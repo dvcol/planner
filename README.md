@@ -6,6 +6,7 @@ A personal native planning app for iPhone, iPad, and Mac. The project is current
 - [Product brief](docs/product-brief.md) preserves the original requirements. The map records the agreed scope refinements.
 - [Working through the map](docs/wayfinding.md) defines ticket readiness, completion, research, prototypes, and `/tdd` expectations.
 - [Release goals](docs/release-goals.md) records the accepted V0–V3 stages, native platform expectations, and quality gates. V2 is the first daily-use release; there is no deadline.
+- [Glossary](GLOSSARY.md) records the planner's domain terms. [Planner vocabulary](docs/planner-vocabulary.md) records confirmed state/membership behavior and the remaining vocabulary review.
 
 The agreed stack is Swift, SwiftUI, SwiftData with private CloudKit sync, and native MapKit, targeting iOS, iPadOS, and macOS 27 or newer. Shared domain services will support the UI, App Intents, and temporary localhost MCP sessions.
 

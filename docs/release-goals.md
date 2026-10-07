@@ -16,12 +16,14 @@ The accepted progression makes V2 the first daily-use release because both selec
 
 | Stage | User journeys and scope | Intended use and exit gate |
 | --- | --- | --- |
-| V0 | Create a generic item, put it in a list, search, edit, complete, archive and restore it. Establish local SwiftData durability and a minimal private CloudKit synchronization slice. Introduce the native project, local PlannerCore package and focused tests. | Learning and foundation work with disposable data. Pass relevant domain unit, persistence, basic UI and two-device checks. This is not the first daily-use release. |
+| V0 | Create a generic item, put it in a list, search, edit, complete/reopen and archive/unarchive it. Establish local SwiftData durability and a minimal private CloudKit synchronization slice. Introduce the native project, local PlannerCore package and focused tests. | Learning and foundation work with disposable data. Pass relevant domain unit, persistence, basic UI and two-device checks. This is not the first daily-use release. |
 | V1 | Save places manually, retain arbitrary links, view located items on the native map, organize items in multiple lists, and use search, categories/tags and duration filters. Keep ordinary items without locations usable. | Travel collection and organization trial. Pass the resolved domain/search fixtures and map/offline fallback checks. Itineraries and the complete capture workflow still prevent this stage from satisfying both daily-use goals. |
 | V2 | Capture Apple Maps, Google Maps and Safari links through the app and native Share workflows. Review/edit partial imports. Assemble and reorder referenced items/lists in itineraries, schedule them in Planner's canonical calendar, and support one-way EventKit export. Add JSON export/import. | First daily-use release. Both travel workflows operate on all three platforms with native layouts. All accepted unit, integration, UI and physical-device gates pass; no critical reliability scenario remains unverified. |
 | V3 | Add selected App Intents/Shortcuts, applicable Siri/Spotlight integrations, and temporary localhost MCP Agent Control on macOS using the same PlannerCore behavior. | System and agent integration release. Advertise only demonstrated system/client capabilities. Pass command equivalence, permissions, authentication, shutdown and selected-client checks. |
 
 One-way EventKit export and JSON portability are included in V2. App Intents and MCP are V3. V0 and V1 are learning/trial stages; V2 is the first release intended for daily personal use.
+
+The user's 2026-10-08 vocabulary clarification separates todo/done from active/archived. Completion/reopening and archiving/unarchiving change different states; see the [vocabulary review](planner-vocabulary.md). Local work can start without paid membership, while private CloudKit validation still requires an active Program team; see [Apple test access](setup/apple-test-access.md).
 
 ## Acceptance examples
 
