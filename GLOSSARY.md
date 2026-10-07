@@ -59,3 +59,11 @@ An ordered reference within an itinerary to an existing item or list.
 
 **Schedule entry**:
 A planning date or time assignment referencing an existing item or itinerary in Planner's calendar.
+
+**Duration estimate**:
+An optional estimate of the time an activity takes. It can be compared with other estimates without scheduling the activity.
+_Avoid_: Treating an estimate as a scheduled start or end.
+
+**Calendar span**:
+The start and end of a scheduled period in Planner's calendar. It describes when an item or itinerary is planned.
+_Avoid_: Using an activity estimate as a substitute for its calendar span.
