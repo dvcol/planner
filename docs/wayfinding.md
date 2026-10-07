@@ -39,6 +39,16 @@ Research and grilling tickets define tests for subsequent implementation and clo
 
 The map is an index. Open tickets live in native sub-issues, dependency state lives in native blocking relationships, and an answer lives in its resolution comment and linked artifacts.
 
+## Build native prototypes
+
+Follow the accepted [Build workflow](https://github.com/dvcol/planner/issues/18). Core architecture must define the native project/package paths, app and Share extension targets, test targets, shared schemes, configuration and entitlement files, and signing inputs. Use a local Swift package for PlannerCore and Swift Package Manager for dependencies. Pin resolved dependencies in the appropriate repository files. Native Xcode project configuration is authoritative initially.
+
+Code-producing prototypes must commit runnable configuration alongside their source. Prefer Xcode buildable folders where appropriate and verify app/extension source and resource membership. Share build/test schemes so a clean checkout exposes the documented commands without relying on personal Xcode state.
+
+Record the stable Xcode/SDK baseline and exact focused `xcodebuild` commands, schemes, and destinations. Verify scheme discovery, dependency resolution, app/extension builds, embedded products, launch, and the affected test suites. Record discovered and executed test counts and result artifacts. Package tests do not substitute for app, extension, UI, signing, or physical-device checks. Signed-device and CloudKit evidence belongs to the relevant access and prototype tickets.
+
+The repository contains planning documents until code-producing work supplies these artifacts. Specification handoff must link the committed prototype projects and their verified build/test evidence, and identify any production scaffolding still required.
+
 ## Use /tdd for code
 
 Consult the installed `tdd` skill before writing tests. Agree public test interfaces first. Work one vertical slice at a time: one failing behavior test, the minimum implementation that passes, then the next scenario. Record the red and green evidence.
