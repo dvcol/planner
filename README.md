@@ -5,6 +5,7 @@ A personal native planning app for iPhone, iPad, and Mac. The project is current
 - [Native personal planner decision map](https://github.com/dvcol/planner/issues/1) is the canonical plan. Read it first when continuing the project.
 - [Product brief](docs/product-brief.md) preserves the original requirements. The map records the agreed scope refinements.
 - [Working through the map](docs/wayfinding.md) defines ticket readiness, completion, research, prototypes, and `/tdd` expectations.
+- [Release goals](docs/release-goals.md) records the accepted V0–V3 stages, native platform expectations, and quality gates. V2 is the first daily-use release; there is no deadline.
 
 The agreed stack is Swift, SwiftUI, SwiftData with private CloudKit sync, and native MapKit, targeting iOS, iPadOS, and macOS 27 or newer. Shared domain services will support the UI, App Intents, and temporary localhost MCP sessions.
 

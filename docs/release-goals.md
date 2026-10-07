@@ -1,18 +1,18 @@
 # Release goals
 
-Draft for [Release goals](https://github.com/dvcol/planner/issues/2), updated 2026-10-07. The priorities below are confirmed by the human. The proposed stage boundaries and acceptance matrix still need their review before this decision closes. The original [product brief](product-brief.md) and [decision map](https://github.com/dvcol/planner/issues/1) remain the scope references.
+Accepted resolution for [Release goals](https://github.com/dvcol/planner/issues/2), confirmed by the human on 2026-10-08. The release stages, priorities and daily-use gates below govern subsequent decisions; detailed domain semantics remain assigned to their owning tickets. The original [product brief](product-brief.md) and [decision map](https://github.com/dvcol/planner/issues/1) remain the scope references.
 
 ## Confirmed priorities
 
 - The first daily-use release must support both saving/organizing places and assembling trips with scheduled itineraries. Ordinary tasks remain supported by the generic item model.
 - The first usable release covers iPhone, iPad, and native macOS. Each platform must feel native; an enlarged iPhone layout on iPad or Mac does not satisfy this requirement.
 - Durable offline saves, demonstrated two-device sync, visible sync failures, and JSON export for recovery are daily-use gates. Missing place enrichment and delayed synchronization may be acceptable; lost or silently overwritten plans are not.
-- Quality and stability are the highest priority. No dated trip or release deadline has been supplied. A date, if later provided, cannot waive these quality gates.
+- Quality and stability are the highest priority. There is no deadline. Release when the agreed quality gates pass.
 - Use the accepted [native Xcode and Swift Package Manager workflow](https://github.com/dvcol/planner/issues/18).
 
-## Proposed V0–V3 stages
+## Accepted V0–V3 stages
 
-This proposal preserves the brief's progression and makes V2 the first daily-use release because both selected travel workflows must be present.
+The accepted progression makes V2 the first daily-use release because both selected travel workflows must be present.
 
 | Stage | User journeys and scope | Intended use and exit gate |
 | --- | --- | --- |
@@ -21,11 +21,11 @@ This proposal preserves the brief's progression and makes V2 the first daily-use
 | V2 | Capture Apple Maps, Google Maps and Safari links through the app and native Share workflows. Review/edit partial imports. Assemble and reorder referenced items/lists in itineraries, schedule them in Planner's canonical calendar, and support one-way EventKit export. Add JSON export/import. | First daily-use release. Both travel workflows operate on all three platforms with native layouts. All accepted unit, integration, UI and physical-device gates pass; no critical reliability scenario remains unverified. |
 | V3 | Add selected App Intents/Shortcuts, applicable Siri/Spotlight integrations, and temporary localhost MCP Agent Control on macOS using the same PlannerCore behavior. | System and agent integration release. Advertise only demonstrated system/client capabilities. Pass command equivalence, permissions, authentication, shutdown and selected-client checks. |
 
-One-way EventKit export remains in the proposed V2 scope. App Intents and MCP remain V3. These placements are proposals for confirmation, not accepted deferrals. JSON recovery moves into the first daily-use gate as already agreed.
+One-way EventKit export and JSON portability are included in V2. App Intents and MCP are V3. V0 and V1 are learning/trial stages; V2 is the first release intended for daily personal use.
 
 ## Acceptance examples
 
-All examples describe future implementation evidence. No application check has run for this draft. Confirm public test interfaces under `/tdd` before code; work one failing behavior test and its minimum passing implementation at a time.
+All examples describe future implementation evidence. No application check has run as part of this release decision. Confirm public test interfaces under `/tdd` before code; work one failing behavior test and its minimum passing implementation at a time.
 
 | Journey and initial state | Action and required end state | Required evidence |
 | --- | --- | --- |
