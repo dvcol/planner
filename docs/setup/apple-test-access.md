@@ -20,6 +20,25 @@ Partial setup evidence for [Apple test access](https://github.com/dvcol/planner/
 
 The 2026-10-07 macOS 26.6.2 observation is superseded by this refresh. Current host-access simulator and device discovery succeeded. Initial sandbox failures on the previous run did not establish missing runtimes or devices. The developer-directory default was not changed.
 
+## When an account is needed
+
+Account requirements were checked against current Apple documentation on 2026-10-08. An Apple Developer Program membership is not a prerequisite for continuing domain decisions, local Swift package work, local-only persistence tests, simulator UI work, or ordinary local Mac execution. The installed Xcode can run that work before team selection. Capabilities that require provisioning add their own setup requirements. See Apple's [simulator and physical-device workflow](https://developer.apple.com/documentation/xcode/running-your-app-on-simulated-or-physical-devices) and [local package workflow](https://developer.apple.com/documentation/xcode/organizing-your-code-with-local-packages).
+
+| Work | Account or capability gate | What remains unverified here |
+| --- | --- | --- |
+| Specification, local PlannerCore tests, simulator layouts and ordinary local Mac prototype | No paid membership required. | Runnable source, agreed public test seams, build and test evidence have not been supplied yet. |
+| Basic personal iPhone/iPad app testing | A free Apple Account signed into Xcode can use a Personal Team. | Selected team, device pairing, Developer Mode, provisioning and actual launches. |
+| Private CloudKit setup and two-device synchronization | Access to an active Apple Developer Program team with appropriate setup authority. | Container selection, account arrangement, entitlements and actual development/production access. |
+| App Group configuration for app/Share targets | Apple currently lists App groups as available to free Apple Developers on iOS and macOS; verify the actual selected team's arrangement. | Group registration/configuration, signing and cross-process access for the chosen targets. |
+
+Personal Team provisioning requires periodic rebuilding/reinstallation. Apple currently lists ten App IDs, three devices and up to three installed apps per device, with seven-day expiration limits. This makes basic personal-device testing possible before paid enrollment, subject to the capabilities in that build. [Apple account overview](https://developer.apple.com/help/account/basics/about-your-developer-account).
+
+Apple's [CloudKit setup instructions](https://developer.apple.com/documentation/cloudkit/enabling-cloudkit-in-your-app) require active Program membership and administrative setup access. The official capability tables mark App groups available in the free Apple Developer column while iCloud: CloudKit is unavailable there. See the [iOS capability table](https://developer.apple.com/help/account/reference/supported-capabilities-ios) and [macOS capability table](https://developer.apple.com/help/account/reference/supported-capabilities-macos). Table check markers were inspected because their text extraction omits availability icons. These are documented capability facts, not successful provisioning or runtime checks.
+
+Team selection can wait while the remaining domain and interface decisions proceed. It must be settled before the gated signing/CloudKit checks. This does not remove CloudKit from the accepted V0 foundation or daily-use quality gates, and does not allow local/simulator evidence to stand in for physical sync evidence.
+
+[Navigation prototype](https://github.com/dvcol/planner/issues/14) and [MCP session prototype](https://github.com/dvcol/planner/issues/16) use disposable local fixtures and verify their own applicable build/launch and access requirements. They can proceed after their domain/build prerequisites without completing this task's CloudKit checks. [Sync and share prototype](https://github.com/dvcol/planner/issues/15) still depends on completing Apple test access. Its physical two-device and extension evidence remains required.
+
 ## Reproduce the inventory
 
 Select Xcode for each command without changing the machine-wide default:
@@ -40,7 +59,7 @@ Device listings may contain personal device names and identifiers. Record only t
 
 ## Human inputs and actions
 
-- Choose the Apple Developer team for signing and CloudKit. Confirm whether membership and the required capabilities are already available; do not post passwords, keys, or certificates.
+- Before physical provisioning, choose the Apple Account/Personal Team or enrolled team used for the particular build. Before CloudKit setup, confirm access to an active Program team and its required capabilities. This selection can wait during domain/local work; do not post passwords, keys, or certificates.
 - Make the available iPhone and iPad discoverable to Xcode: connect and trust the selected devices, and enable Developer Mode where required. Confirm both may use the same private test iCloud account. Record model and OS version after successful discovery.
 - The macOS 27 host prerequisite is now satisfied. Complete native Mac signing and launch checks once the disposable project and selected team are available.
 - Agree the test iCloud account arrangement and test-only container/App Group identifiers before changing account or capability configuration.

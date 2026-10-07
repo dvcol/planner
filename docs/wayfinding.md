@@ -51,6 +51,8 @@ The repository contains planning documents until code-producing work supplies th
 
 The current [Apple test access inventory](setup/apple-test-access.md) records observed tooling, available destinations, and the remaining human setup inputs. Recheck it when execution starts.
 
+Team selection can wait during specification and local work. Navigation and MCP prototypes using disposable local fixtures verify their own applicable build, signing, destination and client access; they do not depend on completing private CloudKit provisioning. The sync/share prototype retains Apple test access as a native blocker and requires its physical-device, container and extension checks. This distinction changes readiness, not the accepted runtime or daily-use quality gates.
+
 ## Use /tdd for code
 
 Consult the installed `tdd` skill before writing tests. Agree public test interfaces first. Work one vertical slice at a time: one failing behavior test, the minimum implementation that passes, then the next scenario. Record the red and green evidence.
