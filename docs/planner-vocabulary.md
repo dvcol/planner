@@ -1,6 +1,6 @@
 # Planner vocabulary
 
-Review artifact for [Planner vocabulary](https://github.com/dvcol/planner/issues/3), updated on 2026-10-08. The user's completion/archive and membership answers below are confirmed. The full glossary and ownership sketch remain open for final review; this document is not a closed-ticket resolution.
+Accepted resolution for [Planner vocabulary](https://github.com/dvcol/planner/issues/3), confirmed by the human on 2026-10-08. The glossary, ownership sketch and operation examples below govern later decisions. Production interfaces and the explicitly delegated policies still belong to their named tickets.
 
 The [product brief](product-brief.md) supplies the generic item, many-to-many lists, stable identities, and referenced itineraries/schedules. [Release goals](release-goals.md) keeps places and scheduled itineraries as the first daily-use journeys. The [glossary](../GLOSSARY.md) gives those concepts one common vocabulary. There is no application code or agreed production interface yet.
 
@@ -11,6 +11,7 @@ The user confirmed these decisions on 2026-10-08:
 - Items have no special repeat-visit behavior. A museum and an ordinary todo use the same item model; a later visit does not automatically create an item, reopen an item, or create visit history.
 - Removing the last list membership preserves the item in Inbox/All Items. Visibility still follows the selected completion and archive filters.
 - Todo/done and active/archived are independent states. Archiving does not complete an item. Unarchiving a done item leaves it done.
+- Categories and tags are shared objects. Items and itineraries reference them, so changing a label's name, color or icon updates every use without changing the referring item's or itinerary's identity.
 
 All four combinations are valid:
 
@@ -23,7 +24,7 @@ All four combinations are valid:
 
 An ordinary todo view includes only todo + active items. "Active" alone means unarchived, so an active-only filter must not silently mean todo-only. [Duration and search](https://github.com/dvcol/planner/issues/8) owns explicit filter composition and section defaults.
 
-## Ownership and references for review
+## Ownership and references
 
 ```mermaid
 flowchart LR
@@ -47,7 +48,7 @@ The arrows describe domain references and content ownership. They do not specify
 | Item | Title, notes, completion/archive state, links, optional location and duration estimate | One stable identity across lists, itineraries and schedules. Place metadata does not make it a separate task system. |
 | List | Its name and presentation metadata | Memberships reference existing item identities. Removing a membership does not remove the item. |
 | Membership | The association between one item and one list, with any list-local ordering | Refers to the same item, never a list-specific copy. Duplicate-association and concurrent-order policies belong to recovery. |
-| Category and Tag | User-defined name, optional color/icon | Proposed shared classifications referenced by items/itineraries. Whether renaming updates every use needs the user's answer. |
+| Category and Tag | User-defined name, optional color/icon | Each has a shared identity referenced by items/itineraries. Editing that object updates every reference; no per-item label copy needs synchronization. |
 | Link and Location | Content attached to the owning item or itinerary | Editable metadata rather than a separate todo or automatically shared venue history. Capture/provenance decisions govern provider fields. |
 | Itinerary | Its own title, notes, metadata and explicit status | Contains ordered references to existing items/lists. Child progress and itinerary completion behavior belong to scheduling. |
 | Itinerary entry | Its position within an itinerary | References an existing source; changing order does not change that source's identity or memberships. Nesting and list expansion remain in scheduling. |
@@ -58,6 +59,8 @@ Independent source identities and reference records must survive saving and reop
 ## Before and after examples
 
 Use one existing `Nezu Museum` item with stable identity `11111111-1111-1111-1111-111111111111`. Lists A, B, C and D mean `Tokyo Museums`, `Wishlist`, `Weekend` and `Art`. Each row states its own starting fixture unless it explicitly names the preceding row.
+
+For shared-label cases, use a `Food` category with a red color and fork/knife icon, and a `rainy-day` tag. Edit the category to `Dining`, blue and a cup/saucer icon, and rename the tag to `indoors`. These are user-visible fixture values; architecture chooses their concrete representation.
 
 | Operation | Before | Required end state |
 | --- | --- | --- |
@@ -72,6 +75,8 @@ Use one existing `Nezu Museum` item with stable identity `11111111-1111-1111-111
 | Complete an archived item | The item is todo + archived. | It becomes done + archived; completion does not unarchive it. |
 | Reopen then unarchive | The item is done + archived. | Reopen yields todo + archived; unarchive yields todo + active. Ordinary todo views can show it again. |
 | Edit a referenced source | An itinerary entry and schedule entry reference the existing item. | Editing its title changes that item; the references retain its identity and display its current content. |
+| Edit a shared category | Two items and an itinerary reference the same `Food` category with a red color and fork/knife icon. | Rename it to `Dining`, blue and a cup/saucer icon. All three show those values, retaining their identities and their references to the same category identity. |
+| Edit a shared tag | Two items and an itinerary reference the same tag named `rainy-day`. | Rename it to `indoors`. All three show `indoors` through the same tag identity; memberships and schedule/itinerary references remain intact. |
 | Add an itinerary or schedule reference | The existing item has no such reference. | The reference points to that existing item. The number of items and its list memberships stay unchanged. |
 | Consider another museum visit | The item is done + active. | Merely planning to revisit has no automatic effect. The user can use ordinary create/reopen operations if desired; there is no inferred visit lifecycle. |
 
@@ -99,13 +104,16 @@ These are future `/tdd` obligations, not tests reported as passing. Confirm the 
 | Domain unit | Exercise complete, reopen, archive and unarchive from the combinations above. | Only the named state changes. The resulting pairs match the table and content/memberships/references remain intact. |
 | Domain unit | Complete an item referenced by lists, an itinerary and a schedule. | Todo views exclude it everywhere; explicit completed queries return the same identity; both references remain. |
 | Domain unit | Add itinerary and schedule references, then edit the source title. | Item count is unchanged; both references retain the source identity and read the updated title. Exact schedule setup comes from scheduling. |
+| Domain unit | Two items and one itinerary reference the same `Food` category and `rainy-day` tag. Edit the category to `Dining`, blue and a cup/saucer icon, and rename the tag to `indoors`. | Public queries for all three return `Dining`, blue, the cup/saucer icon and `indoors`. Category/tag identities and all source identities/references are unchanged. |
 | Persistence integration | Save four items covering all completion/archive combinations and representative memberships/references, close and reopen a real temporary store. | Public queries return the original identities, all four state pairs, the exact membership sets and intact references. |
+| Persistence integration | Save two items and an itinerary referencing the same category/tag, edit those labels, then reopen a real temporary store. | Public queries return the updated shared metadata and the original label/source identities and references; no independent stale label copies appear. |
 | UI | Display an item belonging to A and B, then swipe complete from A. | The UI indicates multiple memberships; ordinary todo views in both A and B exclude it, and a completed view can find it. |
 | UI | Unarchive a done item, then explicitly reopen it. | Unarchive leaves it done and absent from ordinary todo views; reopen makes it todo + active and visible there. |
+| UI | Rename the category/tag from its editor while two items and an itinerary reference it. | Their displayed labels update without individually editing the referring sources. Query matching after a rename follows the search decision. |
 | Physical two-device integration | Change completion on one device and archive state on another. | The accepted recovery scenario determines convergence; queries and UI show both independent states. This is a recovery/prototype gate, not a claimed CloudKit guarantee. |
 
 Deleting sources, trash recovery, concurrent conflict winners and itinerary progress cannot be tested against invented expectations. Their named owners must resolve those outcomes first. Documentation validation checks the four state pairs, before/after examples and links; it cannot prove runtime behavior.
 
-## Remaining vocabulary review
+## Acceptance and limits
 
-Confirm whether categories and tags are shared labels: renaming `Food` to `Dining`, or changing its color/icon, updates all associated items and itineraries without changing their identities. The recommended answer is yes. The glossary and remaining ownership/operation examples then need final human acceptance before this ticket can close.
+The human confirmed that items and itineraries point to a category/tag object, so updating that object updates every use. Together with the earlier state/membership answers and the presented glossary/operation review, this settles the vocabulary. Label deletion, concurrent label edits, text/query matching after a rename and persistence topology remain with recovery, search and architecture. No unit, integration, UI or physical-device runtime evidence is claimed by this documentation resolution.

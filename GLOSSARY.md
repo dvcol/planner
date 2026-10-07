@@ -40,10 +40,10 @@ A view of items with no list memberships.
 A view across list memberships, including items that belong to no list.
 
 **Category**:
-A user-defined classification, such as food or museum, associated with items or itineraries.
+A shared user-defined classification, such as food or museum, referenced by items and itineraries. Editing it updates every use.
 
 **Tag**:
-A free-form label, such as rainy-day or ceramics, associated with items or itineraries.
+A shared free-form label, such as rainy-day or ceramics, referenced by items and itineraries. Editing it updates every use.
 
 **Link**:
 A URL associated with an item or itinerary, with an optional label and provider description.

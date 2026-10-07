@@ -23,7 +23,7 @@ The accepted progression makes V2 the first daily-use release because both selec
 
 One-way EventKit export and JSON portability are included in V2. App Intents and MCP are V3. V0 and V1 are learning/trial stages; V2 is the first release intended for daily personal use.
 
-The user's 2026-10-08 vocabulary clarification separates todo/done from active/archived. Completion/reopening and archiving/unarchiving change different states; see the [vocabulary review](planner-vocabulary.md). Local work can start without paid membership, while private CloudKit validation still requires an active Program team; see [Apple test access](setup/apple-test-access.md).
+The user's 2026-10-08 vocabulary clarification separates todo/done from active/archived. Completion/reopening and archiving/unarchiving change different states; see the [accepted vocabulary](planner-vocabulary.md). Local work can start without paid membership, while private CloudKit validation still requires an active Program team; see [Apple test access](setup/apple-test-access.md).
 
 ## Acceptance examples
 
