@@ -20,7 +20,7 @@ Each letter denotes one distinct item identity. A runnable prototype must assign
 | H | `Archived shop`; Shopping; ceramics | 60 | Todo / archived | Tokyo Shopping |
 | I | `Finished archived dinner`; Food; outdoor | 30 | Done / archived | None |
 
-The estimates above use only unambiguous minutes/hours. The meaning of day, half-day, weekend, week, month and year remains a human decision; this dataset does not assign them numeric defaults. The human requires native pickers for activity estimates, while calendar scheduling uses spans.
+The estimates above use minutes/hours. The human has now approved fixed day/week/month/year estimate units of 24 hours / 7 days / 30 days / 365 days, with native pickers and one-minute precision. Calendar scheduling uses actual spans. Half-day/full-day/weekend shortcut values remain a human decision. The [partial decision record](duration-and-search.md) gives exact normalization and maximum/unknown results.
 
 A has a manually entered address `Ginza fixture address`, notes `Check vegetarian options` and a link labelled `Menu` at `https://example.com/ramen`. F has a manually entered address `Museum fixture address` and a link labelled `Museum website` at `https://example.com/museum`. The other items have no address or links. These are exact test strings and do not claim real venue addresses or URLs.
 
@@ -37,7 +37,7 @@ The accepted vocabulary supplies these outcomes independently of the remaining s
 
 | Scenario | Known distinction to resolve |
 | --- | --- |
-| Food plus a two-hour maximum in ordinary todo scope | A and B are below the limit, C is exactly at it, D exceeds it, and E has no estimate. Decide inclusive boundaries and unknown handling. |
+| Food plus a two-hour maximum in ordinary todo scope | The inclusive maximum returns A/B/C; enabling Include unknown estimates adds E. D exceeds the maximum. Clearing only the duration group returns A/B/C/D/E. |
 | Food plus rainy-day and reservation-required tags | Any returns A/C/D; All returns C in ordinary scope. Any is the confirmed default; groups narrow cumulatively. |
 | Search text `cafe` | Insensitive matching returns C in ordinary scope and C/G when both state filters are Any. |
 | Search text `vegetarian menu` | All words may match across fields of one item, so A matches notes plus link label. |
@@ -46,4 +46,15 @@ The accepted vocabulary supplies these outcomes independently of the remaining s
 | Global versus Tokyo Food scope | Ordinary global scope returns A/B/C/D/E/F once each; Tokyo Food returns A/B/C/D. |
 | Shared category rename while a category filter is selected | ID-based selection is unchanged; the current name Dining participates in text matching. See the exact state-scoped sets in the partial decision record. |
 
-The partial decision record supplies the confirmed expected sets. The final ticket resolution must add duration/sort/performance and engine-dependent examples after the human decides them. Query results, real-store reopening, UI controls and remote-change refresh must later agree on that one meaning. Pending decisions are not executable test expectations yet.
+The partial decision record supplies the confirmed expected sets and the accepted 5,000-item / 200-list, 300 ms responsiveness target. The final ticket resolution must add shortcut/sort and engine-dependent examples after the human decides them. Query results, real-store reopening, UI controls and remote-change refresh must later agree on that one meaning. Pending decisions are not executable test expectations yet.
+
+## Additional validation inputs
+
+These cases are separate from the nine-item dataset above; they do not change its accepted identity sets.
+
+- Maximum boundary: three ordinary items estimated at 119, 120 and 121 minutes. A 120-minute maximum includes the first two and excludes the third.
+- One-minute precision: pick 1 hour and 31 minutes, save/reopen and compare as 91 minutes without rounding to a quarter hour. Clearing and zero behavior await the next answer.
+- Fixed-unit comparison: two days are 2,880 minutes, one week is 10,080, one month is 43,200, one year is 525,600 and twelve months are 518,400. Calendar-span interpretation is independent.
+- Ordered fixtures: add fixed created/updated timestamps and stable identity ties when chronological modes and tie behavior are confirmed. Assert exact sequences in both directions, including unknown estimates, without rewriting manual list order.
+- Long-list completeness: use 5,000 stable item identities and 200 list identities. Put a sole text match beyond the initial row/data window; the complete-scope query still finds it. Traverse every matching result forward and back and compare against the independently specified sequence, once sorting/window policy is agreed.
+- Window refresh: alter a matching item's title, category, duration or state while scrolled away. Test the architecture's approved refresh rule, cancellation and selection preservation rather than inventing a cursor/snapshot policy here.
