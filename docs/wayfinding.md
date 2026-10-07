@@ -49,6 +49,8 @@ Record the stable Xcode/SDK baseline and exact focused `xcodebuild` commands, sc
 
 The repository contains planning documents until code-producing work supplies these artifacts. Specification handoff must link the committed prototype projects and their verified build/test evidence, and identify any production scaffolding still required.
 
+The current [Apple test access inventory](setup/apple-test-access.md) records observed tooling, available destinations, and the remaining human setup inputs. Recheck it when execution starts.
+
 ## Use /tdd for code
 
 Consult the installed `tdd` skill before writing tests. Agree public test interfaces first. Work one vertical slice at a time: one failing behavior test, the minimum implementation that passes, then the next scenario. Record the red and green evidence.
