@@ -4,7 +4,7 @@ Accepted resolution for [Planner vocabulary](https://github.com/dvcol/planner/is
 
 The later [Completion scopes and derived progress](https://github.com/dvcol/planner/issues/22) clarification supersedes this record's global-only completion and independent itinerary-completion assumptions. Source content remains shared, but contextual item completion can differ between lists/itineraries, global Done overrides its effective display, and container completion derives from contextual children. See [Completion scopes](completion-scopes.md) for the accepted rule and exact fixtures. The global-operation examples below remain baseline examples; they do not prohibit local completion.
 
-The first [Offline conflicts and recovery](offline-conflicts-and-recovery.md) round confirms that Lists have their own archive state, container Archive/Delete affects only that container, and deletion of Items/Lists/Itineraries uses recoverable Trash. Ordinary re-addition starts local Todo after the final path was removed; Undo or restoration of the original association preserves its local state. Trash visibility, permanent-delete reference handling and concurrent outcomes remain open in that recovery record.
+The later [Offline conflicts and recovery](offline-conflicts-and-recovery.md) answers confirm that Lists have their own archive state and container Archive/Delete affects only that container. Ordinary re-addition starts local Todo after the final path was removed; Undo or restoration of the original association preserves its local state. Confirmed permanent deletion removes the selected entity and its references while retaining source Items/Lists of deleted containers. The human reopened the earlier Trash choice; its lifecycle is pending R14 and is therefore absent from the canonical glossary. Concurrent outcomes and recovery interactions remain with the recovery record.
 
 The [product brief](product-brief.md) supplies the generic item, many-to-many lists, stable identities, and referenced itineraries/schedules. [Release goals](release-goals.md) keeps places and scheduled itineraries as the first daily-use journeys. The [glossary](../GLOSSARY.md) gives those concepts one common vocabulary. There is no application code or agreed production interface yet.
 
@@ -86,7 +86,7 @@ For shared-label cases, use a `Food` category with a red color and fork/knife ic
 | Add an itinerary or schedule reference | The existing item has no such reference. | The reference points to that existing item. The number of items and its list memberships stay unchanged. |
 | Consider another museum visit | The item is done + active. | Merely planning to revisit has no automatic effect. The user can use ordinary create/reopen operations if desired; there is no inferred visit lifecycle. |
 
-Use distinct verbs: complete/reopen change completion; archive/unarchive change archive state. Restore has the accepted Trash-recovery meaning: return the same entity with its retained identity, content, references, order and contextual states. Recovery and command-contract decisions must finish its reference visibility and concurrent effects before implementation.
+Use distinct verbs: complete/reopen change completion; archive/unarchive change archive state. Undo of an original association retains its prior contextual value, while ordinary re-addition starts local Todo. The reopened deletion lifecycle must be resolved before defining any Trash Restore operation. JSON restoration and independent account recovery retain their accepted data-preservation requirements.
 
 ## Decisions owned by later tickets
 
@@ -120,7 +120,7 @@ These are future `/tdd` obligations, not tests reported as passing. Confirm the 
 | UI | Rename the category/tag from its editor while two items and an itinerary reference it. | Their displayed labels update without individually editing the referring sources. Query matching after a rename follows the search decision. |
 | Physical two-device integration | Change completion on one device and archive state on another. | The accepted recovery scenario determines convergence; queries and UI show both independent states. This is a recovery/prototype gate, not a claimed CloudKit guarantee. |
 
-The completion and first-round recovery records provide accepted progress and basic recovery fixtures. Remaining Trash visibility, permanent deletion, concurrent conflict winners and failure cases require their named owners' exact outcomes before tests. Documentation validation checks the four state pairs, before/after examples and links; it cannot prove runtime behavior.
+The completion and recovery records provide accepted progress, confirmed deletion scope, import failure and independent local recovery requirements. Reopened Trash and remaining concurrent/recovery interactions require their named owners' exact outcomes before tests. Documentation validation checks the four state pairs, before/after examples and links; it cannot prove runtime behavior.
 
 ## Acceptance and limits
 

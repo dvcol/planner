@@ -45,15 +45,11 @@ _Avoid_: Using active to mean todo.
 An item, list or itinerary put away from ordinary planning views while retaining its content and references. It can be todo or done.
 _Avoid_: Deleted.
 
-**Trash**:
-The recoverable deletion state of an item, list or itinerary. Its identity, content, references, order and contextual completion are retained for restoration.
-_Avoid_: Archive.
-
-**Restore**:
-Return a trashed item, list or itinerary with its retained identity and planning data. Restoring an original association preserves its local completion; ordinary removal and re-addition starts a new local Todo state.
-
 **Permanent deletion**:
-Removal of a trashed entity that cannot be reversed with Trash's Restore action.
+Removal of an entity and its references from the planner. Deleting a container leaves its referenced source items and lists intact.
+
+**Recovery copy**:
+A locally retained copy of saved Planner data that remains recoverable independently of the current iCloud account's mirrored data.
 
 **Inbox**:
 A view of items with no list memberships.
