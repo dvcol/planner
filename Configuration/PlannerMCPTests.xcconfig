@@ -1,0 +1,9 @@
+#include "Base.xcconfig"
+
+PRODUCT_NAME = PlannerMCPTests
+PRODUCT_BUNDLE_IDENTIFIER = org.example.PlannerMCPPrototype.TransportTests
+SUPPORTED_PLATFORMS = macosx
+SDKROOT = macosx
+TEST_HOST = $(BUILT_PRODUCTS_DIR)/Planner.app/Contents/MacOS/Planner
+BUNDLE_LOADER = $(TEST_HOST)
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/../Frameworks @loader_path/../Frameworks

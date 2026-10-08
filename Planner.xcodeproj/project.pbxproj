@@ -1,0 +1,110 @@
+// !$*UTF8*$!
+{
+    archiveVersion = 1;
+    classes = {};
+    objectVersion = 77;
+    objects = {
+        000000000000000000000001 = {
+            isa = PBXProject;
+            attributes = { BuildIndependentTargetsInParallel = 1; LastUpgradeCheck = 2700; };
+            buildConfigurationList = 000000000000000000000501;
+            compatibilityVersion = "Xcode 16.0";
+            developmentRegion = en;
+            hasScannedForEncodings = 0;
+            knownRegions = (en, Base);
+            mainGroup = 000000000000000000000101;
+            minimizedProjectReferenceProxies = 1;
+            packageReferences = (000000000000000000000301, 000000000000000000000302, 000000000000000000000303);
+            preferredProjectObjectVersion = 77;
+            productRefGroup = 000000000000000000000104;
+            projectDirPath = "";
+            projectRoot = "";
+            targets = (000000000000000000000201, 000000000000000000000202);
+        };
+        000000000000000000000101 = {
+            isa = PBXGroup;
+            children = (000000000000000000000102, 000000000000000000000103, 000000000000000000000105, 000000000000000000000106, 000000000000000000000104);
+            sourceTree = "<group>";
+        };
+        000000000000000000000102 = { isa = PBXFileSystemSynchronizedRootGroup; path = Planner; sourceTree = "<group>"; };
+        000000000000000000000103 = { isa = PBXFileSystemSynchronizedRootGroup; path = PlannerMCPTests; sourceTree = "<group>"; };
+        000000000000000000000104 = {
+            isa = PBXGroup;
+            children = (000000000000000000000111, 000000000000000000000112);
+            name = Products;
+            sourceTree = "<group>";
+        };
+        000000000000000000000105 = {
+            isa = PBXGroup;
+            children = (000000000000000000000113, 000000000000000000000114, 000000000000000000000115, 000000000000000000000116, 000000000000000000000117);
+            path = Configuration;
+            sourceTree = "<group>";
+        };
+        000000000000000000000106 = { isa = PBXFileReference; lastKnownFileType = folder; path = Packages; sourceTree = "<group>"; };
+        000000000000000000000111 = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Planner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+        000000000000000000000112 = { isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlannerMCPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+        000000000000000000000113 = { isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+        000000000000000000000114 = { isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Planner.xcconfig; sourceTree = "<group>"; };
+        000000000000000000000115 = { isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PlannerMCPTests.xcconfig; sourceTree = "<group>"; };
+        000000000000000000000116 = { isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Local.example.xcconfig; sourceTree = "<group>"; };
+        000000000000000000000117 = { isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlannerMacPrototype.entitlements; sourceTree = "<group>"; };
+        000000000000000000000201 = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 000000000000000000000502;
+            buildPhases = (000000000000000000000211, 000000000000000000000212, 000000000000000000000213);
+            buildRules = ();
+            dependencies = ();
+            fileSystemSynchronizedGroups = (000000000000000000000102);
+            name = Planner;
+            packageProductDependencies = (000000000000000000000311, 000000000000000000000312, 000000000000000000000313, 000000000000000000000314, 000000000000000000000315);
+            productName = Planner;
+            productReference = 000000000000000000000111;
+            productType = "com.apple.product-type.application";
+        };
+        000000000000000000000202 = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 000000000000000000000503;
+            buildPhases = (000000000000000000000221, 000000000000000000000222, 000000000000000000000223);
+            buildRules = ();
+            dependencies = (000000000000000000000231);
+            fileSystemSynchronizedGroups = (000000000000000000000103);
+            name = PlannerMCPTests;
+            packageProductDependencies = (000000000000000000000312);
+            productName = PlannerMCPTests;
+            productReference = 000000000000000000000112;
+            productType = "com.apple.product-type.bundle.unit-test";
+        };
+        000000000000000000000211 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000212 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000411, 000000000000000000000412, 000000000000000000000413, 000000000000000000000414, 000000000000000000000415); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000213 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000221 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000222 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000422); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000223 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000231 = { isa = PBXTargetDependency; target = 000000000000000000000201; targetProxy = 000000000000000000000232; };
+        000000000000000000000232 = { isa = PBXContainerItemProxy; containerPortal = 000000000000000000000001; proxyType = 1; remoteGlobalIDString = 000000000000000000000201; remoteInfo = Planner; };
+        000000000000000000000301 = { isa = XCLocalSwiftPackageReference; relativePath = Packages/PlannerCore; };
+        000000000000000000000302 = { isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/modelcontextprotocol/swift-sdk"; requirement = { kind = exactVersion; version = 0.12.1; }; };
+        000000000000000000000303 = { isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/apple/swift-nio.git"; requirement = { kind = exactVersion; version = 2.104.0; }; };
+        000000000000000000000311 = { isa = XCSwiftPackageProductDependency; package = 000000000000000000000301; productName = PlannerCore; };
+        000000000000000000000312 = { isa = XCSwiftPackageProductDependency; package = 000000000000000000000302; productName = MCP; };
+        000000000000000000000313 = { isa = XCSwiftPackageProductDependency; package = 000000000000000000000303; productName = NIOCore; };
+        000000000000000000000314 = { isa = XCSwiftPackageProductDependency; package = 000000000000000000000303; productName = NIOPosix; };
+        000000000000000000000315 = { isa = XCSwiftPackageProductDependency; package = 000000000000000000000303; productName = NIOHTTP1; };
+        000000000000000000000411 = { isa = PBXBuildFile; productRef = 000000000000000000000311; };
+        000000000000000000000412 = { isa = PBXBuildFile; platformFilter = macos; productRef = 000000000000000000000312; };
+        000000000000000000000413 = { isa = PBXBuildFile; platformFilter = macos; productRef = 000000000000000000000313; };
+        000000000000000000000414 = { isa = PBXBuildFile; platformFilter = macos; productRef = 000000000000000000000314; };
+        000000000000000000000415 = { isa = PBXBuildFile; platformFilter = macos; productRef = 000000000000000000000315; };
+        000000000000000000000422 = { isa = PBXBuildFile; productRef = 000000000000000000000312; };
+        000000000000000000000501 = { isa = XCConfigurationList; buildConfigurations = (000000000000000000000511, 000000000000000000000512); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+        000000000000000000000502 = { isa = XCConfigurationList; buildConfigurations = (000000000000000000000521, 000000000000000000000522); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+        000000000000000000000503 = { isa = XCConfigurationList; buildConfigurations = (000000000000000000000531, 000000000000000000000532); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+        000000000000000000000511 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000113; buildSettings = { DEBUG_INFORMATION_FORMAT = dwarf; ENABLE_TESTABILITY = YES; GCC_PREPROCESSOR_DEFINITIONS = ("DEBUG=1", "$(inherited)"); SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)"; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; }; name = Debug; };
+        000000000000000000000512 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000113; buildSettings = { DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; SWIFT_COMPILATION_MODE = wholemodule; }; name = Release; };
+        000000000000000000000521 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000114; buildSettings = {}; name = Debug; };
+        000000000000000000000522 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000114; buildSettings = {}; name = Release; };
+        000000000000000000000531 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000115; buildSettings = {}; name = Debug; };
+        000000000000000000000532 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000115; buildSettings = {}; name = Release; };
+    };
+    rootObject = 000000000000000000000001;
+}
