@@ -26,7 +26,7 @@ An item appearance's local completion within a list or itinerary, independently 
 The completion shown for an item within a list or itinerary. It is done when the item is globally done or locally done in that context.
 
 **Progress**:
-A measure of a list or itinerary's effective child completion. A nonempty container is completed only when every child appearance is effectively done. An empty container has no completion percentage and is not completed.
+The number of effectively done item appearances out of all item appearances in a list or itinerary. Repeated appearances count separately; a referenced list contributes its child items, not an extra container count. A nonempty container is completed only when every child appearance is effectively done. An empty container has no completion percentage and is not completed.
 
 **Todo**:
 An unfinished item or contextual item reference. A list or itinerary is unfinished when its contextual children do not make it completed.
