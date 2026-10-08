@@ -11,7 +11,7 @@
       },
       "expectedFailures": 0,
       "failedTests": 1,
-      "passedTests": 0,
+      "passedTests": 2,
       "skippedTests": 0,
       "testPlanConfiguration": {
         "configurationId": "1",
@@ -22,24 +22,24 @@
   "environmentDescription": "Planner · Built with macOS 27.0.1",
   "expectedFailures": 0,
   "failedTests": 1,
-  "finishTime": 1791502371.289,
-  "passedTests": 0,
+  "finishTime": 1791502781.336,
+  "passedTests": 2,
   "result": "Failed",
   "runtimeWarnings": [],
   "skippedTests": 0,
-  "startTime": 1791502354.939,
+  "startTime": 1791502770.065,
   "statistics": [],
   "testFailures": [
     {
-      "failureText": "Expectation failed: response.statusCode == 401\nresponse.statusCode → 501",
+      "failureText": "Expectation failed: response.statusCode == 200\nresponse.statusCode → 501",
       "targetName": "PlannerMCPTests",
-      "testIdentifier": 1,
-      "testIdentifierString": "AuthenticationTests/missingAuthorizationRejectsPingWithoutAccessWindowHeader()",
-      "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/AuthenticationTests/missingAuthorizationRejectsPingWithoutAccessWindowHeader()",
-      "testName": "missingAuthorizationRejectsPingWithoutAccessWindowHeader()"
+      "testIdentifier": 3,
+      "testIdentifierString": "PingTests/authorizedPingPreservesSDKResultAndAdmittedAccessWindow()",
+      "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/PingTests/authorizedPingPreservesSDKResultAndAdmittedAccessWindow()",
+      "testName": "authorizedPingPreservesSDKResultAndAdmittedAccessWindow()"
     }
   ],
   "title": "Test - Planner",
   "topInsights": [],
-  "totalTestCount": 1
+  "totalTestCount": 3
 }

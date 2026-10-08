@@ -1,11 +1,14 @@
 #if os(macOS)
+  import Foundation
   import MCP
 
   actor PlannerMCPRequestHandler {
     private let credential: String
+    private let accessWindowIdentifier: UUID
 
-    init(credential: String) {
+    init(credential: String, accessWindowIdentifier: UUID) {
       self.credential = credential
+      self.accessWindowIdentifier = accessWindowIdentifier
     }
 
     func handleRequest(_ request: HTTPRequest) async -> HTTPResponse {
@@ -13,7 +16,25 @@
         return .error(statusCode: 401, .invalidRequest("Unauthorized"))
       }
 
-      return .error(statusCode: 501, .internalError("MCP prototype is not implemented"))
+      let transport = StatelessHTTPServerTransport()
+      let server = Server(name: "Planner MCP prototype", version: "0.0.1")
+
+      do {
+        try await server.start(transport: transport)
+      } catch {
+        await server.stop()
+        return .error(statusCode: 500, .internalError("MCP service is unavailable"))
+      }
+
+      let response = await transport.handleRequest(request)
+      await server.stop()
+
+      guard case .data(let responseData, var responseHeaders) = response else {
+        return response
+      }
+
+      responseHeaders["X-Planner-Access-Window"] = accessWindowIdentifier.uuidString
+      return .data(responseData, headers: responseHeaders)
     }
   }
 #endif

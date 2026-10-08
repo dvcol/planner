@@ -11,7 +11,7 @@
       },
       "expectedFailures": 0,
       "failedTests": 0,
-      "passedTests": 1,
+      "passedTests": 3,
       "skippedTests": 0,
       "testPlanConfiguration": {
         "configurationId": "1",
@@ -22,15 +22,15 @@
   "environmentDescription": "Planner · Built with macOS 27.0.1",
   "expectedFailures": 0,
   "failedTests": 0,
-  "finishTime": 1791502440.619,
-  "passedTests": 1,
+  "finishTime": 1791502840.852,
+  "passedTests": 3,
   "result": "Passed",
   "runtimeWarnings": [],
   "skippedTests": 0,
-  "startTime": 1791502435.82,
+  "startTime": 1791502836.228,
   "statistics": [],
   "testFailures": [],
   "title": "Test - Planner",
   "topInsights": [],
-  "totalTestCount": 1
+  "totalTestCount": 3
 }
