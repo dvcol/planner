@@ -11,7 +11,7 @@ A thing to do, buy, or keep for planning, optionally describing a place. Its sha
 A named collection of items with its own archive state and completion derived from its children in that list. An item can belong to several lists.
 
 **Membership**:
-The association of one item with one list, including that item's local completion context. Removing a membership leaves the item intact.
+The association of one item with one list, including that item's local completion context. There is at most one membership for a given item/list pair. Removing a membership leaves the item intact.
 
 **Completion state**:
 Whether an item is todo or done globally or in a planning context. Lists and itineraries derive their completion from their contextual child items.
@@ -58,10 +58,10 @@ A view of items with no list memberships.
 A view across list memberships, including items that belong to no list.
 
 **Category**:
-A shared user-defined classification, such as food or museum, referenced by items and itineraries. Editing it updates every use.
+A shared user-defined classification, such as food or museum, referenced by items and itineraries. Editing it updates every use. Different categories may have the same name while retaining distinct identities.
 
 **Tag**:
-A shared free-form label, such as rainy-day or ceramics, referenced by items and itineraries. Editing it updates every use.
+A shared free-form label, such as rainy-day or ceramics, referenced by items and itineraries. Editing it updates every use. Different tags may have the same name while retaining distinct identities.
 
 **Link**:
 A URL associated with an item or itinerary, with an optional label and provider description.
