@@ -63,6 +63,15 @@ A shared user-defined classification, such as food or museum, referenced by item
 **Tag**:
 A shared free-form label, such as rainy-day or ceramics, referenced by items and itineraries. Editing it updates every use. Different tags may have the same name while retaining distinct identities.
 
+**Capture**:
+Turning pasted or shared links or independent text into a reviewed draft, then creating an item or reusing an existing one.
+
+**Capture draft**:
+An unsaved, editable proposal to create an item or add references to an existing item. Cancelling it does not change the planner.
+
+**Provider preview**:
+Temporary place information supplied by a Maps provider alongside a captured link. It does not become stored item content.
+
 **Link**:
 A URL associated with an item or itinerary, with an optional label and provider description.
 
