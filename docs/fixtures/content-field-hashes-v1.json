@@ -1,6 +1,6 @@
 {
   "format": "planner-content-field-hash-fixtures-v1",
-  "status": "independently-calculated expectations for proposed Q31, not executed Swift tests",
+  "status": "independently-calculated expectations under Q10/Q27, not executed Swift tests",
   "fixtures": [
     {
       "name": "two-hour estimate",
