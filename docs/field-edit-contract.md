@@ -61,7 +61,7 @@ All length/count conversions are checked. UUID byte order does not depend on hos
 
 A schema field fixes its value type; type tags cannot coerce a string into an integer. Enum cases use their declared stable String values. New canonical layouts require a new hash version; silently changing version 1 is prohibited.
 
-Apply this encoding to the declared content fields and the separate Schedule form guard in the [adapter contract](adapter-contract.md#schedule-form-and-guard). Notes/subtitle are optional String values, title/name are required String values for their respective source kinds, and an estimate is an optional record with `displayUnit` and `minutes`. Label association values include the selected label identities/lifetimes, not their names or display metadata. Owned ordered links include their declared persisted content/identity/logical-order values; transient provider previews and internal scalar ranks are absent. The [complete content catalog](content-and-reader-review.md#complete-content-hash-catalog) fixes nested field names and compound guard granularity under Q10/Q27. On 2026-10-09 the human clarified that Q31 repeats the settled conflict decision. There is no separate Q31 approval gate; final complete-contract review remains, and no compiled source or runtime evidence is claimed.
+Apply this encoding to the declared content fields and the separate Schedule form guard in the [adapter contract](adapter-contract.md#schedule-form-and-guard). Notes/subtitle are optional String values, title/name are required String values for their respective source kinds, and an estimate is an optional record with `displayUnit` and `minutes`. Label association values include the selected label identities/lifetimes, not their names or display metadata. Owned ordered links include their declared persisted content/identity/logical-order values; transient provider previews and internal scalar ranks are absent. The [complete content catalog](content-and-reader-review.md#complete-content-hash-catalog) fixes nested field names and compound guard granularity under Q10/Q27. On 2026-10-09 the human clarified that Q31 repeats the settled conflict decision. There is no separate Q31 approval gate; Q33 A accepts the complete contract on 2026-10-09, and no compiled source or runtime evidence is claimed.
 
 Changing notes cannot invalidate a title hash. Renaming a referenced label cannot invalidate an owner's association hash. Changing local completion, membership placement or another source's content cannot invalidate an Item's content hashes. Commands for completion, archive, organization and schedule actions retain their separately approved scopes and validations.
 
@@ -98,7 +98,7 @@ The JSON example above uses the Original notes vector. A Friday booking current 
 ## Definition of ready
 
 - [x] Q9/Q10/Q27 behavior and A21/A22 Core ownership/result semantics are accepted.
-- [ ] Accept this concrete read/edit/hash declaration as part of the final public contract review, including the [full content catalog](content-and-reader-review.md), [adapter contract](adapter-contract.md) and [portable/native recovery forms](portable-data-contract.md).
+- [x] Q33 A accepts this concrete read/edit/hash declaration as part of the complete contract, including the [full content catalog](content-and-reader-review.md), [adapter contract](adapter-contract.md) and [portable/native recovery forms](portable-data-contract.md).
 - [ ] Agree the prototype's real storage configuration and affected native test/build commands before implementation.
 
 ## Required /tdd and other evidence
@@ -115,6 +115,6 @@ Through approved reads and edits, start with one failing behavior test and its m
 
 ## Definition of done
 
-- [ ] Final public-contract review confirms these declarations and the complete content-field catalog.
+- [x] Q33 A confirms these declarations and the complete content-field catalog.
 - [ ] Future implementation records red/green evidence, real-store reopen results, affected-target build/type checks and applicable lint.
-- [ ] Link implemented evidence from Shared command contracts and its owning prototype. This draft alone neither resolves that decision nor proves runtime behavior.
+- [ ] Link implemented evidence from Shared command contracts and its owning prototype. Accepted declarations resolve the contract decision; implemented evidence must still prove runtime behavior.

@@ -232,7 +232,7 @@ At official SDK 0.12.1, a shared Server rejects a second initialize and retains 
 
 | Settled prerequisite | Current independent follow-up | Held until its prerequisites settle |
 | --- | --- | --- |
-| Q27 chooses changed-field hashes, Q10 fixes partial-edit semantics; Q31 is withdrawn as repeated | Review the completed adapter and portable/native recovery declarations using the concrete content catalog. | One complete final-contract review; unchanged public approval carries forward. No separate conflict-policy round. |
+| Q27 chooses changed-field hashes, Q10 fixes partial-edit semantics; Q31 is withdrawn as repeated; Q33 A accepts the complete packet | Implement the accepted adapter and portable/native recovery forms through the existing facade. | Qualify concrete behavior in the owning prototypes; unchanged public approval carries forward. No separate conflict-policy round. |
 | Q28 accepts the same-app reader; Q20 selects four clients; Q29 selects the official SDK; Q32 A selects authenticated ping | Carry exact reader observations into the prototype gates. | Qualify dependency pin, signing/Keychain/access, repeated initialization, reconnects and isolated concurrent routing. No custom protocol stack or XPC bootstrap is approved. |
 | Q30 C accepts two-client proof without an extra app cap | Define measured native/SDK capacity evidence. | No profile-registration or custom two-call admission fields; a later extra limit needs measured stability justification and an explicit amendment. |
 | Accepted manual Agent Control enablement/menu bar and Core ownership | Preserve enablement until Stop or app quit independently of transport. | Reader storage/access and final schema are concretized under the selected native/client policy. |
@@ -716,19 +716,19 @@ Accepted Q29 A requires supported official-SDK protocol negotiation and authenti
 
 Accepted Q30 C requires two selected clients concurrently, additional callers without a registration refusal, concurrent native access, truthful cancellation/replay and measured memory/latency under increasing load. Two concurrent independent HTTP requests using JSON-RPC ID 7 must each receive their own requested Item exactly once, with no exchanged, overwritten or unresolved response. Also distinguish integer 1 from string "1". Protocol request IDs do not replace the Core operation identity. Use SDK/OS handling and the approved Core writer coordination. Do not add an initial custom client or two-call cap. Record actual saturation behavior and fixture outcomes; measured stability failures can justify a later explicit limit amendment. No unlimited-throughput claim is made.
 
-## Complete contract review packet
+## Accepted complete contract packet
 
 The [adapter contract](adapter-contract.md) and [portable data/native recovery contract](portable-data-contract.md) now declare the remaining request/result/status, full data-only backup and native administration forms. They use the approved facade and accepted Q1-Q30/Q32 behavior; Q31 does not reopen Q27. Exact future inputs are linked from each packet, including 24 adapter cases, 13 import/delete cases, six concrete lineage cases, seven recovery-evidence cases and independent Schedule/payload fingerprint bytes.
 
 Before review, the starting state was accepted behavior with incomplete adapter/portable encodings. After acceptance, those declarations can be used at the existing public seams for prototype /tdd. The initial App Intent catalog keeps permanent source/label Delete in native Planner; this catalog detail is included in this review rather than attributed to a nonexistent blanket human decision. Runtime compilation, stores, migration, physical-device sync/Share and all-four-client qualification remain the prototypes' gates.
 
-The final review asks for acceptance or specific corrections to this linked packet. No hash-policy, timeout, client-capacity or credential-reader choice is reopened. The ticket stays open until that review and publication/readback criteria pass.
+Accepted Contract Q33 A on 2026-10-09. The human approved the complete packet for prototype work. This accepts the concrete declarations and initial integration catalog, with unchanged A21/A22 and Q1-Q30/Q32 behavior carried forward. Runtime compilation, stores, migration, native UI, physical-device sync/Share and real-client qualification remain required prototype evidence. No hash-policy, timeout, client-capacity or credential-reader choice is reopened.
 
 ## Definition of done
 
-- [ ] Human accepts the final command/query schemas, wire validation and integration authority.
-- [ ] Representative complete JSON/typed Swift requests and results include exact UUIDs, error and retained-state expectations.
-- [ ] No adapter duplicates Core rules or obtains forbidden authority through alternate commands.
-- [ ] Accepted grammar/resource/access choices have executable-boundary fields and exact future unit/store/UI/device/client obligations.
-- [ ] Document checks pass; publish/read back committed source and progress/resolution evidence.
+- [x] Human accepts the final command/query schemas, wire validation and integration authority under Q33 A.
+- [x] Representative complete JSON/typed Swift requests and results include exact UUIDs, error and retained-state expectations.
+- [x] No adapter duplicates Core rules or obtains forbidden authority through alternate commands.
+- [x] Accepted grammar/resource/access choices have executable-boundary fields and exact future unit/store/UI/device/client obligations.
+- [x] Document checks pass; publish/read back committed source and progress/resolution evidence.
 - [ ] Close only after this decision's applicable human/evidence criteria pass, then append its named resolution pointer to the map. Runtime checks remain owned by the prototypes.

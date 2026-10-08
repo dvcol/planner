@@ -1,6 +1,6 @@
 # Portable data and native recovery contract
 
-Derivative declaration for the complete [Shared command contracts](https://github.com/dvcol/planner/issues/13) review. Accepted A7/A9/A12-A22 and Q4/Q5/Q11-Q14 govern this format. The [adapter packet](adapter-contract.md), [content catalog](content-and-reader-review.md) and [approved ownership design](architecture-review-packet.md) supply the shared types. Exact field declarations below do not claim that native mirroring, recovery or migration has passed.
+Accepted declaration under Contract Q33 A, 2026-10-09, for [Shared command contracts](https://github.com/dvcol/planner/issues/13). Accepted A7/A9/A12-A22 and Q4/Q5/Q11-Q14 govern this format. The [adapter packet](adapter-contract.md), [content catalog](content-and-reader-review.md) and [approved ownership design](architecture-review-packet.md) supply the shared types. Exact field declarations below do not claim that native mirroring, recovery or migration has passed.
 
 ## Context, starting state and expected end
 
@@ -120,7 +120,7 @@ The prototype must prove consistent ownership/cutoff during native account impor
 
 - [x] Accepted import/recovery/native authority and precise lineage outcomes are preserved.
 - [x] Portable root/record shapes, full fixture, native review/result/error and separate recovery-envelope forms are concrete.
-- [ ] Complete packet receives final human review for newly concrete declarations, with unchanged A21/A22 approval carried forward.
+- [x] Human accepts the complete packet under Q33 A, with unchanged A21/A22 approval carried forward.
 - [ ] Prototype implementation records red/green, compile/lint, real-store/migration, interruption, native UI, physical-device and ownership evidence at the agreed boundaries.
 
 Contract completion is publication and accepted declarations. Prototype completion requires actual execution; source tables and golden files never substitute for those gates.

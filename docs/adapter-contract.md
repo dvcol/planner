@@ -1,6 +1,6 @@
 # Planner adapter contract
 
-Complete derivative declaration for final review of [Shared command contracts](https://github.com/dvcol/planner/issues/13). The [approved facade](architecture-review-packet.md), [accepted policies](shared-command-contracts.md), [content values](content-and-reader-review.md) and [field hashes](field-edit-contract.md) govern this packet. Q31 is withdrawn as repeating Q27; Q32 A uses authenticated SDK ping. This document specifies encodings and observations, not another conflict policy or executed code.
+Accepted declaration for [Shared command contracts](https://github.com/dvcol/planner/issues/13). The [approved facade](architecture-review-packet.md), [accepted policies](shared-command-contracts.md), [content values](content-and-reader-review.md) and [field hashes](field-edit-contract.md) govern this packet. Q31 is withdrawn as repeating Q27; Q32 A uses authenticated SDK ping; Q33 A accepts this complete packet on 2026-10-09. This document specifies encodings and observations, not another conflict policy or executed code.
 
 ## Context, starting state and expected end
 
@@ -229,7 +229,7 @@ The [operation expectations](fixtures/adapter-operation-expectations-v1.json), [
 - [x] Accepted A21/A22 facade and Q1-Q30/Q32 behavior carry forward; Q31 is not reopened.
 - [x] Concrete command/query/read/result/capture/status forms and derivative native counterparts are declared.
 - [x] [Native portable/recovery forms](portable-data-contract.md) and independent whole-backup fixture are linked with this packet; document checks are recorded in its publication comment.
-- [ ] Human reviews the complete contract, with only changed/new declarations needing approval before their tests.
+- [x] Human accepts the complete contract under Q33 A; prior approval carries forward and new changed declarations require review before their tests.
 - [ ] Reconcile requested changes, publish verified source/ticket pointers and close the contract ticket only when its applicable criteria pass.
 
 Runnable configuration, Swift 6 compilation, affected-target lint, unit/store/UI/device/client execution and discovery/executed counts belong to the prototype tickets. Follow `/tdd` one failing independently specified behavior and its minimum implementation at a time; mock actual I/O and do not add production test seams.

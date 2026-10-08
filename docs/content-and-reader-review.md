@@ -6,7 +6,7 @@ Concrete declarations for [Shared command contracts](https://github.com/dvcol/pl
 
 The approved architecture names content families but leaves some nested field types unspecified. An implementation cannot independently test a location, an ordered link edit or a label association hash until those types are fixed. This packet declares the editable content catalog and the compound values used by reads, creation and edits. Completion, archive, organization, scheduling and recovery retain their own commands.
 
-The expected end is a complete public contract using these concrete values and the accepted reader observations. Q31 is withdrawn as a repeated policy question; its catalog is an engineering declaration under Q10/Q27, not a new conflict policy or an invented human approval. Q32 selects the ping candidate for qualification. The [complete adapter packet](adapter-contract.md) and [portable/native recovery declaration](portable-data-contract.md) now supply command/query/review/result encodings and native backup administration forms for one final review. This does not resolve the entire ticket or prove an extension, client or device workflow.
+The expected end is a complete public contract using these concrete values and the accepted reader observations. Q31 is withdrawn as a repeated policy question; its catalog is an engineering declaration under Q10/Q27, not a new conflict policy or an invented human approval. Q32 selects the ping candidate for qualification. The [complete adapter packet](adapter-contract.md) and [portable/native recovery declaration](portable-data-contract.md) now supply command/query/review/result encodings and native backup administration forms accepted under Q33 A on 2026-10-09. This resolves the declarations for the contract decision; it does not prove an extension, client or device workflow.
 
 ## Content catalog under accepted Q10/Q27
 
@@ -141,7 +141,7 @@ Neither process properties nor a successful bearer-authenticated ping proves ven
 - [x] Finish the native reader fact check and specify its observable input/output/storage/lifecycle candidate with unproved runtime limits.
 - [x] Q31's repeated conflict-policy question is removed; Q10/Q27 govern the engineering content catalog and changed-field guards.
 - [x] Human accepts Q32 A, authenticated SDK ping, for the same-app reader.
-- [x] The adapter and native administration request/result declarations are linked using these accepted types; complete human review remains open.
+- [x] The adapter and native administration request/result declarations are linked using these accepted types; complete human review is accepted under Q33 A.
 
 ## Required /tdd and other evidence
 
@@ -163,5 +163,5 @@ These are future obligations. Agree the public declarations first, then write on
 
 - [x] Human clarification preserves Q27's delegated hash decision and accepts Q32 A without another conflict-policy round.
 - [x] Reconcile amendments into the field-edit draft and linked adapter/portable declarations; original domain and authority invariants remain intact.
-- [ ] Link the source, exact independently specified fixtures and applicable validation from Shared command contracts.
-- [ ] Before resolving the full contract ticket, approve its complete request/result/admin forms and assign every runtime obligation to its prototype. This packet alone does not close the ticket or complete the map.
+- [x] Link the source, exact independently specified fixtures and applicable validation from Shared command contracts.
+- [x] Q33 A accepts complete request/result/admin forms; the linked packet assigns runtime obligations to their prototypes. Contract resolution does not complete the map or imply executed runtime proof.
