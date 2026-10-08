@@ -20,13 +20,13 @@ Whether an item is todo or done globally or in a planning context. Lists and iti
 The completion of an item itself. A globally done item appears done in every context; globally reopening it reveals the retained local states.
 
 **Contextual completion**:
-An item's local completion within a list or itinerary, independently of its global completion and other contexts. It starts todo. All appearances of an item within one itinerary share that contextual state; a source list's local completion does not determine it.
+An item appearance's local completion within a list or itinerary, independently of its global completion and other appearances. It starts todo. Repeated itinerary appearances have separate local states; a source list's local completion does not determine them.
 
 **Effective completion**:
 The completion shown for an item within a list or itinerary. It is done when the item is globally done or locally done in that context.
 
 **Progress**:
-The number of effectively done items out of the unique items currently reachable in a list or itinerary. Repeated appearances count once. An empty container has no completion percentage and is not completed.
+A measure of a list or itinerary's effective child completion. A nonempty container is completed only when every child appearance is effectively done. An empty container has no completion percentage and is not completed.
 
 **Todo**:
 An unfinished item or contextual item reference. A list or itinerary is unfinished when its contextual children do not make it completed.
@@ -82,7 +82,7 @@ Optional place information associated with an item or itinerary, such as a name,
 A named, ordered plan with live references to existing items and lists. It has its own metadata and archive state, with completion derived from its contextual children.
 
 **Itinerary entry**:
-An ordered live reference within an itinerary to an existing item or list. Completion is interpreted within that itinerary's context.
+An ordered live reference within an itinerary to an existing item or list. Multiple entries may reference one source. An item entry has its own local completion; a list entry derives completion from its child appearances in that entry.
 
 **Schedule entry**:
 One planning date or time assignment referencing an existing item or itinerary in Planner's calendar. Several entries can reference the same source.
@@ -94,7 +94,7 @@ A schedule entry assigned to one date or an inclusive date range without clock t
 A schedule entry with a start date and time, and an optional end that must be a later instant when supplied.
 
 **Planning timezone**:
-The timezone associated with a timed schedule's intended date and clock time. It stays associated with the schedule when the device changes timezone.
+The timezone associated with a timed schedule's date and clock time. It stays associated with the schedule when the device changes timezone. Changing only this zone preserves the appointment's actual instants.
 
 **Display timezone**:
 The timezone used to show timed entries on Planner's calendar. Changing it does not reschedule entries or change all-day dates.
