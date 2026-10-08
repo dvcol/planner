@@ -17,3 +17,5 @@ The agreed stack is Swift, SwiftUI, SwiftData with private CloudKit sync, and na
 The accepted [Build workflow](https://github.com/dvcol/planner/issues/18) uses a committed native Xcode project and Swift Package Manager. Runnable projects and build/test commands will be introduced with the prototypes; this checkout currently contains planning documents.
 
 Open decisions are native child issues of the map, with native blocking dependencies. Start with the first unblocked, unassigned child, or the decision named by the user.
+
+Planner's own calendar, private iCloud synchronization and JSON portability are included. [Apple Calendar export](docs/itineraries-and-scheduling.md#accepted-export-scope-scheduling-q7) is deferred outside the current V0-V3 map.

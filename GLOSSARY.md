@@ -88,10 +88,10 @@ An ordered live reference within an itinerary to an existing item or list. Compl
 One planning date or time assignment referencing an existing item or itinerary in Planner's calendar. Several entries can reference the same source.
 
 **All-day schedule**:
-A schedule entry assigned to a date or date range without clock times.
+A schedule entry assigned to one date or an inclusive date range without clock times. Its dates stay unchanged across travel.
 
 **Timed schedule**:
-A schedule entry with a start date and time, and an optional end.
+A schedule entry with a start date and time, and an optional end that must be a later instant when supplied.
 
 **Duration estimate**:
 An optional estimate of the time an activity takes. It can be compared with other estimates without scheduling the activity.

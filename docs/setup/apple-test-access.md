@@ -64,4 +64,6 @@ Device listings may contain personal device names and identifiers. Record only t
 - The macOS 27 host prerequisite is now satisfied. Complete native Mac signing and launch checks once the disposable project and selected team are available.
 - Agree the test iCloud account arrangement and test-only container/App Group identifiers before changing account or capability configuration.
 
-After those inputs, complete the task's signed app, private-container, extension, EventKit, and Shortcuts checks. Agree any disposable public code-test interfaces before using `/tdd`. Keep the ticket open until its required checks actually pass. Prototype ownership and cross-device reliability remain with the corresponding prototype tickets.
+After those inputs, complete the task's signed app, private-container, extension and Shortcuts checks. Agree any disposable public code-test interfaces before using `/tdd`. Keep the ticket open until its required checks actually pass. Prototype ownership and cross-device reliability remain with the corresponding prototype tickets.
+
+Apple Calendar/EventKit export and its permission/access checks are deferred outside the current map under [accepted Scheduling Q7](../itineraries-and-scheduling.md#accepted-export-scope-scheduling-q7). Signed app/extension and physical CloudKit checks remain required; the selected team, pairing and private-account/container setup are still unverified.
