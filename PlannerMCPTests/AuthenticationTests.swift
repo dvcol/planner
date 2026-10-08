@@ -9,7 +9,8 @@ struct AuthenticationTests {
   @Test
   func missingAuthorizationRejectsPingWithoutAccessWindowHeader() async {
     let handler = PlannerMCPRequestHandler(
-      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      accessWindowIdentifier: UUID(uuidString: "00000000-0000-4000-8000-000000000701")!
     )
     let request = HTTPRequest(
       method: "POST",
@@ -32,7 +33,8 @@ struct AuthenticationTests {
   @Test
   func incorrectCredentialRejectsPingWithoutAccessWindowHeader() async {
     let handler = PlannerMCPRequestHandler(
-      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      accessWindowIdentifier: UUID(uuidString: "00000000-0000-4000-8000-000000000701")!
     )
     let request = HTTPRequest(
       method: "POST",
