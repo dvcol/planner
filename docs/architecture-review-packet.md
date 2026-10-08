@@ -1,18 +1,18 @@
 # Architecture review packet
 
-Proposed final boundary for [Core architecture](https://github.com/dvcol/planner/issues/12), using accepted A1-A20. Review this packet with the [blueprint](architecture-blueprint.md), [decision record](core-architecture.md) and linked behavior fixtures. No declaration, schema or runtime mechanism below has been implemented or approved yet.
+Approved architecture boundary for [Core architecture](https://github.com/dvcol/planner/issues/12). The human accepted A1-A20 and explicitly approved A21/A22 on 2026-10-08. Read this packet with the [blueprint](architecture-blueprint.md), [decision record](core-architecture.md) and linked behavior fixtures. The public field/method shapes, native schema/reference/value design and recovery candidate are approved for feasibility prototypes. They have not been compiled or demonstrated at runtime.
 
 ## Context, starting state and expected end
 
 Planner currently has planning documents and verified platform facts, without a runnable project. The product outcomes are accepted. This packet names concrete public inputs/outputs, reference ownership, native value validation and prototype responsibilities so implementation does not invent another completion or recovery model.
 
-Approval settles this architecture for feasibility prototypes. It does not establish runtime success. [Shared command contracts](https://github.com/dvcol/planner/issues/13) still owns exact transport forms, permissions, capture decoding/network limits and versioned JSON grammar. Native project commands and signing inputs are in the blueprint; runnable configuration arrives with code-producing prototypes.
+The approval settles this architecture for feasibility prototypes. It does not establish runtime success. [Shared command contracts](https://github.com/dvcol/planner/issues/13) still owns exact transport forms, permissions, capture decoding/network limits and versioned JSON grammar. Native project commands and signing inputs are in the blueprint; runnable configuration arrives with code-producing prototypes.
 
 ## One shared implementation
 
 Use one `PlannerCore` library and one public `Planner` facade. Its command/query/portability/recovery methods share the same implementation owner. Keep SwiftData models and contexts private. Native adapters exchange immutable Sendable values and Planner-owned UUIDs; they cannot mutate a model or save through SwiftUI autosave. No generic repository per entity, test-only dependency parameter or independent business-rule implementation is required.
 
-Proposed project paths are `Planner.xcodeproj`, `Packages/PlannerCore/Package.swift`, `Planner/`, `PlannerShareMobile/`, `PlannerShareMac/` and `PlannerUITests/`. Core source and test folders belong to the package. Shared schemes are `Planner`, `PlannerShareMobile`, `PlannerShareMac` and `PlannerCore`. The app embeds only its platform's Share product. Configuration explicitly supplies App Group, CloudKit container/environment and signing values from Apple test access; no identifiers are invented.
+Approved project paths are `Planner.xcodeproj`, `Packages/PlannerCore/Package.swift`, `Planner/`, `PlannerShareMobile/`, `PlannerShareMac/` and `PlannerUITests/`. Core source and test folders belong to the package. Shared schemes are `Planner`, `PlannerShareMobile`, `PlannerShareMac` and `PlannerCore`. The app embeds only its platform's Share product. Configuration explicitly supplies App Group, CloudKit container/environment and signing values from Apple test access; no identifiers are invented.
 
 A command owner exists per process. It uses an isolated ModelContext with autosave disabled and a cross-process gate for participating app/Share writers. Actor isolation alone is insufficient. Native observation triggers canonical Core queries; adapters only present the returned meanings.
 
@@ -20,7 +20,7 @@ Use native UserDefaults for device presentation preferences. Sort keys include d
 
 ## Public values and request fields
 
-These named values are concrete enum/struct proposals. Their transport encoding is downstream work, not an untyped dictionary in Core.
+These named values are the approved concrete enum/struct shapes. Their transport encoding is downstream work, not an untyped dictionary in Core.
 
 | Value | Required fields and cases |
 | --- | --- |
@@ -39,7 +39,7 @@ A rejected changed-payload replay describes this attempt only. It does not rewri
 
 ## Facade method shapes
 
-Methods are asynchronous across the public actor boundary. Expected command failures return structured outcomes; observation/read failures remain distinguishable from an empty result. These shapes are review declarations, not compiled Swift source.
+Methods are asynchronous across the public actor boundary. Expected command failures return structured outcomes; observation/read failures remain distinguishable from an empty result. These shapes were approved in A21; they are not compiled Swift source.
 
 | Method | Input | Output and responsibility |
 | --- | --- | --- |
@@ -87,7 +87,7 @@ Snapshot row requests specify generation and range. Native batching/lazy row rea
 | Original bookmark | Preserve supplied String; parsed request URL is separate. Exact permitted input/redirect schemes, provider hosts, size/hop/time budgets and malformed transport behavior are contract decisions. No fetch of ordinary page content. |
 | Text/IDs | Preserve user text and Planner UUIDs; use accepted fixed-locale native comparison. No arbitrary character or planner-count cap is added. 5,000 Items/200 Lists is an acceptance dataset, not a storage limit. |
 
-Native validation facts are grounded in Apple's [coordinate validity API](https://developer.apple.com/documentation/corelocation/cllocationcoordinate2disvalid(_:)) and [Calendar matching policies](https://developer.apple.com/documentation/foundation/calendar/dates(byMatching:startingAt:in:matchingPolicy:repeatedTimePolicy:direction:)). Full-component round-trip validation is the proposed application rule that preserves the accepted gap/repeat outcomes; it is not a claim that native strict searching alone enforces them.
+Native validation facts are grounded in Apple's [coordinate validity API](https://developer.apple.com/documentation/corelocation/cllocationcoordinate2disvalid(_:)) and [Calendar matching policies](https://developer.apple.com/documentation/foundation/calendar/dates(byMatching:startingAt:in:matchingPolicy:repeatedTimePolicy:direction:)). Full-component round-trip validation is the approved application rule that preserves the accepted gap/repeat outcomes; it is not a claim that native strict searching alone enforces them.
 
 Contracts must define exact large-integer/date/coordinate encoding without precision loss, field/version grammar and bounded input/network loading. Navigation defines practical native picker interactions. These assignments are gates, not permission to leave validation implicit in code.
 
@@ -95,7 +95,7 @@ Contracts must define exact large-integer/date/coordinate encoding without preci
 
 Use VersionedSchema from the first persisted version. Source defaults are empty optional metadata, false completion/archive and explicit initialization of IDs/timestamps by validated creation. Cloud-compatible storage fields have defaults or are optional. Partial cloud records are not new authorized entities; domain validation requires their identities/bindings before actions or complete logical export. An unresolved local graph produces a typed export failure instead of a silently shortened full backup.
 
-The blueprint's source, membership, entry, Schedule, label/link, deletion and receipt records remain the base. Explicit UUID/lifetime bindings govern logical identity. Proposed native traversal relationships are optional with the named inverses below, nullify deletion rules and no `.deny`/unique/ordered constraints. Inverse collections default nil and remain unordered; scalar ranks define order. Commands explicitly remove owned associations without cascading into shared sources. Relationship delivery is non-atomic, so a temporarily missing relationship never authorizes recreation or deletion.
+The blueprint's source, membership, entry, Schedule, label/link, deletion and receipt records remain the base. Explicit UUID/lifetime bindings govern logical identity. Approved native traversal relationships are optional with the named inverses below, nullify deletion rules and no `.deny`/unique/ordered constraints. Inverse collections default nil and remain unordered; scalar ranks define order. Commands explicitly remove owned associations without cascading into shared sources. Relationship delivery is non-atomic, so a temporarily missing relationship never authorizes recreation or deletion.
 
 | Record | Storage fields/defaults and optional relationship inverses |
 | --- | --- |
@@ -138,8 +138,8 @@ The gate coordinates participating Planner writers, not Apple's account/reset/mi
 ## Definition of ready and required /tdd evidence
 
 - [x] Accepted A1-A20 supply the product outcomes; named architecture blockers are closed.
-- [ ] Human approves this concrete public/schema/ownership packet before code tests.
-- [ ] Each prototype confirms its exact slice of declarations and fixture inputs; contracts supply applicable transport/loader/network limits.
+- [x] Human explicitly approved the public boundary and schema/ownership packet through A21/A22 before code tests.
+- [ ] Each prototype compiles its slice of the approved declarations and uses exact fixture inputs; contracts supply applicable transport/loader/network limits. Unchanged public approval carries forward; only changed boundaries require renewed review.
 - [ ] Signed CloudKit/Share work has its Apple test-access prerequisites; local UI/domain work can use disposable native stores.
 
 | Boundary and level | Required independent expected outcome |
@@ -158,9 +158,10 @@ Use /tdd one independently specified failing behavior and its minimum passing im
 
 ## Definition of done for this review
 
-- [ ] Human accepts the concrete packet, including public scopes/outcomes and the narrow reconciliation candidate.
-- [ ] Architecture resolution links this packet, accepted decision record, blueprint/build commands and exact downstream evidence owners.
-- [ ] Original ticket context remains intact; any failed feasibility gate reopens the relevant design with evidence.
-- [ ] Publish and verify the resolution, then close Core architecture and append its named pointer to the map.
+- [x] Human accepted the concrete packet, public scopes/outcomes and narrow reconciliation candidate through A21/A22.
+- [x] Architecture record links this packet, accepted decision record, blueprint/build commands and exact downstream evidence owners.
+- [x] Original ticket context remains intact; failed feasibility gates reopen the relevant design with evidence.
 
-Review A21 concerns the facade, requests/results, query/window and review/cancellation boundaries. Review A22 concerns native types, versioned schema/reference/provenance, process ownership and recovery sequence. Both remain pending until the human answers. Documentation lint, local links/newlines, whitespace and publication readback are the applicable checks now; no runtime result or Swift compilation is claimed.
+Tracker completion publishes/verifies the resolution, closes Core architecture and appends its named pointer to the map. Its completion evidence lives on the canonical ticket and map rather than being confused with completed runtime tests here.
+
+A21 approved the facade/request/result/query/window and review/cancellation boundary. A22 approved native values, versioned references/provenance, process ownership and the recovery candidate. Documentation lint, local links/newlines, whitespace and publication readback are the applicable checks for this decision; runtime results and declaration compilation remain prototype work.

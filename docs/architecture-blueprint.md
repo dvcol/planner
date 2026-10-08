@@ -1,14 +1,14 @@
-# Architecture blueprint draft
+# Architecture blueprint
 
-Review asset for [Core architecture](https://github.com/dvcol/planner/issues/12). The [decision record](core-architecture.md) records accepted A1-A20. This file proposes concrete implementation ownership, records, public test boundaries and native project commands. It is not approved Swift signatures, a runnable project or runtime evidence.
+Approved blueprint for [Core architecture](https://github.com/dvcol/planner/issues/12), under accepted A1-A22 on 2026-10-08. The [decision record](core-architecture.md) records the human answers. This file fixes implementation ownership, native paths/schemes, records, public boundaries and focused commands for feasibility prototypes. It is not a runnable project or runtime evidence.
 
 ## Context, starting state and review goal
 
-The source tree contains planning documents. There is no Xcode project, package, app or extension to build. The accepted topology is one multiplatform SwiftUI app, one PlannerCore package, separate mobile/Mac Share extensions, managed private CloudKit mirroring and independent account-scoped recovery. Confirm this packet's concrete public boundaries, then use /tdd for the code-producing prototypes. [Shared command contracts](https://github.com/dvcol/planner/issues/13) owns final transport shapes and permissions.
+The source tree contains planning documents. There is no Xcode project, package, app or extension to build. The accepted topology is one multiplatform SwiftUI app, one PlannerCore package, separate mobile/Mac Share extensions, managed private CloudKit mirroring and independent account-scoped recovery. A21/A22 approve the packet's concrete public boundary and schema/ownership candidate. Use /tdd for the code-producing prototypes; approval carries forward for unchanged boundaries. [Shared command contracts](https://github.com/dvcol/planner/issues/13) owns final transport shapes and permissions.
 
 ## Project and ownership
 
-| Artifact or responsibility | Proposed owner |
+| Artifact or responsibility | Approved owner |
 | --- | --- |
 | `Planner.xcodeproj`, shared `Planner` scheme | Multiplatform `Planner` app; native platform scenes/navigation/menus, resources and conditional extension embedding. |
 | `Packages/PlannerCore/Package.swift`, `PlannerCore` library | Domain rules, commands, canonical queries, SwiftData storage, recovery and versioned portability. Use source folders for those responsibilities; no repository layer per entity. |
@@ -20,9 +20,28 @@ The source tree contains planning documents. There is no Xcode project, package,
 
 One command owner per process uses an isolated context with autosave explicitly disabled. Native views hold draft values, not unrestricted mutable persistent models. Return Sendable values and Planner-owned IDs across actor boundaries. The same implementation can supply command and query roles; the public split is responsibility, not a requirement for extra packages or contexts. Observation publishes on the main actor and calls canonical Core queries rather than reimplementing completion/search in each adapter.
 
-## Candidate versioned records
+The following filenames complete the native build documentation within the approved layout. They are planned files; the code-producing prototypes must create and verify them with their source.
 
-Start a VersionedSchema at the first persisted schema. Cloud-backed attributes need supported defaults; relationships must be optional with appropriate inverses, without unique constraints, deny deletion or ordered relationships. Persist explicit logical IDs, source lifetimes and scalar ranks. These are implementation candidates requiring the final public review and real-store/CloudKit proof.
+| Planned path | Purpose and membership |
+| --- | --- |
+| `Planner/PlannerApp.swift`, `Planner/Scenes/` | App entry and platform-native scenes; the multiplatform Planner target owns these files. |
+| `Packages/PlannerCore/Sources/PlannerCore/` | Shared domain, commands, queries, persistence, portability and recovery folders, all in one library target. |
+| `Packages/PlannerCore/Sources/PlannerCore/Persistence/PlannerSchemaV1.swift`, `PlannerSchemaMigrationPlan.swift` | Versioned models and main-app migration plan; app and extensions use the same compiled Core schema. |
+| `Packages/PlannerCore/Tests/PlannerCoreTests/`, `PlannerCoreStoreTests/` | Swift Testing unit and real-store integration targets. `CompletionTests` is a selected unit suite; the store target is selected separately by the documented xcodebuild command. |
+| `PlannerUITests/` | XCUITest target for selected phone, tablet and native Mac journeys, with platform-appropriate fixtures. |
+| `Configuration/Base.xcconfig`, `Planner.xcconfig`, `PlannerShareMobile.xcconfig`, `PlannerShareMac.xcconfig` | Shared/native target settings, OS 27 minimums, platform membership and conditional embedding. Settings do not rely on personal Xcode state. |
+| `Configuration/Local.example.xcconfig`, local ignored `Local.xcconfig` | Document actual deployment/signing inputs separately from committed source. Apple test access supplies team, bundle identifiers, App Group, CloudKit container and environment; no value is assumed provisioned. |
+| `Planner/PlannerMobile.entitlements`, `Planner/PlannerMac.entitlements` | Platform-appropriate app capabilities selected conditionally by native configuration. Generate the ordinary app Info.plist through Xcode settings. |
+| `PlannerShareMobile/Info.plist`, `PlannerShareMobile.entitlements`, `ShareViewController.swift` | Mobile Share product configuration, applicable shared capabilities and native controller. Activation/loader details inherit the capture contracts. |
+| `PlannerShareMac/Info.plist`, `PlannerShareMac.entitlements`, `ShareViewController.swift` | Native Mac Share product configuration/capabilities/controller; never embed the mobile product into Mac. |
+| `Planner.xcodeproj/xcshareddata/xcschemes/` | Committed Planner, PlannerCore and both Share schemes, with explicit build/test actions and appropriate embedded products. |
+| `Planner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved`, `Packages/PlannerCore/Package.resolved` | Commit applicable resolution files when external dependencies are introduced; verify package and Xcode resolution agree. None exists or is required merely for this documentation. |
+
+Navigation prototype commits the runnable local app/Core/test setup. Sync and share prototype completes extension embedding, signed capabilities, shared-store lifecycle and CloudKit device proof using Apple test access. MCP session prototype adds and verifies its authorized macOS adapter against the same facade. These ownership assignments do not promise any build command has already passed.
+
+## Approved versioned-record design
+
+Start a VersionedSchema at the first persisted schema. Cloud-backed attributes need supported defaults; relationships must be optional with appropriate inverses, without unique constraints, deny deletion or ordered relationships. Persist explicit logical IDs, source lifetimes and scalar ranks. A22 approves this implementation candidate; real-store/CloudKit proof remains required.
 
 | Record | Fields and ownership to specify |
 | --- | --- |
@@ -42,15 +61,15 @@ One stable public identity can acquire a new authorized lifetime after restorati
 
 Use gapped signed integer ranks with immutable association/entry UUID ties. Concurrent independent insertions can share rank and still retain every member once. Rebalancing changes ranks, not membership arrays or source content. Duplicate standalone memberships and duplicate physical completion records need deterministic identity reconciliation; A17 supplies their local-completion outcome. Never deduplicate intentional repeated itinerary entries. Same-record native conflict winning does not itself reconcile two physical records that share a Planner ID.
 
-Date values remain native: fixed timed instants use Date, planning zones use identifiers and all-day spans use civil year/month/day components. Estimates use optional positive Int64 whole minutes and checked fixed-unit arithmetic; retained unit controls display without Calendar month/year arithmetic. Exact representability/input bounds and supported transport encoding must appear in the final packet; native picker interaction remains Navigation prototype work.
+Date values remain native: fixed timed instants use Date, planning zones use identifiers and all-day spans use civil year/month/day components. Estimates use optional positive Int64 whole minutes and checked fixed-unit arithmetic; retained unit controls display without Calendar month/year arithmetic. The packet supplies native representability validation; contracts supply exact transport encoding/budgets; native picker interaction remains Navigation prototype work.
 
-The [concrete architecture review packet](architecture-review-packet.md) supplies the proposed public fields/methods, native validation, reconciliation provenance, checkpoint sequence and evidence matrix. It remains subject to human review.
+The [approved architecture packet](architecture-review-packet.md) supplies concrete public fields/methods, native validation, reconciliation provenance, checkpoint sequence and evidence matrix under A21/A22.
 
-## Proposed public service outlines
+## Approved public service outlines
 
-The following roles are responsibilities of the review packet's one Planner facade, not four required service instances. This is an outline, not compiled code or final protocol declarations. Confirm exact request/result fields and operation cases before writing tests.
+The following roles belong to the packet's one approved Planner facade, not four required service instances. A21 approves the public field/method shapes; declaration compilation and runtime implementation belong to /tdd prototypes.
 
-| Role | Proposed public calls and observable values |
+| Role | Approved public calls and observable values |
 | --- | --- |
 | Commands | Execute a mutation request carrying operation identity, dataset identity and typed command. Provide preview/approval for actions that already require confirmation. Query the status of the same operation; retry its recovery checkpoint without replaying its mutation. |
 | Queries | Query Items in global/List scope; query itinerary entries and expanded appearances; fetch a selected source/appearance independently of its current filter; return effective completion and full-scope progress. Matching/sort uses native Foundation APIs. |
@@ -59,7 +78,7 @@ The following roles are responsibilities of the review packet's one Planner faca
 
 Mutation cases include create/edit Item and container metadata, global Item Complete/Reopen, local appearance Complete/Reopen, confirmed full-context bulk completion, Archive/Unarchive, confirmed Delete, label editing/deletion, add/remove/move membership, ordered itinerary addition/reorder/removal, manual Schedule changes, reviewed capture create/reuse and approved import. A source Item ID and an appearance identity are different inputs. Native containers cannot call global completion as a fallback for a missing appearance.
 
-An appearance identity denotes a standalone membership, direct itinerary entry or the pair of List-entry/membership identities. Result rows identify source and appearance separately. Query results carry an immutable generation UUID and complete ordered lightweight identity sequence; native batched fetching and lazy realization avoid retaining full detail content for every row. The UI cancels obsolete work and publishes only the current generation. A synchronous fetch may still finish after cancellation, so discarding stale output is required. The final packet must spell out all status/data fields using accepted A1-A20.
+An appearance identity denotes a standalone membership, direct itinerary entry or the pair of List-entry/membership identities. Result rows identify source and appearance separately. Query results carry an immutable generation UUID and complete ordered lightweight identity sequence; native batched fetching and lazy realization avoid retaining full detail content for every row. The UI cancels obsolete work and publishes only the current generation. A synchronous fetch may still finish after cancellation, so discarding stale output is required. The approved packet spells out public status/data fields using accepted A1-A22.
 
 Known operation outcomes are unapplied failure, complete commit with recovery incomplete and independently recoverable success. Approval-required, stale-target/account, invalid input and unsupported schema errors do not mutate. Precommit cancellation changes nothing; postcommit cancellation resolves the operation and cannot mean rollback. Accepted A19 reports prepared-only lost-evidence outcomes as unverified. A18 blocks further Planner mutations in the affected dataset until known incomplete recovery succeeds, preserving reads/search/export. Neither case implies a CloudKit delivery pause. Surface authorization remains separate from domain behavior and must apply to import-triggered deletions as well as direct Delete.
 
@@ -94,7 +113,7 @@ The observed simulators are iPhone 18 Pro and iPad Pro 13-inch M5 on iOS 27. Rev
 
 The installed native formatter supports `env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift format lint --strict` followed by explicit affected Swift file paths. Its help was checked; source lint has not run. Use `--recursive` only for an affected source directory, and retain invalid-syntax diagnostics. No placeholder source path is an executable check for this document.
 
-## Required evidence and review gate
+## Required prototype evidence
 
 | Boundary | Independent expectation and level |
 | --- | --- |
@@ -105,4 +124,4 @@ The installed native formatter supports `env DEVELOPER_DIR=/Applications/Xcode.a
 | Query/store/UI performance | Complete 5,000-Item/200-List matching beyond the first window, exact sort/identity sequence, no omitted/duplicate rows, current results within 300 ms, discarded stale generations, valid filtered-out selection and measured platform scrolling/memory. |
 | Adapter/UI equivalence | Allowed SwiftUI/Share/Intents/MCP operations share Core IDs/state/outcomes, while surface permissions can differ. Full-context bulk actions ignore filters and never become global completion. Native layout/accessibility and device presentation are reviewed in their prototype. |
 
-Before /tdd, confirm the concrete public request/result/preview/status packet, schema and numeric/input bounds. Then each code-producing prototype commits runnable configuration, works one failing behavior and its minimum passing implementation, and records actual focused build/lint/test counts/result artifacts. This draft does not pass any of those gates.
+A21/A22 already approve the Core public boundary, schema/ownership candidate and native value validation. Contracts supplies exact transport/loader/network budgets. Each code-producing prototype commits runnable configuration, works one independently specified failing behavior and its minimum passing implementation, and records focused build/lint/test counts/result artifacts. These runtime gates have not yet passed; unchanged approval is not requested again.
