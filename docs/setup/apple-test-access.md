@@ -1,6 +1,6 @@
 # Apple test access
 
-Partial setup evidence for [Apple test access](https://github.com/dvcol/planner/issues/7), refreshed on 2026-10-08. This records toolchain and destination inventory. It does not prove a signed app launch, CloudKit access, extension execution, or planner correctness.
+Partial setup evidence for [Apple test access](https://github.com/dvcol/planner/issues/7), refreshed on 2026-10-09 for Navigation prototype readiness. The read-only refresh matches the 2026-10-08 inventory below. This records toolchain and destination inventory. It does not prove a signed app launch, CloudKit access, extension execution, or planner correctness.
 
 ## Observed environment
 

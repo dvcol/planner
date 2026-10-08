@@ -230,6 +230,6 @@ The [operation expectations](fixtures/adapter-operation-expectations-v1.json), [
 - [x] Concrete command/query/read/result/capture/status forms and derivative native counterparts are declared.
 - [x] [Native portable/recovery forms](portable-data-contract.md) and independent whole-backup fixture are linked with this packet; document checks are recorded in its publication comment.
 - [x] Human accepts the complete contract under Q33 A; prior approval carries forward and new changed declarations require review before their tests.
-- [ ] Reconcile requested changes, publish verified source/ticket pointers and close the contract ticket only when its applicable criteria pass.
+- [x] Reconcile requested changes, publish verified source/ticket pointers and close the contract ticket only when its applicable criteria pass.
 
 Runnable configuration, Swift 6 compilation, affected-target lint, unit/store/UI/device/client execution and discovery/executed counts belong to the prototype tickets. Follow `/tdd` one failing independently specified behavior and its minimum implementation at a time; mock actual I/O and do not add production test seams.

@@ -2,7 +2,7 @@
 
 Accepted inputs for [Duration and search](https://github.com/dvcol/planner/issues/8), finalized on 2026-10-08 after [Planner vocabulary](planner-vocabulary.md) was accepted. These are fictional local fixtures, not captured provider data or passing application tests. [Duration and search](duration-and-search.md) records the human's confirmed query, sort and duration choices and assigns downstream implementation work.
 
-There is no application or approved public code-test interface yet. Duration normalization, matching, filter composition, section defaults, sorting and measurable responsiveness are accepted. Core architecture and Shared command contracts confirm the public interfaces before later `/tdd` tests, one failing behavior and its minimum passing implementation at a time.
+There is no application yet. A21/A22 and accepted Q33 now establish the Core/adapter public interfaces; Navigation prototype must confirm its new UI test journeys before their tests. Duration normalization, matching, filter composition, section defaults, sorting and measurable responsiveness are accepted. Core architecture and Shared command contracts confirm the public interfaces before later `/tdd` tests, one failing behavior and its minimum passing implementation at a time.
 
 ## Initial dataset
 

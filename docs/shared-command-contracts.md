@@ -724,6 +724,8 @@ Before review, the starting state was accepted behavior with incomplete adapter/
 
 Accepted Contract Q33 A on 2026-10-09. The human approved the complete packet for prototype work. This accepts the concrete declarations and initial integration catalog, with unchanged A21/A22 and Q1-Q30/Q32 behavior carried forward. Runtime compilation, stores, migration, native UI, physical-device sync/Share and real-client qualification remain required prototype evidence. No hash-policy, timeout, client-capacity or credential-reader choice is reopened.
 
+[Published contract resolution](https://github.com/dvcol/planner/issues/13#issuecomment-6070841289) records acceptance and delegates executed proof to the owning prototypes.
+
 ## Definition of done
 
 - [x] Human accepts the final command/query schemas, wire validation and integration authority under Q33 A.
@@ -731,4 +733,4 @@ Accepted Contract Q33 A on 2026-10-09. The human approved the complete packet fo
 - [x] No adapter duplicates Core rules or obtains forbidden authority through alternate commands.
 - [x] Accepted grammar/resource/access choices have executable-boundary fields and exact future unit/store/UI/device/client obligations.
 - [x] Document checks pass; publish/read back committed source and progress/resolution evidence.
-- [ ] Close only after this decision's applicable human/evidence criteria pass, then append its named resolution pointer to the map. Runtime checks remain owned by the prototypes.
+- [x] Close only after this decision's applicable human/evidence criteria pass, then append its named resolution pointer to the map. Runtime checks remain owned by the prototypes.

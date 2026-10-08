@@ -1,0 +1,234 @@
+{
+  "format": "planner-navigation-fixture-catalog",
+  "formatVersion": 1,
+  "status": "Proposed public UI fixture inputs/expected transitions, not executable or approved UI tests",
+  "fullGraph": "portable-backup-v1.json",
+  "search": {
+    "source": "../search-fixtures.md",
+    "items": [
+      {
+        "fixture": "A",
+        "itemId": "00000000-0000-4000-8000-000000001101",
+        "title": "Ramen lunch"
+      },
+      {
+        "fixture": "B",
+        "itemId": "00000000-0000-4000-8000-000000001102",
+        "title": "Rooftop brunch"
+      },
+      {
+        "fixture": "C",
+        "itemId": "00000000-0000-4000-8000-000000001103",
+        "title": "Café tasting"
+      },
+      {
+        "fixture": "D",
+        "itemId": "00000000-0000-4000-8000-000000001104",
+        "title": "Dinner reservation"
+      },
+      {
+        "fixture": "E",
+        "itemId": "00000000-0000-4000-8000-000000001105",
+        "title": "Unestimated lunch"
+      },
+      {
+        "fixture": "F",
+        "itemId": "00000000-0000-4000-8000-000000001106",
+        "title": "Nezu Museum"
+      },
+      {
+        "fixture": "G",
+        "itemId": "00000000-0000-4000-8000-000000001107",
+        "title": "Finished café"
+      },
+      {
+        "fixture": "H",
+        "itemId": "00000000-0000-4000-8000-000000001108",
+        "title": "Archived shop"
+      },
+      {
+        "fixture": "I",
+        "itemId": "00000000-0000-4000-8000-000000001109",
+        "title": "Finished archived dinner"
+      }
+    ],
+    "lists": {
+      "Tokyo Food": "00000000-0000-4000-8000-000000001201",
+      "Wishlist": "00000000-0000-4000-8000-000000001202",
+      "Weekend": "00000000-0000-4000-8000-000000001203",
+      "Tokyo Shopping": "00000000-0000-4000-8000-000000001204"
+    },
+    "categories": {
+      "Food": "00000000-0000-4000-8000-000000001501",
+      "Museum": "00000000-0000-4000-8000-000000001502",
+      "Shopping": "00000000-0000-4000-8000-000000001503"
+    },
+    "tags": {
+      "rainy-day": "00000000-0000-4000-8000-000000001601",
+      "outdoor": "00000000-0000-4000-8000-000000001602",
+      "reservation-required": "00000000-0000-4000-8000-000000001603",
+      "ceramics": "00000000-0000-4000-8000-000000001604"
+    },
+    "contextInitialDone": false,
+    "globalItemCount": "9",
+    "ordinaryGlobalFixtures": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F"
+    ],
+    "ordinaryCafeFixtures": [
+      "C"
+    ],
+    "anyStateCafeFixtures": [
+      "C",
+      "G"
+    ],
+    "manualTokyoFood": [
+      "D",
+      "G",
+      "A",
+      "C",
+      "B"
+    ],
+    "ordinaryManualTokyoFood": [
+      "D",
+      "A",
+      "C",
+      "B"
+    ]
+  },
+  "repeatStops": {
+    "baseline": "portable-backup-v1.json",
+    "sourceTitleOverrides": {
+      "00000000-0000-4000-8000-000000000101": "Hotel",
+      "00000000-0000-4000-8000-000000000102": "Museum"
+    },
+    "replaceItineraryEntries": [
+      {
+        "entryId": "00000000-0000-4000-8000-000000000451",
+        "itemId": "00000000-0000-4000-8000-000000000101",
+        "rank": "1024",
+        "localDone": false
+      },
+      {
+        "entryId": "00000000-0000-4000-8000-000000000454",
+        "itemId": "00000000-0000-4000-8000-000000000102",
+        "rank": "2048",
+        "localDone": false
+      },
+      {
+        "entryId": "00000000-0000-4000-8000-000000000453",
+        "itemId": "00000000-0000-4000-8000-000000000101",
+        "rank": "3072",
+        "localDone": false
+      }
+    ],
+    "replaceExpandedCompletions": [],
+    "globalDone": false,
+    "initialProgress": [
+      "0",
+      "3"
+    ],
+    "firstHotelDone": [
+      "1",
+      "3"
+    ],
+    "bothHotelDone": [
+      "2",
+      "3"
+    ]
+  },
+  "capture": {
+    "inputs": [
+      {
+        "kind": "text",
+        "value": "食事 🥢\nhttps://example.com/menu\nBring umbrella"
+      }
+    ],
+    "expectedTitle": "食事 🥢",
+    "expectedNotes": "https://example.com/menu\nBring umbrella",
+    "expectedOriginalUrls": [
+      "https://example.com/menu"
+    ],
+    "cancelItemCountDelta": "0",
+    "addItemCountDelta": "1"
+  },
+  "dates": {
+    "source": "../itineraries-and-scheduling.md",
+    "planningZone": "America/New_York",
+    "gapComponents": {
+      "year": 2026,
+      "month": 3,
+      "day": 8,
+      "hour": 2,
+      "minute": 30
+    },
+    "gapSavesNothing": true,
+    "repeatComponents": {
+      "year": 2026,
+      "month": 11,
+      "day": 1,
+      "hour": 1,
+      "minute": 30
+    },
+    "earlierInstant": "2026-11-01T05:30:00Z",
+    "laterInstant": "2026-11-01T06:30:00Z",
+    "coupledStart": "2026-11-01T05:45:00Z",
+    "validCoupledEnd": "2026-11-01T06:15:00Z",
+    "invalidCoupledEnd": "2026-11-01T05:15:00Z"
+  },
+  "longLists": {
+    "itemCount": "5000",
+    "listCount": "200",
+    "membersPerList": "25",
+    "itemOrdinalRange": [
+      "1",
+      "5000"
+    ],
+    "itemIdRange": [
+      "00000000-0000-4000-8000-000000020001",
+      "00000000-0000-4000-8000-000000025000"
+    ],
+    "listOrdinalRange": [
+      "1",
+      "200"
+    ],
+    "listIdRange": [
+      "00000000-0000-4000-8000-000000030001",
+      "00000000-0000-4000-8000-000000030200"
+    ],
+    "ordinaryTitlePattern": "Item {ordinal padded to four decimal digits}",
+    "lastItemTitle": "Needle fixture",
+    "globalDone": false,
+    "archived": false,
+    "localDone": false,
+    "minutesCycle": [
+      "15",
+      "30",
+      "60"
+    ],
+    "assignmentRule": "List ordinal = floor((item ordinal - 1) / 25) + 1; minutes cycle uses (item ordinal - 1) modulo 3",
+    "soleMatchQuery": "needle",
+    "soleMatchItemId": "00000000-0000-4000-8000-000000025000",
+    "latencyMaximumMilliseconds": "300"
+  },
+  "recoveryEvidence": "recovery-evidence-expectations-v1.json",
+  "itineraryOnlyLabelDecision": "Pending native UI confirmation choice; fixture T has one itinerary association and zero Item associations",
+  "itineraryOnlyLabel": {
+    "baseline": "portable-backup-v1.json",
+    "tagId": "00000000-0000-4000-8000-000000000601",
+    "itineraryId": "00000000-0000-4000-8000-000000000301",
+    "removeAssociationIds": [
+      "00000000-0000-4000-8000-000000000651"
+    ],
+    "retainedAssociationIds": [
+      "00000000-0000-4000-8000-000000000652"
+    ],
+    "associatedItemCount": "0",
+    "associatedItineraryCount": "1",
+    "confirmation": "Pending human presentation decision"
+  }
+}
