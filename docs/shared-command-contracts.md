@@ -1,6 +1,6 @@
 # Shared command contracts
 
-In-progress review for [Shared command contracts](https://github.com/dvcol/planner/issues/13), claimed on 2026-10-08. The [approved Core architecture](core-architecture.md) and [A21/A22 packet](architecture-review-packet.md) are the baseline. The human answered revised Contract Q1-Q26 on 2026-10-08; the accepted choices below govern the earlier proposals. Exact stale-edit fields and credential handoff remain follow-up decisions. No Swift declarations have been compiled and no unit, store, UI, device or client test has been executed here.
+In-progress review for [Shared command contracts](https://github.com/dvcol/planner/issues/13), claimed on 2026-10-08. The [approved Core architecture](core-architecture.md) and [A21/A22 packet](architecture-review-packet.md) are the baseline. The human answered revised Contract Q1-Q26 on 2026-10-08; the accepted choices below govern the earlier proposals. Q27 delegates the simple edit guard to engineering judgment; per-field hashes are selected. Q28 accepts the same-app credential reader. MCP protocol-version compatibility and the former initialized-client cap require clarification after verifying the released stateless specification. No Swift declarations have been compiled and no unit, store, UI, device or client test has been executed here.
 
 ## Context
 
@@ -12,7 +12,7 @@ An MCP tool annotation or a Core review token does not grant permission. Validat
 
 [Core architecture is resolved](https://github.com/dvcol/planner/issues/12#issuecomment-6057782494). The approved facade, typed source/appearance identities, field changes, review/result/status shapes, native validation and save/recovery sequence carry forward. Their approval must not be requested again for unchanged behavior.
 
-[Local MCP compatibility](https://github.com/dvcol/planner/issues/6) establishes documented candidates and limits, with [committed research](https://github.com/dvcol/planner/blob/research/local-mcp-compatibility/docs/research/local-mcp-compatibility.md). No successful client connection or minimum supported client version is proved. The selected client and lifecycle requirements are now accepted below; credential handoff and successful qualification remain open.
+[Local MCP compatibility](https://github.com/dvcol/planner/issues/6) establishes documented candidates and limits, with [committed research](https://github.com/dvcol/planner/blob/research/local-mcp-compatibility/docs/research/local-mcp-compatibility.md). No successful client connection or minimum supported client version is proved. The selected clients, access-window lifecycle and same-app credential-reader candidate are accepted below. The released 2026-07-28 specification removes protocol sessions; actual client/Swift SDK version compatibility and the former initialized-client cap remain follow-ups.
 
 The original ticket mentions earlier keep-current imports and wholly unapplied failures. The accepted architecture amendments govern the final contract: default whole-record Skip, reviewed Overwrite, data-only backups including minimal deletion lineage, and the A15 distinction between true precommit failure and a fully applied action with incomplete recovery. Q12/Q14 require independent itinerary appearances and appearance-count progress. These are carried-forward resolutions, not new questions.
 
@@ -20,7 +20,7 @@ The original ticket mentions earlier keep-current imports and wholly unapplied f
 
 Agree exact command/query transport forms, integration authority, stale-edit handling, JSON grammar and capture resource limits. Produce representative MCP JSON and corresponding typed Swift requests using the approved facade. Record independently specified state/error observations and the unit, real-store, native UI, physical-device and client evidence each prototype must supply.
 
-Contract Q1-Q26 now settle authority, encoding, capture and session policy. Resolution still requires concrete stale-edit expectations, credential handoff and a final review of the completed request/result schemas. Native JSON handling is accepted; guaranteed duplicate-property rejection and its additional parser branch are no longer required. No executable prototype is claimed.
+Contract Q1-Q26 now settle authority, encoding, capture and session policy. Resolution still requires concrete hash/read/edit schemas, protocol-version compatibility, client-cap clarification, reader access/storage details and final review of the completed request/result schemas. Native JSON handling is accepted; guaranteed duplicate-property rejection and its additional parser branch are no longer required. No executable prototype is claimed.
 
 ## Definition of ready
 
@@ -53,7 +53,7 @@ Command names below identify proposed adapter operations within the approved Cor
 
 | Family | Identity and action | Carried-forward invariant or pending boundary |
 | --- | --- | --- |
-| Create/edit Item, List, Itinerary | Planner-generated source identity on create; explicit source UUID and changed fields on edit. | Item content/label associations are separate from completion/archive. A6 own-Item timestamps have no contextual or label-rename fan-out. Q10 fixes partial missing/null/value rules; exact Q9 stale expectation fields remain pending. |
+| Create/edit Item, List, Itinerary | Planner-generated source identity on create; explicit source UUID and changed fields on edit. | Item content/label associations are separate from completion/archive. A6 own-Item timestamps have no contextual or label-rename fan-out. Q10 fixes partial missing/null/value rules; Q27 chooses a hash guard for changed fields. Complete read/edit declarations remain final-review work. |
 | Set Item completion | Item UUID plus Done/Todo. | Global Done overrides every appearance's display, retaining local flags; global Reopen reveals those flags. Both explicitly described global and appearance scopes are accepted under revised Contract Q1. |
 | Set appearance completion | Exact typed List membership, direct itinerary entry or expanded List-child appearance plus Done/Todo. | A source UUID cannot substitute for an appearance; missing/removed appearances do not retarget globally. |
 | Set full-context completion | List, Itinerary or itinerary List-entry scope plus Done/Todo and Core-issued exact-target review. | Hidden/archived appearances included once each; global flags untouched. Empty remains No items. MCP capture and bulk may be applied by the authorized agent after exact review under revised Contract Q2/Q3. |
@@ -90,13 +90,13 @@ These valid UUIDs are constructed test fixtures, not records in a running app. P
 
 From the initial itinerary, locally complete entry 501: progress is 1 of 3. Globally complete Hotel: progress is 2 of 3 and both Hotel rows display Done. Globally reopen Hotel: progress returns to 1 of 3, retaining entry 501's local Done and entry 503's local Todo. Museum remains Archived/Todo throughout. Tokyo Food's local Hotel flag is independent of the itinerary.
 
-Accepted stale-edit fixture: read Original notes, then locally save Friday booking, then submit Monday booking based on the old read. Reject this attempt as staleEdit and retain Friday booking with no other mutation. A title-only intervening change does not block a notes-only edit. The exact prior-field expectation representation is a follow-up decision; no test has run.
+Accepted stale-edit fixture: read Original notes, then locally save Friday booking, then submit Monday booking based on the old read. Reject this attempt as staleEdit and retain Friday booking with no other mutation. A title-only intervening change does not block a notes-only edit. Q27 chooses Core-issued per-field hashes under delegated engineering judgment: compare only hashes for edited fields under the writer gate, rejecting the entire edit when a hash differs. No test has run.
 
 ## Wire and outcome proposals
 
 Core-issued dataset ownership and epoch values remain opaque. A MCP client cannot choose an account by supplying JSON ownership fields. The adapter binds the request to its authorized active session and calls the same Planner facade. Read/review/operation values remain immutable and dataset-bound.
 
-Accepted partial-edit JSON has an operationId, selected Item UUID and a changes object containing only edited fields. A notes-only value sets notes, null clears it and absent fields stay unchanged under Q10. The corresponding typed request uses the approved PlannerFieldChange set/clear/unchanged cases and PlannerOperation passed to Planner.execute. Q9 requires field-specific stale checking; the exact expectation field/token is the next frontier. A missing mandatory expectation will not silently authorize blind overwrite.
+Accepted partial-edit JSON has an operationId, selected Item UUID and a changes object containing only edited fields. A notes-only value sets notes, null clears it and absent fields stay unchanged under Q10. The corresponding typed request uses the approved PlannerFieldChange set/clear/unchanged cases and PlannerOperation passed to Planner.execute. Q9/Q27 require expectedFieldHashes for changed content fields, produced by a read and compared against current values under the writer gate. A missing required hash rejects instead of silently authorizing blind overwrite. This is an optimistic edit guard, not an authentication credential or a replacement for review tokens.
 
 Proposed completion wire distinguishes set_item_completion with itemId from set_appearance_completion with a typed appearance object. For the first Hotel itinerary appearance, its object contains kind directItineraryItem, itineraryId 301 and entryId 501 using their full UUID strings. Expanded List children additionally require listEntryId and membershipId. Their typed equivalents are PlannerCompletionScope.globalItem or .appearance with the corresponding approved PlannerAppearanceID case. A request missing its required scope/identity is rejected without guessing.
 
@@ -165,7 +165,7 @@ These choices are the human's answers, not inferred acceptance of recommendation
 | Q18 | A. Network lookup only for HTTPS originals on documented Maps hosts; retained HTTP bookmarks receive no lookup. Every redirect is checked. |
 | Q19 | A with amendment. Eight seconds overall, four per request, five redirects/six requests maximum; show an appropriate loading indicator. Add never waits. |
 | Q20 | A. Qualify Codex CLI, local Codex desktop, Claude Code CLI and Claude Desktop local Code tab separately. |
-| Q21 | A. Support two initialized simultaneous clients; clearly refuse a third. |
+| Q21 | A originally. Support two initialized simultaneous clients; clearly refuse a third. Modern sessionless semantics now require explicit Q30 clarification; no amendment is assumed. |
 | Q22 | A with amendment. Stable configurable loopback endpoint, default 127.0.0.1:44444/mcp; occupied port fails clearly and offers an explicit change. |
 | Q23 | C. Default maximum session duration 60 minutes; 15 and 30 remain selectable. No automatic renewal. |
 | Q24 | A. Idle expiry after ten minutes; successful authorized tool calls reset it, protocol pings and rejected requests do not. |
@@ -180,46 +180,88 @@ Loading feedback belongs beside the pending Maps preview, not in a blocking save
 
 The Mac menu-bar control shows active/off state, remaining absolute duration and Stop. Closing the window does not create a daemon or enable access indefinitely. The process must remain alive for the chosen session; app quit, manual Stop and expiry stop the listener and revoke its credential. Sleep does not pause either elapsed deadline; display sleep or session switching is not equated with a lock event.
 
-## Decision tree after round one
+## Accepted Q27/Q28 and clarified session meanings
 
-| Accepted prerequisites | Current follow-up | Held until its prerequisites settle |
+The human offered a hash-based edit guard or last-write-wins for Q27 and delegated the choice to whichever is sensible without excessive complexity. Choose Core-issued per-field SHA-256 hashes: reads return an opaque digest for each editable content field; changes return the original digest for every changed field. Core computes the current corresponding hashes and compares them under the same writer gate as save. A mismatch rejects the complete attempt as staleEdit, retaining the current values. Title-only changes do not invalidate a notes hash.
+
+This preserves accepted Q9 without resending large notes, a stored version history, a separate edit-token registry or timestamp-based conflict decisions. Clients echo hashes rather than implementing canonical hashing themselves. Stable type/field framing and value encoding must be fixed in the final schema and tested across processes, including absent optional values, Unicode, collections, native integers/dates and identity/lifetime changes. Hashes do not authenticate clients or prove sync freshness. A value changed and then restored to its original canonical value has the original hash and is eligible; no revision-history claim is made. Apple provides native [CryptoKit SHA256](https://developer.apple.com/documentation/cryptokit/sha256). No dependency or code has been added.
+
+Q28 A is accepted: use the existing signed Mac Planner executable's non-UI header-reader mode, with actual signing/access and all-four-client proof. The human's question about protocol sessions triggered the verified correction below, not an assumption that initialization is still required by every client.
+
+| Meaning | Current contract |
+| --- | --- |
+| MCP protocol session | The published 2026-07-28 revision removes initialize/initialized and Mcp-Session-Id. Modern requests carry their own version/capabilities; server/discover is available without a mandatory client handshake. No modern protocol session is required. |
+| Agent access window | The independently accepted manual enablement, rotating credential, 60-minute default, ten-minute idle expiry and Stop. These can govern stateless requests; no MCP handshake creates or extends this authority. Prior limits remain accepted unless the human changes them. |
+| PlannerDatasetSession | The already approved Core ownership/lifetime binding. It prevents stale account/store operations and is not an MCP transport session. It carries forward unchanged. |
+| Operation/review identity | Explicit UUID/review handle with accepted payload/target/ownership and replay meanings. Stateless transport does not eliminate durable operation evidence or make an uncertain write automatically safe to repeat. |
+
+## Verified current MCP facts
+
+| Primary source | Verified implication and limitation |
+| --- | --- |
+| [Published 2026-07-28 changelog](https://modelcontextprotocol.io/specification/2026-07-28/changelog) and [versioning](https://modelcontextprotocol.io/specification/2026-07-28/basic/versioning) | Stateless protocol is a released revision, not only a draft. Modern and legacy clients have different request/handshake behavior; compatibility must be proved. |
+| [Current Streamable HTTP](https://modelcontextprotocol.io/specification/2026-07-28/basic/transports/streamable-http) | Modern requests use per-request metadata/headers. Servers do not mint or echo Mcp-Session-Id. Closing a request SSE response signals cancellation; resumable Last-Event-ID delivery is removed. Cancellation still cannot undo Planner's committed domain action. |
+| [Legacy HTTP](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports) | 2025-11-25 still initializes, but assigning an HTTP session ID is optional. Legacy stateless transport and modern handshake-free protocol are different. |
+| [Official Swift SDK 0.12.1](https://github.com/modelcontextprotocol/swift-sdk/releases/tag/0.12.1) and [pinned README](https://github.com/modelcontextprotocol/swift-sdk/blob/0.12.1/README.md) | Current official stable Swift SDK targets 2025-11-25; its StatelessHTTPServerTransport is not proof of 2026-07-28 compliance. Native modern support has a real SDK/prototype gap. |
+| [Claude client runtimes](https://code.claude.com/docs/en/mcp#mcp-client-runtimes) | v2 documents modern support and legacy fallback; selection depends on runtime/version/provider/flags. Observing the installed CLI version is insufficient. Desktop embedded runtime still needs separate proof. |
+| [Codex MCP](https://developers.openai.com/codex/mcp) | Streamable HTTP and credential helpers are documented, but the inspected evidence does not establish current handshake-free runtime compatibility in either selected Codex surface. Prove each; do not infer support from the protocol release date. |
+| [Current request metadata](https://modelcontextprotocol.io/specification/2026-07-28/basic/index) | clientInfo is optional self-reported information, not authenticated client-instance identity. Modern MCP provides no initialized-client roster for enforcing the earlier two-client/third-refusal wording. |
+
+The earlier report and Q21 wording were based on legacy initialization. This packet corrects the protocol facts openly. It does not silently convert a client-count limit into a request-count limit.
+
+## Decision tree after Q27/Q28
+
+| Settled prerequisite | Current independent follow-up | Held until its prerequisites settle |
 | --- | --- | --- |
-| Q9 field-specific stale checking, Q10 partial-edit form, approved identity/lifetime binding | Exact prior-field expectation representation. | Complete typed edit request and corresponding read/stale-error examples. |
-| Q20 four clients, Q22 stable configurable port and credential rotation | Verified credential handoff choices. | Helper/bridge topology, storage and installation fields if chosen; then client setup and actual qualification. |
-| Q1-Q8 authority and results; Q11-Q19 wire/capture choices; Q21-Q26 lifecycle | Concrete transport examples and required test observations under these accepted choices. | Final public contract review, then resolution. No production or prototype code before its applicable interface approval. |
+| Q27 chooses changed-field hashes, Q10 fixes partial-edit semantics | Draft exact read/hash/edit/outcome forms for final public review. | No tests or executable source until the applicable interface review. |
+| Q28 accepts the same-app reader; Q20 selects four clients | Current native SDK versus modern protocol compatibility choice. | Exact selected transport/client setup and compatibility evidence after Q29; no custom protocol stack presumed. |
+| Modern protocol has no initialized-client roster; Q21 asked for two clients | Clarify qualification target versus enforced client registration. | Resource/admission fields or explicit client-profile credential fields after Q30. |
+| Existing accepted Agent Control timers/menu bar and Core ownership | Preserve the access window independently of transport. | Reader storage/access and final schema are concretized under the selected native/client policy. |
 
-## Current frontier, Contract Q27-Q28
+## Native reader storage/access candidate
 
-These two choices have settled prerequisites and are independent of each other. All Q1-Q26 answers carry forward. Header-reader storage/topology details wait for Q28; final edit-field/result declarations wait for Q27. No recommendation below has been accepted. The full questions are issued through the question tool and repeated in chat.
+Following the accepted native best-practice direction and Q28's same-executable choice, use Apple's data-protection Keychain candidate for the temporary credential, owned by Planner's private access group. Both app and reader are the same signed main executable, so neither clients nor Share extensions require Keychain access and no additional shared group is inherently needed. [TN3137](https://developer.apple.com/documentation/technotes/tn3137-on-mac-keychains) describes process/signing and implementation differences; the actual profile/entitlements and sandboxed invocation still require proof.
 
-❓ **Contract Q27** - **How should an edit carry the values it was based on?**
+The [data-protection flag](https://developer.apple.com/documentation/security/ksecusedataprotectionkeychain) with [AfterFirstUnlockThisDeviceOnly](https://developer.apple.com/documentation/security/ksecattraccessibleafterfirstunlockthisdeviceonly) is a documented macOS candidate for access after first unlock until restart, including while locked, without migrating the item to another device. It does not itself enforce Planner's expiry/Stop rules. Do not add user-presence/biometric requirements that contradict the accepted unexpired locked-use behavior. A [noninteractive LAContext](https://developer.apple.com/documentation/localauthentication/lacontext/interactionnotallowed) makes a requirement fail instead of showing UI; it is not proof that access succeeds.
 
-Hotel's notes were Original notes when the agent read them. They are now Friday booking; its proposed Monday booking must be rejected under accepted Q9. A title-only intervening change must not block that notes edit. Q10 fixes missing/null/value changes. This question chooses how the caller supplies its earlier read, without reopening field-specific stale behavior or dataset/identity/lifetime validation.
+The reader emits only the required header JSON for an active, unexpired access window and otherwise returns a controlled unavailable result without prompting. It cannot enable/renew access, start a listener, initialize/migrate data or silently fall back to a plaintext credential in ordinary configuration. Prove actual lock, first-unlock/restart, manual Stop, timeout, app quit/forced termination and update/signing behavior with the same installed executable. Main-process liveness, window metadata and cleanup are part of the final reader contract; no implementation has been established.
 
-- **A. Explicit previous values.** Require an expected value for every changed field, such as expectedFields with notes Original notes beside changes with notes Monday booking. Compare those fields atomically before save. Larger fields are repeated, but clients construct and inspect ordinary JSON without another token lifecycle.
-- **B. Opaque edit token.** A read returns a Core-issued baseline token; the edit supplies it with changes. Compare only the edited fields, never a whole-Item revision. Smaller requests, with token validation and unavailable-token/restart behavior to specify and prove.
+A caller running under the local user's account may be able to invoke the configured executable too. The mode is not proof of vendor identity or client pairing. Q30 B would require explicit profile credentials and reader arguments; Q30 A deliberately avoids that registration policy. Credentials/window metadata are excluded from Planner portable backups and planning-data synchronization.
 
-➡️ Recommendation: **A, Explicit previous values**. It keeps expectations visible and avoids adding an edit-token lifecycle.
+## Current frontier, Contract Q29-Q30
 
-Status: awaiting human answer. Concrete Swift/JSON expectation fields are held until this answer.
+These are independent decisions. Modern sessionless MCP, legacy stateless HTTP and Planner's access window are distinct. Q27's delegated hash choice and Q28's reader choice carry forward. No transport-version or capacity amendment is accepted in advance. Reader accessibility facts are recorded above. Exact reader/state fields remain final-schema work; current protocol and capacity choices remain the two human decisions.
+
+❓ **Contract Q29** - **Which protocol baseline should the native MCP prototype target?**
+
+The published 2026-07-28 protocol removes initialization and protocol sessions. Current official Swift SDK 0.12.1 targets 2025-11-25; its stateless HTTP mode omits session IDs but retains initialization. Claude documents a newer runtime with fallback, while the inspected Codex evidence does not establish modern support in both surfaces. No Planner connection has succeeded. This is a native SDK/compatibility choice, separate from countdown and Stop.
+
+- **A. Official Swift SDK baseline.** Accept 2025-11-25 stateless HTTP for the first prototype and qualify all four clients. No required Mcp-Session-Id or protocol session manager. Modern support is a later upgrade unless a maintained compatible SDK is verified during the prototype.
+- **B. Current protocol plus compatibility.** Require 2026-07-28 and support legacy where selected clients need it. Resolve the native SDK gap before qualification. Adds protocol/adapter investigation and tests, without assuming approval of a custom stack.
+- **C. Current protocol only.** Require 2026-07-28 with no legacy branch. Smaller version matrix, but unqualified clients or the native SDK gap may block the prototype until compatible implementations exist.
+
+➡️ Recommendation: **A, Official Swift SDK baseline**. Use maintained native SDK behavior for the first prototype rather than making a protocol implementation part of it.
+
+Status: awaiting human answer. Exact versioned transport declarations and any newly necessary SDK investigation wait for this answer.
+
+---
+
+❓ **Contract Q30** - **What should the earlier two-client limit mean with sessionless requests?**
+
+Q21 accepted two initialized clients and refusal of a third. The modern protocol has no initialized-client roster; self-reported names do not identify authenticated clients. A hard client limit requires explicit credentials/registration. A request limit is simpler but is an amendment to the earlier rule, not an equivalent implementation. This choice is independent of which protocol baseline Q29 selects.
+
+- **A. Two-client proof with bounded requests.** Demonstrate two clients together. Initially admit two concurrent tool calls and report busy/retry for excess work; additional clients can use free capacity. No hard third-client refusal or client roster. This explicitly replaces that part of Q21.
+- **B. Two registered client profiles.** Issue separate credentials for at most two named profiles and refuse a third profile. Works independently of MCP sessions, but adds profile setup, reader arguments, credential lifecycle and tests. Sharing one profile credential still does not prove distinct client instances.
+
+➡️ Recommendation: **A, Two-client proof with bounded requests**. It preserves the simultaneous-client demonstration while avoiding registration solely for a small resource cap.
+
+Status: awaiting human answer. Keep the original Q21 evidence as accepted history; do not claim that a request counter already satisfies its hard client-cap wording.
 
 ---
 
-❓ **Contract Q28** - **How should clients obtain each freshly enabled session's credential?**
+## Historical Q27/Q28 proposals
 
-Q20 selects four local clients; Q22 selects a stable URL with port 44444. Every enablement uses a fresh credential. Re-entering it each session is possible, but changing a shell variable does not update an already-running desktop client. Codex and Claude document dynamic HTTP header commands.
-
-The smaller native candidate invokes the existing signed Planner app executable in a non-UI reader mode. Configure its quoted installed path once; it returns header JSON only for an already enabled session and exits promptly. It must not open a window, initialize planning data, start the listener or renew access. Apple's signing model supports the candidate; mode startup, credential access, client caching/reconnect and all four clients still require prototype proof. Moving the app may require updating its configured path.
-
-- **A. Reuse Planner's executable.** Configure a header command once, with a documented reconnect fallback. Add the non-UI mode to the existing Mac app. Review storage/access next and prove all four clients; no new helper product is presumed.
-- **B. Manual handoff each enablement.** Supply the credential through supported client environment or protected authentication storage and start a new session or restart/reconnect as required. Do not write it into ordinary client configuration or logs. No reader mode, with recurring setup and desktop environment limitations.
-- **C. Separate packaged native helper.** Use a dedicated signed reader bundle. Separate startup, at the cost of an added build product, profile/signing configuration and distribution/qualification work.
-
-➡️ Recommendation: **A, Reuse Planner's executable**. It avoids another product and repeated token entry, conditional on actual non-UI and four-client proof. It does not promise automatic seamless reconnect.
-
-Status: awaiting human answer. Storage, reader access and exact installed-path/configuration fields are held until this answer.
-
----
+Q27's previous-value versus edit-token question is superseded by the human's hash-or-last-write delegation and the hash selection above. Q28's same-app-reader alternative A is accepted; its implementation remains unproved. The earlier round is preserved in [the prior packet](https://github.com/dvcol/planner/blob/f9bca8a61744aff9d3a11335347433faf963615a/docs/shared-command-contracts.md#current-frontier-contract-q27-q28). No earlier question remains unanswered.
 
 ## Historical round-one questions
 
@@ -597,7 +639,7 @@ These are obligations and competing expected observations for later approved exe
 | Full-context bulk unit, real-store and native confirmation | Tokyo Food contains active Hotel and archived Museum, with UI showing only Hotel. Mark All Done sets both local flags; progress 2/2. Global flags remain Todo. Mark All Undone yields 0/2 unless a source is globally Done. Changed targets reject stale review. True save failure changes neither child; postcommit recovery failure retains both applied flags and blocks further domain mutation. |
 | Reference unit, store and physical convergence | Removing membership 401 preserves Hotel 101, Trip Prep membership 403 and Schedule 601. Ordinary re-add gets a new membership local Todo. Reordering itinerary 501/502/503 retains identities/flags. Identical operation replay creates no second entry; a new intentional Hotel-add operation creates a separate appearance. Use accepted duplicate, deletion and restoration-family device fixtures from the packet. |
 | Query unit/store/UI | All four global completion/archive pairs, generic no-location Item, all accepted search sequences, past direct/indirect schedules and unschedule identity sets. Keep valid filtered-out detail; removed appearance returns missing reference. A stale row-window generation does not mix snapshots. Search quality dataset remains 5,000 Items/200 Lists and 300 ms on each device, not a count cap. |
-| Partial edit and stale unit/store | Q9/Q10 require rejection retaining Friday booking when notes changed, acceptance of a notes-only patch after title-only change, and rejection of required-title null. Missing fields retain their values. A notes-only accepted patch retains title/estimate, memberships, archive/global/local values. Exact expectation representation remains the follow-up. |
+| Partial edit and stale unit/store | Q9/Q10/Q27 require rejection retaining Friday booking when the returned notes hash no longer matches, acceptance after title-only change, and rejection of required-title null or missing required field hash. Missing fields retain their values. A notes-only patch retains title/estimate, memberships, archive/global/local values. Compare under the writer gate; stable field hashing across processes and absent/Unicode/collection/native-value fixtures require final schema proof. |
 | Wire value unit and actual round-trip | Q11/Q12 fix canonical Int64 strings and finite numeric native Date values. Required tests include Int64 max 9223372036854775807, rank min -9223372036854775808, overflow 9223372036854775808, fraction 1.0000000000000001, exponent and leading-zero strings, finite submillisecond native Date and distant finite dates, UUID case variants, malformed IDs, invalid civil dates and non-finite coordinates. Do not impose a new practical domain range. |
 | JSON version/structure unit | Q13 rejects unknown supported-version backup fields; Q14 uses native repeated-property handling without a rejection guarantee. Unsupported version, malformed input, duplicate record IDs and unresolved references reject the whole backup with zero mutation. Assert useful unknown-property errors. For repeated properties, assert one immutable decoded proposal reaches preview/apply; do not assert an undocumented first/last winner. No shortened successful export of an unresolved native graph. |
 | Import unit/store/native preview | Accepted Skip keeps matching whole owners; Overwrite replaces represented whole owners after review; omission from file preserves sources. Current A=[X] with local Done plus incoming A=[X,Z] produces A unchanged and new Z in Skip. Invalid backup rejects together. Incoming deleted markers, restoring IDs, conflict-dependent skipped owners and independent records follow the architecture's exact accepted examples. |
@@ -608,8 +650,12 @@ These are obligations and competing expected observations for later approved exe
 | Capture transport unit and actual extension lifecycle | Q18/Q19 require HTTPS originals only, eight-second total/four-second request budgets, five redirects/six requests, with visible pending-preview feedback. Test exact hosts versus suffix spoofs, HTTP-original behavior selected in Q18, disallowed hop, loops, missing Location, each boundary and deadline, obsolete callbacks after input edit/Add/Cancel, partial Save without lookup, no ordinary-page body fetch and no automatic preview retry. Native allocations and extension lifecycle must be measured; post-load byte checks are insufficient proof. |
 | Export/recovery account integration/physical | Complete active backup retains IDs/manual order/schedules/minimal lineage and excludes app state/credentials/cache/receipts. Inspect/export old recovery does not mutate or upload into current account. Explicit empty-dataset restoration reproduces accepted data; coherent ownership cutoff preserves good independent copy under resets. Q4/Q5 keep backup/export/recovery administration native-only; verify no equivalent public MCP/Intent path. |
 | App Intents native and adapter parity | Q6/Q7 allow ordinary locked-device Intents where Apple permits, while bulk uses system confirmation. Execute locked/unlocked/system-restricted/canceled cases, unsupported/removed IDs and archived hidden bulk children. No ambiguous completion fallback. Capture native review cancellation creates zero Items. |
-| Selected-client and native MCP integration | Q20-Q26 require four separately demonstrated clients, two concurrent sessions and clear third refusal, occupied 44444 failure, fresh credentials on enablement, no listener while Off, 60-minute default and ten-minute idle expiry. Lock/sleep retain only unexpired access; expired sleep sessions admit zero work on wake. Last-window closure retains menu-bar status/Stop; app quit ends access. Test before/after-commit cancellation status. Credential handoff remains a follow-up. No secrets in ordinary logs/configuration. CLI success cannot stand in for desktop proof. |
+| Selected-client and native MCP integration | Q20-Q26 require four separately demonstrated clients, two-client qualification and the clarified capacity policy selected in the current frontier, occupied 44444 failure, fresh credentials on enablement, no listener while Off, 60-minute default and ten-minute idle expiry. Lock/sleep retain only unexpired access; expired sleep sessions admit zero work on wake. Last-window closure retains menu-bar status/Stop; app quit ends access. Test before/after-commit cancellation status. Same-app credential reader is accepted; exact access/storage and modern/legacy compatibility remain follow-ups. No secrets in ordinary logs/configuration. CLI success cannot stand in for desktop proof. |
 | Native lifecycle and menu-bar proof | With a 60-minute session and last successful call at 09:00, sleeping from 09:05 to 09:12 expires the ten-minute idle deadline; wake admits zero requests before revocation. Waking at 09:09 retains only the remaining original time. Continuous authorized calls cannot pass the 60-minute deadline. Locked but unexpired allowed calls remain subject to normal authority. Closing the last window keeps a visible countdown/Stop; Stop or quit removes the listener. These are proposed exact fixtures under already accepted policies, not executed tests. |
+
+Additional current obligations are conditional on the pending choices, not claimed passing tests. For Q29 A, a client must initialize using the supported legacy revision and then perform permitted authenticated calls without a required protocol session ID. For Q29 B/C, prove modern calls without initialize or Mcp-Session-Id, per-request version/capability/header validation and server/discover; test each required legacy branch only if selected. A modern response-stream cancellation still preserves an already committed operation and its receipt. Unsupported versions return useful failure, never an accidental successful downgrade.
+
+For Q30 A, hold two tool calls at a genuine I/O boundary; a third call receives a clear retryable busy result with no domain mutation. After capacity frees, another client can run. For Q30 B, prove two profile credentials, rejection of creating a third profile, revocation and per-request profile authority; do not pretend that clientInfo authenticates the vendor or that one shared credential establishes client-instance uniqueness. Both choices still prove the accepted two-client Core behavior and replay/save outcomes.
 
 ## Definition of done
 
