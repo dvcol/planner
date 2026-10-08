@@ -139,6 +139,8 @@ Changing sort order changes the presentation sequence, not the matching identity
 
 The timestamp/manual-order fixture inputs are specified in search-fixtures.md. These are independent worked expectations, not output copied from an implementation.
 
+Accepted architecture A8 scopes per-device sort preferences by account/dataset and stable view/List identity. Switching accounts cannot carry one dataset's sort choice into another, even when List UUIDs match; returning to the original dataset retains its choice. A9 excludes device presentation preferences from JSON backups. A11 selects native Foundation substring and title-comparison APIs with explicit case/diacritic-insensitive options and fixed `en_US_POSIX` locale, followed by the accepted stable identity tie-break. Use these native primitives rather than a custom search/comparison algorithm. Exact cross-language results and real-store translation still require the approved public tests.
+
 ## Responsiveness and long lists
 
 The human approved 5,000 items and 200 lists as an acceptance-test dataset, with current filtered results visible within 300 ms after final input on iPhone, iPad and Mac, and smooth scrolling. This is a measured acceptance gate, not an observed result or a maximum storage size. Include debounce, query work, fetching and first-visible-result rendering in the elapsed measurement.
@@ -163,7 +165,7 @@ The rows above are independently specified unit-test expectations for the future
 
 The human has confirmed all choices in this ticket. The following implementation and dependent-domain work remains in its named owner:
 
-- Core architecture chooses storage/display representation, numeric representability limits, local preference storage/account scope, explicit Foundation matching/title comparison, actor/observation ownership and the complete-scope loading/refresh contract. Accepted A2 fixes per-device sort scope, A3 fixes valid selection during refresh and A6 fixes Item Last updated meaning. The remaining choices must preserve this record's exact public behavior and ordered examples.
+- Core architecture chooses storage/display representation, numeric representability limits, local preference storage, actor/observation ownership and the complete-scope loading/refresh contract. Accepted A2/A8 fix per-device and account/dataset sort scope, A3 fixes valid selection during refresh, A6 fixes Item Last updated meaning, A9 excludes display preferences from backups and A11 selects native fixed-locale Foundation matching/comparison. The remaining choices must preserve this record's exact public behavior and ordered examples.
 - Core architecture and [Shared command contracts](https://github.com/dvcol/planner/issues/13) propose and confirm public duration, query and sorting interfaces before implementation tests under `/tdd`. This decision writes no code and does not claim that signatures were approved.
 - Navigation prototype owns native picker range/interaction, filter/sort control layout, Manual-mode interaction, selection/anchor behavior and measured scrolling/memory/latency evidence on all devices.
 - Itineraries and scheduling defines calendar spans, scheduled-date sorting, and scheduled/unscheduled predicates with exact reference/date/time-zone examples. Their groups use the accepted cumulative composition.

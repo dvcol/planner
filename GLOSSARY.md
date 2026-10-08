@@ -51,6 +51,9 @@ Removal of an entity and its references from the planner. Deleting a container l
 **Recovery copy**:
 A locally retained copy of saved Planner data that remains recoverable independently of the current iCloud account's mirrored data.
 
+**Backup**:
+A portable snapshot of Planner content, identities, references, completion, saved order and schedules. It contains data rather than a device's presentation or navigation state.
+
 **Inbox**:
 A view of items with no list memberships.
 
