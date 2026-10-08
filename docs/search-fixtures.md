@@ -42,7 +42,7 @@ Use these literal UTC timestamps as independent created/updated sort inputs. The
 | H | 2026-10-01T09:07:00Z | 2026-10-06T09:00:00Z |
 | I | 2026-10-01T09:08:00Z | 2026-10-07T09:00:00Z |
 
-Tokyo Food's saved Manual sequence is D, G, A, C, B. In ordinary todo + active scope it is D, A, C, B. Choosing another sort and switching back must recover that sequence without writing new manual positions. Saved per-list sort preferences use list identity and survive its rename/reopening.
+Tokyo Food's saved Manual sequence is D, G, A, C, B. In ordinary todo + active scope it is D, A, C, B. Choosing another sort and switching back must recover that sequence without writing new manual positions. Saved per-list sort preferences use list identity and survive its rename/reopening. Accepted architecture A2 keeps display preferences per device: with both state filters Any, Mac Duration ascending returns A, G, B, C, D while iPhone Manual remains D, G, A, C, B. G precedes B at 60 minutes by title. Architecture A6 governs which subsequent mutations change Item Last updated; these initial timestamps remain literal independent fixture inputs.
 
 ## Already fixed observations
 

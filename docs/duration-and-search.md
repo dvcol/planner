@@ -117,7 +117,7 @@ Global scope spans all lists and unlisted retained items. An item appears once e
 
 ## Sort controls
 
-The human accepted Title, Created date, Last updated and Duration, plus Manual within lists. Title/date/duration modes have ascending/descending controls. Chronological distinguishes creation from last update; scheduled-date ordering belongs to calendar views and is defined in Itineraries and scheduling. Lists initially use saved Manual order; global results initially use Title ascending. Remember the chosen mode/direction per list identity and for the global view across reopening. A list rename must not reset its sort choice.
+The human accepted Title, Created date, Last updated and Duration, plus Manual within lists. Title/date/duration modes have ascending/descending controls. Chronological distinguishes creation from last update; scheduled-date ordering belongs to calendar views and is defined in Itineraries and scheduling. Lists initially use saved Manual order; global results initially use Title ascending. Remember the chosen mode/direction per list identity and for the global view across reopening. A list rename must not reset its sort choice. Accepted A2 in [Core architecture](core-architecture.md) makes these display preferences per device; saved Manual order remains shared data. A6 defines Item Last updated as changes to the Item's own content, label associations, global completion or archive state, excluding contextual organization/completion and shared-label renames.
 
 Unestimated items remain last in duration sorting in both directions. For equal primary values, order by title ascending, then stable item identity ascending; identical titles therefore have a deterministic final tie-break. Title ordering must use a consistent comparison/collation policy selected in Core architecture, including case/accent equivalence and duplicate-title tests. The fixture sequences below are the expected order for the supplied titles and dates.
 
@@ -135,6 +135,7 @@ Changing sort order changes the presentation sequence, not the matching identity
 | Both state filters Any; Duration descending | D, C, H, G, B, I, A, F, E |
 | Tokyo Food ordinary scope; initial Manual order | D, A, C, B |
 | That list; choose Title ascending, then return to Manual | C, D, A, B, then D, A, C, B |
+| Tokyo Food, both state filters Any; Mac Duration ascending and iPhone Manual under architecture A2 | Mac A, G, B, C, D; iPhone D, G, A, C, B. Relaunch/List rename retains each device's choice and the saved Manual order. |
 
 The timestamp/manual-order fixture inputs are specified in search-fixtures.md. These are independent worked expectations, not output copied from an implementation.
 
@@ -162,7 +163,7 @@ The rows above are independently specified unit-test expectations for the future
 
 The human has confirmed all choices in this ticket. The following implementation and dependent-domain work remains in its named owner:
 
-- Core architecture chooses storage/display representation, numeric representability limits, storage/device-sync scope for per-view sort preferences, explicit Foundation matching/title comparison, actor/observation ownership and the complete-scope loading/refresh contract. These choices must preserve this record's exact public behavior and ordered examples.
+- Core architecture chooses storage/display representation, numeric representability limits, local preference storage/account scope, explicit Foundation matching/title comparison, actor/observation ownership and the complete-scope loading/refresh contract. Accepted A2 fixes per-device sort scope, A3 fixes valid selection during refresh and A6 fixes Item Last updated meaning. The remaining choices must preserve this record's exact public behavior and ordered examples.
 - Core architecture and [Shared command contracts](https://github.com/dvcol/planner/issues/13) propose and confirm public duration, query and sorting interfaces before implementation tests under `/tdd`. This decision writes no code and does not claim that signatures were approved.
 - Navigation prototype owns native picker range/interaction, filter/sort control layout, Manual-mode interaction, selection/anchor behavior and measured scrolling/memory/latency evidence on all devices.
 - Itineraries and scheduling defines calendar spans, scheduled-date sorting, and scheduled/unscheduled predicates with exact reference/date/time-zone examples. Their groups use the accepted cumulative composition.

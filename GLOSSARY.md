@@ -103,6 +103,9 @@ The timezone used to show timed entries on Planner's calendar. Changing it does 
 An optional estimate of the time an activity takes. It can be compared with other estimates without scheduling the activity.
 _Avoid_: Treating an estimate as a scheduled start or end.
 
+**Item Last updated**:
+When the item's own content, label associations, global completion or archive state last changed. Organizing or completing its references, or editing a shared label, does not change this value.
+
 **Calendar span**:
 A scheduled period in Planner's calendar, described by dates or a timed start with an optional end. It describes when an item or itinerary is planned.
 _Avoid_: Using an activity estimate as a substitute for its calendar span.
