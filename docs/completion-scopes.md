@@ -14,6 +14,7 @@ The human clarified these behaviors:
 - List and itinerary completion derives from their contextual child items. Mark Done/Undone is a bulk child operation, not an independent parent completion override.
 - Archived child items still count and are included by bulk completion. UI filters do not reduce bulk targets; completion does not unarchive anything.
 - An empty list or itinerary shows No items, has no completion percentage and is not completed.
+- List/itinerary actions affect only their contextual children. They do not offer global completion actions; native global actions belong in the item view. Clearing local completion can leave an item effectively Done while its global source is Done, without any automatic global reopen.
 
 The earlier proposal for global Complete/Reopen to overwrite all stored local states is superseded. The earlier proposal for a manually completed itinerary independent of its children is also superseded. These revisions are recorded explicitly rather than changing the old accepted resolution silently.
 
@@ -28,7 +29,7 @@ For an existing contextual reference, the clarified override/restore behavior ha
 | Done | Todo | Done |
 | Done | Done | Done |
 
-This table describes behavior, not a Swift signature, storage schema or write fan-out strategy. A local Todo state cannot make an item effectively Todo while its global source is Done. The native Undone action must explain this rather than silently affecting other contexts.
+This table describes behavior, not a Swift signature, storage schema or write fan-out strategy. A local Todo state cannot make an item effectively Todo while its global source is Done. Local Undone does not change the global source or offer a global action in a list/itinerary view.
 
 ## Concrete existing-reference examples
 
@@ -52,8 +53,8 @@ For a scheduled item, source/reference identity remains stable through these ope
 - A new reference to a globally Done item must initially appear Done, as the human accepted. It is still being clarified whether its local state starts Todo and inherits that display, or copies the current source completion. The result after a later Global Reopen distinguishes them.
 - A list completed in its own context is referenced by itineraries with independent local item states. Whether source-list completion contributes to those itinerary uses is still being clarified.
 - One itinerary shares a contextual item state across appearances. Its progress denominator still needs a choice between unique identities and occurrences.
-- A local bulk Undone operation may leave globally Done items effectively Done. Its explanation and any separate explicit Global Reopen action remain under discussion.
-- Confirmation/cancellation and native labels must reflect bulk contextual completion, not the superseded independent parent-status proposal.
+- Local bulk Undone clears only the current context. Globally Done items can remain effectively Done; the item view owns any global change. Native presentation belongs to the navigation prototype, without extra global-action options in list/itinerary prompts.
+- Confirmation/cancellation and native labels must reflect bulk contextual completion, not the superseded independent parent-status proposal. The requested completion prompt must stay within that local bulk scope.
 
 Removal/re-addition of contextual associations, duplicates during sync, deleted sources, bulk failures and concurrent changes belong to [Offline conflicts and recovery](https://github.com/dvcol/planner/issues/10). No retention lifetime, conflict winner or atomic cross-device bulk transaction is assumed.
 
