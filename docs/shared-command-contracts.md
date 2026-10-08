@@ -20,7 +20,7 @@ The original ticket mentions earlier keep-current imports and wholly unapplied f
 
 Agree exact command/query transport forms, integration authority, stale-edit handling, JSON grammar and capture resource limits. Produce representative MCP JSON and corresponding typed Swift requests using the approved facade. Record independently specified state/error observations and the unit, real-store, native UI, physical-device and client evidence each prototype must supply.
 
-Contract Q1-Q26 now settle authority, encoding, capture and session policy. Resolution still requires concrete hash/read/edit schemas, protocol-version compatibility, client-cap clarification, reader access/storage details and final review of the completed request/result schemas. Native JSON handling is accepted; guaranteed duplicate-property rejection and its additional parser branch are no longer required. No executable prototype is claimed.
+Contract Q1-Q26 now settle authority, encoding, capture and Agent Control policy, with the later human amendment removing automatic access expiry. Resolution still requires concrete hash/read/edit schemas, protocol-version compatibility, client-cap clarification, reader access/storage details and final review of the completed request/result schemas. Native JSON handling is accepted; guaranteed duplicate-property rejection and its additional parser branch are no longer required. No executable prototype is claimed.
 
 ## Definition of ready
 
@@ -45,7 +45,7 @@ Contract Q1-Q26 now settle authority, encoding, capture and session policy. Reso
 | V2, known recovery incomplete | Read/search/export remain available. Retry only the known-applied checkpoint, then unblock domain changes. | Core result/status is approved; native and Share interruption proof. |
 | V2, account changed | Inspect/export the old independent recovery namespace without changing the active dataset; explicit restore/merge is separately reviewed. | Native recovery only under Q4; coherent account cutoff is a hard device gate. |
 | V3, Shortcuts action | Resolve stable IDs, invoke explicit scoped ordinary action, return the Core outcome. Confirm required bulk targets and route capture to Add/Cancel. | Ordinary Intents may run while locked where Apple permits; bulk uses system confirmation. Native behavior must be demonstrated. |
-| V3, Agent Control Off/On | No listener while Off. Enabled authorized client performs permitted operations; stop/expiry revokes access and operation status remains truthful. | Four selected clients, two simultaneous connections, 60-minute default and 10-minute idle timeout are accepted; the MCP prototype proves them. |
+| V3, Agent Control Off/On | No listener while Off. Enabled authorized client performs permitted operations until Stop or app quit; operation status remains truthful. Lock, sleep and last-window closure retain enablement. | Four selected clients, two-client qualification and the manually controlled lifecycle are accepted; the MCP prototype proves them. No maximum duration, idle expiry or countdown. Capacity remains the Q30 follow-up. |
 
 ## Command and authority inventory
 
@@ -121,7 +121,7 @@ Read-only facts checked against installed OS 27 declarations and primary sources
 | [URLSession request timeout](https://developer.apple.com/documentation/foundation/urlsessionconfiguration/timeoutintervalforrequest) resets when data arrives; a non-background [redirect delegate](https://developer.apple.com/documentation/foundation/urlsessiontaskdelegate/urlsession(_:task:willperformhttpredirection:newrequest:completionhandler:)) can inspect/refuse each redirect. | A whole-preview deadline is separate. Use headers/redirect inspection and cancellation rather than body-fetch convenience methods; HEAD success is not assumed. |
 | [MCP tool annotations](https://modelcontextprotocol.io/specification/2025-11-25/schema#toolannotations) are hints; [structured tools](https://modelcontextprotocol.io/specification/2025-11-25/server/tools) may return domain evidence. | Enforce authority in command admission/impact, with unambiguous applied/recovery status. |
 | [Intent authentication policy](https://developer.apple.com/documentation/AppIntents/IntentAuthenticationPolicy) and confirmation are separate mechanisms; custom intents can default to alwaysAllowed. | Choose authentication explicitly rather than treating invocation or confirmed true as independent human approval. |
-| [System sleep](https://developer.apple.com/documentation/appkit/nsworkspace/willsleepnotification), [last-window closure](https://developer.apple.com/documentation/appkit/nsapplicationdelegate/applicationshouldterminateafterlastwindowclosed(_:)) and [ContinuousClock](https://developer.apple.com/documentation/swift/continuousclock) have documented public meanings. [Session deactivation](https://developer.apple.com/documentation/appkit/nsworkspace/sessiondidresignactivenotification) documents switching sessions, not every lock. [Closed-lid operation](https://support.apple.com/en-gb/102282) can leave a Mac awake. | Actual system sleep differs from display sleep/lid closure. Q25 retains an unexpired session through lock/sleep and does not require universal lock detection. Check elapsed deadlines before requests after wake; a callback need not run during sleep. Q26 requires continued process life and menu-bar controls after last-window closure. |
+| [System sleep](https://developer.apple.com/documentation/appkit/nsworkspace/willsleepnotification), [last-window closure](https://developer.apple.com/documentation/appkit/nsapplicationdelegate/applicationshouldterminateafterlastwindowclosed(_:)) and [ContinuousClock](https://developer.apple.com/documentation/swift/continuousclock) have documented public meanings. [Session deactivation](https://developer.apple.com/documentation/appkit/nsworkspace/sessiondidresignactivenotification) documents switching sessions, not every lock. [Closed-lid operation](https://support.apple.com/en-gb/102282) can leave a Mac awake. | Actual system sleep differs from display sleep/lid closure. Q25 retains enabled access through lock/sleep and does not require universal lock detection. An asleep Mac cannot serve requests; wake resumes access while Planner remains running, without an elapsed-time cutoff. Q26 requires continued process life and menu-bar controls after last-window closure. |
 
 Guaranteed duplicate-property rejection is feasible through the established C library [Jansson's JSON_REJECT_DUPLICATES](https://jansson.readthedocs.io/en/latest/apiref.html#decoding). Its [current releases](https://github.com/akheron/jansson/releases) and [source/tests](https://github.com/akheron/jansson) show maintenance. It is not a verified drop-in Swift package; native platform integration and grammar compatibility would need proof if selected. No dependency has been added. Q14 accepts native handling, so no additional duplicate-rejecting parser is selected or required. Q13 separately requires unknown supported-version backup fields to reject together.
 
@@ -167,10 +167,10 @@ These choices are the human's answers, not inferred acceptance of recommendation
 | Q20 | A. Qualify Codex CLI, local Codex desktop, Claude Code CLI and Claude Desktop local Code tab separately. |
 | Q21 | A originally. Support two initialized simultaneous clients; clearly refuse a third. Modern sessionless semantics now require explicit Q30 clarification; no amendment is assumed. |
 | Q22 | A with amendment. Stable configurable loopback endpoint, default 127.0.0.1:44444/mcp; occupied port fails clearly and offers an explicit change. |
-| Q23 | C. Default maximum session duration 60 minutes; 15 and 30 remain selectable. No automatic renewal. |
-| Q24 | A. Idle expiry after ten minutes; successful authorized tool calls reset it, protocol pings and rejected requests do not. |
-| Q25 | C. Lock/sleep do not revoke an unexpired session. Original elapsed absolute/idle deadlines are checked before resuming requests. |
-| Q26 | B. Last-window closure retains unexpired access with a native menu-bar status and Stop control. App quit always stops access. |
+| Q23 | Superseded by the human amendment: no maximum duration, duration picker or countdown. Original C is historical. |
+| Q24 | Superseded by the human amendment: no idle expiry or activity-reset timer. Original A is historical. |
+| Q25 | C, amended to remove expiry qualifiers. Lock/sleep do not revoke enabled access; wake resumes it while Planner remains running. |
+| Q26 | B, amended to remove expiry qualifiers. Last-window closure retains enabled access with a native menu-bar status and Stop control. App quit always stops access. |
 
 Completion command descriptions must say what changes and what is retained. Global Complete sets the Item Done so every appearance displays Done; Global Reopen reveals retained local flags and can leave some appearances Done. Contextual Complete/Reopen changes only the selected local flag; a globally Done Item still displays Done. Container bulk affects all contextual children, including hidden/archived ones, without changing global completion. Read results identify global, local and effective completion so an agent can explain the outcome.
 
@@ -178,7 +178,15 @@ The manual-administration boundary excludes backup export/decode/apply, recovery
 
 Loading feedback belongs beside the pending Maps preview, not in a blocking save screen. Show that lookup is in progress, then its result or truthful unavailable/partial state. Obsolete callbacks after input changes/Add/Cancel cannot update a saved Item or the current review.
 
-The Mac menu-bar control shows active/off state, remaining absolute duration and Stop. Closing the window does not create a daemon or enable access indefinitely. The process must remain alive for the chosen session; app quit, manual Stop and expiry stop the listener and revoke its credential. Sleep does not pause either elapsed deadline; display sleep or session switching is not equated with a lock event.
+The Mac menu-bar control shows On/Off and Stop, with no countdown or duration selector. The running app retains manually enabled access through long idle periods, lock, sleep and last-window closure. Manual Stop or app quit removes the listener and revokes its credential. App restart starts Off; the reader cannot enable access. No separate daemon is introduced. Actual system sleep prevents serving requests until wake, without changing the enablement policy.
+
+## Accepted amendment: no automatic agent access expiry
+
+On 2026-10-08 the human explicitly removed all session timeouts from the preceding questions. Previously accepted Q23 C and Q24 A imposed a 60-minute maximum and ten-minute idle expiry, and Q25/Q26 retained access only while unexpired. Those limits are superseded: Agent Control stays enabled until manual Stop or app quit, including long idle periods, lock, sleep and last-window closure while the main app remains running.
+
+Remove duration choices, countdown, maximum-duration and idle-reset timers, elapsed-expiry checks after wake, and time-based credential rotation. Enablement still creates a fresh credential. Stop revokes access and removes the listener; quit or process termination ends access; relaunch starts Off. Menu-bar On/Off and Stop remain visible after last-window closure. Authorization, Core dataset ownership, reviewed-action validation and truthful precommit/postcommit cancellation outcomes still apply. The reader cannot start or re-enable Agent Control.
+
+This amendment overrides the original brief and historical Q23-Q26 wording below. Capture loading and Maps-request budgets govern individual operations and are unchanged. Protocol compatibility and capacity remain independent pending Q29/Q30 decisions. The required evidence table below states the updated unit, real-listener and native lifecycle observations; no runtime evidence is claimed.
 
 ## Accepted Q27/Q28 and clarified session meanings
 
@@ -191,7 +199,7 @@ Q28 A is accepted: use the existing signed Mac Planner executable's non-UI heade
 | Meaning | Current contract |
 | --- | --- |
 | MCP protocol session | The published 2026-07-28 revision removes initialize/initialized and Mcp-Session-Id. Modern requests carry their own version/capabilities; server/discover is available without a mandatory client handshake. No modern protocol session is required. |
-| Agent access window | The independently accepted manual enablement, rotating credential, 60-minute default, ten-minute idle expiry and Stop. These can govern stateless requests; no MCP handshake creates or extends this authority. Prior limits remain accepted unless the human changes them. |
+| Agent access window | Manual enablement with a fresh credential, retained until Stop or app quit. The human removed all automatic maximum/idle expiry and countdown. Lock, sleep and last-window closure retain enablement. No MCP handshake creates or extends this authority. |
 | PlannerDatasetSession | The already approved Core ownership/lifetime binding. It prevents stale account/store operations and is not an MCP transport session. It carries forward unchanged. |
 | Operation/review identity | Explicit UUID/review handle with accepted payload/target/ownership and replay meanings. Stateless transport does not eliminate durable operation evidence or make an uncertain write automatically safe to repeat. |
 
@@ -216,15 +224,15 @@ The earlier report and Q21 wording were based on legacy initialization. This pac
 | Q27 chooses changed-field hashes, Q10 fixes partial-edit semantics | Draft exact read/hash/edit/outcome forms for final public review. | No tests or executable source until the applicable interface review. |
 | Q28 accepts the same-app reader; Q20 selects four clients | Current native SDK versus modern protocol compatibility choice. | Exact selected transport/client setup and compatibility evidence after Q29; no custom protocol stack presumed. |
 | Modern protocol has no initialized-client roster; Q21 asked for two clients | Clarify qualification target versus enforced client registration. | Resource/admission fields or explicit client-profile credential fields after Q30. |
-| Existing accepted Agent Control timers/menu bar and Core ownership | Preserve the access window independently of transport. | Reader storage/access and final schema are concretized under the selected native/client policy. |
+| Accepted manual Agent Control enablement/menu bar and Core ownership | Preserve enablement until Stop or app quit independently of transport. | Reader storage/access and final schema are concretized under the selected native/client policy. |
 
 ## Native reader storage/access candidate
 
 Following the accepted native best-practice direction and Q28's same-executable choice, use Apple's data-protection Keychain candidate for the temporary credential, owned by Planner's private access group. Both app and reader are the same signed main executable, so neither clients nor Share extensions require Keychain access and no additional shared group is inherently needed. [TN3137](https://developer.apple.com/documentation/technotes/tn3137-on-mac-keychains) describes process/signing and implementation differences; the actual profile/entitlements and sandboxed invocation still require proof.
 
-The [data-protection flag](https://developer.apple.com/documentation/security/ksecusedataprotectionkeychain) with [AfterFirstUnlockThisDeviceOnly](https://developer.apple.com/documentation/security/ksecattraccessibleafterfirstunlockthisdeviceonly) is a documented macOS candidate for access after first unlock until restart, including while locked, without migrating the item to another device. It does not itself enforce Planner's expiry/Stop rules. Do not add user-presence/biometric requirements that contradict the accepted unexpired locked-use behavior. A [noninteractive LAContext](https://developer.apple.com/documentation/localauthentication/lacontext/interactionnotallowed) makes a requirement fail instead of showing UI; it is not proof that access succeeds.
+The [data-protection flag](https://developer.apple.com/documentation/security/ksecusedataprotectionkeychain) with [AfterFirstUnlockThisDeviceOnly](https://developer.apple.com/documentation/security/ksecattraccessibleafterfirstunlockthisdeviceonly) is a documented macOS candidate for access after first unlock until restart, including while locked, without migrating the item to another device. It does not itself enforce Planner's Stop or process-lifetime rules. Do not add user-presence/biometric requirements that contradict the accepted enabled locked-use behavior. A [noninteractive LAContext](https://developer.apple.com/documentation/localauthentication/lacontext/interactionnotallowed) makes a requirement fail instead of showing UI; it is not proof that access succeeds.
 
-The reader emits only the required header JSON for an active, unexpired access window and otherwise returns a controlled unavailable result without prompting. It cannot enable/renew access, start a listener, initialize/migrate data or silently fall back to a plaintext credential in ordinary configuration. Prove actual lock, first-unlock/restart, manual Stop, timeout, app quit/forced termination and update/signing behavior with the same installed executable. Main-process liveness, window metadata and cleanup are part of the final reader contract; no implementation has been established.
+The reader emits only the required header JSON while Agent Control is enabled in the running main app and otherwise returns a controlled unavailable result without prompting. It cannot enable access, start a listener, initialize/migrate data or silently fall back to a plaintext credential in ordinary configuration. Prove continuation after long idle periods and lock/sleep, first-unlock/restart, manual Stop, app quit/forced termination and update/signing behavior with the same installed executable. Main-process liveness, access metadata and cleanup are part of the final reader contract; no implementation has been established.
 
 A caller running under the local user's account may be able to invoke the configured executable too. The mode is not proof of vendor identity or client pairing. Q30 B would require explicit profile credentials and reader arguments; Q30 A deliberately avoids that registration policy. Credentials/window metadata are excluded from Planner portable backups and planning-data synchronization.
 
@@ -234,7 +242,7 @@ These are independent decisions. Modern sessionless MCP, legacy stateless HTTP a
 
 ❓ **Contract Q29** - **Which protocol baseline should the native MCP prototype target?**
 
-The published 2026-07-28 protocol removes initialization and protocol sessions. Current official Swift SDK 0.12.1 targets 2025-11-25; its stateless HTTP mode omits session IDs but retains initialization. Claude documents a newer runtime with fallback, while the inspected Codex evidence does not establish modern support in both surfaces. No Planner connection has succeeded. This is a native SDK/compatibility choice, separate from countdown and Stop.
+The published 2026-07-28 protocol removes initialization and protocol sessions. Current official Swift SDK 0.12.1 targets 2025-11-25; its stateless HTTP mode omits session IDs but retains initialization. Claude documents a newer runtime with fallback, while the inspected Codex evidence does not establish modern support in both surfaces. No Planner connection has succeeded. This is a native SDK/compatibility choice, separate from manual enablement and Stop.
 
 - **A. Official Swift SDK baseline.** Accept 2025-11-25 stateless HTTP for the first prototype and qualify all four clients. No required Mcp-Session-Id or protocol session manager. Modern support is a later upgrade unless a maintained compatible SDK is verified during the prototype.
 - **B. Current protocol plus compatibility.** Require 2026-07-28 and support legacy where selected clients need it. Resolve the native SDK gap before qualification. Adds protocol/adapter investigation and tests, without assuming approval of a custom stack.
@@ -366,6 +374,8 @@ Original proposal covered: bulk-confirmation part of Q5. Status: accepted A, 202
 ---
 
 ❓ **Revised Contract Q8** - **What should Stop do to an already admitted MCP write?**
+
+The later no-automatic-expiry amendment removes the expiry trigger in this historical question; accepted safe precommit cancellation still applies to manual Stop.
 
 An agent starts creating an Item and its two memberships. You press Stop or the session expires before the response arrives. New work must fail immediately. A committed action cannot be promised rolled back, and incomplete recovery is already an approved distinct status. The open choice is what to do if the admitted action has not committed yet.
 
@@ -571,6 +581,8 @@ Original proposal covered: address part of Q15. Status: accepted A, with default
 
 ---
 
+The following Q23-Q26 cards preserve the historical proposals and original answers. Their timer/expiry language is superseded by the accepted no-automatic-expiry amendment above.
+
 ❓ **Revised Contract Q23** - **What should the default absolute session duration be?**
 
 Agent Control shows a countdown and can offer the brief's 15, 30 and 60-minute choices. It must not renew itself automatically. An absolute expiry still stops access even if a client repeatedly sends valid requests. Idle expiry, lock/sleep and window closure are separate decisions. Which duration should be selected by default?
@@ -581,7 +593,7 @@ Agent Control shows a countdown and can offer the brief's 15, 30 and 60-minute c
 
 ➡️ Recommendation: **A, Thirty minutes**. It fits a deliberate temporary working session while leaving shorter/longer choices visible.
 
-Original proposal covered: absolute-duration part of Q16. Status: accepted C, 2026-10-08.
+Original proposal covered: absolute-duration part of Q16. Status: originally accepted C, then superseded on 2026-10-08 by the human amendment removing all automatic access expiry. Historical question; no duration choice remains required.
 
 ---
 
@@ -595,7 +607,7 @@ The brief requires an inactivity timeout in addition to manual Stop and the abso
 
 ➡️ Recommendation: **A, Ten minutes idle**. It balances temporary access with ordinary pauses; exact timer/reset boundaries remain test obligations.
 
-Original proposal covered: inactivity part of Q16. Status: accepted A, 2026-10-08.
+Original proposal covered: inactivity part of Q16. Status: originally accepted A, then superseded on 2026-10-08 by the human amendment removing all automatic access expiry. Historical question; no idle interval remains required.
 
 ---
 
@@ -609,7 +621,7 @@ An agent is connected, then you lock the Mac or it actually enters system sleep.
 
 ➡️ Recommendation: **A, Stop on both lock and sleep**. It makes unattended access a deliberate new session, conditional on proving the lock guarantee rather than substituting display sleep or app deactivation.
 
-Original proposal covered: lock/sleep part of Q16. Status: accepted C, 2026-10-08.
+Original proposal covered: lock/sleep part of Q16. Status: accepted C, 2026-10-08; later amended to retain enablement without the historical expiry/deadline qualifiers.
 
 ---
 
@@ -623,7 +635,7 @@ Closing the last Mac window can leave the app process running. If Agent Control 
 
 ➡️ Recommendation: **A, Stop access with the last window**. It keeps the first session lifecycle easy to see and reason about.
 
-Original proposal covered: window-close part of Q16. Status: accepted B, 2026-10-08.
+Original proposal covered: window-close part of Q16. Status: accepted B, 2026-10-08; later amended to retain enablement without the historical expiry qualifier or countdown.
 
 ---
 
@@ -643,15 +655,15 @@ These are obligations and competing expected observations for later approved exe
 | Wire value unit and actual round-trip | Q11/Q12 fix canonical Int64 strings and finite numeric native Date values. Required tests include Int64 max 9223372036854775807, rank min -9223372036854775808, overflow 9223372036854775808, fraction 1.0000000000000001, exponent and leading-zero strings, finite submillisecond native Date and distant finite dates, UUID case variants, malformed IDs, invalid civil dates and non-finite coordinates. Do not impose a new practical domain range. |
 | JSON version/structure unit | Q13 rejects unknown supported-version backup fields; Q14 uses native repeated-property handling without a rejection guarantee. Unsupported version, malformed input, duplicate record IDs and unresolved references reject the whole backup with zero mutation. Assert useful unknown-property errors. For repeated properties, assert one immutable decoded proposal reaches preview/apply; do not assert an undocumented first/last winner. No shortened successful export of an unresolved native graph. |
 | Import unit/store/native preview | Accepted Skip keeps matching whole owners; Overwrite replaces represented whole owners after review; omission from file preserves sources. Current A=[X] with local Done plus incoming A=[X,Z] produces A unchanged and new Z in Skip. Invalid backup rejects together. Incoming deleted markers, restoring IDs, conflict-dependent skipped owners and independent records follow the architecture's exact accepted examples. |
-| Authority unit and real MCP server | Forbidden source/label Delete and any unauthorized indirect apply reject before mutation, including the case where X is absent at preview but its obsolete lifetime may arrive later. Disabled/expired access fails. Ordinary authorized reference removal preserves protected sources. Q1-Q8/Q5 require separately described completion scopes, agent-applied exact capture/bulk review and native-only backup administration/export. No backup or admin command is registered in MCP/Intents, and indirect forbidden commands reject with zero mutation. |
+| Authority unit and real MCP server | Forbidden source/label Delete and any unauthorized indirect apply reject before mutation, including the case where X is absent at preview but its obsolete lifetime may arrive later. Disabled/revoked access fails. Ordinary authorized reference removal preserves protected sources. Q1-Q8/Q5 require separately described completion scopes, agent-applied exact capture/bulk review and native-only backup administration/export. No backup or admin command is registered in MCP/Intents, and indirect forbidden commands reject with zero mutation. |
 | Receipt/recovery integration and host-closed Share | Same operation/payload creates one result. Changed-payload replay rejects only that attempt. Failure before commit leaves action unapplied; failure after commit retains complete Item/memberships, reports recovery incomplete, blocks dataset writes and retries copy only. Kill at every approved prepare/commit/copy/receipt checkpoint and query actual surviving evidence; prepared-only stays unverified. |
 | Scheduling unit/store/native picker/device | Inclusive Friday-Sunday dates, fixed Tokyo 10:00-11:00 to Paris 03:00-04:00 display, valid start-only, strictly-later end, spring gap rejection, earlier/later repeated occurrence and coupled DST endpoints. Planning-zone-only edit preserves both instants. Every accepted Q5-Q14 fixture remains required; no EventKit check substitutes. |
 | Capture loader/parser unit, real store and physical payload | Reverse loader completion and retain U then V; Unicode/prose/link retention exactly matches C8-C10. Typed URL-object spelling is distinguished from original text. Unsupported/file-only, conflicting parameters, missing own coordinate and finite bounds follow accepted C9/C13. Q15-Q17 require typed URL first within attachment order; test just below/at/above each accepted budget, reverse callback completion, four-loader maximum and ten-second total deadline. Failed supported inputs block Add until retry or explicit removal. Never silently omit a supported lane. |
 | Capture transport unit and actual extension lifecycle | Q18/Q19 require HTTPS originals only, eight-second total/four-second request budgets, five redirects/six requests, with visible pending-preview feedback. Test exact hosts versus suffix spoofs, HTTP-original behavior selected in Q18, disallowed hop, loops, missing Location, each boundary and deadline, obsolete callbacks after input edit/Add/Cancel, partial Save without lookup, no ordinary-page body fetch and no automatic preview retry. Native allocations and extension lifecycle must be measured; post-load byte checks are insufficient proof. |
 | Export/recovery account integration/physical | Complete active backup retains IDs/manual order/schedules/minimal lineage and excludes app state/credentials/cache/receipts. Inspect/export old recovery does not mutate or upload into current account. Explicit empty-dataset restoration reproduces accepted data; coherent ownership cutoff preserves good independent copy under resets. Q4/Q5 keep backup/export/recovery administration native-only; verify no equivalent public MCP/Intent path. |
 | App Intents native and adapter parity | Q6/Q7 allow ordinary locked-device Intents where Apple permits, while bulk uses system confirmation. Execute locked/unlocked/system-restricted/canceled cases, unsupported/removed IDs and archived hidden bulk children. No ambiguous completion fallback. Capture native review cancellation creates zero Items. |
-| Selected-client and native MCP integration | Q20-Q26 require four separately demonstrated clients, two-client qualification and the clarified capacity policy selected in the current frontier, occupied 44444 failure, fresh credentials on enablement, no listener while Off, 60-minute default and ten-minute idle expiry. Lock/sleep retain only unexpired access; expired sleep sessions admit zero work on wake. Last-window closure retains menu-bar status/Stop; app quit ends access. Test before/after-commit cancellation status. Same-app credential reader is accepted; exact access/storage and modern/legacy compatibility remain follow-ups. No secrets in ordinary logs/configuration. CLI success cannot stand in for desktop proof. |
-| Native lifecycle and menu-bar proof | With a 60-minute session and last successful call at 09:00, sleeping from 09:05 to 09:12 expires the ten-minute idle deadline; wake admits zero requests before revocation. Waking at 09:09 retains only the remaining original time. Continuous authorized calls cannot pass the 60-minute deadline. Locked but unexpired allowed calls remain subject to normal authority. Closing the last window keeps a visible countdown/Stop; Stop or quit removes the listener. These are proposed exact fixtures under already accepted policies, not executed tests. |
+| Selected-client and native MCP integration | Q20-Q26 require four separately demonstrated clients, two-client qualification and the clarified capacity policy selected in the current frontier, occupied 44444 failure, fresh credentials on enablement and no listener while Off. No maximum duration or idle expiry. Long idle periods and lock/sleep retain enabled access; wake resumes requests while Planner remains running. Last-window closure retains menu-bar status/Stop; app quit ends access. Test before/after-commit cancellation status. Same-app credential reader is accepted; exact access/storage and modern/legacy compatibility remain follow-ups. No secrets in ordinary logs/configuration. CLI success cannot stand in for desktop proof. |
+| Native lifecycle and menu-bar proof | Enable at 09:00. With no intervening tool calls, an authorized read at 12:00 still succeeds. Sleep at 12:05 and wake at 13:15: access remains On and an authorized read succeeds while Planner remains running. Locked requests retain normal authority. Closing the last window keeps menu-bar On/Stop without a countdown. Stop removes the listener; re-enable uses a fresh credential and rejects the previous one. Quit/forced termination removes the listener; relaunch starts Off and the reader returns unavailable. Cover elapsed-time policy through public-boundary unit fixtures and actual sleep/window/quit behavior through native integration. These are future observations, not executed tests. |
 
 Additional current obligations are conditional on the pending choices, not claimed passing tests. For Q29 A, a client must initialize using the supported legacy revision and then perform permitted authenticated calls without a required protocol session ID. For Q29 B/C, prove modern calls without initialize or Mcp-Session-Id, per-request version/capability/header validation and server/discover; test each required legacy branch only if selected. A modern response-stream cancellation still preserves an already committed operation and its receipt. Unsupported versions return useful failure, never an accidental successful downgrade.
 
@@ -662,6 +674,6 @@ For Q30 A, hold two tool calls at a genuine I/O boundary; a third call receives 
 - [ ] Human accepts the final command/query schemas, wire validation and integration authority.
 - [ ] Representative complete JSON/typed Swift requests and results include exact UUIDs, error and retained-state expectations.
 - [ ] No adapter duplicates Core rules or obtains forbidden authority through alternate commands.
-- [ ] Accepted grammar/resource/session choices have executable-boundary fields and exact future unit/store/UI/device/client obligations.
+- [ ] Accepted grammar/resource/access choices have executable-boundary fields and exact future unit/store/UI/device/client obligations.
 - [ ] Document checks pass; publish/read back committed source and progress/resolution evidence.
 - [ ] Close only after this decision's applicable human/evidence criteria pass, then append its named resolution pointer to the map. Runtime checks remain owned by the prototypes.
