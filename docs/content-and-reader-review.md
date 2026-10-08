@@ -6,7 +6,7 @@ Concrete declarations for [Shared command contracts](https://github.com/dvcol/pl
 
 The approved architecture names content families but leaves some nested field types unspecified. An implementation cannot independently test a location, an ordered link edit or a label association hash until those types are fixed. This packet declares the editable content catalog and the compound values used by reads, creation and edits. Completion, archive, organization, scheduling and recovery retain their own commands.
 
-The expected end is a complete public contract using these concrete values and the accepted reader observations. Q31 is withdrawn as a repeated policy question; its catalog is an engineering declaration under Q10/Q27, not a new conflict policy or an invented human approval. Q32 selects the ping candidate for qualification. The complete adapter packet must still supply command/query/review/result encodings and native backup administration forms for one final review. This does not resolve the entire ticket or prove an extension, client or device workflow.
+The expected end is a complete public contract using these concrete values and the accepted reader observations. Q31 is withdrawn as a repeated policy question; its catalog is an engineering declaration under Q10/Q27, not a new conflict policy or an invented human approval. Q32 selects the ping candidate for qualification. The [complete adapter packet](adapter-contract.md) and [portable/native recovery declaration](portable-data-contract.md) now supply command/query/review/result encodings and native backup administration forms for one final review. This does not resolve the entire ticket or prove an extension, client or device workflow.
 
 ## Content catalog under accepted Q10/Q27
 
@@ -66,7 +66,7 @@ Compound values are one edited field. A location edit validates and guards the c
 
 A supplied compound field is a complete replacement value, not a recursive patch. Its declared nested properties must be present, using null for nullable members; a location object containing only formattedAddress is rejected rather than silently clearing the other members. Link input alone may omit `linkId` to request a new owned identity. Top-level optional fields may be omitted on creation for their nil defaults; omitted top-level edit fields remain unchanged. This distinction must appear in the final input schemas and error paths.
 
-Schedule commands are separate from source-content edits. A source patch cannot reschedule its Item by putting a schedule property in `changes`. Their final adapter packet will use the approved typed timed/all-day form, fixed instants, inclusive civil dates and explicit zone-only edit. The Schedule kind byte reserved by the hash draft does not grant an extra source-content field or authorize a blind Schedule edit.
+Schedule commands are separate from source-content edits. A source patch cannot reschedule its Item by putting a schedule property in `changes`. The [adapter packet](adapter-contract.md#schedule-form-and-guard) uses the approved typed timed/all-day form, fixed instants, inclusive civil dates and explicit zone-only edit. The Schedule kind byte reserved by the hash draft does not grant an extra source-content field or authorize a blind Schedule edit.
 
 ## Representative independent fixture
 
@@ -141,7 +141,7 @@ Neither process properties nor a successful bearer-authenticated ping proves ven
 - [x] Finish the native reader fact check and specify its observable input/output/storage/lifecycle candidate with unproved runtime limits.
 - [x] Q31's repeated conflict-policy question is removed; Q10/Q27 govern the engineering content catalog and changed-field guards.
 - [x] Human accepts Q32 A, authenticated SDK ping, for the same-app reader.
-- [ ] Finalize the remaining adapter and native administration request/result declarations using these accepted types.
+- [x] The adapter and native administration request/result declarations are linked using these accepted types; complete human review remains open.
 
 ## Required /tdd and other evidence
 
@@ -162,6 +162,6 @@ These are future obligations. Agree the public declarations first, then write on
 ## Definition of done for this review packet
 
 - [x] Human clarification preserves Q27's delegated hash decision and accepts Q32 A without another conflict-policy round.
-- [ ] Reconcile amendments into the field-edit draft and remaining adapter declarations; original domain and authority invariants remain intact.
+- [x] Reconcile amendments into the field-edit draft and linked adapter/portable declarations; original domain and authority invariants remain intact.
 - [ ] Link the source, exact independently specified fixtures and applicable validation from Shared command contracts.
 - [ ] Before resolving the full contract ticket, approve its complete request/result/admin forms and assign every runtime obligation to its prototype. This packet alone does not close the ticket or complete the map.

@@ -1,0 +1,483 @@
+{
+  "format": "planner-portable-import-expectations",
+  "formatVersion": 1,
+  "status": "Independent future native/store/device expectations; no Swift execution",
+  "baseline": "portable-backup-v1.json",
+  "editRule": "Current/incoming edits independently modify separate copies of the baseline. Literal edits produce fixture inputs; expected values are not generated from production code.",
+  "scenarios": [
+    {
+      "name": "default Skip retains current X and adds Z once",
+      "incomingEdits": [
+        {
+          "operation": "replace",
+          "path": "/sources/0/content/title",
+          "value": "Backup museum"
+        },
+        {
+          "operation": "add",
+          "path": "/sources/-",
+          "value": {
+            "kind": "item",
+            "id": "00000000-0000-4000-8000-000000000103",
+            "lifetimeId": "00000000-0000-4000-8000-000000000813",
+            "createdAt": 10.25,
+            "updatedAt": 20.125,
+            "content": {
+              "title": "Travel Adapter",
+              "subtitle": null,
+              "notes": null,
+              "location": null,
+              "estimate": null
+            },
+            "globalDone": false,
+            "archived": false,
+            "contentOrigins": {
+              "title": "independent"
+            }
+          }
+        }
+      ],
+      "mode": "skip",
+      "expected": {
+        "itemCount": "3",
+        "itemXTitle": "Nezu Museum",
+        "itemZTitle": "Travel Adapter",
+        "listAMembershipIds": [
+          "00000000-0000-4000-8000-000000000401",
+          "00000000-0000-4000-8000-000000000402"
+        ],
+        "listALocalDone": [
+          true,
+          false
+        ],
+        "reimportAddsNothing": true
+      }
+    },
+    {
+      "name": "Overwrite replaces represented X and preserves omitted source",
+      "incomingEdits": [
+        {
+          "operation": "replace",
+          "path": "/sources/0/content/title",
+          "value": "Backup museum"
+        },
+        {
+          "operation": "add",
+          "path": "/sources/-",
+          "value": {
+            "kind": "item",
+            "id": "00000000-0000-4000-8000-000000000103",
+            "lifetimeId": "00000000-0000-4000-8000-000000000813",
+            "createdAt": 10.25,
+            "updatedAt": 20.125,
+            "content": {
+              "title": "Travel Adapter",
+              "subtitle": null,
+              "notes": null,
+              "location": null,
+              "estimate": null
+            },
+            "globalDone": false,
+            "archived": false,
+            "contentOrigins": {
+              "title": "independent"
+            }
+          }
+        }
+      ],
+      "mode": "overwrite",
+      "expected": {
+        "itemCount": "4",
+        "itemXTitle": "Backup museum",
+        "itemZTitle": "Travel Adapter",
+        "sourceItemYRetained": true,
+        "listAMembershipIds": [
+          "00000000-0000-4000-8000-000000000401",
+          "00000000-0000-4000-8000-000000000402"
+        ],
+        "reimportAddsNothing": true,
+        "sourceItemWRetained": true,
+        "itemWTitle": "Current W"
+      },
+      "currentEdits": [
+        {
+          "operation": "add",
+          "path": "/sources/-",
+          "value": {
+            "kind": "item",
+            "id": "00000000-0000-4000-8000-000000000104",
+            "lifetimeId": "00000000-0000-4000-8000-000000000816",
+            "createdAt": 10.25,
+            "updatedAt": 20.125,
+            "content": {
+              "title": "Current W",
+              "subtitle": null,
+              "notes": null,
+              "location": null,
+              "estimate": null
+            },
+            "globalDone": false,
+            "archived": false,
+            "contentOrigins": {
+              "title": "independent"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "matching List Skip retains full current owner",
+      "incomingEdits": [
+        {
+          "operation": "replace",
+          "path": "/sources/0/content/title",
+          "value": "Backup museum"
+        },
+        {
+          "operation": "add",
+          "path": "/sources/-",
+          "value": {
+            "kind": "item",
+            "id": "00000000-0000-4000-8000-000000000103",
+            "lifetimeId": "00000000-0000-4000-8000-000000000813",
+            "createdAt": 10.25,
+            "updatedAt": 20.125,
+            "content": {
+              "title": "Travel Adapter",
+              "subtitle": null,
+              "notes": null,
+              "location": null,
+              "estimate": null
+            },
+            "globalDone": false,
+            "archived": false,
+            "contentOrigins": {
+              "title": "independent"
+            }
+          }
+        },
+        {
+          "operation": "add",
+          "path": "/memberships/-",
+          "value": {
+            "id": "00000000-0000-4000-8000-000000000404",
+            "list": {
+              "kind": "list",
+              "id": "00000000-0000-4000-8000-000000000201",
+              "lifetimeId": "00000000-0000-4000-8000-000000000821"
+            },
+            "item": {
+              "kind": "item",
+              "id": "00000000-0000-4000-8000-000000000103",
+              "lifetimeId": "00000000-0000-4000-8000-000000000813"
+            },
+            "rank": "3072",
+            "localDone": false,
+            "lifetimeId": "00000000-0000-4000-8000-000000000404"
+          }
+        }
+      ],
+      "mode": "skip",
+      "expected": {
+        "itemCount": "3",
+        "listAMembershipIds": [
+          "00000000-0000-4000-8000-000000000401",
+          "00000000-0000-4000-8000-000000000402"
+        ],
+        "listALocalDone": [
+          true,
+          false
+        ],
+        "newMembership404Absent": true,
+        "itineraryProgress": [
+          "0",
+          "3"
+        ]
+      }
+    },
+    {
+      "name": "matching List Overwrite includes its incoming new membership",
+      "incomingEdits": [
+        {
+          "operation": "replace",
+          "path": "/sources/0/content/title",
+          "value": "Backup museum"
+        },
+        {
+          "operation": "add",
+          "path": "/sources/-",
+          "value": {
+            "kind": "item",
+            "id": "00000000-0000-4000-8000-000000000103",
+            "lifetimeId": "00000000-0000-4000-8000-000000000813",
+            "createdAt": 10.25,
+            "updatedAt": 20.125,
+            "content": {
+              "title": "Travel Adapter",
+              "subtitle": null,
+              "notes": null,
+              "location": null,
+              "estimate": null
+            },
+            "globalDone": false,
+            "archived": false,
+            "contentOrigins": {
+              "title": "independent"
+            }
+          }
+        },
+        {
+          "operation": "add",
+          "path": "/memberships/-",
+          "value": {
+            "id": "00000000-0000-4000-8000-000000000404",
+            "list": {
+              "kind": "list",
+              "id": "00000000-0000-4000-8000-000000000201",
+              "lifetimeId": "00000000-0000-4000-8000-000000000821"
+            },
+            "item": {
+              "kind": "item",
+              "id": "00000000-0000-4000-8000-000000000103",
+              "lifetimeId": "00000000-0000-4000-8000-000000000813"
+            },
+            "rank": "3072",
+            "localDone": false,
+            "lifetimeId": "00000000-0000-4000-8000-000000000404"
+          }
+        }
+      ],
+      "mode": "overwrite",
+      "expected": {
+        "itemCount": "3",
+        "listAMembershipIds": [
+          "00000000-0000-4000-8000-000000000401",
+          "00000000-0000-4000-8000-000000000402",
+          "00000000-0000-4000-8000-000000000404"
+        ],
+        "listALocalDone": [
+          true,
+          false,
+          false
+        ],
+        "newExpandedZLocalDone": false,
+        "itineraryProgress": [
+          "0",
+          "4"
+        ]
+      }
+    },
+    {
+      "name": "unsupported version rejects together",
+      "incomingEdits": [
+        {
+          "operation": "replace",
+          "path": "/formatVersion",
+          "value": 2
+        }
+      ],
+      "mode": "skip",
+      "expected": {
+        "code": "unsupportedVersion",
+        "propertyPath": "/formatVersion",
+        "noMutation": true
+      }
+    },
+    {
+      "name": "unknown supported-version field rejects together",
+      "incomingEdits": [
+        {
+          "operation": "add",
+          "path": "/sources/0/unrecognized",
+          "value": true
+        }
+      ],
+      "mode": "overwrite",
+      "expected": {
+        "code": "unknownField",
+        "propertyPath": "/sources/0/unrecognized",
+        "noMutation": true
+      }
+    },
+    {
+      "name": "duplicate source identity rejects together",
+      "incomingEdits": [
+        {
+          "operation": "appendCopy",
+          "path": "/sources",
+          "from": "/sources/0"
+        }
+      ],
+      "mode": "skip",
+      "expected": {
+        "code": "invalidInput",
+        "propertyPath": "/sources/7/id",
+        "noMutation": true
+      }
+    },
+    {
+      "name": "unresolvable membership rejects together",
+      "incomingEdits": [
+        {
+          "operation": "replace",
+          "path": "/memberships/0/item/id",
+          "value": "00000000-0000-4000-8000-000000000198"
+        }
+      ],
+      "mode": "overwrite",
+      "expected": {
+        "code": "unresolvedReference",
+        "propertyPath": "/memberships/0/item/id",
+        "noMutation": true
+      }
+    },
+    {
+      "name": "invalid coordinate rejects whole file",
+      "incomingEdits": [
+        {
+          "operation": "replace",
+          "path": "/sources/0/content/location/coordinate/latitude",
+          "value": 91.0
+        }
+      ],
+      "mode": "skip",
+      "expected": {
+        "code": "invalidInput",
+        "propertyPath": "/sources/0/content/location/coordinate/latitude",
+        "noMutation": true
+      }
+    },
+    {
+      "name": "noncanonical rank rejects whole file",
+      "incomingEdits": [
+        {
+          "operation": "replace",
+          "path": "/memberships/0/rank",
+          "value": "01024"
+        }
+      ],
+      "mode": "skip",
+      "expected": {
+        "code": "invalidInput",
+        "propertyPath": "/memberships/0/rank",
+        "noMutation": true
+      }
+    },
+    {
+      "name": "cyclic completion predecessor rejects whole file",
+      "incomingEdits": [
+        {
+          "operation": "replace",
+          "path": "/completionChanges/0/observedChangeIds",
+          "value": [
+            "00000000-0000-4000-8000-000000000881"
+          ]
+        }
+      ],
+      "mode": "overwrite",
+      "expected": {
+        "code": "invalidInput",
+        "propertyPath": "/completionChanges/0/observedChangeIds",
+        "noMutation": true
+      }
+    },
+    {
+      "name": "Delete cancel preserves every owner and reference",
+      "nativeCommand": {
+        "type": "deleteSource",
+        "source": {
+          "kind": "tag",
+          "id": "00000000-0000-4000-8000-000000000601"
+        }
+      },
+      "cancelReview": true,
+      "expected": {
+        "sourceRetained": true,
+        "retainedAssociationIds": [
+          "00000000-0000-4000-8000-000000000651",
+          "00000000-0000-4000-8000-000000000652"
+        ],
+        "noMutation": true
+      }
+    },
+    {
+      "name": "confirmed Tag Delete removes associations only",
+      "nativeCommand": {
+        "type": "deleteSource",
+        "source": {
+          "kind": "tag",
+          "id": "00000000-0000-4000-8000-000000000601"
+        }
+      },
+      "confirmReview": true,
+      "expected": {
+        "removedSourceIds": [
+          "00000000-0000-4000-8000-000000000601"
+        ],
+        "removedAssociationIds": [
+          "00000000-0000-4000-8000-000000000651",
+          "00000000-0000-4000-8000-000000000652"
+        ],
+        "retainedCategoryId": "00000000-0000-4000-8000-000000000501",
+        "itemCount": "2",
+        "allCompletionAndSchedulesRetained": true
+      }
+    }
+  ],
+  "lineageAndRecovery": [
+    {
+      "name": "older backup cannot undo retained deletion",
+      "before": "Deletion marker closes Item D 199/lifetime 819",
+      "action": "Restore the post-deletion backup, then Skip a pre-deletion backup with D",
+      "expected": "D remains absent; old references remain absent; no automatic restoration"
+    },
+    {
+      "name": "deleted dependency skips complete owner",
+      "before": "X is deleted; incoming new Z and new List C references incoming X/Z",
+      "action": "Apply valid incoming backup using Skip",
+      "expected": "Z imported once; X stays deleted; whole C skipped and reported; no shortened C"
+    },
+    {
+      "name": "concurrent approved restoration families",
+      "before": "Deleted X lifetime 811; two reviewed restores create candidates lifetime 814 and 815 in one predecessor family",
+      "action": "Deliver both candidates and independent Z in both orders, then Delete X and deliver a late losing candidate",
+      "expected": "One visible X chooses lifetime 814 initially; Z and authorized references survive; predecessor refs stay suppressed; subsequent Delete keeps both candidates absent"
+    },
+    {
+      "name": "delayed alias cannot reassert Done after explicit Reopen",
+      "before": "Standalone X/A alias Done and another alias Todo consolidate once",
+      "action": "Explicit Reopen, relaunch, deliver a previously unseen initial Done alias",
+      "expected": "One context stays Todo; unrelated contexts unchanged; intentional itinerary repeats remain independent"
+    },
+    {
+      "name": "prepared-only proposal is unverified",
+      "before": "Prepared proposal survives, both committed-receipt sources missing",
+      "action": "Reopen and inspect the original operation",
+      "expected": "preparedUnverified with the surviving proposal identity, never rollback/success; fresh reviewed retry uses a new operation"
+    },
+    {
+      "name": "postcommit archive failure and checkpoint retry",
+      "before": "Complete import committed; independent recovery publication fails",
+      "action": "Read status, attempt another domain write, retry only the known checkpoint",
+      "expected": "Full import retained; appliedRecoveryIncomplete; further mutationBlocked; checkpoint completion changes no domain data and ends with appliedRecoveryComplete"
+    },
+    {
+      "name": "account ownership separation",
+      "before": "Old account A recovery with X; current account B has W",
+      "action": "Inspect/export A, then cancel a reviewed restoration",
+      "expected": "B still has W only; no automatic A upload; exported portable file excludes ownership/control/receipt/presentation state"
+    },
+    {
+      "name": "independent recovery integrity",
+      "before": "Acknowledged envelope with exact portable bytes and SHA-256 digest",
+      "action": "Corrupt one payload byte or supply a mismatched ownership binding",
+      "expected": "Controlled integrity/ownership failure; preserve previous good envelope; never claim Saved on this device for unverified data"
+    },
+    {
+      "name": "missing reliable evidence is not rollback",
+      "before": "No proposal or committed receipt survives; evidence reads succeed",
+      "action": "Inspect the original operation",
+      "expected": "noReliableEvidence; no knownUnapplied/success inference and no automatic replay"
+    }
+  ]
+}

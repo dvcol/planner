@@ -1,0 +1,415 @@
+{
+  "format": "planner-portable-lineage-expectations",
+  "formatVersion": 1,
+  "status": "Exact future native inputs/expectations; no Swift or sync execution",
+  "baseline": "portable-backup-v1.json",
+  "editRule": "Each scenario starts from a separate baseline. Apply listed literal edits before the named late delivery. Candidate/snapshot records are native preparation outputs used at the real persistence/I-O boundary, not caller-selectable production UUID factories.",
+  "scenarios": [
+    {
+      "name": "Done and Todo immutable aliases consolidate once",
+      "incomingEdits": [
+        {
+          "operation": "replace",
+          "path": "/contextAliases",
+          "value": [
+            {
+              "aliasId": "00000000-0000-4000-8000-000000000405",
+              "context": {
+                "kind": "listMembership",
+                "membershipId": "00000000-0000-4000-8000-000000000401",
+                "membershipLifetimeId": "00000000-0000-4000-8000-000000000401"
+              },
+              "canonicalContext": {
+                "kind": "listMembership",
+                "membershipId": "00000000-0000-4000-8000-000000000401",
+                "membershipLifetimeId": "00000000-0000-4000-8000-000000000401"
+              },
+              "initialDone": true,
+              "currentChangeId": null
+            },
+            {
+              "aliasId": "00000000-0000-4000-8000-000000000406",
+              "context": {
+                "kind": "listMembership",
+                "membershipId": "00000000-0000-4000-8000-000000000401",
+                "membershipLifetimeId": "00000000-0000-4000-8000-000000000401"
+              },
+              "canonicalContext": {
+                "kind": "listMembership",
+                "membershipId": "00000000-0000-4000-8000-000000000401",
+                "membershipLifetimeId": "00000000-0000-4000-8000-000000000401"
+              },
+              "initialDone": false,
+              "currentChangeId": null
+            }
+          ]
+        },
+        {
+          "operation": "replace",
+          "path": "/completionChanges",
+          "value": []
+        }
+      ],
+      "expected": {
+        "listMembershipCount": "1",
+        "localDone": true,
+        "listAProgress": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "Explicit Reopen suppresses late Done alias",
+      "incomingEdits": [
+        {
+          "operation": "replace",
+          "path": "/contextAliases",
+          "value": [
+            {
+              "aliasId": "00000000-0000-4000-8000-000000000405",
+              "context": {
+                "kind": "listMembership",
+                "membershipId": "00000000-0000-4000-8000-000000000401",
+                "membershipLifetimeId": "00000000-0000-4000-8000-000000000401"
+              },
+              "canonicalContext": {
+                "kind": "listMembership",
+                "membershipId": "00000000-0000-4000-8000-000000000401",
+                "membershipLifetimeId": "00000000-0000-4000-8000-000000000401"
+              },
+              "initialDone": true,
+              "currentChangeId": "00000000-0000-4000-8000-000000000883"
+            },
+            {
+              "aliasId": "00000000-0000-4000-8000-000000000406",
+              "context": {
+                "kind": "listMembership",
+                "membershipId": "00000000-0000-4000-8000-000000000401",
+                "membershipLifetimeId": "00000000-0000-4000-8000-000000000401"
+              },
+              "canonicalContext": {
+                "kind": "listMembership",
+                "membershipId": "00000000-0000-4000-8000-000000000401",
+                "membershipLifetimeId": "00000000-0000-4000-8000-000000000401"
+              },
+              "initialDone": false,
+              "currentChangeId": null
+            }
+          ]
+        },
+        {
+          "operation": "replace",
+          "path": "/completionChanges",
+          "value": [
+            {
+              "id": "00000000-0000-4000-8000-000000000883",
+              "aliasId": "00000000-0000-4000-8000-000000000405",
+              "context": {
+                "kind": "listMembership",
+                "membershipId": "00000000-0000-4000-8000-000000000401",
+                "membershipLifetimeId": "00000000-0000-4000-8000-000000000401"
+              },
+              "done": false,
+              "observedChangeIds": []
+            }
+          ]
+        },
+        {
+          "operation": "replace",
+          "path": "/memberships/0/localDone",
+          "value": false
+        }
+      ],
+      "lateDelivery": {
+        "contextAlias": {
+          "aliasId": "00000000-0000-4000-8000-000000000407",
+          "context": {
+            "kind": "listMembership",
+            "membershipId": "00000000-0000-4000-8000-000000000401",
+            "membershipLifetimeId": "00000000-0000-4000-8000-000000000401"
+          },
+          "canonicalContext": {
+            "kind": "listMembership",
+            "membershipId": "00000000-0000-4000-8000-000000000401",
+            "membershipLifetimeId": "00000000-0000-4000-8000-000000000401"
+          },
+          "initialDone": true,
+          "currentChangeId": null
+        }
+      },
+      "expected": {
+        "localDoneAfterLateDelivery": false,
+        "listAProgress": [
+          "0",
+          "2"
+        ],
+        "itineraryProgress": [
+          "0",
+          "3"
+        ]
+      }
+    },
+    {
+      "name": "Concurrent authorized source restoration",
+      "predecessorDeletion": {
+        "deletionId": "00000000-0000-4000-8000-000000000892",
+        "operationId": "00000000-0000-4000-8000-000000000992",
+        "target": {
+          "kind": "source",
+          "source": {
+            "kind": "item",
+            "id": "00000000-0000-4000-8000-000000000101",
+            "lifetimeId": "00000000-0000-4000-8000-000000000811"
+          }
+        },
+        "closedFamilyId": null
+      },
+      "restorationFamily": {
+        "familyId": "00000000-0000-4000-8000-000000000890",
+        "predecessor": {
+          "kind": "item",
+          "id": "00000000-0000-4000-8000-000000000101",
+          "lifetimeId": "00000000-0000-4000-8000-000000000811"
+        },
+        "candidates": [
+          {
+            "lifetimeId": "00000000-0000-4000-8000-000000000814",
+            "operationId": "00000000-0000-4000-8000-000000000994"
+          },
+          {
+            "lifetimeId": "00000000-0000-4000-8000-000000000815",
+            "operationId": "00000000-0000-4000-8000-000000000995"
+          }
+        ]
+      },
+      "candidateSources": [
+        {
+          "kind": "item",
+          "id": "00000000-0000-4000-8000-000000000101",
+          "lifetimeId": "00000000-0000-4000-8000-000000000814",
+          "createdAt": 10.25,
+          "updatedAt": 20.125,
+          "content": {
+            "title": "Nezu Museum",
+            "subtitle": null,
+            "notes": "Original notes",
+            "location": {
+              "displayName": "Meeting point",
+              "formattedAddress": "Meeting point A",
+              "coordinate": {
+                "latitude": 35.0,
+                "longitude": 139.0
+              }
+            },
+            "estimate": {
+              "minutes": "120",
+              "displayUnit": "hour"
+            }
+          },
+          "globalDone": false,
+          "archived": false,
+          "contentOrigins": {
+            "title": "independent",
+            "notes": "independent",
+            "location": "independent"
+          }
+        },
+        {
+          "kind": "item",
+          "id": "00000000-0000-4000-8000-000000000101",
+          "lifetimeId": "00000000-0000-4000-8000-000000000815",
+          "createdAt": 10.25,
+          "updatedAt": 20.125,
+          "content": {
+            "title": "Nezu Museum",
+            "subtitle": null,
+            "notes": "Original notes",
+            "location": {
+              "displayName": "Meeting point",
+              "formattedAddress": "Meeting point A",
+              "coordinate": {
+                "latitude": 35.0,
+                "longitude": 139.0
+              }
+            },
+            "estimate": {
+              "minutes": "120",
+              "displayUnit": "hour"
+            }
+          },
+          "globalDone": false,
+          "archived": false,
+          "contentOrigins": {
+            "title": "independent",
+            "notes": "independent",
+            "location": "independent"
+          }
+        }
+      ],
+      "candidateBindings": [
+        {
+          "kind": "item",
+          "id": "00000000-0000-4000-8000-000000000101",
+          "lifetimeId": "00000000-0000-4000-8000-000000000814"
+        },
+        {
+          "kind": "item",
+          "id": "00000000-0000-4000-8000-000000000101",
+          "lifetimeId": "00000000-0000-4000-8000-000000000815"
+        }
+      ],
+      "obsoleteBinding": {
+        "kind": "item",
+        "id": "00000000-0000-4000-8000-000000000101",
+        "lifetimeId": "00000000-0000-4000-8000-000000000811"
+      },
+      "deliveryOrders": [
+        [
+          "00000000-0000-4000-8000-000000000814",
+          "00000000-0000-4000-8000-000000000815"
+        ],
+        [
+          "00000000-0000-4000-8000-000000000815",
+          "00000000-0000-4000-8000-000000000814"
+        ]
+      ],
+      "expected": {
+        "visibleSourceCount": "1",
+        "initialWinnerLifetimeId": "00000000-0000-4000-8000-000000000814",
+        "bothCandidateBindingsEffective": true,
+        "obsoleteBindingEffective": false
+      }
+    },
+    {
+      "name": "Delete closes late restoration candidate",
+      "restorationFamily": {
+        "familyId": "00000000-0000-4000-8000-000000000890",
+        "predecessor": {
+          "kind": "item",
+          "id": "00000000-0000-4000-8000-000000000101",
+          "lifetimeId": "00000000-0000-4000-8000-000000000811"
+        },
+        "candidates": [
+          {
+            "lifetimeId": "00000000-0000-4000-8000-000000000814",
+            "operationId": "00000000-0000-4000-8000-000000000994"
+          },
+          {
+            "lifetimeId": "00000000-0000-4000-8000-000000000815",
+            "operationId": "00000000-0000-4000-8000-000000000995"
+          }
+        ]
+      },
+      "deletion": {
+        "deletionId": "00000000-0000-4000-8000-000000000893",
+        "operationId": "00000000-0000-4000-8000-000000000993",
+        "target": {
+          "kind": "source",
+          "source": {
+            "kind": "item",
+            "id": "00000000-0000-4000-8000-000000000101",
+            "lifetimeId": "00000000-0000-4000-8000-000000000814"
+          }
+        },
+        "closedFamilyId": "00000000-0000-4000-8000-000000000890"
+      },
+      "lateCandidate": {
+        "lifetimeId": "00000000-0000-4000-8000-000000000817",
+        "operationId": "00000000-0000-4000-8000-000000000998"
+      },
+      "expected": {
+        "visibleSourceCount": "0",
+        "lateCandidateEffective": false
+      }
+    },
+    {
+      "name": "Original membership Undo preserves public ID and flags",
+      "issuedNativeSnapshot": {
+        "datasetId": "00000000-0000-4000-8000-000000000801",
+        "ownershipBinding": "fixture-owner-A-epoch-1",
+        "identity": {
+          "kind": "membership",
+          "id": "00000000-0000-4000-8000-000000000401",
+          "lifetimeId": "00000000-0000-4000-8000-000000000401"
+        },
+        "closingOperationId": "00000000-0000-4000-8000-000000000997",
+        "originalRecord": {
+          "id": "00000000-0000-4000-8000-000000000401",
+          "list": {
+            "kind": "list",
+            "id": "00000000-0000-4000-8000-000000000201",
+            "lifetimeId": "00000000-0000-4000-8000-000000000821"
+          },
+          "item": {
+            "kind": "item",
+            "id": "00000000-0000-4000-8000-000000000101",
+            "lifetimeId": "00000000-0000-4000-8000-000000000811"
+          },
+          "rank": "1024",
+          "localDone": true,
+          "lifetimeId": "00000000-0000-4000-8000-000000000401"
+        },
+        "originalExpandedStates": [
+          {
+            "context": {
+              "listEntryId": "00000000-0000-4000-8000-000000000452",
+              "membershipId": "00000000-0000-4000-8000-000000000401",
+              "listEntryLifetimeId": "00000000-0000-4000-8000-000000000452",
+              "membershipLifetimeId": "00000000-0000-4000-8000-000000000401"
+            },
+            "localDone": false
+          }
+        ]
+      },
+      "restorationFamily": {
+        "familyId": "00000000-0000-4000-8000-000000000896",
+        "predecessor": {
+          "kind": "membership",
+          "id": "00000000-0000-4000-8000-000000000401",
+          "lifetimeId": "00000000-0000-4000-8000-000000000401"
+        },
+        "candidates": [
+          {
+            "lifetimeId": "00000000-0000-4000-8000-000000000941",
+            "operationId": "00000000-0000-4000-8000-000000000996"
+          }
+        ]
+      },
+      "expected": {
+        "membershipId": "00000000-0000-4000-8000-000000000401",
+        "newLifetimeId": "00000000-0000-4000-8000-000000000941",
+        "localDone": true,
+        "expandedLocalDone": false,
+        "obsoleteMembershipLifetimeEffective": false,
+        "listAProgress": [
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "name": "Ordinary re-add is separate from original Undo",
+      "removedMembership": {
+        "kind": "membership",
+        "id": "00000000-0000-4000-8000-000000000401",
+        "lifetimeId": "00000000-0000-4000-8000-000000000401"
+      },
+      "command": {
+        "type": "addMembership",
+        "itemId": "00000000-0000-4000-8000-000000000101",
+        "listId": "00000000-0000-4000-8000-000000000201",
+        "placement": {
+          "kind": "last"
+        }
+      },
+      "expected": {
+        "newPublicMembershipIdentity": true,
+        "newLifetimeEqualsPublicId": true,
+        "localDone": false,
+        "expandedLocalDone": false,
+        "globalDone": false
+      }
+    }
+  ]
+}

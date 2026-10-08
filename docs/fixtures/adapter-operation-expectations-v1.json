@@ -1,0 +1,745 @@
+{
+  "format": "planner-adapter-operation-expectations",
+  "formatVersion": 1,
+  "status": "Independent future public-boundary expectations; no Swift execution",
+  "baseline": "portable-backup-v1.json",
+  "bindingRule": "Template aliases are fixture helpers bound only to preceding public results. They introduce no production UUID/clock seam.",
+  "scenarios": [
+    {
+      "name": "notes changed with current hash",
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000901",
+          "command": {
+            "type": "editItem",
+            "sourceId": "00000000-0000-4000-8000-000000000101",
+            "changes": {
+              "notes": "Monday booking"
+            },
+            "expectedFieldHashes": {
+              "notes": "sha256-v1:514218da3ebca004857b8063cf5c59a50a25b02eb99b293bc9c4bc17fcca90dd"
+            }
+          }
+        }
+      },
+      "expected": {
+        "state": "applied",
+        "recovery": "complete",
+        "notes": "Monday booking",
+        "listAProgress": [
+          "1",
+          "2"
+        ],
+        "itineraryProgress": [
+          "0",
+          "3"
+        ],
+        "unchangedExcept": [
+          "Item X notes",
+          "Item X updatedAt",
+          "operation/recovery evidence"
+        ]
+      }
+    },
+    {
+      "name": "edited field stale",
+      "interveningChanges": {
+        "itemId": "00000000-0000-4000-8000-000000000101",
+        "notes": "Friday booking"
+      },
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000902",
+          "command": {
+            "type": "editItem",
+            "sourceId": "00000000-0000-4000-8000-000000000101",
+            "changes": {
+              "notes": "Monday booking"
+            },
+            "expectedFieldHashes": {
+              "notes": "sha256-v1:514218da3ebca004857b8063cf5c59a50a25b02eb99b293bc9c4bc17fcca90dd"
+            }
+          }
+        }
+      },
+      "expected": {
+        "state": "rejected",
+        "code": "staleEdit",
+        "conflictingFields": [
+          "notes"
+        ],
+        "retainedNotes": "Friday booking",
+        "noMutation": true
+      }
+    },
+    {
+      "name": "unrelated field change permits edit",
+      "interveningChanges": {
+        "itemId": "00000000-0000-4000-8000-000000000101",
+        "title": "Nezu Museum booking"
+      },
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000903",
+          "command": {
+            "type": "editItem",
+            "sourceId": "00000000-0000-4000-8000-000000000101",
+            "changes": {
+              "notes": "Monday booking"
+            },
+            "expectedFieldHashes": {
+              "notes": "sha256-v1:514218da3ebca004857b8063cf5c59a50a25b02eb99b293bc9c4bc17fcca90dd"
+            }
+          }
+        }
+      },
+      "expected": {
+        "state": "applied",
+        "retainedTitle": "Nezu Museum booking",
+        "notes": "Monday booking"
+      }
+    },
+    {
+      "name": "global Done overrides retained local flags",
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000904",
+          "command": {
+            "type": "setCompletion",
+            "scope": {
+              "kind": "globalItem",
+              "itemId": "00000000-0000-4000-8000-000000000101"
+            },
+            "done": true
+          }
+        }
+      },
+      "expected": {
+        "state": "applied",
+        "globalDone": true,
+        "listAProgress": [
+          "1",
+          "2"
+        ],
+        "listBProgress": [
+          "1",
+          "1"
+        ],
+        "itineraryProgress": [
+          "2",
+          "3"
+        ],
+        "retainedLocalFlags": true
+      }
+    },
+    {
+      "name": "global Reopen reveals local flags",
+      "startingGlobalDone": true,
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000905",
+          "command": {
+            "type": "setCompletion",
+            "scope": {
+              "kind": "globalItem",
+              "itemId": "00000000-0000-4000-8000-000000000101"
+            },
+            "done": false
+          }
+        }
+      },
+      "expected": {
+        "state": "applied",
+        "globalDone": false,
+        "listAProgress": [
+          "1",
+          "2"
+        ],
+        "listBProgress": [
+          "0",
+          "1"
+        ],
+        "itineraryProgress": [
+          "0",
+          "3"
+        ],
+        "retainedLocalFlags": true
+      }
+    },
+    {
+      "name": "one List appearance Reopen stays local",
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000906",
+          "command": {
+            "type": "setCompletion",
+            "scope": {
+              "kind": "appearance",
+              "appearance": {
+                "kind": "listMembership",
+                "listId": "00000000-0000-4000-8000-000000000201",
+                "membershipId": "00000000-0000-4000-8000-000000000401"
+              }
+            },
+            "done": false
+          }
+        }
+      },
+      "expected": {
+        "state": "applied",
+        "listAProgress": [
+          "0",
+          "2"
+        ],
+        "listBProgress": [
+          "0",
+          "1"
+        ],
+        "itineraryProgress": [
+          "0",
+          "3"
+        ],
+        "globalDone": false
+      }
+    },
+    {
+      "name": "direct itinerary appearance Complete stays local",
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000907",
+          "command": {
+            "type": "setCompletion",
+            "scope": {
+              "kind": "appearance",
+              "appearance": {
+                "kind": "directItineraryItem",
+                "itineraryId": "00000000-0000-4000-8000-000000000301",
+                "entryId": "00000000-0000-4000-8000-000000000451"
+              }
+            },
+            "done": true
+          }
+        }
+      },
+      "expected": {
+        "state": "applied",
+        "itineraryProgress": [
+          "1",
+          "3"
+        ],
+        "listAProgress": [
+          "1",
+          "2"
+        ],
+        "listBProgress": [
+          "0",
+          "1"
+        ],
+        "globalDone": false
+      }
+    },
+    {
+      "name": "expanded itinerary appearance Complete stays local",
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000908",
+          "command": {
+            "type": "setCompletion",
+            "scope": {
+              "kind": "appearance",
+              "appearance": {
+                "kind": "expandedListItem",
+                "itineraryId": "00000000-0000-4000-8000-000000000301",
+                "listEntryId": "00000000-0000-4000-8000-000000000452",
+                "membershipId": "00000000-0000-4000-8000-000000000401"
+              }
+            },
+            "done": true
+          }
+        }
+      },
+      "expected": {
+        "state": "applied",
+        "itineraryProgress": [
+          "1",
+          "3"
+        ],
+        "directLocalDone": false,
+        "listAProgress": [
+          "1",
+          "2"
+        ],
+        "globalDone": false
+      }
+    },
+    {
+      "name": "bulk targets hidden archived children",
+      "prepareSameCommand": true,
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000909",
+          "command": {
+            "type": "setBulkCompletion",
+            "scope": {
+              "kind": "itinerary",
+              "itineraryId": "00000000-0000-4000-8000-000000000301"
+            },
+            "done": true
+          },
+          "reviewToken": "${preparedReview.reviewToken}"
+        }
+      },
+      "expected": {
+        "state": "applied",
+        "targetCount": "3",
+        "itineraryProgress": [
+          "3",
+          "3"
+        ],
+        "itemYArchived": true,
+        "globalFlags": [
+          false,
+          false
+        ],
+        "listAProgress": [
+          "1",
+          "2"
+        ],
+        "listBProgress": [
+          "0",
+          "1"
+        ]
+      }
+    },
+    {
+      "name": "changed bulk target set rejects old review",
+      "prepareSameCommand": true,
+      "interveningAction": "Add another direct X entry after preparing the review",
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000910",
+          "command": {
+            "type": "setBulkCompletion",
+            "scope": {
+              "kind": "itinerary",
+              "itineraryId": "00000000-0000-4000-8000-000000000301"
+            },
+            "done": true
+          },
+          "reviewToken": "${preparedReview.reviewToken}"
+        }
+      },
+      "expected": {
+        "state": "rejected",
+        "code": "staleReview",
+        "noMutation": true
+      }
+    },
+    {
+      "name": "precommit persistence failure leaves bulk unapplied",
+      "prepareSameCommand": true,
+      "failureBoundary": "genuine persistence commit I/O",
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000911",
+          "command": {
+            "type": "setBulkCompletion",
+            "scope": {
+              "kind": "itinerary",
+              "itineraryId": "00000000-0000-4000-8000-000000000301"
+            },
+            "done": true
+          },
+          "reviewToken": "${preparedReview.reviewToken}"
+        }
+      },
+      "expected": {
+        "state": "rejected",
+        "code": "persistenceFailure",
+        "itineraryProgress": [
+          "0",
+          "3"
+        ],
+        "noDomainMutation": true
+      }
+    },
+    {
+      "name": "postcommit recovery failure retains all bulk flags",
+      "prepareSameCommand": true,
+      "failureBoundary": "independent archive publication I/O after domain commit",
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000912",
+          "command": {
+            "type": "setBulkCompletion",
+            "scope": {
+              "kind": "itinerary",
+              "itineraryId": "00000000-0000-4000-8000-000000000301"
+            },
+            "done": true
+          },
+          "reviewToken": "${preparedReview.reviewToken}"
+        }
+      },
+      "expected": {
+        "state": "applied",
+        "recovery": "incomplete",
+        "itineraryProgress": [
+          "3",
+          "3"
+        ],
+        "nextDomainWriteCode": "mutationBlocked",
+        "checkpointRetryDoesNotReplay": true
+      }
+    },
+    {
+      "name": "move into existing membership preserves destination",
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000913",
+          "command": {
+            "type": "moveMembership",
+            "listId": "00000000-0000-4000-8000-000000000201",
+            "membershipId": "00000000-0000-4000-8000-000000000401",
+            "destinationListId": "00000000-0000-4000-8000-000000000202",
+            "placement": {
+              "kind": "last"
+            }
+          }
+        }
+      },
+      "expected": {
+        "state": "applied",
+        "removedMembershipIds": [
+          "00000000-0000-4000-8000-000000000401"
+        ],
+        "retainedDestinationMembershipId": "00000000-0000-4000-8000-000000000403",
+        "destinationLocalDone": false,
+        "listAProgress": [
+          "0",
+          "1"
+        ],
+        "listBProgress": [
+          "0",
+          "1"
+        ],
+        "itineraryProgress": [
+          "0",
+          "2"
+        ],
+        "sourceRetained": true
+      }
+    },
+    {
+      "name": "intentional itinerary repeat has new independent state",
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000914",
+          "command": {
+            "type": "addItineraryEntry",
+            "itineraryId": "00000000-0000-4000-8000-000000000301",
+            "source": {
+              "kind": "item",
+              "id": "00000000-0000-4000-8000-000000000101"
+            },
+            "placement": {
+              "kind": "last"
+            }
+          }
+        }
+      },
+      "expected": {
+        "state": "applied",
+        "newEntryId": "${firstResult.generatedEntryId}",
+        "newEntryLocalDone": false,
+        "distinctFromEntryId": "00000000-0000-4000-8000-000000000451",
+        "itineraryProgress": [
+          "0",
+          "4"
+        ],
+        "replayKeepsSameGeneratedId": true,
+        "replayAddsNothing": true
+      }
+    },
+    {
+      "name": "remove one direct Schedule keeps itinerary scheduledness",
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000915",
+          "command": {
+            "type": "removeSchedule",
+            "scheduleId": "00000000-0000-4000-8000-000000000701"
+          }
+        }
+      },
+      "expected": {
+        "state": "applied",
+        "removedScheduleIds": [
+          "00000000-0000-4000-8000-000000000701"
+        ],
+        "retainedScheduleIds": [
+          "00000000-0000-4000-8000-000000000702"
+        ],
+        "itemXScheduled": true,
+        "itemYScheduled": true,
+        "sourceRetained": true
+      }
+    },
+    {
+      "name": "planning-zone-only edit preserves both instants",
+      "readScheduleBeforeRequest": true,
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000916",
+          "command": {
+            "type": "changeScheduleZone",
+            "scheduleId": "00000000-0000-4000-8000-000000000701",
+            "planningTimeZone": "Europe/Paris",
+            "expectedFieldHashes": {
+              "form": "${scheduleRead.fieldHashes.form}"
+            }
+          }
+        }
+      },
+      "expected": {
+        "state": "applied",
+        "start": 813200400.0,
+        "end": 813204000.0,
+        "planningTimeZone": "Europe/Paris"
+      }
+    },
+    {
+      "name": "Schedule form changed before zone edit",
+      "readScheduleBeforeRequest": true,
+      "interveningAction": "Change start/end to a different valid form after the read",
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000917",
+          "command": {
+            "type": "changeScheduleZone",
+            "scheduleId": "00000000-0000-4000-8000-000000000701",
+            "planningTimeZone": "Europe/Paris",
+            "expectedFieldHashes": {
+              "form": "${scheduleRead.fieldHashes.form}"
+            }
+          }
+        }
+      },
+      "expected": {
+        "state": "rejected",
+        "code": "staleEdit",
+        "conflictingFields": [
+          "form"
+        ],
+        "noMutation": true
+      }
+    },
+    {
+      "name": "MCP source Delete remains forbidden",
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000918",
+          "command": {
+            "type": "deleteSource",
+            "source": {
+              "kind": "item",
+              "id": "00000000-0000-4000-8000-000000000101"
+            }
+          }
+        }
+      },
+      "expected": {
+        "state": "rejected",
+        "code": "forbiddenOperation",
+        "noMutation": true
+      }
+    },
+    {
+      "name": "MCP backup administration remains forbidden",
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000919",
+          "command": {
+            "type": "applyImport",
+            "mode": "skip",
+            "backup": "${nativeDecodedBackup}"
+          }
+        }
+      },
+      "expected": {
+        "state": "rejected",
+        "code": "forbiddenOperation",
+        "noMutation": true
+      }
+    },
+    {
+      "name": "modified-payload replay preserves original applied status",
+      "firstRunScenario": "notes changed with current hash",
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000901",
+          "command": {
+            "type": "editItem",
+            "sourceId": "00000000-0000-4000-8000-000000000101",
+            "changes": {
+              "notes": "Different booking"
+            },
+            "expectedFieldHashes": {
+              "notes": "sha256-v1:514218da3ebca004857b8063cf5c59a50a25b02eb99b293bc9c4bc17fcca90dd"
+            }
+          }
+        }
+      },
+      "expected": {
+        "state": "rejected",
+        "code": "operationPayloadMismatch",
+        "originalStatus": "appliedRecoveryComplete",
+        "retainedNotes": "Monday booking"
+      }
+    },
+    {
+      "name": "create generated source replay is stable",
+      "request": {
+        "tool": "planner_execute",
+        "arguments": {
+          "formatVersion": 1,
+          "operationId": "00000000-0000-4000-8000-000000000920",
+          "command": {
+            "type": "createItem",
+            "content": {
+              "title": "Book train tickets"
+            }
+          }
+        }
+      },
+      "expected": {
+        "state": "applied",
+        "sourceId": "${firstResult.generatedItemId}",
+        "globalDone": false,
+        "archived": false,
+        "links": [],
+        "categoryIds": [],
+        "tagIds": [],
+        "replayKeepsSameGeneratedId": true,
+        "replayAddsNothing": true
+      }
+    },
+    {
+      "name": "capture independent Unicode text is retained",
+      "request": {
+        "tool": "planner_prepare_capture",
+        "arguments": {
+          "formatVersion": 1,
+          "inputs": [
+            {
+              "kind": "text",
+              "value": "食事 🥢\nhttps://example.com/menu\nBring umbrella"
+            }
+          ]
+        }
+      },
+      "expected": {
+        "title": "食事 🥢",
+        "notes": "https://example.com/menu\nBring umbrella",
+        "originalUrls": [
+          "https://example.com/menu"
+        ],
+        "saveAllowed": true,
+        "savedItemCount": "0"
+      }
+    },
+    {
+      "name": "stale query row generation is a failure",
+      "interveningAction": "Change matching data and obtain a different query generation",
+      "request": {
+        "tool": "planner_read",
+        "arguments": {
+          "formatVersion": 1,
+          "request": {
+            "kind": "rows",
+            "generation": "${oldSnapshot.generation}",
+            "offset": "0",
+            "limit": "20"
+          }
+        }
+      },
+      "expected": {
+        "code": "staleSnapshot",
+        "noMixedRows": true
+      }
+    },
+    {
+      "name": "appearance read distinguishes global local effective",
+      "startingGlobalDone": true,
+      "request": {
+        "tool": "planner_read",
+        "arguments": {
+          "formatVersion": 1,
+          "request": {
+            "kind": "appearance",
+            "appearance": {
+              "kind": "expandedListItem",
+              "itineraryId": "00000000-0000-4000-8000-000000000301",
+              "listEntryId": "00000000-0000-4000-8000-000000000452",
+              "membershipId": "00000000-0000-4000-8000-000000000401"
+            }
+          }
+        }
+      },
+      "expected": {
+        "globalDone": true,
+        "localDone": false,
+        "effectiveDone": true,
+        "sourceId": "00000000-0000-4000-8000-000000000101"
+      }
+    }
+  ],
+  "bindings": {
+    "firstResult.generatedEntryId": "first planner_execute applied result.result.generated entry whose kind is itineraryEntry, .id",
+    "firstResult.generatedItemId": "first planner_execute applied result.result.generated source whose kind is item, .id",
+    "preparedReview.reviewToken": "preceding planner_prepare_review success.reviewToken",
+    "scheduleRead.fieldHashes.form": "preceding planner_read source success.value.fieldHashes.form",
+    "oldSnapshot.generation": "preceding planner_query success.generation",
+    "nativeDecodedBackup": "preceding native decodeImport decoded PlannerDecodedBackup; forbidden MCP fixture never admits it"
+  }
+}
