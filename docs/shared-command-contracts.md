@@ -20,7 +20,7 @@ The original ticket mentions earlier keep-current imports and wholly unapplied f
 
 Agree exact command/query transport forms, integration authority, stale-edit handling, JSON grammar and capture resource limits. Produce representative MCP JSON and corresponding typed Swift requests using the approved facade. Record independently specified state/error observations and the unit, real-store, native UI, physical-device and client evidence each prototype must supply.
 
-Contract Q1-Q26 now settle authority, encoding, capture and Agent Control policy, with the later human amendment removing automatic access expiry. Resolution still requires the complete concrete content/read/edit catalog, reader access/storage details and final review of the completed request/result schemas. Q29 selects the official Swift SDK; actual protocol/client compatibility belongs to the MCP prototype. Native JSON handling is accepted; guaranteed duplicate-property rejection and its additional parser branch are no longer required. No executable prototype is claimed.
+Contract Q1-Q30 settle authority, encoding, capture and Agent Control policy, with the later human amendment removing automatic access expiry. The [content and credential-reader packet](content-and-reader-review.md) now proposes the complete content/hash catalog and reader declaration for Q31/Q32. Their approval and the remaining complete adapter request/result/admin schemas are still required. Q29 selects the official Swift SDK; actual protocol/client compatibility belongs to the MCP prototype. Native JSON handling is accepted; guaranteed duplicate-property rejection and its additional parser branch are no longer required. No executable prototype is claimed.
 
 ## Definition of ready
 
@@ -226,8 +226,8 @@ At official SDK 0.12.1, a shared Server rejects a second initialize and retains 
 
 | Settled prerequisite | Current independent follow-up | Held until its prerequisites settle |
 | --- | --- | --- |
-| Q27 chooses changed-field hashes, Q10 fixes partial-edit semantics | Draft exact read/hash/edit/outcome forms for final public review. | No tests or executable source until the applicable interface review. |
-| Q28 accepts the same-app reader; Q20 selects four clients; Q29 selects the official Swift SDK | Specify the reader and supported-protocol request/result fields for final review. | Qualify actual dependency pin, repeated initialization, reconnects and isolated concurrent routing in the MCP prototype. No custom protocol stack is approved. |
+| Q27 chooses changed-field hashes, Q10 fixes partial-edit semantics | Q31 reviews the complete content catalog and compound guard granularity in the new packet. | Complete dependent adapter request/result/admin forms after catalog approval; no code tests until applicable public review. |
+| Q28 accepts the same-app reader; Q20 selects four clients; Q29 selects the official Swift SDK | Q32 reviews the concrete Keychain/reader declaration and live confirmation candidate. | Qualify actual dependency pin, signing/access, repeated initialization, reconnects and isolated concurrent routing in the MCP prototype. No custom protocol stack is approved. |
 | Q30 C accepts two-client proof without an extra app cap | Define measured native/SDK capacity evidence. | No profile-registration or custom two-call admission fields; a later extra limit needs measured stability justification and an explicit amendment. |
 | Accepted manual Agent Control enablement/menu bar and Core ownership | Preserve enablement until Stop or app quit independently of transport. | Reader storage/access and final schema are concretized under the selected native/client policy. |
 
@@ -274,6 +274,37 @@ Q21 accepted two initialized clients and refusal of a third. The modern protocol
 Accepted: **C, No additional app cap; measure capacity**. Keep the two-client proof and require measured stability evidence before an additional limit. No initial client-profile registry, hard third-client refusal or custom two-concurrent-tool-call counter.
 
 Status: accepted C, 2026-10-08. Q21's original initialized-client cap is historical; measured SDK/OS capacity and existing Core write coordination remain prototype evidence gates.
+
+---
+
+## Current frontier, Contract Q31-Q32
+
+Accepted Q29/Q30 carry forward. The [content and credential-reader packet](content-and-reader-review.md) supplies the concrete declarations, native source limits, before/after fixtures and six additional independently calculated compound hash expectations. Q31 and Q32 are independent. Their dependent adapter request/result/admin forms wait for this round; no public approval or runtime proof is inferred.
+
+❓ **Contract Q31** - **Accept the complete content catalog and compound edit guards?**
+
+The packet fixes Item/List/Itinerary/Category/Tag fields, native sRGB color values, ordered owned links, independent location, estimates and live label IDs. Completion/archive/reference actions stay separate under Q8. It guards a complete location or links replacement as one field. If Mac changes an address while iPhone edits coordinates from the old location, the iPhone edit is stale and must reread; unrelated notes/title edits still coexist. A nested value is a complete replacement, with explicit nullable members, so an incomplete location object cannot silently erase its other values.
+
+- **A. Proposed catalog and compound guards.** Accept the packet's complete types. Simple read/edit shapes and atomic coordinate/order validation; any concurrent change within the same compound field requires reread.
+- **B. Same catalog, finer nested guards.** Allow independent location-subfield/link-record edits to coexist. Requires additional field identities, patch grammar and coordinate/order consistency tests; those declarations must be revised before approval.
+- **C. Amend the content catalog first.** Describe field/type changes. Keep existing domain/authority rules, but settle those changes before generating dependent adapter schemas.
+
+➡️ Recommendation: **A, Proposed catalog and compound guards**. It keeps the changed-field guard simple without blocking independent title/notes edits.
+
+Status: proposed, awaiting the human's Q31 answer. No code tests are written against an unapproved new declaration.
+
+---
+
+❓ **Contract Q32** - **Which live confirmation should the same-app credential reader qualify?**
+
+Q28 already chose this signed app executable as the reader; Q29 chose the official SDK. The packet fixes a no-UI `--mcp-headers` mode, noninteractive after-first-unlock Keychain access, fresh random credential per Enable, ephemeral main/window metadata and controlled unavailable outcomes. A stale PID/file alone cannot prove that the enabled app is alive. Both candidates preserve manual Stop, no expiry, no profiles, no plaintext fallback and unchanged Core authority.
+
+- **A. Authenticated SDK ping and window check.** Before returning headers, verify the existing enabled endpoint with its standard SDK ping and matching window header. Adds one local HTTP request per reader invocation. Uses the already required listener; no extra IPC service or Planner tool. Actual signed/locked/lifecycle/client proof remains required.
+- **B. Native anonymous XPC confirmation.** Keep the same reader/Keychain/output, but verify live main/window state through private native IPC. Avoids a reader MCP request; adds endpoint bootstrap, signing/sandbox and interruption work. The documented transfer uses an existing XPC connection; file-archive bootstrap is unproved and must be researched before this candidate is ready. No permanent launchd service is approved.
+
+➡️ Recommendation: **A, Authenticated SDK ping and window check**. The pinned official SDK supports this read-only probe and response header without another protocol implementation.
+
+Status: proposed, awaiting the human's Q32 answer. Native documentation is factual evidence, not actual reader execution.
 
 ---
 
