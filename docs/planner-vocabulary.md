@@ -4,6 +4,8 @@ Accepted resolution for [Planner vocabulary](https://github.com/dvcol/planner/is
 
 The later [Completion scopes and derived progress](https://github.com/dvcol/planner/issues/22) clarification supersedes this record's global-only completion and independent itinerary-completion assumptions. Source content remains shared, but contextual item completion can differ between lists/itineraries, global Done overrides its effective display, and container completion derives from contextual children. See [Completion scopes](completion-scopes.md) for the accepted rule and exact fixtures. The global-operation examples below remain baseline examples; they do not prohibit local completion.
 
+The first [Offline conflicts and recovery](offline-conflicts-and-recovery.md) round confirms that Lists have their own archive state, container Archive/Delete affects only that container, and deletion of Items/Lists/Itineraries uses recoverable Trash. Ordinary re-addition starts local Todo after the final path was removed; Undo or restoration of the original association preserves its local state. Trash visibility, permanent-delete reference handling and concurrent outcomes remain open in that recovery record.
+
 The [product brief](product-brief.md) supplies the generic item, many-to-many lists, stable identities, and referenced itineraries/schedules. [Release goals](release-goals.md) keeps places and scheduled itineraries as the first daily-use journeys. The [glossary](../GLOSSARY.md) gives those concepts one common vocabulary. There is no application code or agreed production interface yet.
 
 ## Confirmed behavior
@@ -48,7 +50,7 @@ The arrows describe domain references and content ownership. They do not specify
 | Concept | Owns | References and identity |
 | --- | --- | --- |
 | Item | Title, notes, global completion/archive state, links, optional location and duration estimate | One stable identity across lists, itineraries and schedules. Contextual completion does not create another item. |
-| List | Its name and presentation metadata, with completion derived from its contextual children | Memberships reference existing item identities. Removing a membership does not remove the item. |
+| List | Its name, presentation metadata and archive state, with completion derived from its contextual children | Memberships reference existing item identities. Removing a membership does not remove the item. Container Archive/Delete leaves referenced source states unchanged. |
 | Membership | The association between one item and one list, with local completion and any list-local ordering | Refers to the same item, never a list-specific copy. Duplicate-association, local-state retention and concurrent-order policies belong to recovery. |
 | Category and Tag | User-defined name, optional color/icon | Each has a shared identity referenced by items/itineraries. Editing that object updates every reference; no per-item label copy needs synchronization. |
 | Link and Location | Content attached to the owning item or itinerary | Editable metadata rather than a separate todo or automatically shared venue history. Capture/provenance decisions govern provider fields. |
@@ -84,7 +86,7 @@ For shared-label cases, use a `Food` category with a red color and fork/knife ic
 | Add an itinerary or schedule reference | The existing item has no such reference. | The reference points to that existing item. The number of items and its list memberships stay unchanged. |
 | Consider another museum visit | The item is done + active. | Merely planning to revisit has no automatic effect. The user can use ordinary create/reopen operations if desired; there is no inferred visit lifecycle. |
 
-Use distinct verbs: complete/reopen change completion; archive/unarchive change archive state. A standalone "restore" is ambiguous and must not silently perform both. If trash is adopted, its recovery operation needs an explicit meaning in the recovery and command-contract decisions.
+Use distinct verbs: complete/reopen change completion; archive/unarchive change archive state. Restore has the accepted Trash-recovery meaning: return the same entity with its retained identity, content, references, order and contextual states. Recovery and command-contract decisions must finish its reference visibility and concurrent effects before implementation.
 
 ## Decisions owned by later tickets
 
@@ -118,7 +120,7 @@ These are future `/tdd` obligations, not tests reported as passing. Confirm the 
 | UI | Rename the category/tag from its editor while two items and an itinerary reference it. | Their displayed labels update without individually editing the referring sources. Query matching after a rename follows the search decision. |
 | Physical two-device integration | Change completion on one device and archive state on another. | The accepted recovery scenario determines convergence; queries and UI show both independent states. This is a recovery/prototype gate, not a claimed CloudKit guarantee. |
 
-Deleting sources, trash recovery, concurrent conflict winners and itinerary progress cannot be tested against invented expectations. Their named owners must resolve those outcomes first. Documentation validation checks the four state pairs, before/after examples and links; it cannot prove runtime behavior.
+The completion and first-round recovery records provide accepted progress and basic recovery fixtures. Remaining Trash visibility, permanent deletion, concurrent conflict winners and failure cases require their named owners' exact outcomes before tests. Documentation validation checks the four state pairs, before/after examples and links; it cannot prove runtime behavior.
 
 ## Acceptance and limits
 
