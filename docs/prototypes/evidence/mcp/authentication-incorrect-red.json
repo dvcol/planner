@@ -1,0 +1,52 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006030-001A586C3EA3001C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 1,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "Planner · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1791502596.582,
+  "passedTests" : 1,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1791502584.308,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Expectation failed: response.statusCode == 401\nresponse.statusCode → 501",
+      "targetName" : "PlannerMCPTests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "AuthenticationTests/incorrectCredentialRejectsPingWithoutAccessWindowHeader()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/AuthenticationTests/incorrectCredentialRejectsPingWithoutAccessWindowHeader()",
+      "testName" : "incorrectCredentialRejectsPingWithoutAccessWindowHeader()"
+    }
+  ],
+  "title" : "Test - Planner",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 2
+}
