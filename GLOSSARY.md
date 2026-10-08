@@ -52,7 +52,7 @@ Removal of an entity and its references from the planner. Deleting a container l
 A locally retained copy of saved Planner data that remains recoverable independently of the current iCloud account's mirrored data.
 
 **Backup**:
-A portable snapshot of Planner content, identities, references, completion, saved order and schedules. It contains data rather than a device's presentation or navigation state.
+A portable snapshot of Planner content, identities, references, completion, saved order and schedules. It includes minimal deletion history without deleted content, and excludes a device's presentation or navigation state.
 
 **Import conflict**:
 A difference between incoming and current data for one Planner identity, including an identity kept deleted. A required reference to skipped deleted data can also prevent an incoming owner from being imported.
@@ -64,7 +64,10 @@ The default import choice. Keep current conflicted data and omit owners blocked 
 The reviewed import choice that replaces represented data with incoming data, including container contents. Explicitly confirmed restoration is allowed; absence from a backup does not delete current entities.
 
 **Recovery incomplete**:
-A complete action has been applied locally but its independent recovery copy is not established. The action is retained; it is not yet a fully acknowledged save.
+A complete action has been applied locally but its independent recovery copy is not established. The action is retained; further changes in that dataset wait for recovery, and the save is not yet fully acknowledged.
+
+**Unverified operation**:
+A preserved proposal whose applied outcome cannot be established from surviving evidence. It requires explicit review before recovery rather than an assumed success or failure.
 
 **Inbox**:
 A view of items with no list memberships.

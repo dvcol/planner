@@ -1,10 +1,10 @@
 # Architecture blueprint draft
 
-Review asset for [Core architecture](https://github.com/dvcol/planner/issues/12). The [decision record](core-architecture.md) distinguishes accepted behavior from pending A16-A20. This file proposes concrete implementation ownership, records, public test boundaries and native project commands. It is not approved Swift signatures, a runnable project or runtime evidence.
+Review asset for [Core architecture](https://github.com/dvcol/planner/issues/12). The [decision record](core-architecture.md) records accepted A1-A20. This file proposes concrete implementation ownership, records, public test boundaries and native project commands. It is not approved Swift signatures, a runnable project or runtime evidence.
 
 ## Context, starting state and review goal
 
-The source tree contains planning documents. There is no Xcode project, package, app or extension to build. The accepted topology is one multiplatform SwiftUI app, one PlannerCore package, separate mobile/Mac Share extensions, managed private CloudKit mirroring and independent account-scoped recovery. Confirm this packet's public boundaries after the pending product answers, then use /tdd for the code-producing prototypes. [Shared command contracts](https://github.com/dvcol/planner/issues/13) owns final transport shapes and permissions.
+The source tree contains planning documents. There is no Xcode project, package, app or extension to build. The accepted topology is one multiplatform SwiftUI app, one PlannerCore package, separate mobile/Mac Share extensions, managed private CloudKit mirroring and independent account-scoped recovery. Confirm this packet's concrete public boundaries, then use /tdd for the code-producing prototypes. [Shared command contracts](https://github.com/dvcol/planner/issues/13) owns final transport shapes and permissions.
 
 ## Project and ownership
 
@@ -26,7 +26,7 @@ Start a VersionedSchema at the first persisted schema. Cloud-backed attributes n
 
 | Record | Fields and ownership to specify |
 | --- | --- |
-| Item | Planner UUID, source lifetime UUID, title, notes, global Done, archive state, creation/Item Last updated, owned links/location/provenance and optional estimated whole minutes with retained display unit. |
+| Item | Planner UUID, source lifetime UUID, title, optional subtitle, notes, global Done, archive state, creation/Item Last updated, owned links/location/provenance and optional estimated whole minutes with retained display unit. |
 | List | Planner UUID/lifetime, name/presentation metadata, archive and timestamps. Completion is derived, never a stored parent override. |
 | Itinerary | Planner UUID/lifetime, title/notes/presentation metadata, archive/timestamps and owned links/location. Categories/Tags remain shared references; completion is derived. |
 | Category / Tag | Separate stable UUID/lifetime, name/color/icon and timestamps. Names may duplicate; references do not copy label metadata. |
@@ -35,7 +35,7 @@ Start a VersionedSchema at the first persisted schema. Cloud-backed attributes n
 | Expanded List child state | Context key made from the List-entry lifetime and membership lifetime, plus local Done. Missing state means Todo. Two repeated List entries have distinct keys without copying source Items; reorder preserves keys. |
 | Schedule | Stable UUID/lifetime, Item/Itinerary binding and either inclusive Gregorian civil dates or fixed start/optional-end Date instants with planning-zone identifier. No estimate-derived end. |
 | Label association / owned Link | Explicit owner/target binding or owned bookmark fields, stable identity and required saved order. Capture provenance distinguishes user content, original bookmarks and permitted identifiers from transient previews. |
-| Deletion identity metadata | Entity kind, logical ID/lifetime, operation identity and only necessary alias/restoration lineage. No deleted content. A16 governs portable inclusion; A20 governs concurrent restored versions. |
+| Deletion identity metadata | Entity kind, logical ID/lifetime, operation identity and only necessary alias/restoration lineage. No deleted content. Accepted A16 includes this data in portable backups; A20 requires one concurrent restored version. |
 | Internal operation receipt | Operation UUID, canonical payload digest, dataset/ownership binding, result identities and local outcome/checkpoint evidence. This is internal recovery state, excluded from portable data JSON. |
 
 One stable public identity can acquire a new authorized lifetime after restoration. Native framework IDs are store-scoped and are not JSON identities. An association's immutable UUID can itself identify its lifetime unless original-association restoration requires preserving that public UUID. Avoid adding another ID where it has no role.
@@ -44,22 +44,24 @@ Use gapped signed integer ranks with immutable association/entry UUID ties. Conc
 
 Date values remain native: fixed timed instants use Date, planning zones use identifiers and all-day spans use civil year/month/day components. Estimates use optional positive Int64 whole minutes and checked fixed-unit arithmetic; retained unit controls display without Calendar month/year arithmetic. Exact representability/input bounds and supported transport encoding must appear in the final packet; native picker interaction remains Navigation prototype work.
 
+The [concrete architecture review packet](architecture-review-packet.md) supplies the proposed public fields/methods, native validation, reconciliation provenance, checkpoint sequence and evidence matrix. It remains subject to human review.
+
 ## Proposed public service outlines
 
-The following is an outline, not compiled code or final protocol declarations. Confirm exact request/result fields and operation cases before writing tests. It deliberately exposes domain scope and observable outcomes, rather than a separate repository for every model.
+The following roles are responsibilities of the review packet's one Planner facade, not four required service instances. This is an outline, not compiled code or final protocol declarations. Confirm exact request/result fields and operation cases before writing tests.
 
 | Role | Proposed public calls and observable values |
 | --- | --- |
-| PlannerCommands | Execute a mutation request carrying operation identity, dataset identity and typed command. Provide preview/approval for actions that already require confirmation. Query the status of the same operation; retry its recovery checkpoint without replaying its mutation. |
-| PlannerQueries | Query Items in global/List scope; query itinerary entries and expanded appearances; fetch a selected source/appearance independently of its current filter; return effective completion and full-scope progress. Matching/sort uses native Foundation APIs. |
-| PlannerPortability | Decode/validate a versioned data file, create immutable Skip/Overwrite preview, then apply the approved selection under the same command owner. Export portable data without presentation state or credentials. |
-| PlannerRecovery | Establish independent checkpoint, inspect/export old account data and prepare explicit restoration. Report namespace-scoped observations; it does not force CloudKit synchronization or invent per-save upload receipts. |
+| Commands | Execute a mutation request carrying operation identity, dataset identity and typed command. Provide preview/approval for actions that already require confirmation. Query the status of the same operation; retry its recovery checkpoint without replaying its mutation. |
+| Queries | Query Items in global/List scope; query itinerary entries and expanded appearances; fetch a selected source/appearance independently of its current filter; return effective completion and full-scope progress. Matching/sort uses native Foundation APIs. |
+| Portability | Decode/validate a versioned data file, create immutable Skip/Overwrite preview, then apply the approved selection under the same command owner. Export portable data without presentation state or credentials. |
+| Recovery | Establish independent checkpoint, inspect/export old account data and prepare explicit restoration. Report namespace-scoped observations; it does not force CloudKit synchronization or invent per-save upload receipts. |
 
 Mutation cases include create/edit Item and container metadata, global Item Complete/Reopen, local appearance Complete/Reopen, confirmed full-context bulk completion, Archive/Unarchive, confirmed Delete, label editing/deletion, add/remove/move membership, ordered itinerary addition/reorder/removal, manual Schedule changes, reviewed capture create/reuse and approved import. A source Item ID and an appearance identity are different inputs. Native containers cannot call global completion as a fallback for a missing appearance.
 
-An appearance identity denotes a standalone membership, direct itinerary entry or the pair of List-entry/membership identities. Result rows identify source and appearance separately. Query results carry an immutable generation UUID and complete ordered lightweight identity sequence; native batched fetching and lazy realization avoid retaining full detail content for every row. The UI cancels obsolete work and publishes only the current generation. A synchronous fetch may still finish after cancellation, so discarding stale output is required. A16-A20 and the final packet settle all status/data fields.
+An appearance identity denotes a standalone membership, direct itinerary entry or the pair of List-entry/membership identities. Result rows identify source and appearance separately. Query results carry an immutable generation UUID and complete ordered lightweight identity sequence; native batched fetching and lazy realization avoid retaining full detail content for every row. The UI cancels obsolete work and publishes only the current generation. A synchronous fetch may still finish after cancellation, so discarding stale output is required. The final packet must spell out all status/data fields using accepted A1-A20.
 
-Known operation outcomes are unapplied failure, complete commit with recovery incomplete and independently recoverable success. Approval-required, stale-target/account, invalid input and unsupported schema errors do not mutate. Precommit cancellation changes nothing; postcommit cancellation resolves the operation and cannot mean rollback. The proposed indeterminate state remains pending A19. A18 decides whether later mutations wait for recovery. Surface authorization remains separate from domain behavior and must apply to import-triggered deletions as well as direct Delete.
+Known operation outcomes are unapplied failure, complete commit with recovery incomplete and independently recoverable success. Approval-required, stale-target/account, invalid input and unsupported schema errors do not mutate. Precommit cancellation changes nothing; postcommit cancellation resolves the operation and cannot mean rollback. Accepted A19 reports prepared-only lost-evidence outcomes as unverified. A18 blocks further Planner mutations in the affected dataset until known incomplete recovery succeeds, preserving reads/search/export. Neither case implies a CloudKit delivery pause. Surface authorization remains separate from domain behavior and must apply to import-triggered deletions as well as direct Delete.
 
 ## Recovery and account protocol to prove
 
@@ -98,9 +100,9 @@ The installed native formatter supports `env DEVELOPER_DIR=/Applications/Xcode.a
 | --- | --- |
 | Completion/query unit tests | Hotel/Museum gives 1 of 3, global Hotel Done gives 2 of 3, Global Reopen restores retained local flags. Repeated List children remain independent; source/label edits remain live. |
 | Portability unit/store tests | Exact accepted Skip/Overwrite, complete-owner dependency skips, confirmed restoration, omitted-source retention, repeat-import no-op and whole-invalid-file rejection. Reopen the store with the same logical IDs/order/states. |
-| Command/store recovery integration | Precommit failure leaves no action. Postcommit copy failure retains the entire action and completes recovery without replay. Exercise every receipt/preparation/copy checkpoint and account-binding mismatch. Pending A18/A19 determine the remaining expectations. |
+| Command/store recovery integration | Precommit failure leaves no action. Postcommit copy failure retains the entire action and completes recovery without replay. Exercise every receipt/preparation/copy checkpoint and account-binding mismatch. A18 refuses the next affected-dataset mutation until recovery completes; A19 preserves lost-evidence proposals as unverified, requiring fresh explicit review. |
 | Native and physical sync tests | Both reconnect orders preserve independent title/notes edits, delete defeats stale edits, every membership survives ordering convergence, duplicate contexts obey A17 and authorized restorations obey A20. Native account resets cannot leak old data into another account. |
 | Query/store/UI performance | Complete 5,000-Item/200-List matching beyond the first window, exact sort/identity sequence, no omitted/duplicate rows, current results within 300 ms, discarded stale generations, valid filtered-out selection and measured platform scrolling/memory. |
 | Adapter/UI equivalence | Allowed SwiftUI/Share/Intents/MCP operations share Core IDs/state/outcomes, while surface permissions can differ. Full-context bulk actions ignore filters and never become global completion. Native layout/accessibility and device presentation are reviewed in their prototype. |
 
-Before /tdd, confirm the concrete public request/result/preview/status packet and numeric/input bounds after A16-A20. Then each code-producing prototype commits runnable configuration, works one failing behavior and its minimum passing implementation, and records actual focused build/lint/test counts/result artifacts. This draft does not pass any of those gates.
+Before /tdd, confirm the concrete public request/result/preview/status packet, schema and numeric/input bounds. Then each code-producing prototype commits runnable configuration, works one failing behavior and its minimum passing implementation, and records actual focused build/lint/test counts/result artifacts. This draft does not pass any of those gates.

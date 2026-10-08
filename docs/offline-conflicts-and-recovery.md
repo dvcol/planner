@@ -72,6 +72,18 @@ The human confirmed A12-A15 in the architecture discussion. This extends the ori
 
 Apply whole-owner dependency handling to new Itineraries, Schedules and owned reference data. The preview shows skipped conflicts, skipped dependents, changed owners and restored identities. Overwrite updates represented live records rather than manufacturing duplicate Items. Only references included in the incoming data are restored; omitted current source entities are never implicitly deleted. Archive/completion remain separate and local contexts outside replaced owners are not rewritten. Reconnect and termination behavior require physical-device proof.
 
+## Accepted deletion metadata and recovery outcomes
+
+Accepted architecture A16-A20 complete the following product expectations. The [architecture record](core-architecture.md) contains their exact before/action/after fixtures and prototype requirements.
+
+- Portable backup includes minimal deleted-ID/lifetime data without deleted content. After restoring a post-deletion backup, default Skip of an older X backup retains X's deletion. An incoming deletion against live X is a conflict: Skip keeps X, and Overwrite requires deletion-impact confirmation. Receipts, cloud/account credentials and device presentation remain excluded.
+- Duplicate physical memberships or completion contexts consolidate with an explicit Done retained once. Intentional repeated itinerary appearances stay independent. Subsequent local Reopen works, and delayed aliases cannot permanently force Done or reset other contexts.
+- Known complete commit plus recovery-copy failure blocks further Planner mutations in that dataset until its checkpoint succeeds. Read/search/export and separate datasets remain available. Ordinary offline use/cloud delay does not block editing. This does not control automatic CloudKit writes.
+- A prepared proposal alone after termination/account reset is unverified if both committed-receipt sources were lost. Preserve it separately for inspection/export and a fresh explicitly reviewed restore/retry. Never infer success, rollback or automatic replay from the proposal. Previously acknowledged recovery remains valid.
+- Concurrent authorized restorations converge to one visible X and one consistent restored version. Independent imported Items/containers and newly authorized references survive; references from the deleted lifetime stay suppressed. A later reviewed Overwrite can select different content.
+
+These requirements do not prove the native implementation can meet them. Unit, real-store/reopen, interruption and both-order physical-device tests are required at the confirmed public boundaries. A metadata marker, UUID tie-break or account notification alone is insufficient proof.
+
 ## Exact first-round observations for later /tdd
 
 - Archive List A: only its container archive state changes. X remains globally Todo + Active, Y Todo + Archived, List B's local X Todo, and Itinerary A's local X/Y Todo. Memberships, source identities and S1/S2 dates remain. List A retains its local Done/Todo values and 1-of-2 progress; Itinerary A retains three locally Todo appearances and stays unfinished at 0 of 3. Archiving Itinerary A similarly changes only that itinerary's archive state.
