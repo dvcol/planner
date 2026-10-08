@@ -1,12 +1,12 @@
 # Duration and search
 
-Working record for [Duration and search](https://github.com/dvcol/planner/issues/8), updated on 2026-10-08. The human confirmed the choices below after reviewing the [nine-item fixtures](search-fixtures.md). The ticket remains open for the questions listed at the end. This document is a partial decision record, not a completed specification or evidence of an executable search implementation.
+Accepted decision record for [Duration and search](https://github.com/dvcol/planner/issues/8), confirmed by the human on 2026-10-08 after reviewing the [nine-item fixtures](search-fixtures.md) and the final five-question round. It defines the product behavior and concrete future test expectations. It is not evidence of an executable search implementation or the completed application specification.
 
 ## Context and before state
 
 [Planner vocabulary](planner-vocabulary.md) fixes stable item identity, shared category/tag objects, and independent completion and archive states. The repository has no app, search implementation or approved public code-test seams. The original brief requires fast duration selection, global and list-local search, and composed filters. Before this round, duration meaning, filter composition, insensitive matching and the dedicated Done/Archive sections were unresolved.
 
-The confirmed behavior below supplies concrete expected results for later `/tdd` work. Choosing an engine and proving persistence, responsiveness, native controls and cross-device refresh remain separate work.
+The confirmed behavior below supplies concrete expected results for later `/tdd` work. The human accepted a native lexical baseline; selecting its storage/observation implementation and proving persistence, responsiveness, native controls and cross-device refresh remain separate work.
 
 ## Activity estimates and calendar spans
 
@@ -25,7 +25,9 @@ Activity units have accepted fixed elapsed-time conversions, independent of a st
 | Month | 30 days | 43,200 |
 | Year | 365 days | 525,600 |
 
-These are estimate units, not calendar arithmetic. For example, two days compare as 2,880 minutes even across daylight saving; a scheduled span still uses actual dates. Twelve estimate months equal 360 days, while one estimate year equals 365 days. Preserve the chosen human representation rather than silently rounding one into the other. Half-day/full-day/weekend shortcut values still need confirmation. The storage schema and numeric validation limits belong to Core architecture.
+These are estimate units, not calendar arithmetic. For example, two days compare as 2,880 minutes even across daylight saving; a scheduled span still uses actual dates. Twelve estimate months equal 360 days, while one estimate year equals 365 days. Preserve the chosen human representation rather than silently rounding one into the other. The storage schema and numeric validation limits belong to Core architecture.
+
+Named shortcuts are half-day = 12 hours / 720 minutes, full-day = 24 hours / 1,440 minutes, and weekend = 48 hours / 2,880 minutes. Known estimates must be positive whole minutes. Zero is invalid; No estimate clears the optional value. Picker controls must make both ordinary selection and explicit clearing possible without raw duration input. Reject an invalid command value rather than silently converting zero to unknown or rounding it to a positive estimate.
 
 A maximum-duration filter is an inclusive comparison, such as "activities taking up to two hours." An estimate of exactly 120 minutes matches. Unknown estimates are excluded while a duration constraint is enabled unless the human explicitly enables Include unknown estimates. Without a duration constraint, an unknown estimate imposes no exclusion. The filter does not impose a maximum schedule length or picker value.
 
@@ -63,13 +65,17 @@ Common filters should be available through a native dropdown, menu or popover al
 | Add has-address and has-links, ordinary scope | A, F |
 | Add Food to those address/link constraints | A |
 
-These are sets; the remaining sort choices determine their order.
+These are sets; the accepted sort rules determine their order.
 
 ## Text matching
 
 Matching is case- and accent-insensitive. All typed words must match, and they may match across different searchable fields of the same item. The accepted fields are title, subtitle, notes, current category/tag names, link labels and URLs, and saved location text. A shared-label rename therefore changes searchable text immediately without changing the item's identity or its selected label filter.
 
-The human permits fuzzy matching through native APIs or a well-tested, widely used library and prefers an out-of-the-box capability. The completed [Native search capabilities](https://github.com/dvcol/planner/issues/19) research documents a native lexical path and the limits of indexed/semantic alternatives. Typo behavior, tokenization details and indexed-query semantics are not inferred from that permission. The required insensitive lexical matches below must survive any engine choice.
+Split the query at whitespace, discard empty parts, and require every remaining part to match as a substring. Keep punctuation literal. For example, `rainy-day` is one part, `/ramen` matches a saved URL, and `museum` matches `Museums`. Repeated whitespace, tabs and newlines do not add constraints. Empty or whitespace-only text imposes no text restriction. There is no special text-query operator or wildcard grammar; the native filter controls provide advanced composition.
+
+Matching must be consistent across device languages. Core architecture must choose an explicit Foundation comparison/normalization policy and test it rather than rely on each device's current locale defaults. The required case/accent and literal-punctuation examples are the public behavior; the exact API and any internal cache remain implementation choices. Preserve original text for display.
+
+The human accepted a reliable native lexical baseline for the first daily-use release. [Native search capabilities](https://github.com/dvcol/planner/issues/19) documents that path and the limits of indexed/semantic alternatives. Fuzzy/semantic expansion is deferred until concrete missing-search examples justify a new decision. No typo correction, synonym expansion, third-party fuzzy library or system-index dependency is required by this baseline. All control surfaces must retain these lexical and structured-filter semantics.
 
 | Before state and action | Expected matching item identities |
 | --- | --- |
@@ -78,12 +84,17 @@ The human permits fuzzy matching through native APIs or a well-tested, widely us
 | Ordinary scope; query `CAFÉ` | C |
 | Ordinary scope; query `vegetarian menu` | A; one word is in notes, the other in a link label |
 | Ordinary scope; query `Ginza` | A |
+| Ordinary scope; query `rainy-day` | A, C, F |
+| Ordinary scope; query `/ramen` | A |
+| Ordinary scope; query `rainy*` | None; the asterisk is literal |
+| Ordinary scope; query `cfae` or `meal` | None; no typo or synonym expansion |
+| Ordinary scope; empty or whitespace-only text | A, B, C, D, E, F |
 | Ordinary scope; query `Food` before renaming the shared category | A, B, C, D, E |
 | Rename Food to Dining; keep an ID-based filter on that category | A, B, C, D, E |
 | After the rename, ordinary scope; query `Dining` | A, B, C, D, E |
 | After the rename, all states; query `Dining` | A, B, C, D, E, G, I |
 
-The item's list memberships are not searchable fields in this accepted field set. Consequently `Food` after the category rename has no required lexical match merely because a list is named Tokyo Food. Any broader or fuzzy matching must have its own approved examples.
+The item's list memberships are not searchable fields in this accepted field set. Consequently `Food` after the category rename has no lexical match merely because a list is named Tokyo Food. Any future broader matching must have its own approved examples.
 
 ## Completion, archive and scope
 
@@ -104,15 +115,32 @@ Global scope spans all lists and unlisted retained items. An item appears once e
 
 ## Sort controls
 
-The human requires a native sort selector with alphabetical, chronological and duration choices, plus ascending/descending controls. A single fixed order is insufficient. The next live round asks which dates chronological sorting uses, the available modes/defaults, whether selections persist by view, and placement of unknown estimates. Stable tie behavior and exact ordered fixture results must be specified before sorting is implemented.
+The human accepted Title, Created date, Last updated and Duration, plus Manual within lists. Title/date/duration modes have ascending/descending controls. Chronological distinguishes creation from last update; scheduled-date ordering belongs to calendar views and is defined in Itineraries and scheduling. Lists initially use saved Manual order; global results initially use Title ascending. Remember the chosen mode/direction per list identity and for the global view across reopening. A list rename must not reset its sort choice.
 
-Changing sort order changes the presentation sequence, not the matching identity set, manual memberships/order, completion or archive state. An explicit Manual option and its interaction with saved list order are still a proposal; a temporary duration or alphabetical sort must not silently rewrite a list.
+Unestimated items remain last in duration sorting in both directions. For equal primary values, order by title ascending, then stable item identity ascending; identical titles therefore have a deterministic final tie-break. Title ordering must use a consistent comparison/collation policy selected in Core architecture, including case/accent equivalence and duplicate-title tests. The fixture sequences below are the expected order for the supplied titles and dates.
+
+Changing sort order changes the presentation sequence, not the matching identity set, manual memberships/order, completion or archive state. Switching back to Manual restores the saved list order. The UI treatment of direction and reordering in Manual mode belongs to Navigation prototype; a temporary duration, date or alphabetical sort must not silently rewrite a list.
+
+| Scope and selected order | Expected ordered fixture identities |
+| --- | --- |
+| Ordinary global scope; Title ascending, the initial default | C, D, F, A, B, E |
+| Ordinary global scope; Title descending | E, B, A, F, D, C |
+| Ordinary global scope; Created ascending / descending | A, B, C, D, E, F / F, E, D, C, B, A |
+| Ordinary global scope; Last updated ascending / descending | D, B, A, C, F, E / F, E, C, A, B, D |
+| Ordinary global scope; Duration ascending | A, B, C, D, F, E |
+| Ordinary global scope; Duration descending | D, C, B, A, F, E |
+| Both state filters Any; Duration ascending | I, A, H, G, B, C, D, F, E |
+| Both state filters Any; Duration descending | D, C, H, G, B, I, A, F, E |
+| Tokyo Food ordinary scope; initial Manual order | D, A, C, B |
+| That list; choose Title ascending, then return to Manual | C, D, A, B, then D, A, C, B |
+
+The timestamp/manual-order fixture inputs are specified in search-fixtures.md. These are independent worked expectations, not output copied from an implementation.
 
 ## Responsiveness and long lists
 
 The human approved 5,000 items and 200 lists as an acceptance-test dataset, with current filtered results visible within 300 ms after final input on iPhone, iPad and Mac, and smooth scrolling. This is a measured acceptance gate, not an observed result or a maximum storage size. Include debounce, query work, fetching and first-visible-result rendering in the elapsed measurement.
 
-The human requests infinite loading with moving windows or virtual scrolling where possible. Prefer native mechanisms that render/load the visible rows and necessary surrounding content. [Native long-list capabilities](https://github.com/dvcol/planner/issues/20) investigates the distinction between lazy row rendering and bounded data fetching, and what each platform documents. Core architecture chooses the data/query strategy; Navigation prototype measures and demonstrates it. No custom pagination layer, window size or memory budget is selected by this document.
+The human requests infinite loading with moving windows or virtual scrolling where possible. Prefer native mechanisms that render/load the visible rows and necessary surrounding content. The completed [Native long-list capabilities](https://github.com/dvcol/planner/issues/20) research distinguishes lazy row rendering from bounded data fetching and documents each platform's capabilities. Core architecture chooses the data/query strategy; Navigation prototype measures and demonstrates it. No custom pagination layer, window size or memory budget is selected by this document.
 
 Every filter and sort applies to the complete selected scope, including items beyond the visible or initially fetched rows. Loading optimization must preserve the complete logical ordered result, stable identities, selected item and independently editable filters. Traversing the result forward and back must not skip or duplicate matching items. Obsolete query results must not replace the current query after a filter/sort change. The architecture must specify refresh behavior during concurrent edits and then verify it through real-store and UI tests.
 
@@ -120,24 +148,25 @@ Every filter and sort applies to the complete selected scope, including items be
 
 The rows above are independently specified unit-test expectations for the future public query interface, not tests already written or passed. Before writing code, confirm the public duration-comparison and query seams under `/tdd`, then work one failing behavior and its minimum passing implementation at a time.
 
-- Unit tests must cover each accepted result set, empty and conflicting filter groups, Any/All selection, distinct identity, insensitive matching across fields, independent state filters and shared-label rename behavior. Test each fixed unit conversion and one-minute precision, 119/120/121-minute maximum boundaries, unknown exclusion/inclusion and clearing the duration constraint. Add approved shortcut, sort and typo examples before those behaviors are implemented.
-- Integration tests must save the fixture identities and relationships in a real temporary store, reopen it and reproduce the accepted results. Rename the shared category and verify ID-based filters remain selected while current text matches change. Local and remote edits must refresh results under the policy decided by [Core architecture](https://github.com/dvcol/planner/issues/12).
+- Unit tests must cover every accepted set and ordered sequence, empty and conflicting filter groups, Any/All selection, distinct identity, insensitive literal matching across fields, whitespace/punctuation cases, independent state filters and shared-label renames. Test every fixed unit/shortcut conversion, one-minute precision, positive/zero/clearing behavior, 119/120/121-minute boundaries, unknown exclusion/inclusion, both sort directions and duplicate-title identity ties. Assert literal typo/synonym exclusions; no fuzzy behavior is implemented in this baseline.
+- Integration tests must save the fixture identities and relationships in a real temporary store, reopen it and reproduce the accepted results, estimates, manual order and per-view sort choices. Rename a list without losing its chosen sort. Rename the shared category and verify ID-based filters remain selected while current text matches change. Local and remote edits must refresh results under the policy decided by [Core architecture](https://github.com/dvcol/planner/issues/12).
 - UI tests must compare simple and advanced controls, clear only one constraint, show global/list scope and both state filters, and choose/edit estimates with native pickers. Verify the sort selector/direction controls, accessible names, keyboard operation on Mac and native layouts on all devices through Navigation prototype.
-- A selected index or fuzzy candidate needs its own tests for stale entries, cancellation and typo outcomes. It must not bypass current structured filters or replace the authoritative item data.
+- Any future index or fuzzy candidate needs a new accepted behavior contract and its own stale/fresh-entry, cancellation and matching tests. It must not bypass current structured filters or replace authoritative item data; it is not a required dependency of this lexical baseline.
 - Window/paging tests must compare the traversed identities with the complete logical result, find a sole match beyond the initial window, revisit earlier rows without lost selection or duplicates, and ignore results from an obsolete query. Real-store mutation tests must use the refresh/cursor policy accepted in Core architecture.
 - Performance tests must use 5,000 items and 200 lists and measure the approved 300 ms final-input-to-current-results-visible target on iPhone, iPad and Mac. Record cold/warm searches, supported sorts, scrolling hitches and peak/steady memory through repeated traversal. No responsiveness, memory or smooth-scrolling result has been measured yet.
 - Scheduled/unscheduled predicates and date-aware calendar spans depend on [Itineraries and scheduling](https://github.com/dvcol/planner/issues/9). That ticket must specify exact reference, date and time-zone examples before implementation. Capture and provider-retention rules continue to govern which location text is saved.
 
-## Remaining decisions
+## Downstream ownership
 
-- Native picker range and detailed interaction belong to Navigation prototype; storage/display representation and numeric validation limits belong to Core architecture. One-minute precision and all named units are accepted.
-- Values and labels for half-day, full-day and weekend shortcuts from the brief.
-- Positive/zero estimate validation and explicit clearing behavior.
-- Default order within a list and globally, supported alternate sorts and stable tie handling.
-- Query tokenization/locale policy and whether a fuzzy gap must be addressed in the first release.
-- Native long-list implementation details and measured proof belong to Core architecture and Navigation prototype, using the new research report.
-- Final shared-understanding confirmation and any public test seams needed before code-producing work.
+The human has confirmed all choices in this ticket. The following implementation and dependent-domain work remains in its named owner:
+
+- Core architecture chooses storage/display representation, numeric representability limits, storage/device-sync scope for per-view sort preferences, explicit Foundation matching/title comparison, actor/observation ownership and the complete-scope loading/refresh contract. These choices must preserve this record's exact public behavior and ordered examples.
+- Core architecture and [Shared command contracts](https://github.com/dvcol/planner/issues/13) propose and confirm public duration, query and sorting interfaces before implementation tests under `/tdd`. This decision writes no code and does not claim that signatures were approved.
+- Navigation prototype owns native picker range/interaction, filter/sort control layout, Manual-mode interaction, selection/anchor behavior and measured scrolling/memory/latency evidence on all devices.
+- Itineraries and scheduling defines calendar spans, scheduled-date sorting, and scheduled/unscheduled predicates with exact reference/date/time-zone examples. Their groups use the accepted cumulative composition.
+- [Offline conflicts and recovery](https://github.com/dvcol/planner/issues/10) defines deletion/conflict behavior for references and selected label/list identities. Category/tag renames preserve selections and refresh current text as specified here.
+- Fuzzy/semantic matching is deferred until a demonstrated search gap justifies a new decision; it is not unresolved work required to implement this accepted baseline.
 
 ## Validation status
 
-This round changes planning documents only. The actual checks are affected Markdown lint, local-link checks, whitespace checks and committed-artifact inspection. Swift type checks and application tests are inapplicable because no Swift implementation exists. The decision ticket closes only after its remaining product choices and acceptance examples are confirmed; downstream runtime obligations remain explicit.
+This decision changes planning documents only. The actual checks are affected Markdown lint, local-link checks, whitespace checks and committed-artifact inspection. Swift type checks and application tests are inapplicable because no Swift implementation exists. Product choices and concrete acceptance examples are confirmed; downstream runtime obligations remain explicit and unexecuted.
