@@ -1,6 +1,6 @@
 # Shared command contracts
 
-In-progress review for [Shared command contracts](https://github.com/dvcol/planner/issues/13), claimed on 2026-10-08. The [approved Core architecture](core-architecture.md) and [A21/A22 packet](architecture-review-packet.md) are the baseline. The revised Contract Q1-Q26 below replace the unaccepted earlier Q1-Q16 prompts. The human requested more context, meaningful options and impacts; this revision records that correction, not acceptance of any option. No contract question has been accepted, no Swift declarations compiled and no unit, store, UI, device or client test executed here.
+In-progress review for [Shared command contracts](https://github.com/dvcol/planner/issues/13), claimed on 2026-10-08. The [approved Core architecture](core-architecture.md) and [A21/A22 packet](architecture-review-packet.md) are the baseline. The human answered revised Contract Q1-Q26 on 2026-10-08; the accepted choices below govern the earlier proposals. Exact stale-edit fields and credential handoff remain follow-up decisions. No Swift declarations have been compiled and no unit, store, UI, device or client test has been executed here.
 
 ## Context
 
@@ -12,7 +12,7 @@ An MCP tool annotation or a Core review token does not grant permission. Validat
 
 [Core architecture is resolved](https://github.com/dvcol/planner/issues/12#issuecomment-6057782494). The approved facade, typed source/appearance identities, field changes, review/result/status shapes, native validation and save/recovery sequence carry forward. Their approval must not be requested again for unchanged behavior.
 
-[Local MCP compatibility](https://github.com/dvcol/planner/issues/6) establishes documented candidates and limits, with [committed research](https://github.com/dvcol/planner/blob/research/local-mcp-compatibility/docs/research/local-mcp-compatibility.md). No successful client connection or minimum supported client version is proved. Permissions, selected clients, handoff and lifecycle remain choices here.
+[Local MCP compatibility](https://github.com/dvcol/planner/issues/6) establishes documented candidates and limits, with [committed research](https://github.com/dvcol/planner/blob/research/local-mcp-compatibility/docs/research/local-mcp-compatibility.md). No successful client connection or minimum supported client version is proved. The selected client and lifecycle requirements are now accepted below; credential handoff and successful qualification remain open.
 
 The original ticket mentions earlier keep-current imports and wholly unapplied failures. The accepted architecture amendments govern the final contract: default whole-record Skip, reviewed Overwrite, data-only backups including minimal deletion lineage, and the A15 distinction between true precommit failure and a fully applied action with incomplete recovery. Q12/Q14 require independent itinerary appearances and appearance-count progress. These are carried-forward resolutions, not new questions.
 
@@ -20,14 +20,14 @@ The original ticket mentions earlier keep-current imports and wholly unapplied f
 
 Agree exact command/query transport forms, integration authority, stale-edit handling, JSON grammar and capture resource limits. Produce representative MCP JSON and corresponding typed Swift requests using the approved facade. Record independently specified state/error observations and the unit, real-store, native UI, physical-device and client evidence each prototype must supply.
 
-Resolution requires human answers and concrete follow-up field schemas. This draft has not reached that end state. Questions dependent on an answer, such as credential handoff after client/address selection, the precise stale-edit expectation and parser capability selection, wait for the next frontier.
+Contract Q1-Q26 now settle authority, encoding, capture and session policy. Resolution still requires concrete stale-edit expectations, credential handoff and a final review of the completed request/result schemas. Native JSON handling is accepted; guaranteed duplicate-property rejection and its additional parser branch are no longer required. No executable prototype is claimed.
 
 ## Definition of ready
 
 - [x] Read the approved architecture and domain resolutions, release journeys and local MCP compatibility research.
 - [x] Inventory the release journeys and required command/query families below.
 - [x] Prepare valid UUID fixtures, retained reference graphs and explicit competing stale-edit results.
-- [ ] Accept this frontier's remaining behavior, authority and wire choices.
+- [x] Accept revised Contract Q1-Q26 behavior, authority and wire choices, including the human amendments.
 - [ ] Specify and accept changed or newly concrete request fields after their prerequisite answers. Unchanged A21/A22 public approval carries forward before /tdd.
 
 ## Release journeys and shared operations
@@ -38,14 +38,14 @@ Resolution requires human answers and concrete follow-up field schemas. This dra
 | V0, Hotel in two Lists | Add/remove/move memberships, explicit global/contextual completion, archive/unarchive. Removing one membership preserves Hotel and the other membership. | Core semantics approved. Exact authorized adapter operations are finalized here. |
 | V1, generic Item without location | Read/search/filter/sort works without map coordinates; completion and archive remain independent. | Approved search fixtures plus public-query/store/UI checks. |
 | V1, shared labels | Create/edit references by UUID; rename updates all uses; duplicate names remain distinct. Referenced label Delete is native-confirmed and preserves its owners. | Native UI and authorized label-edit adapters share Core. |
-| V2, mixed URL/text capture | Decode supported inputs into one review, optionally look up the selected Maps link, then reviewed create/reuse. Cancel-before-Add creates nothing; saving includes selected memberships together. | Native app/Share; proposed integration profile is below. |
+| V2, mixed URL/text capture | Decode supported inputs into one review, optionally look up the selected Maps link, then reviewed create/reuse. Cancel-before-Add creates nothing; saving includes selected memberships together. | Native app/Share; authorized MCP capture uses exact agent-reviewed apply under Q2. |
 | V2, Hotel, Museum, Hotel itinerary | Add distinct live entries, reorder without resetting local flags, read appearance progress and schedule source references. Editing Hotel's source content updates both appearances. | Native app; Core, UI and device evidence. |
 | V2, timed/all-day schedules | Create/edit/remove only the selected Schedule. All-day civil dates survive travel; zone-only edits preserve instants; no estimate fills an end. | Scheduling fixtures; no Calendar export/EventKit operations. |
-| V2, portable data | Export full data-only backup; decode/review/apply Skip or Overwrite. Invalid backup rejects together; absent-file sources survive. | Native UI initially proposed; permission decision pending. |
+| V2, portable data | Export full data-only backup; decode/review/apply Skip or Overwrite. Invalid backup rejects together; absent-file sources survive. | Native UI only; backup administration is not exposed through MCP or Intents. |
 | V2, known recovery incomplete | Read/search/export remain available. Retry only the known-applied checkpoint, then unblock domain changes. | Core result/status is approved; native and Share interruption proof. |
-| V2, account changed | Inspect/export the old independent recovery namespace without changing the active dataset; explicit restore/merge is separately reviewed. | Native recovery initially proposed; coherent account cutoff is a hard device gate. |
-| V3, Shortcuts action | Resolve stable IDs, invoke explicit scoped ordinary action, return the Core outcome. Confirm required bulk targets and route capture to Add/Cancel. | Intent profile pending; native intent behavior must be demonstrated. |
-| V3, Agent Control Off/On | No listener while Off. Enabled authorized client performs permitted operations; stop/expiry revokes access and operation status remains truthful. | Selected-client/session profile pending; MCP session prototype proves it. |
+| V2, account changed | Inspect/export the old independent recovery namespace without changing the active dataset; explicit restore/merge is separately reviewed. | Native recovery only under Q4; coherent account cutoff is a hard device gate. |
+| V3, Shortcuts action | Resolve stable IDs, invoke explicit scoped ordinary action, return the Core outcome. Confirm required bulk targets and route capture to Add/Cancel. | Ordinary Intents may run while locked where Apple permits; bulk uses system confirmation. Native behavior must be demonstrated. |
+| V3, Agent Control Off/On | No listener while Off. Enabled authorized client performs permitted operations; stop/expiry revokes access and operation status remains truthful. | Four selected clients, two simultaneous connections, 60-minute default and 10-minute idle timeout are accepted; the MCP prototype proves them. |
 
 ## Command and authority inventory
 
@@ -53,18 +53,18 @@ Command names below identify proposed adapter operations within the approved Cor
 
 | Family | Identity and action | Carried-forward invariant or pending boundary |
 | --- | --- | --- |
-| Create/edit Item, List, Itinerary | Planner-generated source identity on create; explicit source UUID and changed fields on edit. | Item content/label associations are separate from completion/archive. A6 own-Item timestamps have no contextual or label-rename fan-out. Partial/stale wire rules are pending. |
-| Set Item completion | Item UUID plus Done/Todo. | Global Done overrides every appearance's display, retaining local flags; global Reopen reveals those flags. Integration availability is revised Contract Q1. |
+| Create/edit Item, List, Itinerary | Planner-generated source identity on create; explicit source UUID and changed fields on edit. | Item content/label associations are separate from completion/archive. A6 own-Item timestamps have no contextual or label-rename fan-out. Q10 fixes partial missing/null/value rules; exact Q9 stale expectation fields remain pending. |
+| Set Item completion | Item UUID plus Done/Todo. | Global Done overrides every appearance's display, retaining local flags; global Reopen reveals those flags. Both explicitly described global and appearance scopes are accepted under revised Contract Q1. |
 | Set appearance completion | Exact typed List membership, direct itinerary entry or expanded List-child appearance plus Done/Todo. | A source UUID cannot substitute for an appearance; missing/removed appearances do not retarget globally. |
-| Set full-context completion | List, Itinerary or itinerary List-entry scope plus Done/Todo and Core-issued exact-target review. | Hidden/archived appearances included once each; global flags untouched. Empty remains No items. MCP capture and bulk authority are separate revised Contract Q2 and Q3. |
+| Set full-context completion | List, Itinerary or itinerary List-entry scope plus Done/Todo and Core-issued exact-target review. | Hidden/archived appearances included once each; global flags untouched. Empty remains No items. MCP capture and bulk may be applied by the authorized agent after exact review under revised Contract Q2/Q3. |
 | Archive/unarchive | Item/List/Itinerary source UUID plus independent archive state. | Container-only effects; shared source content and global/local completion retained. |
 | Organize | Source/destination and association/entry identity, placement and operation identity. | Brief already includes remove-from-list and unschedule. Planning-reference removal retains shared source Items/Lists. Standalone membership uniqueness and intentional itinerary repeats differ. |
 | Schedule | Item/Itinerary source and selected Schedule identity with typed timed/all-day values. | Removing one Schedule preserves source/other Schedules. These ordinary planning edits must not authorize source/label Delete. |
 | Create/edit labels | Category/Tag UUID and own name/metadata; owner association edits retain label identity. | Same-name labels allowed; shared edits live everywhere. Permanent label Delete remains a separate authority/confirmation path. |
 | Permanent Delete | Source/label identity plus bound impact review. | Default MCP cannot invoke it directly or indirectly. Native confirmation lists affected references; container sources remain. |
 | Capture create/reuse | Reviewed draft/origins, original links, selected List IDs, chosen create/reuse and operation identity. | Provider preview stays unsaved. Reuse retains existing fields/state and adds reviewed missing links/memberships. Native Add/Cancel and C16 in-flight rules retained. |
-| Backup apply/recovery restore | Validated immutable backup, Skip/Overwrite and exact impact review. | Incoming deletion/lifetime effects require authority even for absent local targets. Surface availability is revised Contract Q4. |
-| Read/export/recovery status | Current authorized dataset or separately authorized recovery namespace. | Read failure is not empty data; portable backup excludes credentials, internal receipts and presentation state. Active-dataset export is revised Contract Q5; backup/recovery authority is Q4. |
+| Backup apply/recovery restore | Validated immutable backup, Skip/Overwrite and exact impact review. | Incoming deletion/lifetime effects require authority even for absent local targets. MCP and Intents expose no backup apply or account-recovery administration under revised Contract Q4. |
+| Read/export/recovery status | Current authorized dataset or separately authorized recovery namespace. | Read failure is not empty data. Portable backup excludes credentials, internal receipts and presentation state. Q4/Q5 keep full export/import/recovery manual and unavailable to MCP/Intents; ordinary authorized reads and operation-status queries remain available. |
 
 For permitted reference editing, deleting Item X, a List, an Itinerary, Category or Tag is distinct from removing an association or one Schedule. The original brief explicitly proposes remove-from-list and unschedule as ordinary MCP planning operations. This contract carries those actions forward and requires source-Delete authorization checks for indirect effects; it does not silently introduce a destructive default capability.
 
@@ -90,13 +90,13 @@ These valid UUIDs are constructed test fixtures, not records in a running app. P
 
 From the initial itinerary, locally complete entry 501: progress is 1 of 3. Globally complete Hotel: progress is 2 of 3 and both Hotel rows display Done. Globally reopen Hotel: progress returns to 1 of 3, retaining entry 501's local Done and entry 503's local Todo. Museum remains Archived/Todo throughout. Tokyo Food's local Hotel flag is independent of the itinerary.
 
-For stale-edit discussion, read Original notes, then locally save Friday booking, then submit Monday booking based on the old read. Revised Contract Q9 distinguishes field-specific rejection, whole-source revision rejection and accepting the submitted patch. Title-only changes are not notes-field conflicts in the recommended policy. This is a competing observation, not a test or new public token declaration approved in advance.
+Accepted stale-edit fixture: read Original notes, then locally save Friday booking, then submit Monday booking based on the old read. Reject this attempt as staleEdit and retain Friday booking with no other mutation. A title-only intervening change does not block a notes-only edit. The exact prior-field expectation representation is a follow-up decision; no test has run.
 
 ## Wire and outcome proposals
 
 Core-issued dataset ownership and epoch values remain opaque. A MCP client cannot choose an account by supplying JSON ownership fields. The adapter binds the request to its authorized active session and calls the same Planner facade. Read/review/operation values remain immutable and dataset-bound.
 
-Proposed partial-edit JSON has an operationId, selected Item UUID and a changes object containing only edited fields. A notes-only value sets notes, a null clears it and absent fields stay unchanged if revised Contract Q10 is accepted. The corresponding typed request uses the approved PlannerFieldChange set/clear/unchanged cases and PlannerOperation passed to Planner.execute. The expected-read field/token is deliberately not invented before revised Contract Q9 is answered.
+Accepted partial-edit JSON has an operationId, selected Item UUID and a changes object containing only edited fields. A notes-only value sets notes, null clears it and absent fields stay unchanged under Q10. The corresponding typed request uses the approved PlannerFieldChange set/clear/unchanged cases and PlannerOperation passed to Planner.execute. Q9 requires field-specific stale checking; the exact expectation field/token is the next frontier. A missing mandatory expectation will not silently authorize blind overwrite.
 
 Proposed completion wire distinguishes set_item_completion with itemId from set_appearance_completion with a typed appearance object. For the first Hotel itinerary appearance, its object contains kind directItineraryItem, itineraryId 301 and entryId 501 using their full UUID strings. Expanded List children additionally require listEntryId and membershipId. Their typed equivalents are PlannerCompletionScope.globalItem or .appearance with the corresponding approved PlannerAppearanceID case. A request missing its required scope/identity is rejected without guessing.
 
@@ -110,10 +110,10 @@ Read-only facts checked against installed OS 27 declarations and primary sources
 
 | Fact | Contract implication |
 | --- | --- |
-| Native [Int64 JSON decoding](https://github.com/swiftlang/swift-foundation/blob/2df17f28d6cd4aa0cf27cc66598fcabbcde8292c/Sources/FoundationEssentials/JSON/JSONDecoder.swift#L1112) can accept integral decimal/exponent forms and a rounded tiny fractional value; [RFC 8259](https://www.rfc-editor.org/rfc/rfc8259#section-6) describes binary64 interoperability limits. | Canonical decimal strings plus native checked conversion avoid a JavaScript precision cap and strict-lexeme ambiguity. Integer policy is revised Contract Q11; timestamp policy is Q12. |
+| Native [Int64 JSON decoding](https://github.com/swiftlang/swift-foundation/blob/2df17f28d6cd4aa0cf27cc66598fcabbcde8292c/Sources/FoundationEssentials/JSON/JSONDecoder.swift#L1112) can accept integral decimal/exponent forms and a rounded tiny fractional value; [RFC 8259](https://www.rfc-editor.org/rfc/rfc8259#section-6) describes binary64 interoperability limits. | Canonical decimal strings plus native checked conversion avoid a JavaScript precision cap and strict-lexeme ambiguity. Q11 accepts canonical Int64 strings; Q12 accepts exact finite native Date numbers. |
 | Native [Date Codable](https://github.com/swiftlang/swift-foundation/blob/2df17f28d6cd4aa0cf27cc66598fcabbcde8292c/Sources/FoundationEssentials/Date.swift#L346) uses Double seconds since 2001-01-01 UTC; inspected [ISO8601 fractional formatting](https://github.com/swiftlang/swift-foundation/blob/2df17f28d6cd4aa0cf27cc66598fcabbcde8292c/Sources/FoundationEssentials/Formatting/Date%2BISO8601FormatStyle.swift#L354) rounds to milliseconds. | Full backup cannot claim arbitrary Date fidelity from ordinary ISO formatting. Lossless finite native round-trip remains a focused runtime gate. |
 | [decodeIfPresent](https://developer.apple.com/documentation/swift/keyeddecodingcontainer/decodeifpresent(_:forkey:)-w7f) conflates missing/null; contains plus decodeNil can distinguish them. Native UUID Codable uses UUID string conversion. | Patch semantics can use native Codable. Producers use canonical hyphenated UUID output; accepted case variants do not create new identities. |
-| Ordinary Foundation keyed decoding collapses repeated property names before allKeys; [RFC 8259 object names](https://www.rfc-editor.org/rfc/rfc8259#section-4) should be unique. | Repeated JSON properties differ from duplicate entity UUIDs. Native handling versus guaranteed rejection is an explicit open guarantee. |
+| Ordinary Foundation keyed decoding collapses repeated property names before allKeys; [RFC 8259 object names](https://www.rfc-editor.org/rfc/rfc8259#section-4) should be unique. | Repeated JSON properties differ from duplicate entity UUIDs. Q14 accepts native handling without a guaranteed duplicate-property rejection or portable winner. |
 | [NSItemProvider](https://developer.apple.com/documentation/foundation/nsitemprovider) typed loadObject supports NSURL, NSString and MKMapItem in installed SDK 27; callbacks are asynchronous and return Progress. | Collect supported typed lanes with fixed positions. Do not infer content authorship from loader class or callback order. File URLs are excluded; unsupported formats reported. No arbitrary binary-data fallback is proposed. |
 | [Plain text](https://developer.apple.com/documentation/uniformtypeidentifiers/uttype-swift.struct/plaintext) has unspecified encoding; native object loading materializes a result before a size check. | NSString avoids an assumed UTF-8 byte decode. A post-load acceptance bound is not proof of bounded peak memory. |
 | [Unified Maps URLs](https://developer.apple.com/documentation/mapkit/unified-map-urls) documents Apple place/viewport distinctions and shortened maps.apple-host URLs resolved from redirects. [Google Maps URLs](https://developers.google.com/maps/documentation/urls/get-started) defines no-key map URLs. | Retain original bookmarks. Preview interpretation follows documented parameters; no opaque path decoding or promotion of provider descriptions to own content. |
@@ -121,24 +121,109 @@ Read-only facts checked against installed OS 27 declarations and primary sources
 | [URLSession request timeout](https://developer.apple.com/documentation/foundation/urlsessionconfiguration/timeoutintervalforrequest) resets when data arrives; a non-background [redirect delegate](https://developer.apple.com/documentation/foundation/urlsessiontaskdelegate/urlsession(_:task:willperformhttpredirection:newrequest:completionhandler:)) can inspect/refuse each redirect. | A whole-preview deadline is separate. Use headers/redirect inspection and cancellation rather than body-fetch convenience methods; HEAD success is not assumed. |
 | [MCP tool annotations](https://modelcontextprotocol.io/specification/2025-11-25/schema#toolannotations) are hints; [structured tools](https://modelcontextprotocol.io/specification/2025-11-25/server/tools) may return domain evidence. | Enforce authority in command admission/impact, with unambiguous applied/recovery status. |
 | [Intent authentication policy](https://developer.apple.com/documentation/AppIntents/IntentAuthenticationPolicy) and confirmation are separate mechanisms; custom intents can default to alwaysAllowed. | Choose authentication explicitly rather than treating invocation or confirmed true as independent human approval. |
-| [System sleep](https://developer.apple.com/documentation/appkit/nsworkspace/willsleepnotification), [last-window closure](https://developer.apple.com/documentation/appkit/nsapplicationdelegate/applicationshouldterminateafterlastwindowclosed(_:)) and [ContinuousClock](https://developer.apple.com/documentation/swift/continuousclock) have documented public meanings. [Session deactivation](https://developer.apple.com/documentation/appkit/nsworkspace/sessiondidresignactivenotification) documents switching sessions, not every lock. [Closed-lid operation](https://support.apple.com/en-gb/102282) can leave a Mac awake. | Actual system sleep differs from display sleep/lid closure. Lock revocation needs supported-API proof; no existing notification is silently equated with lock. Check elapsed deadlines before requests after wake; a callback need not run during sleep. |
+| [System sleep](https://developer.apple.com/documentation/appkit/nsworkspace/willsleepnotification), [last-window closure](https://developer.apple.com/documentation/appkit/nsapplicationdelegate/applicationshouldterminateafterlastwindowclosed(_:)) and [ContinuousClock](https://developer.apple.com/documentation/swift/continuousclock) have documented public meanings. [Session deactivation](https://developer.apple.com/documentation/appkit/nsworkspace/sessiondidresignactivenotification) documents switching sessions, not every lock. [Closed-lid operation](https://support.apple.com/en-gb/102282) can leave a Mac awake. | Actual system sleep differs from display sleep/lid closure. Q25 retains an unexpired session through lock/sleep and does not require universal lock detection. Check elapsed deadlines before requests after wake; a callback need not run during sleep. Q26 requires continued process life and menu-bar controls after last-window closure. |
 
-Guaranteed duplicate-property rejection is feasible through the established C library [Jansson's JSON_REJECT_DUPLICATES](https://jansson.readthedocs.io/en/latest/apiref.html#decoding). Its [current releases](https://github.com/akheron/jansson/releases) and [source/tests](https://github.com/akheron/jansson) show maintenance. It is not a verified drop-in Swift package; native platform integration and grammar compatibility would need proof if selected. No dependency has been added. Revised Contract Q14 chooses the required duplicate-property guarantee before capability selection; Q13 separately chooses unknown-field handling.
+Guaranteed duplicate-property rejection is feasible through the established C library [Jansson's JSON_REJECT_DUPLICATES](https://jansson.readthedocs.io/en/latest/apiref.html#decoding). Its [current releases](https://github.com/akheron/jansson/releases) and [source/tests](https://github.com/akheron/jansson) show maintenance. It is not a verified drop-in Swift package; native platform integration and grammar compatibility would need proof if selected. No dependency has been added. Q14 accepts native handling, so no additional duplicate-rejecting parser is selected or required. Q13 separately requires unknown supported-version backup fields to reject together.
 
-## Revised decision tree and current frontier
+## Credential-handoff facts for the next frontier
 
-The earlier [sixteen-question proposal](https://github.com/dvcol/planner/blob/0c2a67fc67b2e169eac6e45543b7fb52474f6642/docs/shared-command-contracts.md) remains historical, unaccepted evidence. Its condensed prompts are superseded. Answer the revised Q1-Q26, whose full titles distinguish them from older question-tool cards. A response to an older card will be matched by its actual meaning, never silently applied to a different revised number.
+These are documented candidates, not successful Planner connections. Fact work inspected public documentation and installed CLI help/schema, without reading private client configuration or credentials and without installing or changing clients.
 
-| Settled prerequisite | Independent choices now | Dependent questions held for a later round |
+| Client or native capability | Verified fact and remaining proof |
+| --- | --- |
+| Codex CLI, observed 0.160.1 | Supports environment-backed bearer/header values and a string http_headers_helper. The [pinned schema](https://github.com/openai/codex/blob/rust-v0.160.1/codex-rs/core/config.schema.json) and [helper implementation](https://github.com/openai/codex/blob/rust-v0.160.1/codex-rs/rmcp-client/src/http_headers.rs#L431) use a shell command, cache per connection and refresh/retry once on same-origin 401/403 when headers changed. Other bearer/OAuth configuration may override helper Authorization. |
+| Local Codex desktop | [MCP documentation](https://developers.openai.com/codex/mcp) establishes shared host configuration and local Streamable HTTP. Configuration changes may require Save/Restart. Embedded helper behavior and renewal/reconnect need an independent demonstration. |
+| Claude Code CLI, observed 2.1.291 | [Dynamic authentication](https://code.claude.com/docs/en/mcp#use-dynamic-headers-for-custom-authentication) supports a shell headersHelper, evaluated on connection/reconnection with one refresh/retry after 401/403. A running client's environment is not automatically changed by editing shell variables. |
+| Claude Desktop local Code tab | [Shared configuration](https://code.claude.com/docs/en/desktop#shared-configuration) uses the CLI configuration. Desktop does not inherit arbitrary shell variables; its local environment editor applies values to new sessions. Actual helper execution and reconnect require separate proof. |
+| Existing signed app executable | Apple's [app-like executable/profile example](https://developer.apple.com/documentation/xcode/signing-a-daemon-with-a-restricted-entitlement) and [Keychain process rules](https://developer.apple.com/documentation/technotes/tn3137-on-mac-keychains) support using an executable inside its signed app wrapper. A non-UI mode of Planner's main executable is a smaller candidate than another restricted-entitlement tool, not yet implemented or proved. |
+| Credential storage and access | [App Group containers](https://developer.apple.com/documentation/xcode/accessing-app-group-containers) and [Keychain sharing](https://developer.apple.com/documentation/security/sharing-access-to-keychain-items-among-a-collection-of-apps) have process/signing requirements. Storage and reader caller trust are separate; neither storage mechanism alone identifies a client invoking a credential reader. If a reader is chosen, its exact storage and access contract is the dependent follow-up. No unauthenticated credential-serving HTTP endpoint is proposed. |
+| Port 44444 | [IANA](https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=44444) assigns TCP 44444 to cognex-dataman. This does not establish local occupancy or invalidate a configurable loopback default. Preserve the human's requested 44444 and prove clear occupied-bind failure. |
+
+## Accepted Contract Q1-Q26
+
+These choices are the human's answers, not inferred acceptance of recommendations. Earlier recommendations in the historical question round are superseded wherever the chosen option differs.
+
+| Question | Accepted option and resulting behavior |
+| --- | --- |
+| Q1 | A. Separate global Item and contextual appearance completion, with descriptions explaining the effect of each. No missing-scope fallback. |
+| Q2 | A. Agent capture is a legitimate flow; the enabled agent reviews and applies the exact create/reuse proposal without an additional native click. |
+| Q3 | A. Agent applies the exact full-context local bulk preview, including hidden/archived targets, without modifying global Item flags. |
+| Q4 | A. Backup import/restore and old-account recovery are rare manual native actions, unavailable to both MCP and Intents. |
+| Q5 | C. Full export is also manual native administration. Integrations interact with ordinary Planner data, not backup administration. |
+| Q6 | C. Ordinary data Intents may run while locked where Apple permits. No added Planner authentication requirement; Apple's system restrictions still apply. |
+| Q7 | A. Bulk Intent uses system confirmation describing the full scope and count; cancellation changes nothing. |
+| Q8 | A. Stop attempts safe precommit cancellation. Applied actions remain applied, with truthful status/recovery reporting. |
+| Q9 | A. Reject a locally known stale edit only when an edited field changed; unrelated field edits do not block it. |
+| Q10 | A. Omitted fields unchanged, null clears optional fields, a supplied value sets; required-field clear rejects. |
+| Q11 | A. Int64 wire values are canonical decimal strings with checked native conversion. |
+| Q12 | A. Finite Date values use numeric Double seconds since 2001-01-01 UTC with exact native round-trip proof. |
+| Q13 | A. Unknown fields in supported-version backups reject the whole import with a property path. |
+| Q14 | A. Native duplicate-property handling, with no guaranteed rejection or portable first/last winner. Review/apply use one immutable decode. |
+| Q15 | A. Input/attachment order, then typed URL before text-detected links; callback timing cannot change order. |
+| Q16 | A. 32 providers, 1 MiB decoded URL/text total, 128 distinct links, four concurrent loads, ten seconds overall; physical allocation/lifecycle proof required. |
+| Q17 | A. Failed/oversized supported inputs block Add until retry or explicit removal. Optional enrichment failure remains separately saveable. |
+| Q18 | A. Network lookup only for HTTPS originals on documented Maps hosts; retained HTTP bookmarks receive no lookup. Every redirect is checked. |
+| Q19 | A with amendment. Eight seconds overall, four per request, five redirects/six requests maximum; show an appropriate loading indicator. Add never waits. |
+| Q20 | A. Qualify Codex CLI, local Codex desktop, Claude Code CLI and Claude Desktop local Code tab separately. |
+| Q21 | A. Support two initialized simultaneous clients; clearly refuse a third. |
+| Q22 | A with amendment. Stable configurable loopback endpoint, default 127.0.0.1:44444/mcp; occupied port fails clearly and offers an explicit change. |
+| Q23 | C. Default maximum session duration 60 minutes; 15 and 30 remain selectable. No automatic renewal. |
+| Q24 | A. Idle expiry after ten minutes; successful authorized tool calls reset it, protocol pings and rejected requests do not. |
+| Q25 | C. Lock/sleep do not revoke an unexpired session. Original elapsed absolute/idle deadlines are checked before resuming requests. |
+| Q26 | B. Last-window closure retains unexpired access with a native menu-bar status and Stop control. App quit always stops access. |
+
+Completion command descriptions must say what changes and what is retained. Global Complete sets the Item Done so every appearance displays Done; Global Reopen reveals retained local flags and can leave some appearances Done. Contextual Complete/Reopen changes only the selected local flag; a globally Done Item still displays Done. Container bulk affects all contextual children, including hidden/archived ones, without changing global completion. Read results identify global, local and effective completion so an agent can explain the outcome.
+
+The manual-administration boundary excludes backup export/decode/apply, recovery-namespace inspection/restore and recovery administration from public MCP tools and App Intents. It does not prevent ordinary reads, scoped operation-status checks or Core's internal recovery work after an allowed save. Native app/Share internal calls retain their approved ownership; no adapter reimplements recovery or domain rules.
+
+Loading feedback belongs beside the pending Maps preview, not in a blocking save screen. Show that lookup is in progress, then its result or truthful unavailable/partial state. Obsolete callbacks after input changes/Add/Cancel cannot update a saved Item or the current review.
+
+The Mac menu-bar control shows active/off state, remaining absolute duration and Stop. Closing the window does not create a daemon or enable access indefinitely. The process must remain alive for the chosen session; app quit, manual Stop and expiry stop the listener and revoke its credential. Sleep does not pause either elapsed deadline; display sleep or session switching is not equated with a lock event.
+
+## Decision tree after round one
+
+| Accepted prerequisites | Current follow-up | Held until its prerequisites settle |
 | --- | --- | --- |
-| Approved global/local completion and exact Core review tokens | Q1 available scopes; Q2 agent capture approval; Q3 agent bulk approval; Q7 bulk Intent interaction | Exact tool registration, denied-command responses and confirmation integration after availability choices. |
-| Approved default permissions, Skip/Overwrite and account separation | Q4 backup/recovery authority; Q5 active export; Q6 Intent authentication | Capability grant/revocation and selected recovery-namespace fields if advanced access is chosen. |
-| Approved commit/recovery results and native offline conflict policy | Q8 Stop behavior; Q9 known stale edits; Q10 patch form | Concrete stale-edit expectation fields, typed constructors and error payloads. |
-| Approved full-range native values and faithful backup | Q11 integers; Q12 exact timestamps; Q13 unknown fields; Q14 duplicate properties | Final backup schema and verified parser/library capabilities for the selected guarantees. |
-| Approved retained links/text, provider origins and partial enrichment | Q15 stable order; Q16 resource profile; Q17 unavailable intended input; Q18 request schemes; Q19 lookup budget | Exact loading/request signatures and boundary fixtures under selected profiles; real provider/device proof. |
-| Approved temporary local MCP and documented compatibility facts | Q20 clients; Q21 concurrency; Q22 port; Q23 absolute duration; Q24 inactivity; Q25 lock/sleep; Q26 window close | Credential handoff/helper/bridge choices after client/address selection, then actual connection qualification. |
+| Q9 field-specific stale checking, Q10 partial-edit form, approved identity/lifetime binding | Exact prior-field expectation representation. | Complete typed edit request and corresponding read/stale-error examples. |
+| Q20 four clients, Q22 stable configurable port and credential rotation | Verified credential handoff choices. | Helper/bridge topology, storage and installation fields if chosen; then client setup and actual qualification. |
+| Q1-Q8 authority and results; Q11-Q19 wire/capture choices; Q21-Q26 lifecycle | Concrete transport examples and required test observations under these accepted choices. | Final public contract review, then resolution. No production or prototype code before its applicable interface approval. |
 
-Each option below describes a proposed observable result and its cost. Recommendations remain unaccepted. There is no automatic rollout, no assumption that a preselected option is an answer, and no dependent next round before the human answers. Native Item/List/Itinerary rules already accepted are retained.
+## Current frontier, Contract Q27-Q28
+
+These two choices have settled prerequisites and are independent of each other. All Q1-Q26 answers carry forward. Header-reader storage/topology details wait for Q28; final edit-field/result declarations wait for Q27. No recommendation below has been accepted. The full questions are issued through the question tool and repeated in chat.
+
+❓ **Contract Q27** - **How should an edit carry the values it was based on?**
+
+Hotel's notes were Original notes when the agent read them. They are now Friday booking; its proposed Monday booking must be rejected under accepted Q9. A title-only intervening change must not block that notes edit. Q10 fixes missing/null/value changes. This question chooses how the caller supplies its earlier read, without reopening field-specific stale behavior or dataset/identity/lifetime validation.
+
+- **A. Explicit previous values.** Require an expected value for every changed field, such as expectedFields with notes Original notes beside changes with notes Monday booking. Compare those fields atomically before save. Larger fields are repeated, but clients construct and inspect ordinary JSON without another token lifecycle.
+- **B. Opaque edit token.** A read returns a Core-issued baseline token; the edit supplies it with changes. Compare only the edited fields, never a whole-Item revision. Smaller requests, with token validation and unavailable-token/restart behavior to specify and prove.
+
+➡️ Recommendation: **A, Explicit previous values**. It keeps expectations visible and avoids adding an edit-token lifecycle.
+
+Status: awaiting human answer. Concrete Swift/JSON expectation fields are held until this answer.
+
+---
+
+❓ **Contract Q28** - **How should clients obtain each freshly enabled session's credential?**
+
+Q20 selects four local clients; Q22 selects a stable URL with port 44444. Every enablement uses a fresh credential. Re-entering it each session is possible, but changing a shell variable does not update an already-running desktop client. Codex and Claude document dynamic HTTP header commands.
+
+The smaller native candidate invokes the existing signed Planner app executable in a non-UI reader mode. Configure its quoted installed path once; it returns header JSON only for an already enabled session and exits promptly. It must not open a window, initialize planning data, start the listener or renew access. Apple's signing model supports the candidate; mode startup, credential access, client caching/reconnect and all four clients still require prototype proof. Moving the app may require updating its configured path.
+
+- **A. Reuse Planner's executable.** Configure a header command once, with a documented reconnect fallback. Add the non-UI mode to the existing Mac app. Review storage/access next and prove all four clients; no new helper product is presumed.
+- **B. Manual handoff each enablement.** Supply the credential through supported client environment or protected authentication storage and start a new session or restart/reconnect as required. Do not write it into ordinary client configuration or logs. No reader mode, with recurring setup and desktop environment limitations.
+- **C. Separate packaged native helper.** Use a dedicated signed reader bundle. Separate startup, at the cost of an added build product, profile/signing configuration and distribution/qualification work.
+
+➡️ Recommendation: **A, Reuse Planner's executable**. It avoids another product and repeated token entry, conditional on actual non-UI and four-client proof. It does not promise automatic seamless reconnect.
+
+Status: awaiting human answer. Storage, reader access and exact installed-path/configuration fields are held until this answer.
+
+---
+
+## Historical round-one questions
+
+The [original sixteen-question draft](https://github.com/dvcol/planner/blob/0c2a67fc67b2e169eac6e45543b7fb52474f6642/docs/shared-command-contracts.md) was replaced by the following expanded questions. Their recommendations show the proposed alternatives at the time; the accepted table above and each recorded answer govern current work.
 
 ❓ **Revised Contract Q1** - **Which completion scopes should integrations expose?**
 
@@ -150,7 +235,7 @@ Hotel appears twice in Tokyo Trip. Both local flags start Todo. The accepted rul
 
 ➡️ Recommendation: **A, Both explicit scopes**. It preserves useful automation while making the effect explicit.
 
-Original proposal covered: Q1. Status: awaiting human answer.
+Original proposal covered: Q1. Status: accepted A, with explicit ramifications in descriptions, 2026-10-08.
 
 ---
 
@@ -164,7 +249,7 @@ You ask an agent to save a Maps link to Tokyo Food. Capture produces one editabl
 
 ➡️ Recommendation: **A, Agent reviews and applies**. Enabling ordinary agent editing can cover this explicit reviewed action without a second approval interface.
 
-Original proposal covered: Q2. Status: awaiting human answer.
+Original proposal covered: Q2. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -178,7 +263,7 @@ Tokyo Food contains active Hotel and archived Museum. A current filter shows onl
 
 ➡️ Recommendation: **A, Agent applies exact preview**. A full-target preview and explicit scope make the enabled session useful while retaining the approved local transaction and stale-target protections.
 
-Original proposal covered: Q2. Status: awaiting human answer.
+Original proposal covered: Q2. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -192,7 +277,7 @@ A backup can contain new Z, a replacement for List A, or a deleted-ID marker for
 
 ➡️ Recommendation: **A, Native backup and recovery workflows**. It covers the V2 native backup journey and keeps the first agent permission model small.
 
-Original proposal covered: Q3 plus the old-account part of Q4. Status: awaiting human answer.
+Original proposal covered: Q3 plus the old-account part of Q4. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -206,7 +291,7 @@ An enabled agent can already query the active planner. A full portable export co
 
 ➡️ Recommendation: **A, Include export in default read**. It is a useful read operation over the same authorized dataset; account-recovery access is a separate boundary.
 
-Original proposal covered: Q4. Status: awaiting human answer.
+Original proposal covered: Q4. Status: accepted C, 2026-10-08.
 
 ---
 
@@ -220,7 +305,7 @@ Shortcuts and Siri can invoke data actions without showing the main app. Apple's
 
 ➡️ Recommendation: **A, Authenticate all data intents**. An explicit uniform policy is easier to explain and prove for a personal planner.
 
-Original proposal covered: authentication part of Q5. Status: awaiting human answer.
+Original proposal covered: authentication part of Q5. Status: accepted C, 2026-10-08.
 
 ---
 
@@ -234,7 +319,7 @@ A Shortcut says Mark Tokyo Food done. Its accepted scope includes Hotel and arch
 
 ➡️ Recommendation: **A, System confirmation with full scope**. It keeps a visible confirmation without opening the full app for every bulk action.
 
-Original proposal covered: bulk-confirmation part of Q5. Status: awaiting human answer.
+Original proposal covered: bulk-confirmation part of Q5. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -247,7 +332,7 @@ An agent starts creating an Item and its two memberships. You press Stop or the 
 
 ➡️ Recommendation: **A, Attempt cancellation before commit**. It makes Stop meaningful for unapplied work while respecting irreversible commit and recovery evidence.
 
-Original proposal covered: Q6. Status: awaiting human answer.
+Original proposal covered: Q6. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -261,7 +346,7 @@ An agent reads Hotel's notes as Original notes. Another local action saves Frida
 
 ➡️ Recommendation: **A, Reject changed edited fields**. It prevents replacing a known newer value without making independent field edits unnecessarily conflict.
 
-Original proposal covered: Q7. Status: awaiting human answer.
+Original proposal covered: Q7. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -275,7 +360,7 @@ Hotel has title Hotel, notes Friday booking and a 120-minute estimate. A client 
 
 ➡️ Recommendation: **A, Missing unchanged; null clears**. It maps directly to the approved cases using native Codable and keeps common patches short.
 
-Original proposal covered: Q8. Status: awaiting human answer.
+Original proposal covered: Q8. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -288,7 +373,7 @@ Native minutes/ranks use Int64. The value 9007199254740993 can be rounded by a J
 
 ➡️ Recommendation: **A, Canonical decimal strings**. One representation avoids both client rounding and Foundation's permissive integer numeric fallback.
 
-Original proposal covered: integer part of Q9. Status: awaiting human answer.
+Original proposal covered: integer part of Q9. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -301,7 +386,7 @@ Full backups must reproduce stored finite Date values, including submillisecond 
 
 ➡️ Recommendation: **A, Native numeric reference seconds**. A Date already uses binary64, so native numeric encoding is the simpler candidate; exact round-trip still must be proved.
 
-Original proposal covered: date part of Q9. Status: awaiting human answer.
+Original proposal covered: date part of Q9. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -315,7 +400,7 @@ A file declares the supported version but an Item contains notse instead of note
 
 ➡️ Recommendation: **A, Reject unknown fields everywhere**. It makes data-loss and typo detection explicit for the quality-first backup contract.
 
-Original proposal covered: unknown-field part of Q10. Status: awaiting human answer.
+Original proposal covered: unknown-field part of Q10. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -328,7 +413,7 @@ One Item object contains title twice with two different values. This differs fro
 
 ➡️ Recommendation: **A, Use native duplicate-property handling**. It keeps native decoding and avoids a dependency solely for this guarantee; choose B if rejecting ambiguous producer input is worth that cost.
 
-Original proposal covered: duplicate-property part of Q10. Status: awaiting human answer.
+Original proposal covered: duplicate-property part of Q10. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -342,7 +427,7 @@ One attachment offers URL U and text containing a different URL V; a second atta
 
 ➡️ Recommendation: **A, URL before text**. It is a simple app-wide rule users and fixtures can predict across providers.
 
-Original proposal covered: Q11. Status: awaiting human answer.
+Original proposal covered: Q11. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -356,7 +441,7 @@ A typical Maps share is small, but one invocation can contain many attachments o
 
 ➡️ Recommendation: **A, Balanced capture profile**. It is a reasonable starting workload for ordinary link/text capture; physical extension evidence must verify it.
 
-Original proposal covered: resource-budget part of Q12. Status: awaiting human answer.
+Original proposal covered: resource-budget part of Q12. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -370,7 +455,7 @@ The URL lane loaded, but a text lane timed out and may contain additional notes 
 
 ➡️ Recommendation: **A, Block Add until retry or explicit removal**. It avoids a silently incomplete capture while keeping a useful, editable recovery path.
 
-Original proposal covered: failure-policy part of Q12. Status: awaiting human answer.
+Original proposal covered: failure-policy part of Q12. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -384,7 +469,7 @@ A captured original is an HTTP Apple/Google Maps URL. Original HTTP(S) bookmarks
 
 ➡️ Recommendation: **A, Lookup HTTPS originals only**. It is the simplest request policy with a truthful retained-bookmark fallback.
 
-Original proposal covered: scheme/host-policy part of Q13. Status: awaiting human answer.
+Original proposal covered: scheme/host-policy part of Q13. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -398,7 +483,7 @@ Review is editable while a selected Maps link resolves. Add never waits, lookup 
 
 ➡️ Recommendation: **A, Balanced lookup**. It gives a bounded best-effort attempt without making capture depend on network enrichment.
 
-Original proposal covered: lookup-budget part of Q13. Status: awaiting human answer.
+Original proposal covered: lookup-budget part of Q13. Status: accepted A, with appropriate loading feedback, 2026-10-08.
 
 ---
 
@@ -412,7 +497,7 @@ Research found documented local HTTP candidates but no successful Planner connec
 
 ➡️ Recommendation: **A, Four documented local routes**. It supports both vendors' documented local CLI/desktop routes without assuming the uncertain Chat bridge.
 
-Original proposal covered: client-selection part of Q14. Status: awaiting human answer.
+Original proposal covered: client-selection part of Q14. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -426,7 +511,7 @@ Codex and Claude may both connect to one enabled Agent Control session and edit 
 
 ➡️ Recommendation: **A, Support two simultaneous clients**. It covers using both vendors together without an unbounded first session workload.
 
-Original proposal covered: concurrency part of Q14. Status: awaiting human answer.
+Original proposal covered: concurrency part of Q14. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -440,7 +525,7 @@ Each enablement uses a fresh credential. A changed port also changes the client 
 
 ➡️ Recommendation: **A, Stable configurable port**. It reduces routine URL churn and makes collisions explicit rather than silently changing the connection.
 
-Original proposal covered: address part of Q15. Status: awaiting human answer.
+Original proposal covered: address part of Q15. Status: accepted A, with default port 44444, 2026-10-08.
 
 ---
 
@@ -454,7 +539,7 @@ Agent Control shows a countdown and can offer the brief's 15, 30 and 60-minute c
 
 ➡️ Recommendation: **A, Thirty minutes**. It fits a deliberate temporary working session while leaving shorter/longer choices visible.
 
-Original proposal covered: absolute-duration part of Q16. Status: awaiting human answer.
+Original proposal covered: absolute-duration part of Q16. Status: accepted C, 2026-10-08.
 
 ---
 
@@ -468,7 +553,7 @@ The brief requires an inactivity timeout in addition to manual Stop and the abso
 
 ➡️ Recommendation: **A, Ten minutes idle**. It balances temporary access with ordinary pauses; exact timer/reset boundaries remain test obligations.
 
-Original proposal covered: inactivity part of Q16. Status: awaiting human answer.
+Original proposal covered: inactivity part of Q16. Status: accepted A, 2026-10-08.
 
 ---
 
@@ -482,7 +567,7 @@ An agent is connected, then you lock the Mac or it actually enters system sleep.
 
 ➡️ Recommendation: **A, Stop on both lock and sleep**. It makes unattended access a deliberate new session, conditional on proving the lock guarantee rather than substituting display sleep or app deactivation.
 
-Original proposal covered: lock/sleep part of Q16. Status: awaiting human answer.
+Original proposal covered: lock/sleep part of Q16. Status: accepted C, 2026-10-08.
 
 ---
 
@@ -496,7 +581,7 @@ Closing the last Mac window can leave the app process running. If Agent Control 
 
 ➡️ Recommendation: **A, Stop access with the last window**. It keeps the first session lifecycle easy to see and reason about.
 
-Original proposal covered: window-close part of Q16. Status: awaiting human answer.
+Original proposal covered: window-close part of Q16. Status: accepted B, 2026-10-08.
 
 ---
 
@@ -512,18 +597,19 @@ These are obligations and competing expected observations for later approved exe
 | Full-context bulk unit, real-store and native confirmation | Tokyo Food contains active Hotel and archived Museum, with UI showing only Hotel. Mark All Done sets both local flags; progress 2/2. Global flags remain Todo. Mark All Undone yields 0/2 unless a source is globally Done. Changed targets reject stale review. True save failure changes neither child; postcommit recovery failure retains both applied flags and blocks further domain mutation. |
 | Reference unit, store and physical convergence | Removing membership 401 preserves Hotel 101, Trip Prep membership 403 and Schedule 601. Ordinary re-add gets a new membership local Todo. Reordering itinerary 501/502/503 retains identities/flags. Identical operation replay creates no second entry; a new intentional Hotel-add operation creates a separate appearance. Use accepted duplicate, deletion and restoration-family device fixtures from the packet. |
 | Query unit/store/UI | All four global completion/archive pairs, generic no-location Item, all accepted search sequences, past direct/indirect schedules and unschedule identity sets. Keep valid filtered-out detail; removed appearance returns missing reference. A stale row-window generation does not mix snapshots. Search quality dataset remains 5,000 Items/200 Lists and 300 ms on each device, not a count cap. |
-| Partial edit and stale unit/store | Revised Contract Q9/Q10 settle competing observation above. Required-title null rejects; Q13 determines unknown-field handling. A notes-only accepted patch retains title/estimate, memberships, archive/global/local values. Unrelated title edit does not block notes under the recommended field-specific expectation. |
-| Wire value unit and actual round-trip | Revised Contract Q11/Q12 fix value grammar. Proposed tests include Int64 max 9223372036854775807, rank min -9223372036854775808, overflow 9223372036854775808, fraction 1.0000000000000001, exponent and leading-zero strings, finite submillisecond native Date and distant finite dates, UUID case variants, malformed IDs, invalid civil dates and non-finite coordinates. Do not impose a new practical domain range. |
-| JSON version/structure unit | Revised Contract Q13/Q14 settle unknown/repeated-property treatment. Unsupported version, malformed input, duplicate record IDs and unresolved references reject the whole backup with zero mutation. Q13 chooses rejection versus declared tolerance for unknown properties; Q14 chooses the repeated-property guarantee. No shortened successful export of an unresolved native graph. |
+| Partial edit and stale unit/store | Q9/Q10 require rejection retaining Friday booking when notes changed, acceptance of a notes-only patch after title-only change, and rejection of required-title null. Missing fields retain their values. A notes-only accepted patch retains title/estimate, memberships, archive/global/local values. Exact expectation representation remains the follow-up. |
+| Wire value unit and actual round-trip | Q11/Q12 fix canonical Int64 strings and finite numeric native Date values. Required tests include Int64 max 9223372036854775807, rank min -9223372036854775808, overflow 9223372036854775808, fraction 1.0000000000000001, exponent and leading-zero strings, finite submillisecond native Date and distant finite dates, UUID case variants, malformed IDs, invalid civil dates and non-finite coordinates. Do not impose a new practical domain range. |
+| JSON version/structure unit | Q13 rejects unknown supported-version backup fields; Q14 uses native repeated-property handling without a rejection guarantee. Unsupported version, malformed input, duplicate record IDs and unresolved references reject the whole backup with zero mutation. Assert useful unknown-property errors. For repeated properties, assert one immutable decoded proposal reaches preview/apply; do not assert an undocumented first/last winner. No shortened successful export of an unresolved native graph. |
 | Import unit/store/native preview | Accepted Skip keeps matching whole owners; Overwrite replaces represented whole owners after review; omission from file preserves sources. Current A=[X] with local Done plus incoming A=[X,Z] produces A unchanged and new Z in Skip. Invalid backup rejects together. Incoming deleted markers, restoring IDs, conflict-dependent skipped owners and independent records follow the architecture's exact accepted examples. |
-| Authority unit and real MCP server | Forbidden source/label Delete and any unauthorized indirect apply reject before mutation, including the case where X is absent at preview but its obsolete lifetime may arrive later. Disabled/expired access fails. Ordinary authorized reference removal preserves protected sources. Revised Contract Q1-Q8 govern final operation availability and confirmation. |
+| Authority unit and real MCP server | Forbidden source/label Delete and any unauthorized indirect apply reject before mutation, including the case where X is absent at preview but its obsolete lifetime may arrive later. Disabled/expired access fails. Ordinary authorized reference removal preserves protected sources. Q1-Q8/Q5 require separately described completion scopes, agent-applied exact capture/bulk review and native-only backup administration/export. No backup or admin command is registered in MCP/Intents, and indirect forbidden commands reject with zero mutation. |
 | Receipt/recovery integration and host-closed Share | Same operation/payload creates one result. Changed-payload replay rejects only that attempt. Failure before commit leaves action unapplied; failure after commit retains complete Item/memberships, reports recovery incomplete, blocks dataset writes and retries copy only. Kill at every approved prepare/commit/copy/receipt checkpoint and query actual surviving evidence; prepared-only stays unverified. |
 | Scheduling unit/store/native picker/device | Inclusive Friday-Sunday dates, fixed Tokyo 10:00-11:00 to Paris 03:00-04:00 display, valid start-only, strictly-later end, spring gap rejection, earlier/later repeated occurrence and coupled DST endpoints. Planning-zone-only edit preserves both instants. Every accepted Q5-Q14 fixture remains required; no EventKit check substitutes. |
-| Capture loader/parser unit, real store and physical payload | Reverse loader completion and retain U then V; Unicode/prose/link retention exactly matches C8-C10. Typed URL-object spelling is distinguished from original text. Unsupported/file-only, conflicting parameters, missing own coordinate and finite bounds follow accepted C9/C13. Revised Contract Q15-Q17 supply exact order/boundary/deadline/failure observations. Never silently omit a supported lane. |
-| Capture transport unit and actual extension lifecycle | Revised Contract Q18/Q19 fix request-scheme policy and budgets on the documented provider allowlist. Test exact hosts versus suffix spoofs, HTTP-original behavior selected in Q18, disallowed hop, loops, missing Location, each boundary and deadline, obsolete callbacks after input edit/Add/Cancel, partial Save without lookup, no ordinary-page body fetch and no automatic preview retry. Native allocations and extension lifecycle must be measured; post-load byte checks are insufficient proof. |
-| Export/recovery account integration/physical | Complete active backup retains IDs/manual order/schedules/minimal lineage and excludes app state/credentials/cache/receipts. Inspect/export old recovery does not mutate or upload into current account. Explicit empty-dataset restoration reproduces accepted data; coherent ownership cutoff preserves good independent copy under resets. Revised Contract Q4/Q5 govern integration access. |
-| App Intents native and adapter parity | Revised Contract Q6/Q7 settle authentication and bulk confirmation separately. Execute locked/unlocked/denied/canceled cases, unsupported/removed IDs and archived hidden bulk children. No ambiguous completion fallback. Capture native review cancellation creates zero Items. |
-| Selected-client and native MCP integration | Revised Contract Q20-Q26 settle client/concurrency/address/time/lifecycle; selected-client credential handoff is a dependent follow-up. Demonstrate each client separately, simultaneous clients if required, occupied port, token renewal, no listener while Off, timeout/Stop/lock/sleep/window/quit and actual before/after-commit status. No secrets in ordinary logs/configuration. CLI success cannot stand in for desktop proof. |
+| Capture loader/parser unit, real store and physical payload | Reverse loader completion and retain U then V; Unicode/prose/link retention exactly matches C8-C10. Typed URL-object spelling is distinguished from original text. Unsupported/file-only, conflicting parameters, missing own coordinate and finite bounds follow accepted C9/C13. Q15-Q17 require typed URL first within attachment order; test just below/at/above each accepted budget, reverse callback completion, four-loader maximum and ten-second total deadline. Failed supported inputs block Add until retry or explicit removal. Never silently omit a supported lane. |
+| Capture transport unit and actual extension lifecycle | Q18/Q19 require HTTPS originals only, eight-second total/four-second request budgets, five redirects/six requests, with visible pending-preview feedback. Test exact hosts versus suffix spoofs, HTTP-original behavior selected in Q18, disallowed hop, loops, missing Location, each boundary and deadline, obsolete callbacks after input edit/Add/Cancel, partial Save without lookup, no ordinary-page body fetch and no automatic preview retry. Native allocations and extension lifecycle must be measured; post-load byte checks are insufficient proof. |
+| Export/recovery account integration/physical | Complete active backup retains IDs/manual order/schedules/minimal lineage and excludes app state/credentials/cache/receipts. Inspect/export old recovery does not mutate or upload into current account. Explicit empty-dataset restoration reproduces accepted data; coherent ownership cutoff preserves good independent copy under resets. Q4/Q5 keep backup/export/recovery administration native-only; verify no equivalent public MCP/Intent path. |
+| App Intents native and adapter parity | Q6/Q7 allow ordinary locked-device Intents where Apple permits, while bulk uses system confirmation. Execute locked/unlocked/system-restricted/canceled cases, unsupported/removed IDs and archived hidden bulk children. No ambiguous completion fallback. Capture native review cancellation creates zero Items. |
+| Selected-client and native MCP integration | Q20-Q26 require four separately demonstrated clients, two concurrent sessions and clear third refusal, occupied 44444 failure, fresh credentials on enablement, no listener while Off, 60-minute default and ten-minute idle expiry. Lock/sleep retain only unexpired access; expired sleep sessions admit zero work on wake. Last-window closure retains menu-bar status/Stop; app quit ends access. Test before/after-commit cancellation status. Credential handoff remains a follow-up. No secrets in ordinary logs/configuration. CLI success cannot stand in for desktop proof. |
+| Native lifecycle and menu-bar proof | With a 60-minute session and last successful call at 09:00, sleeping from 09:05 to 09:12 expires the ten-minute idle deadline; wake admits zero requests before revocation. Waking at 09:09 retains only the remaining original time. Continuous authorized calls cannot pass the 60-minute deadline. Locked but unexpired allowed calls remain subject to normal authority. Closing the last window keeps a visible countdown/Stop; Stop or quit removes the listener. These are proposed exact fixtures under already accepted policies, not executed tests. |
 
 ## Definition of done
 

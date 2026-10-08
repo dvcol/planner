@@ -54,6 +54,9 @@ A locally retained copy of saved Planner data that remains recoverable independe
 **Backup**:
 A portable snapshot of Planner content, identities, references, completion, saved order and schedules. It includes minimal deletion history without deleted content, and excludes a device's presentation or navigation state.
 
+**Agent Control**:
+A deliberately enabled, temporary session in which local agents can read and change ordinary Planner data. Backup, export, import and account-recovery administration remain manual Planner workflows.
+
 **Import conflict**:
 A difference between incoming and current data for one Planner identity, including an identity kept deleted. A required reference to skipped deleted data can also prevent an incoming owner from being imported.
 
