@@ -93,6 +93,12 @@ A schedule entry assigned to one date or an inclusive date range without clock t
 **Timed schedule**:
 A schedule entry with a start date and time, and an optional end that must be a later instant when supplied.
 
+**Planning timezone**:
+The timezone associated with a timed schedule's intended date and clock time. It stays associated with the schedule when the device changes timezone.
+
+**Display timezone**:
+The timezone used to show timed entries on Planner's calendar. Changing it does not reschedule entries or change all-day dates.
+
 **Duration estimate**:
 An optional estimate of the time an activity takes. It can be compared with other estimates without scheduling the activity.
 _Avoid_: Treating an estimate as a scheduled start or end.
