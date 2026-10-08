@@ -20,10 +20,13 @@ Whether an item is todo or done globally or in a planning context. Lists and iti
 The completion of an item itself. A globally done item appears done in every context; globally reopening it reveals the retained local states.
 
 **Contextual completion**:
-An item's local completion within a list or itinerary, independently of its global completion. All appearances of an item within one itinerary share that contextual state.
+An item's local completion within a list or itinerary, independently of its global completion and other contexts. It starts todo. All appearances of an item within one itinerary share that contextual state; a source list's local completion does not determine it.
 
 **Effective completion**:
 The completion shown for an item within a list or itinerary. It is done when the item is globally done or locally done in that context.
+
+**Progress**:
+The number of effectively done items out of the unique items currently reachable in a list or itinerary. Repeated appearances count once. An empty container has no completion percentage and is not completed.
 
 **Todo**:
 An unfinished item or contextual item reference. A list or itinerary is unfinished when its contextual children do not make it completed.

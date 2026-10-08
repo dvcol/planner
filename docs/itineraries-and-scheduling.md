@@ -15,13 +15,13 @@ The [product brief](product-brief.md), [Planner vocabulary](planner-vocabulary.m
 - An item is scheduled if any retained schedule references it directly or through an itinerary, including live list membership and past dates. Completion/archive filters remain separate.
 - Timed entries preserve a fixed instant with an explicit planning timezone, initially the device's current zone at creation. Another planning zone can be chosen. Device timezone changes do not reschedule an entry.
 
-The original explicit itinerary-status recommendation is superseded by the later derived-completion clarification. [Completion scopes](completion-scopes.md) records effective/local states, confirmed archive/empty behavior and still-open initialization/inheritance/counting cases. All-day endpoint conventions, calendar display policy, DST validation and the export contract remain under discussion.
+The original explicit itinerary-status recommendation is superseded by the later derived-completion clarification. [Completion scopes](completion-scopes.md) records the accepted effective/local states, new local Todo initialization, independent itinerary contexts, unique-item progress, archive/empty behavior and local-only bulk actions. All-day endpoint conventions, calendar display policy, DST validation and the export contract remain under discussion.
 
 ## Reference and form examples
 
 Use the nine existing items A through I from [Search fixtures](search-fixtures.md). These letters stand for distinct stable source identities, not proposed Swift signatures. Tokyo Food has saved Manual order D, G, A, C, B. Each row below starts from its stated fixture.
 
-Museum Morning has two ordered entries: an item reference to F, Nezu Museum, followed by a list reference to Tokyo Food. Membership expansion currently refers to F and the list's D, G, A, C, B. This names the referenced sources; the current round has not selected the rendered visibility or progress count.
+Museum Morning has two ordered entries: an item reference to F, Nezu Museum, followed by a list reference to Tokyo Food. Membership expansion currently refers to F and the list's D, G, A, C, B, six unique items. Itinerary progress uses those six identities and their effective completion in Museum Morning, including archived children. Each new itinerary-context state starts Todo; Tokyo Food's own local completion does not contribute. Detailed row presentation belongs to the navigation prototype.
 
 | Action | Before | Required end state already accepted |
 | --- | --- | --- |
@@ -45,7 +45,7 @@ The rescheduling example uses Gregorian dates and explicit Asia/Tokyo offsets, i
 
 | Open behavior | Owner and required outcome |
 | --- | --- |
-| Global/contextual completion, overlapping references and derived progress | [Completion scopes and derived progress](https://github.com/dvcol/planner/issues/22) must resolve inheritance, initialization, duplicate counts and effective-state outcomes. Archived children count; empty means No items and not completed. |
+| Global/contextual completion, overlapping references and derived progress | Use the accepted [Completion scopes](completion-scopes.md) fixtures: global OR local, retained local states, new local Todo, independent itinerary states and unique reachable items. Archived children count; empty means No items and not completed. |
 | Completion prompt and local bulk behavior | Local Done/Undone affects contextual children only, with no global actions proposed in a list/itinerary. The navigation prototype owns simple native confirmation/presentation. Parent completion is derived; there is no independent parent completion checkbox. |
 | Bulk list Archive/Delete, shared-source impact, undo and partial/concurrent failure | [Offline conflicts and recovery](https://github.com/dvcol/planner/issues/10) must distinguish container actions from source actions and provide exact retained memberships, references, states and recovery. Include a source shared with another list/itinerary/schedule and membership changes during a bulk action. |
 | Scheduled/unscheduled through live itinerary references | Direct/indirect retained schedules and past dates count. This ticket must finish exact live membership, status-change and unscheduling examples. |

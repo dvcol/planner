@@ -1,6 +1,6 @@
 # Completion scopes
 
-Decision record in progress for [Completion scopes and derived progress](https://github.com/dvcol/planner/issues/22), following the human's 2026-10-08 clarification. This ticket revises the earlier global-only completion and explicit itinerary-status assumptions in [Planner vocabulary](planner-vocabulary.md). It remains open for the cases below; no production interfaces or tests have been approved or written.
+Accepted decision record for [Completion scopes and derived progress](https://github.com/dvcol/planner/issues/22), following the human's 2026-10-08 clarification. Q8 governs action scope; the later answers clarify initialization, independence and counting within that rule. This revises the earlier global-only completion and explicit itinerary-status assumptions in [Planner vocabulary](planner-vocabulary.md). Production interfaces and executable tests remain future work.
 
 ## Current behavior and the revision
 
@@ -10,11 +10,14 @@ The human clarified these behaviors:
 
 - Completing an item in a list or itinerary affects only that context. Editing its content still updates every use.
 - Within one itinerary, all appearances of an item share its contextual completion, including appearances reached through different lists.
-- Global Done makes the item appear Done everywhere. Global Reopen reveals the retained contextual states rather than rewriting them. The human proposed the effective rule global Done OR contextual Done; it matches the requested override/restore behavior. Storage representation remains an architecture choice.
+- Global Done makes the item appear Done everywhere. Global Reopen reveals the retained contextual states rather than rewriting them. Effective completion is global Done OR contextual Done. Storage representation remains an architecture choice.
 - List and itinerary completion derives from their contextual child items. Mark Done/Undone is a bulk child operation, not an independent parent completion override.
 - Archived child items still count and are included by bulk completion. UI filters do not reduce bulk targets; completion does not unarchive anything.
 - An empty list or itinerary shows No items, has no completion percentage and is not completed.
 - List/itinerary actions affect only their contextual children. They do not offer global completion actions; native global actions belong in the item view. Clearing local completion can leave an item effectively Done while its global source is Done, without any automatic global reopen.
+- A new contextual state starts Todo. Its effective display inherits global Done without copying global completion into the local state. A later Global Reopen makes it effectively Todo unless it has since been completed locally.
+- A source list's local completion does not contribute to an itinerary's completion. Each itinerary uses its own contextual item states plus the items' global states. A list shown inside an itinerary derives its displayed completion from those itinerary-context items.
+- Progress counts unique reachable item identities. X appearing directly and through two lists, plus Y once, is two items. With X Done and Y Todo, progress is 1 of 2. All references remain live; the shared contextual state applies to every appearance of X.
 
 The earlier proposal for global Complete/Reopen to overwrite all stored local states is superseded. The earlier proposal for a manually completed itinerary independent of its children is also superseded. These revisions are recorded explicitly rather than changing the old accepted resolution silently.
 
@@ -33,7 +36,7 @@ This table describes behavior, not a Swift signature, storage schema or write fa
 
 ## Concrete existing-reference examples
 
-Use two existing items X and Y, each globally Todo + Active. List A contains X/Y; List B contains X. Itineraries A and B each directly reference X. All supplied contextual states initially are Todo. These are fixture inputs for existing references, not a chosen initialization rule for newly created references. Each row resets to its stated fixture unless it explicitly follows the preceding row.
+Use two existing items X and Y, each globally Todo + Active. List A contains X/Y; List B contains X. Itineraries A and B each directly reference X. All supplied contextual states initially are Todo, consistent with the accepted initialization rule. Each row resets to its stated fixture unless it explicitly follows the preceding row.
 
 | Action | Before | Required current observation |
 | --- | --- | --- |
@@ -42,19 +45,34 @@ Use two existing items X and Y, each globally Todo + Active. List A contains X/Y
 | Complete X globally | List A's X is locally Done; every other X context is locally Todo. | Global X becomes Done. Every effective X appearance becomes Done. Retained contextual values stay as before. List A still has unfinished Y; List B and both one-item itineraries are complete. |
 | Reopen X globally | Continue from the preceding row. | Global X becomes Todo. List A's X remains effectively Done; List B's X and both itinerary X contexts return to Todo. Retained contextual states are unchanged. |
 | Mark List A Done | Reset global X/Y and all local states to Todo. | Bulk-complete X/Y in List A's context. List A becomes complete; global X/Y and other contexts remain Todo. Archive states and source count are unchanged. |
-| Mark List A Undone | Global X/Y are Todo; List A's X/Y are locally Done. | Clear List A's local child completion. List A is unfinished; no other context or archive state changes. Global-Done override cases still require the chosen native action behavior. |
+| Mark List A Undone | Global X/Y are Todo; List A's X/Y are locally Done. | Clear List A's local child completion. List A is unfinished; no global, other-context or archive state changes. |
+| Mark Undone with a global override | Global X is Done and Y is Todo; List A's X/Y are locally Done. | Clear both local states to Todo. X remains effectively Done; Y becomes effectively Todo. List A shows 1 of 2 and is unfinished. Global states stay unchanged. The list offers no global-action option. |
+| Mark Undone while every source is globally Done | Global X/Y and List A's local X/Y are Done. | Clear both local states to Todo. Both effective states remain Done and List A remains complete at 2 of 2. Global states stay unchanged; no automatic reopen or global-action option appears. |
 | Finish the last contextual child | A nonempty list/itinerary has only one effectively unfinished child. | Complete that child in this context or globally. The container derives completion from its children. It has no separate completion override to toggle. |
 | Edit X's title | X has different local completion values in the existing contexts. | Every reference reads X's current title. Global, local and effective completion retain their values. There is still one source X. |
 
 For a scheduled item, source/reference identity remains stable through these operations. Scheduling and archive state are separate decisions; local completion does not create visit history or another schedule occurrence.
 
-## Remaining cases
+## Initialization, list references and progress examples
 
-- A new reference to a globally Done item must initially appear Done, as the human accepted. It is still being clarified whether its local state starts Todo and inherits that display, or copies the current source completion. The result after a later Global Reopen distinguishes them.
-- A list completed in its own context is referenced by itineraries with independent local item states. Whether source-list completion contributes to those itinerary uses is still being clarified.
-- One itinerary shares a contextual item state across appearances. Its progress denominator still needs a choice between unique identities and occurrences.
-- Local bulk Undone clears only the current context. Globally Done items can remain effectively Done; the item view owns any global change. Native presentation belongs to the navigation prototype, without extra global-action options in list/itinerary prompts.
-- Confirmation/cancellation and native labels must reflect bulk contextual completion, not the superseded independent parent-status proposal. The requested completion prompt must stay within that local bulk scope.
+Each row supplies its own fixture. Local state is separate from shared item content; there is still only one source per item identity.
+
+| Action | Before | Required observation |
+| --- | --- | --- |
+| Add a globally Done item to a new context | X is globally Done. It has no association with the target List or Itinerary. | The new local state is Todo and its effective state is Done. Global Reopen then shows Todo in that new context. A local Complete before Global Reopen instead preserves effective Done. |
+| Reference a completed source list | X/Y are globally Todo. List A's local X/Y are Done, so List A is complete. Itineraries A/B newly reference List A. | Both itineraries' X/Y local states start Todo. Each itinerary is unfinished at 0 of 2, including its displayed List A entry. Source List A remains complete at 2 of 2. |
+| Complete an overlapping item in one itinerary | X/Y are globally Todo. Itinerary A references X directly, List A containing X/Y, and List B containing X. Every local state is Todo. Itinerary B references List A. | Complete X inside Itinerary A. Every appearance of X in A shows Done through the same local state. A shows 1 of 2 and is unfinished. Itinerary B shows 0 of 2. Source lists and global states remain Todo. |
+| Bulk-complete that itinerary | Continue from the overlapping-item row. | Set A's X/Y local states Done once per unique item. A shows 2 of 2 and is complete. Itinerary B, both source-list contexts and globals remain Todo. |
+| Add a new live list member | List A contains only globally Todo X, locally Done. An itinerary references List A and also has X locally Done. Y is globally Todo and has no existing context in either container. | Add Y to List A. Both containers include Y with new local Todo state; each now shows 1 of 2 and is unfinished. There are still only sources X/Y. |
+| Remove a child from the reachable set | List A contains globally Todo X/Y, locally Done/Todo. An itinerary reaches them only through List A, with X locally Done and Y locally Todo. | Remove Y from List A. Each container now reaches only X and shows 1 of 1, complete. Source Y remains. Retention of Y's removed local associations is owned by recovery. |
+| Reorder references | An itinerary reaches X/Y with X effectively Done and Y Todo. | Reorder itinerary entries or source-list Manual order. Progress remains 1 of 2; identities and completion states do not change. |
+| Complete archived and hidden children | List A reaches globally Todo X/Y; Y is Archived. Both local states are Todo, and filters display only X. | Mark all Done sets both local states Done. Progress is 2 of 2, complete. Y remains Archived. Mark all Undone clears both local states and progress returns to 0 of 2. |
+| Query local completion | X/Y are globally Todo + Active. List A's local X/Y are Done/Todo. List B and Itineraries A/B contain only X with local Todo. | Global Todo returns X/Y; global Done excludes both. List A Todo returns Y and List A Done returns X. List B and Itineraries A/B Todo each return X. Queries change no states or references. |
+| Inspect an empty container | No item is reachable from the List or Itinerary, including an itinerary whose referenced lists are empty. | Show No items, no completion percentage and not completed. Bulk completion has no child state to change and cannot create a parent override. |
+
+## Downstream decisions
+
+The [Navigation prototype](https://github.com/dvcol/planner/issues/14) owns simple native labels and confirmation/cancellation presentation. Its completion prompt stays within local bulk scope, exposes all targeted children including hidden/archived ones, and proposes no global actions. Global completion controls belong only in the Item view. Canceling the prompt changes no state.
 
 Removal/re-addition of contextual associations, duplicates during sync, deleted sources, bulk failures and concurrent changes belong to [Offline conflicts and recovery](https://github.com/dvcol/planner/issues/10). No retention lifetime, conflict winner or atomic cross-device bulk transaction is assumed.
 
@@ -63,10 +81,10 @@ Removal/re-addition of contextual associations, duplicates during sync, deleted 
 Before /tdd code, [Core architecture](https://github.com/dvcol/planner/issues/12) and [Shared command contracts](https://github.com/dvcol/planner/issues/13) must propose and confirm public global/contextual completion, effective queries and bulk commands. One failing behavior and minimum passing implementation follow each approved fixture.
 
 - Unit/query tests exercise all four effective-state rows and the exact existing-reference examples. Global queries and contextual queries must not conflate their completion meaning.
-- New-reference, list-in-itinerary, overlap and Global-Done bulk Undone tests receive exact observations once the remaining choices are accepted.
+- New-reference, list-in-itinerary, overlap, live membership and Global-Done bulk Undone tests use the exact observations above. Unique-item progress must not become occurrence counting or inherit a source list's local completion.
 - Parent progress tests include partial/all completion, archived/hidden children and an empty container. Empty is not completed and has no percentage.
 - Integration tests use a real temporary store to save/reopen source identities and retained contextual states, including Global Done followed by Global Reopen. The sync prototype verifies the approved remote-update outcomes.
-- UI tests demonstrate contextual completion, global completion, override/restore display and bulk completion on native iPhone/iPad/Mac layouts. Confirmations expose their scope and counts; shared source content remains live.
+- UI tests demonstrate contextual completion, Item-view global completion, override/restore display and local bulk completion on native iPhone/iPad/Mac layouts. Confirmations expose their scope and counts; cancellation changes nothing. Lists/itineraries must not offer global completion actions. Shared source content remains live.
 - Recovery fixtures cover a shared item, overlapping itinerary references and membership changes during a bulk action. The recovery resolution must supply exact targets, failure outcomes and converged states before tests.
 
 The record has no runtime evidence. Markdown lint, local links and whitespace checks validate documentation only.
