@@ -8,6 +8,8 @@ There is no application or approved public code-test interface yet. Duration nor
 
 Each letter denotes one distinct item identity. A runnable prototype must assign and preserve stable UUIDs for these items and the referenced lists/categories/tags. `Food`, `Museum` and `Shopping` each denote one shared category object, and repeated tag names denote the same shared tag object.
 
+After the [Completion scopes and derived progress](https://github.com/dvcol/planner/issues/22) clarification, this baseline explicitly sets contextual completion to Todo for each referenced item. The completion column below is the global source state; effective contextual completion is global Done OR contextual Done. This preserves the accepted result sets/sequences without assuming a new-reference initialization policy. [Completion scopes](completion-scopes.md) supplies separate local-state cases, including Global Reopen revealing retained contextual completion.
+
 | Fixture | Item, category and tags | Estimated minutes | Completion / archive | Lists |
 | --- | --- | --- | --- | --- |
 | A | `Ramen lunch`; Food; rainy-day | 30 | Todo / active | Tokyo Food, Wishlist |

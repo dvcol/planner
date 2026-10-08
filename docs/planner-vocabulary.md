@@ -2,6 +2,8 @@
 
 Accepted resolution for [Planner vocabulary](https://github.com/dvcol/planner/issues/3), confirmed by the human on 2026-10-08. The glossary, ownership sketch and operation examples below govern later decisions. Production interfaces and the explicitly delegated policies still belong to their named tickets.
 
+The later [Completion scopes and derived progress](https://github.com/dvcol/planner/issues/22) clarification supersedes this record's global-only completion and independent itinerary-completion assumptions. Source content remains shared, but contextual item completion can differ between lists/itineraries, global Done overrides its effective display, and container completion derives from contextual children. See [Completion scopes](completion-scopes.md) for current behavior and pending cases. The global-operation examples below remain baseline examples; they do not prohibit local completion.
+
 The [product brief](product-brief.md) supplies the generic item, many-to-many lists, stable identities, and referenced itineraries/schedules. [Release goals](release-goals.md) keeps places and scheduled itineraries as the first daily-use journeys. The [glossary](../GLOSSARY.md) gives those concepts one common vocabulary. There is no application code or agreed production interface yet.
 
 ## Confirmed behavior
@@ -22,7 +24,7 @@ All four combinations are valid:
 | Todo | Archived | Unfinished but put away. |
 | Done | Archived | Finished and put away. |
 
-An ordinary todo view includes only todo + active items. "Active" alone means unarchived, so an active-only filter must not silently mean todo-only. [Duration and search](https://github.com/dvcol/planner/issues/8) owns explicit filter composition and section defaults.
+An ordinary todo view includes only todo + active items, using global completion in global item scope and effective completion in a list/itinerary scope. "Active" alone means unarchived, so an active-only filter must not silently mean todo-only. [Duration and search](https://github.com/dvcol/planner/issues/8) owns explicit filter composition and section defaults; Completion scopes supplies the newer contextual meaning.
 
 ## Ownership and references
 
@@ -45,13 +47,13 @@ The arrows describe domain references and content ownership. They do not specify
 
 | Concept | Owns | References and identity |
 | --- | --- | --- |
-| Item | Title, notes, completion/archive state, links, optional location and duration estimate | One stable identity across lists, itineraries and schedules. Place metadata does not make it a separate task system. |
-| List | Its name and presentation metadata | Memberships reference existing item identities. Removing a membership does not remove the item. |
-| Membership | The association between one item and one list, with any list-local ordering | Refers to the same item, never a list-specific copy. Duplicate-association and concurrent-order policies belong to recovery. |
+| Item | Title, notes, global completion/archive state, links, optional location and duration estimate | One stable identity across lists, itineraries and schedules. Contextual completion does not create another item. |
+| List | Its name and presentation metadata, with completion derived from its contextual children | Memberships reference existing item identities. Removing a membership does not remove the item. |
+| Membership | The association between one item and one list, with local completion and any list-local ordering | Refers to the same item, never a list-specific copy. Duplicate-association, local-state retention and concurrent-order policies belong to recovery. |
 | Category and Tag | User-defined name, optional color/icon | Each has a shared identity referenced by items/itineraries. Editing that object updates every reference; no per-item label copy needs synchronization. |
 | Link and Location | Content attached to the owning item or itinerary | Editable metadata rather than a separate todo or automatically shared venue history. Capture/provenance decisions govern provider fields. |
-| Itinerary | Its own title, notes, metadata and explicit status | Contains ordered references to existing items/lists. Child progress and itinerary completion behavior belong to scheduling. |
-| Itinerary entry | Its position within an itinerary | References an existing source; changing order does not change that source's identity or memberships. Nesting and list expansion remain in scheduling. |
+| Itinerary | Its own title, notes, metadata and archive state, with contextual item completion | Contains ordered live references to existing items/lists. Completion derives from contextual children; the old explicit parent-completion proposal is superseded. |
+| Itinerary entry | Its position within an itinerary | References an existing item/list; changing order does not change its source identity or memberships. All appearances of an item share that itinerary's completion context. Source-list completion inheritance remains in Completion scopes. |
 | Schedule entry | Its planning date/time assignment | References an existing item or itinerary. Schedule forms, multiple occurrences and time zones remain in scheduling. |
 
 Independent source identities and reference records must survive saving and reopening. [Core architecture](https://github.com/dvcol/planner/issues/12) decides the concrete record identities and persistence representation; [Shared command contracts](https://github.com/dvcol/planner/issues/13) decides public operation shapes.
@@ -59,6 +61,8 @@ Independent source identities and reference records must survive saving and reop
 ## Before and after examples
 
 Use one existing `Nezu Museum` item with stable identity `11111111-1111-1111-1111-111111111111`. Lists A, B, C and D mean `Tokyo Museums`, `Wishlist`, `Weekend` and `Art`. Each row states its own starting fixture unless it explicitly names the preceding row.
+
+The baseline global-operation rows explicitly start with Todo contextual completion values unless a row states otherwise. This is fixture data, not a chosen new-reference initialization rule. Global Reopen reveals these retained values; local Done cases are supplied separately.
 
 For shared-label cases, use a `Food` category with a red color and fork/knife icon, and a `rainy-day` tag. Edit the category to `Dining`, blue and a cup/saucer icon, and rename the tag to `indoors`. These are user-visible fixture values; architecture chooses their concrete representation.
 
@@ -88,7 +92,8 @@ Use distinct verbs: complete/reopen change completion; archive/unarchive change 
 | --- | --- |
 | Delete a list, delete an item, restore deleted references, or permanently delete a referenced source | [Offline conflicts and recovery](https://github.com/dvcol/planner/issues/10) must state retained content, memberships, reference treatment and recovery. Removing membership and archiving are already distinct from deletion. |
 | Concurrent complete/reopen, archive/unarchive, membership duplication or reorder | [Offline conflicts and recovery](https://github.com/dvcol/planner/issues/10) must supply exact converged states and permitted temporary states. Independent completion/archive changes must be represented in its fixtures. |
-| Nested itineraries, live list expansion, progress, explicit itinerary completion, schedule forms and repeated schedule occurrences | [Itineraries and scheduling](https://github.com/dvcol/planner/issues/9) must give exact reference and display outcomes. It must not introduce automatic visit history or a separate place-task lifecycle. |
+| Global/contextual completion, derived progress and local bulk actions | [Completion scopes and derived progress](https://github.com/dvcol/planner/issues/22) must supply effective-state, initialization, overlap and parent-aggregation examples. This revises the earlier global-only and explicit parent-completion assumptions. |
+| Live itinerary composition, schedule forms and repeated schedule occurrences | [Itineraries and scheduling](https://github.com/dvcol/planner/issues/9) must give exact reference and display outcomes. Flat live item/list composition is accepted; nested itineraries and automatic visit history are excluded. |
 | Duration presets, label matching, independent completion/archive filters, Inbox and Done section defaults | [Duration and search](https://github.com/dvcol/planner/issues/8) must provide worked comparisons and query results. |
 | Provider metadata and edits to partial captures | [URL and share capture](https://github.com/dvcol/planner/issues/11), using [Place-data provenance](https://github.com/dvcol/planner/issues/5). |
 | Record identities, storage relationships, public commands and queries | [Core architecture](https://github.com/dvcol/planner/issues/12) and [Shared command contracts](https://github.com/dvcol/planner/issues/13). No production signatures or test seams are approved here. |
@@ -107,7 +112,8 @@ These are future `/tdd` obligations, not tests reported as passing. Confirm the 
 | Domain unit | Two items and one itinerary reference the same `Food` category and `rainy-day` tag. Edit the category to `Dining`, blue and a cup/saucer icon, and rename the tag to `indoors`. | Public queries for all three return `Dining`, blue, the cup/saucer icon and `indoors`. Category/tag identities and all source identities/references are unchanged. |
 | Persistence integration | Save four items covering all completion/archive combinations and representative memberships/references, close and reopen a real temporary store. | Public queries return the original identities, all four state pairs, the exact membership sets and intact references. |
 | Persistence integration | Save two items and an itinerary referencing the same category/tag, edit those labels, then reopen a real temporary store. | Public queries return the updated shared metadata and the original label/source identities and references; no independent stale label copies appear. |
-| UI | Display an item belonging to A and B, then swipe complete from A. | The UI indicates multiple memberships; ordinary todo views in both A and B exclude it, and a completed view can find it. |
+| UI | Display a globally Todo item in A/B with both local states Todo; complete it only in A. | A's todo query excludes it; B and global todo queries still include the same source. Shared content and memberships remain intact. |
+| UI | With local A Done and B Todo, complete then reopen the item globally. | Global Done excludes it from both contextual todo views. Global Reopen reveals A Done/B Todo again without changing retained local states. |
 | UI | Unarchive a done item, then explicitly reopen it. | Unarchive leaves it done and absent from ordinary todo views; reopen makes it todo + active and visible there. |
 | UI | Rename the category/tag from its editor while two items and an itinerary reference it. | Their displayed labels update without individually editing the referring sources. Query matching after a rename follows the search decision. |
 | Physical two-device integration | Change completion on one device and archive state on another. | The accepted recovery scenario determines convergence; queries and UI show both independent states. This is a recovery/prototype gate, not a claimed CloudKit guarantee. |

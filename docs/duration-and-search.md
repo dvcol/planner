@@ -100,6 +100,8 @@ The item's list memberships are not searchable fields in this accepted field set
 
 Ordinary todo views initialize completion to Todo and archive state to Active. Done initializes completion to Done and archive state to Any, so it includes archived completed items. Archive initializes archive state to Archived and completion to Any, so it includes both todo and done items. These are independently editable state filters. Search inherits the selected view's filters and displays the current scope.
 
+The later [Completion scopes and derived progress](https://github.com/dvcol/planner/issues/22) clarification adds contextual completion. Global item views use the source's global completion; a list/itinerary item view uses its effective contextual completion. Local completion alone does not change the global source or other contexts. See [Completion scopes](completion-scopes.md) for the override/restore rule and remaining cases. The original fixture observations remain valid with explicitly Todo contextual states; additional local-state examples must be tested separately.
+
 | Before state and action | Expected matching item identities |
 | --- | --- |
 | Open Done without other constraints | G, I |
