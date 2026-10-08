@@ -111,7 +111,7 @@ Through approved reads and edits, start with one failing behavior test and its m
 - Make two edits with the same original notes hash contend at the real writer boundary. One succeeds; the other sees the newly stored value and rejects. No check/save gap permits both to overwrite it.
 - An unchanged operation replay returns its original stable result even though the prior read hash is now old. Changed-payload replay preserves the original operation evidence and current data. Precommit failure is unapplied; postcommit recovery failure remains applied with incomplete recovery.
 - Relaunch/read and separate native processes reproduce hashes from the same validated fixture and values. Restoration-family/alias reconciliation cannot borrow an obsolete lifetime's read authorization. Measure actual native serialization and persistence behavior instead of counting this packet as proof.
-- Equivalent authorized native and MCP edits use Core's same guard and return the same domain outcome. MCP protocol/client qualification belongs to its prototype and remains dependent on the pending compatibility decisions.
+- Equivalent authorized native and MCP edits use Core's same guard and return the same domain outcome. Q29 selects the official Swift SDK. Actual MCP client/protocol qualification belongs to its prototype; this document supplies no connection proof.
 
 ## Definition of done
 

@@ -1,6 +1,6 @@
 # Swift MCP SDK options for Q29
 
-Checked 2026-10-08. Primary-source inspection only. No package builds, client connections or new runtime tests were run for this report. This records evidence for Q29 and does not select its protocol baseline.
+Checked 2026-10-08. Primary-source inspection only. No package builds, client connections or new runtime tests were run for this report. This report supplied evidence for Q29 without selecting a baseline. The subsequent human decision accepts the [official Swift SDK](../shared-command-contracts.md#accepted-contract-q29-official-swift-sdk); runtime qualification remains required.
 
 The official Swift SDK already supports HTTP without transport sessions. Another SDK is not required solely to avoid `Mcp-Session-Id` and return one JSON response per POST. There are also independent native Swift libraries with modern protocol implementations, so a blanket claim that none exist would be wrong. The evidence below does not establish an independently audited alternative.
 
