@@ -1,6 +1,6 @@
 # Shared command contracts
 
-In-progress review for [Shared command contracts](https://github.com/dvcol/planner/issues/13), claimed on 2026-10-08. The [approved Core architecture](core-architecture.md) and [A21/A22 packet](architecture-review-packet.md) are the baseline. The human answered revised Contract Q1-Q26 on 2026-10-08; the accepted choices below govern the earlier proposals. Q27 delegates the simple edit guard to engineering judgment; per-field hashes are selected. Q28 accepts the same-app credential reader. MCP protocol-version compatibility and the former initialized-client cap require clarification after verifying the released stateless specification. No Swift declarations have been compiled and no unit, store, UI, device or client test has been executed here.
+In-progress review for [Shared command contracts](https://github.com/dvcol/planner/issues/13), claimed on 2026-10-08. The [approved Core architecture](core-architecture.md) and [A21/A22 packet](architecture-review-packet.md) are the baseline. The human answered revised Contract Q1-Q26 on 2026-10-08; the accepted choices below govern the earlier proposals. Q27 delegates the simple edit guard to engineering judgment; per-field hashes are selected. Q28 accepts the same-app credential reader. Q30 C removes an additional app-imposed client/request cap while retaining two-client proof and measured capacity. Q29 protocol-version compatibility remains under investigation; stateless HTTP and full modern protocol support must be distinguished. No Swift declarations have been compiled and no unit, store, UI, device or client test has been executed here.
 
 ## Context
 
@@ -12,7 +12,7 @@ An MCP tool annotation or a Core review token does not grant permission. Validat
 
 [Core architecture is resolved](https://github.com/dvcol/planner/issues/12#issuecomment-6057782494). The approved facade, typed source/appearance identities, field changes, review/result/status shapes, native validation and save/recovery sequence carry forward. Their approval must not be requested again for unchanged behavior.
 
-[Local MCP compatibility](https://github.com/dvcol/planner/issues/6) establishes documented candidates and limits, with [committed research](https://github.com/dvcol/planner/blob/research/local-mcp-compatibility/docs/research/local-mcp-compatibility.md). No successful client connection or minimum supported client version is proved. The selected clients, access-window lifecycle and same-app credential-reader candidate are accepted below. The released 2026-07-28 specification removes protocol sessions; actual client/Swift SDK version compatibility and the former initialized-client cap remain follow-ups.
+[Local MCP compatibility](https://github.com/dvcol/planner/issues/6) establishes documented candidates and limits, with [committed research](https://github.com/dvcol/planner/blob/research/local-mcp-compatibility/docs/research/local-mcp-compatibility.md). No successful client connection or minimum supported client version is proved. The selected clients, access-window lifecycle and same-app credential-reader candidate are accepted below. The released 2026-07-28 specification removes protocol sessions. Q30 C settles the former client cap; actual client/Swift SDK version compatibility remains a follow-up.
 
 The original ticket mentions earlier keep-current imports and wholly unapplied failures. The accepted architecture amendments govern the final contract: default whole-record Skip, reviewed Overwrite, data-only backups including minimal deletion lineage, and the A15 distinction between true precommit failure and a fully applied action with incomplete recovery. Q12/Q14 require independent itinerary appearances and appearance-count progress. These are carried-forward resolutions, not new questions.
 
@@ -20,7 +20,7 @@ The original ticket mentions earlier keep-current imports and wholly unapplied f
 
 Agree exact command/query transport forms, integration authority, stale-edit handling, JSON grammar and capture resource limits. Produce representative MCP JSON and corresponding typed Swift requests using the approved facade. Record independently specified state/error observations and the unit, real-store, native UI, physical-device and client evidence each prototype must supply.
 
-Contract Q1-Q26 now settle authority, encoding, capture and Agent Control policy, with the later human amendment removing automatic access expiry. Resolution still requires concrete hash/read/edit schemas, protocol-version compatibility, client-cap clarification, reader access/storage details and final review of the completed request/result schemas. Native JSON handling is accepted; guaranteed duplicate-property rejection and its additional parser branch are no longer required. No executable prototype is claimed.
+Contract Q1-Q26 now settle authority, encoding, capture and Agent Control policy, with the later human amendment removing automatic access expiry. Resolution still requires concrete hash/read/edit schemas, protocol-version compatibility, reader access/storage details and final review of the completed request/result schemas. Native JSON handling is accepted; guaranteed duplicate-property rejection and its additional parser branch are no longer required. No executable prototype is claimed.
 
 ## Definition of ready
 
@@ -45,7 +45,7 @@ Contract Q1-Q26 now settle authority, encoding, capture and Agent Control policy
 | V2, known recovery incomplete | Read/search/export remain available. Retry only the known-applied checkpoint, then unblock domain changes. | Core result/status is approved; native and Share interruption proof. |
 | V2, account changed | Inspect/export the old independent recovery namespace without changing the active dataset; explicit restore/merge is separately reviewed. | Native recovery only under Q4; coherent account cutoff is a hard device gate. |
 | V3, Shortcuts action | Resolve stable IDs, invoke explicit scoped ordinary action, return the Core outcome. Confirm required bulk targets and route capture to Add/Cancel. | Ordinary Intents may run while locked where Apple permits; bulk uses system confirmation. Native behavior must be demonstrated. |
-| V3, Agent Control Off/On | No listener while Off. Enabled authorized client performs permitted operations until Stop or app quit; operation status remains truthful. Lock, sleep and last-window closure retain enablement. | Four selected clients, two-client qualification and the manually controlled lifecycle are accepted; the MCP prototype proves them. No maximum duration, idle expiry or countdown. Capacity remains the Q30 follow-up. |
+| V3, Agent Control Off/On | No listener while Off. Enabled authorized client performs permitted operations until Stop or app quit; operation status remains truthful. Lock, sleep and last-window closure retain enablement. | Four selected clients, two-client qualification and the manually controlled lifecycle are accepted; the MCP prototype proves them. No maximum duration, idle expiry or countdown. Q30 C requires measured capacity without an extra app-imposed client/request cap. |
 
 ## Command and authority inventory
 
@@ -165,7 +165,7 @@ These choices are the human's answers, not inferred acceptance of recommendation
 | Q18 | A. Network lookup only for HTTPS originals on documented Maps hosts; retained HTTP bookmarks receive no lookup. Every redirect is checked. |
 | Q19 | A with amendment. Eight seconds overall, four per request, five redirects/six requests maximum; show an appropriate loading indicator. Add never waits. |
 | Q20 | A. Qualify Codex CLI, local Codex desktop, Claude Code CLI and Claude Desktop local Code tab separately. |
-| Q21 | A originally. Support two initialized simultaneous clients; clearly refuse a third. Modern sessionless semantics now require explicit Q30 clarification; no amendment is assumed. |
+| Q21 | Original A is superseded by accepted Q30 C: prove two clients together without a hard client-registration limit or an extra app-imposed tool-call cap. |
 | Q22 | A with amendment. Stable configurable loopback endpoint, default 127.0.0.1:44444/mcp; occupied port fails clearly and offers an explicit change. |
 | Q23 | Superseded by the human amendment: no maximum duration, duration picker or countdown. Original C is historical. |
 | Q24 | Superseded by the human amendment: no idle expiry or activity-reset timer. Original A is historical. |
@@ -186,7 +186,7 @@ On 2026-10-08 the human explicitly removed all session timeouts from the precedi
 
 Remove duration choices, countdown, maximum-duration and idle-reset timers, elapsed-expiry checks after wake, and time-based credential rotation. Enablement still creates a fresh credential. Stop revokes access and removes the listener; quit or process termination ends access; relaunch starts Off. Menu-bar On/Off and Stop remain visible after last-window closure. Authorization, Core dataset ownership, reviewed-action validation and truthful precommit/postcommit cancellation outcomes still apply. The reader cannot start or re-enable Agent Control.
 
-This amendment overrides the original brief and historical Q23-Q26 wording below. Capture loading and Maps-request budgets govern individual operations and are unchanged. Protocol compatibility and capacity remain independent pending Q29/Q30 decisions. The required evidence table below states the updated unit, real-listener and native lifecycle observations; no runtime evidence is claimed.
+This amendment overrides the original brief and historical Q23-Q26 wording below. Capture loading and Maps-request budgets govern individual operations and are unchanged. Q30 C now settles capacity independently; Q29 protocol compatibility remains pending. The required evidence table below states the updated unit, real-listener and native lifecycle observations; no runtime evidence is claimed.
 
 ## Accepted Q27/Q28 and clarified session meanings
 
@@ -225,7 +225,7 @@ The earlier report and Q21 wording were based on legacy initialization. This pac
 | --- | --- | --- |
 | Q27 chooses changed-field hashes, Q10 fixes partial-edit semantics | Draft exact read/hash/edit/outcome forms for final public review. | No tests or executable source until the applicable interface review. |
 | Q28 accepts the same-app reader; Q20 selects four clients | Current native SDK versus modern protocol compatibility choice. | Exact selected transport/client setup and compatibility evidence after Q29; no custom protocol stack presumed. |
-| Modern protocol has no initialized-client roster; Q21 asked for two clients | Clarify qualification target versus enforced client registration. | Resource/admission fields or explicit client-profile credential fields after Q30. |
+| Q30 C accepts two-client proof without an extra app cap | Define measured native/SDK capacity evidence. | No profile-registration or custom two-call admission fields; a later extra limit needs measured stability justification and an explicit amendment. |
 | Accepted manual Agent Control enablement/menu bar and Core ownership | Preserve enablement until Stop or app quit independently of transport. | Reader storage/access and final schema are concretized under the selected native/client policy. |
 
 ## Native reader storage/access candidate
@@ -236,11 +236,11 @@ The [data-protection flag](https://developer.apple.com/documentation/security/ks
 
 The reader emits only the required header JSON while Agent Control is enabled in the running main app and otherwise returns a controlled unavailable result without prompting. It cannot enable access, start a listener, initialize/migrate data or silently fall back to a plaintext credential in ordinary configuration. Prove continuation after long idle periods and lock/sleep, first-unlock/restart, manual Stop, app quit/forced termination and update/signing behavior with the same installed executable. Main-process liveness, access metadata and cleanup are part of the final reader contract; no implementation has been established.
 
-A caller running under the local user's account may be able to invoke the configured executable too. The mode is not proof of vendor identity or client pairing. Q30 B would require explicit profile credentials and reader arguments; Q30 A deliberately avoids that registration policy. Credentials/window metadata are excluded from Planner portable backups and planning-data synchronization.
+A caller running under the local user's account may be able to invoke the configured executable too. The mode is not proof of vendor identity or client pairing. Accepted Q30 C introduces no profile-registration credentials or reader profile arguments. Credentials/window metadata are excluded from Planner portable backups and planning-data synchronization.
 
-## Current frontier, Contract Q29-Q30
+## Current frontier, Contract Q29
 
-These are independent decisions. Modern sessionless MCP, legacy stateless HTTP and Planner's access window are distinct. Q27's delegated hash choice and Q28's reader choice carry forward. No transport-version or capacity amendment is accepted in advance. Reader accessibility facts are recorded above. Exact reader/state fields remain final-schema work; current protocol and capacity choices remain the two human decisions.
+Modern sessionless MCP, legacy stateless HTTP and Planner's access window are distinct. Q27's delegated hash choice, Q28's reader choice and accepted Q30 C carry forward. No protocol baseline is inferred from the user's request for more SDK research. Reader accessibility facts are recorded above. Exact reader/state fields remain final-schema work; Q29 is the remaining protocol decision.
 
 ❓ **Contract Q29** - **Which protocol baseline should the native MCP prototype target?**
 
@@ -252,11 +252,13 @@ The published 2026-07-28 protocol removes initialization and protocol sessions. 
 
 ➡️ Recommendation: **A, Official Swift SDK baseline**. Use maintained native SDK behavior for the first prototype rather than making a protocol implementation part of it.
 
-Status: awaiting human answer. Exact versioned transport declarations and any newly necessary SDK investigation wait for this answer.
+Status: awaiting human protocol choice after the requested first-party/maintained Swift SDK research. Stateless HTTP already exists in the official SDK; this question concerns full modern protocol compatibility. No choice is inferred.
 
 ---
 
-❓ **Contract Q30** - **What should the earlier two-client limit mean with sessionless requests?**
+## Accepted Contract Q30: measured capacity without an extra app cap
+
+The human accepted C on 2026-10-08. This supersedes Q21's hard third-client refusal. The alternatives below preserve the context of that settled decision.
 
 Q21 accepted two initialized clients and refusal of a third. The modern protocol has no initialized-client roster; self-reported names do not identify authenticated clients. A hard client limit requires explicit credentials/registration. A request limit is simpler but is an amendment to the earlier rule, not an equivalent implementation. This choice is independent of which protocol baseline Q29 selects.
 
@@ -264,9 +266,9 @@ Q21 accepted two initialized clients and refusal of a third. The modern protocol
 - **B. Two registered client profiles.** Issue separate credentials for at most two named profiles and refuse a third profile. Works independently of MCP sessions, but adds profile setup, reader arguments, credential lifecycle and tests. Sharing one profile credential still does not prove distinct client instances.
 - **C. No additional app cap; measure capacity.** Demonstrate two clients together, use the selected SDK/OS handling and existing Core write coordination, and require load/memory evidence. No hard client registration or initial custom tool-call counter. A later additional limit requires measured stability justification and an explicit amendment.
 
-➡️ Recommendation: **C, No additional app cap; measure capacity**. The human has rejected unnecessary time constraints. This separately proposed capacity amendment keeps the accepted two-client proof while requiring evidence before adding another arbitrary limit. It has not been accepted.
+Accepted: **C, No additional app cap; measure capacity**. Keep the two-client proof and require measured stability evidence before an additional limit. No initial client-profile registry, hard third-client refusal or custom two-concurrent-tool-call counter.
 
-Status: awaiting human answer. Keep the original Q21 evidence as accepted history; do not claim that a request counter already satisfies its hard client-cap wording.
+Status: accepted C, 2026-10-08. Q21's original initialized-client cap is historical; measured SDK/OS capacity and existing Core write coordination remain prototype evidence gates.
 
 ---
 
@@ -665,12 +667,12 @@ These are obligations and competing expected observations for later approved exe
 | Capture transport unit and actual extension lifecycle | Q18/Q19 require HTTPS originals only, eight-second total/four-second request budgets, five redirects/six requests, with visible pending-preview feedback. Test exact hosts versus suffix spoofs, HTTP-original behavior selected in Q18, disallowed hop, loops, missing Location, each boundary and deadline, obsolete callbacks after input edit/Add/Cancel, partial Save without lookup, no ordinary-page body fetch and no automatic preview retry. Native allocations and extension lifecycle must be measured; post-load byte checks are insufficient proof. |
 | Export/recovery account integration/physical | Complete active backup retains IDs/manual order/schedules/minimal lineage and excludes app state/credentials/cache/receipts. Inspect/export old recovery does not mutate or upload into current account. Explicit empty-dataset restoration reproduces accepted data; coherent ownership cutoff preserves good independent copy under resets. Q4/Q5 keep backup/export/recovery administration native-only; verify no equivalent public MCP/Intent path. |
 | App Intents native and adapter parity | Q6/Q7 allow ordinary locked-device Intents where Apple permits, while bulk uses system confirmation. Execute locked/unlocked/system-restricted/canceled cases, unsupported/removed IDs and archived hidden bulk children. No ambiguous completion fallback. Capture native review cancellation creates zero Items. |
-| Selected-client and native MCP integration | Q20-Q26 require four separately demonstrated clients, two-client qualification and the clarified capacity policy selected in the current frontier, occupied 44444 failure, fresh credentials on enablement and no listener while Off. No maximum duration or idle expiry. Long idle periods and lock/sleep retain enabled access; wake resumes requests while Planner remains running. Last-window closure retains menu-bar status/Stop; app quit ends access. Test before/after-commit cancellation status. Same-app credential reader is accepted; exact access/storage and modern/legacy compatibility remain follow-ups. No secrets in ordinary logs/configuration. CLI success cannot stand in for desktop proof. |
+| Selected-client and native MCP integration | Q20-Q26 require four separately demonstrated clients, two-client qualification and accepted Q30 C without an extra app-imposed client/request cap, occupied 44444 failure, fresh credentials on enablement and no listener while Off. No maximum duration or idle expiry. Long idle periods and lock/sleep retain enabled access; wake resumes requests while Planner remains running. Last-window closure retains menu-bar status/Stop; app quit ends access. Test before/after-commit cancellation status. Same-app credential reader is accepted; exact access/storage and modern/legacy compatibility remain follow-ups. No secrets in ordinary logs/configuration. CLI success cannot stand in for desktop proof. |
 | Native lifecycle and menu-bar proof | Enable at 09:00. With no intervening tool calls, an authorized read at 12:00 still succeeds. Sleep at 12:05 and wake at 13:15: access remains On and an authorized read succeeds while Planner remains running. Locked requests retain normal authority. Closing the last window keeps menu-bar On/Stop without a countdown. Stop removes the listener; re-enable uses a fresh credential and rejects the previous one. Quit/forced termination removes the listener; relaunch starts Off and the reader returns unavailable. Cover elapsed-time policy through public-boundary unit fixtures and actual sleep/window/quit behavior through native integration. These are future observations, not executed tests. |
 
 Additional current obligations are conditional on the pending choices, not claimed passing tests. For Q29 A, a client must initialize using the supported legacy revision and then perform permitted authenticated calls without a required protocol session ID. For Q29 B/C, prove modern calls without initialize or Mcp-Session-Id, per-request version/capability/header validation and server/discover; test each required legacy branch only if selected. A modern response-stream cancellation still preserves an already committed operation and its receipt. Unsupported versions return useful failure, never an accidental successful downgrade.
 
-For Q30 A, hold two tool calls at a genuine I/O boundary; a third call receives a clear retryable busy result with no domain mutation. After capacity frees, another client can run. For Q30 B, prove two profile credentials, rejection of creating a third profile, revocation and per-request profile authority; do not pretend that clientInfo authenticates the vendor or that one shared credential establishes client-instance uniqueness. For Q30 C, prove two selected clients concurrently, additional callers without a registration refusal, concurrent native access, truthful cancellation/replay and measured memory/latency under increasing load. Record SDK/OS saturation behavior; do not advertise unlimited throughput or add an app cap without measured justification. All three choices still prove the accepted two-client Core behavior and replay/save outcomes.
+Accepted Q30 C requires two selected clients concurrently, additional callers without a registration refusal, concurrent native access, truthful cancellation/replay and measured memory/latency under increasing load. Use SDK/OS handling and the approved Core writer coordination. Do not add an initial custom client or two-call cap. Record actual saturation behavior and fixture outcomes; measured stability failures can justify a later explicit limit amendment. No unlimited-throughput claim is made.
 
 ## Definition of done
 
