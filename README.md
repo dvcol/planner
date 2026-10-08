@@ -9,7 +9,7 @@ A personal native planning app for iPhone, iPad, and Mac. The project is current
 - [Glossary](GLOSSARY.md) records the planner's domain terms. [Planner vocabulary](docs/planner-vocabulary.md) records accepted state, membership, shared-label and reference behavior, with concrete future test obligations.
 - [Duration and search](docs/duration-and-search.md) records accepted estimate units/pickers, cumulative filters, lexical matching, remembered sort controls and long-list quality gates. [Search fixtures](docs/search-fixtures.md) supplies exact future test inputs and result sequences.
 - [Itineraries and scheduling](docs/itineraries-and-scheduling.md) records accepted flat composition, live references and schedule forms. [Completion scopes](docs/completion-scopes.md) records the accepted contextual completion, local-only bulk actions and derived unique-item progress.
-- [Offline conflicts and recovery](docs/offline-conflicts-and-recovery.md) prepares concrete shared-item recovery and portability scenarios. Its proposed deletion, retention, import and conflict policies remain open for human decisions.
+- [Offline conflicts and recovery](docs/offline-conflicts-and-recovery.md) records accepted container-only actions, Trash, local completion retention, full JSON backups, default import and bulk failure behavior. Trash visibility/retention, convergence and account recovery remain open, with verified Apple constraints and concrete future test scenarios.
 
 The agreed stack is Swift, SwiftUI, SwiftData with private CloudKit sync, and native MapKit, targeting iOS, iPadOS, and macOS 27 or newer. Shared domain services will support the UI, App Intents, and temporary localhost MCP sessions.
 

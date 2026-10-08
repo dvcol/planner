@@ -8,7 +8,7 @@ Planner organizes one person's things to do and places to keep, then groups and 
 A thing to do, buy, or keep for planning, optionally describing a place. Its shared content and archive state are referenced across plans; completion has global and contextual meanings.
 
 **List**:
-A named collection of items whose completion follows its children's completion in that list. An item can belong to several lists.
+A named collection of items with its own archive state and completion derived from its children in that list. An item can belong to several lists.
 
 **Membership**:
 The association of one item with one list, including that item's local completion context. Removing a membership leaves the item intact.
@@ -35,15 +35,25 @@ An unfinished item or contextual item reference. A list or itinerary is unfinish
 A completed item or contextual item reference. A nonempty list or itinerary is completed when all its contextual child items are effectively done.
 
 **Archive state**:
-Whether an item or itinerary is active or archived, independently of its completion state.
+Whether an item, list or itinerary is active or archived, independently of its completion state.
 
 **Active**:
-An item or itinerary that is not archived. It can be todo or done.
+An item, list or itinerary that is not archived. It can be todo or done.
 _Avoid_: Using active to mean todo.
 
 **Archived**:
-An item or itinerary put away from ordinary planning views while retaining its content and references. It can be todo or done.
+An item, list or itinerary put away from ordinary planning views while retaining its content and references. It can be todo or done.
 _Avoid_: Deleted.
+
+**Trash**:
+The recoverable deletion state of an item, list or itinerary. Its identity, content, references, order and contextual completion are retained for restoration.
+_Avoid_: Archive.
+
+**Restore**:
+Return a trashed item, list or itinerary with its retained identity and planning data. Restoring an original association preserves its local completion; ordinary removal and re-addition starts a new local Todo state.
+
+**Permanent deletion**:
+Removal of a trashed entity that cannot be reversed with Trash's Restore action.
 
 **Inbox**:
 A view of items with no list memberships.
