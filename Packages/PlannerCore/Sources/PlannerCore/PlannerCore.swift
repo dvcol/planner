@@ -493,9 +493,10 @@ public actor Planner {
       throw PlannerFailure("missingReference", "The selected Item is missing or unresolved.")
     }
     let before = try item.value()
-    let bindings = [
-      PlannerBoundIdentity(kind: "item", id: before.id, lifetimeId: before.lifetimeId)
-    ]
+    let bindings =
+      [
+        PlannerBoundIdentity(kind: "item", id: before.id, lifetimeId: before.lifetimeId)
+      ] + (try changes.linkBindings(in: before))
     let digest = try changes.editPayloadDigest(
       sourceId: sourceId, fields: changedFields, hashes: hashes, identity: identity,
       bindings: bindings
@@ -511,7 +512,8 @@ public actor Planner {
         operationId: operation.operationId, outcome: .unverified(proposal.summary))
     }
     let fieldHashes = before.input.fieldHashes(
-      datasetId: identity.datasetId, itemId: before.id, lifetimeId: before.lifetimeId
+      datasetId: identity.datasetId, itemId: before.id, lifetimeId: before.lifetimeId,
+      links: before.links.map(\.read)
     )
     let conflictingFields = changedFields.filter { fieldHashes[$0] != hashes[$0] }
     if !conflictingFields.isEmpty {
@@ -525,6 +527,7 @@ public actor Planner {
         if field == .title { currentValues[field] = .string(before.input.title) }
         if field == .notes { currentValues[field] = .optionalString(before.input.notes) }
         if field == .location { currentValues[field] = .optionalLocation(before.input.location) }
+        if field == .links { currentValues[field] = .links(before.links.map(\.read)) }
       }
       throw PlannerFailure(
         "staleEdit", "Changed fields differ from the supplied read.",
@@ -536,10 +539,11 @@ public actor Planner {
     let now = Date()
     let updatedInput = try changes.applyingChanges(to: before.input)
     let updatedLocationData = try updatedInput.location.map { try JSONEncoder().encode($0) }
+    let updatedLinks = try changes.applyingLinks(to: before)
     let after = ItemSnapshot(
       id: before.id, lifetimeId: before.lifetimeId, createdAt: before.createdAt, updatedAt: now,
       input: updatedInput, globalDone: before.globalDone, archived: before.archived,
-      links: before.links
+      links: updatedLinks
     )
     let snapshots = try items.map { record in
       if record.id == sourceId { return after }
@@ -558,6 +562,7 @@ public actor Planner {
     if changedFields.contains(.title) { item.title = updatedInput.title }
     if changedFields.contains(.notes) { item.notes = updatedInput.notes }
     if changedFields.contains(.location) { item.locationData = updatedLocationData }
+    if changedFields.contains(.links) { item.replaceLinks(with: updatedLinks, context: context) }
     item.updatedAt = now
     context.insert(receipt)
     do { try context.save() } catch {

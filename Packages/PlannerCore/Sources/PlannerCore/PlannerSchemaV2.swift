@@ -65,6 +65,24 @@ enum PlannerSchemaV2: VersionedSchema {
         input: input, globalDone: globalDone, archived: archived, links: ownedLinks
       )
     }
+
+    func replaceLinks(with snapshots: [OwnedLinkSnapshot], context: ModelContext) {
+      let previous = links ?? []
+      let retainedIdentifiers = Set(snapshots.map(\.id))
+      links = snapshots.map { snapshot in
+        if let existing = previous.first(where: { $0.id == snapshot.id }) {
+          existing.rank = snapshot.rank
+          existing.originalUrl = snapshot.originalUrl
+          existing.label = snapshot.label
+          existing.kind = snapshot.kind.rawValue
+          return existing
+        }
+        return OwnedLink(snapshot: snapshot, owner: self)
+      }
+      for record in previous where record.id.map(retainedIdentifiers.contains) != true {
+        context.delete(record)
+      }
+    }
   }
 
   @Model final class OwnedLink {
@@ -87,6 +105,18 @@ enum PlannerSchemaV2: VersionedSchema {
       originalUrl = input.originalUrl
       label = input.label
       kind = try input.validatedKind(propertyPath: "/command/content/links").rawValue
+      itemOwner = owner
+    }
+
+    init(snapshot: OwnedLinkSnapshot, owner: Item) {
+      id = snapshot.id
+      lifetimeId = snapshot.lifetimeId
+      ownerId = owner.id
+      ownerLifetimeId = owner.lifetimeId
+      rank = snapshot.rank
+      originalUrl = snapshot.originalUrl
+      label = snapshot.label
+      kind = snapshot.kind.rawValue
       itemOwner = owner
     }
 

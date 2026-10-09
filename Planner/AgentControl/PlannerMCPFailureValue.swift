@@ -26,6 +26,7 @@
                 case .optionalString(let text): encoded = text.map(Value.string) ?? .null
                 case .optionalLocation(let location):
                   encoded = location.map(PlannerMCPSourceTool.locationValue) ?? .null
+                case .links(let links): encoded = .array(links.map(PlannerMCPRowValue.link))
                 }
                 return (field.rawValue, encoded)
               })),

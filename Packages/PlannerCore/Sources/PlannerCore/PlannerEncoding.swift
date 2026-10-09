@@ -179,10 +179,11 @@ extension PlannerFieldChange {
 extension PlannerItemChanges {
   func validatedFields() throws -> [PlannerItemField] {
     guard subtitle.isUnchanged, estimate.isUnchanged,
-      links.isUnchanged, categoryIds.isUnchanged, tagIds.isUnchanged
+      categoryIds.isUnchanged, tagIds.isUnchanged
     else {
       throw PlannerFailure(
-        "unavailable", "This edit fixture currently supports title, notes and location only.")
+        "unavailable", "This edit fixture currently supports title, notes, location and links only."
+      )
     }
     switch title {
     case .clear:
@@ -205,10 +206,29 @@ extension PlannerItemChanges {
           propertyPath: "/command/changes/location/coordinate")
       }
     }
+    switch links {
+    case .clear:
+      throw PlannerFailure(
+        "invalidInput", "An owned-links collection must use an array, including an empty array.",
+        propertyPath: "/command/changes/links")
+    case .set(let values):
+      var identifiers: Set<UUID> = []
+      for (index, link) in values.enumerated() {
+        let path = "/command/changes/links/\(index)"
+        if let identifier = link.linkId, !identifiers.insert(identifier).inserted {
+          throw PlannerFailure(
+            "invalidInput", "A replacement cannot repeat an existing owned-link identity.",
+            propertyPath: path + "/linkId")
+        }
+        _ = try link.validatedKind(propertyPath: path)
+      }
+    case .unchanged: break
+    }
     var fields: [PlannerItemField] = []
     if !title.isUnchanged { fields.append(.title) }
     if !notes.isUnchanged { fields.append(.notes) }
     if !location.isUnchanged { fields.append(.location) }
+    if !links.isUnchanged { fields.append(.links) }
     guard !fields.isEmpty else {
       throw PlannerFailure(
         "invalidInput", "An Item edit must contain at least one changed field.",
@@ -257,6 +277,9 @@ extension PlannerItemChanges {
     case .set(let value): changedValues["location"] = .optional(value.canonicalValue)
     case .clear: changedValues["location"] = .optional(nil)
     case .unchanged: break
+    }
+    if case .set(let values) = links {
+      changedValues["links"] = .ordered(values.map(\.canonicalValue))
     }
     var usedHashes: [String: PlannerCanonicalValue] = [:]
     for field in fields {
