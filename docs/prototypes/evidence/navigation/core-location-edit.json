@@ -1,0 +1,139 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-09",
+  "baselineCommit": "ed794ae",
+  "scope": "Guarded complete owned-location Set/Clear through the public Planner facade, real store/row/recovery/replay, and typed stale failure codec.",
+  "redGreen": {
+    "behavior": "Location-only edit remains valid after unrelated notes/global/archive changes; preserves other fields, invalidates old rows and survives reopen/recovery.",
+    "redLog": "/private/tmp/PlannerCoreLocationEditRed.log",
+    "redExecutedFunctions": 1,
+    "redFailedFunctions": 1,
+    "greenLog": "/private/tmp/PlannerCoreLocationEditGreen.log",
+    "greenExecutedFunctions": 1,
+    "greenPassedFunctions": 1
+  },
+  "firstExecutionQualification": {
+    "log": "/private/tmp/PlannerCoreLocationEditQualification.log",
+    "executedFunctions": 2,
+    "passedFunctions": 2,
+    "newFunction": "Stale title/location patch, four invalid coordinate patches and missing-hash Clear reject atomically; valid Clear survives old replay and changed replay rejects."
+  },
+  "packageRegression": {
+    "log": "/private/tmp/PlannerCoreLocationEditStoreRegression.log",
+    "executedFunctions": 26,
+    "passedFunctions": 26,
+    "suites": 10
+  },
+  "nativeQualification": {
+    "bundle": "/private/tmp/PlannerCoreLocationEditNativeQualification.xcresult",
+    "log": "/private/tmp/PlannerCoreLocationEditNativeQualification.log",
+    "summary": {
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "modelName": "MacBook Pro",
+            "osBuildNumber": "26A434",
+            "osVersion": "27.0.1",
+            "platform": "macOS"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 2,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+      "expectedFailures": 0,
+      "failedTests": 0,
+      "finishTime": 1791554291.432,
+      "passedTests": 2,
+      "result": "Passed",
+      "runtimeWarnings": [],
+      "skippedTests": 0,
+      "startTime": 1791554281.194,
+      "statistics": [],
+      "testFailures": [],
+      "title": "Test - PlannerCore",
+      "topInsights": [],
+      "totalTestCount": 2
+    }
+  },
+  "affectedMCPRegression": {
+    "bundle": "/private/tmp/PlannerMCPCoreLocationRegression.xcresult",
+    "log": "/private/tmp/PlannerMCPCoreLocationRegression.log",
+    "summary": {
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "modelName": "MacBook Pro",
+            "osBuildNumber": "26A434",
+            "osVersion": "27.0.1",
+            "platform": "macOS"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 34,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+      "expectedFailures": 0,
+      "failedTests": 0,
+      "finishTime": 1791554448.017,
+      "passedTests": 28,
+      "result": "Passed",
+      "runtimeWarnings": [],
+      "skippedTests": 0,
+      "startTime": 1791554433.945,
+      "statistics": [
+        {
+          "subtitle": "9 test runs",
+          "title": "3 tests ran with dynamic parameters"
+        }
+      ],
+      "testFailures": [],
+      "title": "Test - Planner",
+      "topInsights": [
+        {
+          "category": "Longest Test Runs",
+          "impact": "76% of duration",
+          "text": "1 longest test run with outlier durations exceeding 1.58s (three standard deviations)"
+        }
+      ],
+      "totalTestCount": 28
+    }
+  },
+  "simulatorBuild": {
+    "log": "/private/tmp/PlannerCoreLocationEditSimulatorBuild.log",
+    "destination": "generic/platform=iOS Simulator",
+    "signingAllowed": false,
+    "result": "TEST BUILD SUCCEEDED",
+    "runtimeTests": false
+  },
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "3f6e748900e4d5c8dac95cdc536285af501913d906f64fec6cb47ad4d3ea01c9",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "03a037e0960a6fa611dd337fd2e9f8f39f3a7bfa664f0d94af760a4bd7fa90d8",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "a1b9f37c1c19ea4e1ecaee67fd710ed40d8e43387905f3e1d9b97fc9b8434221",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLocationEditTests.swift": "cd33433e59dac692346402e7db07d3aee427eea092aacae28054599c88ff0c56",
+    "Planner/AgentControl/PlannerMCPFailureValue.swift": "d5040efde095f467d67b1e36a72f1a9b2681ffb538daa53ecc859c0e5c9421c6"
+  },
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerCoreLocationEditSwiftLint.log",
+    "diffWhitespace": "passed"
+  },
+  "limitations": [
+    "HTTP location edit admission remains a following slice; no native map interaction or geocoding I/O proof.",
+    "No cross-process/physical CloudKit independent-field convergence, full appearance/Schedule graph, signing or actual Share extension proof.",
+    "No new schema; existing text operation fingerprints remain unchanged. Earlier UI screenshots qualify their own revisions."
+  ]
+}

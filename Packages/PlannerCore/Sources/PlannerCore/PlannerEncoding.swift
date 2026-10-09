@@ -177,12 +177,12 @@ extension PlannerFieldChange {
 }
 
 extension PlannerItemChanges {
-  func validatedTextFields() throws -> [PlannerItemField] {
-    guard subtitle.isUnchanged, location.isUnchanged, estimate.isUnchanged,
+  func validatedFields() throws -> [PlannerItemField] {
+    guard subtitle.isUnchanged, estimate.isUnchanged,
       links.isUnchanged, categoryIds.isUnchanged, tagIds.isUnchanged
     else {
       throw PlannerFailure(
-        "unavailable", "This edit fixture currently supports title and notes only.")
+        "unavailable", "This edit fixture currently supports title, notes and location only.")
     }
     switch title {
     case .clear:
@@ -196,9 +196,19 @@ extension PlannerItemChanges {
       }
     case .unchanged: break
     }
+    if case .set(let value) = location, let coordinate = value.coordinate {
+      guard coordinate.latitude.isFinite, coordinate.longitude.isFinite,
+        (-90...90).contains(coordinate.latitude), (-180...180).contains(coordinate.longitude)
+      else {
+        throw PlannerFailure(
+          "invalidInput", "Coordinates must be finite and within their geographic ranges.",
+          propertyPath: "/command/changes/location/coordinate")
+      }
+    }
     var fields: [PlannerItemField] = []
     if !title.isUnchanged { fields.append(.title) }
     if !notes.isUnchanged { fields.append(.notes) }
+    if !location.isUnchanged { fields.append(.location) }
     guard !fields.isEmpty else {
       throw PlannerFailure(
         "invalidInput", "An Item edit must contain at least one changed field.",
@@ -207,9 +217,10 @@ extension PlannerItemChanges {
     return fields.sorted { $0.rawValue < $1.rawValue }
   }
 
-  func applyingTextChanges(to input: PlannerItemContentInput) throws -> PlannerItemContentInput {
+  func applyingChanges(to input: PlannerItemContentInput) throws -> PlannerItemContentInput {
     var updatedTitle = input.title
     var updatedNotes = input.notes
+    var updatedLocation = input.location
     switch title {
     case .set(let value): updatedTitle = value
     case .clear: throw PlannerFailure("invalidInput", "An Item title cannot be cleared.")
@@ -220,13 +231,18 @@ extension PlannerItemChanges {
     case .clear: updatedNotes = nil
     case .unchanged: break
     }
+    switch location {
+    case .set(let value): updatedLocation = value
+    case .clear: updatedLocation = nil
+    case .unchanged: break
+    }
     return PlannerItemContentInput(
       title: updatedTitle, subtitle: input.subtitle, notes: updatedNotes,
-      location: input.location, estimate: input.estimate
+      location: updatedLocation, estimate: input.estimate
     )
   }
 
-  func textPayloadDigest(
+  func editPayloadDigest(
     sourceId: UUID, fields: [PlannerItemField], hashes: [PlannerItemField: PlannerFieldHash],
     identity: PlannerStoreIdentity, bindings: [PlannerBoundIdentity]
   ) throws -> String {
@@ -235,6 +251,11 @@ extension PlannerItemChanges {
     switch notes {
     case .set(let value): changedValues["notes"] = .optional(.string(value))
     case .clear: changedValues["notes"] = .optional(nil)
+    case .unchanged: break
+    }
+    switch location {
+    case .set(let value): changedValues["location"] = .optional(value.canonicalValue)
+    case .clear: changedValues["location"] = .optional(nil)
     case .unchanged: break
     }
     var usedHashes: [String: PlannerCanonicalValue] = [:]
