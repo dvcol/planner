@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-10",
+  "baselineCommit": "94dfd72",
+  "testSource": "PlannerMCPTests/MembershipCreationRoutingTests.swift",
+  "testSHA256": "87c1e647c71a52b082c4d78aafd2c10c198e7e89309d7001eea4e97281b80c30",
+  "behaviorTestsExecuted": 0,
+  "result": "Unexecuted; native IDE session unavailable",
+  "log": "/private/tmp/PlannerMCPMembershipCreationRed.log",
+  "bundle": "/private/tmp/PlannerMCPMembershipCreationRed.xcresult",
+  "hostSample": "/private/tmp/PlannerMCPMembershipCreationHostSample.txt",
+  "daemonDiagnostic": "Timed out after 120.0s while initiating control session with daemon; test host sampled waiting in XCTestDriver _prepareTestConfigurationAndIDESession.",
+  "cleanup": "Canceled with SIGINT then SIGTERM; final process exit 143.",
+  "serviceRestart": "launchctl kickstart returned 150; System Integrity Protection prohibited restarting com.apple.testmanagerd. No attempt to disable SIP or bypass the denial.",
+  "productionRouteImplemented": false,
+  "testSourceCommitted": false,
+  "testSourceNote": "Prepared draft remains local and untracked; it is not a passing test in this commit. No production MCP membership route was implemented."
+}

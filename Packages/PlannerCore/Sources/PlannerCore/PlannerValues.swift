@@ -164,6 +164,7 @@ public enum PlannerCommand: Sendable {
   case createItem(content: PlannerItemContentInput)
   case createList(content: PlannerListContentInput)
   case addMembership(itemId: UUID, listId: UUID, placement: PlannerPlacement)
+  case reorderMembership(listId: UUID, membershipId: UUID, placement: PlannerPlacement)
   case editList(
     sourceId: UUID, changes: PlannerListChanges,
     expectedFieldHashes: [PlannerListField: PlannerFieldHash])

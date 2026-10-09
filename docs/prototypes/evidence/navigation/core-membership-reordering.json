@@ -1,0 +1,107 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "94dfd72",
+  "scope": "Local exact-List membership reordering with retained identity/completion, operation receipts, checked ranks, stale windows and independent recovery. No current MCP or native UI runtime qualification.",
+  "packageExecutions": {
+    "Red": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipReorderRed.log",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "xcrun swift test --package-path Packages/PlannerCore --filter MembershipReorderingTests --scratch-path /private/tmp/PlannerCoreFixturePackageBuild"
+    },
+    "Green": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipReorderGreen.log",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "xcrun swift test --package-path Packages/PlannerCore --filter MembershipReorderingTests --scratch-path /private/tmp/PlannerCoreFixturePackageBuild"
+    },
+    "BoundaryQualification": {
+      "result": "Passed",
+      "totalTestCount": 3,
+      "suiteCount": 1,
+      "passedTests": 3,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipReorderBoundaryQualification.log",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "xcrun swift test --package-path Packages/PlannerCore --filter MembershipReorderingTests --scratch-path /private/tmp/PlannerCoreFixturePackageBuild"
+    },
+    "FinalStoreQualification": {
+      "result": "Passed",
+      "totalTestCount": 76,
+      "suiteCount": 28,
+      "passedTests": 76,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipReorderQualification.log",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "xcrun swift test --package-path Packages/PlannerCore --filter PlannerCoreStoreTests --scratch-path /private/tmp/PlannerCoreFixturePackageBuild"
+    }
+  },
+  "nativeBuilds": {
+    "GenericSimulator": {
+      "result": "Test build succeeded",
+      "runtimeExecuted": false,
+      "log": "/private/tmp/PlannerCoreMembershipReorderSimulatorBuild.log",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerCore -destination \"generic/platform=iOS Simulator\" -derivedDataPath /private/tmp/PlannerCoreOwnedRowsSimulatorDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO build-for-testing"
+    },
+    "MacAppAndUIBundle": {
+      "result": "Test build succeeded",
+      "runtimeExecuted": false,
+      "log": "/private/tmp/PlannerCoreMembershipReorderMacAppBuild.log",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO build-for-testing"
+    }
+  },
+  "sourceSHA256": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "99ad177e212ecaa282d8ad5ae77b212fa261612c7700be083bf093a3f178c5e3",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "e14e20d6173089570c8a60ea2f278a0c658d0b2110c95492c4ec98e2f3b0e289",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipReorderingTests.swift": "719ec8cb0dd2a95eb2758d9d4459bee8cf28646e5f0a8a10093df54d67fb412d"
+  },
+  "checks": {
+    "swiftLint": {
+      "result": "Passed",
+      "files": [
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipReorderingTests.swift"
+      ],
+      "log": "/private/tmp/PlannerCoreMembershipReorderSwiftLint.log"
+    },
+    "markdownLint": {
+      "result": "Passed",
+      "files": [
+        "docs/core-architecture.md",
+        "docs/prototypes/core-local-qualification.md"
+      ],
+      "log": "/private/tmp/PlannerCoreMembershipReorderMarkdownLint.log"
+    },
+    "diffCheck": "Passed"
+  },
+  "invalidNativeCaseCount": 10,
+  "closeMovesBeforeFinalBeforePlacement": 13,
+  "rankFixtureAppearanceCount": 16,
+  "schemaVersion": 7,
+  "portableFormatVersion": 1,
+  "unqualified": [
+    "Current MCP membership admission and runtime regressions",
+    "Native saved UI and drag/sorted-view restrictions after this Core dependency change",
+    "Membership removal/move, deletion-lineage and Undo",
+    "Postcommit interruption and native recovery controls",
+    "CloudKit reconciliation, physical ordering/deletion/account convergence",
+    "Signed Share/AppGroup, chosen clients/reader, accessibility and performance"
+  ],
+  "mcpStartupEvidence": "docs/prototypes/evidence/navigation/mcp-membership-startup.json"
+}

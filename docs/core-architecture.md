@@ -161,3 +161,7 @@ The codebase-design check keeps domain commands, canonical reads and recovery be
 The architecture decision is complete. Runtime feasibility is not complete. Code-producing prototypes must commit runnable configuration, use /tdd one independently specified failing behavior and its minimum passing implementation, and record actual focused build/lint/test/device results. If a gate fails, reopen the affected design with evidence before claiming feasibility.
 
 Documentation validation covers affected Markdown lint, local links, final newlines, whitespace and published-source/ticket readback. No Swift source was changed, so unit/build/type checks are inapplicable to this decision record. The whole map stays open until its other tickets and required prototypes are resolved.
+
+## Local Manual-order prototype amendment
+
+The [Core reordering qualification](prototypes/core-local-qualification.md#manual-membership-reordering) implements the approved exact-List placement command on schema 7. It retains association identity/lifetime/local state and source Item content while reusing checked gapped ranks. Self or foreign anchors reject; unchanged order preserves timestamps; operation replay preserves the original result without restoring an earlier order. These native package tests establish local persistence and recovery. They do not establish CloudKit conflict convergence, native drag UI, association-removal lineage or current MCP admission/runtime.
