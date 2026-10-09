@@ -1,0 +1,345 @@
+import Foundation
+
+struct PortableItemContent: Codable {
+  let title: String
+  let subtitle: String?
+  let notes: String?
+  let location: PlannerOwnedLocation?
+  let estimate: PlannerEstimate?
+
+  enum CodingKeys: String, CodingKey { case title, subtitle, notes, location, estimate }
+
+  init(_ input: PlannerItemContentInput) {
+    title = input.title
+    subtitle = input.subtitle
+    notes = input.notes
+    location = input.location
+    estimate = input.estimate
+  }
+
+  var input: PlannerItemContentInput {
+    PlannerItemContentInput(
+      title: title, subtitle: subtitle, notes: notes, location: location, estimate: estimate)
+  }
+
+  func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(title, forKey: .title)
+    try container.encode(subtitle, forKey: .subtitle)
+    try container.encode(notes, forKey: .notes)
+    try container.encode(location, forKey: .location)
+    try container.encode(estimate, forKey: .estimate)
+  }
+}
+
+struct PortableItemRecord: Codable {
+  let kind: PlannerEntityKind
+  let id: UUID
+  let lifetimeId: UUID
+  let createdAt: Date
+  let updatedAt: Date
+  let content: PortableItemContent
+  let globalDone: Bool
+  let archived: Bool
+  let contentOrigins: [String: String]
+
+  init(_ item: ItemSnapshot) {
+    kind = .item
+    id = item.id
+    lifetimeId = item.lifetimeId
+    createdAt = item.createdAt
+    updatedAt = item.updatedAt
+    content = PortableItemContent(item.input)
+    globalDone = item.globalDone
+    archived = item.archived
+    var origins = ["title": "independent"]
+    if item.input.subtitle != nil { origins["subtitle"] = "independent" }
+    if item.input.notes != nil { origins["notes"] = "independent" }
+    if item.input.location != nil { origins["location"] = "independent" }
+    contentOrigins = origins
+  }
+
+  func validated() throws -> PlannerPortableItem {
+    guard kind == .item, createdAt.timeIntervalSinceReferenceDate.isFinite,
+      updatedAt.timeIntervalSinceReferenceDate.isFinite
+    else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "The snapshot has invalid Item identity or dates.")
+    }
+    try content.input.validate()
+    let expected = PortableItemRecord(
+      ItemSnapshot(
+        id: id, lifetimeId: lifetimeId, createdAt: createdAt, updatedAt: updatedAt,
+        input: content.input, globalDone: globalDone, archived: archived
+      )
+    ).contentOrigins
+    guard contentOrigins == expected else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "The snapshot has inconsistent content origins.")
+    }
+    return PlannerPortableItem(
+      kind: kind, id: id, lifetimeId: lifetimeId, createdAt: createdAt, updatedAt: updatedAt,
+      content: content.input.readContent, globalDone: globalDone, archived: archived,
+      contentOrigins: contentOrigins
+    )
+  }
+}
+
+/// This slice supports Item-only snapshots. Other graph groups must be empty, never silently dropped.
+struct ItemOnlyPortableBackup: Codable {
+  let format: String
+  let formatVersion: Int
+  let sources: [PortableItemRecord]
+
+  enum CodingKeys: String, CodingKey, CaseIterable {
+    case format, formatVersion, sources, memberships, itineraryEntries, expandedCompletions
+    case schedules, labelAssociations, ownedLinks, deletionMarkers, contextAliases,
+      completionChanges
+    case restorationFamilies
+  }
+
+  init(items: [ItemSnapshot]) {
+    format = "planner-data"
+    formatVersion = 1
+    sources = items.sorted { $0.id.uuidString < $1.id.uuidString }.map(PortableItemRecord.init)
+  }
+
+  init(from decoder: any Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    format = try container.decode(String.self, forKey: .format)
+    formatVersion = try container.decode(Int.self, forKey: .formatVersion)
+    sources = try container.decode([PortableItemRecord].self, forKey: .sources)
+    for key in CodingKeys.allCases where key != .format && key != .formatVersion && key != .sources
+    {
+      guard try container.decode([String].self, forKey: key).isEmpty else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure",
+          "The Item-only prototype cannot validate nonempty \(key.rawValue).")
+      }
+    }
+  }
+
+  func encode(to encoder: any Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(format, forKey: .format)
+    try container.encode(formatVersion, forKey: .formatVersion)
+    try container.encode(sources, forKey: .sources)
+    for key in CodingKeys.allCases where key != .format && key != .formatVersion && key != .sources
+    {
+      try container.encode([String](), forKey: key)
+    }
+  }
+
+  func validated() throws -> PlannerDecodedBackup {
+    guard format == "planner-data", formatVersion == 1 else {
+      throw PlannerFailure("recoveryIntegrityFailure", "Unsupported portable recovery format.")
+    }
+    guard Set(sources.map(\.id)).count == sources.count else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "The snapshot contains duplicate Item identities.")
+    }
+    return PlannerDecodedBackup(
+      backup: PlannerPortableBackup(sources: try sources.map { try $0.validated() }))
+  }
+}
+
+struct RecoveryReceipt: Codable {
+  let operationId: UUID
+  let payloadDigest: String
+  let datasetId: UUID
+  let ownershipBinding: String
+  let result: PlannerAppliedResult
+  let commitState: String
+  let checkpointGeneration: String?
+
+  init(_ receipt: PlannerSchemaV1.Receipt, checkpoint: Int64?) throws {
+    guard let operationId = receipt.operationId, let datasetId = receipt.datasetId,
+      let resultData = receipt.resultData
+    else {
+      throw PlannerFailure(
+        "readUnavailable", "Operation evidence has unresolved identity or result.")
+    }
+    self.operationId = operationId
+    self.datasetId = datasetId
+    payloadDigest = receipt.payloadDigest
+    ownershipBinding = receipt.ownershipBinding
+    result = try JSONDecoder().decode(PlannerAppliedResult.self, from: resultData)
+    commitState = "applied"
+    checkpointGeneration = checkpoint.map(String.init)
+  }
+}
+
+struct RecoveryPreparedProposal: Codable {
+  let proposalId: UUID
+  let originalOperationId: UUID
+  let datasetId: UUID
+  let ownershipBinding: String
+  let proposedBackup: ItemOnlyPortableBackup
+  let payloadDigest: String
+  let evidence: String
+
+  var summary: PlannerProposalSummary {
+    PlannerProposalSummary(
+      proposalId: proposalId, originalOperationId: originalOperationId,
+      evidence: "preparedUnverified", requiresFreshReview: true
+    )
+  }
+}
+
+struct RecoveryEnvelope: Codable {
+  let format: String
+  let formatVersion: Int
+  let namespaceId: UUID
+  let datasetId: UUID
+  let ownershipBinding: String
+  let storageSchemaVersion: String
+  let checkpointGeneration: String
+  let portablePayloadBase64: String
+  let dataDigest: String
+  let receipts: [RecoveryReceipt]
+  let preparedProposals: [RecoveryPreparedProposal]
+
+  func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
+    guard format == "planner-recovery", formatVersion == 1, storageSchemaVersion == "1",
+      namespaceId == identity.namespaceId, datasetId == identity.datasetId,
+      ownershipBinding == identity.ownershipBinding, !ownershipBinding.isEmpty,
+      let generation = Int64(checkpointGeneration), generation > 0,
+      String(generation) == checkpointGeneration,
+      let bytes = Data(base64Encoded: portablePayloadBase64),
+      plannerDigest(bytes, prefix: "sha256:") == dataDigest,
+      Set(receipts.map(\.operationId)).count == receipts.count
+    else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "Recovery ownership, version or digest validation failed.")
+    }
+    let decoded = try JSONDecoder().decode(ItemOnlyPortableBackup.self, from: bytes).validated()
+    for receipt in receipts {
+      guard receipt.datasetId == datasetId, receipt.ownershipBinding == ownershipBinding,
+        receipt.commitState == "applied", let checkpoint = receipt.checkpointGeneration,
+        let receiptGeneration = Int64(checkpoint), receiptGeneration > 0,
+        receiptGeneration <= generation, String(receiptGeneration) == checkpoint
+      else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "Recovery operation evidence is inconsistent.")
+      }
+    }
+    return (bytes, decoded, generation)
+  }
+}
+
+struct PlannerRecoveryArchive {
+  let rootURL: URL
+  let identity: PlannerStoreIdentity
+
+  var namespaceURL: URL { rootURL.appendingPathComponent(identity.namespaceId.uuidString) }
+
+  func prepare(_ proposal: RecoveryPreparedProposal) throws {
+    try plannerWriteDurably(
+      JSONEncoder().encode(proposal),
+      to: namespaceURL.appendingPathComponent("proposal-\(proposal.proposalId.uuidString).json")
+    )
+  }
+
+  func latest() throws -> RecoveryEnvelope? {
+    let files = try FileManager.default.contentsOfDirectory(
+      at: namespaceURL, includingPropertiesForKeys: nil
+    ).filter { $0.lastPathComponent.hasPrefix("checkpoint-") && $0.pathExtension == "json" }
+    var latest: RecoveryEnvelope?
+    var latestGeneration: Int64 = 0
+    for file in files {
+      let envelope = try JSONDecoder().decode(RecoveryEnvelope.self, from: Data(contentsOf: file))
+      let (_, _, generation) = try envelope.validated(identity: identity)
+      if generation > latestGeneration {
+        latest = envelope
+        latestGeneration = generation
+      }
+    }
+    return latest
+  }
+
+  func proposals() throws -> [RecoveryPreparedProposal] {
+    let files = try FileManager.default.contentsOfDirectory(
+      at: namespaceURL, includingPropertiesForKeys: nil
+    )
+    .filter { $0.lastPathComponent.hasPrefix("proposal-") && $0.pathExtension == "json" }
+    let completed = Set(try latest()?.receipts.map(\.operationId) ?? [])
+    return try files.map { file in
+      let proposal = try JSONDecoder().decode(
+        RecoveryPreparedProposal.self, from: Data(contentsOf: file))
+      guard proposal.datasetId == identity.datasetId,
+        proposal.ownershipBinding == identity.ownershipBinding,
+        proposal.evidence == "preparedUnverified"
+      else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "Prepared recovery evidence has an invalid owner.")
+      }
+      _ = try proposal.proposedBackup.validated()
+      return proposal
+    }.filter { !completed.contains($0.originalOperationId) }
+      .sorted { $0.proposalId.uuidString < $1.proposalId.uuidString }
+  }
+
+  func publish(items: [ItemSnapshot], receipts: [PlannerSchemaV1.Receipt]) throws -> Int64 {
+    let previous = try latest()
+    let previousGeneration = try previous?.validated(identity: identity).2 ?? 0
+    let (generation, overflow) = previousGeneration.addingReportingOverflow(1)
+    guard !overflow else {
+      throw PlannerFailure("recoveryIncomplete", "Recovery checkpoint capacity was exceeded.")
+    }
+    let bytes = try JSONEncoder().encode(ItemOnlyPortableBackup(items: items))
+    let priorCheckpoints = Dictionary(
+      uniqueKeysWithValues: (previous?.receipts ?? []).map {
+        ($0.operationId, $0.checkpointGeneration.flatMap(Int64.init))
+      })
+    let evidence = try receipts.map { receipt in
+      try RecoveryReceipt(
+        receipt,
+        checkpoint: receipt.operationId.flatMap { priorCheckpoints[$0] ?? nil } ?? generation)
+    }.sorted { $0.operationId.uuidString < $1.operationId.uuidString }
+    let envelope = RecoveryEnvelope(
+      format: "planner-recovery", formatVersion: 1, namespaceId: identity.namespaceId,
+      datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
+      storageSchemaVersion: "1", checkpointGeneration: String(generation),
+      portablePayloadBase64: bytes.base64EncodedString(),
+      dataDigest: plannerDigest(bytes, prefix: "sha256:"),
+      receipts: evidence, preparedProposals: []
+    )
+    _ = try envelope.validated(identity: identity)
+    try plannerWriteDurably(
+      JSONEncoder().encode(envelope),
+      to: namespaceURL.appendingPathComponent("checkpoint-\(generation).json"))
+    return generation
+  }
+
+  func view() throws -> PlannerRecoveryView {
+    let envelope = try latest()
+    let generation = try envelope?.validated(identity: identity).2
+    let snapshot = generation.map {
+      PlannerSnapshotSummary(
+        storageSchemaVersion: 1, portableFormatVersion: 1, checkpointGeneration: $0,
+        integrity: "verified")
+    }
+    return PlannerRecoveryView(
+      namespaceId: identity.namespaceId, datasetId: identity.datasetId,
+      ownershipDescription: nil, acknowledgedSnapshot: snapshot,
+      preparedProposals: try proposals().map(\.summary), availability: .available
+    )
+  }
+
+  func selection(generation: Int64) throws -> PlannerRecoverySelection {
+    let file = namespaceURL.appendingPathComponent("checkpoint-\(generation).json")
+    let envelope = try JSONDecoder().decode(RecoveryEnvelope.self, from: Data(contentsOf: file))
+    let (bytes, decoded, recordedGeneration) = try envelope.validated(identity: identity)
+    guard generation == recordedGeneration else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure",
+        "The requested checkpoint does not match its recorded generation.")
+    }
+    return PlannerRecoverySelection(
+      selectionId: UUID(), namespaceId: identity.namespaceId, datasetId: identity.datasetId,
+      ownershipBinding: identity.ownershipBinding, evidence: .acknowledgedSnapshot,
+      checkpointGeneration: generation, proposalId: nil, originalOperationId: nil,
+      portableData: bytes, decodedBackup: decoded
+    )
+  }
+}
