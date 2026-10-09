@@ -2,24 +2,34 @@ import Foundation
 
 public enum PlannerScheduleForm: Sendable, Equatable, Codable {
   case timed(start: Date, end: Date?, planningTimeZone: String)
+  case allDay(start: PlannerCivilDate, end: PlannerCivilDate?)
 
   private enum CodingKeys: String, CodingKey { case kind, start, end, planningTimeZone }
 
   public init(from decoder: any Decoder) throws {
     let fields = try decoder.container(keyedBy: CodingKeys.self)
-    guard try fields.decode(String.self, forKey: .kind) == "timed" else {
-      throw PlannerFailure(
-        "recoveryIntegrityFailure", "This prototype supports timed Schedule forms only.")
+    switch try fields.decode(String.self, forKey: .kind) {
+    case "timed":
+      self = .timed(
+        start: try fields.decode(Date.self, forKey: .start),
+        end: try fields.decode(Date?.self, forKey: .end),
+        planningTimeZone: try fields.decode(String.self, forKey: .planningTimeZone))
+    case "allDay":
+      self = .allDay(
+        start: try fields.decode(PlannerCivilDate.self, forKey: .start),
+        end: try fields.decode(PlannerCivilDate?.self, forKey: .end))
+    default:
+      throw PlannerFailure("recoveryIntegrityFailure", "The Schedule form kind is unsupported.")
     }
-    self = .timed(
-      start: try fields.decode(Date.self, forKey: .start),
-      end: try fields.decode(Date?.self, forKey: .end),
-      planningTimeZone: try fields.decode(String.self, forKey: .planningTimeZone))
   }
 
   public func encode(to encoder: any Encoder) throws {
     var fields = encoder.container(keyedBy: CodingKeys.self)
     switch self {
+    case .allDay(let start, let end):
+      try fields.encode("allDay", forKey: .kind)
+      try fields.encode(start, forKey: .start)
+      try fields.encode(end, forKey: .end)
     case .timed(let start, let end, let planningTimeZone):
       try fields.encode("timed", forKey: .kind)
       try fields.encode(start, forKey: .start)
@@ -67,6 +77,16 @@ struct ScheduleSnapshot {
 extension PlannerScheduleForm {
   func validate(propertyPath: String = "/command/form") throws {
     switch self {
+    case .allDay(let start, let end):
+      try start.validate(propertyPath: propertyPath + "/start")
+      if let end {
+        try end.validate(propertyPath: propertyPath + "/end")
+        guard !end.isEarlier(than: start) else {
+          throw PlannerFailure(
+            "invalidInput", "An all-day end must not precede its inclusive start.",
+            propertyPath: propertyPath + "/end")
+        }
+      }
     case .timed(let start, let end, let planningTimeZone):
       guard start.timeIntervalSinceReferenceDate.isFinite else {
         throw PlannerFailure(
@@ -90,6 +110,11 @@ extension PlannerScheduleForm {
 
   var canonicalValue: PlannerCanonicalValue {
     switch self {
+    case .allDay(let start, let end):
+      return .record([
+        "kind": .string("allDay"), "start": start.canonicalValue,
+        "end": .optional(end.map(\.canonicalValue)),
+      ])
     case .timed(let start, let end, let planningTimeZone):
       return .record([
         "kind": .string("timed"), "start": .date(start),
@@ -140,12 +165,16 @@ enum ScheduleChange {
     return true
   }
 
-  func applying(to current: PlannerScheduleForm) -> PlannerScheduleForm? {
+  func applying(to current: PlannerScheduleForm) throws -> PlannerScheduleForm? {
     switch self {
     case .remove: return nil
     case .form(let form): return form
     case .zone(let planningTimeZone):
       switch current {
+      case .allDay:
+        throw PlannerFailure(
+          "invalidInput", "All-day dates have no planning timezone.",
+          propertyPath: "/command/planningTimeZone")
       case .timed(let start, let end, _):
         return .timed(start: start, end: end, planningTimeZone: planningTimeZone)
       }

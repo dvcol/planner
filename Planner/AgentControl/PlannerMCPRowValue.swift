@@ -45,6 +45,10 @@
 
     static func scheduleForm(_ form: PlannerScheduleForm) -> Value {
       switch form {
+      case .allDay(let start, let end):
+        return .object([
+          "kind": .string("allDay"), "start": civilDate(start), "end": end.map(civilDate) ?? .null,
+        ])
       case .timed(let start, let end, let planningTimeZone):
         return .object([
           "kind": .string("timed"),
@@ -53,6 +57,10 @@
           "planningTimeZone": .string(planningTimeZone),
         ])
       }
+    }
+
+    private static func civilDate(_ date: PlannerCivilDate) -> Value {
+      .object(["year": .int(date.year), "month": .int(date.month), "day": .int(date.day)])
     }
 
     private static func row(_ row: PlannerRowRead) -> Value {

@@ -86,7 +86,7 @@ enum PlannerSchemaV1: VersionedSchema {
   }
 }
 
-extension PlannerSchemaV3.Item {
+extension PlannerSchemaV5.Item {
   func rowRead(
     hasLinks: Bool, previewLink: PlannerOwnedLinkRead?, scheduleSummary: PlannerRowScheduleSummary
   ) throws -> PlannerRowRead {
@@ -127,13 +127,17 @@ struct PlannerStoredOperationEvidence: Codable {
 
 enum PlannerMigrationPlan: SchemaMigrationPlan {
   static var schemas: [any VersionedSchema.Type] {
-    [PlannerSchemaV1.self, PlannerSchemaV2.self, PlannerSchemaV3.self, PlannerSchemaV4.self]
+    [
+      PlannerSchemaV1.self, PlannerSchemaV2.self, PlannerSchemaV3.self, PlannerSchemaV4.self,
+      PlannerSchemaV5.self,
+    ]
   }
   static var stages: [MigrationStage] {
     [
       .lightweight(fromVersion: PlannerSchemaV1.self, toVersion: PlannerSchemaV2.self),
       .lightweight(fromVersion: PlannerSchemaV2.self, toVersion: PlannerSchemaV3.self),
       .lightweight(fromVersion: PlannerSchemaV3.self, toVersion: PlannerSchemaV4.self),
+      .lightweight(fromVersion: PlannerSchemaV4.self, toVersion: PlannerSchemaV5.self),
     ]
   }
 }

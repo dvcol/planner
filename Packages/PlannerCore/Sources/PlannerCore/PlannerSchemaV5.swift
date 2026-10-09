@@ -1,10 +1,13 @@
 import Foundation
 import SwiftData
 
-enum PlannerSchemaV3: VersionedSchema {
-  static let versionIdentifier = Schema.Version(3, 0, 0)
+enum PlannerSchemaV5: VersionedSchema {
+  static let versionIdentifier = Schema.Version(5, 0, 0)
   static var models: [any PersistentModel.Type] {
-    [Item.self, PlannerSchemaV1.Receipt.self, OwnedLink.self, Schedule.self]
+    [
+      Item.self, PlannerSchemaV1.Receipt.self, OwnedLink.self, Schedule.self,
+      PlannerSchemaV4.DeletionMarker.self,
+    ]
   }
 
   @Model final class Item {
@@ -151,6 +154,9 @@ enum PlannerSchemaV3: VersionedSchema {
     var start: Date? = nil
     var end: Date? = nil
     var planningTimeZone: String = ""
+    var formKind: String = "timed"
+    var civilStartData: Data? = nil
+    var civilEndData: Data? = nil
     var itemOwner: Item? = nil
 
     init(snapshot: ScheduleSnapshot, owner: Item) throws {
@@ -158,25 +164,52 @@ enum PlannerSchemaV3: VersionedSchema {
       lifetimeId = snapshot.lifetimeId
       sourceId = owner.id
       sourceLifetimeId = owner.lifetimeId
-      switch snapshot.form {
-      case .allDay: throw PlannerFailure("unavailable", "Schema 3 supports timed forms only.")
-      case .timed(let start, let end, let planningTimeZone):
-        self.start = start
-        self.end = end
-        self.planningTimeZone = planningTimeZone
-      }
+      try replace(with: snapshot.form)
       itemOwner = owner
     }
 
-    func value(ownerId: UUID, ownerLifetimeId: UUID) throws -> ScheduleSnapshot {
-      guard let id, let lifetimeId, let start,
-        sourceId == ownerId, sourceLifetimeId == ownerLifetimeId
-      else {
-        throw PlannerFailure(
-          "readUnavailable", "The Schedule has unresolved identity, source or start.")
+    func replace(with form: PlannerScheduleForm) throws {
+      try form.validate()
+      switch form {
+      case .timed(let start, let end, let planningTimeZone):
+        formKind = "timed"
+        self.start = start
+        self.end = end
+        self.planningTimeZone = planningTimeZone
+        civilStartData = nil
+        civilEndData = nil
+      case .allDay(let start, let end):
+        formKind = "allDay"
+        civilStartData = try JSONEncoder().encode(start)
+        civilEndData = try end.map { try JSONEncoder().encode($0) }
+        self.start = nil
+        self.end = nil
+        planningTimeZone = ""
       }
-      let form = PlannerScheduleForm.timed(
-        start: start, end: end, planningTimeZone: planningTimeZone)
+    }
+
+    func value(ownerId: UUID, ownerLifetimeId: UUID) throws -> ScheduleSnapshot {
+      guard let id, let lifetimeId, sourceId == ownerId, sourceLifetimeId == ownerLifetimeId else {
+        throw PlannerFailure(
+          "readUnavailable", "The Schedule has unresolved identity or ownership.")
+      }
+      let form: PlannerScheduleForm
+      switch formKind {
+      case "timed":
+        guard let start, civilStartData == nil, civilEndData == nil else {
+          throw PlannerFailure("readUnavailable", "The timed Schedule has inconsistent fields.")
+        }
+        form = .timed(start: start, end: end, planningTimeZone: planningTimeZone)
+      case "allDay":
+        guard let civilStartData, start == nil, end == nil, planningTimeZone.isEmpty else {
+          throw PlannerFailure("readUnavailable", "The all-day Schedule has inconsistent fields.")
+        }
+        form = .allDay(
+          start: try JSONDecoder().decode(PlannerCivilDate.self, from: civilStartData),
+          end: try civilEndData.map { try JSONDecoder().decode(PlannerCivilDate.self, from: $0) })
+      default:
+        throw PlannerFailure("readUnavailable", "The Schedule form kind is unsupported.")
+      }
       try form.validate()
       return ScheduleSnapshot(id: id, lifetimeId: lifetimeId, form: form)
     }

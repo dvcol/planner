@@ -1,0 +1,151 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "40e95e3",
+  "scope": "Direct Item all-day creation/edit/source/row reads and genuine schema-4 migration through the public facade, with independent recovery.",
+  "packageExecutions": {
+    "CreationRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreAllDayCreationRed.log",
+      "failure": "The public all-day form is rejected as unavailable before persistence."
+    },
+    "CreationSupportedGreen": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreAllDayCreationSupportedGreen.log"
+    },
+    "RowsRed": {
+      "result": "Failed",
+      "totalTestCount": 2,
+      "passedTests": 1,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreAllDayRowsRed.log",
+      "failure": "All-day source saves, but rows fail because existing selection considers only timed assignments."
+    },
+    "RowsGreen": {
+      "result": "Passed",
+      "totalTestCount": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreAllDayRowsGreen.log"
+    },
+    "ZoneRed": {
+      "result": "Failed",
+      "totalTestCount": 3,
+      "passedTests": 2,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreAllDayZoneRed.log",
+      "failure": "An all-day planning-zone change is incorrectly acknowledged as a write."
+    },
+    "ZoneGreen": {
+      "result": "Passed",
+      "totalTestCount": 3,
+      "passedTests": 3,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreAllDayZoneGreen.log"
+    },
+    "QualifiedStore": {
+      "result": "Passed",
+      "totalTestCount": 49,
+      "passedTests": 49,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreAllDayQualifiedStore.log"
+    }
+  },
+  "nativeExecutions": {
+    "CoreMac": {
+      "result": "Passed",
+      "totalTestCount": 8,
+      "passedTests": 8,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerCoreAllDayNativeQualification.xcresult",
+      "log": "/private/tmp/PlannerCoreAllDayNativeQualification.log"
+    },
+    "MCPRegression": {
+      "result": "Passed",
+      "totalTestCount": 41,
+      "passedTests": 41,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPAllDayCoreRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPAllDayCoreRegression.log"
+    }
+  },
+  "simulatorCompilation": {
+    "result": "Passed",
+    "log": "/private/tmp/PlannerCoreAllDaySimulatorBuild.log",
+    "runtimeExecuted": false,
+    "signing": "disabled"
+  },
+  "intermediateCorrections": [
+    {
+      "log": "/private/tmp/PlannerCoreAllDayCreationGreen.log",
+      "outcome": "The edit script stopped before implementing persistence; the unchanged unavailable behavior still fails. Not a green run."
+    },
+    {
+      "log": "/private/tmp/PlannerCoreAllDayCreationImplementedGreen.log",
+      "outcome": "New-store bootstrap fails because the recovery envelope does not yet recognize schema 5. Registering 5 resolves it."
+    },
+    {
+      "log": "/private/tmp/PlannerCoreAllDayQualification.log",
+      "outcome": "Test compilation fails at an invented failed bootstrap variant. Corrected to the declared mainAppMigrationRequired outcome before qualification."
+    }
+  ],
+  "qualification": {
+    "invalidForms": 12,
+    "invalidCreateAndEditAttempts": 24,
+    "behavior": [
+      "Inclusive civil ranges retain Friday through Sunday across Tokyo/Paris and midnight boundaries. Separate weekends retain their gap and exact additional record count.",
+      "Mixed timed/all-day rows choose the ongoing latest start, returning to the inclusive all-day span at the timed end. All-day starts use civil midnight solely for comparison; no saved midnight instant is introduced.",
+      "Known literal accepted all-day form bytes independently establish the field hash after context UUID substitution and CryptoKit SHA-256.",
+      "Invalid Gregorian dates and reversed inclusive ends reject together without a receipt, proposal, source/hash change or row invalidation. Valid leap dates and an explicit equal end are retained.",
+      "Complete all-day/timed/all-day conversions preserve identity/lifetime; a stale conversion returns the complete current form/hash. Earlier replay retains later data.",
+      "A genuine schema-4 fixture preserves source content/links/global/archive/time/hash, fractional timed forms/hash, deletion metadata and historical recovery/receipts. Share-role migration blocks until main initializes; later Share-role all-day saving succeeds."
+    ]
+  },
+  "fixture": {
+    "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV4",
+    "producerCommit": "53946e5",
+    "producerLog": "/private/tmp/PlannerSchema4Producer-53946e5.log",
+    "checksummedFiles": 20,
+    "originalCheckpoint": 6,
+    "originalSchema": 4
+  },
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerCoreAllDayFinalSwiftLint.log",
+    "affectedSwiftFiles": 10,
+    "diffWhitespace": "passed",
+    "excludedMCPSuite": "ReadLoadTests"
+  },
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCivilDate.swift": "d8ae4943ef8af8030c13f12af2f93ffb873de32e328a97245b9c05adbed92306",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "8d04e3aaaf556171f9286e13b68abdcf32e203edbcc55d8f753659abdef57e75",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "1d5a6dbb7bfeec461b887e7ed906cfaf46585704e166de822680997bfd0c2d9b",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "a3393d67c3c5d64042ab504a9010a72e530779a0892abb6ba2043b594a415504",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV3.swift": "16597d7095a886a1736b908877359b110a4d527d6aadb77e4ced5f13cfc9facc",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV5.swift": "e2347043ee4c5d0267391e40119d6cc25f463f181c833c9a9c4b3bed0e10f0f6",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "644b5894f8502b89da583d6961de0ba68f60f927f31473f2e74b8420244acfae",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift": "f55597673c4bc0deefc7ae5bfa52ae6863d34d0dd770eaf9cd0238d39d267920",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift": "f2c31d422b744b478e369a29061a94f72db2c73837f30bc30d681707ba807902",
+    "Planner/AgentControl/PlannerMCPRowValue.swift": "37fd5ad15c075a07c01aac281613a3d7d2e08f415c0dd944676a937980ed5037"
+  },
+  "remaining": [
+    "All-day write admission over HTTP and Itinerary forms/full graph",
+    "Native saved calendar/date-picker/editor and provider I/O journeys",
+    "CloudKit form cohesion/deletion/account/interruption and physical performance",
+    "Actual Share extension and signed clients/reader"
+  ]
+}
