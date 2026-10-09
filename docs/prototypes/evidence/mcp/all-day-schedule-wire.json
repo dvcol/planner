@@ -1,0 +1,86 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "e50c14d",
+  "scope": "Strict timed/all-day union admission, real authenticated HTTP creation/guarded edits/source/travel rows/replay/removal and native recovery.",
+  "nativeExecutions": {
+    "Red": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPAllDayWireRed.xcresult",
+      "log": "/private/tmp/PlannerMCPAllDayWireRed.log",
+      "failure": "The actual all-day creation is rejected by unsupported admission."
+    },
+    "Green": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPAllDayWireGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPAllDayWireGreen.log",
+      "failure": "The test reads content at the outer envelope rather than the declared value member. Corrected assertions pass in EnvelopeGreen; no production fix is claimed for this mistake."
+    },
+    "EnvelopeGreen": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPAllDayWireEnvelopeGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPAllDayWireEnvelopeGreen.log"
+    },
+    "Qualification": {
+      "result": "Passed",
+      "totalTestCount": 23,
+      "passedTests": 23,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPAllDayWireQualification.xcresult",
+      "log": "/private/tmp/PlannerMCPAllDayWireQualification.log"
+    },
+    "Regression": {
+      "result": "Passed",
+      "totalTestCount": 43,
+      "passedTests": 43,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPAllDayWireRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPAllDayWireRegression.log"
+    }
+  },
+  "qualification": {
+    "invalidForms": 22,
+    "invalidCreateAndEditRequests": 44,
+    "behavior": [
+      "Inclusive civil form dates and null ends retain their exact wire shape across Tokyo and Paris row contexts.",
+      "The complete form guard returns current all-day form/hash on a stale request. Zone-only changes reject all-day assignments without applied evidence.",
+      "Exact creation/edit replays return original checkpoints while retaining later complete timed conversion. Removing the selected Schedule retains Item content/hashes/time and creates its independent minimal deletion marker.",
+      "Missing/null/nonobject civil forms, required ends/components, wrong numeric/String/Boolean/fraction types, impossible Gregorian dates/overflow/reversed ends and escaped unknown members reject with exact paths and original operation IDs.",
+      "All 44 rejected create/edit attempts preserve source values, issued row window, checkpoint 2 and absence of receipts/proposals; valid leap-day creation with explicit null end reaches checkpoint 3.",
+      "Existing timed malformed-input journeys now treat all-day as a supported form and retain malformed civil examples instead of expecting unavailable. All successful/rejected text JSON matches structured JSON."
+    ]
+  },
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerMCPAllDayWireFinalSwiftLint.log",
+    "affectedSwiftFiles": 4,
+    "nativeCompilation": "Passed in executed Mac tests",
+    "diffWhitespace": "passed",
+    "excludedSuite": "ReadLoadTests"
+  },
+  "sourceHashes": {
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift": "9da04eaa4e0711eb2dd8e9f59962ee124b0fe77d2ff7f934e0f13d17eb447bea",
+    "PlannerMCPTests/AllDayScheduleRoutingTests.swift": "12687aae9c613c09f86f2a7318dac6f0442fcbe8f0decbddf2787d7d7c380099",
+    "PlannerMCPTests/RowRoutingTests.swift": "0070365b96c450737b63ec772525250f0a883a62c686e908a5d2e7af138cb0c9",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "ff57a901c51b4ef094ce95f5fe0c01ae3834fee77d46d58e6fd23aca52993cc9"
+  },
+  "remaining": [
+    "Itinerary assignments/full shared graph",
+    "Saved native calendar/picker/editor and provider I/O journeys",
+    "Actual Share and chosen signed clients/reader",
+    "CloudKit cohesion/deletion/account/interruption and physical performance"
+  ]
+}
