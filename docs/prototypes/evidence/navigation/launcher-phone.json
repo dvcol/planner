@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-09",
+  "command": "./scripts/navigation-prototype.sh phone",
+  "scriptSHA256": "40863ad00f4dd3f5e1ee822a4aad41fe5e5ed8d67928174eb7ad51dce90c96a5",
+  "buildPassed": true,
+  "simulatorInstallationPassed": true,
+  "simulatorLaunchPassed": true,
+  "exitCode": 0,
+  "simulatorGUIAvailableInSelectedXcodeBundle": false,
+  "simulatorGUIOpened": false,
+  "earlierFailure": "Build, installation and runtime launch passed, then opening Simulator by name failed. The attempted explicit app path was also absent.",
+  "correction": "Open the bundled Simulator UI when present; otherwise report successful runtime launch and unavailable UI explicitly."
+}

@@ -39,4 +39,9 @@ xcrun simctl bootstatus "$prototypeSimulatorName" -b
 xcrun simctl install "$prototypeSimulatorName" \
   "$prototypeBuildDirectory/Build/Products/Debug-iphonesimulator/Planner.app"
 xcrun simctl launch "$prototypeSimulatorName" org.example.PlannerMCPPrototype
-open -a Simulator
+prototypeSimulatorApplication="$DEVELOPER_DIR/Applications/Simulator.app"
+if [[ -d "$prototypeSimulatorApplication" ]]; then
+  open "$prototypeSimulatorApplication"
+else
+  printf '%s\n' 'Planner is running in the simulator runtime. The selected Xcode bundle has no Simulator UI application.'
+fi

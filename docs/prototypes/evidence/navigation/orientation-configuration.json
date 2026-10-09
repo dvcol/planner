@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-09",
+  "configurationSHA256": "b7a614c95c420d23b7d0da086bd30e660744abf66e3726a88ce421fe38ec0372",
+  "deviceBuildPassed": true,
+  "deviceProductUnsigned": true,
+  "generatedPhoneOrientations": [
+    "UIInterfaceOrientationPortrait",
+    "UIInterfaceOrientationLandscapeLeft",
+    "UIInterfaceOrientationLandscapeRight"
+  ],
+  "generatedTabletOrientations": [
+    "UIInterfaceOrientationPortrait",
+    "UIInterfaceOrientationPortraitUpsideDown",
+    "UIInterfaceOrientationLandscapeLeft",
+    "UIInterfaceOrientationLandscapeRight"
+  ],
+  "tabletUIJourneyPassed": true,
+  "tabletRuntimeWarnings": [],
+  "orientationChangesExercised": false,
+  "resizingExercised": false,
+  "macBuildPassedAfterConfigurationChange": true
+}

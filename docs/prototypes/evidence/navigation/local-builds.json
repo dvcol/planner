@@ -10,7 +10,9 @@
     "freshBuildProducts": true,
     "appAndUITestRunnerBuilt": true,
     "uiJourneyExecuted": false,
-    "result": "Passed"
+    "result": "Passed",
+    "standaloneProcessLaunchVerified": true,
+    "renderedUIReviewed": false
   },
   "iosDevice": {
     "scheme": "PlannerNavigation",
