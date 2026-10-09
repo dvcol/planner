@@ -254,6 +254,10 @@ public enum PlannerItemField: String, Sendable, CaseIterable {
 
 public struct PlannerFieldHash: Sendable, Equatable {
   public let value: String
+
+  public init(value: String) {
+    self.value = value
+  }
 }
 
 public struct PlannerItemContent: Sendable {
