@@ -1,0 +1,168 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "29946b8",
+  "scope": "Saved List catalog discovery and compact windows through native Core and actual MCP HTTP, plus consistent native case/diacritic-insensitive ordering across source and List queries. Saved native UI and physical convergence are not qualified.",
+  "packageExecutions": {
+    "Red": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": -1,
+      "failedTests": 2,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListCatalogRed.log"
+    },
+    "InitialGreen": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": -1,
+      "failedTests": 2,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListCatalogGreen.log"
+    },
+    "SortRed": {
+      "result": "Failed",
+      "totalTestCount": 2,
+      "suiteCount": 1,
+      "passedTests": -1,
+      "failedTests": 3,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListCatalogSortRed.log"
+    },
+    "SortGreen": {
+      "result": "Passed",
+      "totalTestCount": 2,
+      "suiteCount": 1,
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListCatalogSortGreen.log"
+    },
+    "BoundaryRed": {
+      "result": "Failed",
+      "totalTestCount": 3,
+      "suiteCount": 1,
+      "passedTests": 1,
+      "failedTests": 2,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListCatalogBoundaryRed.log"
+    },
+    "BoundaryGreen": {
+      "result": "Passed",
+      "totalTestCount": 3,
+      "suiteCount": 1,
+      "passedTests": 3,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListCatalogBoundaryGreen.log"
+    },
+    "Qualification": {
+      "result": "Passed",
+      "totalTestCount": 73,
+      "suiteCount": 27,
+      "passedTests": 73,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListCatalogQualification.log"
+    }
+  },
+  "nativeExecutions": {
+    "HTTPRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPListCatalogRed.xcresult",
+      "log": "/private/tmp/PlannerMCPListCatalogRed.log",
+      "summary": "/private/tmp/PlannerMCPListCatalogRedSummary.json"
+    },
+    "HTTPGreen": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPListCatalogGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPListCatalogGreen.log",
+      "summary": "/private/tmp/PlannerMCPListCatalogGreenSummary.json"
+    },
+    "MCPQualification": {
+      "result": "Passed",
+      "totalTestCount": 55,
+      "passedTests": 55,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPListCatalogQualification.xcresult",
+      "log": "/private/tmp/PlannerMCPListCatalogQualification.log",
+      "summary": "/private/tmp/PlannerMCPListCatalogQualificationSummary.json"
+    },
+    "CoreMac": {
+      "result": "Passed",
+      "totalTestCount": 12,
+      "passedTests": 12,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerCoreListCatalogNativeQualification.xcresult",
+      "log": "/private/tmp/PlannerCoreListCatalogNativeQualification.log",
+      "summary": "/private/tmp/PlannerCoreListCatalogNativeQualificationSummary.json"
+    },
+    "CoreMacItemRows": {
+      "result": "Passed",
+      "totalTestCount": 4,
+      "passedTests": 4,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerCoreListCatalogItemRowsQualification.xcresult",
+      "log": "/private/tmp/PlannerCoreListCatalogItemRowsQualification.log",
+      "summary": "/private/tmp/PlannerCoreListCatalogItemRowsQualificationSummary.json"
+    }
+  },
+  "simulator": {
+    "result": "Test build succeeded",
+    "runtimeExecuted": false,
+    "signing": "disabled",
+    "log": "/private/tmp/PlannerCoreListCatalogSimulatorBuild.log"
+  },
+  "lint": {
+    "result": "Passed",
+    "files": [
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCatalogTests.swift",
+      "Planner/AgentControl/PlannerMCPQueryTool.swift",
+      "PlannerMCPTests/ListCatalogRoutingTests.swift",
+      "PlannerMCPTests/MembershipRowRoutingTests.swift"
+    ],
+    "log": "/private/tmp/PlannerCoreListCatalogSwiftLint.log"
+  },
+  "sourceSHA256": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "9aafeffccb288334338821002a6930ab00d7a5b0284ff46d5ea5542bf4b39294",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "f715525d6dd959945917b5d1a306bba2e121bb882b5156687085b68458308cf0",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCatalogTests.swift": "12b21a0a379f892d5714976c77a184e6ddd26471cb29d09596c92364c8802b68",
+    "Planner/AgentControl/PlannerMCPQueryTool.swift": "417580631dff3d04f52582199d8fc41c61e80fc59184ad71b8b5b0c5045fe34c",
+    "PlannerMCPTests/ListCatalogRoutingTests.swift": "91662dbf5bb643bff79c30fb0b77cea43af0fd9f4b6adb1d8257b0be3e366861",
+    "PlannerMCPTests/MembershipRowRoutingTests.swift": "3932f871199fbbd20f328c4261b84c031a3278e609f6bdf52df641d2ff283d9d"
+  },
+  "intermediateCorrections": [
+    {
+      "stage": "Initial catalog green",
+      "reason": "The actual test exposed raw Foundation POSIX comparison ordering equivalent mixed-case strings differently against other names. Native folding before comparison fixes the common Item/List ordering, with public facade red/green coverage."
+    },
+    {
+      "stage": "Native qualification selection",
+      "reason": "An incorrect ItemRowsTests selector omitted four existing ItemRowReadTests functions. The initial bundle contains 12 discovered passing tests; a separate corrected selection executes all four compact Item row functions."
+    }
+  ],
+  "invalidHTTPCaseCount": 29,
+  "obligations": [
+    "Catalogs for other source kinds and remaining search/filter/sort modes",
+    "Saved native sidebar, valid selection and Q44 contextual checkbox controls",
+    "Bulk review/actions and membership remove/move/reorder",
+    "Repeated Itinerary appearances and full graph",
+    "Actual Share/AppGroup, signed clients and header reader",
+    "CloudKit convergence, A17 reconciliation, deletion/order/account recovery and physical performance"
+  ]
+}
