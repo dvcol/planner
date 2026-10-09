@@ -23,6 +23,9 @@ struct SavedPlannerView: View {
   @State private var selectedItemId: UUID?
   @State private var selectedItem: PlannerItemSourceRead?
   @State private var isOpeningItem = false
+  @State private var selectedAppearanceIdentity: PlannerAppearance?
+  @State private var selectedAppearance: PlannerAppearanceRead?
+  @State private var isOpeningAppearance = false
   @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
   var body: some View {
@@ -44,6 +47,12 @@ struct SavedPlannerView: View {
     .task { await store.open() }
     .task(id: selectedListId) { await loadSelectedList() }
     .task(id: selectedItemId) { await loadSelectedItem() }
+    .task(id: selectedAppearanceIdentity) { await loadSelectedAppearance() }
+    .task(id: store.changeRevision) {
+      await loadSelectedList()
+      await loadSelectedItem()
+      await loadSelectedAppearance()
+    }
     .sheet(isPresented: $showNewList) {
       SavedNewListForm(store: store) { source in
         selectedSection = .lists
@@ -55,9 +64,7 @@ struct SavedPlannerView: View {
     }
     .sheet(isPresented: $showAddItem) {
       if let selectedList {
-        SavedAddItemForm(store: store, list: selectedList) {
-          Task { await loadSelectedList() }
-        }
+        SavedAddItemForm(store: store, list: selectedList) {}
       }
     }
     .alert(
@@ -112,6 +119,9 @@ struct SavedPlannerView: View {
         case .list(let identifier):
           selectedSection = .lists
           selectedListId = identifier
+          #if os(iOS)
+            columnVisibility = .doubleColumn
+          #endif
         case .lists:
           selectedSection = .lists
           selectedListId = nil
@@ -140,9 +150,7 @@ struct SavedPlannerView: View {
       SavedItemDetail(item: selectedItem, canChange: store.canCreate, isSaving: store.isSaving) {
         done in
         Task {
-          if await store.setItemCompletion(selectedItem.source.id, done: done) {
-            await loadSelectedItem()
-          }
+          _ = await store.setItemCompletion(selectedItem.source.id, done: done)
         }
       }
     } else if isOpeningItem {
@@ -165,9 +173,12 @@ struct SavedPlannerView: View {
       return
     }
     isOpeningItem = true
-    selectedItem = nil
+    let revision = store.changeRevision
+    if selectedItem?.source.id != identifier { selectedItem = nil }
     let loaded = await store.readItem(identifier)
-    guard !Task.isCancelled, selectedItemId == identifier else { return }
+    guard !Task.isCancelled, selectedItemId == identifier, store.changeRevision == revision else {
+      return
+    }
     selectedItem = loaded
     isOpeningItem = false
   }
@@ -180,14 +191,73 @@ struct SavedPlannerView: View {
       return
     }
     isOpeningList = true
-    selectedList = nil
-    listItems = nil
+    let revision = store.changeRevision
+    if selectedList?.source.id != identifier {
+      selectedList = nil
+      listItems = nil
+    }
     let loaded = await store.readList(identifier)
     let loadedItems = loaded == nil ? nil : await store.readListItems(identifier)
-    guard !Task.isCancelled, selectedListId == identifier else { return }
+    guard !Task.isCancelled, selectedListId == identifier, store.changeRevision == revision else {
+      return
+    }
     selectedList = loaded
     listItems = loadedItems
     isOpeningList = false
+  }
+
+  private var membershipSelection: Binding<UUID?> {
+    Binding(
+      get: {
+        guard case .listMembership(let listId, let membershipId) = selectedAppearanceIdentity,
+          listId == selectedListId
+        else { return nil }
+        return membershipId
+      },
+      set: { identifier in
+        guard let listId = selectedListId, let identifier else {
+          selectedAppearanceIdentity = nil
+          return
+        }
+        selectedAppearanceIdentity = .listMembership(listId: listId, membershipId: identifier)
+      })
+  }
+
+  private func loadSelectedAppearance() async {
+    guard let identity = selectedAppearanceIdentity else {
+      selectedAppearance = nil
+      isOpeningAppearance = false
+      return
+    }
+    isOpeningAppearance = true
+    let revision = store.changeRevision
+    if selectedAppearance?.appearance != identity { selectedAppearance = nil }
+    let loaded = await store.readAppearance(identity)
+    guard !Task.isCancelled, selectedAppearanceIdentity == identity,
+      store.changeRevision == revision
+    else { return }
+    selectedAppearance = loaded
+    isOpeningAppearance = false
+  }
+
+  @ViewBuilder
+  private var appearanceDetail: some View {
+    if let selectedAppearance, let selectedList {
+      SavedAppearanceDetail(item: selectedAppearance, listName: selectedList.content.name) {
+        selectedItemId = selectedAppearance.source.id
+        selectedSection = .items
+      }
+    } else if isOpeningAppearance {
+      ProgressView("Opening Item")
+    } else if selectedAppearanceIdentity != nil {
+      ContentUnavailableView {
+        Label("List entry unavailable", systemImage: "exclamationmark.triangle")
+      } actions: {
+        Button("Try Again") { Task { await loadSelectedAppearance() } }
+      }
+    } else {
+      ContentUnavailableView("Choose an Item", systemImage: "square.stack")
+    }
   }
 
   private var plannerColumns: some View {
@@ -242,10 +312,28 @@ struct SavedPlannerView: View {
             if listItems.isEmpty {
               ContentUnavailableView("No items", systemImage: "checklist")
             } else {
-              List(listItems) { item in
-                Label(
-                  item.row.title,
-                  systemImage: item.row.effectiveDone == true ? "checkmark.circle.fill" : "circle")
+              List(selection: membershipSelection) {
+                Section {
+                  ForEach(listItems) { item in
+                    SavedMembershipRow(item: item, canChange: store.canCreate) {
+                      guard case .appearance(_, let appearance) = item.row.identity else { return }
+                      Task {
+                        _ = await store.setAppearanceCompletion(
+                          appearance, done: item.row.effectiveDone != true)
+                      }
+                    }
+                  }
+                } header: {
+                  if let done = selectedList.progress.doneCount,
+                    let total = selectedList.progress.totalCount, total > 0
+                  {
+                    ProgressView(value: Double(done), total: Double(total)) {
+                      Text("\(done) of \(total) done")
+                    }
+                    .accessibilityIdentifier("saved.list.progress")
+                    .textCase(nil)
+                  }
+                }
               }
             }
           } else {
@@ -285,15 +373,17 @@ struct SavedPlannerView: View {
       if isItemSection {
         itemDetail
       } else {
-        ContentUnavailableView("Choose an Item", systemImage: "square.stack")
+        appearanceDetail
       }
     }
     .navigationSplitViewStyle(.balanced)
-    #if os(iOS)
-      .onChange(of: selectedListId) { _, identifier in
+    .onChange(of: selectedListId) { _, identifier in
+      selectedAppearanceIdentity = nil
+      selectedAppearance = nil
+      #if os(iOS)
         if identifier != nil { columnVisibility = .doubleColumn }
-      }
-    #endif
+      #endif
+    }
   }
 }
 

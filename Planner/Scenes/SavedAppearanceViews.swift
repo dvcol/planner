@@ -1,0 +1,71 @@
+import PlannerCore
+import SwiftUI
+
+struct SavedMembershipRow: View {
+  let item: SavedPlannerItem
+  let canChange: Bool
+  let toggleCompletion: () -> Void
+
+  var body: some View {
+    HStack {
+      Button(action: toggleCompletion) {
+        Label(
+          completionLabel,
+          systemImage: item.row.effectiveDone == true ? "checkmark.circle.fill" : "circle")
+      }
+      .labelStyle(.iconOnly)
+      .buttonStyle(.plain)
+      .disabled(!canChange || item.row.globalDone == true)
+      .accessibilityValue(item.row.effectiveDone == true ? "Completed" : "To do")
+      .accessibilityIdentifier("saved.appearance.completion.\(item.id.uuidString)")
+      .help(completionLabel)
+      NavigationLink(value: item.id) {
+        Text(item.row.title)
+      }
+      .accessibilityIdentifier("saved.appearance.\(item.id.uuidString)")
+    }
+  }
+
+  private var completionLabel: String {
+    if item.row.globalDone == true { return "Completed globally: \(item.row.title)" }
+    if item.row.effectiveDone == true { return "Mark \(item.row.title) undone in this List" }
+    return "Mark \(item.row.title) done in this List"
+  }
+}
+
+struct SavedAppearanceDetail: View {
+  let item: PlannerAppearanceRead
+  let listName: String
+  let viewItem: () -> Void
+
+  var body: some View {
+    Form {
+      Section {
+        Text(item.content.title).font(.title2).fontWeight(.semibold)
+        Label(
+          item.effectiveDone ? "Completed" : "To do",
+          systemImage: item.effectiveDone ? "checkmark.circle.fill" : "circle")
+        Text("In \(listName)").font(.subheadline).foregroundStyle(.secondary)
+        if let subtitle = item.content.subtitle, !subtitle.isEmpty {
+          Text(subtitle).foregroundStyle(.secondary)
+        }
+      }
+      if let notes = item.content.notes, !notes.isEmpty {
+        Section("Notes") { Text(notes).textSelection(.enabled) }
+      }
+    }
+    .formStyle(.grouped)
+    .navigationTitle(item.content.title)
+    .toolbar {
+      ToolbarItem(placement: .primaryAction) {
+        Menu {
+          Button("View Item", action: viewItem)
+        } label: {
+          Label("Item actions", systemImage: "ellipsis")
+        }
+        .help("Item actions")
+        .accessibilityIdentifier("saved.appearance.actions")
+      }
+    }
+  }
+}

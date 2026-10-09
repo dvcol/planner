@@ -6,7 +6,7 @@ final class SavedListMembershipJourneyTests: XCTestCase {
     continueAfterFailure = false
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
-    application.launch()
+    application.launchSavedPlannerJourney()
     openSection("Items", application: application)
     application.plannerElement("saved.item.new").activateForPlannerJourney()
     let title = application.textFields["saved.item.title"]
@@ -39,9 +39,9 @@ final class SavedListMembershipJourneyTests: XCTestCase {
     candidate.activateForPlannerJourney()
     application.plannerElement("saved.membership.cancel").activateForPlannerJourney()
     application.terminate()
-    application.launch()
+    application.launchSavedPlannerJourney()
     openSection("Lists", application: application)
-    let retained = application.staticTexts["Tokyo Food"].firstMatch
+    let retained = application.savedPlannerListRow("Tokyo Food")
     revealSidebarIfNeeded(application, element: retained)
     XCTAssertTrue(retained.waitForExistence(timeout: 10))
     retained.activateForPlannerJourney()
@@ -52,30 +52,33 @@ final class SavedListMembershipJourneyTests: XCTestCase {
     let confirm = application.plannerElement("saved.membership.add")
     XCTAssertTrue(confirm.isEnabled)
     confirm.activateForPlannerJourney()
-    XCTAssertTrue(candidate.waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Nezu Museum").firstMatch.waitForExistence(timeout: 10))
     XCTAssertFalse(confirm.exists)
     XCTAssertFalse(application.staticTexts["No items"].exists)
-    XCTAssertEqual(application.staticTexts.matching(identifier: "Nezu Museum").count, 1)
+    XCTAssertEqual(application.savedPlannerItemRows("Nezu Museum").count, 1)
 
     addItem.activateForPlannerJourney()
     XCTAssertTrue(candidate.waitForExistence(timeout: 5))
     candidate.activateForPlannerJourney()
     confirm.activateForPlannerJourney()
     XCTAssertFalse(confirm.waitForExistence(timeout: 2))
-    XCTAssertEqual(application.staticTexts.matching(identifier: "Nezu Museum").count, 1)
+    XCTAssertEqual(application.savedPlannerItemRows("Nezu Museum").count, 1)
 
     application.terminate()
-    application.launch()
+    application.launchSavedPlannerJourney()
     openSection("Lists", application: application)
     revealSidebarIfNeeded(application, element: retained)
     XCTAssertTrue(retained.waitForExistence(timeout: 10))
     retained.activateForPlannerJourney()
-    XCTAssertTrue(candidate.waitForExistence(timeout: 10))
-    XCTAssertEqual(application.staticTexts.matching(identifier: "Nezu Museum").count, 1)
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Nezu Museum").firstMatch.waitForExistence(timeout: 10))
+    XCTAssertEqual(application.savedPlannerItemRows("Nezu Museum").count, 1)
     recordScreenshot(application, name: "Saved List with one shared Item after relaunch")
     openSection("Items", application: application)
-    XCTAssertTrue(candidate.waitForExistence(timeout: 10))
-    XCTAssertEqual(application.staticTexts.matching(identifier: "Nezu Museum").count, 1)
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Nezu Museum").firstMatch.waitForExistence(timeout: 10))
+    XCTAssertEqual(application.savedPlannerItemRows("Nezu Museum").count, 1)
   }
 
   private func openSection(_ title: String, application: XCUIApplication) {
