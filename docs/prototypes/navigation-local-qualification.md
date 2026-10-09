@@ -4,7 +4,13 @@ Work for [Navigation prototype](https://github.com/dvcol/planner/issues/14) on `
 
 The latest qualified source and screenshots are in [Useful Item details and roomier referenced Lists](#useful-item-details-and-roomier-referenced-lists). Earlier sections preserve the outcomes and presentation of previous revisions.
 
-The human accepted Q38 A, Q39 B, Q40 A, Q41 A and Q42 A, then accepted Q43 A, Q44 A, Q45 A and Q46 A. The [accepted row decisions](../navigation-prototype-review.md#accepted-review-answers) and [row contract review](../navigation-row-contract-review.md) record the exact declarations and required tests. Rich rows, completion writes, drag-and-drop and provider lookup remain unimplemented. These documentation amendments add no runtime qualification to the seven-journey presentation evidence below.
+The human accepted Q38 A, Q39 B, Q40 A, Q41 A and Q42 A, then accepted Q43 A, Q44 A, Q45 A and Q46 A. The [accepted row decisions](../navigation-prototype-review.md#accepted-review-answers) and [row contract review](../navigation-row-contract-review.md) record the exact declarations and required tests. Native rich rows, completion writes, drag-and-drop and provider lookup remain unimplemented. These documentation amendments add no runtime qualification to the seven-journey presentation evidence below.
+
+## Owned Item row foundation
+
+The [real-store Core row slice](core-local-qualification.md#generation-bound-owned-item-rows) now preserves owned locations/estimates and a fixed query presentation context across moving windows. Two executable red/green pairs establish reopening and stale-generation rejection after another facade archives an Item. Seventeen package store functions and four native row functions pass; generic iOS test bundles compile. The affected MCP regression exposed and then qualified a separate [accepted-socket shutdown fix](mcp-http-qualification.md#accepted-socket-lifecycle-correction).
+
+This is the existing Item-only schema. The full graph, link/schedule selection, native rich-row rendering, completion writes and MCP row wire path remain future slices. The prior seven-journey screenshots qualify their recorded UI source, not the changed Core dependency. Navigation prototype remains open.
 
 ## Starting state and first goal
 

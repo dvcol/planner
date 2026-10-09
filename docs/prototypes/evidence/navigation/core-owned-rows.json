@@ -1,0 +1,149 @@
+{
+  "scope": "Generation-bound owned Item row reads through the real Planner facade",
+  "ownedReadRed": {
+    "executed": 1,
+    "passed": 0,
+    "failed": 1,
+    "suites": 1,
+    "log": "/private/tmp/PlannerCoreOwnedRowRed.log",
+    "failureLines": [
+      "\u2718 Test rowWindowReturnsOwnedMetadataInItsFixedQueryContextAfterReopen() recorded an issue at ItemRowReadTests.swift:52:19: Issue recorded",
+      "\u21b3 The public row reader must return a snapshot window after reopening."
+    ]
+  },
+  "ownedReadGreen": {
+    "executed": 1,
+    "passed": 1,
+    "failed": 0,
+    "suites": 1,
+    "log": "/private/tmp/PlannerCoreOwnedRowGreen.log",
+    "failureLines": []
+  },
+  "staleWindowRed": {
+    "executed": 2,
+    "passed": 1,
+    "failed": 1,
+    "suites": 1,
+    "log": "/private/tmp/PlannerCoreStaleRowsRed.log",
+    "failureLines": [
+      "\u2718 Test anotherWriterInvalidatesTheOldWindowInsteadOfMixingCurrentRows() recorded an issue at ItemRowReadTests.swift:45:19: Issue recorded",
+      "\u21b3 Another writer's archive must invalidate the original row generation."
+    ]
+  },
+  "staleWindowGreen": {
+    "executed": 2,
+    "passed": 2,
+    "failed": 0,
+    "suites": 1,
+    "log": "/private/tmp/PlannerCoreStaleRowsGreen.log",
+    "failureLines": []
+  },
+  "packageQualification": {
+    "executed": 17,
+    "passed": 17,
+    "failed": 0,
+    "suites": 6,
+    "log": "/private/tmp/PlannerCoreOwnedRowsPackageQualification.log",
+    "failureLines": []
+  },
+  "nativeRowQualification": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 4,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791547182.668,
+    "passedTests": 4,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791547176.014,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - PlannerCore",
+    "topInsights": [],
+    "totalTestCount": 4
+  },
+  "nativeAppRegression": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 27,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791547991.32,
+    "passedTests": 21,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791547984.759,
+    "statistics": [
+      {
+        "subtitle": "9 test runs",
+        "title": "3 tests ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [
+      {
+        "category": "Longest Test Runs",
+        "impact": "86% of duration",
+        "text": "1 longest test run with outlier durations exceeding 1.78s (three standard deviations)"
+      }
+    ],
+    "totalTestCount": 21
+  },
+  "nativeMobileBuild": {
+    "result": "TEST BUILD SUCCEEDED",
+    "runtime": false,
+    "log": "/private/tmp/PlannerCoreOwnedRowsSimulatorBuild.log"
+  },
+  "sourceSHA256": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "4ab026c74e8488e9ac50f1ef90d2c57414a55a71708ef507974fd08da695339e",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "f3c8d1d100fda83c19b24da5141a4d47b993a8076a1ccd753b744b327c2d2922",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift": "c045161ffcff2c59a16fea5d8c31eafd6e58ab2f2213ee843b902b16d67c7d3e",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "f7e63bfb4285849ac43b81fc23ec1f39ae410f7abaf4065a67f009652975270a",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemRowReadTests.swift": "1597c7a2480bba06797738d8991d4043fdb35a6c12e7b4f597fc0ee6bb969caa",
+    "Planner/AgentControl/PlannerMCPFailureValue.swift": "901d7bf03e921dbce9f088033b24f4d39f3e7ffd1e96f6e00ebfd7aed5652f14",
+    "Planner/AgentControl/PlannerMCPSourceTool.swift": "efd9289e45f5d71900e60edac44a3f8110643184cc36e714c9165dab7d20b817"
+  },
+  "limitations": [
+    "Existing Item-only store; no links, schedules, contextual appearances or provider I/O.",
+    "MCP row serialization and real native row interaction are not implemented in this slice.",
+    "Cross-process, CloudKit and large-window performance remain unqualified."
+  ]
+}

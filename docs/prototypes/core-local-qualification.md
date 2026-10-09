@@ -74,6 +74,20 @@ This is genuine filesystem I/O at the approved storage configuration boundary. T
 
 Native bundle/log are /private/tmp/PlannerCoreRecoveryObstructionQualification.xcresult and PlannerCoreRecoveryObstructionQualification.log. The affected package regression log is /private/tmp/PlannerCoreRecoveryObstructionPackage.log. Both use the recorded Mac/toolchain and real disposable disk stores. The native command selects only PlannerCoreStoreTests/RecoveryFailureTests; the package command selects PlannerCoreStoreTests. Source/document lint pass.
 
+## Generation-bound owned Item rows
+
+The accepted [Q43–Q46 row contract](../navigation-row-contract-review.md) now has its first real-store read slice. Item queries capture a finite reference instant and valid display timezone once per generation. The caller can supply that presentation context; omitted values use the native current instant/zone. Window reads retain the query's context, count and ordered source identities. They fetch only the requested Item titles, subtitles, estimates, owned locations and completion/archive flags; full notes and field hashes are not part of each row.
+
+The first executable package red failed because the row read was unavailable. Its green reopens the actual disk store and returns Nezu Museum's separately owned Meeting point A, coordinate and 120-minute estimate in the supplied Tokyo context. A second red exposed an old Active query returning an Item another facade had since archived. Binding queries and windows to the latest native SwiftData history token fixes that case: the old generation returns typed staleSnapshot; a fresh query returns only Museum. Query construction and projection check the history token before and after the read. This is two facades on the same local store, not cross-process or CloudKit proof.
+
+Two further functions passed existing implementation on first execution. They verify independent Tokyo/Paris generations, empty and moving windows, Int64.max ranges without overflow, rejection of negative offsets/nonpositive limits, and rejection when a generation is reused through another issued dataset session. Invalid finite-time/timezone inputs return precise paths without invalidating a prior valid query. These are qualification checks, not additional red/green cycles.
+
+[Actual row evidence](evidence/navigation/core-owned-rows.json) retains both package red/green pairs, all seventeen passing store functions, four passing native Xcode row functions and successful generic iOS Simulator test-bundle compilation. Strict Swift formatting and changed-document lint pass. The accepted public Planner facade remains the test boundary; tests use real temporary SwiftData and independent recovery locations.
+
+This slice projects the existing Item-only store. It has no saved links, schedules, memberships or appearances, so previewLink remains null, scheduleSummary is none and localDone is null. It performs no provider I/O. The accepted full graph, schedule priority/additional counts, first non-Maps bookmark, contextual completion, native row interaction, window performance and MCP row serialization still require their own slices. Previous native screenshots describe their recorded source revision; they do not qualify this changed Core dependency.
+
+Row logs are /private/tmp/PlannerCoreOwnedRowRed.log, PlannerCoreOwnedRowGreen.log, PlannerCoreStaleRowsRed.log, PlannerCoreStaleRowsGreen.log and PlannerCoreOwnedRowsPackageQualification.log. Native bundles/logs are /private/tmp/PlannerCoreOwnedRowsNativeQualification.xcresult and PlannerCoreOwnedRowsNativeQualification.log. The simulator build log is /private/tmp/PlannerCoreOwnedRowsSimulatorBuild.log; compilation is not an iOS runtime result.
+
 ## Reproduction
 
 Use unique result-bundle paths on rerun. Scope DEVELOPER_DIR to the accepted Xcode installation.

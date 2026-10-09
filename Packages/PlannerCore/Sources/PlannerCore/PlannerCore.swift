@@ -4,6 +4,11 @@ import SwiftData
 public actor Planner {
   private let configuration: PlannerStorageConfiguration
   private var sessions: [UUID: PlannerDatasetSession] = [:]
+  private struct QueryBinding {
+    let snapshot: PlannerQuerySnapshot
+    let historyToken: DefaultHistoryToken?
+  }
+  private var querySnapshots: [UUID: QueryBinding] = [:]
 
   public init(configuration: PlannerStorageConfiguration) {
     self.configuration = configuration
@@ -187,6 +192,11 @@ public actor Planner {
         let context = ModelContext(container)
         context.autosaveEnabled = false
         switch request {
+        case .rows(let generation, let offset, let limit):
+          return .rows(
+            try readRows(
+              session: session, context: context, generation: generation, offset: offset,
+              limit: limit))
         case .source(let source):
           guard source.kind == .item else {
             throw PlannerFailure(
@@ -213,12 +223,17 @@ public actor Planner {
         context.autosaveEnabled = false
         switch query.request {
         case .items(let itemQuery):
+          let presentation = try
+            (itemQuery.rowPresentation
+            ?? PlannerRowPresentationContext(
+              referenceInstant: Date(), displayTimeZone: TimeZone.current.identifier)).validated()
           switch itemQuery.scope {
           case .global, .inbox: break
           case .list, .itinerary:
             throw PlannerFailure(
               "unavailable", "This Item-only fixture does not implement contextual queries.")
           }
+          let historyToken = try latestHistoryToken(in: context)
           var descriptor = FetchDescriptor<PlannerSchemaV1.Item>()
           descriptor.propertiesToFetch = [\.id, \.title, \.globalDone, \.archived]
           let items = try context.fetch(descriptor).filter { item in
@@ -255,15 +270,81 @@ public actor Planner {
             if comparison != .orderedSame { return comparison == .orderedAscending }
             return first.reference.id.uuidString < second.reference.id.uuidString
           }
-          return .snapshot(
-            PlannerQuerySnapshot(
-              session: query.session, generation: UUID(),
-              rows: sorted.map { .source($0.reference) },
-              matchingCount: Int64(sorted.count)
-            ))
+          let snapshot = PlannerQuerySnapshot(
+            session: query.session, generation: UUID(),
+            rows: sorted.map { .source($0.reference) },
+            matchingCount: Int64(sorted.count), rowPresentation: presentation)
+          guard try latestHistoryToken(in: context) == historyToken else {
+            throw PlannerFailure("readUnavailable", "The store changed while building this query.")
+          }
+          querySnapshots = querySnapshots.filter { $0.value.historyToken == historyToken }
+          querySnapshots[snapshot.generation] = QueryBinding(
+            snapshot: snapshot, historyToken: historyToken)
+          return .snapshot(snapshot)
         }
       }
     } catch { return .failed(failure(error, code: "readUnavailable")) }
+  }
+
+  private func readRows(
+    session: PlannerDatasetSession, context: ModelContext, generation: UUID, offset: Int64,
+    limit: Int64
+  ) throws -> PlannerRowWindow {
+    guard offset >= 0, limit > 0 else {
+      throw PlannerFailure("invalidInput", "Row offset must be nonnegative and limit positive.")
+    }
+    guard let binding = querySnapshots[generation], binding.snapshot.session == session else {
+      throw staleSnapshot(generation)
+    }
+    guard try latestHistoryToken(in: context) == binding.historyToken else {
+      querySnapshots.removeValue(forKey: generation)
+      throw staleSnapshot(generation)
+    }
+    let snapshot = binding.snapshot
+    let identities: [PlannerRowIdentity]
+    if offset >= snapshot.matchingCount {
+      identities = []
+    } else {
+      let count = min(limit, snapshot.matchingCount - offset)
+      identities = Array(snapshot.rows.dropFirst(Int(offset)).prefix(Int(count)))
+    }
+    let rows = try identities.map { identity in
+      switch identity {
+      case .source(let source):
+        let sourceIdentifier = source.id
+        var descriptor = FetchDescriptor<PlannerSchemaV1.Item>(
+          predicate: #Predicate { $0.id == sourceIdentifier })
+        descriptor.fetchLimit = 2
+        descriptor.propertiesToFetch = [
+          \.id, \.title, \.subtitle, \.locationData, \.estimateData, \.globalDone, \.archived,
+        ]
+        let records = try context.fetch(descriptor)
+        guard records.count == 1, let item = records.first else {
+          throw PlannerFailure("readUnavailable", "A snapshot Item is missing or unresolved.")
+        }
+        return try item.rowRead()
+      }
+    }
+    guard try latestHistoryToken(in: context) == binding.historyToken else {
+      querySnapshots.removeValue(forKey: generation)
+      throw staleSnapshot(generation)
+    }
+    return PlannerRowWindow(
+      generation: generation, offset: offset, matchingCount: snapshot.matchingCount,
+      rowPresentation: snapshot.rowPresentation, rows: rows)
+  }
+
+  private func latestHistoryToken(in context: ModelContext) throws -> DefaultHistoryToken? {
+    var descriptor = HistoryDescriptor<DefaultHistoryTransaction>(
+      sortBy: [SortDescriptor(\.transactionIdentifier, order: .reverse)])
+    descriptor.fetchLimit = 1
+    return try context.fetchHistory(descriptor).first?.token
+  }
+
+  private func staleSnapshot(_ generation: UUID) -> PlannerFailure {
+    PlannerFailure(
+      "staleSnapshot", "Run the query again before requesting this row window.",
+      details: .staleSnapshot(requestedGeneration: generation, currentGeneration: nil))
   }
 
   public func operationStatus(session: PlannerDatasetSession, operationId: UUID)
