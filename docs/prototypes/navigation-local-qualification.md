@@ -10,7 +10,7 @@ The human accepted Q38 A, Q39 B, Q40 A, Q41 A and Q42 A, then accepted Q43 A, Q4
 
 The [real-store Core row slice](core-local-qualification.md#generation-bound-owned-item-rows) now preserves owned locations/estimates and a fixed query presentation context across moving windows. Two executable red/green pairs establish reopening and stale-generation rejection after another facade archives an Item. Seventeen package store functions and four native row functions pass; generic iOS test bundles compile. The affected MCP regression exposed and then qualified a separate [accepted-socket shutdown fix](mcp-http-qualification.md#accepted-socket-lifecycle-correction).
 
-This is the existing Item-only schema. The full graph, link/schedule selection, native rich-row rendering, completion writes and MCP row wire path remain future slices. The prior seven-journey screenshots qualify their recorded UI source, not the changed Core dependency. Navigation prototype remains open.
+This is the existing Item-only schema. The Item row wire path is now qualified through [real loopback HTTP](mcp-http-qualification.md#owned-item-row-windows-over-http), including fixed context, owned metadata, malformed-input paths and structured stale-generation failures. The full graph, link/schedule selection, native rich-row rendering and completion writes remain future slices. The prior seven-journey screenshots qualify their recorded UI source, not the changed Core dependency. Navigation prototype remains open.
 
 ## Starting state and first goal
 

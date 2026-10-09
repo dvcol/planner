@@ -5,26 +5,48 @@
 
   enum PlannerMCPSourceTool {
     static let definition = Tool(
-      name: "planner_read", description: "Read a source Item from the local Planner prototype.",
+      name: "planner_read",
+      description:
+        "Read a source Item or a generation-bound Item row window from the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("request")]),
         "properties": .object([
           "formatVersion": .object(["type": .string("integer"), "const": .int(1)]),
           "request": .object([
-            "type": .string("object"), "additionalProperties": .bool(false),
-            "required": .array([.string("kind"), .string("source")]),
-            "properties": .object([
-              "kind": .object(["type": .string("string"), "const": .string("source")]),
-              "source": .object([
+            "oneOf": .array([
+              .object([
                 "type": .string("object"), "additionalProperties": .bool(false),
-                "required": .array([.string("kind"), .string("id")]),
+                "required": .array([.string("kind"), .string("source")]),
                 "properties": .object([
-                  "kind": .object(["type": .string("string"), "const": .string("item")]),
-                  "id": .object(["type": .string("string"), "format": .string("uuid")]),
+                  "kind": .object(["type": .string("string"), "const": .string("source")]),
+                  "source": .object([
+                    "type": .string("object"), "additionalProperties": .bool(false),
+                    "required": .array([.string("kind"), .string("id")]),
+                    "properties": .object([
+                      "kind": .object(["type": .string("string"), "const": .string("item")]),
+                      "id": .object(["type": .string("string"), "format": .string("uuid")]),
+                    ]),
+                  ]),
                 ]),
               ]),
-            ]),
+              .object([
+                "type": .string("object"), "additionalProperties": .bool(false),
+                "required": .array([
+                  .string("kind"), .string("generation"), .string("offset"), .string("limit"),
+                ]),
+                "properties": .object([
+                  "kind": .object(["type": .string("string"), "const": .string("rows")]),
+                  "generation": .object(["type": .string("string"), "format": .string("uuid")]),
+                  "offset": .object([
+                    "type": .string("string"), "pattern": .string("^(0|[1-9][0-9]*)$"),
+                  ]),
+                  "limit": .object([
+                    "type": .string("string"), "pattern": .string("^[1-9][0-9]*$"),
+                  ]),
+                ]),
+              ]),
+            ])
           ]),
         ]),
       ]),
@@ -48,32 +70,14 @@
             code: "unsupportedVersion", path: "/formatVersion",
             message: "Expected adapter format version 1.")
         }
-        let request = try object(arguments["request"], keys: ["kind", "source"], path: "/request")
-        guard request["kind"] == .string("source") else {
-          throw AdmissionFailure(
-            code: "invalidInput", path: "/request/kind",
-            message: "This prototype supports source reads.")
-        }
-        let source = try object(request["source"], keys: ["kind", "id"], path: "/request/source")
-        guard source["kind"] == .string("item") else {
-          throw AdmissionFailure(
-            code: "invalidInput", path: "/request/source/kind",
-            message: "This prototype supports Item sources.")
-        }
-        guard case .string(let spelling) = source["id"], let identity = UUID(uuidString: spelling)
-        else {
-          throw AdmissionFailure(
-            code: "invalidInput", path: "/request/source/id",
-            message: "Expected a Planner Item UUID.")
-        }
-        let result = await planner.read(
-          session: session, request: .source(PlannerEntityReference(kind: .item, id: identity)))
+        let request = try readRequest(arguments["request"])
+        let result = await planner.read(session: session, request: request)
+        let structured: Value
         switch result {
-        case .rows:
-          return failure(
-            code: "unavailable", message: "The source request returned an unexpected row window.")
+        case .rows(let window):
+          structured = PlannerMCPRowValue.window(window)
         case .failed(let reason):
-          return failure(code: reason.code, message: reason.message, path: reason.propertyPath)
+          return failure(reason)
         case .source(let read):
           guard read.content.links.isEmpty, read.content.categoryIds.isEmpty,
             read.content.tagIds.isEmpty,
@@ -83,18 +87,16 @@
               code: "unavailable",
               message: "This first read slice does not yet encode source associations.")
           }
-          let structured = Value.object([
+          structured = Value.object([
             "formatVersion": .int(1), "kind": .string("source"), "value": sourceValue(read),
           ])
-          let serialized = try JSONEncoder().encode(structured)
-          return CallTool.Result(
-            content: [
-              .text(text: String(decoding: serialized, as: UTF8.self), annotations: nil, _meta: nil)
-            ],
-            structuredContent: Optional.some(structured),
-            isError: false
-          )
         }
+        let serialized = try JSONEncoder().encode(structured)
+        return CallTool.Result(
+          content: [
+            .text(text: String(decoding: serialized, as: UTF8.self), annotations: nil, _meta: nil)
+          ],
+          structuredContent: Optional.some(structured), isError: false)
       } catch let reason as AdmissionFailure {
         return failure(code: reason.code, message: reason.message, path: reason.path)
       } catch {
@@ -103,16 +105,73 @@
     }
 
     static func failure(code: String, message: String, path: String? = nil) -> CallTool.Result {
+      failure(
+        .object([
+          "code": .string(code), "propertyPath": path.map(Value.string) ?? .null,
+          "message": .string(message), "details": .null,
+        ]), message: message)
+    }
+
+    static func failure(_ reason: PlannerFailure) -> CallTool.Result {
+      failure(PlannerMCPFailureValue.encode(reason), message: reason.message)
+    }
+
+    private static func failure(_ reason: Value, message: String) -> CallTool.Result {
       CallTool.Result(
         content: [.text(text: message, annotations: nil, _meta: nil)],
         structuredContent: .object([
           "formatVersion": .int(1), "state": .string("failed"),
-          "reason": .object([
-            "code": .string(code), "propertyPath": path.map(Value.string) ?? .null,
-            "message": .string(message), "details": .null,
-          ]),
-        ]), isError: true
-      )
+          "reason": reason,
+        ]), isError: true)
+    }
+
+    private static func readRequest(_ value: Value?) throws -> PlannerReadRequest {
+      guard case .object(let fields) = value else {
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/request", message: "Expected an object.")
+      }
+      switch fields["kind"] {
+      case .string("source"):
+        let request = try object(value, keys: ["kind", "source"], path: "/request")
+        let source = try object(request["source"], keys: ["kind", "id"], path: "/request/source")
+        guard source["kind"] == .string("item") else {
+          throw AdmissionFailure(
+            code: "invalidInput", path: "/request/source/kind",
+            message: "This prototype supports Item sources.")
+        }
+        return .source(
+          PlannerEntityReference(
+            kind: .item, id: try identifier(source["id"], path: "/request/source/id")))
+      case .string("rows"):
+        let request = try object(
+          value, keys: ["kind", "generation", "offset", "limit"], path: "/request")
+        return .rows(
+          generation: try identifier(request["generation"], path: "/request/generation"),
+          offset: try count(request["offset"], minimum: 0, path: "/request/offset"),
+          limit: try count(request["limit"], minimum: 1, path: "/request/limit"))
+      default:
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/request/kind", message: "Expected source or rows.")
+      }
+    }
+
+    private static func identifier(_ value: Value?, path: String) throws -> UUID {
+      guard case .string(let spelling) = value, let identity = UUID(uuidString: spelling) else {
+        throw AdmissionFailure(
+          code: "invalidInput", path: path, message: "Expected a Planner UUID.")
+      }
+      return identity
+    }
+
+    private static func count(_ value: Value?, minimum: Int64, path: String) throws -> Int64 {
+      guard case .string(let spelling) = value, let count = Int64(spelling),
+        String(count) == spelling, count >= minimum
+      else {
+        throw AdmissionFailure(
+          code: "invalidInput", path: path,
+          message: "Expected a canonical decimal Int64 with minimum \(minimum).")
+      }
+      return count
     }
 
     private static func object(_ value: Value?, keys: Set<String>, path: String) throws -> [String:
@@ -169,7 +228,7 @@
       ])
     }
 
-    private static func locationValue(_ location: PlannerOwnedLocation) -> Value {
+    static func locationValue(_ location: PlannerOwnedLocation) -> Value {
       .object([
         "displayName": location.displayName.map(Value.string) ?? .null,
         "formattedAddress": location.formattedAddress.map(Value.string) ?? .null,
