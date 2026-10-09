@@ -6,6 +6,11 @@ private enum NavigationPrototypeLayout: String, CaseIterable {
   case map = "Map alongside list"
 }
 
+private enum PrototypeSidebarSelection: Hashable {
+  case section(String)
+  case source(UUID)
+}
+
 /// Native layout experiment. All displayed data comes from the fixed, read-only fixture.
 struct NavigationPrototypeView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -17,6 +22,7 @@ struct NavigationPrototypeView: View {
   @State private var selectedContainerId: UUID?
   @State private var selectedAppearance: NavigationPrototypeFixture.Appearance?
   @State private var selectedSourceId: UUID?
+  @State private var sidebarSelection: PrototypeSidebarSelection? = .section("list")
 
   var body: some View {
     Group {
@@ -136,40 +142,9 @@ struct NavigationPrototypeView: View {
 
   private func splitLayout(_ fixture: NavigationPrototypeFixture) -> some View {
     NavigationSplitView(columnVisibility: $columnVisibility) {
-      List {
-        Section("Planner") {
-          Button("Lists", systemImage: "list.bullet") { selectSection("list") }
-            .accessibilityIdentifier("nav.lists")
-          Button("Items", systemImage: "square.stack") { selectSection("item") }
-            .accessibilityIdentifier("nav.items")
-          Button("Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath") {
-            selectSection("itinerary")
-          }
-          .accessibilityIdentifier("nav.itineraries")
-        }
-        Section(sectionTitle) {
-          ForEach(fixture.sources.filter { $0.kind == section }) { source in
-            Button {
-              selectedAppearance = nil
-              selectedSourceId = nil
-              selectedContainerId = source.id
-              if source.kind == "item" { selectedSourceId = source.id }
-              #if os(iOS)
-                columnVisibility = .doubleColumn
-              #endif
-            } label: {
-              Label(
-                source.title,
-                systemImage: source.kind == "item" ? "circle" : "list.bullet.rectangle")
-            }
-            .accessibilityIdentifier("\(source.kind).\(source.id.uuidString)")
-          }
-        }
-        fixtureNotice
-        tabletPrototypeControls
-      }
-      .navigationTitle("Planner")
-      .navigationSplitViewColumnWidth(min: 190, ideal: 230)
+      sidebar(fixture)
+        .navigationTitle("Planner")
+        .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
     } content: {
       if let selectedContainerId, let container = fixture.source(selectedContainerId),
         container.kind != "item"
@@ -178,6 +153,8 @@ struct NavigationPrototypeView: View {
           selectedAppearance = appearance
           selectedSourceId = nil
         }
+        .id(container.id)
+        .navigationSplitViewColumnWidth(min: 280, ideal: 340, max: 480)
       } else {
         ContentUnavailableView("Choose a List or Itinerary", systemImage: "list.bullet.rectangle")
       }
@@ -200,6 +177,91 @@ struct NavigationPrototypeView: View {
     .toolbar { prototypeToolbar }
   }
 
+  @ViewBuilder
+  private func sidebar(_ fixture: NavigationPrototypeFixture) -> some View {
+    #if os(macOS)
+      List(selection: $sidebarSelection) {
+        Section("Planner") {
+          NavigationLink(value: PrototypeSidebarSelection.section("list")) {
+            Label("Lists", systemImage: "list.bullet")
+          }
+          .accessibilityIdentifier("nav.lists")
+          NavigationLink(value: PrototypeSidebarSelection.section("item")) {
+            Label("Items", systemImage: "square.stack")
+          }
+          .accessibilityIdentifier("nav.items")
+          NavigationLink(value: PrototypeSidebarSelection.section("itinerary")) {
+            Label("Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+          }
+          .accessibilityIdentifier("nav.itineraries")
+        }
+        Section(sectionTitle) {
+          ForEach(fixture.sources.filter { $0.kind == section }) { source in
+            NavigationLink(value: PrototypeSidebarSelection.source(source.id)) {
+              Label(
+                source.title,
+                systemImage: source.kind == "item" ? "circle" : "list.bullet.rectangle")
+            }
+            .accessibilityIdentifier("\(source.kind).\(source.id.uuidString)")
+          }
+        }
+      }
+      .listStyle(.sidebar)
+      .onChange(of: sidebarSelection) { _, selection in
+        switch selection {
+        case .section(let kind): selectSection(kind)
+        case .source(let sourceId):
+          if let source = fixture.source(sourceId) { selectContainer(source) }
+        case nil: break
+        }
+      }
+      .safeAreaInset(edge: .bottom) {
+        VStack(alignment: .leading, spacing: 4) {
+          Text("Navigation prototype").font(.caption)
+          Text("Read-only Planner data").font(.caption2).foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
+      }
+    #else
+      List {
+        Section("Planner") {
+          Button("Lists", systemImage: "list.bullet") { selectSection("list") }
+            .accessibilityIdentifier("nav.lists")
+          Button("Items", systemImage: "square.stack") { selectSection("item") }
+            .accessibilityIdentifier("nav.items")
+          Button("Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath") {
+            selectSection("itinerary")
+          }
+          .accessibilityIdentifier("nav.itineraries")
+        }
+        Section(sectionTitle) {
+          ForEach(fixture.sources.filter { $0.kind == section }) { source in
+            Button {
+              selectContainer(source)
+            } label: {
+              Label(
+                source.title,
+                systemImage: source.kind == "item" ? "circle" : "list.bullet.rectangle")
+            }
+            .accessibilityIdentifier("\(source.kind).\(source.id.uuidString)")
+          }
+        }
+        fixtureNotice
+        tabletPrototypeControls
+      }
+    #endif
+  }
+
+  private func selectContainer(_ source: NavigationPrototypeFixture.Source) {
+    selectedAppearance = nil
+    selectedSourceId = source.kind == "item" ? source.id : nil
+    selectedContainerId = source.id
+    #if os(iOS)
+      columnVisibility = .doubleColumn
+    #endif
+  }
+
   private var sectionTitle: String {
     switch section {
     case "item": "Items"
@@ -210,6 +272,7 @@ struct NavigationPrototypeView: View {
 
   private func selectSection(_ newSection: String) {
     section = newSection
+    sidebarSelection = .section(newSection)
     selectedContainerId = nil
     selectedAppearance = nil
     selectedSourceId = nil
@@ -243,7 +306,7 @@ struct NavigationPrototypeView: View {
     Section {
       Text("Navigation prototype · Full graph fixture")
         .font(.caption).foregroundStyle(.secondary)
-      Text("Read-only layout review. No changes are saved or synced.")
+      Text("Planner data is read-only. Only local view preferences are saved.")
         .font(.caption).foregroundStyle(.secondary)
     }
   }
@@ -256,79 +319,202 @@ private struct PrototypeContainerView: View {
   var selectAppearance: ((NavigationPrototypeFixture.Appearance) -> Void)?
   @State private var completion = "todo"
   @State private var archive = "active"
+  @State private var selectedAppearanceIdentifier: String?
+  @FocusState private var isItemListFocused: Bool
 
   var body: some View {
-    List {
-      Section {
-        Text(fixture.progress(in: container))
-          .font(.headline)
-        HStack {
-          Menu {
-            Button("Todo") { completion = "todo" }
-            Button("Done") { completion = "done" }
-            Button("All completion states") { completion = "all" }
-          } label: {
-            Label(
-              completion == "all" ? "All completion" : completion.capitalized,
-              systemImage: "checkmark.circle")
-          }
-          .accessibilityIdentifier("filter.completion")
-          Menu {
-            Button("Active") { archive = "active" }
-            Button("Archived") { archive = "archived" }
-            Button("All archive states") { archive = "all" }
-          } label: {
-            Label(archive == "all" ? "All archive" : archive.capitalized, systemImage: "archivebox")
-          }
-          .accessibilityIdentifier("filter.archive")
+    containerList
+      .navigationTitle(container.title)
+      #if os(macOS)
+        .toolbar {
+          ToolbarItemGroup { filterMenus }
         }
+      #endif
+  }
+
+  @ViewBuilder
+  private var containerList: some View {
+    #if os(macOS)
+      List(selection: $selectedAppearanceIdentifier) { containerContents }
+        .listStyle(.inset)
+        .focused($isItemListFocused)
+        .onChange(of: selectedAppearanceIdentifier) { _, identifier in
+          if let appearance = fixture.appearances(in: container).first(where: {
+            $0.id == identifier
+          }) {
+            selectAppearance?(appearance)
+            isItemListFocused = true
+          }
+        }
+    #else
+      List { containerContents }
+    #endif
+  }
+
+  private var containerContents: some View {
+    Group {
+      Section {
+        Text(fixture.progress(in: container)).font(.headline)
+        #if os(iOS)
+          HStack { filterMenus }
+        #endif
       }
       Section("Items") {
-        ForEach(visibleAppearances) { appearance in
-          if let source = fixture.source(appearance.sourceId) {
-            if let selectAppearance {
-              Button {
-                selectAppearance(appearance)
-              } label: {
-                row(source, appearance: appearance)
-              }
-              .accessibilityIdentifier("appearance.\(appearance.id)")
+        if container.kind == "itinerary" {
+          ForEach(fixture.itineraryEntries.filter { $0.itinerary.id == container.id }, id: \.id) {
+            entry in
+            if fixture.source(entry.source.id)?.kind == "list" {
+              PrototypeItineraryListGroup(
+                fixture: fixture, itinerary: container, entry: entry,
+                visibleAppearances: fixture.appearances(in: entry).filter(matchesFilters),
+                showMap: showMap, selectAppearance: selectAppearance)
             } else {
-              NavigationLink {
-                if showMap {
-                  PrototypeMapItemDetail(fixture: fixture, source: source, appearance: appearance)
-                } else {
-                  PrototypeItemDetail(fixture: fixture, source: source, appearance: appearance)
-                }
-              } label: {
-                row(source, appearance: appearance)
-              }
-              .accessibilityIdentifier("appearance.\(appearance.id)")
+              appearanceRows(fixture.appearances(in: entry).filter(matchesFilters))
             }
           }
+        } else {
+          appearanceRows(visibleAppearances)
         }
         if visibleAppearances.isEmpty {
           Text("No matching items").foregroundStyle(.secondary)
         }
       }
     }
-    .navigationTitle(container.title)
-    .id(container.id)
   }
 
-  private var visibleAppearances: [NavigationPrototypeFixture.Appearance] {
-    fixture.appearances(in: container).filter { appearance in
-      guard let source = fixture.source(appearance.sourceId) else { return false }
-      let done = fixture.isDone(appearance)
-      let matchesCompletion = completion == "all" || (completion == "done") == done
-      let matchesArchive = archive == "all" || (archive == "archived") == (source.archived == true)
-      return matchesCompletion && matchesArchive
+  private var filterMenus: some View {
+    Group {
+      Menu {
+        Button("Todo") { completion = "todo" }
+        Button("Done") { completion = "done" }
+        Button("All completion states") { completion = "all" }
+      } label: {
+        Label(
+          completion == "all" ? "All completion" : completion.capitalized,
+          systemImage: "checkmark.circle")
+      }
+      .accessibilityIdentifier("filter.completion")
+      Menu {
+        Button("Active") { archive = "active" }
+        Button("Archived") { archive = "archived" }
+        Button("All archive states") { archive = "all" }
+      } label: {
+        Label(archive == "all" ? "All archive" : archive.capitalized, systemImage: "archivebox")
+      }
+      .accessibilityIdentifier("filter.archive")
     }
   }
 
-  private func row(
-    _ source: NavigationPrototypeFixture.Source, appearance: NavigationPrototypeFixture.Appearance
-  ) -> some View {
+  private var visibleAppearances: [NavigationPrototypeFixture.Appearance] {
+    fixture.appearances(in: container).filter(matchesFilters)
+  }
+
+  private func matchesFilters(_ appearance: NavigationPrototypeFixture.Appearance) -> Bool {
+    guard let source = fixture.source(appearance.sourceId) else { return false }
+    let done = fixture.isDone(appearance)
+    let matchesCompletion = completion == "all" || (completion == "done") == done
+    let matchesArchive = archive == "all" || (archive == "archived") == (source.archived == true)
+    return matchesCompletion && matchesArchive
+  }
+
+  private func appearanceRows(_ appearances: [NavigationPrototypeFixture.Appearance]) -> some View {
+    ForEach(appearances) { appearance in
+      PrototypeAppearanceRow(
+        fixture: fixture, appearance: appearance, showMap: showMap,
+        selectAppearance: selectAppearance
+      )
+      .tag(appearance.id)
+    }
+  }
+}
+
+private struct PrototypeItineraryListGroup: View {
+  let fixture: NavigationPrototypeFixture
+  let entry: NavigationPrototypeFixture.Entry
+  let visibleAppearances: [NavigationPrototypeFixture.Appearance]
+  let showMap: Bool
+  let selectAppearance: ((NavigationPrototypeFixture.Appearance) -> Void)?
+  @AppStorage private var isExpanded: Bool
+
+  init(
+    fixture: NavigationPrototypeFixture, itinerary: NavigationPrototypeFixture.Source,
+    entry: NavigationPrototypeFixture.Entry,
+    visibleAppearances: [NavigationPrototypeFixture.Appearance], showMap: Bool,
+    selectAppearance: ((NavigationPrototypeFixture.Appearance) -> Void)?
+  ) {
+    self.fixture = fixture
+    self.entry = entry
+    self.visibleAppearances = visibleAppearances
+    self.showMap = showMap
+    self.selectAppearance = selectAppearance
+    _isExpanded = AppStorage(
+      wrappedValue: true,
+      "prototype.navigation.expanded.\(itinerary.id.uuidString).\(entry.id.uuidString)")
+  }
+
+  var body: some View {
+    DisclosureGroup(isExpanded: $isExpanded) {
+      ForEach(visibleAppearances) { appearance in
+        PrototypeAppearanceRow(
+          fixture: fixture, appearance: appearance, showMap: showMap,
+          selectAppearance: selectAppearance
+        )
+        .tag(appearance.id)
+      }
+      if visibleAppearances.isEmpty {
+        Text("No matching items").foregroundStyle(.secondary)
+      }
+    } label: {
+      VStack(alignment: .leading, spacing: 4) {
+        Label(
+          fixture.source(entry.source.id)?.title ?? "List", systemImage: "list.bullet.rectangle"
+        )
+        .font(.headline)
+        Text(fixture.progress(in: fixture.appearances(in: entry)))
+          .font(.caption).foregroundStyle(.secondary)
+      }
+      .accessibilityIdentifier("group.\(entry.id.uuidString)")
+    }
+  }
+}
+
+private struct PrototypeAppearanceRow: View {
+  let fixture: NavigationPrototypeFixture
+  let appearance: NavigationPrototypeFixture.Appearance
+  let showMap: Bool
+  let selectAppearance: ((NavigationPrototypeFixture.Appearance) -> Void)?
+
+  var body: some View {
+    if let source = fixture.source(appearance.sourceId) {
+      if let selectAppearance {
+        #if os(macOS)
+          row(source)
+            .accessibilityIdentifier("appearance.\(appearance.id)")
+        #else
+          Button {
+            selectAppearance(appearance)
+          } label: {
+            row(source)
+          }
+          .buttonStyle(.plain)
+          .accessibilityIdentifier("appearance.\(appearance.id)")
+        #endif
+      } else {
+        NavigationLink {
+          if showMap {
+            PrototypeMapItemDetail(fixture: fixture, source: source, appearance: appearance)
+          } else {
+            PrototypeItemDetail(fixture: fixture, source: source, appearance: appearance)
+          }
+        } label: {
+          row(source)
+        }
+        .accessibilityIdentifier("appearance.\(appearance.id)")
+      }
+    }
+  }
+
+  private func row(_ source: NavigationPrototypeFixture.Source) -> some View {
     HStack {
       Image(systemName: fixture.isDone(appearance) ? "checkmark.circle.fill" : "circle")
       Text(source.title)
@@ -336,6 +522,8 @@ private struct PrototypeContainerView: View {
         Image(systemName: "archivebox").accessibilityLabel("Archived")
       }
     }
+    .padding(.vertical, 4)
+    .accessibilityElement(children: .combine)
   }
 }
 
@@ -354,7 +542,9 @@ struct PrototypeItemDetail: View {
           Text("Local: \(appearance.localDone ? "Done" : "Todo")")
           Text("Effective: \(fixture.isDone(appearance) ? "Done" : "Todo")")
         }
-        if let notes = source.content.notes { Text(notes) }
+      }
+      if let notes = source.content.notes {
+        Section("Notes") { Text(notes).textSelection(.enabled) }
       }
       if appearance != nil {
         Section {
@@ -374,6 +564,9 @@ struct PrototypeItemDetail: View {
         }
       }
     }
+    .formStyle(.grouped)
+    .frame(maxWidth: 760)
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     .navigationTitle(source.title)
   }
 

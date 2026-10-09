@@ -1,0 +1,52 @@
+{
+  "devicesAndConfigurations": [
+    {
+      "device": {
+        "architecture": "arm64",
+        "modelName": "MacBook Pro",
+        "osBuildNumber": "26A434",
+        "osVersion": "27.0.1",
+        "platform": "macOS"
+      },
+      "expectedFailures": 0,
+      "failedTests": 2,
+      "passedTests": 3,
+      "skippedTests": 0,
+      "testPlanConfiguration": {
+        "configurationId": "1",
+        "configurationName": "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+  "expectedFailures": 0,
+  "failedTests": 2,
+  "finishTime": 1791536284.842,
+  "passedTests": 3,
+  "result": "Failed",
+  "runtimeWarnings": [],
+  "skippedTests": 0,
+  "startTime": 1791536214.27,
+  "statistics": [],
+  "testFailures": [
+    {
+      "failureText": "XCTAssertTrue failed",
+      "targetName": "PlannerNavigationUITests",
+      "testIdentifier": 3,
+      "testIdentifierString": "NavigationJourneyTests/testItineraryListCollapsePreservesProgressAndSurvivesRelaunch()",
+      "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/NavigationJourneyTests/testItineraryListCollapsePreservesProgressAndSurvivesRelaunch",
+      "testName": "testItineraryListCollapsePreservesProgressAndSurvivesRelaunch()"
+    },
+    {
+      "failureText": "XCTAssertTrue failed",
+      "targetName": "PlannerNavigationUITests",
+      "testIdentifier": 4,
+      "testIdentifierString": "NavigationJourneyTests/testListAppearanceKeepsItsIdentityWhenOpeningTheSourceItem()",
+      "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/NavigationJourneyTests/testListAppearanceKeepsItsIdentityWhenOpeningTheSourceItem",
+      "testName": "testListAppearanceKeepsItsIdentityWhenOpeningTheSourceItem()"
+    }
+  ],
+  "title": "Test - PlannerNavigation",
+  "topInsights": [],
+  "totalTestCount": 5
+}

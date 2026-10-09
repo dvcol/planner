@@ -63,6 +63,7 @@ struct PrototypeMapItemDetail: View {
           .toolbar {
             ToolbarItem(placement: .cancellationAction) {
               Button("Close") { showDetails = false }
+                .accessibilityIdentifier("map.details.close")
             }
           }
       }

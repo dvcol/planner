@@ -1,0 +1,22 @@
+{
+  "baseCommit": "5247cd6cd3c857ff50b59ee4674bd4879407fb2d",
+  "purpose": "Native UI composition and Q36/Q37 disclosure groups. Read-only Planner data; local presentation preferences persist.",
+  "files": {
+    "Planner/NavigationPrototype/NavigationPrototypeFixture.swift": "22b271916c2c8cfd9b7c0eb1405c526ac4be0cdd4746e9d50424502d24e9b060",
+    "Planner/NavigationPrototype/NavigationPrototypeView.swift": "e83998e7ce7fc20ed0bcee464191e80302cc1117ee84ce3bd16daeb82ffdf5a0",
+    "Planner/NavigationPrototype/PrototypeMapItemDetail.swift": "a248adebd441bc2d0ae421b209f6bafcd16192fd7dcbd51fcb59906c3e2e3522",
+    "Planner/PlannerApp.swift": "0de0bc63054a60f7b207231d9124fa7ab42ece9c2fa76bb164799b7056f307b7",
+    "PlannerNavigationUITests/NavigationJourneyTests.swift": "595905ed321bf7410c1dc4e43a41e01e5342c70055028d96730faad94e36deb5",
+    "PlannerNavigationUITests/MapNavigationJourneyTests.swift": "632a265bf13eb4405eaf6dee12f315b4a64df451a25cb72e8cce9ba4ce5058d4",
+    "PlannerNavigationUITests/NativeNavigationElements.swift": "aa13ab01eaf5c924c2a21431342695841658afd30a6b4888ba89545a534c4c7a",
+    "Planner.xcodeproj/project.pbxproj": "43f16f38ddc9ce2877cce20e93294de13df1cf7661bcf5cf309e2330a29e78f7",
+    "Planner.xcodeproj/xcshareddata/xcschemes/PlannerNavigation.xcscheme": "9f45da3b7f9406959e89caf86d79a25c975b1d6ac5b5caed8244913198b78be3",
+    "Configuration/Planner.xcconfig": "b7a614c95c420d23b7d0da086bd30e660744abf66e3726a88ce421fe38ec0372",
+    "docs/fixtures/portable-backup-v1.json": "6496ba36622f06f37b8fc11a9f5e00999e9c145cefbeed721fefce6fa20097ba"
+  },
+  "commands": {
+    "phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,name=iPhone 18 Pro' -derivedDataPath /private/tmp/PlannerNavigationNativeRevision -onlyUsePackageVersionsFromResolvedFile -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNavigationNativePhoneComplete.xcresult test",
+    "tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,name=iPad Air 11-inch (M4)' -derivedDataPath /private/tmp/PlannerNavigationNativeTabletRevision -onlyUsePackageVersionsFromResolvedFile -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNavigationNativeTabletComplete.xcresult test",
+    "mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationNativeMacRevision -onlyUsePackageVersionsFromResolvedFile -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -parallel-testing-enabled NO -test-timeouts-enabled YES -default-test-execution-time-allowance 90 -maximum-test-execution-time-allowance 90 -resultBundlePath /private/tmp/PlannerNavigationNativeMacComplete.xcresult test"
+  }
+}

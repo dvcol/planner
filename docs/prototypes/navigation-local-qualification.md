@@ -76,7 +76,7 @@ Raw current UI bundles are `/private/tmp/PlannerNavigationThreeJourneysPhone.xcr
 
 MapKit uses Apple's [native Map and Annotation API](https://developer.apple.com/documentation/mapkit/map). Fixture location values use the existing shared PlannerCore owned-location type. No additional package, provider enrichment, location permission or Calendar export is introduced.
 
-Q36 is accepted: live List entries appear as named expandable groups, initially expanded, with direct Item entries kept separate. Group progress uses its child appearances in this itinerary; source List completion remains independent. Collapse changes visibility only. The user also requires native/pre-made components whenever available and modern minimalist Liquid Glass, with a possible subtle outline or tint to distinguish groups. These screenshots and tests show the earlier flat presentation. Grouped rendering, styling, collapse-state memory and its native accessibility have not yet been implemented or qualified; final layouts remain subject to actual human review.
+Q36 is accepted: live List entries appear as named expandable groups, initially expanded, with direct Item entries kept separate. Group progress uses its child appearances in this itinerary; source List completion remains independent. Collapse changes visibility only. Q37 remembers expansion per device and itinerary/List-entry identity across relaunches. The user requires native/pre-made components and modern minimalist Liquid Glass, with a possible subtle outline or tint to distinguish groups. The screenshots above show the earlier flat presentation. The [native component revision below](#native-component-revision-and-live-list-groups) records the implemented groups and actual evidence; final layouts remain subject to human review.
 
 ## Expanded appearance identity correction
 
@@ -109,6 +109,39 @@ The clean iPad summary retains four runtime warnings about declaring all support
 `./scripts/navigation-prototype.sh phone` builds, installs and launches the app in the simulator runtime and returns zero. Its initial attempt passed those steps but failed while opening Simulator by name. The expected bundled Simulator UI app is also absent in this selected Xcode bundle. The launcher now opens that app when present and otherwise explicitly reports successful runtime launch with unavailable GUI. It does not conceal a failed build, installation or runtime launch.
 
 [Launcher evidence](evidence/navigation/launcher-phone.json) records the exact command, script hash and observed UI limit. Raw attempts remain `/private/tmp/PlannerNavigationLauncherPhone.log`, `/private/tmp/PlannerNavigationLauncherPhoneFixed.log` and `/private/tmp/PlannerNavigationLauncherPhoneRuntime.log`. The shell syntax passes. The tablet and Mac launcher variants were not rerun end to end; their equivalent native build/test or process-launch outcomes above remain the evidence for those paths.
+
+## Native component revision and live List groups
+
+The user's Mac review showed raised navigation buttons and a small detail form centered in a large empty column. The app already used native SwiftUI components, but their composition failed the intended Mac presentation. The revision uses native sidebar selection and NavigationLinks, selectable Item rows, bounded split-column widths, window toolbar filter menus and a grouped Form anchored at the top of its detail column. Notes and prototype identity inspection have separate system-grouped sections. The Mac scene supplies native SidebarCommands and a default size for new windows; existing window restoration can retain its earlier size.
+
+The user asked for inspiration from Reminders, Notes and Calendar. Apple's [Reminders sidebar guidance](https://support.apple.com/en-sg/guide/reminders/remnd854fc47/mac) and [Notes three-column presentation](https://support.apple.com/guide/notes/view-your-notes-apd8b73d28be/mac) inform the composition. [Explore SwiftUI](https://exploreswiftui.com/) supplies visual component examples. The implementation uses the installed native SDK, with no added UI dependency or custom glass content cards. It preserves the accepted Planner domain behavior.
+
+Native DisclosureGroup presents each live List entry, with all child appearances in its itinerary progress. AppStorage remembers its expansion locally by itinerary and entry IDs; new preferences default to expanded. Planner content remains read-only. A collapsed Tokyo Food still shows 0/2 and leaves direct Nezu Museum visible; Tokyo Weekend remains 0/3. Expansion restores entry 452/membership 401 with its own Todo state, independent of standalone membership 401 Done. These preferences sit outside the backup/domain records; full native backup integration is still a later gate.
+
+The public UI journey [first failed](evidence/navigation/native-group-red.json) because the group was absent, then [passed](evidence/navigation/native-group-green.json) after rendering, disclosure-header identification and relaunch memory were implemented. An intermediate accessibility probe put the identifier on the whole mobile DisclosureGroup, hiding the child's distinct identifier; assigning it only to the header preserved both addresses. Native Mac disclosure triangles and combined header text require platform-appropriate public UI queries.
+
+Mac automation now executes. Earlier shared touch-tap actions did not activate Mac controls; the test adapter now uses native mouse clicks and appropriate element roles. A subsequent [five-journey run](evidence/navigation/native-keyboard-red.json) passed three and failed two: keyboard selection lost focus, and the group-progress probe assumed separate static text. Keeping native List focus after selection and observing the combined accessible header produced [two focused passing journeys](evidence/navigation/native-focus-green.json). The keyboard journey selects archived appearance 402 with Down, then returns to 401 with Up, retaining their independent local states. Sheet Close has a distinct public identifier so the test cannot choose a window/menu Close action.
+
+All five affected UI journeys now pass against the [same final source hashes](evidence/navigation/native-ui-source.json), with zero failures or skips:
+
+| Destination | Counts | Results |
+| --- | --- | --- |
+| iPhone 18 Pro simulator, portrait | 5/5 | [Phone](evidence/navigation/native-phone.json) |
+| iPad Air 11-inch M4 simulator, portrait | 5/5 | [iPad](evidence/navigation/native-tablet.json) |
+| Native arm64 Mac | 5/5, including arrow-key selection | [Mac](evidence/navigation/native-mac.json) |
+
+| Actual native presentation | Evidence |
+| --- | --- |
+| Mac library, selected appearance and top-aligned detail | [Mac library](evidence/navigation/layouts/mac-native-library.png) |
+| Mac live List expanded and collapsed | [Expanded](evidence/navigation/layouts/mac-native-groups.png), [collapsed](evidence/navigation/layouts/mac-native-group-collapsed.png) |
+| Mac itinerary-first and selected-appearance map comparisons | [Planning](evidence/navigation/layouts/mac-native-planning.png), [map](evidence/navigation/layouts/mac-native-map.png) |
+| Live List after relaunch on phone and iPad | [Phone](evidence/navigation/layouts/phone-live-list-groups.png), [iPad](evidence/navigation/layouts/tablet-live-list-groups.png) |
+
+Raw final bundles are `/private/tmp/PlannerNavigationNativePhoneComplete.xcresult`, `/private/tmp/PlannerNavigationNativeTabletComplete.xcresult` and `/private/tmp/PlannerNavigationNativeMacComplete.xcresult`. Use the existing focused scheme/command above without `-only-testing`, and the corresponding platform destination/derived-data directory. Mac uses native mouse actions and its window-scoped screenshots. Strict Swift format lint and affected app/UI-runner compilation pass. No unit tests were added for private fixture projection or styling; these behaviors use Q34's accepted public native UI seam. Full-graph Core/store tests remain separate obligations.
+
+The [source manifest](evidence/navigation/native-ui-source.json) records the exact final commands. Use a fresh result-bundle path when repeating them. `./scripts/navigation-prototype.sh mac` also builds and opens the revision, returns zero, and its compiled standalone process is confirmed running. [Mac launcher evidence](evidence/navigation/native-mac-launcher.json) records that outcome and script hash. Raw launcher output is `/private/tmp/PlannerNavigationNativeMacLauncher.log`.
+
+The earlier Mac automation startup failure remains historical evidence, superseded for these five executed journeys. These checks establish selection, disclosure memory, contextual identity and navigation, including the stated Mac arrow-key journey. They do not establish every keyboard shortcut, VoiceOver, Dynamic Type, resizing/rotation, the physical performance gate, durable Planner writes, Share or CloudKit. Native composition and any additional group border/tint still require the user's actual layout review.
 
 ## Remaining gates
 
