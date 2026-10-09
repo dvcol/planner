@@ -1,0 +1,146 @@
+{
+  "scope": "Real loopback HTTP same-integer-ID Item source reads through pinned official SDK and real Core store",
+  "coreFixtureCommit": "d402f9e",
+  "red": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "passedTests": 0,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 1,
+    "finishTime": 1791510732.918,
+    "passedTests": 0,
+    "result": "Failed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791510717.662,
+    "statistics": [],
+    "testFailures": [
+      {
+        "failureText": "Expectation failed: envelope[\"error\"] == nil\nenvelope[\"error\"] \u2192 {\n    code = \"-32601\";\n    data =     {\n        detail = \"Unknown method: tools/call\";\n    };\n    message = \"Method not found: Unknown method: tools/call\";\n}",
+        "targetName": "PlannerMCPTests",
+        "testIdentifier": 1,
+        "testIdentifierString": "SourceRoutingTests/concurrentSameIdentifierReadsReturnTheirOwnHotelAndMuseum()",
+        "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/SourceRoutingTests/concurrentSameIdentifierReadsReturnTheirOwnHotelAndMuseum()",
+        "testName": "concurrentSameIdentifierReadsReturnTheirOwnHotelAndMuseum()"
+      }
+    ],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 1
+  },
+  "green": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 17,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791510909.512,
+    "passedTests": 14,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791510902.238,
+    "statistics": [
+      {
+        "subtitle": "4 test runs",
+        "title": "1 test ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 14
+  },
+  "final": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 17,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791511456.086,
+    "passedTests": 14,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791511450.806,
+    "statistics": [
+      {
+        "subtitle": "4 test runs",
+        "title": "1 test ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 14
+  },
+  "nativeMobileBuild": {
+    "result": "BUILD SUCCEEDED",
+    "destination": "generic/platform=iOS Simulator",
+    "runtime": false,
+    "log": "/private/tmp/PlannerMCPSourceReadMobileBuild.log"
+  },
+  "limitations": [
+    "Unsigned disposable fixture, not native Enable/Stop UI or signed Keychain/App Group reader.",
+    "Not four selected clients, client overlap, lock/sleep/quit or load proof.",
+    "Only Item source read is exposed; execute/query/status and other command/read variants remain future adapter work.",
+    "Mixed integer/string request IDs are qualified for ping only, not yet for source reads."
+  ]
+}
