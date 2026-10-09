@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create and edit Items and Lists, complete/reopen Items or exact List appearances, archive/unarchive Items and Lists, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
+        "Create and edit Items and Lists, add live Item references to Lists, complete/reopen Items or exact List appearances, archive/unarchive Items and Lists, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -16,7 +16,8 @@
           "operationId": .object(["type": .string("string"), "format": .string("uuid")]),
           "command": .object([
             "oneOf": .array([
-              creationSchema, listCreationSchema, editSchema, listEditSchema, archiveSchema,
+              creationSchema, listCreationSchema, membershipCreationSchema, editSchema,
+              listEditSchema, archiveSchema,
               completionSchema,
               scheduleCreationSchema,
               scheduleEditSchema, scheduleZoneSchema, scheduleRemovalSchema,
@@ -111,6 +112,41 @@
         "content": .object([
           "type": .string("object"), "additionalProperties": .bool(false),
           "required": .array([.string("name")]), "properties": .object(listContentProperties),
+        ]),
+      ]),
+    ])
+
+    private static let membershipCreationSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([
+        .string("type"), .string("itemId"), .string("listId"), .string("placement"),
+      ]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("addMembership")]),
+        "itemId": .object(["type": .string("string"), "format": .string("uuid")]),
+        "listId": .object(["type": .string("string"), "format": .string("uuid")]),
+        "placement": .object([
+          "oneOf": .array([
+            .object([
+              "type": .string("object"), "additionalProperties": .bool(false),
+              "required": .array([.string("kind")]),
+              "properties": .object([
+                "kind": .object([
+                  "type": .string("string"), "enum": .array([.string("first"), .string("last")]),
+                ])
+              ]),
+            ]),
+            .object([
+              "type": .string("object"), "additionalProperties": .bool(false),
+              "required": .array([.string("kind"), .string("associationId")]),
+              "properties": .object([
+                "kind": .object([
+                  "type": .string("string"), "enum": .array([.string("before"), .string("after")]),
+                ]),
+                "associationId": .object(["type": .string("string"), "format": .string("uuid")]),
+              ]),
+            ]),
+          ])
         ]),
       ]),
     ])
@@ -376,6 +412,7 @@
         switch commandType {
         case "createItem": command = try creationCommand(arguments["command"])
         case "createList": command = try listCreationCommand(arguments["command"])
+        case "addMembership": command = try membershipCreationCommand(arguments["command"])
         case "editList": command = try listEditCommand(arguments["command"])
         case "editItem": command = try editCommand(arguments["command"])
         case "setArchive": command = try archiveCommand(arguments["command"])
@@ -424,6 +461,52 @@
           color: color,
           iconName: try nullableText(
             content["iconName"] ?? .null, path: "/command/content/iconName")))
+    }
+
+    private static func membershipCreationCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "itemId", "listId", "placement"],
+        required: ["type", "itemId", "listId", "placement"], path: "/command")
+      guard case .string(let itemSpelling) = command["itemId"],
+        let itemIdentifier = UUID(uuidString: itemSpelling)
+      else {
+        throw AdmissionFailure("invalidInput", "/command/itemId", "Expected an Item UUID.")
+      }
+      guard case .string(let listSpelling) = command["listId"],
+        let listIdentifier = UUID(uuidString: listSpelling)
+      else {
+        throw AdmissionFailure("invalidInput", "/command/listId", "Expected a List UUID.")
+      }
+      let suppliedPlacement = try object(
+        command["placement"], allowed: ["kind", "associationId"], required: ["kind"],
+        path: "/command/placement")
+      let placement: PlannerPlacement
+      switch suppliedPlacement["kind"] {
+      case .string("first"), .string("last"):
+        _ = try object(
+          command["placement"], allowed: ["kind"], required: ["kind"], path: "/command/placement")
+        placement = suppliedPlacement["kind"] == .string("first") ? .first : .last
+      case .string("before"), .string("after"):
+        _ = try object(
+          command["placement"], allowed: ["kind", "associationId"],
+          required: ["kind", "associationId"], path: "/command/placement")
+        guard case .string(let associationSpelling) = suppliedPlacement["associationId"],
+          let associationIdentifier = UUID(uuidString: associationSpelling)
+        else {
+          throw AdmissionFailure(
+            "invalidInput", "/command/placement/associationId", "Expected a membership UUID.")
+        }
+        if suppliedPlacement["kind"] == .string("before") {
+          placement = .before(associationId: associationIdentifier)
+        } else {
+          placement = .after(associationId: associationIdentifier)
+        }
+      default:
+        throw AdmissionFailure(
+          "invalidInput", "/command/placement/kind",
+          "Expected first, last, before or after placement.")
+      }
+      return .addMembership(itemId: itemIdentifier, listId: listIdentifier, placement: placement)
     }
 
     private static func listEditCommand(_ value: Value?) throws -> PlannerCommand {

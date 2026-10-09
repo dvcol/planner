@@ -1,0 +1,153 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "bdb0040",
+  "seam": "Real authenticated loopback HTTP using official SDK handler; public Core reads, queries, operation execution and independent recovery inspection. No model/database side channel.",
+  "storageSchemaVersion": 7,
+  "portableFormatVersion": 1,
+  "executions": {
+    "ResumedRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerMCPMembershipCreationResumedRed.xcresult",
+      "log": "/private/tmp/PlannerMCPMembershipCreationResumedRed.log",
+      "summary": "/private/tmp/PlannerMCPMembershipCreationResumedRedSummary.json",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests/MembershipCreationRoutingTests\" -resultBundlePath /private/tmp/PlannerMCPMembershipCreationResumedRed.xcresult test",
+      "revisionNote": "One executed test failed at missing addMembership admission.",
+      "testFailures": [
+        {
+          "testName": "membershipAdditionOverHTTPRetainsLiveIdentityOrderLocalCompletionAndReplay()",
+          "failureText": "Expectation failed: first[\"state\"] as? String == \"applied\""
+        }
+      ]
+    },
+    "FirstLastGreen": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerMCPMembershipCreationGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPMembershipCreationGreen.log",
+      "summary": "/private/tmp/PlannerMCPMembershipCreationGreenSummary.json",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests/MembershipCreationRoutingTests\" -resultBundlePath /private/tmp/PlannerMCPMembershipCreationGreen.xcresult test",
+      "revisionNote": "One test passed with first/last admission, retained source/local state and original replay.",
+      "testFailures": []
+    },
+    "EmptyMethodFilter": {
+      "result": "unknown",
+      "totalTestCount": 0,
+      "passedTests": 0,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerMCPMembershipAnchoredRed.xcresult",
+      "log": "/private/tmp/PlannerMCPMembershipAnchoredRed.log",
+      "summary": "/private/tmp/PlannerMCPMembershipAnchoredRedSummary.json",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests/MembershipCreationRoutingTests/anchoredMembershipAdditionIsAdvertisedAndRejectsInvalidRequestsWithoutChangingTheList\" -resultBundlePath /private/tmp/PlannerMCPMembershipAnchoredRed.xcresult test",
+      "revisionNote": "Method-only Swift Testing filter executed zero tests; not a passing qualification.",
+      "testFailures": []
+    },
+    "AnchoredRed": {
+      "result": "Failed",
+      "totalTestCount": 2,
+      "passedTests": 1,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerMCPMembershipAnchoredActualRed.xcresult",
+      "log": "/private/tmp/PlannerMCPMembershipAnchoredActualRed.log",
+      "summary": "/private/tmp/PlannerMCPMembershipAnchoredActualRedSummary.json",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests/MembershipCreationRoutingTests\" -resultBundlePath /private/tmp/PlannerMCPMembershipAnchoredActualRed.xcresult test",
+      "revisionNote": "Two tests executed: first/last passed; anchored admission/schema failed.",
+      "testFailures": [
+        {
+          "testName": "anchoredMembershipAdditionIsAdvertisedAndRejectsInvalidRequestsWithoutChangingTheList()",
+          "failureText": "Expectation failed: added[\"state\"] as? String == \"applied\""
+        }
+      ]
+    },
+    "AnchoredAssertionMismatch": {
+      "result": "Failed",
+      "totalTestCount": 2,
+      "passedTests": 1,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerMCPMembershipAnchoredGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPMembershipAnchoredGreen.log",
+      "summary": "/private/tmp/PlannerMCPMembershipAnchoredGreenSummary.json",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests/MembershipCreationRoutingTests\" -resultBundlePath /private/tmp/PlannerMCPMembershipAnchoredGreen.xcresult test",
+      "revisionNote": "Anchored insertion and schema worked; seven assertions incorrectly used path instead of the established propertyPath field.",
+      "testFailures": [
+        {
+          "testName": "anchoredMembershipAdditionIsAdvertisedAndRejectsInvalidRequestsWithoutChangingTheList()",
+          "failureText": "Expectation failed: reason[\"path\"] as? String == expectedPath"
+        }
+      ]
+    },
+    "Qualification": {
+      "result": "Passed",
+      "totalTestCount": 22,
+      "passedTests": 22,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerMCPMembershipQualification.xcresult",
+      "log": "/private/tmp/PlannerMCPMembershipQualification.log",
+      "summary": "/private/tmp/PlannerMCPMembershipQualificationSummary.json",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests/MembershipCreationRoutingTests\" \"-only-testing:PlannerMCPTests/MembershipRowRoutingTests\" \"-only-testing:PlannerMCPTests/ListRoutingTests\" \"-only-testing:PlannerMCPTests/CommandRoutingTests\" \"-only-testing:PlannerMCPTests/ArchiveRoutingTests\" \"-only-testing:PlannerMCPTests/OperationStatusRoutingTests\" \"-only-testing:PlannerMCPTests/ListCatalogRoutingTests\" \"-only-testing:PlannerMCPTests/SourceRoutingTests\" \"-only-testing:PlannerMCPTests/AllDayScheduleRoutingTests\" -resultBundlePath /private/tmp/PlannerMCPMembershipQualification.xcresult test",
+      "revisionNote": "22 functions in nine affected HTTP suites passed after correcting the response-field assertion.",
+      "testFailures": []
+    }
+  },
+  "qualificationSuiteCount": 9,
+  "sourceSha256": {
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift": "47ca521a5952f01ebf126c64a8a0acba9d22309e0761eeb2dc7231505fba670e",
+    "PlannerMCPTests/MembershipCreationRoutingTests.swift": "4ac6e58222a9a63f5d7279314fecd134833b03fca8035c6407ce861d97412639"
+  },
+  "earlierSourceSnapshots": {
+    "ResumedRed": {
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift": "75c1869810f773988b1e39e7573b95186c4e04b7034e41adc028fd78b8c46f74",
+      "PlannerMCPTests/MembershipCreationRoutingTests.swift": "87c1e647c71a52b082c4d78aafd2c10c198e7e89309d7001eea4e97281b80c30"
+    },
+    "FirstLastGreen": {
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift": "55c5bcd327195b885ea5df3bdc8cde9c0925159485834cc201aba0aac2509ae7",
+      "PlannerMCPTests/MembershipCreationRoutingTests.swift": "87c1e647c71a52b082c4d78aafd2c10c198e7e89309d7001eea4e97281b80c30"
+    },
+    "AnchoredRed": {
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift": "55c5bcd327195b885ea5df3bdc8cde9c0925159485834cc201aba0aac2509ae7",
+      "PlannerMCPTests/MembershipCreationRoutingTests.swift": "178acde37e2002d25c4b4624dc10e709c6215b33ff46a65a4920f0fc2f347180"
+    },
+    "BeforeAssertionCorrection": {
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift": "47ca521a5952f01ebf126c64a8a0acba9d22309e0761eeb2dc7231505fba670e",
+      "PlannerMCPTests/MembershipCreationRoutingTests.swift": "178acde37e2002d25c4b4624dc10e709c6215b33ff46a65a4920f0fc2f347180"
+    }
+  },
+  "historicalStartupFailure": "docs/prototypes/evidence/navigation/mcp-membership-startup.json records the earlier zero-execution daemon timeout and denied service restart. This resumed run executed normally; no SIP bypass or new service restart was used.",
+  "checks": {
+    "swiftLint": {
+      "exitCode": 0,
+      "log": "/private/tmp/PlannerMCPMembershipFinalSwiftLint.log"
+    },
+    "markdownLint": {
+      "exitCode": 0,
+      "log": "/private/tmp/PlannerMCPMembershipFinalMarkdownLint.log"
+    },
+    "diffCheck": {
+      "exitCode": 0
+    }
+  },
+  "limits": [
+    "Core and persistence model unchanged; prior Core qualification retains its recorded revision.",
+    "Membership removal/move/reorder over HTTP and contextual bulk review remain open.",
+    "Native drag/reorder and external/cross-window refresh remain open.",
+    "No new actual client, signed Share, credential reader, CloudKit/account, physical capacity/accessibility or ReadLoad qualification.",
+    "Local-only schema 7 / portable format 1; import/export/recovery administration stays manual."
+  ]
+}
