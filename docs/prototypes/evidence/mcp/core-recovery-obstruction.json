@@ -1,0 +1,62 @@
+{
+  "scope": "Real precommit recovery-location I/O failure through public Core execute/read/query/status/recovery APIs",
+  "summary": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 1,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791515736.97,
+    "passedTests": 1,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791515733.881,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - PlannerCore",
+    "topInsights": [],
+    "totalTestCount": 1
+  },
+  "fault": "After acknowledged Hotel creation, move the entire configured recovery directory to a retained sibling and obstruct its original location with a regular file. Submit Museum creation, then restore the retained directory before reopened public observations.",
+  "observed": [
+    "Museum attempt returns rejected/persistenceFailure with its original operation ID and a nonempty useful message.",
+    "A newly bootstrapped facade reads only Hotel/Original notes, Todo/Active, with unchanged createdAt, updatedAt and field hashes.",
+    "Public query retains exactly one original Item identity. The Museum operation has noReliableEvidence.",
+    "The original Hotel operation retains its complete result and checkpoint. The sole recovery namespace retains that checkpoint and no prepared proposals.",
+    "Public independent snapshot selection retains one original Hotel/Original notes, Todo/Active."
+  ],
+  "packageRegression": {
+    "passedTests": 13,
+    "suites": 5,
+    "log": "/private/tmp/PlannerCoreRecoveryObstructionPackage.log"
+  },
+  "execution": {
+    "resultBundle": "/private/tmp/PlannerCoreRecoveryObstructionQualification.xcresult",
+    "log": "/private/tmp/PlannerCoreRecoveryObstructionQualification.log",
+    "existingImplementationPassedFirstExecutableRun": true,
+    "noBehavioralRedClaimed": true
+  },
+  "limitations": [
+    "The genuine configured-location obstruction prevents recovery access before proposal/commit. It does not qualify a failure in SwiftData save or after successful domain commit.",
+    "No forced termination, prepared-only replay, postcommit applied/incomplete checkpoint, blocked mutation/retry or cross-process writer proof.",
+    "Temporary local-only Item fixture; no signed app/extension, account transition or CloudKit evidence."
+  ]
+}

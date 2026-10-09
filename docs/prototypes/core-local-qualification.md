@@ -66,6 +66,14 @@ A subsequent Unarchive/replay function passes existing implementation on first e
 
 [Actual archive evidence](evidence/mcp/core-archive.json) records red 1, green 11, Unarchive qualification 12 and affected MCP regression 19 functions. The same twelve Core store functions pass through the package across four suites, and the native Core test bundles compile for generic iOS Simulator. Source/document lint pass. Bundles/logs are /private/tmp/PlannerCoreArchiveRed, PlannerCoreArchiveGreen, PlannerCoreUnarchiveReplayQualification and PlannerMCPArchiveCoreRegression with xcresult/log extensions. The fixture starts globally Todo; globally Done, container/reference preservation, real failure/interruption, cross-process and physical CloudKit cases remain unqualified.
 
+## Precommit recovery access failure
+
+[Actual obstruction evidence](evidence/mcp/core-recovery-obstruction.json) records one passing native function and thirteen passing Core package functions across five suites. After saving Hotel with complete independent recovery, the fixture moves the configured recovery directory to a retained sibling and replaces its original location with a regular file. Creating Museum returns rejected/persistenceFailure with a useful message. It then restores the retained directory and opens a fresh facade. Public reads/query discover exactly the original Hotel/Original notes, Todo/Active, with unchanged creation/update dates and field hashes. The failed Museum operation has noReliableEvidence; Hotel's original result/checkpoint stays complete. Native recovery inspection retains that checkpoint, no prepared proposal and the independent original Hotel snapshot.
+
+This is genuine filesystem I/O at the approved storage configuration boundary. The test reads no private filenames or database tables, and adds no production failure callback. Existing implementation passes the first executable run; no red or production change is claimed. This obstruction prevents recovery access before proposal and commit. It does not prove a SwiftData-save failure, prepared-only interruption, postcommit applied/incomplete recovery, blocked mutation/retry or cross-process coordination. Those cases remain required separately.
+
+Native bundle/log are /private/tmp/PlannerCoreRecoveryObstructionQualification.xcresult and PlannerCoreRecoveryObstructionQualification.log. The affected package regression log is /private/tmp/PlannerCoreRecoveryObstructionPackage.log. Both use the recorded Mac/toolchain and real disposable disk stores. The native command selects only PlannerCoreStoreTests/RecoveryFailureTests; the package command selects PlannerCoreStoreTests. Source/document lint pass.
+
 ## Reproduction
 
 Use unique result-bundle paths on rerun. Scope DEVELOPER_DIR to the accepted Xcode installation.
