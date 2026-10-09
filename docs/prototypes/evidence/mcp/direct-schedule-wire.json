@@ -1,0 +1,207 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "7913a54",
+  "scope": "Authenticated actual loopback HTTP direct timed Item Schedule creation through the existing canonical writer.",
+  "redGreen": {
+    "behavior": "The first real HTTP createSchedule request fails as unavailable, then saves an independent Schedule. Fixed Tokyo/Paris contexts return unchanged instants, end=null and original zone, selecting exact-start versus later future records with +1. Original operation replay retains its first identity/checkpoint while the later assignment survives.",
+    "redExecutedFunctions": 12,
+    "redPassedFunctions": 11,
+    "redFailedFunctions": 1,
+    "greenExecutedFunctions": 12,
+    "greenPassedFunctions": 12
+  },
+  "qualification": {
+    "executedFunctions": 13,
+    "passedFunctions": 13,
+    "rejectedRequests": 16,
+    "behavior": "Null/unknown/malformed/incomplete forms, string/Bool dates, end equality/backwards, bad zone, escaped unknown key, invalid/missing source, and deferred all-day/Itinerary owners return useful exact code/path and operation identity. No applied receipt, prepared proposal, saved source/window or checkpoint changes. A later valid supplied end retains fractional DateNumber precision and invalidates the old generation."
+  },
+  "nativeExecutions": {
+    "Red": {
+      "bundle": "/private/tmp/PlannerMCPDirectScheduleWireRed.xcresult",
+      "log": "/private/tmp/PlannerMCPDirectScheduleWireRed.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 11,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1791559214.243,
+        "passedTests": 11,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791559196.073,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "Expectation failed: tool[\"isError\"] as? Bool == false\ntool[\"isError\"] as? Bool \u2192 true",
+            "targetName": "PlannerMCPTests",
+            "testIdentifier": 1,
+            "testIdentifierString": "RowRoutingTests/directTimedAppointmentsOverHTTPKeepInstantsAndGenerationBoundDateSelection()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/directTimedAppointmentsOverHTTPKeepInstantsAndGenerationBoundDateSelection()",
+            "testName": "directTimedAppointmentsOverHTTPKeepInstantsAndGenerationBoundDateSelection()"
+          }
+        ],
+        "title": "Test - Planner",
+        "topInsights": [],
+        "totalTestCount": 12
+      }
+    },
+    "Green": {
+      "bundle": "/private/tmp/PlannerMCPDirectScheduleWireGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPDirectScheduleWireGreen.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 12,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791559282.883,
+        "passedTests": 12,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791559275.831,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [],
+        "totalTestCount": 12
+      }
+    },
+    "Qualification": {
+      "bundle": "/private/tmp/PlannerMCPDirectScheduleWireQualification.xcresult",
+      "log": "/private/tmp/PlannerMCPDirectScheduleWireQualification.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 13,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791559424.522,
+        "passedTests": 13,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791559413.325,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [],
+        "totalTestCount": 13
+      }
+    },
+    "Regression": {
+      "bundle": "/private/tmp/PlannerMCPDirectScheduleWireRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPDirectScheduleWireRegression.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 39,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791559468.645,
+        "passedTests": 33,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791559463.658,
+        "statistics": [
+          {
+            "subtitle": "9 test runs",
+            "title": "3 tests ran with dynamic parameters"
+          }
+        ],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [],
+        "totalTestCount": 33
+      },
+      "excludedSuite": "ReadLoadTests"
+    }
+  },
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerMCPDirectScheduleWireSwiftLint.log",
+    "affectedSwiftFiles": 2,
+    "diffWhitespace": "passed"
+  },
+  "sourceHashes": {
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift": "1ebf37ecbb6048e964a5b933d7b0604bd5c7d370b221b082e7c0c16429a3f9eb",
+    "PlannerMCPTests/RowRoutingTests.swift": "010218d442830e73128f9dd94e440bd90eace361eff299332338e9fdd059c40b"
+  },
+  "limitations": [
+    "Only direct timed Item creation. All-day/Itinerary forms, Schedule edit/remove, complete source/reference reads and inherited planning remain open.",
+    "This slice does not claim a saved native date editor, actual Share extension or native preview/geocoding I/O.",
+    "No new signed clients/reader, CloudKit/account/device convergence, migration interruption or performance qualification. Existing native linkd metadata diagnostics remain unqualified."
+  ]
+}

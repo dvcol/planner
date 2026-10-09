@@ -5,6 +5,379 @@ import Testing
 @testable import Planner
 
 struct RowRoutingTests {
+
+  @Test func malformedTimedAppointmentsRejectWithoutChangingSourceWindowOrRecovery() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let created, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createItem(content: PlannerItemContentInput(title: "Hotel", notes: "Keep")))
+      )
+      .outcome,
+      let source = created.generated.first
+    else {
+      Issue.record("A saved Item must exist before invalid appointment requests.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      let owner: [String: Any] = ["kind": "item", "id": source.id.uuidString]
+      let sourceRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1, "request": ["kind": "source", "source": owner],
+        ])
+      let before = try value(try await httpSession.data(for: sourceRequest))
+      let snapshot = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_query",
+            arguments: [
+              "formatVersion": 1, "query": ["kind": "items", "scope": ["kind": "global"]],
+            ])))
+      let rowRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": [
+            "kind": "rows",
+            "generation": try #require(snapshot["generation"] as? String), "offset": "0",
+            "limit": "1",
+          ],
+        ])
+      let beforeWindow = try value(try await httpSession.data(for: rowRequest))
+      let form: [String: Any] = [
+        "kind": "timed", "start": 813_200_400,
+        "end": NSNull(), "planningTimeZone": "Asia/Tokyo",
+      ]
+      let invalidForms: [(Any, String, String)] = [
+        (NSNull(), "invalidInput", "/command/form"),
+        (["kind": "unknown"], "invalidInput", "/command/form/kind"),
+        (
+          [
+            "kind": "timed", "start": "813200400", "end": NSNull(),
+            "planningTimeZone": "Asia/Tokyo",
+          ],
+          "invalidInput", "/command/form/start"
+        ),
+        (
+          ["kind": "timed", "start": true, "end": NSNull(), "planningTimeZone": "Asia/Tokyo"],
+          "invalidInput", "/command/form/start"
+        ),
+        (
+          [
+            "kind": "timed", "start": 813_200_400, "end": "813200401",
+            "planningTimeZone": "Asia/Tokyo",
+          ],
+          "invalidInput", "/command/form/end"
+        ),
+        (
+          ["kind": "timed", "start": 813_200_400, "planningTimeZone": "Asia/Tokyo"],
+          "invalidInput", "/command/form/end"
+        ),
+        (
+          [
+            "kind": "timed", "start": 813_200_400, "end": 813_200_400,
+            "planningTimeZone": "Asia/Tokyo",
+          ],
+          "invalidInput", "/command/form/end"
+        ),
+        (
+          [
+            "kind": "timed", "start": 813_200_400, "end": 813_200_399,
+            "planningTimeZone": "Asia/Tokyo",
+          ],
+          "invalidInput", "/command/form/end"
+        ),
+        (
+          ["kind": "timed", "start": 813_200_400, "end": NSNull(), "planningTimeZone": 0],
+          "invalidInput", "/command/form/planningTimeZone"
+        ),
+        (
+          [
+            "kind": "timed", "start": 813_200_400, "end": NSNull(),
+            "planningTimeZone": "Invalid/Zone",
+          ],
+          "invalidInput", "/command/form/planningTimeZone"
+        ),
+        (
+          [
+            "kind": "timed", "start": 813_200_400, "end": NSNull(),
+            "planningTimeZone": "Asia/Tokyo",
+            "unexpected/~": true,
+          ], "unknownField", "/command/form/unexpected~1~0"
+        ),
+        (
+          ["kind": "allDay", "start": ["year": 2026, "month": 10, "day": 9], "end": NSNull()],
+          "unavailable", "/command/form/kind"
+        ),
+      ]
+      var invalidCommands: [([String: Any], String, String)] = invalidForms.map {
+        input, code, path in
+        (["type": "createSchedule", "source": owner, "form": input], code, path)
+      }
+      invalidCommands += [
+        (
+          ["type": "createSchedule", "source": ["kind": "item", "id": "invalid"], "form": form],
+          "invalidInput", "/command/source/id"
+        ),
+        (
+          [
+            "type": "createSchedule", "source": ["kind": "list", "id": source.id.uuidString],
+            "form": form,
+          ],
+          "invalidInput", "/command/source/kind"
+        ),
+        (
+          [
+            "type": "createSchedule", "source": ["kind": "itinerary", "id": UUID().uuidString],
+            "form": form,
+          ],
+          "unavailable", "/command/source/kind"
+        ),
+        (
+          [
+            "type": "createSchedule", "source": ["kind": "item", "id": UUID().uuidString],
+            "form": form,
+          ],
+          "missingReference", "/command/source"
+        ),
+      ]
+      for (command, code, path) in invalidCommands {
+        let operationIdentifier = UUID()
+        let rejected = try rejection(
+          try await httpSession.data(
+            for: request(
+              endpoint: endpoint, name: "planner_execute",
+              arguments: [
+                "formatVersion": 1, "operationId": operationIdentifier.uuidString,
+                "command": command,
+              ])))
+        #expect(rejected["operationId"] as? String == operationIdentifier.uuidString)
+        let reason = try #require(rejected["reason"] as? [String: Any])
+        #expect(reason["code"] as? String == code)
+        #expect(reason["propertyPath"] as? String == path)
+        guard
+          case .noReliableEvidence = await planner.operationStatus(
+            session: datasetSession, operationId: operationIdentifier)
+        else {
+          Issue.record("Invalid appointment requests must create no applied receipt.")
+          await listener.stop()
+          return
+        }
+      }
+      #expect(
+        NSDictionary(dictionary: try value(try await httpSession.data(for: sourceRequest)))
+          .isEqual(to: before))
+      #expect(
+        NSDictionary(dictionary: try value(try await httpSession.data(for: rowRequest)))
+          .isEqual(to: beforeWindow))
+      guard
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
+      else {
+        Issue.record("Rejected requests must preserve the independent recovery namespace.")
+        await listener.stop()
+        return
+      }
+      #expect(namespaces.first?.acknowledgedSnapshot?.checkpointGeneration == 1)
+      #expect(namespaces.first?.preparedProposals.isEmpty == true)
+      let fractionalForm: [String: Any] = [
+        "kind": "timed", "start": 813_200_400.25,
+        "end": 813_200_400.5, "planningTimeZone": "Europe/Paris",
+      ]
+      let scheduled = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_execute",
+            arguments: [
+              "formatVersion": 1, "operationId": UUID().uuidString,
+              "command": ["type": "createSchedule", "source": owner, "form": fractionalForm],
+            ])))
+      #expect((scheduled["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "2")
+      #expect(
+        try failure(try await httpSession.data(for: rowRequest))["code"] as? String
+          == "staleSnapshot")
+      let fresh = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_query",
+            arguments: [
+              "formatVersion": 1,
+              "query": [
+                "kind": "items", "scope": ["kind": "global"],
+                "rowPresentation": [
+                  "referenceInstant": 813_200_400, "displayTimeZone": "Asia/Tokyo",
+                ],
+              ],
+            ])))
+      let window = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_read",
+            arguments: [
+              "formatVersion": 1,
+              "request": [
+                "kind": "rows",
+                "generation": try #require(fresh["generation"] as? String), "offset": "0",
+                "limit": "1",
+              ],
+            ])))
+      let summary = try #require(
+        ((window["rows"] as? [[String: Any]])?.first)?["scheduleSummary"] as? [String: Any])
+      #expect(
+        NSDictionary(dictionary: try #require(summary["form"] as? [String: Any]))
+          .isEqual(to: fractionalForm))
+      #expect(summary["additionalCount"] as? String == "0")
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
+  @Test func directTimedAppointmentsOverHTTPKeepInstantsAndGenerationBoundDateSelection()
+    async throws
+  {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let created, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createItem(content: PlannerItemContentInput(title: "Hotel", notes: "Keep")))
+      )
+      .outcome,
+      let source = created.generated.first,
+      case .source(let original) = await planner.read(
+        session: datasetSession, request: .source(source))
+    else {
+      Issue.record("The real Item must exist before creating appointments over HTTP.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      let owner: [String: Any] = ["kind": "item", "id": source.id.uuidString]
+      let form: [String: Any] = [
+        "kind": "timed", "start": 813_200_400,
+        "end": NSNull(), "planningTimeZone": "Asia/Tokyo",
+      ]
+      let operationIdentifier = UUID()
+      let creationRequest = try request(
+        endpoint: endpoint, name: "planner_execute",
+        arguments: [
+          "formatVersion": 1, "operationId": operationIdentifier.uuidString,
+          "command": ["type": "createSchedule", "source": owner, "form": form],
+        ])
+      let createdSchedule = try value(try await httpSession.data(for: creationRequest))
+      let creationResult = try #require(createdSchedule["result"] as? [String: Any])
+      let first = try #require((creationResult["generated"] as? [[String: Any]])?.first)
+      #expect(first["kind"] as? String == "schedule")
+      #expect(UUID(uuidString: try #require(first["id"] as? String)) != nil)
+      #expect(
+        (createdSchedule["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "2")
+      let futureForm: [String: Any] = [
+        "kind": "timed", "start": 813_214_800,
+        "end": NSNull(), "planningTimeZone": "Asia/Tokyo",
+      ]
+      let futureCreation = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_execute",
+            arguments: [
+              "formatVersion": 1, "operationId": UUID().uuidString,
+              "command": ["type": "createSchedule", "source": owner, "form": futureForm],
+            ])))
+      let futureResult = try #require(futureCreation["result"] as? [String: Any])
+      let future = try #require((futureResult["generated"] as? [[String: Any]])?.first)
+      #expect(future["id"] as? String != first["id"] as? String)
+      for zone in ["Asia/Tokyo", "Europe/Paris"] {
+        for (instant, selected, expectedForm) in [
+          (813_200_400, first, form), (813_202_200, future, futureForm),
+        ] {
+          let presentation: [String: Any] = ["referenceInstant": instant, "displayTimeZone": zone]
+          let snapshot = try value(
+            try await httpSession.data(
+              for: request(
+                endpoint: endpoint, name: "planner_query",
+                arguments: [
+                  "formatVersion": 1,
+                  "query": [
+                    "kind": "items", "scope": ["kind": "global"],
+                    "rowPresentation": presentation,
+                  ],
+                ])))
+          let generation = try #require(snapshot["generation"] as? String)
+          let window = try value(
+            try await httpSession.data(
+              for: request(
+                endpoint: endpoint, name: "planner_read",
+                arguments: [
+                  "formatVersion": 1,
+                  "request": [
+                    "kind": "rows", "generation": generation,
+                    "offset": "0", "limit": "1",
+                  ],
+                ])))
+          let row = try #require((window["rows"] as? [[String: Any]])?.first)
+          let summary = try #require(row["scheduleSummary"] as? [String: Any])
+          #expect(
+            NSDictionary(dictionary: summary).isEqual(to: [
+              "kind": "directItem", "schedule": selected, "owner": owner,
+              "form": expectedForm, "additionalCount": "1",
+            ]))
+          #expect(
+            NSDictionary(dictionary: try #require(window["rowPresentation"] as? [String: Any]))
+              .isEqual(to: presentation))
+          #expect(row["notes"] == nil)
+          #expect(row["fieldHashes"] == nil)
+        }
+      }
+      let replayed = try value(try await httpSession.data(for: creationRequest))
+      #expect(NSDictionary(dictionary: replayed).isEqual(to: createdSchedule))
+      await listener.stop()
+      guard
+        case .source(let retained) = await planner.read(
+          session: datasetSession, request: .source(source)),
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+        let namespace = namespaces.first,
+        case .selected(let recovery) = await planner.inspectRecovery(
+          request: .acknowledgedSnapshot(
+            namespaceId: namespace.namespaceId, checkpointGeneration: 3))
+      else {
+        Issue.record(
+          "HTTP creation must save both appointments into the same canonical store and recovery.")
+        return
+      }
+      #expect(retained.content.title == "Hotel")
+      #expect(retained.content.notes == "Keep")
+      #expect(retained.fieldHashes == original.fieldHashes)
+      #expect(retained.updatedAt == original.updatedAt)
+      #expect(retained.references.count == 2)
+      #expect(recovery.decodedBackup.backup.schedules.count == 2)
+      #expect(namespace.acknowledgedSnapshot?.checkpointGeneration == 3)
+      #expect(namespace.preparedProposals.isEmpty)
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   @Test func malformedBookmarkEditsRetainBothOwnersAndTheIssuedRowWindow() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
