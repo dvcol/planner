@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create Items with owned location and HTTP(S) bookmarks, edit Items, complete/reopen or archive/unarchive Items, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
+        "Create and edit Items and Lists, complete/reopen or archive/unarchive Items, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -16,7 +16,9 @@
           "operationId": .object(["type": .string("string"), "format": .string("uuid")]),
           "command": .object([
             "oneOf": .array([
-              creationSchema, editSchema, archiveSchema, completionSchema, scheduleCreationSchema,
+              creationSchema, listCreationSchema, editSchema, listEditSchema, archiveSchema,
+              completionSchema,
+              scheduleCreationSchema,
               scheduleEditSchema, scheduleZoneSchema, scheduleRemovalSchema,
             ])
           ]),
@@ -80,6 +82,63 @@
             "location": locationSchema,
             "links": linksSchema,
           ]),
+        ]),
+      ]),
+    ])
+
+    private static let colorSchema = Value.object([
+      "type": .array([.string("object"), .string("null")]), "additionalProperties": .bool(false),
+      "required": .array([.string("red"), .string("green"), .string("blue"), .string("alpha")]),
+      "properties": .object(
+        Dictionary(
+          uniqueKeysWithValues: ["red", "green", "blue", "alpha"].map {
+            ($0, .object(["type": .string("number"), "minimum": .int(0), "maximum": .int(1)]))
+          })),
+    ])
+
+    private static let listContentProperties: [String: Value] = [
+      "name": .object(["type": .string("string")]),
+      "notes": .object(["type": .array([.string("string"), .string("null")])]),
+      "color": colorSchema,
+      "iconName": .object(["type": .array([.string("string"), .string("null")])]),
+    ]
+
+    private static let listCreationSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("type"), .string("content")]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("createList")]),
+        "content": .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "required": .array([.string("name")]), "properties": .object(listContentProperties),
+        ]),
+      ]),
+    ])
+
+    private static let listEditSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([
+        .string("type"), .string("sourceId"), .string("changes"), .string("expectedFieldHashes"),
+      ]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("editList")]),
+        "sourceId": .object(["type": .string("string"), "format": .string("uuid")]),
+        "changes": .object([
+          "type": .string("object"), "additionalProperties": .bool(false), "minProperties": .int(1),
+          "properties": .object(listContentProperties),
+        ]),
+        "expectedFieldHashes": .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "properties": .object(
+            Dictionary(
+              uniqueKeysWithValues: PlannerListField.allCases.map {
+                (
+                  $0.rawValue,
+                  .object([
+                    "type": .string("string"), "pattern": .string("^sha256-v1:[0-9a-f]{64}$"),
+                  ])
+                )
+              })),
         ]),
       ]),
     ])
@@ -293,6 +352,8 @@
         let command: PlannerCommand
         switch commandType {
         case "createItem": command = try creationCommand(arguments["command"])
+        case "createList": command = try listCreationCommand(arguments["command"])
+        case "editList": command = try listEditCommand(arguments["command"])
         case "editItem": command = try editCommand(arguments["command"])
         case "setArchive": command = try archiveCommand(arguments["command"])
         case "setCompletion": command = try completionCommand(arguments["command"])
@@ -315,6 +376,88 @@
           code: "unavailable",
           message: "The operation outcome could not be encoded; inspect its status before retrying."
         )
+      }
+    }
+
+    private static func listCreationCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "content"], required: ["type", "content"], path: "/command")
+      let content = try object(
+        command["content"], allowed: Set(PlannerListField.allCases.map(\.rawValue)),
+        required: ["name"], path: "/command/content")
+      guard case .string(let name) = content["name"] else {
+        throw AdmissionFailure(
+          "invalidInput", "/command/content/name", "Expected a List name String.")
+      }
+      let color: PlannerColor?
+      switch try colorChange(content["color"], path: "/command/content/color") {
+      case .set(let value): color = value
+      case .clear, .unchanged: color = nil
+      }
+      return .createList(
+        content: PlannerListContentInput(
+          name: name,
+          notes: try nullableText(content["notes"] ?? .null, path: "/command/content/notes"),
+          color: color,
+          iconName: try nullableText(
+            content["iconName"] ?? .null, path: "/command/content/iconName")))
+    }
+
+    private static func listEditCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "sourceId", "changes", "expectedFieldHashes"],
+        required: ["type", "sourceId", "changes", "expectedFieldHashes"], path: "/command")
+      guard case .string(let spelling) = command["sourceId"],
+        let sourceIdentifier = UUID(uuidString: spelling)
+      else {
+        throw AdmissionFailure("invalidInput", "/command/sourceId", "Expected a List UUID.")
+      }
+      let fieldNames = Set(PlannerListField.allCases.map(\.rawValue))
+      let changes = try object(
+        command["changes"], allowed: fieldNames, required: [], path: "/command/changes")
+      let hashValues = try object(
+        command["expectedFieldHashes"], allowed: fieldNames, required: [],
+        path: "/command/expectedFieldHashes")
+      var hashes: [PlannerListField: PlannerFieldHash] = [:]
+      for (name, value) in hashValues {
+        guard let field = PlannerListField(rawValue: name), case .string(let spelling) = value
+        else {
+          throw AdmissionFailure(
+            "invalidInput", "/command/expectedFieldHashes/" + name, "Expected a field hash String.")
+        }
+        hashes[field] = PlannerFieldHash(value: spelling)
+      }
+      return .editList(
+        sourceId: sourceIdentifier,
+        changes: PlannerListChanges(
+          name: try textChange(changes["name"], path: "/command/changes/name"),
+          notes: try textChange(changes["notes"], path: "/command/changes/notes"),
+          color: try colorChange(changes["color"], path: "/command/changes/color"),
+          iconName: try textChange(changes["iconName"], path: "/command/changes/iconName")),
+        expectedFieldHashes: hashes)
+    }
+
+    private static func colorChange(
+      _ value: Value?, path: String
+    ) throws -> PlannerFieldChange<PlannerColor> {
+      guard let value else { return .unchanged }
+      if case .null = value { return .clear }
+      let fields = try object(
+        value, allowed: ["red", "green", "blue", "alpha"],
+        required: ["red", "green", "blue", "alpha"], path: path)
+      return .set(
+        PlannerColor(
+          red: try colorComponent(fields["red"], path: path + "/red"),
+          green: try colorComponent(fields["green"], path: path + "/green"),
+          blue: try colorComponent(fields["blue"], path: path + "/blue"),
+          alpha: try colorComponent(fields["alpha"], path: path + "/alpha")))
+    }
+
+    private static func colorComponent(_ value: Value?, path: String) throws -> Double {
+      switch value {
+      case .int(let number): return Double(number)
+      case .double(let number): return number
+      default: throw AdmissionFailure("invalidInput", path, "Expected a color component number.")
       }
     }
 

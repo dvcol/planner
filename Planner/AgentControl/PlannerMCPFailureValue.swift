@@ -31,13 +31,7 @@
                 case .string(let text): encoded = .string(text)
                 case .optionalString(let text): encoded = text.map(Value.string) ?? .null
                 case .optionalColor(let color):
-                  encoded =
-                    color.map { color in
-                      .object([
-                        "red": .double(color.red), "green": .double(color.green),
-                        "blue": .double(color.blue), "alpha": .double(color.alpha),
-                      ])
-                    } ?? .null
+                  encoded = color.map(PlannerMCPSourceTool.colorValue) ?? .null
                 }
                 return (field.rawValue, encoded)
               })),
