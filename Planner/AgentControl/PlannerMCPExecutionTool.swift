@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create an Item with owned location and HTTP(S) bookmarks, edit its title/notes/location/links, complete/reopen or archive/unarchive it, and create or guard complete edits to direct timed appointments through the local Planner prototype.",
+        "Create an Item with owned location and HTTP(S) bookmarks, edit its title/notes/location/links, complete/reopen or archive/unarchive it, and create, edit or change planning zones of direct timed appointments through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -17,7 +17,7 @@
           "command": .object([
             "oneOf": .array([
               creationSchema, editSchema, archiveSchema, completionSchema, scheduleCreationSchema,
-              scheduleEditSchema,
+              scheduleEditSchema, scheduleZoneSchema,
             ])
           ]),
           "reviewToken": .object(["type": .array([.string("string"), .string("null")])]),
@@ -193,15 +193,31 @@
           "type": .string("object"), "additionalProperties": .bool(false),
           "required": .array([.string("form")]), "properties": .object(["form": timedFormSchema]),
         ]),
-        "expectedFieldHashes": .object([
-          "type": .string("object"), "additionalProperties": .bool(false),
-          "required": .array([.string("form")]),
-          "properties": .object([
-            "form": .object([
-              "type": .string("string"), "pattern": .string("^sha256-v1:[0-9a-f]{64}$"),
-            ])
-          ]),
-        ]),
+        "expectedFieldHashes": scheduleHashesSchema,
+      ]),
+    ])
+
+    private static let scheduleHashesSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("form")]),
+      "properties": .object([
+        "form": .object([
+          "type": .string("string"), "pattern": .string("^sha256-v1:[0-9a-f]{64}$"),
+        ])
+      ]),
+    ])
+
+    private static let scheduleZoneSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([
+        .string("type"), .string("scheduleId"), .string("planningTimeZone"),
+        .string("expectedFieldHashes"),
+      ]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("changeScheduleZone")]),
+        "scheduleId": .object(["type": .string("string"), "format": .string("uuid")]),
+        "planningTimeZone": .object(["type": .string("string")]),
+        "expectedFieldHashes": scheduleHashesSchema,
       ]),
     ])
 
@@ -248,6 +264,7 @@
         case "setCompletion": command = try completionCommand(arguments["command"])
         case "createSchedule": command = try scheduleCreationCommand(arguments["command"])
         case "editSchedule": command = try scheduleEditCommand(arguments["command"])
+        case "changeScheduleZone": command = try scheduleZoneCommand(arguments["command"])
         default:
           throw AdmissionFailure(
             "unavailable", "/command/type", "This command is not yet implemented by the prototype.")
@@ -303,16 +320,41 @@
       let changes = try object(
         command["changes"], allowed: ["form"], required: ["form"], path: "/command/changes")
       let form = try scheduleForm(changes["form"], path: "/command/changes/form")
+      return .editSchedule(
+        scheduleId: scheduleIdentifier, changes: PlannerScheduleChanges(form: form),
+        expectedFieldHashes: try scheduleHashes(command["expectedFieldHashes"]))
+    }
+
+    private static func scheduleZoneCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value,
+        allowed: ["type", "scheduleId", "planningTimeZone", "expectedFieldHashes"],
+        required: ["type", "scheduleId", "planningTimeZone", "expectedFieldHashes"],
+        path: "/command")
+      guard case .string(let spelling) = command["scheduleId"],
+        let scheduleIdentifier = UUID(uuidString: spelling)
+      else {
+        throw AdmissionFailure("invalidInput", "/command/scheduleId", "Expected a Schedule UUID.")
+      }
+      guard case .string(let planningTimeZone) = command["planningTimeZone"] else {
+        throw AdmissionFailure(
+          "invalidInput", "/command/planningTimeZone", "Expected a planning timezone String.")
+      }
+      return .changeScheduleZone(
+        scheduleId: scheduleIdentifier, planningTimeZone: planningTimeZone,
+        expectedFieldHashes: try scheduleHashes(command["expectedFieldHashes"]))
+    }
+
+    private static func scheduleHashes(_ value: Value?) throws -> [PlannerScheduleField:
+      PlannerFieldHash]
+    {
       let hashes = try object(
-        command["expectedFieldHashes"], allowed: ["form"], required: ["form"],
-        path: "/command/expectedFieldHashes")
+        value, allowed: ["form"], required: ["form"], path: "/command/expectedFieldHashes")
       guard case .string(let formHash) = hashes["form"] else {
         throw AdmissionFailure(
           "invalidInput", "/command/expectedFieldHashes/form", "Expected a form hash String.")
       }
-      return .editSchedule(
-        scheduleId: scheduleIdentifier, changes: PlannerScheduleChanges(form: form),
-        expectedFieldHashes: [.form: PlannerFieldHash(value: formHash)])
+      return [.form: PlannerFieldHash(value: formHash)]
     }
 
     private static func scheduleForm(_ value: Value?, path: String) throws -> PlannerScheduleForm {

@@ -132,8 +132,15 @@ public actor Planner {
             envelope: envelope
           )
         case .editSchedule(let scheduleId, let changes, let expectedFieldHashes):
-          return try executeScheduleEdit(
-            operation, scheduleId: scheduleId, changes: changes, hashes: expectedFieldHashes,
+          return try executeScheduleChange(
+            operation, scheduleId: scheduleId, change: .form(changes.form),
+            hashes: expectedFieldHashes,
+            identity: identity, context: context, archive: archive, receipts: receipts,
+            envelope: envelope)
+        case .changeScheduleZone(let scheduleId, let planningTimeZone, let expectedFieldHashes):
+          return try executeScheduleChange(
+            operation, scheduleId: scheduleId, change: .zone(planningTimeZone),
+            hashes: expectedFieldHashes,
             identity: identity, context: context, archive: archive, receipts: receipts,
             envelope: envelope)
         case .createItem(let content):
@@ -539,13 +546,13 @@ public actor Planner {
     } catch { return .failed(failure(error, code: "readUnavailable")) }
   }
 
-  private func executeScheduleEdit(
-    _ operation: PlannerOperation, scheduleId: UUID, changes: PlannerScheduleChanges,
+  private func executeScheduleChange(
+    _ operation: PlannerOperation, scheduleId: UUID, change: ScheduleChange,
     hashes: [PlannerScheduleField: PlannerFieldHash], identity: PlannerStoreIdentity,
     context: ModelContext, archive: PlannerRecoveryArchive, receipts: [PlannerSchemaV1.Receipt],
     envelope: RecoveryEnvelope?
   ) throws -> PlannerOperationResult {
-    try changes.form.validate(propertyPath: "/command/changes/form")
+    try change.validate()
     guard let expectedHash = hashes[.form] else {
       throw PlannerFailure(
         "invalidInput", "The Schedule form requires its prior hash.",
@@ -564,7 +571,7 @@ public actor Planner {
       let stored = try receipt.evidence()
       guard
         receipt.payloadDigest
-          == changes.editDigest(
+          == change.editDigest(
             scheduleId: scheduleId,
             expectedFormHash: expectedHash, identity: identity, bindings: stored.bindings)
       else {
@@ -601,7 +608,7 @@ public actor Planner {
       PlannerBoundIdentity(kind: "schedule", id: before.id, lifetimeId: before.lifetimeId),
       PlannerBoundIdentity(kind: "item", id: ownerIdentifier, lifetimeId: ownerLifetime),
     ]
-    let digest = changes.editDigest(
+    let digest = change.editDigest(
       scheduleId: scheduleId, expectedFormHash: expectedHash,
       identity: identity, bindings: bindings)
     if let proposal = try archive.proposals().first(where: {
@@ -620,7 +627,9 @@ public actor Planner {
         "staleEdit", "The Schedule form differs from the supplied read.",
         details: .staleScheduleEdit(currentForm: before.form, currentFormHash: currentHash))
     }
-    let after = ScheduleSnapshot(id: before.id, lifetimeId: before.lifetimeId, form: changes.form)
+    let replacementForm = change.applying(to: before.form)
+    let after = ScheduleSnapshot(
+      id: before.id, lifetimeId: before.lifetimeId, form: replacementForm)
     let snapshots = try items.map { item in
       var snapshot = try item.value()
       if item.id == ownerIdentifier {
@@ -647,7 +656,7 @@ public actor Planner {
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest,
       result: result, bindings: bindings)
-    switch changes.form {
+    switch replacementForm {
     case .timed(let start, let end, let planningTimeZone):
       record.start = start
       record.end = end
