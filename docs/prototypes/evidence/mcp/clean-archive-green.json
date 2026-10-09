@@ -1,0 +1,95 @@
+{
+  "scope": "Committed native/Core/MCP Archive slice clean-source reproduction, excluding performance workload from ordinary suite",
+  "sourceCommit": "94c75fc0f18e5d2bec4196b45070cbd96ed1de39",
+  "sourceDirectory": "/private/tmp/PlannerMCPLocalClean-94c75fc",
+  "sourcePreparation": "git archive of the committed snapshot; no personal Xcode state, Local.xcconfig, previous app products or uncommitted files copied",
+  "dependencySources": "Previously downloaded official resolved package source cache at /private/tmp/PlannerMCPSourcePackages; dependency cache reused, build products fresh",
+  "discovery": {
+    "project": {
+      "configurations": [
+        "Debug",
+        "Release"
+      ],
+      "name": "Planner",
+      "schemes": [
+        "Planner",
+        "PlannerCore",
+        "PlannerCore"
+      ],
+      "targets": [
+        "Planner",
+        "PlannerMCPTests",
+        "PlannerCoreTests",
+        "PlannerCoreStoreTests"
+      ]
+    }
+  },
+  "nativeMCP": {
+    "summary": {
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "modelName": "MacBook Pro",
+            "osBuildNumber": "26A434",
+            "osVersion": "27.0.1",
+            "platform": "macOS"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 26,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+      "expectedFailures": 0,
+      "failedTests": 0,
+      "finishTime": 1791516012.627,
+      "passedTests": 20,
+      "result": "Passed",
+      "runtimeWarnings": [],
+      "skippedTests": 0,
+      "startTime": 1791515959.755,
+      "statistics": [
+        {
+          "subtitle": "9 test runs",
+          "title": "3 tests ran with dynamic parameters"
+        }
+      ],
+      "testFailures": [],
+      "title": "Test - Planner",
+      "topInsights": [],
+      "totalTestCount": 20
+    },
+    "resultBundle": "/private/tmp/PlannerMCPLocalClean-94c75fc.xcresult",
+    "log": "/private/tmp/PlannerMCPLocalClean-94c75fc.log",
+    "freshDerivedData": "/private/tmp/PlannerMCPLocalCleanDerived-94c75fc",
+    "excludedSuite": "ReadLoadTests"
+  },
+  "corePackage": {
+    "passedTests": 13,
+    "suites": 5,
+    "log": "/private/tmp/PlannerCoreLocalClean-94c75fc.log",
+    "freshScratchPath": "/private/tmp/PlannerCoreLocalCleanScratch-94c75fc"
+  },
+  "mobileCompile": {
+    "destination": "generic/platform=iOS Simulator",
+    "result": "BUILD SUCCEEDED",
+    "log": "/private/tmp/PlannerMCPLocalMobileBuild-94c75fc.log",
+    "freshDerivedData": "/private/tmp/PlannerMCPLocalMobileDerived-94c75fc"
+  },
+  "diagnostics": [
+    "Four deprecated SDK text-result constructor calls in execution/query/status adapters are present in this snapshot. They are addressed in a subsequent source change, qualified separately.",
+    "Metadata extraction reports no AppIntents.framework dependency, and the test host reports native linkd.autoShortcut connection/re-registration errors. Intents/Shortcuts are unimplemented and not qualified."
+  ],
+  "limitations": [
+    "This committed snapshot precedes the subsequent SDK constructor correction; do not describe it as a clean-source build of that correction.",
+    "ReadLoadTests is deliberately excluded to keep performance evidence isolated. Its separate measured qualification remains linked.",
+    "Generic iOS Simulator build is compilation only, not simulator UI or physical-device execution.",
+    "No native Agent Control/reader, selected client, lifecycle, cross-process interruption, CloudKit or owning-ticket completion proof."
+  ]
+}
