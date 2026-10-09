@@ -1,0 +1,44 @@
+{
+  "devicesAndConfigurations": [
+    {
+      "device": {
+        "architecture": "arm64",
+        "modelName": "iPhone 18 Pro",
+        "osBuildNumber": "24A434",
+        "osVersion": "27.0",
+        "platform": "iOS Simulator"
+      },
+      "expectedFailures": 0,
+      "failedTests": 1,
+      "passedTests": 0,
+      "skippedTests": 0,
+      "testPlanConfiguration": {
+        "configurationId": "1",
+        "configurationName": "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+  "expectedFailures": 0,
+  "failedTests": 1,
+  "finishTime": 1791521514.953,
+  "passedTests": 0,
+  "result": "Failed",
+  "runtimeWarnings": [],
+  "skippedTests": 0,
+  "startTime": 1791521497.945,
+  "statistics": [],
+  "testFailures": [
+    {
+      "failureText": "XCTAssertTrue failed",
+      "targetName": "PlannerNavigationUITests",
+      "testIdentifier": 1,
+      "testIdentifierString": "MapNavigationJourneyTests/testMapPinKeepsTheSelectedListAppearanceAndGenericItemsRemainVisible()",
+      "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/MapNavigationJourneyTests/testMapPinKeepsTheSelectedListAppearanceAndGenericItemsRemainVisible",
+      "testName": "testMapPinKeepsTheSelectedListAppearanceAndGenericItemsRemainVisible()"
+    }
+  ],
+  "title": "Test - PlannerNavigation",
+  "topInsights": [],
+  "totalTestCount": 1
+}

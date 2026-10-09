@@ -1,4 +1,5 @@
 import Foundation
+import PlannerCore
 
 /// Read-only fixture projection for native layout review.
 struct NavigationPrototypeFixture: Decodable {
@@ -7,6 +8,7 @@ struct NavigationPrototypeFixture: Decodable {
       let title: String?
       let name: String?
       let notes: String?
+      let location: PlannerOwnedLocation?
     }
 
     let kind: String
@@ -49,7 +51,6 @@ struct NavigationPrototypeFixture: Decodable {
   struct Appearance: Identifiable, Hashable {
     let id: String
     let sourceId: UUID
-    let associationId: UUID
     let localDone: Bool
     let contextName: String
   }
@@ -74,7 +75,7 @@ struct NavigationPrototypeFixture: Decodable {
     if container.kind == "list" {
       return memberships.filter { $0.list.id == container.id }.map {
         Appearance(
-          id: $0.id.uuidString, sourceId: $0.item.id, associationId: $0.id,
+          id: $0.id.uuidString, sourceId: $0.item.id,
           localDone: $0.localDone, contextName: "List appearance")
       }
     }
@@ -83,7 +84,7 @@ struct NavigationPrototypeFixture: Decodable {
       if referencedSource.kind == "item" {
         return [
           Appearance(
-            id: entry.id.uuidString, sourceId: referencedSource.id, associationId: entry.id,
+            id: entry.id.uuidString, sourceId: referencedSource.id,
             localDone: entry.localDone ?? false, contextName: "Itinerary appearance")
         ]
       }
@@ -93,7 +94,7 @@ struct NavigationPrototypeFixture: Decodable {
         }
         return Appearance(
           id: "\(entry.id.uuidString)/\(membership.id.uuidString)",
-          sourceId: membership.item.id, associationId: membership.id,
+          sourceId: membership.item.id,
           localDone: completion?.localDone ?? false, contextName: "Itinerary list appearance")
       }
     }

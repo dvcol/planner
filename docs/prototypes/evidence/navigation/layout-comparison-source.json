@@ -1,0 +1,15 @@
+{
+  "description": "Native read-only library, itinerary and selected-appearance map comparisons, including the expanded itinerary identity correction.",
+  "files": {
+    "Planner/PlannerApp.swift": "03e87bf987c5916302c8d4a6c179bb58d21b22c79c81ed204844bd76b7a3d964",
+    "Planner/NavigationPrototype/NavigationPrototypeFixture.swift": "fe3edc2ee0c439dcfe47914abb600d606f2652216ca560b62e59f9875d648bdc",
+    "Planner/NavigationPrototype/NavigationPrototypeView.swift": "4fe6e8c085311c0eae675f4a39c9a51e75d3e36bf300916404e8625c1f4863d0",
+    "Planner/NavigationPrototype/PrototypeMapItemDetail.swift": "31d01094013dc349b91efeff7d2b15502173200ccdaae82c9096400454e6ed61",
+    "PlannerNavigationUITests/NavigationJourneyTests.swift": "4cc65c026ca6582c9f1fe2a9b3d4ed853feefcefcc722047edf8ee61676f92bf",
+    "PlannerNavigationUITests/MapNavigationJourneyTests.swift": "84fd385847bc556bb8c473fc6b737974b66055bdc7474e9b3743052939859cf1",
+    "docs/fixtures/portable-backup-v1.json": "6496ba36622f06f37b8fc11a9f5e00999e9c145cefbeed721fefce6fa20097ba",
+    "Planner.xcodeproj/project.pbxproj": "43f16f38ddc9ce2877cce20e93294de13df1cf7661bcf5cf309e2330a29e78f7",
+    "Configuration/PlannerNavigationUITests.xcconfig": "16d43a3beb8fbe6834623d6aa668ac8a0c74671aa88042488dcbe61fafa892ad",
+    "Planner.xcodeproj/xcshareddata/xcschemes/PlannerNavigation.xcscheme": "9f45da3b7f9406959e89caf86d79a25c975b1d6ac5b5caed8244913198b78be3"
+  }
+}
