@@ -1,0 +1,112 @@
+{
+  "allDayScheduleHash" : "sha256-v1:778cb92710ec49756add163402909721033822157ec3274b81b1b52862d32672",
+  "allDayScheduleId" : "3CB83E76-83ED-4132-AA98-9F683ADD39A7",
+  "archivedCheckpoint" : 3,
+  "createdAt" : 813260832.01779902,
+  "creationCheckpoint" : 1,
+  "creationOperationId" : "00000000-0000-4000-8000-000000000941",
+  "datasetId" : "9AEF7941-3330-4191-AE96-57766718C57F",
+  "deletionMarkers" : [
+    {
+      "closedFamilyId" : null,
+      "deletionId" : "9A900A8E-FBA8-4C79-B298-A042620B2B1B",
+      "operationId" : "00000000-0000-4000-8000-000000000945",
+      "target" : {
+        "kind" : "source",
+        "source" : {
+          "id" : "B3AFCBB5-F8AA-42EC-A832-EF28016376A2",
+          "kind" : "schedule",
+          "lifetimeId" : "59E0FE4D-1894-45F3-976A-19148A994EC6"
+        }
+      }
+    }
+  ],
+  "fieldHashes" : {
+    "categoryIds" : "sha256-v1:f31ae077931cc0596a0b63340e2217a9fe3c7e7d0b35c77f837857cefcecbbda",
+    "estimate" : "sha256-v1:df23aee8e07907d362b4440ca5847e6f7256685e95f9612573d7f37a53c2a330",
+    "links" : "sha256-v1:9d399f4d9a413c1e504e3428e5035127db7ad827d5499806ade7871e5ab6f671",
+    "location" : "sha256-v1:d805eab16334deb3c199571dd6b2ddccf0e8220813a57918832bcff1aa0c6ecb",
+    "notes" : "sha256-v1:f64c7a0923d07b438aefe823f164bc7378096eab54b67b3225015391760fce71",
+    "subtitle" : "sha256-v1:5e6570a5704ca5f18f3f1ea5536825c6cab11cb11a4431c4988138f42ea14b14",
+    "tagIds" : "sha256-v1:3d11c6cd42d66bc9ddd58b6bbaa160ba2812fff61ea6409ea58fbfed5c015c6b",
+    "title" : "sha256-v1:30e031fcb1688e3119593415f10e55b6f82b9847af667036055bcc0648704b50"
+  },
+  "itemId" : "8A2AE8A8-70BF-42FB-B755-5014C9629587",
+  "latestCheckpoint" : 7,
+  "ownedLinks" : [
+    {
+      "id" : "41C71DF4-227F-45FB-A989-6E63230F0BB5",
+      "kind" : "appleMaps",
+      "label" : "Map",
+      "lifetimeId" : "4EFE8E86-25E5-4DE6-93A3-9092D8B673E1",
+      "originalUrl" : "https:\/\/maps.apple.com\/?q=Hotel",
+      "owner" : {
+        "id" : "8A2AE8A8-70BF-42FB-B755-5014C9629587",
+        "kind" : "item",
+        "lifetimeId" : "72171C3E-6507-43F3-8483-D060C1F89ACA"
+      },
+      "providerReference" : null,
+      "rank" : "0"
+    },
+    {
+      "id" : "46341A9C-3C2B-49CF-874A-0A611C0EEA98",
+      "kind" : "website",
+      "label" : "Menu",
+      "lifetimeId" : "65F07732-6226-42E3-81EC-5C64E41CC2D1",
+      "originalUrl" : "https:\/\/example.com\/menu",
+      "owner" : {
+        "id" : "8A2AE8A8-70BF-42FB-B755-5014C9629587",
+        "kind" : "item",
+        "lifetimeId" : "72171C3E-6507-43F3-8483-D060C1F89ACA"
+      },
+      "providerReference" : null,
+      "rank" : "1"
+    }
+  ],
+  "producerCommit" : "e50c14d",
+  "retainedScheduleHash" : "sha256-v1:421391a315f5321da7a85bff44ca98b0ca2a518db67ffdfce91cb4b303495213",
+  "retainedScheduleId" : "BB91537E-9F5C-40C7-8570-5D24B31BDE6E",
+  "scheduleHash" : "sha256-v1:1e7e0560f45072351b7f2e4215a1a002868eb59d88eb4b024e7fe8874df9c930",
+  "scheduleId" : "B3AFCBB5-F8AA-42EC-A832-EF28016376A2",
+  "scheduleOperationId" : "00000000-0000-4000-8000-000000000944",
+  "schedules" : [
+    {
+      "form" : {
+        "end" : {
+          "day" : 11,
+          "month" : 10,
+          "year" : 2026
+        },
+        "kind" : "allDay",
+        "start" : {
+          "day" : 9,
+          "month" : 10,
+          "year" : 2026
+        }
+      },
+      "id" : "3CB83E76-83ED-4132-AA98-9F683ADD39A7",
+      "lifetimeId" : "3003B44A-4381-4C0E-8109-FEDC216BE52E",
+      "source" : {
+        "id" : "8A2AE8A8-70BF-42FB-B755-5014C9629587",
+        "kind" : "item",
+        "lifetimeId" : "72171C3E-6507-43F3-8483-D060C1F89ACA"
+      }
+    },
+    {
+      "form" : {
+        "end" : 813204000.75,
+        "kind" : "timed",
+        "planningTimeZone" : "Asia\/Tokyo",
+        "start" : 813200400.25
+      },
+      "id" : "BB91537E-9F5C-40C7-8570-5D24B31BDE6E",
+      "lifetimeId" : "09077A53-D316-489B-BA6D-2CE69DBE82F0",
+      "source" : {
+        "id" : "8A2AE8A8-70BF-42FB-B755-5014C9629587",
+        "kind" : "item",
+        "lifetimeId" : "72171C3E-6507-43F3-8483-D060C1F89ACA"
+      }
+    }
+  ],
+  "updatedAt" : 813260832.05524802
+}

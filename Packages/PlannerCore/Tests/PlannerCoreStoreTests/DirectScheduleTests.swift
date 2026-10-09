@@ -94,8 +94,8 @@ struct DirectScheduleTests {
     #expect(
       newRecovery.decodedBackup.backup.schedules.first?.lifetimeId
         == oldRecovery.decodedBackup.backup.schedules.first?.lifetimeId)
-    #expect(oldRecovery.decodedBackup.backup.sources.first?.content.links.count == 1)
-    #expect(newRecovery.decodedBackup.backup.sources.first?.content.links.isEmpty == true)
+    #expect(oldRecovery.decodedBackup.backup.items.first?.content.links.count == 1)
+    #expect(newRecovery.decodedBackup.backup.items.first?.content.links.isEmpty == true)
     #expect(namespace.preparedProposals.isEmpty)
   }
 

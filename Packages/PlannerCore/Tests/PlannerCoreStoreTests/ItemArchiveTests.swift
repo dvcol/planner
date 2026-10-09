@@ -231,8 +231,8 @@ struct ItemArchiveTests {
       Issue.record("Archive requires an independently decodable acknowledged checkpoint.")
       return
     }
-    #expect(selection.decodedBackup.backup.sources.count == 1)
-    let recovered = try #require(selection.decodedBackup.backup.sources.first)
+    #expect(selection.decodedBackup.backup.items.count == 1)
+    let recovered = try #require(selection.decodedBackup.backup.items.first)
     #expect(recovered.id == source.id)
     #expect(recovered.archived == true)
     #expect(recovered.globalDone == false)

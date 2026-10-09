@@ -77,6 +77,9 @@
         let result = await planner.read(session: session, request: request)
         let structured: Value
         switch result {
+        case .source(.list):
+          return failure(
+            code: "unavailable", message: "List reads are not yet admitted by this adapter.")
         case .rows(let window):
           structured = PlannerMCPRowValue.window(window)
         case .failed(let reason):

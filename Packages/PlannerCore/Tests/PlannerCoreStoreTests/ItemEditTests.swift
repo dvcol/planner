@@ -466,9 +466,9 @@ struct ItemEditTests {
       Issue.record("The edited content must be independently recovered: \(inspected)")
       return
     }
-    #expect(selection.decodedBackup.backup.sources.count == 1)
-    #expect(selection.decodedBackup.backup.sources.first?.id == item.id)
-    #expect(selection.decodedBackup.backup.sources.first?.content.title == "Hotel")
-    #expect(selection.decodedBackup.backup.sources.first?.content.notes == "Friday booking")
+    #expect(selection.decodedBackup.backup.items.count == 1)
+    #expect(selection.decodedBackup.backup.items.first?.id == item.id)
+    #expect(selection.decodedBackup.backup.items.first?.content.title == "Hotel")
+    #expect(selection.decodedBackup.backup.items.first?.content.notes == "Friday booking")
   }
 }

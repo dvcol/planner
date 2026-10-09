@@ -159,6 +159,7 @@ public struct PlannerItemContentInput: Sendable, Equatable {
 
 public enum PlannerCommand: Sendable {
   case createItem(content: PlannerItemContentInput)
+  case createList(content: PlannerListContentInput)
   case createSchedule(source: PlannerEntityReference, form: PlannerScheduleForm)
   case editSchedule(
     scheduleId: UUID, changes: PlannerScheduleChanges,
@@ -313,6 +314,7 @@ public enum PlannerReferenceRead: Sendable, Equatable {
 }
 
 public enum PlannerSourceRead: Sendable {
+  case list(PlannerListSourceRead)
   case item(PlannerItemSourceRead)
   case schedule(PlannerScheduleSourceRead)
 }
@@ -456,12 +458,26 @@ public struct PlannerDecodedBackup: Sendable {
 }
 
 public struct PlannerPortableBackup: Sendable {
-  public let sources: [PlannerPortableItem]
+  public var items: [PlannerPortableItem] {
+    sources.compactMap {
+      if case .item(let item) = $0 { return item }
+      return nil
+    }
+  }
+
+  public var lists: [PlannerPortableList] {
+    sources.compactMap {
+      if case .list(let list) = $0 { return list }
+      return nil
+    }
+  }
+
+  public let sources: [PlannerPortableSource]
   public let schedules: [PlannerPortableSchedule]
   public let deletionMarkers: [PlannerPortableDeletionMarker]
 
   init(
-    sources: [PlannerPortableItem], schedules: [PlannerPortableSchedule] = [],
+    sources: [PlannerPortableSource], schedules: [PlannerPortableSchedule] = [],
     deletionMarkers: [PlannerPortableDeletionMarker]
   ) {
     self.sources = sources

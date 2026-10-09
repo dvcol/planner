@@ -85,11 +85,11 @@ struct PortableItemRecord: Codable {
   }
 }
 
-/// This slice supports Items, owned links, direct timed/all-day Schedules and minimal Schedule deletion metadata. Other graph groups must be empty.
-struct ItemOnlyPortableBackup: Codable {
+/// This slice supports Items, empty Lists, owned links, direct timed/all-day Schedules and minimal Schedule deletion metadata. Other graph groups must be empty.
+struct PlannerDataSnapshot: Codable {
   let format: String
   let formatVersion: Int
-  let sources: [PortableItemRecord]
+  let sources: [PortableSourceRecord]
   let ownedLinks: [PortableOwnedLink]
   let schedules: [PortableScheduleRecord]
   let deletionMarkers: [PortableDeletionMarker]
@@ -101,13 +101,17 @@ struct ItemOnlyPortableBackup: Codable {
     case restorationFamilies
   }
 
-  init(items: [ItemSnapshot], deletionMarkers: [PortableDeletionMarker]) {
+  init(items: [ItemSnapshot], lists: [ListSnapshot], deletionMarkers: [PortableDeletionMarker]) {
     self.deletionMarkers = deletionMarkers.sorted {
       $0.deletionId.uuidString < $1.deletionId.uuidString
     }
     format = "planner-data"
     formatVersion = 1
-    sources = items.sorted { $0.id.uuidString < $1.id.uuidString }.map(PortableItemRecord.init)
+    sources =
+      (items.map { PortableSourceRecord.item(PortableItemRecord($0)) }
+      + lists.map { PortableSourceRecord.list(PortableListRecord($0)) }).sorted {
+        $0.id.uuidString < $1.id.uuidString
+      }
     ownedLinks = items.flatMap { item in
       item.links.map { PortableOwnedLink($0, owner: item) }
     }.sorted { $0.id.uuidString < $1.id.uuidString }
@@ -120,7 +124,7 @@ struct ItemOnlyPortableBackup: Codable {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     format = try container.decode(String.self, forKey: .format)
     formatVersion = try container.decode(Int.self, forKey: .formatVersion)
-    sources = try container.decode([PortableItemRecord].self, forKey: .sources)
+    sources = try container.decode([PortableSourceRecord].self, forKey: .sources)
     ownedLinks = try container.decode([PortableOwnedLink].self, forKey: .ownedLinks)
     schedules = try container.decode([PortableScheduleRecord].self, forKey: .schedules)
     deletionMarkers = try container.decode([PortableDeletionMarker].self, forKey: .deletionMarkers)
@@ -131,7 +135,7 @@ struct ItemOnlyPortableBackup: Codable {
       guard try container.decode([String].self, forKey: key).isEmpty else {
         throw PlannerFailure(
           "recoveryIntegrityFailure",
-          "The Item-only prototype cannot validate nonempty \(key.rawValue).")
+          "This snapshot slice cannot validate nonempty \(key.rawValue).")
       }
     }
   }
@@ -158,15 +162,24 @@ struct ItemOnlyPortableBackup: Codable {
     }
     guard Set(sources.map(\.id)).count == sources.count else {
       throw PlannerFailure(
-        "recoveryIntegrityFailure", "The snapshot contains duplicate Item identities.")
+        "recoveryIntegrityFailure", "The snapshot contains duplicate source identities.")
     }
     guard Set(ownedLinks.map(\.id)).count == ownedLinks.count else {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "The snapshot contains duplicate link identities.")
     }
+    let itemRecords = sources.compactMap {
+      if case .item(let item) = $0 { return item }
+      return nil
+    }
+    let listRecords = sources.compactMap {
+      if case .list(let list) = $0 { return list }
+      return nil
+    }
+    let lists = try listRecords.map { try $0.validated() }
     let linksByOwner = try Dictionary(
-      grouping: ownedLinks.map { try $0.validated(sources: sources) }, by: \.ownerId)
-    let items = try sources.map { source in
+      grouping: ownedLinks.map { try $0.validated(sources: itemRecords) }, by: \.ownerId)
+    let items = try itemRecords.map { source in
       let item = try source.validated()
       let links = (linksByOwner[item.id] ?? []).sorted { left, right in
         if left.rank != right.rank { return left.rank < right.rank }
@@ -188,7 +201,8 @@ struct ItemOnlyPortableBackup: Codable {
     }
     return PlannerDecodedBackup(
       backup: PlannerPortableBackup(
-        sources: items, schedules: try schedules.map { try $0.validated(sources: sources) },
+        sources: items.map(PlannerPortableSource.item) + lists.map(PlannerPortableSource.list),
+        schedules: try schedules.map { try $0.validated(sources: itemRecords) },
         deletionMarkers: try deletionMarkers.map { try $0.validated(schedules: schedules) }))
   }
 }
@@ -223,7 +237,7 @@ struct RecoveryPreparedProposal: Codable {
   let originalOperationId: UUID
   let datasetId: UUID
   let ownershipBinding: String
-  let proposedBackup: ItemOnlyPortableBackup
+  let proposedBackup: PlannerDataSnapshot
   let payloadDigest: String
   let evidence: String
 
@@ -250,7 +264,7 @@ struct RecoveryEnvelope: Codable {
 
   func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
     guard format == "planner-recovery", formatVersion == 1,
-      ["1", "2", "3", "4", "5"].contains(storageSchemaVersion),
+      ["1", "2", "3", "4", "5", "6"].contains(storageSchemaVersion),
       namespaceId == identity.namespaceId, datasetId == identity.datasetId,
       ownershipBinding == identity.ownershipBinding, !ownershipBinding.isEmpty,
       let generation = Int64(checkpointGeneration), generation > 0,
@@ -262,7 +276,7 @@ struct RecoveryEnvelope: Codable {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "Recovery ownership, version or digest validation failed.")
     }
-    let decoded = try JSONDecoder().decode(ItemOnlyPortableBackup.self, from: bytes).validated()
+    let decoded = try JSONDecoder().decode(PlannerDataSnapshot.self, from: bytes).validated()
     for receipt in receipts {
       guard receipt.datasetId == datasetId, receipt.ownershipBinding == ownershipBinding,
         receipt.commitState == "applied", let checkpoint = receipt.checkpointGeneration,
@@ -330,7 +344,7 @@ struct PlannerRecoveryArchive {
   }
 
   func publish(
-    items: [ItemSnapshot], deletionMarkers: [PortableDeletionMarker],
+    items: [ItemSnapshot], lists: [ListSnapshot], deletionMarkers: [PortableDeletionMarker],
     receipts: [PlannerSchemaV1.Receipt]
   ) throws -> Int64 {
     let previous = try latest()
@@ -340,7 +354,7 @@ struct PlannerRecoveryArchive {
       throw PlannerFailure("recoveryIncomplete", "Recovery checkpoint capacity was exceeded.")
     }
     let bytes = try JSONEncoder().encode(
-      ItemOnlyPortableBackup(items: items, deletionMarkers: deletionMarkers))
+      PlannerDataSnapshot(items: items, lists: lists, deletionMarkers: deletionMarkers))
     let priorCheckpoints = Dictionary(
       uniqueKeysWithValues: (previous?.receipts ?? []).map {
         ($0.operationId, $0.checkpointGeneration.flatMap(Int64.init))

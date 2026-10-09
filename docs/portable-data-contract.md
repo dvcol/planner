@@ -138,3 +138,9 @@ Selected removal, its receipt and marker save atomically through the public nati
 The local schema-5 Core slice now retains the declared all-day form with exact integer Gregorian components and an optional inclusive end in portable format 1. Timed and all-day source forms share the single guarded form field and stable Schedule lifetime. Conversions retain identity; explicit null end remains distinct from an equal inclusive end. Item content, Last updated, completion, archive and other assignments remain separate.
 
 [Actual local evidence](prototypes/evidence/navigation/core-all-day-schedule.json) covers save/reopen, literal canonical hash bytes, invalid-date rejection, complete form conversion, travel/day-boundary summaries and a genuine schema-4 store migration retaining deletion metadata and historical independent recovery. This does not qualify import/export administration, native mirrored convergence, actual Share embedding or physical-device behavior.
+
+## Implemented typed Item and empty List sources
+
+The schema-6 local slice now retains Item/List records in the same declared portable sources array. Native decoded sources use an immutable typed union, with items/lists projections for kind-specific content. Lists preserve their ID/lifetime, timestamps, name/notes/color/icon, archive state and content origins. Their inapplicable globalDone is null; empty completion remains derived and absent from stored source state. Lists add no Item copies, memberships or parent Done override.
+
+[Actual local evidence](prototypes/evidence/navigation/core-list-creation.json) verifies creation/reopen, acknowledged recovery across every existing writer and genuine schema-5 migration retaining both Schedule forms and minimal deletion metadata. Prepared proposal content inspection, nonempty graph/import/export administration, mirroring and actual Share remain separate obligations.

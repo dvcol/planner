@@ -60,9 +60,9 @@ struct ItemCreationTests {
       Issue.record("The unchanged checkpoint must remain readable: \(inspected)")
       return
     }
-    #expect(selection.decodedBackup.backup.sources.count == 1)
-    #expect(selection.decodedBackup.backup.sources.first?.id == item.id)
-    #expect(selection.decodedBackup.backup.sources.first?.content.title == "Hotel")
+    #expect(selection.decodedBackup.backup.items.count == 1)
+    #expect(selection.decodedBackup.backup.items.first?.id == item.id)
+    #expect(selection.decodedBackup.backup.items.first?.content.title == "Hotel")
   }
 
   @Test func changedPayloadReplayRejectsWithoutReplacingOriginalItemOrEvidence() async throws {
@@ -127,8 +127,8 @@ struct ItemCreationTests {
       Issue.record("The original recovery checkpoint must remain readable: \(inspected)")
       return
     }
-    #expect(selection.decodedBackup.backup.sources.count == 1)
-    #expect(selection.decodedBackup.backup.sources.first?.content.title == "Hotel")
+    #expect(selection.decodedBackup.backup.items.count == 1)
+    #expect(selection.decodedBackup.backup.items.first?.content.title == "Hotel")
   }
 
   @Test func replayingCreationAfterReopenRetainsOneItemAndOriginalCheckpoint() async throws {
@@ -189,8 +189,8 @@ struct ItemCreationTests {
       Issue.record("Acknowledged snapshot was unavailable: \(inspected)")
       return
     }
-    #expect(selection.decodedBackup.backup.sources.count == 1)
-    let recoveredItem = try #require(selection.decodedBackup.backup.sources.first)
+    #expect(selection.decodedBackup.backup.items.count == 1)
+    let recoveredItem = try #require(selection.decodedBackup.backup.items.first)
     #expect(recoveredItem.id == originalResult.generated.first?.id)
     #expect(recoveredItem.content.title == "Hotel")
     #expect(recoveredItem.content.notes == "Original notes")
@@ -288,8 +288,8 @@ struct ItemCreationTests {
     #expect(selection.proposalId == nil)
     #expect(selection.originalOperationId == nil)
     #expect(!selection.portableData.isEmpty)
-    #expect(selection.decodedBackup.backup.sources.count == 1)
-    let recoveredItem = try #require(selection.decodedBackup.backup.sources.first)
+    #expect(selection.decodedBackup.backup.items.count == 1)
+    let recoveredItem = try #require(selection.decodedBackup.backup.items.first)
     #expect(recoveredItem.id == item.id)
     #expect(recoveredItem.kind == .item)
     #expect(recoveredItem.content.title == "Hotel")

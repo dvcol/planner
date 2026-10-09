@@ -1,0 +1,125 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "a9b34af",
+  "scope": "Durable empty List metadata and derived No items progress, typed mixed Item/List recovery and genuine schema-5 migration through the public facade.",
+  "packageExecutions": {
+    "Red": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListCreationRed.log",
+      "failure": "The native createList command is rejected as unavailable before implementation."
+    },
+    "CompiledGreen": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListCreationCompiledGreen.log"
+    },
+    "Qualification": {
+      "result": "Failed",
+      "totalTestCount": 52,
+      "passedTests": 51,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListCreationQualification.log",
+      "failure": "The test assumes an acknowledged empty checkpoint after bootstrap; bootstrap initializes a namespace without a saved-data acknowledgement. Corrected to check absent acknowledgement and no prepared proposal."
+    },
+    "QualifiedStore": {
+      "result": "Passed",
+      "totalTestCount": 53,
+      "passedTests": 53,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListCreationQualifiedStore.log"
+    }
+  },
+  "nativeExecutions": {
+    "CoreMac": {
+      "result": "Passed",
+      "totalTestCount": 8,
+      "passedTests": 8,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerCoreListCreationNativeQualification.xcresult",
+      "log": "/private/tmp/PlannerCoreListCreationNativeQualification.log"
+    },
+    "MCPRegression": {
+      "result": "Passed",
+      "totalTestCount": 43,
+      "passedTests": 43,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPListCreationCoreRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPListCreationCoreRegression.log"
+    }
+  },
+  "intermediateCorrection": {
+    "log": "/private/tmp/PlannerCoreListCreationGreen.log",
+    "outcome": "Native predicate compilation failed on source.id key-path optional lifting. Binding the UUID scalar before the predicate resolves it; this is not a passing run."
+  },
+  "simulatorCompilation": {
+    "result": "Passed",
+    "log": "/private/tmp/PlannerCoreListCreationSimulatorBuild.log",
+    "runtimeExecuted": false,
+    "signing": "disabled"
+  },
+  "qualification": {
+    "invalidCreations": 6,
+    "behavior": [
+      "Owned name with surrounding whitespace, notes, exact sRGB color and icon survive native reopen and independent recovery. The name hash matches independently framed literal bytes after context UUID substitution.",
+      "An empty List has no global Done flag, remains Active, and derives empty 0/0 progress without a completion percentage or parent override.",
+      "Creating the List preserves existing Item content/hash/time, all-day Schedule and minimal metadata for an earlier removed Schedule. Exact replay reuses the generated identity; changed content under the same operation ID rejects.",
+      "Every existing Item and Schedule writer retains the List identity/content/time/archive state in its acknowledged checkpoint. Snapshot and publish signatures require List data to prevent accidental omission; prepared-content inspection remains unqualified.",
+      "Blank names and invalid finite/range sRGB components reject at exact paths with no receipt, acknowledgement or prepared proposal. Optional notes/icon preserve nil/empty semantics.",
+      "Genuine schema-5 migration retains Item data/links/flags/hash/time, fractional timed and inclusive civil forms/hashes, deletion metadata and byte-identical prior portable recovery. Share-role List creation succeeds only after main-owned migration."
+    ]
+  },
+  "fixture": {
+    "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV5",
+    "producerCommit": "e50c14d",
+    "producerLog": "/private/tmp/PlannerSchema5Producer-e50c14d.log",
+    "checksummedFiles": 22,
+    "originalSchema": 5,
+    "originalCheckpoint": 7
+  },
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerCoreListCreationFinalSwiftLint.log",
+    "affectedSwiftFiles": 20,
+    "diffWhitespace": "passed",
+    "excludedMCPSuite": "ReadLoadTests"
+  },
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "623cc3ae5e13dcf2e4a658a74c7c24a720c5d18b8d75222313fff10f7dc19a6d",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "8f62ace87e9f9040063eb3e8cfe287841afbf75fa5e7cb23cef5b34cf7fe6bbd",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerListRecovery.swift": "77ac9d1b81c6534d3f9fcbf9c8f278008432d0d2a78b4f01fd4b9e1f489e538f",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift": "54531deb809fa038981acdb8908e623749a0934adbebd629eeb626e827ea23b7",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "620f23c3a7685e89696e8ce4022c6fa78b5b07838b51604aac8172039097637c",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV6.swift": "9ec7f806f24a4666d02f9a2b16e94bf10330705b4cd4989cb52792e30757fd83",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "3d0610ddb09e3c63a939b5e34c41215d4e224eaad0bbaf8a04b1e3704018ec88",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "b1c2010a31acb7b5160c3a726bf4d513e435accadc99aa83fa12739072d4d223",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DirectScheduleTests.swift": "3f1148695b499a04cbf62f1807e79f26a3a5e2c2d507e392a8548e389c55282d",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemArchiveTests.swift": "748743d255db0613db7ee2e39c03c439afcf83fa31cf8cf416eb39b66c6bf7a2",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCompletionTests.swift": "90622f5f7087eea57a7992a14b57d8bb61102f439749531b8753f9dbe38bc79d",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCreationTests.swift": "cce7f91e2a638989d5922168d781e2f51c2f13ee2d5e0d1875a20f00f232ebf8",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEditTests.swift": "76dc86b75124410f45443170320ac6a774bdb3c91c518102bbce9a48cbc91314",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift": "7088e9d7eb869f1fa7c7c0cf63c518041e6247e7a7e291374b2af55185c0799a",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkTests.swift": "4284ec284db6e3e3b269bed171b95d96a66d14df959d22e9790e4bd484f8ad2d",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLocationEditTests.swift": "de312ef15e594aa81f18e8344b01095c628eea72c9fac059f6d555babcd7ae31",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemReferenceReadTests.swift": "cacd8855cacc69426abbf6eb8cd2ef88d9ec85e4a2966ac77ad22cc20b1db022",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCreationTests.swift": "694915bb33d1a54ace2b6c0771a0bb0a8f0487f9a69249a414ee7505ae2ad4f2",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoveryFailureTests.swift": "a30332eb67867c9cf240ea22bf58c9d3c9c36f085149ff44b49a9c83a328ac79",
+    "Planner/AgentControl/PlannerMCPSourceTool.swift": "9924eae0899aac8aab859dc5fd45b97db116e41d35f61638b1389cfb3a409536"
+  },
+  "remaining": [
+    "List editing/archive, catalogs and memberships/local completion/bulk/order",
+    "List agent admission and saved native UI/full Itinerary/label graph",
+    "Prepared-content and real interruption/performance qualification",
+    "Actual Share, CloudKit convergence/account recovery and physical-device gates"
+  ]
+}
