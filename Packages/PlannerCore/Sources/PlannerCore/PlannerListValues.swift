@@ -34,6 +34,31 @@ public typealias PlannerListContent = PlannerListContentInput
 
 public enum PlannerListField: String, Sendable, CaseIterable { case name, notes, color, iconName }
 
+public enum PlannerListFieldValue: Sendable, Equatable {
+  case string(String)
+  case optionalString(String?)
+  case optionalColor(PlannerColor?)
+}
+
+public struct PlannerListChanges: Sendable {
+  public let name: PlannerFieldChange<String>
+  public let notes: PlannerFieldChange<String>
+  public let color: PlannerFieldChange<PlannerColor>
+  public let iconName: PlannerFieldChange<String>
+
+  public init(
+    name: PlannerFieldChange<String> = .unchanged,
+    notes: PlannerFieldChange<String> = .unchanged,
+    color: PlannerFieldChange<PlannerColor> = .unchanged,
+    iconName: PlannerFieldChange<String> = .unchanged
+  ) {
+    self.name = name
+    self.notes = notes
+    self.color = color
+    self.iconName = iconName
+  }
+}
+
 public enum PlannerContainerProgressState: String, Sendable {
   case empty, complete, partial, unresolved
 }
@@ -102,6 +127,53 @@ extension PlannerListContentInput {
   }
 }
 
+extension PlannerListChanges {
+  func validatedFields() throws -> [PlannerListField] {
+    switch name {
+    case .clear:
+      throw PlannerFailure(
+        "invalidInput", "A List name cannot be cleared.", propertyPath: "/command/changes/name")
+    case .set(let value):
+      guard !value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        throw PlannerFailure(
+          "invalidInput", "A List name must contain text.", propertyPath: "/command/changes/name")
+      }
+    case .unchanged: break
+    }
+    if case .set(let value) = color { try value.validate(propertyPath: "/command/changes/color") }
+    var fields: [PlannerListField] = []
+    if !name.isUnchanged { fields.append(.name) }
+    if !notes.isUnchanged { fields.append(.notes) }
+    if !color.isUnchanged { fields.append(.color) }
+    if !iconName.isUnchanged { fields.append(.iconName) }
+    guard !fields.isEmpty else {
+      throw PlannerFailure(
+        "invalidInput", "A List edit must contain at least one changed field.",
+        propertyPath: "/command/changes")
+    }
+    return fields.sorted { $0.rawValue < $1.rawValue }
+  }
+
+  func applying(to content: PlannerListContent) -> PlannerListContent {
+    var updatedName = content.name
+    if case .set(let value) = name { updatedName = value }
+    return PlannerListContent(
+      name: updatedName, notes: optionalValue(notes, retaining: content.notes),
+      color: optionalValue(color, retaining: content.color),
+      iconName: optionalValue(iconName, retaining: content.iconName))
+  }
+
+  private func optionalValue<Value>(
+    _ change: PlannerFieldChange<Value>, retaining current: Value?
+  ) -> Value? {
+    switch change {
+    case .set(let value): value
+    case .clear: nil
+    case .unchanged: current
+    }
+  }
+}
+
 struct ListSnapshot {
   let id: UUID
   let lifetimeId: UUID
@@ -111,6 +183,15 @@ struct ListSnapshot {
   let archived: Bool
 
   var reference: PlannerEntityReference { PlannerEntityReference(kind: .list, id: id) }
+
+  func fieldValue(_ field: PlannerListField) -> PlannerListFieldValue {
+    switch field {
+    case .name: .string(content.name)
+    case .notes: .optionalString(content.notes)
+    case .color: .optionalColor(content.color)
+    case .iconName: .optionalString(content.iconName)
+    }
+  }
 
   func read(datasetId: UUID) -> PlannerListSourceRead {
     PlannerListSourceRead(

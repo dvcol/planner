@@ -1,0 +1,93 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "29ded56",
+  "scope": "Guarded List name/notes/color/icon edits with whole-patch conflict rejection, original receipt replay and typed mixed-source independent recovery.",
+  "packageExecutions": {
+    "Red": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListEditRed.log",
+      "failure": "List editing rejects as unavailable before implementation."
+    },
+    "Green": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListEditGreen.log"
+    },
+    "Qualification": {
+      "result": "Passed",
+      "totalTestCount": 58,
+      "suiteCount": 20,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListEditQualification.log"
+    }
+  },
+  "nativeExecutions": {
+    "CoreMac": {
+      "result": "Passed",
+      "totalTestCount": 5,
+      "passedTests": 5,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerCoreListEditNativeQualification.xcresult",
+      "log": "/private/tmp/PlannerCoreListEditNativeQualification.log"
+    },
+    "MCPRegression": {
+      "result": "Passed",
+      "totalTestCount": 43,
+      "passedTests": 43,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPListEditCoreRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPListEditCoreRegression.log"
+    }
+  },
+  "simulatorCompilation": {
+    "result": "Passed",
+    "log": "/private/tmp/PlannerCoreListEditSimulatorBuild.log",
+    "runtimeExecuted": false,
+    "signing": "disabled"
+  },
+  "lint": {
+    "result": "Passed",
+    "files": [
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListEditTests.swift",
+      "Planner/AgentControl/PlannerMCPFailureValue.swift"
+    ],
+    "log": "/private/tmp/PlannerCoreListEditSwiftLint.log"
+  },
+  "sourceSHA256": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "14a54440ba4f7da0f6ce931f44f34672981f8251841089ed7f52bb57ad09f317",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift": "875dc8e1593d911bd3ff6141dada0c3b9de33d975836a0cee3cfffee653dd008",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "bac9e6e04bea678f73b27b8f90f2fbb375c4e7ea7f999407639cccdd4b425cac",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "41e958c8aa0cdb7951b48855298a8d5fcf03c402dba7478a6fb41f4d292659c8",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListEditTests.swift": "103b7b0d95a9d3945d9a097c9b3766646622f1652b359b4030e5aaf2d7a94c57",
+    "Planner/AgentControl/PlannerMCPFailureValue.swift": "709b213a5139c8d5d82bf60f08841ec40791cadb8b3e43eeecdf32572eb82c07"
+  },
+  "observations": [
+    "Public read/execute/reopen returns edited notes, unchanged List metadata, empty derived progress and the original checkpoint on exact replay.",
+    "An intervening name edit does not invalidate a notes-only edit using the full old hash map. A conflicting notes field rejects an entire name/notes patch with typed current values/hashes and no timestamp/checkpoint change.",
+    "Later notes are retained when replaying an old successful edit. Unused echoed hashes do not enlarge the payload; modified content under the old operation ID rejects.",
+    "Exact padded Unicode name and empty notes/icon survive before optional clears. The blue color hash is checked against literal accepted canonical bytes with only real UUID contexts substituted. Unrelated Item/Schedule hashes and Item updatedAt remain unchanged.",
+    "Ten invalid typed edits and a missing identity have no applied evidence; a real recovery-directory file obstruction rejects before committing.",
+    "Two independently bootstrapped facades compete on one original notes guard at the shared native writer boundary; one saves at checkpoint 2 and one rejects stale."
+  ],
+  "limits": [
+    "No native saved List editor, memberships, List archive action or HTTP List admission is qualified here.",
+    "No schema or portable-format change; genuine migration fixtures remain covered by the affected store regression.",
+    "No prepared-content inspection, postcommit interruption, actual Share extension, physical iCloud/account convergence or performance claim.",
+    "ReadLoadTests is excluded from this affected MCP regression. Simulator is compilation only."
+  ]
+}
