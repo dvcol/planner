@@ -309,8 +309,29 @@
       ])
     }
 
+    static func appliedIdentityValue(_ identity: PlannerAppliedIdentity) -> Value {
+      switch identity {
+      case .source(let source):
+        return .object(["kind": .string(source.kind.rawValue), "id": .string(source.id.uuidString)])
+      case .reference(let reference): return referenceValue(reference)
+      }
+    }
+
     private static func referenceValue(_ reference: PlannerReferenceRead) -> Value {
       switch reference {
+      case .membership(let identifier, let list, let item):
+        return .object([
+          "kind": .string("membership"), "id": .string(identifier.uuidString),
+          "owner": .object(["kind": .string(list.kind.rawValue), "id": .string(list.id.uuidString)]
+          ),
+          "source": .object([
+            "kind": .string(item.kind.rawValue), "id": .string(item.id.uuidString),
+          ]),
+          "appearance": .object([
+            "kind": .string("listMembership"), "listId": .string(list.id.uuidString),
+            "membershipId": .string(identifier.uuidString),
+          ]),
+        ])
       case .ownedLink(let identifier, let owner):
         return .object([
           "kind": .string("ownedLink"), "id": .string(identifier.uuidString),

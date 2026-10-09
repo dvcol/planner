@@ -1,0 +1,185 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "984b98f",
+  "scope": "Native List membership creation, stable live references, approved placement and local recovery; existing HTTP source/status reads preserve full membership identities.",
+  "packageExecutions": {
+    "CreationRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipCreationRed.log"
+    },
+    "CreationGreen": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipCreationGreenQualified.log"
+    },
+    "PlacementRed": {
+      "result": "Failed",
+      "totalTestCount": 2,
+      "suiteCount": 1,
+      "passedTests": 1,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipPlacementRed.log"
+    },
+    "PlacementGreen": {
+      "result": "Passed",
+      "totalTestCount": 2,
+      "suiteCount": 1,
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipPlacementGreen.log"
+    },
+    "InboxRed": {
+      "result": "Failed",
+      "totalTestCount": 3,
+      "suiteCount": 1,
+      "passedTests": 2,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipInboxBehaviorRed.log"
+    },
+    "InboxGreen": {
+      "result": "Passed",
+      "totalTestCount": 3,
+      "suiteCount": 1,
+      "passedTests": 3,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipInboxGreen.log"
+    },
+    "MigrationQualification": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipMigrationQualification.log"
+    },
+    "Qualification": {
+      "result": "Passed",
+      "totalTestCount": 65,
+      "suiteCount": 23,
+      "passedTests": 65,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipQualification.log"
+    }
+  },
+  "nativeExecutions": {
+    "CoreMac": {
+      "result": "Passed",
+      "totalTestCount": 10,
+      "passedTests": 10,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerCoreMembershipNativeQualification.xcresult",
+      "log": "/private/tmp/PlannerCoreMembershipNativeQualification.log",
+      "summary": "/private/tmp/PlannerCoreMembershipNativeQualificationSummary.json"
+    },
+    "MCP": {
+      "result": "Passed",
+      "totalTestCount": 48,
+      "passedTests": 48,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPMembershipReadQualification.xcresult",
+      "log": "/private/tmp/PlannerMCPMembershipReadQualification.log",
+      "summary": "/private/tmp/PlannerMCPMembershipReadQualificationSummary.json"
+    }
+  },
+  "simulator": {
+    "result": "Test build succeeded",
+    "runtimeExecuted": false,
+    "signing": "disabled",
+    "log": "/private/tmp/PlannerCoreMembershipSimulatorBuild.log"
+  },
+  "lint": {
+    "result": "Passed",
+    "files": [
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerAppliedValues.swift",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipRecovery.swift",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV7.swift",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMigrationTests.swift",
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift",
+      "Planner/AgentControl/PlannerMCPOperationStatusTool.swift",
+      "Planner/AgentControl/PlannerMCPSourceTool.swift",
+      "PlannerMCPTests/ListRoutingTests.swift"
+    ],
+    "log": "/private/tmp/PlannerCoreMembershipSwiftLint.log"
+  },
+  "sourceSHA256": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerAppliedValues.swift": "7bd92cdaab57c37a778813f84ad492c1c03c07a94d0be4098cf2a809d7247808",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "dc74c5482ba4e0ccd43ddb4d9870ff42d10316273c562dc8c6a926c4c0bfa2a7",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift": "cc858d8b5901779245572e6b0fbb8a5babbfc1b55cd88895194b838cf5e6c577",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipRecovery.swift": "132e5752b86d01a9038c6404b6d2455335294da8cede1a9673fc9efd43e371ce",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift": "8bffc2487d3f43604e877b84bbde13be83fdbd5eb53bca45fb6d8b06b2e27575",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "4a2035cb9b906603ccaadd6227aabe5b2d1ae24fb7c7293ab78374759fdffd91",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV7.swift": "7dce5ff7a8df9a69eaf6f7cdc70d1b19df524b67976889b6669b9f424e6ca398",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "2385bca6ce140c5370b59f21156d5192567c090f786525f1fbcb71e7a605c1ad",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "61aa77d912a44ba05ce6af53632cf4a226903c63902be2736abda4089406f3d6",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift": "eda2dd044c3c630db41c6f5b7ff0fabcd8cca5d0b78a37d7c99f2217618972bf",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift": "0d17ef73650029f0c7b98625af62c6af1c184405693dbe5b4fbf1573957f20f1",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMigrationTests.swift": "a7ee75320b039c22ba06924fd068649ff388e46caad71a11c0c991a2436dedee",
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift": "9a55fb45a1791dded417f0abaa601a77bfc8c0ae8f69181809e19e1c9b0c3f5d",
+    "Planner/AgentControl/PlannerMCPOperationStatusTool.swift": "bcf50d44eb73187d0e04243780cc0172154861d64a6374fc2bef3c2971b2fe8d",
+    "Planner/AgentControl/PlannerMCPSourceTool.swift": "e535f34904bfe427599f2011361a903093714311646a1794f223992dc3d7fb2c",
+    "PlannerMCPTests/ListRoutingTests.swift": "2b814742229b3b27b384b930561e41752cf556cc3cc34541233dc31766948f75"
+  },
+  "fixture": {
+    "schemaVersion": 6,
+    "producerCommit": "984b98f",
+    "directory": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV6",
+    "checksummedFileCount": 30,
+    "checksumsVerified": true
+  },
+  "observations": [
+    "A new membership owns an independent immutable ID and uses that ID as its ordinary lifetime. Its bound Item/List sources remain live identities, not copied content; localDone starts false independently of global Done.",
+    "Source reads return complete owner/source/appearance references; nonempty List progress uses every retained child including archived Items. Existing membership addition retains identity, local state and position, with no generated duplicate.",
+    "First/last/before/after placements validate an exact destination anchor. Twelve repeated insertions prove gap-exhaustion rebalance retains all source/reference identities, order and local Todo states across reopen.",
+    "All Items returns one shared source; Inbox excludes Items with any retained membership, including archived containers. Global Done makes both independent Lists complete; Reopen reveals their retained Todo flags.",
+    "Every existing Item/List create/edit/state and Schedule create/edit/zone/removal writer preserves memberships in acknowledged independent recovery. Membership addition does not rewrite Item updatedAt or content hashes.",
+    "Genuine schema-6 migration retains both Lists, both Schedule forms, owned links, Item flags/content/timestamps/hashes, minimal Schedule deletion history and original source creation receipts. Share role refuses migration until main opens; later Share-role save reaches checkpoint 12 under schema 7. Historical checkpoint 11 bytes stay identical.",
+    "Five missing-source/invalid-anchor requests and a genuine precommit recovery directory obstruction leave the addition unapplied, preserve issued windows and checkpoint, and produce no applied/prepared evidence.",
+    "Actual HTTP source reads and operation status retain the complete membership and mixed source/reference receipt after native creation; exact native replay survives reopen. HTTP addMembership admission is not yet implemented."
+  ],
+  "implementationCorrections": [
+    {
+      "log": "/private/tmp/PlannerCoreMembershipCreationGreen.log",
+      "reason": "Added required memberships to the typed portable backup initializer after its compile failure."
+    },
+    {
+      "log": "/private/tmp/PlannerCoreMembershipCreationGreenFixed.log",
+      "reason": "Moved the current lightweight Item row projection to schema 7 after its compile failure."
+    },
+    {
+      "log": "/private/tmp/PlannerCoreMembershipInboxRed.log",
+      "reason": "Corrected a test identity comparison to use UUID sets because source references are Equatable, not Hashable."
+    }
+  ],
+  "limits": [
+    "Contextual appearance reads/rows, local and bulk completion commands, membership removal/move/reorder, catalogs and saved native controls remain required.",
+    "The store remains localOnly with CloudKit disabled. Duplicate-context A17 reconciliation and physical membership/order/deletion/account convergence remain unproved.",
+    "Prepared-content inspection, postcommit interruption for this new writer, actual Share/AppGroup embedding, signing/clients/reader, native accessibility and physical performance remain open.",
+    "HTTP addMembership is not admitted or advertised by this slice. Simulator evidence is compilation only. ReadLoadTests remains excluded from the affected MCP target."
+  ]
+}

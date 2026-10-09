@@ -193,12 +193,37 @@ struct ListSnapshot {
     }
   }
 
-  func read(datasetId: UUID) -> PlannerListSourceRead {
-    PlannerListSourceRead(
+  func read(datasetId: UUID, memberships: [MembershipSnapshot], items: [ItemSnapshot]) throws
+    -> PlannerListSourceRead
+  {
+    let children = memberships.filter { $0.list.id == id }.sorted {
+      if $0.rank != $1.rank { return $0.rank < $1.rank }
+      return $0.id.uuidString < $1.id.uuidString
+    }
+    let doneCount = try children.reduce(Int64(0)) { count, membership in
+      let matches = items.filter {
+        $0.id == membership.item.id && $0.lifetimeId == membership.item.lifetimeId
+      }
+      guard matches.count == 1, let item = matches.first else {
+        throw PlannerFailure("readUnavailable", "A List child source is unresolved.")
+      }
+      return count + (item.globalDone || membership.localDone ? 1 : 0)
+    }
+    let totalCount = Int64(children.count)
+    let progressState: PlannerContainerProgressState
+    if children.isEmpty {
+      progressState = .empty
+    } else if doneCount == totalCount {
+      progressState = .complete
+    } else {
+      progressState = .partial
+    }
+    return PlannerListSourceRead(
       source: reference, content: content, createdAt: createdAt, updatedAt: updatedAt,
       fieldHashes: fieldHashes(datasetId: datasetId),
       state: PlannerSourceState(globalDone: nil, archived: archived),
       progress: PlannerContainerProgress(
-        container: reference, state: .empty, doneCount: 0, totalCount: 0), references: [])
+        container: reference, state: progressState, doneCount: doneCount, totalCount: totalCount),
+      references: children.map(\.reference))
   }
 }
