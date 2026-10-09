@@ -1,0 +1,255 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "498d2f2",
+  "scope": "Typed Item/Schedule source-read union, own Schedule source/form read, lifetime-bound form hash and actual HTTP admission/encoding through the public facade.",
+  "coreRedGreen": {
+    "redLog": "/private/tmp/PlannerCoreScheduleSourceReadRed.log",
+    "redExecutedFunctions": 1,
+    "redFailedFunctions": 1,
+    "observed": "A saved Schedule cannot be read under its own identity.",
+    "greenLog": "/private/tmp/PlannerCoreScheduleSourceReadGreen.log",
+    "greenExecutedFunctions": 1,
+    "greenPassedFunctions": 1
+  },
+  "qualification": {
+    "packageLog": "/private/tmp/PlannerCoreScheduleSourceReadQualification.log",
+    "executedFunctions": 36,
+    "passedFunctions": 36,
+    "suites": 14,
+    "hashOracle": "The complete accepted Tokyo canonical input bytes from docs/fixtures/schedule-field-hashes-v1.json are literal in the public read test. Only its context UUIDs are substituted with the real dataset/generated Schedule/independently recovered Schedule lifetime. Native CryptoKit hashes those known bytes; no production canonical encoder/helper, private table or test-only identity injection is used.",
+    "behavior": "Original fixed form/source identity and sole form hash survive reopen. Item callers use the typed Item source case while preserving their previous identity/content/state/hash/recovery assertions."
+  },
+  "wireRedGreen": {
+    "redExecutedFunctions": 15,
+    "redPassedFunctions": 14,
+    "redFailedFunctions": 1,
+    "greenExecutedFunctions": 15,
+    "greenPassedFunctions": 15,
+    "observed": "The actual HTTP Schedule source request is rejected by the old Item-only admission.",
+    "behavior": "Source envelope returns the Schedule identity, original Item target/timed form, exactly form hash, null createdAt/updatedAt/globalDone/archived/progress and empty labels/references. Text and structured JSON remain identical."
+  },
+  "nativeExecutions": {
+    "NativeQualification": {
+      "bundle": "/private/tmp/PlannerCoreScheduleSourceReadNativeQualification.xcresult",
+      "log": "/private/tmp/PlannerCoreScheduleSourceReadNativeQualification.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 9,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791560987.505,
+        "passedTests": 9,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791560971.239,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerCore",
+        "topInsights": [],
+        "totalTestCount": 9
+      }
+    },
+    "WireRed": {
+      "bundle": "/private/tmp/PlannerMCPScheduleSourceReadRed.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleSourceReadRed.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 14,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1791560772.982,
+        "passedTests": 14,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791560749.525,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "Expectation failed: tool[\"isError\"] as? Bool == false\ntool[\"isError\"] as? Bool \u2192 true",
+            "targetName": "PlannerMCPTests",
+            "testIdentifier": 1,
+            "testIdentifierString": "RowRoutingTests/scheduleSourceOverHTTPReturnsOriginalFormAndOnlyItsGuardedHash()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/scheduleSourceOverHTTPReturnsOriginalFormAndOnlyItsGuardedHash()",
+            "testName": "scheduleSourceOverHTTPReturnsOriginalFormAndOnlyItsGuardedHash()"
+          }
+        ],
+        "title": "Test - Planner",
+        "topInsights": [],
+        "totalTestCount": 15
+      }
+    },
+    "WireGreen": {
+      "bundle": "/private/tmp/PlannerMCPScheduleSourceReadGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleSourceReadGreen.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 15,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791560814.568,
+        "passedTests": 15,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791560807.21,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [],
+        "totalTestCount": 15
+      }
+    },
+    "AffectedMCPRegression": {
+      "bundle": "/private/tmp/PlannerMCPScheduleSourceReadRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleSourceReadRegression.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 41,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791560976.068,
+        "passedTests": 35,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791560969.104,
+        "statistics": [
+          {
+            "subtitle": "9 test runs",
+            "title": "3 tests ran with dynamic parameters"
+          }
+        ],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [
+          {
+            "category": "Longest Test Runs",
+            "impact": "11% of duration",
+            "text": "1 longest test run with outlier durations exceeding 0.27s (three standard deviations)"
+          }
+        ],
+        "totalTestCount": 35
+      },
+      "excludedSuite": "ReadLoadTests"
+    }
+  },
+  "simulatorBuild": {
+    "log": "/private/tmp/PlannerCoreScheduleSourceReadSimulatorBuild.log",
+    "destination": "generic/platform=iOS Simulator",
+    "signingAllowed": false,
+    "result": "TEST BUILD SUCCEEDED",
+    "runtimeTests": false
+  },
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerScheduleSourceReadSwiftLint.log",
+    "affectedSwiftFiles": 24,
+    "diffWhitespace": "passed"
+  },
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "8aea666121c58a9c987fe1c8bdcba150b3f959a9b9d285d3ecacb6c7c56283b3",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "55ed9344dd6ef066bad88aa142c7666816c051d52988a531b48bf034011e69f4",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "907e5d83f702dfb7bb0f3991fbf1aad72a56080391096c9ab3d8c13fe70c70fe",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "604c6ee4c6b48b4b947eeb460f6aab5e8ff3d2f99165a983cb3433d0cf7e61c6",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "ebca0c4f2e63b5b3ede65d5e1618239ffa94fd926a6920e10f3156ef015180ac",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DirectScheduleTests.swift": "f79c9b1d3a2df1e6079dd9ff5ba92345205020d16a5fa644a8e196c68e477e33",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemArchiveTests.swift": "a25b90373aa7691ffd35148a09fd979cf36b1c285b6d43b73d925a747c2363de",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCompletionTests.swift": "6f83dfb660f9e984ec9c0272c109b515c78e9a669d533de915dd5d7bc2cc0eee",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCreationTests.swift": "614eb50b6c7c49f7094c862538bfce7828b0c493ed00fe27daec566ca7ff65d8",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEditTests.swift": "62bca5c0232c48d51e923303c263d94033d678571a02328cfa294ad48df31303",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkEditTests.swift": "1797fb47a943f82ab1f2dcb9dc6a59cc0b653151182c9bfb18dc594d20f8e5fd",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift": "30cd6b0ac4cbdb66469606ed63e914b010118167f1525cccd8dbbaca536bf9d8",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkTests.swift": "8a6ffabab1dab19f42bd50a8b618968b7e50a30eaaca89f58cb4b8599c7a770d",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLocationEditTests.swift": "9e0b8b804a6cbe6a32d9e4e83b99021c80cf3496a2a0ee93eec4740b93c39502",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemQueryTests.swift": "d78739e8e6a260413d277b785f2c7aa21193e5123740544032099b443b7633f7",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemReferenceReadTests.swift": "99827549b9288e66ea038d427984d7c613c84272e5c385039f93026b2b6557b7",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoveryFailureTests.swift": "9e36488f019071651b3f7db789878f4c38da3b028903a439d87bbffa41ee24b1",
+    "Planner/AgentControl/PlannerMCPRowValue.swift": "08f634bddc48a4fd08b477073d5677ac926d15966701c16529087c7b7a4b74d4",
+    "Planner/AgentControl/PlannerMCPSourceTool.swift": "cb0809c5423086d598d6e1cbc753d6ded942c519e88f9f1d45ff31892718ab75",
+    "PlannerMCPTests/ArchiveRoutingTests.swift": "ad255ec0210088e92f99e6c962c5b7a725d1773aa0d2159dff37399bcffd44bf",
+    "PlannerMCPTests/CommandRoutingTests.swift": "509eeb17f3981982036a64255ef6e03bb59db956faec9141564b91fd7ce0a43d",
+    "PlannerMCPTests/ReadLoadTests.swift": "15db5773518413fae4d34c06f7d4f09c24032922e811864fd5e525176c339b04",
+    "PlannerMCPTests/RowRoutingTests.swift": "4ccc36f843a14d03d4de7ae54d47f406f8521a65cf2e3ab51e384e506f700782",
+    "docs/adapter-contract.md": "cb56d53c18cfaac17a347c28ce7580aa63948c594c9c80609e9180438da809cd",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleSourceReadTests.swift": "6e2575c710d5a52aa251fa8f6138b01392fbbff32e664316aeb8b015bcb1724e"
+  },
+  "limitations": [
+    "Only direct timed Item Schedules. All-day/Itinerary forms, guarded edits/removal and other source/graph variants remain open.",
+    "Source reads change no stored schema or recovery format and introduce no native saved editor/provider I/O. ReadLoadTests receives only the typed Item-case caller update; no new performance measurement is claimed.",
+    "No actual Share, signed client/reader, interrupted migration, physical CloudKit/account convergence or device performance qualification. Existing native metadata/linkd diagnostics remain unqualified."
+  ]
+}

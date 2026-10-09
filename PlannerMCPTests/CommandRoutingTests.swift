@@ -29,7 +29,7 @@ struct CommandRoutingTests {
     }
     let source = try #require(result.generated.first)
     guard
-      case .source(let original) = await planner.read(
+      case .source(.item(let original)) = await planner.read(
         session: datasetSession, request: .source(source))
     else {
       Issue.record("The original notes hash must come from a public read.")
@@ -58,7 +58,7 @@ struct CommandRoutingTests {
       #expect(recovery["state"] as? String == "complete")
       #expect(recovery["checkpointGeneration"] as? String == "2")
       guard
-        case .source(let friday) = await planner.read(
+        case .source(.item(let friday)) = await planner.read(
           session: datasetSession, request: .source(source))
       else {
         Issue.record("HTTP must update the shared native Item.")
@@ -88,7 +88,7 @@ struct CommandRoutingTests {
       let hashes = try #require(details["currentFieldHashes"] as? [String: String])
       #expect(hashes["notes"] == friday.fieldHashes[.notes]?.value)
       guard
-        case .source(let current) = await planner.read(
+        case .source(.item(let current)) = await planner.read(
           session: datasetSession, request: .source(source))
       else {
         Issue.record("A stale agent edit must retain the current Item.")
@@ -162,7 +162,7 @@ struct CommandRoutingTests {
       #expect(reason["code"] as? String == "forbiddenOperation")
       #expect(reason["propertyPath"] as? String == "/command/type")
       guard
-        case .source(let current) = await planner.read(
+        case .source(.item(let current)) = await planner.read(
           session: datasetSession, request: .source(source))
       else {
         Issue.record("Rejected administration must retain Hotel.")
@@ -244,7 +244,7 @@ struct CommandRoutingTests {
       }
       let item = PlannerEntityReference(kind: .item, id: first.itemIdentifier)
       guard
-        case .source(let read) = await reopened.read(
+        case .source(.item(let read)) = await reopened.read(
           session: reopenedSession, request: .source(item))
       else {
         Issue.record("HTTP-created Hotel must remain readable after reopening.")

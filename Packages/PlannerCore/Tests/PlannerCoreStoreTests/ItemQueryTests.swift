@@ -63,7 +63,7 @@ struct ItemQueryTests {
     #expect(reopenedSnapshot.rows == [.source(hotelIdentity), .source(museumIdentity)])
     for identity in [hotelIdentity, museumIdentity] {
       let read = await reopenedPlanner.read(session: reopenedSession, request: .source(identity))
-      guard case .source(let source) = read else {
+      guard case .source(.item(let source)) = read else {
         Issue.record("Each discovered identity must remain readable: \(read)")
         return
       }

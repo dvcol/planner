@@ -111,9 +111,9 @@ struct ArchiveRoutingTests {
         ])
       await listener.stop()
       guard
-        case .source(let retainedHotel) = await planner.read(
+        case .source(.item(let retainedHotel)) = await planner.read(
           session: datasetSession, request: .source(hotelSource)),
-        case .source(let retainedMuseum) = await planner.read(
+        case .source(.item(let retainedMuseum)) = await planner.read(
           session: datasetSession, request: .source(museumSource))
       else {
         Issue.record("Archive and replay must retain both native source identities.")

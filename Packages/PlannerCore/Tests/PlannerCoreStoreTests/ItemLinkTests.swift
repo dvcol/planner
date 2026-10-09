@@ -22,7 +22,8 @@ struct ItemLinkTests {
           operationId: operationId, session: session, command: .createItem(content: content))
       ).outcome,
       let item = created.generated.first,
-      case .source(let original) = await planner.read(session: session, request: .source(item))
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("The original bookmarked Item must be saved.")
       return
@@ -80,7 +81,8 @@ struct ItemLinkTests {
       #expect(reason.code == "operationPayloadMismatch")
     }
     guard
-      case .source(let unchanged) = await planner.read(session: session, request: .source(item)),
+      case .source(.item(let unchanged)) = await planner.read(
+        session: session, request: .source(item)),
       case .snapshot(let snapshot) = await planner.query(
         PlannerQuery(session: session, request: .items(PlannerItemQuery()))),
       case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
@@ -129,7 +131,8 @@ struct ItemLinkTests {
     #expect(window.rows.first?.hasLinks == true)
     #expect(window.rows.first?.previewLink == nil)
     let item = try #require(created.generated.first)
-    guard case .source(let maps) = await planner.read(session: session, request: .source(item))
+    guard
+      case .source(.item(let maps)) = await planner.read(session: session, request: .source(item))
     else {
       Issue.record("Map links must remain in full details.")
       return
@@ -150,7 +153,7 @@ struct ItemLinkTests {
             content: PlannerItemContentInput(
               title: "Websites", links: originalUrls.map { PlannerLinkInput(originalUrl: $0) })))
       ).outcome, let websitesItem = websites.generated.first,
-      case .source(let source) = await planner.read(
+      case .source(.item(let source)) = await planner.read(
         session: session, request: .source(websitesItem))
     else {
       Issue.record("Other supported web bookmarks must retain their exact original strings.")
@@ -182,7 +185,8 @@ struct ItemLinkTests {
               links: [PlannerLinkInput(originalUrl: "https://example.com/menu", label: "Menu")])))
       ).outcome,
       let item = created.generated.first,
-      case .source(let original) = await planner.read(session: session, request: .source(item))
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("The Item and its bookmark must be independently saved.")
       return
@@ -201,7 +205,8 @@ struct ItemLinkTests {
         case .applied(_, .complete(let checkpoint)) = await planner.execute(
           PlannerOperation(operationId: UUID(), session: session, command: command)
         ).outcome,
-        case .source(let source) = await planner.read(session: session, request: .source(item)),
+        case .source(.item(let source)) = await planner.read(
+          session: session, request: .source(item)),
         case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
         let namespace = namespaces.first,
         case .selected(let recovery) = await planner.inspectRecovery(
@@ -256,7 +261,8 @@ struct ItemLinkTests {
       return
     }
     let item = try #require(created.generated.first)
-    guard case .source(let source) = await planner.read(session: session, request: .source(item))
+    guard
+      case .source(.item(let source)) = await planner.read(session: session, request: .source(item))
     else {
       Issue.record("The saved source must return every owned link.")
       return
@@ -274,7 +280,7 @@ struct ItemLinkTests {
     #expect(source.state.archived == false)
     let reopened = Planner(configuration: configuration)
     guard case .ready(let reopenedSession) = await reopened.bootstrap(),
-      case .source(let reopenedSource) = await reopened.read(
+      case .source(.item(let reopenedSource)) = await reopened.read(
         session: reopenedSession, request: .source(item)),
       case .applied(let replayed, .complete(let replayedCheckpoint)) = await reopened.execute(
         PlannerOperation(

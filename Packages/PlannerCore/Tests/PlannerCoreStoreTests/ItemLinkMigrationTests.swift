@@ -28,7 +28,8 @@ struct ItemLinkMigrationTests {
     }
     #expect(session.datasetId == manifest.datasetId)
     let item = PlannerEntityReference(kind: .item, id: manifest.itemId)
-    guard case .source(let source) = await planner.read(session: session, request: .source(item))
+    guard
+      case .source(.item(let source)) = await planner.read(session: session, request: .source(item))
     else {
       Issue.record("The migrated Item must remain retrievable by its original identity.")
       return
@@ -124,7 +125,7 @@ struct ItemLinkMigrationTests {
     }
     let planner = Planner(configuration: configuration(directory, role: .mainApplication))
     guard case .ready(let session) = await planner.bootstrap(),
-      case .source(let source) = await planner.read(
+      case .source(.item(let source)) = await planner.read(
         session: session,
         request: .source(PlannerEntityReference(kind: .item, id: manifest.itemId)))
     else {
@@ -198,7 +199,8 @@ struct ItemLinkMigrationTests {
           command: .createSchedule(source: item, form: form))
       ).outcome,
       let assignment = scheduled.generated.first,
-      case .source(let retained) = await planner.read(session: session, request: .source(item)),
+      case .source(.item(let retained)) = await planner.read(
+        session: session, request: .source(item)),
       case .listedNamespaces(let updatedNamespaces) = await planner.inspectRecovery(
         request: .namespaces),
       case .selected(let newRecovery) = await planner.inspectRecovery(

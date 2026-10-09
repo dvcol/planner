@@ -43,21 +43,23 @@
       ])
     }
 
+    static func scheduleForm(_ form: PlannerScheduleForm) -> Value {
+      switch form {
+      case .timed(let start, let end, let planningTimeZone):
+        return .object([
+          "kind": .string("timed"),
+          "start": .double(start.timeIntervalSinceReferenceDate),
+          "end": end.map { .double($0.timeIntervalSinceReferenceDate) } ?? .null,
+          "planningTimeZone": .string(planningTimeZone),
+        ])
+      }
+    }
+
     private static func row(_ row: PlannerRowRead) -> Value {
       let schedule: Value
       switch row.scheduleSummary {
       case .none: schedule = .object(["kind": .string("none")])
       case .directItem(let reference, let owner, let form, let additionalCount):
-        let encodedForm: Value
-        switch form {
-        case .timed(let start, let end, let planningTimeZone):
-          encodedForm = .object([
-            "kind": .string("timed"),
-            "start": .double(start.timeIntervalSinceReferenceDate),
-            "end": end.map { .double($0.timeIntervalSinceReferenceDate) } ?? .null,
-            "planningTimeZone": .string(planningTimeZone),
-          ])
-        }
         schedule = .object([
           "kind": .string("directItem"),
           "schedule": .object([
@@ -66,7 +68,7 @@
           "owner": .object([
             "kind": .string(owner.kind.rawValue), "id": .string(owner.id.uuidString),
           ]),
-          "form": encodedForm, "additionalCount": .string(String(additionalCount)),
+          "form": scheduleForm(form), "additionalCount": .string(String(additionalCount)),
         ])
       }
       return .object([

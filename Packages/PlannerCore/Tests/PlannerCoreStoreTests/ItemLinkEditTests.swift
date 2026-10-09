@@ -24,7 +24,8 @@ struct ItemLinkEditTests {
               links: [PlannerLinkInput(originalUrl: "https://example.com/menu", label: "Menu")])))
       )
       .outcome, let item = created.generated.first,
-      case .source(let original) = await planner.read(session: session, request: .source(item)),
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(item)),
       case .applied(let otherCreated, .complete) = await planner.execute(
         PlannerOperation(
           operationId: UUID(), session: session,
@@ -34,7 +35,7 @@ struct ItemLinkEditTests {
               links: [PlannerLinkInput(originalUrl: "https://example.com/museum", label: nil)])))
       )
       .outcome, let otherItem = otherCreated.generated.first,
-      case .source(let otherOriginal) = await planner.read(
+      case .source(.item(let otherOriginal)) = await planner.read(
         session: session, request: .source(otherItem))
     else {
       Issue.record("Two Items must own separate saved link identities.")
@@ -56,7 +57,8 @@ struct ItemLinkEditTests {
         PlannerOperation(operationId: editIdentifier, session: session, command: editCommand)
       )
       .outcome,
-      case .source(let current) = await planner.read(session: session, request: .source(item))
+      case .source(.item(let current)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("The intervening replacement must actually save.")
       return
@@ -123,7 +125,8 @@ struct ItemLinkEditTests {
           sourceId: item.id, changes: PlannerItemChanges(links: .set([])), expectedFieldHashes: [:])
       ))
     guard case .rejected(let missingReason) = missingHash.outcome,
-      case .source(let unchanged) = await planner.read(session: session, request: .source(item))
+      case .source(.item(let unchanged)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("Even empty replacements must require their previous field hash.")
       return
@@ -144,13 +147,15 @@ struct ItemLinkEditTests {
             expectedFieldHashes: current.fieldHashes))
       )
       .outcome,
-      case .source(let emptied) = await planner.read(session: session, request: .source(item)),
+      case .source(.item(let emptied)) = await planner.read(
+        session: session, request: .source(item)),
       case .applied(let replayed, .complete(let replayedCheckpoint)) = await planner.execute(
         PlannerOperation(operationId: editIdentifier, session: session, command: editCommand)
       )
       .outcome,
-      case .source(let retained) = await planner.read(session: session, request: .source(item)),
-      case .source(let otherRetained) = await planner.read(
+      case .source(.item(let retained)) = await planner.read(
+        session: session, request: .source(item)),
+      case .source(.item(let otherRetained)) = await planner.read(
         session: session, request: .source(otherItem)),
       case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
       let namespace = namespaces.first,
@@ -216,7 +221,8 @@ struct ItemLinkEditTests {
               ])))
       )
       .outcome, let item = created.generated.first,
-      case .source(let original) = await planner.read(session: session, request: .source(item))
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("Hotel must have three independently saved owned links.")
       return
@@ -232,7 +238,7 @@ struct ItemLinkEditTests {
             expectedFieldHashes: original.fieldHashes))
       )
       .outcome,
-      case .source(let before) = await planner.read(session: session, request: .source(item)),
+      case .source(.item(let before)) = await planner.read(session: session, request: .source(item)),
       case .snapshot(let oldSnapshot) = await planner.query(
         PlannerQuery(session: session, request: .items(PlannerItemQuery())))
     else {
@@ -255,7 +261,8 @@ struct ItemLinkEditTests {
     guard
       case .applied(let edited, .complete(let checkpoint)) = await planner.execute(operation)
         .outcome,
-      case .source(let current) = await planner.read(session: session, request: .source(item))
+      case .source(.item(let current)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("A complete guarded replacement must save after an unrelated edit.")
       return
@@ -296,7 +303,7 @@ struct ItemLinkEditTests {
     #expect(stale.code == "staleSnapshot")
     let reopened = Planner(configuration: configuration)
     guard case .ready(let reopenedSession) = await reopened.bootstrap(),
-      case .source(let retained) = await reopened.read(
+      case .source(.item(let retained)) = await reopened.read(
         session: reopenedSession, request: .source(item)),
       case .snapshot(let fresh) = await reopened.query(
         PlannerQuery(session: reopenedSession, request: .items(PlannerItemQuery()))),

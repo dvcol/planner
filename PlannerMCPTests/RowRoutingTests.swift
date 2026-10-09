@@ -6,6 +6,88 @@ import Testing
 
 struct RowRoutingTests {
 
+  @Test func scheduleSourceOverHTTPReturnsOriginalFormAndOnlyItsGuardedHash() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let created, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createItem(content: PlannerItemContentInput(title: "Hotel", notes: "Keep")))
+      )
+      .outcome,
+      let source = created.generated.first,
+      case .applied(let scheduled, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createSchedule(
+            source: source,
+            form: .timed(
+              start: Date(timeIntervalSinceReferenceDate: 813_200_400),
+              end: Date(timeIntervalSinceReferenceDate: 813_204_000), planningTimeZone: "Asia/Tokyo"
+            )))
+      )
+      .outcome,
+      let assignment = scheduled.generated.first,
+      case .source(.schedule(let original)) = await planner.read(
+        session: datasetSession, request: .source(assignment))
+    else {
+      Issue.record("The real Schedule's typed source value must exist before HTTP reading.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      let response = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_read",
+            arguments: [
+              "formatVersion": 1,
+              "request": [
+                "kind": "source",
+                "source": ["kind": "schedule", "id": assignment.id.uuidString],
+              ],
+            ])))
+      #expect(response["kind"] as? String == "source")
+      let read = try #require(response["value"] as? [String: Any])
+      #expect(
+        NSDictionary(dictionary: try #require(read["source"] as? [String: Any]))
+          .isEqual(to: ["kind": "schedule", "id": assignment.id.uuidString]))
+      let content = try #require(read["content"] as? [String: Any])
+      #expect(
+        NSDictionary(dictionary: content).isEqual(to: [
+          "source": ["kind": "item", "id": source.id.uuidString],
+          "form": [
+            "kind": "timed", "start": 813_200_400, "end": 813_204_000,
+            "planningTimeZone": "Asia/Tokyo",
+          ],
+        ]))
+      #expect(
+        read["fieldHashes"] as? [String: String] == [
+          "form": try #require(original.fieldHashes[.form]?.value)
+        ])
+      #expect(read["createdAt"] is NSNull)
+      #expect(read["updatedAt"] is NSNull)
+      #expect(read["progress"] is NSNull)
+      #expect((read["labels"] as? [Any])?.isEmpty == true)
+      #expect((read["references"] as? [Any])?.isEmpty == true)
+      let state = try #require(read["state"] as? [String: Any])
+      #expect(state["globalDone"] is NSNull)
+      #expect(state["archived"] is NSNull)
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   @Test func scheduledSourceOverHTTPEnumeratesBookmarksAndScheduleWithoutLosingContent()
     async throws
   {
@@ -26,7 +108,7 @@ struct RowRoutingTests {
       )
       .outcome,
       let source = created.generated.first,
-      case .source(let original) = await planner.read(
+      case .source(.item(let original)) = await planner.read(
         session: datasetSession, request: .source(source)),
       case .applied(let scheduled, .complete) = await planner.execute(
         PlannerOperation(
@@ -341,7 +423,7 @@ struct RowRoutingTests {
       )
       .outcome,
       let source = created.generated.first,
-      case .source(let original) = await planner.read(
+      case .source(.item(let original)) = await planner.read(
         session: datasetSession, request: .source(source))
     else {
       Issue.record("The real Item must exist before creating appointments over HTTP.")
@@ -435,7 +517,7 @@ struct RowRoutingTests {
       #expect(NSDictionary(dictionary: replayed).isEqual(to: createdSchedule))
       await listener.stop()
       guard
-        case .source(let retained) = await planner.read(
+        case .source(.item(let retained)) = await planner.read(
           session: datasetSession, request: .source(source)),
         case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
         let namespace = namespaces.first,
@@ -475,7 +557,7 @@ struct RowRoutingTests {
               links: [PlannerLinkInput(originalUrl: "https://example.com/menu", label: "Menu")])))
       )
       .outcome, let source = created.generated.first,
-      case .source(let original) = await planner.read(
+      case .source(.item(let original)) = await planner.read(
         session: datasetSession, request: .source(source)),
       case .applied(let otherCreated, .complete) = await planner.execute(
         PlannerOperation(
@@ -486,7 +568,7 @@ struct RowRoutingTests {
               links: [PlannerLinkInput(originalUrl: "https://example.com/museum", label: nil)])))
       )
       .outcome, let otherSource = otherCreated.generated.first,
-      case .source(let otherOriginal) = await planner.read(
+      case .source(.item(let otherOriginal)) = await planner.read(
         session: datasetSession, request: .source(otherSource))
     else {
       Issue.record("Two saved Items must have separate owned links before invalid editing.")
@@ -594,7 +676,7 @@ struct RowRoutingTests {
       #expect(NSDictionary(dictionary: afterWindow).isEqual(to: beforeWindow))
       await listener.stop()
       guard
-        case .source(let otherRetained) = await planner.read(
+        case .source(.item(let otherRetained)) = await planner.read(
           session: datasetSession, request: .source(otherSource)),
         case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
       else {
@@ -1065,7 +1147,7 @@ struct RowRoutingTests {
               title: "Hotel", notes: "Original notes",
               links: [PlannerLinkInput(originalUrl: "https://example.com/menu", label: "Menu")])))
       ).outcome, let source = created.generated.first,
-      case .source(let saved) = await planner.read(
+      case .source(.item(let saved)) = await planner.read(
         session: datasetSession, request: .source(source))
     else {
       Issue.record("The original Item must be independently saved before invalid agent input.")
@@ -1304,7 +1386,7 @@ struct RowRoutingTests {
       await listener.stop()
       let reopened = PlannerCore.Planner(configuration: configuration)
       guard case .ready(let reopenedSession) = await reopened.bootstrap(),
-        case .source(let retained) = await reopened.read(
+        case .source(.item(let retained)) = await reopened.read(
           session: reopenedSession, request: .source(source))
       else {
         Issue.record("The HTTP-created owned links must survive native store reopen.")
@@ -1421,7 +1503,7 @@ struct RowRoutingTests {
           to: try #require(before["value"] as? [String: Any])))
       await listener.stop()
       guard
-        case .source(let retained) = await planner.read(
+        case .source(.item(let retained)) = await planner.read(
           session: datasetSession, request: .source(source)),
         case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
       else {
@@ -1559,7 +1641,7 @@ struct RowRoutingTests {
       await listener.stop()
       let newFacade = PlannerCore.Planner(configuration: configuration)
       guard case .ready(let newSession) = await newFacade.bootstrap(),
-        case .source(let retained) = await newFacade.read(
+        case .source(.item(let retained)) = await newFacade.read(
           session: newSession, request: .source(source)),
         case .listedNamespaces(let namespaces) = await newFacade.inspectRecovery(
           request: .namespaces)
@@ -1757,7 +1839,7 @@ struct RowRoutingTests {
       #expect((refreshed["rows"] as? [[String: Any]])?.isEmpty == true)
       await listener.stop()
       guard
-        case .source(let retained) = await planner.read(
+        case .source(.item(let retained)) = await planner.read(
           session: datasetSession, request: .source(source))
       else {
         Issue.record("The stale-window rejection must retain the archived Item.")

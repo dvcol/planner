@@ -282,3 +282,11 @@ Full Schedule source/reference reads, all-day and Itinerary assignments, edit/re
 The actual HTTP red run rejects the new scheduled-source journey and four existing bookmark-source journeys after Core starts returning typed association values. All five failures come from the old empty-reference guard. The exhaustive codec resolves them, and the same fourteen-function suite passes. The scheduled Item retains full content/bookmarks, hashes and Last updated, with exact association identities and nullable fields. Structured and text JSON remain identical.
 
 [Joint evidence](evidence/navigation/core-item-reference-read.json) records the exact red count of nine passes/five failures, fourteen-function green, native Core qualification and the 34-function affected MCP regression with no skips. ReadLoadTests remains separate. Full Schedule source/form reads and guarded edits, additional graph variants, signed clients/reader and physical-device validation remain required. Backup/export/import/recovery administration stays manual.
+
+## Read a Schedule's original form and guarded hash
+
+`planner_read` now advertises Item and Schedule source kinds. A Schedule request selects the same public Core read, returning the existing source envelope with its own identity, planned Item reference, original timed form and exactly the form hash. It emits explicit nulls for inapplicable timestamps/completion/archive/progress and empty labels/references. Item source encoding remains separate. Source and row summaries reuse one exhaustive ScheduleForm codec.
+
+The actual HTTP Schedule request fails in the fifteen-function red run because admission accepts only Item kind. The same journey passes after strict admission and typed encoding are added. It verifies every meaningful field, all inapplicable nulls and identical text/structured JSON. [Joint evidence](evidence/navigation/core-schedule-source-read.json) records fourteen passes/one failure in red, fifteen-function green, native form/hash qualification and the 35-function affected MCP regression with no skips. ReadLoadTests stays excluded.
+
+Guarded Schedule edits/removal, all-day/Itinerary forms and remaining graph/source variants stay open, alongside native saved editors and physical-device validation. Administration remains manual; existing native metadata/linkd diagnostics remain unqualified.

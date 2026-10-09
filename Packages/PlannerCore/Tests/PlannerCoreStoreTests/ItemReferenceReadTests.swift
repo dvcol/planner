@@ -26,7 +26,8 @@ struct ItemReferenceReadTests {
       )
       .outcome,
       let item = created.generated.first,
-      case .source(let original) = await planner.read(session: session, request: .source(item))
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("The source must retain both original owned bookmarks.")
       return
@@ -57,7 +58,8 @@ struct ItemReferenceReadTests {
     }
     let reopened = Planner(configuration: configuration)
     guard case .ready(let reopenedSession) = await reopened.bootstrap(),
-      case .source(let read) = await reopened.read(session: reopenedSession, request: .source(item))
+      case .source(.item(let read)) = await reopened.read(
+        session: reopenedSession, request: .source(item))
     else {
       Issue.record("The source and every necessary association must remain readable after reopen.")
       return
@@ -88,7 +90,7 @@ struct ItemReferenceReadTests {
                   linkId: menu.linkId, originalUrl: menu.originalUrl, label: menu.label)
               ])), expectedFieldHashes: read.fieldHashes))
       ).outcome,
-      case .source(let current) = await reopened.read(
+      case .source(.item(let current)) = await reopened.read(
         session: reopenedSession, request: .source(item)),
       case .listedNamespaces(let namespaces) = await reopened.inspectRecovery(request: .namespaces),
       let namespace = namespaces.first,

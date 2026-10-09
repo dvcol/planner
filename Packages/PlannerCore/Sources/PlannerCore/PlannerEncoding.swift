@@ -1,6 +1,22 @@
 import CryptoKit
 import Foundation
 
+extension ScheduleSnapshot {
+  func formHash(datasetId: UUID) -> PlannerFieldHash {
+    let name = Data("form".utf8)
+    var bytes = Data("PlannerFieldHash".utf8)
+    bytes += Data([0, 0, 0, 0, 1])
+    bytes += identityBytes(datasetId)
+    bytes += Data([6])
+    bytes += identityBytes(id)
+    bytes += identityBytes(lifetimeId)
+    bytes += unsigned(UInt64(name.count))
+    bytes += name
+    bytes += form.canonicalValue.encoded()
+    return PlannerFieldHash(value: plannerDigest(bytes, prefix: "sha256-v1:"))
+  }
+}
+
 /// Version 1 uses tagged native values, never JSON encoder output, for fingerprints.
 indirect enum PlannerCanonicalValue {
   case string(String)

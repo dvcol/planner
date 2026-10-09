@@ -304,8 +304,8 @@ struct ItemCreationTests {
 
   private func requireHotel(
     _ read: PlannerReadResult, identity: PlannerEntityReference
-  ) throws -> PlannerSourceRead {
-    guard case .source(let source) = read else {
+  ) throws -> PlannerItemSourceRead {
+    guard case .source(.item(let source)) = read else {
       Issue.record("Hotel must be readable through the facade: \(read)")
       throw HotelReadFailure()
     }

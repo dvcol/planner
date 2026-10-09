@@ -31,7 +31,7 @@ struct ReadLoadTests {
     }
     let source = try #require(result.generated.first)
     guard
-      case .source(let original) = await planner.read(
+      case .source(.item(let original)) = await planner.read(
         session: datasetSession, request: .source(source))
     else {
       Issue.record("The source must be readable before measurement.")
@@ -62,7 +62,7 @@ struct ReadLoadTests {
       }
       await listener.stop()
       guard
-        case .source(let current) = await planner.read(
+        case .source(.item(let current)) = await planner.read(
           session: datasetSession, request: .source(source))
       else {
         Issue.record("Read-only load must retain Hotel.")
