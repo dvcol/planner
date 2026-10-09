@@ -1,1 +1,373 @@
 import Foundation
+import SwiftData
+
+public actor Planner {
+  private let configuration: PlannerStorageConfiguration
+  private var sessions: [UUID: PlannerDatasetSession] = [:]
+
+  public init(configuration: PlannerStorageConfiguration) {
+    self.configuration = configuration
+  }
+
+  public func bootstrap() -> PlannerBootstrapResult {
+    do {
+      try validateConfiguration()
+      if configuration.processRole == .shareExtension,
+        !FileManager.default.fileExists(atPath: configuration.controlURL.path)
+      {
+        return .mainAppSetupRequired
+      }
+      return try coordinated {
+        let identity: PlannerStoreIdentity
+        if FileManager.default.fileExists(atPath: configuration.controlURL.path) {
+          identity = try loadIdentity()
+          guard identity.schemaVersion == 1 else {
+            return .mainAppMigrationRequired
+          }
+          guard FileManager.default.fileExists(atPath: configuration.storeURL.path) else {
+            throw PlannerFailure(
+              "unavailable",
+              "The initialized dataset's store is missing; recovery remains separate.")
+          }
+        } else {
+          guard configuration.processRole == .mainApplication else { return .mainAppSetupRequired }
+          try FileManager.default.createDirectory(
+            at: configuration.storeURL.deletingLastPathComponent(),
+            withIntermediateDirectories: true
+          )
+          let container = try openContainer()
+          let context = ModelContext(container)
+          context.autosaveEnabled = false
+          try context.save()
+          identity = PlannerStoreIdentity(
+            schemaVersion: 1, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
+            ownershipBinding: "local:" + UUID().uuidString
+          )
+          try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
+        }
+        _ = try openContainer()
+        let archive = recoveryArchive(identity)
+        let metadataURL = archive.namespaceURL.appendingPathComponent("identity.json")
+        if FileManager.default.fileExists(atPath: metadataURL.path) {
+          let recorded = try JSONDecoder().decode(
+            PlannerStoreIdentity.self, from: Data(contentsOf: metadataURL))
+          guard recorded.datasetId == identity.datasetId,
+            recorded.namespaceId == identity.namespaceId,
+            recorded.ownershipBinding == identity.ownershipBinding,
+            recorded.epochId == identity.epochId
+          else {
+            throw PlannerFailure(
+              "ownershipUnverified",
+              "The independent recovery namespace belongs to another dataset.")
+          }
+        } else {
+          try plannerWriteDurably(JSONEncoder().encode(identity), to: metadataURL)
+        }
+        let session = PlannerDatasetSession(
+          datasetId: identity.datasetId, sessionId: UUID(),
+          ownershipBinding: identity.ownershipBinding, epochId: identity.epochId
+        )
+        sessions[session.sessionId] = session
+        return .ready(session)
+      }
+    } catch {
+      return .unavailable(failure(error, code: "unavailable"))
+    }
+  }
+
+  public func execute(_ operation: PlannerOperation) -> PlannerOperationResult {
+    do {
+      return try coordinated {
+        let identity = try validateSession(operation.session)
+        let container = try openContainer()
+        let context = ModelContext(container)
+        context.autosaveEnabled = false
+        let archive = recoveryArchive(identity)
+        let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
+        let envelope = try archive.latest()
+        switch operation.command {
+        case .createItem(let content):
+          try content.validate()
+          let digest = content.payloadDigest(
+            datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding)
+          if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+            guard receipt.payloadDigest == digest else {
+              throw PlannerFailure(
+                "operationPayloadMismatch",
+                "This operation identity already describes different content.")
+            }
+            let evidence = try RecoveryReceipt(receipt, checkpoint: nil)
+            return appliedResult(
+              operationId: operation.operationId, evidence: evidence, envelope: envelope)
+          }
+          let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
+          guard
+            receipts.allSatisfy({ receipt in
+              receipt.operationId.map { completedIds.contains($0) } ?? false
+            })
+          else {
+            throw PlannerFailure(
+              "mutationBlocked", "A prior applied action still needs independent recovery.")
+          }
+          if let proposal = try archive.proposals().first(where: {
+            $0.originalOperationId == operation.operationId
+          }) {
+            guard proposal.payloadDigest == digest else {
+              throw PlannerFailure(
+                "operationPayloadMismatch", "Prepared evidence describes a different payload.")
+            }
+            return PlannerOperationResult(
+              operationId: operation.operationId, outcome: .unverified(proposal.summary))
+          }
+          let item = try PlannerSchemaV1.Item(input: content)
+          let snapshot = try item.value()
+          let result = PlannerAppliedResult(
+            generated: [snapshot.reference], affected: [snapshot.reference])
+          let existingItems = try context.fetch(FetchDescriptor<PlannerSchemaV1.Item>()).map {
+            try $0.value()
+          }
+          let proposal = RecoveryPreparedProposal(
+            proposalId: UUID(), originalOperationId: operation.operationId,
+            datasetId: identity.datasetId,
+            ownershipBinding: identity.ownershipBinding,
+            proposedBackup: ItemOnlyPortableBackup(items: existingItems + [snapshot]),
+            payloadDigest: digest, evidence: "preparedUnverified"
+          )
+          try archive.prepare(proposal)
+          let receipt = try PlannerSchemaV1.Receipt(
+            operation: operation, digest: digest, result: result)
+          context.insert(item)
+          context.insert(receipt)
+          do { try context.save() } catch {
+            context.rollback()
+            throw PlannerFailure(
+              "persistenceFailure",
+              "The complete Item action was not committed: \(error.localizedDescription)")
+          }
+          do {
+            let generation = try archive.publish(
+              items: existingItems + [snapshot], receipts: receipts + [receipt])
+            return PlannerOperationResult(
+              operationId: operation.operationId,
+              outcome: .applied(
+                result: result, recovery: .complete(checkpointGeneration: generation)
+              ))
+          } catch {
+            return PlannerOperationResult(
+              operationId: operation.operationId,
+              outcome: .applied(
+                result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))
+              ))
+          }
+        }
+      }
+    } catch {
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .rejected(failure(error, code: "persistenceFailure")))
+    }
+  }
+
+  public func read(session: PlannerDatasetSession, request: PlannerReadRequest) -> PlannerReadResult
+  {
+    do {
+      return try coordinated {
+        let identity = try validateSession(session)
+        let container = try openContainer()
+        let context = ModelContext(container)
+        context.autosaveEnabled = false
+        switch request {
+        case .source(let source):
+          guard source.kind == .item else {
+            throw PlannerFailure(
+              "unavailable", "This fixture currently implements Item reads only.")
+          }
+          let items = try context.fetch(FetchDescriptor<PlannerSchemaV1.Item>()).filter {
+            $0.id == source.id
+          }
+          guard items.count == 1, let item = items.first else {
+            throw PlannerFailure("missingReference", "The selected Item is missing or unresolved.")
+          }
+          return .source(try item.value().read(datasetId: identity.datasetId))
+        }
+      }
+    } catch { return .failed(failure(error, code: "readUnavailable")) }
+  }
+
+  public func operationStatus(session: PlannerDatasetSession, operationId: UUID)
+    -> PlannerOperationStatus
+  {
+    do {
+      return try coordinated {
+        let identity = try validateSession(session)
+        let archive = recoveryArchive(identity)
+        let envelope = try archive.latest()
+        if let receipt = envelope?.receipts.first(where: { $0.operationId == operationId }),
+          let value = receipt.checkpointGeneration, let generation = Int64(value)
+        {
+          return .appliedRecoveryComplete(result: receipt.result, checkpointGeneration: generation)
+        }
+        let container = try openContainer()
+        let context = ModelContext(container)
+        context.autosaveEnabled = false
+        if let receipt = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>()).first(
+          where: { $0.operationId == operationId })
+        {
+          let evidence = try RecoveryReceipt(receipt, checkpoint: nil)
+          return .appliedRecoveryIncomplete(
+            result: evidence.result,
+            reason: PlannerFailure("recoveryIncomplete", "Independent recovery is not established.")
+          )
+        }
+        if let proposal = try archive.proposals().first(where: {
+          $0.originalOperationId == operationId
+        }) {
+          return .preparedUnverified(proposal.summary)
+        }
+        return .noReliableEvidence
+      }
+    } catch { return .unavailable(failure(error, code: "readUnavailable")) }
+  }
+
+  public func inspectRecovery(request: PlannerRecoveryRequest) -> PlannerRecoveryInspection {
+    do {
+      let archives = try discoveredArchives()
+      switch request {
+      case .namespaces: return .listedNamespaces(try archives.map { try $0.view() })
+      case .namespace(let namespaceId):
+        return .listed(try requireArchive(archives, namespaceId: namespaceId).view())
+      case .acknowledgedSnapshot(let namespaceId, let generation):
+        return .selected(
+          try requireArchive(archives, namespaceId: namespaceId).selection(generation: generation))
+      case .proposal:
+        throw PlannerFailure(
+          "unavailable", "Selecting prepared proposals is not implemented by this first fixture.")
+      }
+    } catch { return .failed(failure(error, code: "readUnavailable")) }
+  }
+
+  private func appliedResult(
+    operationId: UUID, evidence: RecoveryReceipt, envelope: RecoveryEnvelope?
+  ) -> PlannerOperationResult {
+    if let recovered = envelope?.receipts.first(where: {
+      $0.operationId == operationId && $0.payloadDigest == evidence.payloadDigest
+        && $0.result == evidence.result
+    }), let checkpoint = recovered.checkpointGeneration.flatMap(Int64.init) {
+      return PlannerOperationResult(
+        operationId: operationId,
+        outcome: .applied(
+          result: evidence.result, recovery: .complete(checkpointGeneration: checkpoint)))
+    }
+    return PlannerOperationResult(
+      operationId: operationId,
+      outcome: .applied(
+        result: evidence.result,
+        recovery: .incomplete(
+          PlannerFailure("recoveryIncomplete", "Independent recovery is not established."))))
+  }
+
+  private func validateConfiguration() throws {
+    guard configuration.storeURL.isFileURL, configuration.controlURL.isFileURL,
+      configuration.recoveryDirectoryURL.isFileURL,
+      configuration.storeURL.standardizedFileURL != configuration.controlURL.standardizedFileURL,
+      configuration.storeURL.standardizedFileURL
+        != configuration.recoveryDirectoryURL.standardizedFileURL
+    else {
+      throw PlannerFailure(
+        "invalidInput", "Store, control and recovery require distinct local file locations.")
+    }
+  }
+
+  private func loadIdentity() throws -> PlannerStoreIdentity {
+    let identity = try JSONDecoder().decode(
+      PlannerStoreIdentity.self, from: Data(contentsOf: configuration.controlURL))
+    guard identity.ownershipBinding.hasPrefix("local:"),
+      !identity.ownershipBinding.dropFirst(6).isEmpty
+    else {
+      throw PlannerFailure(
+        "ownershipUnverified", "The local dataset has no established ownership binding.")
+    }
+    return identity
+  }
+
+  private func validateSession(_ session: PlannerDatasetSession) throws -> PlannerStoreIdentity {
+    let identity = try loadIdentity()
+    guard sessions[session.sessionId] == session, session.datasetId == identity.datasetId,
+      session.ownershipBinding == identity.ownershipBinding, session.epochId == identity.epochId,
+      identity.schemaVersion == 1
+    else {
+      throw PlannerFailure("staleDatasetSession", "The dataset session is no longer authorized.")
+    }
+    return identity
+  }
+
+  private func openContainer() throws -> ModelContainer {
+    let schema = Schema(versionedSchema: PlannerSchemaV1.self)
+    let modelConfiguration = ModelConfiguration(
+      schema: schema, url: configuration.storeURL, cloudKitDatabase: .none)
+    return try ModelContainer(
+      for: schema, migrationPlan: PlannerMigrationPlan.self, configurations: [modelConfiguration])
+  }
+
+  private func recoveryArchive(_ identity: PlannerStoreIdentity) -> PlannerRecoveryArchive {
+    PlannerRecoveryArchive(rootURL: configuration.recoveryDirectoryURL, identity: identity)
+  }
+
+  private func discoveredArchives() throws -> [PlannerRecoveryArchive] {
+    let directories = try FileManager.default.contentsOfDirectory(
+      at: configuration.recoveryDirectoryURL, includingPropertiesForKeys: nil
+    )
+    .filter { !$0.lastPathComponent.hasPrefix(".") }
+    let archives = try directories.map { directory in
+      let identity = try JSONDecoder().decode(
+        PlannerStoreIdentity.self,
+        from: Data(contentsOf: directory.appendingPathComponent("identity.json")))
+      guard directory.lastPathComponent == identity.namespaceId.uuidString,
+        identity.schemaVersion == 1, !identity.ownershipBinding.isEmpty
+      else {
+        throw PlannerFailure(
+          "ownershipUnverified", "A recovery namespace has invalid ownership metadata.")
+      }
+      return recoveryArchive(identity)
+    }
+    guard Set(archives.map { $0.identity.namespaceId }).count == archives.count else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "Recovery namespace identities are duplicated.")
+    }
+    return archives.sorted {
+      $0.identity.namespaceId.uuidString < $1.identity.namespaceId.uuidString
+    }
+  }
+
+  private func requireArchive(_ archives: [PlannerRecoveryArchive], namespaceId: UUID) throws
+    -> PlannerRecoveryArchive
+  {
+    guard let archive = archives.first(where: { $0.identity.namespaceId == namespaceId }) else {
+      throw PlannerFailure("missingReference", "The selected recovery namespace is missing.")
+    }
+    return archive
+  }
+
+  private func coordinated<Value>(_ action: () throws -> Value) throws -> Value {
+    try FileManager.default.createDirectory(
+      at: configuration.controlURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+    let coordinator = NSFileCoordinator()
+    var coordinationError: NSError?
+    var outcome: Result<Value, any Error>?
+    coordinator.coordinate(
+      writingItemAt: configuration.controlURL, options: [], error: &coordinationError
+    ) { _ in
+      outcome = Result { try action() }
+    }
+    if let coordinationError { throw coordinationError }
+    guard let outcome else {
+      throw PlannerFailure("unavailable", "The Planner writer gate did not execute.")
+    }
+    return try outcome.get()
+  }
+
+  private func failure(_ error: any Error, code: String) -> PlannerFailure {
+    if let failure = error as? PlannerFailure { return failure }
+    return PlannerFailure(code, error.localizedDescription)
+  }
+}

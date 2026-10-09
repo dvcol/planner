@@ -64,7 +64,7 @@ env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --
 env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift format lint --strict --recursive Packages/PlannerCore/Sources/PlannerCore Packages/PlannerCore/Tests/PlannerCoreStoreTests
 ```
 
-The suite and its domain types do not exist yet; these commands are the proposed execution plan, not reported results. Before later native/client claims, compile and qualify the same facade in the app/test host and real client routes. Package/store tests cannot replace signed reader, App Group, extension, UI, account-transition or physical CloudKit evidence.
+The suite and its first Item-only domain slice are now implemented. The [local qualification report](core-local-qualification.md) records the executed red/green and limitations. Before later native/client claims, compile and qualify the same facade in the app/test host and real client routes. Package/store tests cannot replace signed reader, App Group, extension, UI, account-transition or physical CloudKit evidence.
 
 ## Review choice
 
@@ -77,5 +77,5 @@ The suite and its domain types do not exist yet; these commands are the proposed
 - [x] Existing domain/authority contracts are accepted; native Core scheme/targets build and their current zero-test discovery is recorded.
 - [x] Real storage inputs, namespace discovery, ownership limits, first operation/read/status/recovery expectations and focused commands are concrete for review.
 - [x] Human confirms the storage-opening input, native namespace discovery and first store journey before its new public-boundary tests under Q36 A.
-- [ ] Executable red/green, actual reopen/recovery evidence, focused compilation/lint and discovered/executed counts are committed.
+- [x] Executable red/green, actual reopen/recovery evidence, focused compilation/lint and discovered/executed counts are recorded in the [local qualification report](core-local-qualification.md) and accompanying native summaries. The first Item-only slice does not replace the owning prototype's remaining gates.
 - [ ] Real MCP domain commands and the original owning prototype's remaining gates pass before resolution.

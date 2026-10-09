@@ -1,0 +1,154 @@
+{
+  "scope": "Q36 A Item-only local SwiftData create/read/reopen/operation status/independent recovery fixture",
+  "red": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "passedTests": 0,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 1,
+    "finishTime": 1791508069.057,
+    "passedTests": 0,
+    "result": "Failed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791508046.424,
+    "statistics": [],
+    "testFailures": [
+      {
+        "failureText": "Issue recorded: Explicit bootstrap must initialize a real local dataset: .unavailable(PlannerCore.PlannerFailure(code: \"unavailable\", propertyPath: nil, message: \"Local storage has not been implemented.\"))",
+        "targetName": "PlannerCoreStoreTests",
+        "testIdentifier": 1,
+        "testIdentifierString": "ItemCreationTests/savedItemSurvivesReopenWithIndependentAcknowledgedRecovery()",
+        "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerCoreStoreTests/ItemCreationTests/savedItemSurvivesReopenWithIndependentAcknowledgedRecovery()",
+        "testName": "savedItemSurvivesReopenWithIndependentAcknowledgedRecovery()"
+      }
+    ],
+    "title": "Test - PlannerCore",
+    "topInsights": [],
+    "totalTestCount": 1
+  },
+  "green": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 1,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791508409.366,
+    "passedTests": 1,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791508404.636,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - PlannerCore",
+    "topInsights": [],
+    "totalTestCount": 1
+  },
+  "artifacts": {
+    "red": "/private/tmp/PlannerCoreItemCreationExecutableRed.xcresult",
+    "green": "/private/tmp/PlannerCoreItemCreationGreen.xcresult"
+  },
+  "setupFailures": [
+    "Sandbox denied default Xcode package caches before execution.",
+    "First green attempt could not type-check a long Data concatenation; it executed no tests."
+  ],
+  "package": {
+    "command": "xcrun swift test --package-path Packages/PlannerCore --filter ItemCreationTests --scratch-path /private/tmp/PlannerCoreFixturePackageBuild",
+    "log": "/private/tmp/PlannerCoreFixturePackage.log",
+    "executed": 1,
+    "passed": 1
+  },
+  "limitations": [
+    "One behavior journey, Item-only local store.",
+    "Not a CloudKit account-transition or physical-device proof.",
+    "No links/labels, other graph groups, edits, adapters, or native UI are qualified.",
+    "Cross-process writer contention and crash/failure recovery require subsequent scenarios."
+  ],
+  "nativeAppTransportRegression": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 16,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791508514.524,
+    "passedTests": 13,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791508486.269,
+    "statistics": [
+      {
+        "subtitle": "4 test runs",
+        "title": "1 test ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 13
+  },
+  "nativeMobileBuild": {
+    "result": "TEST BUILD SUCCEEDED",
+    "destination": "generic/platform=iOS Simulator",
+    "runtimeTests": false,
+    "log": "/private/tmp/PlannerCoreFixtureMobileBuild.log"
+  }
+}
