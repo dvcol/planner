@@ -26,7 +26,7 @@ Account requirements were checked against current Apple documentation on 2026-10
 
 | Work | Account or capability gate | What remains unverified here |
 | --- | --- | --- |
-| Specification, local PlannerCore tests, simulator layouts and ordinary local Mac prototype | No paid membership required. | Native project, agreed Core/HTTP seams and local build/test evidence are now supplied below. Navigation UI approval and runtime comparisons remain pending. |
+| Specification, local PlannerCore tests, simulator layouts and ordinary local Mac prototype | No paid membership required. | Native project, agreed Core/HTTP/UI seams and local evidence are supplied below. Navigation comparisons and final human review remain open. |
 | Basic personal iPhone/iPad app testing | A free Apple Account signed into Xcode can use a Personal Team. | Selected team, device pairing, Developer Mode, provisioning and actual launches. |
 | Private CloudKit setup and two-device synchronization | Access to an active Apple Developer Program team with appropriate setup authority. | Container selection, account arrangement, entitlements and actual development/production access. |
 | App Group configuration for app/Share targets | Apple currently lists App groups as available to free Apple Developers on iOS and macOS; verify the actual selected team's arrangement. | Group registration/configuration, signing and cross-process access for the chosen targets. |
@@ -45,7 +45,9 @@ The prototype/mcp branch now contains the committed native Xcode project, shared
 
 Xcode launches the ad hoc signed Mac test host for the hosted tests. That does not satisfy the selected-team launch, signed Keychain reader or signing-update requirements. A refreshed read-only `security find-identity -v -p codesigning` count on 2026-10-09 still reports zero valid identities. The prototype uses an org.example bundle identifier and has no provisioned App Group. No account, team, container or device configuration has been changed by these local checks.
 
-The remaining human frontier is concrete: select the signing team and supply Team ID, app bundle ID and App Group ID, or request guided setup; authorize the intended test account/container arrangement; make the physical iPhone and iPad discoverable and authorize their provisioning. The pending Q34 UI-test boundary and Q35 itinerary-only label confirmation belong to navigation readiness. Neither the local evidence nor these pending questions closes Apple test access, native navigation, MCP or sync/share acceptance.
+The user accepted Q34 native public UI journeys and Q35 confirmation before deleting a Category/Tag with any association. On 2026-10-09 the user deferred signing and physical setup while away from the computer, and authorized simulator and local development work. The [navigation qualification](../prototypes/navigation-local-qualification.md) records actual simulator journeys and local Mac outcomes. These results do not close the remaining selected-team, physical, CloudKit or extension gates.
+
+When the user returns to signing setup, the remaining inputs are the intended team and Team ID, app bundle ID and App Group ID, the test account/container arrangement, and discoverable physical devices authorized for provisioning. Continue local work while those inputs are deferred.
 
 ## Reproduce the inventory
 
