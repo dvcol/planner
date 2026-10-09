@@ -153,12 +153,13 @@ enum PlannerSchemaV3: VersionedSchema {
     var planningTimeZone: String = ""
     var itemOwner: Item? = nil
 
-    init(snapshot: ScheduleSnapshot, owner: Item) {
+    init(snapshot: ScheduleSnapshot, owner: Item) throws {
       id = snapshot.id
       lifetimeId = snapshot.lifetimeId
       sourceId = owner.id
       sourceLifetimeId = owner.lifetimeId
       switch snapshot.form {
+      case .allDay: throw PlannerFailure("unavailable", "Schema 3 supports timed forms only.")
       case .timed(let start, let end, let planningTimeZone):
         self.start = start
         self.end = end

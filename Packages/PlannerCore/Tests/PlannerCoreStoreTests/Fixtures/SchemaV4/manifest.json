@@ -1,0 +1,88 @@
+{
+  "archivedCheckpoint" : 3,
+  "createdAt" : 813259030.07392597,
+  "creationCheckpoint" : 1,
+  "creationOperationId" : "00000000-0000-4000-8000-000000000941",
+  "datasetId" : "A70A838F-413D-474D-A781-416D5220CEAF",
+  "deletionMarkers" : [
+    {
+      "closedFamilyId" : null,
+      "deletionId" : "D82058F5-780F-4863-B0EA-0118175E4824",
+      "operationId" : "00000000-0000-4000-8000-000000000945",
+      "target" : {
+        "kind" : "source",
+        "source" : {
+          "id" : "2CF20C31-840C-49F4-96CC-B064B67BBE37",
+          "kind" : "schedule",
+          "lifetimeId" : "0EBEE481-5958-47DA-8E23-AA2E4A46C366"
+        }
+      }
+    }
+  ],
+  "fieldHashes" : {
+    "categoryIds" : "sha256-v1:276ad00dd9871d2ba1e3f52cd86f0116602af725e2f9894c77e9a08691ea6069",
+    "estimate" : "sha256-v1:3ae67d3ad17961d8b530aa5f4eb3fc6a57a68126db82f1eca6631d3faae46170",
+    "links" : "sha256-v1:9977834180d428a1c270c477d37993882ddef873cbc910b5371c2196419b16f2",
+    "location" : "sha256-v1:66427c06dafe294e4d897a3d821f47c10891f520c00cc633dde83c5813a14a06",
+    "notes" : "sha256-v1:8947f47a6eb4900e9b6d8590e7428290451cf7142e4fb63a3932fb051310f0a2",
+    "subtitle" : "sha256-v1:6533b137ab83a352d9fb193c66723a98e5ddadf4afbd37ef189e12169af41a8d",
+    "tagIds" : "sha256-v1:a56510dc28afbe385df452482dbd7e60ee75e4a00153dc7bd69cc86443b1e1a1",
+    "title" : "sha256-v1:17f588c32cca52d4ed380b92b993be8209e309020f533a97846c88a0f88a875e"
+  },
+  "itemId" : "C5C4D0A0-0C1C-421C-8083-11C591AE3B74",
+  "latestCheckpoint" : 6,
+  "ownedLinks" : [
+    {
+      "id" : "33D5CF39-47F0-43BE-80B4-B8E960E89936",
+      "kind" : "website",
+      "label" : "Menu",
+      "lifetimeId" : "F30D0F46-D429-4D23-89C2-67284067CCAA",
+      "originalUrl" : "https:\/\/example.com\/menu",
+      "owner" : {
+        "id" : "C5C4D0A0-0C1C-421C-8083-11C591AE3B74",
+        "kind" : "item",
+        "lifetimeId" : "B62F1F86-2AEA-441F-B3A7-6A7EE3049736"
+      },
+      "providerReference" : null,
+      "rank" : "1"
+    },
+    {
+      "id" : "A24718C9-214C-49E2-827D-5BE73BAE87DD",
+      "kind" : "appleMaps",
+      "label" : "Map",
+      "lifetimeId" : "421EC491-5A88-47E1-B51C-60ACCF4F72AB",
+      "originalUrl" : "https:\/\/maps.apple.com\/?q=Hotel",
+      "owner" : {
+        "id" : "C5C4D0A0-0C1C-421C-8083-11C591AE3B74",
+        "kind" : "item",
+        "lifetimeId" : "B62F1F86-2AEA-441F-B3A7-6A7EE3049736"
+      },
+      "providerReference" : null,
+      "rank" : "0"
+    }
+  ],
+  "producerCommit" : "53946e5",
+  "retainedScheduleHash" : "sha256-v1:944cbe691a29a2d5ef5207b673c543076965d28e8b4b60f2b95e9cd04838eeda",
+  "retainedScheduleId" : "6AAE4E9A-48AA-4A87-BFE7-243CCCD9C6D9",
+  "scheduleHash" : "sha256-v1:29ca4fa098f56907fd97ac1b08307948300d304a3398662e5a0aa771e8dd7329",
+  "scheduleId" : "2CF20C31-840C-49F4-96CC-B064B67BBE37",
+  "scheduleOperationId" : "00000000-0000-4000-8000-000000000944",
+  "schedules" : [
+    {
+      "form" : {
+        "end" : 813204000.75,
+        "kind" : "timed",
+        "planningTimeZone" : "Asia\/Tokyo",
+        "start" : 813200400.25
+      },
+      "id" : "6AAE4E9A-48AA-4A87-BFE7-243CCCD9C6D9",
+      "lifetimeId" : "2D209665-A39C-49A1-9243-1829FED36FE8",
+      "source" : {
+        "id" : "C5C4D0A0-0C1C-421C-8083-11C591AE3B74",
+        "kind" : "item",
+        "lifetimeId" : "B62F1F86-2AEA-441F-B3A7-6A7EE3049736"
+      }
+    }
+  ],
+  "updatedAt" : 813259030.10612404
+}

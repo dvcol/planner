@@ -30,11 +30,11 @@ public actor Planner {
         var identity: PlannerStoreIdentity
         if FileManager.default.fileExists(atPath: configuration.controlURL.path) {
           identity = try loadIdentity()
-          guard (1...4).contains(identity.schemaVersion) else {
+          guard (1...5).contains(identity.schemaVersion) else {
             throw PlannerFailure(
               "unsupportedVersion", "The dataset uses an unsupported storage schema.")
           }
-          if identity.schemaVersion < 4, configuration.processRole == .shareExtension {
+          if identity.schemaVersion < 5, configuration.processRole == .shareExtension {
             return .mainAppMigrationRequired
           }
           guard FileManager.default.fileExists(atPath: configuration.storeURL.path) else {
@@ -53,15 +53,15 @@ public actor Planner {
           context.autosaveEnabled = false
           try context.save()
           identity = PlannerStoreIdentity(
-            schemaVersion: 4, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
+            schemaVersion: 5, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
             ownershipBinding: "local:" + UUID().uuidString
           )
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
         }
         _ = try openContainer()
-        if identity.schemaVersion < 4 {
+        if identity.schemaVersion < 5 {
           identity = PlannerStoreIdentity(
-            schemaVersion: 4, datasetId: identity.datasetId, epochId: identity.epochId,
+            schemaVersion: 5, datasetId: identity.datasetId, epochId: identity.epochId,
             namespaceId: identity.namespaceId, ownershipBinding: identity.ownershipBinding)
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
         }
@@ -181,11 +181,11 @@ public actor Planner {
             return PlannerOperationResult(
               operationId: operation.operationId, outcome: .unverified(proposal.summary))
           }
-          let item = try PlannerSchemaV3.Item(input: content)
+          let item = try PlannerSchemaV5.Item(input: content)
           let snapshot = try item.value()
           let result = PlannerAppliedResult(
             generated: [snapshot.reference], affected: [snapshot.reference])
-          let existingItems = try context.fetch(FetchDescriptor<PlannerSchemaV3.Item>()).map {
+          let existingItems = try context.fetch(FetchDescriptor<PlannerSchemaV5.Item>()).map {
             try $0.value()
           }
           let proposal = RecoveryPreparedProposal(
@@ -256,7 +256,7 @@ public actor Planner {
             throw PlannerFailure(
               "unavailable", "This fixture currently implements Item reads only.")
           }
-          let items = try context.fetch(FetchDescriptor<PlannerSchemaV3.Item>()).filter {
+          let items = try context.fetch(FetchDescriptor<PlannerSchemaV5.Item>()).filter {
             $0.id == source.id
           }
           guard items.count == 1, let item = items.first else {
@@ -272,7 +272,7 @@ public actor Planner {
     _ source: PlannerEntityReference, datasetId: UUID, context: ModelContext
   ) throws -> PlannerScheduleSourceRead {
     let identifier = source.id
-    var descriptor = FetchDescriptor<PlannerSchemaV3.Schedule>(
+    var descriptor = FetchDescriptor<PlannerSchemaV5.Schedule>(
       predicate: #Predicate { $0.id == identifier })
     descriptor.fetchLimit = 2
     let records = try context.fetch(descriptor)
@@ -282,7 +282,7 @@ public actor Planner {
     guard let ownerIdentifier = record.sourceId, let ownerLifetime = record.sourceLifetimeId else {
       throw PlannerFailure("readUnavailable", "The Schedule's source binding is unresolved.")
     }
-    var owners = FetchDescriptor<PlannerSchemaV3.Item>(
+    var owners = FetchDescriptor<PlannerSchemaV5.Item>(
       predicate: #Predicate { $0.id == ownerIdentifier && $0.lifetimeId == ownerLifetime })
     owners.fetchLimit = 2
     owners.propertiesToFetch = [\.id, \.lifetimeId]
@@ -318,7 +318,7 @@ public actor Planner {
               "unavailable", "This Item-only fixture does not implement contextual queries.")
           }
           let historyToken = try latestHistoryToken(in: context)
-          var descriptor = FetchDescriptor<PlannerSchemaV3.Item>()
+          var descriptor = FetchDescriptor<PlannerSchemaV5.Item>()
           descriptor.propertiesToFetch = [\.id, \.title, \.globalDone, \.archived]
           let items = try context.fetch(descriptor).filter { item in
             switch itemQuery.completion {
@@ -399,7 +399,7 @@ public actor Planner {
           throw PlannerFailure("readUnavailable", "The Item query has no presentation context.")
         }
         let sourceIdentifier = source.id
-        var descriptor = FetchDescriptor<PlannerSchemaV3.Item>(
+        var descriptor = FetchDescriptor<PlannerSchemaV5.Item>(
           predicate: #Predicate { $0.id == sourceIdentifier })
         descriptor.fetchLimit = 2
         descriptor.propertiesToFetch = [
@@ -413,11 +413,11 @@ public actor Planner {
         guard let lifetimeId = item.lifetimeId else {
           throw PlannerFailure("readUnavailable", "The row Item has unresolved lifetime.")
         }
-        let owned = FetchDescriptor<PlannerSchemaV3.OwnedLink>(
+        let owned = FetchDescriptor<PlannerSchemaV5.OwnedLink>(
           predicate: #Predicate {
             $0.ownerId == sourceIdentifier && $0.ownerLifetimeId == lifetimeId
           })
-        var selected = FetchDescriptor<PlannerSchemaV3.OwnedLink>(
+        var selected = FetchDescriptor<PlannerSchemaV5.OwnedLink>(
           predicate: #Predicate {
             $0.ownerId == sourceIdentifier && $0.ownerLifetimeId == lifetimeId
               && $0.kind != "appleMaps" && $0.kind != "googleMaps"
@@ -431,7 +431,7 @@ public actor Planner {
         ).read
         let summary = try rowScheduleSummary(
           source: source, lifetimeId: lifetimeId,
-          referenceInstant: presentation.referenceInstant, context: context)
+          presentation: presentation, context: context)
         return try item.rowRead(
           hasLinks: context.fetchCount(owned) > 0, previewLink: preview, scheduleSummary: summary)
       }
@@ -446,41 +446,80 @@ public actor Planner {
   }
 
   private func rowScheduleSummary(
-    source: PlannerEntityReference, lifetimeId: UUID, referenceInstant: Date,
+    source: PlannerEntityReference, lifetimeId: UUID, presentation: PlannerRowPresentationContext,
     context: ModelContext
   ) throws -> PlannerRowScheduleSummary {
     let sourceIdentifier = source.id
-    let assignments = FetchDescriptor<PlannerSchemaV3.Schedule>(
+    let referenceInstant = presentation.referenceInstant
+    var calendar = Calendar(identifier: .gregorian)
+    calendar.timeZone = TimeZone(identifier: presentation.displayTimeZone)!
+    let currentDate = try scheduleCivilDate(referenceInstant, calendar: calendar)
+    let assignments = FetchDescriptor<PlannerSchemaV5.Schedule>(
       predicate: #Predicate {
         $0.sourceId == sourceIdentifier && $0.sourceLifetimeId == lifetimeId
       })
     let assignmentCount = try context.fetchCount(assignments)
     guard assignmentCount > 0 else { return .none }
     let candidates = [
-      FetchDescriptor<PlannerSchemaV3.Schedule>(
+      FetchDescriptor<PlannerSchemaV5.Schedule>(
         predicate: #Predicate {
           $0.sourceId == sourceIdentifier && $0.sourceLifetimeId == lifetimeId
             && $0.start != nil && ($0.start ?? referenceInstant) <= referenceInstant
             && $0.end != nil && ($0.end ?? referenceInstant) > referenceInstant
         }, sortBy: [SortDescriptor(\.start, order: .reverse), SortDescriptor(\.id)]),
-      FetchDescriptor<PlannerSchemaV3.Schedule>(
+      FetchDescriptor<PlannerSchemaV5.Schedule>(
         predicate: #Predicate {
           $0.sourceId == sourceIdentifier && $0.sourceLifetimeId == lifetimeId
             && $0.start != nil && ($0.start ?? referenceInstant) >= referenceInstant
         }, sortBy: [SortDescriptor(\.start), SortDescriptor(\.id)]),
-      FetchDescriptor<PlannerSchemaV3.Schedule>(
+      FetchDescriptor<PlannerSchemaV5.Schedule>(
         predicate: #Predicate {
           $0.sourceId == sourceIdentifier && $0.sourceLifetimeId == lifetimeId
             && $0.start != nil && ($0.start ?? referenceInstant) < referenceInstant
         }, sortBy: [SortDescriptor(\.start, order: .reverse), SortDescriptor(\.id)]),
     ]
-    for var descriptor in candidates {
+    var allDayDescriptor = FetchDescriptor<PlannerSchemaV5.Schedule>(
+      predicate: #Predicate {
+        $0.sourceId == sourceIdentifier && $0.sourceLifetimeId == lifetimeId
+          && $0.formKind == "allDay"
+      })
+    allDayDescriptor.propertiesToFetch = [
+      \.id, \.lifetimeId, \.sourceId, \.sourceLifetimeId, \.formKind, \.civilStartData,
+      \.civilEndData, \.start, \.end, \.planningTimeZone,
+    ]
+    let civilAssignments = try context.fetch(allDayDescriptor).map {
+      try $0.value(ownerId: sourceIdentifier, ownerLifetimeId: lifetimeId)
+    }
+    for (phase, candidateDescriptor) in candidates.enumerated() {
+      var descriptor = candidateDescriptor
       descriptor.fetchLimit = 1
       descriptor.propertiesToFetch = [
         \.id, \.lifetimeId, \.sourceId, \.sourceLifetimeId, \.start, \.end, \.planningTimeZone,
+        \.formKind, \.civilStartData, \.civilEndData,
       ]
-      guard let record = try context.fetch(descriptor).first else { continue }
-      let value = try record.value(ownerId: sourceIdentifier, ownerLifetimeId: lifetimeId)
+      var eligible = civilAssignments.filter { candidate in
+        guard case .allDay(let start, let end) = candidate.form else { return false }
+        let finalDate = end ?? start
+        if !currentDate.isEarlier(than: start), !finalDate.isEarlier(than: currentDate) {
+          return phase == 0
+        }
+        if currentDate.isEarlier(than: start) { return phase == 1 }
+        return phase == 2
+      }
+      if let record = try context.fetch(descriptor).first {
+        eligible.append(try record.value(ownerId: sourceIdentifier, ownerLifetimeId: lifetimeId))
+      }
+      let keyed = try eligible.map {
+        (assignment: $0, components: try scheduleStartComponents($0.form, calendar: calendar))
+      }
+      let selected = keyed.sorted { first, second in
+        if first.components == second.components {
+          return first.assignment.id.uuidString < second.assignment.id.uuidString
+        }
+        if phase == 1 { return first.components.lexicographicallyPrecedes(second.components) }
+        return second.components.lexicographicallyPrecedes(first.components)
+      }.first
+      guard let value = selected?.assignment else { continue }
       return .directItem(
         schedule: value.reference, owner: source, form: value.form,
         additionalCount: Int64(assignmentCount - 1))
@@ -553,6 +592,33 @@ public actor Planner {
     } catch { return .failed(failure(error, code: "readUnavailable")) }
   }
 
+  private func scheduleCivilDate(_ instant: Date, calendar: Calendar) throws -> PlannerCivilDate {
+    let components = calendar.dateComponents([.era, .year, .month, .day], from: instant)
+    guard let era = components.era, let year = components.year, let month = components.month,
+      let day = components.day
+    else {
+      throw PlannerFailure("readUnavailable", "The calendar display date is unavailable.")
+    }
+    return PlannerCivilDate(year: era == 0 ? 1 - year : year, month: month, day: day)
+  }
+
+  private func scheduleStartComponents(_ form: PlannerScheduleForm, calendar: Calendar) throws
+    -> [Int]
+  {
+    switch form {
+    case .allDay(let start, _): return [start.year, start.month, start.day, 0, 0, 0, 0]
+    case .timed(let start, _, _):
+      let date = try scheduleCivilDate(start, calendar: calendar)
+      let time = calendar.dateComponents([.hour, .minute, .second, .nanosecond], from: start)
+      guard let hour = time.hour, let minute = time.minute, let second = time.second,
+        let nanosecond = time.nanosecond
+      else {
+        throw PlannerFailure("readUnavailable", "The calendar display time is unavailable.")
+      }
+      return [date.year, date.month, date.day, hour, minute, second, nanosecond]
+    }
+  }
+
   private func deletionMarkers(_ context: ModelContext) throws -> [PortableDeletionMarker] {
     try context.fetch(FetchDescriptor<PlannerSchemaV4.DeletionMarker>()).map { try $0.value() }
   }
@@ -602,7 +668,7 @@ public actor Planner {
       throw PlannerFailure(
         "mutationBlocked", "A prior applied action still needs independent recovery.")
     }
-    var assignments = FetchDescriptor<PlannerSchemaV3.Schedule>(
+    var assignments = FetchDescriptor<PlannerSchemaV5.Schedule>(
       predicate: #Predicate { $0.id == scheduleId })
     assignments.fetchLimit = 2
     let records = try context.fetch(assignments)
@@ -611,7 +677,7 @@ public actor Planner {
     else {
       throw PlannerFailure("missingReference", "The selected Schedule is missing or unresolved.")
     }
-    let items = try context.fetch(FetchDescriptor<PlannerSchemaV3.Item>())
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV5.Item>())
     let owners = items.filter { $0.id == ownerIdentifier && $0.lifetimeId == ownerLifetime }
     guard owners.count == 1 else {
       throw PlannerFailure(
@@ -641,7 +707,7 @@ public actor Planner {
         "staleEdit", "The Schedule form differs from the supplied read.",
         details: .staleScheduleEdit(currentForm: before.form, currentFormHash: currentHash))
     }
-    let replacementForm = change.applying(to: before.form)
+    let replacementForm = try change.applying(to: before.form)
     let after = replacementForm.map {
       ScheduleSnapshot(id: before.id, lifetimeId: before.lifetimeId, form: $0)
     }
@@ -683,12 +749,7 @@ public actor Planner {
       operation: operation, digest: digest,
       result: result, bindings: bindings)
     if let replacementForm {
-      switch replacementForm {
-      case .timed(let start, let end, let planningTimeZone):
-        record.start = start
-        record.end = end
-        record.planningTimeZone = planningTimeZone
-      }
+      try record.replace(with: replacementForm)
     } else if let removalMarker {
       context.insert(PlannerSchemaV4.DeletionMarker(removalMarker))
       context.delete(record)
@@ -743,7 +804,7 @@ public actor Planner {
       throw PlannerFailure(
         "mutationBlocked", "A prior applied action still needs independent recovery.")
     }
-    let items = try context.fetch(FetchDescriptor<PlannerSchemaV3.Item>())
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV5.Item>())
     let matches = items.filter { $0.id == source.id }
     guard matches.count == 1, let item = matches.first else {
       throw PlannerFailure(
@@ -788,7 +849,7 @@ public actor Planner {
         payloadDigest: digest, evidence: "preparedUnverified"))
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
-    context.insert(PlannerSchemaV3.Schedule(snapshot: assignment, owner: item))
+    context.insert(try PlannerSchemaV5.Schedule(snapshot: assignment, owner: item))
     context.insert(receipt)
     do { try context.save() } catch {
       context.rollback()
@@ -853,7 +914,7 @@ public actor Planner {
       throw PlannerFailure(
         "mutationBlocked", "A prior applied action still needs independent recovery.")
     }
-    let items = try context.fetch(FetchDescriptor<PlannerSchemaV3.Item>())
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV5.Item>())
     let matches = items.filter { $0.id == sourceId }
     guard matches.count == 1, let item = matches.first else {
       throw PlannerFailure("missingReference", "The selected Item is missing or unresolved.")
@@ -981,7 +1042,7 @@ public actor Planner {
       throw PlannerFailure(
         "mutationBlocked", "A prior applied action still needs independent recovery.")
     }
-    let items = try context.fetch(FetchDescriptor<PlannerSchemaV3.Item>())
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV5.Item>())
     let matches = items.filter { $0.id == source.id }
     guard matches.count == 1, let item = matches.first else {
       throw PlannerFailure("missingReference", "The selected Item is missing or unresolved.")
@@ -1134,7 +1195,7 @@ public actor Planner {
     let identity = try loadIdentity()
     guard sessions[session.sessionId] == session, session.datasetId == identity.datasetId,
       session.ownershipBinding == identity.ownershipBinding, session.epochId == identity.epochId,
-      identity.schemaVersion == 4
+      identity.schemaVersion == 5
     else {
       throw PlannerFailure("staleDatasetSession", "The dataset session is no longer authorized.")
     }
@@ -1142,7 +1203,7 @@ public actor Planner {
   }
 
   private func openContainer() throws -> ModelContainer {
-    let schema = Schema(versionedSchema: PlannerSchemaV4.self)
+    let schema = Schema(versionedSchema: PlannerSchemaV5.self)
     let modelConfiguration = ModelConfiguration(
       schema: schema, url: configuration.storeURL, cloudKitDatabase: .none)
     return try ModelContainer(
@@ -1163,7 +1224,7 @@ public actor Planner {
         PlannerStoreIdentity.self,
         from: Data(contentsOf: directory.appendingPathComponent("identity.json")))
       guard directory.lastPathComponent == identity.namespaceId.uuidString,
-        (1...4).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
+        (1...5).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
       else {
         throw PlannerFailure(
           "ownershipUnverified", "A recovery namespace has invalid ownership metadata.")

@@ -3,6 +3,127 @@ import PlannerCore
 import Testing
 
 struct ItemLinkMigrationTests {
+  @Test func mainMigratesGenuineV4RetainingDeletionHistoryBeforeShareSavesAllDay() async throws {
+    #if SWIFT_PACKAGE
+      let fixtureBundle = Bundle.module
+    #else
+      let fixtureBundle = Bundle(for: NativeFixtureBundle.self)
+    #endif
+    let fixture = try #require(
+      fixtureBundle.url(forResource: "SchemaV4", withExtension: nil, subdirectory: "Fixtures"))
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    try FileManager.default.copyItem(at: fixture, to: directory)
+    let manifest = try JSONDecoder().decode(
+      LinkedManifest.self, from: Data(contentsOf: directory.appendingPathComponent("manifest.json"))
+    )
+    let assignment = try JSONDecoder().decode(
+      DeletionManifest.self,
+      from: Data(contentsOf: directory.appendingPathComponent("manifest.json")))
+    let share = Planner(configuration: configuration(directory, role: .shareExtension))
+    guard case .mainAppMigrationRequired = await share.bootstrap() else {
+      Issue.record("Share cannot migrate the original schema-4 store.")
+      return
+    }
+    let planner = Planner(configuration: configuration(directory, role: .mainApplication))
+    let item = PlannerEntityReference(kind: .item, id: manifest.itemId)
+    let retainedSchedule = PlannerEntityReference(
+      kind: .schedule, id: assignment.retainedScheduleId)
+    let deletedSchedule = PlannerEntityReference(kind: .schedule, id: assignment.scheduleId)
+    let timedForm = PlannerScheduleForm.timed(
+      start: Date(timeIntervalSinceReferenceDate: 813_200_400.25),
+      end: Date(timeIntervalSinceReferenceDate: 813_204_000.75), planningTimeZone: "Asia/Tokyo")
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(item)),
+      case .source(.schedule(let retained)) = await planner.read(
+        session: session, request: .source(retainedSchedule)),
+      case .failed(let missing) = await planner.read(
+        session: session, request: .source(deletedSchedule)),
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first,
+      case .selected(let before) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: namespace.namespaceId, checkpointGeneration: assignment.latestCheckpoint))
+    else {
+      Issue.record(
+        "Migration must preserve source, remaining Schedule and independent schema-4 recovery.")
+      return
+    }
+    #expect(session.datasetId == manifest.datasetId)
+    #expect(original.content.title == "Hotel")
+    #expect(original.content.notes == "Original notes")
+    #expect(original.updatedAt.timeIntervalSinceReferenceDate == manifest.updatedAt)
+    #expect(original.createdAt.timeIntervalSinceReferenceDate == manifest.createdAt)
+    #expect(
+      Dictionary(
+        uniqueKeysWithValues: original.fieldHashes.map { ($0.key.rawValue, $0.value.value) })
+        == manifest.fieldHashes)
+    #expect(
+      original.content.links.map(\.linkId)
+        == manifest.ownedLinks.sorted { $0.rank < $1.rank }.map(\.id))
+    #expect(original.state.globalDone == true)
+    #expect(original.state.archived == true)
+    #expect(retained.content.form == timedForm)
+    #expect(retained.fieldHashes[.form]?.value == assignment.retainedScheduleHash)
+    #expect(missing.code == "missingReference")
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 4)
+    #expect(before.decodedBackup.backup.schedules.count == 1)
+    #expect(before.decodedBackup.backup.deletionMarkers.count == 1)
+    #expect(
+      before.decodedBackup.backup.deletionMarkers.first?.operationId
+        == UUID(uuidString: "00000000-0000-4000-8000-000000000945"))
+    let civilForm = PlannerScheduleForm.allDay(
+      start: PlannerCivilDate(year: 2026, month: 10, day: 9),
+      end: PlannerCivilDate(year: 2026, month: 10, day: 11))
+    guard case .ready(let shareSession) = await share.bootstrap(),
+      case .applied(let added, .complete(let checkpoint)) = await share.execute(
+        PlannerOperation(
+          operationId: UUID(), session: shareSession,
+          command: .createSchedule(source: item, form: civilForm))
+      ).outcome,
+      let allDay = added.generated.first,
+      case .source(.schedule(let newRead)) = await planner.read(
+        session: session, request: .source(allDay)),
+      case .applied(let replay, .complete(let originalCheckpoint)) = await planner.execute(
+        PlannerOperation(
+          operationId: assignment.scheduleOperationId, session: session,
+          command: .createSchedule(source: item, form: timedForm))
+      ).outcome,
+      case .failed(let stillDeleted) = await planner.read(
+        session: session, request: .source(deletedSchedule)),
+      case .source(.item(let current)) = await planner.read(
+        session: session, request: .source(item)),
+      case .listedNamespaces(let afterNamespaces) = await planner.inspectRecovery(
+        request: .namespaces),
+      case .selected(let after) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint)),
+      case .selected(let beforeAgain) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: namespace.namespaceId, checkpointGeneration: assignment.latestCheckpoint))
+    else {
+      Issue.record(
+        "Share-role all-day saving must retain deletion and earlier operation evidence without resurrection."
+      )
+      return
+    }
+    #expect(checkpoint == 7)
+    #expect(originalCheckpoint == 4)
+    #expect(replay.generated == [deletedSchedule])
+    #expect(stillDeleted.code == "missingReference")
+    #expect(newRead.content.form == civilForm)
+    #expect(current.fieldHashes == original.fieldHashes)
+    #expect(current.updatedAt == original.updatedAt)
+    #expect(current.content.links == original.content.links)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 5)
+    #expect(afterNamespaces.first?.preparedProposals.isEmpty == true)
+    #expect(after.decodedBackup.backup.schedules.count == 2)
+    #expect(
+      after.decodedBackup.backup.deletionMarkers == before.decodedBackup.backup.deletionMarkers)
+    #expect(beforeAgain.portableData == before.portableData)
+  }
+
   @Test func mainAppMigratesV3ThenShareRemovesScheduleWithoutLosingItemOrHistoricalReceipt()
     async throws
   {
@@ -102,7 +223,7 @@ struct ItemLinkMigrationTests {
     #expect(retained.content.links == source.content.links)
     #expect(retained.state.globalDone == true)
     #expect(retained.state.archived == true)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 4)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 5)
     #expect(newRecovery.decodedBackup.backup.schedules.isEmpty)
     #expect(newRecovery.decodedBackup.backup.deletionMarkers.count == 1)
     #expect(
@@ -200,7 +321,7 @@ struct ItemLinkMigrationTests {
       return
     }
     #expect(nextCheckpoint == 4)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 4)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 5)
     #expect(newRecovery.decodedBackup.backup.sources.count == 2)
     #expect(newRecovery.decodedBackup.backup.sources.first { $0.id == item.id }?.globalDone == true)
     #expect(newRecovery.decodedBackup.backup.sources.first { $0.id == item.id }?.archived == true)
@@ -320,7 +441,7 @@ struct ItemLinkMigrationTests {
       return
     }
     #expect(nextCheckpoint == 4)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 4)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 5)
     #expect(retained.content.links == source.content.links)
     #expect(retained.fieldHashes == source.fieldHashes)
     #expect(retained.updatedAt == source.updatedAt)
@@ -371,6 +492,14 @@ struct ItemLinkMigrationTests {
       controlURL: directory.appendingPathComponent("control/writer"),
       recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
       processRole: role, storageMode: .localOnly)
+  }
+
+  private struct DeletionManifest: Decodable {
+    let latestCheckpoint: Int64
+    let scheduleId: UUID
+    let scheduleOperationId: UUID
+    let retainedScheduleId: UUID
+    let retainedScheduleHash: String
   }
 
   private struct ScheduledManifest: Decodable {
