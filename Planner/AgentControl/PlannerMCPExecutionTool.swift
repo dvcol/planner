@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create an Item with owned HTTP(S) bookmarks, edit its title/notes, complete/reopen it globally or archive/unarchive it through the local Planner prototype.",
+        "Create an Item with owned location and HTTP(S) bookmarks, edit its title/notes/location, complete/reopen it globally or archive/unarchive it through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -24,6 +24,30 @@
         readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false)
     )
 
+    private static let locationSchema = Value.object([
+      "type": .array([.string("object"), .string("null")]), "additionalProperties": .bool(false),
+      "required": .array([
+        .string("displayName"), .string("formattedAddress"), .string("coordinate"),
+      ]),
+      "properties": .object([
+        "displayName": .object(["type": .array([.string("string"), .string("null")])]),
+        "formattedAddress": .object(["type": .array([.string("string"), .string("null")])]),
+        "coordinate": .object([
+          "type": .array([.string("object"), .string("null")]),
+          "additionalProperties": .bool(false),
+          "required": .array([.string("latitude"), .string("longitude")]),
+          "properties": .object([
+            "latitude": .object([
+              "type": .string("number"), "minimum": .int(-90), "maximum": .int(90),
+            ]),
+            "longitude": .object([
+              "type": .string("number"), "minimum": .int(-180), "maximum": .int(180),
+            ]),
+          ]),
+        ]),
+      ]),
+    ])
+
     private static let creationSchema = Value.object([
       "type": .string("object"), "additionalProperties": .bool(false),
       "required": .array([.string("type"), .string("content")]),
@@ -35,6 +59,7 @@
           "properties": .object([
             "title": .object(["type": .string("string")]),
             "notes": .object(["type": .array([.string("string"), .string("null")])]),
+            "location": locationSchema,
             "links": .object([
               "type": .string("array"),
               "items": .object([
@@ -67,6 +92,7 @@
           "properties": .object([
             "title": .object(["type": .string("string")]),
             "notes": .object(["type": .array([.string("string"), .string("null")])]),
+            "location": locationSchema,
           ]),
         ]),
         "expectedFieldHashes": .object([
@@ -221,11 +247,12 @@
           "title", "notes", "subtitle", "location", "estimate", "links", "categoryIds", "tagIds",
         ],
         required: ["title"], path: "/command/content")
-      if let unsupported = Set(content.keys).subtracting(["title", "notes", "links"]).sorted().first
+      if let unsupported = Set(content.keys).subtracting(["title", "notes", "links", "location"])
+        .sorted().first
       {
         throw AdmissionFailure(
           "unavailable", "/command/content/" + unsupported,
-          "This HTTP creation slice supports title, notes and owned links only.")
+          "This HTTP creation slice supports title, notes, owned location and links only.")
       }
       guard case .string(let title) = content["title"] else {
         throw AdmissionFailure(
@@ -239,9 +266,61 @@
         throw AdmissionFailure(
           "invalidInput", "/command/content/notes", "Expected a notes String or null.")
       }
+      let location: PlannerOwnedLocation?
+      switch try locationChange(content["location"], path: "/command/content/location") {
+      case .set(let value): location = value
+      case .clear, .unchanged: location = nil
+      }
       return .createItem(
         content: PlannerItemContentInput(
-          title: title, notes: notes, links: try linksInput(content["links"])))
+          title: title, notes: notes, location: location, links: try linksInput(content["links"])))
+    }
+
+    private static func locationChange(
+      _ value: Value?, path: String
+    ) throws -> PlannerFieldChange<PlannerOwnedLocation> {
+      guard let value else { return .unchanged }
+      if case .null = value { return .clear }
+      let fields = try object(
+        value, allowed: ["displayName", "formattedAddress", "coordinate"],
+        required: ["displayName", "formattedAddress", "coordinate"], path: path)
+      let coordinate: PlannerCoordinate?
+      if case .null = fields["coordinate"] {
+        coordinate = nil
+      } else {
+        let coordinates = try object(
+          fields["coordinate"], allowed: ["latitude", "longitude"],
+          required: ["latitude", "longitude"], path: path + "/coordinate")
+        coordinate = PlannerCoordinate(
+          latitude: try coordinateNumber(
+            coordinates["latitude"], path: path + "/coordinate/latitude"),
+          longitude: try coordinateNumber(
+            coordinates["longitude"], path: path + "/coordinate/longitude"))
+      }
+      return .set(
+        PlannerOwnedLocation(
+          displayName: try nullableText(fields["displayName"], path: path + "/displayName"),
+          formattedAddress: try nullableText(
+            fields["formattedAddress"], path: path + "/formattedAddress"),
+          coordinate: coordinate))
+    }
+
+    private static func coordinateNumber(_ value: Value?, path: String) throws -> Double {
+      switch value {
+      case .int(let number): return Double(number)
+      case .double(let number): return number
+      default:
+        throw AdmissionFailure("invalidInput", path, "Expected a coordinate number.")
+      }
+    }
+
+    private static func nullableText(_ value: Value?, path: String) throws -> String? {
+      switch value {
+      case .null: return nil
+      case .string(let text): return text
+      default:
+        throw AdmissionFailure("invalidInput", path, "Expected a String or null.")
+      }
     }
 
     private static func linksInput(_ value: Value?) throws -> [PlannerLinkInput] {
@@ -295,10 +374,12 @@
       let fieldNames = Set(PlannerItemField.allCases.map(\.rawValue))
       let changes = try object(
         command["changes"], allowed: fieldNames, required: [], path: "/command/changes")
-      if let unsupported = Set(changes.keys).subtracting(["title", "notes"]).sorted().first {
+      if let unsupported = Set(changes.keys).subtracting(["title", "notes", "location"]).sorted()
+        .first
+      {
         throw AdmissionFailure(
           "unavailable", "/command/changes/" + unsupported,
-          "This edit slice supports title and notes only.")
+          "This edit slice supports title, notes and location only.")
       }
       let hashValues = try object(
         command["expectedFieldHashes"], allowed: fieldNames, required: [],
@@ -316,7 +397,8 @@
         sourceId: sourceIdentifier,
         changes: PlannerItemChanges(
           title: try textChange(changes["title"], path: "/command/changes/title"),
-          notes: try textChange(changes["notes"], path: "/command/changes/notes")),
+          notes: try textChange(changes["notes"], path: "/command/changes/notes"),
+          location: try locationChange(changes["location"], path: "/command/changes/location")),
         expectedFieldHashes: hashes)
     }
 

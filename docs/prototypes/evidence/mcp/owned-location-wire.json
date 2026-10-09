@@ -1,0 +1,202 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-09",
+  "coreBaselineCommit": "061d7eb",
+  "scope": "Actual authenticated stateless loopback HTTP owned-location creation and guarded complete Set/Clear through the official SDK and public Planner facade.",
+  "executions": {
+    "Red": {
+      "bundle": "/private/tmp/PlannerMCPLocationWireRed.xcresult",
+      "log": "/private/tmp/PlannerMCPLocationWireRed.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 7,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1791554747.003,
+        "passedTests": 7,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791554731.197,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "Expectation failed: tool[\"isError\"] as? Bool == false\ntool[\"isError\"] as? Bool \u2192 true",
+            "targetName": "PlannerMCPTests",
+            "testIdentifier": 1,
+            "testIdentifierString": "RowRoutingTests/ownedLocationOverHTTPRejectsStaleCompoundEditAndRetainsClearOnReplay()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/ownedLocationOverHTTPRejectsStaleCompoundEditAndRetainsClearOnReplay()",
+            "testName": "ownedLocationOverHTTPRejectsStaleCompoundEditAndRetainsClearOnReplay()"
+          }
+        ],
+        "title": "Test - Planner",
+        "topInsights": [],
+        "totalTestCount": 8
+      }
+    },
+    "Green": {
+      "bundle": "/private/tmp/PlannerMCPLocationWireGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPLocationWireGreen.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 8,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791554932.034,
+        "passedTests": 8,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791554925.458,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [],
+        "totalTestCount": 8
+      }
+    },
+    "Qualification": {
+      "bundle": "/private/tmp/PlannerMCPLocationWireQualification.xcresult",
+      "log": "/private/tmp/PlannerMCPLocationWireQualification.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 9,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791555260.365,
+        "passedTests": 9,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791555251.42,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [],
+        "totalTestCount": 9
+      }
+    },
+    "Regression": {
+      "bundle": "/private/tmp/PlannerMCPLocationWireRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPLocationWireRegression.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 35,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791555325.327,
+        "passedTests": 29,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791555320.802,
+        "statistics": [
+          {
+            "subtitle": "9 test runs",
+            "title": "3 tests ran with dynamic parameters"
+          }
+        ],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [
+          {
+            "category": "Longest Test Runs",
+            "impact": "16% of duration",
+            "text": "1 longest test run with outlier durations exceeding 0.18s (three standard deviations)"
+          }
+        ],
+        "totalTestCount": 29
+      }
+    }
+  },
+  "redGreenBehavior": "Creation with Meeting point A fails at the unimplemented location route, then saves. Meeting point B replaces the complete location. A stale title/location patch rejects together with typed current values/hash. Clear reaches checkpoint 3; replay of the earlier B edit returns checkpoint 2 without restoring B or changing current content.",
+  "firstExecutionQualification": "Twelve malformed complete location values are each submitted to creation and compound notes/location edit. All twenty-four reject with exact paths and operation identity, no applied receipt, and unchanged complete source, row generation/window and checkpoint 1 with no prepared proposals.",
+  "regressionScope": "All 29 affected MCP functions in 14 suites; ReadLoadTests is excluded to avoid replacing its isolated performance measurement.",
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerMCPLocationWireSwiftLint.log",
+    "diffWhitespace": "passed"
+  },
+  "sourceHashes": {
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift": "406ce7846ea71deb82728628d14587eb143720e2e6d642d64526a674f5c282fa",
+    "Planner/AgentControl/PlannerMCPFailureValue.swift": "d5040efde095f467d67b1e36a72f1a9b2681ffb538daa53ecc859c0e5c9421c6",
+    "PlannerMCPTests/RowRoutingTests.swift": "eba53138df97da3166c716e547dd6f4072a422b723739251460a0faa255bfba5"
+  },
+  "limitations": [
+    "No native location editor, geocoding/MapKit provider I/O or rich-row interaction evidence.",
+    "No full appearance/Schedule graph, cross-process/physical CloudKit independent-field convergence, signing or actual Share extension proof.",
+    "No actual selected-client or signed-reader qualification. Native logs retain com.apple.linkd.autoShortcut diagnostics and do not qualify App Intents.",
+    "No protocol session expiry or agent backup/export/import/recovery administration added. Historical native screenshots remain bound to their own source revision."
+  ]
+}
