@@ -373,24 +373,38 @@ public struct PlannerItemQuery: Sendable {
   }
   public enum Completion: Sendable { case todo, done, all }
   public enum Archive: Sendable { case active, archived, all }
+  public struct Sort: Sendable {
+    public enum Mode: String, Sendable { case title, created, lastUpdated, duration, manual }
+    public enum Direction: String, Sendable { case ascending, descending }
+    public let mode: Mode
+    public let direction: Direction
+
+    public init(mode: Mode = .title, direction: Direction = .ascending) {
+      self.mode = mode
+      self.direction = direction
+    }
+  }
   public let scope: Scope
   public let completion: Completion
   public let archive: Archive
+  public let sort: Sort
   public let rowPresentation: PlannerRowPresentationContext?
 
   public init(
     scope: Scope = .global, completion: Completion = .todo, archive: Archive = .active,
-    rowPresentation: PlannerRowPresentationContext? = nil
+    sort: Sort = Sort(), rowPresentation: PlannerRowPresentationContext? = nil
   ) {
     self.scope = scope
     self.completion = completion
     self.archive = archive
+    self.sort = sort
     self.rowPresentation = rowPresentation
   }
 }
 
 public enum PlannerRowIdentity: Sendable, Equatable {
   case source(PlannerEntityReference)
+  case appearance(source: PlannerEntityReference, appearance: PlannerAppearance)
 }
 
 public struct PlannerQuerySnapshot: Sendable {
@@ -399,6 +413,8 @@ public struct PlannerQuerySnapshot: Sendable {
   public let rows: [PlannerRowIdentity]
   public let matchingCount: Int64
   public let rowPresentation: PlannerRowPresentationContext?
+  public let progress: [PlannerContainerProgress]
+  public let unresolvedReferences: [PlannerReferenceRead]
 }
 
 public enum PlannerQueryResult: Sendable {

@@ -1,0 +1,155 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "265f4b5",
+  "scope": "Standalone List contextual queries and compact appearance windows through Core and actual MCP HTTP. Title ascending is the query default; native List presentation can explicitly select saved Manual order. Local completion writes and saved native screens remain separate work.",
+  "packageExecutions": {
+    "RowsRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipRowsRed.log"
+    },
+    "RowsGreen": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipRowsGreen.log"
+    },
+    "SortRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipRowSortRed.log"
+    },
+    "SortBoundaryRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipRowSortBoundaryRed.log"
+    },
+    "SortGreen": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipRowSortGreen.log"
+    },
+    "Qualification": {
+      "result": "Passed",
+      "totalTestCount": 68,
+      "suiteCount": 25,
+      "passedTests": 68,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipRowsQualificationFixed.log"
+    }
+  },
+  "nativeExecutions": {
+    "HTTPRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPMembershipRowsRed.xcresult",
+      "log": "/private/tmp/PlannerMCPMembershipRowsRed.log",
+      "summary": "/private/tmp/PlannerMCPMembershipRowsRedSummary.json"
+    },
+    "HTTPGreen": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPMembershipRowsGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPMembershipRowsGreen.log",
+      "summary": "/private/tmp/PlannerMCPMembershipRowsGreenSummary.json"
+    },
+    "MCPQualification": {
+      "result": "Passed",
+      "totalTestCount": 52,
+      "passedTests": 52,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPMembershipRowsQualification.xcresult",
+      "log": "/private/tmp/PlannerMCPMembershipRowsQualification.log",
+      "summary": "/private/tmp/PlannerMCPMembershipRowsQualificationSummary.json"
+    },
+    "CoreMac": {
+      "result": "Passed",
+      "totalTestCount": 11,
+      "passedTests": 11,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerCoreMembershipRowsNativeQualification.xcresult",
+      "log": "/private/tmp/PlannerCoreMembershipRowsNativeQualification.log",
+      "summary": "/private/tmp/PlannerCoreMembershipRowsNativeQualificationSummary.json"
+    }
+  },
+  "simulator": {
+    "result": "Test build succeeded",
+    "runtimeExecuted": false,
+    "signing": "disabled",
+    "log": "/private/tmp/PlannerCoreMembershipRowsSimulatorBuild.log"
+  },
+  "lint": {
+    "result": "Passed",
+    "files": [
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRowTests.swift",
+      "Planner/AgentControl/PlannerMCPQueryTool.swift",
+      "Planner/AgentControl/PlannerMCPRowValue.swift",
+      "Planner/AgentControl/PlannerMCPSourceTool.swift",
+      "PlannerMCPTests/MembershipRowRoutingTests.swift"
+    ],
+    "log": "/private/tmp/PlannerCoreMembershipRowsSwiftLint.log"
+  },
+  "sourceSHA256": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "be71629c66b63b28522253b2bfa07e1477307830f4df3fb6f10b517766e13183",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "bbdd9f97ffb8eab40c1e8b5db963151fda5dc2d6d9580c3ffc959f29b0e7574e",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "d1cc39817ebb8d8ae92a31f31b038bc631799b417a8d2f01c7728ee432f46829",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRowTests.swift": "72277f8ef9501f600eeda71730067f68d0b3d910e5a443563689cb78c0bb7c5d",
+    "Planner/AgentControl/PlannerMCPQueryTool.swift": "8347a63a81fcefbfdc317f6c7349bcaff0174e7131afb5c2206169bbacc51a53",
+    "Planner/AgentControl/PlannerMCPRowValue.swift": "a95329ee2ceba0e527b06e4b05ead1d63a9ac093ff6dbdf192a367c7c9f93ba6",
+    "Planner/AgentControl/PlannerMCPSourceTool.swift": "e930443ca3c4e31ec03ecb13c21c746c5493aca6f223ef640bd220913165cce8",
+    "PlannerMCPTests/MembershipRowRoutingTests.swift": "6dd7708313bb51c9ee478c17f3cdb9201fd4509370cb047be4e2d17c784b5de5"
+  },
+  "intermediateCorrections": [
+    {
+      "stage": "Sort test preparation",
+      "result": "Not executed",
+      "reason": "A missing parenthesis stopped formatting; corrected before the executed sort red."
+    },
+    {
+      "stage": "Initial store qualification",
+      "result": "Compilation failed",
+      "log": "/private/tmp/PlannerCoreMembershipRowsQualification.log",
+      "reason": "The title tie-break tuple label still used membershipId after changing its key to source Item identity. Corrected before the passing qualification."
+    }
+  ],
+  "obligations": [
+    "Local completion and bulk review/actions",
+    "Remaining search/filter/sort modes and catalogs",
+    "Membership removal/move/reorder, repeated Itinerary appearances and full graph",
+    "Native saved screens, selection, checkbox accessibility and provider previews",
+    "Actual Share/AppGroup, signed clients and header reader",
+    "CloudKit convergence, A17 reconciliation, deletion/order/account recovery and physical performance"
+  ]
+}

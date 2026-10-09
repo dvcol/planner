@@ -298,15 +298,19 @@
           "archived": read.state.archived.map(Value.bool) ?? .null,
         ]),
         "labels": .array([]), "references": .array(read.references.map(referenceValue)),
-        "progress": .object([
-          "container": .object([
-            "kind": .string(read.progress.container.kind.rawValue),
-            "id": .string(read.progress.container.id.uuidString),
-          ]),
-          "state": .string(read.progress.state.rawValue),
-          "doneCount": read.progress.doneCount.map { .string(String($0)) } ?? .null,
-          "totalCount": read.progress.totalCount.map { .string(String($0)) } ?? .null,
+        "progress": progressValue(read.progress),
+      ])
+    }
+
+    static func progressValue(_ progress: PlannerContainerProgress) -> Value {
+      .object([
+        "container": .object([
+          "kind": .string(progress.container.kind.rawValue),
+          "id": .string(progress.container.id.uuidString),
         ]),
+        "state": .string(progress.state.rawValue),
+        "doneCount": progress.doneCount.map { .string(String($0)) } ?? .null,
+        "totalCount": progress.totalCount.map { .string(String($0)) } ?? .null,
       ])
     }
 
@@ -339,7 +343,7 @@
       ])
     }
 
-    private static func appearanceIdentityValue(_ appearance: PlannerAppearance) -> Value {
+    static func appearanceIdentityValue(_ appearance: PlannerAppearance) -> Value {
       switch appearance {
       case .listMembership(let listId, let membershipId):
         return .object([
@@ -396,7 +400,7 @@
       }
     }
 
-    private static func referenceValue(_ reference: PlannerReferenceRead) -> Value {
+    static func referenceValue(_ reference: PlannerReferenceRead) -> Value {
       switch reference {
       case .membership(let identifier, let list, let item):
         return .object([

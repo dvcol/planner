@@ -12,6 +12,14 @@
 
     static func identity(_ identity: PlannerRowIdentity) -> Value {
       switch identity {
+      case .appearance(let source, let appearance):
+        return .object([
+          "kind": .string("appearance"),
+          "source": .object([
+            "kind": .string(source.kind.rawValue), "id": .string(source.id.uuidString),
+          ]),
+          "appearance": PlannerMCPSourceTool.appearanceIdentityValue(appearance),
+        ])
       case .source(let source):
         return .object([
           "kind": .string("source"),

@@ -6,7 +6,8 @@
   enum PlannerMCPQueryTool {
     static let definition = Tool(
       name: "planner_query",
-      description: "Discover Item identities in the local Planner prototype.",
+      description:
+        "Discover source or exact List appearance identities in the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("query")]),
@@ -18,13 +19,39 @@
             "properties": .object([
               "kind": .object(["type": .string("string"), "const": .string("items")]),
               "scope": .object([
+                "oneOf": .array([
+                  .object([
+                    "type": .string("object"), "additionalProperties": .bool(false),
+                    "required": .array([.string("kind")]),
+                    "properties": .object([
+                      "kind": .object([
+                        "type": .string("string"),
+                        "enum": .array([.string("global"), .string("inbox")]),
+                      ])
+                    ]),
+                  ]),
+                  .object([
+                    "type": .string("object"), "additionalProperties": .bool(false),
+                    "required": .array([.string("kind"), .string("listId")]),
+                    "properties": .object([
+                      "kind": .object(["type": .string("string"), "const": .string("list")]),
+                      "listId": .object(["type": .string("string"), "format": .string("uuid")]),
+                    ]),
+                  ]),
+                ])
+              ]),
+              "sort": .object([
                 "type": .string("object"), "additionalProperties": .bool(false),
-                "required": .array([.string("kind")]),
+                "required": .array([.string("mode"), .string("direction")]),
                 "properties": .object([
-                  "kind": .object([
+                  "mode": .object([
                     "type": .string("string"),
-                    "enum": .array([.string("global"), .string("inbox")]),
-                  ])
+                    "enum": .array([.string("title"), .string("manual")]),
+                  ]),
+                  "direction": .object([
+                    "type": .string("string"),
+                    "enum": .array([.string("ascending"), .string("descending")]),
+                  ]),
                 ]),
               ]),
               "rowPresentation": .object([
@@ -75,24 +102,16 @@
             message: "This prototype supports Item queries.")
         }
         if let unsupported = Set(query.keys).subtracting([
-          "kind", "scope", "completion", "archive", "rowPresentation",
+          "kind", "scope", "completion", "archive", "sort", "rowPresentation",
         ])
         .sorted().first {
           throw AdmissionFailure(
             code: "unavailable", path: "/query/" + unsupported,
-            message: "This query slice supports scope, completion, archive and row presentation.")
+            message:
+              "This query slice supports scope, completion, archive, sort and row presentation.")
         }
-        let scope = try object(
-          query["scope"], allowed: ["kind"], required: ["kind"], path: "/query/scope")
-        let nativeScope: PlannerItemQuery.Scope
-        switch scope["kind"] {
-        case .string("global"): nativeScope = .global
-        case .string("inbox"): nativeScope = .inbox
-        default:
-          throw AdmissionFailure(
-            code: "invalidInput", path: "/query/scope/kind",
-            message: "Expected global or inbox scope.")
-        }
+        let nativeScope = try scope(query["scope"])
+        let sort = try sort(query["sort"])
         let completion: PlannerItemQuery.Completion
         switch query["completion"] {
         case nil, .string("todo"): completion = .todo
@@ -119,7 +138,7 @@
             request: .items(
               PlannerItemQuery(
                 scope: nativeScope, completion: completion, archive: archive,
-                rowPresentation: presentation))))
+                sort: sort, rowPresentation: presentation))))
         switch queried {
         case .failed(let reason):
           return PlannerMCPSourceTool.failure(reason)
@@ -130,7 +149,9 @@
             "rows": .array(snapshot.rows.map(PlannerMCPRowValue.identity)),
             "rowPresentation": snapshot.rowPresentation.map(PlannerMCPRowValue.presentation)
               ?? .null,
-            "unresolvedReferences": .array([]), "progress": .array([]),
+            "unresolvedReferences": .array(
+              snapshot.unresolvedReferences.map(PlannerMCPSourceTool.referenceValue)),
+            "progress": .array(snapshot.progress.map(PlannerMCPSourceTool.progressValue)),
           ])
           let serialized = try JSONEncoder().encode(value)
           return CallTool.Result(
@@ -146,6 +167,50 @@
         return PlannerMCPSourceTool.failure(
           code: "unavailable", message: "The Planner query could not be completed.")
       }
+    }
+
+    private static func scope(_ value: Value?) throws -> PlannerItemQuery.Scope {
+      let fields = try object(
+        value, allowed: ["kind", "listId"], required: ["kind"], path: "/query/scope")
+      switch fields["kind"] {
+      case .string("global"), .string("inbox"):
+        _ = try object(value, allowed: ["kind"], required: ["kind"], path: "/query/scope")
+        return fields["kind"] == .string("global") ? .global : .inbox
+      case .string("list"):
+        _ = try object(
+          value, allowed: ["kind", "listId"], required: ["kind", "listId"], path: "/query/scope")
+        guard case .string(let encoded) = fields["listId"],
+          let identifier = UUID(uuidString: encoded)
+        else {
+          throw AdmissionFailure(
+            code: "invalidInput", path: "/query/scope/listId", message: "Expected a List UUID.")
+        }
+        return .list(identifier)
+      default:
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/scope/kind",
+          message: "Expected global, inbox or list scope.")
+      }
+    }
+
+    private static func sort(_ value: Value?) throws -> PlannerItemQuery.Sort {
+      guard let value else { return PlannerItemQuery.Sort() }
+      let fields = try object(
+        value, allowed: ["mode", "direction"], required: ["mode", "direction"], path: "/query/sort")
+      guard case .string(let encodedMode) = fields["mode"],
+        let mode = PlannerItemQuery.Sort.Mode(rawValue: encodedMode)
+      else {
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/sort/mode", message: "Expected a declared sort mode.")
+      }
+      guard case .string(let encodedDirection) = fields["direction"],
+        let direction = PlannerItemQuery.Sort.Direction(rawValue: encodedDirection)
+      else {
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/sort/direction",
+          message: "Expected ascending or descending.")
+      }
+      return PlannerItemQuery.Sort(mode: mode, direction: direction)
     }
 
     private static func rowPresentation(_ value: Value?) throws -> PlannerRowPresentationContext? {

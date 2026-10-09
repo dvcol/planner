@@ -401,15 +401,40 @@ public actor Planner {
             (itemQuery.rowPresentation
             ?? PlannerRowPresentationContext(
               referenceInstant: Date(), displayTimeZone: TimeZone.current.identifier)).validated()
+          switch itemQuery.sort.mode {
+          case .manual:
+            guard case .list = itemQuery.scope, itemQuery.sort.direction == .ascending else {
+              throw PlannerFailure(
+                "invalidInput", "Manual order requires an ascending standalone List query.",
+                propertyPath: "/query/sort")
+            }
+          case .title: break
+          case .created, .lastUpdated, .duration:
+            throw PlannerFailure(
+              "unavailable", "This query slice supports title and saved Manual order.",
+              propertyPath: "/query/sort/mode")
+          }
+          let historyToken = try latestHistoryToken(in: context)
           let listedIdentifiers: Set<UUID>
           switch itemQuery.scope {
           case .global: listedIdentifiers = []
           case .inbox: listedIdentifiers = Set(try membershipSnapshots(context).map { $0.item.id })
-          case .list, .itinerary:
+          case .list(let listId):
+            let snapshot = try listQuerySnapshot(
+              session: query.session, listId: listId, query: itemQuery,
+              presentation: presentation, context: context)
+            guard try latestHistoryToken(in: context) == historyToken else {
+              throw PlannerFailure(
+                "readUnavailable", "The store changed while building this query.")
+            }
+            querySnapshots = querySnapshots.filter { $0.value.historyToken == historyToken }
+            querySnapshots[snapshot.generation] = QueryBinding(
+              snapshot: snapshot, historyToken: historyToken)
+            return .snapshot(snapshot)
+          case .itinerary:
             throw PlannerFailure(
               "unavailable", "This Item-only fixture does not implement contextual queries.")
           }
-          let historyToken = try latestHistoryToken(in: context)
           var descriptor = FetchDescriptor<PlannerSchemaV7.Item>()
           descriptor.propertiesToFetch = [\.id, \.title, \.globalDone, \.archived]
           let items = try context.fetch(descriptor).filter { item in
@@ -444,13 +469,17 @@ public actor Planner {
           )
           let sorted = values.sorted { first, second in
             let comparison = comparator.compare(first.title, second.title)
-            if comparison != .orderedSame { return comparison == .orderedAscending }
+            if comparison != .orderedSame {
+              if itemQuery.sort.direction == .ascending { return comparison == .orderedAscending }
+              return comparison == .orderedDescending
+            }
             return first.reference.id.uuidString < second.reference.id.uuidString
           }
           let snapshot = PlannerQuerySnapshot(
             session: query.session, generation: UUID(),
             rows: sorted.map { .source($0.reference) },
-            matchingCount: Int64(sorted.count), rowPresentation: presentation)
+            matchingCount: Int64(sorted.count), rowPresentation: presentation,
+            progress: [], unresolvedReferences: [])
           guard try latestHistoryToken(in: context) == historyToken else {
             throw PlannerFailure("readUnavailable", "The store changed while building this query.")
           }
@@ -461,6 +490,94 @@ public actor Planner {
         }
       }
     } catch { return .failed(failure(error, code: "readUnavailable")) }
+  }
+
+  private func listQuerySnapshot(
+    session: PlannerDatasetSession, listId: UUID, query: PlannerItemQuery,
+    presentation: PlannerRowPresentationContext, context: ModelContext
+  ) throws -> PlannerQuerySnapshot {
+    var lists = FetchDescriptor<PlannerSchemaV7.List>(
+      predicate: #Predicate { $0.id == listId })
+    lists.fetchLimit = 2
+    lists.propertiesToFetch = [\.id, \.lifetimeId]
+    let owners = try context.fetch(lists)
+    guard owners.count == 1, let owner = owners.first, let lifetimeId = owner.lifetimeId else {
+      throw PlannerFailure("missingReference", "The selected List is missing or unresolved.")
+    }
+    let memberships = FetchDescriptor<PlannerSchemaV7.Membership>(
+      predicate: #Predicate { $0.listId == listId && $0.listLifetimeId == lifetimeId },
+      sortBy: [SortDescriptor(\.rank), SortDescriptor(\.id)])
+    let children = try context.fetch(memberships).map { try $0.value() }
+    guard Set(children.map(\.id)).count == children.count,
+      Set(children.map { $0.item.id }).count == children.count
+    else {
+      throw PlannerFailure("readUnavailable", "List memberships are duplicated and unresolved.")
+    }
+    let itemIdentifiers = children.map { Optional($0.item.id) }
+    var items = FetchDescriptor<PlannerSchemaV7.Item>(
+      predicate: #Predicate { itemIdentifiers.contains($0.id) })
+    items.propertiesToFetch = [\.id, \.lifetimeId, \.title, \.globalDone, \.archived]
+    let sources = Dictionary(grouping: try context.fetch(items), by: \.id)
+    var doneCount: Int64 = 0
+    var matching: [(identity: PlannerRowIdentity, title: String, itemId: UUID)] = []
+    for membership in children {
+      guard let matches = sources[membership.item.id], matches.count == 1,
+        let item = matches.first, item.lifetimeId == membership.item.lifetimeId,
+        !item.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+      else {
+        throw PlannerFailure("readUnavailable", "A List child source is unresolved.")
+      }
+      let effectiveDone = item.globalDone || membership.localDone
+      if effectiveDone { doneCount += 1 }
+      switch query.completion {
+      case .todo: if effectiveDone { continue }
+      case .done: if !effectiveDone { continue }
+      case .all: break
+      }
+      switch query.archive {
+      case .active: if item.archived { continue }
+      case .archived: if !item.archived { continue }
+      case .all: break
+      }
+      matching.append(
+        (
+          identity: .appearance(
+            source: PlannerEntityReference(kind: .item, id: membership.item.id),
+            appearance: .listMembership(listId: listId, membershipId: membership.id)),
+          title: item.title, itemId: membership.item.id
+        ))
+    }
+    if query.sort.mode == .title {
+      let comparator = String.Comparator(
+        options: [.caseInsensitive, .diacriticInsensitive],
+        locale: Locale(identifier: "en_US_POSIX"))
+      matching.sort { first, second in
+        let comparison = comparator.compare(first.title, second.title)
+        if comparison != .orderedSame {
+          if query.sort.direction == .ascending { return comparison == .orderedAscending }
+          return comparison == .orderedDescending
+        }
+        return first.itemId.uuidString < second.itemId.uuidString
+      }
+    }
+    let rows = matching.map(\.identity)
+    let totalCount = Int64(children.count)
+    let state: PlannerContainerProgressState
+    if totalCount == 0 {
+      state = .empty
+    } else if doneCount == totalCount {
+      state = .complete
+    } else {
+      state = .partial
+    }
+    return PlannerQuerySnapshot(
+      session: session, generation: UUID(), rows: rows, matchingCount: Int64(rows.count),
+      rowPresentation: presentation,
+      progress: [
+        PlannerContainerProgress(
+          container: PlannerEntityReference(kind: .list, id: listId), state: state,
+          doneCount: doneCount, totalCount: totalCount)
+      ], unresolvedReferences: [])
   }
 
   private func readRows(
@@ -486,48 +603,72 @@ public actor Planner {
       identities = Array(snapshot.rows.dropFirst(Int(offset)).prefix(Int(count)))
     }
     let rows = try identities.map { identity in
+      let source: PlannerEntityReference
+      let localDone: Bool?
+      let expectedLifetimeId: UUID?
       switch identity {
-      case .source(let source):
-        guard let presentation = snapshot.rowPresentation else {
-          throw PlannerFailure("readUnavailable", "The Item query has no presentation context.")
+      case .appearance(let reference, .listMembership(let listId, let membershipId)):
+        var memberships = FetchDescriptor<PlannerSchemaV7.Membership>(
+          predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
+        memberships.fetchLimit = 2
+        let records = try context.fetch(memberships)
+        guard records.count == 1, let record = records.first else {
+          throw PlannerFailure("readUnavailable", "A snapshot appearance is missing or unresolved.")
         }
-        let sourceIdentifier = source.id
-        var descriptor = FetchDescriptor<PlannerSchemaV7.Item>(
-          predicate: #Predicate { $0.id == sourceIdentifier })
-        descriptor.fetchLimit = 2
-        descriptor.propertiesToFetch = [
-          \.id, \.lifetimeId, \.title, \.subtitle, \.locationData, \.estimateData,
-          \.globalDone, \.archived,
-        ]
-        let records = try context.fetch(descriptor)
-        guard records.count == 1, let item = records.first else {
-          throw PlannerFailure("readUnavailable", "A snapshot Item is missing or unresolved.")
+        let membership = try record.value()
+        guard reference.kind == .item, membership.item.id == reference.id else {
+          throw PlannerFailure("readUnavailable", "The snapshot appearance's source is unresolved.")
         }
-        guard let lifetimeId = item.lifetimeId else {
-          throw PlannerFailure("readUnavailable", "The row Item has unresolved lifetime.")
-        }
-        let owned = FetchDescriptor<PlannerSchemaV7.OwnedLink>(
-          predicate: #Predicate {
-            $0.ownerId == sourceIdentifier && $0.ownerLifetimeId == lifetimeId
-          })
-        var selected = FetchDescriptor<PlannerSchemaV7.OwnedLink>(
-          predicate: #Predicate {
-            $0.ownerId == sourceIdentifier && $0.ownerLifetimeId == lifetimeId
-              && $0.kind != "appleMaps" && $0.kind != "googleMaps"
-          }, sortBy: [SortDescriptor(\.rank), SortDescriptor(\.id)])
-        selected.fetchLimit = 1
-        selected.propertiesToFetch = [
-          \.id, \.lifetimeId, \.ownerId, \.ownerLifetimeId, \.rank, \.originalUrl, \.label, \.kind,
-        ]
-        let preview = try context.fetch(selected).first?.value(
-          ownerId: sourceIdentifier, ownerLifetimeId: lifetimeId
-        ).read
-        let summary = try rowScheduleSummary(
-          source: source, lifetimeId: lifetimeId,
-          presentation: presentation, context: context)
-        return try item.rowRead(
-          hasLinks: context.fetchCount(owned) > 0, previewLink: preview, scheduleSummary: summary)
+        source = reference
+        localDone = membership.localDone
+        expectedLifetimeId = membership.item.lifetimeId
+      case .source(let reference):
+        source = reference
+        localDone = nil
+        expectedLifetimeId = nil
       }
+      guard let presentation = snapshot.rowPresentation else {
+        throw PlannerFailure("readUnavailable", "The Item query has no presentation context.")
+      }
+      let sourceIdentifier = source.id
+      var descriptor = FetchDescriptor<PlannerSchemaV7.Item>(
+        predicate: #Predicate { $0.id == sourceIdentifier })
+      descriptor.fetchLimit = 2
+      descriptor.propertiesToFetch = [
+        \.id, \.lifetimeId, \.title, \.subtitle, \.locationData, \.estimateData,
+        \.globalDone, \.archived,
+      ]
+      let records = try context.fetch(descriptor)
+      guard records.count == 1, let item = records.first else {
+        throw PlannerFailure("readUnavailable", "A snapshot Item is missing or unresolved.")
+      }
+      guard let lifetimeId = item.lifetimeId,
+        expectedLifetimeId == nil || expectedLifetimeId == lifetimeId
+      else {
+        throw PlannerFailure("readUnavailable", "The row Item has unresolved lifetime.")
+      }
+      let owned = FetchDescriptor<PlannerSchemaV7.OwnedLink>(
+        predicate: #Predicate {
+          $0.ownerId == sourceIdentifier && $0.ownerLifetimeId == lifetimeId
+        })
+      var selected = FetchDescriptor<PlannerSchemaV7.OwnedLink>(
+        predicate: #Predicate {
+          $0.ownerId == sourceIdentifier && $0.ownerLifetimeId == lifetimeId
+            && $0.kind != "appleMaps" && $0.kind != "googleMaps"
+        }, sortBy: [SortDescriptor(\.rank), SortDescriptor(\.id)])
+      selected.fetchLimit = 1
+      selected.propertiesToFetch = [
+        \.id, \.lifetimeId, \.ownerId, \.ownerLifetimeId, \.rank, \.originalUrl, \.label, \.kind,
+      ]
+      let preview = try context.fetch(selected).first?.value(
+        ownerId: sourceIdentifier, ownerLifetimeId: lifetimeId
+      ).read
+      let summary = try rowScheduleSummary(
+        source: source, lifetimeId: lifetimeId,
+        presentation: presentation, context: context)
+      return try item.rowRead(
+        identity: identity, localDone: localDone,
+        hasLinks: context.fetchCount(owned) > 0, previewLink: preview, scheduleSummary: summary)
     }
     guard try latestHistoryToken(in: context) == binding.historyToken else {
       querySnapshots.removeValue(forKey: generation)
