@@ -55,6 +55,7 @@
     }
 
     func stop() async {
+      await requestHandler.revokeAccess()
       try? await acceptingChannel?.close().get()
       servingTask?.cancel()
       await servingTask?.value

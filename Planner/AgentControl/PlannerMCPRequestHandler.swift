@@ -3,7 +3,7 @@
   import MCP
 
   actor PlannerMCPRequestHandler {
-    private let credential: String
+    private var credential: String?
     private let accessWindowIdentifier: UUID
 
     init(credential: String, accessWindowIdentifier: UUID) {
@@ -11,12 +11,16 @@
       self.accessWindowIdentifier = accessWindowIdentifier
     }
 
+    func revokeAccess() {
+      credential = nil
+    }
+
     func handleRequest(_ request: HTTPRequest) async -> HTTPResponse {
       guard request.path == "/mcp" else {
         return .error(statusCode: 404, .invalidRequest("Not Found"))
       }
 
-      guard request.header("Authorization") == "Bearer \(credential)" else {
+      guard let credential, request.header("Authorization") == "Bearer \(credential)" else {
         return .error(statusCode: 401, .invalidRequest("Unauthorized"))
       }
 
