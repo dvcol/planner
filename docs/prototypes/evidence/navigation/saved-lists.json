@@ -1,0 +1,220 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "8f24069",
+  "scope": "Saved local List creation, cancellation, catalog discovery and reopen through native UI; final visible content after iOS sidebar adaptation. CloudKit and native Item interactions are not qualified.",
+  "executions": {
+    "InitialPhoneRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "runtimeWarnings": [],
+      "bundle": "/private/tmp/PlannerNavigationSavedListPhoneRed.xcresult",
+      "summary": "/private/tmp/PlannerNavigationSavedListPhoneRedSummary.json",
+      "log": "/private/tmp/PlannerNavigationSavedListPhoneRed.log",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListJourneyTests\" -resultBundlePath /private/tmp/PlannerNavigationSavedListPhoneRed.xcresult test"
+    },
+    "TabletVisibilityRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "runtimeWarnings": [],
+      "bundle": "/private/tmp/PlannerNavigationSavedListVisibleTabletRetryRed.xcresult",
+      "summary": "/private/tmp/PlannerNavigationSavedListVisibleTabletRetryRedSummary.json",
+      "log": "/private/tmp/PlannerNavigationSavedListVisibleTabletRetryRed.log",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListJourneyTests\" -resultBundlePath /private/tmp/PlannerNavigationSavedListVisibleTabletRetryRed.xcresult test"
+    },
+    "FinalPhone": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "runtimeWarnings": [],
+      "bundle": "/private/tmp/PlannerNavigationSavedListVisibleFinalPhone.xcresult",
+      "summary": "/private/tmp/PlannerNavigationSavedListVisibleFinalPhoneSummary.json",
+      "log": "/private/tmp/PlannerNavigationSavedListVisibleFinalPhone.log",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListJourneyTests\" -resultBundlePath /private/tmp/PlannerNavigationSavedListVisibleFinalPhone.xcresult test"
+    },
+    "FinalTablet": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "runtimeWarnings": [],
+      "bundle": "/private/tmp/PlannerNavigationSavedListVisibleTabletGreen.xcresult",
+      "summary": "/private/tmp/PlannerNavigationSavedListVisibleTabletGreenSummary.json",
+      "log": "/private/tmp/PlannerNavigationSavedListVisibleTabletGreen.log",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListJourneyTests\" -resultBundlePath /private/tmp/PlannerNavigationSavedListVisibleTabletGreen.xcresult test"
+    },
+    "EarlierPhoneSuite": {
+      "result": "Passed",
+      "totalTestCount": 8,
+      "passedTests": 8,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "runtimeWarnings": [],
+      "bundle": "/private/tmp/PlannerNavigationSavedListPhoneFinalQualification.xcresult",
+      "summary": "/private/tmp/PlannerNavigationSavedListPhoneFinalQualificationSummary.json",
+      "log": "/private/tmp/PlannerNavigationSavedListPhoneFinalQualification.log",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests\" -resultBundlePath /private/tmp/PlannerNavigationSavedListPhoneFinalQualification.xcresult test",
+      "revisionNote": "Earlier working SavedPlannerView before the later loading/Retry and column-visibility corrections. The seven fixture journeys and their explicit comparison launch arguments are unchanged. The final saved journey was requalified separately."
+    },
+    "EarlierTabletSuite": {
+      "result": "Passed",
+      "totalTestCount": 8,
+      "passedTests": 8,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "runtimeWarnings": [],
+      "bundle": "/private/tmp/PlannerNavigationSavedListTabletFinalQualification.xcresult",
+      "summary": "/private/tmp/PlannerNavigationSavedListTabletFinalQualificationSummary.json",
+      "log": "/private/tmp/PlannerNavigationSavedListTabletFinalQualification.log",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests\" -resultBundlePath /private/tmp/PlannerNavigationSavedListTabletFinalQualification.xcresult test",
+      "revisionNote": "Earlier working SavedPlannerView before the later loading/Retry and column-visibility corrections. The seven fixture journeys and their explicit comparison launch arguments are unchanged. The final saved journey was requalified separately."
+    },
+    "MCPRegressionBeforeLayoutCorrection": {
+      "result": "Passed",
+      "totalTestCount": 55,
+      "passedTests": 55,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "runtimeWarnings": [],
+      "bundle": "/private/tmp/PlannerMCPSavedListSceneQualification.xcresult",
+      "summary": "/private/tmp/PlannerMCPSavedListSceneQualificationSummary.json",
+      "log": "/private/tmp/PlannerMCPSavedListSceneQualification.log",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests\" \"-skip-testing:PlannerMCPTests/ReadLoadTests\" -resultBundlePath /private/tmp/PlannerMCPSavedListSceneQualification.xcresult test",
+      "revisionNote": "55 actual MCP functions passed with the saved default app scene before UI-only loading/visibility corrections. PlannerCore and transport code are unchanged in this slice."
+    }
+  },
+  "visibilityRedSourceSHA256": {
+    "Planner/PlannerApp.swift": "933b0d67602686daad69fb127c00fa0122472307980d25ba5b1d1ea29584ceb1",
+    "Planner/Scenes/SavedPlannerStore.swift": "05d63c2965d0de8c38a7909f112fedd5b52475f03eb15756ab51ebe192714b1b",
+    "Planner/Scenes/SavedPlannerView.swift": "fd0c4e153a0dcdcf4f6d9dad5290d6acb85ff4c7edebf787edb0459262abd852",
+    "PlannerNavigationUITests/SavedListJourneyTests.swift": "e3fef76d2aad2250eaaf33794f5e2e73aa99722946cede5b1a6bd684bc737c7d"
+  },
+  "finalSourceSHA256": {
+    "Planner/PlannerApp.swift": "933b0d67602686daad69fb127c00fa0122472307980d25ba5b1d1ea29584ceb1",
+    "Planner/Scenes/SavedPlannerStore.swift": "05d63c2965d0de8c38a7909f112fedd5b52475f03eb15756ab51ebe192714b1b",
+    "Planner/Scenes/SavedPlannerView.swift": "411fc622505169961023813d5d11620343ab2d92d1fc9b3d8bfc0782b0bca5f0",
+    "PlannerNavigationUITests/SavedListJourneyTests.swift": "e3fef76d2aad2250eaaf33794f5e2e73aa99722946cede5b1a6bd684bc737c7d",
+    "PlannerNavigationUITests/NavigationJourneyTests.swift": "ea98f7e2dd9d2ddc9f8dc7026bfe78615528238af1109edb3d52d8c7efcb4202",
+    "PlannerNavigationUITests/MapNavigationJourneyTests.swift": "3d99ee33846a4d5466b9d23f3b64086824c56e1404942b333df8337f635cac37",
+    "scripts/navigation-prototype.sh": "d79a840eb606fd35d2e05cacc6421c828810c09a05cbd2dc16afe9efcb25fe04"
+  },
+  "finalMacBuild": {
+    "result": "Test build succeeded",
+    "runtimeExecuted": false,
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNavigationSavedListVisibleFinalMacBuild.xcresult build-for-testing",
+    "log": "/private/tmp/PlannerNavigationSavedListVisibleFinalMacBuild.log",
+    "bundle": "/private/tmp/PlannerNavigationSavedListVisibleFinalMacBuild.xcresult"
+  },
+  "intermediateCorrections": [
+    {
+      "stage": "First Mac selection",
+      "result": "No UI execution",
+      "reason": "The Planner scheme does not contain the native UI target. The selection was corrected to PlannerNavigation.",
+      "log": "/private/tmp/PlannerNavigationSavedListMacRed.log"
+    },
+    {
+      "stage": "Mac UI startup",
+      "result": "Runner initialization failed",
+      "executedBehaviorTests": 0,
+      "reportedRunnerFailures": 1,
+      "reason": "Timed out while enabling automation mode. Mac native UI runtime remains unqualified.",
+      "bundle": "/private/tmp/PlannerNavigationSavedListMacBehaviorRed.xcresult"
+    },
+    {
+      "stage": "Initial app scene build",
+      "result": "Compilation failed",
+      "executedBehaviorTests": 0,
+      "reason": "Conditional Scene modifiers and the separate comparison Window needed separate compiler conditionals.",
+      "log": "/private/tmp/PlannerNavigationSavedListPhoneGreen.log"
+    },
+    {
+      "stage": "Phone empty catalog",
+      "result": "Behavior failed",
+      "reason": "Compact navigation hid the empty catalog state. The sidebar now has a native empty-state overlay.",
+      "bundle": "/private/tmp/PlannerNavigationSavedListPhoneSceneFixed.xcresult"
+    },
+    {
+      "stage": "Toolbar placement experiment",
+      "result": "Behavior failed on both simulators",
+      "reason": "A root toolbar did not expose New List. It belongs to the native sidebar; the test uses Show Sidebar where needed.",
+      "bundles": [
+        "/private/tmp/PlannerNavigationSavedListPhoneToolbarFixed.xcresult",
+        "/private/tmp/PlannerNavigationSavedListTabletToolbarFixed.xcresult"
+      ]
+    },
+    {
+      "stage": "First stronger iPad attempt",
+      "result": "Interrupted before behavior execution",
+      "executedBehaviorTests": 0,
+      "exitCode": 75,
+      "reason": "No runner execution was observed before interruption. Restarting the simulator and waiting for startup produced the recorded actual assertion failure.",
+      "log": "/private/tmp/PlannerNavigationSavedListVisibleTabletRed.log"
+    },
+    {
+      "stage": "Report export",
+      "result": "Initial export failed",
+      "reason": "xcresulttool required report-cache writes beyond the restricted filesystem. The authorized export succeeded with its required access."
+    }
+  ],
+  "checks": {
+    "swiftLint": {
+      "result": "Passed",
+      "files": [
+        "Planner/PlannerApp.swift",
+        "Planner/Scenes/SavedPlannerStore.swift",
+        "Planner/Scenes/SavedPlannerView.swift",
+        "PlannerNavigationUITests/SavedListJourneyTests.swift",
+        "PlannerNavigationUITests/NavigationJourneyTests.swift",
+        "PlannerNavigationUITests/MapNavigationJourneyTests.swift"
+      ],
+      "log": "/private/tmp/PlannerNavigationSavedListVisibleFinalSwiftLint.log"
+    },
+    "shellSyntax": {
+      "result": "Passed",
+      "command": "bash -n scripts/navigation-prototype.sh"
+    },
+    "comparisonLauncherEndToEndRerun": false,
+    "SDKLogDiagnostics": "Debugger-version lookup, duplicate simulator accessibility classes and cleanup diagnostics remain in raw logs. Empty structured runtimeWarnings arrays do not mean the raw logs are warning-free."
+  },
+  "screenshots": {
+    "phone": {
+      "source": "/private/tmp/PlannerSavedListVisibleFinalPhoneAttachments/545218BC-71E0-4A62-BEF0-833A182EAD7A.png",
+      "committedPath": "docs/prototypes/evidence/navigation/layouts/phone-saved-list-reopen.png",
+      "sha256": "1e1e7abb1e32fb351a2989c5952a8e4a65e4d05ed2de763d6adfe227b8c7fc88",
+      "visuallyInspected": true
+    },
+    "tablet": {
+      "source": "/private/tmp/PlannerSavedListVisibleTabletAttachments/DF2A8F98-63EB-4CBB-8D65-63563384F8E0.png",
+      "committedPath": "docs/prototypes/evidence/navigation/layouts/tablet-saved-list-reopen.png",
+      "sha256": "b3a3a216deff6b6044bcacd93176f7c8f4d73519a55be85765205d5e084c69e2",
+      "visuallyInspected": true
+    }
+  },
+  "unqualified": [
+    "Native Mac UI execution",
+    "Native failure/recovery controls and postcommit interruption",
+    "Item creation, saved detail selection and Q44 contextual circles",
+    "Nonempty List progress, filters, other catalogs and native tabs",
+    "Complete row-window reads are not moving-window/performance qualification",
+    "Provider lookup, previews and drag-and-drop",
+    "CloudKit, physical convergence, signed Share/AppGroup and chosen clients/reader",
+    "Accessibility, orientation/resizing and final human layout review"
+  ]
+}

@@ -2,7 +2,9 @@ import SwiftUI
 
 @main
 struct PlannerApp: App {
+  @State private var savedPlanner = SavedPlannerStore()
   #if os(macOS)
+    @Environment(\.openWindow) private var openWindow
     @FocusedBinding(\.navigationPrototypeLayout) private var prototypeLayout:
       NavigationPrototypeLayout?
     @FocusedBinding(\.navigationPrototypeInformationPresented) private var showPrototypeInformation:
@@ -11,13 +13,19 @@ struct PlannerApp: App {
 
   var body: some Scene {
     WindowGroup {
-      NavigationPrototypeView()
+      if ProcessInfo.processInfo.arguments.contains("--navigation-prototype") {
+        NavigationPrototypeView()
+      } else {
+        SavedPlannerView(store: savedPlanner)
+      }
     }
     #if os(macOS)
       .defaultSize(width: 1200, height: 800)
       .commands {
         SidebarCommands()
         CommandMenu("Prototype") {
+          Button("Open navigation comparison") { openWindow(id: "navigation-prototype") }
+          Divider()
           if let layout = Binding($prototypeLayout) {
             Picker("Layout comparison", selection: layout) {
               ForEach(NavigationPrototypeLayout.allCases, id: \.self) { candidate in
@@ -31,6 +39,12 @@ struct PlannerApp: App {
           .disabled(showPrototypeInformation == nil)
         }
       }
+    #endif
+    #if os(macOS)
+      Window("Navigation comparison", id: "navigation-prototype") {
+        NavigationPrototypeView()
+      }
+      .defaultSize(width: 1200, height: 800)
     #endif
   }
 }
