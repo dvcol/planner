@@ -1,0 +1,255 @@
+{
+  "scope": "Isolated native hosted test: 64 real HTTP Hotel reads at each approved concurrency over persistent Core, followed by public source/query/recovery assertions",
+  "implementationBaseCommit": "8b9403f",
+  "additionalSourceAtExecution": "PlannerMCPTests/ReadLoadTests.swift",
+  "toolchain": {
+    "xcode": "27.0 build 27A266a",
+    "swift": "6.4",
+    "configuration": "Debug",
+    "destination": "macOS arm64"
+  },
+  "execution": {
+    "resultBundle": "/private/tmp/PlannerMCPReadLoadExecutableQualification.xcresult",
+    "log": "/private/tmp/PlannerMCPReadLoadExecutableQualification.log",
+    "isolatedTestFunction": "ReadLoadTests/sixtyFourHotelReadsAtEachConcurrencyRetainSourceAndRecovery()",
+    "noBehavioralRedClaimed": true
+  },
+  "summary": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 1,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791515416.672,
+    "passedTests": 1,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791515408.819,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 1
+  },
+  "measurements": [
+    {
+      "baselineMemory": {
+        "footprintBytes": 60523552,
+        "processLifetimePeakFootprintBytes": 61015072,
+        "processLifetimePeakResidentBytes": 174096384,
+        "residentBytes": 173670400
+      },
+      "cancelled": 0,
+      "completed": 64,
+      "completedLatencyMilliseconds": {
+        "maximum": 15.626,
+        "median": 4.878667,
+        "minimum": 3.926208,
+        "percentile95": 7.089959,
+        "percentile99": 15.626
+      },
+      "concurrency": 1,
+      "elapsedMilliseconds": 346.923375,
+      "failed": 0,
+      "failures": [],
+      "rejected": 0,
+      "sampledPeakFootprintBytes": 61817888,
+      "settledAfterMilliseconds": 250,
+      "settledMemory": {
+        "footprintBytes": 61539360,
+        "processLifetimePeakFootprintBytes": 61834272,
+        "processLifetimePeakResidentBytes": 177405952,
+        "residentBytes": 177225728
+      },
+      "submitted": 64
+    },
+    {
+      "baselineMemory": {
+        "footprintBytes": 61555744,
+        "processLifetimePeakFootprintBytes": 61834272,
+        "processLifetimePeakResidentBytes": 177405952,
+        "residentBytes": 177291264
+      },
+      "cancelled": 0,
+      "completed": 64,
+      "completedLatencyMilliseconds": {
+        "maximum": 23.903417,
+        "median": 4.4665,
+        "minimum": 4.155083,
+        "percentile95": 7.618375,
+        "percentile99": 23.903417
+      },
+      "concurrency": 2,
+      "elapsedMilliseconds": 167.544625,
+      "failed": 0,
+      "failures": [],
+      "rejected": 0,
+      "sampledPeakFootprintBytes": 61998112,
+      "settledAfterMilliseconds": 250,
+      "settledMemory": {
+        "footprintBytes": 61998112,
+        "processLifetimePeakFootprintBytes": 62014496,
+        "processLifetimePeakResidentBytes": 177766400,
+        "residentBytes": 177733632
+      },
+      "submitted": 64
+    },
+    {
+      "baselineMemory": {
+        "footprintBytes": 61998112,
+        "processLifetimePeakFootprintBytes": 62014496,
+        "processLifetimePeakResidentBytes": 177766400,
+        "residentBytes": 177733632
+      },
+      "cancelled": 0,
+      "completed": 64,
+      "completedLatencyMilliseconds": {
+        "maximum": 33.87275,
+        "median": 9.888667,
+        "minimum": 8.390125,
+        "percentile95": 20.026333,
+        "percentile99": 33.87275
+      },
+      "concurrency": 4,
+      "elapsedMilliseconds": 182.351292,
+      "failed": 0,
+      "failures": [],
+      "rejected": 0,
+      "sampledPeakFootprintBytes": 62424096,
+      "settledAfterMilliseconds": 250,
+      "settledMemory": {
+        "footprintBytes": 62424096,
+        "processLifetimePeakFootprintBytes": 62440480,
+        "processLifetimePeakResidentBytes": 178192384,
+        "residentBytes": 178159616
+      },
+      "submitted": 64
+    },
+    {
+      "baselineMemory": {
+        "footprintBytes": 62424096,
+        "processLifetimePeakFootprintBytes": 62440480,
+        "processLifetimePeakResidentBytes": 178192384,
+        "residentBytes": 178159616
+      },
+      "cancelled": 0,
+      "completed": 64,
+      "completedLatencyMilliseconds": {
+        "maximum": 62.504083,
+        "median": 17.20925,
+        "minimum": 15.824292,
+        "percentile95": 52.124791,
+        "percentile99": 62.504083
+      },
+      "concurrency": 8,
+      "elapsedMilliseconds": 186.031333,
+      "failed": 0,
+      "failures": [],
+      "rejected": 0,
+      "sampledPeakFootprintBytes": 63013920,
+      "settledAfterMilliseconds": 250,
+      "settledMemory": {
+        "footprintBytes": 63013920,
+        "processLifetimePeakFootprintBytes": 63030304,
+        "processLifetimePeakResidentBytes": 178782208,
+        "residentBytes": 178749440
+      },
+      "submitted": 64
+    },
+    {
+      "baselineMemory": {
+        "footprintBytes": 63013920,
+        "processLifetimePeakFootprintBytes": 63030304,
+        "processLifetimePeakResidentBytes": 178782208,
+        "residentBytes": 178749440
+      },
+      "cancelled": 0,
+      "completed": 64,
+      "completedLatencyMilliseconds": {
+        "maximum": 100.1095,
+        "median": 39.589959,
+        "minimum": 33.719083,
+        "percentile95": 92.124791,
+        "percentile99": 100.1095
+      },
+      "concurrency": 16,
+      "elapsedMilliseconds": 212.546958,
+      "failed": 0,
+      "failures": [],
+      "rejected": 0,
+      "sampledPeakFootprintBytes": 64324664,
+      "settledAfterMilliseconds": 250,
+      "settledMemory": {
+        "footprintBytes": 64324664,
+        "processLifetimePeakFootprintBytes": 64341048,
+        "processLifetimePeakResidentBytes": 180109312,
+        "residentBytes": 180076544
+      },
+      "submitted": 64
+    },
+    {
+      "baselineMemory": {
+        "footprintBytes": 64324664,
+        "processLifetimePeakFootprintBytes": 64341048,
+        "processLifetimePeakResidentBytes": 180109312,
+        "residentBytes": 180076544
+      },
+      "cancelled": 0,
+      "completed": 64,
+      "completedLatencyMilliseconds": {
+        "maximum": 128.202542,
+        "median": 70.158875,
+        "minimum": 53.576333,
+        "percentile95": 122.078417,
+        "percentile99": 128.202542
+      },
+      "concurrency": 32,
+      "elapsedMilliseconds": 192.2505,
+      "failed": 0,
+      "failures": [],
+      "rejected": 0,
+      "sampledPeakFootprintBytes": 66258000,
+      "settledAfterMilliseconds": 250,
+      "settledMemory": {
+        "footprintBytes": 66258000,
+        "processLifetimePeakFootprintBytes": 66274384,
+        "processLifetimePeakResidentBytes": 182026240,
+        "residentBytes": 181993472
+      },
+      "submitted": 64
+    }
+  ],
+  "method": [
+    "One isolated test-host process; concurrency levels run sequentially, each with a fresh ephemeral URLSession and the matching maximum connections per host.",
+    "A task group maintains up to the selected concurrency until 64 requests settle. Every completed response must retain the original Item/window identity and Hotel/Original notes/Todo/Active values.",
+    "ContinuousClock records end-to-end URLSession latency. Completed-request percentiles use nearest rank; counts classify completed, rejected, cancelled and failed outcomes separately.",
+    "Mach TASK_VM_INFO reads actual process footprint/resident counters. The entire returned structure is required. Kernel process-lifetime peaks are cumulative and do not reset between workloads.",
+    "Trial footprint peaks sample baseline and request completions. They may miss transient peaks between samples. Settled memory is observed after URLSession invalidation and a 250 ms pause.",
+    "Final public Core reads/query/recovery inspection retain original content, flags, updatedAt, field hashes, one Item, the original acknowledged checkpoint and no prepared proposal."
+  ],
+  "limitations": [
+    "One local Debug run with one Item and native test-host overhead; no sustained-load, general capacity, leak-free or saturation guarantee.",
+    "Peak/resident values include the entire Planner test-host process and are not isolated MCP allocations.",
+    "No selected Codex/Claude client, native navigation responsiveness, native Enable/Stop, signed credential reader, lock/sleep/quit, mutation load, physical iOS or CloudKit proof.",
+    "The first attempt did not compile because a C memory-count macro is unavailable to Swift. It ran no tests and is excluded from behavioral evidence.",
+    "Native linkd.autoShortcut diagnostics remain in the execution log; this test does not qualify App Intents or Shortcuts."
+  ]
+}
