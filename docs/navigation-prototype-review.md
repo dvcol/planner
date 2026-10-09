@@ -66,7 +66,7 @@ Core read/query/execute tests observe independently specified IDs/values through
 
 ## Readiness and first slice
 
-The 2026-10-09 read-only refresh matches Apple test access: macOS 27.0.1/arm64, Xcode 27.0 build 27A266a, Swift 6.4, iOS/iOS Simulator/macOS 27 SDKs, available iOS 27 runtime, five iPhone and six iPad simulators. First-launch check exits 0. Scope DEVELOPER_DIR to the installed Xcode; the global selection remains Command Line Tools. No build, scheme discovery, boot or launch has happened.
+The 2026-10-09 read-only refresh matches Apple test access: macOS 27.0.1/arm64, Xcode 27.0 build 27A266a, Swift 6.4, iOS/iOS Simulator/macOS 27 SDKs, available iOS 27 runtime, five iPhone and six iPad simulators. First-launch check exits 0. Scope DEVELOPER_DIR to the installed Xcode; the global selection remains Command Line Tools. This inventory preceded native execution. Current focused build, launch and test evidence is in the [navigation qualification report](prototypes/navigation-local-qualification.md).
 
 Use iPhone 18 Pro, iPad Air 11-inch M4 and native arm64 Mac as initial local destinations. Verify project-specific destinations after committing native configuration. Compact phone, iPad orientations/resizing, Dynamic Type and VoiceOver checks remain required. Physical provisioning, pairing, Developer Mode, signing and the measured real-device dataset remain human/device gates before this prototype can close; private CloudKit setup does not block local fixture work.
 

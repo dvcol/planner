@@ -19,24 +19,24 @@
             productRefGroup = 000000000000000000000104;
             projectDirPath = "";
             projectRoot = "";
-            targets = (000000000000000000000201, 000000000000000000000202, 000000000000000000000203, 000000000000000000000204);
+            targets = (000000000000000000000201, 000000000000000000000202, 000000000000000000000203, 000000000000000000000204, 000000000000000000000205);
         };
         000000000000000000000101 = {
             isa = PBXGroup;
-            children = (000000000000000000000102, 000000000000000000000103, 000000000000000000000105, 000000000000000000000106, 000000000000000000000107, 000000000000000000000108, 000000000000000000000104);
+            children = (000000000000000000000102, 000000000000000000000103, 000000000000000000000105, 000000000000000000000106, 000000000000000000000107, 000000000000000000000108, 000000000000000000000109, 000000000000000000000123, 000000000000000000000104);
             sourceTree = "<group>";
         };
         000000000000000000000102 = { isa = PBXFileSystemSynchronizedRootGroup; path = Planner; sourceTree = "<group>"; };
         000000000000000000000103 = { isa = PBXFileSystemSynchronizedRootGroup; path = PlannerMCPTests; sourceTree = "<group>"; };
         000000000000000000000104 = {
             isa = PBXGroup;
-            children = (000000000000000000000111, 000000000000000000000112, 000000000000000000000119, 000000000000000000000120);
+            children = (000000000000000000000111, 000000000000000000000112, 000000000000000000000119, 000000000000000000000120, 000000000000000000000121);
             name = Products;
             sourceTree = "<group>";
         };
         000000000000000000000105 = {
             isa = PBXGroup;
-            children = (000000000000000000000113, 000000000000000000000114, 000000000000000000000115, 000000000000000000000116, 000000000000000000000117, 000000000000000000000118);
+            children = (000000000000000000000113, 000000000000000000000114, 000000000000000000000115, 000000000000000000000116, 000000000000000000000117, 000000000000000000000118, 000000000000000000000122);
             path = Configuration;
             sourceTree = "<group>";
         };
@@ -121,7 +121,7 @@
         000000000000000000000552 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000118; buildSettings = {}; name = Release; };
         000000000000000000000211 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000212 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000411, 000000000000000000000412, 000000000000000000000413, 000000000000000000000414, 000000000000000000000415); runOnlyForDeploymentPostprocessing = 0; };
-        000000000000000000000213 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000213 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000416); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000221 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000222 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000422); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000223 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
@@ -144,12 +144,38 @@
         000000000000000000000501 = { isa = XCConfigurationList; buildConfigurations = (000000000000000000000511, 000000000000000000000512); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
         000000000000000000000502 = { isa = XCConfigurationList; buildConfigurations = (000000000000000000000521, 000000000000000000000522); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
         000000000000000000000503 = { isa = XCConfigurationList; buildConfigurations = (000000000000000000000531, 000000000000000000000532); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
-        000000000000000000000511 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000113; buildSettings = { DEBUG_INFORMATION_FORMAT = dwarf; ENABLE_TESTABILITY = YES; GCC_PREPROCESSOR_DEFINITIONS = ("DEBUG=1", "$(inherited)"); SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)"; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; }; name = Debug; };
+        000000000000000000000511 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000113; buildSettings = { DEBUG_INFORMATION_FORMAT = dwarf; ENABLE_TESTABILITY = YES; ONLY_ACTIVE_ARCH = YES; GCC_PREPROCESSOR_DEFINITIONS = ("DEBUG=1", "$(inherited)"); SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)"; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; }; name = Debug; };
         000000000000000000000512 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000113; buildSettings = { DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; SWIFT_COMPILATION_MODE = wholemodule; }; name = Release; };
         000000000000000000000521 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000114; buildSettings = {}; name = Debug; };
         000000000000000000000522 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000114; buildSettings = {}; name = Release; };
         000000000000000000000531 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000115; buildSettings = {}; name = Debug; };
         000000000000000000000532 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000115; buildSettings = {}; name = Release; };
+        000000000000000000000109 = { isa = PBXFileSystemSynchronizedRootGroup; path = PlannerNavigationUITests; sourceTree = "<group>"; };
+        000000000000000000000121 = { isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlannerNavigationUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+        000000000000000000000122 = { isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PlannerNavigationUITests.xcconfig; sourceTree = "<group>"; };
+        000000000000000000000205 = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 000000000000000000000506;
+            buildPhases = (000000000000000000000261, 000000000000000000000262, 000000000000000000000263);
+            buildRules = ();
+            dependencies = (000000000000000000000271);
+            fileSystemSynchronizedGroups = (000000000000000000000109);
+            name = PlannerNavigationUITests;
+            packageProductDependencies = ();
+            productName = PlannerNavigationUITests;
+            productReference = 000000000000000000000121;
+            productType = "com.apple.product-type.bundle.ui-testing";
+        };
+        000000000000000000000261 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000262 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000263 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000271 = { isa = PBXTargetDependency; target = 000000000000000000000201; targetProxy = 000000000000000000000272; };
+        000000000000000000000272 = { isa = PBXContainerItemProxy; containerPortal = 000000000000000000000001; proxyType = 1; remoteGlobalIDString = 000000000000000000000201; remoteInfo = Planner; };
+        000000000000000000000506 = { isa = XCConfigurationList; buildConfigurations = (000000000000000000000561, 000000000000000000000562); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+        000000000000000000000561 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000122; buildSettings = {}; name = Debug; };
+        000000000000000000000562 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000122; buildSettings = {}; name = Release; };
+        000000000000000000000123 = { isa = PBXFileReference; lastKnownFileType = text.json; path = docs/fixtures/portable-backup-v1.json; sourceTree = SOURCE_ROOT; };
+        000000000000000000000416 = { isa = PBXBuildFile; fileRef = 000000000000000000000123; };
     };
     rootObject = 000000000000000000000001;
 }
