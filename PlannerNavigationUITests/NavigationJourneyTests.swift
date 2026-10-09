@@ -2,6 +2,47 @@ import XCTest
 
 @MainActor
 final class NavigationJourneyTests: XCTestCase {
+  func testContextualDetailsKeepUsefulContentSeparateFromPrototypeDiagnostics() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launch()
+    application.openPlannerSection("Itineraries")
+    application.plannerElement("itinerary.00000000-0000-4000-8000-000000000301")
+      .activateForPlannerJourney()
+    let appearance = application.plannerElement(
+      "appearance.00000000-0000-4000-8000-000000000452/00000000-0000-4000-8000-000000000401")
+    if !appearance.exists {
+      #if os(macOS)
+        application.disclosureTriangles.firstMatch.activateForPlannerJourney()
+      #else
+        application.descendants(matching: .any)
+          .matching(identifier: "group.00000000-0000-4000-8000-000000000452").firstMatch
+          .activateForPlannerJourney()
+      #endif
+    }
+    appearance.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["In Tokyo Weekend"].waitForExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["To do"].exists)
+    XCTAssertTrue(application.staticTexts["Original notes"].exists)
+    XCTAssertTrue(application.staticTexts["Meeting point A"].exists)
+    XCTAssertFalse(application.staticTexts["Global: Todo"].exists)
+    XCTAssertFalse(application.staticTexts["Local: Todo"].exists)
+    XCTAssertFalse(application.staticTexts["Effective: Todo"].exists)
+    XCTAssertFalse(application.staticTexts["Prototype identity inspection"].exists)
+    XCTAssertFalse(application.plannerElement("Open source Item").exists)
+    recordScreenshot(application, name: "Contextual details without technical fields")
+
+    application.openItemDiagnostics()
+    XCTAssertTrue(application.staticTexts["Local: Todo"].waitForExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["Global: Todo"].exists)
+    XCTAssertTrue(
+      application.staticTexts[
+        "00000000-0000-4000-8000-000000000452/00000000-0000-4000-8000-000000000401"
+      ].exists)
+    application.closeItemDiagnostics()
+    XCTAssertFalse(application.staticTexts["Global: Todo"].exists)
+  }
+
   func testCumulativeFiltersSummarizeSelectionsWithoutChangingFullListProgress() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -73,29 +114,46 @@ final class NavigationJourneyTests: XCTestCase {
     application.plannerElement("appearance.00000000-0000-4000-8000-000000000401")
       .activateForPlannerJourney()
 
-    XCTAssertTrue(application.staticTexts["List appearance"].waitForExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["In Tokyo Food"].waitForExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["Completed"].exists)
+    application.openItemDiagnostics()
+    XCTAssertTrue(application.staticTexts["List appearance"].exists)
     XCTAssertTrue(application.staticTexts["00000000-0000-4000-8000-000000000401"].exists)
     XCTAssertTrue(application.staticTexts["Local: Done"].exists)
     XCTAssertTrue(application.staticTexts["Global: Todo"].exists)
+    application.closeItemDiagnostics()
 
     #if os(macOS)
+      application.plannerElement("appearance.00000000-0000-4000-8000-000000000401").click()
       application.typeKey(.downArrow, modifierFlags: [])
+      XCTAssertTrue(application.staticTexts["To do"].waitForExistence(timeout: 5))
+      application.openItemDiagnostics()
       XCTAssertTrue(
         application.staticTexts["00000000-0000-4000-8000-000000000402"].waitForExistence(timeout: 5)
       )
       XCTAssertTrue(application.staticTexts["Local: Todo"].exists)
+      application.closeItemDiagnostics()
+      application.plannerElement("appearance.00000000-0000-4000-8000-000000000402").click()
       application.typeKey(.upArrow, modifierFlags: [])
+      XCTAssertTrue(application.staticTexts["Completed"].waitForExistence(timeout: 5))
+      application.openItemDiagnostics()
       XCTAssertTrue(
         application.staticTexts["00000000-0000-4000-8000-000000000401"].waitForExistence(timeout: 5)
       )
+      application.closeItemDiagnostics()
     #endif
 
     recordScreenshot(application, name: "List appearance 401")
 
-    application.plannerElement("Open source Item").activateForPlannerJourney()
+    application.plannerElement("detail.actions").activateForPlannerJourney()
+    application.plannerElement("View Item").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Item"].waitForExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["To do"].exists)
+    application.openItemDiagnostics()
     XCTAssertTrue(application.staticTexts["Source Item"].waitForExistence(timeout: 5))
     XCTAssertTrue(application.staticTexts["00000000-0000-4000-8000-000000000101"].exists)
     XCTAssertTrue(application.staticTexts["Global: Todo"].exists)
+    application.closeItemDiagnostics()
     recordScreenshot(application, name: "Source Item 101")
 
     application.openPlannerSection("Itineraries")
@@ -121,9 +179,13 @@ final class NavigationJourneyTests: XCTestCase {
     recordScreenshot(application, name: "Itinerary first layout")
     application.plannerElement("appearance.00000000-0000-4000-8000-000000000451")
       .activateForPlannerJourney()
-    XCTAssertTrue(application.staticTexts["Local: Todo"].waitForExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["In Tokyo Weekend"].waitForExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["To do"].exists)
+    application.openItemDiagnostics()
+    XCTAssertTrue(application.staticTexts["Local: Todo"].exists)
     XCTAssertTrue(application.staticTexts["Global: Todo"].exists)
     XCTAssertTrue(application.staticTexts["00000000-0000-4000-8000-000000000451"].exists)
+    application.closeItemDiagnostics()
     recordScreenshot(application, name: "Independent itinerary appearance 451")
   }
 
@@ -137,13 +199,16 @@ final class NavigationJourneyTests: XCTestCase {
     application.plannerElement(
       "appearance.00000000-0000-4000-8000-000000000452/00000000-0000-4000-8000-000000000401"
     ).activateForPlannerJourney()
-    XCTAssertTrue(application.staticTexts["Itinerary list appearance"].waitForExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["In Tokyo Weekend"].waitForExistence(timeout: 5))
+    application.openItemDiagnostics()
+    XCTAssertTrue(application.staticTexts["Itinerary list appearance"].exists)
     XCTAssertTrue(application.staticTexts["Local: Todo"].exists)
     XCTAssertTrue(application.staticTexts["Global: Todo"].exists)
     XCTAssertTrue(
       application.staticTexts[
         "00000000-0000-4000-8000-000000000452/00000000-0000-4000-8000-000000000401"
       ].exists)
+    application.closeItemDiagnostics()
     recordScreenshot(application, name: "Expanded itinerary appearance 452 membership 401")
   }
 
@@ -187,12 +252,15 @@ final class NavigationJourneyTests: XCTestCase {
     XCTAssertTrue(expandedItem.waitForExistence(timeout: 5))
     recordScreenshot(application, name: "Expanded live List after relaunch")
     expandedItem.activateForPlannerJourney()
-    XCTAssertTrue(application.staticTexts["Local: Todo"].waitForExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["In Tokyo Weekend"].waitForExistence(timeout: 5))
+    application.openItemDiagnostics()
+    XCTAssertTrue(application.staticTexts["Local: Todo"].exists)
     XCTAssertTrue(application.staticTexts["Global: Todo"].exists)
     XCTAssertTrue(
       application.staticTexts[
         "00000000-0000-4000-8000-000000000452/00000000-0000-4000-8000-000000000401"
       ].exists)
+    application.closeItemDiagnostics()
   }
 
   private func groupProgress(in application: XCUIApplication) -> XCUIElement {

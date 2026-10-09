@@ -58,6 +58,16 @@ extension XCUIApplication {
       if sidebar.exists { sidebar.tap() }
     #endif
   }
+
+  func openItemDiagnostics() {
+    plannerElement("detail.actions").activateForPlannerJourney()
+    plannerElement("Prototype diagnostics").activateForPlannerJourney()
+    XCTAssertTrue(plannerElement("detail.diagnostics.close").waitForExistence(timeout: 5))
+  }
+
+  func closeItemDiagnostics() {
+    plannerElement("detail.diagnostics.close").activateForPlannerJourney()
+  }
 }
 
 extension XCUIElement {

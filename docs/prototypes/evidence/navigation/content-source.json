@@ -1,0 +1,24 @@
+{
+  "baseCommit": "6adecd78c1ec92e1ac19a2713b7c5f37d5be7e19",
+  "purpose": "Roomier native referenced List groups and useful Item details. Technical state/identity is behind an explicit diagnostics action; View Item is in the native item menu. Planner content remains read-only.",
+  "files": {
+    "Planner/NavigationPrototype/NavigationPrototypeFixture.swift": "b79ba5cbccb7608690be8e3407fe77b2b33211dca6cf14dc047e7690fe5199e5",
+    "Planner/NavigationPrototype/NavigationPrototypeView.swift": "0c8467d954d6867c7101628d5e1e0d2d9598b1c87eeed1561a97efb52e4e4eeb",
+    "Planner/NavigationPrototype/PrototypeMapItemDetail.swift": "a12593a96500dfda25ed688cd67cbf249348a52fd75a598c9a235cc4b65597c2",
+    "Planner/PlannerApp.swift": "ffbc3ede3e016ee2e8853c4ef991b7a6f647c9ae6c019d55c393effd5f94f241",
+    "PlannerNavigationUITests/NavigationJourneyTests.swift": "6606912165845753b637d7dd922abab4a214736dae57b9b55d201f44acf792b5",
+    "PlannerNavigationUITests/MapNavigationJourneyTests.swift": "a68385c8ce77f90f411548fc9828e1810600b4549f34355340f7a98702520799",
+    "PlannerNavigationUITests/NativeNavigationElements.swift": "58c622ad329a9035ae2b029dbd139732433f41f5e31c7f559453c423bc66e532",
+    "Planner.xcodeproj/project.pbxproj": "43f16f38ddc9ce2877cce20e93294de13df1cf7661bcf5cf309e2330a29e78f7",
+    "Planner.xcodeproj/xcshareddata/xcschemes/PlannerNavigation.xcscheme": "9f45da3b7f9406959e89caf86d79a25c975b1d6ac5b5caed8244913198b78be3",
+    "Configuration/Planner.xcconfig": "b7a614c95c420d23b7d0da086bd30e660744abf66e3726a88ce421fe38ec0372",
+    "docs/fixtures/portable-backup-v1.json": "6496ba36622f06f37b8fc11a9f5e00999e9c145cefbeed721fefce6fa20097ba",
+    "scripts/navigation-prototype.sh": "95df10ac8307e2558294d86a04f0500ceb96c91cc84918c2af8e729804040c13"
+  },
+  "testSeam": "Q34 public native UI; fixed Full graph fixture. No private fixture unit tests, new Core commands or provider lookup. Q43-Q46 remain pending.",
+  "commands": {
+    "mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationNativeMacRevision -onlyUsePackageVersionsFromResolvedFile -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -parallel-testing-enabled NO -test-timeouts-enabled YES -default-test-execution-time-allowance 90 -maximum-test-execution-time-allowance 90 -resultBundlePath /private/tmp/PlannerNavigationContentMacQualified.xcresult test",
+    "phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,name=iPhone 18 Pro' -derivedDataPath /private/tmp/PlannerNavigationNativeRevision -onlyUsePackageVersionsFromResolvedFile -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNavigationContentPhoneQualified.xcresult test",
+    "tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,name=iPad Air 11-inch (M4)' -derivedDataPath /private/tmp/PlannerNavigationNativeTabletRevision -onlyUsePackageVersionsFromResolvedFile -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNavigationContentTabletQualified.xcresult test"
+  }
+}

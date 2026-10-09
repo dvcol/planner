@@ -1,0 +1,15 @@
+{
+  "command": "./scripts/navigation-prototype.sh mac",
+  "exitCode": 0,
+  "buildSucceeded": true,
+  "standaloneProcessConfirmed": true,
+  "freshInstanceRequested": true,
+  "newStandaloneProcessConfirmed": true,
+  "launcherSHA256": "95df10ac8307e2558294d86a04f0500ceb96c91cc84918c2af8e729804040c13",
+  "sourceManifest": "content-source.json",
+  "limits": [
+    "The launch check confirms a standalone process. Rendered layout and interaction evidence comes from the separate seven-journey native Mac UI run.",
+    "Fixture Planner content remains read-only.",
+    "No signing/account or physical-device setup was performed."
+  ]
+}

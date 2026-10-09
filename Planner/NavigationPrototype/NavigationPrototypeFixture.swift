@@ -53,6 +53,7 @@ struct NavigationPrototypeFixture: Decodable {
     let sourceId: UUID
     let localDone: Bool
     let contextName: String
+    let containerTitle: String
   }
 
   let sources: [Source]
@@ -76,7 +77,7 @@ struct NavigationPrototypeFixture: Decodable {
       return memberships.filter { $0.list.id == container.id }.map {
         Appearance(
           id: $0.id.uuidString, sourceId: $0.item.id,
-          localDone: $0.localDone, contextName: "List appearance")
+          localDone: $0.localDone, contextName: "List appearance", containerTitle: container.title)
       }
     }
     return itineraryEntries.filter { $0.itinerary.id == container.id }.flatMap {
@@ -90,7 +91,8 @@ struct NavigationPrototypeFixture: Decodable {
       return [
         Appearance(
           id: entry.id.uuidString, sourceId: referencedSource.id,
-          localDone: entry.localDone ?? false, contextName: "Itinerary appearance")
+          localDone: entry.localDone ?? false, contextName: "Itinerary appearance",
+          containerTitle: source(entry.itinerary.id)?.title ?? "Itinerary")
       ]
     }
     return memberships.filter { $0.list.id == referencedSource.id }.map { membership in
@@ -100,7 +102,8 @@ struct NavigationPrototypeFixture: Decodable {
       return Appearance(
         id: "\(entry.id.uuidString)/\(membership.id.uuidString)",
         sourceId: membership.item.id,
-        localDone: completion?.localDone ?? false, contextName: "Itinerary list appearance")
+        localDone: completion?.localDone ?? false, contextName: "Itinerary list appearance",
+        containerTitle: source(entry.itinerary.id)?.title ?? "Itinerary")
     }
   }
 

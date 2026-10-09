@@ -17,19 +17,16 @@ final class MapNavigationJourneyTests: XCTestCase {
     application.plannerElement("appearance.00000000-0000-4000-8000-000000000401")
       .activateForPlannerJourney()
     XCTAssertTrue(
-      application.staticTexts["Local: Done"].waitForExistence(timeout: 5),
+      application.staticTexts["Completed"].waitForExistence(timeout: 5),
       "Selecting the row must show details directly, without opening an inspection sheet.")
-    XCTAssertTrue(application.staticTexts["Global: Todo"].exists)
+    XCTAssertTrue(application.staticTexts["In Tokyo Food"].exists)
     XCTAssertFalse(application.buttons["Inspect Item"].exists)
     XCTAssertTrue(application.descendants(matching: .any)["map.location"].exists)
-    if !application.staticTexts["00000000-0000-4000-8000-000000000401"].exists {
-      #if os(macOS)
-        application.scrollViews.firstMatch.scroll(byDeltaX: 0, deltaY: -400)
-      #else
-        application.swipeUp()
-      #endif
-    }
+    application.openItemDiagnostics()
+    XCTAssertTrue(application.staticTexts["Local: Done"].exists)
+    XCTAssertTrue(application.staticTexts["Global: Todo"].exists)
     XCTAssertTrue(application.staticTexts["00000000-0000-4000-8000-000000000401"].exists)
+    application.closeItemDiagnostics()
     recordScreenshot(application, name: "Map selected appearance 401")
     let genericItem = application.plannerElement("appearance.00000000-0000-4000-8000-000000000402")
     if !genericItem.exists { application.plannerElement("BackButton").activateForPlannerJourney() }
