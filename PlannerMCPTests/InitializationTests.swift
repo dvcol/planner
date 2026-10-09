@@ -6,6 +6,46 @@ import Testing
 @Suite
 struct InitializationTests {
   @Test
+  func unsupportedInitializationVersionCannotSilentlyDowngrade() async throws {
+    let requestHandler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      accessWindowIdentifier: UUID(uuidString: "00000000-0000-4000-8000-000000000701")!
+    )
+    let listener = PlannerMCPLoopbackListener(requestHandler: requestHandler)
+    let endpoint = try await listener.start(port: 0)
+    let session = URLSession(configuration: .ephemeral)
+    defer { session.invalidateAndCancel() }
+    var request = URLRequest(url: endpoint)
+    request.httpMethod = "POST"
+    request.httpBody = Data(
+      #"{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2099-01-01","clientInfo":{"name":"Unsupported fixture","version":"1"},"capabilities":{}}}"#
+        .utf8)
+    request.setValue(
+      "Bearer AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", forHTTPHeaderField: "Authorization")
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.setValue("application/json, text/event-stream", forHTTPHeaderField: "Accept")
+    request.timeoutInterval = 5
+
+    do {
+      let (responseData, response) = try await session.data(for: request)
+      await listener.stop()
+      let httpResponse = try #require(response as? HTTPURLResponse)
+      #expect(httpResponse.statusCode == 400)
+      #expect(httpResponse.value(forHTTPHeaderField: "X-Planner-Access-Window") == nil)
+      let envelope = try #require(
+        JSONSerialization.jsonObject(with: responseData) as? [String: Any])
+      #expect(envelope["result"] == nil)
+      let error = try #require(envelope["error"] as? [String: Any])
+      let message = try #require(error["message"] as? String)
+      #expect(message.contains("2099-01-01"))
+      #expect(message.contains("2025-11-25"))
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
+  @Test
   func repeatedIndependentInitializationsRetainRequestedSupportedVersions() async throws {
     let requestHandler = PlannerMCPRequestHandler(
       credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",

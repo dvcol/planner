@@ -24,6 +24,19 @@
         return .error(statusCode: 401, .invalidRequest("Unauthorized"))
       }
 
+      if let body = request.body,
+        let initialization = try? JSONDecoder().decode(Request<Initialize>.self, from: body),
+        initialization.method == Initialize.name,
+        !Version.supported.contains(initialization.params.protocolVersion)
+      {
+        return .error(
+          statusCode: 400,
+          .invalidRequest(
+            "Unsupported protocol version: \(initialization.params.protocolVersion). Supported: \(Version.supported.sorted().joined(separator: ", "))"
+          )
+        )
+      }
+
       let transport = StatelessHTTPServerTransport()
       let server = Server(name: "Planner MCP prototype", version: "0.0.1")
 
