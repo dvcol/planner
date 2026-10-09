@@ -1,0 +1,72 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "d14bf4e",
+  "scope": "Strict complete timed Schedule form edit admission and real authenticated loopback HTTP outcomes through the public native facade.",
+  "nativeExecutions": {
+    "Red": {
+      "result": "Failed",
+      "totalTestCount": 16,
+      "passedTests": 15,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPScheduleEditWireRed.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleEditWireRed.log",
+      "failure": "The actual guarded edit is rejected by unsupported command admission."
+    },
+    "Green": {
+      "result": "Passed",
+      "totalTestCount": 16,
+      "passedTests": 16,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPScheduleEditWireGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleEditWireGreen.log"
+    },
+    "Qualification": {
+      "result": "Passed",
+      "totalTestCount": 17,
+      "passedTests": 17,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPScheduleEditWireQualification.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleEditWireQualification.log"
+    },
+    "Regression": {
+      "result": "Passed",
+      "totalTestCount": 37,
+      "passedTests": 37,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPScheduleEditWireRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleEditWireRegression.log"
+    }
+  },
+  "qualification": {
+    "malformedRequests": 21,
+    "behavior": [
+      "HTTP reads supply form hashes used by the complete edit. Fractional instants, complete form, original Schedule identity and changed hash are retained.",
+      "Stale form rejects with exactly form, its complete current value and current hash; the entire saved source remains unchanged.",
+      "A later start-only Paris form reaches checkpoint 4; exact earlier replay returns checkpoint 3 without reapplying the former form.",
+      "Malformed command/change/form/hash objects, UUIDs, DateNumber types, supplied ends, planning zones, escaped unknown fields and deferred all-day variants reject at their expected paths.",
+      "Every rejected operation creates no applied Core receipt and retains the full source, issued row window, Item hashes/time and checkpoint 2 without prepared proposals.",
+      "Text and structured JSON are checked at the real HTTP boundary, including rejections."
+    ]
+  },
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerMCPScheduleEditWireSwiftLint.log",
+    "affectedSwiftFiles": 2,
+    "nativeCompilation": "Passed in executed Mac tests",
+    "diffWhitespace": "passed",
+    "excludedSuite": "ReadLoadTests"
+  },
+  "sourceHashes": {
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift": "2d6204cb372e6285b1a57cf32de93b91825b5f9c35f4897fe9b76000b29818bd",
+    "PlannerMCPTests/RowRoutingTests.swift": "aa83d4b3dd4553389b4da6d8f0aef4e50b58a300256d5285e7e419759c1bdde8"
+  },
+  "remaining": [
+    "Zone-only edit, removal, all-day/Itinerary forms and full shared reference graph",
+    "Native saved editors and physical CloudKit/account/Share/interruption/performance gates",
+    "Chosen clients and signed reader validation"
+  ]
+}

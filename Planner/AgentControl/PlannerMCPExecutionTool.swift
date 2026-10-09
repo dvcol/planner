@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create an Item with owned location and HTTP(S) bookmarks, edit its title/notes/location/links, complete/reopen or archive/unarchive it, and create direct timed appointments through the local Planner prototype.",
+        "Create an Item with owned location and HTTP(S) bookmarks, edit its title/notes/location/links, complete/reopen or archive/unarchive it, and create or guard complete edits to direct timed appointments through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -17,6 +17,7 @@
           "command": .object([
             "oneOf": .array([
               creationSchema, editSchema, archiveSchema, completionSchema, scheduleCreationSchema,
+              scheduleEditSchema,
             ])
           ]),
           "reviewToken": .object(["type": .array([.string("string"), .string("null")])]),
@@ -163,16 +164,42 @@
             "id": .object(["type": .string("string"), "format": .string("uuid")]),
           ]),
         ]),
-        "form": .object([
+        "form": timedFormSchema,
+      ]),
+    ])
+
+    private static let timedFormSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([
+        .string("kind"), .string("start"), .string("end"), .string("planningTimeZone"),
+      ]),
+      "properties": .object([
+        "kind": .object(["type": .string("string"), "const": .string("timed")]),
+        "start": .object(["type": .string("number")]),
+        "end": .object(["type": .array([.string("number"), .string("null")])]),
+        "planningTimeZone": .object(["type": .string("string")]),
+      ]),
+    ])
+
+    private static let scheduleEditSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([
+        .string("type"), .string("scheduleId"), .string("changes"), .string("expectedFieldHashes"),
+      ]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("editSchedule")]),
+        "scheduleId": .object(["type": .string("string"), "format": .string("uuid")]),
+        "changes": .object([
           "type": .string("object"), "additionalProperties": .bool(false),
-          "required": .array([
-            .string("kind"), .string("start"), .string("end"), .string("planningTimeZone"),
-          ]),
+          "required": .array([.string("form")]), "properties": .object(["form": timedFormSchema]),
+        ]),
+        "expectedFieldHashes": .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "required": .array([.string("form")]),
           "properties": .object([
-            "kind": .object(["type": .string("string"), "const": .string("timed")]),
-            "start": .object(["type": .string("number")]),
-            "end": .object(["type": .array([.string("number"), .string("null")])]),
-            "planningTimeZone": .object(["type": .string("string")]),
+            "form": .object([
+              "type": .string("string"), "pattern": .string("^sha256-v1:[0-9a-f]{64}$"),
+            ])
           ]),
         ]),
       ]),
@@ -220,6 +247,7 @@
         case "setArchive": command = try archiveCommand(arguments["command"])
         case "setCompletion": command = try completionCommand(arguments["command"])
         case "createSchedule": command = try scheduleCreationCommand(arguments["command"])
+        case "editSchedule": command = try scheduleEditCommand(arguments["command"])
         default:
           throw AdmissionFailure(
             "unavailable", "/command/type", "This command is not yet implemented by the prototype.")
@@ -257,34 +285,62 @@
       else {
         throw AdmissionFailure("invalidInput", "/command/source/id", "Expected a source UUID.")
       }
+      return .createSchedule(
+        source: PlannerEntityReference(kind: sourceKind, id: sourceIdentifier),
+        form: try scheduleForm(command["form"], path: "/command/form"))
+    }
+
+    private static func scheduleEditCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value,
+        allowed: ["type", "scheduleId", "changes", "expectedFieldHashes"],
+        required: ["type", "scheduleId", "changes", "expectedFieldHashes"], path: "/command")
+      guard case .string(let spelling) = command["scheduleId"],
+        let scheduleIdentifier = UUID(uuidString: spelling)
+      else {
+        throw AdmissionFailure("invalidInput", "/command/scheduleId", "Expected a Schedule UUID.")
+      }
+      let changes = try object(
+        command["changes"], allowed: ["form"], required: ["form"], path: "/command/changes")
+      let form = try scheduleForm(changes["form"], path: "/command/changes/form")
+      let hashes = try object(
+        command["expectedFieldHashes"], allowed: ["form"], required: ["form"],
+        path: "/command/expectedFieldHashes")
+      guard case .string(let formHash) = hashes["form"] else {
+        throw AdmissionFailure(
+          "invalidInput", "/command/expectedFieldHashes/form", "Expected a form hash String.")
+      }
+      return .editSchedule(
+        scheduleId: scheduleIdentifier, changes: PlannerScheduleChanges(form: form),
+        expectedFieldHashes: [.form: PlannerFieldHash(value: formHash)])
+    }
+
+    private static func scheduleForm(_ value: Value?, path: String) throws -> PlannerScheduleForm {
       let form = try object(
-        command["form"], allowed: ["kind", "start", "end", "planningTimeZone"],
-        required: ["kind"], path: "/command/form")
+        value, allowed: ["kind", "start", "end", "planningTimeZone"],
+        required: ["kind"], path: path)
       if form["kind"] == .string("allDay") {
         throw AdmissionFailure(
-          "unavailable", "/command/form/kind", "All-day forms are not implemented by this slice.")
+          "unavailable", path + "/kind", "All-day forms are not implemented by this slice.")
       }
       guard form["kind"] == .string("timed") else {
-        throw AdmissionFailure(
-          "invalidInput", "/command/form/kind", "Expected a Schedule form kind.")
+        throw AdmissionFailure("invalidInput", path + "/kind", "Expected a Schedule form kind.")
       }
       _ = try object(
-        command["form"], allowed: ["kind", "start", "end", "planningTimeZone"],
-        required: ["kind", "start", "end", "planningTimeZone"], path: "/command/form")
-      let start = try scheduleInstant(form["start"], path: "/command/form/start")
+        value, allowed: ["kind", "start", "end", "planningTimeZone"],
+        required: ["kind", "start", "end", "planningTimeZone"], path: path)
+      let start = try scheduleInstant(form["start"], path: path + "/start")
       let end: Date?
       if form["end"] == .null {
         end = nil
       } else {
-        end = try scheduleInstant(form["end"], path: "/command/form/end")
+        end = try scheduleInstant(form["end"], path: path + "/end")
       }
       guard case .string(let planningTimeZone) = form["planningTimeZone"] else {
         throw AdmissionFailure(
-          "invalidInput", "/command/form/planningTimeZone", "Expected a planning timezone String.")
+          "invalidInput", path + "/planningTimeZone", "Expected a planning timezone String.")
       }
-      return .createSchedule(
-        source: PlannerEntityReference(kind: sourceKind, id: sourceIdentifier),
-        form: .timed(start: start, end: end, planningTimeZone: planningTimeZone))
+      return .timed(start: start, end: end, planningTimeZone: planningTimeZone)
     }
 
     private static func scheduleInstant(_ value: Value?, path: String) throws -> Date {
