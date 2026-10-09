@@ -50,6 +50,7 @@ public enum PlannerItemFieldValue: Sendable, Equatable {
   case string(String)
   case optionalString(String?)
   case optionalLocation(PlannerOwnedLocation?)
+  case links([PlannerOwnedLinkRead])
 }
 
 public enum PlannerFailureDetails: Sendable, Equatable {
@@ -279,7 +280,7 @@ public struct PlannerItemContent: Sendable {
   public let tagIds: Set<UUID>
 }
 
-public struct PlannerOwnedLinkRead: Sendable {
+public struct PlannerOwnedLinkRead: Sendable, Equatable {
   public let linkId: UUID
   public let originalUrl: String
   public let label: String?
@@ -291,7 +292,7 @@ public enum PlannerLinkKind: String, Sendable, Codable {
   case appleMaps, googleMaps, tabelog, website, booking, generic
 }
 
-public struct PlannerProviderReference: Sendable, Codable {
+public struct PlannerProviderReference: Sendable, Codable, Equatable {
   public enum Kind: String, Sendable, Codable { case applePlaceId }
   public let kind: Kind
   public let value: String

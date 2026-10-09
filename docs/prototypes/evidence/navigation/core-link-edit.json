@@ -1,0 +1,145 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-09",
+  "baselineCommit": "cf225d9",
+  "scope": "Guarded Item-owned complete bookmark replacement through the public Planner facade and actual native persistence/recovery, with compatible typed stale-links failure encoding.",
+  "redGreen": {
+    "redLog": "/private/tmp/PlannerCoreLinkEditRed.log",
+    "redExecutedFunctions": 1,
+    "redFailedFunctions": 1,
+    "greenLog": "/private/tmp/PlannerCoreLinkEditGreen.log",
+    "greenExecutedFunctions": 1,
+    "greenPassedFunctions": 1,
+    "behavior": "Reverse two retained link identities, edit URL/classification/label, omit Map and add Gallery after an unrelated notes edit. Reopen keeps logical order/identity/content and one current preview; old row generation is stale."
+  },
+  "qualification": {
+    "log": "/private/tmp/PlannerCoreLinkEditQualification.log",
+    "executedFunctions": 2,
+    "passedFunctions": 2,
+    "firstExecutionBehavior": "One stale field rejects a whole title/links edit with typed current values/hash. Foreign/repeated IDs, invalid URL, Clear and missing hash reject together. Empty array removes only Hotel links. Old replay returns checkpoint 3 without restoring removed links or changing Museum at checkpoint 4. Altered replay rejects.",
+    "finalNativeAddition": "Independent checkpoints 1 and 3 retain the same lifetime for both retained links."
+  },
+  "packageRegression": {
+    "log": "/private/tmp/PlannerCoreLinkEditStoreRegression.log",
+    "executedFunctions": 28,
+    "passedFunctions": 28,
+    "suites": 11
+  },
+  "nativeExecutions": {
+    "NativeQualification": {
+      "bundle": "/private/tmp/PlannerCoreLinkEditNativeQualification.xcresult",
+      "log": "/private/tmp/PlannerCoreLinkEditNativeQualification.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 2,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791556061.633,
+        "passedTests": 2,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791556047.177,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerCore",
+        "topInsights": [],
+        "totalTestCount": 2
+      }
+    },
+    "AffectedMCPRegression": {
+      "bundle": "/private/tmp/PlannerMCPCoreLinkEditRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPCoreLinkEditRegression.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 35,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791556068.773,
+        "passedTests": 29,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791556048.044,
+        "statistics": [
+          {
+            "subtitle": "9 test runs",
+            "title": "3 tests ran with dynamic parameters"
+          }
+        ],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [
+          {
+            "category": "Longest Test Runs",
+            "impact": "15% of duration",
+            "text": "1 longest test run with outlier durations exceeding 0.17s (three standard deviations)"
+          }
+        ],
+        "totalTestCount": 29
+      },
+      "excludedSuite": "ReadLoadTests"
+    }
+  },
+  "simulatorBuild": {
+    "log": "/private/tmp/PlannerCoreLinkEditSimulatorBuild.log",
+    "destination": "generic/platform=iOS Simulator",
+    "signingAllowed": false,
+    "result": "TEST BUILD SUCCEEDED",
+    "runtimeTests": false
+  },
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerCoreLinkEditSwiftLint.log",
+    "diffWhitespace": "passed"
+  },
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "f82c75fa1c4403383a02d92da9e42ddadd89ae4c9c1b3a2bc7224bfa574baa3e",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "429e23d785d54bed6c3d8f54ce0aa5ad261a784243b284c2ee9d04b23d33bab8",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkValues.swift": "1d56582bc53cdd9b0e1844269dfed4f441309997f0c6b134a8f64265cae2e5c9",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV2.swift": "efbe703445f557022a2fb25fe40b4cadde725cfaa23c2293864099726e1b5af1",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "7d1a8117d881a4db7f240e832d9bb5f3d746d786fd6c913c46e1803989b2f2c5",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkEditTests.swift": "0f00427f5199e365aa8355704e0db9e38bf987a6e925b9e8e814d33799e14926",
+    "Planner/AgentControl/PlannerMCPFailureValue.swift": "8714102d53fa5a413fffee4ba5d323e23b095c2aaf43a3e1aa8a031dbf6b6bc9"
+  },
+  "limitations": [
+    "HTTP bookmark replacement input remains a following slice; only the typed failure codec is made exhaustive here.",
+    "No new stored attributes, providerReference parsing/lookup, native preview I/O or saved rich-row/checkbox/drag interaction.",
+    "No full reference/Schedule graph, real Share/physical CloudKit convergence, signed client/reader or performance qualification. Existing native metadata/linkd diagnostics remain unqualified."
+  ]
+}
