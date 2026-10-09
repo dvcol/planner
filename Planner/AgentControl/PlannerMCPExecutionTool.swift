@@ -5,34 +5,68 @@
 
   enum PlannerMCPExecutionTool {
     static let definition = Tool(
-      name: "planner_execute", description: "Create an Item through the local Planner prototype.",
+      name: "planner_execute",
+      description: "Create an Item or edit its title/notes through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
         "properties": .object([
           "formatVersion": .object(["type": .string("integer"), "const": .int(1)]),
           "operationId": .object(["type": .string("string"), "format": .string("uuid")]),
-          "command": .object([
-            "type": .string("object"), "additionalProperties": .bool(false),
-            "required": .array([.string("type"), .string("content")]),
-            "properties": .object([
-              "type": .object(["type": .string("string"), "const": .string("createItem")]),
-              "content": .object([
-                "type": .string("object"), "additionalProperties": .bool(false),
-                "required": .array([.string("title")]),
-                "properties": .object([
-                  "title": .object(["type": .string("string")]),
-                  "notes": .object(["type": .array([.string("string"), .string("null")])]),
-                ]),
-              ]),
-            ]),
-          ]),
+          "command": .object(["oneOf": .array([creationSchema, editSchema])]),
           "reviewToken": .object(["type": .array([.string("string"), .string("null")])]),
         ]),
       ]),
       annotations: .init(
         readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false)
     )
+
+    private static let creationSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("type"), .string("content")]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("createItem")]),
+        "content": .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "required": .array([.string("title")]),
+          "properties": .object([
+            "title": .object(["type": .string("string")]),
+            "notes": .object(["type": .array([.string("string"), .string("null")])]),
+          ]),
+        ]),
+      ]),
+    ])
+
+    private static let editSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([
+        .string("type"), .string("sourceId"), .string("changes"), .string("expectedFieldHashes"),
+      ]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("editItem")]),
+        "sourceId": .object(["type": .string("string"), "format": .string("uuid")]),
+        "changes": .object([
+          "type": .string("object"), "additionalProperties": .bool(false), "minProperties": .int(1),
+          "properties": .object([
+            "title": .object(["type": .string("string")]),
+            "notes": .object(["type": .array([.string("string"), .string("null")])]),
+          ]),
+        ]),
+        "expectedFieldHashes": .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "properties": .object(
+            Dictionary(
+              uniqueKeysWithValues: PlannerItemField.allCases.map {
+                (
+                  $0.rawValue,
+                  .object([
+                    "type": .string("string"), "pattern": .string("^sha256-v1:[0-9a-f]{64}$"),
+                  ])
+                )
+              })),
+        ]),
+      ]),
+    ])
 
     static func call(
       _ parameters: CallTool.Parameters, planner: PlannerCore.Planner,
@@ -66,42 +100,19 @@
         }
         if let token = arguments["reviewToken"], token != .null {
           throw AdmissionFailure(
-            "staleReview", "/reviewToken", "No review token is issued for this creation slice.")
+            "staleReview", "/reviewToken", "No review token is issued for this ordinary Item slice."
+          )
         }
-        let command = try object(
-          arguments["command"], allowed: ["type", "content"], required: ["type", "content"],
-          path: "/command")
-        guard command["type"] == .string("createItem") else {
-          throw AdmissionFailure(
-            "unavailable", "/command/type", "This prototype currently exposes Item creation only.")
-        }
-        let content = try object(
-          command["content"],
-          allowed: [
-            "title", "notes", "subtitle", "location", "estimate", "links", "categoryIds", "tagIds",
-          ],
-          required: ["title"], path: "/command/content")
-        if let unsupported = Set(content.keys).subtracting(["title", "notes"]).sorted().first {
-          throw AdmissionFailure(
-            "unavailable", "/command/content/" + unsupported,
-            "This HTTP creation slice supports title and notes only.")
-        }
-        guard case .string(let title) = content["title"] else {
-          throw AdmissionFailure(
-            "invalidInput", "/command/content/title", "Expected a title String.")
-        }
-        let notes: String?
-        switch content["notes"] {
-        case nil, .null: notes = nil
-        case .string(let value): notes = value
+        let command: PlannerCommand
+        switch commandType {
+        case "createItem": command = try creationCommand(arguments["command"])
+        case "editItem": command = try editCommand(arguments["command"])
         default:
           throw AdmissionFailure(
-            "invalidInput", "/command/content/notes", "Expected a notes String or null.")
+            "unavailable", "/command/type", "This command is not yet implemented by the prototype.")
         }
         let outcome = await planner.execute(
-          PlannerOperation(
-            operationId: identity, session: session,
-            command: .createItem(content: PlannerItemContentInput(title: title, notes: notes))))
+          PlannerOperation(operationId: identity, session: session, command: command))
         return try encoded(outcome)
       } catch let failure as AdmissionFailure {
         return rejection(
@@ -114,6 +125,84 @@
       }
     }
 
+    private static func creationCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "content"], required: ["type", "content"],
+        path: "/command")
+      let content = try object(
+        command["content"],
+        allowed: [
+          "title", "notes", "subtitle", "location", "estimate", "links", "categoryIds", "tagIds",
+        ],
+        required: ["title"], path: "/command/content")
+      if let unsupported = Set(content.keys).subtracting(["title", "notes"]).sorted().first {
+        throw AdmissionFailure(
+          "unavailable", "/command/content/" + unsupported,
+          "This HTTP creation slice supports title and notes only.")
+      }
+      guard case .string(let title) = content["title"] else {
+        throw AdmissionFailure(
+          "invalidInput", "/command/content/title", "Expected a title String.")
+      }
+      let notes: String?
+      switch content["notes"] {
+      case nil, .null: notes = nil
+      case .string(let value): notes = value
+      default:
+        throw AdmissionFailure(
+          "invalidInput", "/command/content/notes", "Expected a notes String or null.")
+      }
+      return .createItem(content: PlannerItemContentInput(title: title, notes: notes))
+    }
+
+    private static func editCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "sourceId", "changes", "expectedFieldHashes"],
+        required: ["type", "sourceId", "changes", "expectedFieldHashes"], path: "/command")
+      guard case .string(let spelling) = command["sourceId"],
+        let sourceIdentifier = UUID(uuidString: spelling)
+      else {
+        throw AdmissionFailure("invalidInput", "/command/sourceId", "Expected an Item UUID.")
+      }
+      let fieldNames = Set(PlannerItemField.allCases.map(\.rawValue))
+      let changes = try object(
+        command["changes"], allowed: fieldNames, required: [], path: "/command/changes")
+      if let unsupported = Set(changes.keys).subtracting(["title", "notes"]).sorted().first {
+        throw AdmissionFailure(
+          "unavailable", "/command/changes/" + unsupported,
+          "This edit slice supports title and notes only.")
+      }
+      let hashValues = try object(
+        command["expectedFieldHashes"], allowed: fieldNames, required: [],
+        path: "/command/expectedFieldHashes")
+      var hashes: [PlannerItemField: PlannerFieldHash] = [:]
+      for (name, value) in hashValues {
+        guard let field = PlannerItemField(rawValue: name), case .string(let spelling) = value
+        else {
+          throw AdmissionFailure(
+            "invalidInput", "/command/expectedFieldHashes/" + name, "Expected a field hash String.")
+        }
+        hashes[field] = PlannerFieldHash(value: spelling)
+      }
+      return .editItem(
+        sourceId: sourceIdentifier,
+        changes: PlannerItemChanges(
+          title: try textChange(changes["title"], path: "/command/changes/title"),
+          notes: try textChange(changes["notes"], path: "/command/changes/notes")),
+        expectedFieldHashes: hashes)
+    }
+
+    private static func textChange(_ value: Value?, path: String) throws -> PlannerFieldChange<
+      String
+    > {
+      switch value {
+      case nil: return .unchanged
+      case .null: return .clear
+      case .string(let text): return .set(text)
+      default: throw AdmissionFailure("invalidInput", path, "Expected a String or null.")
+      }
+    }
+
     private static func encoded(_ outcome: PlannerOperationResult) throws -> CallTool.Result {
       var fields: [String: Value] = [
         "formatVersion": .int(1), "operationId": .string(outcome.operationId.uuidString),
@@ -122,7 +211,7 @@
       switch outcome.outcome {
       case .rejected(let reason):
         fields["state"] = .string("rejected")
-        fields["reason"] = failureValue(reason.code, reason.propertyPath, reason.message)
+        fields["reason"] = PlannerMCPFailureValue.encode(reason)
         rejected = true
       case .unverified(let proposal):
         fields["state"] = .string("unverified")
@@ -147,7 +236,7 @@
         case .incomplete(let reason):
           fields["recovery"] = .object([
             "state": .string("incomplete"),
-            "reason": failureValue(reason.code, reason.propertyPath, reason.message),
+            "reason": PlannerMCPFailureValue.encode(reason),
           ])
         }
       }

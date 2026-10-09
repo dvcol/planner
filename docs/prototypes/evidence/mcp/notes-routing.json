@@ -1,0 +1,110 @@
+{
+  "scope": "HTTP notes edit with native changed-field guard and complete staleEdit details, without overwriting current notes",
+  "red": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "passedTests": 4,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 1,
+    "finishTime": 1791513266.362,
+    "passedTests": 2,
+    "result": "Failed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791513251.967,
+    "statistics": [
+      {
+        "subtitle": "3 test runs",
+        "title": "1 test ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [
+      {
+        "failureText": "Expectation failed: tool[\"isError\"] as? Bool == isError\ntool[\"isError\"] as? Bool \u2192 true\nisError \u2192 false",
+        "targetName": "PlannerMCPTests",
+        "testIdentifier": 1,
+        "testIdentifierString": "CommandRoutingTests/notesEditOverHTTPRejectsStaleHashAndRetainsFridayBooking()",
+        "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/notesEditOverHTTPRejectsStaleHashAndRetainsFridayBooking()",
+        "testName": "notesEditOverHTTPRejectsStaleHashAndRetainsFridayBooking()"
+      }
+    ],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 3
+  },
+  "green": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 25,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791513376.294,
+    "passedTests": 19,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791513367.478,
+    "statistics": [
+      {
+        "subtitle": "9 test runs",
+        "title": "3 tests ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 19
+  },
+  "corePackage": {
+    "passed": 10,
+    "log": "/private/tmp/PlannerCoreMCPHashInputPackage.log"
+  },
+  "iOSBuild": {
+    "result": "BUILD SUCCEEDED",
+    "runtime": false,
+    "log": "/private/tmp/PlannerMCPNotesMobileBuild.log"
+  },
+  "limitations": [
+    "Notes Set and stale notes rejection are qualified here; other patch operations/fields and replay are separate adapter fixtures.",
+    "Native hash input spelling remains validated by Core execute admission.",
+    "No selected clients, native UI, signed reader or lifecycle/load claim."
+  ]
+}

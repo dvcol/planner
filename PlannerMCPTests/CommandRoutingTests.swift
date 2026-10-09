@@ -5,6 +5,113 @@ import Testing
 @testable import Planner
 
 struct CommandRoutingTests {
+  @Test func notesEditOverHTTPRejectsStaleHashAndRetainsFridayBooking() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(
+      configuration: PlannerStorageConfiguration(
+        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+        controlURL: directory.appendingPathComponent("control/writer"),
+        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+        processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let datasetSession) = await planner.bootstrap() else {
+      Issue.record("The real Planner dataset must initialize.")
+      return
+    }
+    let created = await planner.execute(
+      PlannerOperation(
+        operationId: UUID(), session: datasetSession,
+        command: .createItem(
+          content: PlannerItemContentInput(title: "Hotel", notes: "Original notes"))))
+    guard case .applied(let result, .complete) = created.outcome else {
+      Issue.record("Hotel must be independently saved before editing.")
+      return
+    }
+    let source = try #require(result.generated.first)
+    guard
+      case .source(let original) = await planner.read(
+        session: datasetSession, request: .source(source))
+    else {
+      Issue.record("The original notes hash must come from a public read.")
+      return
+    }
+    let originalHash = try #require(original.fieldHashes[.notes])
+    let operationIdentifier = UUID()
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      let edit = try executionRequest(
+        endpoint: endpoint, operationIdentifier: operationIdentifier,
+        command: [
+          "type": "editItem", "sourceId": source.id.uuidString,
+          "changes": ["notes": "Friday booking"],
+          "expectedFieldHashes": ["notes": originalHash.value],
+        ])
+      let edited = try operationValue(try await httpSession.data(for: edit), isError: false)
+      #expect(edited["state"] as? String == "applied")
+      let recovery = try #require(edited["recovery"] as? [String: Any])
+      #expect(recovery["state"] as? String == "complete")
+      #expect(recovery["checkpointGeneration"] as? String == "2")
+      guard
+        case .source(let friday) = await planner.read(
+          session: datasetSession, request: .source(source))
+      else {
+        Issue.record("HTTP must update the shared native Item.")
+        return
+      }
+      #expect(friday.content.title == "Hotel")
+      #expect(friday.content.notes == "Friday booking")
+      #expect(friday.state.globalDone == false)
+      #expect(friday.state.archived == false)
+      let staleRequest = try executionRequest(
+        endpoint: endpoint, operationIdentifier: UUID(),
+        command: [
+          "type": "editItem", "sourceId": source.id.uuidString,
+          "changes": ["notes": "Monday booking"],
+          "expectedFieldHashes": ["notes": originalHash.value],
+        ])
+      let stale = try operationValue(try await httpSession.data(for: staleRequest), isError: true)
+      await listener.stop()
+      #expect(stale["state"] as? String == "rejected")
+      let reason = try #require(stale["reason"] as? [String: Any])
+      #expect(reason["code"] as? String == "staleEdit")
+      let details = try #require(reason["details"] as? [String: Any])
+      #expect(details["kind"] as? String == "staleEdit")
+      #expect(details["conflictingFields"] as? [String] == ["notes"])
+      let currentValues = try #require(details["currentValues"] as? [String: Any])
+      #expect(currentValues["notes"] as? String == "Friday booking")
+      let hashes = try #require(details["currentFieldHashes"] as? [String: String])
+      #expect(hashes["notes"] == friday.fieldHashes[.notes]?.value)
+      guard
+        case .source(let current) = await planner.read(
+          session: datasetSession, request: .source(source))
+      else {
+        Issue.record("A stale agent edit must retain the current Item.")
+        return
+      }
+      #expect(current.content.notes == "Friday booking")
+      #expect(current.updatedAt == friday.updatedAt)
+      #expect(current.fieldHashes == friday.fieldHashes)
+      guard
+        case .appliedRecoveryComplete(let saved, let checkpoint) = await planner.operationStatus(
+          session: datasetSession, operationId: operationIdentifier)
+      else {
+        Issue.record("The successful edit must retain its original evidence.")
+        return
+      }
+      #expect(saved.affected == [source])
+      #expect(checkpoint == 2)
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   @Test(arguments: ["deleteSource", "applyImport", "restoreRecovery"])
   func nativeAdministrationIsForbiddenWithoutChangingHotel(_ commandType: String) async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
@@ -192,6 +299,24 @@ struct CommandRoutingTests {
     request.setValue("2025-11-25", forHTTPHeaderField: "MCP-Protocol-Version")
     request.timeoutInterval = 5
     return request
+  }
+
+  private func operationValue(_ exchange: (Data, URLResponse), isError: Bool) throws -> [String:
+    Any]
+  {
+    let response = try #require(exchange.1 as? HTTPURLResponse)
+    #expect(response.statusCode == 200)
+    let envelope = try #require(JSONSerialization.jsonObject(with: exchange.0) as? [String: Any])
+    #expect(envelope["error"] == nil)
+    let tool = try #require(envelope["result"] as? [String: Any])
+    #expect(tool["isError"] as? Bool == isError)
+    let value = try #require(tool["structuredContent"] as? [String: Any])
+    let content = try #require(tool["content"] as? [[String: Any]])
+    let text = try #require(content.first?["text"] as? String)
+    let textResult = try #require(
+      JSONSerialization.jsonObject(with: Data(text.utf8)) as? [String: Any])
+    #expect(NSDictionary(dictionary: textResult).isEqual(to: value))
+    return value
   }
 
   private func appliedCreation(
