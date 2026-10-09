@@ -85,6 +85,37 @@ First establish a minimal runnable native project/package, shared schemes and te
 
 Q36/Q37 settle the itinerary grouping structure and local collapse memory. Group styling, the overall platform layouts, picker arrangement, Manual-sort controls, destructive Undo affordances and status placement still require review. Do not record them as final choices from this readiness proposal.
 
+## Requested row interactions and previews
+
+The user requests compact Reminders-style row metadata for location, dates and other useful details, completion directly from a row, drag-and-drop, link images and embedded address-map pins. The current prototype shows title/state icons and an independently supplied coordinate pin. It has no row mutations, reordering, link images or address-only lookup. The requested end is a native, useful row and detail comparison that preserves the accepted shared-reference and completion rules.
+
+### Verified native capabilities
+
+- OS 27 SwiftUI provides [reorderable collections](https://developer.apple.com/documentation/swiftui/reordering-items-in-lists-stacks-grids-and-custom-layouts), including stable dragged identities and insertion destinations. Core still owns reference addition/move, saved Manual order and concurrent-change validation.
+- Native [Toggle](https://developer.apple.com/documentation/swiftui/toggle) and Button controls supply completion interaction. Automatic Toggle styling uses a Mac checkbox or mobile switch; Reminders' circular appearance is not an automatic cross-platform style. Use native control/accessibility behavior with SF Symbols where a compact completion button is appropriate.
+- Current [LinkMetadata](https://developer.apple.com/documentation/linkpresentation/linkmetadata) can fetch metadata asynchronously and supply optional images through [media(_:as:)](https://developer.apple.com/documentation/linkpresentation/linkmetadata/media(_:as:)). [LPLinkView](https://developer.apple.com/documentation/linkpresentation/lplinkview) supplies a native rich card for details. Fetching contacts the website, can fail or return no image, and must not block Planner content. Apple's [metadata documentation](https://developer.apple.com/documentation/linkpresentation/lplinkmetadata) recommends local caching; preview caches remain outside Planner backup/synced content.
+- [MKGeocodingRequest](https://developer.apple.com/documentation/mapkit/mkgeocodingrequest) resolves address text to map-item candidates; [Map](https://developer.apple.com/documentation/mapkit/map) and [Marker](https://developer.apple.com/documentation/mapkit/marker) display the result natively. The API does not promise a unique result or offline lookup. Independent saved address text remains available if lookup fails. Returned provider data stays within the accepted temporary-preview/Apple-reference boundary.
+
+### Readiness and current frontier
+
+Q38-Q42 remain unanswered: Manual reordering with filters, cross-List drop behavior, date-summary meaning, when website previews fetch, and ambiguous address selection. These questions concern presentation and lookup policy; Q8 completion precedence and live references remain settled. Dates come from Planner Schedules and activity estimates remain separately labeled durations.
+
+Before executable work, agree the lightweight row read amendment and exact fixture expectations at the existing public Core query/read/execute and native UI seams. The accepted RowRead currently has title/subtitle/estimate, completion/archive and location/link presence, but no address or Schedule summary. Full-graph completion/reference/order commands are declared in [the adapter contract](adapter-contract.md) but not implemented in Core. Do not simulate a saved checkbox/drop by mutating the read-only fixture.
+
+### Required /tdd and review evidence
+
+| Level and starting state | Action | Required end state |
+| --- | --- | --- |
+| Public Core/store plus native UI; full graph, all state filters | Clear local Done on Tokyo Food membership 401, then reopen the disposable store/app. | Same membership/source identity; List A changes from 1/2 to 0/2. Global X, List B and itinerary flags/progress stay unchanged. Report saved only after the accepted local persistence/recovery outcome. Failure presentation follows the actual applied/rejected outcome. |
+| Public Core/store plus native UI; full graph with X globally Done | Exercise row completion and later global Reopen from the source Item view. | Effective global precedence is visible. Container interaction never performs a global action; retained local flags determine the display after global Reopen. Agree the precise row affordance before its UI test. |
+| Public Core/query plus native UI; full graph, Manual order [X, Y], both visible | Move Y before X; reopen; separately change sort/filter while a drag is underway. | Saved [Y, X] with original association identities/local flags, no copied Item and unchanged completion. Hidden rows remain retained. Non-Manual and stale-target behavior follows the accepted Q38 choice rather than rewriting a filtered/sorted array. |
+| Public Core/query plus native UI; shared X in List A, new and already-existing destination membership cases | Drop X between Lists under Q39's selected add/move policy. | Observe exact origin/destination membership identities, local states and source preservation. Existing destination is retained without reset; new context starts local Todo. Test rejected/current-target changes and durable reopen. |
+| Public row query plus native UI; literal owned location, estimate and direct/itinerary Schedules | Render and refresh compact rows using Q40's selected date meaning. | Exact location text, separately labeled estimate/date values and correct source/appearance identity. Item edits refresh every reference; local completion stays scoped. A lightweight query does not require arbitrary full-graph reads for every realized row. |
+| Provider I/O integration plus native UI; controlled metadata with an image, no image, error and delayed result | Load previews under Q41's selected trigger; change/remove the link during lookup; traverse the 5,000-Item fixture. | Optional thumbnail/card and useful link fallback; obsolete results cannot replace current content. Lookup never overwrites saved fields or enters backup/synced content. Measure realized-row work, network reuse and scrolling; do not fetch the entire dataset eagerly. Live provider rendering is a separate native review. |
+| Provider I/O integration plus native UI; own address with zero/one/multiple controlled map candidates | Resolve under Q42; change the address during lookup, then go offline. | Accepted pin/selection/failure presentation, no obsolete pin and no invented location. Saved address survives. Provider results do not become permanent owned coordinates merely through confirmation. Test independent saved coordinates separately and review real MapKit attribution/pin behavior. |
+
+Done requires runnable phone/iPad/Mac interactions, focused red/green evidence at approved seams, truthful persistence/recovery outcomes and human review. The API research and requested direction alone do not complete these gates or close Navigation prototype.
+
 ## Definition of ready and done
 
 - [x] Contract public interfaces accepted, prerequisite resolutions reviewed, local toolchain inventory refreshed and fixture inputs/expected transitions specified.
