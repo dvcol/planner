@@ -10,7 +10,17 @@ The executable red discovered and ran one test. It failed at explicit bootstrap 
 
 The prototype uses private defaulted/optional SwiftData models under VersionedSchema 1 and its migration plan. A stable NSFileCoordinator control URL coordinates participating writers. Every action opens a fresh context with autosave disabled, validates the issued dataset session, preserves prepared evidence independently, then commits Item plus operation receipt together. A completed envelope is published separately before the result reports complete recovery. Database-only evidence cannot report completed recovery.
 
-The independent archive contains data-only portable bytes with all declared root groups present, their exact-byte SHA-256 digest, ownership/checkpoint binding and minimal internal operation evidence. This initial projection supports Items only. Other graph groups must be empty during validation, and nonempty link/label creation returns unavailable rather than dropping data. Public declarations currently cover this slice; full source/read/result unions, portable graph types, commands and adapter serialization remain future work. The native storage and recovery boundaries are implemented, but failure/interruption, competing writers, replay and hostile-file cases still require their own tests.
+The independent archive contains data-only portable bytes with all declared root groups present, their exact-byte SHA-256 digest, ownership/checkpoint binding and minimal internal operation evidence. This initial projection supports Items only. Other graph groups must be empty during validation, and nonempty link/label creation returns unavailable rather than dropping data. Public declarations currently cover this slice; full source/read/result unions, portable graph types, commands and adapter serialization remain future work. Failure/interruption, competing writers and hostile-file cases still require their own tests.
+
+## Replay and validation qualification
+
+Three additional scenarios were added and executed one at a time through the same accepted facade. Each passed the existing implementation on its first run, requiring no production change. They are qualification checks, not additional red/green cycles.
+
+- An identical create replay after reopening returns the original Item/result/checkpoint, with one recovered Item and no new checkpoint.
+- Reusing the applied operation ID with Museum/Different notes rejects as operationPayloadMismatch. Hotel/Original notes and the original completed operation evidence remain unchanged; the snapshot still contains one Item.
+- A new create with a whitespace-only title rejects as invalidInput at `/command/content/title`. Hotel's identity/content, checkpoint and empty prepared-proposal catalog remain unchanged.
+
+The final qualification run discovers and executes four test functions, all passing with no skips or expected failures. The [actual summaries](evidence/mcp/core-creation-qualification.json) preserve the sequential two-, three- and four-test runs. Their result bundles are `/private/tmp/PlannerCoreItemReplayQualification.xcresult`, `/private/tmp/PlannerCoreChangedReplayQualification.xcresult` and `/private/tmp/PlannerCoreInvalidCreationQualification.xcresult`.
 
 ## Reproduction
 
