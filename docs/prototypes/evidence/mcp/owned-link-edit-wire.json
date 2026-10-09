@@ -1,0 +1,200 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-09",
+  "coreBaselineCommit": "aa1005e",
+  "scope": "Actual authenticated stateless loopback HTTP guarded complete owned bookmark replacement through the official MCP SDK and public Planner facade.",
+  "executions": {
+    "Red": {
+      "bundle": "/private/tmp/PlannerMCPLinkEditWireRed.xcresult",
+      "log": "/private/tmp/PlannerMCPLinkEditWireRed.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 9,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1791556368.606,
+        "passedTests": 9,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791556351.995,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "Expectation failed: tool[\"isError\"] as? Bool == false\ntool[\"isError\"] as? Bool \u2192 true",
+            "targetName": "PlannerMCPTests",
+            "testIdentifier": 1,
+            "testIdentifierString": "RowRoutingTests/ownedBookmarkReplacementOverHTTPRejectsStalePatchAndKeepsLaterEmptyValueOnReplay()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/ownedBookmarkReplacementOverHTTPRejectsStalePatchAndKeepsLaterEmptyValueOnReplay()",
+            "testName": "ownedBookmarkReplacementOverHTTPRejectsStalePatchAndKeepsLaterEmptyValueOnReplay()"
+          }
+        ],
+        "title": "Test - Planner",
+        "topInsights": [],
+        "totalTestCount": 10
+      }
+    },
+    "Green": {
+      "bundle": "/private/tmp/PlannerMCPLinkEditWireGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPLinkEditWireGreen.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 10,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791556445.797,
+        "passedTests": 10,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791556438.92,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [],
+        "totalTestCount": 10
+      }
+    },
+    "Qualification": {
+      "bundle": "/private/tmp/PlannerMCPLinkEditWireQualification.xcresult",
+      "log": "/private/tmp/PlannerMCPLinkEditWireQualification.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 11,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791556536.779,
+        "passedTests": 11,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791556526.726,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [],
+        "totalTestCount": 11
+      }
+    },
+    "Regression": {
+      "bundle": "/private/tmp/PlannerMCPLinkEditWireRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPLinkEditWireRegression.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 37,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791556664.771,
+        "passedTests": 31,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791556660.166,
+        "statistics": [
+          {
+            "subtitle": "9 test runs",
+            "title": "3 tests ran with dynamic parameters"
+          }
+        ],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [
+          {
+            "category": "Longest Test Runs",
+            "impact": "12% of duration",
+            "text": "1 longest test run with outlier durations exceeding 0.16s (three standard deviations)"
+          }
+        ],
+        "totalTestCount": 31
+      }
+    }
+  },
+  "redGreenBehavior": "An Item links edit fails at unsupported input, then retains Menu identity with new Dinner URL/classification/label, omits Map and adds Gallery. Stale title/links patch rejects with current complete links/hash. Empty array reaches checkpoint 3; replay of the earlier edit returns original checkpoint 2 without restoring links or changing current source.",
+  "firstExecutionQualification": "Seven malformed or foreign link replacements reject whole notes/links patches with exact paths and operation identity, no applied receipt, unchanged source/window and unaffected other owner at checkpoint 2 without prepared proposals.",
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerMCPLinkEditWireSwiftLint.log",
+    "diffWhitespace": "passed"
+  },
+  "sourceHashes": {
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift": "15fe87ab0eda38aea715c7f002818477c11d6d9b7605deb4b9e971fe3789860d",
+    "PlannerMCPTests/RowRoutingTests.swift": "5d2961b08afde267125514960a9f999ec0cb802534942b2c15858bb38f7a6137"
+  },
+  "regressionScope": "31 affected MCP functions in 14 suites; ReadLoadTests remains excluded to preserve its isolated measurement.",
+  "limitations": [
+    "No native bookmark editor, Link Presentation image/error/cancellation I/O or saved rich-row/checkbox/drag proof.",
+    "No full reference/Schedule graph, selected clients/signed reader, physical CloudKit/Share/account convergence or performance qualification.",
+    "No agent backup/export/import/recovery administration or new access expiry. Native metadata/linkd diagnostics remain unqualified; prior UI screenshots retain their original revision binding."
+  ]
+}
