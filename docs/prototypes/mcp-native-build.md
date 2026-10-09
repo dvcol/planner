@@ -53,3 +53,7 @@ env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild test -pr
 ```
 
 Project-list readback includes PlannerCoreTests/PlannerCoreStoreTests and the shared PlannerCore scheme. Logs and readback are /private/tmp/PlannerCoreSchemeDiscovery.log, PlannerCoreNativeSchemeDiscovery.log and PlannerCoreNativeSchemeProjectList.json. This completes buildable scheme configuration; its first real store behavior test and cross-platform runtime checks remain required.
+
+The shared Core scheme also passed generic iOS Simulator build-for-testing using fresh /private/tmp/PlannerCoreMobileSchemeDerivedData products and CODE_SIGNING_ALLOWED=NO, log /private/tmp/PlannerCoreMobileSchemeBuild.log. This compiled the same test sources and package for iOS without booting a simulator or executing tests. The affected PlannerMCPTests regression run still executes twelve passing test functions, zero failures/skips, with [actual evidence](evidence/mcp/core-scheme-transport-regression.json); bundle/log are /private/tmp/PlannerMCPCoreSchemeRegression.xcresult and PlannerMCPCoreSchemeRegression.log.
+
+The [local Core fixture review](core-local-fixture-review.md) specifies its newly concrete storage-opening input, missing native recovery namespace discovery and first create/read/reopen/recovery journey. Those new public forms await Q36 before tests. Existing A21/A22/Q33 domain/execute/read approval carries forward; Q36 does not reopen those rules. The package still has zero domain behavior tests and no storage/commands implemented.
