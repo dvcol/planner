@@ -1,0 +1,286 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "00006030-001A586C3EA3001C",
+      "deviceName" : "My Mac",
+      "modelName" : "MacBook Pro",
+      "osBuildNumber" : "26A434",
+      "osVersion" : "27.0.1",
+      "platform" : "macOS"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,067s",
+                      "durationInSeconds" : 0.06668400764465332,
+                      "name" : ".identicalIntegers",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SourceRoutingTests/concurrentSourceReadsReturnTheirOwnHotelAndMuseum(_:)?args=2e6964656e746963616c496e746567657273",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,067s",
+                      "durationInSeconds" : 0.06656503677368164,
+                      "name" : ".integerAndString",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SourceRoutingTests/concurrentSourceReadsReturnTheirOwnHotelAndMuseum(_:)?args=2e696e7465676572416e64537472696e67",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,067s",
+                  "durationInSeconds" : 0.06662452220916748,
+                  "name" : "concurrentSourceReadsReturnTheirOwnHotelAndMuseum(_:)",
+                  "nodeIdentifier" : "SourceRoutingTests/concurrentSourceReadsReturnTheirOwnHotelAndMuseum(_:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SourceRoutingTests/concurrentSourceReadsReturnTheirOwnHotelAndMuseum(_:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SourceRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SourceRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,016s",
+                  "durationInSeconds" : 0.015759944915771484,
+                  "name" : "stopClosesAConnectionWaitingForTheRestOfItsBody()",
+                  "nodeIdentifier" : "IncompleteRequestTests/stopClosesAConnectionWaitingForTheRestOfItsBody()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/IncompleteRequestTests/stopClosesAConnectionWaitingForTheRestOfItsBody()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "IncompleteRequestTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/IncompleteRequestTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,038s",
+                  "durationInSeconds" : 0.03777003288269043,
+                  "name" : "repeatedIndependentInitializationsRetainRequestedSupportedVersions()",
+                  "nodeIdentifier" : "InitializationTests/repeatedIndependentInitializationsRetainRequestedSupportedVersions()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/InitializationTests/repeatedIndependentInitializationsRetainRequestedSupportedVersions()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,029s",
+                  "durationInSeconds" : 0.028586149215698242,
+                  "name" : "unsupportedInitializationVersionCannotSilentlyDowngrade()",
+                  "nodeIdentifier" : "InitializationTests/unsupportedInitializationVersionCannotSilentlyDowngrade()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/InitializationTests/unsupportedInitializationVersionCannotSilentlyDowngrade()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "InitializationTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/InitializationTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,012s",
+                  "durationInSeconds" : 0.011829137802124023,
+                  "name" : "authorizedPingPreservesSDKResultAndAdmittedAccessWindow()",
+                  "nodeIdentifier" : "PingTests/authorizedPingPreservesSDKResultAndAdmittedAccessWindow()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/PingTests/authorizedPingPreservesSDKResultAndAdmittedAccessWindow()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "PingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/PingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,032s",
+                  "durationInSeconds" : 0.03203296661376953,
+                  "name" : "concurrentIntegerAndStringPingIdentifiersKeepTheirTypes()",
+                  "nodeIdentifier" : "ConcurrentRoutingTests/concurrentIntegerAndStringPingIdentifiersKeepTheirTypes()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ConcurrentRoutingTests/concurrentIntegerAndStringPingIdentifiersKeepTheirTypes()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "ConcurrentRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ConcurrentRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,00013s",
+                  "durationInSeconds" : 0.00013494491577148438,
+                  "name" : "unrecognizedPathCannotDispatchAnAuthorizedPing()",
+                  "nodeIdentifier" : "RoutingTests/unrecognizedPathCannotDispatchAnAuthorizedPing()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RoutingTests/unrecognizedPathCannotDispatchAnAuthorizedPing()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "RoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,00022s",
+                  "durationInSeconds" : 0.00022220611572265625,
+                  "name" : "missingAuthorizationRejectsPingWithoutAccessWindowHeader()",
+                  "nodeIdentifier" : "AuthenticationTests/missingAuthorizationRejectsPingWithoutAccessWindowHeader()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/AuthenticationTests/missingAuthorizationRejectsPingWithoutAccessWindowHeader()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00027s",
+                  "durationInSeconds" : 0.00027489662170410156,
+                  "name" : "incorrectCredentialRejectsPingWithoutAccessWindowHeader()",
+                  "nodeIdentifier" : "AuthenticationTests/incorrectCredentialRejectsPingWithoutAccessWindowHeader()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/AuthenticationTests/incorrectCredentialRejectsPingWithoutAccessWindowHeader()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "AuthenticationTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/AuthenticationTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,029s",
+                  "durationInSeconds" : 0.029324054718017578,
+                  "name" : "authenticatedPingTraversesARealLoopbackHTTPConnection()",
+                  "nodeIdentifier" : "ListenerTests/authenticatedPingTraversesARealLoopbackHTTPConnection()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ListenerTests/authenticatedPingTraversesARealLoopbackHTTPConnection()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,015s",
+                  "durationInSeconds" : 0.014594078063964844,
+                  "name" : "stoppingListenerRevokesItsAccessWindow()",
+                  "nodeIdentifier" : "ListenerTests/stoppingListenerRevokesItsAccessWindow()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ListenerTests/stoppingListenerRevokesItsAccessWindow()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,026s",
+                  "durationInSeconds" : 0.025839805603027344,
+                  "name" : "stoppedListenerNoLongerAcceptsHTTPConnections()",
+                  "nodeIdentifier" : "ListenerTests/stoppedListenerNoLongerAcceptsHTTPConnections()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ListenerTests/stoppedListenerNoLongerAcceptsHTTPConnections()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "ListenerTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ListenerTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,032s",
+                  "durationInSeconds" : 0.0319368839263916,
+                  "name" : "untrustedOriginIsRejectedOverLoopback()",
+                  "nodeIdentifier" : "ValidationTests/untrustedOriginIsRejectedOverLoopback()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ValidationTests/untrustedOriginIsRejectedOverLoopback()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,027s",
+                      "durationInSeconds" : 0.027477741241455078,
+                      "name" : "HTTPHeaderRejection(headerName: \"Accept\", headerValue: \"text/plain\", expectedStatusCode: 406)",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ValidationTests/unsupportedHeadersAreRejectedOverLoopback(rejection:)?args=4854545048656164657252656a656374696f6e286865616465724e616d653a2022416363657074222c2068656164657256616c75653a2022746578742f706c61696e222c206578706563746564537461747573436f64653a2034303629",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,025s",
+                      "durationInSeconds" : 0.025455951690673828,
+                      "name" : "HTTPHeaderRejection(headerName: \"Content-Type\", headerValue: \"text/plain\", expectedStatusCode: 415)",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ValidationTests/unsupportedHeadersAreRejectedOverLoopback(rejection:)?args=4854545048656164657252656a656374696f6e286865616465724e616d653a2022436f6e74656e742d54797065222c2068656164657256616c75653a2022746578742f706c61696e222c206578706563746564537461747573436f64653a2034313529",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,029s",
+                      "durationInSeconds" : 0.02850818634033203,
+                      "name" : "HTTPHeaderRejection(headerName: \"Host\", headerValue: \"untrusted.example\", expectedStatusCode: 421)",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ValidationTests/unsupportedHeadersAreRejectedOverLoopback(rejection:)?args=4854545048656164657252656a656374696f6e286865616465724e616d653a2022486f7374222c2068656164657256616c75653a2022756e747275737465642e6578616d706c65222c206578706563746564537461747573436f64653a2034323129",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,026s",
+                      "durationInSeconds" : 0.025748014450073242,
+                      "name" : "HTTPHeaderRejection(headerName: \"MCP-Protocol-Version\", headerValue: \"2099-01-01\", expectedStatusCode: 400)",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ValidationTests/unsupportedHeadersAreRejectedOverLoopback(rejection:)?args=4854545048656164657252656a656374696f6e286865616465724e616d653a20224d43502d50726f746f636f6c2d56657273696f6e222c2068656164657256616c75653a2022323039392d30312d3031222c206578706563746564537461747573436f64653a2034303029",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,027s",
+                  "durationInSeconds" : 0.026797473430633545,
+                  "name" : "unsupportedHeadersAreRejectedOverLoopback(rejection:)",
+                  "nodeIdentifier" : "ValidationTests/unsupportedHeadersAreRejectedOverLoopback(rejection:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ValidationTests/unsupportedHeadersAreRejectedOverLoopback(rejection:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "ValidationTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ValidationTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "PlannerMCPTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "Planner",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

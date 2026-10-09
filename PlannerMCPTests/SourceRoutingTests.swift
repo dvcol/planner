@@ -5,7 +5,20 @@ import Testing
 @testable import Planner
 
 struct SourceRoutingTests {
-  @Test func concurrentSameIdentifierReadsReturnTheirOwnHotelAndMuseum() async throws {
+  enum RequestIdentifiers: Sendable {
+    case identicalIntegers, integerAndString
+
+    var hotel: Any { self == .identicalIntegers ? 7 : 1 }
+    var museum: Any {
+      if self == .identicalIntegers { return 7 }
+      return "1"
+    }
+  }
+
+  @Test(arguments: [RequestIdentifiers.identicalIntegers, .integerAndString])
+  func concurrentSourceReadsReturnTheirOwnHotelAndMuseum(_ identifiers: RequestIdentifiers)
+    async throws
+  {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
     let planner = PlannerCore.Planner(
@@ -48,8 +61,10 @@ struct SourceRoutingTests {
     let endpoint = try await listener.start(port: 0)
     let httpSession = URLSession(configuration: .ephemeral)
     defer { httpSession.invalidateAndCancel() }
-    let hotelRequest = try request(endpoint: endpoint, itemIdentifier: hotelIdentifier)
-    let museumRequest = try request(endpoint: endpoint, itemIdentifier: museumIdentifier)
+    let hotelRequest = try request(
+      endpoint: endpoint, itemIdentifier: hotelIdentifier, requestIdentifier: identifiers.hotel)
+    let museumRequest = try request(
+      endpoint: endpoint, itemIdentifier: museumIdentifier, requestIdentifier: identifiers.museum)
     do {
       async let hotelExchange = httpSession.data(for: hotelRequest)
       async let museumExchange = httpSession.data(for: museumRequest)
@@ -57,10 +72,10 @@ struct SourceRoutingTests {
       await listener.stop()
       try expectItem(
         hotelResponse, identity: hotelIdentifier, title: "Hotel", notes: "Hotel notes",
-        accessWindowIdentifier: accessWindowIdentifier)
+        accessWindowIdentifier: accessWindowIdentifier, requestIdentifier: identifiers.hotel)
       try expectItem(
         museumResponse, identity: museumIdentifier, title: "Museum", notes: "Museum notes",
-        accessWindowIdentifier: accessWindowIdentifier)
+        accessWindowIdentifier: accessWindowIdentifier, requestIdentifier: identifiers.museum)
       let queried = await planner.query(
         PlannerQuery(session: datasetSession, request: .items(PlannerItemQuery())))
       guard case .snapshot(let snapshot) = queried else {
@@ -79,11 +94,13 @@ struct SourceRoutingTests {
     }
   }
 
-  private func request(endpoint: URL, itemIdentifier: UUID) throws -> URLRequest {
+  private func request(endpoint: URL, itemIdentifier: UUID, requestIdentifier: Any) throws
+    -> URLRequest
+  {
     var request = URLRequest(url: endpoint)
     request.httpMethod = "POST"
     request.httpBody = try JSONSerialization.data(withJSONObject: [
-      "jsonrpc": "2.0", "id": 7, "method": "tools/call",
+      "jsonrpc": "2.0", "id": requestIdentifier, "method": "tools/call",
       "params": [
         "name": "planner_read",
         "arguments": [
@@ -105,7 +122,7 @@ struct SourceRoutingTests {
 
   private func expectItem(
     _ exchange: (Data, URLResponse), identity: UUID, title: String, notes: String,
-    accessWindowIdentifier: UUID
+    accessWindowIdentifier: UUID, requestIdentifier: Any
   ) throws {
     let response = try #require(exchange.1 as? HTTPURLResponse)
     #expect(response.statusCode == 200)
@@ -114,7 +131,12 @@ struct SourceRoutingTests {
       response.value(forHTTPHeaderField: "X-Planner-Access-Window")
         == accessWindowIdentifier.uuidString)
     let envelope = try #require(JSONSerialization.jsonObject(with: exchange.0) as? [String: Any])
-    #expect(envelope["id"] as? Int == 7)
+    if let expectedInteger = requestIdentifier as? Int {
+      #expect(envelope["id"] as? Int == expectedInteger)
+    } else {
+      let expectedString = try #require(requestIdentifier as? String)
+      #expect(envelope["id"] as? String == expectedString)
+    }
     #expect(envelope["error"] == nil)
     let toolResult = try #require(envelope["result"] as? [String: Any])
     #expect(toolResult["isError"] as? Bool == false)
