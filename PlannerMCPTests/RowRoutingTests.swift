@@ -6,6 +6,89 @@ import Testing
 
 struct RowRoutingTests {
 
+  @Test func scheduledSourceOverHTTPEnumeratesBookmarksAndScheduleWithoutLosingContent()
+    async throws
+  {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let created, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createItem(
+            content: PlannerItemContentInput(
+              title: "Hotel", notes: "Keep",
+              links: [
+                PlannerLinkInput(originalUrl: "https://maps.apple.com/?q=Hotel", label: "Map"),
+                PlannerLinkInput(originalUrl: "https://example.com/menu", label: "Menu"),
+              ])))
+      )
+      .outcome,
+      let source = created.generated.first,
+      case .source(let original) = await planner.read(
+        session: datasetSession, request: .source(source)),
+      case .applied(let scheduled, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createSchedule(
+            source: source,
+            form: .timed(
+              start: Date(timeIntervalSinceReferenceDate: 813_200_400), end: nil,
+              planningTimeZone: "Asia/Tokyo")))
+      ).outcome,
+      let assignment = scheduled.generated.first
+    else {
+      Issue.record("A real Item must retain its own bookmarks and direct appointment.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      let owner: [String: Any] = ["kind": "item", "id": source.id.uuidString]
+      let response = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_read",
+            arguments: [
+              "formatVersion": 1, "request": ["kind": "source", "source": owner],
+            ])))
+      let read = try #require(response["value"] as? [String: Any])
+      let references = try #require(read["references"] as? [[String: Any]])
+      #expect(references.count == 3)
+      let expectedLinks: [[String: Any]] = original.content.links.map {
+        [
+          "kind": "ownedLink", "id": $0.linkId.uuidString, "owner": owner,
+          "source": NSNull(), "appearance": NSNull(),
+        ]
+      }
+      let expectedSchedule: [String: Any] = [
+        "kind": "schedule", "id": assignment.id.uuidString, "owner": NSNull(),
+        "source": owner, "appearance": NSNull(),
+      ]
+      #expect(NSArray(array: references).isEqual(to: expectedLinks + [expectedSchedule]))
+      let content = try #require(read["content"] as? [String: Any])
+      #expect(content["title"] as? String == "Hotel")
+      #expect(content["notes"] as? String == "Keep")
+      #expect((content["links"] as? [[String: Any]])?.count == 2)
+      #expect(read["updatedAt"] as? Double == original.updatedAt.timeIntervalSinceReferenceDate)
+      #expect(
+        read["fieldHashes"] as? [String: String]
+          == Dictionary(
+            uniqueKeysWithValues:
+              original.fieldHashes.map { ($0.key.rawValue, $0.value.value) }))
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   @Test func malformedTimedAppointmentsRejectWithoutChangingSourceWindowOrRecovery() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }

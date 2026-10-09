@@ -81,7 +81,7 @@
         case .source(let read):
           guard read.content.categoryIds.isEmpty,
             read.content.tagIds.isEmpty,
-            read.labels.isEmpty, read.references.isEmpty
+            read.labels.isEmpty
           else {
             return failure(
               code: "unavailable",
@@ -225,8 +225,30 @@
           "globalDone": read.state.globalDone.map(Value.bool) ?? .null,
           "archived": read.state.archived.map(Value.bool) ?? .null,
         ]),
-        "labels": .array([]), "references": .array([]), "progress": .null,
+        "labels": .array([]), "references": .array(read.references.map(referenceValue)),
+        "progress": .null,
       ])
+    }
+
+    private static func referenceValue(_ reference: PlannerReferenceRead) -> Value {
+      switch reference {
+      case .ownedLink(let identifier, let owner):
+        return .object([
+          "kind": .string("ownedLink"), "id": .string(identifier.uuidString),
+          "owner": .object([
+            "kind": .string(owner.kind.rawValue), "id": .string(owner.id.uuidString),
+          ]),
+          "source": .null, "appearance": .null,
+        ])
+      case .schedule(let identifier, let source):
+        return .object([
+          "kind": .string("schedule"), "id": .string(identifier.uuidString), "owner": .null,
+          "source": .object([
+            "kind": .string(source.kind.rawValue), "id": .string(source.id.uuidString),
+          ]),
+          "appearance": .null,
+        ])
+      }
     }
 
     static func locationValue(_ location: PlannerOwnedLocation) -> Value {

@@ -137,7 +137,7 @@ struct ItemLinkMigrationTests {
     #expect(source.content.notes == "Original notes")
     #expect(source.state.globalDone == true)
     #expect(source.state.archived == true)
-    #expect(source.references.isEmpty)
+    #expect(source.references.count == 2)
     #expect(source.createdAt.timeIntervalSinceReferenceDate == manifest.createdAt)
     #expect(source.updatedAt.timeIntervalSinceReferenceDate == manifest.updatedAt)
     #expect(
@@ -217,7 +217,7 @@ struct ItemLinkMigrationTests {
     #expect(retained.updatedAt == source.updatedAt)
     #expect(retained.state.globalDone == true)
     #expect(retained.state.archived == true)
-    #expect(retained.references == [assignment])
+    #expect(retained.references == source.references + [.schedule(id: assignment.id, source: item)])
     #expect(newRecovery.decodedBackup.backup.schedules.first?.form == form)
     #expect(newRecovery.decodedBackup.backup.schedules.first?.id == assignment.id)
     #expect(

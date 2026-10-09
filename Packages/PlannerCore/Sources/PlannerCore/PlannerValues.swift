@@ -299,6 +299,11 @@ public struct PlannerProviderReference: Sendable, Codable, Equatable {
   public let value: String
 }
 
+public enum PlannerReferenceRead: Sendable, Equatable {
+  case ownedLink(id: UUID, owner: PlannerEntityReference)
+  case schedule(id: UUID, source: PlannerEntityReference)
+}
+
 public struct PlannerSourceRead: Sendable {
   public let source: PlannerEntityReference
   public let content: PlannerItemContent
@@ -307,7 +312,7 @@ public struct PlannerSourceRead: Sendable {
   public let fieldHashes: [PlannerItemField: PlannerFieldHash]
   public let state: PlannerSourceState
   public let labels: [PlannerEntityReference]
-  public let references: [PlannerEntityReference]
+  public let references: [PlannerReferenceRead]
 }
 
 public struct PlannerSourceState: Sendable {

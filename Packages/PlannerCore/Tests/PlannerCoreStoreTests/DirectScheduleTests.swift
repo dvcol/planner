@@ -80,7 +80,7 @@ struct DirectScheduleTests {
       return
     }
     #expect(checkpoint == 6)
-    #expect(retained.references == [assignment])
+    #expect(retained.references == [.schedule(id: assignment.id, source: item)])
     #expect(retained.content.title == "Tokyo Hotel")
     #expect(retained.content.notes == "Keep")
     #expect(retained.content.links.isEmpty)
@@ -280,7 +280,7 @@ struct DirectScheduleTests {
     }
     #expect(checkpoint == 2)
     #expect(mismatch.code == "operationPayloadMismatch")
-    #expect(retained.references == [assignment])
+    #expect(retained.references == [.schedule(id: assignment.id, source: item)])
     #expect(recovery.decodedBackup.backup.schedules.count == 1)
     #expect(recovery.decodedBackup.backup.schedules.first?.form == form)
   }
@@ -451,7 +451,7 @@ struct DirectScheduleTests {
     #expect(current.fieldHashes == original.fieldHashes)
     #expect(current.createdAt == original.createdAt)
     #expect(current.updatedAt == original.updatedAt)
-    #expect(current.references.contains(schedule))
+    #expect(current.references.contains(.schedule(id: schedule.id, source: item)))
     let reopened = Planner(configuration: configuration)
     guard case .ready(let reopenedSession) = await reopened.bootstrap() else {
       Issue.record("The saved appointment must survive a fresh native store opening.")

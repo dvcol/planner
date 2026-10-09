@@ -1,0 +1,275 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "69a2e14",
+  "scope": "Complete typed owned-bookmark and direct Schedule reference metadata in Item source reads through Core and authenticated actual loopback HTTP.",
+  "coreRedGreen": {
+    "redLog": "/private/tmp/PlannerCoreItemReferenceReadRed.log",
+    "redExecutedFunctions": 1,
+    "redFailedFunctions": 1,
+    "observed": "The reopened Item has two owned bookmarks and two direct Schedules, but reports only two references.",
+    "greenLog": "/private/tmp/PlannerCoreItemReferenceReadGreen.log",
+    "greenExecutedFunctions": 1,
+    "greenPassedFunctions": 1
+  },
+  "qualification": {
+    "behavior": "Full typed ownedLink owner and Schedule source metadata match the exact saved IDs after reopen. Removing Map retains Menu and both Schedules; checkpoint 4 contains one bookmark and two assignments. Existing Schedule/migration assertions are updated for the declared reference values, preserving every previous identity/state/recovery obligation.",
+    "packageLog": "/private/tmp/PlannerCoreItemReferenceReadQualifiedStoreRegression.log",
+    "executedFunctions": 35,
+    "passedFunctions": 35,
+    "suites": 13
+  },
+  "wireRedGreen": {
+    "redExecutedFunctions": 14,
+    "redPassedFunctions": 9,
+    "redFailedFunctions": 5,
+    "greenExecutedFunctions": 14,
+    "greenPassedFunctions": 14,
+    "observed": "The new scheduled source and four existing bookmark-source journeys are rejected by the old empty-reference guard after Core starts returning the complete typed values. The codec resolves all five failures.",
+    "behavior": "Item source.read returns ownedLink metadata with owner and null source/appearance, and Schedule metadata with source and null owner/appearance. IDs, full Item content/bookmarks, prior hashes and Last updated survive; structured output equals text JSON."
+  },
+  "nativeExecutions": {
+    "NativeQualification": {
+      "bundle": "/private/tmp/PlannerCoreItemReferenceReadNativeQualification.xcresult",
+      "log": "/private/tmp/PlannerCoreItemReferenceReadNativeQualification.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 8,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791560078.486,
+        "passedTests": 8,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791560068.693,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerCore",
+        "topInsights": [],
+        "totalTestCount": 8
+      }
+    },
+    "WireRed": {
+      "bundle": "/private/tmp/PlannerMCPItemReferenceReadRed.xcresult",
+      "log": "/private/tmp/PlannerMCPItemReferenceReadRed.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 5,
+            "passedTests": 9,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 5,
+        "finishTime": 1791559951.899,
+        "passedTests": 9,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791559927.226,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "Expectation failed: tool[\"isError\"] as? Bool == false\ntool[\"isError\"] as? Bool \u2192 true",
+            "targetName": "PlannerMCPTests",
+            "testIdentifier": 4,
+            "testIdentifierString": "RowRoutingTests/malformedBookmarkEditsRetainBothOwnersAndTheIssuedRowWindow()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/malformedBookmarkEditsRetainBothOwnersAndTheIssuedRowWindow()",
+            "testName": "malformedBookmarkEditsRetainBothOwnersAndTheIssuedRowWindow()"
+          },
+          {
+            "failureText": "Expectation failed: tool[\"isError\"] as? Bool == false\ntool[\"isError\"] as? Bool \u2192 true",
+            "targetName": "PlannerMCPTests",
+            "testIdentifier": 8,
+            "testIdentifierString": "RowRoutingTests/malformedOwnedLinksRejectTogetherWithoutChangingTheSavedSourceOrWindow()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/malformedOwnedLinksRejectTogetherWithoutChangingTheSavedSourceOrWindow()",
+            "testName": "malformedOwnedLinksRejectTogetherWithoutChangingTheSavedSourceOrWindow()"
+          },
+          {
+            "failureText": "Expectation failed: tool[\"isError\"] as? Bool == false\ntool[\"isError\"] as? Bool \u2192 true",
+            "targetName": "PlannerMCPTests",
+            "testIdentifier": 5,
+            "testIdentifierString": "RowRoutingTests/ownedBookmarkReplacementOverHTTPRejectsStalePatchAndKeepsLaterEmptyValueOnReplay()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/ownedBookmarkReplacementOverHTTPRejectsStalePatchAndKeepsLaterEmptyValueOnReplay()",
+            "testName": "ownedBookmarkReplacementOverHTTPRejectsStalePatchAndKeepsLaterEmptyValueOnReplay()"
+          },
+          {
+            "failureText": "Expectation failed: tool[\"isError\"] as? Bool == false\ntool[\"isError\"] as? Bool \u2192 true",
+            "targetName": "PlannerMCPTests",
+            "testIdentifier": 9,
+            "testIdentifierString": "RowRoutingTests/ownedLinksOverHTTPRetainFullDetailsAndOneRowPreviewAfterReplay()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/ownedLinksOverHTTPRetainFullDetailsAndOneRowPreviewAfterReplay()",
+            "testName": "ownedLinksOverHTTPRetainFullDetailsAndOneRowPreviewAfterReplay()"
+          },
+          {
+            "failureText": "Expectation failed: tool[\"isError\"] as? Bool == false\ntool[\"isError\"] as? Bool \u2192 true",
+            "targetName": "PlannerMCPTests",
+            "testIdentifier": 1,
+            "testIdentifierString": "RowRoutingTests/scheduledSourceOverHTTPEnumeratesBookmarksAndScheduleWithoutLosingContent()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/scheduledSourceOverHTTPEnumeratesBookmarksAndScheduleWithoutLosingContent()",
+            "testName": "scheduledSourceOverHTTPEnumeratesBookmarksAndScheduleWithoutLosingContent()"
+          }
+        ],
+        "title": "Test - Planner",
+        "topInsights": [
+          {
+            "category": "Common Failures",
+            "impact": "100% of failures",
+            "text": "5 runs of 5 tests failed with Expectation failed: tool[\"isError\"] as? Bool == false"
+          }
+        ],
+        "totalTestCount": 14
+      }
+    },
+    "WireGreen": {
+      "bundle": "/private/tmp/PlannerMCPItemReferenceReadGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPItemReferenceReadGreen.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 14,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791559981.528,
+        "passedTests": 14,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791559973.755,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [],
+        "totalTestCount": 14
+      }
+    },
+    "AffectedMCPRegression": {
+      "bundle": "/private/tmp/PlannerMCPItemReferenceReadRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPItemReferenceReadRegression.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 40,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791560077.888,
+        "passedTests": 34,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791560069.912,
+        "statistics": [
+          {
+            "subtitle": "9 test runs",
+            "title": "3 tests ran with dynamic parameters"
+          }
+        ],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [
+          {
+            "category": "Longest Test Runs",
+            "impact": "11% of duration",
+            "text": "1 longest test run with outlier durations exceeding 0.24s (three standard deviations)"
+          }
+        ],
+        "totalTestCount": 34
+      },
+      "excludedSuite": "ReadLoadTests"
+    }
+  },
+  "simulatorBuild": {
+    "log": "/private/tmp/PlannerCoreItemReferenceReadSimulatorBuild.log",
+    "destination": "generic/platform=iOS Simulator",
+    "signingAllowed": false,
+    "result": "TEST BUILD SUCCEEDED",
+    "runtimeTests": false
+  },
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerItemReferenceReadSwiftLint.log",
+    "affectedSwiftFiles": 7,
+    "diffWhitespace": "passed"
+  },
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "497d0045e8993902a72cd2541606f8e271efc86cd618a4e2fdc54a769c648385",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "bfd89ebc2901af40f1a78a9d553b0e317d51923436ad823fa331d1e2ea882fcf",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DirectScheduleTests.swift": "4b85e01339cb552f64e8161379f081cfdc301c1ef5786eb7e545ec38900e08c5",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift": "6ac819cee086258fa593c8086bc2dbdae06397c741baf8a27d194238e5024171",
+    "Planner/AgentControl/PlannerMCPSourceTool.swift": "100343f24dc5fdb164f69814600382ecfa0221755e7f1e4630471c4e84c9521f",
+    "PlannerMCPTests/RowRoutingTests.swift": "488b44a5725a23b1f98838913d8f3708fd62abd015933d584bca9fde581f6ffd",
+    "docs/adapter-contract.md": "14290c945d641aa014fc1504271ecab17a8dbc737e6abf9cb87bb0f4afe72008",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemReferenceReadTests.swift": "d9ec2d036a83bd0f8b7774ccfd73267af2c7ce91f200d5a1381e5ed337ecb43f"
+  },
+  "limitations": [
+    "Only currently saved Item ownedLink and direct Schedule reference variants. Labels/memberships/itinerary entries/expanded appearances remain required.",
+    "Full Schedule source read/form hash/edit/remove and all-day/Itinerary scheduling remain open. No stored schema, recovery format, provider I/O or native UI interaction changes.",
+    "No actual Share, signed reader/client, interrupted migration, physical CloudKit/account convergence or performance qualification. Existing native metadata/linkd diagnostics remain unqualified."
+  ]
+}
