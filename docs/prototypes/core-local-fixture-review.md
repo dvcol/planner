@@ -1,6 +1,6 @@
 # Local Core fixture setup
 
-Review proposal for the shared Core fixture used by [MCP session prototype](https://github.com/dvcol/planner/issues/16). A21/A22/Q33 already accept the domain facade, source fields, writer/recovery sequence and local-store feasibility work. This proposal specifies the previously undeclared storage-opening input, native recovery namespace discovery and exact first executable store journey. It adds no completion, conflict, backup, authority or account policy.
+Accepted Q36 A on 2026-10-09 for the shared Core fixture used by [MCP session prototype](https://github.com/dvcol/planner/issues/16). The human approved the concrete packet with "looks good to me, continue." A21/A22/Q33 already accept the domain facade, source fields, writer/recovery sequence and local-store feasibility work. This packet specifies the storage-opening input, native recovery namespace discovery and exact first executable store journey. It adds no completion, conflict, backup, authority or account policy. Runtime evidence remains required.
 
 ## Context, starting state and expected end
 
@@ -76,6 +76,6 @@ The suite and its domain types do not exist yet; these commands are the proposed
 
 - [x] Existing domain/authority contracts are accepted; native Core scheme/targets build and their current zero-test discovery is recorded.
 - [x] Real storage inputs, namespace discovery, ownership limits, first operation/read/status/recovery expectations and focused commands are concrete for review.
-- [ ] Human confirms the storage-opening input, native namespace discovery and first store journey before its new public-boundary tests.
+- [x] Human confirms the storage-opening input, native namespace discovery and first store journey before its new public-boundary tests under Q36 A.
 - [ ] Executable red/green, actual reopen/recovery evidence, focused compilation/lint and discovered/executed counts are committed.
 - [ ] Real MCP domain commands and the original owning prototype's remaining gates pass before resolution.
