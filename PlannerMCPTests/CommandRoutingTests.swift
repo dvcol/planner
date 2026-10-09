@@ -5,6 +5,97 @@ import Testing
 @testable import Planner
 
 struct CommandRoutingTests {
+  @Test(arguments: ["deleteSource", "applyImport", "restoreRecovery"])
+  func nativeAdministrationIsForbiddenWithoutChangingHotel(_ commandType: String) async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(
+      configuration: PlannerStorageConfiguration(
+        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+        controlURL: directory.appendingPathComponent("control/writer"),
+        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+        processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let datasetSession) = await planner.bootstrap() else {
+      Issue.record("The real Planner dataset must initialize.")
+      return
+    }
+    let created = await planner.execute(
+      PlannerOperation(
+        operationId: UUID(), session: datasetSession,
+        command: .createItem(
+          content: PlannerItemContentInput(title: "Hotel", notes: "Original notes"))))
+    guard case .applied(let originalResult, .complete(let checkpoint)) = created.outcome else {
+      Issue.record("Hotel must be independently saved before rejected agent work.")
+      return
+    }
+    let source = try #require(originalResult.generated.first)
+    let operationIdentifier = UUID()
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    let request = try executionRequest(
+      endpoint: endpoint, operationIdentifier: operationIdentifier, command: ["type": commandType])
+    do {
+      let exchange = try await httpSession.data(for: request)
+      await listener.stop()
+      let response = try #require(exchange.1 as? HTTPURLResponse)
+      #expect(response.statusCode == 200)
+      let envelope = try #require(JSONSerialization.jsonObject(with: exchange.0) as? [String: Any])
+      #expect(envelope["error"] == nil)
+      let tool = try #require(envelope["result"] as? [String: Any])
+      #expect(tool["isError"] as? Bool == true)
+      let structured = try #require(tool["structuredContent"] as? [String: Any])
+      #expect(structured["state"] as? String == "rejected")
+      #expect(structured["operationId"] as? String == operationIdentifier.uuidString)
+      let reason = try #require(structured["reason"] as? [String: Any])
+      #expect(reason["code"] as? String == "forbiddenOperation")
+      #expect(reason["propertyPath"] as? String == "/command/type")
+      guard
+        case .source(let current) = await planner.read(
+          session: datasetSession, request: .source(source))
+      else {
+        Issue.record("Rejected administration must retain Hotel.")
+        return
+      }
+      #expect(current.content.title == "Hotel")
+      #expect(current.content.notes == "Original notes")
+      #expect(current.state.globalDone == false)
+      #expect(current.state.archived == false)
+      guard
+        case .snapshot(let snapshot) = await planner.query(
+          PlannerQuery(session: datasetSession, request: .items(PlannerItemQuery())))
+      else {
+        Issue.record("Rejected administration must preserve the public query.")
+        return
+      }
+      #expect(snapshot.matchingCount == 1)
+      #expect(snapshot.rows == [.source(source)])
+      guard
+        case .noReliableEvidence = await planner.operationStatus(
+          session: datasetSession, operationId: operationIdentifier)
+      else {
+        Issue.record("Adapter admission must not create a domain receipt.")
+        return
+      }
+      guard
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
+      else {
+        Issue.record("The existing independent checkpoint must remain available.")
+        return
+      }
+      #expect(namespaces.count == 1)
+      #expect(namespaces.first?.preparedProposals.isEmpty == true)
+      #expect(namespaces.first?.acknowledgedSnapshot?.checkpointGeneration == checkpoint)
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   @Test func createOverHTTPPersistsHotelAndReplaysWithoutAnotherItem() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
