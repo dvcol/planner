@@ -1,0 +1,215 @@
+{
+  "scope": "Stop closes accepted MCP TCP sockets, including those not yet owned by serving tasks",
+  "observedRegression": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "passedTests": 26,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 1,
+    "finishTime": 1791547085.491,
+    "passedTests": 20,
+    "result": "Failed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791546931.967,
+    "statistics": [
+      {
+        "subtitle": "9 test runs",
+        "title": "3 tests ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [
+      {
+        "failureText": "Test exceeded execution time allowance of 1 minute",
+        "targetName": "PlannerMCPTests",
+        "testIdentifier": 8,
+        "testIdentifierString": "IncompleteRequestTests/stopClosesAConnectionWaitingForTheRestOfItsBody()",
+        "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/IncompleteRequestTests/stopClosesAConnectionWaitingForTheRestOfItsBody()",
+        "testName": "stopClosesAConnectionWaitingForTheRestOfItsBody()"
+      }
+    ],
+    "title": "Test - Planner",
+    "topInsights": [
+      {
+        "category": "Longest Test Runs",
+        "impact": "94% of duration",
+        "text": "1 longest test run with outlier durations exceeding 36.31s (three standard deviations)"
+      }
+    ],
+    "totalTestCount": 21
+  },
+  "initialCancellationCrash": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "passedTests": 26,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 1,
+    "finishTime": 1791547235.847,
+    "passedTests": 20,
+    "result": "Failed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791547214.626,
+    "statistics": [
+      {
+        "subtitle": "9 test runs",
+        "title": "3 tests ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [
+      {
+        "failureText": "Crash: Planner",
+        "targetName": "PlannerMCPTests",
+        "testIdentifier": 8,
+        "testIdentifierString": "IncompleteRequestTests/stopClosesAConnectionWaitingForTheRestOfItsBody()",
+        "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/IncompleteRequestTests/stopClosesAConnectionWaitingForTheRestOfItsBody()",
+        "testName": "stopClosesAConnectionWaitingForTheRestOfItsBody()"
+      }
+    ],
+    "title": "Test - Planner",
+    "topInsights": [
+      {
+        "category": "Longest Test Runs",
+        "impact": "82% of duration",
+        "text": "1 longest test run with outlier durations exceeding 1.77s (three standard deviations)"
+      }
+    ],
+    "totalTestCount": 21
+  },
+  "traceFreeStress": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 100,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791547936.949,
+    "passedTests": 1,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791547929.126,
+    "statistics": [
+      {
+        "subtitle": "100 test runs",
+        "title": "1 configuration ran with test repetitions"
+      }
+    ],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 1
+  },
+  "nativeRegression": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 27,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791547991.32,
+    "passedTests": 21,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791547984.759,
+    "statistics": [
+      {
+        "subtitle": "9 test runs",
+        "title": "3 tests ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [
+      {
+        "category": "Longest Test Runs",
+        "impact": "86% of duration",
+        "text": "1 longest test run with outlier durations exceeding 1.78s (three standard deviations)"
+      }
+    ],
+    "totalTestCount": 21
+  },
+  "sourceSHA256": {
+    "Planner/AgentControl/PlannerMCPLoopbackListener.swift": "56e00b716e0680245e521b9f671e43a7990f1c8103a5bd3f85e2bd14d7756e94",
+    "PlannerMCPTests/IncompleteRequestTests.swift": "13fbe5feb56d2d9631b4652451c51275873b1b3e0d29f7461c71e165a3cd7902"
+  },
+  "diagnosis": "Normal accepting-loop termination did not cancel children; a child writer constructed before consumption could be discarded unfinished. Accepted sockets outside serving-task ownership also required explicit closure at Stop.",
+  "unsuccessfulAttempts": [
+    "Cancellation on normal exit passed focused testing but full regression crashed with Deinited NIOAsyncWriter without calling finish().",
+    "Delaying writer creation without gating reads dropped some concurrent source requests.",
+    "Gating reads passed one full regression but the trace-free repetition still timed out.",
+    "Trace instrumentation changed timing; its 100 passing repetitions were not counted as final qualification.",
+    "Shutting down event loops before joining serving tasks timed out and produced Cannot schedule tasks on an EventLoop that has already shut down."
+  ],
+  "limitations": [
+    "This proves local incomplete HTTP exchange shutdown; domain cancellation around commit and app/account lifecycle still require separate evidence.",
+    "All waits/time limits are test harness bounds, not agent session or idle limits."
+  ]
+}
