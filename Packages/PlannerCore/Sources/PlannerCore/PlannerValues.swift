@@ -52,6 +52,7 @@ public enum PlannerItemFieldValue: Sendable, Equatable {
 }
 
 public enum PlannerFailureDetails: Sendable, Equatable {
+  case staleSnapshot(requestedGeneration: UUID, currentGeneration: UUID?)
   case staleEdit(
     conflictingFields: [PlannerItemField], currentValues: [PlannerItemField: PlannerItemFieldValue],
     currentFieldHashes: [PlannerItemField: PlannerFieldHash]
@@ -308,10 +309,12 @@ public struct PlannerSourceState: Sendable {
 
 public enum PlannerReadRequest: Sendable {
   case source(PlannerEntityReference)
+  case rows(generation: UUID, offset: Int64, limit: Int64)
 }
 
 public enum PlannerReadResult: Sendable {
   case source(PlannerSourceRead)
+  case rows(PlannerRowWindow)
   case failed(PlannerFailure)
 }
 
@@ -340,11 +343,16 @@ public struct PlannerItemQuery: Sendable {
   public let scope: Scope
   public let completion: Completion
   public let archive: Archive
+  public let rowPresentation: PlannerRowPresentationContext?
 
-  public init(scope: Scope = .global, completion: Completion = .todo, archive: Archive = .active) {
+  public init(
+    scope: Scope = .global, completion: Completion = .todo, archive: Archive = .active,
+    rowPresentation: PlannerRowPresentationContext? = nil
+  ) {
     self.scope = scope
     self.completion = completion
     self.archive = archive
+    self.rowPresentation = rowPresentation
   }
 }
 
@@ -357,6 +365,7 @@ public struct PlannerQuerySnapshot: Sendable {
   public let generation: UUID
   public let rows: [PlannerRowIdentity]
   public let matchingCount: Int64
+  public let rowPresentation: PlannerRowPresentationContext?
 }
 
 public enum PlannerQueryResult: Sendable {

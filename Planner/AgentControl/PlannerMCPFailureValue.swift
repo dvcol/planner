@@ -7,6 +7,12 @@
       let details: Value
       switch reason.details {
       case nil: details = .null
+      case .staleSnapshot(let requestedGeneration, let currentGeneration):
+        details = .object([
+          "kind": .string("staleSnapshot"),
+          "requestedGeneration": .string(requestedGeneration.uuidString),
+          "currentGeneration": currentGeneration.map { .string($0.uuidString) } ?? .null,
+        ])
       case .staleEdit(let fields, let values, let hashes):
         details = .object([
           "kind": .string("staleEdit"),

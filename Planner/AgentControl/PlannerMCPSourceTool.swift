@@ -69,6 +69,9 @@
         let result = await planner.read(
           session: session, request: .source(PlannerEntityReference(kind: .item, id: identity)))
         switch result {
+        case .rows:
+          return failure(
+            code: "unavailable", message: "The source request returned an unexpected row window.")
         case .failed(let reason):
           return failure(code: reason.code, message: reason.message, path: reason.propertyPath)
         case .source(let read):

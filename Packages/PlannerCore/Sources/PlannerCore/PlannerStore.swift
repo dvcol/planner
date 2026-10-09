@@ -86,6 +86,27 @@ enum PlannerSchemaV1: VersionedSchema {
   }
 }
 
+extension PlannerSchemaV1.Item {
+  func rowRead() throws -> PlannerRowRead {
+    guard let id else {
+      throw PlannerFailure("readUnavailable", "The row Item has unresolved identity.")
+    }
+    let content = PlannerItemContentInput(
+      title: title, subtitle: subtitle,
+      location: try locationData.map {
+        try JSONDecoder().decode(PlannerOwnedLocation.self, from: $0)
+      },
+      estimate: try estimateData.map { try JSONDecoder().decode(PlannerEstimate.self, from: $0) })
+    try content.validate()
+    return PlannerRowRead(
+      identity: .source(PlannerEntityReference(kind: .item, id: id)),
+      title: content.title, subtitle: content.subtitle, estimate: content.estimate,
+      globalDone: globalDone, localDone: nil, effectiveDone: globalDone, archived: archived,
+      hasLocation: content.location != nil, hasLinks: false,
+      ownedLocation: content.location, previewLink: nil, scheduleSummary: .none)
+  }
+}
+
 struct PlannerBoundIdentity: Codable {
   let kind: String
   let id: UUID
