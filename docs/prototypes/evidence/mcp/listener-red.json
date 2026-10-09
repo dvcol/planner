@@ -1,0 +1,45 @@
+{
+  "devicesAndConfigurations": [
+    {
+      "device": {
+        "architecture": "arm64",
+        "deviceName": "My Mac",
+        "modelName": "MacBook Pro",
+        "osBuildNumber": "26A434",
+        "osVersion": "27.0.1",
+        "platform": "macOS"
+      },
+      "expectedFailures": 0,
+      "failedTests": 1,
+      "passedTests": 4,
+      "skippedTests": 0,
+      "testPlanConfiguration": {
+        "configurationId": "1",
+        "configurationName": "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+  "expectedFailures": 0,
+  "failedTests": 1,
+  "finishTime": 1791504545.545,
+  "passedTests": 4,
+  "result": "Failed",
+  "runtimeWarnings": [],
+  "skippedTests": 0,
+  "startTime": 1791504533.163,
+  "statistics": [],
+  "testFailures": [
+    {
+      "failureText": "Caught error: .unavailable",
+      "targetName": "PlannerMCPTests",
+      "testIdentifier": 3,
+      "testIdentifierString": "ListenerTests/authenticatedPingTraversesARealLoopbackHTTPConnection()",
+      "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/ListenerTests/authenticatedPingTraversesARealLoopbackHTTPConnection()",
+      "testName": "authenticatedPingTraversesARealLoopbackHTTPConnection()"
+    }
+  ],
+  "title": "Test - Planner",
+  "topInsights": [],
+  "totalTestCount": 5
+}
