@@ -104,6 +104,17 @@ public enum PlannerAppearance: Sendable, Equatable, Codable {
   }
 }
 
+public struct PlannerAppearanceRead: Sendable {
+  public let appearance: PlannerAppearance
+  public let source: PlannerEntityReference
+  public let content: PlannerItemContent
+  public let globalDone: Bool
+  public let localDone: Bool
+  public let effectiveDone: Bool
+  public let archived: Bool
+  public let fieldHashes: [PlannerItemField: PlannerFieldHash]
+}
+
 extension PlannerReferenceRead: Codable {
   private enum CodingKeys: String, CodingKey { case kind, id, owner, source, appearance }
 

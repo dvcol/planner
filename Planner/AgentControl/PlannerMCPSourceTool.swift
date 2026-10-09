@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_read",
       description:
-        "Read an Item, List or Schedule source, or a generation-bound Item row window from the local Planner prototype.",
+        "Read an Item, List or Schedule source, an exact List item appearance, or a generation-bound Item row window from the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("request")]),
@@ -15,6 +15,28 @@
           "formatVersion": .object(["type": .string("integer"), "const": .int(1)]),
           "request": .object([
             "oneOf": .array([
+              .object([
+                "type": .string("object"), "additionalProperties": .bool(false),
+                "required": .array([.string("kind"), .string("appearance")]),
+                "properties": .object([
+                  "kind": .object(["type": .string("string"), "const": .string("appearance")]),
+                  "appearance": .object([
+                    "type": .string("object"), "additionalProperties": .bool(false),
+                    "required": .array([
+                      .string("kind"), .string("listId"), .string("membershipId"),
+                    ]),
+                    "properties": .object([
+                      "kind": .object([
+                        "type": .string("string"), "const": .string("listMembership"),
+                      ]),
+                      "listId": .object(["type": .string("string"), "format": .string("uuid")]),
+                      "membershipId": .object([
+                        "type": .string("string"), "format": .string("uuid"),
+                      ]),
+                    ]),
+                  ]),
+                ]),
+              ]),
               .object([
                 "type": .string("object"), "additionalProperties": .bool(false),
                 "required": .array([.string("kind"), .string("source")]),
@@ -77,6 +99,11 @@
         let result = await planner.read(session: session, request: request)
         let structured: Value
         switch result {
+        case .appearance(let read):
+          structured = .object([
+            "formatVersion": .int(1), "kind": .string("appearance"),
+            "value": appearanceReadValue(read),
+          ])
         case .source(.list(let read)):
           structured = .object([
             "formatVersion": .int(1), "kind": .string("source"), "value": listValue(read),
@@ -142,6 +169,21 @@
           code: "invalidInput", path: "/request", message: "Expected an object.")
       }
       switch fields["kind"] {
+      case .string("appearance"):
+        let request = try object(value, keys: ["kind", "appearance"], path: "/request")
+        let appearance = try object(
+          request["appearance"], keys: ["kind", "listId", "membershipId"],
+          path: "/request/appearance")
+        guard appearance["kind"] == .string("listMembership") else {
+          throw AdmissionFailure(
+            code: "invalidInput", path: "/request/appearance/kind",
+            message: "Expected a List membership appearance.")
+        }
+        return .appearance(
+          .listMembership(
+            listId: try identifier(appearance["listId"], path: "/request/appearance/listId"),
+            membershipId: try identifier(
+              appearance["membershipId"], path: "/request/appearance/membershipId")))
       case .string("source"):
         let request = try object(value, keys: ["kind", "source"], path: "/request")
         let source = try object(request["source"], keys: ["kind", "id"], path: "/request/source")
@@ -165,7 +207,8 @@
           limit: try count(request["limit"], minimum: 1, path: "/request/limit"))
       default:
         throw AdmissionFailure(
-          code: "invalidInput", path: "/request/kind", message: "Expected source or rows.")
+          code: "invalidInput", path: "/request/kind",
+          message: "Expected source, appearance or rows.")
       }
     }
 
@@ -274,25 +317,61 @@
       ])
     }
 
+    private static func itemContentValue(_ content: PlannerItemContent) -> Value {
+      return .object([
+        "title": .string(content.title),
+        "subtitle": content.subtitle.map(Value.string) ?? .null,
+        "notes": content.notes.map(Value.string) ?? .null,
+        "location": content.location.map(locationValue) ?? .null,
+        "estimate": content.estimate.map { estimate in
+          .object([
+            "minutes": .string(String(estimate.minutes)),
+            "displayUnit": .string(estimate.displayUnit.rawValue),
+          ])
+        } ?? .null,
+        "links": .array(content.links.map(PlannerMCPRowValue.link)),
+        "categoryIds": .array(
+          content.categoryIds.sorted { $0.uuidString < $1.uuidString }.map {
+            .string($0.uuidString)
+          }),
+        "tagIds": .array(
+          content.tagIds.sorted { $0.uuidString < $1.uuidString }.map { .string($0.uuidString) }),
+      ])
+    }
+
+    private static func appearanceIdentityValue(_ appearance: PlannerAppearance) -> Value {
+      switch appearance {
+      case .listMembership(let listId, let membershipId):
+        return .object([
+          "kind": .string("listMembership"), "listId": .string(listId.uuidString),
+          "membershipId": .string(membershipId.uuidString),
+        ])
+      }
+    }
+
+    private static func appearanceReadValue(_ read: PlannerAppearanceRead) -> Value {
+      .object([
+        "appearance": appearanceIdentityValue(read.appearance),
+        "source": .object([
+          "kind": .string(read.source.kind.rawValue), "id": .string(read.source.id.uuidString),
+        ]),
+        "content": itemContentValue(read.content),
+        "globalDone": .bool(read.globalDone), "localDone": .bool(read.localDone),
+        "effectiveDone": .bool(read.effectiveDone), "archived": .bool(read.archived),
+        "fieldHashes": .object(
+          Dictionary(
+            uniqueKeysWithValues: read.fieldHashes.map {
+              ($0.key.rawValue, .string($0.value.value))
+            })),
+      ])
+    }
+
     private static func sourceValue(_ read: PlannerItemSourceRead) -> Value {
       .object([
         "source": .object([
           "kind": .string(read.source.kind.rawValue), "id": .string(read.source.id.uuidString),
         ]),
-        "content": .object([
-          "title": .string(read.content.title),
-          "subtitle": read.content.subtitle.map(Value.string) ?? .null,
-          "notes": read.content.notes.map(Value.string) ?? .null,
-          "location": read.content.location.map(locationValue) ?? .null,
-          "estimate": read.content.estimate.map { estimate in
-            .object([
-              "minutes": .string(String(estimate.minutes)),
-              "displayUnit": .string(estimate.displayUnit.rawValue),
-            ])
-          } ?? .null,
-          "links": .array(read.content.links.map(PlannerMCPRowValue.link)),
-          "categoryIds": .array([]), "tagIds": .array([]),
-        ]),
+        "content": itemContentValue(read.content),
         "createdAt": .double(read.createdAt.timeIntervalSinceReferenceDate),
         "updatedAt": .double(read.updatedAt.timeIntervalSinceReferenceDate),
         "fieldHashes": .object(
