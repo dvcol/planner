@@ -86,8 +86,10 @@ enum PlannerSchemaV1: VersionedSchema {
   }
 }
 
-extension PlannerSchemaV2.Item {
-  func rowRead(hasLinks: Bool, previewLink: PlannerOwnedLinkRead?) throws -> PlannerRowRead {
+extension PlannerSchemaV3.Item {
+  func rowRead(
+    hasLinks: Bool, previewLink: PlannerOwnedLinkRead?, scheduleSummary: PlannerRowScheduleSummary
+  ) throws -> PlannerRowRead {
     guard let id else {
       throw PlannerFailure("readUnavailable", "The row Item has unresolved identity.")
     }
@@ -104,7 +106,7 @@ extension PlannerSchemaV2.Item {
       globalDone: globalDone, localDone: nil, effectiveDone: globalDone, archived: archived,
       hasLocation: content.location != nil, hasLinks: hasLinks,
       ownedLocation: content.location, previewLink: previewLink,
-      scheduleSummary: .none)
+      scheduleSummary: scheduleSummary)
   }
 }
 
@@ -124,9 +126,14 @@ struct PlannerStoredOperationEvidence: Codable {
 }
 
 enum PlannerMigrationPlan: SchemaMigrationPlan {
-  static var schemas: [any VersionedSchema.Type] { [PlannerSchemaV1.self, PlannerSchemaV2.self] }
+  static var schemas: [any VersionedSchema.Type] {
+    [PlannerSchemaV1.self, PlannerSchemaV2.self, PlannerSchemaV3.self]
+  }
   static var stages: [MigrationStage] {
-    [.lightweight(fromVersion: PlannerSchemaV1.self, toVersion: PlannerSchemaV2.self)]
+    [
+      .lightweight(fromVersion: PlannerSchemaV1.self, toVersion: PlannerSchemaV2.self),
+      .lightweight(fromVersion: PlannerSchemaV2.self, toVersion: PlannerSchemaV3.self),
+    ]
   }
 }
 
@@ -139,6 +146,7 @@ struct ItemSnapshot {
   let globalDone: Bool
   let archived: Bool
   var links: [OwnedLinkSnapshot] = []
+  var schedules: [ScheduleSnapshot] = []
 
   var reference: PlannerEntityReference { PlannerEntityReference(kind: .item, id: id) }
 
@@ -149,7 +157,7 @@ struct ItemSnapshot {
       fieldHashes: input.fieldHashes(
         datasetId: datasetId, itemId: id, lifetimeId: lifetimeId, links: links.map(\.read)),
       state: PlannerSourceState(globalDone: globalDone, archived: archived), labels: [],
-      references: []
+      references: schedules.map(\.reference)
     )
   }
 }

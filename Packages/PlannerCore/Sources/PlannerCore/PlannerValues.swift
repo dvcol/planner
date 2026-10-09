@@ -158,6 +158,7 @@ public struct PlannerItemContentInput: Sendable, Equatable {
 
 public enum PlannerCommand: Sendable {
   case createItem(content: PlannerItemContentInput)
+  case createSchedule(source: PlannerEntityReference, form: PlannerScheduleForm)
   case setCompletion(scope: PlannerCompletionScope, done: Bool)
   case setArchive(source: PlannerEntityReference, archived: Bool)
   case editItem(
@@ -438,6 +439,12 @@ public struct PlannerDecodedBackup: Sendable {
 
 public struct PlannerPortableBackup: Sendable {
   public let sources: [PlannerPortableItem]
+  public let schedules: [PlannerPortableSchedule]
+
+  init(sources: [PlannerPortableItem], schedules: [PlannerPortableSchedule] = []) {
+    self.sources = sources
+    self.schedules = schedules
+  }
 }
 
 public struct PlannerPortableItem: Sendable {

@@ -1,0 +1,192 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "70112c0",
+  "scope": "Direct timed Item Schedule creation, fixed-context Q45 row selection, native V1/V2 to V3 migration and independent portable recovery through the public facade.",
+  "redGreen": [
+    {
+      "redLog": "/private/tmp/PlannerCoreDirectScheduleRed.log",
+      "redExecutedFunctions": 1,
+      "redFailedFunctions": 1,
+      "greenLog": "/private/tmp/PlannerCoreDirectScheduleGreen.log",
+      "greenExecutedFunctions": 1,
+      "greenPassedFunctions": 1,
+      "behavior": "A real start-only Tokyo appointment saves without an estimated end, survives reopen in Tokyo and Paris query contexts, replays with one identity and checkpoint, and exists in independent portable recovery."
+    },
+    {
+      "redLog": "/private/tmp/PlannerCoreDirectScheduleSelectionExecutedRed.log",
+      "redExecutedFunctions": 2,
+      "redFailedFunctions": 1,
+      "redExpectationIssues": 3,
+      "greenLog": "/private/tmp/PlannerCoreDirectScheduleSelectionGreenRerun.log",
+      "greenExecutedFunctions": 2,
+      "greenPassedFunctions": 2,
+      "behavior": "At an end boundary select the next future start; after all spans select the latest past; overlaps choose latest ongoing start then ascending Schedule UUID."
+    }
+  ],
+  "qualification": {
+    "log": "/private/tmp/PlannerCoreDirectScheduleQualification.log",
+    "executedFunctions": 4,
+    "passedFunctions": 4,
+    "firstExecutionBehavior": "Exact-start start-only eligibility, subsequent future/past selection, invalid/nonfinite endpoints and timezone, missing owner, no receipt/checkpoint/generation change on rejection, and changed-payload replay rejection."
+  },
+  "packageRegression": {
+    "log": "/private/tmp/PlannerCoreDirectScheduleStoreExecutedRegression.log",
+    "executedFunctions": 34,
+    "passedFunctions": 34,
+    "suites": 12,
+    "additionalFirstPassQualification": "Ordinary title/bookmark/global completion/archive changes preserve the Schedule identity/lifetime in reopen and checkpoints 2/6. Genuine V1 and V2 fixtures migrate through the current facade; Share role requires main-app migration first and can save afterward. V2 bookmark IDs/lifetimes/order, Item timestamps/hashes/state and original receipt/checkpoint bytes survive."
+  },
+  "fixtureProducer": {
+    "commit": "70112c0",
+    "log": "/private/tmp/PlannerSchema2Producer-70112c0.log",
+    "result": "Build and producer execution succeeded",
+    "outputCopiedAfterProducerExit": true,
+    "fixture": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV2"
+  },
+  "excludedNonExecutions": [
+    "/private/tmp/PlannerCoreDirectScheduleSelectionRed.log",
+    "/private/tmp/PlannerCoreDirectScheduleSelectionGreen.log",
+    "/private/tmp/PlannerCoreScheduleMigrationQualification.log",
+    "/private/tmp/PlannerCoreScheduleMigrationExecutedQualification.log",
+    "/private/tmp/PlannerCoreDirectScheduleStoreRegression.log"
+  ],
+  "nativeExecutions": {
+    "NativeQualification": {
+      "bundle": "/private/tmp/PlannerCoreDirectScheduleNativeQualification.xcresult",
+      "log": "/private/tmp/PlannerCoreDirectScheduleNativeQualification.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 7,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791558957.147,
+        "passedTests": 7,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791558938.395,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerCore",
+        "topInsights": [],
+        "totalTestCount": 7
+      }
+    },
+    "AffectedMCPRegression": {
+      "bundle": "/private/tmp/PlannerMCPCoreDirectScheduleRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPCoreDirectScheduleRegression.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 37,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791558964.635,
+        "passedTests": 31,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791558936.648,
+        "statistics": [
+          {
+            "subtitle": "9 test runs",
+            "title": "3 tests ran with dynamic parameters"
+          }
+        ],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [
+          {
+            "category": "Longest Test Runs",
+            "impact": "16% of duration",
+            "text": "1 longest test run with outlier durations exceeding 0.20s (three standard deviations)"
+          }
+        ],
+        "totalTestCount": 31
+      },
+      "excludedSuite": "ReadLoadTests"
+    }
+  },
+  "simulatorBuild": {
+    "log": "/private/tmp/PlannerCoreDirectScheduleSimulatorBuild.log",
+    "destination": "generic/platform=iOS Simulator",
+    "signingAllowed": false,
+    "result": "TEST BUILD SUCCEEDED",
+    "runtimeTests": false
+  },
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerCoreDirectScheduleSwiftLint.log",
+    "affectedSwiftFiles": 12,
+    "diffWhitespace": "passed"
+  },
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "2705998957c303b6c39527949c56df9e80265f3a96c77f2b6d20e85d2b1541a3",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "11f3136fc3b45672c2de517d04347d49665baba4b9083455865119b032627d96",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "54a8cf5f1638a13a7c5e658c0799cc8d0705274e8d5e5bb5f28dc5321c153923",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift": "02a5cdae131a35460b5f29cf928733fba03eb722d24cfb915e144cce01b643a5",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "ae9d5f13ee0f489f898a33710529d074211007a06ec90b3b1c9a85d63b134703",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "1f6e7ec94edea108dcba55c76f898d8c778a0dd727a28705a6a3b0546a6ee4be",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift": "64d2138d9d07fba2ecf46be95c964f020d474f213c312863e8db638853e6027b",
+    "Planner/AgentControl/PlannerMCPRowValue.swift": "0025762e3d1c79f63a27ae26e0cbcfa4d7e712b22a85fcbd9373dc40e95a0eb3",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleRecovery.swift": "04cd468445d0110b980aff89b94b1e3f4ca1ff641ce46dc9ecb1eb6518667a22",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "36448504129ba8874521ab66f51eee5c213d6555859fee0898b9e5e65624cc7c",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV3.swift": "f7ce9fffd6cb47fd46d0ad441aadd5c23ab88aab7d3c8b0d8dee84b1234a4a1c",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DirectScheduleTests.swift": "f9ac984a0e1b5b0792c0c92c5c8f7ad413cd7c91a4f78e4902666ebb7df17b32",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV2/Producer.swift.txt": "35bd93f3b05157ba4e6d796a950a1e2cc9d8da6fb820ac52c5e283c3bae1cc2a",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV2/README.md": "33c9e7116c51d7e3cef62a004432a35ffc75ff908f2497c7b644bd544502c8e4",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV2/control/writer": "b68c1db0ea123827ce79560dfe28b0bf5b7dc6c13ac9839bc5498bf8fc13cb33",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV2/manifest.json": "ce764c8e8aadf396930220f27c7dd49f9d29397ddd447af38426f63d801553f6",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV2/recovery/9228EACC-F92D-44A9-972A-239EEC6E5DA5/checkpoint-1.json": "47c22b31adc0716a42346765484c822abf52a8240b84b536494ac47b05a55855",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV2/recovery/9228EACC-F92D-44A9-972A-239EEC6E5DA5/checkpoint-2.json": "650ad7fd85247ac1be644d44b3fef9efed091ea0040c117ac300eb5a9b70e889",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV2/recovery/9228EACC-F92D-44A9-972A-239EEC6E5DA5/checkpoint-3.json": "4384b053a596f6fdb9dc8ba01b926b4f758f5aba208688d5bcebf4716150eb26",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV2/recovery/9228EACC-F92D-44A9-972A-239EEC6E5DA5/identity.json": "fcc295d81d2f62f9db3b37288ed3687ffa7ab1d04759c8d2d0e087ec9c5ccf14",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV2/recovery/9228EACC-F92D-44A9-972A-239EEC6E5DA5/proposal-25F6D089-F7F2-49AB-A58A-29111B8254F8.json": "0bd53457df72bc11f49778efa1fd5b5b8cd30d03d249778fa30f8b44a23cc5ca",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV2/recovery/9228EACC-F92D-44A9-972A-239EEC6E5DA5/proposal-45BC790D-88FB-4151-A73A-70C1801D5FE9.json": "bf39c1b4e876228c666fdd5c3652528ecf656d619461a465bf03aae0f7c9ff23",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV2/recovery/9228EACC-F92D-44A9-972A-239EEC6E5DA5/proposal-99ED7422-6B6D-4A13-83C5-7B2004EDA9A8.json": "cbe18520506dbe92fd8c2d9815f4e732d8b93b66593fe698639ccb8035a3b2c0",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV2/store/Planner.sqlite": "ef16561859af53c4fa1aa31f85420d86101aaa9667aece4dabd7774185b13475",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV2/store/Planner.sqlite-shm": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV2/store/Planner.sqlite-wal": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "limitations": [
+    "Only direct timed Item assignments, not all-day forms, Itinerary spans or inherited planning.",
+    "No Schedule edit/remove, complete Schedule source/reference read, scheduled filters, native saved date picker or real Share extension execution.",
+    "HTTP creation is a following slice. The row encoder is exhaustive for the new directItem value, while source.read still rejects nonempty reference arrays rather than emitting a wrong wire declaration.",
+    "No interrupted migration, physical CloudKit/account recovery, signing or performance qualification. Existing native metadata/linkd diagnostics remain unqualified."
+  ]
+}

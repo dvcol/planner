@@ -7,6 +7,7 @@ indirect enum PlannerCanonicalValue {
   case boolean(Bool)
   case integer(Int64)
   case double(Double)
+  case date(Date)
   case identity(UUID)
   case optional(PlannerCanonicalValue?)
   case ordered([PlannerCanonicalValue])
@@ -21,6 +22,9 @@ indirect enum PlannerCanonicalValue {
     case .boolean(let value): return Data([0x11, value ? 1 : 0])
     case .integer(let value): return Data([0x12]) + unsigned(UInt64(bitPattern: value))
     case .double(let value): return Data([0x13]) + unsigned((value == 0 ? 0 : value).bitPattern)
+    case .date(let value):
+      let seconds = value.timeIntervalSinceReferenceDate
+      return Data([0x19]) + unsigned((seconds == 0 ? 0 : seconds).bitPattern)
     case .identity(let value): return Data([0x14]) + identityBytes(value)
     case .optional(let value):
       guard let value else { return Data([0x15, 0]) }

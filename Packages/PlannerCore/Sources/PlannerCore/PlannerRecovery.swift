@@ -85,12 +85,13 @@ struct PortableItemRecord: Codable {
   }
 }
 
-/// This slice supports Items and their owned links. Other graph groups must be empty, never silently dropped.
+/// This slice supports Items, their owned links and direct timed Schedules. Other graph groups must be empty.
 struct ItemOnlyPortableBackup: Codable {
   let format: String
   let formatVersion: Int
   let sources: [PortableItemRecord]
   let ownedLinks: [PortableOwnedLink]
+  let schedules: [PortableScheduleRecord]
 
   enum CodingKeys: String, CodingKey, CaseIterable {
     case format, formatVersion, sources, memberships, itineraryEntries, expandedCompletions
@@ -106,6 +107,9 @@ struct ItemOnlyPortableBackup: Codable {
     ownedLinks = items.flatMap { item in
       item.links.map { PortableOwnedLink($0, owner: item) }
     }.sorted { $0.id.uuidString < $1.id.uuidString }
+    schedules = items.flatMap { item in
+      item.schedules.map { PortableScheduleRecord($0, owner: item) }
+    }.sorted { $0.id.uuidString < $1.id.uuidString }
   }
 
   init(from decoder: any Decoder) throws {
@@ -114,8 +118,11 @@ struct ItemOnlyPortableBackup: Codable {
     formatVersion = try container.decode(Int.self, forKey: .formatVersion)
     sources = try container.decode([PortableItemRecord].self, forKey: .sources)
     ownedLinks = try container.decode([PortableOwnedLink].self, forKey: .ownedLinks)
+    schedules = try container.decode([PortableScheduleRecord].self, forKey: .schedules)
     for key in CodingKeys.allCases
-    where key != .format && key != .formatVersion && key != .sources && key != .ownedLinks {
+    where key != .format && key != .formatVersion && key != .sources && key != .ownedLinks
+      && key != .schedules
+    {
       guard try container.decode([String].self, forKey: key).isEmpty else {
         throw PlannerFailure(
           "recoveryIntegrityFailure",
@@ -130,8 +137,11 @@ struct ItemOnlyPortableBackup: Codable {
     try container.encode(formatVersion, forKey: .formatVersion)
     try container.encode(sources, forKey: .sources)
     try container.encode(ownedLinks, forKey: .ownedLinks)
+    try container.encode(schedules, forKey: .schedules)
     for key in CodingKeys.allCases
-    where key != .format && key != .formatVersion && key != .sources && key != .ownedLinks {
+    where key != .format && key != .formatVersion && key != .sources && key != .ownedLinks
+      && key != .schedules
+    {
       try container.encode([String](), forKey: key)
     }
   }
@@ -162,7 +172,13 @@ struct ItemOnlyPortableBackup: Codable {
         content: source.content.input.readContent(links: links),
         globalDone: item.globalDone, archived: item.archived, contentOrigins: item.contentOrigins)
     }
-    return PlannerDecodedBackup(backup: PlannerPortableBackup(sources: items))
+    guard Set(schedules.map(\.id)).count == schedules.count else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "The snapshot contains duplicate Schedule identities.")
+    }
+    return PlannerDecodedBackup(
+      backup: PlannerPortableBackup(
+        sources: items, schedules: try schedules.map { try $0.validated(sources: sources) }))
   }
 }
 
@@ -223,7 +239,7 @@ struct RecoveryEnvelope: Codable {
 
   func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
     guard format == "planner-recovery", formatVersion == 1,
-      storageSchemaVersion == "1" || storageSchemaVersion == "2",
+      storageSchemaVersion == "1" || storageSchemaVersion == "2" || storageSchemaVersion == "3",
       namespaceId == identity.namespaceId, datasetId == identity.datasetId,
       ownershipBinding == identity.ownershipBinding, !ownershipBinding.isEmpty,
       let generation = Int64(checkpointGeneration), generation > 0,

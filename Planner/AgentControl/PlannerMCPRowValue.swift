@@ -47,6 +47,27 @@
       let schedule: Value
       switch row.scheduleSummary {
       case .none: schedule = .object(["kind": .string("none")])
+      case .directItem(let reference, let owner, let form, let additionalCount):
+        let encodedForm: Value
+        switch form {
+        case .timed(let start, let end, let planningTimeZone):
+          encodedForm = .object([
+            "kind": .string("timed"),
+            "start": .double(start.timeIntervalSinceReferenceDate),
+            "end": end.map { .double($0.timeIntervalSinceReferenceDate) } ?? .null,
+            "planningTimeZone": .string(planningTimeZone),
+          ])
+        }
+        schedule = .object([
+          "kind": .string("directItem"),
+          "schedule": .object([
+            "kind": .string(reference.kind.rawValue), "id": .string(reference.id.uuidString),
+          ]),
+          "owner": .object([
+            "kind": .string(owner.kind.rawValue), "id": .string(owner.id.uuidString),
+          ]),
+          "form": encodedForm, "additionalCount": .string(String(additionalCount)),
+        ])
       }
       return .object([
         "identity": identity(row.identity), "title": .string(row.title),
