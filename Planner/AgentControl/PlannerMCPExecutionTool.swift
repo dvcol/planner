@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create and edit Items and Lists, complete/reopen Items, archive/unarchive Items and Lists, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
+        "Create and edit Items and Lists, complete/reopen Items or exact List appearances, archive/unarchive Items and Lists, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -201,12 +201,33 @@
       "properties": .object([
         "type": .object(["type": .string("string"), "const": .string("setCompletion")]),
         "scope": .object([
-          "type": .string("object"), "additionalProperties": .bool(false),
-          "required": .array([.string("kind"), .string("itemId")]),
-          "properties": .object([
-            "kind": .object(["type": .string("string"), "const": .string("globalItem")]),
-            "itemId": .object(["type": .string("string"), "format": .string("uuid")]),
-          ]),
+          "oneOf": .array([
+            .object([
+              "type": .string("object"), "additionalProperties": .bool(false),
+              "required": .array([.string("kind"), .string("itemId")]),
+              "properties": .object([
+                "kind": .object(["type": .string("string"), "const": .string("globalItem")]),
+                "itemId": .object(["type": .string("string"), "format": .string("uuid")]),
+              ]),
+            ]),
+            .object([
+              "type": .string("object"), "additionalProperties": .bool(false),
+              "required": .array([.string("kind"), .string("appearance")]),
+              "properties": .object([
+                "kind": .object(["type": .string("string"), "const": .string("appearance")]),
+                "appearance": .object([
+                  "type": .string("object"), "additionalProperties": .bool(false),
+                  "required": .array([.string("kind"), .string("listId"), .string("membershipId")]),
+                  "properties": .object([
+                    "kind": .object(["type": .string("string"), "const": .string("listMembership")]
+                    ),
+                    "listId": .object(["type": .string("string"), "format": .string("uuid")]),
+                    "membershipId": .object(["type": .string("string"), "format": .string("uuid")]),
+                  ]),
+                ]),
+              ]),
+            ]),
+          ])
         ]),
         "done": .object(["type": .string("boolean")]),
       ]),
@@ -623,30 +644,51 @@
       let scope = try object(
         command["scope"], allowed: ["kind", "itemId", "appearance"], required: ["kind"],
         path: "/command/scope")
-      if scope["kind"] == .string("appearance") {
-        _ = try object(
+      let completionScope: PlannerCompletionScope
+      switch scope["kind"] {
+      case .string("appearance"):
+        let localScope = try object(
           command["scope"], allowed: ["kind", "appearance"], required: ["kind", "appearance"],
           path: "/command/scope")
-        throw AdmissionFailure(
-          "unavailable", "/command/scope/kind",
-          "Appearance-local completion is not implemented by this Item-only fixture.")
-      }
-      guard scope["kind"] == .string("globalItem") else {
+        let appearance = try object(
+          localScope["appearance"], allowed: ["kind", "listId", "membershipId"],
+          required: ["kind", "listId", "membershipId"], path: "/command/scope/appearance")
+        guard appearance["kind"] == .string("listMembership") else {
+          throw AdmissionFailure(
+            "invalidInput", "/command/scope/appearance/kind",
+            "Expected a List membership appearance.")
+        }
+        guard case .string(let listSpelling) = appearance["listId"],
+          let listId = UUID(uuidString: listSpelling)
+        else {
+          throw AdmissionFailure(
+            "invalidInput", "/command/scope/appearance/listId", "Expected a List UUID.")
+        }
+        guard case .string(let membershipSpelling) = appearance["membershipId"],
+          let membershipId = UUID(uuidString: membershipSpelling)
+        else {
+          throw AdmissionFailure(
+            "invalidInput", "/command/scope/appearance/membershipId", "Expected a membership UUID.")
+        }
+        completionScope = .appearance(.listMembership(listId: listId, membershipId: membershipId))
+      case .string("globalItem"):
+        let globalScope = try object(
+          command["scope"], allowed: ["kind", "itemId"], required: ["kind", "itemId"],
+          path: "/command/scope")
+        guard case .string(let spelling) = globalScope["itemId"],
+          let itemIdentifier = UUID(uuidString: spelling)
+        else {
+          throw AdmissionFailure("invalidInput", "/command/scope/itemId", "Expected an Item UUID.")
+        }
+        completionScope = .globalItem(itemId: itemIdentifier)
+      default:
         throw AdmissionFailure(
           "invalidInput", "/command/scope/kind", "Expected a completion scope.")
-      }
-      let globalScope = try object(
-        command["scope"], allowed: ["kind", "itemId"], required: ["kind", "itemId"],
-        path: "/command/scope")
-      guard case .string(let spelling) = globalScope["itemId"],
-        let itemIdentifier = UUID(uuidString: spelling)
-      else {
-        throw AdmissionFailure("invalidInput", "/command/scope/itemId", "Expected an Item UUID.")
       }
       guard case .bool(let done) = command["done"] else {
         throw AdmissionFailure("invalidInput", "/command/done", "Expected a completion Boolean.")
       }
-      return .setCompletion(scope: .globalItem(itemId: itemIdentifier), done: done)
+      return .setCompletion(scope: completionScope, done: done)
     }
 
     private static func creationCommand(_ value: Value?) throws -> PlannerCommand {
