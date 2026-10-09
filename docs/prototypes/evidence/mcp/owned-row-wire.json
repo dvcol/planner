@@ -1,0 +1,179 @@
+{
+  "scope": "Owned Item query context and generation-bound row windows through real loopback HTTP and the official MCP SDK",
+  "red": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "passedTests": 0,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 1,
+    "finishTime": 1791548280.575,
+    "passedTests": 0,
+    "result": "Failed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791548267.645,
+    "statistics": [],
+    "testFailures": [
+      {
+        "failureText": "Expectation failed: tool[\"isError\"] as? Bool == false\ntool[\"isError\"] as? Bool \u2192 true",
+        "targetName": "PlannerMCPTests",
+        "testIdentifier": 1,
+        "testIdentifierString": "RowRoutingTests/rowWindowRepeatsFixedContextAndOwnedMetadataOverHTTP()",
+        "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/rowWindowRepeatsFixedContextAndOwnedMetadataOverHTTP()",
+        "testName": "rowWindowRepeatsFixedContextAndOwnedMetadataOverHTTP()"
+      }
+    ],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 1
+  },
+  "green": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 1,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791548506.064,
+    "passedTests": 1,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791548498.682,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 1
+  },
+  "qualification": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 3,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791548611.851,
+    "passedTests": 3,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791548605.962,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 3
+  },
+  "affectedRegression": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 30,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791548702.814,
+    "passedTests": 24,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791548696.115,
+    "statistics": [
+      {
+        "subtitle": "9 test runs",
+        "title": "3 tests ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [
+      {
+        "category": "Longest Test Runs",
+        "impact": "84% of duration",
+        "text": "1 longest test run with outlier durations exceeding 1.68s (three standard deviations)"
+      }
+    ],
+    "totalTestCount": 24
+  },
+  "sourceSHA256": {
+    "Planner/AgentControl/PlannerMCPQueryTool.swift": "a580077e16e046c9607621446dd17745027b6f901ca0939ec338f20cc0accb2d",
+    "Planner/AgentControl/PlannerMCPSourceTool.swift": "430b316052a7708a6ebbca65ef5d322af942d17720b18bfc5a10a9a4bc7cbf2b",
+    "Planner/AgentControl/PlannerMCPRowValue.swift": "8760d1a9e7d2a06f61348544223ea1b66b5666bba9453c4fe3da7102a0c0ad9d",
+    "PlannerMCPTests/RowRoutingTests.swift": "ecbd166fd000645988f33b693822b75e0308c028ceb9c3ccd619f0c0b73c1928"
+  },
+  "buildOnlyFailure": {
+    "bundle": "/private/tmp/PlannerMCPOwnedRowWireGreen.xcresult",
+    "log": "/private/tmp/PlannerMCPOwnedRowWireGreen.log",
+    "reason": "Adapter attempted to call an internal Core failure initializer. No behavior test executed; adapter-local failure encoding corrected it."
+  },
+  "limitations": [
+    "Only the real Item-only Core projection is qualified; contextual rows, links and schedules remain absent.",
+    "No provider I/O or native row interaction is implemented by this wire slice.",
+    "Real selected MCP client journeys, signed ownership transitions, domain interruption/cancellation and long-list performance remain open."
+  ]
+}

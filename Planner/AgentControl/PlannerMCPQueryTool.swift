@@ -27,6 +27,14 @@
                   ])
                 ]),
               ]),
+              "rowPresentation": .object([
+                "type": .string("object"), "additionalProperties": .bool(false),
+                "required": .array([.string("referenceInstant"), .string("displayTimeZone")]),
+                "properties": .object([
+                  "referenceInstant": .object(["type": .string("number")]),
+                  "displayTimeZone": .object(["type": .string("string")]),
+                ]),
+              ]),
               "completion": .object([
                 "type": .string("string"),
                 "enum": .array([.string("todo"), .string("done"), .string("all")]),
@@ -59,19 +67,20 @@
           arguments["query"],
           allowed: [
             "kind", "scope", "text", "completion", "archive", "categories", "tags", "lists",
-            "duration", "scheduled", "hasAddress", "hasLinks", "sort",
+            "duration", "scheduled", "hasAddress", "hasLinks", "sort", "rowPresentation",
           ], required: ["kind", "scope"], path: "/query")
         guard query["kind"] == .string("items") else {
           throw AdmissionFailure(
             code: "invalidInput", path: "/query/kind",
             message: "This prototype supports Item queries.")
         }
-        if let unsupported = Set(query.keys).subtracting(["kind", "scope", "completion", "archive"])
-          .sorted().first
-        {
+        if let unsupported = Set(query.keys).subtracting([
+          "kind", "scope", "completion", "archive", "rowPresentation",
+        ])
+        .sorted().first {
           throw AdmissionFailure(
             code: "unavailable", path: "/query/" + unsupported,
-            message: "This query slice supports scope, completion and archive only.")
+            message: "This query slice supports scope, completion, archive and row presentation.")
         }
         let scope = try object(
           query["scope"], allowed: ["kind"], required: ["kind"], path: "/query/scope")
@@ -103,31 +112,24 @@
             code: "invalidInput", path: "/query/archive",
             message: "Expected active, archived or all.")
         }
+        let presentation = try rowPresentation(query["rowPresentation"])
         let queried = await planner.query(
           PlannerQuery(
             session: session,
             request: .items(
-              PlannerItemQuery(scope: nativeScope, completion: completion, archive: archive))))
+              PlannerItemQuery(
+                scope: nativeScope, completion: completion, archive: archive,
+                rowPresentation: presentation))))
         switch queried {
         case .failed(let reason):
-          return PlannerMCPSourceTool.failure(
-            code: reason.code, message: reason.message, path: reason.propertyPath)
+          return PlannerMCPSourceTool.failure(reason)
         case .snapshot(let snapshot):
           let value = Value.object([
             "formatVersion": .int(1), "generation": .string(snapshot.generation.uuidString),
             "matchingCount": .string(String(snapshot.matchingCount)),
-            "rows": .array(
-              snapshot.rows.map { row in
-                switch row {
-                case .source(let source):
-                  return .object([
-                    "kind": .string("source"),
-                    "source": .object([
-                      "kind": .string(source.kind.rawValue), "id": .string(source.id.uuidString),
-                    ]),
-                  ])
-                }
-              }),
+            "rows": .array(snapshot.rows.map(PlannerMCPRowValue.identity)),
+            "rowPresentation": snapshot.rowPresentation.map(PlannerMCPRowValue.presentation)
+              ?? .null,
             "unresolvedReferences": .array([]), "progress": .array([]),
           ])
           let serialized = try JSONEncoder().encode(value)
@@ -144,6 +146,35 @@
         return PlannerMCPSourceTool.failure(
           code: "unavailable", message: "The Planner query could not be completed.")
       }
+    }
+
+    private static func rowPresentation(_ value: Value?) throws -> PlannerRowPresentationContext? {
+      guard let value else { return nil }
+      let fields = try object(
+        value, allowed: ["referenceInstant", "displayTimeZone"],
+        required: ["referenceInstant", "displayTimeZone"], path: "/query/rowPresentation")
+      let referenceInstant: Double
+      switch fields["referenceInstant"] {
+      case .double(let number): referenceInstant = number
+      case .int(let number): referenceInstant = Double(number)
+      default:
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/rowPresentation/referenceInstant",
+          message: "Expected a finite Foundation reference-date number.")
+      }
+      guard referenceInstant.isFinite else {
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/rowPresentation/referenceInstant",
+          message: "Expected a finite Foundation reference-date number.")
+      }
+      guard case .string(let displayTimeZone) = fields["displayTimeZone"] else {
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/rowPresentation/displayTimeZone",
+          message: "Expected a timezone identifier.")
+      }
+      return PlannerRowPresentationContext(
+        referenceInstant: Date(timeIntervalSinceReferenceDate: referenceInstant),
+        displayTimeZone: displayTimeZone)
     }
 
     private static func object(
