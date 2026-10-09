@@ -4,6 +4,8 @@ Work for [Navigation prototype](https://github.com/dvcol/planner/issues/14) on `
 
 The latest qualified source and screenshots are in [Native chrome, cumulative filters and inline maps](#native-chrome-cumulative-filters-and-inline-maps). Earlier sections preserve the outcomes and presentation of previous revisions.
 
+After that runtime qualification, the human accepted Q38 A, Q39 B, Q40 A, Q41 A and Q42 A. The [accepted row decisions](../navigation-prototype-review.md#accepted-row-decisions-and-their-consequences) and [follow-on contract review](../navigation-row-contract-review.md) record their behavior, remaining questions and required tests. Those documentation changes add no runtime qualification; the published read-only source/results remain unchanged.
+
 ## Starting state and first goal
 
 The inherited app was a placeholder. The first slice opens Lists → Tokyo Food, shows its unfiltered 1 of 2 progress under the ordinary Todo/Active filter, switches both filters to All and opens Nezu Museum's membership 401. Its detail must retain that appearance and show Local Done / Global Todo. Opening its source explicitly shows Item 101 in global context. Tokyo Weekend retains 0 of 3 progress.
@@ -178,7 +180,7 @@ Strict affected Swift formatting, app/UI-runner compilation through these test r
 
 The Mac launcher now requests a fresh instance with `open -n` so a running older process cannot conceal the rebuilt UI. `./scripts/navigation-prototype.sh mac` builds and opens the current source, returns zero, and a new standalone process was verified. It leaves existing instances alone. [Launcher evidence](evidence/navigation/chrome-mac-launcher.json) records the script hash and limits; raw output is `/private/tmp/PlannerNavigationChromeLaunch.log`.
 
-Planner content remains a read-only fixture projection. Q38-Q42 still await answers for row ordering/drop/date/website/address behavior. Rich metadata, completion writes, drag-and-drop and preview enrichment are not established by these checks. Full-graph persistence, physical/signing/sync/Share, broader keyboard/accessibility, orientation/resizing, long-list performance and final human review remain required. This revision records the requested presentation corrections without closing Navigation prototype.
+Planner content remains a read-only fixture projection. At this qualification, Q38-Q42 still awaited answers for row ordering/drop/date/website/address behavior; the later accepted choices are linked at the top of this report. Rich metadata, completion writes, drag-and-drop and preview enrichment are not established by these checks. Full-graph persistence, physical/signing/sync/Share, broader keyboard/accessibility, orientation/resizing, long-list performance and final human review remain required. This revision records the requested presentation corrections without closing Navigation prototype.
 
 ## Remaining gates
 
