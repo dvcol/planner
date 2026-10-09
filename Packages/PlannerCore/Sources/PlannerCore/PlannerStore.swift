@@ -157,7 +157,10 @@ struct ItemSnapshot {
       fieldHashes: input.fieldHashes(
         datasetId: datasetId, itemId: id, lifetimeId: lifetimeId, links: links.map(\.read)),
       state: PlannerSourceState(globalDone: globalDone, archived: archived), labels: [],
-      references: schedules.map(\.reference)
+      references: links.map { .ownedLink(id: $0.id, owner: reference) }
+        + schedules.sorted { $0.id.uuidString < $1.id.uuidString }.map {
+          .schedule(id: $0.id, source: reference)
+        }
     )
   }
 }
