@@ -1,0 +1,32 @@
+{
+  "sourceCommit": "90dd8cf0bdc0ed0e044374e84250e41874ed26ea",
+  "date": "2026-10-09",
+  "mac": {
+    "scheme": "PlannerNavigation",
+    "action": "build-for-testing",
+    "configuration": "Debug",
+    "architecture": "arm64",
+    "freshCommittedArchive": true,
+    "freshBuildProducts": true,
+    "appAndUITestRunnerBuilt": true,
+    "uiJourneyExecuted": false,
+    "result": "Passed"
+  },
+  "iosDevice": {
+    "scheme": "PlannerNavigation",
+    "action": "build",
+    "configuration": "Debug",
+    "architecture": "arm64",
+    "sdk": "iphoneos27.0",
+    "bundleIdentifier": "org.example.PlannerMCPPrototype",
+    "codeSigningAllowed": false,
+    "appUnsigned": true,
+    "installedOnPhysicalDevice": false,
+    "result": "Passed"
+  },
+  "limits": [
+    "Native Mac interactions and accessibility remain unqualified.",
+    "The unsigned iOS app requires selected-team provisioning before physical installation.",
+    "No CloudKit or Share entitlement or execution is proven."
+  ]
+}
