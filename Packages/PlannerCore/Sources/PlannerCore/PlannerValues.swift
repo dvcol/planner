@@ -33,12 +33,28 @@ public struct PlannerFailure: Error, Sendable, Equatable {
   public let code: String
   public let propertyPath: String?
   public let message: String
+  public let details: PlannerFailureDetails?
 
-  init(_ code: String, _ message: String, propertyPath: String? = nil) {
+  init(
+    _ code: String, _ message: String, propertyPath: String? = nil,
+    details: PlannerFailureDetails? = nil
+  ) {
     self.code = code
     self.propertyPath = propertyPath
     self.message = message
+    self.details = details
   }
+}
+
+public enum PlannerItemFieldValue: Sendable, Equatable {
+  case optionalString(String?)
+}
+
+public enum PlannerFailureDetails: Sendable, Equatable {
+  case staleEdit(
+    conflictingFields: [PlannerItemField], currentValues: [PlannerItemField: PlannerItemFieldValue],
+    currentFieldHashes: [PlannerItemField: PlannerFieldHash]
+  )
 }
 
 public enum PlannerBootstrapResult: Sendable {
@@ -138,6 +154,46 @@ public struct PlannerItemContentInput: Sendable, Equatable {
 
 public enum PlannerCommand: Sendable {
   case createItem(content: PlannerItemContentInput)
+  case editItem(
+    sourceId: UUID, changes: PlannerItemChanges,
+    expectedFieldHashes: [PlannerItemField: PlannerFieldHash])
+}
+
+public enum PlannerFieldChange<Value: Sendable>: Sendable {
+  case unchanged
+  case set(Value)
+  case clear
+}
+
+public struct PlannerItemChanges: Sendable {
+  public let title: PlannerFieldChange<String>
+  public let subtitle: PlannerFieldChange<String>
+  public let notes: PlannerFieldChange<String>
+  public let location: PlannerFieldChange<PlannerOwnedLocation>
+  public let estimate: PlannerFieldChange<PlannerEstimate>
+  public let links: PlannerFieldChange<[PlannerLinkInput]>
+  public let categoryIds: PlannerFieldChange<Set<UUID>>
+  public let tagIds: PlannerFieldChange<Set<UUID>>
+
+  public init(
+    title: PlannerFieldChange<String> = .unchanged,
+    subtitle: PlannerFieldChange<String> = .unchanged,
+    notes: PlannerFieldChange<String> = .unchanged,
+    location: PlannerFieldChange<PlannerOwnedLocation> = .unchanged,
+    estimate: PlannerFieldChange<PlannerEstimate> = .unchanged,
+    links: PlannerFieldChange<[PlannerLinkInput]> = .unchanged,
+    categoryIds: PlannerFieldChange<Set<UUID>> = .unchanged,
+    tagIds: PlannerFieldChange<Set<UUID>> = .unchanged
+  ) {
+    self.title = title
+    self.subtitle = subtitle
+    self.notes = notes
+    self.location = location
+    self.estimate = estimate
+    self.links = links
+    self.categoryIds = categoryIds
+    self.tagIds = tagIds
+  }
 }
 
 public struct PlannerReviewToken: Sendable {

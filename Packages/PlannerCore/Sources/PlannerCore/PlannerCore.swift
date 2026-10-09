@@ -86,6 +86,12 @@ public actor Planner {
         let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
         let envelope = try archive.latest()
         switch operation.command {
+        case .editItem(let sourceId, let changes, let expectedFieldHashes):
+          return try executeNotesEdit(
+            operation, sourceId: sourceId, changes: changes, hashes: expectedFieldHashes,
+            identity: identity, context: context, archive: archive, receipts: receipts,
+            envelope: envelope
+          )
         case .createItem(let content):
           try content.validate()
           let digest = content.payloadDigest(
@@ -244,6 +250,127 @@ public actor Planner {
           "unavailable", "Selecting prepared proposals is not implemented by this first fixture.")
       }
     } catch { return .failed(failure(error, code: "readUnavailable")) }
+  }
+
+  private func executeNotesEdit(
+    _ operation: PlannerOperation, sourceId: UUID, changes: PlannerItemChanges,
+    hashes: [PlannerItemField: PlannerFieldHash], identity: PlannerStoreIdentity,
+    context: ModelContext, archive: PlannerRecoveryArchive,
+    receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    let notes = try changes.validatedNotesChange()
+    guard let expectedHash = hashes[.notes] else {
+      throw PlannerFailure(
+        "invalidInput", "A notes edit requires its prior field hash.",
+        propertyPath: "/command/expectedFieldHashes/notes")
+    }
+    for (field, hash) in hashes {
+      let prefix = "sha256-v1:"
+      let suffix = hash.value.dropFirst(prefix.count)
+      guard hash.value.hasPrefix(prefix), suffix.count == 64,
+        suffix.allSatisfy({ "0123456789abcdef".contains($0) })
+      else {
+        throw PlannerFailure(
+          "invalidInput", "A supplied field hash has an unsupported format.",
+          propertyPath: "/command/expectedFieldHashes/\(field.rawValue)")
+      }
+    }
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let stored = try receipt.evidence()
+      let digest = changes.notesPayloadDigest(
+        sourceId: sourceId, notes: notes, expectedHash: expectedHash,
+        identity: identity, bindings: stored.bindings
+      )
+      guard receipt.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "This operation identity already describes a different edit.")
+      }
+      return appliedResult(
+        operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
+        envelope: envelope)
+    }
+    let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV1.Item>())
+    let matches = items.filter { $0.id == sourceId }
+    guard matches.count == 1, let item = matches.first else {
+      throw PlannerFailure("missingReference", "The selected Item is missing or unresolved.")
+    }
+    let before = try item.value()
+    let bindings = [
+      PlannerBoundIdentity(kind: "item", id: before.id, lifetimeId: before.lifetimeId)
+    ]
+    let digest = changes.notesPayloadDigest(
+      sourceId: sourceId, notes: notes, expectedHash: expectedHash, identity: identity,
+      bindings: bindings
+    )
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes a different edit.")
+      }
+      return PlannerOperationResult(
+        operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    let currentHash = before.input.fieldHashes(
+      datasetId: identity.datasetId, itemId: before.id, lifetimeId: before.lifetimeId)[.notes]
+    guard currentHash == expectedHash else {
+      let currentHashes = currentHash.map { [PlannerItemField.notes: $0] } ?? [:]
+      throw PlannerFailure(
+        "staleEdit", "Notes changed since the supplied read.",
+        details: .staleEdit(
+          conflictingFields: [.notes], currentValues: [.notes: .optionalString(before.input.notes)],
+          currentFieldHashes: currentHashes
+        ))
+    }
+    let now = Date()
+    let updatedInput = PlannerItemContentInput(
+      title: before.input.title, subtitle: before.input.subtitle, notes: notes,
+      location: before.input.location, estimate: before.input.estimate
+    )
+    let after = ItemSnapshot(
+      id: before.id, lifetimeId: before.lifetimeId, createdAt: before.createdAt, updatedAt: now,
+      input: updatedInput, globalDone: before.globalDone, archived: before.archived
+    )
+    let snapshots = try items.map { record in
+      if record.id == sourceId { return after }
+      return try record.value()
+    }
+    let result = PlannerAppliedResult(generated: [], affected: [before.reference])
+    let proposal = RecoveryPreparedProposal(
+      proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
+      ownershipBinding: identity.ownershipBinding,
+      proposedBackup: ItemOnlyPortableBackup(items: snapshots),
+      payloadDigest: digest, evidence: "preparedUnverified"
+    )
+    try archive.prepare(proposal)
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result, bindings: bindings)
+    item.notes = notes
+    item.updatedAt = now
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The complete notes edit was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(items: snapshots, receipts: receipts + [receipt])
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
   }
 
   private func appliedResult(

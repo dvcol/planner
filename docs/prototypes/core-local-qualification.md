@@ -10,7 +10,7 @@ The executable red discovered and ran one test. It failed at explicit bootstrap 
 
 The prototype uses private defaulted/optional SwiftData models under VersionedSchema 1 and its migration plan. A stable NSFileCoordinator control URL coordinates participating writers. Every action opens a fresh context with autosave disabled, validates the issued dataset session, preserves prepared evidence independently, then commits Item plus operation receipt together. A completed envelope is published separately before the result reports complete recovery. Database-only evidence cannot report completed recovery.
 
-The independent archive contains data-only portable bytes with all declared root groups present, their exact-byte SHA-256 digest, ownership/checkpoint binding and minimal internal operation evidence. This initial projection supports Items only. Other graph groups must be empty during validation, and nonempty link/label creation returns unavailable rather than dropping data. Public declarations currently cover this slice; full source/read/result unions, portable graph types, commands and adapter serialization remain future work. Failure/interruption, competing writers and hostile-file cases still require their own tests.
+The independent archive contains data-only portable bytes with all declared root groups present, their exact-byte SHA-256 digest, ownership/checkpoint binding and minimal internal operation evidence. This initial projection supports Items only. Other graph groups must be empty during validation, and nonempty link/label creation returns unavailable rather than dropping data. Public declarations currently cover this slice; full source/read/result unions, portable graph types, additional commands and adapter serialization remain future work. Failure/interruption, competing writers and hostile-file cases still require their own tests.
 
 ## Replay and validation qualification
 
@@ -21,6 +21,18 @@ Three additional scenarios were added and executed one at a time through the sam
 - A new create with a whitespace-only title rejects as invalidInput at `/command/content/title`. Hotel's identity/content, checkpoint and empty prepared-proposal catalog remain unchanged.
 
 The final qualification run discovers and executes four test functions, all passing with no skips or expected failures. The [actual summaries](evidence/mcp/core-creation-qualification.json) preserve the sequential two-, three- and four-test runs. Their result bundles are `/private/tmp/PlannerCoreItemReplayQualification.xcresult`, `/private/tmp/PlannerCoreChangedReplayQualification.xcresult` and `/private/tmp/PlannerCoreInvalidCreationQualification.xcresult`.
+
+## Guarded notes edit
+
+The next vertical slice adds the accepted typed Item changes and guarded edit case. Its executable red runs one test and rejects the edit as unimplemented. Its green runs that test plus the four existing creation checks, all passing. Hotel's notes change from Original notes to Friday booking while its identity, creation date, title hash, empty references and Todo/Active flags survive reopening. Operation status and a new independently decoded checkpoint retain the edited content.
+
+Two subsequent qualification scenarios passed the green implementation on their first execution. A Monday booking edit using the old Original notes hash rejects as staleEdit, identifying the current Friday booking and current notes hash, while retaining the source timestamp/hashes/checkpoint. Replaying the acknowledged Friday edit after a later Saturday edit returns Friday's original result/checkpoint without replacing Saturday or advancing recovery. Echoing known hashes for unchanged fields does not alter that replay payload.
+
+This slice supports notes Set/Clear only; other changed fields return unavailable. It performs the changed-field comparison in the same coordinated writer section as the complete action. Private receipt evidence now retains the original resolved binding for replay without changing the persisted VersionedSchema 1 attributes. The original creation-only receipt representation remains readable. This is not a historical-schema migration or account-reset replay proof.
+
+The [actual notes-edit evidence](evidence/mcp/core-notes-edit.json) records the one-test red, five-test green, six- and seven-test qualification runs, five-test package run, thirteen-test affected app regression and generic iOS test-bundle compilation. Each native run has zero skips or expected failures. Source lint passed. No iOS runtime, fixed-context independent hash-vector, full compound-edit, competing-writer or physical CloudKit result is claimed.
+
+Notes result bundles are `/private/tmp/PlannerCoreNotesEditRed.xcresult`, `/private/tmp/PlannerCoreNotesEditGreen.xcresult`, `/private/tmp/PlannerCoreStaleNotesQualification.xcresult` and `/private/tmp/PlannerCoreNotesReplayQualification.xcresult`. Matching logs record builds and execution. The affected app log retains metadata-extraction and com.apple.linkd.autoShortcut diagnostics; its thirteen transport tests pass, and this evidence does not qualify App Intents or dismiss those diagnostics as pre-existing.
 
 ## Reproduction
 

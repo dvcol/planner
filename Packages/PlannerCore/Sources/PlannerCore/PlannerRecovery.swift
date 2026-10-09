@@ -153,8 +153,7 @@ struct RecoveryReceipt: Codable {
   let checkpointGeneration: String?
 
   init(_ receipt: PlannerSchemaV1.Receipt, checkpoint: Int64?) throws {
-    guard let operationId = receipt.operationId, let datasetId = receipt.datasetId,
-      let resultData = receipt.resultData
+    guard let operationId = receipt.operationId, let datasetId = receipt.datasetId
     else {
       throw PlannerFailure(
         "readUnavailable", "Operation evidence has unresolved identity or result.")
@@ -163,7 +162,7 @@ struct RecoveryReceipt: Codable {
     self.datasetId = datasetId
     payloadDigest = receipt.payloadDigest
     ownershipBinding = receipt.ownershipBinding
-    result = try JSONDecoder().decode(PlannerAppliedResult.self, from: resultData)
+    result = try receipt.evidence().result
     commitState = "applied"
     checkpointGeneration = checkpoint.map(String.init)
   }

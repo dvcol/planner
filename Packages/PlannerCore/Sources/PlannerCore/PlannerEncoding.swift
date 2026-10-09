@@ -156,3 +156,44 @@ extension PlannerEstimate {
     .record(["minutes": .integer(minutes), "displayUnit": .string(displayUnit.rawValue)])
   }
 }
+
+extension PlannerFieldChange {
+  var isUnchanged: Bool {
+    if case .unchanged = self { return true }
+    return false
+  }
+}
+
+extension PlannerItemChanges {
+  func validatedNotesChange() throws -> String? {
+    guard title.isUnchanged, subtitle.isUnchanged, location.isUnchanged, estimate.isUnchanged,
+      links.isUnchanged, categoryIds.isUnchanged, tagIds.isUnchanged
+    else { throw PlannerFailure("unavailable", "This edit fixture currently supports notes only.") }
+    switch notes {
+    case .unchanged:
+      throw PlannerFailure(
+        "invalidInput", "An Item edit must contain at least one changed field.",
+        propertyPath: "/command/changes")
+    case .set(let value): return value
+    case .clear: return nil
+    }
+  }
+
+  func notesPayloadDigest(
+    sourceId: UUID, notes: String?, expectedHash: PlannerFieldHash,
+    identity: PlannerStoreIdentity, bindings: [PlannerBoundIdentity]
+  ) -> String {
+    let command = PlannerCanonicalValue.record([
+      "type": .string("editItem"), "sourceId": .identity(sourceId),
+      "changes": .record(["notes": .optional(notes.map { .string($0) })]),
+      "expectedFieldHashes": .record(["notes": .string(expectedHash.value)]),
+    ])
+    let value = PlannerCanonicalValue.record([
+      "command": command, "datasetId": .identity(identity.datasetId),
+      "ownershipBinding": .string(identity.ownershipBinding),
+      "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
+    ])
+    let bytes = Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded()
+    return plannerDigest(bytes, prefix: "sha256-payload-v1:")
+  }
+}
