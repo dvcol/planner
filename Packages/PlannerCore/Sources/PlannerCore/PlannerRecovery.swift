@@ -85,7 +85,7 @@ struct PortableItemRecord: Codable {
   }
 }
 
-/// This slice supports Items, their owned links and direct timed Schedules and minimal Schedule deletion metadata. Other graph groups must be empty.
+/// This slice supports Items, owned links, direct timed/all-day Schedules and minimal Schedule deletion metadata. Other graph groups must be empty.
 struct ItemOnlyPortableBackup: Codable {
   let format: String
   let formatVersion: Int

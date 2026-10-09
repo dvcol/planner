@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create an Item with owned location and HTTP(S) bookmarks, edit its title/notes/location/links, complete/reopen or archive/unarchive it, and create, edit, change planning zones or remove selected direct timed appointments through the local Planner prototype.",
+        "Create Items with owned location and HTTP(S) bookmarks, edit Items, complete/reopen or archive/unarchive Items, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -164,7 +164,31 @@
             "id": .object(["type": .string("string"), "format": .string("uuid")]),
           ]),
         ]),
-        "form": timedFormSchema,
+        "form": scheduleFormSchema,
+      ]),
+    ])
+
+    private static let scheduleFormSchema = Value.object([
+      "oneOf": .array([timedFormSchema, allDayFormSchema])
+    ])
+
+    private static let civilDateSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("year"), .string("month"), .string("day")]),
+      "properties": .object([
+        "year": .object(["type": .string("integer")]),
+        "month": .object(["type": .string("integer")]),
+        "day": .object(["type": .string("integer")]),
+      ]),
+    ])
+
+    private static let allDayFormSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("kind"), .string("start"), .string("end")]),
+      "properties": .object([
+        "kind": .object(["type": .string("string"), "const": .string("allDay")]),
+        "start": civilDateSchema,
+        "end": .object(["oneOf": .array([civilDateSchema, .object(["type": .string("null")])])]),
       ]),
     ])
 
@@ -191,7 +215,8 @@
         "scheduleId": .object(["type": .string("string"), "format": .string("uuid")]),
         "changes": .object([
           "type": .string("object"), "additionalProperties": .bool(false),
-          "required": .array([.string("form")]), "properties": .object(["form": timedFormSchema]),
+          "required": .array([.string("form")]),
+          "properties": .object(["form": scheduleFormSchema]),
         ]),
         "expectedFieldHashes": scheduleHashesSchema,
       ]),
@@ -383,8 +408,16 @@
         value, allowed: ["kind", "start", "end", "planningTimeZone"],
         required: ["kind"], path: path)
       if form["kind"] == .string("allDay") {
-        throw AdmissionFailure(
-          "unavailable", path + "/kind", "All-day forms are not implemented by this slice.")
+        _ = try object(
+          value, allowed: ["kind", "start", "end"], required: ["kind", "start", "end"], path: path)
+        let start = try civilDate(form["start"], path: path + "/start")
+        let end: PlannerCivilDate?
+        if form["end"] == .null {
+          end = nil
+        } else {
+          end = try civilDate(form["end"], path: path + "/end")
+        }
+        return .allDay(start: start, end: end)
       }
       guard form["kind"] == .string("timed") else {
         throw AdmissionFailure("invalidInput", path + "/kind", "Expected a Schedule form kind.")
@@ -404,6 +437,22 @@
           "invalidInput", path + "/planningTimeZone", "Expected a planning timezone String.")
       }
       return .timed(start: start, end: end, planningTimeZone: planningTimeZone)
+    }
+
+    private static func civilDate(_ value: Value?, path: String) throws -> PlannerCivilDate {
+      let date = try object(
+        value, allowed: ["year", "month", "day"], required: ["year", "month", "day"], path: path)
+      return PlannerCivilDate(
+        year: try civilDateComponent(date["year"], path: path + "/year"),
+        month: try civilDateComponent(date["month"], path: path + "/month"),
+        day: try civilDateComponent(date["day"], path: path + "/day"))
+    }
+
+    private static func civilDateComponent(_ value: Value?, path: String) throws -> Int {
+      guard case .int(let component) = value else {
+        throw AdmissionFailure("invalidInput", path, "Expected an integer Gregorian component.")
+      }
+      return component
     }
 
     private static func scheduleInstant(_ value: Value?, path: String) throws -> Date {

@@ -837,7 +837,7 @@ struct RowRoutingTests {
       ),
       (
         validCommand.merging(["changes": ["form": ["kind": "allDay"]]]) { _, incoming in incoming },
-        "unavailable", "/command/changes/form/kind"
+        "invalidInput", "/command/changes/form/end"
       ),
       (
         validCommand.merging(["expectedFieldHashes": [:]]) { _, incoming in incoming },
@@ -1402,8 +1402,8 @@ struct RowRoutingTests {
           ], "unknownField", "/command/form/unexpected~1~0"
         ),
         (
-          ["kind": "allDay", "start": ["year": 2026, "month": 10, "day": 9], "end": NSNull()],
-          "unavailable", "/command/form/kind"
+          ["kind": "allDay", "start": ["year": 2023, "month": 2, "day": 29], "end": NSNull()],
+          "invalidInput", "/command/form/start"
         ),
       ]
       var invalidCommands: [([String: Any], String, String)] = invalidForms.map {
