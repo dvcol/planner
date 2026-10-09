@@ -124,8 +124,8 @@ struct RecoveryFailureTests {
         "The original acknowledged recovery snapshot must remain independently readable.")
       return
     }
-    #expect(selection.decodedBackup.backup.sources.count == 1)
-    let recovered = try #require(selection.decodedBackup.backup.sources.first)
+    #expect(selection.decodedBackup.backup.items.count == 1)
+    let recovered = try #require(selection.decodedBackup.backup.items.first)
     #expect(recovered.id == source.id)
     #expect(recovered.content.title == "Hotel")
     #expect(recovered.content.notes == "Original notes")

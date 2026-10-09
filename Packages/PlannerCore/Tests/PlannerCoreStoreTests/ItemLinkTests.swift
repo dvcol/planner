@@ -219,7 +219,7 @@ struct ItemLinkTests {
       #expect(checkpoint == Int64(index + 2))
       #expect(source.content.links.map(\.linkId) == [linkId])
       #expect(source.fieldHashes[.links] == original.fieldHashes[.links])
-      let recovered = try #require(recovery.decodedBackup.backup.sources.first)
+      let recovered = try #require(recovery.decodedBackup.backup.items.first)
       #expect(recovered.content.links.map(\.linkId) == [linkId])
       #expect(recovered.content.links.first?.originalUrl == "https://example.com/menu")
       #expect(recovered.globalDone)
@@ -317,8 +317,8 @@ struct ItemLinkTests {
       Issue.record("The independent recovery checkpoint must include owned links.")
       return
     }
-    #expect(recovery.decodedBackup.backup.sources.count == 1)
-    let recovered = try #require(recovery.decodedBackup.backup.sources.first)
+    #expect(recovery.decodedBackup.backup.items.count == 1)
+    let recovered = try #require(recovery.decodedBackup.backup.items.first)
     #expect(recovered.id == item.id)
     #expect(recovered.content.links.map(\.linkId) == linkIds)
     #expect(recovered.content.links.map(\.originalUrl) == content.links.map(\.originalUrl))

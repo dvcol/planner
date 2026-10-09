@@ -106,7 +106,7 @@ struct ItemReferenceReadTests {
     #expect(current.references == [.ownedLink(id: menu.linkId, owner: item)] + expectedSchedules)
     #expect(current.content.links == [menu])
     #expect(current.content.notes == "Keep")
-    #expect(recovery.decodedBackup.backup.sources.first?.content.links == [menu])
+    #expect(recovery.decodedBackup.backup.items.first?.content.links == [menu])
     #expect(recovery.decodedBackup.backup.schedules.count == 2)
   }
 }

@@ -129,7 +129,7 @@ enum PlannerMigrationPlan: SchemaMigrationPlan {
   static var schemas: [any VersionedSchema.Type] {
     [
       PlannerSchemaV1.self, PlannerSchemaV2.self, PlannerSchemaV3.self, PlannerSchemaV4.self,
-      PlannerSchemaV5.self,
+      PlannerSchemaV5.self, PlannerSchemaV6.self,
     ]
   }
   static var stages: [MigrationStage] {
@@ -138,6 +138,7 @@ enum PlannerMigrationPlan: SchemaMigrationPlan {
       .lightweight(fromVersion: PlannerSchemaV2.self, toVersion: PlannerSchemaV3.self),
       .lightweight(fromVersion: PlannerSchemaV3.self, toVersion: PlannerSchemaV4.self),
       .lightweight(fromVersion: PlannerSchemaV4.self, toVersion: PlannerSchemaV5.self),
+      .lightweight(fromVersion: PlannerSchemaV5.self, toVersion: PlannerSchemaV6.self),
     ]
   }
 }

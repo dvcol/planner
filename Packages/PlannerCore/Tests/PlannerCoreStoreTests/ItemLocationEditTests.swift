@@ -288,7 +288,7 @@ struct ItemLocationEditTests {
       Issue.record("Independent recovery must retain the changed location and unrelated values.")
       return
     }
-    let recovered = try #require(recovery.decodedBackup.backup.sources.first)
+    let recovered = try #require(recovery.decodedBackup.backup.items.first)
     #expect(recovered.content.location == changedLocation)
     #expect(recovered.content.notes == "Monday booking")
     #expect(recovered.content.links.map(\.linkId) == original.content.links.map(\.linkId))

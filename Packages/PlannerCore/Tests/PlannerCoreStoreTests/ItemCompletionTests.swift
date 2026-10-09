@@ -266,7 +266,7 @@ struct ItemCompletionTests {
       Issue.record("The completed checkpoint must decode independently.")
       return
     }
-    let recovered = try #require(selection.decodedBackup.backup.sources.first)
+    let recovered = try #require(selection.decodedBackup.backup.items.first)
     #expect(recovered.id == source.id)
     #expect(recovered.globalDone == true)
     #expect(recovered.archived == true)
