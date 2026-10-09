@@ -99,7 +99,7 @@ The JSON example above uses the Original notes vector. A Friday booking current 
 
 - [x] Q9/Q10/Q27 behavior and A21/A22 Core ownership/result semantics are accepted.
 - [x] Q33 A accepts this concrete read/edit/hash declaration as part of the complete contract, including the [full content catalog](content-and-reader-review.md), [adapter contract](adapter-contract.md) and [portable/native recovery forms](portable-data-contract.md).
-- [ ] Agree the prototype's real storage configuration and affected native test/build commands before implementation.
+- [x] Q36 A accepts the prototype's [real storage configuration and affected native test/build commands](prototypes/core-local-fixture-review.md); executable implementation evidence remains required.
 
 ## Required /tdd and other evidence
 
