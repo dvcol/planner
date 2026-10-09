@@ -132,6 +132,10 @@ public actor Planner {
             archive: archive, receipts: receipts, envelope: envelope)
         case .setCompletion(let scope, let done):
           switch scope {
+          case .appearance(let appearance):
+            return try executeMembershipCompletion(
+              operation, appearance: appearance, done: done, identity: identity,
+              context: context, archive: archive, receipts: receipts, envelope: envelope)
           case .globalItem(let itemId):
             return try executeItemStateChange(
               operation, source: PlannerEntityReference(kind: .item, id: itemId),
@@ -1249,6 +1253,154 @@ public actor Planner {
         outcome: .applied(
           result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
     }
+  }
+
+  private func executeMembershipCompletion(
+    _ operation: PlannerOperation, appearance: PlannerAppearance, done: Bool,
+    identity: PlannerStoreIdentity, context: ModelContext, archive: PlannerRecoveryArchive,
+    receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let stored = try receipt.evidence()
+      let digest = membershipCompletionDigest(
+        appearance: appearance, done: done, identity: identity, bindings: stored.bindings)
+      guard receipt.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "This operation identity describes another completion action."
+        )
+      }
+      return appliedResult(
+        operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
+        envelope: envelope)
+    }
+    let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    let listId: UUID
+    let membershipId: UUID
+    switch appearance {
+    case .listMembership(let ownerIdentifier, let associationIdentifier):
+      listId = ownerIdentifier
+      membershipId = associationIdentifier
+    }
+    var descriptor = FetchDescriptor<PlannerSchemaV7.Membership>(
+      predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
+    descriptor.fetchLimit = 2
+    let selected = try context.fetch(descriptor)
+    guard selected.count == 1, let record = selected.first else {
+      throw PlannerFailure(
+        "missingReference", "The selected List appearance is missing or unresolved.")
+    }
+    let before = try record.value()
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>())
+    let lists = try context.fetch(FetchDescriptor<PlannerSchemaV7.List>())
+    let owners = lists.filter { $0.id == before.list.id && $0.lifetimeId == before.list.lifetimeId }
+    let sources = items.filter {
+      $0.id == before.item.id && $0.lifetimeId == before.item.lifetimeId
+    }
+    guard owners.count == 1, let owner = owners.first, sources.count == 1 else {
+      throw PlannerFailure(
+        "missingReference", "The appearance's Item or List lifetime is unresolved.")
+    }
+    let ownerSnapshot = try owner.value()
+    let bindings = [
+      PlannerBoundIdentity(kind: "membership", id: before.id, lifetimeId: before.lifetimeId),
+      before.list, before.item,
+    ]
+    let digest = membershipCompletionDigest(
+      appearance: appearance, done: done, identity: identity, bindings: bindings)
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another completion action.")
+      }
+      return PlannerOperationResult(
+        operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    let after = MembershipSnapshot(
+      id: before.id, lifetimeId: before.lifetimeId, list: before.list, item: before.item,
+      rank: before.rank, localDone: done)
+    let memberships = try membershipSnapshots(context).map { snapshot in
+      if snapshot.id == before.id { return after }
+      return snapshot
+    }
+    let itemSnapshots = try items.map { try $0.value() }
+    let updatedAt = done == before.localDone ? ownerSnapshot.updatedAt : Date()
+    let listSnapshots = try lists.map { list in
+      if list.id != before.list.id { return try list.value() }
+      return ListSnapshot(
+        id: ownerSnapshot.id, lifetimeId: ownerSnapshot.lifetimeId,
+        createdAt: ownerSnapshot.createdAt, updatedAt: updatedAt,
+        content: ownerSnapshot.content, archived: ownerSnapshot.archived)
+    }
+    let markers = try deletionMarkers(context)
+    let result = PlannerAppliedResult(
+      generatedIdentities: [],
+      affectedIdentities: [.reference(before.reference), .source(ownerSnapshot.reference)])
+    try archive.prepare(
+      RecoveryPreparedProposal(
+        proposalId: UUID(), originalOperationId: operation.operationId,
+        datasetId: identity.datasetId,
+        ownershipBinding: identity.ownershipBinding,
+        proposedBackup: PlannerDataSnapshot(
+          items: itemSnapshots, lists: listSnapshots, memberships: memberships,
+          deletionMarkers: markers),
+        payloadDigest: digest, evidence: "preparedUnverified"))
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result, bindings: bindings)
+    record.localDone = done
+    owner.updatedAt = updatedAt
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The complete local completion action was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(
+        items: itemSnapshots, lists: listSnapshots, memberships: memberships,
+        deletionMarkers: markers, receipts: receipts + [receipt])
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
+  }
+
+  private func membershipCompletionDigest(
+    appearance: PlannerAppearance, done: Bool, identity: PlannerStoreIdentity,
+    bindings: [PlannerBoundIdentity]
+  ) -> String {
+    let appearanceValue: PlannerCanonicalValue
+    switch appearance {
+    case .listMembership(let listId, let membershipId):
+      appearanceValue = .record([
+        "kind": .string("listMembership"), "listId": .identity(listId),
+        "membershipId": .identity(membershipId),
+      ])
+    }
+    let value = PlannerCanonicalValue.record([
+      "command": .record([
+        "type": .string("setCompletion"),
+        "scope": .record(["kind": .string("appearance"), "appearance": appearanceValue]),
+        "done": .boolean(done),
+      ]),
+      "datasetId": .identity(identity.datasetId),
+      "ownershipBinding": .string(identity.ownershipBinding),
+      "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
+    ])
+    return plannerDigest(
+      Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded(),
+      prefix: "sha256-payload-v1:")
   }
 
   private func membershipCreationDigest(

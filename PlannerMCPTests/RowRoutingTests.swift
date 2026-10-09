@@ -2580,7 +2580,7 @@ struct RowRoutingTests {
               "listId": "00000000-0000-4000-8000-000000000201",
               "membershipId": "00000000-0000-4000-8000-000000000401",
             ],
-          ], "unavailable", "/command/scope/kind"
+          ], "missingReference", ""
         ),
         (
           "scope",
@@ -2607,7 +2607,11 @@ struct RowRoutingTests {
         #expect(rejected["operationId"] as? String == operationIdentifier.uuidString)
         let reason = try #require(rejected["reason"] as? [String: Any])
         #expect(reason["code"] as? String == expected.code)
-        #expect(reason["propertyPath"] as? String == expected.path)
+        if expected.path.isEmpty {
+          #expect(reason["propertyPath"] is NSNull)
+        } else {
+          #expect(reason["propertyPath"] as? String == expected.path)
+        }
         guard
           case .noReliableEvidence = await planner.operationStatus(
             session: datasetSession, operationId: operationIdentifier)

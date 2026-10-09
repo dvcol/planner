@@ -184,6 +184,7 @@ public enum PlannerCommand: Sendable {
 
 public enum PlannerCompletionScope: Sendable {
   case globalItem(itemId: UUID)
+  case appearance(PlannerAppearance)
 }
 
 public enum PlannerFieldChange<Value: Sendable>: Sendable {
