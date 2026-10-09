@@ -1,14 +1,26 @@
 #if os(macOS)
   import Foundation
   import MCP
+  import PlannerCore
 
   actor PlannerMCPRequestHandler {
     private var credential: String?
     private let accessWindowIdentifier: UUID
+    private let dataset: (planner: PlannerCore.Planner, session: PlannerDatasetSession)?
 
     init(credential: String, accessWindowIdentifier: UUID) {
       self.credential = credential
       self.accessWindowIdentifier = accessWindowIdentifier
+      dataset = nil
+    }
+
+    init(
+      credential: String, accessWindowIdentifier: UUID,
+      planner: PlannerCore.Planner, datasetSession: PlannerDatasetSession
+    ) {
+      self.credential = credential
+      self.accessWindowIdentifier = accessWindowIdentifier
+      dataset = (planner, datasetSession)
     }
 
     func revokeAccess() {
@@ -38,7 +50,22 @@
       }
 
       let transport = StatelessHTTPServerTransport()
-      let server = Server(name: "Planner MCP prototype", version: "0.0.1")
+      var capabilities = Server.Capabilities()
+      if dataset != nil { capabilities.tools = .init() }
+      let server = Server(
+        name: "Planner MCP prototype", version: "0.0.1", capabilities: capabilities)
+      if dataset != nil {
+        await server.withMethodHandler(ListTools.self) { _ in
+          ListTools.Result(tools: [PlannerMCPSourceTool.definition])
+        }
+        await server.withMethodHandler(CallTool.self) { [weak self] parameters in
+          guard let self else {
+            return PlannerMCPSourceTool.failure(
+              code: "unavailable", message: "Planner is unavailable.")
+          }
+          return await self.callPlannerTool(parameters)
+        }
+      }
 
       do {
         try await server.start(transport: transport)
@@ -56,6 +83,15 @@
 
       responseHeaders["X-Planner-Access-Window"] = accessWindowIdentifier.uuidString
       return .data(responseData, headers: responseHeaders)
+    }
+
+    private func callPlannerTool(_ parameters: CallTool.Parameters) async -> CallTool.Result {
+      guard credential != nil, let dataset else {
+        return PlannerMCPSourceTool.failure(
+          code: "forbiddenOperation", message: "This agent access window is no longer active.")
+      }
+      return await PlannerMCPSourceTool.call(
+        parameters, planner: dataset.planner, session: dataset.session)
     }
   }
 #endif
