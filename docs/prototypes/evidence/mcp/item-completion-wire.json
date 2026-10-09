@@ -1,0 +1,237 @@
+{
+  "scope": "Global Item Complete/Reopen and exact completion-scope admission through real loopback HTTP",
+  "commandRed": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "passedTests": 3,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 1,
+    "finishTime": 1791549971.881,
+    "passedTests": 3,
+    "result": "Failed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791549961.784,
+    "statistics": [],
+    "testFailures": [
+      {
+        "failureText": "Expectation failed: tool[\"isError\"] as? Bool == false\ntool[\"isError\"] as? Bool \u2192 true",
+        "targetName": "PlannerMCPTests",
+        "testIdentifier": 1,
+        "testIdentifierString": "RowRoutingTests/completionOverHTTPUpdatesRowsAndOldReplayPreservesReopenedState()",
+        "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/completionOverHTTPUpdatesRowsAndOldReplayPreservesReopenedState()",
+        "testName": "completionOverHTTPUpdatesRowsAndOldReplayPreservesReopenedState()"
+      }
+    ],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 4
+  },
+  "commandGreen": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 4,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791550133.053,
+    "passedTests": 4,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791550126.831,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 4
+  },
+  "firstRejectionQualification": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 5,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791550298.402,
+    "passedTests": 5,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791550291.27,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 5
+  },
+  "scopeFieldsRed": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "passedTests": 4,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 1,
+    "finishTime": 1791550420.919,
+    "passedTests": 4,
+    "result": "Failed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791550407.525,
+    "statistics": [],
+    "testFailures": [
+      {
+        "failureText": "Expectation failed: reason[\"code\"] as? String == expected.code\nreason[\"code\"] as? String \u2192 \"unavailable\"\nexpected.code \u2192 \"unknownField\"",
+        "targetName": "PlannerMCPTests",
+        "testIdentifier": 1,
+        "testIdentifierString": "RowRoutingTests/invalidCompletionScopesNeverFallBackToGlobalOrRecordAppliedEvidence()",
+        "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/invalidCompletionScopesNeverFallBackToGlobalOrRecordAppliedEvidence()",
+        "testName": "invalidCompletionScopesNeverFallBackToGlobalOrRecordAppliedEvidence()"
+      }
+    ],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 5
+  },
+  "scopeFieldsGreenAndRegression": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 32,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791550491.941,
+    "passedTests": 26,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791550483.243,
+    "statistics": [
+      {
+        "subtitle": "9 test runs",
+        "title": "3 tests ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [
+      {
+        "category": "Longest Test Runs",
+        "impact": "79% of duration",
+        "text": "1 longest test run with outlier durations exceeding 1.59s (three standard deviations)"
+      }
+    ],
+    "totalTestCount": 26
+  },
+  "excludedEmptySelection": {
+    "summary": {
+      "devicesAndConfigurations": [],
+      "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+      "expectedFailures": 0,
+      "failedTests": 0,
+      "finishTime": 1791549842.53,
+      "passedTests": 0,
+      "result": "unknown",
+      "runtimeWarnings": [],
+      "skippedTests": 0,
+      "startTime": 1791549836.234,
+      "statistics": [],
+      "testFailures": [],
+      "title": "Test - Planner",
+      "topInsights": [],
+      "totalTestCount": 0
+    },
+    "qualified": false,
+    "reason": "Single-function selector discovered zero Swift Testing cases; rerun selected the concrete suite."
+  },
+  "sourceSHA256": {
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift": "06567eeda6a29aa14e38376aed9889bc3c4b1c0bc56ca8b0699946f8b40b9276",
+    "PlannerMCPTests/RowRoutingTests.swift": "d50fcae4fe463bc99d7ed84913e923b2e3565e3a24962bee507a8fb4d06e7d94"
+  },
+  "limitations": [
+    "Global Item completion only; correctly shaped appearance scope remains unavailable and never falls back to global.",
+    "No native checkbox, full-graph contextual/bulk state or provider interaction is introduced.",
+    "Real selected MCP clients, cross-process/CloudKit convergence and domain interruption/account transitions remain unqualified."
+  ]
+}

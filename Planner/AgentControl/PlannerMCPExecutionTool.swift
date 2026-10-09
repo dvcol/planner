@@ -7,14 +7,16 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create an Item, edit its title/notes or archive/unarchive it through the local Planner prototype.",
+        "Create an Item, edit its title/notes, complete/reopen it globally or archive/unarchive it through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
         "properties": .object([
           "formatVersion": .object(["type": .string("integer"), "const": .int(1)]),
           "operationId": .object(["type": .string("string"), "format": .string("uuid")]),
-          "command": .object(["oneOf": .array([creationSchema, editSchema, archiveSchema])]),
+          "command": .object([
+            "oneOf": .array([creationSchema, editSchema, archiveSchema, completionSchema])
+          ]),
           "reviewToken": .object(["type": .array([.string("string"), .string("null")])]),
         ]),
       ]),
@@ -86,6 +88,23 @@
       ]),
     ])
 
+    private static let completionSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("type"), .string("scope"), .string("done")]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("setCompletion")]),
+        "scope": .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "required": .array([.string("kind"), .string("itemId")]),
+          "properties": .object([
+            "kind": .object(["type": .string("string"), "const": .string("globalItem")]),
+            "itemId": .object(["type": .string("string"), "format": .string("uuid")]),
+          ]),
+        ]),
+        "done": .object(["type": .string("boolean")]),
+      ]),
+    ])
+
     static func call(
       _ parameters: CallTool.Parameters, planner: PlannerCore.Planner,
       session: PlannerDatasetSession
@@ -126,6 +145,7 @@
         case "createItem": command = try creationCommand(arguments["command"])
         case "editItem": command = try editCommand(arguments["command"])
         case "setArchive": command = try archiveCommand(arguments["command"])
+        case "setCompletion": command = try completionCommand(arguments["command"])
         default:
           throw AdmissionFailure(
             "unavailable", "/command/type", "This command is not yet implemented by the prototype.")
@@ -142,6 +162,39 @@
           message: "The operation outcome could not be encoded; inspect its status before retrying."
         )
       }
+    }
+
+    private static func completionCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "scope", "done"], required: ["type", "scope", "done"],
+        path: "/command")
+      let scope = try object(
+        command["scope"], allowed: ["kind", "itemId", "appearance"], required: ["kind"],
+        path: "/command/scope")
+      if scope["kind"] == .string("appearance") {
+        _ = try object(
+          command["scope"], allowed: ["kind", "appearance"], required: ["kind", "appearance"],
+          path: "/command/scope")
+        throw AdmissionFailure(
+          "unavailable", "/command/scope/kind",
+          "Appearance-local completion is not implemented by this Item-only fixture.")
+      }
+      guard scope["kind"] == .string("globalItem") else {
+        throw AdmissionFailure(
+          "invalidInput", "/command/scope/kind", "Expected a completion scope.")
+      }
+      let globalScope = try object(
+        command["scope"], allowed: ["kind", "itemId"], required: ["kind", "itemId"],
+        path: "/command/scope")
+      guard case .string(let spelling) = globalScope["itemId"],
+        let itemIdentifier = UUID(uuidString: spelling)
+      else {
+        throw AdmissionFailure("invalidInput", "/command/scope/itemId", "Expected an Item UUID.")
+      }
+      guard case .bool(let done) = command["done"] else {
+        throw AdmissionFailure("invalidInput", "/command/done", "Expected a completion Boolean.")
+      }
+      return .setCompletion(scope: .globalItem(itemId: itemIdentifier), done: done)
     }
 
     private static func creationCommand(_ value: Value?) throws -> PlannerCommand {
