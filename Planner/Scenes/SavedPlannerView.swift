@@ -1,19 +1,33 @@
 import PlannerCore
 import SwiftUI
 
+private enum SavedPlannerSection: Hashable {
+  case lists, items
+}
+
+private enum SavedPlannerSidebarSelection: Hashable {
+  case lists, items
+  case list(UUID)
+}
+
 struct SavedPlannerView: View {
   @Bindable var store: SavedPlannerStore
+  @State private var selectedSection: SavedPlannerSection = .lists
   @State private var selectedListId: UUID?
   @State private var selectedList: PlannerListSourceRead?
   @State private var listItems: [SavedPlannerItem]?
   @State private var isOpeningList = false
   @State private var showNewList = false
+  @State private var showNewItem = false
+  @State private var selectedItemId: UUID?
+  @State private var selectedItem: PlannerItemSourceRead?
+  @State private var isOpeningItem = false
   @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
   var body: some View {
     Group {
       if store.isReady {
-        plannerColumns
+        nativeLayout
       } else if let reason = store.openingFailure {
         ContentUnavailableView {
           Label("Planner unavailable", systemImage: "exclamationmark.triangle")
@@ -28,8 +42,15 @@ struct SavedPlannerView: View {
     }
     .task { await store.open() }
     .task(id: selectedListId) { await loadSelectedList() }
+    .task(id: selectedItemId) { await loadSelectedItem() }
     .sheet(isPresented: $showNewList) {
-      SavedNewListForm(store: store) { source in selectedListId = source.id }
+      SavedNewListForm(store: store) { source in
+        selectedSection = .lists
+        selectedListId = source.id
+      }
+    }
+    .sheet(isPresented: $showNewItem) {
+      SavedNewItemForm(store: store) { source in selectedItemId = source.id }
     }
     .alert(
       "Planner",
@@ -44,6 +65,103 @@ struct SavedPlannerView: View {
     #if os(macOS)
       .frame(minWidth: 820, minHeight: 540)
     #endif
+  }
+
+  @ViewBuilder
+  private var nativeLayout: some View {
+    #if os(macOS)
+      plannerColumns
+    #else
+      TabView(selection: $selectedSection) {
+        Tab("Lists", systemImage: "list.bullet", value: .lists) { plannerColumns }
+        Tab("Items", systemImage: "square.stack", value: .items) {
+          NavigationSplitView {
+            itemCatalog
+          } detail: {
+            itemDetail
+          }
+        }
+      }
+    #endif
+  }
+
+  private var sidebarSelection: Binding<SavedPlannerSidebarSelection?> {
+    Binding(
+      get: {
+        #if os(macOS)
+          if selectedSection == .items { return .items }
+        #endif
+        if let selectedListId { return .list(selectedListId) }
+        #if os(macOS)
+          return .lists
+        #else
+          return nil
+        #endif
+      },
+      set: { selection in
+        switch selection {
+        case .items: selectedSection = .items
+        case .list(let identifier):
+          selectedSection = .lists
+          selectedListId = identifier
+        case .lists:
+          selectedSection = .lists
+          selectedListId = nil
+        case nil: break
+        }
+      })
+  }
+
+  private var isItemSection: Bool {
+    #if os(macOS)
+      selectedSection == .items
+    #else
+      false
+    #endif
+  }
+
+  private var itemCatalog: some View {
+    SavedItemCatalog(
+      items: store.items, selection: $selectedItemId, canCreate: store.canCreate
+    ) { showNewItem = true }
+  }
+
+  @ViewBuilder
+  private var itemDetail: some View {
+    if let selectedItem {
+      SavedItemDetail(item: selectedItem, canChange: store.canCreate, isSaving: store.isSaving) {
+        done in
+        Task {
+          if await store.setItemCompletion(selectedItem.source.id, done: done) {
+            await loadSelectedItem()
+          }
+        }
+      }
+    } else if isOpeningItem {
+      ProgressView("Opening Item")
+    } else if selectedItemId != nil {
+      ContentUnavailableView {
+        Label("Item unavailable", systemImage: "exclamationmark.triangle")
+      } actions: {
+        Button("Try Again") { Task { await loadSelectedItem() } }
+      }
+    } else {
+      ContentUnavailableView("Choose an Item", systemImage: "square.stack")
+    }
+  }
+
+  private func loadSelectedItem() async {
+    guard let identifier = selectedItemId else {
+      selectedItem = nil
+      isOpeningItem = false
+      return
+    }
+    isOpeningItem = true
+    selectedItem = nil
+    let loaded = await store.readItem(identifier)
+    guard !Task.isCancelled, selectedItemId == identifier else { return }
+    selectedItem = loaded
+    isOpeningItem = false
   }
 
   private func loadSelectedList() async {
@@ -66,10 +184,21 @@ struct SavedPlannerView: View {
 
   private var plannerColumns: some View {
     NavigationSplitView(columnVisibility: $columnVisibility) {
-      List(selection: $selectedListId) {
+      List(selection: sidebarSelection) {
+        #if os(macOS)
+          Section("Planner") {
+            NavigationLink(value: SavedPlannerSidebarSelection.lists) {
+              Label("Lists", systemImage: "list.bullet")
+            }
+            NavigationLink(value: SavedPlannerSidebarSelection.items) {
+              Label("Items", systemImage: "square.stack")
+            }
+            .accessibilityIdentifier("saved.section.items")
+          }
+        #endif
         Section("Lists") {
           ForEach(store.lists) { list in
-            NavigationLink(value: list.id) {
+            NavigationLink(value: SavedPlannerSidebarSelection.list(list.id)) {
               Label(list.name, systemImage: "list.bullet.rectangle")
             }
             .accessibilityIdentifier("saved.list.\(list.id.uuidString)")
@@ -78,11 +207,13 @@ struct SavedPlannerView: View {
       }
       .listStyle(.sidebar)
       .overlay {
-        if store.lists.isEmpty {
-          ContentUnavailableView(
-            "No Lists yet", systemImage: "list.bullet.rectangle",
-            description: Text("Create a List to start planning."))
-        }
+        #if os(iOS)
+          if store.lists.isEmpty {
+            ContentUnavailableView(
+              "No Lists yet", systemImage: "list.bullet.rectangle",
+              description: Text("Create a List to start planning."))
+          }
+        #endif
       }
       .navigationTitle("Planner")
       .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
@@ -94,7 +225,9 @@ struct SavedPlannerView: View {
         }
       }
     } content: {
-      if let selectedList {
+      if isItemSection {
+        itemCatalog
+      } else if let selectedList {
         Group {
           if let listItems {
             if listItems.isEmpty {
@@ -133,7 +266,11 @@ struct SavedPlannerView: View {
         ContentUnavailableView("Choose a List", systemImage: "list.bullet.rectangle")
       }
     } detail: {
-      ContentUnavailableView("Choose an Item", systemImage: "square.stack")
+      if isItemSection {
+        itemDetail
+      } else {
+        ContentUnavailableView("Choose an Item", systemImage: "square.stack")
+      }
     }
     .navigationSplitViewStyle(.balanced)
     #if os(iOS)
