@@ -7,6 +7,29 @@ import Testing
 @Suite
 struct ListenerTests {
   @Test
+  func stoppedListenerNoLongerAcceptsHTTPConnections() async throws {
+    let requestHandler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      accessWindowIdentifier: UUID(uuidString: "00000000-0000-4000-8000-000000000701")!
+    )
+    let listener = PlannerMCPLoopbackListener(requestHandler: requestHandler)
+    let endpoint = try await listener.start(port: 0)
+    await listener.stop()
+    let session = URLSession(configuration: .ephemeral)
+    defer { session.invalidateAndCancel() }
+    var request = URLRequest(url: endpoint)
+    request.httpMethod = "POST"
+    request.timeoutInterval = 5
+
+    do {
+      _ = try await session.data(for: request)
+      Issue.record("The stopped listener accepted an HTTP connection")
+    } catch let error as URLError {
+      #expect(error.code == .cannotConnectToHost)
+    }
+  }
+
+  @Test
   func stoppingListenerRevokesItsAccessWindow() async throws {
     let handler = PlannerMCPRequestHandler(
       credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
