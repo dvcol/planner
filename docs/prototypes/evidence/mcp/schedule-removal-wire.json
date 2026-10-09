@@ -1,0 +1,82 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "53946e5",
+  "scope": "Strict selected Schedule removal through real authenticated loopback HTTP and the public native facade.",
+  "nativeExecutions": {
+    "Red": {
+      "result": "Failed",
+      "totalTestCount": 20,
+      "passedTests": 19,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPScheduleRemovalWireRed.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleRemovalWireRed.log",
+      "failure": "Unsupported removeSchedule admission rejects the actual removal journey."
+    },
+    "Green": {
+      "result": "Passed",
+      "totalTestCount": 20,
+      "passedTests": 20,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPScheduleRemovalWireGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleRemovalWireGreen.log"
+    },
+    "Qualification": {
+      "result": "Failed",
+      "totalTestCount": 21,
+      "passedTests": 20,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPScheduleRemovalWireQualification.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleRemovalWireQualification.log",
+      "failure": "Test asserted nonexistent displayTitle instead of the declared title row field; production behavior was correct. Corrected assertion passes in Qualified."
+    },
+    "Qualified": {
+      "result": "Passed",
+      "totalTestCount": 21,
+      "passedTests": 21,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPScheduleRemovalWireQualified.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleRemovalWireQualified.log"
+    },
+    "Regression": {
+      "result": "Passed",
+      "totalTestCount": 41,
+      "passedTests": 41,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPScheduleRemovalWireRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleRemovalWireRegression.log"
+    }
+  },
+  "qualification": {
+    "invalidRequests": 11,
+    "behavior": [
+      "Removing one assignment retains the source Item, its owned bookmarks/content/hashes/Last updated and its other Schedule.",
+      "The successful removal invalidates the old row generation and saves content-free deletion metadata with independent recovery.",
+      "Later source changes survive exact removal replay; replay returns its original checkpoint. Altered Schedule selection under the same operation identity rejects without another removal.",
+      "Invalid or unavailable UUID/type/unknown-field requests retain source, rows, checkpoint and no applied receipt/proposal.",
+      "Removing the final assignment returns explicit scheduleSummary none while retaining the Item. Successful and rejected text JSON match structured content."
+    ]
+  },
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerMCPScheduleRemovalWireFinalSwiftLint.log",
+    "affectedSwiftFiles": 2,
+    "nativeCompilation": "Passed in executed Mac tests",
+    "diffWhitespace": "passed",
+    "excludedSuite": "ReadLoadTests"
+  },
+  "sourceHashes": {
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift": "a0464b8f8c3e8f2bcf66e8599c41ca5287ef29df02990783816d3ae8152b26a7",
+    "PlannerMCPTests/RowRoutingTests.swift": "b62e97dcf42da84cf8e645c4061103937d06d251ceddfd77e58a7f3896648657"
+  },
+  "remaining": [
+    "All-day/Itinerary assignments and remaining shared graph",
+    "Native saved editors/provider I/O and actual Share",
+    "CloudKit deletion versus old offline edit, account recovery and physical performance",
+    "Chosen clients and signed reader validation"
+  ]
+}

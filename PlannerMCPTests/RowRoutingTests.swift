@@ -5,6 +5,419 @@ import Testing
 @testable import Planner
 
 struct RowRoutingTests {
+  @Test func invalidScheduleRemovalsPreserveRowsAndLastRemovalReturnsNoScheduleOverHTTP()
+    async throws
+  {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    let start = Date(timeIntervalSinceReferenceDate: 813_200_400)
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let created, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createItem(content: PlannerItemContentInput(title: "Hotel", notes: "Keep")))
+      ).outcome,
+      let item = created.generated.first,
+      case .applied(let scheduled, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createSchedule(
+            source: item,
+            form: .timed(start: start, end: nil, planningTimeZone: "Asia/Tokyo")))
+      ).outcome,
+      let schedule = scheduled.generated.first,
+      case .source(.item(let originalItem)) = await planner.read(
+        session: datasetSession, request: .source(item)),
+      case .snapshot(let snapshot) = await planner.query(
+        PlannerQuery(
+          session: datasetSession,
+          request: .items(
+            PlannerItemQuery(
+              rowPresentation: PlannerRowPresentationContext(
+                referenceInstant: start, displayTimeZone: "Asia/Tokyo")))))
+    else {
+      Issue.record(
+        "A scheduled Item and issued projection must exist before invalid removal requests.")
+      return
+    }
+    let command: [String: Any] = ["type": "removeSchedule", "scheduleId": schedule.id.uuidString]
+    let invalid: [([String: Any], String, String)] = [
+      (["type": "removeSchedule"], "invalidInput", "/command/scheduleId"),
+      (
+        command.merging(["scheduleId": NSNull()]) { _, incoming in incoming }, "invalidInput",
+        "/command/scheduleId"
+      ),
+      (
+        command.merging(["scheduleId": true]) { _, incoming in incoming }, "invalidInput",
+        "/command/scheduleId"
+      ),
+      (
+        command.merging(["scheduleId": 1]) { _, incoming in incoming }, "invalidInput",
+        "/command/scheduleId"
+      ),
+      (
+        command.merging(["scheduleId": "invalid"]) { _, incoming in incoming }, "invalidInput",
+        "/command/scheduleId"
+      ),
+      (
+        command.merging(["scheduleId": item.id.uuidString]) { _, incoming in incoming },
+        "missingReference", ""
+      ),
+      (
+        command.merging(["scheduleId": UUID().uuidString]) { _, incoming in incoming },
+        "missingReference", ""
+      ),
+      (
+        command.merging(["source": ["kind": "item", "id": item.id.uuidString]]) { _, incoming in
+          incoming
+        }, "unknownField", "/command/source"
+      ),
+      (
+        command.merging(["expectedFieldHashes": [:]]) { _, incoming in incoming }, "unknownField",
+        "/command/expectedFieldHashes"
+      ),
+      (
+        command.merging(["weird/~": true]) { _, incoming in incoming }, "unknownField",
+        "/command/weird~1~0"
+      ),
+      (
+        ["type": "deleteSource", "source": ["kind": "schedule", "id": schedule.id.uuidString]],
+        "forbiddenOperation", "/command/type"
+      ),
+    ]
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      let sourceRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": ["kind": "source", "source": ["kind": "item", "id": item.id.uuidString]],
+        ])
+      let originalSource = try value(try await httpSession.data(for: sourceRequest))
+      let rowRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": [
+            "kind": "rows", "generation": snapshot.generation.uuidString, "offset": "0",
+            "limit": "1",
+          ],
+        ])
+      let originalRows = try value(try await httpSession.data(for: rowRequest))
+      for (invalidCommand, code, path) in invalid {
+        let operationIdentifier = UUID()
+        let rejected = try rejection(
+          try await httpSession.data(
+            for: request(
+              endpoint: endpoint, name: "planner_execute",
+              arguments: [
+                "formatVersion": 1, "operationId": operationIdentifier.uuidString,
+                "command": invalidCommand,
+              ])))
+        #expect(rejected["operationId"] as? String == operationIdentifier.uuidString)
+        let reason = try #require(rejected["reason"] as? [String: Any])
+        #expect(reason["code"] as? String == code)
+        if path.isEmpty {
+          #expect(reason["propertyPath"] is NSNull)
+        } else {
+          #expect(reason["propertyPath"] as? String == path)
+        }
+        guard
+          case .noReliableEvidence = await planner.operationStatus(
+            session: datasetSession, operationId: operationIdentifier)
+        else {
+          await listener.stop()
+          Issue.record("Invalid removal must not create applied evidence.")
+          return
+        }
+      }
+      let unchangedSource = try value(try await httpSession.data(for: sourceRequest))
+      let unchangedRows = try value(try await httpSession.data(for: rowRequest))
+      #expect(NSDictionary(dictionary: unchangedSource).isEqual(to: originalSource))
+      #expect(NSDictionary(dictionary: unchangedRows).isEqual(to: originalRows))
+      guard
+        case .listedNamespaces(let beforeNamespaces) = await planner.inspectRecovery(
+          request: .namespaces),
+        let namespace = beforeNamespaces.first,
+        case .selected(let beforeRecovery) = await planner.inspectRecovery(
+          request: .acknowledgedSnapshot(
+            namespaceId: namespace.namespaceId, checkpointGeneration: 2))
+      else {
+        await listener.stop()
+        Issue.record("Invalid removal must preserve its independent original checkpoint.")
+        return
+      }
+      #expect(beforeNamespaces.first?.acknowledgedSnapshot?.checkpointGeneration == 2)
+      #expect(beforeNamespaces.first?.preparedProposals.isEmpty == true)
+      #expect(beforeRecovery.decodedBackup.backup.deletionMarkers.isEmpty)
+      let operationIdentifier = UUID()
+      let removed = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_execute",
+            arguments: [
+              "formatVersion": 1, "operationId": operationIdentifier.uuidString, "command": command,
+            ])))
+      #expect((removed["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "3")
+      guard
+        case .snapshot(let currentSnapshot) = await planner.query(
+          PlannerQuery(
+            session: datasetSession,
+            request: .items(
+              PlannerItemQuery(
+                rowPresentation: PlannerRowPresentationContext(
+                  referenceInstant: start, displayTimeZone: "Asia/Tokyo")))))
+      else {
+        await listener.stop()
+        Issue.record(
+          "The Item must still have a fresh valid projection after its last assignment is removed.")
+        return
+      }
+      let rows = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_read",
+            arguments: [
+              "formatVersion": 1,
+              "request": [
+                "kind": "rows", "generation": currentSnapshot.generation.uuidString, "offset": "0",
+                "limit": "1",
+              ],
+            ])))
+      let row = try #require((rows["rows"] as? [[String: Any]])?.first)
+      #expect(
+        NSDictionary(dictionary: try #require(row["scheduleSummary"] as? [String: Any])).isEqual(
+          to: ["kind": "none"]))
+      #expect(row["title"] as? String == "Hotel")
+      await listener.stop()
+      guard
+        case .source(.item(let retained)) = await planner.read(
+          session: datasetSession, request: .source(item)),
+        case .selected(let recovery) = await planner.inspectRecovery(
+          request: .acknowledgedSnapshot(
+            namespaceId: namespace.namespaceId, checkpointGeneration: 3))
+      else {
+        Issue.record("The Item and minimal closure must remain independently saved.")
+        return
+      }
+      #expect(retained.fieldHashes == originalItem.fieldHashes)
+      #expect(retained.updatedAt == originalItem.updatedAt)
+      #expect(retained.content.notes == "Keep")
+      #expect(recovery.decodedBackup.backup.schedules.isEmpty)
+      #expect(recovery.decodedBackup.backup.deletionMarkers.count == 1)
+      #expect(
+        recovery.decodedBackup.backup.deletionMarkers.first?.operationId == operationIdentifier)
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
+  @Test func selectedScheduleRemovalOverHTTPKeepsSourceOtherAssignmentAndOriginalReplay()
+    async throws
+  {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    let start = Date(timeIntervalSinceReferenceDate: 813_200_400)
+    let secondForm = PlannerScheduleForm.timed(
+      start: start.addingTimeInterval(3600), end: nil, planningTimeZone: "Asia/Tokyo")
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let created, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createItem(
+            content: PlannerItemContentInput(
+              title: "Hotel", notes: "Keep",
+              links: [PlannerLinkInput(originalUrl: "https://example.com/menu", label: "Menu")])))
+      ).outcome,
+      let item = created.generated.first,
+      case .applied(let firstCreated, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createSchedule(
+            source: item,
+            form: .timed(start: start, end: nil, planningTimeZone: "Asia/Tokyo")))
+      ).outcome,
+      let first = firstCreated.generated.first,
+      case .applied(let secondCreated, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createSchedule(source: item, form: secondForm))
+      ).outcome,
+      let second = secondCreated.generated.first,
+      case .source(.item(let originalItem)) = await planner.read(
+        session: datasetSession, request: .source(item)),
+      case .snapshot(let snapshot) = await planner.query(
+        PlannerQuery(
+          session: datasetSession,
+          request: .items(
+            PlannerItemQuery(
+              rowPresentation: PlannerRowPresentationContext(
+                referenceInstant: start, displayTimeZone: "Asia/Tokyo")))))
+    else {
+      Issue.record("The source and two direct appointments must exist before the HTTP removal.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      let secondRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": [
+            "kind": "source", "source": ["kind": "schedule", "id": second.id.uuidString],
+          ],
+        ])
+      let originalSecond = try value(try await httpSession.data(for: secondRequest))
+      let operationIdentifier = UUID()
+      let removalRequest = try request(
+        endpoint: endpoint, name: "planner_execute",
+        arguments: [
+          "formatVersion": 1, "operationId": operationIdentifier.uuidString,
+          "command": ["type": "removeSchedule", "scheduleId": first.id.uuidString],
+        ])
+      let removed = try value(try await httpSession.data(for: removalRequest))
+      #expect(removed["operationId"] as? String == operationIdentifier.uuidString)
+      #expect((removed["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "4")
+      let result = try #require(removed["result"] as? [String: Any])
+      #expect((result["generated"] as? [Any])?.isEmpty == true)
+      #expect(
+        NSArray(array: try #require(result["affected"] as? [[String: Any]])).isEqual(to: [
+          ["kind": "schedule", "id": first.id.uuidString],
+          ["kind": "item", "id": item.id.uuidString],
+        ]))
+      let missing = try failure(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_read",
+            arguments: [
+              "formatVersion": 1,
+              "request": [
+                "kind": "source", "source": ["kind": "schedule", "id": first.id.uuidString],
+              ],
+            ])))
+      #expect(missing["code"] as? String == "missingReference")
+      let retainedSecond = try value(try await httpSession.data(for: secondRequest))
+      #expect(NSDictionary(dictionary: retainedSecond).isEqual(to: originalSecond))
+      let oldWindow = try failure(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_read",
+            arguments: [
+              "formatVersion": 1,
+              "request": [
+                "kind": "rows", "generation": snapshot.generation.uuidString, "offset": "0",
+                "limit": "1",
+              ],
+            ])))
+      #expect(oldWindow["code"] as? String == "staleSnapshot")
+      guard
+        case .snapshot(let currentSnapshot) = await planner.query(
+          PlannerQuery(
+            session: datasetSession,
+            request: .items(
+              PlannerItemQuery(
+                rowPresentation: PlannerRowPresentationContext(
+                  referenceInstant: start, displayTimeZone: "Europe/Paris"))))),
+        case .source(.item(let retainedItem)) = await planner.read(
+          session: datasetSession, request: .source(item))
+      else {
+        await listener.stop()
+        Issue.record("The complete source and new date projection must be readable.")
+        return
+      }
+      #expect(retainedItem.fieldHashes == originalItem.fieldHashes)
+      #expect(retainedItem.updatedAt == originalItem.updatedAt)
+      #expect(retainedItem.content.links == originalItem.content.links)
+      let rows = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_read",
+            arguments: [
+              "formatVersion": 1,
+              "request": [
+                "kind": "rows", "generation": currentSnapshot.generation.uuidString, "offset": "0",
+                "limit": "1",
+              ],
+            ])))
+      let row = try #require((rows["rows"] as? [[String: Any]])?.first)
+      let summary = try #require(row["scheduleSummary"] as? [String: Any])
+      #expect(
+        NSDictionary(dictionary: try #require(summary["schedule"] as? [String: Any])).isEqual(to: [
+          "kind": "schedule", "id": second.id.uuidString,
+        ]))
+      #expect(summary["additionalCount"] as? String == "0")
+      let later = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_execute",
+            arguments: [
+              "formatVersion": 1, "operationId": UUID().uuidString,
+              "command": [
+                "type": "editItem", "sourceId": item.id.uuidString,
+                "changes": ["notes": "Later notes"],
+                "expectedFieldHashes": [
+                  "notes": try #require(retainedItem.fieldHashes[.notes]?.value)
+                ],
+              ],
+            ])))
+      #expect((later["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "5")
+      let replayed = try value(try await httpSession.data(for: removalRequest))
+      #expect(NSDictionary(dictionary: replayed).isEqual(to: removed))
+      let changedReplay = try rejection(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_execute",
+            arguments: [
+              "formatVersion": 1, "operationId": operationIdentifier.uuidString,
+              "command": ["type": "removeSchedule", "scheduleId": second.id.uuidString],
+            ])))
+      #expect(
+        (changedReplay["reason"] as? [String: Any])?["code"] as? String
+          == "operationPayloadMismatch")
+      let stillPresent = try value(try await httpSession.data(for: secondRequest))
+      #expect(NSDictionary(dictionary: stillPresent).isEqual(to: originalSecond))
+      await listener.stop()
+      guard
+        case .source(.item(let currentItem)) = await planner.read(
+          session: datasetSession, request: .source(item)),
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+        let namespace = namespaces.first,
+        case .selected(let recovery) = await planner.inspectRecovery(
+          request: .acknowledgedSnapshot(
+            namespaceId: namespace.namespaceId, checkpointGeneration: 5))
+      else {
+        Issue.record(
+          "The newer Item edit and minimal removal metadata must be independently saved.")
+        return
+      }
+      #expect(currentItem.content.title == "Hotel")
+      #expect(currentItem.content.notes == "Later notes")
+      #expect(recovery.decodedBackup.backup.schedules.map(\.id) == [second.id])
+      #expect(recovery.decodedBackup.backup.deletionMarkers.count == 1)
+      #expect(
+        recovery.decodedBackup.backup.deletionMarkers.first?.operationId == operationIdentifier)
+      #expect(namespace.preparedProposals.isEmpty)
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   @Test func malformedZoneRequestsPreserveRowsAndStartOnlyZoneChangeCreatesNoEnd() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
