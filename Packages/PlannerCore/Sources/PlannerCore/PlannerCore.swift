@@ -400,6 +400,18 @@ public actor Planner {
         let context = ModelContext(container)
         context.autosaveEnabled = false
         switch query.request {
+        case .catalog(let catalogQuery):
+          let historyToken = try latestHistoryToken(in: context)
+          let snapshot = try listCatalogSnapshot(
+            session: query.session, query: catalogQuery, context: context)
+          guard try latestHistoryToken(in: context) == historyToken else {
+            throw PlannerFailure(
+              "readUnavailable", "The store changed while building this catalog.")
+          }
+          querySnapshots = querySnapshots.filter { $0.value.historyToken == historyToken }
+          querySnapshots[snapshot.generation] = QueryBinding(
+            snapshot: snapshot, historyToken: historyToken)
+          return .snapshot(snapshot)
         case .items(let itemQuery):
           let presentation = try
             (itemQuery.rowPresentation
@@ -454,6 +466,7 @@ public actor Planner {
             case .all: return true
             }
           }
+          let locale = Locale(identifier: "en_US_POSIX")
           let values = try items.map { item in
             guard let id = item.id,
               !item.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -461,7 +474,11 @@ public actor Planner {
               throw PlannerFailure(
                 "readUnavailable", "A query Item has unresolved identity or title.")
             }
-            return (reference: PlannerEntityReference(kind: .item, id: id), title: item.title)
+            return (
+              reference: PlannerEntityReference(kind: .item, id: id),
+              comparisonTitle: item.title.folding(
+                options: [.caseInsensitive, .diacriticInsensitive], locale: locale)
+            )
           }
           guard Set(values.map { $0.reference.id }).count == values.count else {
             throw PlannerFailure(
@@ -469,10 +486,10 @@ public actor Planner {
           }
           let comparator = String.Comparator(
             options: [.caseInsensitive, .diacriticInsensitive],
-            locale: Locale(identifier: "en_US_POSIX")
+            locale: locale
           )
           let sorted = values.sorted { first, second in
-            let comparison = comparator.compare(first.title, second.title)
+            let comparison = comparator.compare(first.comparisonTitle, second.comparisonTitle)
             if comparison != .orderedSame {
               if itemQuery.sort.direction == .ascending { return comparison == .orderedAscending }
               return comparison == .orderedDescending
@@ -494,6 +511,62 @@ public actor Planner {
         }
       }
     } catch { return .failed(failure(error, code: "readUnavailable")) }
+  }
+
+  private func listCatalogSnapshot(
+    session: PlannerDatasetSession, query: PlannerCatalogQuery, context: ModelContext
+  ) throws -> PlannerQuerySnapshot {
+    guard query.sourceKind != .item else {
+      throw PlannerFailure(
+        "invalidInput", "Item discovery requires an Item query.", propertyPath: "/query/sourceKind")
+    }
+    guard query.sourceKind == .list else {
+      throw PlannerFailure(
+        "unavailable", "This catalog slice supports List discovery only.",
+        propertyPath: "/query/sourceKind")
+    }
+    var descriptor = FetchDescriptor<PlannerSchemaV7.List>()
+    descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.name, \.archived]
+    let locale = Locale(identifier: "en_US_POSIX")
+    let terms = query.text.split(whereSeparator: \.isWhitespace).map(String.init)
+    let matches = try context.fetch(descriptor).filter { list in
+      switch query.archive {
+      case .active: if list.archived { return false }
+      case .archived: if !list.archived { return false }
+      case .all: break
+      }
+      return terms.allSatisfy {
+        list.name.range(of: $0, options: [.caseInsensitive, .diacriticInsensitive], locale: locale)
+          != nil
+      }
+    }
+    let values = try matches.map { list in
+      guard let identifier = list.id, list.lifetimeId != nil,
+        !list.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+      else {
+        throw PlannerFailure("readUnavailable", "A catalog List has unresolved identity or name.")
+      }
+      return (
+        source: PlannerEntityReference(kind: .list, id: identifier),
+        comparisonName: list.name.folding(
+          options: [.caseInsensitive, .diacriticInsensitive], locale: locale)
+      )
+    }
+    guard Set(values.map { $0.source.id }).count == values.count else {
+      throw PlannerFailure(
+        "readUnavailable", "Catalog List identities are duplicated and unresolved.")
+    }
+    let comparator = String.Comparator(
+      options: [.caseInsensitive, .diacriticInsensitive], locale: locale)
+    let sorted = values.sorted { first, second in
+      let comparison = comparator.compare(first.comparisonName, second.comparisonName)
+      if comparison != .orderedSame { return comparison == .orderedAscending }
+      return first.source.id.uuidString < second.source.id.uuidString
+    }
+    return PlannerQuerySnapshot(
+      session: session, generation: UUID(), rows: sorted.map { .source($0.source) },
+      matchingCount: Int64(sorted.count), rowPresentation: nil,
+      progress: [], unresolvedReferences: [])
   }
 
   private func listQuerySnapshot(
@@ -523,7 +596,8 @@ public actor Planner {
     items.propertiesToFetch = [\.id, \.lifetimeId, \.title, \.globalDone, \.archived]
     let sources = Dictionary(grouping: try context.fetch(items), by: \.id)
     var doneCount: Int64 = 0
-    var matching: [(identity: PlannerRowIdentity, title: String, itemId: UUID)] = []
+    let locale = Locale(identifier: "en_US_POSIX")
+    var matching: [(identity: PlannerRowIdentity, comparisonTitle: String, itemId: UUID)] = []
     for membership in children {
       guard let matches = sources[membership.item.id], matches.count == 1,
         let item = matches.first, item.lifetimeId == membership.item.lifetimeId,
@@ -548,15 +622,17 @@ public actor Planner {
           identity: .appearance(
             source: PlannerEntityReference(kind: .item, id: membership.item.id),
             appearance: .listMembership(listId: listId, membershipId: membership.id)),
-          title: item.title, itemId: membership.item.id
+          comparisonTitle: item.title.folding(
+            options: [.caseInsensitive, .diacriticInsensitive], locale: locale),
+          itemId: membership.item.id
         ))
     }
     if query.sort.mode == .title {
       let comparator = String.Comparator(
         options: [.caseInsensitive, .diacriticInsensitive],
-        locale: Locale(identifier: "en_US_POSIX"))
+        locale: locale)
       matching.sort { first, second in
-        let comparison = comparator.compare(first.title, second.title)
+        let comparison = comparator.compare(first.comparisonTitle, second.comparisonTitle)
         if comparison != .orderedSame {
           if query.sort.direction == .ascending { return comparison == .orderedAscending }
           return comparison == .orderedDescending
@@ -630,6 +706,24 @@ public actor Planner {
         source = reference
         localDone = nil
         expectedLifetimeId = nil
+      }
+      if source.kind == .list {
+        let sourceIdentifier = source.id
+        var descriptor = FetchDescriptor<PlannerSchemaV7.List>(
+          predicate: #Predicate { $0.id == sourceIdentifier })
+        descriptor.fetchLimit = 2
+        descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.name, \.archived]
+        let records = try context.fetch(descriptor)
+        guard records.count == 1, let list = records.first, list.lifetimeId != nil,
+          !list.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        else {
+          throw PlannerFailure("readUnavailable", "A snapshot List is missing or unresolved.")
+        }
+        return PlannerRowRead(
+          identity: identity, title: list.name, subtitle: nil, estimate: nil,
+          globalDone: nil, localDone: nil, effectiveDone: nil, archived: list.archived,
+          hasLocation: false, hasLinks: false, ownedLocation: nil, previewLink: nil,
+          scheduleSummary: .none)
       }
       guard let presentation = snapshot.rowPresentation else {
         throw PlannerFailure("readUnavailable", "The Item query has no presentation context.")

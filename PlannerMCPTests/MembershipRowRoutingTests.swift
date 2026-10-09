@@ -104,8 +104,14 @@ struct MembershipRowRoutingTests {
       let tools = try #require((listing["result"] as? [String: Any])?["tools"] as? [[String: Any]])
       let tool = try #require(tools.first { $0["name"] as? String == "planner_query" })
       let schema = try #require(tool["inputSchema"] as? [String: Any])
-      let querySchema = try #require(
+      let queryVariants = try #require(
         (schema["properties"] as? [String: Any])?["query"] as? [String: Any])
+      let querySchemas = try #require(queryVariants["oneOf"] as? [[String: Any]])
+      let querySchema = try #require(
+        querySchemas.first {
+          (($0["properties"] as? [String: Any])?["kind"] as? [String: Any])?["const"] as? String
+            == "items"
+        })
       let properties = try #require(querySchema["properties"] as? [String: Any])
       let scopeSchema = try #require(properties["scope"] as? [String: Any])
       let scopes = try #require(scopeSchema["oneOf"] as? [[String: Any]])

@@ -4,6 +4,80 @@
   import PlannerCore
 
   enum PlannerMCPQueryTool {
+    private static let itemQuerySchema: Value = .object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("kind"), .string("scope")]),
+      "properties": .object([
+        "kind": .object(["type": .string("string"), "const": .string("items")]),
+        "scope": .object([
+          "oneOf": .array([
+            .object([
+              "type": .string("object"), "additionalProperties": .bool(false),
+              "required": .array([.string("kind")]),
+              "properties": .object([
+                "kind": .object([
+                  "type": .string("string"),
+                  "enum": .array([.string("global"), .string("inbox")]),
+                ])
+              ]),
+            ]),
+            .object([
+              "type": .string("object"), "additionalProperties": .bool(false),
+              "required": .array([.string("kind"), .string("listId")]),
+              "properties": .object([
+                "kind": .object(["type": .string("string"), "const": .string("list")]),
+                "listId": .object(["type": .string("string"), "format": .string("uuid")]),
+              ]),
+            ]),
+          ])
+        ]),
+        "sort": .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "required": .array([.string("mode"), .string("direction")]),
+          "properties": .object([
+            "mode": .object([
+              "type": .string("string"),
+              "enum": .array([.string("title"), .string("manual")]),
+            ]),
+            "direction": .object([
+              "type": .string("string"),
+              "enum": .array([.string("ascending"), .string("descending")]),
+            ]),
+          ]),
+        ]),
+        "rowPresentation": .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "required": .array([.string("referenceInstant"), .string("displayTimeZone")]),
+          "properties": .object([
+            "referenceInstant": .object(["type": .string("number")]),
+            "displayTimeZone": .object(["type": .string("string")]),
+          ]),
+        ]),
+        "completion": .object([
+          "type": .string("string"),
+          "enum": .array([.string("todo"), .string("done"), .string("all")]),
+        ]),
+        "archive": .object([
+          "type": .string("string"),
+          "enum": .array([.string("active"), .string("archived"), .string("all")]),
+        ]),
+      ]),
+    ])
+
+    private static let catalogQuerySchema: Value = .object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("kind"), .string("sourceKind")]),
+      "properties": .object([
+        "kind": .object(["type": .string("string"), "const": .string("catalog")]),
+        "sourceKind": .object(["type": .string("string"), "const": .string("list")]),
+        "text": .object(["type": .string("string")]),
+        "archive": .object([
+          "type": .string("string"),
+          "enum": .array([.string("active"), .string("archived"), .string("all")]),
+        ]),
+      ]),
+    ])
+
     static let definition = Tool(
       name: "planner_query",
       description:
@@ -13,65 +87,7 @@
         "required": .array([.string("formatVersion"), .string("query")]),
         "properties": .object([
           "formatVersion": .object(["type": .string("integer"), "const": .int(1)]),
-          "query": .object([
-            "type": .string("object"), "additionalProperties": .bool(false),
-            "required": .array([.string("kind"), .string("scope")]),
-            "properties": .object([
-              "kind": .object(["type": .string("string"), "const": .string("items")]),
-              "scope": .object([
-                "oneOf": .array([
-                  .object([
-                    "type": .string("object"), "additionalProperties": .bool(false),
-                    "required": .array([.string("kind")]),
-                    "properties": .object([
-                      "kind": .object([
-                        "type": .string("string"),
-                        "enum": .array([.string("global"), .string("inbox")]),
-                      ])
-                    ]),
-                  ]),
-                  .object([
-                    "type": .string("object"), "additionalProperties": .bool(false),
-                    "required": .array([.string("kind"), .string("listId")]),
-                    "properties": .object([
-                      "kind": .object(["type": .string("string"), "const": .string("list")]),
-                      "listId": .object(["type": .string("string"), "format": .string("uuid")]),
-                    ]),
-                  ]),
-                ])
-              ]),
-              "sort": .object([
-                "type": .string("object"), "additionalProperties": .bool(false),
-                "required": .array([.string("mode"), .string("direction")]),
-                "properties": .object([
-                  "mode": .object([
-                    "type": .string("string"),
-                    "enum": .array([.string("title"), .string("manual")]),
-                  ]),
-                  "direction": .object([
-                    "type": .string("string"),
-                    "enum": .array([.string("ascending"), .string("descending")]),
-                  ]),
-                ]),
-              ]),
-              "rowPresentation": .object([
-                "type": .string("object"), "additionalProperties": .bool(false),
-                "required": .array([.string("referenceInstant"), .string("displayTimeZone")]),
-                "properties": .object([
-                  "referenceInstant": .object(["type": .string("number")]),
-                  "displayTimeZone": .object(["type": .string("string")]),
-                ]),
-              ]),
-              "completion": .object([
-                "type": .string("string"),
-                "enum": .array([.string("todo"), .string("done"), .string("all")]),
-              ]),
-              "archive": .object([
-                "type": .string("string"),
-                "enum": .array([.string("active"), .string("archived"), .string("all")]),
-              ]),
-            ]),
-          ]),
+          "query": .object(["oneOf": .array([itemQuerySchema, catalogQuerySchema])]),
         ]),
       ]),
       annotations: .init(
@@ -90,55 +106,8 @@
             code: "unsupportedVersion", path: "/formatVersion",
             message: "Expected adapter format version 1.")
         }
-        let query = try object(
-          arguments["query"],
-          allowed: [
-            "kind", "scope", "text", "completion", "archive", "categories", "tags", "lists",
-            "duration", "scheduled", "hasAddress", "hasLinks", "sort", "rowPresentation",
-          ], required: ["kind", "scope"], path: "/query")
-        guard query["kind"] == .string("items") else {
-          throw AdmissionFailure(
-            code: "invalidInput", path: "/query/kind",
-            message: "This prototype supports Item queries.")
-        }
-        if let unsupported = Set(query.keys).subtracting([
-          "kind", "scope", "completion", "archive", "sort", "rowPresentation",
-        ])
-        .sorted().first {
-          throw AdmissionFailure(
-            code: "unavailable", path: "/query/" + unsupported,
-            message:
-              "This query slice supports scope, completion, archive, sort and row presentation.")
-        }
-        let nativeScope = try scope(query["scope"])
-        let sort = try sort(query["sort"])
-        let completion: PlannerItemQuery.Completion
-        switch query["completion"] {
-        case nil, .string("todo"): completion = .todo
-        case .string("done"): completion = .done
-        case .string("all"): completion = .all
-        default:
-          throw AdmissionFailure(
-            code: "invalidInput", path: "/query/completion", message: "Expected todo, done or all.")
-        }
-        let archive: PlannerItemQuery.Archive
-        switch query["archive"] {
-        case nil, .string("active"): archive = .active
-        case .string("archived"): archive = .archived
-        case .string("all"): archive = .all
-        default:
-          throw AdmissionFailure(
-            code: "invalidInput", path: "/query/archive",
-            message: "Expected active, archived or all.")
-        }
-        let presentation = try rowPresentation(query["rowPresentation"])
-        let queried = await planner.query(
-          PlannerQuery(
-            session: session,
-            request: .items(
-              PlannerItemQuery(
-                scope: nativeScope, completion: completion, archive: archive,
-                sort: sort, rowPresentation: presentation))))
+        let request = try queryRequest(arguments["query"])
+        let queried = await planner.query(PlannerQuery(session: session, request: request))
         switch queried {
         case .failed(let reason):
           return PlannerMCPSourceTool.failure(reason)
@@ -167,6 +136,97 @@
         return PlannerMCPSourceTool.failure(
           code: "unavailable", message: "The Planner query could not be completed.")
       }
+    }
+
+    private static func queryRequest(_ value: Value?) throws -> PlannerQueryRequest {
+      let query = try object(
+        value,
+        allowed: [
+          "kind", "scope", "sourceKind", "text", "completion", "archive", "categories", "tags",
+          "lists",
+          "duration", "scheduled", "hasAddress", "hasLinks", "sort", "rowPresentation",
+        ], required: ["kind"], path: "/query")
+      if query["kind"] == .string("catalog") {
+        return .catalog(try catalog(value))
+      }
+      guard query["kind"] == .string("items") else {
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/kind", message: "Expected items or catalog.")
+      }
+      if query["sourceKind"] != nil {
+        throw AdmissionFailure(
+          code: "unknownField", path: "/query/sourceKind",
+          message: "Item queries have no sourceKind.")
+      }
+      _ = try object(
+        value, allowed: Set(query.keys), required: ["kind", "scope"], path: "/query")
+      if let unsupported = Set(query.keys).subtracting([
+        "kind", "scope", "completion", "archive", "sort", "rowPresentation",
+      ])
+      .sorted().first {
+        throw AdmissionFailure(
+          code: "unavailable", path: "/query/" + unsupported,
+          message:
+            "This query slice supports scope, completion, archive, sort and row presentation.")
+      }
+      let nativeScope = try scope(query["scope"])
+      let sort = try sort(query["sort"])
+      let completion: PlannerItemQuery.Completion
+      switch query["completion"] {
+      case nil, .string("todo"): completion = .todo
+      case .string("done"): completion = .done
+      case .string("all"): completion = .all
+      default:
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/completion", message: "Expected todo, done or all.")
+      }
+      let archive: PlannerItemQuery.Archive
+      switch query["archive"] {
+      case nil, .string("active"): archive = .active
+      case .string("archived"): archive = .archived
+      case .string("all"): archive = .all
+      default:
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/archive",
+          message: "Expected active, archived or all.")
+      }
+      let presentation = try rowPresentation(query["rowPresentation"])
+      return .items(
+        PlannerItemQuery(
+          scope: nativeScope, completion: completion, archive: archive,
+          sort: sort, rowPresentation: presentation))
+    }
+
+    private static func catalog(_ value: Value?) throws -> PlannerCatalogQuery {
+      let fields = try object(
+        value, allowed: ["kind", "sourceKind", "text", "archive"],
+        required: ["kind", "sourceKind"], path: "/query")
+      guard case .string(let encodedKind) = fields["sourceKind"],
+        let sourceKind = PlannerEntityKind(rawValue: encodedKind), sourceKind != .item
+      else {
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/sourceKind",
+          message: "Expected a declared catalog source kind.")
+      }
+      let text: String
+      switch fields["text"] {
+      case nil: text = ""
+      case .string(let value): text = value
+      default:
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/text", message: "Expected catalog search text.")
+      }
+      let archive: PlannerItemQuery.Archive
+      switch fields["archive"] {
+      case nil, .string("active"): archive = .active
+      case .string("archived"): archive = .archived
+      case .string("all"): archive = .all
+      default:
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/archive", message: "Expected active, archived or all."
+        )
+      }
+      return PlannerCatalogQuery(sourceKind: sourceKind, text: text, archive: archive)
     }
 
     private static func scope(_ value: Value?) throws -> PlannerItemQuery.Scope {

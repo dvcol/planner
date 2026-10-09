@@ -364,6 +364,21 @@ public struct PlannerQuery: Sendable {
 
 public enum PlannerQueryRequest: Sendable {
   case items(PlannerItemQuery)
+  case catalog(PlannerCatalogQuery)
+}
+
+public struct PlannerCatalogQuery: Sendable {
+  public let sourceKind: PlannerEntityKind
+  public let text: String
+  public let archive: PlannerItemQuery.Archive
+
+  public init(
+    sourceKind: PlannerEntityKind, text: String = "", archive: PlannerItemQuery.Archive = .active
+  ) {
+    self.sourceKind = sourceKind
+    self.text = text
+    self.archive = archive
+  }
 }
 
 public struct PlannerItemQuery: Sendable {
