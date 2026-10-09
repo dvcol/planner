@@ -57,14 +57,48 @@ enum PlannerSchemaV1: VersionedSchema {
     var datasetId: UUID? = nil
     var ownershipBinding: String = ""
 
-    init(operation: PlannerOperation, digest: String, result: PlannerAppliedResult) throws {
+    init(
+      operation: PlannerOperation, digest: String, result: PlannerAppliedResult,
+      bindings: [PlannerBoundIdentity] = []
+    ) throws {
       operationId = operation.operationId
       payloadDigest = digest
-      resultData = try JSONEncoder().encode(result)
+      resultData = try JSONEncoder().encode(
+        PlannerStoredOperationEvidence(result: result, bindings: bindings))
       datasetId = operation.session.datasetId
       ownershipBinding = operation.session.ownershipBinding
     }
+
+    func evidence() throws -> PlannerStoredOperationEvidence {
+      guard let resultData else {
+        throw PlannerFailure("readUnavailable", "Operation result evidence is missing.")
+      }
+      if let value = try? JSONDecoder().decode(
+        PlannerStoredOperationEvidence.self, from: resultData)
+      {
+        return value
+      }
+      // The original creation-only prototype stored AppliedResult directly with no resolved bindings.
+      return PlannerStoredOperationEvidence(
+        result: try JSONDecoder().decode(PlannerAppliedResult.self, from: resultData), bindings: []
+      )
+    }
   }
+}
+
+struct PlannerBoundIdentity: Codable {
+  let kind: String
+  let id: UUID
+  let lifetimeId: UUID
+
+  var canonicalValue: PlannerCanonicalValue {
+    .record(["kind": .string(kind), "id": .identity(id), "lifetimeId": .identity(lifetimeId)])
+  }
+}
+
+struct PlannerStoredOperationEvidence: Codable {
+  let result: PlannerAppliedResult
+  let bindings: [PlannerBoundIdentity]
 }
 
 enum PlannerMigrationPlan: SchemaMigrationPlan {
