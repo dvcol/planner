@@ -3,6 +3,113 @@ import PlannerCore
 import Testing
 
 struct ItemLinkMigrationTests {
+  @Test func mainAppMigratesV3ThenShareRemovesScheduleWithoutLosingItemOrHistoricalReceipt()
+    async throws
+  {
+    #if SWIFT_PACKAGE
+      let fixtureBundle = Bundle.module
+    #else
+      let fixtureBundle = Bundle(for: NativeFixtureBundle.self)
+    #endif
+    let fixture = try #require(
+      fixtureBundle.url(forResource: "SchemaV3", withExtension: nil, subdirectory: "Fixtures"))
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    try FileManager.default.copyItem(at: fixture, to: directory)
+    let manifestData = try Data(contentsOf: directory.appendingPathComponent("manifest.json"))
+    let manifest = try JSONDecoder().decode(LinkedManifest.self, from: manifestData)
+    let assignment = try JSONDecoder().decode(ScheduledManifest.self, from: manifestData)
+    let share = Planner(configuration: configuration(directory, role: .shareExtension))
+    guard case .mainAppMigrationRequired = await share.bootstrap() else {
+      Issue.record("Share must leave the genuine V3 store for main-app migration.")
+      return
+    }
+    let planner = Planner(configuration: configuration(directory, role: .mainApplication))
+    let item = PlannerEntityReference(kind: .item, id: manifest.itemId)
+    let schedule = PlannerEntityReference(kind: .schedule, id: assignment.scheduleId)
+    let form = PlannerScheduleForm.timed(
+      start: Date(timeIntervalSinceReferenceDate: 813_200_400.25),
+      end: Date(timeIntervalSinceReferenceDate: 813_204_000.75), planningTimeZone: "Asia/Tokyo")
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .source(.item(let source)) = await planner.read(session: session, request: .source(item)),
+      case .source(.schedule(let scheduleRead)) = await planner.read(
+        session: session, request: .source(schedule)),
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first,
+      case .selected(let oldRecovery) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: namespace.namespaceId, checkpointGeneration: assignment.latestCheckpoint))
+    else {
+      Issue.record(
+        "Migration must preserve Item/Schedule identities, complete forms and old recovery.")
+      return
+    }
+    #expect(session.datasetId == manifest.datasetId)
+    #expect(source.content.title == "Hotel")
+    #expect(source.content.notes == "Original notes")
+    #expect(source.createdAt.timeIntervalSinceReferenceDate == manifest.createdAt)
+    #expect(source.updatedAt.timeIntervalSinceReferenceDate == manifest.updatedAt)
+    #expect(
+      Dictionary(uniqueKeysWithValues: source.fieldHashes.map { ($0.key.rawValue, $0.value.value) })
+        == manifest.fieldHashes)
+    #expect(source.state.globalDone == true)
+    #expect(source.state.archived == true)
+    #expect(
+      source.content.links.map(\.linkId)
+        == manifest.ownedLinks.sorted { $0.rank < $1.rank }.map(\.id))
+    #expect(scheduleRead.content.source == item)
+    #expect(scheduleRead.content.form == form)
+    #expect(scheduleRead.fieldHashes[.form]?.value == assignment.scheduleHash)
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 3)
+    #expect(namespace.acknowledgedSnapshot?.checkpointGeneration == 4)
+    #expect(oldRecovery.decodedBackup.backup.deletionMarkers.isEmpty)
+    let removalIdentifier = UUID()
+    guard case .ready(let shareSession) = await share.bootstrap(),
+      case .applied(_, .complete(let checkpoint)) = await share.execute(
+        PlannerOperation(
+          operationId: removalIdentifier, session: shareSession,
+          command: .removeSchedule(scheduleId: schedule.id))
+      ).outcome,
+      case .applied(let replayedCreation, .complete(let originalCheckpoint)) =
+        await planner.execute(
+          PlannerOperation(
+            operationId: assignment.scheduleOperationId, session: session,
+            command: .createSchedule(source: item, form: form))
+        ).outcome,
+      case .failed(let missing) = await planner.read(session: session, request: .source(schedule)),
+      case .source(.item(let retained)) = await planner.read(
+        session: session, request: .source(item)),
+      case .listedNamespaces(let updatedNamespaces) = await planner.inspectRecovery(
+        request: .namespaces),
+      case .selected(let newRecovery) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint)),
+      case .selected(let oldAgain) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: namespace.namespaceId, checkpointGeneration: assignment.latestCheckpoint))
+    else {
+      Issue.record(
+        "Share-role removal must preserve the source and original creation receipt without resurrection."
+      )
+      return
+    }
+    #expect(checkpoint == 5)
+    #expect(originalCheckpoint == 4)
+    #expect(replayedCreation.generated == [schedule])
+    #expect(missing.code == "missingReference")
+    #expect(retained.fieldHashes == source.fieldHashes)
+    #expect(retained.updatedAt == source.updatedAt)
+    #expect(retained.content.links == source.content.links)
+    #expect(retained.state.globalDone == true)
+    #expect(retained.state.archived == true)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 4)
+    #expect(newRecovery.decodedBackup.backup.schedules.isEmpty)
+    #expect(newRecovery.decodedBackup.backup.deletionMarkers.count == 1)
+    #expect(
+      newRecovery.decodedBackup.backup.deletionMarkers.first?.operationId == removalIdentifier)
+    #expect(oldAgain.portableData == oldRecovery.portableData)
+  }
+
   @Test func mainAppMigratesV1WithoutChangingItemIdentityStateOrAcknowledgedHistory() async throws {
     #if SWIFT_PACKAGE
       let fixtureBundle = Bundle.module
@@ -93,7 +200,7 @@ struct ItemLinkMigrationTests {
       return
     }
     #expect(nextCheckpoint == 4)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 3)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 4)
     #expect(newRecovery.decodedBackup.backup.sources.count == 2)
     #expect(newRecovery.decodedBackup.backup.sources.first { $0.id == item.id }?.globalDone == true)
     #expect(newRecovery.decodedBackup.backup.sources.first { $0.id == item.id }?.archived == true)
@@ -213,7 +320,7 @@ struct ItemLinkMigrationTests {
       return
     }
     #expect(nextCheckpoint == 4)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 3)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 4)
     #expect(retained.content.links == source.content.links)
     #expect(retained.fieldHashes == source.fieldHashes)
     #expect(retained.updatedAt == source.updatedAt)
@@ -264,6 +371,13 @@ struct ItemLinkMigrationTests {
       controlURL: directory.appendingPathComponent("control/writer"),
       recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
       processRole: role, storageMode: .localOnly)
+  }
+
+  private struct ScheduledManifest: Decodable {
+    let latestCheckpoint: Int64
+    let scheduleId: UUID
+    let scheduleOperationId: UUID
+    let scheduleHash: String
   }
 
   private struct Manifest: Decodable {

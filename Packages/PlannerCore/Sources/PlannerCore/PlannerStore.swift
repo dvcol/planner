@@ -127,12 +127,13 @@ struct PlannerStoredOperationEvidence: Codable {
 
 enum PlannerMigrationPlan: SchemaMigrationPlan {
   static var schemas: [any VersionedSchema.Type] {
-    [PlannerSchemaV1.self, PlannerSchemaV2.self, PlannerSchemaV3.self]
+    [PlannerSchemaV1.self, PlannerSchemaV2.self, PlannerSchemaV3.self, PlannerSchemaV4.self]
   }
   static var stages: [MigrationStage] {
     [
       .lightweight(fromVersion: PlannerSchemaV1.self, toVersion: PlannerSchemaV2.self),
       .lightweight(fromVersion: PlannerSchemaV2.self, toVersion: PlannerSchemaV3.self),
+      .lightweight(fromVersion: PlannerSchemaV3.self, toVersion: PlannerSchemaV4.self),
     ]
   }
 }

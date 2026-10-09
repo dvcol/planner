@@ -1,0 +1,103 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "4ecd459",
+  "scope": "Native selected direct Schedule removal with an atomic receipt/minimal deletion marker, independent recovery and genuine V1/V2/V3 migration to native schema 4. HTTP admission is subsequent work.",
+  "redGreen": {
+    "redLog": "/private/tmp/PlannerCoreScheduleRemovalRed.log",
+    "redExecutedFunctions": 1,
+    "redFailedFunctions": 1,
+    "observed": "Selected Schedule removal rejects as unavailable.",
+    "greenLog": "/private/tmp/PlannerCoreScheduleRemovalGreen.log",
+    "greenExecutedFunctions": 1,
+    "greenPassedFunctions": 1
+  },
+  "qualification": {
+    "packageLog": "/private/tmp/PlannerCoreScheduleRemovalQualifiedStore.log",
+    "executedFunctions": 44,
+    "passedFunctions": 44,
+    "suites": 17,
+    "removalFunctions": 2,
+    "migrationFunctions": 3,
+    "behavior": [
+      "Remove exactly one Schedule, retain its Item content/owned links/hashes/Last updated/completion/archive and other assignment across reopen.",
+      "Invalidate old row generation and select remaining assignment; removing the last assignment returns explicit No Schedule.",
+      "Receipt and minimal source-lifetime closure metadata save together. The marker serializes only deletionId/operationId/target/closedFamilyId, with no removed content or receipt payload.",
+      "Every implemented Item create/edit/completion/archive and Schedule create/edit/zone writer preserves existing deletion history in independent snapshots.",
+      "Exact prior remove replay retains later Item edits and the original checkpoint/marker; changed selected ID rejects without deleting another assignment.",
+      "Fresh removal of an absent assignment rejects without applied evidence or invalidating current rows.",
+      "Real V1/V2/V3 stores require main-app migration before Share-role writing. IDs, lifetimes, full content/hash/time/state, prior checkpoints and original receipts remain intact.",
+      "A migrated original creation replay after removal returns original evidence without resurrecting its deleted Schedule."
+    ],
+    "correctedQualificationAttempts": [
+      {
+        "log": "/private/tmp/PlannerCoreScheduleRemovalMigrationQualification.log",
+        "classification": "Compilation error in a newly added fixture test referring to the wrong manifest type; corrected before executed qualification."
+      },
+      {
+        "log": "/private/tmp/PlannerCoreScheduleRemovalQualification.log",
+        "classification": "Two new expectations compared optional nil instead of the explicit No Schedule enum case; corrected before final passing qualification."
+      }
+    ]
+  },
+  "nativeExecutions": {
+    "PlannerCoreScheduleRemovalNativeQualification": {
+      "result": "Passed",
+      "totalTestCount": 5,
+      "passedTests": 5,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerCoreScheduleRemovalNativeQualification.xcresult",
+      "log": "/private/tmp/PlannerCoreScheduleRemovalNativeQualification.log"
+    },
+    "PlannerMCPScheduleRemovalCoreRegression": {
+      "result": "Passed",
+      "totalTestCount": 39,
+      "passedTests": 39,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPScheduleRemovalCoreRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleRemovalCoreRegression.log"
+    }
+  },
+  "fixture": {
+    "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV3",
+    "producerCommit": "4ecd459",
+    "producerLog": "/private/tmp/PlannerSchema3Producer-4ecd459.log",
+    "copiedAfterProducerExit": true,
+    "checksums": "checksums.json",
+    "storageSchemaVersion": 3,
+    "latestCheckpoint": 4
+  },
+  "simulatorBuild": {
+    "log": "/private/tmp/PlannerCoreScheduleRemovalSimulatorBuild.log",
+    "result": "TEST BUILD SUCCEEDED",
+    "signingAllowed": false,
+    "runtimeTests": false
+  },
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerScheduleRemovalSwiftLint.log",
+    "affectedSwiftFiles": 10,
+    "diffWhitespace": "passed",
+    "affectedMCPExcludedSuite": "ReadLoadTests"
+  },
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "c4ba8e9788eb8ae5bf83ad818c4faa829d5fb9eeb6c5392f8f7b57cb938a45bd",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "86962ed2cde97d8156b05f16a536ad0670ae808a97a46de514339c5b451b170c",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "d4217b942ce1b82c004fdb642af02c30d4a23e97f0bae7cc4ef9396b211f7972",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "0580f776ea3dc313111bf1334d3cce551eca63e54d5fa8c4f292626a01482631",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "989c5adc9a5721d0e403ce6c04e54dcf9837f43e141cd2416926106e643f0a15",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "c2d323e112a4f91a726971673276ea7c99cad2e6f82ea729a5c61d579d887b2e",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "65aa71b628aae731049f3954e89a199e6c276c5fb4c18750960da351dd7ca6d2",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "5f3327716354fbe99519ed79bb7b616ff654320801962a67d3f6582d01445552",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift": "b14382e2f0103ca82e291d04e654801437df7c1232de52393fc6b330886e1824",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleRemovalTests.swift": "c70e40d77fc71f59ab1f9a7f6952c71412482b27e4aef4b5d5e3a3e99c79b157"
+  },
+  "remaining": [
+    "HTTP removal admission and actual wire qualification",
+    "All-day/Itinerary forms, inherited summaries and the remaining reference graph",
+    "Other deletion target/closure/restoration-family variants",
+    "CloudKit deletion-versus-old-offline-edit convergence: markers alone are not proof",
+    "Native saved UI, actual Share, signed clients/reader, physical account/interruption and performance gates"
+  ]
+}

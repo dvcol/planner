@@ -120,9 +120,11 @@ extension PlannerScheduleForm {
 enum ScheduleChange {
   case form(PlannerScheduleForm)
   case zone(String)
+  case remove
 
   func validate() throws {
     switch self {
+    case .remove: return
     case .form(let form): try form.validate(propertyPath: "/command/changes/form")
     case .zone(let planningTimeZone):
       guard TimeZone(identifier: planningTimeZone) != nil else {
@@ -133,8 +135,14 @@ enum ScheduleChange {
     }
   }
 
-  func applying(to current: PlannerScheduleForm) -> PlannerScheduleForm {
+  var requiresFormHash: Bool {
+    if case .remove = self { return false }
+    return true
+  }
+
+  func applying(to current: PlannerScheduleForm) -> PlannerScheduleForm? {
     switch self {
+    case .remove: return nil
     case .form(let form): return form
     case .zone(let planningTimeZone):
       switch current {
@@ -145,14 +153,17 @@ enum ScheduleChange {
   }
 
   func editDigest(
-    scheduleId: UUID, expectedFormHash: PlannerFieldHash, identity: PlannerStoreIdentity,
+    scheduleId: UUID, expectedFormHash: PlannerFieldHash?, identity: PlannerStoreIdentity,
     bindings: [PlannerBoundIdentity]
   ) -> String {
     var command: [String: PlannerCanonicalValue] = [
-      "scheduleId": .identity(scheduleId),
-      "expectedFieldHashes": .record(["form": .string(expectedFormHash.value)]),
+      "scheduleId": .identity(scheduleId)
     ]
+    if let expectedFormHash {
+      command["expectedFieldHashes"] = .record(["form": .string(expectedFormHash.value)])
+    }
     switch self {
+    case .remove: command["type"] = .string("removeSchedule")
     case .form(let form):
       command["type"] = .string("editSchedule")
       command["changes"] = .record(["form": form.canonicalValue])
