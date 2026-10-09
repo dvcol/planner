@@ -30,11 +30,11 @@ public actor Planner {
         var identity: PlannerStoreIdentity
         if FileManager.default.fileExists(atPath: configuration.controlURL.path) {
           identity = try loadIdentity()
-          guard (1...3).contains(identity.schemaVersion) else {
+          guard (1...4).contains(identity.schemaVersion) else {
             throw PlannerFailure(
               "unsupportedVersion", "The dataset uses an unsupported storage schema.")
           }
-          if identity.schemaVersion < 3, configuration.processRole == .shareExtension {
+          if identity.schemaVersion < 4, configuration.processRole == .shareExtension {
             return .mainAppMigrationRequired
           }
           guard FileManager.default.fileExists(atPath: configuration.storeURL.path) else {
@@ -53,15 +53,15 @@ public actor Planner {
           context.autosaveEnabled = false
           try context.save()
           identity = PlannerStoreIdentity(
-            schemaVersion: 3, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
+            schemaVersion: 4, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
             ownershipBinding: "local:" + UUID().uuidString
           )
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
         }
         _ = try openContainer()
-        if identity.schemaVersion < 3 {
+        if identity.schemaVersion < 4 {
           identity = PlannerStoreIdentity(
-            schemaVersion: 3, datasetId: identity.datasetId, epochId: identity.epochId,
+            schemaVersion: 4, datasetId: identity.datasetId, epochId: identity.epochId,
             namespaceId: identity.namespaceId, ownershipBinding: identity.ownershipBinding)
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
         }
@@ -143,6 +143,11 @@ public actor Planner {
             hashes: expectedFieldHashes,
             identity: identity, context: context, archive: archive, receipts: receipts,
             envelope: envelope)
+        case .removeSchedule(let scheduleId):
+          return try executeScheduleChange(
+            operation, scheduleId: scheduleId, change: .remove, hashes: [:],
+            identity: identity, context: context, archive: archive, receipts: receipts,
+            envelope: envelope)
         case .createItem(let content):
           try content.validate()
           let digest = content.payloadDigest(
@@ -187,7 +192,8 @@ public actor Planner {
             proposalId: UUID(), originalOperationId: operation.operationId,
             datasetId: identity.datasetId,
             ownershipBinding: identity.ownershipBinding,
-            proposedBackup: ItemOnlyPortableBackup(items: existingItems + [snapshot]),
+            proposedBackup: ItemOnlyPortableBackup(
+              items: existingItems + [snapshot], deletionMarkers: try deletionMarkers(context)),
             payloadDigest: digest, evidence: "preparedUnverified"
           )
           try archive.prepare(proposal)
@@ -203,7 +209,8 @@ public actor Planner {
           }
           do {
             let generation = try archive.publish(
-              items: existingItems + [snapshot], receipts: receipts + [receipt])
+              items: existingItems + [snapshot], deletionMarkers: try deletionMarkers(context),
+              receipts: receipts + [receipt])
             return PlannerOperationResult(
               operationId: operation.operationId,
               outcome: .applied(
@@ -546,6 +553,10 @@ public actor Planner {
     } catch { return .failed(failure(error, code: "readUnavailable")) }
   }
 
+  private func deletionMarkers(_ context: ModelContext) throws -> [PortableDeletionMarker] {
+    try context.fetch(FetchDescriptor<PlannerSchemaV4.DeletionMarker>()).map { try $0.value() }
+  }
+
   private func executeScheduleChange(
     _ operation: PlannerOperation, scheduleId: UUID, change: ScheduleChange,
     hashes: [PlannerScheduleField: PlannerFieldHash], identity: PlannerStoreIdentity,
@@ -553,19 +564,22 @@ public actor Planner {
     envelope: RecoveryEnvelope?
   ) throws -> PlannerOperationResult {
     try change.validate()
-    guard let expectedHash = hashes[.form] else {
-      throw PlannerFailure(
-        "invalidInput", "The Schedule form requires its prior hash.",
-        propertyPath: "/command/expectedFieldHashes/form")
-    }
-    let prefix = "sha256-v1:"
-    let suffix = expectedHash.value.dropFirst(prefix.count)
-    guard expectedHash.value.hasPrefix(prefix), suffix.count == 64,
-      suffix.allSatisfy({ "0123456789abcdef".contains($0) })
-    else {
-      throw PlannerFailure(
-        "invalidInput", "The supplied form hash has an unsupported format.",
-        propertyPath: "/command/expectedFieldHashes/form")
+    let expectedHash = hashes[.form]
+    if change.requiresFormHash {
+      guard let expectedHash else {
+        throw PlannerFailure(
+          "invalidInput", "The Schedule form requires its prior hash.",
+          propertyPath: "/command/expectedFieldHashes/form")
+      }
+      let prefix = "sha256-v1:"
+      let suffix = expectedHash.value.dropFirst(prefix.count)
+      guard expectedHash.value.hasPrefix(prefix), suffix.count == 64,
+        suffix.allSatisfy({ "0123456789abcdef".contains($0) })
+      else {
+        throw PlannerFailure(
+          "invalidInput", "The supplied form hash has an unsupported format.",
+          propertyPath: "/command/expectedFieldHashes/form")
+      }
     }
     if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
       let stored = try receipt.evidence()
@@ -622,18 +636,30 @@ public actor Planner {
         operationId: operation.operationId, outcome: .unverified(proposal.summary))
     }
     let currentHash = before.formHash(datasetId: identity.datasetId)
-    guard currentHash == expectedHash else {
+    if let expectedHash, currentHash != expectedHash {
       throw PlannerFailure(
         "staleEdit", "The Schedule form differs from the supplied read.",
         details: .staleScheduleEdit(currentForm: before.form, currentFormHash: currentHash))
     }
     let replacementForm = change.applying(to: before.form)
-    let after = ScheduleSnapshot(
-      id: before.id, lifetimeId: before.lifetimeId, form: replacementForm)
+    let after = replacementForm.map {
+      ScheduleSnapshot(id: before.id, lifetimeId: before.lifetimeId, form: $0)
+    }
+    let removalMarker: PortableDeletionMarker?
+    if replacementForm == nil {
+      removalMarker = PortableDeletionMarker(
+        deletionId: UUID(), operationId: operation.operationId,
+        target: .source(
+          PlannerBoundIdentity(kind: "schedule", id: before.id, lifetimeId: before.lifetimeId)),
+        closedFamilyId: nil)
+    } else {
+      removalMarker = nil
+    }
+    let markers = try deletionMarkers(context) + [removalMarker].compactMap { $0 }
     let snapshots = try items.map { item in
       var snapshot = try item.value()
       if item.id == ownerIdentifier {
-        snapshot.schedules = snapshot.schedules.map { schedule in
+        snapshot.schedules = snapshot.schedules.compactMap { schedule in
           if schedule.id == scheduleId { return after }
           return schedule
         }
@@ -651,26 +677,32 @@ public actor Planner {
         proposalId: UUID(),
         originalOperationId: operation.operationId, datasetId: identity.datasetId,
         ownershipBinding: identity.ownershipBinding,
-        proposedBackup: ItemOnlyPortableBackup(items: snapshots),
+        proposedBackup: ItemOnlyPortableBackup(items: snapshots, deletionMarkers: markers),
         payloadDigest: digest, evidence: "preparedUnverified"))
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest,
       result: result, bindings: bindings)
-    switch replacementForm {
-    case .timed(let start, let end, let planningTimeZone):
-      record.start = start
-      record.end = end
-      record.planningTimeZone = planningTimeZone
+    if let replacementForm {
+      switch replacementForm {
+      case .timed(let start, let end, let planningTimeZone):
+        record.start = start
+        record.end = end
+        record.planningTimeZone = planningTimeZone
+      }
+    } else if let removalMarker {
+      context.insert(PlannerSchemaV4.DeletionMarker(removalMarker))
+      context.delete(record)
     }
     context.insert(receipt)
     do { try context.save() } catch {
       context.rollback()
       throw PlannerFailure(
         "persistenceFailure",
-        "The complete Schedule edit was not committed: \(error.localizedDescription)")
+        "The complete Schedule change was not committed: \(error.localizedDescription)")
     }
     do {
-      let generation = try archive.publish(items: snapshots, receipts: receipts + [receipt])
+      let generation = try archive.publish(
+        items: snapshots, deletionMarkers: markers, receipts: receipts + [receipt])
       return PlannerOperationResult(
         operationId: operation.operationId,
         outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
@@ -751,7 +783,8 @@ public actor Planner {
         proposalId: UUID(), originalOperationId: operation.operationId,
         datasetId: identity.datasetId,
         ownershipBinding: identity.ownershipBinding,
-        proposedBackup: ItemOnlyPortableBackup(items: snapshots),
+        proposedBackup: ItemOnlyPortableBackup(
+          items: snapshots, deletionMarkers: try deletionMarkers(context)),
         payloadDigest: digest, evidence: "preparedUnverified"))
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
@@ -764,7 +797,9 @@ public actor Planner {
         "The complete Schedule was not committed: \(error.localizedDescription)")
     }
     do {
-      let generation = try archive.publish(items: snapshots, receipts: receipts + [receipt])
+      let generation = try archive.publish(
+        items: snapshots, deletionMarkers: try deletionMarkers(context),
+        receipts: receipts + [receipt])
       return PlannerOperationResult(
         operationId: operation.operationId,
         outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
@@ -884,7 +919,8 @@ public actor Planner {
     let proposal = RecoveryPreparedProposal(
       proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
-      proposedBackup: ItemOnlyPortableBackup(items: snapshots),
+      proposedBackup: ItemOnlyPortableBackup(
+        items: snapshots, deletionMarkers: try deletionMarkers(context)),
       payloadDigest: digest, evidence: "preparedUnverified"
     )
     try archive.prepare(proposal)
@@ -903,7 +939,9 @@ public actor Planner {
         "The complete Item edit was not committed: \(error.localizedDescription)")
     }
     do {
-      let generation = try archive.publish(items: snapshots, receipts: receipts + [receipt])
+      let generation = try archive.publish(
+        items: snapshots, deletionMarkers: try deletionMarkers(context),
+        receipts: receipts + [receipt])
       return PlannerOperationResult(
         operationId: operation.operationId,
         outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
@@ -986,7 +1024,8 @@ public actor Planner {
     let proposal = RecoveryPreparedProposal(
       proposalId: UUID(), originalOperationId: operation.operationId,
       datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
-      proposedBackup: ItemOnlyPortableBackup(items: snapshots), payloadDigest: digest,
+      proposedBackup: ItemOnlyPortableBackup(
+        items: snapshots, deletionMarkers: try deletionMarkers(context)), payloadDigest: digest,
       evidence: "preparedUnverified")
     try archive.prepare(proposal)
     let receipt = try PlannerSchemaV1.Receipt(
@@ -1004,7 +1043,9 @@ public actor Planner {
         "The complete Item state action was not committed: \(error.localizedDescription)")
     }
     do {
-      let generation = try archive.publish(items: snapshots, receipts: receipts + [receipt])
+      let generation = try archive.publish(
+        items: snapshots, deletionMarkers: try deletionMarkers(context),
+        receipts: receipts + [receipt])
       return PlannerOperationResult(
         operationId: operation.operationId,
         outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
@@ -1093,7 +1134,7 @@ public actor Planner {
     let identity = try loadIdentity()
     guard sessions[session.sessionId] == session, session.datasetId == identity.datasetId,
       session.ownershipBinding == identity.ownershipBinding, session.epochId == identity.epochId,
-      identity.schemaVersion == 3
+      identity.schemaVersion == 4
     else {
       throw PlannerFailure("staleDatasetSession", "The dataset session is no longer authorized.")
     }
@@ -1101,7 +1142,7 @@ public actor Planner {
   }
 
   private func openContainer() throws -> ModelContainer {
-    let schema = Schema(versionedSchema: PlannerSchemaV3.self)
+    let schema = Schema(versionedSchema: PlannerSchemaV4.self)
     let modelConfiguration = ModelConfiguration(
       schema: schema, url: configuration.storeURL, cloudKitDatabase: .none)
     return try ModelContainer(
@@ -1122,7 +1163,7 @@ public actor Planner {
         PlannerStoreIdentity.self,
         from: Data(contentsOf: directory.appendingPathComponent("identity.json")))
       guard directory.lastPathComponent == identity.namespaceId.uuidString,
-        (1...3).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
+        (1...4).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
       else {
         throw PlannerFailure(
           "ownershipUnverified", "A recovery namespace has invalid ownership metadata.")

@@ -126,3 +126,9 @@ The prototype must prove consistent ownership/cutoff during native account impor
 - [ ] Prototype implementation records red/green, compile/lint, real-store/migration, interruption, native UI, physical-device and ownership evidence at the agreed boundaries.
 
 Contract completion is publication and accepted declarations. Prototype completion requires actual execution; source tables and golden files never substitute for those gates.
+
+## Implemented local Schedule deletion metadata
+
+Native schema 4 currently persists minimal Schedule source-deletion markers. The public portable backup exposes typed markers, while the normalized version-1 record uses the exact deletionMarkers shape above. The current source target binds Schedule kind, public ID and authorized lifetime; closedFamilyId is null. Duplicate marker IDs and a closure still live under that same Schedule lifetime reject snapshot validation. Other target/restoration-family variants remain unimplemented.
+
+Selected removal, its receipt and marker save atomically through the public native facade. Every currently implemented writer retains prior markers in prepared and acknowledged recovery snapshots. [Executed local evidence](prototypes/evidence/navigation/core-schedule-removal.json) includes genuine V1/V2/V3 migration, reopen, prior creation/removal replay and minimal encoded fields. It does not prove CloudKit deletion convergence or implement portable import/restore administration.

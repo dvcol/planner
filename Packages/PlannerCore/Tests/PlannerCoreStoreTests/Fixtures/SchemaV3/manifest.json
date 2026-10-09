@@ -1,0 +1,71 @@
+{
+  "archivedCheckpoint" : 3,
+  "createdAt" : 813256839.57093406,
+  "creationCheckpoint" : 1,
+  "creationOperationId" : "00000000-0000-4000-8000-000000000941",
+  "datasetId" : "F463BFC0-72C3-401C-959E-71D72A2DEC07",
+  "fieldHashes" : {
+    "categoryIds" : "sha256-v1:1d46d3f788f3d4b18eebe5fd5967c3d51234e32523354b55468fe33e28667bc7",
+    "estimate" : "sha256-v1:9d840597a7b666cfa7f62ccdfd91b6df39e7b119d9517675219c5ca7d8b2a784",
+    "links" : "sha256-v1:cb2b9952cf9816ad1636793cec0b22baac3a10795f377f916839bf2018e257bc",
+    "location" : "sha256-v1:c95d32d37127c86fd0b00e398a4fce3f4af4377e41aba487bdbd03c33d8207b0",
+    "notes" : "sha256-v1:e826be3a3f30ac7680d0a9acb54924c45d5c6b5d42279cdcff0cb6d6d5593adb",
+    "subtitle" : "sha256-v1:da63117e121de5ea1d8fb458abfb89a8520e8486845c70a12761e2b4f277ed84",
+    "tagIds" : "sha256-v1:701495c52364fc7bca9800140c4fc9b69d0cf255a2cd5dc931613d3eb715813e",
+    "title" : "sha256-v1:79673e8272d9e38ef8fa36f08bd685e4b46217b7b86188845781eb8b69c91023"
+  },
+  "itemId" : "5DFCC886-D62A-4245-9E54-B75CDD16E284",
+  "latestCheckpoint" : 4,
+  "ownedLinks" : [
+    {
+      "id" : "1FDAFFF3-CA06-47BC-8DA6-52680BEAA281",
+      "kind" : "website",
+      "label" : "Menu",
+      "lifetimeId" : "B4D34D80-8FBD-4713-A9A7-C13F630F200E",
+      "originalUrl" : "https:\/\/example.com\/menu",
+      "owner" : {
+        "id" : "5DFCC886-D62A-4245-9E54-B75CDD16E284",
+        "kind" : "item",
+        "lifetimeId" : "F7D667BE-6532-4497-87CF-153E67847409"
+      },
+      "providerReference" : null,
+      "rank" : "1"
+    },
+    {
+      "id" : "50E3687D-939B-431D-94E4-3CCEE7F098AB",
+      "kind" : "appleMaps",
+      "label" : "Map",
+      "lifetimeId" : "A97C9D49-3C73-4C95-99E0-33F04C681BE0",
+      "originalUrl" : "https:\/\/maps.apple.com\/?q=Hotel",
+      "owner" : {
+        "id" : "5DFCC886-D62A-4245-9E54-B75CDD16E284",
+        "kind" : "item",
+        "lifetimeId" : "F7D667BE-6532-4497-87CF-153E67847409"
+      },
+      "providerReference" : null,
+      "rank" : "0"
+    }
+  ],
+  "producerCommit" : "4ecd459",
+  "scheduleHash" : "sha256-v1:706c0823956b783a36d01aef3dec2e95082cc7d808131eef44ccdec767a7d8e1",
+  "scheduleId" : "1DD77330-6856-4041-A57E-B82F3C1E5AF9",
+  "scheduleOperationId" : "00000000-0000-4000-8000-000000000944",
+  "schedules" : [
+    {
+      "form" : {
+        "end" : 813204000.75,
+        "kind" : "timed",
+        "planningTimeZone" : "Asia\/Tokyo",
+        "start" : 813200400.25
+      },
+      "id" : "1DD77330-6856-4041-A57E-B82F3C1E5AF9",
+      "lifetimeId" : "3AEAE301-238A-44B3-84D0-CC113FEE7547",
+      "source" : {
+        "id" : "5DFCC886-D62A-4245-9E54-B75CDD16E284",
+        "kind" : "item",
+        "lifetimeId" : "F7D667BE-6532-4497-87CF-153E67847409"
+      }
+    }
+  ],
+  "updatedAt" : 813256839.60203004
+}

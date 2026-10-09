@@ -85,13 +85,14 @@ struct PortableItemRecord: Codable {
   }
 }
 
-/// This slice supports Items, their owned links and direct timed Schedules. Other graph groups must be empty.
+/// This slice supports Items, their owned links and direct timed Schedules and minimal Schedule deletion metadata. Other graph groups must be empty.
 struct ItemOnlyPortableBackup: Codable {
   let format: String
   let formatVersion: Int
   let sources: [PortableItemRecord]
   let ownedLinks: [PortableOwnedLink]
   let schedules: [PortableScheduleRecord]
+  let deletionMarkers: [PortableDeletionMarker]
 
   enum CodingKeys: String, CodingKey, CaseIterable {
     case format, formatVersion, sources, memberships, itineraryEntries, expandedCompletions
@@ -100,7 +101,10 @@ struct ItemOnlyPortableBackup: Codable {
     case restorationFamilies
   }
 
-  init(items: [ItemSnapshot]) {
+  init(items: [ItemSnapshot], deletionMarkers: [PortableDeletionMarker]) {
+    self.deletionMarkers = deletionMarkers.sorted {
+      $0.deletionId.uuidString < $1.deletionId.uuidString
+    }
     format = "planner-data"
     formatVersion = 1
     sources = items.sorted { $0.id.uuidString < $1.id.uuidString }.map(PortableItemRecord.init)
@@ -119,9 +123,10 @@ struct ItemOnlyPortableBackup: Codable {
     sources = try container.decode([PortableItemRecord].self, forKey: .sources)
     ownedLinks = try container.decode([PortableOwnedLink].self, forKey: .ownedLinks)
     schedules = try container.decode([PortableScheduleRecord].self, forKey: .schedules)
+    deletionMarkers = try container.decode([PortableDeletionMarker].self, forKey: .deletionMarkers)
     for key in CodingKeys.allCases
     where key != .format && key != .formatVersion && key != .sources && key != .ownedLinks
-      && key != .schedules
+      && key != .schedules && key != .deletionMarkers
     {
       guard try container.decode([String].self, forKey: key).isEmpty else {
         throw PlannerFailure(
@@ -138,9 +143,10 @@ struct ItemOnlyPortableBackup: Codable {
     try container.encode(sources, forKey: .sources)
     try container.encode(ownedLinks, forKey: .ownedLinks)
     try container.encode(schedules, forKey: .schedules)
+    try container.encode(deletionMarkers, forKey: .deletionMarkers)
     for key in CodingKeys.allCases
     where key != .format && key != .formatVersion && key != .sources && key != .ownedLinks
-      && key != .schedules
+      && key != .schedules && key != .deletionMarkers
     {
       try container.encode([String](), forKey: key)
     }
@@ -176,9 +182,14 @@ struct ItemOnlyPortableBackup: Codable {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "The snapshot contains duplicate Schedule identities.")
     }
+    guard Set(deletionMarkers.map(\.deletionId)).count == deletionMarkers.count else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "The snapshot contains duplicate deletion markers.")
+    }
     return PlannerDecodedBackup(
       backup: PlannerPortableBackup(
-        sources: items, schedules: try schedules.map { try $0.validated(sources: sources) }))
+        sources: items, schedules: try schedules.map { try $0.validated(sources: sources) },
+        deletionMarkers: try deletionMarkers.map { try $0.validated(schedules: schedules) }))
   }
 }
 
@@ -239,7 +250,7 @@ struct RecoveryEnvelope: Codable {
 
   func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
     guard format == "planner-recovery", formatVersion == 1,
-      storageSchemaVersion == "1" || storageSchemaVersion == "2" || storageSchemaVersion == "3",
+      ["1", "2", "3", "4"].contains(storageSchemaVersion),
       namespaceId == identity.namespaceId, datasetId == identity.datasetId,
       ownershipBinding == identity.ownershipBinding, !ownershipBinding.isEmpty,
       let generation = Int64(checkpointGeneration), generation > 0,
@@ -318,14 +329,18 @@ struct PlannerRecoveryArchive {
       .sorted { $0.proposalId.uuidString < $1.proposalId.uuidString }
   }
 
-  func publish(items: [ItemSnapshot], receipts: [PlannerSchemaV1.Receipt]) throws -> Int64 {
+  func publish(
+    items: [ItemSnapshot], deletionMarkers: [PortableDeletionMarker],
+    receipts: [PlannerSchemaV1.Receipt]
+  ) throws -> Int64 {
     let previous = try latest()
     let previousGeneration = try previous?.validated(identity: identity).2 ?? 0
     let (generation, overflow) = previousGeneration.addingReportingOverflow(1)
     guard !overflow else {
       throw PlannerFailure("recoveryIncomplete", "Recovery checkpoint capacity was exceeded.")
     }
-    let bytes = try JSONEncoder().encode(ItemOnlyPortableBackup(items: items))
+    let bytes = try JSONEncoder().encode(
+      ItemOnlyPortableBackup(items: items, deletionMarkers: deletionMarkers))
     let priorCheckpoints = Dictionary(
       uniqueKeysWithValues: (previous?.receipts ?? []).map {
         ($0.operationId, $0.checkpointGeneration.flatMap(Int64.init))

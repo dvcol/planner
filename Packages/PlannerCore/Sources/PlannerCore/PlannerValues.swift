@@ -166,6 +166,7 @@ public enum PlannerCommand: Sendable {
   case changeScheduleZone(
     scheduleId: UUID, planningTimeZone: String,
     expectedFieldHashes: [PlannerScheduleField: PlannerFieldHash])
+  case removeSchedule(scheduleId: UUID)
   case setCompletion(scope: PlannerCompletionScope, done: Bool)
   case setArchive(source: PlannerEntityReference, archived: Bool)
   case editItem(
@@ -457,10 +458,15 @@ public struct PlannerDecodedBackup: Sendable {
 public struct PlannerPortableBackup: Sendable {
   public let sources: [PlannerPortableItem]
   public let schedules: [PlannerPortableSchedule]
+  public let deletionMarkers: [PlannerPortableDeletionMarker]
 
-  init(sources: [PlannerPortableItem], schedules: [PlannerPortableSchedule] = []) {
+  init(
+    sources: [PlannerPortableItem], schedules: [PlannerPortableSchedule] = [],
+    deletionMarkers: [PlannerPortableDeletionMarker]
+  ) {
     self.sources = sources
     self.schedules = schedules
+    self.deletionMarkers = deletionMarkers
   }
 }
 
