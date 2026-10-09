@@ -1,0 +1,142 @@
+{
+  "scope": "Default Item identity query through real Planner facade",
+  "red": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "passedTests": 0,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 1,
+    "finishTime": 1791510118.768,
+    "passedTests": 0,
+    "result": "Failed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791510104.802,
+    "statistics": [],
+    "testFailures": [
+      {
+        "failureText": "Issue recorded: The default query must discover the complete fixture: .failed(PlannerCore.PlannerFailure(code: \"unavailable\", propertyPath: nil, message: \"Item queries have not been implemented.\", details: nil))",
+        "targetName": "PlannerCoreStoreTests",
+        "testIdentifier": 1,
+        "testIdentifierString": "ItemQueryTests/defaultQueryReturnsEveryCreatedItemIdentityInTitleOrderAfterReopen()",
+        "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerCoreStoreTests/ItemQueryTests/defaultQueryReturnsEveryCreatedItemIdentityInTitleOrderAfterReopen()",
+        "testName": "defaultQueryReturnsEveryCreatedItemIdentityInTitleOrderAfterReopen()"
+      }
+    ],
+    "title": "Test - PlannerCore",
+    "topInsights": [],
+    "totalTestCount": 1
+  },
+  "green": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 10,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791510202.636,
+    "passedTests": 10,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791510198.767,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - PlannerCore",
+    "topInsights": [],
+    "totalTestCount": 10
+  },
+  "nativeAppRegression": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 16,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791510325.622,
+    "passedTests": 13,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791510308.465,
+    "statistics": [
+      {
+        "subtitle": "4 test runs",
+        "title": "1 test ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 13
+  },
+  "package": {
+    "executed": 10,
+    "passed": 10,
+    "log": "/private/tmp/PlannerCoreQueryPackage.log"
+  },
+  "nativeMobileBuild": {
+    "result": "TEST BUILD SUCCEEDED",
+    "runtime": false,
+    "log": "/private/tmp/PlannerCoreQueryMobileBuild.log"
+  },
+  "limitations": [
+    "Only the default Item query and its current global/inbox/state DTO subset are implemented.",
+    "No full search/catalog/sort/window, 5000-Item performance, contextual query or selected-client claim."
+  ]
+}

@@ -46,6 +46,16 @@ The [actual text-field summaries](evidence/mcp/core-text-fields.json) record the
 
 Result bundles are `/private/tmp/PlannerCoreUnrelatedFieldExecutableRed.xcresult`, `/private/tmp/PlannerCoreUnrelatedFieldGreen.xcresult` and `/private/tmp/PlannerCoreAtomicTextPatchQualification.xcresult`. The zero-test selection run is `/private/tmp/PlannerCoreUnrelatedFieldRed.xcresult`.
 
+## Default Item query
+
+The next slice supplies the default Item identity query needed for the prototype's public count/readback checks. Museum is created first, then Hotel. Query returns Hotel then Museum with count 2, and a new facade returns those same source identities after reopening. Both returned identities remain readable as Todo/Active. Query fetches the identity/title/global/archive projection without loading full notes or computing content hashes. It uses the accepted case/diacritic-insensitive Foundation [String.Comparator initializer](https://developer.apple.com/documentation/swift/string/comparator/init(options:locale:order:)) with en_US_POSIX and stable UUID tie ordering.
+
+The executable red runs one query test, failing because queries are unimplemented. Green runs all ten Core store tests successfully. The same ten pass through the package target. Generic iOS test-bundle compilation and thirteen affected app transport tests pass; source/document lint pass. The [actual summaries](evidence/mcp/core-default-query.json) retain the counts and failure text.
+
+This is the default Item query and a partial native DTO. Full text/filter/sort/catalog/window variants, contextual queries, international fixtures and the 5,000-Item/200-List performance gate remain future evidence. List/Itinerary query scopes fail unavailable. The current Item-only schema has no memberships, so its Inbox is the full Item set; no membership data is guessed or copied. No actual selected-client or iOS runtime proof is claimed.
+
+Result bundles are `/private/tmp/PlannerCoreDefaultQueryRed.xcresult` and `/private/tmp/PlannerCoreDefaultQueryGreen.xcresult`; matching logs record their execution.
+
 ## Reproduction
 
 Use unique result-bundle paths on rerun. Scope DEVELOPER_DIR to the accepted Xcode installation.
