@@ -726,6 +726,8 @@ Accepted Contract Q33 A on 2026-10-09. The human approved the complete packet fo
 
 [Published contract resolution](https://github.com/dvcol/planner/issues/13#issuecomment-6070841289) records acceptance and delegates executed proof to the owning prototypes.
 
+Navigation prototype later accepts Q43 A, Q44 A, Q45 A and Q46 A. The [row contract amendment](navigation-row-contract-review.md) extends the existing public lightweight read, binds row time/zone to its query generation, fixes the globally Done contextual affordance and selects one actual Schedule and website preview link. The [adapter declaration](adapter-contract.md#row-presentation-context-and-schedule-summary) and Core packet reflect this additive read amendment. The literal row scenarios assign subsequent unit/store/provider-I/O/native UI obligations; no new runtime proof, editable content or backup fields are introduced.
+
 ## Definition of done
 
 - [x] Human accepts the final command/query schemas, wire validation and integration authority under Q33 A.
