@@ -8,28 +8,31 @@
       "result": "Failed",
       "totalTestCount": 1,
       "suiteCount": 1,
-      "passedTests": -1,
-      "failedTests": 2,
+      "passedTests": 0,
+      "failedTests": 1,
       "skippedTests": 0,
-      "log": "/private/tmp/PlannerCoreListCatalogRed.log"
+      "log": "/private/tmp/PlannerCoreListCatalogRed.log",
+      "assertionIssueCount": 1
     },
     "InitialGreen": {
       "result": "Failed",
       "totalTestCount": 1,
       "suiteCount": 1,
-      "passedTests": -1,
-      "failedTests": 2,
+      "passedTests": 0,
+      "failedTests": 1,
       "skippedTests": 0,
-      "log": "/private/tmp/PlannerCoreListCatalogGreen.log"
+      "log": "/private/tmp/PlannerCoreListCatalogGreen.log",
+      "assertionIssueCount": 6
     },
     "SortRed": {
       "result": "Failed",
       "totalTestCount": 2,
       "suiteCount": 1,
-      "passedTests": -1,
-      "failedTests": 3,
+      "passedTests": 0,
+      "failedTests": 2,
       "skippedTests": 0,
-      "log": "/private/tmp/PlannerCoreListCatalogSortRed.log"
+      "log": "/private/tmp/PlannerCoreListCatalogSortRed.log",
+      "assertionIssueCount": 12
     },
     "SortGreen": {
       "result": "Passed",
@@ -44,10 +47,11 @@
       "result": "Failed",
       "totalTestCount": 3,
       "suiteCount": 1,
-      "passedTests": 1,
-      "failedTests": 2,
+      "passedTests": 2,
+      "failedTests": 1,
       "skippedTests": 0,
-      "log": "/private/tmp/PlannerCoreListCatalogBoundaryRed.log"
+      "log": "/private/tmp/PlannerCoreListCatalogBoundaryRed.log",
+      "assertionIssueCount": 1
     },
     "BoundaryGreen": {
       "result": "Passed",
