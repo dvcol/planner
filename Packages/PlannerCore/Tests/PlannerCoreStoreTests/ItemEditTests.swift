@@ -3,6 +3,173 @@ import PlannerCore
 import Testing
 
 struct ItemEditTests {
+  @Test func oneStaleFieldRejectsEntireTitleAndNotesPatch() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly
+    )
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap() else {
+      Issue.record("The local dataset must initialize.")
+      return
+    }
+    let created = await planner.execute(
+      PlannerOperation(
+        operationId: UUID(), session: session,
+        command: .createItem(
+          content: PlannerItemContentInput(title: "Hotel", notes: "Original notes"))
+      ))
+    guard case .applied(let result, .complete) = created.outcome else {
+      Issue.record("Hotel creation failed: \(created)")
+      return
+    }
+    let item = try #require(result.generated.first)
+    guard case .source(let original) = await planner.read(session: session, request: .source(item))
+    else {
+      Issue.record("Original field hashes must be readable.")
+      return
+    }
+    let friday = await planner.execute(
+      PlannerOperation(
+        operationId: UUID(), session: session,
+        command: .editItem(
+          sourceId: item.id, changes: PlannerItemChanges(notes: .set("Friday booking")),
+          expectedFieldHashes: original.fieldHashes)
+      ))
+    guard case .applied(_, .complete(let checkpoint)) = friday.outcome else {
+      Issue.record("Friday booking must save: \(friday)")
+      return
+    }
+    guard case .source(let before) = await planner.read(session: session, request: .source(item))
+    else {
+      Issue.record("The current Item must be readable.")
+      return
+    }
+    let patch = await planner.execute(
+      PlannerOperation(
+        operationId: UUID(), session: session,
+        command: .editItem(
+          sourceId: item.id,
+          changes: PlannerItemChanges(title: .set("Tokyo Hotel"), notes: .set("Monday booking")),
+          expectedFieldHashes: original.fieldHashes)
+      ))
+    guard case .rejected(let reason) = patch.outcome else {
+      Issue.record("One stale field must reject the complete patch: \(patch)")
+      return
+    }
+    #expect(reason.code == "staleEdit")
+    guard case .staleEdit(let fields, let currentValues, _) = reason.details else {
+      Issue.record("Stale rejection must identify only the conflicting field.")
+      return
+    }
+    #expect(fields == [.notes])
+    #expect(currentValues == [.notes: .optionalString("Friday booking")])
+    guard case .source(let after) = await planner.read(session: session, request: .source(item))
+    else {
+      Issue.record("The retained Item must be readable.")
+      return
+    }
+    #expect(after.content.title == "Hotel")
+    #expect(after.content.notes == "Friday booking")
+    #expect(after.updatedAt == before.updatedAt)
+    #expect(after.fieldHashes == before.fieldHashes)
+    let catalog = await planner.inspectRecovery(request: .namespaces)
+    guard case .listedNamespaces(let namespaces) = catalog else {
+      Issue.record("The recovery checkpoint must remain readable: \(catalog)")
+      return
+    }
+    #expect(namespaces.first?.acknowledgedSnapshot?.checkpointGeneration == checkpoint)
+    #expect(namespaces.first?.preparedProposals.isEmpty == true)
+  }
+
+  @Test func unrelatedTitleEditDoesNotInvalidatePriorNotesHash() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly
+    )
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap() else {
+      Issue.record("The local dataset must initialize.")
+      return
+    }
+    let created = await planner.execute(
+      PlannerOperation(
+        operationId: UUID(), session: session,
+        command: .createItem(
+          content: PlannerItemContentInput(title: "Hotel", notes: "Original notes"))
+      ))
+    guard case .applied(let createdResult, .complete) = created.outcome else {
+      Issue.record("Hotel creation failed: \(created)")
+      return
+    }
+    let item = try #require(createdResult.generated.first)
+    guard case .source(let original) = await planner.read(session: session, request: .source(item))
+    else {
+      Issue.record("Original content hashes must be readable.")
+      return
+    }
+    let originalTitleHash = try #require(original.fieldHashes[.title])
+    let originalNotesHash = try #require(original.fieldHashes[.notes])
+    let titleEdit = await planner.execute(
+      PlannerOperation(
+        operationId: UUID(), session: session,
+        command: .editItem(
+          sourceId: item.id, changes: PlannerItemChanges(title: .set("Tokyo Hotel")),
+          expectedFieldHashes: [.title: originalTitleHash])
+      ))
+    guard case .applied(_, .complete) = titleEdit.outcome else {
+      Issue.record("The title edit must save independently: \(titleEdit)")
+      return
+    }
+    guard case .source(let renamed) = await planner.read(session: session, request: .source(item))
+    else {
+      Issue.record("Renamed Hotel must be readable.")
+      return
+    }
+    #expect(renamed.content.title == "Tokyo Hotel")
+    #expect(renamed.content.notes == "Original notes")
+    #expect(renamed.fieldHashes[.notes] == originalNotesHash)
+    #expect(renamed.fieldHashes[.title] != originalTitleHash)
+    let notesEdit = await planner.execute(
+      PlannerOperation(
+        operationId: UUID(), session: session,
+        command: .editItem(
+          sourceId: item.id, changes: PlannerItemChanges(notes: .set("Friday booking")),
+          expectedFieldHashes: original.fieldHashes)
+      ))
+    guard case .applied(_, .complete) = notesEdit.outcome else {
+      Issue.record("A stale unchanged title hash must not reject the notes-only edit: \(notesEdit)")
+      return
+    }
+    let reopenedPlanner = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopenedPlanner.bootstrap() else {
+      Issue.record("The completed dataset must reopen.")
+      return
+    }
+    guard
+      case .source(let current) = await reopenedPlanner.read(
+        session: reopenedSession, request: .source(item))
+    else {
+      Issue.record("The Item must remain readable.")
+      return
+    }
+    #expect(current.content.title == "Tokyo Hotel")
+    #expect(current.content.notes == "Friday booking")
+    #expect(current.fieldHashes[.title] == renamed.fieldHashes[.title])
+    #expect(current.fieldHashes[.notes] != originalNotesHash)
+    #expect(current.createdAt == original.createdAt)
+    #expect(current.state.globalDone == false)
+    #expect(current.state.archived == false)
+  }
+
   @Test func replayingNotesEditReturnsOriginalEvidenceWithoutReapplyingOldValue() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }

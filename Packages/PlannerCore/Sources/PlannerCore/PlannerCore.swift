@@ -87,7 +87,7 @@ public actor Planner {
         let envelope = try archive.latest()
         switch operation.command {
         case .editItem(let sourceId, let changes, let expectedFieldHashes):
-          return try executeNotesEdit(
+          return try executeItemTextEdit(
             operation, sourceId: sourceId, changes: changes, hashes: expectedFieldHashes,
             identity: identity, context: context, archive: archive, receipts: receipts,
             envelope: envelope
@@ -252,17 +252,17 @@ public actor Planner {
     } catch { return .failed(failure(error, code: "readUnavailable")) }
   }
 
-  private func executeNotesEdit(
+  private func executeItemTextEdit(
     _ operation: PlannerOperation, sourceId: UUID, changes: PlannerItemChanges,
     hashes: [PlannerItemField: PlannerFieldHash], identity: PlannerStoreIdentity,
     context: ModelContext, archive: PlannerRecoveryArchive,
     receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
   ) throws -> PlannerOperationResult {
-    let notes = try changes.validatedNotesChange()
-    guard let expectedHash = hashes[.notes] else {
+    let changedFields = try changes.validatedTextFields()
+    for field in changedFields where hashes[field] == nil {
       throw PlannerFailure(
-        "invalidInput", "A notes edit requires its prior field hash.",
-        propertyPath: "/command/expectedFieldHashes/notes")
+        "invalidInput", "Every changed field requires its prior hash.",
+        propertyPath: "/command/expectedFieldHashes/\(field.rawValue)")
     }
     for (field, hash) in hashes {
       let prefix = "sha256-v1:"
@@ -277,8 +277,8 @@ public actor Planner {
     }
     if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
       let stored = try receipt.evidence()
-      let digest = changes.notesPayloadDigest(
-        sourceId: sourceId, notes: notes, expectedHash: expectedHash,
+      let digest = try changes.textPayloadDigest(
+        sourceId: sourceId, fields: changedFields, hashes: hashes,
         identity: identity, bindings: stored.bindings
       )
       guard receipt.payloadDigest == digest else {
@@ -303,8 +303,8 @@ public actor Planner {
     let bindings = [
       PlannerBoundIdentity(kind: "item", id: before.id, lifetimeId: before.lifetimeId)
     ]
-    let digest = changes.notesPayloadDigest(
-      sourceId: sourceId, notes: notes, expectedHash: expectedHash, identity: identity,
+    let digest = try changes.textPayloadDigest(
+      sourceId: sourceId, fields: changedFields, hashes: hashes, identity: identity,
       bindings: bindings
     )
     if let proposal = try archive.proposals().first(where: {
@@ -317,22 +317,30 @@ public actor Planner {
       return PlannerOperationResult(
         operationId: operation.operationId, outcome: .unverified(proposal.summary))
     }
-    let currentHash = before.input.fieldHashes(
-      datasetId: identity.datasetId, itemId: before.id, lifetimeId: before.lifetimeId)[.notes]
-    guard currentHash == expectedHash else {
-      let currentHashes = currentHash.map { [PlannerItemField.notes: $0] } ?? [:]
+    let fieldHashes = before.input.fieldHashes(
+      datasetId: identity.datasetId, itemId: before.id, lifetimeId: before.lifetimeId
+    )
+    let conflictingFields = changedFields.filter { fieldHashes[$0] != hashes[$0] }
+    if !conflictingFields.isEmpty {
+      var currentValues: [PlannerItemField: PlannerItemFieldValue] = [:]
+      var currentHashes: [PlannerItemField: PlannerFieldHash] = [:]
+      for field in conflictingFields {
+        guard let hash = fieldHashes[field] else {
+          throw PlannerFailure("readUnavailable", "A changed field has no current hash.")
+        }
+        currentHashes[field] = hash
+        if field == .title { currentValues[field] = .string(before.input.title) }
+        if field == .notes { currentValues[field] = .optionalString(before.input.notes) }
+      }
       throw PlannerFailure(
-        "staleEdit", "Notes changed since the supplied read.",
+        "staleEdit", "Changed fields differ from the supplied read.",
         details: .staleEdit(
-          conflictingFields: [.notes], currentValues: [.notes: .optionalString(before.input.notes)],
+          conflictingFields: conflictingFields, currentValues: currentValues,
           currentFieldHashes: currentHashes
         ))
     }
     let now = Date()
-    let updatedInput = PlannerItemContentInput(
-      title: before.input.title, subtitle: before.input.subtitle, notes: notes,
-      location: before.input.location, estimate: before.input.estimate
-    )
+    let updatedInput = try changes.applyingTextChanges(to: before.input)
     let after = ItemSnapshot(
       id: before.id, lifetimeId: before.lifetimeId, createdAt: before.createdAt, updatedAt: now,
       input: updatedInput, globalDone: before.globalDone, archived: before.archived
@@ -351,14 +359,15 @@ public actor Planner {
     try archive.prepare(proposal)
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
-    item.notes = notes
+    item.title = updatedInput.title
+    item.notes = updatedInput.notes
     item.updatedAt = now
     context.insert(receipt)
     do { try context.save() } catch {
       context.rollback()
       throw PlannerFailure(
         "persistenceFailure",
-        "The complete notes edit was not committed: \(error.localizedDescription)")
+        "The complete Item edit was not committed: \(error.localizedDescription)")
     }
     do {
       let generation = try archive.publish(items: snapshots, receipts: receipts + [receipt])

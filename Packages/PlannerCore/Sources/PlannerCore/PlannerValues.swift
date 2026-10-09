@@ -47,6 +47,7 @@ public struct PlannerFailure: Error, Sendable, Equatable {
 }
 
 public enum PlannerItemFieldValue: Sendable, Equatable {
+  case string(String)
   case optionalString(String?)
 }
 
