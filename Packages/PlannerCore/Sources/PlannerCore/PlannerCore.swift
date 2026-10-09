@@ -131,6 +131,11 @@ public actor Planner {
             identity: identity, context: context, archive: archive, receipts: receipts,
             envelope: envelope
           )
+        case .editSchedule(let scheduleId, let changes, let expectedFieldHashes):
+          return try executeScheduleEdit(
+            operation, scheduleId: scheduleId, changes: changes, hashes: expectedFieldHashes,
+            identity: identity, context: context, archive: archive, receipts: receipts,
+            envelope: envelope)
         case .createItem(let content):
           try content.validate()
           let digest = content.payloadDigest(
@@ -532,6 +537,140 @@ public actor Planner {
           "unavailable", "Selecting prepared proposals is not implemented by this first fixture.")
       }
     } catch { return .failed(failure(error, code: "readUnavailable")) }
+  }
+
+  private func executeScheduleEdit(
+    _ operation: PlannerOperation, scheduleId: UUID, changes: PlannerScheduleChanges,
+    hashes: [PlannerScheduleField: PlannerFieldHash], identity: PlannerStoreIdentity,
+    context: ModelContext, archive: PlannerRecoveryArchive, receipts: [PlannerSchemaV1.Receipt],
+    envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    try changes.form.validate(propertyPath: "/command/changes/form")
+    guard let expectedHash = hashes[.form] else {
+      throw PlannerFailure(
+        "invalidInput", "The Schedule form requires its prior hash.",
+        propertyPath: "/command/expectedFieldHashes/form")
+    }
+    let prefix = "sha256-v1:"
+    let suffix = expectedHash.value.dropFirst(prefix.count)
+    guard expectedHash.value.hasPrefix(prefix), suffix.count == 64,
+      suffix.allSatisfy({ "0123456789abcdef".contains($0) })
+    else {
+      throw PlannerFailure(
+        "invalidInput", "The supplied form hash has an unsupported format.",
+        propertyPath: "/command/expectedFieldHashes/form")
+    }
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let stored = try receipt.evidence()
+      guard
+        receipt.payloadDigest
+          == changes.editDigest(
+            scheduleId: scheduleId,
+            expectedFormHash: expectedHash, identity: identity, bindings: stored.bindings)
+      else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "This operation identity describes a different edit.")
+      }
+      return appliedResult(
+        operationId: operation.operationId,
+        evidence: try RecoveryReceipt(receipt, checkpoint: nil), envelope: envelope)
+    }
+    let completedIdentifiers = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { completedIdentifiers.contains($0) } ?? false })
+    else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    var assignments = FetchDescriptor<PlannerSchemaV3.Schedule>(
+      predicate: #Predicate { $0.id == scheduleId })
+    assignments.fetchLimit = 2
+    let records = try context.fetch(assignments)
+    guard records.count == 1, let record = records.first,
+      let ownerIdentifier = record.sourceId, let ownerLifetime = record.sourceLifetimeId
+    else {
+      throw PlannerFailure("missingReference", "The selected Schedule is missing or unresolved.")
+    }
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV3.Item>())
+    let owners = items.filter { $0.id == ownerIdentifier && $0.lifetimeId == ownerLifetime }
+    guard owners.count == 1 else {
+      throw PlannerFailure(
+        "missingReference", "The Schedule's source Item is missing or unresolved.")
+    }
+    let before = try record.value(ownerId: ownerIdentifier, ownerLifetimeId: ownerLifetime)
+    let bindings = [
+      PlannerBoundIdentity(kind: "schedule", id: before.id, lifetimeId: before.lifetimeId),
+      PlannerBoundIdentity(kind: "item", id: ownerIdentifier, lifetimeId: ownerLifetime),
+    ]
+    let digest = changes.editDigest(
+      scheduleId: scheduleId, expectedFormHash: expectedHash,
+      identity: identity, bindings: bindings)
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes a different edit.")
+      }
+      return PlannerOperationResult(
+        operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    let currentHash = before.formHash(datasetId: identity.datasetId)
+    guard currentHash == expectedHash else {
+      throw PlannerFailure(
+        "staleEdit", "The Schedule form differs from the supplied read.",
+        details: .staleScheduleEdit(currentForm: before.form, currentFormHash: currentHash))
+    }
+    let after = ScheduleSnapshot(id: before.id, lifetimeId: before.lifetimeId, form: changes.form)
+    let snapshots = try items.map { item in
+      var snapshot = try item.value()
+      if item.id == ownerIdentifier {
+        snapshot.schedules = snapshot.schedules.map { schedule in
+          if schedule.id == scheduleId { return after }
+          return schedule
+        }
+      }
+      return snapshot
+    }
+    let result = PlannerAppliedResult(
+      generated: [],
+      affected: [
+        before.reference,
+        PlannerEntityReference(kind: .item, id: ownerIdentifier),
+      ])
+    try archive.prepare(
+      RecoveryPreparedProposal(
+        proposalId: UUID(),
+        originalOperationId: operation.operationId, datasetId: identity.datasetId,
+        ownershipBinding: identity.ownershipBinding,
+        proposedBackup: ItemOnlyPortableBackup(items: snapshots),
+        payloadDigest: digest, evidence: "preparedUnverified"))
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest,
+      result: result, bindings: bindings)
+    switch changes.form {
+    case .timed(let start, let end, let planningTimeZone):
+      record.start = start
+      record.end = end
+      record.planningTimeZone = planningTimeZone
+    }
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The complete Schedule edit was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(items: snapshots, receipts: receipts + [receipt])
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
   }
 
   private func executeScheduleCreation(

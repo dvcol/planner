@@ -59,6 +59,7 @@ public enum PlannerFailureDetails: Sendable, Equatable {
     conflictingFields: [PlannerItemField], currentValues: [PlannerItemField: PlannerItemFieldValue],
     currentFieldHashes: [PlannerItemField: PlannerFieldHash]
   )
+  case staleScheduleEdit(currentForm: PlannerScheduleForm, currentFormHash: PlannerFieldHash)
 }
 
 public enum PlannerBootstrapResult: Sendable {
@@ -159,6 +160,9 @@ public struct PlannerItemContentInput: Sendable, Equatable {
 public enum PlannerCommand: Sendable {
   case createItem(content: PlannerItemContentInput)
   case createSchedule(source: PlannerEntityReference, form: PlannerScheduleForm)
+  case editSchedule(
+    scheduleId: UUID, changes: PlannerScheduleChanges,
+    expectedFieldHashes: [PlannerScheduleField: PlannerFieldHash])
   case setCompletion(scope: PlannerCompletionScope, done: Bool)
   case setArchive(source: PlannerEntityReference, archived: Bool)
   case editItem(

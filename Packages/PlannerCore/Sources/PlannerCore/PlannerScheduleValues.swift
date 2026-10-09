@@ -39,6 +39,12 @@ public struct PlannerPortableSchedule: Sendable {
 
 public enum PlannerScheduleField: String, Sendable, CaseIterable { case form }
 
+public struct PlannerScheduleChanges: Sendable {
+  public let form: PlannerScheduleForm
+
+  public init(form: PlannerScheduleForm) { self.form = form }
+}
+
 public struct PlannerScheduleContent: Sendable, Equatable {
   public let source: PlannerEntityReference
   public let form: PlannerScheduleForm
@@ -59,24 +65,25 @@ struct ScheduleSnapshot {
 }
 
 extension PlannerScheduleForm {
-  func validate() throws {
+  func validate(propertyPath: String = "/command/form") throws {
     switch self {
     case .timed(let start, let end, let planningTimeZone):
       guard start.timeIntervalSinceReferenceDate.isFinite else {
         throw PlannerFailure(
-          "invalidInput", "The Schedule start must be finite.", propertyPath: "/command/form/start")
+          "invalidInput", "The Schedule start must be finite.",
+          propertyPath: propertyPath + "/start")
       }
       if let end {
         guard end.timeIntervalSinceReferenceDate.isFinite, end > start else {
           throw PlannerFailure(
             "invalidInput", "A supplied Schedule end must be finite and later than its start.",
-            propertyPath: "/command/form/end")
+            propertyPath: propertyPath + "/end")
         }
       }
       guard TimeZone(identifier: planningTimeZone) != nil else {
         throw PlannerFailure(
           "invalidInput", "The planning timezone must be valid.",
-          propertyPath: "/command/form/planningTimeZone")
+          propertyPath: propertyPath + "/planningTimeZone")
       }
     }
   }
@@ -100,6 +107,26 @@ extension PlannerScheduleForm {
         "type": .string("createSchedule"),
         "source": .record(["kind": .string(source.kind.rawValue), "id": .identity(source.id)]),
         "form": canonicalValue,
+      ]),
+      "datasetId": .identity(identity.datasetId),
+      "ownershipBinding": .string(identity.ownershipBinding),
+      "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
+    ])
+    let bytes = Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded()
+    return plannerDigest(bytes, prefix: "sha256-payload-v1:")
+  }
+}
+
+extension PlannerScheduleChanges {
+  func editDigest(
+    scheduleId: UUID, expectedFormHash: PlannerFieldHash, identity: PlannerStoreIdentity,
+    bindings: [PlannerBoundIdentity]
+  ) -> String {
+    let value = PlannerCanonicalValue.record([
+      "command": .record([
+        "type": .string("editSchedule"), "scheduleId": .identity(scheduleId),
+        "changes": .record(["form": form.canonicalValue]),
+        "expectedFieldHashes": .record(["form": .string(expectedFormHash.value)]),
       ]),
       "datasetId": .identity(identity.datasetId),
       "ownershipBinding": .string(identity.ownershipBinding),

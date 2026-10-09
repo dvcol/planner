@@ -13,6 +13,12 @@
           "requestedGeneration": .string(requestedGeneration.uuidString),
           "currentGeneration": currentGeneration.map { .string($0.uuidString) } ?? .null,
         ])
+      case .staleScheduleEdit(let form, let hash):
+        details = .object([
+          "kind": .string("staleEdit"), "conflictingFields": .array([.string("form")]),
+          "currentValues": .object(["form": PlannerMCPRowValue.scheduleForm(form)]),
+          "currentFieldHashes": .object(["form": .string(hash.value)]),
+        ])
       case .staleEdit(let fields, let values, let hashes):
         details = .object([
           "kind": .string("staleEdit"),
