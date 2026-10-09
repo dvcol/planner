@@ -4,6 +4,7 @@
   import NIOCore
   import NIOHTTP1
   import NIOPosix
+  import Synchronization
 
   actor PlannerMCPLoopbackListener {
     enum Failure: Error {
@@ -14,6 +15,7 @@
     private var eventLoopGroup: MultiThreadedEventLoopGroup?
     private var acceptingChannel: (any Channel)?
     private var servingTask: Task<Void, Never>?
+    private var acceptedConnections: PlannerMCPAcceptedConnections?
 
     init(requestHandler: PlannerMCPRequestHandler) {
       self.requestHandler = requestHandler
@@ -24,15 +26,18 @@
 
       let eventLoopGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
       let bootstrap = ServerBootstrap(group: eventLoopGroup)
+        .childChannelOption(ChannelOptions.autoRead, value: false)
+      let acceptedConnections = PlannerMCPAcceptedConnections()
 
       do {
-        let serverChannel = try await bootstrap.bind(host: "127.0.0.1", port: Int(port)) {
+        let serverChannel: NIOAsyncChannel<any Channel, Never> = try await bootstrap.bind(
+          host: "127.0.0.1", port: Int(port)
+        ) {
           channel in
-          channel.pipeline.configureHTTPServerPipeline().flatMapThrowing {
-            try NIOAsyncChannel<HTTPServerRequestPart, HTTPServerResponsePart>(
-              wrappingChannelSynchronously: channel
-            )
+          guard acceptedConnections.register(channel) else {
+            return channel.eventLoop.makeFailedFuture(Failure.unavailable)
           }
+          return channel.pipeline.configureHTTPServerPipeline().map { channel }
         }
         guard let boundPort = serverChannel.channel.localAddress?.port,
           let endpoint = URL(string: "http://127.0.0.1:\(boundPort)/mcp")
@@ -42,6 +47,7 @@
         }
 
         self.eventLoopGroup = eventLoopGroup
+        self.acceptedConnections = acceptedConnections
         acceptingChannel = serverChannel.channel
         let requestHandler = self.requestHandler
         servingTask = Task {
@@ -49,6 +55,7 @@
         }
         return endpoint
       } catch {
+        acceptedConnections.closeAll()
         try? await eventLoopGroup.shutdownGracefully()
         throw error
       }
@@ -56,6 +63,7 @@
 
     func stop() async {
       await requestHandler.revokeAccess()
+      acceptedConnections?.closeAll()
       try? await acceptingChannel?.close().get()
       servingTask?.cancel()
       await servingTask?.value
@@ -63,29 +71,29 @@
       acceptingChannel = nil
       servingTask = nil
       eventLoopGroup = nil
+      acceptedConnections = nil
     }
 
     private static func serve(
-      _ serverChannel: NIOAsyncChannel<
-        NIOAsyncChannel<HTTPServerRequestPart, HTTPServerResponsePart>, Never
-      >,
+      _ serverChannel: NIOAsyncChannel<any Channel, Never>,
       requestHandler: PlannerMCPRequestHandler
     ) async {
       do {
         try await serverChannel.executeThenClose { inbound in
           await withDiscardingTaskGroup { connections in
+            defer { connections.cancelAll() }
             do {
               for try await connection in inbound {
                 connections.addTask {
                   await withTaskCancellationHandler {
                     try? await respond(connection, requestHandler: requestHandler)
                   } onCancel: {
-                    connection.channel.close(promise: nil)
+                    connection.close(promise: nil)
                   }
                 }
               }
             } catch {
-              connections.cancelAll()
+              return
             }
           }
         }
@@ -95,10 +103,15 @@
     }
 
     private static func respond(
-      _ connection: NIOAsyncChannel<HTTPServerRequestPart, HTTPServerResponsePart>,
+      _ channel: any Channel,
       requestHandler: PlannerMCPRequestHandler
     ) async throws {
+      let connection = try await channel.eventLoop.submit {
+        try NIOAsyncChannel<HTTPServerRequestPart, HTTPServerResponsePart>(
+          wrappingChannelSynchronously: channel)
+      }.get()
       try await connection.executeThenClose { inbound, outbound in
+        try await channel.setOption(ChannelOptions.autoRead, value: true).get()
         var requestHead: HTTPRequestHead?
         var requestBody = ByteBufferAllocator().buffer(capacity: 0)
 
@@ -145,6 +158,46 @@
             return
           }
         }
+      }
+    }
+  }
+
+  private final class PlannerMCPAcceptedConnections: Sendable {
+    private struct State {
+      var channels: [ObjectIdentifier: any Channel] = [:]
+      var isStopping = false
+    }
+
+    private let state = Mutex(State())
+
+    func register(_ channel: any Channel) -> Bool {
+      let identity = ObjectIdentifier(channel)
+      let registered = state.withLock { state in
+        guard !state.isStopping else { return false }
+        state.channels[identity] = channel
+        return true
+      }
+      guard registered else {
+        channel.close(promise: nil)
+        return false
+      }
+      channel.closeFuture.whenComplete { [weak self] _ in
+        self?.state.withLock { state in
+          _ = state.channels.removeValue(forKey: identity)
+        }
+      }
+      return true
+    }
+
+    func closeAll() {
+      let channels = state.withLock { state in
+        state.isStopping = true
+        let channels = Array(state.channels.values)
+        state.channels.removeAll()
+        return channels
+      }
+      for channel in channels {
+        channel.close(promise: nil)
       }
     }
   }
