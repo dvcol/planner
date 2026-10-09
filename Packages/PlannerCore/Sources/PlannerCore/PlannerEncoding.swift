@@ -165,28 +165,78 @@ extension PlannerFieldChange {
 }
 
 extension PlannerItemChanges {
-  func validatedNotesChange() throws -> String? {
-    guard title.isUnchanged, subtitle.isUnchanged, location.isUnchanged, estimate.isUnchanged,
+  func validatedTextFields() throws -> [PlannerItemField] {
+    guard subtitle.isUnchanged, location.isUnchanged, estimate.isUnchanged,
       links.isUnchanged, categoryIds.isUnchanged, tagIds.isUnchanged
-    else { throw PlannerFailure("unavailable", "This edit fixture currently supports notes only.") }
-    switch notes {
-    case .unchanged:
+    else {
+      throw PlannerFailure(
+        "unavailable", "This edit fixture currently supports title and notes only.")
+    }
+    switch title {
+    case .clear:
+      throw PlannerFailure(
+        "invalidInput", "An Item title cannot be cleared.", propertyPath: "/command/changes/title")
+    case .set(let value):
+      guard !value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        throw PlannerFailure(
+          "invalidInput", "An Item title must contain text.", propertyPath: "/command/changes/title"
+        )
+      }
+    case .unchanged: break
+    }
+    var fields: [PlannerItemField] = []
+    if !title.isUnchanged { fields.append(.title) }
+    if !notes.isUnchanged { fields.append(.notes) }
+    guard !fields.isEmpty else {
       throw PlannerFailure(
         "invalidInput", "An Item edit must contain at least one changed field.",
         propertyPath: "/command/changes")
-    case .set(let value): return value
-    case .clear: return nil
     }
+    return fields.sorted { $0.rawValue < $1.rawValue }
   }
 
-  func notesPayloadDigest(
-    sourceId: UUID, notes: String?, expectedHash: PlannerFieldHash,
+  func applyingTextChanges(to input: PlannerItemContentInput) throws -> PlannerItemContentInput {
+    var updatedTitle = input.title
+    var updatedNotes = input.notes
+    switch title {
+    case .set(let value): updatedTitle = value
+    case .clear: throw PlannerFailure("invalidInput", "An Item title cannot be cleared.")
+    case .unchanged: break
+    }
+    switch notes {
+    case .set(let value): updatedNotes = value
+    case .clear: updatedNotes = nil
+    case .unchanged: break
+    }
+    return PlannerItemContentInput(
+      title: updatedTitle, subtitle: input.subtitle, notes: updatedNotes,
+      location: input.location, estimate: input.estimate
+    )
+  }
+
+  func textPayloadDigest(
+    sourceId: UUID, fields: [PlannerItemField], hashes: [PlannerItemField: PlannerFieldHash],
     identity: PlannerStoreIdentity, bindings: [PlannerBoundIdentity]
-  ) -> String {
+  ) throws -> String {
+    var changedValues: [String: PlannerCanonicalValue] = [:]
+    if case .set(let value) = title { changedValues["title"] = .string(value) }
+    switch notes {
+    case .set(let value): changedValues["notes"] = .optional(.string(value))
+    case .clear: changedValues["notes"] = .optional(nil)
+    case .unchanged: break
+    }
+    var usedHashes: [String: PlannerCanonicalValue] = [:]
+    for field in fields {
+      guard let hash = hashes[field] else {
+        throw PlannerFailure(
+          "invalidInput", "Every changed field requires its prior hash.",
+          propertyPath: "/command/expectedFieldHashes/\(field.rawValue)")
+      }
+      usedHashes[field.rawValue] = .string(hash.value)
+    }
     let command = PlannerCanonicalValue.record([
       "type": .string("editItem"), "sourceId": .identity(sourceId),
-      "changes": .record(["notes": .optional(notes.map { .string($0) })]),
-      "expectedFieldHashes": .record(["notes": .string(expectedHash.value)]),
+      "changes": .record(changedValues), "expectedFieldHashes": .record(usedHashes),
     ])
     let value = PlannerCanonicalValue.record([
       "command": command, "datasetId": .identity(identity.datasetId),

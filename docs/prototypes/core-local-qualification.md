@@ -34,6 +34,18 @@ The [actual notes-edit evidence](evidence/mcp/core-notes-edit.json) records the 
 
 Notes result bundles are `/private/tmp/PlannerCoreNotesEditRed.xcresult`, `/private/tmp/PlannerCoreNotesEditGreen.xcresult`, `/private/tmp/PlannerCoreStaleNotesQualification.xcresult` and `/private/tmp/PlannerCoreNotesReplayQualification.xcresult`. Matching logs record builds and execution. The affected app log retains metadata-extraction and com.apple.linkd.autoShortcut diagnostics; its thirteen transport tests pass, and this evidence does not qualify App Intents or dismiss those diagnostics as pre-existing.
 
+## Independent text-field guards
+
+The next slice extends that notes-only implementation to title Set and notes Set/Clear. An unrelated title edit changes Hotel to Tokyo Hotel while leaving Original notes and its prior hash intact. A subsequent notes-only edit accepts the earlier read, including its now-stale unchanged title hash, and preserves Tokyo Hotel after reopening. Payload fingerprints include only changed fields and their required hashes.
+
+The executable red ran four edit tests, with the new title behavior failing as unavailable and the previous three passing. Its green runs all eight Core store tests, all passing. An earlier individual-test selector discovered zero tests and is explicitly excluded from behavior evidence.
+
+A subsequent whole-patch qualification passed on its first execution. After Friday booking is saved, a patch proposing Tokyo Hotel and Monday booking from the earlier read has one stale field. It rejects the complete patch, reports only notes as conflicting, and retains Hotel/Friday booking, source timestamps/hashes and the acknowledged checkpoint with no prepared proposal.
+
+The [actual text-field summaries](evidence/mcp/core-text-fields.json) record the four-test red, eight-test green, nine-test final qualification/package runs, thirteen-test affected app regression and generic iOS test-bundle compilation. Source and changed-document lint pass. Other changed content fields still return unavailable. No compound edit, fixed-context vector, competing-writer, account-reset or physical CloudKit evidence is claimed.
+
+Result bundles are `/private/tmp/PlannerCoreUnrelatedFieldExecutableRed.xcresult`, `/private/tmp/PlannerCoreUnrelatedFieldGreen.xcresult` and `/private/tmp/PlannerCoreAtomicTextPatchQualification.xcresult`. The zero-test selection run is `/private/tmp/PlannerCoreUnrelatedFieldRed.xcresult`.
+
 ## Reproduction
 
 Use unique result-bundle paths on rerun. Scope DEVELOPER_DIR to the accepted Xcode installation.
