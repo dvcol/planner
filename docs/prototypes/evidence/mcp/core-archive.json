@@ -1,0 +1,179 @@
+{
+  "scope": "Item Archive/Unarchive through persistent Core, independent acknowledged recovery and original-operation replay after newer state",
+  "limitations": [
+    "Item-only local fixture with global Todo input; container references and globally Done preservation are not yet exercised.",
+    "No genuine persistence/archive failure, concurrent-process, native UI, selected-client or CloudKit proof."
+  ],
+  "red": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "passedTests": 0,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 1,
+    "finishTime": 1791514073.266,
+    "passedTests": 0,
+    "result": "Failed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791514059.165,
+    "statistics": [],
+    "testFailures": [
+      {
+        "failureText": "Issue recorded: Archive must complete independently: PlannerOperationResult(operationId: BBAFA804-EE0E-458E-B58B-B74E8D75D987, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: \"unavailable\", propertyPath: nil, message: \"Archive is not implemented by this fixture yet.\", details: nil)))",
+        "targetName": "PlannerCoreStoreTests",
+        "testIdentifier": 1,
+        "testIdentifierString": "ItemArchiveTests/archivingRetainsContentAndCompletionAcrossReopenAndIndependentRecovery()",
+        "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerCoreStoreTests/ItemArchiveTests/archivingRetainsContentAndCompletionAcrossReopenAndIndependentRecovery()",
+        "testName": "archivingRetainsContentAndCompletionAcrossReopenAndIndependentRecovery()"
+      }
+    ],
+    "title": "Test - PlannerCore",
+    "topInsights": [],
+    "totalTestCount": 1
+  },
+  "green": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 11,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791514153.851,
+    "passedTests": 11,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791514149.306,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - PlannerCore",
+    "topInsights": [],
+    "totalTestCount": 11
+  },
+  "unarchiveReplay": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 12,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791514246.454,
+    "passedTests": 12,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791514243.526,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - PlannerCore",
+    "topInsights": [],
+    "totalTestCount": 12
+  },
+  "mcpRegression": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 25,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791514356.834,
+    "passedTests": 19,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791514343.468,
+    "statistics": [
+      {
+        "subtitle": "9 test runs",
+        "title": "3 tests ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 19
+  },
+  "package": {
+    "passed": 12,
+    "suites": 4,
+    "log": "/private/tmp/PlannerCoreArchivePackage.log"
+  },
+  "iOSBuild": {
+    "result": "TEST BUILD SUCCEEDED",
+    "runtime": false,
+    "log": "/private/tmp/PlannerCoreArchiveMobileBuild.log"
+  }
+}
