@@ -16,7 +16,7 @@ This is the existing Item-only schema. The Item row wire path is now qualified t
 
 [Global Item completion and Reopen](core-local-qualification.md#global-item-completion-and-reopen) now save through Core with independent recovery. Completing an archived Item preserves its content/archive state, updates its effective row state and invalidates an old Todo window. No-op timestamp and identical/changed replay checks preserve the current state after Reopen. Nineteen store functions and two native completion functions pass; the affected 24-function MCP target passes and simulator Core test bundles compile.
 
-The native UI remains the recorded read-only fixture. This adds no contextual flag, bulk action, provider I/O or checkbox facade simulation. Those interactions still need full-graph persistence and their own native tests before Navigation prototype can complete.
+The [global Item MCP route](mcp-http-qualification.md#global-item-completion-over-http) is now qualified with replay and strict scope rejection through actual HTTP. The native UI remains the recorded read-only fixture. This adds no contextual flag, bulk action, provider I/O or simulated checkbox save. Those interactions still need full-graph persistence and their own native tests before Navigation prototype can complete.
 
 ## Starting state and first goal
 
