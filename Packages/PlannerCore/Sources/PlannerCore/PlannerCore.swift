@@ -9,6 +9,10 @@ public actor Planner {
     let historyToken: DefaultHistoryToken?
   }
   private var querySnapshots: [UUID: QueryBinding] = [:]
+  private enum ItemStateChange {
+    case archive(Bool)
+    case completion(Bool)
+  }
 
   public init(configuration: PlannerStorageConfiguration) {
     self.configuration = configuration
@@ -91,9 +95,18 @@ public actor Planner {
         let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
         let envelope = try archive.latest()
         switch operation.command {
+        case .setCompletion(let scope, let done):
+          switch scope {
+          case .globalItem(let itemId):
+            return try executeItemStateChange(
+              operation, source: PlannerEntityReference(kind: .item, id: itemId),
+              change: .completion(done), identity: identity, context: context,
+              archive: archive, receipts: receipts, envelope: envelope)
+          }
         case .setArchive(let source, let archived):
-          return try executeItemArchive(
-            operation, source: source, archived: archived, identity: identity, context: context,
+          return try executeItemStateChange(
+            operation, source: source, change: .archive(archived), identity: identity,
+            context: context,
             archive: archive, receipts: receipts, envelope: envelope)
         case .editItem(let sourceId, let changes, let expectedFieldHashes):
           return try executeItemTextEdit(
@@ -529,20 +542,20 @@ public actor Planner {
     }
   }
 
-  private func executeItemArchive(
-    _ operation: PlannerOperation, source: PlannerEntityReference, archived: Bool,
+  private func executeItemStateChange(
+    _ operation: PlannerOperation, source: PlannerEntityReference, change: ItemStateChange,
     identity: PlannerStoreIdentity, context: ModelContext, archive: PlannerRecoveryArchive,
     receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
   ) throws -> PlannerOperationResult {
     guard source.kind == .item else {
       throw PlannerFailure(
-        "unavailable", "This fixture currently archives Items only.",
+        "unavailable", "This fixture currently changes Item states only.",
         propertyPath: "/command/source/kind")
     }
     if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
       let stored = try receipt.evidence()
-      let digest = itemArchivePayloadDigest(
-        source: source, archived: archived, identity: identity, bindings: stored.bindings)
+      let digest = itemStatePayloadDigest(
+        source: source, change: change, identity: identity, bindings: stored.bindings)
       guard receipt.payloadDigest == digest else {
         throw PlannerFailure(
           "operationPayloadMismatch",
@@ -566,8 +579,8 @@ public actor Planner {
     let bindings = [
       PlannerBoundIdentity(kind: "item", id: before.id, lifetimeId: before.lifetimeId)
     ]
-    let digest = itemArchivePayloadDigest(
-      source: source, archived: archived, identity: identity, bindings: bindings)
+    let digest = itemStatePayloadDigest(
+      source: source, change: change, identity: identity, bindings: bindings)
     if let proposal = try archive.proposals().first(where: {
       $0.originalOperationId == operation.operationId
     }) {
@@ -578,11 +591,20 @@ public actor Planner {
       return PlannerOperationResult(
         operationId: operation.operationId, outcome: .unverified(proposal.summary))
     }
-    let updatedAt = before.archived == archived ? before.updatedAt : Date()
+    var archived = before.archived
+    var globalDone = before.globalDone
+    switch change {
+    case .archive(let value): archived = value
+    case .completion(let value): globalDone = value
+    }
+    var updatedAt = before.updatedAt
+    if archived != before.archived || globalDone != before.globalDone {
+      updatedAt = Date()
+    }
     let after = ItemSnapshot(
       id: before.id, lifetimeId: before.lifetimeId,
       createdAt: before.createdAt, updatedAt: updatedAt, input: before.input,
-      globalDone: before.globalDone, archived: archived)
+      globalDone: globalDone, archived: archived)
     let snapshots = try items.map { record in
       if record.id == source.id { return after }
       return try record.value()
@@ -596,14 +618,17 @@ public actor Planner {
     try archive.prepare(proposal)
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
-    item.archived = archived
+    switch change {
+    case .archive(let value): item.archived = value
+    case .completion(let value): item.globalDone = value
+    }
     item.updatedAt = updatedAt
     context.insert(receipt)
     do { try context.save() } catch {
       context.rollback()
       throw PlannerFailure(
         "persistenceFailure",
-        "The complete Archive action was not committed: \(error.localizedDescription)")
+        "The complete Item state action was not committed: \(error.localizedDescription)")
     }
     do {
       let generation = try archive.publish(items: snapshots, receipts: receipts + [receipt])
@@ -618,15 +643,25 @@ public actor Planner {
     }
   }
 
-  private func itemArchivePayloadDigest(
-    source: PlannerEntityReference, archived: Bool, identity: PlannerStoreIdentity,
+  private func itemStatePayloadDigest(
+    source: PlannerEntityReference, change: ItemStateChange, identity: PlannerStoreIdentity,
     bindings: [PlannerBoundIdentity]
   ) -> String {
-    let command = PlannerCanonicalValue.record([
-      "type": .string("setArchive"),
-      "source": .record(["kind": .string(source.kind.rawValue), "id": .identity(source.id)]),
-      "archived": .boolean(archived),
-    ])
+    let command: PlannerCanonicalValue
+    switch change {
+    case .archive(let archived):
+      command = .record([
+        "type": .string("setArchive"),
+        "source": .record(["kind": .string(source.kind.rawValue), "id": .identity(source.id)]),
+        "archived": .boolean(archived),
+      ])
+    case .completion(let done):
+      command = .record([
+        "type": .string("setCompletion"),
+        "scope": .record(["kind": .string("globalItem"), "itemId": .identity(source.id)]),
+        "done": .boolean(done),
+      ])
+    }
     let value = PlannerCanonicalValue.record([
       "command": command, "datasetId": .identity(identity.datasetId),
       "ownershipBinding": .string(identity.ownershipBinding),

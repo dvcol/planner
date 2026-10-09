@@ -88,6 +88,18 @@ This slice projects the existing Item-only store. It has no saved links, schedul
 
 Row logs are /private/tmp/PlannerCoreOwnedRowRed.log, PlannerCoreOwnedRowGreen.log, PlannerCoreStaleRowsRed.log, PlannerCoreStaleRowsGreen.log and PlannerCoreOwnedRowsPackageQualification.log. Native bundles/logs are /private/tmp/PlannerCoreOwnedRowsNativeQualification.xcresult and PlannerCoreOwnedRowsNativeQualification.log. The simulator build log is /private/tmp/PlannerCoreOwnedRowsSimulatorBuild.log; compilation is not an iOS runtime result.
 
+## Global Item completion and Reopen
+
+The accepted setCompletion command now has a globalItem scope through the public facade. It changes only the selected Item's globalDone and its own Last updated when the flag changes. Content, content hashes, archive state and creation identity/time remain intact. It uses the existing coordinated prepare/save/publish/receipt sequence and resolved Item lifetime binding. Archive and global completion share that sequence while retaining different immutable command fingerprints; Archive's existing canonical payload is unchanged. No persisted schema change is required.
+
+The [executed completion red](evidence/navigation/core-item-completion.json) fails at the unimplemented command. Green passes all eighteen Core store functions. The new journey completes an archived Hotel, invalidates its old Todo window, reopens the disk store and reads global/effective Done with localDone null. The Done query discovers Hotel and Todo does not. Source content/hashes/archive, recorded operation status and independently decoded checkpoint 3 retain the accepted values.
+
+One further function passed existing implementation on first execution. An explicit same-state operation receives its own acknowledged checkpoint without changing the Item's timestamp/hashes. Global Reopen saves Todo at checkpoint 4. Replaying the earlier Done operation after reopening returns its original result/checkpoint 2, preserving current Todo, timestamp/content and checkpoint 4. Reusing that operation ID with done false or with Archive rejects operationPayloadMismatch. A missing Item rejects before recorded applied evidence; all failed actions preserve Hotel and an empty prepared-proposal catalog.
+
+The package qualification passes nineteen functions across seven suites. Both completion functions pass in the native Core target; all 24 affected MCP functions pass. Generic iOS Simulator Core test bundles compile; this is not an iOS runtime result. Strict source/document lint and diff checks pass. Package logs are /private/tmp/PlannerCoreItemCompletionRed.log, PlannerCoreItemCompletionGreen.log and PlannerCoreItemCompletionQualification.log. Native bundles/logs use PlannerCoreItemCompletionNativeQualification and PlannerMCPItemCompletionRegression with xcresult/log extensions. The simulator build log is PlannerCoreItemCompletionSimulatorBuild.log.
+
+This is global Item scope only. Appearance-local and bulk completion, the Q44 disabled contextual control, saved Lists/Itineraries, native checkbox writes and the MCP completion command still require their own slices. These tests do not prove cross-process/CloudKit state merging, account transitions, save/publication interruption or historical migrations. The completed command never copies global completion into local flags; the current schema has no such records, so that full-graph behavior remains to be proved.
+
 ## Reproduction
 
 Use unique result-bundle paths on rerun. Scope DEVELOPER_DIR to the accepted Xcode installation.
