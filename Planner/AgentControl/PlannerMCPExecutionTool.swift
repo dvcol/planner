@@ -54,6 +54,16 @@
           throw AdmissionFailure(
             "unsupportedVersion", "/formatVersion", "Expected adapter format version 1.")
         }
+        guard case .object(let suppliedCommand) = arguments["command"],
+          case .string(let commandType) = suppliedCommand["type"]
+        else {
+          throw AdmissionFailure("invalidInput", "/command/type", "Expected a command type.")
+        }
+        if ["deleteSource", "applyImport", "restoreRecovery"].contains(commandType) {
+          throw AdmissionFailure(
+            "forbiddenOperation", "/command/type",
+            "Permanent deletion, import and recovery administration are native Planner actions.")
+        }
         if let token = arguments["reviewToken"], token != .null {
           throw AdmissionFailure(
             "staleReview", "/reviewToken", "No review token is issued for this creation slice.")
