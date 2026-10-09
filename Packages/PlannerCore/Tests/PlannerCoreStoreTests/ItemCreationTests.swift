@@ -3,6 +3,207 @@ import PlannerCore
 import Testing
 
 struct ItemCreationTests {
+  @Test func invalidCreationLeavesCurrentItemAndRecoveryCheckpointUnchanged() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly
+    )
+    let planner = Planner(configuration: configuration)
+    let bootstrap = await planner.bootstrap()
+    guard case .ready(let session) = bootstrap else {
+      Issue.record("Initial bootstrap failed: \(bootstrap)")
+      return
+    }
+    let created = await planner.execute(
+      PlannerOperation(
+        operationId: UUID(), session: session,
+        command: .createItem(
+          content: PlannerItemContentInput(title: "Hotel", notes: "Original notes"))
+      ))
+    guard case .applied(let originalResult, .complete(let checkpoint)) = created.outcome else {
+      Issue.record("Creation failed: \(created)")
+      return
+    }
+    let invalidOperationId = UUID()
+    let invalid = await planner.execute(
+      PlannerOperation(
+        operationId: invalidOperationId, session: session,
+        command: .createItem(
+          content: PlannerItemContentInput(title: " \n\t", notes: "Unsaved notes"))
+      ))
+    guard case .rejected(let reason) = invalid.outcome else {
+      Issue.record("A whitespace-only title must reject before mutation: \(invalid)")
+      return
+    }
+    #expect(reason.code == "invalidInput")
+    #expect(reason.propertyPath == "/command/content/title")
+    let item = try #require(originalResult.generated.first)
+    _ = try requireHotel(
+      await planner.read(session: session, request: .source(item)), identity: item)
+    let catalog = await planner.inspectRecovery(request: .namespaces)
+    guard case .listedNamespaces(let namespaces) = catalog else {
+      Issue.record("Recovery catalog failed: \(catalog)")
+      return
+    }
+    let namespace = try #require(namespaces.first)
+    #expect(namespace.preparedProposals.isEmpty)
+    #expect(namespace.acknowledgedSnapshot?.checkpointGeneration == checkpoint)
+    let inspected = await planner.inspectRecovery(
+      request: .acknowledgedSnapshot(
+        namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint
+      ))
+    guard case .selected(let selection) = inspected else {
+      Issue.record("The unchanged checkpoint must remain readable: \(inspected)")
+      return
+    }
+    #expect(selection.decodedBackup.backup.sources.count == 1)
+    #expect(selection.decodedBackup.backup.sources.first?.id == item.id)
+    #expect(selection.decodedBackup.backup.sources.first?.content.title == "Hotel")
+  }
+
+  @Test func changedPayloadReplayRejectsWithoutReplacingOriginalItemOrEvidence() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly
+    )
+    let planner = Planner(configuration: configuration)
+    let bootstrap = await planner.bootstrap()
+    guard case .ready(let session) = bootstrap else {
+      Issue.record("Initial bootstrap failed: \(bootstrap)")
+      return
+    }
+    let operationId = try #require(UUID(uuidString: "00000000-0000-4000-8000-000000000901"))
+    let created = await planner.execute(
+      PlannerOperation(
+        operationId: operationId, session: session,
+        command: .createItem(
+          content: PlannerItemContentInput(title: "Hotel", notes: "Original notes"))
+      ))
+    guard case .applied(let originalResult, .complete(let checkpoint)) = created.outcome else {
+      Issue.record("Creation failed: \(created)")
+      return
+    }
+    let changed = await planner.execute(
+      PlannerOperation(
+        operationId: operationId, session: session,
+        command: .createItem(
+          content: PlannerItemContentInput(title: "Museum", notes: "Different notes"))
+      ))
+    guard case .rejected(let reason) = changed.outcome else {
+      Issue.record("Changed-payload replay must reject: \(changed)")
+      return
+    }
+    #expect(reason.code == "operationPayloadMismatch")
+    let item = try #require(originalResult.generated.first)
+    let current = await planner.read(session: session, request: .source(item))
+    _ = try requireHotel(current, identity: item)
+    let status = await planner.operationStatus(session: session, operationId: operationId)
+    guard case .appliedRecoveryComplete(let statusResult, let statusCheckpoint) = status else {
+      Issue.record("A rejected attempt must retain original operation evidence: \(status)")
+      return
+    }
+    #expect(statusResult == originalResult)
+    #expect(statusCheckpoint == checkpoint)
+    let catalog = await planner.inspectRecovery(request: .namespaces)
+    guard case .listedNamespaces(let namespaces) = catalog else {
+      Issue.record("Recovery catalog failed: \(catalog)")
+      return
+    }
+    let namespace = try #require(namespaces.first)
+    #expect(namespace.acknowledgedSnapshot?.checkpointGeneration == checkpoint)
+    let inspected = await planner.inspectRecovery(
+      request: .acknowledgedSnapshot(
+        namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint
+      ))
+    guard case .selected(let selection) = inspected else {
+      Issue.record("The original recovery checkpoint must remain readable: \(inspected)")
+      return
+    }
+    #expect(selection.decodedBackup.backup.sources.count == 1)
+    #expect(selection.decodedBackup.backup.sources.first?.content.title == "Hotel")
+  }
+
+  @Test func replayingCreationAfterReopenRetainsOneItemAndOriginalCheckpoint() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly
+    )
+    let planner = Planner(configuration: configuration)
+    let bootstrap = await planner.bootstrap()
+    guard case .ready(let session) = bootstrap else {
+      Issue.record("Initial bootstrap failed: \(bootstrap)")
+      return
+    }
+    let operationId = try #require(UUID(uuidString: "00000000-0000-4000-8000-000000000901"))
+    let content = PlannerItemContentInput(title: "Hotel", notes: "Original notes")
+    let created = await planner.execute(
+      PlannerOperation(
+        operationId: operationId, session: session, command: .createItem(content: content)
+      ))
+    guard case .applied(let originalResult, .complete(let originalCheckpoint)) = created.outcome
+    else {
+      Issue.record("Creation was not independently acknowledged: \(created)")
+      return
+    }
+    let reopenedPlanner = Planner(configuration: configuration)
+    let reopenedBootstrap = await reopenedPlanner.bootstrap()
+    guard case .ready(let reopenedSession) = reopenedBootstrap else {
+      Issue.record("Reopen failed: \(reopenedBootstrap)")
+      return
+    }
+    let replayed = await reopenedPlanner.execute(
+      PlannerOperation(
+        operationId: operationId, session: reopenedSession, command: .createItem(content: content)
+      ))
+    guard case .applied(let replayedResult, .complete(let replayedCheckpoint)) = replayed.outcome
+    else {
+      Issue.record("An identical replay must return completed evidence: \(replayed)")
+      return
+    }
+    #expect(replayedResult == originalResult)
+    #expect(replayedCheckpoint == originalCheckpoint)
+    let catalog = await reopenedPlanner.inspectRecovery(request: .namespaces)
+    guard case .listedNamespaces(let namespaces) = catalog else {
+      Issue.record("Recovery catalog failed: \(catalog)")
+      return
+    }
+    let namespace = try #require(namespaces.first)
+    #expect(namespace.acknowledgedSnapshot?.checkpointGeneration == originalCheckpoint)
+    let inspected = await reopenedPlanner.inspectRecovery(
+      request: .acknowledgedSnapshot(
+        namespaceId: namespace.namespaceId, checkpointGeneration: originalCheckpoint
+      ))
+    guard case .selected(let selection) = inspected else {
+      Issue.record("Acknowledged snapshot was unavailable: \(inspected)")
+      return
+    }
+    #expect(selection.decodedBackup.backup.sources.count == 1)
+    let recoveredItem = try #require(selection.decodedBackup.backup.sources.first)
+    #expect(recoveredItem.id == originalResult.generated.first?.id)
+    #expect(recoveredItem.content.title == "Hotel")
+    #expect(recoveredItem.content.notes == "Original notes")
+    let status = await reopenedPlanner.operationStatus(
+      session: reopenedSession, operationId: operationId)
+    guard case .appliedRecoveryComplete(let statusResult, let statusCheckpoint) = status else {
+      Issue.record("Replayed operation evidence was unavailable: \(status)")
+      return
+    }
+    #expect(statusResult == originalResult)
+    #expect(statusCheckpoint == originalCheckpoint)
+  }
+
   @Test func savedItemSurvivesReopenWithIndependentAcknowledgedRecovery() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
