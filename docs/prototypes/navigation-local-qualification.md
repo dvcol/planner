@@ -4,7 +4,7 @@ Work for [Navigation prototype](https://github.com/dvcol/planner/issues/14) on `
 
 The latest qualified source and screenshots are in [Useful Item details and roomier referenced Lists](#useful-item-details-and-roomier-referenced-lists). Earlier sections preserve the outcomes and presentation of previous revisions.
 
-The human accepted Q38 A, Q39 B, Q40 A, Q41 A and Q42 A. The [accepted row decisions](../navigation-prototype-review.md#accepted-row-decisions-and-their-consequences) and [follow-on contract review](../navigation-row-contract-review.md) record their behavior, remaining questions and required tests. Rich rows, completion writes, drag-and-drop and provider lookup remain unimplemented. The later presentation qualification below does not settle the unanswered Q43-Q46.
+The human accepted Q38 A, Q39 B, Q40 A, Q41 A and Q42 A, then accepted Q43 A, Q44 A, Q45 A and Q46 A. The [accepted row decisions](../navigation-prototype-review.md#accepted-review-answers) and [row contract review](../navigation-row-contract-review.md) record the exact declarations and required tests. Rich rows, completion writes, drag-and-drop and provider lookup remain unimplemented. These documentation amendments add no runtime qualification to the seven-journey presentation evidence below.
 
 ## Starting state and first goal
 
@@ -213,7 +213,7 @@ Strict affected Swift lint, app/UI-runner compilation through the passing test r
 
 `./scripts/navigation-prototype.sh mac` rebuilt this source and returned zero. A new standalone app process was confirmed after the launcher requested a fresh instance. [Launcher evidence](evidence/navigation/content-mac-launcher.json) records the script hash and qualification limits; raw output is `/private/tmp/PlannerNavigationContentLaunch.log`.
 
-Planner content remains a read-only fixture projection. This screenshot feedback answers no pending Q43-Q46 and introduces no Core commands, provider requests, rich row metadata or drag writes. Maps still use synthetic fixture coordinates. Physical/signing, CloudKit, Share, full-graph persistence, long-list performance and final human review remain required. Navigation prototype stays open.
+Planner content remains a read-only fixture projection. At this runtime qualification Q43-Q46 awaited human answers; the later accepted amendment linked above records them without changing the app. This presentation introduces no Core commands, provider requests, rich row metadata or drag writes. Maps still use synthetic fixture coordinates. Physical/signing, CloudKit, Share, full-graph persistence, long-list performance and final human review remain required. Navigation prototype stays open.
 
 ## Remaining gates
 

@@ -105,6 +105,9 @@ Temporary place information supplied by a Maps provider alongside a captured lin
 **Link**:
 A URL associated with an item or itinerary, with an optional label and provider description.
 
+**Link preview**:
+A temporary card or thumbnail for a selected website bookmark. An unavailable preview leaves the original link useful and does not change the item's saved content.
+
 **Location**:
 Optional place information associated with an item or itinerary, such as a name, address, or coordinates.
 
@@ -116,6 +119,9 @@ An ordered live reference within an itinerary to an existing item or list. Multi
 
 **Schedule entry**:
 One planning date or time assignment referencing an existing item or itinerary in Planner's calendar. Several entries can reference the same source.
+
+**Schedule summary**:
+The single actual assignment shown for an item or its current itinerary, choosing an ongoing assignment, then the next future start, then the latest past start. An additional count refers to other assignments in that same context, including past ones, rather than the number of days in a span.
 
 **All-day schedule**:
 A schedule entry assigned to one date or an inclusive date range without clock times. Its dates stay unchanged across travel.

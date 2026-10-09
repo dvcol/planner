@@ -28,6 +28,8 @@ Item and Itinerary category/tag fields are live selections of shared label ident
 
 Source detail reads return immutable content, current source state and `fieldHashes` for exactly the catalog fields. They also return current referenced label display values for rendering, separately from the editable ID selections. A shared label rename changes that display projection, not the owner's association hash or Item timestamp. A lightweight query row does not carry full notes, all links or this complete hash map.
 
+The later accepted [Q43-Q46 row amendment](navigation-row-contract-review.md) adds owned location, one selected owned link and a typed Schedule summary to that lightweight read. It retains this content catalog and the no-full-detail-per-row boundary. Temporary thumbnails/geocoding, resolved query time/zone and native completion affordances introduce no editable fields, hashes or backup state.
+
 ## Compound content values
 
 The following declarations fix nested values for both native callers and their eventual JSON encodings. Swift integer values remain native types; Int64 values use accepted canonical decimal strings on the wire. JSON optional properties use null in full reads and missing/null/value in patches according to Q10.
