@@ -59,6 +59,7 @@
           ListTools.Result(tools: [
             PlannerMCPSourceTool.definition, PlannerMCPExecutionTool.definition,
             PlannerMCPQueryTool.definition,
+            PlannerMCPOperationStatusTool.definition,
           ])
         }
         await server.withMethodHandler(CallTool.self) { [weak self] parameters in
@@ -99,6 +100,10 @@
       }
       if parameters.name == "planner_query" {
         return await PlannerMCPQueryTool.call(
+          parameters, planner: dataset.planner, session: dataset.session)
+      }
+      if parameters.name == "planner_operation_status" {
+        return await PlannerMCPOperationStatusTool.call(
           parameters, planner: dataset.planner, session: dataset.session)
       }
       return await PlannerMCPSourceTool.call(
