@@ -5,6 +5,350 @@ import Testing
 @testable import Planner
 
 struct RowRoutingTests {
+  @Test func malformedZoneRequestsPreserveRowsAndStartOnlyZoneChangeCreatesNoEnd() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    let start = Date(timeIntervalSinceReferenceDate: 813_200_400)
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let created, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createItem(content: PlannerItemContentInput(title: "Hotel")))
+      ).outcome,
+      let item = created.generated.first,
+      case .applied(let scheduled, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createSchedule(
+            source: item,
+            form: .timed(start: start, end: nil, planningTimeZone: "Asia/Tokyo")))
+      ).outcome,
+      let schedule = scheduled.generated.first,
+      case .source(.schedule(let original)) = await planner.read(
+        session: datasetSession, request: .source(schedule)),
+      case .snapshot(let snapshot) = await planner.query(
+        PlannerQuery(
+          session: datasetSession,
+          request: .items(
+            PlannerItemQuery(
+              rowPresentation: PlannerRowPresentationContext(
+                referenceInstant: start, displayTimeZone: "Asia/Tokyo")))))
+    else {
+      Issue.record(
+        "A saved start-only appointment and issued rows must exist before HTTP validation.")
+      return
+    }
+    let command: [String: Any] = [
+      "type": "changeScheduleZone", "scheduleId": schedule.id.uuidString,
+      "planningTimeZone": "UTC",
+      "expectedFieldHashes": ["form": try #require(original.fieldHashes[.form]?.value)],
+    ]
+    let invalid: [([String: Any], String, String)] = [
+      (
+        command.merging(["scheduleId": "invalid"]) { _, incoming in incoming }, "invalidInput",
+        "/command/scheduleId"
+      ),
+      (
+        command.merging(["scheduleId": item.id.uuidString]) { _, incoming in incoming },
+        "missingReference", ""
+      ),
+      (
+        command.merging(["planningTimeZone": NSNull()]) { _, incoming in incoming }, "invalidInput",
+        "/command/planningTimeZone"
+      ),
+      (
+        command.merging(["planningTimeZone": true]) { _, incoming in incoming }, "invalidInput",
+        "/command/planningTimeZone"
+      ),
+      (
+        command.merging(["planningTimeZone": "Invalid/Zone"]) { _, incoming in incoming },
+        "invalidInput", "/command/planningTimeZone"
+      ),
+      (
+        command.merging(["expectedFieldHashes": [:]]) { _, incoming in incoming }, "invalidInput",
+        "/command/expectedFieldHashes/form"
+      ),
+      (
+        command.merging(["expectedFieldHashes": ["form": NSNull()]]) { _, incoming in incoming },
+        "invalidInput", "/command/expectedFieldHashes/form"
+      ),
+      (
+        command.merging(["expectedFieldHashes": ["form": "sha256-v1:invalid"]]) { _, incoming in
+          incoming
+        }, "invalidInput", "/command/expectedFieldHashes/form"
+      ),
+      (
+        command.merging(["expectedFieldHashes": ["form": "invalid", "weird/~": "invalid"]]) {
+          _, incoming in incoming
+        }, "unknownField", "/command/expectedFieldHashes/weird~1~0"
+      ),
+      (
+        command.merging(["start": 813_214_800]) { _, incoming in incoming }, "unknownField",
+        "/command/start"
+      ),
+      (
+        command.merging(["weird/~": true]) { _, incoming in incoming }, "unknownField",
+        "/command/weird~1~0"
+      ),
+    ]
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      let sourceRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": [
+            "kind": "source", "source": ["kind": "schedule", "id": schedule.id.uuidString],
+          ],
+        ])
+      let originalSource = try value(try await httpSession.data(for: sourceRequest))
+      let rowRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": [
+            "kind": "rows", "generation": snapshot.generation.uuidString, "offset": "0",
+            "limit": "1",
+          ],
+        ])
+      let originalRows = try value(try await httpSession.data(for: rowRequest))
+      for (invalidCommand, code, path) in invalid {
+        let operationIdentifier = UUID()
+        let rejected = try rejection(
+          try await httpSession.data(
+            for: request(
+              endpoint: endpoint, name: "planner_execute",
+              arguments: [
+                "formatVersion": 1, "operationId": operationIdentifier.uuidString,
+                "command": invalidCommand,
+              ])))
+        #expect(rejected["operationId"] as? String == operationIdentifier.uuidString)
+        let reason = try #require(rejected["reason"] as? [String: Any])
+        #expect(reason["code"] as? String == code)
+        if path.isEmpty {
+          #expect(reason["propertyPath"] is NSNull)
+        } else {
+          #expect(reason["propertyPath"] as? String == path)
+        }
+        guard
+          case .noReliableEvidence = await planner.operationStatus(
+            session: datasetSession, operationId: operationIdentifier)
+        else {
+          await listener.stop()
+          Issue.record("Rejected zone requests must not create applied receipts.")
+          return
+        }
+      }
+      let unchanged = try value(try await httpSession.data(for: sourceRequest))
+      let unchangedRows = try value(try await httpSession.data(for: rowRequest))
+      #expect(NSDictionary(dictionary: unchanged).isEqual(to: originalSource))
+      #expect(NSDictionary(dictionary: unchangedRows).isEqual(to: originalRows))
+      guard
+        case .listedNamespaces(let beforeNamespaces) = await planner.inspectRecovery(
+          request: .namespaces)
+      else {
+        await listener.stop()
+        Issue.record("Independent checkpoint must remain readable.")
+        return
+      }
+      #expect(beforeNamespaces.first?.acknowledgedSnapshot?.checkpointGeneration == 2)
+      #expect(beforeNamespaces.first?.preparedProposals.isEmpty == true)
+      let operationIdentifier = UUID()
+      let edited = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_execute",
+            arguments: [
+              "formatVersion": 1, "operationId": operationIdentifier.uuidString, "command": command,
+            ])))
+      #expect((edited["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "3")
+      let current = try value(try await httpSession.data(for: sourceRequest))
+      let expectedForm: [String: Any] = [
+        "kind": "timed", "start": 813_200_400, "end": NSNull(), "planningTimeZone": "UTC",
+      ]
+      #expect(
+        NSDictionary(
+          dictionary: try #require(
+            ((current["value"] as? [String: Any])?["content"] as? [String: Any])?["form"]
+              as? [String: Any])
+        )
+        .isEqual(to: expectedForm))
+      let staleRows = try failure(try await httpSession.data(for: rowRequest))
+      #expect(staleRows["code"] as? String == "staleSnapshot")
+      let changedReplay = try rejection(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_execute",
+            arguments: [
+              "formatVersion": 1, "operationId": operationIdentifier.uuidString,
+              "command": command.merging(["planningTimeZone": "Europe/Paris"]) { _, incoming in
+                incoming
+              },
+            ])))
+      #expect(
+        (changedReplay["reason"] as? [String: Any])?["code"] as? String
+          == "operationPayloadMismatch")
+      let afterMismatch = try value(try await httpSession.data(for: sourceRequest))
+      #expect(NSDictionary(dictionary: afterMismatch).isEqual(to: current))
+      await listener.stop()
+      guard
+        case .appliedRecoveryComplete(_, let originalCheckpoint) = await planner.operationStatus(
+          session: datasetSession, operationId: operationIdentifier),
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
+      else {
+        Issue.record("Payload mismatch must retain the previously applied receipt and checkpoint.")
+        return
+      }
+      #expect(originalCheckpoint == 3)
+      #expect(namespaces.first?.acknowledgedSnapshot?.checkpointGeneration == 3)
+      #expect(namespaces.first?.preparedProposals.isEmpty == true)
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
+  @Test func scheduleZoneOverHTTPPreservesInstantsAndRetainsLaterZoneOnReplay() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let created, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createItem(content: PlannerItemContentInput(title: "Hotel", notes: "Keep")))
+      ).outcome,
+      let item = created.generated.first,
+      case .source(.item(let originalItem)) = await planner.read(
+        session: datasetSession, request: .source(item)),
+      case .applied(let scheduled, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createSchedule(
+            source: item,
+            form: .timed(
+              start: Date(timeIntervalSinceReferenceDate: 813_200_400.25),
+              end: Date(timeIntervalSinceReferenceDate: 813_204_000.75),
+              planningTimeZone: "Asia/Tokyo")))
+      ).outcome,
+      let schedule = scheduled.generated.first
+    else {
+      Issue.record("The original appointment must exist before changing its zone over HTTP.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      let sourceRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": [
+            "kind": "source", "source": ["kind": "schedule", "id": schedule.id.uuidString],
+          ],
+        ])
+      let original = try value(try await httpSession.data(for: sourceRequest))
+      let hashes = try #require(
+        (original["value"] as? [String: Any])?["fieldHashes"] as? [String: String])
+      let operationIdentifier = UUID()
+      let zoneRequest = try request(
+        endpoint: endpoint, name: "planner_execute",
+        arguments: [
+          "formatVersion": 1, "operationId": operationIdentifier.uuidString,
+          "command": [
+            "type": "changeScheduleZone", "scheduleId": schedule.id.uuidString,
+            "planningTimeZone": "Europe/Paris", "expectedFieldHashes": hashes,
+          ],
+        ])
+      let changed = try value(try await httpSession.data(for: zoneRequest))
+      #expect(changed["operationId"] as? String == operationIdentifier.uuidString)
+      #expect((changed["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "3")
+      let current = try value(try await httpSession.data(for: sourceRequest))
+      let currentSource = try #require(current["value"] as? [String: Any])
+      let currentHashes = try #require(currentSource["fieldHashes"] as? [String: String])
+      let expectedForm: [String: Any] = [
+        "kind": "timed", "start": 813_200_400.25, "end": 813_204_000.75,
+        "planningTimeZone": "Europe/Paris",
+      ]
+      #expect(
+        NSDictionary(
+          dictionary: try #require(
+            (currentSource["content"] as? [String: Any])?["form"] as? [String: Any])
+        )
+        .isEqual(to: expectedForm))
+      #expect(
+        NSDictionary(dictionary: try #require(currentSource["source"] as? [String: Any]))
+          .isEqual(to: ["kind": "schedule", "id": schedule.id.uuidString]))
+      #expect(currentHashes != hashes)
+      let stale = try rejection(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_execute",
+            arguments: [
+              "formatVersion": 1, "operationId": UUID().uuidString,
+              "command": [
+                "type": "changeScheduleZone", "scheduleId": schedule.id.uuidString,
+                "planningTimeZone": "UTC", "expectedFieldHashes": hashes,
+              ],
+            ])))
+      let reason = try #require(stale["reason"] as? [String: Any])
+      let details = try #require(reason["details"] as? [String: Any])
+      #expect(reason["code"] as? String == "staleEdit")
+      #expect(details["conflictingFields"] as? [String] == ["form"])
+      #expect(
+        NSDictionary(dictionary: try #require(details["currentValues"] as? [String: Any]))
+          .isEqual(to: ["form": expectedForm]))
+      #expect(details["currentFieldHashes"] as? [String: String] == currentHashes)
+      let later = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_execute",
+            arguments: [
+              "formatVersion": 1, "operationId": UUID().uuidString,
+              "command": [
+                "type": "changeScheduleZone", "scheduleId": schedule.id.uuidString,
+                "planningTimeZone": "UTC", "expectedFieldHashes": currentHashes,
+              ],
+            ])))
+      #expect((later["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "4")
+      let beforeReplay = try value(try await httpSession.data(for: sourceRequest))
+      let replayed = try value(try await httpSession.data(for: zoneRequest))
+      #expect(NSDictionary(dictionary: replayed).isEqual(to: changed))
+      let retained = try value(try await httpSession.data(for: sourceRequest))
+      #expect(NSDictionary(dictionary: retained).isEqual(to: beforeReplay))
+      #expect(
+        (((retained["value"] as? [String: Any])?["content"] as? [String: Any])?["form"]
+          as? [String: Any])?["planningTimeZone"] as? String == "UTC")
+      await listener.stop()
+      guard
+        case .source(.item(let retainedItem)) = await planner.read(
+          session: datasetSession, request: .source(item)),
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
+      else {
+        Issue.record("The planned Item and independent checkpoint must remain intact.")
+        return
+      }
+      #expect(retainedItem.fieldHashes == originalItem.fieldHashes)
+      #expect(retainedItem.updatedAt == originalItem.updatedAt)
+      #expect(namespaces.first?.acknowledgedSnapshot?.checkpointGeneration == 4)
+      #expect(namespaces.first?.preparedProposals.isEmpty == true)
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
 
   @Test func malformedScheduleEditsKeepTheSavedFormAndIssuedRowsUnchanged() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)

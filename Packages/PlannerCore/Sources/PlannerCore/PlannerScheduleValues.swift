@@ -117,17 +117,51 @@ extension PlannerScheduleForm {
   }
 }
 
-extension PlannerScheduleChanges {
+enum ScheduleChange {
+  case form(PlannerScheduleForm)
+  case zone(String)
+
+  func validate() throws {
+    switch self {
+    case .form(let form): try form.validate(propertyPath: "/command/changes/form")
+    case .zone(let planningTimeZone):
+      guard TimeZone(identifier: planningTimeZone) != nil else {
+        throw PlannerFailure(
+          "invalidInput", "The planning timezone must be valid.",
+          propertyPath: "/command/planningTimeZone")
+      }
+    }
+  }
+
+  func applying(to current: PlannerScheduleForm) -> PlannerScheduleForm {
+    switch self {
+    case .form(let form): return form
+    case .zone(let planningTimeZone):
+      switch current {
+      case .timed(let start, let end, _):
+        return .timed(start: start, end: end, planningTimeZone: planningTimeZone)
+      }
+    }
+  }
+
   func editDigest(
     scheduleId: UUID, expectedFormHash: PlannerFieldHash, identity: PlannerStoreIdentity,
     bindings: [PlannerBoundIdentity]
   ) -> String {
+    var command: [String: PlannerCanonicalValue] = [
+      "scheduleId": .identity(scheduleId),
+      "expectedFieldHashes": .record(["form": .string(expectedFormHash.value)]),
+    ]
+    switch self {
+    case .form(let form):
+      command["type"] = .string("editSchedule")
+      command["changes"] = .record(["form": form.canonicalValue])
+    case .zone(let planningTimeZone):
+      command["type"] = .string("changeScheduleZone")
+      command["planningTimeZone"] = .string(planningTimeZone)
+    }
     let value = PlannerCanonicalValue.record([
-      "command": .record([
-        "type": .string("editSchedule"), "scheduleId": .identity(scheduleId),
-        "changes": .record(["form": form.canonicalValue]),
-        "expectedFieldHashes": .record(["form": .string(expectedFormHash.value)]),
-      ]),
+      "command": .record(command),
       "datasetId": .identity(identity.datasetId),
       "ownershipBinding": .string(identity.ownershipBinding),
       "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),

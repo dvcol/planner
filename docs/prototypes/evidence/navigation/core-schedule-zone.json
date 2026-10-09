@@ -1,0 +1,118 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "5c586b6",
+  "scope": "Native and authenticated HTTP timed planning-zone changes, guarding the whole form and preserving actual start/optional end instants.",
+  "coreRedGreen": {
+    "redLog": "/private/tmp/PlannerCoreScheduleZoneRed.log",
+    "redExecutedFunctions": 1,
+    "redFailedFunctions": 1,
+    "observed": "The declared timezone-only command rejects as unavailable.",
+    "greenLog": "/private/tmp/PlannerCoreScheduleZoneGreen.log",
+    "greenExecutedFunctions": 1,
+    "greenPassedFunctions": 1
+  },
+  "qualification": {
+    "packageLog": "/private/tmp/PlannerCoreScheduleZoneQualification.log",
+    "executedFunctions": 41,
+    "passedFunctions": 41,
+    "suites": 16,
+    "zoneFunctions": 2,
+    "nativeBehavior": [
+      "Tokyo-to-Paris preserves fractional start/end, Schedule identity/lifetime and Item content/hashes/Last updated across reopen.",
+      "Original and changed forms remain independently recoverable; prior exact zone replay cannot replace a later complete form edit.",
+      "Start-only keeps its absent end; invalid zone/hash/missing Schedule leaves generation and checkpoint unchanged.",
+      "An intervening start/end change with the same zone makes the whole-form guard stale; complete current form/hash is returned without saving.",
+      "Form replacement and zone change share the existing guarded save/recovery path. Their canonical command payloads remain distinct."
+    ],
+    "wireMalformedRequests": 11,
+    "wireBehavior": [
+      "Actual HTTP request fails before admission and passes after strict schema/decoding through the same native writer.",
+      "Fractional instants/identity retained; exact current form/hash is returned for stale zone requests; replay leaves a later UTC change intact.",
+      "Eleven malformed/unavailable zone requests retain complete source and issued row window, create no applied receipt/proposal and preserve checkpoint 2.",
+      "Successful start-only UTC change retains end=null and invalidates the old row projection; a modified replay rejects and leaves its previously applied status/checkpoint intact.",
+      "Text/structured JSON equality is checked at the actual HTTP boundary."
+    ]
+  },
+  "nativeExecutions": {
+    "PlannerCoreScheduleZoneNativeQualification": {
+      "result": "Passed",
+      "totalTestCount": 5,
+      "passedTests": 5,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerCoreScheduleZoneNativeQualification.xcresult",
+      "log": "/private/tmp/PlannerCoreScheduleZoneNativeQualification.log"
+    },
+    "PlannerMCPScheduleZoneCoreRegression": {
+      "result": "Passed",
+      "totalTestCount": 37,
+      "passedTests": 37,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPScheduleZoneCoreRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleZoneCoreRegression.log"
+    },
+    "PlannerMCPScheduleZoneWireRed": {
+      "result": "Failed",
+      "totalTestCount": 18,
+      "passedTests": 17,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPScheduleZoneWireRed.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleZoneWireRed.log"
+    },
+    "PlannerMCPScheduleZoneWireGreen": {
+      "result": "Passed",
+      "totalTestCount": 18,
+      "passedTests": 18,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPScheduleZoneWireGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleZoneWireGreen.log"
+    },
+    "PlannerMCPScheduleZoneWireQualification": {
+      "result": "Passed",
+      "totalTestCount": 19,
+      "passedTests": 19,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPScheduleZoneWireQualification.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleZoneWireQualification.log"
+    },
+    "PlannerMCPScheduleZoneWireRegression": {
+      "result": "Passed",
+      "totalTestCount": 39,
+      "passedTests": 39,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPScheduleZoneWireRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleZoneWireRegression.log"
+    }
+  },
+  "simulatorBuild": {
+    "log": "/private/tmp/PlannerCoreScheduleZoneSimulatorBuild.log",
+    "result": "TEST BUILD SUCCEEDED",
+    "signingAllowed": false,
+    "runtimeTests": false
+  },
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerScheduleZoneFinalSwiftLint.log",
+    "affectedSwiftFiles": 6,
+    "diffWhitespace": "passed",
+    "affectedMCPExcludedSuite": "ReadLoadTests"
+  },
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "b122864465fde7ca2dd2342f4f5021f4f60a190500772931814f1e939fe728eb",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "5f600dd6eb9f00e898c4bffd543e49d0353b854de024861f0fbb83757abf0bc0",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "cfdbaf6b53589f28e9651099c3fa34d8e9935453f8d59f7f178a204ea578371f",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleZoneTests.swift": "9f9ab4b11626cccf3f8a3bcc3bd743ad33fa817e3a8c96ca33d8631f31b4d475",
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift": "615a0abc3d55c095664ab0d8f66fa4de736e1e6bc43ce07d7f069c458352df5d",
+    "PlannerMCPTests/RowRoutingTests.swift": "bfa962b752f9eb73ed469124c659038a68c29e5840cc42e800f023521db29e47"
+  },
+  "remaining": [
+    "Schedule removal, all-day/Itinerary forms, inherited summaries and full shared graph",
+    "Native saved editors, actual Share, signed reader/clients",
+    "Physical CloudKit/account/interruption and performance gates"
+  ]
+}
