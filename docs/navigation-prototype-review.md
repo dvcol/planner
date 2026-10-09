@@ -76,9 +76,11 @@ First establish a minimal runnable native project/package, shared schemes and te
 
 - Q34 accepts the public native UI seam, journeys, literal fixtures and first slice. Core A21/A22/Q33 approval carries forward.
 - Q35 requires Delete confirmation for a Category or Tag with any association, including itinerary-only uses. Cancel retains the label and associations; confirming removes its associations while preserving owners.
+- Q36 chooses named expandable live-List groups inside itineraries, initially expanded. Direct Item entries remain separate rows. Each group shows its children's progress in this itinerary, independent of the source List's completion. Collapse changes visibility only; repeated List entries retain separate appearance identities and local completion.
+- Prefer native and pre-made components whenever available. Use modern minimalist Liquid Glass through native navigation and controls, with native disclosure/list/section components for content groups. Compare a subtle outline or tint only if the native grouping needs a clearer boundary. Apple's [materials guidance](https://developer.apple.com/design/human-interface-guidelines/materials) places Liquid Glass in the controls/navigation layer and recommends standard materials for content. The grouped presentation and any additional styling still require implementation and native review.
 - Signing, provisioning and physical-device setup are delayed at the user's request. Continue simulator and local Mac work. This delay does not waive physical performance, CloudKit or signed Share gates.
 
-Layout, picker arrangement, Manual-sort controls, destructive Undo affordances and status placement remain comparisons for actual runnable human review. Do not record them as final choices from this readiness proposal.
+Q36 settles the itinerary grouping structure. Group styling, collapse-state memory, the overall platform layouts, picker arrangement, Manual-sort controls, destructive Undo affordances and status placement still require review. Do not record them as final choices from this readiness proposal.
 
 ## Definition of ready and done
 

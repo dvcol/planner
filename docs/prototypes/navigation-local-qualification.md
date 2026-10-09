@@ -76,7 +76,7 @@ Raw current UI bundles are `/private/tmp/PlannerNavigationThreeJourneysPhone.xcr
 
 MapKit uses Apple's [native Map and Annotation API](https://developer.apple.com/documentation/mapkit/map). Fixture location values use the existing shared PlannerCore owned-location type. No additional package, provider enrichment, location permission or Calendar export is introduced.
 
-Q36 asks how a live List entry should appear inside an itinerary. The current two identically titled Nezu Museum rows expose the issue. Expanded named List groups, flat rows with source-List subtitles and compact navigable List rows have different scanning/navigation costs; none changes independent appearance state or child-based progress. The user has not yet selected that presentation. Final layouts remain subject to actual human review.
+Q36 is accepted: live List entries appear as named expandable groups, initially expanded, with direct Item entries kept separate. Group progress uses its child appearances in this itinerary; source List completion remains independent. Collapse changes visibility only. The user also requires native/pre-made components whenever available and modern minimalist Liquid Glass, with a possible subtle outline or tint to distinguish groups. These screenshots and tests show the earlier flat presentation. Grouped rendering, styling, collapse-state memory and its native accessibility have not yet been implemented or qualified; final layouts remain subject to actual human review.
 
 ## Expanded appearance identity correction
 
