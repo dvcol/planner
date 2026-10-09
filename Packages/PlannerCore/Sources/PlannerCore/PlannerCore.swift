@@ -86,6 +86,10 @@ public actor Planner {
         let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
         let envelope = try archive.latest()
         switch operation.command {
+        case .setArchive(let source, let archived):
+          return try executeItemArchive(
+            operation, source: source, archived: archived, identity: identity, context: context,
+            archive: archive, receipts: receipts, envelope: envelope)
         case .editItem(let sourceId, let changes, let expectedFieldHashes):
           return try executeItemTextEdit(
             operation, sourceId: sourceId, changes: changes, hashes: expectedFieldHashes,
@@ -442,6 +446,114 @@ public actor Planner {
         outcome: .applied(
           result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
     }
+  }
+
+  private func executeItemArchive(
+    _ operation: PlannerOperation, source: PlannerEntityReference, archived: Bool,
+    identity: PlannerStoreIdentity, context: ModelContext, archive: PlannerRecoveryArchive,
+    receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    guard source.kind == .item else {
+      throw PlannerFailure(
+        "unavailable", "This fixture currently archives Items only.",
+        propertyPath: "/command/source/kind")
+    }
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let stored = try receipt.evidence()
+      let digest = itemArchivePayloadDigest(
+        source: source, archived: archived, identity: identity, bindings: stored.bindings)
+      guard receipt.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch",
+          "This operation identity already describes a different action.")
+      }
+      return appliedResult(
+        operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
+        envelope: envelope)
+    }
+    let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV1.Item>())
+    let matches = items.filter { $0.id == source.id }
+    guard matches.count == 1, let item = matches.first else {
+      throw PlannerFailure("missingReference", "The selected Item is missing or unresolved.")
+    }
+    let before = try item.value()
+    let bindings = [
+      PlannerBoundIdentity(kind: "item", id: before.id, lifetimeId: before.lifetimeId)
+    ]
+    let digest = itemArchivePayloadDigest(
+      source: source, archived: archived, identity: identity, bindings: bindings)
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes a different action.")
+      }
+      return PlannerOperationResult(
+        operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    let updatedAt = before.archived == archived ? before.updatedAt : Date()
+    let after = ItemSnapshot(
+      id: before.id, lifetimeId: before.lifetimeId,
+      createdAt: before.createdAt, updatedAt: updatedAt, input: before.input,
+      globalDone: before.globalDone, archived: archived)
+    let snapshots = try items.map { record in
+      if record.id == source.id { return after }
+      return try record.value()
+    }
+    let result = PlannerAppliedResult(generated: [], affected: [source])
+    let proposal = RecoveryPreparedProposal(
+      proposalId: UUID(), originalOperationId: operation.operationId,
+      datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
+      proposedBackup: ItemOnlyPortableBackup(items: snapshots), payloadDigest: digest,
+      evidence: "preparedUnverified")
+    try archive.prepare(proposal)
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result, bindings: bindings)
+    item.archived = archived
+    item.updatedAt = updatedAt
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The complete Archive action was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(items: snapshots, receipts: receipts + [receipt])
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
+  }
+
+  private func itemArchivePayloadDigest(
+    source: PlannerEntityReference, archived: Bool, identity: PlannerStoreIdentity,
+    bindings: [PlannerBoundIdentity]
+  ) -> String {
+    let command = PlannerCanonicalValue.record([
+      "type": .string("setArchive"),
+      "source": .record(["kind": .string(source.kind.rawValue), "id": .identity(source.id)]),
+      "archived": .boolean(archived),
+    ])
+    let value = PlannerCanonicalValue.record([
+      "command": command, "datasetId": .identity(identity.datasetId),
+      "ownershipBinding": .string(identity.ownershipBinding),
+      "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
+    ])
+    return plannerDigest(
+      Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded(),
+      prefix: "sha256-payload-v1:")
   }
 
   private func appliedResult(

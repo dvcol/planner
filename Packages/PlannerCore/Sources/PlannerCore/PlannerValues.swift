@@ -155,6 +155,7 @@ public struct PlannerItemContentInput: Sendable, Equatable {
 
 public enum PlannerCommand: Sendable {
   case createItem(content: PlannerItemContentInput)
+  case setArchive(source: PlannerEntityReference, archived: Bool)
   case editItem(
     sourceId: UUID, changes: PlannerItemChanges,
     expectedFieldHashes: [PlannerItemField: PlannerFieldHash])

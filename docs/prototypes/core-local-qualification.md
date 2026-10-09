@@ -56,6 +56,16 @@ This is the default Item query and a partial native DTO. Full text/filter/sort/c
 
 Result bundles are `/private/tmp/PlannerCoreDefaultQueryRed.xcresult` and `/private/tmp/PlannerCoreDefaultQueryGreen.xcresult`; matching logs record their execution.
 
+## Item Archive and Unarchive
+
+The accepted setArchive command now applies to Item sources through the existing coordinated writer/recovery sequence. Archive changes its own flag and Item Last updated when the flag changes, retaining identity/lifetime, content and global completion. It records the immutable operation payload with its original resolved lifetime, preserves a proposal before commit, saves the Item and receipt together and publishes independent recovery before complete acknowledgement. Other source kinds remain unavailable in this Item-only fixture. No migration or new persisted state is added.
+
+The executable red runs one archive function and fails at the explicitly unimplemented command. Green runs all eleven Core store functions. Hotel/Tokyo/Original notes, its independently owned location and 91-minute estimate remain intact after Archive and reopening. Content hashes and creation time remain unchanged; global Todo remains Todo. The ordinary Active query becomes empty, the Archived query discovers the original Item and its independently decoded checkpoint 2 contains the same retained values with archived true.
+
+A subsequent Unarchive/replay function passes existing implementation on first execution; no additional red or production change is claimed for it. Unarchive restores ordinary visibility at checkpoint 3. Reopening and replaying the earlier Archive operation returns its original result/checkpoint 2 without reapplying archived true. Changing that earlier operation's payload to archived false rejects as operationPayloadMismatch. Current content, timestamp, field hashes, visibility and checkpoint 3 remain intact.
+
+[Actual archive evidence](evidence/mcp/core-archive.json) records red 1, green 11, Unarchive qualification 12 and affected MCP regression 19 functions. The same twelve Core store functions pass through the package across four suites, and the native Core test bundles compile for generic iOS Simulator. Source/document lint pass. Bundles/logs are /private/tmp/PlannerCoreArchiveRed, PlannerCoreArchiveGreen, PlannerCoreUnarchiveReplayQualification and PlannerMCPArchiveCoreRegression with xcresult/log extensions. The fixture starts globally Todo; globally Done, container/reference preservation, real failure/interruption, cross-process and physical CloudKit cases remain unqualified.
+
 ## Reproduction
 
 Use unique result-bundle paths on rerun. Scope DEVELOPER_DIR to the accepted Xcode installation.
