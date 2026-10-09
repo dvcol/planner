@@ -163,6 +163,7 @@ public struct PlannerItemContentInput: Sendable, Equatable {
 public enum PlannerCommand: Sendable {
   case createItem(content: PlannerItemContentInput)
   case createList(content: PlannerListContentInput)
+  case addMembership(itemId: UUID, listId: UUID, placement: PlannerPlacement)
   case editList(
     sourceId: UUID, changes: PlannerListChanges,
     expectedFieldHashes: [PlannerListField: PlannerFieldHash])
@@ -243,11 +244,6 @@ public struct PlannerOperation: Sendable {
   }
 }
 
-public struct PlannerAppliedResult: Sendable, Codable, Equatable {
-  public let generated: [PlannerEntityReference]
-  public let affected: [PlannerEntityReference]
-}
-
 public enum PlannerRecoveryResult: Sendable {
   case complete(checkpointGeneration: Int64)
   case incomplete(PlannerFailure)
@@ -315,6 +311,7 @@ public struct PlannerProviderReference: Sendable, Codable, Equatable {
 }
 
 public enum PlannerReferenceRead: Sendable, Equatable {
+  case membership(id: UUID, list: PlannerEntityReference, item: PlannerEntityReference)
   case ownedLink(id: UUID, owner: PlannerEntityReference)
   case schedule(id: UUID, source: PlannerEntityReference)
 }
@@ -479,14 +476,17 @@ public struct PlannerPortableBackup: Sendable {
   }
 
   public let sources: [PlannerPortableSource]
+  public let memberships: [PlannerPortableMembership]
   public let schedules: [PlannerPortableSchedule]
   public let deletionMarkers: [PlannerPortableDeletionMarker]
 
   init(
-    sources: [PlannerPortableSource], schedules: [PlannerPortableSchedule] = [],
+    sources: [PlannerPortableSource], memberships: [PlannerPortableMembership],
+    schedules: [PlannerPortableSchedule] = [],
     deletionMarkers: [PlannerPortableDeletionMarker]
   ) {
     self.sources = sources
+    self.memberships = memberships
     self.schedules = schedules
     self.deletionMarkers = deletionMarkers
   }

@@ -121,7 +121,7 @@ struct ItemLinkMigrationTests {
     #expect(
       after.decodedBackup.backup.deletionMarkers == before.decodedBackup.backup.deletionMarkers)
     #expect(beforeAgain.portableData == before.portableData)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 6)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 7)
     #expect(afterNamespaces.first?.preparedProposals.isEmpty == true)
   }
 
@@ -238,7 +238,7 @@ struct ItemLinkMigrationTests {
     #expect(current.fieldHashes == original.fieldHashes)
     #expect(current.updatedAt == original.updatedAt)
     #expect(current.content.links == original.content.links)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 6)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 7)
     #expect(afterNamespaces.first?.preparedProposals.isEmpty == true)
     #expect(after.decodedBackup.backup.schedules.count == 2)
     #expect(
@@ -345,7 +345,7 @@ struct ItemLinkMigrationTests {
     #expect(retained.content.links == source.content.links)
     #expect(retained.state.globalDone == true)
     #expect(retained.state.archived == true)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 6)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 7)
     #expect(newRecovery.decodedBackup.backup.schedules.isEmpty)
     #expect(newRecovery.decodedBackup.backup.deletionMarkers.count == 1)
     #expect(
@@ -443,7 +443,7 @@ struct ItemLinkMigrationTests {
       return
     }
     #expect(nextCheckpoint == 4)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 6)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 7)
     #expect(newRecovery.decodedBackup.backup.items.count == 2)
     #expect(newRecovery.decodedBackup.backup.items.first { $0.id == item.id }?.globalDone == true)
     #expect(newRecovery.decodedBackup.backup.items.first { $0.id == item.id }?.archived == true)
@@ -563,7 +563,7 @@ struct ItemLinkMigrationTests {
       return
     }
     #expect(nextCheckpoint == 4)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 6)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 7)
     #expect(retained.content.links == source.content.links)
     #expect(retained.fieldHashes == source.fieldHashes)
     #expect(retained.updatedAt == source.updatedAt)

@@ -86,7 +86,7 @@ enum PlannerSchemaV1: VersionedSchema {
   }
 }
 
-extension PlannerSchemaV5.Item {
+extension PlannerSchemaV7.Item {
   func rowRead(
     hasLinks: Bool, previewLink: PlannerOwnedLinkRead?, scheduleSummary: PlannerRowScheduleSummary
   ) throws -> PlannerRowRead {
@@ -129,7 +129,7 @@ enum PlannerMigrationPlan: SchemaMigrationPlan {
   static var schemas: [any VersionedSchema.Type] {
     [
       PlannerSchemaV1.self, PlannerSchemaV2.self, PlannerSchemaV3.self, PlannerSchemaV4.self,
-      PlannerSchemaV5.self, PlannerSchemaV6.self,
+      PlannerSchemaV5.self, PlannerSchemaV6.self, PlannerSchemaV7.self,
     ]
   }
   static var stages: [MigrationStage] {
@@ -139,6 +139,7 @@ enum PlannerMigrationPlan: SchemaMigrationPlan {
       .lightweight(fromVersion: PlannerSchemaV3.self, toVersion: PlannerSchemaV4.self),
       .lightweight(fromVersion: PlannerSchemaV4.self, toVersion: PlannerSchemaV5.self),
       .lightweight(fromVersion: PlannerSchemaV5.self, toVersion: PlannerSchemaV6.self),
+      .lightweight(fromVersion: PlannerSchemaV6.self, toVersion: PlannerSchemaV7.self),
     ]
   }
 }
@@ -156,7 +157,7 @@ struct ItemSnapshot {
 
   var reference: PlannerEntityReference { PlannerEntityReference(kind: .item, id: id) }
 
-  func read(datasetId: UUID) -> PlannerItemSourceRead {
+  func read(datasetId: UUID, memberships: [MembershipSnapshot]) -> PlannerItemSourceRead {
     PlannerItemSourceRead(
       source: reference, content: input.readContent(links: links.map(\.read)), createdAt: createdAt,
       updatedAt: updatedAt,
@@ -167,6 +168,8 @@ struct ItemSnapshot {
         + schedules.sorted { $0.id.uuidString < $1.id.uuidString }.map {
           .schedule(id: $0.id, source: reference)
         }
+        + memberships.filter { $0.item.id == id }.sorted { $0.id.uuidString < $1.id.uuidString }
+        .map(\.reference)
     )
   }
 }

@@ -1,0 +1,195 @@
+{
+  "allDayCreationCheckpoint" : 7,
+  "allDayScheduleHash" : "sha256-v1:e16785fad31259e5bc3eda61fbe52da71d4ca7e3870cded0da1cd2220c87ddc2",
+  "allDayScheduleId" : "73A6A257-71F5-47D2-96FF-B5A08885C706",
+  "archivedCheckpoint" : 3,
+  "createdAt" : 813264299.74880695,
+  "creationCheckpoint" : 1,
+  "creationOperationId" : "00000000-0000-4000-8000-000000000941",
+  "datasetId" : "083D0176-4A8D-453E-8C46-C637E41DCD4E",
+  "deletionMarkers" : [
+    {
+      "closedFamilyId" : null,
+      "deletionId" : "97789031-5190-457D-A3AC-A7C1B4FDA6BD",
+      "operationId" : "00000000-0000-4000-8000-000000000945",
+      "target" : {
+        "kind" : "source",
+        "source" : {
+          "id" : "953AAFEF-A4AC-4CAC-BFEC-5B5DE3C79C1D",
+          "kind" : "schedule",
+          "lifetimeId" : "33B744C9-9261-4BF5-A124-164BCE0A4132"
+        }
+      }
+    }
+  ],
+  "fieldHashes" : {
+    "categoryIds" : "sha256-v1:ecac2c0e88fd8b6856be6733f7e987c851fe21476788406391ccc111373eae74",
+    "estimate" : "sha256-v1:b7ab960a316e9ab7bb1c2a66de7f214a543b022759f08c4e5a3504a22d7f275d",
+    "links" : "sha256-v1:d73207e722be2572758d2805a43368c334c3c512cafbb181ff3b1d5796809793",
+    "location" : "sha256-v1:48dca8122cf25b611bcdb15484f630ee7c55c5cd2094e6bdf803b4ce04e5b1df",
+    "notes" : "sha256-v1:7a4d4913b774eeb8b71be1fb2647c6d1b8f128efa1e08e37dd059476dd069c8a",
+    "subtitle" : "sha256-v1:091a65bd5cd69e39497988e8b61511b6a9cf9fe7017df334b88f3e7a1f744cf4",
+    "tagIds" : "sha256-v1:6afdbb5db7e6bb391e257e4abe3e58f586622e94a02822cf809b26df1f5704a5",
+    "title" : "sha256-v1:750df59a4922dab2bbc844d0c4fa00f892f3bcb8816e512fc3f7bf0cc0235a2a"
+  },
+  "itemId" : "2BD7937B-D552-4EAC-8675-12AA80FF3708",
+  "latestCheckpoint" : 11,
+  "listArchiveCheckpoint" : 10,
+  "listArchiveOperationId" : "00000000-0000-4000-8000-000000000950",
+  "listCreationCheckpoint" : 8,
+  "listCreationOperationId" : "00000000-0000-4000-8000-000000000948",
+  "listEditCheckpoint" : 9,
+  "listEditOperationId" : "00000000-0000-4000-8000-000000000949",
+  "listId" : "D4A789DA-8768-4112-A3CE-2BC2F162C19C",
+  "listMetadata" : [
+    {
+      "createdAt" : 813264299.84908605,
+      "fieldHashes" : {
+        "color" : "sha256-v1:9f92728e942a974dcfcff552ea3e5ca1d9c176649fc95ef794d541ddf7a68d6d",
+        "iconName" : "sha256-v1:e48d88d1f5fcb7fca399b52180a0b78d233aad89722e35bd06ca4dbfce08ba80",
+        "name" : "sha256-v1:28cccb25ddb51791d014187513513a42c20184c2c7a1b633a1a8f606f458df2e",
+        "notes" : "sha256-v1:baee189d940803fce2e310c507e68ded895eff92777d2940bd8fe80cee9b108a"
+      },
+      "id" : "D4A789DA-8768-4112-A3CE-2BC2F162C19C",
+      "updatedAt" : 813264299.88174403
+    },
+    {
+      "createdAt" : 813264299.89975095,
+      "fieldHashes" : {
+        "color" : "sha256-v1:65897d8f113065a458f2e296fc87bb867e75885cfc7c10395240a1d885043bed",
+        "iconName" : "sha256-v1:e961d8358e282452140445af56c181b993e71d8065d77f9acc7ed68961e682ec",
+        "name" : "sha256-v1:b6e23c610a62325fd8de27fa9ccbefecbdfb23162547659b54a7ce30ea9ea386",
+        "notes" : "sha256-v1:91ab7ab3ee399d7f5f6b5000991bac22a456fea6604f1b37488edfe07b6f24fb"
+      },
+      "id" : "ECA4CEAC-7350-4632-AF9F-CEECDF025E6F",
+      "updatedAt" : 813264299.89975095
+    }
+  ],
+  "lists" : [
+    {
+      "archived" : true,
+      "content" : {
+        "color" : {
+          "alpha" : 1,
+          "blue" : 0.75,
+          "green" : 0.5,
+          "red" : 0.125
+        },
+        "iconName" : "fork.knife",
+        "name" : " Tokyo Food ",
+        "notes" : " Friday booking "
+      },
+      "contentOrigins" : {
+        "name" : "independent",
+        "notes" : "independent"
+      },
+      "createdAt" : 813264299.84908605,
+      "globalDone" : null,
+      "id" : "D4A789DA-8768-4112-A3CE-2BC2F162C19C",
+      "kind" : "list",
+      "lifetimeId" : "B9DBB6FB-D1D2-46EA-AA0F-5E9C189488B2",
+      "updatedAt" : 813264299.88174403
+    },
+    {
+      "archived" : false,
+      "content" : {
+        "color" : {
+          "alpha" : 1,
+          "blue" : 1,
+          "green" : 0,
+          "red" : 0
+        },
+        "iconName" : "",
+        "name" : "Wishlist",
+        "notes" : null
+      },
+      "contentOrigins" : {
+        "name" : "independent"
+      },
+      "createdAt" : 813264299.89975095,
+      "globalDone" : null,
+      "id" : "ECA4CEAC-7350-4632-AF9F-CEECDF025E6F",
+      "kind" : "list",
+      "lifetimeId" : "1D287D88-2035-47E0-9972-C4C5D88DFD5E",
+      "updatedAt" : 813264299.89975095
+    }
+  ],
+  "ownedLinks" : [
+    {
+      "id" : "18846BB8-2677-499A-A70C-A98DF3B99FF1",
+      "kind" : "appleMaps",
+      "label" : "Map",
+      "lifetimeId" : "FFD16315-38B5-48C1-9AC5-538C5A777EC9",
+      "originalUrl" : "https:\/\/maps.apple.com\/?q=Hotel",
+      "owner" : {
+        "id" : "2BD7937B-D552-4EAC-8675-12AA80FF3708",
+        "kind" : "item",
+        "lifetimeId" : "308E11FF-D359-48AC-94AC-CB2C6BA86C3C"
+      },
+      "providerReference" : null,
+      "rank" : "0"
+    },
+    {
+      "id" : "7F854F67-682A-42B5-8E6C-D648A5CC7212",
+      "kind" : "website",
+      "label" : "Menu",
+      "lifetimeId" : "3419F66D-4D6D-4B1F-A141-6C0B387DB34F",
+      "originalUrl" : "https:\/\/example.com\/menu",
+      "owner" : {
+        "id" : "2BD7937B-D552-4EAC-8675-12AA80FF3708",
+        "kind" : "item",
+        "lifetimeId" : "308E11FF-D359-48AC-94AC-CB2C6BA86C3C"
+      },
+      "providerReference" : null,
+      "rank" : "1"
+    }
+  ],
+  "producerCommit" : "984b98f",
+  "removedScheduleCreationCheckpoint" : 4,
+  "retainedScheduleCreationCheckpoint" : 6,
+  "retainedScheduleHash" : "sha256-v1:0fb19e3f173b295275292d64a936abb029b8ceeb2a7be69cf24cc6880f52cde2",
+  "retainedScheduleId" : "110C4BAC-F61C-4C11-9B80-49BDA11C5E9A",
+  "scheduleHash" : "sha256-v1:42d98003dc6d4a0c45bdef7cc192a1e08dae3880516f606750d98010ab6d9ca4",
+  "scheduleId" : "953AAFEF-A4AC-4CAC-BFEC-5B5DE3C79C1D",
+  "scheduleOperationId" : "00000000-0000-4000-8000-000000000944",
+  "schedules" : [
+    {
+      "form" : {
+        "end" : 813204000.75,
+        "kind" : "timed",
+        "planningTimeZone" : "Asia\/Tokyo",
+        "start" : 813200400.25
+      },
+      "id" : "110C4BAC-F61C-4C11-9B80-49BDA11C5E9A",
+      "lifetimeId" : "71B70613-D735-4BF4-9B78-604273C4FF4A",
+      "source" : {
+        "id" : "2BD7937B-D552-4EAC-8675-12AA80FF3708",
+        "kind" : "item",
+        "lifetimeId" : "308E11FF-D359-48AC-94AC-CB2C6BA86C3C"
+      }
+    },
+    {
+      "form" : {
+        "end" : {
+          "day" : 11,
+          "month" : 10,
+          "year" : 2026
+        },
+        "kind" : "allDay",
+        "start" : {
+          "day" : 9,
+          "month" : 10,
+          "year" : 2026
+        }
+      },
+      "id" : "73A6A257-71F5-47D2-96FF-B5A08885C706",
+      "lifetimeId" : "3618B378-9C53-4A51-80E7-A38BC462D31D",
+      "source" : {
+        "id" : "2BD7937B-D552-4EAC-8675-12AA80FF3708",
+        "kind" : "item",
+        "lifetimeId" : "308E11FF-D359-48AC-94AC-CB2C6BA86C3C"
+      }
+    }
+  ],
+  "updatedAt" : 813264299.77806199
+}

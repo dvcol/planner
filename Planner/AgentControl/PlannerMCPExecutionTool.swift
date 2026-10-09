@@ -882,8 +882,10 @@
       case .applied(let result, let recovery):
         fields["state"] = .string("applied")
         fields["result"] = .object([
-          "generated": .array(result.generated.map(referenceValue)),
-          "affected": .array(result.affected.map(referenceValue)),
+          "generated": .array(
+            result.generatedIdentities.map(PlannerMCPSourceTool.appliedIdentityValue)),
+          "affected": .array(
+            result.affectedIdentities.map(PlannerMCPSourceTool.appliedIdentityValue)),
           "progress": .array([]), "importSummary": .null,
         ])
         switch recovery {
@@ -899,10 +901,6 @@
         }
       }
       return try result(.object(fields), isError: rejected)
-    }
-
-    private static func referenceValue(_ source: PlannerEntityReference) -> Value {
-      .object(["kind": .string(source.kind.rawValue), "id": .string(source.id.uuidString)])
     }
 
     private static func rejection(

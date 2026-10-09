@@ -100,14 +100,12 @@
 
     private static func appliedValue(_ result: PlannerAppliedResult) -> Value {
       .object([
-        "generated": .array(result.generated.map(referenceValue)),
-        "affected": .array(result.affected.map(referenceValue)),
+        "generated": .array(
+          result.generatedIdentities.map(PlannerMCPSourceTool.appliedIdentityValue)),
+        "affected": .array(
+          result.affectedIdentities.map(PlannerMCPSourceTool.appliedIdentityValue)),
         "progress": .array([]), "importSummary": .null,
       ])
-    }
-
-    private static func referenceValue(_ source: PlannerEntityReference) -> Value {
-      .object(["kind": .string(source.kind.rawValue), "id": .string(source.id.uuidString)])
     }
 
   }

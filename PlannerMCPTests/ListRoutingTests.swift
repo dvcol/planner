@@ -674,6 +674,118 @@ struct ListRoutingTests {
     }
   }
 
+  @Test func membershipReferencesAndMixedReceiptsAreCompleteThroughActualHTTPReads() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let configuration = storageConfiguration(directory)
+    let planner = PlannerCore.Planner(configuration: configuration)
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let itemCreated, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createItem(content: PlannerItemContentInput(title: "Hotel")))
+      ).outcome,
+      let item = itemCreated.generated.first,
+      case .applied(let listCreated, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createList(content: PlannerListContentInput(name: "Tokyo")))
+      ).outcome,
+      let list = listCreated.generated.first
+    else {
+      Issue.record("Native sources must save before HTTP reference inspection.")
+      return
+    }
+    let operationIdentifier = UUID()
+    guard
+      case .applied(let added, .complete(let checkpoint)) = await planner.execute(
+        PlannerOperation(
+          operationId: operationIdentifier, session: datasetSession,
+          command: .addMembership(itemId: item.id, listId: list.id, placement: .last))
+      ).outcome,
+      case .membership(let membershipIdentifier, _, _)? = added.generatedReferences.first
+    else {
+      Issue.record("Core must save a membership receipt before HTTP inspection.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    let expectedReference: [String: Any] = [
+      "kind": "membership", "id": membershipIdentifier.uuidString,
+      "owner": ["kind": "list", "id": list.id.uuidString],
+      "source": ["kind": "item", "id": item.id.uuidString],
+      "appearance": [
+        "kind": "listMembership", "listId": list.id.uuidString,
+        "membershipId": membershipIdentifier.uuidString,
+      ],
+    ]
+    do {
+      for source in [list, item] {
+        let read = try value(
+          try await httpSession.data(
+            for: request(
+              endpoint: endpoint, name: "planner_read",
+              arguments: [
+                "formatVersion": 1,
+                "request": [
+                  "kind": "source",
+                  "source": ["kind": source.kind.rawValue, "id": source.id.uuidString],
+                ],
+              ])))
+        let sourceValue = try #require(read["value"] as? [String: Any])
+        let references = try #require(sourceValue["references"] as? [[String: Any]])
+        #expect(references.count == 1)
+        #expect(
+          NSDictionary(dictionary: try #require(references.first)).isEqual(to: expectedReference))
+        if source.kind == .list {
+          let progress = try #require(sourceValue["progress"] as? [String: Any])
+          #expect(progress["state"] as? String == "partial")
+          #expect(progress["doneCount"] as? String == "0")
+          #expect(progress["totalCount"] as? String == "1")
+        }
+      }
+      let status = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_operation_status",
+            arguments: ["formatVersion": 1, "operationId": operationIdentifier.uuidString])))
+      #expect(status["state"] as? String == "appliedRecoveryComplete")
+      #expect(status["checkpointGeneration"] as? String == String(checkpoint))
+      let result = try #require(status["result"] as? [String: Any])
+      let generated = try #require(result["generated"] as? [[String: Any]])
+      #expect(generated.count == 1)
+      #expect(
+        NSDictionary(dictionary: try #require(generated.first)).isEqual(to: expectedReference))
+      let affected = try #require(result["affected"] as? [[String: Any]])
+      #expect(affected.count == 2)
+      #expect(NSDictionary(dictionary: affected[0]).isEqual(to: expectedReference))
+      #expect(
+        NSDictionary(dictionary: affected[1]).isEqual(to: [
+          "kind": "list", "id": list.id.uuidString,
+        ]))
+      await listener.stop()
+      let reopened = PlannerCore.Planner(configuration: configuration)
+      guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+        case .appliedRecoveryComplete(let retained, let retainedCheckpoint) =
+          await reopened.operationStatus(
+            session: reopenedSession, operationId: operationIdentifier)
+      else {
+        Issue.record("Mixed reference/source receipts must survive native reopen.")
+        return
+      }
+      #expect(retained == added)
+      #expect(retainedCheckpoint == checkpoint)
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   private func rejected(_ exchange: (Data, URLResponse)) throws -> [String: Any] {
     #expect((exchange.1 as? HTTPURLResponse)?.statusCode == 200)
     let envelope = try #require(JSONSerialization.jsonObject(with: exchange.0) as? [String: Any])
