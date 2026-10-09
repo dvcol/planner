@@ -2,7 +2,6 @@
   "devices": [
     {
       "architecture": "arm64",
-      "deviceName": "My Mac",
       "modelName": "MacBook Pro",
       "osBuildNumber": "26A434",
       "osVersion": "27.0.1",
