@@ -42,7 +42,7 @@
         };
         000000000000000000000106 = { isa = PBXFileReference; lastKnownFileType = folder; path = Packages; sourceTree = "<group>"; };
         000000000000000000000107 = { isa = PBXFileSystemSynchronizedRootGroup; path = Packages/PlannerCore/Tests/PlannerCoreTests; sourceTree = "<group>"; };
-        000000000000000000000108 = { isa = PBXFileSystemSynchronizedRootGroup; path = Packages/PlannerCore/Tests/PlannerCoreStoreTests; sourceTree = "<group>"; };
+        000000000000000000000108 = { isa = PBXFileSystemSynchronizedRootGroup; explicitFolders = (Fixtures); path = Packages/PlannerCore/Tests/PlannerCoreStoreTests; sourceTree = "<group>"; };
         000000000000000000000118 = { isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PlannerCoreTests.xcconfig; sourceTree = "<group>"; };
         000000000000000000000119 = { isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlannerCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
         000000000000000000000120 = { isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlannerCoreStoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };

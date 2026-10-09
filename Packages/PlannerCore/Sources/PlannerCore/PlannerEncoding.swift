@@ -70,14 +70,18 @@ extension PlannerItemContentInput {
       "notes": .optional(notes.map { .string($0) }),
       "location": .optional(location.map { $0.canonicalValue }),
       "estimate": .optional(estimate.map { $0.canonicalValue }),
-      "links": .ordered([]), "categoryIds": .identitySet([]), "tagIds": .identitySet([]),
+      "links": .ordered(links.map(\.canonicalValue)), "categoryIds": .identitySet([]),
+      "tagIds": .identitySet([]),
     ])
   }
 
-  func fieldHashes(datasetId: UUID, itemId: UUID, lifetimeId: UUID) -> [PlannerItemField:
+  func fieldHashes(
+    datasetId: UUID, itemId: UUID, lifetimeId: UUID, links: [PlannerOwnedLinkRead] = []
+  ) -> [PlannerItemField:
     PlannerFieldHash]
   {
-    guard case .record(let fields) = canonicalContent else { return [:] }
+    guard case .record(var fields) = canonicalContent else { return [:] }
+    fields["links"] = .ordered(links.map(\.canonicalValue))
     return Dictionary(
       uniqueKeysWithValues: PlannerItemField.allCases.compactMap { field in
         guard let value = fields[field.rawValue] else { return nil }
@@ -124,16 +128,24 @@ extension PlannerItemContentInput {
           propertyPath: "/command/content/location/coordinate")
       }
     }
-    guard links.isEmpty, categoryIds.isEmpty, tagIds.isEmpty else {
-      throw PlannerFailure(
-        "unavailable", "This first local fixture does not yet implement owned links or labels.")
+    guard categoryIds.isEmpty, tagIds.isEmpty else {
+      throw PlannerFailure("unavailable", "This local fixture does not yet implement labels.")
+    }
+    for (index, link) in links.enumerated() {
+      let path = "/command/content/links/\(index)"
+      guard link.linkId == nil else {
+        throw PlannerFailure(
+          "invalidInput", "New Item links cannot reuse an existing owned-link identity.",
+          propertyPath: path + "/linkId")
+      }
+      _ = try link.validatedKind(propertyPath: path)
     }
   }
 
-  var readContent: PlannerItemContent {
+  func readContent(links: [PlannerOwnedLinkRead] = []) -> PlannerItemContent {
     PlannerItemContent(
       title: title, subtitle: subtitle, notes: notes, location: location, estimate: estimate,
-      links: [], categoryIds: [], tagIds: []
+      links: links, categoryIds: [], tagIds: []
     )
   }
 }

@@ -86,8 +86,8 @@ enum PlannerSchemaV1: VersionedSchema {
   }
 }
 
-extension PlannerSchemaV1.Item {
-  func rowRead() throws -> PlannerRowRead {
+extension PlannerSchemaV2.Item {
+  func rowRead(hasLinks: Bool, previewLink: PlannerOwnedLinkRead?) throws -> PlannerRowRead {
     guard let id else {
       throw PlannerFailure("readUnavailable", "The row Item has unresolved identity.")
     }
@@ -102,8 +102,9 @@ extension PlannerSchemaV1.Item {
       identity: .source(PlannerEntityReference(kind: .item, id: id)),
       title: content.title, subtitle: content.subtitle, estimate: content.estimate,
       globalDone: globalDone, localDone: nil, effectiveDone: globalDone, archived: archived,
-      hasLocation: content.location != nil, hasLinks: false,
-      ownedLocation: content.location, previewLink: nil, scheduleSummary: .none)
+      hasLocation: content.location != nil, hasLinks: hasLinks,
+      ownedLocation: content.location, previewLink: previewLink,
+      scheduleSummary: .none)
   }
 }
 
@@ -123,8 +124,10 @@ struct PlannerStoredOperationEvidence: Codable {
 }
 
 enum PlannerMigrationPlan: SchemaMigrationPlan {
-  static var schemas: [any VersionedSchema.Type] { [PlannerSchemaV1.self] }
-  static var stages: [MigrationStage] { [] }
+  static var schemas: [any VersionedSchema.Type] { [PlannerSchemaV1.self, PlannerSchemaV2.self] }
+  static var stages: [MigrationStage] {
+    [.lightweight(fromVersion: PlannerSchemaV1.self, toVersion: PlannerSchemaV2.self)]
+  }
 }
 
 struct ItemSnapshot {
@@ -135,13 +138,16 @@ struct ItemSnapshot {
   let input: PlannerItemContentInput
   let globalDone: Bool
   let archived: Bool
+  var links: [OwnedLinkSnapshot] = []
 
   var reference: PlannerEntityReference { PlannerEntityReference(kind: .item, id: id) }
 
   func read(datasetId: UUID) -> PlannerSourceRead {
     PlannerSourceRead(
-      source: reference, content: input.readContent, createdAt: createdAt, updatedAt: updatedAt,
-      fieldHashes: input.fieldHashes(datasetId: datasetId, itemId: id, lifetimeId: lifetimeId),
+      source: reference, content: input.readContent(links: links.map(\.read)), createdAt: createdAt,
+      updatedAt: updatedAt,
+      fieldHashes: input.fieldHashes(
+        datasetId: datasetId, itemId: id, lifetimeId: lifetimeId, links: links.map(\.read)),
       state: PlannerSourceState(globalDone: globalDone, archived: archived), labels: [],
       references: []
     )
