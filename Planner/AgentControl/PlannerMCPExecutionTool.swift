@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create an Item with owned location and HTTP(S) bookmarks, edit its title/notes/location/links, complete/reopen or archive/unarchive it, and create, edit or change planning zones of direct timed appointments through the local Planner prototype.",
+        "Create an Item with owned location and HTTP(S) bookmarks, edit its title/notes/location/links, complete/reopen or archive/unarchive it, and create, edit, change planning zones or remove selected direct timed appointments through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -17,14 +17,14 @@
           "command": .object([
             "oneOf": .array([
               creationSchema, editSchema, archiveSchema, completionSchema, scheduleCreationSchema,
-              scheduleEditSchema, scheduleZoneSchema,
+              scheduleEditSchema, scheduleZoneSchema, scheduleRemovalSchema,
             ])
           ]),
           "reviewToken": .object(["type": .array([.string("string"), .string("null")])]),
         ]),
       ]),
       annotations: .init(
-        readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false)
+        readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false)
     )
 
     private static let locationSchema = Value.object([
@@ -221,6 +221,15 @@
       ]),
     ])
 
+    private static let scheduleRemovalSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("type"), .string("scheduleId")]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("removeSchedule")]),
+        "scheduleId": .object(["type": .string("string"), "format": .string("uuid")]),
+      ]),
+    ])
+
     static func call(
       _ parameters: CallTool.Parameters, planner: PlannerCore.Planner,
       session: PlannerDatasetSession
@@ -253,7 +262,7 @@
         }
         if let token = arguments["reviewToken"], token != .null {
           throw AdmissionFailure(
-            "staleReview", "/reviewToken", "No review token is issued for this ordinary Item slice."
+            "staleReview", "/reviewToken", "No review token is issued for this ordinary data slice."
           )
         }
         let command: PlannerCommand
@@ -265,6 +274,7 @@
         case "createSchedule": command = try scheduleCreationCommand(arguments["command"])
         case "editSchedule": command = try scheduleEditCommand(arguments["command"])
         case "changeScheduleZone": command = try scheduleZoneCommand(arguments["command"])
+        case "removeSchedule": command = try scheduleRemovalCommand(arguments["command"])
         default:
           throw AdmissionFailure(
             "unavailable", "/command/type", "This command is not yet implemented by the prototype.")
@@ -305,6 +315,17 @@
       return .createSchedule(
         source: PlannerEntityReference(kind: sourceKind, id: sourceIdentifier),
         form: try scheduleForm(command["form"], path: "/command/form"))
+    }
+
+    private static func scheduleRemovalCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "scheduleId"], required: ["type", "scheduleId"], path: "/command")
+      guard case .string(let spelling) = command["scheduleId"],
+        let scheduleIdentifier = UUID(uuidString: spelling)
+      else {
+        throw AdmissionFailure("invalidInput", "/command/scheduleId", "Expected a Schedule UUID.")
+      }
+      return .removeSchedule(scheduleId: scheduleIdentifier)
     }
 
     private static func scheduleEditCommand(_ value: Value?) throws -> PlannerCommand {
