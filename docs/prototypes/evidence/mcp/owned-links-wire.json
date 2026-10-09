@@ -1,0 +1,203 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-09",
+  "coreBaselineCommit": "b0bc73e",
+  "scope": "Actual authenticated stateless loopback HTTP owned-link creation, full-source/selected-row encoding, replay and input rejection through the official MCP SDK and public Planner facade.",
+  "executions": {
+    "Red": {
+      "bundle": "/private/tmp/PlannerMCPOwnedLinksWireRed.xcresult",
+      "log": "/private/tmp/PlannerMCPOwnedLinksWireRed.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 5,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1791553051.031,
+        "passedTests": 5,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791553036.574,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "Expectation failed: tool[\"isError\"] as? Bool == false\ntool[\"isError\"] as? Bool \u2192 true",
+            "targetName": "PlannerMCPTests",
+            "testIdentifier": 1,
+            "testIdentifierString": "RowRoutingTests/ownedLinksOverHTTPRetainFullDetailsAndOneRowPreviewAfterReplay()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/ownedLinksOverHTTPRetainFullDetailsAndOneRowPreviewAfterReplay()",
+            "testName": "ownedLinksOverHTTPRetainFullDetailsAndOneRowPreviewAfterReplay()"
+          }
+        ],
+        "title": "Test - Planner",
+        "topInsights": [],
+        "totalTestCount": 6
+      }
+    },
+    "Green": {
+      "bundle": "/private/tmp/PlannerMCPOwnedLinksWireGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPOwnedLinksWireGreen.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 6,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791553126.622,
+        "passedTests": 6,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791553120.187,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [],
+        "totalTestCount": 6
+      }
+    },
+    "Qualification": {
+      "bundle": "/private/tmp/PlannerMCPOwnedLinksWireQualification.xcresult",
+      "log": "/private/tmp/PlannerMCPOwnedLinksWireQualification.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 7,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791553313.235,
+        "passedTests": 7,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791553304.269,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [],
+        "totalTestCount": 7
+      }
+    },
+    "Regression": {
+      "bundle": "/private/tmp/PlannerMCPOwnedLinksWireRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPOwnedLinksWireRegression.log",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "modelName": "MacBook Pro",
+              "osBuildNumber": "26A434",
+              "osVersion": "27.0.1",
+              "platform": "macOS"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 34,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791553435.133,
+        "passedTests": 28,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791553428.152,
+        "statistics": [
+          {
+            "subtitle": "9 test runs",
+            "title": "3 tests ran with dynamic parameters"
+          }
+        ],
+        "testFailures": [],
+        "title": "Test - Planner",
+        "topInsights": [
+          {
+            "category": "Longest Test Runs",
+            "impact": "75% of duration",
+            "text": "1 longest test run with outlier durations exceeding 1.59s (three standard deviations)"
+          }
+        ],
+        "totalTestCount": 28
+      }
+    }
+  },
+  "redGreenBehavior": "Museum with Map/Menu/reservation bookmarks is rejected before route implementation, then saves once with exact link identity/order/nulls. Full details retain all links; one row previews only Menu. Same operation replay and real-store reopen preserve data.",
+  "firstExecutionQualification": "Thirteen invalid/forged link-array requests return exact code/path and operation identity, create no applied Core evidence, and preserve source, generation window and acknowledged checkpoint. Seven suite functions pass without further implementation.",
+  "excludedPreExecutionFailure": "Swift-format caught an extra closing parenthesis in the new rejection test before xcodebuild executed. No native red or product failure is attributed to it.",
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerMCPOwnedLinksWireSwiftLint.log",
+    "diffWhitespace": "passed"
+  },
+  "sourceHashes": {
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift": "a2586244c2c9a924736c2df78a48235da4e268eec264e1907d01c49bbed5fc8f",
+    "Planner/AgentControl/PlannerMCPSourceTool.swift": "ffd5b597713ac8eeabc596a285dfe4dd9e407c51f35bdf7d2438912535b2be2d",
+    "Planner/AgentControl/PlannerMCPRowValue.swift": "553d1c0850a379c61413bfbfb217e650d869096886a4870592a451d8ac0ef408",
+    "PlannerMCPTests/RowRoutingTests.swift": "e46b6e38464615f4d7f035b4f8d287f707589fa2c2aac1a69e0739a1cc8edb87"
+  },
+  "limitations": [
+    "No link replacement, capture/redirect/stable-reference parsing or native image/error/cancellation I/O.",
+    "No List/Itinerary/appearance/Schedule persistence, saved native checkbox/drag or performance qualification.",
+    "No actual selected-client/signed-reader/physical account/CloudKit/Share proof; backup/export/import/recovery administration remains absent from MCP.",
+    "Native logs retain com.apple.linkd.autoShortcut diagnostics; passing MCP functions do not qualify App Intents."
+  ]
+}

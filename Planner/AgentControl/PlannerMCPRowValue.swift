@@ -33,6 +33,16 @@
       ])
     }
 
+    static func link(_ link: PlannerOwnedLinkRead) -> Value {
+      .object([
+        "linkId": .string(link.linkId.uuidString), "originalUrl": .string(link.originalUrl),
+        "label": link.label.map(Value.string) ?? .null, "kind": .string(link.kind.rawValue),
+        "providerReference": link.providerReference.map { reference in
+          .object(["kind": .string(reference.kind.rawValue), "value": .string(reference.value)])
+        } ?? .null,
+      ])
+    }
+
     private static func row(_ row: PlannerRowRead) -> Value {
       let schedule: Value
       switch row.scheduleSummary {
@@ -53,15 +63,7 @@
         "archived": row.archived.map(Value.bool) ?? .null,
         "hasLocation": .bool(row.hasLocation), "hasLinks": .bool(row.hasLinks),
         "ownedLocation": row.ownedLocation.map(PlannerMCPSourceTool.locationValue) ?? .null,
-        "previewLink": row.previewLink.map { link in
-          .object([
-            "linkId": .string(link.linkId.uuidString), "originalUrl": .string(link.originalUrl),
-            "label": link.label.map(Value.string) ?? .null, "kind": .string(link.kind.rawValue),
-            "providerReference": link.providerReference.map { reference in
-              .object(["kind": .string(reference.kind.rawValue), "value": .string(reference.value)])
-            } ?? .null,
-          ])
-        } ?? .null,
+        "previewLink": row.previewLink.map(link) ?? .null,
         "scheduleSummary": schedule,
       ])
     }

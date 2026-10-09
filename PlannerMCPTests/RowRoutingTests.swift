@@ -5,6 +5,275 @@ import Testing
 @testable import Planner
 
 struct RowRoutingTests {
+  @Test func malformedOwnedLinksRejectTogetherWithoutChangingTheSavedSourceOrWindow() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let created, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createItem(
+            content: PlannerItemContentInput(
+              title: "Hotel", notes: "Original notes",
+              links: [PlannerLinkInput(originalUrl: "https://example.com/menu", label: "Menu")])))
+      ).outcome, let source = created.generated.first,
+      case .source(let saved) = await planner.read(
+        session: datasetSession, request: .source(source))
+    else {
+      Issue.record("The original Item must be independently saved before invalid agent input.")
+      return
+    }
+    let existingLinkIdentifier = try #require(saved.content.links.first?.linkId.uuidString)
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      let sourceRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": ["kind": "source", "source": ["kind": "item", "id": source.id.uuidString]],
+        ])
+      let before = try value(try await httpSession.data(for: sourceRequest))
+      let queryRequest = try request(
+        endpoint: endpoint, name: "planner_query",
+        arguments: ["formatVersion": 1, "query": ["kind": "items", "scope": ["kind": "global"]]])
+      let snapshot = try value(try await httpSession.data(for: queryRequest))
+      let generation = try #require(snapshot["generation"] as? String)
+      let rowRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": ["kind": "rows", "generation": generation, "offset": "0", "limit": "1"],
+        ])
+      let beforeWindow = try value(try await httpSession.data(for: rowRequest))
+      let rejections: [(input: Any, code: String, path: String)] = [
+        (NSNull(), "invalidInput", "/command/content/links"),
+        ([NSNull()], "invalidInput", "/command/content/links/0"),
+        (
+          [["originalUrl": "https://example.com/menu"]], "invalidInput",
+          "/command/content/links/0/label"
+        ),
+        (
+          [["originalUrl": 1, "label": NSNull()]], "invalidInput",
+          "/command/content/links/0/originalUrl"
+        ),
+        (
+          [["originalUrl": "https://example.com/menu", "label": true]], "invalidInput",
+          "/command/content/links/0/label"
+        ),
+        (
+          [["originalUrl": "https://example.com/menu", "label": NSNull(), "linkId": "invalid"]],
+          "invalidInput", "/command/content/links/0/linkId"
+        ),
+        (
+          [["originalUrl": "https://example.com/menu", "label": NSNull(), "linkId": 1]],
+          "invalidInput", "/command/content/links/0/linkId"
+        ),
+        (
+          [
+            [
+              "originalUrl": "https://example.com/menu", "label": NSNull(),
+              "linkId": existingLinkIdentifier,
+            ]
+          ], "invalidInput", "/command/content/links/0/linkId"
+        ),
+        (
+          [["originalUrl": "file:///private/tmp/menu", "label": NSNull()]], "invalidInput",
+          "/command/content/links/0/originalUrl"
+        ),
+        (
+          [["originalUrl": "https://example.com/menu", "label": NSNull(), "kind": "website"]],
+          "unknownField", "/command/content/links/0/kind"
+        ),
+        (
+          [
+            [
+              "originalUrl": "https://example.com/menu", "label": NSNull(),
+              "providerReference": NSNull(),
+            ]
+          ], "unknownField", "/command/content/links/0/providerReference"
+        ),
+        (
+          [["originalUrl": "https://example.com/menu", "label": NSNull(), "unexpected/~": true]],
+          "unknownField", "/command/content/links/0/unexpected~1~0"
+        ),
+        (
+          [
+            ["originalUrl": "https://example.com/valid", "label": NSNull()],
+            ["originalUrl": "https://example.com/invalid", "label": true],
+          ], "invalidInput", "/command/content/links/1/label"
+        ),
+      ]
+      for expected in rejections {
+        let operationIdentifier = UUID()
+        let invalidRequest = try request(
+          endpoint: endpoint, name: "planner_execute",
+          arguments: [
+            "formatVersion": 1, "operationId": operationIdentifier.uuidString,
+            "command": [
+              "type": "createItem", "content": ["title": "Rejected", "links": expected.input],
+            ],
+          ])
+        let rejected = try rejection(try await httpSession.data(for: invalidRequest))
+        #expect(rejected["operationId"] as? String == operationIdentifier.uuidString)
+        let reason = try #require(rejected["reason"] as? [String: Any])
+        #expect(reason["code"] as? String == expected.code)
+        #expect(reason["propertyPath"] as? String == expected.path)
+        guard
+          case .noReliableEvidence = await planner.operationStatus(
+            session: datasetSession, operationId: operationIdentifier)
+        else {
+          Issue.record(
+            "Invalid links must not save an Item, partial link array or applied receipt.")
+          await listener.stop()
+          return
+        }
+      }
+      let after = try value(try await httpSession.data(for: sourceRequest))
+      #expect(NSDictionary(dictionary: after).isEqual(to: before))
+      let afterWindow = try value(try await httpSession.data(for: rowRequest))
+      #expect(NSDictionary(dictionary: afterWindow).isEqual(to: beforeWindow))
+      await listener.stop()
+      guard
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
+      else {
+        Issue.record("Invalid wire inputs must retain the original recovery checkpoint.")
+        return
+      }
+      #expect(namespaces.first?.acknowledgedSnapshot?.checkpointGeneration == 1)
+      #expect(namespaces.first?.preparedProposals.isEmpty == true)
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
+  @Test func ownedLinksOverHTTPRetainFullDetailsAndOneRowPreviewAfterReplay() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let configuration = storageConfiguration(directory)
+    let planner = PlannerCore.Planner(configuration: configuration)
+    guard case .ready(let datasetSession) = await planner.bootstrap() else {
+      Issue.record("The real dataset must initialize before the agent journey.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    let operationIdentifier = UUID()
+    let creationRequest = try request(
+      endpoint: endpoint, name: "planner_execute",
+      arguments: [
+        "formatVersion": 1, "operationId": operationIdentifier.uuidString,
+        "command": [
+          "type": "createItem",
+          "content": [
+            "title": "Museum", "notes": "Bring umbrella",
+            "links": [
+              ["originalUrl": "https://maps.apple.com/?q=Museum", "label": "Map"],
+              [
+                "originalUrl": "http://example.com/menu?b=2&a=1#prices", "label": "Menu",
+                "linkId": NSNull(),
+              ],
+              ["originalUrl": "https://example.com/reservation", "label": NSNull()],
+            ],
+          ],
+        ],
+      ])
+    do {
+      let creation = try value(try await httpSession.data(for: creationRequest))
+      #expect(creation["state"] as? String == "applied")
+      #expect(creation["operationId"] as? String == operationIdentifier.uuidString)
+      guard
+        case .appliedRecoveryComplete(let applied, let checkpoint) = await planner.operationStatus(
+          session: datasetSession, operationId: operationIdentifier)
+      else {
+        Issue.record("HTTP creation must have actual saved Core and recovery evidence.")
+        await listener.stop()
+        return
+      }
+      #expect(checkpoint == 1)
+      let source = try #require(applied.generated.first)
+      let sourceRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": ["kind": "source", "source": ["kind": "item", "id": source.id.uuidString]],
+        ])
+      let full = try value(try await httpSession.data(for: sourceRequest))
+      let sourceValue = try #require(full["value"] as? [String: Any])
+      let content = try #require(sourceValue["content"] as? [String: Any])
+      let links = try #require(content["links"] as? [[String: Any]])
+      let linkIds = try links.map { try #require($0["linkId"] as? String) }
+      #expect(linkIds.count == 3)
+      #expect(Set(linkIds).count == 3)
+      #expect(linkIds.allSatisfy { UUID(uuidString: $0) != nil })
+      #expect(links.compactMap { $0["kind"] as? String } == ["appleMaps", "website", "website"])
+      #expect(
+        links.compactMap { $0["originalUrl"] as? String } == [
+          "https://maps.apple.com/?q=Museum", "http://example.com/menu?b=2&a=1#prices",
+          "https://example.com/reservation",
+        ])
+      #expect(links[2]["label"] is NSNull)
+      #expect(links.allSatisfy { $0["providerReference"] is NSNull })
+      #expect(content["notes"] as? String == "Bring umbrella")
+      #expect(content["location"] is NSNull)
+      let queryRequest = try request(
+        endpoint: endpoint, name: "planner_query",
+        arguments: ["formatVersion": 1, "query": ["kind": "items", "scope": ["kind": "global"]]])
+      let snapshot = try value(try await httpSession.data(for: queryRequest))
+      let generation = try #require(snapshot["generation"] as? String)
+      let rowRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": ["kind": "rows", "generation": generation, "offset": "0", "limit": "1"],
+        ])
+      let window = try value(try await httpSession.data(for: rowRequest))
+      let rows = try #require(window["rows"] as? [[String: Any]])
+      let row = try #require(rows.first)
+      #expect(row["hasLinks"] as? Bool == true)
+      #expect(row["links"] == nil)
+      #expect(row["notes"] == nil)
+      #expect(row["fieldHashes"] == nil)
+      let preview = try #require(row["previewLink"] as? [String: Any])
+      #expect(NSDictionary(dictionary: preview).isEqual(to: links[1]))
+      let replay = try value(try await httpSession.data(for: creationRequest))
+      #expect(NSDictionary(dictionary: replay).isEqual(to: creation))
+      let afterReplay = try value(try await httpSession.data(for: sourceRequest))
+      #expect(NSDictionary(dictionary: afterReplay).isEqual(to: full))
+      let unchangedWindow = try value(try await httpSession.data(for: rowRequest))
+      #expect(NSDictionary(dictionary: unchangedWindow).isEqual(to: window))
+      await listener.stop()
+      let reopened = PlannerCore.Planner(configuration: configuration)
+      guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+        case .source(let retained) = await reopened.read(
+          session: reopenedSession, request: .source(source))
+      else {
+        Issue.record("The HTTP-created owned links must survive native store reopen.")
+        return
+      }
+      #expect(retained.content.links.map { $0.linkId.uuidString } == linkIds)
+      #expect(
+        retained.content.links.map(\.originalUrl)
+          == links.compactMap { $0["originalUrl"] as? String })
+      #expect(retained.content.notes == "Bring umbrella")
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   @Test func invalidCompletionScopesNeverFallBackToGlobalOrRecordAppliedEvidence() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
