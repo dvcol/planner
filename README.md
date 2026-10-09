@@ -1,6 +1,6 @@
 # Planner
 
-A personal native planning app for iPhone, iPad, and Mac. The project is currently finding its way to an implementation-ready specification.
+A personal native planning app for iPhone, iPad, and Mac. Native prototypes are implementing and testing the accepted decision map.
 
 - [Native personal planner decision map](https://github.com/dvcol/planner/issues/1) is the canonical plan. Read it first when continuing the project.
 - [Product brief](docs/product-brief.md) preserves the original requirements. The map records the agreed scope refinements.
@@ -19,7 +19,9 @@ A personal native planning app for iPhone, iPad, and Mac. The project is current
 
 The agreed stack is Swift, SwiftUI, SwiftData with private CloudKit sync, and native MapKit, targeting iOS, iPadOS, and macOS 27 or newer. Shared domain services will support the UI, App Intents, and manually enabled localhost MCP access.
 
-The accepted [Build workflow](https://github.com/dvcol/planner/issues/18) uses a committed native Xcode project and Swift Package Manager. Runnable projects and build/test commands will be introduced with the prototypes; this checkout currently contains planning documents.
+The accepted [Build workflow](https://github.com/dvcol/planner/issues/18) uses the committed `Planner.xcodeproj` and local `Packages/PlannerCore` Swift package. Open the project in Xcode and use the shared `PlannerNavigation` scheme for the app and native UI journeys. The default scene opens saved local Lists. [Native qualification](docs/prototypes/navigation-local-qualification.md) records the exact tested revisions and remaining runtime gates.
+
+The earlier read-only navigation comparison remains available with `./scripts/navigation-prototype.sh phone`, `tablet` or `mac`, or the Mac's Prototype menu. The launcher passes `--navigation-prototype`. For an isolated local review dataset, launch the default scene with `--local-prototype-dataset <UUID>`; reusing that UUID reopens its saved data. These prototypes use local storage. CloudKit, signed Share extensions and physical-device qualification remain open.
 
 Open decisions are native child issues of the map, with native blocking dependencies. Start with the first unblocked, unassigned child, or the decision named by the user.
 

@@ -5,6 +5,7 @@ final class MapNavigationJourneyTests: XCTestCase {
   func testSelectedAppearanceShowsItsMapAndDetailsTogetherWithoutInspection() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
+    application.launchArguments = ["--navigation-prototype"]
     application.launch()
     application.choosePrototypeLayout("Map alongside list")
     application.openPlannerSection("Lists")

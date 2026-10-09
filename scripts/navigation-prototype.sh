@@ -31,14 +31,14 @@ xcodebuild -project "$prototypeRoot/Planner.xcodeproj" -scheme PlannerNavigation
   -clonedSourcePackagesDirPath "$prototypePackageDirectory" build
 
 if [[ "$prototypePlatform" == mac ]]; then
-  open -n "$prototypeBuildDirectory/Build/Products/Debug/Planner.app"
+  open -n "$prototypeBuildDirectory/Build/Products/Debug/Planner.app" --args --navigation-prototype
   exit
 fi
 
 xcrun simctl bootstatus "$prototypeSimulatorName" -b
 xcrun simctl install "$prototypeSimulatorName" \
   "$prototypeBuildDirectory/Build/Products/Debug-iphonesimulator/Planner.app"
-xcrun simctl launch "$prototypeSimulatorName" org.example.PlannerMCPPrototype
+xcrun simctl launch "$prototypeSimulatorName" org.example.PlannerMCPPrototype --navigation-prototype
 prototypeSimulatorApplication="$DEVELOPER_DIR/Applications/Simulator.app"
 if [[ -d "$prototypeSimulatorApplication" ]]; then
   open "$prototypeSimulatorApplication"

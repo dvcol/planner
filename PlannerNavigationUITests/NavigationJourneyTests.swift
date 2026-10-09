@@ -5,6 +5,7 @@ final class NavigationJourneyTests: XCTestCase {
   func testContextualDetailsKeepUsefulContentSeparateFromPrototypeDiagnostics() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
+    application.launchArguments = ["--navigation-prototype"]
     application.launch()
     application.openPlannerSection("Itineraries")
     application.plannerElement("itinerary.00000000-0000-4000-8000-000000000301")
@@ -46,6 +47,7 @@ final class NavigationJourneyTests: XCTestCase {
   func testCumulativeFiltersSummarizeSelectionsWithoutChangingFullListProgress() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
+    application.launchArguments = ["--navigation-prototype"]
     application.launch()
     application.openPlannerSection("Lists")
     application.plannerElement("list.00000000-0000-4000-8000-000000000201")
@@ -90,6 +92,7 @@ final class NavigationJourneyTests: XCTestCase {
   func testListAppearanceKeepsItsIdentityWhenOpeningTheSourceItem() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
+    application.launchArguments = ["--navigation-prototype"]
     application.launch()
 
     application.openPlannerSection("Lists")
@@ -166,6 +169,7 @@ final class NavigationJourneyTests: XCTestCase {
   func testPlanningLayoutKeepsItineraryAppearanceCompletionIndependent() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
+    application.launchArguments = ["--navigation-prototype"]
     application.launch()
     application.choosePrototypeLayout("Itinerary first")
     XCTAssertFalse(application.staticTexts["Navigation prototype"].exists)
@@ -192,6 +196,7 @@ final class NavigationJourneyTests: XCTestCase {
   func testExpandedListAppearanceRetainsItsFullItineraryIdentityAndOwnCompletion() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
+    application.launchArguments = ["--navigation-prototype"]
     application.launch()
     application.openPlannerSection("Itineraries")
     application.plannerElement("itinerary.00000000-0000-4000-8000-000000000301")
@@ -215,6 +220,7 @@ final class NavigationJourneyTests: XCTestCase {
   func testItineraryListCollapsePreservesProgressAndSurvivesRelaunch() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
+    application.launchArguments = ["--navigation-prototype"]
     application.launch()
     application.openPlannerSection("Itineraries")
     application.plannerElement("itinerary.00000000-0000-4000-8000-000000000301")
@@ -242,6 +248,7 @@ final class NavigationJourneyTests: XCTestCase {
     recordScreenshot(application, name: "Collapsed live List with unchanged progress")
 
     application.terminate()
+    application.launchArguments = ["--navigation-prototype"]
     application.launch()
     application.openPlannerSection("Itineraries")
     application.plannerElement("itinerary.00000000-0000-4000-8000-000000000301")
