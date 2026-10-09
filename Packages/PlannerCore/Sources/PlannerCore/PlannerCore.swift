@@ -112,6 +112,11 @@ public actor Planner {
         let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
         let envelope = try archive.latest()
         switch operation.command {
+        case .reorderMembership(let listId, let membershipId, let placement):
+          return try executeMembershipReordering(
+            operation, listId: listId, membershipId: membershipId, placement: placement,
+            identity: identity, context: context, archive: archive, receipts: receipts,
+            envelope: envelope)
         case .addMembership(let itemId, let listId, let placement):
           return try executeMembershipCreation(
             operation, itemId: itemId, listId: listId, placement: placement,
@@ -1347,6 +1352,178 @@ public actor Planner {
         outcome: .applied(
           result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
     }
+  }
+
+  private func executeMembershipReordering(
+    _ operation: PlannerOperation, listId: UUID, membershipId: UUID, placement: PlannerPlacement,
+    identity: PlannerStoreIdentity, context: ModelContext, archive: PlannerRecoveryArchive,
+    receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let digest = membershipReorderingDigest(
+        listId: listId, membershipId: membershipId, placement: placement, identity: identity,
+        bindings: try receipt.evidence().bindings)
+      guard receipt.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "This operation identity describes another reorder.")
+      }
+      return appliedResult(
+        operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
+        envelope: envelope)
+    }
+    let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    var descriptor = FetchDescriptor<PlannerSchemaV7.Membership>(
+      predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
+    descriptor.fetchLimit = 2
+    let selected = try context.fetch(descriptor)
+    guard selected.count == 1, let record = selected.first else {
+      throw PlannerFailure("missingReference", "The selected membership is missing or unresolved.")
+    }
+    let before = try record.value()
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>())
+    let lists = try context.fetch(FetchDescriptor<PlannerSchemaV7.List>())
+    let owners = lists.filter { $0.id == before.list.id && $0.lifetimeId == before.list.lifetimeId }
+    let sources = items.filter {
+      $0.id == before.item.id && $0.lifetimeId == before.item.lifetimeId
+    }
+    guard owners.count == 1, let owner = owners.first, sources.count == 1 else {
+      throw PlannerFailure(
+        "missingReference", "The membership's Item or List lifetime is unresolved.")
+    }
+    switch placement {
+    case .before(let identifier), .after(let identifier):
+      guard identifier != membershipId else {
+        throw PlannerFailure(
+          "invalidInput", "A membership cannot use itself as its placement anchor.",
+          propertyPath: "/command/placement/associationId")
+      }
+    case .first, .last: break
+    }
+    var memberships = try membershipSnapshots(context)
+    let ordered = memberships.filter { $0.list.id == listId }.sorted {
+      if $0.rank != $1.rank { return $0.rank < $1.rank }
+      return $0.id.uuidString < $1.id.uuidString
+    }
+    let remaining = ordered.filter { $0.id != membershipId }
+    let insertionIndex = try membershipInsertionIndex(placement, in: remaining)
+    var desiredOrder = remaining.map(\.id)
+    desiredOrder.insert(membershipId, at: insertionIndex)
+    let changed = desiredOrder != ordered.map(\.id)
+    var bindings = [
+      PlannerBoundIdentity(kind: "membership", id: before.id, lifetimeId: before.lifetimeId),
+      before.list, before.item,
+    ]
+    switch placement {
+    case .before(let identifier), .after(let identifier):
+      if let anchor = remaining.first(where: { $0.id == identifier }) {
+        bindings.append(
+          PlannerBoundIdentity(kind: "membership", id: anchor.id, lifetimeId: anchor.lifetimeId))
+      }
+    case .first, .last: break
+    }
+    let digest = membershipReorderingDigest(
+      listId: listId, membershipId: membershipId, placement: placement, identity: identity,
+      bindings: bindings)
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another reorder.")
+      }
+      return PlannerOperationResult(
+        operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    if changed {
+      let rank = try membershipInsertionRank(
+        at: insertionIndex, ordered: remaining, memberships: &memberships)
+      guard let selectedIndex = memberships.firstIndex(where: { $0.id == membershipId }) else {
+        throw PlannerFailure("missingReference", "The selected membership is missing.")
+      }
+      memberships[selectedIndex].rank = rank
+    }
+    let ownerSnapshot = try owner.value()
+    let updatedAt = changed ? Date() : ownerSnapshot.updatedAt
+    let itemSnapshots = try items.map { try $0.value() }
+    let listSnapshots = try lists.map { list in
+      if list.id != listId { return try list.value() }
+      return ListSnapshot(
+        id: ownerSnapshot.id, lifetimeId: ownerSnapshot.lifetimeId,
+        createdAt: ownerSnapshot.createdAt, updatedAt: updatedAt,
+        content: ownerSnapshot.content, archived: ownerSnapshot.archived)
+    }
+    let markers = try deletionMarkers(context)
+    let result = PlannerAppliedResult(
+      generatedIdentities: [],
+      affectedIdentities: [.reference(before.reference), .source(ownerSnapshot.reference)])
+    try archive.prepare(
+      RecoveryPreparedProposal(
+        proposalId: UUID(), originalOperationId: operation.operationId,
+        datasetId: identity.datasetId,
+        ownershipBinding: identity.ownershipBinding,
+        proposedBackup: PlannerDataSnapshot(
+          items: itemSnapshots, lists: listSnapshots, memberships: memberships,
+          deletionMarkers: markers),
+        payloadDigest: digest, evidence: "preparedUnverified"))
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result, bindings: bindings)
+    let ranks = Dictionary(uniqueKeysWithValues: memberships.map { ($0.id, $0.rank) })
+    for membership in try context.fetch(FetchDescriptor<PlannerSchemaV7.Membership>()) {
+      if let identifier = membership.id, let rank = ranks[identifier], membership.rank != rank {
+        membership.rank = rank
+      }
+    }
+    owner.updatedAt = updatedAt
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The complete reorder was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(
+        items: itemSnapshots, lists: listSnapshots, memberships: memberships,
+        deletionMarkers: markers, receipts: receipts + [receipt])
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
+  }
+
+  private func membershipReorderingDigest(
+    listId: UUID, membershipId: UUID, placement: PlannerPlacement, identity: PlannerStoreIdentity,
+    bindings: [PlannerBoundIdentity]
+  ) -> String {
+    let placementValue: PlannerCanonicalValue
+    switch placement {
+    case .first: placementValue = .record(["kind": .string("first")])
+    case .last: placementValue = .record(["kind": .string("last")])
+    case .before(let identifier):
+      placementValue = .record(["kind": .string("before"), "associationId": .identity(identifier)])
+    case .after(let identifier):
+      placementValue = .record(["kind": .string("after"), "associationId": .identity(identifier)])
+    }
+    let value = PlannerCanonicalValue.record([
+      "command": .record([
+        "type": .string("reorderMembership"), "listId": .identity(listId),
+        "membershipId": .identity(membershipId), "placement": placementValue,
+      ]),
+      "datasetId": .identity(identity.datasetId),
+      "ownershipBinding": .string(identity.ownershipBinding),
+      "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
+    ])
+    let bytes = Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded()
+    return plannerDigest(bytes, prefix: "sha256-payload-v1:")
   }
 
   private func executeMembershipCompletion(
