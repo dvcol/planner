@@ -79,7 +79,7 @@
         case .failed(let reason):
           return failure(reason)
         case .source(let read):
-          guard read.content.links.isEmpty, read.content.categoryIds.isEmpty,
+          guard read.content.categoryIds.isEmpty,
             read.content.tagIds.isEmpty,
             read.labels.isEmpty, read.references.isEmpty
           else {
@@ -211,7 +211,8 @@
               "displayUnit": .string(estimate.displayUnit.rawValue),
             ])
           } ?? .null,
-          "links": .array([]), "categoryIds": .array([]), "tagIds": .array([]),
+          "links": .array(read.content.links.map(PlannerMCPRowValue.link)),
+          "categoryIds": .array([]), "tagIds": .array([]),
         ]),
         "createdAt": .double(read.createdAt.timeIntervalSinceReferenceDate),
         "updatedAt": .double(read.updatedAt.timeIntervalSinceReferenceDate),

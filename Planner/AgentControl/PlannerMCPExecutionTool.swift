@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create an Item, edit its title/notes, complete/reopen it globally or archive/unarchive it through the local Planner prototype.",
+        "Create an Item with owned HTTP(S) bookmarks, edit its title/notes, complete/reopen it globally or archive/unarchive it through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -35,6 +35,20 @@
           "properties": .object([
             "title": .object(["type": .string("string")]),
             "notes": .object(["type": .array([.string("string"), .string("null")])]),
+            "links": .object([
+              "type": .string("array"),
+              "items": .object([
+                "type": .string("object"), "additionalProperties": .bool(false),
+                "required": .array([.string("originalUrl"), .string("label")]),
+                "properties": .object([
+                  "linkId": .object([
+                    "type": .array([.string("string"), .string("null")]), "format": .string("uuid"),
+                  ]),
+                  "originalUrl": .object(["type": .string("string"), "format": .string("uri")]),
+                  "label": .object(["type": .array([.string("string"), .string("null")])]),
+                ]),
+              ]),
+            ]),
           ]),
         ]),
       ]),
@@ -207,10 +221,11 @@
           "title", "notes", "subtitle", "location", "estimate", "links", "categoryIds", "tagIds",
         ],
         required: ["title"], path: "/command/content")
-      if let unsupported = Set(content.keys).subtracting(["title", "notes"]).sorted().first {
+      if let unsupported = Set(content.keys).subtracting(["title", "notes", "links"]).sorted().first
+      {
         throw AdmissionFailure(
           "unavailable", "/command/content/" + unsupported,
-          "This HTTP creation slice supports title and notes only.")
+          "This HTTP creation slice supports title, notes and owned links only.")
       }
       guard case .string(let title) = content["title"] else {
         throw AdmissionFailure(
@@ -224,7 +239,48 @@
         throw AdmissionFailure(
           "invalidInput", "/command/content/notes", "Expected a notes String or null.")
       }
-      return .createItem(content: PlannerItemContentInput(title: title, notes: notes))
+      return .createItem(
+        content: PlannerItemContentInput(
+          title: title, notes: notes, links: try linksInput(content["links"])))
+    }
+
+    private static func linksInput(_ value: Value?) throws -> [PlannerLinkInput] {
+      guard let value else { return [] }
+      guard case .array(let links) = value else {
+        throw AdmissionFailure(
+          "invalidInput", "/command/content/links", "Expected an ordered links array.")
+      }
+      return try links.enumerated().map { index, value in
+        let path = "/command/content/links/\(index)"
+        let fields = try object(
+          value, allowed: ["linkId", "originalUrl", "label"], required: ["originalUrl", "label"],
+          path: path)
+        guard case .string(let originalUrl) = fields["originalUrl"] else {
+          throw AdmissionFailure(
+            "invalidInput", path + "/originalUrl", "Expected an original URL String.")
+        }
+        let label: String?
+        switch fields["label"] {
+        case .null: label = nil
+        case .string(let value): label = value
+        default:
+          throw AdmissionFailure(
+            "invalidInput", path + "/label", "Expected a label String or null.")
+        }
+        let linkIdentifier: UUID?
+        switch fields["linkId"] {
+        case nil, .null: linkIdentifier = nil
+        case .string(let spelling):
+          guard let parsedIdentifier = UUID(uuidString: spelling) else {
+            throw AdmissionFailure(
+              "invalidInput", path + "/linkId", "Expected a link UUID or null.")
+          }
+          linkIdentifier = parsedIdentifier
+        default:
+          throw AdmissionFailure("invalidInput", path + "/linkId", "Expected a link UUID or null.")
+        }
+        return PlannerLinkInput(linkId: linkIdentifier, originalUrl: originalUrl, label: label)
+      }
     }
 
     private static func editCommand(_ value: Value?) throws -> PlannerCommand {
