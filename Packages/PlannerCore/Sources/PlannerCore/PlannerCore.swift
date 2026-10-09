@@ -200,6 +200,68 @@ public actor Planner {
     } catch { return .failed(failure(error, code: "readUnavailable")) }
   }
 
+  public func query(_ query: PlannerQuery) -> PlannerQueryResult {
+    do {
+      return try coordinated {
+        _ = try validateSession(query.session)
+        let container = try openContainer()
+        let context = ModelContext(container)
+        context.autosaveEnabled = false
+        switch query.request {
+        case .items(let itemQuery):
+          switch itemQuery.scope {
+          case .global, .inbox: break
+          case .list, .itinerary:
+            throw PlannerFailure(
+              "unavailable", "This Item-only fixture does not implement contextual queries.")
+          }
+          var descriptor = FetchDescriptor<PlannerSchemaV1.Item>()
+          descriptor.propertiesToFetch = [\.id, \.title, \.globalDone, \.archived]
+          let items = try context.fetch(descriptor).filter { item in
+            switch itemQuery.completion {
+            case .todo: if item.globalDone { return false }
+            case .done: if !item.globalDone { return false }
+            case .all: break
+            }
+            switch itemQuery.archive {
+            case .active: return !item.archived
+            case .archived: return item.archived
+            case .all: return true
+            }
+          }
+          let values = try items.map { item in
+            guard let id = item.id,
+              !item.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            else {
+              throw PlannerFailure(
+                "readUnavailable", "A query Item has unresolved identity or title.")
+            }
+            return (reference: PlannerEntityReference(kind: .item, id: id), title: item.title)
+          }
+          guard Set(values.map { $0.reference.id }).count == values.count else {
+            throw PlannerFailure(
+              "readUnavailable", "Query Item identities are duplicated and unresolved.")
+          }
+          let comparator = String.Comparator(
+            options: [.caseInsensitive, .diacriticInsensitive],
+            locale: Locale(identifier: "en_US_POSIX")
+          )
+          let sorted = values.sorted { first, second in
+            let comparison = comparator.compare(first.title, second.title)
+            if comparison != .orderedSame { return comparison == .orderedAscending }
+            return first.reference.id.uuidString < second.reference.id.uuidString
+          }
+          return .snapshot(
+            PlannerQuerySnapshot(
+              session: query.session, generation: UUID(),
+              rows: sorted.map { .source($0.reference) },
+              matchingCount: Int64(sorted.count)
+            ))
+        }
+      }
+    } catch { return .failed(failure(error, code: "readUnavailable")) }
+  }
+
   public func operationStatus(session: PlannerDatasetSession, operationId: UUID)
     -> PlannerOperationStatus
   {

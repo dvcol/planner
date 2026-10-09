@@ -310,6 +310,55 @@ public enum PlannerReadResult: Sendable {
   case failed(PlannerFailure)
 }
 
+public struct PlannerQuery: Sendable {
+  public let session: PlannerDatasetSession
+  public let request: PlannerQueryRequest
+
+  public init(session: PlannerDatasetSession, request: PlannerQueryRequest) {
+    self.session = session
+    self.request = request
+  }
+}
+
+public enum PlannerQueryRequest: Sendable {
+  case items(PlannerItemQuery)
+}
+
+public struct PlannerItemQuery: Sendable {
+  public enum Scope: Sendable {
+    case global, inbox
+    case list(UUID)
+    case itinerary(UUID)
+  }
+  public enum Completion: Sendable { case todo, done, all }
+  public enum Archive: Sendable { case active, archived, all }
+  public let scope: Scope
+  public let completion: Completion
+  public let archive: Archive
+
+  public init(scope: Scope = .global, completion: Completion = .todo, archive: Archive = .active) {
+    self.scope = scope
+    self.completion = completion
+    self.archive = archive
+  }
+}
+
+public enum PlannerRowIdentity: Sendable, Equatable {
+  case source(PlannerEntityReference)
+}
+
+public struct PlannerQuerySnapshot: Sendable {
+  public let session: PlannerDatasetSession
+  public let generation: UUID
+  public let rows: [PlannerRowIdentity]
+  public let matchingCount: Int64
+}
+
+public enum PlannerQueryResult: Sendable {
+  case snapshot(PlannerQuerySnapshot)
+  case failed(PlannerFailure)
+}
+
 public enum PlannerRecoveryRequest: Sendable {
   case namespaces
   case namespace(namespaceId: UUID)
