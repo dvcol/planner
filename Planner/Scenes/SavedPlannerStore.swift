@@ -18,6 +18,7 @@ final class SavedPlannerStore {
   private let planner: PlannerCore.Planner?
   private var session: PlannerDatasetSession?
   private(set) var lists: [SavedPlannerList] = []
+  private(set) var items: [SavedPlannerItem] = []
   private(set) var isOpening = false
   private(set) var isSaving = false
   private(set) var recoveryBlocked = false
@@ -69,6 +70,7 @@ final class SavedPlannerStore {
     case .ready(let ready):
       session = ready
       await refreshLists()
+      await refreshItems()
     case .unavailable(let reason): openingFailure = reason.message
     case .mainAppSetupRequired, .mainAppMigrationRequired:
       openingFailure = "Planner could not initialize its local data."
@@ -107,6 +109,94 @@ final class SavedPlannerStore {
     default: alertMessage = "Planner could not open this List."
     }
     return nil
+  }
+
+  func refreshItems() async {
+    guard let planner, let session else { return }
+    switch await planner.query(
+      PlannerQuery(
+        session: session,
+        request: .items(.init(scope: .global, completion: .all, archive: .active))))
+    {
+    case .failed(let reason): alertMessage = reason.message
+    case .snapshot(let snapshot):
+      switch await planner.read(
+        session: session,
+        request: .rows(generation: snapshot.generation, offset: 0, limit: Int64.max))
+      {
+      case .rows(let window):
+        var loadedItems: [SavedPlannerItem] = []
+        for row in window.rows {
+          guard case .source(let source) = row.identity, source.kind == .item else {
+            alertMessage = "Planner could not resolve its Items."
+            return
+          }
+          loadedItems.append(SavedPlannerItem(id: source.id, row: row))
+        }
+        items = loadedItems
+      case .failed(let reason): alertMessage = reason.message
+      default: alertMessage = "Planner could not read its Items."
+      }
+    }
+  }
+
+  func readItem(_ identifier: UUID) async -> PlannerItemSourceRead? {
+    guard let planner, let session else { return nil }
+    switch await planner.read(
+      session: session, request: .source(.init(kind: .item, id: identifier)))
+    {
+    case .source(.item(let item)): return item
+    case .failed(let reason): alertMessage = reason.message
+    default: alertMessage = "Planner could not open this Item."
+    }
+    return nil
+  }
+
+  func createItem(title: String, notes: String, operationId: UUID) async -> PlannerEntityReference?
+  {
+    guard
+      let applied = await executeItemChange(
+        .createItem(content: .init(title: title, notes: notes.isEmpty ? nil : notes)),
+        operationId: operationId)
+    else { return nil }
+    await refreshItems()
+    return applied.generated.first { $0.kind == .item }
+  }
+
+  func setItemCompletion(_ identifier: UUID, done: Bool) async -> Bool {
+    guard
+      await executeItemChange(
+        .setCompletion(scope: .globalItem(itemId: identifier), done: done), operationId: UUID())
+        != nil
+    else { return false }
+    await refreshItems()
+    return true
+  }
+
+  private func executeItemChange(
+    _ command: PlannerCommand, operationId: UUID
+  ) async -> PlannerAppliedResult? {
+    guard let planner, let session, canCreate else { return nil }
+    isSaving = true
+    defer { isSaving = false }
+    let result = await planner.execute(
+      PlannerOperation(operationId: operationId, session: session, command: command))
+    switch result.outcome {
+    case .rejected(let reason):
+      alertMessage = reason.message
+      return nil
+    case .unverified:
+      recoveryBlocked = true
+      alertMessage = "The change could not be verified. Further changes need recovery review."
+      return nil
+    case .applied(let applied, let recovery):
+      if case .incomplete = recovery {
+        recoveryBlocked = true
+        alertMessage =
+          "The change was saved, but its recovery copy is incomplete. Further changes are paused."
+      }
+      return applied
+    }
   }
 
   func createList(name: String, operationId: UUID) async -> PlannerEntityReference? {
