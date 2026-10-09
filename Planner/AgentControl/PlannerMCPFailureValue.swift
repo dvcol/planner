@@ -24,6 +24,8 @@
                 switch value {
                 case .string(let text): encoded = .string(text)
                 case .optionalString(let text): encoded = text.map(Value.string) ?? .null
+                case .optionalLocation(let location):
+                  encoded = location.map(PlannerMCPSourceTool.locationValue) ?? .null
                 }
                 return (field.rawValue, encoded)
               })),

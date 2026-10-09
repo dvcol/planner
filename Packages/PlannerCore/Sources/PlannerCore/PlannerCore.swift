@@ -122,7 +122,7 @@ public actor Planner {
             context: context,
             archive: archive, receipts: receipts, envelope: envelope)
         case .editItem(let sourceId, let changes, let expectedFieldHashes):
-          return try executeItemTextEdit(
+          return try executeItemEdit(
             operation, sourceId: sourceId, changes: changes, hashes: expectedFieldHashes,
             identity: identity, context: context, archive: archive, receipts: receipts,
             envelope: envelope
@@ -445,13 +445,13 @@ public actor Planner {
     } catch { return .failed(failure(error, code: "readUnavailable")) }
   }
 
-  private func executeItemTextEdit(
+  private func executeItemEdit(
     _ operation: PlannerOperation, sourceId: UUID, changes: PlannerItemChanges,
     hashes: [PlannerItemField: PlannerFieldHash], identity: PlannerStoreIdentity,
     context: ModelContext, archive: PlannerRecoveryArchive,
     receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
   ) throws -> PlannerOperationResult {
-    let changedFields = try changes.validatedTextFields()
+    let changedFields = try changes.validatedFields()
     for field in changedFields where hashes[field] == nil {
       throw PlannerFailure(
         "invalidInput", "Every changed field requires its prior hash.",
@@ -470,7 +470,7 @@ public actor Planner {
     }
     if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
       let stored = try receipt.evidence()
-      let digest = try changes.textPayloadDigest(
+      let digest = try changes.editPayloadDigest(
         sourceId: sourceId, fields: changedFields, hashes: hashes,
         identity: identity, bindings: stored.bindings
       )
@@ -496,7 +496,7 @@ public actor Planner {
     let bindings = [
       PlannerBoundIdentity(kind: "item", id: before.id, lifetimeId: before.lifetimeId)
     ]
-    let digest = try changes.textPayloadDigest(
+    let digest = try changes.editPayloadDigest(
       sourceId: sourceId, fields: changedFields, hashes: hashes, identity: identity,
       bindings: bindings
     )
@@ -524,6 +524,7 @@ public actor Planner {
         currentHashes[field] = hash
         if field == .title { currentValues[field] = .string(before.input.title) }
         if field == .notes { currentValues[field] = .optionalString(before.input.notes) }
+        if field == .location { currentValues[field] = .optionalLocation(before.input.location) }
       }
       throw PlannerFailure(
         "staleEdit", "Changed fields differ from the supplied read.",
@@ -533,7 +534,8 @@ public actor Planner {
         ))
     }
     let now = Date()
-    let updatedInput = try changes.applyingTextChanges(to: before.input)
+    let updatedInput = try changes.applyingChanges(to: before.input)
+    let updatedLocationData = try updatedInput.location.map { try JSONEncoder().encode($0) }
     let after = ItemSnapshot(
       id: before.id, lifetimeId: before.lifetimeId, createdAt: before.createdAt, updatedAt: now,
       input: updatedInput, globalDone: before.globalDone, archived: before.archived,
@@ -553,8 +555,9 @@ public actor Planner {
     try archive.prepare(proposal)
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
-    item.title = updatedInput.title
-    item.notes = updatedInput.notes
+    if changedFields.contains(.title) { item.title = updatedInput.title }
+    if changedFields.contains(.notes) { item.notes = updatedInput.notes }
+    if changedFields.contains(.location) { item.locationData = updatedLocationData }
     item.updatedAt = now
     context.insert(receipt)
     do { try context.save() } catch {
