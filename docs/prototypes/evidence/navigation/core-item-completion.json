@@ -1,0 +1,126 @@
+{
+  "scope": "Global Item completion and Reopen through the real Planner facade",
+  "red": {
+    "executed": 1,
+    "passed": 0,
+    "failed": 1,
+    "suites": 1,
+    "log": "/private/tmp/PlannerCoreItemCompletionRed.log",
+    "failureLines": [
+      "\u2718 Test globalCompletionPreservesArchivedContentAfterReopenAndIndependentRecovery() recorded an issue at ItemCompletionTests.swift:56:19: Issue recorded",
+      "\u21b3 Global completion must save the Item and acknowledge independent recovery: .rejected(PlannerCore.PlannerFailure(code: \"unavailable\", propertyPath: nil, message: \"Item completion has not been implemented.\", details: nil))"
+    ]
+  },
+  "green": {
+    "executed": 18,
+    "passed": 18,
+    "failed": 0,
+    "suites": 7,
+    "log": "/private/tmp/PlannerCoreItemCompletionGreen.log",
+    "failureLines": []
+  },
+  "qualification": {
+    "executed": 19,
+    "passed": 19,
+    "failed": 0,
+    "suites": 7,
+    "log": "/private/tmp/PlannerCoreItemCompletionQualification.log",
+    "failureLines": []
+  },
+  "nativeCompletionQualification": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 2,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791549404.062,
+    "passedTests": 2,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791549393.941,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - PlannerCore",
+    "topInsights": [],
+    "totalTestCount": 2
+  },
+  "nativeAppRegression": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 30,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791549413.532,
+    "passedTests": 24,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791549394.726,
+    "statistics": [
+      {
+        "subtitle": "9 test runs",
+        "title": "3 tests ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [
+      {
+        "category": "Longest Test Runs",
+        "impact": "83% of duration",
+        "text": "1 longest test run with outlier durations exceeding 1.63s (three standard deviations)"
+      }
+    ],
+    "totalTestCount": 24
+  },
+  "nativeMobileBuild": {
+    "result": "TEST BUILD SUCCEEDED",
+    "runtime": false,
+    "log": "/private/tmp/PlannerCoreItemCompletionSimulatorBuild.log"
+  },
+  "sourceSHA256": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "8d1748d512e5aa498480019ccb81ad188a9e6f09d72ada1a2c437166e2fe20ff",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "fc5ac0c32e726aca284eb5cece3d9efa3286b92eb78960a0de0c9ede23418c06",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCompletionTests.swift": "e6c73b3c09cd74f6cb96b28e6a00f0eb681c39efd4d9157c7443415faa173be1"
+  },
+  "limitations": [
+    "Global Item scope only; no contextual appearance or bulk completion implementation.",
+    "MCP completion command and native checkbox writes remain unimplemented.",
+    "Independent recovery access/save/publish interruption and cross-process/CloudKit state convergence remain separate gates."
+  ]
+}

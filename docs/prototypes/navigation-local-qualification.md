@@ -12,6 +12,12 @@ The [real-store Core row slice](core-local-qualification.md#generation-bound-own
 
 This is the existing Item-only schema. The Item row wire path is now qualified through [real loopback HTTP](mcp-http-qualification.md#owned-item-row-windows-over-http), including fixed context, owned metadata, malformed-input paths and structured stale-generation failures. The full graph, link/schedule selection, native rich-row rendering and completion writes remain future slices. The prior seven-journey screenshots qualify their recorded UI source, not the changed Core dependency. Navigation prototype remains open.
 
+## Global Item completion foundation
+
+[Global Item completion and Reopen](core-local-qualification.md#global-item-completion-and-reopen) now save through Core with independent recovery. Completing an archived Item preserves its content/archive state, updates its effective row state and invalidates an old Todo window. No-op timestamp and identical/changed replay checks preserve the current state after Reopen. Nineteen store functions and two native completion functions pass; the affected 24-function MCP target passes and simulator Core test bundles compile.
+
+The native UI remains the recorded read-only fixture. This adds no contextual flag, bulk action, provider I/O or checkbox facade simulation. Those interactions still need full-graph persistence and their own native tests before Navigation prototype can complete.
+
 ## Starting state and first goal
 
 The inherited app was a placeholder. The first slice opens Lists → Tokyo Food, shows its unfiltered 1 of 2 progress under the ordinary Todo/Active filter, switches both filters to All and opens Nezu Museum's membership 401. Its detail must retain that appearance and show Local Done / Global Todo. Opening its source explicitly shows Item 101 in global context. Tokyo Weekend retains 0 of 3 progress.
