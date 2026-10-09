@@ -12,6 +12,10 @@
     }
 
     func handleRequest(_ request: HTTPRequest) async -> HTTPResponse {
+      guard request.path == "/mcp" else {
+        return .error(statusCode: 404, .invalidRequest("Not Found"))
+      }
+
       guard request.header("Authorization") == "Bearer \(credential)" else {
         return .error(statusCode: 401, .invalidRequest("Unauthorized"))
       }
