@@ -1,0 +1,84 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "afb807e",
+  "scope": "Guarded complete timed Schedule form replacement through the public native facade, preserving identity and Item content. HTTP edit admission is subsequent work.",
+  "redGreen": [
+    {
+      "redLog": "/private/tmp/PlannerCoreScheduleEditRed.log",
+      "redExecutedFunctions": 1,
+      "redFailedFunctions": 1,
+      "observed": "The editSchedule command rejects as unavailable.",
+      "greenLog": "/private/tmp/PlannerCoreScheduleEditGreen.log",
+      "greenExecutedFunctions": 1,
+      "greenPassedFunctions": 1
+    },
+    {
+      "redLog": "/private/tmp/PlannerCoreScheduleEditStaleRed.log",
+      "redExecutedFunctions": 2,
+      "redFailedFunctions": 1,
+      "observed": "A stale Schedule edit rejects but returns no current form/hash details.",
+      "greenLog": "/private/tmp/PlannerCoreScheduleEditStaleGreen.log",
+      "greenExecutedFunctions": 2,
+      "greenPassedFunctions": 2
+    }
+  ],
+  "qualification": {
+    "packageLog": "/private/tmp/PlannerCoreScheduleEditQualification.log",
+    "executedFunctions": 39,
+    "passedFunctions": 39,
+    "suites": 15,
+    "scheduleEditFunctions": 3,
+    "behavior": [
+      "Replacement retains Schedule identity/lifetime, Item content/bookmarks/hashes/Last updated, and original/updated independent recovery across reopen.",
+      "Applied edit invalidates prior query generation; stale and invalid edits retain generation and do not prepare or save.",
+      "Six invalid form values, three missing/malformed hashes and a missing Schedule reject with precise classification/paths.",
+      "An exact checkpoint-3 replay after checkpoint 4 returns original evidence without reapplying the older form; changed payload under that identity rejects.",
+      "Typed staleScheduleEdit details contain the complete current form and lifetime-bound hash. The shared MCP failure codec preserves the accepted staleEdit wire shape."
+    ]
+  },
+  "nativeExecutions": {
+    "PlannerCoreScheduleEditNativeQualification": {
+      "result": "Passed",
+      "totalTestCount": 3,
+      "passedTests": 3,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerCoreScheduleEditNativeQualification.xcresult",
+      "log": "/private/tmp/PlannerCoreScheduleEditNativeQualification.log"
+    },
+    "PlannerMCPScheduleEditCoreRegression": {
+      "result": "Passed",
+      "totalTestCount": 35,
+      "passedTests": 35,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPScheduleEditCoreRegression.xcresult",
+      "log": "/private/tmp/PlannerMCPScheduleEditCoreRegression.log"
+    }
+  },
+  "affectedMCPExcludedSuite": "ReadLoadTests",
+  "simulatorBuild": {
+    "log": "/private/tmp/PlannerCoreScheduleEditSimulatorBuild.log",
+    "result": "TEST BUILD SUCCEEDED",
+    "signingAllowed": false,
+    "runtimeTests": false
+  },
+  "checks": {
+    "strictSwiftFormatLog": "/private/tmp/PlannerScheduleEditSwiftLint.log",
+    "affectedSwiftFiles": 5,
+    "diffWhitespace": "passed"
+  },
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "15c96308a7f6a078bbebe27173373659072cc7b7abb437de360fe93454f47f50",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "38ec2e7f9cea8e2e679b353e1c36845e56c51259f431b5138ccbe45d8b9637d2",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "07291dc86baf30d55322ac4944cbc2ac7cc62471d514a7fcfbe9d3196b56560b",
+    "Planner/AgentControl/PlannerMCPFailureValue.swift": "c9a3996f48e268dc0ab7b09212e8c512001ce32a37282a7aa0db5c8e4fb4f0d3",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleEditTests.swift": "d00e72c8541f3124da7997a064e7f963ff816ba96f8d3ee8fca115b5138034a5"
+  },
+  "remaining": [
+    "HTTP edit admission and its actual wire tests",
+    "All-day and Itinerary Schedule forms, zone-only edit, removal and full reference graph",
+    "Native saved editors, actual Share, signed clients/reader, physical CloudKit/account/interruption and performance gates"
+  ]
+}
