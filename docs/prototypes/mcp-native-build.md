@@ -38,6 +38,18 @@ Logs are machine-local at /private/tmp/PlannerMCPResolve.log, PlannerMCPProjectL
 
 ## Remaining gates
 
-The committed package and app are deliberately incomplete. An explicit shared Core test scheme, navigation/UI suites, platform Share targets/embedding and domain implementation remain required by their owning prototypes. The [HTTP evidence](mcp-http-qualification.md) now records a real disposable loopback exchange. Native Agent Control operation, real client calls, signed Data Protection Keychain/App Group reader access, lifecycle/concurrency/load evidence and human connection review remain MCP gates. Ad hoc signature verification does not establish those capabilities. Physical-device navigation performance and private CloudKit/Share proof remain required elsewhere in the map.
+The committed package and app are deliberately incomplete. Navigation/UI suites, platform Share targets/embedding and domain implementation remain required by their owning prototypes. The explicit Core scheme configuration is recorded below. The [HTTP evidence](mcp-http-qualification.md) now records a real disposable loopback exchange. Native Agent Control operation, real client calls, signed Data Protection Keychain/App Group reader access, lifecycle/concurrency/load evidence and human connection review remain MCP gates. Ad hoc signature verification does not establish those capabilities. Physical-device navigation performance and private CloudKit/Share proof remain required elsewhere in the map.
 
 Subsequent slices test the approved HTTP boundary through the SDK's public HTTPRequest/HTTPResponse values and actual loopback requests. Use one executed failing behavior and its minimum implementation at a time. In-process tests do not substitute for listener or client evidence. Navigation's unconfirmed UI tests remain unwritten.
+
+## Explicit Core test scheme
+
+The committed PlannerCore scheme now refers to explicit native PlannerCoreTests and PlannerCoreStoreTests targets. Their synchronized source folders are the same test folders used by the package manifest; both link the PlannerCore package product. The test configuration supports Mac and iOS destinations. No second Core implementation or hosted app is introduced.
+
+The first scheme attempt referred directly to package test names and Xcode reported no available test bundles, exit 70. That was setup failure, not a TDD red. Native target references corrected discovery. The focused command below then built the Core library and both test bundles, launched the standalone store test runner, and exited zero. The [actual summary](evidence/mcp/core-scheme-discovery.json) records zero discovered/executed behavior tests because the source folders still contain only import declarations. No domain behavior is claimed passing.
+
+```sh
+env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild test -project Planner.xcodeproj -scheme PlannerCore -destination 'platform=macOS,arch=arm64' -only-testing:PlannerCoreStoreTests -onlyUsePackageVersionsFromResolvedFile -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerCoreSchemeDerivedData -resultBundlePath /private/tmp/PlannerCoreNativeSchemeDiscovery.xcresult
+```
+
+Project-list readback includes PlannerCoreTests/PlannerCoreStoreTests and the shared PlannerCore scheme. Logs and readback are /private/tmp/PlannerCoreSchemeDiscovery.log, PlannerCoreNativeSchemeDiscovery.log and PlannerCoreNativeSchemeProjectList.json. This completes buildable scheme configuration; its first real store behavior test and cross-platform runtime checks remain required.
