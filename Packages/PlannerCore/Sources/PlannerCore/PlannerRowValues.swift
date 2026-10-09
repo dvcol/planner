@@ -12,6 +12,9 @@ public struct PlannerRowPresentationContext: Sendable, Equatable {
 
 public enum PlannerRowScheduleSummary: Sendable, Equatable {
   case none
+  case directItem(
+    schedule: PlannerEntityReference, owner: PlannerEntityReference,
+    form: PlannerScheduleForm, additionalCount: Int64)
 }
 
 public struct PlannerRowRead: Sendable {

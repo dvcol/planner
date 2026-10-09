@@ -1,0 +1,50 @@
+{
+  "createdAt" : 813250608.13875306,
+  "creationCheckpoint" : 1,
+  "creationOperationId" : "00000000-0000-4000-8000-000000000941",
+  "datasetId" : "825873BE-ED99-4095-BC2C-CED7125E3658",
+  "fieldHashes" : {
+    "categoryIds" : "sha256-v1:f6fe11f59756b0162ecd680a20fcdc8ab76647a870637413856838779f116436",
+    "estimate" : "sha256-v1:b5961e7eaad7097093bf27a5aac4cdffe476c00e3a2f717fe40abf22e2f49e9d",
+    "links" : "sha256-v1:054c5ae6b7691d12f98cca83f77753e57df3f96b68d0fcca124fe24f312362be",
+    "location" : "sha256-v1:75cf5489cb5f27309d70863ee449eebfc5b3eaf3be4ba0a1d16d16a55bdfa362",
+    "notes" : "sha256-v1:d60522ff48dbddeb35e8a5eafadd6e967c0864b0a1af9c866a295554058cef7a",
+    "subtitle" : "sha256-v1:00fc3b1884df5ea049d52d509499a700f08ea2042f93d21a0e6d6646f915ff36",
+    "tagIds" : "sha256-v1:4406227dceefae8df76916554abb306538dd262b639e9ac9ee87f0c27138d32e",
+    "title" : "sha256-v1:baee24b442fdaba3ee65918cb0f6a64dcc13d0dc56362447498383aae0d448c8"
+  },
+  "itemId" : "8219D523-DF9C-497A-9843-DCD9F943F36A",
+  "latestCheckpoint" : 3,
+  "ownedLinks" : [
+    {
+      "id" : "BE1CCD33-52E0-4220-8A64-5D9DA31DACFA",
+      "kind" : "website",
+      "label" : "Menu",
+      "lifetimeId" : "D3C0AD13-6710-498C-82CA-561B384E27B3",
+      "originalUrl" : "https:\/\/example.com\/menu",
+      "owner" : {
+        "id" : "8219D523-DF9C-497A-9843-DCD9F943F36A",
+        "kind" : "item",
+        "lifetimeId" : "26227E83-F197-49C4-AABE-C5C53DB5C6C7"
+      },
+      "providerReference" : null,
+      "rank" : "1"
+    },
+    {
+      "id" : "ECB14923-7B87-4CD6-8875-67B0B5802BA7",
+      "kind" : "appleMaps",
+      "label" : "Map",
+      "lifetimeId" : "4A8D327C-AF4D-401D-9CB2-D74FCB38E767",
+      "originalUrl" : "https:\/\/maps.apple.com\/?q=Hotel",
+      "owner" : {
+        "id" : "8219D523-DF9C-497A-9843-DCD9F943F36A",
+        "kind" : "item",
+        "lifetimeId" : "26227E83-F197-49C4-AABE-C5C53DB5C6C7"
+      },
+      "providerReference" : null,
+      "rank" : "0"
+    }
+  ],
+  "producerCommit" : "70112c0",
+  "updatedAt" : 813250608.17176402
+}

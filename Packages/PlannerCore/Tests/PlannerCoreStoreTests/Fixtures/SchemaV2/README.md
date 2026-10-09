@@ -1,0 +1,7 @@
+# V2 migration fixture
+
+This disposable dataset was generated through the public Planner facade at commit `70112c0`, before the Schedule schema existed. Hotel contains Original notes, independently supplied Meeting point A at 35/139, a 120-minute estimate and ordered Map/Menu bookmarks. Global Complete and Archive produce acknowledged checkpoints 2 and 3. `manifest.json` records the original dataset, Item, dates, hashes, creation receipt and both links with their real lifetimes and owner binding.
+
+`Producer.swift.txt` is the executed generator. Archive `Packages/PlannerCore` from that commit, create a temporary Swift executable package depending on its PlannerCore product with macOS 27 and Swift 6.4, and run this source with an empty output directory argument. The complete output was copied only after the producer exited successfully. Never generate the old schema using current model classes or replace only its database files.
+
+Tests copy this entire directory, then use public bootstrap/read/execute/inspectRecovery methods. Share must ask the main app to migrate first. Existing content, identities, link lifetimes, order and recovery history survive the main application's native V2 to V3 migration. A later Share-role Schedule command saves to the migrated local store with a new independent checkpoint. This is a facade process-role test, not execution of a real Share extension, CloudKit deployment or interrupted migration.
