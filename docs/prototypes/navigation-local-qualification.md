@@ -88,6 +88,14 @@ Raw bundles are `/private/tmp/PlannerNavigationExpandedIdentityRed.xcresult` and
 
 The updated native Mac app and four-journey UI runner compile. A standalone local Mac app process was also launched from its derived products. Process launch does not establish rendered Mac layout, interaction or keyboard/accessibility behavior; the earlier automation startup failure still leaves those gates open. [Source hashes](evidence/navigation/layout-comparison-source.json) identify the corrected comparison code, tests and unchanged fixture.
 
+## Local build reproduction while signing is deferred
+
+Committed source `90dd8cf` was exported with `git archive` and built with fresh derived products. The narrow `PlannerNavigation` Mac build-for-testing passed and produced the arm64 app and UI runner. The archived source hashes match the comparison manifest. This is clean compilation evidence, not a successful Mac UI run.
+
+The same committed app also compiles for `generic/platform=iOS` with `CODE_SIGNING_ALLOWED=NO` and fresh device products. The executable is arm64, its SDK is iphoneos27.0, and codesign confirms the app is unsigned. It is ready for later signing configuration, not installed or launched on a physical device. [Build evidence and limits](evidence/navigation/local-builds.json) record both outcomes. Raw logs remain `/private/tmp/PlannerNavigationCleanMacBuild.log` and `/private/tmp/PlannerNavigationUnsignedDeviceBuild.log`.
+
+Reproduce the device compilation with the scoped developer directory, resolved-package options above, destination `generic/platform=iOS`, a separate derived-data directory and `CODE_SIGNING_ALLOWED=NO build`. No team/account choice, provisioning, App Group or CloudKit setup was performed.
+
 ## Remaining gates
 
 The first read-only UI slice cannot establish completion writes, query generation/window completeness, ordinary import, recovery, capture, schedules, CloudKit or Share feasibility. Those journeys must use their approved public seams and truthful outcomes as implementation proceeds. All three structural alternatives, persistence/reopen, orientation/resizing, keyboard/focus, Dynamic Type, VoiceOver and human layout decisions remain required. Physical-device long-list latency and memory, signed Share and account/sync tests remain deferred rather than waived.
