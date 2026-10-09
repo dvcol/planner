@@ -6,14 +6,15 @@
   enum PlannerMCPExecutionTool {
     static let definition = Tool(
       name: "planner_execute",
-      description: "Create an Item or edit its title/notes through the local Planner prototype.",
+      description:
+        "Create an Item, edit its title/notes or archive/unarchive it through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
         "properties": .object([
           "formatVersion": .object(["type": .string("integer"), "const": .int(1)]),
           "operationId": .object(["type": .string("string"), "format": .string("uuid")]),
-          "command": .object(["oneOf": .array([creationSchema, editSchema])]),
+          "command": .object(["oneOf": .array([creationSchema, editSchema, archiveSchema])]),
           "reviewToken": .object(["type": .array([.string("string"), .string("null")])]),
         ]),
       ]),
@@ -68,6 +69,23 @@
       ]),
     ])
 
+    private static let archiveSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("type"), .string("source"), .string("archived")]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("setArchive")]),
+        "source": .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "required": .array([.string("kind"), .string("id")]),
+          "properties": .object([
+            "kind": .object(["type": .string("string"), "const": .string("item")]),
+            "id": .object(["type": .string("string"), "format": .string("uuid")]),
+          ]),
+        ]),
+        "archived": .object(["type": .string("boolean")]),
+      ]),
+    ])
+
     static func call(
       _ parameters: CallTool.Parameters, planner: PlannerCore.Planner,
       session: PlannerDatasetSession
@@ -107,6 +125,7 @@
         switch commandType {
         case "createItem": command = try creationCommand(arguments["command"])
         case "editItem": command = try editCommand(arguments["command"])
+        case "setArchive": command = try archiveCommand(arguments["command"])
         default:
           throw AdmissionFailure(
             "unavailable", "/command/type", "This command is not yet implemented by the prototype.")
@@ -190,6 +209,31 @@
           title: try textChange(changes["title"], path: "/command/changes/title"),
           notes: try textChange(changes["notes"], path: "/command/changes/notes")),
         expectedFieldHashes: hashes)
+    }
+
+    private static func archiveCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "source", "archived"], required: ["type", "source", "archived"],
+        path: "/command")
+      let source = try object(
+        command["source"], allowed: ["kind", "id"], required: ["kind", "id"],
+        path: "/command/source")
+      guard case .string(let spelling) = source["kind"],
+        let kind = PlannerEntityKind(rawValue: spelling),
+        [.item, .list, .itinerary].contains(kind)
+      else {
+        throw AdmissionFailure(
+          "invalidInput", "/command/source/kind", "Expected Item, List or Itinerary source kind.")
+      }
+      guard case .string(let spelling) = source["id"], let identity = UUID(uuidString: spelling)
+      else {
+        throw AdmissionFailure("invalidInput", "/command/source/id", "Expected a source UUID.")
+      }
+      guard case .bool(let archived) = command["archived"] else {
+        throw AdmissionFailure("invalidInput", "/command/archived", "Expected an archive Bool.")
+      }
+      return .setArchive(
+        source: PlannerEntityReference(kind: kind, id: identity), archived: archived)
     }
 
     private static func textChange(_ value: Value?, path: String) throws -> PlannerFieldChange<

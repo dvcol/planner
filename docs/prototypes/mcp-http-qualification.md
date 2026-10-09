@@ -141,6 +141,14 @@ The execute schema now includes Item title/notes patches. Missing/null/value bec
 
 Bundles/logs are /private/tmp/PlannerMCPNotesRoutingRed and PlannerMCPNotesRoutingGreen with xcresult/log extensions. The ten affected Core package tests also pass, and a fresh generic iOS Simulator app build succeeds. Source/document lint pass. Only notes Set/stale rejection is executed in this adapter fixture; title, clear, replay, malformed hashes and other patch cases remain separate qualification. Native/client/signing/lifecycle/load gates remain open.
 
+## Shared Core Archive and Unarchive
+
+The execute schema now advertises Item setArchive with a parsed source UUID and strict Bool. The adapter constructs the accepted Core command; it does not delete content, alter completion or invent a receipt/checkpoint. Unsupported source kinds never fall back to an Item/global action.
+
+[Actual archive routing evidence](evidence/mcp/archive-routing.json) records one executed failing function, then twenty passing hosted functions. Two saved sources begin Hotel/Original notes and Museum/Museum notes, both Todo/Active. HTTP Archive saves Hotel at complete checkpoint "3"; HTTP source read retains its content and global Todo with archived true. The ordinary HTTP query discovers only Museum. HTTP Unarchive completes at checkpoint "4". Replaying the original Archive returns checkpoint "3" while the ordinary HTTP query still discovers Hotel and Museum. Final public native reads retain both original sources/content as Todo/Active. Every tool result has equivalent full text/structured JSON.
+
+Bundles/logs are /private/tmp/PlannerMCPArchiveRoutingRed and PlannerMCPArchiveRoutingGreen with xcresult/log extensions. Source/document lint pass. This supplies the required disposable read/create/edit/archive command subset through actual HTTP and Core. It does not replace selected-client calls, native Agent Control, signed reader, lifecycle/load, container/global-Done cases or full graph/CloudKit evidence.
+
 ## Clean-domain reproduction
 
 Archived committed b530c0d99047046c24b918271429f28761bfe376 into /private/tmp/PlannerMCPDomainClean-b530c0d. The checkout contains no personal Xcode state, ignored Local.xcconfig or previous app products. Native project discovery succeeds. Fresh /private/tmp/PlannerMCPDomainCleanDerived-b530c0d and PlannerCoreDomainCleanScratch-b530c0d products run the affected hosted MCP and Core package store suites. Committed remote pins use the already downloaded dependency source cache.
