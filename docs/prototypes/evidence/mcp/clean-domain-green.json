@@ -1,0 +1,82 @@
+{
+  "scope": "Clean committed source reproduction of real Core and MCP Item-domain slices",
+  "commit": "b530c0d99047046c24b918271429f28761bfe376",
+  "checkout": "/private/tmp/PlannerMCPDomainClean-b530c0d",
+  "nativeMCP": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 25,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791513634.34,
+    "passedTests": 19,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791513603.158,
+    "statistics": [
+      {
+        "subtitle": "9 test runs",
+        "title": "3 tests ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 19
+  },
+  "corePackage": {
+    "passed": 10,
+    "suites": 3,
+    "log": "/private/tmp/PlannerCoreDomainClean-b530c0d.log"
+  },
+  "projectDiscovery": {
+    "project": {
+      "configurations": [
+        "Debug",
+        "Release"
+      ],
+      "name": "Planner",
+      "schemes": [
+        "Planner",
+        "PlannerCore",
+        "PlannerCore"
+      ],
+      "targets": [
+        "Planner",
+        "PlannerMCPTests",
+        "PlannerCoreTests",
+        "PlannerCoreStoreTests"
+      ]
+    }
+  },
+  "conditions": [
+    "No personal Xcode state, ignored Local.xcconfig or existing app build products were copied.",
+    "Fresh separate native derived-data and Core package scratch directories were used.",
+    "Committed package pins used an existing downloaded dependency source cache."
+  ],
+  "limitations": [
+    "Disposable ad hoc test host, not signed reader or native Enable/Stop.",
+    "No selected clients, physical iOS runtime, CloudKit, app lifecycle or load evidence.",
+    "Archive, further field/input/replay/failure and full graph commands remain unqualified."
+  ]
+}
