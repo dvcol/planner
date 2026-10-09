@@ -88,9 +88,10 @@ enum PlannerSchemaV1: VersionedSchema {
 
 extension PlannerSchemaV7.Item {
   func rowRead(
-    hasLinks: Bool, previewLink: PlannerOwnedLinkRead?, scheduleSummary: PlannerRowScheduleSummary
+    identity: PlannerRowIdentity, localDone: Bool?, hasLinks: Bool,
+    previewLink: PlannerOwnedLinkRead?, scheduleSummary: PlannerRowScheduleSummary
   ) throws -> PlannerRowRead {
-    guard let id else {
+    guard id != nil else {
       throw PlannerFailure("readUnavailable", "The row Item has unresolved identity.")
     }
     let content = PlannerItemContentInput(
@@ -101,9 +102,10 @@ extension PlannerSchemaV7.Item {
       estimate: try estimateData.map { try JSONDecoder().decode(PlannerEstimate.self, from: $0) })
     try content.validate()
     return PlannerRowRead(
-      identity: .source(PlannerEntityReference(kind: .item, id: id)),
+      identity: identity,
       title: content.title, subtitle: content.subtitle, estimate: content.estimate,
-      globalDone: globalDone, localDone: nil, effectiveDone: globalDone, archived: archived,
+      globalDone: globalDone, localDone: localDone,
+      effectiveDone: globalDone || localDone == true, archived: archived,
       hasLocation: content.location != nil, hasLinks: hasLinks,
       ownedLocation: content.location, previewLink: previewLink,
       scheduleSummary: scheduleSummary)
