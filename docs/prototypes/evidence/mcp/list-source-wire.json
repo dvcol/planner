@@ -1,0 +1,81 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "7a6eaeb",
+  "scope": "Strict advertised List create/edit and declared List detail reads over actual loopback HTTP, delegated to native Core.",
+  "nativeExecutions": {
+    "CreationRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPListCreationWireRed.xcresult",
+      "log": "/private/tmp/PlannerMCPListCreationWireRed.log"
+    },
+    "CreationGreen": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPListCreationWireGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPListCreationWireGreen.log"
+    },
+    "EditRed": {
+      "result": "Failed",
+      "totalTestCount": 2,
+      "passedTests": 1,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPListEditWireRed.xcresult",
+      "log": "/private/tmp/PlannerMCPListEditWireRed.log"
+    },
+    "EditGreen": {
+      "result": "Passed",
+      "totalTestCount": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPListEditWireGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPListEditWireGreen.log"
+    },
+    "Qualification": {
+      "result": "Passed",
+      "totalTestCount": 46,
+      "passedTests": 46,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPListWireQualification.xcresult",
+      "log": "/private/tmp/PlannerMCPListWireQualification.log"
+    }
+  },
+  "lint": {
+    "result": "Passed",
+    "files": [
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift",
+      "Planner/AgentControl/PlannerMCPSourceTool.swift",
+      "Planner/AgentControl/PlannerMCPFailureValue.swift",
+      "PlannerMCPTests/ListRoutingTests.swift"
+    ],
+    "log": "/private/tmp/PlannerMCPListWireSwiftLint.log"
+  },
+  "sourceSHA256": {
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift": "ed98caf40abbd8d6a3cab797d8b8023241ea4971643760c9c51303e78da7821c",
+    "Planner/AgentControl/PlannerMCPSourceTool.swift": "50ad39ec085655256ff105118536fbe95c29fe9fc3e93ce6b6f07cac986a2cc4",
+    "Planner/AgentControl/PlannerMCPFailureValue.swift": "c687a70985dc6c25214572a499da512c16a822b3148e390acceced842f1a1c04",
+    "PlannerMCPTests/ListRoutingTests.swift": "7e09e2c5728ea506e40e8427e92ed24b397ccc8b746a7554862a14c5e432b49e"
+  },
+  "observations": [
+    "Creation with exact padded name, empty notes, presentation color/icon produces one stable native List and acknowledged recovery. Optional omitted fields read back as null; empty progress has string counts 0/0 and globalDone null.",
+    "Structured and text tool replies match. Reopening through the public Core facade retains content/timestamps/four hashes and typed mixed-source recovery.",
+    "Guarded notes/color/icon HTTP edits save at one checkpoint. A stale notes field rejects a whole name/notes patch without changing content or timestamp. Color conflict details encode both the current object and a later cleared null.",
+    "Optional clear updates only the declared fields. Exact old edit and creation replay return their original checkpoints without replacing later Unicode name or nulls; unrelated Item content/time/hashes remain unchanged.",
+    "Actual tools/list advertises both strict List commands. Forty-four invalid create/edit requests reject with exact operation IDs and property paths, no applied/prepared evidence, unchanged List detail and issued Item row window, and unchanged mixed-source recovery/Schedule forms."
+  ],
+  "limits": [
+    "List catalogs, memberships/local completion/order/archive, Itineraries/labels and saved native UI remain separate slices.",
+    "No native data schema or portable-format change is introduced by this adapter slice.",
+    "ReadLoadTests remains excluded from affected regression; chosen-client/signing/reader, actual Share and physical CloudKit/account/interruption/performance remain required."
+  ]
+}

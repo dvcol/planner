@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_read",
       description:
-        "Read an Item or Schedule source, or a generation-bound Item row window from the local Planner prototype.",
+        "Read an Item, List or Schedule source, or a generation-bound Item row window from the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("request")]),
@@ -26,7 +26,7 @@
                     "properties": .object([
                       "kind": .object([
                         "type": .string("string"),
-                        "enum": .array([.string("item"), .string("schedule")]),
+                        "enum": .array([.string("item"), .string("list"), .string("schedule")]),
                       ]),
                       "id": .object(["type": .string("string"), "format": .string("uuid")]),
                     ]),
@@ -77,9 +77,10 @@
         let result = await planner.read(session: session, request: request)
         let structured: Value
         switch result {
-        case .source(.list):
-          return failure(
-            code: "unavailable", message: "List reads are not yet admitted by this adapter.")
+        case .source(.list(let read)):
+          structured = .object([
+            "formatVersion": .int(1), "kind": .string("source"), "value": listValue(read),
+          ])
         case .rows(let window):
           structured = PlannerMCPRowValue.window(window)
         case .failed(let reason):
@@ -146,11 +147,11 @@
         let source = try object(request["source"], keys: ["kind", "id"], path: "/request/source")
         guard case .string(let spelling) = source["kind"],
           let sourceKind = PlannerEntityKind(rawValue: spelling),
-          [.item, .schedule].contains(sourceKind)
+          [.item, .list, .schedule].contains(sourceKind)
         else {
           throw AdmissionFailure(
             code: "invalidInput", path: "/request/source/kind",
-            message: "This prototype supports Item and Schedule sources.")
+            message: "This prototype supports Item, List and Schedule sources.")
         }
         return .source(
           PlannerEntityReference(
@@ -229,6 +230,48 @@
           message: "Required property is missing: \(missing).")
       }
       return fields
+    }
+
+    private static func listValue(_ read: PlannerListSourceRead) -> Value {
+      .object([
+        "source": .object([
+          "kind": .string(read.source.kind.rawValue), "id": .string(read.source.id.uuidString),
+        ]),
+        "content": .object([
+          "name": .string(read.content.name),
+          "notes": read.content.notes.map(Value.string) ?? .null,
+          "color": read.content.color.map(colorValue) ?? .null,
+          "iconName": read.content.iconName.map(Value.string) ?? .null,
+        ]),
+        "createdAt": .double(read.createdAt.timeIntervalSinceReferenceDate),
+        "updatedAt": .double(read.updatedAt.timeIntervalSinceReferenceDate),
+        "fieldHashes": .object(
+          Dictionary(
+            uniqueKeysWithValues: read.fieldHashes.map {
+              ($0.key.rawValue, .string($0.value.value))
+            })),
+        "state": .object([
+          "globalDone": read.state.globalDone.map(Value.bool) ?? .null,
+          "archived": read.state.archived.map(Value.bool) ?? .null,
+        ]),
+        "labels": .array([]), "references": .array(read.references.map(referenceValue)),
+        "progress": .object([
+          "container": .object([
+            "kind": .string(read.progress.container.kind.rawValue),
+            "id": .string(read.progress.container.id.uuidString),
+          ]),
+          "state": .string(read.progress.state.rawValue),
+          "doneCount": read.progress.doneCount.map { .string(String($0)) } ?? .null,
+          "totalCount": read.progress.totalCount.map { .string(String($0)) } ?? .null,
+        ]),
+      ])
+    }
+
+    static func colorValue(_ color: PlannerColor) -> Value {
+      .object([
+        "red": .double(color.red), "green": .double(color.green), "blue": .double(color.blue),
+        "alpha": .double(color.alpha),
+      ])
     }
 
     private static func sourceValue(_ read: PlannerItemSourceRead) -> Value {
