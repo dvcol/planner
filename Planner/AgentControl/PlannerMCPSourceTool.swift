@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_read",
       description:
-        "Read a source Item or a generation-bound Item row window from the local Planner prototype.",
+        "Read an Item or Schedule source, or a generation-bound Item row window from the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("request")]),
@@ -24,7 +24,10 @@
                     "type": .string("object"), "additionalProperties": .bool(false),
                     "required": .array([.string("kind"), .string("id")]),
                     "properties": .object([
-                      "kind": .object(["type": .string("string"), "const": .string("item")]),
+                      "kind": .object([
+                        "type": .string("string"),
+                        "enum": .array([.string("item"), .string("schedule")]),
+                      ]),
                       "id": .object(["type": .string("string"), "format": .string("uuid")]),
                     ]),
                   ]),
@@ -78,7 +81,11 @@
           structured = PlannerMCPRowValue.window(window)
         case .failed(let reason):
           return failure(reason)
-        case .source(let read):
+        case .source(.schedule(let read)):
+          structured = .object([
+            "formatVersion": .int(1), "kind": .string("source"), "value": scheduleValue(read),
+          ])
+        case .source(.item(let read)):
           guard read.content.categoryIds.isEmpty,
             read.content.tagIds.isEmpty,
             read.labels.isEmpty
@@ -134,14 +141,17 @@
       case .string("source"):
         let request = try object(value, keys: ["kind", "source"], path: "/request")
         let source = try object(request["source"], keys: ["kind", "id"], path: "/request/source")
-        guard source["kind"] == .string("item") else {
+        guard case .string(let spelling) = source["kind"],
+          let sourceKind = PlannerEntityKind(rawValue: spelling),
+          [.item, .schedule].contains(sourceKind)
+        else {
           throw AdmissionFailure(
             code: "invalidInput", path: "/request/source/kind",
-            message: "This prototype supports Item sources.")
+            message: "This prototype supports Item and Schedule sources.")
         }
         return .source(
           PlannerEntityReference(
-            kind: .item, id: try identifier(source["id"], path: "/request/source/id")))
+            kind: sourceKind, id: try identifier(source["id"], path: "/request/source/id")))
       case .string("rows"):
         let request = try object(
           value, keys: ["kind", "generation", "offset", "limit"], path: "/request")
@@ -153,6 +163,29 @@
         throw AdmissionFailure(
           code: "invalidInput", path: "/request/kind", message: "Expected source or rows.")
       }
+    }
+
+    private static func scheduleValue(_ read: PlannerScheduleSourceRead) -> Value {
+      .object([
+        "source": .object([
+          "kind": .string(read.source.kind.rawValue), "id": .string(read.source.id.uuidString),
+        ]),
+        "content": .object([
+          "source": .object([
+            "kind": .string(read.content.source.kind.rawValue),
+            "id": .string(read.content.source.id.uuidString),
+          ]),
+          "form": PlannerMCPRowValue.scheduleForm(read.content.form),
+        ]),
+        "createdAt": .null, "updatedAt": .null,
+        "fieldHashes": .object(
+          Dictionary(
+            uniqueKeysWithValues: read.fieldHashes.map {
+              ($0.key.rawValue, .string($0.value.value))
+            })),
+        "state": .object(["globalDone": .null, "archived": .null]),
+        "labels": .array([]), "references": .array([]), "progress": .null,
+      ])
     }
 
     private static func identifier(_ value: Value?, path: String) throws -> UUID {
@@ -195,7 +228,7 @@
       return fields
     }
 
-    private static func sourceValue(_ read: PlannerSourceRead) -> Value {
+    private static func sourceValue(_ read: PlannerItemSourceRead) -> Value {
       .object([
         "source": .object([
           "kind": .string(read.source.kind.rawValue), "id": .string(read.source.id.uuidString),

@@ -150,8 +150,8 @@ struct ItemSnapshot {
 
   var reference: PlannerEntityReference { PlannerEntityReference(kind: .item, id: id) }
 
-  func read(datasetId: UUID) -> PlannerSourceRead {
-    PlannerSourceRead(
+  func read(datasetId: UUID) -> PlannerItemSourceRead {
+    PlannerItemSourceRead(
       source: reference, content: input.readContent(links: links.map(\.read)), createdAt: createdAt,
       updatedAt: updatedAt,
       fieldHashes: input.fieldHashes(

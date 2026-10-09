@@ -32,7 +32,8 @@ struct RecoveryFailureTests {
     }
     let source = try #require(originalResult.generated.first)
     guard
-      case .source(let original) = await planner.read(session: session, request: .source(source))
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(source))
     else {
       Issue.record("Hotel must be readable before the fault.")
       return
@@ -64,7 +65,7 @@ struct RecoveryFailureTests {
       return
     }
     guard
-      case .source(let current) = await reopened.read(
+      case .source(.item(let current)) = await reopened.read(
         session: reopenedSession, request: .source(source))
     else {
       Issue.record("The original Hotel must remain readable after the fault.")

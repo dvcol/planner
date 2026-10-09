@@ -32,7 +32,8 @@ struct ItemCompletionTests {
             operationId: completionIdentifier, session: session,
             command: .setCompletion(scope: .globalItem(itemId: source.id), done: true))
         ).outcome,
-      case .source(let completed) = await planner.read(session: session, request: .source(source))
+      case .source(.item(let completed)) = await planner.read(
+        session: session, request: .source(source))
     else {
       Issue.record("Hotel must be globally Done before Reopen.")
       return
@@ -44,7 +45,8 @@ struct ItemCompletionTests {
           operationId: UUID(), session: session,
           command: .setCompletion(scope: .globalItem(itemId: source.id), done: true))
       ).outcome,
-      case .source(let unchanged) = await planner.read(session: session, request: .source(source))
+      case .source(.item(let unchanged)) = await planner.read(
+        session: session, request: .source(source))
     else {
       Issue.record(
         "Repeating the current state under a new operation must remain a durable acknowledgement.")
@@ -60,7 +62,7 @@ struct ItemCompletionTests {
           operationId: UUID(), session: session,
           command: .setCompletion(scope: .globalItem(itemId: source.id), done: false))
       ).outcome,
-      case .source(let reopenedItem) = await planner.read(
+      case .source(.item(let reopenedItem)) = await planner.read(
         session: session, request: .source(source))
     else {
       Issue.record("Global Reopen must durably set Todo.")
@@ -117,7 +119,7 @@ struct ItemCompletionTests {
     }
     #expect(missing.code == "missingReference")
     guard
-      case .source(let current) = await reopened.read(
+      case .source(.item(let current)) = await reopened.read(
         session: reopenedSession, request: .source(source)),
       case .snapshot(let query) = await reopened.query(
         PlannerQuery(session: reopenedSession, request: .items(PlannerItemQuery()))),
@@ -171,7 +173,8 @@ struct ItemCompletionTests {
         operationId: UUID(), session: session,
         command: .setArchive(source: source, archived: true)))
     guard case .applied(_, .complete) = archived.outcome,
-      case .source(let before) = await planner.read(session: session, request: .source(source)),
+      case .source(.item(let before)) = await planner.read(
+        session: session, request: .source(source)),
       case .snapshot(let originalQuery) = await planner.query(
         PlannerQuery(session: session, request: .items(PlannerItemQuery(archive: .all))))
     else {
@@ -206,7 +209,7 @@ struct ItemCompletionTests {
     #expect(stale.code == "staleSnapshot")
     let reopened = Planner(configuration: configuration)
     guard case .ready(let reopenedSession) = await reopened.bootstrap(),
-      case .source(let current) = await reopened.read(
+      case .source(.item(let current)) = await reopened.read(
         session: reopenedSession, request: .source(source))
     else {
       Issue.record("The completed archived Item must reopen.")

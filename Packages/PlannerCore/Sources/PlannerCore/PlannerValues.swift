@@ -304,7 +304,12 @@ public enum PlannerReferenceRead: Sendable, Equatable {
   case schedule(id: UUID, source: PlannerEntityReference)
 }
 
-public struct PlannerSourceRead: Sendable {
+public enum PlannerSourceRead: Sendable {
+  case item(PlannerItemSourceRead)
+  case schedule(PlannerScheduleSourceRead)
+}
+
+public struct PlannerItemSourceRead: Sendable {
   public let source: PlannerEntityReference
   public let content: PlannerItemContent
   public let createdAt: Date

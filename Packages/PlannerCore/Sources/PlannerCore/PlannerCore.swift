@@ -228,6 +228,11 @@ public actor Planner {
               session: session, context: context, generation: generation, offset: offset,
               limit: limit))
         case .source(let source):
+          if source.kind == .schedule {
+            return .source(
+              .schedule(
+                try readSchedule(source, datasetId: identity.datasetId, context: context)))
+          }
           guard source.kind == .item else {
             throw PlannerFailure(
               "unavailable", "This fixture currently implements Item reads only.")
@@ -238,10 +243,40 @@ public actor Planner {
           guard items.count == 1, let item = items.first else {
             throw PlannerFailure("missingReference", "The selected Item is missing or unresolved.")
           }
-          return .source(try item.value().read(datasetId: identity.datasetId))
+          return .source(.item(try item.value().read(datasetId: identity.datasetId)))
         }
       }
     } catch { return .failed(failure(error, code: "readUnavailable")) }
+  }
+
+  private func readSchedule(
+    _ source: PlannerEntityReference, datasetId: UUID, context: ModelContext
+  ) throws -> PlannerScheduleSourceRead {
+    let identifier = source.id
+    var descriptor = FetchDescriptor<PlannerSchemaV3.Schedule>(
+      predicate: #Predicate { $0.id == identifier })
+    descriptor.fetchLimit = 2
+    let records = try context.fetch(descriptor)
+    guard records.count == 1, let record = records.first else {
+      throw PlannerFailure("missingReference", "The selected Schedule is missing or unresolved.")
+    }
+    guard let ownerIdentifier = record.sourceId, let ownerLifetime = record.sourceLifetimeId else {
+      throw PlannerFailure("readUnavailable", "The Schedule's source binding is unresolved.")
+    }
+    var owners = FetchDescriptor<PlannerSchemaV3.Item>(
+      predicate: #Predicate { $0.id == ownerIdentifier && $0.lifetimeId == ownerLifetime })
+    owners.fetchLimit = 2
+    owners.propertiesToFetch = [\.id, \.lifetimeId]
+    guard try context.fetch(owners).count == 1 else {
+      throw PlannerFailure(
+        "readUnavailable", "The Schedule's source Item is missing or unresolved.")
+    }
+    let snapshot = try record.value(ownerId: ownerIdentifier, ownerLifetimeId: ownerLifetime)
+    return PlannerScheduleSourceRead(
+      source: snapshot.reference,
+      content: PlannerScheduleContent(
+        source: PlannerEntityReference(kind: .item, id: ownerIdentifier), form: snapshot.form),
+      fieldHashes: [.form: snapshot.formHash(datasetId: datasetId)])
   }
 
   public func query(_ query: PlannerQuery) -> PlannerQueryResult {

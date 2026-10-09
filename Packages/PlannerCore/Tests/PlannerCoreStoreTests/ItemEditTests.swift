@@ -28,7 +28,9 @@ struct ItemEditTests {
       return
     }
     let item = try #require(result.generated.first)
-    guard case .source(let original) = await planner.read(session: session, request: .source(item))
+    guard
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("Original field hashes must be readable.")
       return
@@ -44,7 +46,8 @@ struct ItemEditTests {
       Issue.record("Friday booking must save: \(friday)")
       return
     }
-    guard case .source(let before) = await planner.read(session: session, request: .source(item))
+    guard
+      case .source(.item(let before)) = await planner.read(session: session, request: .source(item))
     else {
       Issue.record("The current Item must be readable.")
       return
@@ -68,7 +71,8 @@ struct ItemEditTests {
     }
     #expect(fields == [.notes])
     #expect(currentValues == [.notes: .optionalString("Friday booking")])
-    guard case .source(let after) = await planner.read(session: session, request: .source(item))
+    guard
+      case .source(.item(let after)) = await planner.read(session: session, request: .source(item))
     else {
       Issue.record("The retained Item must be readable.")
       return
@@ -111,7 +115,9 @@ struct ItemEditTests {
       return
     }
     let item = try #require(createdResult.generated.first)
-    guard case .source(let original) = await planner.read(session: session, request: .source(item))
+    guard
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("Original content hashes must be readable.")
       return
@@ -129,7 +135,9 @@ struct ItemEditTests {
       Issue.record("The title edit must save independently: \(titleEdit)")
       return
     }
-    guard case .source(let renamed) = await planner.read(session: session, request: .source(item))
+    guard
+      case .source(.item(let renamed)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("Renamed Hotel must be readable.")
       return
@@ -155,7 +163,7 @@ struct ItemEditTests {
       return
     }
     guard
-      case .source(let current) = await reopenedPlanner.read(
+      case .source(.item(let current)) = await reopenedPlanner.read(
         session: reopenedSession, request: .source(item))
     else {
       Issue.record("The Item must remain readable.")
@@ -195,7 +203,9 @@ struct ItemEditTests {
       return
     }
     let item = try #require(creationResult.generated.first)
-    guard case .source(let original) = await planner.read(session: session, request: .source(item))
+    guard
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("The original read must be available.")
       return
@@ -215,7 +225,8 @@ struct ItemEditTests {
       return
     }
     guard
-      case .source(let fridayRead) = await planner.read(session: session, request: .source(item))
+      case .source(.item(let fridayRead)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("Friday booking must supply its current hash.")
       return
@@ -252,7 +263,7 @@ struct ItemEditTests {
     #expect(replayCheckpoint == originalCheckpoint)
     #expect(replayCheckpoint < latestCheckpoint)
     guard
-      case .source(let current) = await reopenedPlanner.read(
+      case .source(.item(let current)) = await reopenedPlanner.read(
         session: reopenedSession, request: .source(item))
     else {
       Issue.record("The current Item must remain readable.")
@@ -293,7 +304,9 @@ struct ItemEditTests {
       return
     }
     let item = try #require(result.generated.first)
-    guard case .source(let original) = await planner.read(session: session, request: .source(item))
+    guard
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("The original notes hash must be readable.")
       return
@@ -310,7 +323,8 @@ struct ItemEditTests {
       Issue.record("Friday booking must be saved before the competing edit: \(saved)")
       return
     }
-    guard case .source(let friday) = await planner.read(session: session, request: .source(item))
+    guard
+      case .source(.item(let friday)) = await planner.read(session: session, request: .source(item))
     else {
       Issue.record("Friday booking must be readable.")
       return
@@ -334,7 +348,9 @@ struct ItemEditTests {
     #expect(fields == [.notes])
     #expect(currentValues == [.notes: .optionalString("Friday booking")])
     #expect(currentHashes == [.notes: try #require(friday.fieldHashes[.notes])])
-    guard case .source(let unchanged) = await planner.read(session: session, request: .source(item))
+    guard
+      case .source(.item(let unchanged)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("The retained current Item must remain readable.")
       return
@@ -380,7 +396,7 @@ struct ItemEditTests {
     }
     let item = try #require(createdResult.generated.first)
     let originalRead = await planner.read(session: session, request: .source(item))
-    guard case .source(let original) = originalRead else {
+    guard case .source(.item(let original)) = originalRead else {
       Issue.record("Hotel must supply its current notes hash: \(originalRead)")
       return
     }
@@ -407,7 +423,7 @@ struct ItemEditTests {
       return
     }
     let read = await reopenedPlanner.read(session: reopenedSession, request: .source(item))
-    guard case .source(let current) = read else {
+    guard case .source(.item(let current)) = read else {
       Issue.record("The edited Item must remain readable: \(read)")
       return
     }

@@ -37,6 +37,19 @@ public struct PlannerPortableSchedule: Sendable {
   public let form: PlannerScheduleForm
 }
 
+public enum PlannerScheduleField: String, Sendable, CaseIterable { case form }
+
+public struct PlannerScheduleContent: Sendable, Equatable {
+  public let source: PlannerEntityReference
+  public let form: PlannerScheduleForm
+}
+
+public struct PlannerScheduleSourceRead: Sendable {
+  public let source: PlannerEntityReference
+  public let content: PlannerScheduleContent
+  public let fieldHashes: [PlannerScheduleField: PlannerFieldHash]
+}
+
 struct ScheduleSnapshot {
   let id: UUID
   let lifetimeId: UUID

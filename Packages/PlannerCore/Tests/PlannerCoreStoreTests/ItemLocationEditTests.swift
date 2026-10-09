@@ -30,7 +30,8 @@ struct ItemLocationEditTests {
             title: "Hotel", notes: "Original notes", location: firstLocation))))
     guard case .applied(let created, .complete) = creation.outcome,
       let item = created.generated.first,
-      case .source(let original) = await planner.read(session: session, request: .source(item))
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("The first owned address must be saved.")
       return
@@ -43,7 +44,8 @@ struct ItemLocationEditTests {
       case .applied(_, .complete(let editedCheckpoint)) = await planner.execute(
         PlannerOperation(operationId: editIdentifier, session: session, command: secondCommand)
       ).outcome,
-      case .source(let current) = await planner.read(session: session, request: .source(item))
+      case .source(.item(let current)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("The intervening address must be saved.")
       return
@@ -58,7 +60,8 @@ struct ItemLocationEditTests {
           expectedFieldHashes: original.fieldHashes)))
     guard case .rejected(let reason) = staleEdit.outcome,
       case .staleEdit(let fields, let values, let hashes) = reason.details,
-      case .source(let unchanged) = await planner.read(session: session, request: .source(item))
+      case .source(.item(let unchanged)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("One stale location must reject the complete title/location patch.")
       return
@@ -123,11 +126,13 @@ struct ItemLocationEditTests {
             expectedFieldHashes: current.fieldHashes))
       )
       .outcome,
-      case .source(let cleared) = await planner.read(session: session, request: .source(item)),
+      case .source(.item(let cleared)) = await planner.read(
+        session: session, request: .source(item)),
       case .applied(_, .complete(let replayedCheckpoint)) = await planner.execute(
         PlannerOperation(operationId: editIdentifier, session: session, command: secondCommand)
       ).outcome,
-      case .source(let retained) = await planner.read(session: session, request: .source(item)),
+      case .source(.item(let retained)) = await planner.read(
+        session: session, request: .source(item)),
       case .snapshot(let snapshot) = await planner.query(
         PlannerQuery(session: session, request: .items(PlannerItemQuery()))),
       case .rows(let window) = await planner.read(
@@ -193,7 +198,8 @@ struct ItemLocationEditTests {
             links: [PlannerLinkInput(originalUrl: "https://example.com/menu", label: "Menu")]))))
     guard case .applied(let created, .complete) = creation.outcome,
       let item = created.generated.first,
-      case .source(let original) = await planner.read(session: session, request: .source(item))
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("Hotel and its original owned location must be saved.")
       return
@@ -214,7 +220,8 @@ struct ItemLocationEditTests {
         return
       }
     }
-    guard case .source(let before) = await planner.read(session: session, request: .source(item)),
+    guard
+      case .source(.item(let before)) = await planner.read(session: session, request: .source(item)),
       case .snapshot(let snapshot) = await planner.query(
         PlannerQuery(
           session: session, request: .items(PlannerItemQuery(completion: .all, archive: .all))))
@@ -244,7 +251,7 @@ struct ItemLocationEditTests {
     #expect(stale.code == "staleSnapshot")
     let reopened = Planner(configuration: configuration)
     guard case .ready(let reopenedSession) = await reopened.bootstrap(),
-      case .source(let after) = await reopened.read(
+      case .source(.item(let after)) = await reopened.read(
         session: reopenedSession, request: .source(item)),
       case .snapshot(let refreshed) = await reopened.query(
         PlannerQuery(

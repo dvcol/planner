@@ -33,7 +33,8 @@ struct DirectScheduleTests {
       )
       .outcome,
       let assignment = scheduled.generated.first,
-      case .source(let original) = await planner.read(session: session, request: .source(item)),
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(item)),
       case .applied(_, .complete) = await planner.execute(
         PlannerOperation(
           operationId: UUID(), session: session,
@@ -51,7 +52,8 @@ struct DirectScheduleTests {
           operationId: UUID(), session: session, command: .setArchive(source: item, archived: true))
       )
       .outcome,
-      case .source(let current) = await planner.read(session: session, request: .source(item)),
+      case .source(.item(let current)) = await planner.read(
+        session: session, request: .source(item)),
       case .applied(_, .complete(let checkpoint)) = await planner.execute(
         PlannerOperation(
           operationId: UUID(), session: session,
@@ -65,7 +67,7 @@ struct DirectScheduleTests {
     }
     let reopened = Planner(configuration: configuration(directory))
     guard case .ready(let reopenedSession) = await reopened.bootstrap(),
-      case .source(let retained) = await reopened.read(
+      case .source(.item(let retained)) = await reopened.read(
         session: reopenedSession, request: .source(item)),
       case .listedNamespaces(let namespaces) = await reopened.inspectRecovery(request: .namespaces),
       let namespace = namespaces.first,
@@ -174,7 +176,8 @@ struct DirectScheduleTests {
       )
       .outcome,
       let item = created.generated.first,
-      case .source(let original) = await planner.read(session: session, request: .source(item)),
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(item)),
       case .snapshot(let snapshot) = await planner.query(
         PlannerQuery(session: session, request: .items(PlannerItemQuery())))
     else {
@@ -236,7 +239,8 @@ struct DirectScheduleTests {
             source: PlannerEntityReference(kind: .item, id: UUID()), form: form))
       )
       .outcome,
-      case .source(let unchanged) = await planner.read(session: session, request: .source(item)),
+      case .source(.item(let unchanged)) = await planner.read(
+        session: session, request: .source(item)),
       case .rows = await planner.read(
         session: session,
         request: .rows(generation: snapshot.generation, offset: 0, limit: 1)),
@@ -270,7 +274,8 @@ struct DirectScheduleTests {
             form: .timed(
               start: start.addingTimeInterval(1), end: nil, planningTimeZone: "Asia/Tokyo")))
       ).outcome,
-      case .source(let retained) = await planner.read(session: session, request: .source(item)),
+      case .source(.item(let retained)) = await planner.read(
+        session: session, request: .source(item)),
       case .selected(let recovery) = await planner.inspectRecovery(
         request: .acknowledgedSnapshot(
           namespaceId: namespace.namespaceId, checkpointGeneration: 2))
@@ -422,7 +427,8 @@ struct DirectScheduleTests {
               links: [PlannerLinkInput(originalUrl: "https://example.com/menu", label: "Menu")])))
       )
       .outcome, let item = created.generated.first,
-      case .source(let original) = await planner.read(session: session, request: .source(item))
+      case .source(.item(let original)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("Hotel must be independently saved before assigning an appointment.")
       return
@@ -437,7 +443,8 @@ struct DirectScheduleTests {
         PlannerOperation(operationId: operationIdentifier, session: session, command: command)
       )
       .outcome, let schedule = scheduled.generated.first,
-      case .source(let current) = await planner.read(session: session, request: .source(item))
+      case .source(.item(let current)) = await planner.read(
+        session: session, request: .source(item))
     else {
       Issue.record("A supplied start with no end must save without using the activity estimate.")
       return
