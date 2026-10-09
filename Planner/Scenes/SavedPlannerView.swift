@@ -19,6 +19,7 @@ struct SavedPlannerView: View {
   @State private var isOpeningList = false
   @State private var showNewList = false
   @State private var showNewItem = false
+  @State private var showAddItem = false
   @State private var selectedItemId: UUID?
   @State private var selectedItem: PlannerItemSourceRead?
   @State private var isOpeningItem = false
@@ -51,6 +52,13 @@ struct SavedPlannerView: View {
     }
     .sheet(isPresented: $showNewItem) {
       SavedNewItemForm(store: store) { source in selectedItemId = source.id }
+    }
+    .sheet(isPresented: $showAddItem) {
+      if let selectedList {
+        SavedAddItemForm(store: store, list: selectedList) {
+          Task { await loadSelectedList() }
+        }
+      }
     }
     .alert(
       "Planner",
@@ -190,6 +198,7 @@ struct SavedPlannerView: View {
             NavigationLink(value: SavedPlannerSidebarSelection.lists) {
               Label("Lists", systemImage: "list.bullet")
             }
+            .accessibilityIdentifier("saved.section.lists")
             NavigationLink(value: SavedPlannerSidebarSelection.items) {
               Label("Items", systemImage: "square.stack")
             }
@@ -248,6 +257,13 @@ struct SavedPlannerView: View {
           }
         }
         .navigationTitle(selectedList.content.name)
+        .toolbar {
+          ToolbarItem {
+            Button("Add existing Item", systemImage: "plus") { showAddItem = true }
+              .disabled(!store.canCreate)
+              .accessibilityIdentifier("saved.list.add")
+          }
+        }
       } else if isOpeningList {
         ProgressView("Opening List")
       } else if selectedListId != nil {

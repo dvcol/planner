@@ -1,0 +1,167 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "a02beb0",
+  "scope": "Native Add existing Item to List, explicit cancellation proved by relaunch, duplicate addition, membership/source retention and saved Item/List regression. Contextual circles remain indicators.",
+  "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+  "storageSchemaVersion": 7,
+  "portableFormatVersion": 1,
+  "initialBuildFailure": {
+    "bundle": "/private/tmp/PlannerNavigationSavedMembershipRed.xcresult",
+    "log": "/private/tmp/PlannerNavigationSavedMembershipRed.log",
+    "exitCode": 65,
+    "executedBehaviorTests": 0,
+    "reason": "New test used XCUIElement.count instead of XCUIElementQuery.count. Fixed before the actual native red."
+  },
+  "executions": {
+    "NativeRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedListMembershipJourneyTests/testExistingItemCanBeAddedToAListWithoutDuplicatingItsSourceAfterRelaunch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedListMembershipJourneyTests/testExistingItemCanBeAddedToAListWithoutDuplicatingItsSourceAfterRelaunch",
+          "testName": "testExistingItemCanBeAddedToAListWithoutDuplicatingItsSourceAfterRelaunch()"
+        }
+      ],
+      "runtimeWarnings": [],
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerNavigationSavedMembershipQueryFixedRed.xcresult",
+      "summary": "/private/tmp/PlannerNavigationSavedMembershipQueryFixedRedSummary.json",
+      "log": "/private/tmp/PlannerNavigationSavedMembershipQueryFixedRed.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListMembershipJourneyTests\" -resultBundlePath /private/tmp/PlannerNavigationSavedMembershipQueryFixedRed.xcresult test",
+      "revisionNote": "Actual missing Add existing Item assertion after the test-query compiler correction."
+    },
+    "InitialGreen": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "runtimeWarnings": [],
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerNavigationSavedMembershipGreen.xcresult",
+      "summary": "/private/tmp/PlannerNavigationSavedMembershipGreenSummary.json",
+      "log": "/private/tmp/PlannerNavigationSavedMembershipGreen.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListMembershipJourneyTests\" -resultBundlePath /private/tmp/PlannerNavigationSavedMembershipGreen.xcresult test",
+      "revisionNote": "Addition, duplicate addition and relaunch; before the expanded Cancel/relaunch check and custom screenshot capture."
+    },
+    "FinalPhone": {
+      "result": "Passed",
+      "totalTestCount": 3,
+      "passedTests": 3,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "runtimeWarnings": [],
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerNavigationSavedMembershipPhoneQualification.xcresult",
+      "summary": "/private/tmp/PlannerNavigationSavedMembershipPhoneQualificationSummary.json",
+      "log": "/private/tmp/PlannerNavigationSavedMembershipPhoneQualification.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedItemJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListMembershipJourneyTests\" -resultBundlePath /private/tmp/PlannerNavigationSavedMembershipPhoneQualification.xcresult test",
+      "revisionNote": "Three saved journeys with final source hashes below."
+    },
+    "FinalTablet": {
+      "result": "Passed",
+      "totalTestCount": 3,
+      "passedTests": 3,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "runtimeWarnings": [],
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerNavigationSavedMembershipTabletQualification.xcresult",
+      "summary": "/private/tmp/PlannerNavigationSavedMembershipTabletQualificationSummary.json",
+      "log": "/private/tmp/PlannerNavigationSavedMembershipTabletQualification.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedItemJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListMembershipJourneyTests\" -resultBundlePath /private/tmp/PlannerNavigationSavedMembershipTabletQualification.xcresult test",
+      "revisionNote": "Three saved journeys with final source hashes below."
+    }
+  },
+  "macBuild": {
+    "result": "Test build succeeded",
+    "exitCode": 0,
+    "executedBehaviorTests": 0,
+    "bundle": "/private/tmp/PlannerNavigationSavedMembershipFinalMacBuild.xcresult",
+    "log": "/private/tmp/PlannerNavigationSavedMembershipFinalMacBuild.log",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNavigationSavedMembershipFinalMacBuild.xcresult build-for-testing",
+    "runtimeNote": "No Mac UI execution attempted for this slice; earlier native test-daemon limitations remain open."
+  },
+  "sourceHashes": {
+    "Planner/Scenes/SavedPlannerStore.swift": "ca59105d33e01c3db1570f226248330e43dee483a96028d7270a371db92da388",
+    "Planner/Scenes/SavedPlannerView.swift": "cb2f668e36e403968eaca3fd54d63d9f7b5649d242530d184bba80b0f207b869",
+    "Planner/Scenes/SavedAddItemForm.swift": "41ffacb4686a14c2fa0011d3820195eecf1ce4396deaf0e2eed3fae971007bd8",
+    "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "cfa64e518e57b8489c68eec04ddf4faab3bc0ea30156ec05b20e906ac4e90edf",
+    "PlannerNavigationUITests/SavedItemJourneyTests.swift": "0b01e3049e33836945c47c2b152dd1d8653d7f2364a9aae3facedfdc19367590",
+    "PlannerNavigationUITests/SavedListJourneyTests.swift": "e3fef76d2aad2250eaaf33794f5e2e73aa99722946cede5b1a6bd684bc737c7d"
+  },
+  "earlierSourceHashes": {
+    "NativeRed": {
+      "Planner/Scenes/SavedPlannerStore.swift": "4f00c99bfe0c95c6ef76cbda0a39af6d8ca81eaf98ab9653eade417ef9e26a60",
+      "Planner/Scenes/SavedPlannerView.swift": "2e40d8ced12c8eae243128b298d952c456111dd6d3d85ea47a6311541a774df4",
+      "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "26027fe9a083247ae3c41329a0633ccf5cc12957abaa83a7adc622888b0d27a5"
+    },
+    "InitialGreen": {
+      "Planner/Scenes/SavedPlannerStore.swift": "ca59105d33e01c3db1570f226248330e43dee483a96028d7270a371db92da388",
+      "Planner/Scenes/SavedPlannerView.swift": "cb2f668e36e403968eaca3fd54d63d9f7b5649d242530d184bba80b0f207b869",
+      "Planner/Scenes/SavedAddItemForm.swift": "41ffacb4686a14c2fa0011d3820195eecf1ce4396deaf0e2eed3fae971007bd8",
+      "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "26027fe9a083247ae3c41329a0633ccf5cc12957abaa83a7adc622888b0d27a5"
+    }
+  },
+  "screenshots": [
+    {
+      "device": "Phone",
+      "source": "/private/tmp/PlannerSavedMembershipPhoneAttachments/0F7DC07E-28E6-41C4-A9D7-7C7562C08ED5.png",
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-membership-reopened.png",
+      "sha256": "f06923a493a331ad378f8cadd1252bc172c5291c788e6ea24a00e6390f10da18",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "0F7DC07E-28E6-41C4-A9D7-7C7562C08ED5.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Saved List with one shared Item after relaunch_0_BF2C6C1B-4910-4DC9-993C-FE314E977B6B.png",
+        "timestamp": 1791585721.237
+      }
+    },
+    {
+      "device": "Tablet",
+      "source": "/private/tmp/PlannerSavedMembershipTabletAttachments/1F3E68FE-C4C8-4C5A-8604-F79D88BA04CE.png",
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-membership-reopened.png",
+      "sha256": "d39ca75c6d97061cffa30375ae42b9d9b639aef96db7ff7f6fc434e35a65bd57",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "1F3E68FE-C4C8-4C5A-8604-F79D88BA04CE.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Saved List with one shared Item after relaunch_0_F4587990-7125-4340-8D78-3E94A180CBEE.png",
+        "timestamp": 1791585719.435
+      }
+    }
+  ],
+  "visualInspection": "Both final membership captures inspected. One Nezu Museum reference is visible in Tokyo Food after relaunch. Phone has native tabs/collapsed navigation; iPad retains content/detail panes. The empty detail placeholder and static completion indicator identify remaining native selection/action work.",
+  "validation": {
+    "swiftLint": "/private/tmp/PlannerNavigationSavedMembershipFinalSwiftLint.log",
+    "markdownLint": "/private/tmp/PlannerNavigationSavedMembershipMarkdownLint.log",
+    "diffCheck": "git diff --check passed"
+  },
+  "diagnostics": "Raw logs retain SDK/debugger/accessibility messages. The actual red run also logs an xcrun simctl utility lookup diagnostic after the behavior failure; its summary still records the missing-control assertion.",
+  "unqualified": [
+    "Native appearance selection/details/contextual completion/progress",
+    "Native removal/move/reorder/bulk review",
+    "Mac UI runtime",
+    "Native failed/interrupted save and recovery controls",
+    "Cross-window/external live refresh",
+    "Paging/long-list memory and physical performance",
+    "Provider previews, remaining source catalogs/fields/filters",
+    "Physical signing, Share and CloudKit/account changes",
+    "Accessibility, orientation/resizing and final human review"
+  ]
+}

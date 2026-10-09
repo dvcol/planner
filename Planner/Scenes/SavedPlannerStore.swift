@@ -155,7 +155,7 @@ final class SavedPlannerStore {
   func createItem(title: String, notes: String, operationId: UUID) async -> PlannerEntityReference?
   {
     guard
-      let applied = await executeItemChange(
+      let applied = await executeChange(
         .createItem(content: .init(title: title, notes: notes.isEmpty ? nil : notes)),
         operationId: operationId)
     else { return nil }
@@ -165,7 +165,7 @@ final class SavedPlannerStore {
 
   func setItemCompletion(_ identifier: UUID, done: Bool) async -> Bool {
     guard
-      await executeItemChange(
+      await executeChange(
         .setCompletion(scope: .globalItem(itemId: identifier), done: done), operationId: UUID())
         != nil
     else { return false }
@@ -173,7 +173,13 @@ final class SavedPlannerStore {
     return true
   }
 
-  private func executeItemChange(
+  func addMembership(itemId: UUID, listId: UUID, operationId: UUID) async -> Bool {
+    await executeChange(
+      .addMembership(itemId: itemId, listId: listId, placement: .last), operationId: operationId)
+      != nil
+  }
+
+  private func executeChange(
     _ command: PlannerCommand, operationId: UUID
   ) async -> PlannerAppliedResult? {
     guard let planner, let session, canCreate else { return nil }
