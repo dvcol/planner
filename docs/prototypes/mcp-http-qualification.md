@@ -149,6 +149,32 @@ The execute schema now advertises Item setArchive with a parsed source UUID and 
 
 Bundles/logs are /private/tmp/PlannerMCPArchiveRoutingRed and PlannerMCPArchiveRoutingGreen with xcresult/log extensions. Source/document lint pass. This supplies the required disposable read/create/edit/archive command subset through actual HTTP and Core. It does not replace selected-client calls, native Agent Control, signed reader, lifecycle/load, container/global-Done cases or full graph/CloudKit evidence.
 
+## Concurrent Item read measurements
+
+The accepted workload now has [actual isolated load evidence](evidence/mcp/read-load.json). One hosted function passed, with 64 completed Hotel reads at each concurrency below. All 384 requests returned the original source/window identity, Hotel/Original notes and Todo/Active. Each workload recorded zero rejected, cancelled or failed requests. Final public Core reads, query and recovery inspection retained the original content, timestamp, field hashes, single identity, acknowledged checkpoint and absence of prepared proposals. The existing implementation passed its first executable run; no behavioral red or production change is claimed.
+
+| Concurrent requests | Completed | Median ms | p95 ms | p99 ms | Sampled peak footprint MiB | Settled footprint MiB |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | 64 | 4.9 | 7.1 | 15.6 | 59.0 | 58.7 |
+| 2 | 64 | 4.5 | 7.6 | 23.9 | 59.1 | 59.1 |
+| 4 | 64 | 9.9 | 20.0 | 33.9 | 59.5 | 59.5 |
+| 8 | 64 | 17.2 | 52.1 | 62.5 | 60.1 | 60.1 |
+| 16 | 64 | 39.6 | 92.1 | 100.1 | 61.3 | 61.3 |
+| 32 | 64 | 70.2 | 122.1 | 128.2 | 63.2 | 63.2 |
+
+These are end-to-end URLSession latencies in one Debug test-host process on the recorded arm64 Mac. The task group maintains up to the selected concurrency until 64 requests settle. Each level uses a fresh ephemeral URLSession whose maximum connections per host equals the workload. These values configure the measurement, not Agent Control capacity. The listener uses an OS-assigned disposable loopback port. Request and test time budgets do not add an access expiry.
+
+Mach TASK_VM_INFO supplies native process footprint, resident size and process-lifetime peak counters. The latter are cumulative across the six sequential workloads. Sampled trial peaks observe baseline and request completions, so they can miss a transient peak between observations. Settled memory is sampled 250 ms after URLSession invalidation. At the end, cumulative peak footprint is 63.2 MiB and peak resident size is 173.6 MiB, including the entire app and test-host overhead. The evidence preserves exact bytes, baseline/settled counters and latency distributions. This short run does not establish leak-free sustained operation or a saturation threshold.
+
+Run only ReadLoadTests when using these performance values so other hosted suites do not compete for resources:
+
+```sh
+env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild test -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -only-testing:PlannerMCPTests/ReadLoadTests -onlyUsePackageVersionsFromResolvedFile -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerMCPDerivedData -resultBundlePath /private/tmp/PlannerMCPReadLoadExecutableQualification.xcresult
+env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun xcresulttool get test-results summary --path /private/tmp/PlannerMCPReadLoadExecutableQualification.xcresult --format json
+```
+
+The matching log is /private/tmp/PlannerMCPReadLoadExecutableQualification.log. Its six PLANNER_MCP_READ_LOAD JSON records supply the committed measurements. An earlier C-macro import compile failure ran no tests and is excluded from behavior evidence. Native linkd.autoShortcut diagnostics remain recorded; this test does not qualify Intents/Shortcuts. Actual selected-client overlap, native selection/query responsiveness, Agent Control UI/reader/lifecycle, mutation load, physical iOS and CloudKit remain separate gates.
+
 ## Clean-domain reproduction
 
 Archived committed b530c0d99047046c24b918271429f28761bfe376 into /private/tmp/PlannerMCPDomainClean-b530c0d. The checkout contains no personal Xcode state, ignored Local.xcconfig or previous app products. Native project discovery succeeds. Fresh /private/tmp/PlannerMCPDomainCleanDerived-b530c0d and PlannerCoreDomainCleanScratch-b530c0d products run the affected hosted MCP and Core package store suites. Committed remote pins use the already downloaded dependency source cache.
