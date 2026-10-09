@@ -1,0 +1,13 @@
+{
+  "description": "First native read-only navigation slice; source file hashes identify the tested fixture and reviewed code.",
+  "files": {
+    "Planner/PlannerApp.swift": "03e87bf987c5916302c8d4a6c179bb58d21b22c79c81ed204844bd76b7a3d964",
+    "Planner/NavigationPrototype/NavigationPrototypeFixture.swift": "bb1d9581ab487eaf37c082d735735cdd3631429d596bf46f7703a3abd4fff3aa",
+    "Planner/NavigationPrototype/NavigationPrototypeView.swift": "333ee186b6f7e325aa4c5c91e7b275c9b1e9cfc1b749f00b111f023b7107cfbe",
+    "PlannerNavigationUITests/NavigationJourneyTests.swift": "0ccc6b9e24ca774607da2bd28c46c8b01d8226c6de43a2ef7151f6b2cc11f3f1",
+    "docs/fixtures/portable-backup-v1.json": "6496ba36622f06f37b8fc11a9f5e00999e9c145cefbeed721fefce6fa20097ba",
+    "Planner.xcodeproj/project.pbxproj": "43f16f38ddc9ce2877cce20e93294de13df1cf7661bcf5cf309e2330a29e78f7",
+    "Configuration/PlannerNavigationUITests.xcconfig": "16d43a3beb8fbe6834623d6aa668ac8a0c74671aa88042488dcbe61fafa892ad",
+    "Planner.xcodeproj/xcshareddata/xcschemes/PlannerNavigation.xcscheme": "9f45da3b7f9406959e89caf86d79a25c975b1d6ac5b5caed8244913198b78be3"
+  }
+}

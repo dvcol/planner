@@ -1,0 +1,9 @@
+#include "Base.xcconfig"
+
+PRODUCT_NAME = $(TARGET_NAME)
+PRODUCT_BUNDLE_IDENTIFIER = org.example.PlannerMCPPrototype.$(PRODUCT_NAME:rfc1034identifier)
+SUPPORTED_PLATFORMS = iphoneos iphonesimulator macosx
+SDKROOT = auto
+TARGETED_DEVICE_FAMILY = 1,2
+TEST_TARGET_NAME = Planner
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
