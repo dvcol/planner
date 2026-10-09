@@ -79,24 +79,28 @@ struct NavigationPrototypeFixture: Decodable {
           localDone: $0.localDone, contextName: "List appearance")
       }
     }
-    return itineraryEntries.filter { $0.itinerary.id == container.id }.flatMap { entry in
-      guard let referencedSource = source(entry.source.id) else { return [Appearance]() }
-      if referencedSource.kind == "item" {
-        return [
-          Appearance(
-            id: entry.id.uuidString, sourceId: referencedSource.id,
-            localDone: entry.localDone ?? false, contextName: "Itinerary appearance")
-        ]
+    return itineraryEntries.filter { $0.itinerary.id == container.id }.flatMap {
+      appearances(in: $0)
+    }
+  }
+
+  func appearances(in entry: Entry) -> [Appearance] {
+    guard let referencedSource = source(entry.source.id) else { return [] }
+    if referencedSource.kind == "item" {
+      return [
+        Appearance(
+          id: entry.id.uuidString, sourceId: referencedSource.id,
+          localDone: entry.localDone ?? false, contextName: "Itinerary appearance")
+      ]
+    }
+    return memberships.filter { $0.list.id == referencedSource.id }.map { membership in
+      let completion = expandedCompletions.first {
+        $0.context.listEntryId == entry.id && $0.context.membershipId == membership.id
       }
-      return memberships.filter { $0.list.id == referencedSource.id }.map { membership in
-        let completion = expandedCompletions.first {
-          $0.context.listEntryId == entry.id && $0.context.membershipId == membership.id
-        }
-        return Appearance(
-          id: "\(entry.id.uuidString)/\(membership.id.uuidString)",
-          sourceId: membership.item.id,
-          localDone: completion?.localDone ?? false, contextName: "Itinerary list appearance")
-      }
+      return Appearance(
+        id: "\(entry.id.uuidString)/\(membership.id.uuidString)",
+        sourceId: membership.item.id,
+        localDone: completion?.localDone ?? false, contextName: "Itinerary list appearance")
     }
   }
 
@@ -105,7 +109,10 @@ struct NavigationPrototypeFixture: Decodable {
   }
 
   func progress(in container: Source) -> String {
-    let children = appearances(in: container)
+    progress(in: appearances(in: container))
+  }
+
+  func progress(in children: [Appearance]) -> String {
     guard !children.isEmpty else { return "No items" }
     return "\(children.filter(isDone).count) of \(children.count) done"
   }

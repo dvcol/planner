@@ -6,5 +6,9 @@ struct PlannerApp: App {
     WindowGroup {
       NavigationPrototypeView()
     }
+    #if os(macOS)
+      .defaultSize(width: 1200, height: 800)
+      .commands { SidebarCommands() }
+    #endif
   }
 }
