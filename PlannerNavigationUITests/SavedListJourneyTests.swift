@@ -6,7 +6,7 @@ final class SavedListJourneyTests: XCTestCase {
     continueAfterFailure = false
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
-    application.launch()
+    application.launchSavedPlannerJourney()
     let newList = application.plannerElement("saved.list.new")
     revealSidebarIfNeeded(application, element: newList)
     XCTAssertTrue(newList.waitForExistence(timeout: 10))
@@ -31,8 +31,8 @@ final class SavedListJourneyTests: XCTestCase {
     recordScreenshot(application, name: "Saved native List with empty progress")
 
     application.terminate()
-    application.launch()
-    let retained = application.staticTexts["Tokyo Weekend"].firstMatch
+    application.launchSavedPlannerJourney()
+    let retained = application.savedPlannerListRow("Tokyo Weekend")
     revealSidebarIfNeeded(application, element: retained)
     XCTAssertTrue(retained.waitForExistence(timeout: 10))
     retained.activateForPlannerJourney()

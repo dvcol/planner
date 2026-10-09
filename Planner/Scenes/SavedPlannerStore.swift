@@ -22,6 +22,7 @@ final class SavedPlannerStore {
   private(set) var isOpening = false
   private(set) var isSaving = false
   private(set) var recoveryBlocked = false
+  private(set) var changeRevision = UUID()
   private(set) var openingFailure: String?
   var alertMessage: String?
   var isReady: Bool { session != nil && !isOpening }
@@ -152,6 +153,16 @@ final class SavedPlannerStore {
     return nil
   }
 
+  func readAppearance(_ appearance: PlannerAppearance) async -> PlannerAppearanceRead? {
+    guard let planner, let session else { return nil }
+    switch await planner.read(session: session, request: .appearance(appearance)) {
+    case .appearance(let item): return item
+    case .failed(let reason): alertMessage = reason.message
+    default: alertMessage = "Planner could not open this List entry."
+    }
+    return nil
+  }
+
   func createItem(title: String, notes: String, operationId: UUID) async -> PlannerEntityReference?
   {
     guard
@@ -179,6 +190,11 @@ final class SavedPlannerStore {
       != nil
   }
 
+  func setAppearanceCompletion(_ appearance: PlannerAppearance, done: Bool) async -> Bool {
+    await executeChange(
+      .setCompletion(scope: .appearance(appearance), done: done), operationId: UUID()) != nil
+  }
+
   private func executeChange(
     _ command: PlannerCommand, operationId: UUID
   ) async -> PlannerAppliedResult? {
@@ -196,6 +212,7 @@ final class SavedPlannerStore {
       alertMessage = "The change could not be verified. Further changes need recovery review."
       return nil
     case .applied(let applied, let recovery):
+      changeRevision = UUID()
       if case .incomplete = recovery {
         recoveryBlocked = true
         alertMessage =
@@ -222,6 +239,7 @@ final class SavedPlannerStore {
       alertMessage = "The List's save could not be verified. Further changes need recovery review."
       return nil
     case .applied(let applied, let recovery):
+      changeRevision = UUID()
       if case .incomplete = recovery {
         recoveryBlocked = true
         alertMessage =

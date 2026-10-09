@@ -6,7 +6,7 @@ final class SavedItemJourneyTests: XCTestCase {
     continueAfterFailure = false
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
-    application.launch()
+    application.launchSavedPlannerJourney()
     openItems(application)
     let newItem = application.plannerElement("saved.item.new")
     XCTAssertTrue(newItem.waitForExistence(timeout: 10))
@@ -32,24 +32,24 @@ final class SavedItemJourneyTests: XCTestCase {
     let completion = application.descendants(matching: .any)
       .matching(identifier: "saved.item.completion").firstMatch
     XCTAssertTrue(completion.waitForExistence(timeout: 5))
-    XCTAssertEqual(completion.value as? String, "0")
+    XCTAssertEqual(completion.plannerBooleanState, false)
     activateCompletion(completion)
-    XCTAssertTrue(completion.waitForValue("1"), application.debugDescription)
+    XCTAssertTrue(completion.waitForPlannerBooleanState(true), application.debugDescription)
     XCTAssertFalse(application.staticTexts["Global: Todo"].exists)
     XCTAssertFalse(application.plannerElement("Open source Item").exists)
     recordScreenshot(application, name: "Saved Item with global completion")
 
     application.terminate()
-    application.launch()
+    application.launchSavedPlannerJourney()
     openItems(application)
-    let retained = application.staticTexts["Nezu Museum"].firstMatch
+    let retained = application.savedPlannerItemRows("Nezu Museum").firstMatch
     XCTAssertTrue(retained.waitForExistence(timeout: 10))
     retained.activateForPlannerJourney()
     XCTAssertTrue(
       application.staticTexts["Meet at the garden entrance"].waitForExistence(timeout: 5))
-    XCTAssertTrue(completion.waitForValue("1"))
+    XCTAssertTrue(completion.waitForPlannerBooleanState(true))
     activateCompletion(completion)
-    XCTAssertTrue(completion.waitForValue("0"))
+    XCTAssertTrue(completion.waitForPlannerBooleanState(false))
     XCTAssertFalse(application.staticTexts["Canceled visit"].exists)
     recordScreenshot(application, name: "Saved Item reopened globally after relaunch")
   }
@@ -84,14 +84,5 @@ final class SavedItemJourneyTests: XCTestCase {
     attachment.name = name
     attachment.lifetime = .keepAlways
     add(attachment)
-  }
-}
-
-extension XCUIElement {
-  fileprivate func waitForValue(_ expected: String) -> Bool {
-    let predicate = NSPredicate(format: "value == %@", expected)
-    return XCTWaiter.wait(
-      for: [XCTNSPredicateExpectation(predicate: predicate, object: self)], timeout: 5)
-      == .completed
   }
 }

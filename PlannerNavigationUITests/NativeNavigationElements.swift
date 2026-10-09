@@ -1,6 +1,30 @@
 import XCTest
 
 extension XCUIApplication {
+  func launchSavedPlannerJourney() {
+    launch()
+    #if os(macOS)
+      if !windows.firstMatch.waitForExistence(timeout: 3) {
+        menuBars.menuBarItems["File"].click()
+        menuItems["New Window"].click()
+        XCTAssertTrue(windows.firstMatch.waitForExistence(timeout: 5))
+      }
+    #endif
+  }
+
+  func savedPlannerItemRows(_ title: String) -> XCUIElementQuery {
+    buttons.matching(
+      NSPredicate(
+        format: "(identifier BEGINSWITH %@ OR identifier BEGINSWITH %@) AND label == %@",
+        "saved.item.", "saved.appearance.", title))
+  }
+
+  func savedPlannerListRow(_ title: String) -> XCUIElement {
+    buttons.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@ AND label == %@", "saved.list.", title)
+    ).firstMatch
+  }
+
   /// Native Mac rows and menus expose different accessibility roles from mobile navigation buttons.
   func plannerElement(_ identifier: String) -> XCUIElement {
     #if os(macOS)
@@ -71,6 +95,34 @@ extension XCUIApplication {
 }
 
 extension XCUIElement {
+  func waitForPlannerHittability() -> Bool {
+    let predicate = NSPredicate(format: "hittable == true")
+    return XCTWaiter.wait(
+      for: [XCTNSPredicateExpectation(predicate: predicate, object: self)], timeout: 5)
+      == .completed
+  }
+
+  var plannerBooleanState: Bool? {
+    if let number = value as? NSNumber {
+      if number.intValue == 0 { return false }
+      if number.intValue == 1 { return true }
+      return nil
+    }
+    switch value as? String {
+    case "0": return false
+    case "1": return true
+    default: return nil
+    }
+  }
+
+  func waitForPlannerBooleanState(_ expected: Bool) -> Bool {
+    let predicate = NSPredicate(
+      format: "value == %@ OR value == %@", NSNumber(value: expected), expected ? "1" : "0")
+    return XCTWaiter.wait(
+      for: [XCTNSPredicateExpectation(predicate: predicate, object: self)], timeout: 5)
+      == .completed
+  }
+
   var plannerProgressFraction: Double? {
     #if os(macOS)
       value as? Double

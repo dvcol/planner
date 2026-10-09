@@ -1,0 +1,867 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "86574d7",
+  "scope": "Native saved List appearance selection/details, local completion/progress, global precedence and retained contextual state after reopening/relaunch, with saved creation/membership regression.",
+  "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+  "storageSchemaVersion": 7,
+  "portableFormatVersion": 1,
+  "executions": {
+    "SelectionRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "testName": "testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()",
+          "failureText": "XCTAssertTrue failed - Attributes: Application, 0x1092e1cc0, pid: 48965, label: 'Planner navigation prototype'"
+        }
+      ],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSavedAppearanceSelectionRed.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearanceSelectionRedSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearanceSelectionRed.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedAppearanceSelectionRed.xcresult test",
+      "revisionNote": "Missing contextual notes after selecting the static List row."
+    },
+    "SelectionGreen": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 1,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSavedAppearanceSelectionGreen.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearanceSelectionGreenSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearanceSelectionGreen.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedAppearanceSelectionGreen.xcresult test",
+      "revisionNote": "One native selection/navigation journey before completion controls."
+    },
+    "CompletionRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "testName": "testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+          "failureText": "XCTAssertTrue failed"
+        }
+      ],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSavedAppearanceCompletionRed.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearanceCompletionRedSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearanceCompletionRed.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt\" -resultBundlePath /private/tmp/PlannerSavedAppearanceCompletionRed.xcresult test",
+      "revisionNote": "Missing contextual completion circle."
+    },
+    "CompletionGreen": {
+      "result": "Passed",
+      "totalTestCount": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 2,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSavedAppearanceCompletionGreen.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearanceCompletionGreenSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearanceCompletionGreen.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedAppearanceCompletionGreen.xcresult test",
+      "revisionNote": "Two native iPhone journeys before final callback/control-adapter changes."
+    },
+    "InitialPhone": {
+      "result": "Passed",
+      "totalTestCount": 5,
+      "passedTests": 5,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 5,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSavedAppearancePhoneQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearancePhoneQualificationSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearancePhoneQualification.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedItemJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListMembershipJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedAppearancePhoneQualification.xcresult test",
+      "revisionNote": "Five passing journeys before Mac-specific adapter corrections."
+    },
+    "InitialMac": {
+      "result": "Failed",
+      "totalTestCount": 5,
+      "passedTests": 0,
+      "failedTests": 5,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "testName": "testExistingItemCanBeAddedToAListWithoutDuplicatingItsSourceAfterRelaunch()",
+          "failureText": "XCTAssertTrue failed"
+        },
+        {
+          "testName": "testItemDraftCancellationAndGlobalCompletionSurviveNativeRelaunch()",
+          "failureText": "XCTAssertTrue failed"
+        },
+        {
+          "testName": "testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+          "failureText": "XCTAssertTrue failed"
+        },
+        {
+          "testName": "testListDraftCancellationAndCreationRemainDistinctAfterNativeRelaunch()",
+          "failureText": "XCTAssertTrue failed"
+        },
+        {
+          "testName": "testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()",
+          "failureText": "XCTAssertTrue failed"
+        }
+      ],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "modelName": "MacBook Pro",
+            "osBuildNumber": "26A434",
+            "osVersion": "27.0.1",
+            "platform": "macOS"
+          },
+          "expectedFailures": 0,
+          "failedTests": 5,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSavedAppearanceMacQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearanceMacQualificationSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearanceMacQualification.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedItemJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListMembershipJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedAppearanceMacQualification.xcresult test",
+      "revisionNote": "Five executed failures with no app window restored. Not a test-daemon startup timeout."
+    },
+    "MacLaunchExperiment": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "testName": "testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()",
+          "failureText": "XCTAssertTrue failed"
+        }
+      ],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "modelName": "MacBook Pro",
+            "osBuildNumber": "26A434",
+            "osVersion": "27.0.1",
+            "platform": "macOS"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSavedAppearanceMacLaunchGreen.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearanceMacLaunchGreenSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearanceMacLaunchGreen.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation\" -resultBundlePath /private/tmp/PlannerSavedAppearanceMacLaunchGreen.xcresult test",
+      "revisionNote": "Explicit primary-scene launch behavior did not resolve the missing window; production experiment removed."
+    },
+    "MacNewWindow": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "testName": "testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()",
+          "failureText": "XCTAssertTrue failed"
+        }
+      ],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "modelName": "MacBook Pro",
+            "osBuildNumber": "26A434",
+            "osVersion": "27.0.1",
+            "platform": "macOS"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSavedAppearanceMacNewWindowGreen.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearanceMacNewWindowGreenSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearanceMacNewWindowGreen.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation\" -resultBundlePath /private/tmp/PlannerSavedAppearanceMacNewWindowGreen.xcresult test",
+      "revisionNote": "Native File → New Window opened the saved app. Journey failed because Mac Item rows expose Button rather than StaticText."
+    },
+    "MacControlRoles": {
+      "result": "Failed",
+      "totalTestCount": 2,
+      "passedTests": 0,
+      "failedTests": 2,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "testName": "testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+          "failureText": "XCTAssertTrue failed"
+        },
+        {
+          "testName": "testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()",
+          "failureText": "XCTAssertEqual failed: (\"nil\") is not equal to (\"Optional(\"0\")\")"
+        }
+      ],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "modelName": "MacBook Pro",
+            "osBuildNumber": "26A434",
+            "osVersion": "27.0.1",
+            "platform": "macOS"
+          },
+          "expectedFailures": 0,
+          "failedTests": 2,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSavedAppearanceMacRolesGreen.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearanceMacRolesGreenSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearanceMacRolesGreen.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedAppearanceMacRolesGreen.xcresult test",
+      "revisionNote": "Two journeys progressed to global completion. Mac checkbox numeric values failed string-only expectations."
+    },
+    "BeforeOverlayPhone": {
+      "result": "Passed",
+      "totalTestCount": 5,
+      "passedTests": 5,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 5,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSavedAppearancePhoneNativeQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearancePhoneNativeQualificationSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearancePhoneNativeQualification.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedItemJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListMembershipJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedAppearancePhoneNativeQualification.xcresult test",
+      "revisionNote": "Five passing journeys with corrected native adapters."
+    },
+    "BeforeOverlayMac": {
+      "result": "Passed",
+      "totalTestCount": 5,
+      "passedTests": 5,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "modelName": "MacBook Pro",
+            "osBuildNumber": "26A434",
+            "osVersion": "27.0.1",
+            "platform": "macOS"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 5,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSavedAppearanceMacNativeQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearanceMacNativeQualificationSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearanceMacNativeQualification.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedItemJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListMembershipJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedAppearanceMacNativeQualification.xcresult test",
+      "revisionNote": "Five passing journeys with native New Window initialization when needed."
+    },
+    "BeforeOverlayTablet": {
+      "result": "Failed",
+      "totalTestCount": 5,
+      "passedTests": 4,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "testName": "testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+          "failureText": "Failed to tap \"View Item\" Button: No matches found for Elements matching predicate '\"View Item\" IN identifiers' from input {("
+        }
+      ],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 4,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSavedAppearanceTabletNativeQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearanceTabletNativeQualificationSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearanceTabletNativeQualification.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedItemJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListMembershipJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedAppearanceTabletNativeQualification.xcresult test",
+      "revisionNote": "Four passed, one failed: selecting the same List retained a covering sidebar overlay; row hit point was {-1,-1}, then the first actions tap dismissed the overlay."
+    },
+    "BeforeStylePhone": {
+      "result": "Passed",
+      "totalTestCount": 5,
+      "passedTests": 5,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 5,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSavedAppearancePhoneOverlayQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearancePhoneOverlayQualificationSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearancePhoneOverlayQualification.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedItemJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListMembershipJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedAppearancePhoneOverlayQualification.xcresult test",
+      "revisionNote": "Five journeys before the one-line selected-row button-style change, explicit row hittability and List-reselection fix."
+    },
+    "BeforeStyleTablet": {
+      "result": "Passed",
+      "totalTestCount": 5,
+      "passedTests": 5,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 5,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSavedAppearanceTabletOverlayQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearanceTabletOverlayQualificationSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearanceTabletOverlayQualification.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedItemJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListMembershipJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedAppearanceTabletOverlayQualification.xcresult test",
+      "revisionNote": "Five journeys before the one-line selected-row button-style change, explicit row hittability and List-reselection fix."
+    },
+    "BeforeStyleMac": {
+      "result": "Passed",
+      "totalTestCount": 5,
+      "passedTests": 5,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "modelName": "MacBook Pro",
+            "osBuildNumber": "26A434",
+            "osVersion": "27.0.1",
+            "platform": "macOS"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 5,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSavedAppearanceMacOverlayQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearanceMacOverlayQualificationSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearanceMacOverlayQualification.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedItemJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListMembershipJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedAppearanceMacOverlayQualification.xcresult test",
+      "revisionNote": "Five journeys before the one-line selected-row button-style change and observed native control roles/values."
+    },
+    "FinalPhone": {
+      "result": "Passed",
+      "totalTestCount": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 2,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSavedAppearancePhonePlainQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearancePhonePlainQualificationSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearancePhonePlainQualification.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedAppearancePhonePlainQualification.xcresult test",
+      "revisionNote": "Two affected appearance journeys after native plain button styling for selected-row contrast."
+    },
+    "FinalTablet": {
+      "result": "Passed",
+      "totalTestCount": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 2,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSavedAppearanceTabletPlainQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearanceTabletPlainQualificationSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearanceTabletPlainQualification.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedAppearanceTabletPlainQualification.xcresult test",
+      "revisionNote": "Two affected appearance journeys after native plain button styling for selected-row contrast."
+    },
+    "FinalMac": {
+      "result": "Passed",
+      "totalTestCount": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "xctestSummaryRuntimeWarnings": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "00006030-001A586C3EA3001C",
+            "deviceName": "My Mac",
+            "modelName": "MacBook Pro",
+            "osBuildNumber": "26A434",
+            "osVersion": "27.0.1",
+            "platform": "macOS"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 2,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSavedAppearanceMacPlainQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedAppearanceMacPlainQualificationSummary.json",
+      "log": "/private/tmp/PlannerSavedAppearanceMacPlainQualification.log",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedAppearanceMacPlainQualification.xcresult test",
+      "revisionNote": "Two affected appearance journeys after native plain button styling for selected-row contrast."
+    }
+  },
+  "sourceSha256": {
+    "Planner/PlannerApp.swift": "933b0d67602686daad69fb127c00fa0122472307980d25ba5b1d1ea29584ceb1",
+    "Planner/Scenes/SavedPlannerView.swift": "976374a2bf1df3ce63d7cbe4e2964675b1667bdace93bac2a9681e4a9e3bf509",
+    "Planner/Scenes/SavedPlannerStore.swift": "04627aa299f77d21ee3252088eb4e8a6bf8e381d795bf8948eb13d9f27130927",
+    "Planner/Scenes/SavedAppearanceViews.swift": "65076e3e29aa9299cf080dd6c6294ba4668a382bd717486e0d175e62403640a4",
+    "Planner/Scenes/SavedItemViews.swift": "68a4dea86989c23a245bf8fe3dbb27be0ece0214b77a408fc7fcdfeaedb672e2",
+    "Planner/Scenes/SavedAddItemForm.swift": "41ffacb4686a14c2fa0011d3820195eecf1ce4396deaf0e2eed3fae971007bd8",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "2ef4d621aaa8b0b2f8153a75a2a0104cddac5ea77967b35b018d79d4702a7c9e",
+    "PlannerNavigationUITests/SavedItemJourneyTests.swift": "51e64c357b2f365eed17d806506e07db15de2f9d87c4b300b194c114ebb1aeb5",
+    "PlannerNavigationUITests/SavedListJourneyTests.swift": "380de78657d782766c035af842ad9ca1260f1a88de9852bf333dfef5d6ebb11f",
+    "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "2972aec7da112b0de7e5929a91b557ea3a55680fd98ba73f80b340041bedf99f",
+    "PlannerNavigationUITests/NativeNavigationElements.swift": "5244312acddaa4a0e6cd879d5424a7a5a003f33f643ec418c025f490af4eb844"
+  },
+  "earlierSourceSnapshots": {
+    "SelectionRed": {
+      "Planner/Scenes/SavedPlannerView.swift": "cb2f668e36e403968eaca3fd54d63d9f7b5649d242530d184bba80b0f207b869",
+      "Planner/Scenes/SavedPlannerStore.swift": "ca59105d33e01c3db1570f226248330e43dee483a96028d7270a371db92da388",
+      "Planner/Scenes/SavedItemViews.swift": "14d908a0f358be311eecd707b971986a58b3475ad4fc2f5d8945679f428f3dca",
+      "Planner/Scenes/SavedAddItemForm.swift": "41ffacb4686a14c2fa0011d3820195eecf1ce4396deaf0e2eed3fae971007bd8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "82694b391c48d585f588b9e6263e56211adc12b081231215a9483fd90d274035"
+    },
+    "SelectionGreen": {
+      "Planner/Scenes/SavedPlannerView.swift": "71639c43944da49bc71dcf5e9344e21cd90a11789b30c928000ce2260438ed95",
+      "Planner/Scenes/SavedPlannerStore.swift": "51bf3f6bf688a2662ff11ddb7284bb9ca1c35d4743ea396bc8955710fcd2fd69",
+      "Planner/Scenes/SavedAppearanceViews.swift": "d048989fba495badc389441b54a7ef71242f183a6274fe24efdde37031c97156",
+      "Planner/Scenes/SavedItemViews.swift": "14d908a0f358be311eecd707b971986a58b3475ad4fc2f5d8945679f428f3dca",
+      "Planner/Scenes/SavedAddItemForm.swift": "41ffacb4686a14c2fa0011d3820195eecf1ce4396deaf0e2eed3fae971007bd8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "82694b391c48d585f588b9e6263e56211adc12b081231215a9483fd90d274035"
+    },
+    "CompletionRed": {
+      "Planner/Scenes/SavedPlannerView.swift": "71639c43944da49bc71dcf5e9344e21cd90a11789b30c928000ce2260438ed95",
+      "Planner/Scenes/SavedPlannerStore.swift": "51bf3f6bf688a2662ff11ddb7284bb9ca1c35d4743ea396bc8955710fcd2fd69",
+      "Planner/Scenes/SavedAppearanceViews.swift": "d048989fba495badc389441b54a7ef71242f183a6274fe24efdde37031c97156",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "fabdff85527c024fed91227ed68012d9b4b7cc771b42e1ca294e7373a6938110"
+    },
+    "CompletionGreen": {
+      "Planner/Scenes/SavedPlannerView.swift": "3e44749c5fdc7c1087452446dcb5ee542c774a96d70d917dd1242cf26a4461c1",
+      "Planner/Scenes/SavedPlannerStore.swift": "04627aa299f77d21ee3252088eb4e8a6bf8e381d795bf8948eb13d9f27130927",
+      "Planner/Scenes/SavedAppearanceViews.swift": "80b55e221a4659e5f29065fc0e7f0a3845d3d0f6f381c98688e278d602474fd0",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "fabdff85527c024fed91227ed68012d9b4b7cc771b42e1ca294e7373a6938110"
+    },
+    "BeforeNativeAdapters": {
+      "Planner/Scenes/SavedPlannerView.swift": "3e44749c5fdc7c1087452446dcb5ee542c774a96d70d917dd1242cf26a4461c1",
+      "Planner/Scenes/SavedPlannerStore.swift": "04627aa299f77d21ee3252088eb4e8a6bf8e381d795bf8948eb13d9f27130927",
+      "Planner/Scenes/SavedAppearanceViews.swift": "80b55e221a4659e5f29065fc0e7f0a3845d3d0f6f381c98688e278d602474fd0",
+      "Planner/Scenes/SavedItemViews.swift": "68a4dea86989c23a245bf8fe3dbb27be0ece0214b77a408fc7fcdfeaedb672e2",
+      "Planner/Scenes/SavedAddItemForm.swift": "41ffacb4686a14c2fa0011d3820195eecf1ce4396deaf0e2eed3fae971007bd8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "fabdff85527c024fed91227ed68012d9b4b7cc771b42e1ca294e7373a6938110",
+      "PlannerNavigationUITests/SavedItemJourneyTests.swift": "0b01e3049e33836945c47c2b152dd1d8653d7f2364a9aae3facedfdc19367590",
+      "PlannerNavigationUITests/SavedListJourneyTests.swift": "e3fef76d2aad2250eaaf33794f5e2e73aa99722946cede5b1a6bd684bc737c7d",
+      "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "cfa64e518e57b8489c68eec04ddf4faab3bc0ea30156ec05b20e906ac4e90edf",
+      "PlannerNavigationUITests/NativeNavigationElements.swift": "58c622ad329a9035ae2b029dbd139732433f41f5e31c7f559453c423bc66e532"
+    },
+    "BeforeOverlay": {
+      "Planner/PlannerApp.swift": "933b0d67602686daad69fb127c00fa0122472307980d25ba5b1d1ea29584ceb1",
+      "Planner/Scenes/SavedPlannerView.swift": "3e44749c5fdc7c1087452446dcb5ee542c774a96d70d917dd1242cf26a4461c1",
+      "Planner/Scenes/SavedPlannerStore.swift": "04627aa299f77d21ee3252088eb4e8a6bf8e381d795bf8948eb13d9f27130927",
+      "Planner/Scenes/SavedAppearanceViews.swift": "80b55e221a4659e5f29065fc0e7f0a3845d3d0f6f381c98688e278d602474fd0",
+      "Planner/Scenes/SavedItemViews.swift": "68a4dea86989c23a245bf8fe3dbb27be0ece0214b77a408fc7fcdfeaedb672e2",
+      "Planner/Scenes/SavedAddItemForm.swift": "41ffacb4686a14c2fa0011d3820195eecf1ce4396deaf0e2eed3fae971007bd8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "5e503c63c9f528d86d59dd7e907349c824eacdd00d839bb591bb58857eb32f7c",
+      "PlannerNavigationUITests/SavedItemJourneyTests.swift": "51e64c357b2f365eed17d806506e07db15de2f9d87c4b300b194c114ebb1aeb5",
+      "PlannerNavigationUITests/SavedListJourneyTests.swift": "380de78657d782766c035af842ad9ca1260f1a88de9852bf333dfef5d6ebb11f",
+      "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "2972aec7da112b0de7e5929a91b557ea3a55680fd98ba73f80b340041bedf99f",
+      "PlannerNavigationUITests/NativeNavigationElements.swift": "f31a696c23e4961f105808896adddf12f798d5d85e33f3be230416d46cfe230e"
+    },
+    "BeforePlainButtonStyle": {
+      "Planner/PlannerApp.swift": "933b0d67602686daad69fb127c00fa0122472307980d25ba5b1d1ea29584ceb1",
+      "Planner/Scenes/SavedPlannerView.swift": "976374a2bf1df3ce63d7cbe4e2964675b1667bdace93bac2a9681e4a9e3bf509",
+      "Planner/Scenes/SavedPlannerStore.swift": "04627aa299f77d21ee3252088eb4e8a6bf8e381d795bf8948eb13d9f27130927",
+      "Planner/Scenes/SavedAppearanceViews.swift": "80b55e221a4659e5f29065fc0e7f0a3845d3d0f6f381c98688e278d602474fd0",
+      "Planner/Scenes/SavedItemViews.swift": "68a4dea86989c23a245bf8fe3dbb27be0ece0214b77a408fc7fcdfeaedb672e2",
+      "Planner/Scenes/SavedAddItemForm.swift": "41ffacb4686a14c2fa0011d3820195eecf1ce4396deaf0e2eed3fae971007bd8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "2ef4d621aaa8b0b2f8153a75a2a0104cddac5ea77967b35b018d79d4702a7c9e",
+      "PlannerNavigationUITests/SavedItemJourneyTests.swift": "51e64c357b2f365eed17d806506e07db15de2f9d87c4b300b194c114ebb1aeb5",
+      "PlannerNavigationUITests/SavedListJourneyTests.swift": "380de78657d782766c035af842ad9ca1260f1a88de9852bf333dfef5d6ebb11f",
+      "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "2972aec7da112b0de7e5929a91b557ea3a55680fd98ba73f80b340041bedf99f",
+      "PlannerNavigationUITests/NativeNavigationElements.swift": "5244312acddaa4a0e6cd879d5424a7a5a003f33f643ec418c025f490af4eb844"
+    }
+  },
+  "visualReview": "Selected iPad completion circle blended into the blue selection under borderless styling. Final named captures use the native plain button style.",
+  "macTestInitialization": "Uses the observed native File → New Window command if launch restores no app window; default Mac launch/restoration is not qualified by this workaround. No production scene-launch override remains.",
+  "screenshots": [
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/mac-saved-appearance-completed.png",
+      "sha256": "f2ef3c0d1914fd084b7d2d049858ded07bcc5e38ddd2e243b7d542e075a2038c",
+      "byteCount": 172914,
+      "sourceAttachment": "/private/tmp/PlannerSavedAppearanceMacPlainAttachments/4B593657-0A5E-4DED-B972-51794103DC86.png",
+      "suggestedHumanReadableName": "Saved List with contextual completion and details_0_1EA8AC9D-5319-44A5-96DB-AB8B7E07E5D1.png",
+      "bundle": "/private/tmp/PlannerSavedAppearanceMacPlainQualification.xcresult"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/mac-saved-appearance-global-done.png",
+      "sha256": "5f1e1755e1ba7293768899c38bf86e247a26851f7a175e253eeb9ff50c4acbc7",
+      "byteCount": 161556,
+      "sourceAttachment": "/private/tmp/PlannerSavedAppearanceMacPlainAttachments/25096FBD-3361-488C-A081-20ABAE287411.png",
+      "suggestedHumanReadableName": "Saved List with globally completed Item_0_08D79774-AFF1-43A6-A669-0B6BDEEDF014.png",
+      "bundle": "/private/tmp/PlannerSavedAppearanceMacPlainQualification.xcresult"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-appearance-completed.png",
+      "sha256": "88ce69563c395634bf1b021ad7a695602eca592abf10d7ed5bdc664d481e7b6a",
+      "byteCount": 143360,
+      "sourceAttachment": "/private/tmp/PlannerSavedAppearancePhonePlainAttachments/C7AE507C-2B1C-4341-8EE8-FF52905FB763.png",
+      "suggestedHumanReadableName": "Saved List with contextual completion and details_0_1B3DEC8D-9299-4C66-AC0D-45804673CEF9.png",
+      "bundle": "/private/tmp/PlannerSavedAppearancePhonePlainQualification.xcresult"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-appearance-global-done.png",
+      "sha256": "4d485142345bb96c9555a82cb64ccb2db3fabb639646ade46d6c64d7103ddffd",
+      "byteCount": 109973,
+      "sourceAttachment": "/private/tmp/PlannerSavedAppearancePhonePlainAttachments/7080E1A6-955A-457F-BEBA-9625F6EACF4C.png",
+      "suggestedHumanReadableName": "Saved List with globally completed Item_0_D570E946-C5B9-47E0-A8ED-DA57684D9162.png",
+      "bundle": "/private/tmp/PlannerSavedAppearancePhonePlainQualification.xcresult"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-appearance-completed.png",
+      "sha256": "5c6e3d90e2c26f5d8d30ff815197e00c11e81b7b907d63ffe82c7b7706b325b9",
+      "byteCount": 144832,
+      "sourceAttachment": "/private/tmp/PlannerSavedAppearanceTabletPlainAttachments/846ADAC5-40CE-4A3B-A4B2-AB7FB70D36EF.png",
+      "suggestedHumanReadableName": "Saved List with contextual completion and details_0_6642A66B-09D5-44EB-9FE6-10E0093C367E.png",
+      "bundle": "/private/tmp/PlannerSavedAppearanceTabletPlainQualification.xcresult"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-appearance-global-done.png",
+      "sha256": "aa13658efe840122ccfe109938f58fc1788636b8753ac58ef2fdef658a857fa6",
+      "byteCount": 144479,
+      "sourceAttachment": "/private/tmp/PlannerSavedAppearanceTabletPlainAttachments/E2A1823C-5DB6-467C-B4D9-DA62BCED06F8.png",
+      "suggestedHumanReadableName": "Saved List with globally completed Item_0_4B2F2F52-6321-4846-9CA2-683F34F3F6D1.png",
+      "bundle": "/private/tmp/PlannerSavedAppearanceTabletPlainQualification.xcresult"
+    }
+  ],
+  "checks": {
+    "swiftLint": {
+      "exitCode": 0,
+      "log": "/private/tmp/PlannerSavedAppearanceFinalSwiftLint.log"
+    },
+    "markdownLint": {
+      "exitCode": 0,
+      "log": "/private/tmp/PlannerSavedAppearanceFinalMarkdownLint.log"
+    },
+    "diffCheck": {
+      "exitCode": 0
+    }
+  },
+  "limits": [
+    "Core and transport unchanged; no new Core unit or MCP HTTP qualification.",
+    "Full row windows; paging and long-list memory not qualified.",
+    "App-owned revision only; external and cross-window runtime observation not qualified.",
+    "Contextual removal/deletion, other catalogs, filters, drag, bulk actions and Q43/Q45/Q46 rich previews remain open.",
+    "Native failure/recovery/interruption, broad accessibility, resizing/orientation and final human layout review remain open.",
+    "Local-only schema 7 / portable format 1; physical signing, CloudKit/account/Share and A17 reconciliation remain open."
+  ]
+}

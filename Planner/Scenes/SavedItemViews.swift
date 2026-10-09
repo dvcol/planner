@@ -48,7 +48,7 @@ struct SavedItemDetail: View {
   let item: PlannerItemSourceRead
   let canChange: Bool
   let isSaving: Bool
-  let setCompletion: (Bool) -> Void
+  let setCompletion: @MainActor @Sendable (Bool) -> Void
 
   var body: some View {
     Form {
