@@ -452,12 +452,13 @@ private struct PrototypeItineraryListGroup: View {
           selectAppearance: selectAppearance
         )
         .tag(appearance.id)
+        .padding(.leading, 6)
       }
       if visibleAppearances.isEmpty {
         Text("No matching items").foregroundStyle(.secondary)
       }
     } label: {
-      VStack(alignment: .leading, spacing: 4) {
+      VStack(alignment: .leading, spacing: 8) {
         Label(
           fixture.source(entry.source.id)?.title ?? "List", systemImage: "list.bullet.rectangle"
         )
@@ -466,6 +467,7 @@ private struct PrototypeItineraryListGroup: View {
           fixture: fixture, appearances: fixture.appearances(in: entry),
           accessibilityIdentifier: "progress.group.\(entry.id.uuidString)")
       }
+      .padding(.vertical, 10)
       .accessibilityIdentifier("group.\(entry.id.uuidString)")
     }
   }
@@ -543,43 +545,34 @@ struct PrototypeItemDetail: View {
   let appearance: NavigationPrototypeFixture.Appearance?
   var showMap = false
   var openSource: (() -> Void)?
+  @State private var showDiagnostics = false
 
   var body: some View {
     Form {
-      Section(appearance?.contextName ?? "Source Item") {
-        Text(source.title).font(.title2)
-        Text("Global: \(source.globalDone == true ? "Done" : "Todo")")
-        if let appearance {
-          Text("Local: \(appearance.localDone ? "Done" : "Todo")")
-          Text("Effective: \(fixture.isDone(appearance) ? "Done" : "Todo")")
+      Section {
+        VStack(alignment: .leading, spacing: 8) {
+          Text(source.title).font(.title2)
+          Label(
+            isDone ? "Completed" : "To do",
+            systemImage: isDone ? "checkmark.circle.fill" : "circle")
+          if let appearance {
+            Text("In \(appearance.containerTitle)").font(.subheadline).foregroundStyle(.secondary)
+          } else {
+            Text("Item").font(.subheadline).foregroundStyle(.secondary)
+          }
         }
+        .padding(.vertical, 4)
       }
       if let notes = source.content.notes {
         Section("Notes") { Text(notes).textSelection(.enabled) }
       }
-      if showMap {
+      if source.content.location != nil || showMap {
         Section("Location") {
+          if let name = source.content.location?.displayName { Text(name) }
           if let address = source.content.location?.formattedAddress {
             Label(address, systemImage: "mappin.and.ellipse")
           }
-          PrototypeMapItemDetail(source: source)
-        }
-      }
-      if appearance != nil {
-        Section {
-          if let openSource {
-            Button("Open source Item", action: openSource)
-          } else {
-            NavigationLink("Open source Item") {
-              PrototypeItemDetail(fixture: fixture, source: source, appearance: nil)
-            }
-          }
-        }
-      }
-      Section("Prototype identity inspection") {
-        identityValue("Source identity", identifier: source.id.uuidString)
-        if let appearance {
-          identityValue("Appearance identity", identifier: appearance.id)
+          if showMap { PrototypeMapItemDetail(source: source) }
         }
       }
     }
@@ -587,6 +580,73 @@ struct PrototypeItemDetail: View {
     .frame(maxWidth: 760)
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     .navigationTitle(source.title)
+    .toolbar {
+      ToolbarItem(placement: .primaryAction) {
+        Menu {
+          if appearance != nil {
+            if let openSource {
+              Button("View Item", action: openSource)
+            } else {
+              NavigationLink("View Item") {
+                PrototypeItemDetail(fixture: fixture, source: source, appearance: nil)
+              }
+            }
+            Divider()
+          }
+          Button("Prototype diagnostics") { showDiagnostics = true }
+        } label: {
+          Label("Item actions", systemImage: "ellipsis")
+        }
+        .accessibilityIdentifier("detail.actions")
+        .help("Item actions")
+      }
+    }
+    .sheet(isPresented: $showDiagnostics) {
+      PrototypeItemDiagnostics(fixture: fixture, source: source, appearance: appearance)
+    }
+  }
+
+  private var isDone: Bool {
+    if let appearance { return fixture.isDone(appearance) }
+    return source.globalDone == true
+  }
+}
+
+private struct PrototypeItemDiagnostics: View {
+  @Environment(\.dismiss) private var dismiss
+  let fixture: NavigationPrototypeFixture
+  let source: NavigationPrototypeFixture.Source
+  let appearance: NavigationPrototypeFixture.Appearance?
+
+  var body: some View {
+    NavigationStack {
+      Form {
+        Section(appearance?.contextName ?? "Source Item") {
+          Text("Global: \(source.globalDone == true ? "Done" : "Todo")")
+          if let appearance {
+            Text("Local: \(appearance.localDone ? "Done" : "Todo")")
+            Text("Effective: \(fixture.isDone(appearance) ? "Done" : "Todo")")
+          }
+        }
+        Section("Prototype identity inspection") {
+          identityValue("Source identity", identifier: source.id.uuidString)
+          if let appearance {
+            identityValue("Appearance identity", identifier: appearance.id)
+          }
+        }
+      }
+      .formStyle(.grouped)
+      .navigationTitle("Prototype diagnostics")
+      .toolbar {
+        ToolbarItem(placement: .cancellationAction) {
+          Button("Close") { dismiss() }
+            .accessibilityIdentifier("detail.diagnostics.close")
+        }
+      }
+    }
+    #if os(macOS)
+      .frame(width: 520, height: 440)
+    #endif
   }
 
   private func identityValue(_ label: String, identifier: String) -> some View {

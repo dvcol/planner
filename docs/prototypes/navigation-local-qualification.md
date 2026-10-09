@@ -2,9 +2,9 @@
 
 Work for [Navigation prototype](https://github.com/dvcol/planner/issues/14) on `prototype/navigation`. Q34 accepts the native UI journeys and fixtures. Q35 requires confirmation before deleting a Category/Tag with any association. The user delayed signing and physical setup while authorizing simulator and local Mac work.
 
-The latest qualified source and screenshots are in [Native chrome, cumulative filters and inline maps](#native-chrome-cumulative-filters-and-inline-maps). Earlier sections preserve the outcomes and presentation of previous revisions.
+The latest qualified source and screenshots are in [Useful Item details and roomier referenced Lists](#useful-item-details-and-roomier-referenced-lists). Earlier sections preserve the outcomes and presentation of previous revisions.
 
-After that runtime qualification, the human accepted Q38 A, Q39 B, Q40 A, Q41 A and Q42 A. The [accepted row decisions](../navigation-prototype-review.md#accepted-row-decisions-and-their-consequences) and [follow-on contract review](../navigation-row-contract-review.md) record their behavior, remaining questions and required tests. Those documentation changes add no runtime qualification; the published read-only source/results remain unchanged.
+The human accepted Q38 A, Q39 B, Q40 A, Q41 A and Q42 A. The [accepted row decisions](../navigation-prototype-review.md#accepted-row-decisions-and-their-consequences) and [follow-on contract review](../navigation-row-contract-review.md) record their behavior, remaining questions and required tests. Rich rows, completion writes, drag-and-drop and provider lookup remain unimplemented. The later presentation qualification below does not settle the unanswered Q43-Q46.
 
 ## Starting state and first goal
 
@@ -181,6 +181,39 @@ Strict affected Swift formatting, app/UI-runner compilation through these test r
 The Mac launcher now requests a fresh instance with `open -n` so a running older process cannot conceal the rebuilt UI. `./scripts/navigation-prototype.sh mac` builds and opens the current source, returns zero, and a new standalone process was verified. It leaves existing instances alone. [Launcher evidence](evidence/navigation/chrome-mac-launcher.json) records the script hash and limits; raw output is `/private/tmp/PlannerNavigationChromeLaunch.log`.
 
 Planner content remains a read-only fixture projection. At this qualification, Q38-Q42 still awaited answers for row ordering/drop/date/website/address behavior; the later accepted choices are linked at the top of this report. Rich metadata, completion writes, drag-and-drop and preview enrichment are not established by these checks. Full-graph persistence, physical/signing/sync/Share, broader keyboard/accessibility, orientation/resizing, long-list performance and final human review remain required. This revision records the requested presentation corrections without closing Navigation prototype.
+
+## Useful Item details and roomier referenced Lists
+
+The next screenshot review requested more room around referenced List groups, useful detail content and removal of the prominent Open source Item button. The starting detail form exposed Global, Local and Effective flags plus source/appearance UUIDs. The requested end keeps normal Item information in the third pane or phone navigation stack and preserves explicit prototype inspection for the accepted Q34 public UI seam.
+
+The existing native DisclosureGroup now has more header spacing and vertical padding, with additional indentation for child rows. Its native icon, title and full-scope ProgressView distinguish the referenced List from an ordinary Item. Collapse memory, Manual order, appearance identity and completion rules are unchanged. This presentation does not add arbitrary List nesting.
+
+Normal details show the Item title, Completed or To do, the containing List/Itinerary name, notes and owned location text. The existing Map comparison retains its compact map. Technical flags and UUIDs are available only through Item actions → Prototype diagnostics. The source transition is Item actions → View Item, retaining the source identity and explicitly opening its global view. No form button or inspection sheet interrupts normal Item selection.
+
+The new public UI journey [first failed](evidence/navigation/content-details-red.json) at the missing In Tokyo Weekend context, then [passed](evidence/navigation/content-details-green.json). It opens expanded appearance 452/401 and requires To do, Original notes and Meeting point A while technical fields and Open source Item are absent. Explicit diagnostics must still expose Local Todo, Global Todo and the full appearance identity; closing diagnostics removes those fields again. The existing journeys now inspect literal technical values through that same visible diagnostics action. No private fixture unit tests or new production testing seam were added.
+
+All seven affected public journeys pass against the [final source hashes and exact commands](evidence/navigation/content-source.json). They cover the new clean-details journey, cumulative filtering and progress, contextual-to-global Item navigation, Mac Down/Up selection with native list focus, independent direct/expanded itinerary state, remembered disclosure and inline map/details with a generic Item fallback.
+
+| Destination | Passed | Failed/skipped | Runtime warnings | Results |
+| --- | --- | --- | --- | --- |
+| Native arm64 Mac, macOS 27.0.1 | 7/7 | 0/0 | 0 | [Mac summary](evidence/navigation/content-mac.json) |
+| iPhone 18 Pro simulator, iOS 27, portrait | 7/7 | 0/0 | 0 | [Phone summary](evidence/navigation/content-phone.json) |
+| iPad Air 11-inch M4 simulator, iOS 27, portrait | 7/7 | 0/0 | 0 | [iPad summary](evidence/navigation/content-tablet.json) |
+
+| Actual native presentation | Evidence |
+| --- | --- |
+| Mac referenced List and useful third-pane detail | [Expanded group/details](evidence/navigation/layouts/mac-roomy-list-clean-details.png), [collapsed group](evidence/navigation/layouts/mac-roomy-list-collapsed.png) |
+| Explicit global Item view and compact map detail | [Item view](evidence/navigation/layouts/mac-item-view.png), [map/detail](evidence/navigation/layouts/mac-clean-map-details.png) |
+| iPad native tabs and split details | [iPad details](evidence/navigation/layouts/tablet-clean-details.png) |
+| Phone native navigation and details | [Phone details](evidence/navigation/layouts/phone-clean-details.png) |
+
+The Mac, iPad and phone captures were visually inspected. The Mac capture contains only the owned app window. The referenced List has a taller title/progress area and indented children, and the normal details contain no prototype identifiers or state jargon. Native Form and navigation retain their platform presentation. Final layout approval, landscape/resizing and broader accessibility remain open.
+
+Strict affected Swift lint, app/UI-runner compilation through the passing test runs, affected Markdown lint and diff checks pass. Raw red/green bundles are `/private/tmp/PlannerNavigationContentDetailsRed.xcresult` and `/private/tmp/PlannerNavigationContentDetailsGreen.xcresult`. Raw final bundles are `/private/tmp/PlannerNavigationContentMacQualified.xcresult`, `/private/tmp/PlannerNavigationContentPhoneQualified.xcresult` and `/private/tmp/PlannerNavigationContentTabletQualified.xcresult`; their logs use the same basenames with `.log`. The source manifest records the narrow scheme/destinations and resolved-package commands.
+
+`./scripts/navigation-prototype.sh mac` rebuilt this source and returned zero. A new standalone app process was confirmed after the launcher requested a fresh instance. [Launcher evidence](evidence/navigation/content-mac-launcher.json) records the script hash and qualification limits; raw output is `/private/tmp/PlannerNavigationContentLaunch.log`.
+
+Planner content remains a read-only fixture projection. This screenshot feedback answers no pending Q43-Q46 and introduces no Core commands, provider requests, rich row metadata or drag writes. Maps still use synthetic fixture coordinates. Physical/signing, CloudKit, Share, full-graph persistence, long-list performance and final human review remain required. Navigation prototype stays open.
 
 ## Remaining gates
 
