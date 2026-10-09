@@ -13,6 +13,12 @@ A named collection of items with its own archive state and completion derived fr
 **Membership**:
 The association of one item with one list, including that item's local completion context. There is at most one membership for a given item/list pair. Removing a membership leaves the item intact.
 
+**Add to a list**:
+Create a reference to a shared item in another list while retaining its existing memberships. A new membership starts locally todo; an existing destination membership keeps its state.
+
+**Move between lists**:
+Remove the selected membership and add a reference to the same item in the destination list. A new destination membership starts locally todo; an existing one retains its state, and unrelated references remain intact.
+
 **Completion state**:
 Whether an item is todo or done globally or in a planning context. Lists and itineraries derive their completion from their contextual child items.
 
