@@ -116,6 +116,16 @@ Before executable work, agree the lightweight row read amendment and exact fixtu
 
 Done requires runnable phone/iPad/Mac interactions, focused red/green evidence at approved seams, truthful persistence/recovery outcomes and human review. The API research and requested direction alone do not complete these gates or close Navigation prototype.
 
+## Native chrome and inline details review
+
+The next screenshot review requests details in the third pane instead of Inspect Item plus a sheet, a native completion indicator, one cumulative filter label, removal of sidebar diagnostic text and a less confusing comparison selector. It also asks whether navigation uses native tabs. These corrections use Q34's existing public native UI seam and fixed full-graph fixture; they do not answer Q38-Q42 or add domain mutations/network enrichment.
+
+The expected comparison keeps Mac's native sidebar/list/detail NavigationSplitView, puts a compact MapKit map within the selected Item's detail form, and shows a determinate linear ProgressView for nonempty container/group progress. Empty containers still show No items. A single native filter menu retains independent Completion/Archive selections, displays All when both are unrestricted and otherwise summarizes their cumulative selection. Hidden/archived children remain in the progress denominator.
+
+Prototype diagnostics and layout choices move into a named Mac Prototype menu and a mobile information sheet. The prototype remains explicitly read-only there. iPhone retains native TabView/NavigationStack; regular iPad compares native top tabs with its split content, rather than duplicating primary section buttons in the sidebar. Mac retains native sidebar navigation.
+
+Required /tdd observes the same appearance 401's Local Done/Global Todo and map together immediately after row selection, with no inspection action, plus generic Item 402's no-location detail. The cumulative-filter journey starts with full List A progress 1/2 and ordinary Todo/Active visibility, selects All completion then All archive, observes both rows and an All summary, then selects Done and observes only 401 while full progress stays 1/2. Native menu titles/labels and progress accessibility values are platform observations. The existing identity, keyboard, grouping/relaunch and layout journeys must still pass. Focused red/green, affected formatting/compilation, owned-window screenshots and a fresh standalone launch are required; remaining human, physical, accessibility and full-graph persistence gates stay open.
+
 ## Definition of ready and done
 
 - [x] Contract public interfaces accepted, prerequisite resolutions reviewed, local toolchain inventory refreshed and fixture inputs/expected transitions specified.

@@ -1,0 +1,24 @@
+{
+  "baseCommit": "f2d436a9704f09dffa22784559ddae0e72722c3e",
+  "purpose": "Third-pane details with embedded MapKit, determinate progress, cumulative filters, native tabs and separate prototype information. Planner data remains read-only.",
+  "files": {
+    "Planner/NavigationPrototype/NavigationPrototypeFixture.swift": "22b271916c2c8cfd9b7c0eb1405c526ac4be0cdd4746e9d50424502d24e9b060",
+    "Planner/NavigationPrototype/NavigationPrototypeView.swift": "368804be85feedc1fc95f9781b3743b25854b7b7009059a0b0d942f6da7e41e5",
+    "Planner/NavigationPrototype/PrototypeMapItemDetail.swift": "a12593a96500dfda25ed688cd67cbf249348a52fd75a598c9a235cc4b65597c2",
+    "Planner/PlannerApp.swift": "ffbc3ede3e016ee2e8853c4ef991b7a6f647c9ae6c019d55c393effd5f94f241",
+    "PlannerNavigationUITests/NavigationJourneyTests.swift": "88f3dbb4dc3ad09657157bfa7d6d267b683e1d7ce1d17f897a5b1e06fe4c2d04",
+    "PlannerNavigationUITests/MapNavigationJourneyTests.swift": "3e1f35e539f5b218dd8ba57b9259b03612eb485062fcb88ac30f912efaa3ad38",
+    "PlannerNavigationUITests/NativeNavigationElements.swift": "a3988b93b51b3372b1ce075c50b4519ab0d77608598c2a623b4136909172e791",
+    "Planner.xcodeproj/project.pbxproj": "43f16f38ddc9ce2877cce20e93294de13df1cf7661bcf5cf309e2330a29e78f7",
+    "Planner.xcodeproj/xcshareddata/xcschemes/PlannerNavigation.xcscheme": "9f45da3b7f9406959e89caf86d79a25c975b1d6ac5b5caed8244913198b78be3",
+    "Configuration/Planner.xcconfig": "b7a614c95c420d23b7d0da086bd30e660744abf66e3726a88ce421fe38ec0372",
+    "docs/fixtures/portable-backup-v1.json": "6496ba36622f06f37b8fc11a9f5e00999e9c145cefbeed721fefce6fa20097ba",
+    "scripts/navigation-prototype.sh": "95df10ac8307e2558294d86a04f0500ceb96c91cc84918c2af8e729804040c13"
+  },
+  "commands": {
+    "mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationNativeMacRevision -onlyUsePackageVersionsFromResolvedFile -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -parallel-testing-enabled NO -test-timeouts-enabled YES -default-test-execution-time-allowance 90 -maximum-test-execution-time-allowance 90 -resultBundlePath /private/tmp/PlannerNavigationChromeMacQualified.xcresult test",
+    "phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,name=iPhone 18 Pro' -derivedDataPath /private/tmp/PlannerNavigationNativeRevision -onlyUsePackageVersionsFromResolvedFile -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNavigationChromePhoneQualified.xcresult test",
+    "tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,name=iPad Air 11-inch (M4)' -derivedDataPath /private/tmp/PlannerNavigationNativeTabletRevision -onlyUsePackageVersionsFromResolvedFile -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNavigationChromeTabletQualified.xcresult test"
+  },
+  "testSeam": "Q34 public native UI, fixed Full graph fixture. No private projection unit seam or new Core mutation/network behavior."
+}

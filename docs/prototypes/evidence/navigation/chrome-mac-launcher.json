@@ -1,0 +1,14 @@
+{
+  "command": "./scripts/navigation-prototype.sh mac",
+  "exitCode": 0,
+  "buildSucceeded": true,
+  "standaloneProcessConfirmed": true,
+  "freshInstanceRequested": true,
+  "processBinaryRelativeToTemporaryDirectory": "PlannerNavigationLaunch-mac/Build/Products/Debug/Planner.app/Contents/MacOS/Planner",
+  "scriptSHA256": "95df10ac8307e2558294d86a04f0500ceb96c91cc84918c2af8e729804040c13",
+  "sourceManifest": "chrome-source.json",
+  "limits": [
+    "Fixture Planner content remains read-only.",
+    "No signing/account or physical-device setup was performed."
+  ]
+}
