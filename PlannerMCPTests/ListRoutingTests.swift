@@ -786,6 +786,300 @@ struct ListRoutingTests {
     }
   }
 
+  @Test func exactAppearanceReadRetainsLiveItemContentAndIndependentStatesOverHTTP() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let itemCreated, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createItem(
+            content: PlannerItemContentInput(
+              title: "Hotel", notes: "Original",
+              links: [PlannerLinkInput(originalUrl: "https://example.com/hotel", label: "Website")])
+          ))
+      ).outcome,
+      let item = itemCreated.generated.first,
+      case .applied(let listCreated, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createList(content: PlannerListContentInput(name: "Tokyo")))
+      ).outcome,
+      let list = listCreated.generated.first,
+      case .applied(let memberCreated, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .addMembership(itemId: item.id, listId: list.id, placement: .last))
+      ).outcome,
+      case .membership(let membershipIdentifier, _, _)? = memberCreated.generatedReferences.first,
+      case .source(.item(let originalItem)) = await planner.read(
+        session: datasetSession, request: .source(item))
+    else {
+      Issue.record("A real saved appearance must exist before HTTP detail reads.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    let appearance: [String: Any] = [
+      "kind": "listMembership", "listId": list.id.uuidString,
+      "membershipId": membershipIdentifier.uuidString,
+    ]
+    let arguments: [String: Any] = [
+      "formatVersion": 1, "request": ["kind": "appearance", "appearance": appearance],
+    ]
+    do {
+      let original = try value(
+        try await httpSession.data(
+          for: request(endpoint: endpoint, name: "planner_read", arguments: arguments)))
+      #expect(original["kind"] as? String == "appearance")
+      let originalValue = try #require(original["value"] as? [String: Any])
+      #expect(
+        Set(originalValue.keys) == [
+          "appearance", "source", "content", "globalDone", "localDone", "effectiveDone", "archived",
+          "fieldHashes",
+        ])
+      #expect(
+        NSDictionary(dictionary: try #require(originalValue["appearance"] as? [String: Any]))
+          .isEqual(to: appearance))
+      #expect(
+        NSDictionary(dictionary: try #require(originalValue["source"] as? [String: Any])).isEqual(
+          to: ["kind": "item", "id": item.id.uuidString]))
+      #expect(originalValue["globalDone"] as? Bool == false)
+      #expect(originalValue["localDone"] as? Bool == false)
+      #expect(originalValue["effectiveDone"] as? Bool == false)
+      #expect(originalValue["archived"] as? Bool == false)
+      let content = try #require(originalValue["content"] as? [String: Any])
+      #expect(
+        Set(content.keys) == [
+          "title", "subtitle", "notes", "location", "estimate", "links", "categoryIds", "tagIds",
+        ])
+      #expect(content["title"] as? String == "Hotel")
+      #expect(content["notes"] as? String == "Original")
+      #expect(content["subtitle"] is NSNull)
+      #expect(content["location"] is NSNull)
+      #expect(content["estimate"] is NSNull)
+      #expect(
+        (content["links"] as? [[String: Any]])?.first?["originalUrl"] as? String
+          == "https://example.com/hotel")
+      #expect(
+        originalValue["fieldHashes"] as? [String: String]
+          == Dictionary(
+            uniqueKeysWithValues: originalItem.fieldHashes.map { ($0.key.rawValue, $0.value.value) }
+          ))
+      guard
+        case .applied(_, .complete) = await planner.execute(
+          PlannerOperation(
+            operationId: UUID(), session: datasetSession,
+            command: .setCompletion(scope: .globalItem(itemId: item.id), done: true))
+        ).outcome,
+        case .applied(_, .complete) = await planner.execute(
+          PlannerOperation(
+            operationId: UUID(), session: datasetSession,
+            command: .editItem(
+              sourceId: item.id, changes: PlannerItemChanges(notes: .set("Booking updated")),
+              expectedFieldHashes: originalItem.fieldHashes))
+        ).outcome
+      else {
+        await listener.stop()
+        Issue.record("Shared source edits must remain independent of contextual reads.")
+        return
+      }
+      let changed = try value(
+        try await httpSession.data(
+          for: request(endpoint: endpoint, name: "planner_read", arguments: arguments)))
+      let changedValue = try #require(changed["value"] as? [String: Any])
+      #expect((changedValue["content"] as? [String: Any])?["notes"] as? String == "Booking updated")
+      #expect(changedValue["globalDone"] as? Bool == true)
+      #expect(changedValue["localDone"] as? Bool == false)
+      #expect(changedValue["effectiveDone"] as? Bool == true)
+      #expect(
+        NSDictionary(dictionary: try #require(changedValue["appearance"] as? [String: Any]))
+          .isEqual(to: appearance))
+      var listRequest = try request(endpoint: endpoint, name: "planner_read", arguments: [:])
+      listRequest.httpBody = try JSONSerialization.data(withJSONObject: [
+        "jsonrpc": "2.0", "id": 2, "method": "tools/list",
+      ])
+      let toolsExchange = try await httpSession.data(for: listRequest)
+      let envelope = try #require(
+        JSONSerialization.jsonObject(with: toolsExchange.0) as? [String: Any])
+      let tools = try #require((envelope["result"] as? [String: Any])?["tools"] as? [[String: Any]])
+      let definition = try #require(tools.first { $0["name"] as? String == "planner_read" })
+      let schema = try #require(definition["inputSchema"] as? [String: Any])
+      let properties = try #require(schema["properties"] as? [String: Any])
+      let variants = try #require(
+        (properties["request"] as? [String: Any])?["oneOf"] as? [[String: Any]])
+      let variant = try #require(
+        variants.first { variant in
+          ((variant["properties"] as? [String: Any])?["kind"] as? [String: Any])?["const"]
+            as? String == "appearance"
+        })
+      #expect(Set(try #require(variant["required"] as? [String])) == ["kind", "appearance"])
+      let appearanceSchema = try #require(
+        (variant["properties"] as? [String: Any])?["appearance"] as? [String: Any])
+      #expect(appearanceSchema["additionalProperties"] as? Bool == false)
+      #expect(
+        Set(try #require(appearanceSchema["required"] as? [String])) == [
+          "kind", "listId", "membershipId",
+        ])
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
+  @Test func malformedAppearanceReadsNeverFallbackOrChangeSavedData() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let itemCreated, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createItem(content: PlannerItemContentInput(title: "Hotel", notes: "Keep")))
+      ).outcome,
+      let item = itemCreated.generated.first,
+      case .applied(let listCreated, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createList(content: PlannerListContentInput(name: "Tokyo")))
+      ).outcome,
+      let list = listCreated.generated.first,
+      case .applied(let added, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .addMembership(itemId: item.id, listId: list.id, placement: .last))
+      ).outcome,
+      case .membership(let membershipIdentifier, _, _)? = added.generatedReferences.first,
+      case .source(.item(let original)) = await planner.read(
+        session: datasetSession, request: .source(item)),
+      case .snapshot(let issued) = await planner.query(
+        PlannerQuery(session: datasetSession, request: .items(PlannerItemQuery())))
+    else {
+      Issue.record("Saved sources and a row window must exist before invalid detail requests.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    let valid: [String: Any] = [
+      "kind": "listMembership", "listId": list.id.uuidString,
+      "membershipId": membershipIdentifier.uuidString,
+    ]
+    var cases: [(value: Any, code: String, path: String?)] = [
+      (NSNull(), "invalidInput", "/request/appearance"),
+      ("membership", "invalidInput", "/request/appearance"),
+      ([], "invalidInput", "/request/appearance"),
+      (
+        [
+          "kind": "directItineraryItem", "listId": list.id.uuidString,
+          "membershipId": membershipIdentifier.uuidString,
+        ], "invalidInput", "/request/appearance/kind"
+      ),
+      (
+        [
+          "kind": "listMembership", "listId": UUID().uuidString,
+          "membershipId": membershipIdentifier.uuidString,
+        ], "missingReference", nil
+      ),
+      (
+        [
+          "kind": "listMembership", "listId": list.id.uuidString,
+          "membershipId": item.id.uuidString,
+        ], "missingReference", nil
+      ),
+    ]
+    for field in ["kind", "listId", "membershipId"] {
+      var omitted = valid
+      omitted.removeValue(forKey: field)
+      cases.append((omitted, "invalidInput", "/request/appearance/" + field))
+      for value in [NSNull(), 42, false, "invalid"] as [Any] {
+        var changed = valid
+        changed[field] = value
+        cases.append((changed, "invalidInput", "/request/appearance/" + field))
+      }
+    }
+    for field in ["source", "rank", "unknown/~"] {
+      var changed = valid
+      changed[field] = "unexpected"
+      let escaped = field.replacingOccurrences(of: "~", with: "~0").replacingOccurrences(
+        of: "/", with: "~1")
+      cases.append((changed, "unknownField", "/request/appearance/" + escaped))
+    }
+    do {
+      #expect(cases.count == 24)
+      for candidate in cases {
+        let exchange = try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_read",
+            arguments: [
+              "formatVersion": 1, "request": ["kind": "appearance", "appearance": candidate.value],
+            ]))
+        #expect((exchange.1 as? HTTPURLResponse)?.statusCode == 200)
+        let envelope = try #require(
+          JSONSerialization.jsonObject(with: exchange.0) as? [String: Any])
+        #expect(envelope["error"] == nil)
+        let tool = try #require(envelope["result"] as? [String: Any])
+        #expect(tool["isError"] as? Bool == true)
+        let result = try #require(tool["structuredContent"] as? [String: Any])
+        #expect(result["state"] as? String == "failed")
+        #expect(result["value"] == nil)
+        let reason = try #require(result["reason"] as? [String: Any])
+        #expect(reason["code"] as? String == candidate.code)
+        #expect(reason["propertyPath"] as? String == candidate.path)
+      }
+      let validRead = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_read",
+            arguments: [
+              "formatVersion": 1,
+              "request": [
+                "kind": "appearance",
+                "appearance": [
+                  "kind": "listMembership", "listId": list.id.uuidString.lowercased(),
+                  "membershipId": membershipIdentifier.uuidString.lowercased(),
+                ],
+              ],
+            ])))
+      let validValue = try #require(validRead["value"] as? [String: Any])
+      #expect(
+        NSDictionary(dictionary: try #require(validValue["appearance"] as? [String: Any])).isEqual(
+          to: valid))
+      await listener.stop()
+      guard
+        case .source(.item(let retained)) = await planner.read(
+          session: datasetSession, request: .source(item)),
+        case .rows(let rows) = await planner.read(
+          session: datasetSession,
+          request: .rows(generation: issued.generation, offset: 0, limit: 1)),
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
+      else {
+        Issue.record("Failed detail reads must preserve source state, issued rows and recovery.")
+        return
+      }
+      #expect(retained.content.notes == original.content.notes)
+      #expect(retained.updatedAt == original.updatedAt)
+      #expect(retained.fieldHashes == original.fieldHashes)
+      #expect(rows.rows.count == 1)
+      #expect(namespaces.first?.acknowledgedSnapshot?.checkpointGeneration == 3)
+      #expect(namespaces.first?.preparedProposals.isEmpty == true)
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   private func rejected(_ exchange: (Data, URLResponse)) throws -> [String: Any] {
     #expect((exchange.1 as? HTTPURLResponse)?.statusCode == 200)
     let envelope = try #require(JSONSerialization.jsonObject(with: exchange.0) as? [String: Any])

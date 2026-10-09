@@ -268,6 +268,9 @@ public actor Planner {
         let context = ModelContext(container)
         context.autosaveEnabled = false
         switch request {
+        case .appearance(let appearance):
+          return .appearance(
+            try readAppearance(appearance, datasetId: identity.datasetId, context: context))
         case .rows(let generation, let offset, let limit):
           return .rows(
             try readRows(
@@ -314,6 +317,45 @@ public actor Planner {
         }
       }
     } catch { return .failed(failure(error, code: "readUnavailable")) }
+  }
+
+  private func readAppearance(
+    _ appearance: PlannerAppearance, datasetId: UUID, context: ModelContext
+  ) throws -> PlannerAppearanceRead {
+    switch appearance {
+    case .listMembership(let listId, let membershipId):
+      var descriptor = FetchDescriptor<PlannerSchemaV7.Membership>(
+        predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
+      descriptor.fetchLimit = 2
+      let records = try context.fetch(descriptor)
+      guard records.count == 1, let membership = records.first else {
+        throw PlannerFailure(
+          "missingReference", "The selected List appearance is missing or unresolved.")
+      }
+      let binding = try membership.value()
+      let itemId = binding.item.id
+      var itemDescriptor = FetchDescriptor<PlannerSchemaV7.Item>(
+        predicate: #Predicate { $0.id == itemId })
+      itemDescriptor.fetchLimit = 2
+      let items = try context.fetch(itemDescriptor)
+      guard items.count == 1, let item = items.first else {
+        throw PlannerFailure(
+          "missingReference", "The appearance's shared Item is missing or unresolved.")
+      }
+      let source = try item.value()
+      guard source.lifetimeId == binding.item.lifetimeId else {
+        throw PlannerFailure(
+          "missingReference", "The appearance's Item lifetime no longer resolves.")
+      }
+      return PlannerAppearanceRead(
+        appearance: appearance, source: source.reference,
+        content: source.input.readContent(links: source.links.map(\.read)),
+        globalDone: source.globalDone, localDone: binding.localDone,
+        effectiveDone: source.globalDone || binding.localDone, archived: source.archived,
+        fieldHashes: source.input.fieldHashes(
+          datasetId: datasetId, itemId: source.id, lifetimeId: source.lifetimeId,
+          links: source.links.map(\.read)))
+    }
   }
 
   private func readSchedule(

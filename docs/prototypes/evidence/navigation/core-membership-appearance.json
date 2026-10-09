@@ -1,0 +1,117 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "c08a553",
+  "scope": "Exact standalone List appearance detail reads through Core and admitted/advertised MCP HTTP. Contextual row queries and local completion commands remain separate work.",
+  "packageExecutions": {
+    "Red": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipAppearanceRed.log"
+    },
+    "Green": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreMembershipAppearanceGreen.log"
+    },
+    "Qualification": {
+      "result": "Passed",
+      "totalTestCount": 66,
+      "suiteCount": 24,
+      "passedTests": 66,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreAppearanceQualification.log"
+    }
+  },
+  "nativeExecutions": {
+    "HTTPRed": {
+      "result": "Failed",
+      "totalTestCount": 6,
+      "passedTests": 5,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPAppearanceReadRed.xcresult",
+      "log": "/private/tmp/PlannerMCPAppearanceReadRed.log",
+      "summary": "/private/tmp/PlannerMCPAppearanceReadRedSummary.json"
+    },
+    "HTTPGreen": {
+      "result": "Passed",
+      "totalTestCount": 6,
+      "passedTests": 6,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPAppearanceReadGreen.xcresult",
+      "log": "/private/tmp/PlannerMCPAppearanceReadGreen.log",
+      "summary": "/private/tmp/PlannerMCPAppearanceReadGreenSummary.json"
+    },
+    "CoreMac": {
+      "result": "Passed",
+      "totalTestCount": 6,
+      "passedTests": 6,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerCoreAppearanceNativeQualification.xcresult",
+      "log": "/private/tmp/PlannerCoreAppearanceNativeQualification.log",
+      "summary": "/private/tmp/PlannerCoreAppearanceNativeQualificationSummary.json"
+    },
+    "MCPQualification": {
+      "result": "Passed",
+      "totalTestCount": 50,
+      "passedTests": 50,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPAppearanceReadQualification.xcresult",
+      "log": "/private/tmp/PlannerMCPAppearanceReadQualification.log",
+      "summary": "/private/tmp/PlannerMCPAppearanceReadQualificationSummary.json"
+    }
+  },
+  "simulator": {
+    "result": "Test build succeeded",
+    "runtimeExecuted": false,
+    "signing": "disabled",
+    "log": "/private/tmp/PlannerCoreAppearanceSimulatorBuild.log"
+  },
+  "lint": {
+    "result": "Passed",
+    "files": [
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipAppearanceTests.swift",
+      "Planner/AgentControl/PlannerMCPSourceTool.swift",
+      "PlannerMCPTests/ListRoutingTests.swift"
+    ],
+    "log": "/private/tmp/PlannerCoreAppearanceSwiftLint.log"
+  },
+  "sourceSHA256": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1096b7a69a10de1cdecc25fda48868fb6bbac52826367afdc3f4c011dd51d50a",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift": "75f90481dee6e5931746acb2c7923154d94e2bfb0a0cbf3b9cdad4b6fbb4e5bc",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "9bc87448ce6f4cbcf3d3dd68d2de2f740dda9d819f1d8efb152382f768fca922",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipAppearanceTests.swift": "c7e78a9a5fa0495f896e1c1b5e839b1e6b2b03d3a75e6e4cd98ecf019e00d359",
+    "Planner/AgentControl/PlannerMCPSourceTool.swift": "9b345b946e6a3a7795147db7a518e481b8558395d68aba85ad203073bae23424",
+    "PlannerMCPTests/ListRoutingTests.swift": "5834c6ea20dea912f61c5182fbe482b9e4d1ddd804292cccb58f20e1fd963d2d"
+  },
+  "observations": [
+    "The native appearance request uses the exact List/membership pair, validates retained parent/source/lifetime bindings and returns live Item content/hashes with independent global/local/effective observations. It never copies Item data into a context.",
+    "Two retained appearances remain readable after shared global Done/Archive/content editing removes the source from a Todo/Active query. Reopen retains the exact memberships and exposes local Todo. Reopening the facade preserves the updated source content and original owned links.",
+    "Foreign owner, source UUID substituted for membership UUID and missing membership fail with missingReference rather than returning a global Item detail.",
+    "Actual HTTP read returns the exact eight declared appearance fields, full Item content with explicit null optional fields, owned links and current Item hashes. Shared edits and global Done change the next read without changing its appearance identity or local flag.",
+    "Actual tools/list advertises the appearance read variant with required kind/appearance and strict listMembership kind/listId/membershipId shape.",
+    "Twenty-four malformed/missing/unknown fields or mismatched identities return typed failures with exact paths and no successful value. UUID case variants canonicalize to the same identity. Saved source data/time/hashes, issued row window and recovery checkpoint remain unchanged."
+  ],
+  "limits": [
+    "Only standalone List appearance detail is implemented. Contextual lightweight rows/queries, local/bulk completion commands, repeated itinerary appearance variants and native saved selection/checkbox controls remain required.",
+    "There is no new native schema or portable version; root remains schema 7 and portable format 1. HTTP membership creation is still not admitted/advertised.",
+    "The store remains localOnly with CloudKit disabled. Physical convergence, A17 duplicate-context reconciliation, actual Share/AppGroup/signing/clients/reader, postcommit interruption and physical performance/accessibility remain open.",
+    "Simulator qualification is compilation only. ReadLoadTests stays separate. Historical screenshots qualify their original revisions only."
+  ]
+}

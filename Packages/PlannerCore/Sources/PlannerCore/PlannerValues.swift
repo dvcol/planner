@@ -340,11 +340,13 @@ public struct PlannerSourceState: Sendable {
 
 public enum PlannerReadRequest: Sendable {
   case source(PlannerEntityReference)
+  case appearance(PlannerAppearance)
   case rows(generation: UUID, offset: Int64, limit: Int64)
 }
 
 public enum PlannerReadResult: Sendable {
   case source(PlannerSourceRead)
+  case appearance(PlannerAppearanceRead)
   case rows(PlannerRowWindow)
   case failed(PlannerFailure)
 }
