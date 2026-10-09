@@ -80,11 +80,15 @@
               code: "unavailable",
               message: "This first read slice does not yet encode source associations.")
           }
+          let structured = Value.object([
+            "formatVersion": .int(1), "kind": .string("source"), "value": sourceValue(read),
+          ])
+          let serialized = try JSONEncoder().encode(structured)
           return CallTool.Result(
-            content: [.text(text: "Read \(read.content.title).", annotations: nil, _meta: nil)],
-            structuredContent: .object([
-              "formatVersion": .int(1), "kind": .string("source"), "value": sourceValue(read),
-            ]),
+            content: [
+              .text(text: String(decoding: serialized, as: UTF8.self), annotations: nil, _meta: nil)
+            ],
+            structuredContent: Optional.some(structured),
             isError: false
           )
         }
