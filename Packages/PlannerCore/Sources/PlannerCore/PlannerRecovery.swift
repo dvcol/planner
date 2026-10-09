@@ -79,17 +79,18 @@ struct PortableItemRecord: Codable {
     }
     return PlannerPortableItem(
       kind: kind, id: id, lifetimeId: lifetimeId, createdAt: createdAt, updatedAt: updatedAt,
-      content: content.input.readContent, globalDone: globalDone, archived: archived,
+      content: content.input.readContent(), globalDone: globalDone, archived: archived,
       contentOrigins: contentOrigins
     )
   }
 }
 
-/// This slice supports Item-only snapshots. Other graph groups must be empty, never silently dropped.
+/// This slice supports Items and their owned links. Other graph groups must be empty, never silently dropped.
 struct ItemOnlyPortableBackup: Codable {
   let format: String
   let formatVersion: Int
   let sources: [PortableItemRecord]
+  let ownedLinks: [PortableOwnedLink]
 
   enum CodingKeys: String, CodingKey, CaseIterable {
     case format, formatVersion, sources, memberships, itineraryEntries, expandedCompletions
@@ -102,6 +103,9 @@ struct ItemOnlyPortableBackup: Codable {
     format = "planner-data"
     formatVersion = 1
     sources = items.sorted { $0.id.uuidString < $1.id.uuidString }.map(PortableItemRecord.init)
+    ownedLinks = items.flatMap { item in
+      item.links.map { PortableOwnedLink($0, owner: item) }
+    }.sorted { $0.id.uuidString < $1.id.uuidString }
   }
 
   init(from decoder: any Decoder) throws {
@@ -109,8 +113,9 @@ struct ItemOnlyPortableBackup: Codable {
     format = try container.decode(String.self, forKey: .format)
     formatVersion = try container.decode(Int.self, forKey: .formatVersion)
     sources = try container.decode([PortableItemRecord].self, forKey: .sources)
-    for key in CodingKeys.allCases where key != .format && key != .formatVersion && key != .sources
-    {
+    ownedLinks = try container.decode([PortableOwnedLink].self, forKey: .ownedLinks)
+    for key in CodingKeys.allCases
+    where key != .format && key != .formatVersion && key != .sources && key != .ownedLinks {
       guard try container.decode([String].self, forKey: key).isEmpty else {
         throw PlannerFailure(
           "recoveryIntegrityFailure",
@@ -124,8 +129,9 @@ struct ItemOnlyPortableBackup: Codable {
     try container.encode(format, forKey: .format)
     try container.encode(formatVersion, forKey: .formatVersion)
     try container.encode(sources, forKey: .sources)
-    for key in CodingKeys.allCases where key != .format && key != .formatVersion && key != .sources
-    {
+    try container.encode(ownedLinks, forKey: .ownedLinks)
+    for key in CodingKeys.allCases
+    where key != .format && key != .formatVersion && key != .sources && key != .ownedLinks {
       try container.encode([String](), forKey: key)
     }
   }
@@ -138,8 +144,25 @@ struct ItemOnlyPortableBackup: Codable {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "The snapshot contains duplicate Item identities.")
     }
-    return PlannerDecodedBackup(
-      backup: PlannerPortableBackup(sources: try sources.map { try $0.validated() }))
+    guard Set(ownedLinks.map(\.id)).count == ownedLinks.count else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "The snapshot contains duplicate link identities.")
+    }
+    let linksByOwner = try Dictionary(
+      grouping: ownedLinks.map { try $0.validated(sources: sources) }, by: \.ownerId)
+    let items = try sources.map { source in
+      let item = try source.validated()
+      let links = (linksByOwner[item.id] ?? []).sorted { left, right in
+        if left.rank != right.rank { return left.rank < right.rank }
+        return left.id.uuidString < right.id.uuidString
+      }.map(\.read)
+      return PlannerPortableItem(
+        kind: item.kind, id: item.id, lifetimeId: item.lifetimeId,
+        createdAt: item.createdAt, updatedAt: item.updatedAt,
+        content: source.content.input.readContent(links: links),
+        globalDone: item.globalDone, archived: item.archived, contentOrigins: item.contentOrigins)
+    }
+    return PlannerDecodedBackup(backup: PlannerPortableBackup(sources: items))
   }
 }
 
@@ -199,7 +222,8 @@ struct RecoveryEnvelope: Codable {
   let preparedProposals: [RecoveryPreparedProposal]
 
   func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
-    guard format == "planner-recovery", formatVersion == 1, storageSchemaVersion == "1",
+    guard format == "planner-recovery", formatVersion == 1,
+      storageSchemaVersion == "1" || storageSchemaVersion == "2",
       namespaceId == identity.namespaceId, datasetId == identity.datasetId,
       ownershipBinding == identity.ownershipBinding, !ownershipBinding.isEmpty,
       let generation = Int64(checkpointGeneration), generation > 0,
@@ -298,7 +322,8 @@ struct PlannerRecoveryArchive {
     let envelope = RecoveryEnvelope(
       format: "planner-recovery", formatVersion: 1, namespaceId: identity.namespaceId,
       datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
-      storageSchemaVersion: "1", checkpointGeneration: String(generation),
+      storageSchemaVersion: String(identity.schemaVersion),
+      checkpointGeneration: String(generation),
       portablePayloadBase64: bytes.base64EncodedString(),
       dataDigest: plannerDigest(bytes, prefix: "sha256:"),
       receipts: evidence, preparedProposals: []
@@ -315,7 +340,8 @@ struct PlannerRecoveryArchive {
     let generation = try envelope?.validated(identity: identity).2
     let snapshot = generation.map {
       PlannerSnapshotSummary(
-        storageSchemaVersion: 1, portableFormatVersion: 1, checkpointGeneration: $0,
+        storageSchemaVersion: Int64(envelope?.storageSchemaVersion ?? "") ?? 0,
+        portableFormatVersion: 1, checkpointGeneration: $0,
         integrity: "verified")
     }
     return PlannerRecoveryView(

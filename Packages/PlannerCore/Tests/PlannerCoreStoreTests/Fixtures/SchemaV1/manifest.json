@@ -1,0 +1,20 @@
+{
+  "createdAt" : 813244462.91098797,
+  "creationCheckpoint" : 1,
+  "creationOperationId" : "00000000-0000-4000-8000-000000000941",
+  "datasetId" : "75C4F410-6641-4450-B3E8-EFD918E65BFE",
+  "fieldHashes" : {
+    "categoryIds" : "sha256-v1:fd14076a61b3d5a0bd5be1aeec6f4e6dc2a92cc335dbb1c0aac30232a472e782",
+    "estimate" : "sha256-v1:f7c0817d2ea2894f435cf04dd9c82391e30ab8fdbf62aedb9b7e5c13d5de40aa",
+    "links" : "sha256-v1:821e2c72591f893697a4f21997bb1cb24f2efecbe528b55e63e743c00529a1da",
+    "location" : "sha256-v1:c82e485dee88d1177c78cb64f07705f3bfd3ab2bf42cce18e28906aa5bf58fdd",
+    "notes" : "sha256-v1:5be59a1780b8655fe163b8b78ce256e0244ee44beb3fb396703b2a80fe7c1019",
+    "subtitle" : "sha256-v1:d7f2d81b7a33627fbd786f5d81308ed485644e377ef6b7d8beb46e2b4489d676",
+    "tagIds" : "sha256-v1:945d548a332496371ee2b23597fb2e3f53608ec7e3a3253413f26b64a07e1fb5",
+    "title" : "sha256-v1:a5acb8e000de363b9f8422b56905a188b6ad03e0f49f2830400c0782f08218ec"
+  },
+  "itemId" : "1E549C08-3282-4A8C-88E3-A61D49CB3E9D",
+  "latestCheckpoint" : 3,
+  "producerCommit" : "66010bf",
+  "updatedAt" : 813244462.93962002
+}

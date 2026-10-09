@@ -1,0 +1,190 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-09",
+  "baselineCommit": "66010bfafef5091875f4648f86d7285ca4e8b345",
+  "scope": "Local-only Item-owned link creation/read/row/recovery and main-app V1-to-V2 migration through the approved public Planner facade.",
+  "redGreenCycles": [
+    {
+      "behavior": "Save/reopen/replay four owned links and select one Menu preview after Maps links.",
+      "red": {
+        "log": "/private/tmp/PlannerCoreOwnedLinksRed.log",
+        "executedFunctions": 1,
+        "failedFunctions": 1,
+        "issues": 1
+      },
+      "green": {
+        "log": "/private/tmp/PlannerCoreOwnedLinksGreen.log",
+        "executedFunctions": 1,
+        "passedFunctions": 1
+      }
+    },
+    {
+      "behavior": "Completion, Archive and notes-only editing retain the same links in every acknowledged checkpoint.",
+      "red": {
+        "log": "/private/tmp/PlannerCoreOwnedLinkRetentionRed.log",
+        "executedFunctions": 2,
+        "failedFunctions": 1,
+        "issues": 4
+      },
+      "green": {
+        "log": "/private/tmp/PlannerCoreOwnedLinkRetentionGreen.log",
+        "executedFunctions": 2,
+        "passedFunctions": 2
+      }
+    }
+  ],
+  "firstExecutionQualifications": [
+    {
+      "behavior": "Existing V1 identities/hashes/state/receipts/checkpoints survive main-app migration; Share requires migration first and then saves V2 links.",
+      "log": "/private/tmp/PlannerCoreOwnedLinkMigrationExecution.log",
+      "executedFunctions": 1,
+      "passedFunctions": 1
+    },
+    {
+      "behavior": "Six invalid/foreign inputs and two altered replays retain the original Item/checkpoint; Maps-only and exact provider-host boundary cases.",
+      "log": "/private/tmp/PlannerCoreOwnedLinkValidationQualification.log",
+      "executedFunctions": 4,
+      "passedFunctions": 4,
+      "newQualificationFunctions": 2
+    }
+  ],
+  "excludedBuildFailures": [
+    {
+      "log": "/private/tmp/PlannerCoreOwnedLinkMigrationQualification.log",
+      "reason": "An extra closing parenthesis prevented the migration test from compiling; no behavioral red claimed."
+    },
+    {
+      "log": "/private/tmp/PlannerCoreOwnedLinksNativeQualification.log",
+      "bundle": "/private/tmp/PlannerCoreOwnedLinksNativeQualification.xcresult",
+      "reason": "The direct Xcode test target has no SwiftPM Bundle.module; corrected native bundle lookup and directory resource configuration."
+    },
+    {
+      "log": "/private/tmp/PlannerCoreOwnedLinksSimulatorBuild.log",
+      "reason": "The same native fixture compile error; no iOS runtime or behavioral red claimed."
+    }
+  ],
+  "packageRegression": {
+    "log": "/private/tmp/PlannerCoreOwnedLinksBundledStoreRegression.log",
+    "executedFunctions": 24,
+    "passedFunctions": 24,
+    "suites": 9
+  },
+  "nativeQualification": {
+    "bundle": "/private/tmp/PlannerCoreOwnedLinksNativeFixtureQualification.xcresult",
+    "log": "/private/tmp/PlannerCoreOwnedLinksNativeFixtureQualification.log",
+    "summary": {
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "modelName": "MacBook Pro",
+            "osBuildNumber": "26A434",
+            "osVersion": "27.0.1",
+            "platform": "macOS"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 5,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+      "expectedFailures": 0,
+      "failedTests": 0,
+      "finishTime": 1791552521.5,
+      "passedTests": 5,
+      "result": "Passed",
+      "runtimeWarnings": [],
+      "skippedTests": 0,
+      "startTime": 1791552511.107,
+      "statistics": [],
+      "testFailures": [],
+      "title": "Test - PlannerCore",
+      "topInsights": [],
+      "totalTestCount": 5
+    }
+  },
+  "affectedMCPRegression": {
+    "bundle": "/private/tmp/PlannerMCPOwnedLinksCoreRegression.xcresult",
+    "log": "/private/tmp/PlannerMCPOwnedLinksCoreRegression.log",
+    "summary": {
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "modelName": "MacBook Pro",
+            "osBuildNumber": "26A434",
+            "osVersion": "27.0.1",
+            "platform": "macOS"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 32,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+      "expectedFailures": 0,
+      "failedTests": 0,
+      "finishTime": 1791552639.833,
+      "passedTests": 26,
+      "result": "Passed",
+      "runtimeWarnings": [],
+      "skippedTests": 0,
+      "startTime": 1791552625.25,
+      "statistics": [
+        {
+          "subtitle": "9 test runs",
+          "title": "3 tests ran with dynamic parameters"
+        }
+      ],
+      "testFailures": [],
+      "title": "Test - Planner",
+      "topInsights": [
+        {
+          "category": "Longest Test Runs",
+          "impact": "80% of duration",
+          "text": "1 longest test run with outlier durations exceeding 1.68s (three standard deviations)"
+        }
+      ],
+      "totalTestCount": 26
+    }
+  },
+  "simulatorBuild": {
+    "log": "/private/tmp/PlannerCoreOwnedLinksSimulatorFixtureBuild.log",
+    "destination": "generic/platform=iOS Simulator",
+    "signingAllowed": false,
+    "result": "TEST BUILD SUCCEEDED",
+    "runtimeTests": false
+  },
+  "oldStoreFixture": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV1",
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "2617abfe801274ec994537f9ebfbb83bf33776648e63d11cd0781a4468798423",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "a8c968042f37c4306452e413c39b883d8d547d148342248894d7890189e2f67f",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift": "c045161ffcff2c59a16fea5d8c31eafd6e58ab2f2213ee843b902b16d67c7d3e",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "fc5ac0c32e726aca284eb5cece3d9efa3286b92eb78960a0de0c9ede23418c06",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV2.swift": "e89efef9aa6ffe3b98b472681b8d700a03b253a63268994891aa5216265ddf63",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkRecovery.swift": "76e82b80e6be3200a1cc0a9c4eb439094c9085c30939d543dacaaf70cbd60b1b",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "a2e6908d077e4e1da0b113be41c79093ec65a678169ef3424ace50bd3232d9a9",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkValues.swift": "8df38cd75cff1257e24ba47723803e5309b0de69097ffb0b6e8916d594d78ebe",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "13068daa95689e72cd4c9f8185498ca8db6123fc37ed653d5560ef0a570915f6",
+    "Packages/PlannerCore/Package.swift": "a581f4fe459fac23b9307ee37f91fd1fe1083afe6d8becec272bbb1081e3cf69",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkTests.swift": "bba297b216177e00ccd6112a3f83f182bf74cb8484bd378ef1b57742024b1a82",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift": "664cedbe547e837c6479df6c4fdfc32c7377e7ffa02d0df209500a5023a5999c",
+    "Planner.xcodeproj/project.pbxproj": "2ab729c39c3f37dcafe0de8912c18fdd896165b14b26d3428d02652985271f47"
+  },
+  "limitations": [
+    "LocalOnly stores with CloudKit disabled; no physical or cross-process convergence proof.",
+    "No link replacement, Capture/redirect/stable-provider-reference parsing, label/List/Itinerary/Schedule graph or full import.",
+    "No native row writes, thumbnail image/error/cancellation I/O, drag/drop or performance qualification.",
+    "MCP new link input/full-source encoding remains a following slice; earlier screenshots qualify their own recorded source revision."
+  ]
+}
