@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create an Item with owned location and HTTP(S) bookmarks, edit its title/notes/location, complete/reopen it globally or archive/unarchive it through the local Planner prototype.",
+        "Create an Item with owned location and HTTP(S) bookmarks, edit its title/notes/location/links, complete/reopen it globally or archive/unarchive it through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -48,6 +48,21 @@
       ]),
     ])
 
+    private static let linksSchema = Value.object([
+      "type": .string("array"),
+      "items": .object([
+        "type": .string("object"), "additionalProperties": .bool(false),
+        "required": .array([.string("originalUrl"), .string("label")]),
+        "properties": .object([
+          "linkId": .object([
+            "type": .array([.string("string"), .string("null")]), "format": .string("uuid"),
+          ]),
+          "originalUrl": .object(["type": .string("string"), "format": .string("uri")]),
+          "label": .object(["type": .array([.string("string"), .string("null")])]),
+        ]),
+      ]),
+    ])
+
     private static let creationSchema = Value.object([
       "type": .string("object"), "additionalProperties": .bool(false),
       "required": .array([.string("type"), .string("content")]),
@@ -60,20 +75,7 @@
             "title": .object(["type": .string("string")]),
             "notes": .object(["type": .array([.string("string"), .string("null")])]),
             "location": locationSchema,
-            "links": .object([
-              "type": .string("array"),
-              "items": .object([
-                "type": .string("object"), "additionalProperties": .bool(false),
-                "required": .array([.string("originalUrl"), .string("label")]),
-                "properties": .object([
-                  "linkId": .object([
-                    "type": .array([.string("string"), .string("null")]), "format": .string("uuid"),
-                  ]),
-                  "originalUrl": .object(["type": .string("string"), "format": .string("uri")]),
-                  "label": .object(["type": .array([.string("string"), .string("null")])]),
-                ]),
-              ]),
-            ]),
+            "links": linksSchema,
           ]),
         ]),
       ]),
@@ -93,6 +95,7 @@
             "title": .object(["type": .string("string")]),
             "notes": .object(["type": .array([.string("string"), .string("null")])]),
             "location": locationSchema,
+            "links": linksSchema,
           ]),
         ]),
         "expectedFieldHashes": .object([
@@ -273,7 +276,8 @@
       }
       return .createItem(
         content: PlannerItemContentInput(
-          title: title, notes: notes, location: location, links: try linksInput(content["links"])))
+          title: title, notes: notes, location: location,
+          links: try linksInput(content["links"], path: "/command/content/links")))
     }
 
     private static func locationChange(
@@ -323,14 +327,16 @@
       }
     }
 
-    private static func linksInput(_ value: Value?) throws -> [PlannerLinkInput] {
+    private static func linksInput(_ value: Value?, path collectionPath: String) throws
+      -> [PlannerLinkInput]
+    {
       guard let value else { return [] }
       guard case .array(let links) = value else {
         throw AdmissionFailure(
-          "invalidInput", "/command/content/links", "Expected an ordered links array.")
+          "invalidInput", collectionPath, "Expected an ordered links array.")
       }
       return try links.enumerated().map { index, value in
-        let path = "/command/content/links/\(index)"
+        let path = collectionPath + "/\(index)"
         let fields = try object(
           value, allowed: ["linkId", "originalUrl", "label"], required: ["originalUrl", "label"],
           path: path)
@@ -374,12 +380,13 @@
       let fieldNames = Set(PlannerItemField.allCases.map(\.rawValue))
       let changes = try object(
         command["changes"], allowed: fieldNames, required: [], path: "/command/changes")
-      if let unsupported = Set(changes.keys).subtracting(["title", "notes", "location"]).sorted()
+      if let unsupported = Set(changes.keys).subtracting(["title", "notes", "location", "links"])
+        .sorted()
         .first
       {
         throw AdmissionFailure(
           "unavailable", "/command/changes/" + unsupported,
-          "This edit slice supports title, notes and location only.")
+          "This edit slice supports title, notes, location and links only.")
       }
       let hashValues = try object(
         command["expectedFieldHashes"], allowed: fieldNames, required: [],
@@ -393,12 +400,19 @@
         }
         hashes[field] = PlannerFieldHash(value: spelling)
       }
+      let linkChanges: PlannerFieldChange<[PlannerLinkInput]>
+      if let value = changes["links"] {
+        linkChanges = .set(try linksInput(value, path: "/command/changes/links"))
+      } else {
+        linkChanges = .unchanged
+      }
       return .editItem(
         sourceId: sourceIdentifier,
         changes: PlannerItemChanges(
           title: try textChange(changes["title"], path: "/command/changes/title"),
           notes: try textChange(changes["notes"], path: "/command/changes/notes"),
-          location: try locationChange(changes["location"], path: "/command/changes/location")),
+          location: try locationChange(changes["location"], path: "/command/changes/location"),
+          links: linkChanges),
         expectedFieldHashes: hashes)
     }
 

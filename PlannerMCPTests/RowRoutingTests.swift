@@ -5,6 +5,301 @@ import Testing
 @testable import Planner
 
 struct RowRoutingTests {
+  @Test func malformedBookmarkEditsRetainBothOwnersAndTheIssuedRowWindow() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let created, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createItem(
+            content: PlannerItemContentInput(
+              title: "Hotel", notes: "Original notes",
+              links: [PlannerLinkInput(originalUrl: "https://example.com/menu", label: "Menu")])))
+      )
+      .outcome, let source = created.generated.first,
+      case .source(let original) = await planner.read(
+        session: datasetSession, request: .source(source)),
+      case .applied(let otherCreated, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createItem(
+            content: PlannerItemContentInput(
+              title: "Museum",
+              links: [PlannerLinkInput(originalUrl: "https://example.com/museum", label: nil)])))
+      )
+      .outcome, let otherSource = otherCreated.generated.first,
+      case .source(let otherOriginal) = await planner.read(
+        session: datasetSession, request: .source(otherSource))
+    else {
+      Issue.record("Two saved Items must have separate owned links before invalid editing.")
+      return
+    }
+    let identifier = try #require(original.content.links.first?.linkId.uuidString)
+    let foreignIdentifier = try #require(otherOriginal.content.links.first?.linkId.uuidString)
+    let retainedLink: [String: Any] = [
+      "linkId": identifier, "originalUrl": "https://example.com/menu", "label": "Menu",
+    ]
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      let sourceRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": ["kind": "source", "source": ["kind": "item", "id": source.id.uuidString]],
+        ])
+      let before = try value(try await httpSession.data(for: sourceRequest))
+      let hashes = try #require(
+        (before["value"] as? [String: Any])?["fieldHashes"] as? [String: String])
+      let snapshot = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_query",
+            arguments: [
+              "formatVersion": 1, "query": ["kind": "items", "scope": ["kind": "global"]],
+            ])))
+      let rowRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": [
+            "kind": "rows", "generation": try #require(snapshot["generation"] as? String),
+            "offset": "0", "limit": "2",
+          ],
+        ])
+      let beforeWindow = try value(try await httpSession.data(for: rowRequest))
+      let invalid: [(input: Any, code: String, path: String)] = [
+        (NSNull(), "invalidInput", "/command/changes/links"),
+        (
+          [["originalUrl": "https://example.com/menu"]], "invalidInput",
+          "/command/changes/links/0/label"
+        ),
+        (
+          [["linkId": "invalid", "originalUrl": "https://example.com/menu", "label": NSNull()]],
+          "invalidInput", "/command/changes/links/0/linkId"
+        ),
+        ([retainedLink, retainedLink], "invalidInput", "/command/changes/links/1/linkId"),
+        (
+          [
+            [
+              "linkId": foreignIdentifier, "originalUrl": "https://example.com/museum",
+              "label": NSNull(),
+            ]
+          ],
+          "invalidInput", "/command/changes/links/0/linkId"
+        ),
+        (
+          [retainedLink, ["originalUrl": "file:///private/tmp/menu", "label": NSNull()]],
+          "invalidInput", "/command/changes/links/1/originalUrl"
+        ),
+        (
+          [["originalUrl": "https://example.com/menu", "label": NSNull(), "unexpected/~": true]],
+          "unknownField", "/command/changes/links/0/unexpected~1~0"
+        ),
+      ]
+      for expected in invalid {
+        let operationIdentifier = UUID()
+        let rejected = try rejection(
+          try await httpSession.data(
+            for: request(
+              endpoint: endpoint, name: "planner_execute",
+              arguments: [
+                "formatVersion": 1, "operationId": operationIdentifier.uuidString,
+                "command": [
+                  "type": "editItem", "sourceId": source.id.uuidString,
+                  "changes": ["notes": "Rejected notes", "links": expected.input],
+                  "expectedFieldHashes": hashes,
+                ],
+              ])))
+        #expect(rejected["operationId"] as? String == operationIdentifier.uuidString)
+        let reason = try #require(rejected["reason"] as? [String: Any])
+        #expect(reason["code"] as? String == expected.code)
+        #expect(reason["propertyPath"] as? String == expected.path)
+        guard
+          case .noReliableEvidence = await planner.operationStatus(
+            session: datasetSession, operationId: operationIdentifier)
+        else {
+          Issue.record(
+            "Invalid bookmark edits must not save partial notes/links or an applied receipt.")
+          await listener.stop()
+          return
+        }
+      }
+      let after = try value(try await httpSession.data(for: sourceRequest))
+      #expect(NSDictionary(dictionary: after).isEqual(to: before))
+      let afterWindow = try value(try await httpSession.data(for: rowRequest))
+      #expect(NSDictionary(dictionary: afterWindow).isEqual(to: beforeWindow))
+      await listener.stop()
+      guard
+        case .source(let otherRetained) = await planner.read(
+          session: datasetSession, request: .source(otherSource)),
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
+      else {
+        Issue.record("Invalid edits must retain the other owner and independent recovery.")
+        return
+      }
+      #expect(otherRetained.content.links == otherOriginal.content.links)
+      #expect(otherRetained.updatedAt == otherOriginal.updatedAt)
+      #expect(otherRetained.fieldHashes == otherOriginal.fieldHashes)
+      #expect(namespaces.first?.acknowledgedSnapshot?.checkpointGeneration == 2)
+      #expect(namespaces.first?.preparedProposals.isEmpty == true)
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
+  @Test func ownedBookmarkReplacementOverHTTPRejectsStalePatchAndKeepsLaterEmptyValueOnReplay()
+    async throws
+  {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let created, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createItem(
+            content: PlannerItemContentInput(
+              title: "Hotel", notes: "Original notes",
+              links: [
+                PlannerLinkInput(originalUrl: "https://maps.apple.com/?q=Hotel", label: "Map"),
+                PlannerLinkInput(originalUrl: "https://example.com/menu", label: "Menu"),
+              ])))
+      )
+      .outcome, let source = created.generated.first
+    else {
+      Issue.record("The source and its owned links must be independently saved.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      let sourceRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": ["kind": "source", "source": ["kind": "item", "id": source.id.uuidString]],
+        ])
+      let before = try value(try await httpSession.data(for: sourceRequest))
+      let original = try #require(before["value"] as? [String: Any])
+      let hashes = try #require(original["fieldHashes"] as? [String: String])
+      let content = try #require(original["content"] as? [String: Any])
+      let originalLinks = try #require(content["links"] as? [[String: Any]])
+      try #require(originalLinks.count == 2)
+      let retainedIdentifier = try #require(originalLinks[1]["linkId"] as? String)
+      let replacement: [[String: Any]] = [
+        [
+          "linkId": retainedIdentifier, "originalUrl": "https://tabelog.com/menu",
+          "label": "Dinner",
+        ],
+        ["originalUrl": "https://example.com/gallery", "label": NSNull()],
+      ]
+      let editIdentifier = UUID()
+      let editRequest = try request(
+        endpoint: endpoint, name: "planner_execute",
+        arguments: [
+          "formatVersion": 1, "operationId": editIdentifier.uuidString,
+          "command": [
+            "type": "editItem", "sourceId": source.id.uuidString,
+            "changes": ["links": replacement], "expectedFieldHashes": hashes,
+          ],
+        ])
+      let edited = try value(try await httpSession.data(for: editRequest))
+      #expect((edited["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "2")
+      let current = try value(try await httpSession.data(for: sourceRequest))
+      let currentSource = try #require(current["value"] as? [String: Any])
+      let currentContent = try #require(currentSource["content"] as? [String: Any])
+      let currentLinks = try #require(currentContent["links"] as? [[String: Any]])
+      let currentHashes = try #require(currentSource["fieldHashes"] as? [String: String])
+      #expect(
+        currentLinks.map { $0["originalUrl"] as? String } == [
+          "https://tabelog.com/menu", "https://example.com/gallery",
+        ])
+      #expect(currentLinks.first?["linkId"] as? String == retainedIdentifier)
+      #expect(currentLinks.first?["label"] as? String == "Dinner")
+      #expect(currentLinks.first?["kind"] as? String == "tabelog")
+      #expect(currentLinks.last?["label"] is NSNull)
+      #expect(currentLinks.last?["linkId"] as? String != retainedIdentifier)
+      let staleIdentifier = UUID()
+      let stale = try rejection(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_execute",
+            arguments: [
+              "formatVersion": 1, "operationId": staleIdentifier.uuidString,
+              "command": [
+                "type": "editItem", "sourceId": source.id.uuidString,
+                "changes": ["title": "Rejected title", "links": replacement],
+                "expectedFieldHashes": hashes,
+              ],
+            ])))
+      let reason = try #require(stale["reason"] as? [String: Any])
+      let details = try #require(reason["details"] as? [String: Any])
+      #expect(reason["code"] as? String == "staleEdit")
+      #expect(details["conflictingFields"] as? [String] == ["links"])
+      let currentValues = try #require(details["currentValues"] as? [String: Any])
+      #expect(
+        NSArray(array: try #require(currentValues["links"] as? [[String: Any]])).isEqual(
+          to: currentLinks))
+      #expect(
+        details["currentFieldHashes"] as? [String: String] == [
+          "links": try #require(currentHashes["links"])
+        ])
+      let afterStale = try value(try await httpSession.data(for: sourceRequest))
+      #expect(NSDictionary(dictionary: afterStale).isEqual(to: current))
+      let emptied = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_execute",
+            arguments: [
+              "formatVersion": 1, "operationId": UUID().uuidString,
+              "command": [
+                "type": "editItem", "sourceId": source.id.uuidString,
+                "changes": ["links": []], "expectedFieldHashes": currentHashes,
+              ],
+            ])))
+      #expect((emptied["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "3")
+      let emptySource = try value(try await httpSession.data(for: sourceRequest))
+      let replayed = try value(try await httpSession.data(for: editRequest))
+      #expect(NSDictionary(dictionary: replayed).isEqual(to: edited))
+      let retained = try value(try await httpSession.data(for: sourceRequest))
+      #expect(NSDictionary(dictionary: retained).isEqual(to: emptySource))
+      let retainedContent = try #require(
+        (retained["value"] as? [String: Any])?["content"] as? [String: Any])
+      #expect(retainedContent["title"] as? String == "Hotel")
+      #expect(retainedContent["notes"] as? String == "Original notes")
+      #expect((retainedContent["links"] as? [[String: Any]])?.isEmpty == true)
+      await listener.stop()
+      guard
+        case .noReliableEvidence = await planner.operationStatus(
+          session: datasetSession, operationId: staleIdentifier),
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
+      else {
+        Issue.record(
+          "Stale edits must retain the last independent checkpoint without applied evidence.")
+        return
+      }
+      #expect(namespaces.first?.acknowledgedSnapshot?.checkpointGeneration == 3)
+      #expect(namespaces.first?.preparedProposals.isEmpty == true)
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   @Test func malformedLocationsRejectWholeCreationsAndEditsWithoutChangingSavedData() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
