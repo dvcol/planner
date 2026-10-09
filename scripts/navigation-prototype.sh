@@ -31,7 +31,7 @@ xcodebuild -project "$prototypeRoot/Planner.xcodeproj" -scheme PlannerNavigation
   -clonedSourcePackagesDirPath "$prototypePackageDirectory" build
 
 if [[ "$prototypePlatform" == mac ]]; then
-  open "$prototypeBuildDirectory/Build/Products/Debug/Planner.app"
+  open -n "$prototypeBuildDirectory/Build/Products/Debug/Planner.app"
   exit
 fi
 

@@ -2,6 +2,8 @@
 
 Work for [Navigation prototype](https://github.com/dvcol/planner/issues/14) on `prototype/navigation`. Q34 accepts the native UI journeys and fixtures. Q35 requires confirmation before deleting a Category/Tag with any association. The user delayed signing and physical setup while authorizing simulator and local Mac work.
 
+The latest qualified source and screenshots are in [Native chrome, cumulative filters and inline maps](#native-chrome-cumulative-filters-and-inline-maps). Earlier sections preserve the outcomes and presentation of previous revisions.
+
 ## Starting state and first goal
 
 The inherited app was a placeholder. The first slice opens Lists → Tokyo Food, shows its unfiltered 1 of 2 progress under the ordinary Todo/Active filter, switches both filters to All and opens Nezu Museum's membership 401. Its detail must retain that appearance and show Local Done / Global Todo. Opening its source explicitly shows Item 101 in global context. Tokyo Weekend retains 0 of 3 progress.
@@ -142,6 +144,41 @@ Raw final bundles are `/private/tmp/PlannerNavigationNativePhoneComplete.xcresul
 The [source manifest](evidence/navigation/native-ui-source.json) records the exact final commands. Use a fresh result-bundle path when repeating them. `./scripts/navigation-prototype.sh mac` also builds and opens the revision, returns zero, and its compiled standalone process is confirmed running. [Mac launcher evidence](evidence/navigation/native-mac-launcher.json) records that outcome and script hash. Raw launcher output is `/private/tmp/PlannerNavigationNativeMacLauncher.log`.
 
 The earlier Mac automation startup failure remains historical evidence, superseded for these five executed journeys. These checks establish selection, disclosure memory, contextual identity and navigation, including the stated Mac arrow-key journey. They do not establish every keyboard shortcut, VoiceOver, Dynamic Type, resizing/rotation, the physical performance gate, durable Planner writes, Share or CloudKit. Native composition and any additional group border/tint still require the user's actual layout review.
+
+## Native chrome, cumulative filters and inline maps
+
+The next Mac screenshot review exposed a map occupying the entire detail column, a separate Inspect Item sheet, plain-text progress, truncated independent filter buttons, sidebar diagnostic text and an unexplained layout selector. This revision keeps the selected appearance's details in the third pane and embeds a compact native MapKit map in the Map alongside list comparison. It removes the inspection sheet/action. An Item without coordinates still has its full detail and a No location view. The other comparisons retain their ordinary detail form; no address lookup or new provider policy is implemented.
+
+Nonempty containers and live List groups now use a native determinate linear ProgressView with their full completion count. Empty containers show No items without an indeterminate spinner. A single native filter menu has independent Completion and Archive selections, applied cumulatively. Its label is All when both are unrestricted, or the selected restrictions, such as Todo · Active, Active or Done. Filtering never changes full-container progress or appearance state.
+
+iPhone uses native TabView and NavigationStack. Regular iPad uses native top tabs with NavigationSplitView content; portrait presents the catalog as a native sidebar overlay. Mac uses native sidebar selection and three split columns in every comparison. Prototype information and comparison choices live in the Mac menu bar's named Prototype menu or the mobile information sheet. The visible window no longer has sidebar diagnostic text or an unexplained right-hand layout menu. The information sheet explicitly states that Planner data is read-only and only local view preferences are saved. No custom navigation, glass cards or new UI package was added.
+
+The accepted Q34 public native UI seam observes literal fixture outcomes. The inline-map journey [first failed](evidence/navigation/chrome-inline-map-red.json) because Local Done was unavailable until inspection, then [passed](evidence/navigation/chrome-inline-map-green.json) with membership 401's details and map visible together. The cumulative-filter journey [first failed](evidence/navigation/chrome-filters-red.json) at the absent native progress indicator, then [passed](evidence/navigation/chrome-filters-green.json): List A stays 1/2 while Todo/Active becomes Active, All and Done, and appearance visibility changes accordingly. The separate prototype-menu journey [failed](evidence/navigation/chrome-menu-red.json) when the native Mac menu was absent, then [passed](evidence/navigation/chrome-menu-green.json). The final suites include that menu/information path in their layout journeys.
+
+Intermediate setup and accessibility probes did not all pass. The Mac focused-binding and conditional toolbar compilation errors were corrected before behavioral runs. Mac MenuButton exposes its visible title through AX title rather than label. iPad's native floating tabs expose both a cell and child Button with the same label, and its information toolbar must belong to the sidebar within the tab's split content. Switching tabs also required reopening the collapsed catalog in the portrait journey. Phone progress exposes a localized percentage with a nonbreaking space; the test now reads it using Foundation's native percent formatter. These changes observe actual native controls and retain the independently specified expected fraction 0.5; they do not derive expected results from private fixture projections.
+
+All six affected public journeys pass against the [same final source hashes and exact commands](evidence/navigation/chrome-source.json), with no failures or skips. They cover cumulative filtering/progress, appearance-to-source identity and Mac Down/Up selection, independent direct itinerary completion, full expanded appearance identity, disclosure memory after relaunch, and inline map/details with a generic Item fallback.
+
+| Destination | Passed | Failed/skipped | Results |
+| --- | --- | --- | --- |
+| Native arm64 Mac | 6/6 | 0/0 | [Mac summary](evidence/navigation/chrome-mac.json) |
+| iPhone 18 Pro simulator, portrait | 6/6 | 0/0 | [Phone summary](evidence/navigation/chrome-phone.json) |
+| iPad Air 11-inch M4 simulator, portrait | 6/6 | 0/0 | [iPad summary](evidence/navigation/chrome-tablet.json) |
+
+| Actual native presentation | Evidence |
+| --- | --- |
+| Mac third-pane detail with embedded map | [Mac inline details](evidence/navigation/layouts/mac-inline-map-details.png) |
+| Mac cumulative filter and full progress; live List group progress | [Filters](evidence/navigation/layouts/mac-cumulative-progress.png), [groups](evidence/navigation/layouts/mac-native-progress-groups.png) |
+| iPad native top tabs, split details and cumulative filters | [Map/detail](evidence/navigation/layouts/tablet-native-tabs-map-details.png), [filters](evidence/navigation/layouts/tablet-native-tabs-filters.png) |
+| Phone native detail and cumulative progress | [Map/detail](evidence/navigation/layouts/phone-inline-map-details.png), [filters](evidence/navigation/layouts/phone-cumulative-progress.png) |
+
+Mac evidence captures the owned application window, not the desktop. The iPad map screenshot still has a loading/grid basemap and a native pin; it does not prove live basemap availability or offline rendering. Every map uses the fixture's synthetic owned coordinate, not geocoding of the museum's address.
+
+Strict affected Swift formatting, app/UI-runner compilation through these test runs, shell syntax, affected Markdown lint and diff checks pass. No private fixture unit tests or Core mutation seam were added. Raw final result bundles are `/private/tmp/PlannerNavigationChromeMacQualified.xcresult`, `/private/tmp/PlannerNavigationChromePhoneQualified.xcresult` and `/private/tmp/PlannerNavigationChromeTabletQualified.xcresult`. Their logs use the same basenames with `.log`. Use the source manifest's focused commands with fresh result-bundle paths to reproduce.
+
+The Mac launcher now requests a fresh instance with `open -n` so a running older process cannot conceal the rebuilt UI. `./scripts/navigation-prototype.sh mac` builds and opens the current source, returns zero, and a new standalone process was verified. It leaves existing instances alone. [Launcher evidence](evidence/navigation/chrome-mac-launcher.json) records the script hash and limits; raw output is `/private/tmp/PlannerNavigationChromeLaunch.log`.
+
+Planner content remains a read-only fixture projection. Q38-Q42 still await answers for row ordering/drop/date/website/address behavior. Rich metadata, completion writes, drag-and-drop and preview enrichment are not established by these checks. Full-graph persistence, physical/signing/sync/Share, broader keyboard/accessibility, orientation/resizing, long-list performance and final human review remain required. This revision records the requested presentation corrections without closing Navigation prototype.
 
 ## Remaining gates
 

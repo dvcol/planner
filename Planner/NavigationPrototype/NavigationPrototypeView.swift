@@ -1,6 +1,6 @@
 import SwiftUI
 
-private enum NavigationPrototypeLayout: String, CaseIterable {
+enum NavigationPrototypeLayout: String, CaseIterable {
   case library = "Library first"
   case itinerary = "Itinerary first"
   case map = "Map alongside list"
@@ -23,6 +23,7 @@ struct NavigationPrototypeView: View {
   @State private var selectedAppearance: NavigationPrototypeFixture.Appearance?
   @State private var selectedSourceId: UUID?
   @State private var sidebarSelection: PrototypeSidebarSelection? = .section("list")
+  @State private var showPrototypeInformation = false
 
   var body: some View {
     Group {
@@ -43,108 +44,97 @@ struct NavigationPrototypeView: View {
         loadError = error.localizedDescription
       }
     }
-  }
-
-  private var prototypeToolbar: some ToolbarContent {
-    ToolbarItem(placement: .primaryAction) { prototypeLayoutMenu }
-  }
-
-  private var prototypeLayoutMenu: some View {
-    Menu {
-      ForEach(NavigationPrototypeLayout.allCases, id: \.self) { candidate in
-        Button(candidate.rawValue) { chooseLayout(candidate) }
-      }
-    } label: {
-      Label(layout.rawValue, systemImage: "rectangle.3.group")
+    .onChange(of: layout) { _, candidate in
+      selectSection(candidate == .itinerary ? "itinerary" : "list")
+      columnVisibility = .all
     }
-    .accessibilityLabel("Prototype layouts")
-    .accessibilityIdentifier("prototype.layouts")
-    .help("Navigation prototype layout comparison")
-  }
-
-  @ViewBuilder
-  private var tabletPrototypeControls: some View {
-    #if os(iOS)
-      if horizontalSizeClass == .regular {
-        Section("Prototype layout") { prototypeLayoutMenu }
-      }
+    .sheet(isPresented: $showPrototypeInformation) {
+      PrototypeInformationView(layout: $layout)
+    }
+    #if os(macOS)
+      .focusedSceneValue(\.navigationPrototypeLayout, $layout)
+      .focusedSceneValue(\.navigationPrototypeInformationPresented, $showPrototypeInformation)
     #endif
   }
+
+  #if os(iOS)
+    private var prototypeToolbar: some ToolbarContent {
+      ToolbarItem(placement: .topBarTrailing) {
+        Button("About prototype", systemImage: "info.circle") {
+          showPrototypeInformation = true
+        }
+        .accessibilityIdentifier("prototype.information")
+      }
+    }
+  #endif
 
   @ViewBuilder
   private func nativeLayout(_ fixture: NavigationPrototypeFixture) -> some View {
     #if os(macOS)
-      if layout == .itinerary {
-        planningLayout(fixture).frame(minWidth: 820, minHeight: 540)
-      } else {
-        splitLayout(fixture).frame(minWidth: 820, minHeight: 540)
-      }
+      splitLayout(fixture).frame(minWidth: 820, minHeight: 540)
     #else
       if horizontalSizeClass == .compact {
         phoneLayout(fixture)
-      } else if layout == .itinerary {
-        planningLayout(fixture)
       } else {
-        splitLayout(fixture)
+        tabletLayout(fixture)
       }
     #endif
   }
 
-  private func chooseLayout(_ candidate: NavigationPrototypeLayout) {
-    layout = candidate
-    selectSection(candidate == .itinerary ? "itinerary" : "list")
-    columnVisibility = .all
-  }
-
-  private func planningLayout(_ fixture: NavigationPrototypeFixture) -> some View {
-    NavigationSplitView(columnVisibility: $columnVisibility) {
-      catalog(fixture, kind: "itinerary")
-        .navigationTitle("Itineraries")
-        .navigationSplitViewColumnWidth(min: 200, ideal: 250)
-    } detail: {
-      ContentUnavailableView(
-        "Choose an Itinerary", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+  #if os(iOS)
+    private func tabletLayout(_ fixture: NavigationPrototypeFixture) -> some View {
+      TabView(selection: $section) {
+        Tab("Lists", systemImage: "list.bullet", value: "list") { splitLayout(fixture) }
+        Tab("Items", systemImage: "square.stack", value: "item") { splitLayout(fixture) }
+        Tab(
+          "Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath",
+          value: "itinerary"
+        ) { splitLayout(fixture) }
+      }
+      .onChange(of: section) { _, newSection in
+        selectSection(newSection)
+        columnVisibility = .all
+      }
     }
-    .navigationSplitViewStyle(.balanced)
-    .toolbar { prototypeToolbar }
-  }
 
-  private func phoneLayout(_ fixture: NavigationPrototypeFixture) -> some View {
-    TabView(selection: $section) {
-      NavigationStack {
-        catalog(fixture, kind: "list")
-          .navigationTitle("Lists")
-          .toolbar { prototypeToolbar }
+    private func phoneLayout(_ fixture: NavigationPrototypeFixture) -> some View {
+      TabView(selection: $section) {
+        Tab("Lists", systemImage: "list.bullet", value: "list") {
+          NavigationStack {
+            catalog(fixture, kind: "list")
+              .navigationTitle("Lists")
+              .toolbar { prototypeToolbar }
+          }
+        }
+        Tab("Items", systemImage: "square.stack", value: "item") {
+          NavigationStack {
+            catalog(fixture, kind: "item")
+              .navigationTitle("Items")
+              .toolbar { prototypeToolbar }
+          }
+        }
+        Tab(
+          "Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath",
+          value: "itinerary"
+        ) {
+          NavigationStack {
+            catalog(fixture, kind: "itinerary")
+              .navigationTitle("Itineraries")
+              .toolbar { prototypeToolbar }
+          }
+        }
       }
-      .tabItem { Label("Lists", systemImage: "list.bullet") }
-      .accessibilityIdentifier("nav.lists")
-      .tag("list")
-      NavigationStack {
-        catalog(fixture, kind: "item")
-          .navigationTitle("Items")
-          .toolbar { prototypeToolbar }
-      }
-      .tabItem { Label("Items", systemImage: "square.stack") }
-      .accessibilityIdentifier("nav.items")
-      .tag("item")
-      NavigationStack {
-        catalog(fixture, kind: "itinerary")
-          .navigationTitle("Itineraries")
-          .toolbar { prototypeToolbar }
-      }
-      .tabItem {
-        Label("Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
-      }
-      .accessibilityIdentifier("nav.itineraries")
-      .tag("itinerary")
     }
-  }
+  #endif
 
   private func splitLayout(_ fixture: NavigationPrototypeFixture) -> some View {
     NavigationSplitView(columnVisibility: $columnVisibility) {
       sidebar(fixture)
         .navigationTitle("Planner")
         .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
+        #if os(iOS)
+          .toolbar { prototypeToolbar }
+        #endif
     } content: {
       if let selectedContainerId, let container = fixture.source(selectedContainerId),
         container.kind != "item"
@@ -160,97 +150,62 @@ struct NavigationPrototypeView: View {
       }
     } detail: {
       if let selectedSourceId, let source = fixture.source(selectedSourceId) {
-        PrototypeItemDetail(fixture: fixture, source: source, appearance: nil)
+        PrototypeItemDetail(
+          fixture: fixture, source: source, appearance: nil, showMap: layout == .map)
       } else if let selectedAppearance, let source = fixture.source(selectedAppearance.sourceId) {
-        if layout == .map {
-          PrototypeMapItemDetail(fixture: fixture, source: source, appearance: selectedAppearance)
-        } else {
-          PrototypeItemDetail(fixture: fixture, source: source, appearance: selectedAppearance) {
-            selectedSourceId = source.id
-          }
+        PrototypeItemDetail(
+          fixture: fixture, source: source, appearance: selectedAppearance, showMap: layout == .map
+        ) {
+          selectedSourceId = source.id
         }
       } else {
         ContentUnavailableView("Choose an Item", systemImage: "square.stack")
       }
     }
     .navigationSplitViewStyle(.balanced)
-    .toolbar { prototypeToolbar }
   }
 
   @ViewBuilder
   private func sidebar(_ fixture: NavigationPrototypeFixture) -> some View {
-    #if os(macOS)
-      List(selection: $sidebarSelection) {
-        Section("Planner") {
-          NavigationLink(value: PrototypeSidebarSelection.section("list")) {
-            Label("Lists", systemImage: "list.bullet")
-          }
-          .accessibilityIdentifier("nav.lists")
-          NavigationLink(value: PrototypeSidebarSelection.section("item")) {
-            Label("Items", systemImage: "square.stack")
-          }
-          .accessibilityIdentifier("nav.items")
-          NavigationLink(value: PrototypeSidebarSelection.section("itinerary")) {
-            Label("Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
-          }
-          .accessibilityIdentifier("nav.itineraries")
-        }
-        Section(sectionTitle) {
-          ForEach(fixture.sources.filter { $0.kind == section }) { source in
-            NavigationLink(value: PrototypeSidebarSelection.source(source.id)) {
-              Label(
-                source.title,
-                systemImage: source.kind == "item" ? "circle" : "list.bullet.rectangle")
+    List(selection: $sidebarSelection) {
+      #if os(macOS)
+        if layout != .itinerary {
+          Section("Planner") {
+            NavigationLink(value: PrototypeSidebarSelection.section("list")) {
+              Label("Lists", systemImage: "list.bullet")
             }
-            .accessibilityIdentifier("\(source.kind).\(source.id.uuidString)")
-          }
-        }
-      }
-      .listStyle(.sidebar)
-      .onChange(of: sidebarSelection) { _, selection in
-        switch selection {
-        case .section(let kind): selectSection(kind)
-        case .source(let sourceId):
-          if let source = fixture.source(sourceId) { selectContainer(source) }
-        case nil: break
-        }
-      }
-      .safeAreaInset(edge: .bottom) {
-        VStack(alignment: .leading, spacing: 4) {
-          Text("Navigation prototype").font(.caption)
-          Text("Read-only Planner data").font(.caption2).foregroundStyle(.secondary)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-      }
-    #else
-      List {
-        Section("Planner") {
-          Button("Lists", systemImage: "list.bullet") { selectSection("list") }
             .accessibilityIdentifier("nav.lists")
-          Button("Items", systemImage: "square.stack") { selectSection("item") }
-            .accessibilityIdentifier("nav.items")
-          Button("Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath") {
-            selectSection("itinerary")
-          }
-          .accessibilityIdentifier("nav.itineraries")
-        }
-        Section(sectionTitle) {
-          ForEach(fixture.sources.filter { $0.kind == section }) { source in
-            Button {
-              selectContainer(source)
-            } label: {
-              Label(
-                source.title,
-                systemImage: source.kind == "item" ? "circle" : "list.bullet.rectangle")
+            NavigationLink(value: PrototypeSidebarSelection.section("item")) {
+              Label("Items", systemImage: "square.stack")
             }
-            .accessibilityIdentifier("\(source.kind).\(source.id.uuidString)")
+            .accessibilityIdentifier("nav.items")
+            NavigationLink(value: PrototypeSidebarSelection.section("itinerary")) {
+              Label("Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+            }
+            .accessibilityIdentifier("nav.itineraries")
           }
         }
-        fixtureNotice
-        tabletPrototypeControls
+      #endif
+      Section(sectionTitle) {
+        ForEach(fixture.sources.filter { $0.kind == section }) { source in
+          NavigationLink(value: PrototypeSidebarSelection.source(source.id)) {
+            Label(
+              source.title,
+              systemImage: source.kind == "item" ? "circle" : "list.bullet.rectangle")
+          }
+          .accessibilityIdentifier("\(source.kind).\(source.id.uuidString)")
+        }
       }
-    #endif
+    }
+    .listStyle(.sidebar)
+    .onChange(of: sidebarSelection) { _, selection in
+      switch selection {
+      case .section(let kind): selectSection(kind)
+      case .source(let sourceId):
+        if let source = fixture.source(sourceId) { selectContainer(source) }
+      case nil: break
+      }
+    }
   }
 
   private func selectContainer(_ source: NavigationPrototypeFixture.Source) {
@@ -297,18 +252,42 @@ struct NavigationPrototypeView: View {
         }
         .accessibilityIdentifier("\(source.kind).\(source.id.uuidString)")
       }
-      fixtureNotice
-      tabletPrototypeControls
     }
   }
+}
 
-  private var fixtureNotice: some View {
-    Section {
-      Text("Navigation prototype · Full graph fixture")
-        .font(.caption).foregroundStyle(.secondary)
-      Text("Planner data is read-only. Only local view preferences are saved.")
-        .font(.caption).foregroundStyle(.secondary)
+private struct PrototypeInformationView: View {
+  @Environment(\.dismiss) private var dismiss
+  @Binding var layout: NavigationPrototypeLayout
+
+  var body: some View {
+    NavigationStack {
+      Form {
+        Section("Navigation prototype") {
+          Text("Planner data is read-only. Only local view preferences are saved.")
+          Text("This comparison uses the fixed Full graph fixture.")
+        }
+        Section("Layout comparison") {
+          Picker("Layout", selection: $layout) {
+            ForEach(NavigationPrototypeLayout.allCases, id: \.self) { candidate in
+              Text(candidate.rawValue).tag(candidate)
+            }
+          }
+          .pickerStyle(.inline)
+        }
+      }
+      .formStyle(.grouped)
+      .navigationTitle("About prototype")
+      .toolbar {
+        ToolbarItem(placement: .cancellationAction) {
+          Button("Close") { dismiss() }
+            .accessibilityIdentifier("prototype.information.close")
+        }
+      }
     }
+    #if os(macOS)
+      .frame(width: 520, height: 440)
+    #endif
   }
 }
 
@@ -323,13 +302,25 @@ private struct PrototypeContainerView: View {
   @FocusState private var isItemListFocused: Bool
 
   var body: some View {
-    containerList
-      .navigationTitle(container.title)
-      #if os(macOS)
-        .toolbar {
-          ToolbarItemGroup { filterMenus }
-        }
-      #endif
+    VStack(spacing: 0) {
+      VStack(alignment: .leading, spacing: 10) {
+        PrototypeCompletionProgress(
+          fixture: fixture, appearances: fixture.appearances(in: container),
+          accessibilityIdentifier: "progress.container")
+        #if os(iOS)
+          filterMenu
+        #endif
+      }
+      .padding()
+      Divider()
+      containerList
+    }
+    .navigationTitle(container.title)
+    #if os(macOS)
+      .toolbar {
+        ToolbarItem { filterMenu }
+      }
+    #endif
   }
 
   @ViewBuilder
@@ -353,12 +344,6 @@ private struct PrototypeContainerView: View {
 
   private var containerContents: some View {
     Group {
-      Section {
-        Text(fixture.progress(in: container)).font(.headline)
-        #if os(iOS)
-          HStack { filterMenus }
-        #endif
-      }
       Section("Items") {
         if container.kind == "itinerary" {
           ForEach(fixture.itineraryEntries.filter { $0.itinerary.id == container.id }, id: \.id) {
@@ -382,27 +367,34 @@ private struct PrototypeContainerView: View {
     }
   }
 
-  private var filterMenus: some View {
-    Group {
-      Menu {
-        Button("Todo") { completion = "todo" }
-        Button("Done") { completion = "done" }
-        Button("All completion states") { completion = "all" }
-      } label: {
-        Label(
-          completion == "all" ? "All completion" : completion.capitalized,
-          systemImage: "checkmark.circle")
+  private var filterMenu: some View {
+    Menu {
+      Picker("Completion", selection: $completion) {
+        Text("Todo").tag("todo")
+        Text("Done").tag("done")
+        Text("All completion states").tag("all")
       }
-      .accessibilityIdentifier("filter.completion")
-      Menu {
-        Button("Active") { archive = "active" }
-        Button("Archived") { archive = "archived" }
-        Button("All archive states") { archive = "all" }
-      } label: {
-        Label(archive == "all" ? "All archive" : archive.capitalized, systemImage: "archivebox")
+      .pickerStyle(.inline)
+      Divider()
+      Picker("Archive", selection: $archive) {
+        Text("Active").tag("active")
+        Text("Archived").tag("archived")
+        Text("All archive states").tag("all")
       }
-      .accessibilityIdentifier("filter.archive")
+      .pickerStyle(.inline)
+    } label: {
+      Label(filterSummary, systemImage: "line.3.horizontal.decrease")
+        .labelStyle(.titleAndIcon)
+        .fixedSize(horizontal: true, vertical: false)
     }
+    .accessibilityLabel(filterSummary)
+    .accessibilityIdentifier("filter.options")
+    .help("Filters: \(filterSummary)")
+  }
+
+  private var filterSummary: String {
+    let selectedFilters = [completion, archive].filter { $0 != "all" }.map { $0.capitalized }
+    return selectedFilters.isEmpty ? "All" : selectedFilters.joined(separator: " · ")
   }
 
   private var visibleAppearances: [NavigationPrototypeFixture.Appearance] {
@@ -470,10 +462,31 @@ private struct PrototypeItineraryListGroup: View {
           fixture.source(entry.source.id)?.title ?? "List", systemImage: "list.bullet.rectangle"
         )
         .font(.headline)
-        Text(fixture.progress(in: fixture.appearances(in: entry)))
-          .font(.caption).foregroundStyle(.secondary)
+        PrototypeCompletionProgress(
+          fixture: fixture, appearances: fixture.appearances(in: entry),
+          accessibilityIdentifier: "progress.group.\(entry.id.uuidString)")
       }
       .accessibilityIdentifier("group.\(entry.id.uuidString)")
+    }
+  }
+}
+
+private struct PrototypeCompletionProgress: View {
+  let fixture: NavigationPrototypeFixture
+  let appearances: [NavigationPrototypeFixture.Appearance]
+  let accessibilityIdentifier: String
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 6) {
+      Text(fixture.progress(in: appearances)).font(.caption).foregroundStyle(.secondary)
+      if !appearances.isEmpty {
+        ProgressView(
+          value: Double(appearances.filter(fixture.isDone).count), total: Double(appearances.count)
+        )
+        .progressViewStyle(.linear)
+        .accessibilityLabel("Completion")
+        .accessibilityIdentifier(accessibilityIdentifier)
+      }
     }
   }
 }
@@ -501,11 +514,8 @@ private struct PrototypeAppearanceRow: View {
         #endif
       } else {
         NavigationLink {
-          if showMap {
-            PrototypeMapItemDetail(fixture: fixture, source: source, appearance: appearance)
-          } else {
-            PrototypeItemDetail(fixture: fixture, source: source, appearance: appearance)
-          }
+          PrototypeItemDetail(
+            fixture: fixture, source: source, appearance: appearance, showMap: showMap)
         } label: {
           row(source)
         }
@@ -531,6 +541,7 @@ struct PrototypeItemDetail: View {
   let fixture: NavigationPrototypeFixture
   let source: NavigationPrototypeFixture.Source
   let appearance: NavigationPrototypeFixture.Appearance?
+  var showMap = false
   var openSource: (() -> Void)?
 
   var body: some View {
@@ -545,6 +556,14 @@ struct PrototypeItemDetail: View {
       }
       if let notes = source.content.notes {
         Section("Notes") { Text(notes).textSelection(.enabled) }
+      }
+      if showMap {
+        Section("Location") {
+          if let address = source.content.location?.formattedAddress {
+            Label(address, systemImage: "mappin.and.ellipse")
+          }
+          PrototypeMapItemDetail(source: source)
+        }
       }
       if appearance != nil {
         Section {
