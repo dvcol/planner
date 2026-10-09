@@ -5,6 +5,302 @@ import Testing
 @testable import Planner
 
 struct RowRoutingTests {
+  @Test func malformedLocationsRejectWholeCreationsAndEditsWithoutChangingSavedData() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    let location = PlannerOwnedLocation(
+      displayName: nil, formattedAddress: "Meeting point A",
+      coordinate: PlannerCoordinate(latitude: 35, longitude: 139))
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let created, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createItem(
+            content: PlannerItemContentInput(
+              title: "Hotel", notes: "Original notes", location: location)))
+      )
+      .outcome, let source = created.generated.first
+    else {
+      Issue.record("The original Item and owned address must be independently saved.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      let sourceRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": ["kind": "source", "source": ["kind": "item", "id": source.id.uuidString]],
+        ])
+      let before = try value(try await httpSession.data(for: sourceRequest))
+      let hashes = try #require(
+        (before["value"] as? [String: Any])?["fieldHashes"] as? [String: String])
+      let snapshot = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_query",
+            arguments: [
+              "formatVersion": 1, "query": ["kind": "items", "scope": ["kind": "global"]],
+            ])))
+      let rowRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": [
+            "kind": "rows", "generation": try #require(snapshot["generation"] as? String),
+            "offset": "0", "limit": "1",
+          ],
+        ])
+      let beforeWindow = try value(try await httpSession.data(for: rowRequest))
+      let invalidLocations: [(input: Any, code: String, suffix: String)] = [
+        (true, "invalidInput", ""),
+        (["formattedAddress": NSNull(), "coordinate": NSNull()], "invalidInput", "/displayName"),
+        (["displayName": NSNull(), "formattedAddress": NSNull()], "invalidInput", "/coordinate"),
+        (
+          ["displayName": 1, "formattedAddress": NSNull(), "coordinate": NSNull()],
+          "invalidInput", "/displayName"
+        ),
+        (
+          ["displayName": NSNull(), "formattedAddress": true, "coordinate": NSNull()],
+          "invalidInput", "/formattedAddress"
+        ),
+        (
+          ["displayName": NSNull(), "formattedAddress": NSNull(), "coordinate": ["latitude": 35]],
+          "invalidInput", "/coordinate/longitude"
+        ),
+        (
+          [
+            "displayName": NSNull(), "formattedAddress": NSNull(),
+            "coordinate": ["latitude": "35", "longitude": 139],
+          ],
+          "invalidInput", "/coordinate/latitude"
+        ),
+        (
+          [
+            "displayName": NSNull(), "formattedAddress": NSNull(),
+            "coordinate": ["latitude": 35, "longitude": true],
+          ],
+          "invalidInput", "/coordinate/longitude"
+        ),
+        (
+          [
+            "displayName": NSNull(), "formattedAddress": NSNull(),
+            "coordinate": ["latitude": 90.01, "longitude": 139],
+          ],
+          "invalidInput", "/coordinate"
+        ),
+        (
+          [
+            "displayName": NSNull(), "formattedAddress": NSNull(),
+            "coordinate": ["latitude": 35, "longitude": -180.01],
+          ],
+          "invalidInput", "/coordinate"
+        ),
+        (
+          [
+            "displayName": NSNull(), "formattedAddress": NSNull(), "coordinate": NSNull(),
+            "unexpected/~": true,
+          ], "unknownField", "/unexpected~1~0"
+        ),
+        (
+          [
+            "displayName": NSNull(), "formattedAddress": NSNull(),
+            "coordinate": ["latitude": 35, "longitude": 139, "unexpected/~": true],
+          ],
+          "unknownField", "/coordinate/unexpected~1~0"
+        ),
+      ]
+      for expected in invalidLocations {
+        for commandType in ["createItem", "editItem"] {
+          let operationIdentifier = UUID()
+          var command: [String: Any] = ["type": commandType]
+          let propertyPrefix: String
+          if commandType == "createItem" {
+            command["content"] = ["title": "Rejected", "location": expected.input]
+            propertyPrefix = "/command/content/location"
+          } else {
+            command["sourceId"] = source.id.uuidString
+            command["changes"] = ["notes": "Rejected notes", "location": expected.input]
+            command["expectedFieldHashes"] = hashes
+            propertyPrefix = "/command/changes/location"
+          }
+          let rejected = try rejection(
+            try await httpSession.data(
+              for: request(
+                endpoint: endpoint, name: "planner_execute",
+                arguments: [
+                  "formatVersion": 1, "operationId": operationIdentifier.uuidString,
+                  "command": command,
+                ])))
+          #expect(rejected["operationId"] as? String == operationIdentifier.uuidString)
+          let reason = try #require(rejected["reason"] as? [String: Any])
+          #expect(reason["code"] as? String == expected.code)
+          #expect(reason["propertyPath"] as? String == propertyPrefix + expected.suffix)
+          guard
+            case .noReliableEvidence = await planner.operationStatus(
+              session: datasetSession, operationId: operationIdentifier)
+          else {
+            Issue.record(
+              "Invalid location input must not save partial content or an applied receipt.")
+            await listener.stop()
+            return
+          }
+        }
+      }
+      let after = try value(try await httpSession.data(for: sourceRequest))
+      #expect(NSDictionary(dictionary: after).isEqual(to: before))
+      let afterWindow = try value(try await httpSession.data(for: rowRequest))
+      #expect(NSDictionary(dictionary: afterWindow).isEqual(to: beforeWindow))
+      await listener.stop()
+      guard
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
+      else {
+        Issue.record("Invalid locations must retain acknowledged recovery.")
+        return
+      }
+      #expect(namespaces.first?.acknowledgedSnapshot?.checkpointGeneration == 1)
+      #expect(namespaces.first?.preparedProposals.isEmpty == true)
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
+  @Test func ownedLocationOverHTTPRejectsStaleCompoundEditAndRetainsClearOnReplay() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    guard case .ready(let datasetSession) = await planner.bootstrap() else {
+      Issue.record("The real dataset must initialize.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    let firstLocation: [String: Any] = [
+      "displayName": NSNull(), "formattedAddress": "Meeting point A",
+      "coordinate": ["latitude": 35, "longitude": 139],
+    ]
+    let secondLocation: [String: Any] = [
+      "displayName": "Entrance", "formattedAddress": "Meeting point B",
+      "coordinate": ["latitude": 35.25, "longitude": 139.5],
+    ]
+    do {
+      let creationIdentifier = UUID()
+      let creationRequest = try request(
+        endpoint: endpoint, name: "planner_execute",
+        arguments: [
+          "formatVersion": 1, "operationId": creationIdentifier.uuidString,
+          "command": [
+            "type": "createItem",
+            "content": ["title": "Hotel", "notes": "Original notes", "location": firstLocation],
+          ],
+        ])
+      let creation = try value(try await httpSession.data(for: creationRequest))
+      #expect(creation["state"] as? String == "applied")
+      guard
+        case .appliedRecoveryComplete(let applied, _) = await planner.operationStatus(
+          session: datasetSession, operationId: creationIdentifier)
+      else {
+        Issue.record("The HTTP-created address must be actually saved.")
+        await listener.stop()
+        return
+      }
+      let source = try #require(applied.generated.first)
+      let sourceRequest = try request(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": ["kind": "source", "source": ["kind": "item", "id": source.id.uuidString]],
+        ])
+      let original = try value(try await httpSession.data(for: sourceRequest))
+      let originalSource = try #require(original["value"] as? [String: Any])
+      let originalHashes = try #require(originalSource["fieldHashes"] as? [String: String])
+      let originalContent = try #require(originalSource["content"] as? [String: Any])
+      #expect(
+        NSDictionary(dictionary: try #require(originalContent["location"] as? [String: Any]))
+          .isEqual(to: firstLocation))
+      let editIdentifier = UUID()
+      let editRequest = try request(
+        endpoint: endpoint, name: "planner_execute",
+        arguments: [
+          "formatVersion": 1, "operationId": editIdentifier.uuidString,
+          "command": [
+            "type": "editItem", "sourceId": source.id.uuidString,
+            "changes": ["location": secondLocation],
+            "expectedFieldHashes": ["location": try #require(originalHashes["location"])],
+          ],
+        ])
+      let edited = try value(try await httpSession.data(for: editRequest))
+      #expect(edited["state"] as? String == "applied")
+      let beforeStale = try value(try await httpSession.data(for: sourceRequest))
+      let currentSource = try #require(beforeStale["value"] as? [String: Any])
+      let currentHashes = try #require(currentSource["fieldHashes"] as? [String: String])
+      let staleRequest = try request(
+        endpoint: endpoint, name: "planner_execute",
+        arguments: [
+          "formatVersion": 1, "operationId": UUID().uuidString,
+          "command": [
+            "type": "editItem", "sourceId": source.id.uuidString,
+            "changes": ["title": "Rejected title", "location": firstLocation],
+            "expectedFieldHashes": originalHashes,
+          ],
+        ])
+      let rejected = try rejection(try await httpSession.data(for: staleRequest))
+      let reason = try #require(rejected["reason"] as? [String: Any])
+      #expect(reason["code"] as? String == "staleEdit")
+      let details = try #require(reason["details"] as? [String: Any])
+      #expect(details["kind"] as? String == "staleEdit")
+      #expect(details["conflictingFields"] as? [String] == ["location"])
+      let currentValues = try #require(details["currentValues"] as? [String: Any])
+      #expect(
+        NSDictionary(dictionary: try #require(currentValues["location"] as? [String: Any])).isEqual(
+          to: secondLocation))
+      #expect(
+        details["currentFieldHashes"] as? [String: String] == [
+          "location": try #require(currentHashes["location"])
+        ])
+      let afterStale = try value(try await httpSession.data(for: sourceRequest))
+      #expect(NSDictionary(dictionary: afterStale).isEqual(to: beforeStale))
+      let clearRequest = try request(
+        endpoint: endpoint, name: "planner_execute",
+        arguments: [
+          "formatVersion": 1, "operationId": UUID().uuidString,
+          "command": [
+            "type": "editItem", "sourceId": source.id.uuidString, "changes": ["location": NSNull()],
+            "expectedFieldHashes": ["location": try #require(currentHashes["location"])],
+          ],
+        ])
+      let cleared = try value(try await httpSession.data(for: clearRequest))
+      #expect((cleared["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "3")
+      let clearedSource = try value(try await httpSession.data(for: sourceRequest))
+      let replayed = try value(try await httpSession.data(for: editRequest))
+      #expect(NSDictionary(dictionary: replayed).isEqual(to: edited))
+      let retained = try value(try await httpSession.data(for: sourceRequest))
+      #expect(NSDictionary(dictionary: retained).isEqual(to: clearedSource))
+      let retainedContent = try #require(
+        (retained["value"] as? [String: Any])?["content"] as? [String: Any])
+      #expect(retainedContent["title"] as? String == "Hotel")
+      #expect(retainedContent["notes"] as? String == "Original notes")
+      #expect(retainedContent["location"] is NSNull)
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   @Test func malformedOwnedLinksRejectTogetherWithoutChangingTheSavedSourceOrWindow() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
