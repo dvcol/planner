@@ -1,12 +1,12 @@
 # Apple test access
 
-Partial setup evidence for [Apple test access](https://github.com/dvcol/planner/issues/7), refreshed on 2026-10-09 for Navigation prototype readiness. The read-only refresh matches the 2026-10-08 inventory below. This records toolchain and destination inventory. It does not prove a signed app launch, CloudKit access, extension execution, or planner correctness.
+Partial setup evidence for [Apple test access](https://github.com/dvcol/planner/issues/7), refreshed on 2026-10-09 for Navigation prototype readiness. The read-only refresh matches the 2026-10-08 inventory below. Subsequent local native/Core/MCP execution is recorded separately below. Selected-team signing, physical-device launch, CloudKit access and extension execution remain unverified.
 
 ## Observed environment
 
 | Check | Observed result | What it proves |
 | --- | --- | --- |
-| Host | Apple silicon, macOS 27.0.1, build 26A434 | The local Mac now meets the app's macOS 27 runtime minimum. An app launch remains unverified. |
+| Host | Apple silicon, macOS 27.0.1, build 26A434 | The local Mac meets the runtime minimum. Local test-host execution is recorded below; provisioned app launch remains unverified. |
 | Default developer directory | `/Library/Developer/CommandLineTools` | Unqualified `xcodebuild` fails because the default points to Command Line Tools. |
 | Full Xcode installation | `/Applications/Xcode.app`, Xcode 27.0, build 27A266a | A full OS 27 toolchain is installed and can be selected per command. |
 | Swift compiler | Scoped Xcode and default `swift --version` both report Apple Swift 6.4 | Compiler discovery succeeds after the OS upgrade; use scoped Xcode selection for builds. |
@@ -16,7 +16,7 @@ Partial setup evidence for [Apple test access](https://github.com/dvcol/planner/
 | Simulator destinations | Five available iPhone and six available iPad destinations for iOS 27 | Mobile prototype destinations exist; no simulator was booted or app launched. |
 | Human-reported physical devices | The user has an iPhone and iPad running OS 27 available | Ownership/availability is confirmed by the user; exact model, OS build, pairing and Developer Mode remain to verify. |
 | Physical-device discovery | Refreshed `devicectl list devices` succeeded with an empty device list | The available devices are not yet discoverable by this Xcode host. Pairing/connection and signed execution remain unverified. |
-| Signing, team, iCloud account, container and App Group | Not selected or verified | These remain human inputs and later signed-runtime checks. |
+| Signing, team, iCloud account, container and App Group | A 2026-10-09 read-only signing inventory finds zero valid identities; selected team and provisioned identifiers remain unverified | The local app uses ad hoc signing. Selected-team, Keychain-reader, App Group and CloudKit checks remain required. |
 
 The 2026-10-07 macOS 26.6.2 observation is superseded by this refresh. Current host-access simulator and device discovery succeeded. Initial sandbox failures on the previous run did not establish missing runtimes or devices. The developer-directory default was not changed.
 
@@ -26,7 +26,7 @@ Account requirements were checked against current Apple documentation on 2026-10
 
 | Work | Account or capability gate | What remains unverified here |
 | --- | --- | --- |
-| Specification, local PlannerCore tests, simulator layouts and ordinary local Mac prototype | No paid membership required. | Runnable source, agreed public test seams, build and test evidence have not been supplied yet. |
+| Specification, local PlannerCore tests, simulator layouts and ordinary local Mac prototype | No paid membership required. | Native project, agreed Core/HTTP seams and local build/test evidence are now supplied below. Navigation UI approval and runtime comparisons remain pending. |
 | Basic personal iPhone/iPad app testing | A free Apple Account signed into Xcode can use a Personal Team. | Selected team, device pairing, Developer Mode, provisioning and actual launches. |
 | Private CloudKit setup and two-device synchronization | Access to an active Apple Developer Program team with appropriate setup authority. | Container selection, account arrangement, entitlements and actual development/production access. |
 | App Group configuration for app/Share targets | Apple currently lists App groups as available to free Apple Developers on iOS and macOS; verify the actual selected team's arrangement. | Group registration/configuration, signing and cross-process access for the chosen targets. |
@@ -38,6 +38,14 @@ Apple's [CloudKit setup instructions](https://developer.apple.com/documentation/
 Team selection can wait while the remaining domain and interface decisions proceed. It must be settled before the gated signing/CloudKit checks. This does not remove CloudKit from the accepted V0 foundation or daily-use quality gates, and does not allow local/simulator evidence to stand in for physical sync evidence.
 
 [Navigation prototype](https://github.com/dvcol/planner/issues/14) and [MCP session prototype](https://github.com/dvcol/planner/issues/16) use disposable local fixtures and verify their own applicable build/launch and access requirements. They can proceed after their domain/build prerequisites without completing this task's CloudKit checks. [Sync and share prototype](https://github.com/dvcol/planner/issues/15) still depends on completing Apple test access. Its physical two-device and extension evidence remains required.
+
+## Local prototype evidence and remaining gates
+
+The prototype/mcp branch now contains the committed native Xcode project, shared schemes and local PlannerCore package. The [native build report](../prototypes/mcp-native-build.md), [Core qualification](../prototypes/core-local-qualification.md) and [MCP qualification](../prototypes/mcp-http-qualification.md) record the actual source snapshots, commands and limits. Clean committed 94c75fc reproduces twenty hosted MCP functions, thirteen Core package store functions and a generic iOS Simulator app build with fresh products. The later SDK-constructor correction separately passes twenty hosted functions. The isolated read workload completes all 384 requests. These results establish the stated local prototype behaviors and compilation, not physical-device, provisioned identity or CloudKit access.
+
+Xcode launches the ad hoc signed Mac test host for the hosted tests. That does not satisfy the selected-team launch, signed Keychain reader or signing-update requirements. A refreshed read-only `security find-identity -v -p codesigning` count on 2026-10-09 still reports zero valid identities. The prototype uses an org.example bundle identifier and has no provisioned App Group. No account, team, container or device configuration has been changed by these local checks.
+
+The remaining human frontier is concrete: select the signing team and supply Team ID, app bundle ID and App Group ID, or request guided setup; authorize the intended test account/container arrangement; make the physical iPhone and iPad discoverable and authorize their provisioning. The pending Q34 UI-test boundary and Q35 itinerary-only label confirmation belong to navigation readiness. Neither the local evidence nor these pending questions closes Apple test access, native navigation, MCP or sync/share acceptance.
 
 ## Reproduce the inventory
 
