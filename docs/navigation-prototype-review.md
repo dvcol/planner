@@ -2,6 +2,8 @@
 
 Readiness proposal for [Navigation prototype](https://github.com/dvcol/planner/issues/14), claimed after [Shared command contracts](https://github.com/dvcol/planner/issues/13#issuecomment-6070841289) resolved. This is a concrete public UI test proposal, not runnable code or accepted final layouts. Q33 accepts the underlying Core/adapter interfaces. Existing domain behavior and quality gates carry forward.
 
+The starting state below describes when this proposal was prepared. The prototype/mcp branch now contains a native Xcode project, shared Core package and runnable local Core/HTTP qualification, recorded in the [native build](prototypes/mcp-native-build.md), [Core](prototypes/core-local-qualification.md) and [MCP](prototypes/mcp-http-qualification.md) reports. The navigation comparison and its new UI test boundary still await Q34/Q35. Native test-host launches do not establish reviewed navigation or physical-device behavior.
+
 ## Context, starting state and goal
 
 The app needs native iPhone, iPad and Mac navigation for both capture/organization and itinerary/scheduling. The checkout contains accepted contracts and fixed data, with no Xcode project or running app. Navigation prototype must commit the native app/package/test setup and demonstrate its interactions before a production implementation begins.
