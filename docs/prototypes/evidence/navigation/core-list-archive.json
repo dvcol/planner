@@ -1,0 +1,101 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "910eebf",
+  "scope": "Container-only Archive/Unarchive for empty Lists through the shared native content writer and advertised HTTP command.",
+  "packageExecutions": {
+    "Red": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListArchiveRed.log",
+      "failure": "The native setArchive route rejects a List as unavailable before implementation."
+    },
+    "Green": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListArchiveGreen.log"
+    },
+    "Qualification": {
+      "result": "Passed",
+      "totalTestCount": 60,
+      "suiteCount": 21,
+      "passedTests": 60,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "log": "/private/tmp/PlannerCoreListArchiveQualification.log"
+    }
+  },
+  "nativeExecutions": {
+    "SchemaRed": {
+      "result": "Failed",
+      "totalTestCount": 4,
+      "passedTests": 3,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPListArchiveSchemaRed.xcresult",
+      "log": "/private/tmp/PlannerMCPListArchiveSchemaRed.log",
+      "failure": "The actual tools/list response still advertises Item-only Archive; its required Item/List enum assertion fails before schema correction. Native List Archive execution is already implemented at this stage."
+    },
+    "CoreMac": {
+      "result": "Passed",
+      "totalTestCount": 7,
+      "passedTests": 7,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerCoreListArchiveNativeQualification.xcresult",
+      "log": "/private/tmp/PlannerCoreListArchiveNativeQualification.log"
+    },
+    "MCPQualification": {
+      "result": "Passed",
+      "totalTestCount": 47,
+      "passedTests": 47,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundle": "/private/tmp/PlannerMCPListArchiveQualification.xcresult",
+      "log": "/private/tmp/PlannerMCPListArchiveQualification.log"
+    }
+  },
+  "simulatorCompilation": {
+    "result": "Passed",
+    "runtimeExecuted": false,
+    "signing": "disabled",
+    "log": "/private/tmp/PlannerCoreListArchiveSimulatorBuild.log"
+  },
+  "lint": {
+    "result": "Passed",
+    "files": [
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListArchiveTests.swift",
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift",
+      "PlannerMCPTests/ListRoutingTests.swift"
+    ],
+    "log": "/private/tmp/PlannerCoreListArchiveSwiftLint.log"
+  },
+  "sourceSHA256": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "ea96235e24e7bb67d63c513910401ba9a726babde256b51d4145d0f0f9b93182",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListArchiveTests.swift": "393b5114ef81d5cef09ab39d0936c0998d101beda77d1bfc30a87a2f3683d687",
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift": "2b9e0ead52dc5194c60a6a1591cf1ad7ba005d8bf1a661104868a9d23f1b8aa2",
+    "PlannerMCPTests/ListRoutingTests.swift": "e203955d3b26fd4a80462c526b37537afc67ef7253e20bb339ce90c85da804f4"
+  },
+  "observations": [
+    "Archive updates the List own flag and timestamp while retaining identity/lifetime, content, four hashes, createdAt and No items progress with no global completion. A same-state Archive retains updatedAt while saving its operation.",
+    "Guarded content editing of an archived List retains archive state. Explicit Unarchive survives facade reopen; old successful Archive replay returns its original checkpoint and cannot reapply the old flag. A changed old operation payload rejects.",
+    "Historical and latest acknowledged portable snapshots preserve their corresponding List archive/content state and unrelated Item/Schedule data. Item content/time/hashes and Schedule form/hash remain unchanged.",
+    "A missing List identity and real independent-recovery file obstruction reject without applied/prepared evidence or changing saved state/checkpoint.",
+    "Actual tools/list advertises Item/List Archive after the recorded schema red. HTTP Archive/Unarchive/read and old replay use the same native saved state and receipt; 47 affected MCP functions pass.",
+    "The existing guarded List edit tests remain passing against the shared content/archive writer; no new native data schema or portable-format version."
+  ],
+  "limits": [
+    "The Lists in this slice are empty. Referenced-child/archive preservation must be qualified once memberships exist.",
+    "Catalogs, memberships/local completion/order, Itineraries/labels/full graph and saved native controls remain required.",
+    "Prepared-content inspection, postcommit interruption, actual Share, signing/clients/reader, physical CloudKit/account convergence and performance remain open.",
+    "Simulator is compilation only. ReadLoadTests remains excluded from the affected MCP regression."
+  ]
+}

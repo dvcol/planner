@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create and edit Items and Lists, complete/reopen or archive/unarchive Items, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
+        "Create and edit Items and Lists, complete/reopen Items, archive/unarchive Items and Lists, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -185,7 +185,9 @@
           "type": .string("object"), "additionalProperties": .bool(false),
           "required": .array([.string("kind"), .string("id")]),
           "properties": .object([
-            "kind": .object(["type": .string("string"), "const": .string("item")]),
+            "kind": .object([
+              "type": .string("string"), "enum": .array([.string("item"), .string("list")]),
+            ]),
             "id": .object(["type": .string("string"), "format": .string("uuid")]),
           ]),
         ]),

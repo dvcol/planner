@@ -563,6 +563,117 @@ struct ListRoutingTests {
     }
   }
 
+  @Test func advertisedListArchiveRoutesWithoutChangingContentOrReapplyingOldState() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let result, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createList(content: PlannerListContentInput(name: "Wishlist", notes: "Keep")))
+      ).outcome,
+      let list = result.generated.first,
+      case .source(.list(let original)) = await planner.read(
+        session: datasetSession, request: .source(list))
+    else {
+      Issue.record("A native List must save before advertised HTTP Archive/Unarchive.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      var toolsRequest = try request(endpoint: endpoint, name: "planner_read", arguments: [:])
+      toolsRequest.httpBody = try JSONSerialization.data(withJSONObject: [
+        "jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": [:],
+      ])
+      let exchange = try await httpSession.data(for: toolsRequest)
+      #expect((exchange.1 as? HTTPURLResponse)?.statusCode == 200)
+      let toolsEnvelope = try #require(
+        JSONSerialization.jsonObject(with: exchange.0) as? [String: Any])
+      let tools = try #require(
+        (toolsEnvelope["result"] as? [String: Any])?["tools"] as? [[String: Any]])
+      let executionTool = try #require(tools.first { $0["name"] as? String == "planner_execute" })
+      let properties = try #require(
+        (executionTool["inputSchema"] as? [String: Any])?["properties"] as? [String: Any])
+      let commands = try #require(
+        (properties["command"] as? [String: Any])?["oneOf"] as? [[String: Any]])
+      let archive = try #require(
+        commands.first {
+          (($0["properties"] as? [String: Any])?["type"] as? [String: Any])?["const"] as? String
+            == "setArchive"
+        })
+      let archiveProperties = try #require(archive["properties"] as? [String: Any])
+      let sourceProperties = try #require(
+        (archiveProperties["source"] as? [String: Any])?["properties"] as? [String: Any])
+      #expect(
+        (sourceProperties["kind"] as? [String: Any])?["enum"] as? [String] == ["item", "list"])
+      let archiveArguments: [String: Any] = [
+        "formatVersion": 1, "operationId": UUID().uuidString,
+        "command": [
+          "type": "setArchive", "source": ["kind": "list", "id": list.id.uuidString],
+          "archived": true,
+        ],
+      ]
+      let archived = try value(
+        try await httpSession.data(
+          for: request(endpoint: endpoint, name: "planner_execute", arguments: archiveArguments)))
+      #expect((archived["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "2")
+      let readArguments: [String: Any] = [
+        "formatVersion": 1,
+        "request": ["kind": "source", "source": ["kind": "list", "id": list.id.uuidString]],
+      ]
+      let archivedRead = try value(
+        try await httpSession.data(
+          for: request(endpoint: endpoint, name: "planner_read", arguments: readArguments)))
+      let archivedValue = try #require(archivedRead["value"] as? [String: Any])
+      #expect((archivedValue["state"] as? [String: Any])?["archived"] as? Bool == true)
+      #expect((archivedValue["state"] as? [String: Any])?["globalDone"] is NSNull)
+      #expect((archivedValue["progress"] as? [String: Any])?["state"] as? String == "empty")
+      let unarchived = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_execute",
+            arguments: [
+              "formatVersion": 1, "operationId": UUID().uuidString,
+              "command": [
+                "type": "setArchive", "source": ["kind": "list", "id": list.id.uuidString],
+                "archived": false,
+              ],
+            ])))
+      #expect((unarchived["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "3")
+      let replay = try value(
+        try await httpSession.data(
+          for: request(endpoint: endpoint, name: "planner_execute", arguments: archiveArguments)))
+      #expect(NSDictionary(dictionary: replay).isEqual(to: archived))
+      guard
+        case .source(.list(let current)) = await planner.read(
+          session: datasetSession, request: .source(list)),
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
+      else {
+        await listener.stop()
+        Issue.record("Unarchive must remain saved after old HTTP Archive replay.")
+        return
+      }
+      #expect(current.state.archived == false)
+      #expect(current.state.globalDone == nil)
+      #expect(current.content == original.content)
+      #expect(current.fieldHashes == original.fieldHashes)
+      #expect(current.createdAt == original.createdAt)
+      #expect(namespaces.first?.acknowledgedSnapshot?.checkpointGeneration == 3)
+      #expect(namespaces.first?.preparedProposals.isEmpty == true)
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   private func rejected(_ exchange: (Data, URLResponse)) throws -> [String: Any] {
     #expect((exchange.1 as? HTTPURLResponse)?.statusCode == 200)
     let envelope = try #require(JSONSerialization.jsonObject(with: exchange.0) as? [String: Any])

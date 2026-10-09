@@ -13,6 +13,10 @@ public actor Planner {
     case archive(Bool)
     case completion(Bool)
   }
+  private enum ListChange {
+    case content(PlannerListChanges, [PlannerListField: PlannerFieldHash])
+    case archive(Bool)
+  }
 
   public init(configuration: PlannerStorageConfiguration) {
     self.configuration = configuration
@@ -109,8 +113,8 @@ public actor Planner {
         let envelope = try archive.latest()
         switch operation.command {
         case .editList(let sourceId, let changes, let hashes):
-          return try executeListEdit(
-            operation, sourceId: sourceId, changes: changes, hashes: hashes,
+          return try executeListChange(
+            operation, sourceId: sourceId, change: .content(changes, hashes),
             identity: identity, context: context, archive: archive, receipts: receipts,
             envelope: envelope)
         case .createList(let content):
@@ -130,6 +134,11 @@ public actor Planner {
               archive: archive, receipts: receipts, envelope: envelope)
           }
         case .setArchive(let source, let archived):
+          if source.kind == .list {
+            return try executeListChange(
+              operation, sourceId: source.id, change: .archive(archived), identity: identity,
+              context: context, archive: archive, receipts: receipts, envelope: envelope)
+          }
           return try executeItemStateChange(
             operation, source: source, change: .archive(archived), identity: identity,
             context: context,
@@ -725,13 +734,22 @@ public actor Planner {
     }
   }
 
-  private func executeListEdit(
-    _ operation: PlannerOperation, sourceId: UUID, changes: PlannerListChanges,
-    hashes: [PlannerListField: PlannerFieldHash], identity: PlannerStoreIdentity,
+  private func executeListChange(
+    _ operation: PlannerOperation, sourceId: UUID, change: ListChange,
+    identity: PlannerStoreIdentity,
     context: ModelContext, archive: PlannerRecoveryArchive,
     receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
   ) throws -> PlannerOperationResult {
-    let fields = try changes.validatedFields()
+    let fields: [PlannerListField]
+    let hashes: [PlannerListField: PlannerFieldHash]
+    switch change {
+    case .content(let changes, let values):
+      fields = try changes.validatedFields()
+      hashes = values
+    case .archive:
+      fields = []
+      hashes = [:]
+    }
     for field in fields where hashes[field] == nil {
       throw PlannerFailure(
         "invalidInput", "Every changed field requires its prior hash.",
@@ -750,8 +768,8 @@ public actor Planner {
     }
     if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
       let stored = try receipt.evidence()
-      let digest = try changes.payloadDigest(
-        sourceId: sourceId, fields: fields, hashes: hashes, identity: identity,
+      let digest = try listChangePayloadDigest(
+        change: change, sourceId: sourceId, fields: fields, identity: identity,
         bindings: stored.bindings)
       guard receipt.payloadDigest == digest else {
         throw PlannerFailure(
@@ -775,8 +793,8 @@ public actor Planner {
     let bindings = [
       PlannerBoundIdentity(kind: "list", id: before.id, lifetimeId: before.lifetimeId)
     ]
-    let digest = try changes.payloadDigest(
-      sourceId: sourceId, fields: fields, hashes: hashes, identity: identity, bindings: bindings)
+    let digest = try listChangePayloadDigest(
+      change: change, sourceId: sourceId, fields: fields, identity: identity, bindings: bindings)
     if let proposal = try archive.proposals().first(where: {
       $0.originalOperationId == operation.operationId
     }) {
@@ -798,12 +816,24 @@ public actor Planner {
             uniqueKeysWithValues: conflictingFields.map { ($0, before.fieldValue($0)) }),
           currentFieldHashes: currentHashes.filter { conflictingFields.contains($0.key) }))
     }
-    let content = changes.applying(to: before.content)
+    let content: PlannerListContent
+    let archived: Bool
+    let updatedAt: Date
+    switch change {
+    case .content(let changes, _):
+      content = changes.applying(to: before.content)
+      archived = before.archived
+      updatedAt = Date()
+    case .archive(let value):
+      content = before.content
+      archived = value
+      updatedAt = value == before.archived ? before.updatedAt : Date()
+    }
     let colorData = try content.color.map { try JSONEncoder().encode($0) }
-    let now = Date()
     let after = ListSnapshot(
-      id: before.id, lifetimeId: before.lifetimeId, createdAt: before.createdAt, updatedAt: now,
-      content: content, archived: before.archived)
+      id: before.id, lifetimeId: before.lifetimeId, createdAt: before.createdAt,
+      updatedAt: updatedAt,
+      content: content, archived: archived)
     let snapshots = try lists.map { record in
       if record.id == sourceId { return after }
       return try record.value()
@@ -823,13 +853,14 @@ public actor Planner {
     if fields.contains(.notes) { list.notes = content.notes }
     if fields.contains(.color) { list.colorData = colorData }
     if fields.contains(.iconName) { list.iconName = content.iconName }
-    list.updatedAt = now
+    list.archived = archived
+    list.updatedAt = updatedAt
     context.insert(receipt)
     do { try context.save() } catch {
       context.rollback()
       throw PlannerFailure(
         "persistenceFailure",
-        "The complete List edit was not committed: \(error.localizedDescription)")
+        "The complete List action was not committed: \(error.localizedDescription)")
     }
     do {
       let generation = try archive.publish(
@@ -843,6 +874,21 @@ public actor Planner {
         operationId: operation.operationId,
         outcome: .applied(
           result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
+  }
+
+  private func listChangePayloadDigest(
+    change: ListChange, sourceId: UUID, fields: [PlannerListField], identity: PlannerStoreIdentity,
+    bindings: [PlannerBoundIdentity]
+  ) throws -> String {
+    switch change {
+    case .content(let changes, let hashes):
+      return try changes.payloadDigest(
+        sourceId: sourceId, fields: fields, hashes: hashes, identity: identity, bindings: bindings)
+    case .archive(let value):
+      return sourceStatePayloadDigest(
+        source: PlannerEntityReference(kind: .list, id: sourceId), change: .archive(value),
+        identity: identity, bindings: bindings)
     }
   }
 
@@ -1263,7 +1309,7 @@ public actor Planner {
     }
     if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
       let stored = try receipt.evidence()
-      let digest = itemStatePayloadDigest(
+      let digest = sourceStatePayloadDigest(
         source: source, change: change, identity: identity, bindings: stored.bindings)
       guard receipt.payloadDigest == digest else {
         throw PlannerFailure(
@@ -1288,7 +1334,7 @@ public actor Planner {
     let bindings = [
       PlannerBoundIdentity(kind: "item", id: before.id, lifetimeId: before.lifetimeId)
     ]
-    let digest = itemStatePayloadDigest(
+    let digest = sourceStatePayloadDigest(
       source: source, change: change, identity: identity, bindings: bindings)
     if let proposal = try archive.proposals().first(where: {
       $0.originalOperationId == operation.operationId
@@ -1357,7 +1403,7 @@ public actor Planner {
     }
   }
 
-  private func itemStatePayloadDigest(
+  private func sourceStatePayloadDigest(
     source: PlannerEntityReference, change: ItemStateChange, identity: PlannerStoreIdentity,
     bindings: [PlannerBoundIdentity]
   ) -> String {
