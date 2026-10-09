@@ -302,14 +302,17 @@
         "state": .string("rejected"), "reason": failureValue(code, path, message),
       ])
       do { return try result(value, isError: true) } catch {
-        return CallTool.Result(content: [.text(text: message)], isError: true)
+        return CallTool.Result(
+          content: [.text(text: message, annotations: nil, _meta: nil)], isError: true)
       }
     }
 
     private static func result(_ value: Value, isError: Bool) throws -> CallTool.Result {
       let serialized = try JSONEncoder().encode(value)
       return CallTool.Result(
-        content: [.text(text: String(decoding: serialized, as: UTF8.self))],
+        content: [
+          .text(text: String(decoding: serialized, as: UTF8.self), annotations: nil, _meta: nil)
+        ],
         structuredContent: Optional.some(value), isError: isError)
     }
 

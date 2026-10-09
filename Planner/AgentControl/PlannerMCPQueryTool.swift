@@ -132,7 +132,9 @@
           ])
           let serialized = try JSONEncoder().encode(value)
           return CallTool.Result(
-            content: [.text(text: String(decoding: serialized, as: UTF8.self))],
+            content: [
+              .text(text: String(decoding: serialized, as: UTF8.self), annotations: nil, _meta: nil)
+            ],
             structuredContent: Optional.some(value), isError: false)
         }
       } catch let failure as AdmissionFailure {

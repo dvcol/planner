@@ -1,0 +1,53 @@
+{
+  "scope": "Affected hosted MCP regression after replacing four deprecated SDK text constructors with the documented enum case",
+  "summary": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 26,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "Planner \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791516155.982,
+    "passedTests": 20,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1791516150.124,
+    "statistics": [
+      {
+        "subtitle": "9 test runs",
+        "title": "3 tests ran with dynamic parameters"
+      }
+    ],
+    "testFailures": [],
+    "title": "Test - Planner",
+    "topInsights": [],
+    "totalTestCount": 20
+  },
+  "resultBundle": "/private/tmp/PlannerMCPTextAPIFinal.xcresult",
+  "log": "/private/tmp/PlannerMCPTextAPIFinal.log",
+  "api": "Tool.Content.text(text:annotations:_meta:) with nil annotations and nil metadata, matching the official SDK compatibility factory body",
+  "sourceDeprecationDiagnostics": "No deprecation diagnostic appears in the affected rebuild log.",
+  "limitations": [
+    "No new behavior or behavioral red claim; existing HTTP text/structured-result assertions remain passing.",
+    "Uses existing derived products; this regression is separate from the earlier archived clean-source snapshot.",
+    "ReadLoadTests remains excluded from the ordinary suite to preserve isolated measurement conditions.",
+    "Metadata extraction/linkd.autoShortcut diagnostics remain and do not establish Intents/Shortcuts support."
+  ]
+}
