@@ -1,11 +1,18 @@
 import SwiftUI
 
+private enum NavigationPrototypeLayout: String, CaseIterable {
+  case library = "Library first"
+  case itinerary = "Itinerary first"
+  case map = "Map alongside list"
+}
+
 /// Native layout experiment. All displayed data comes from the fixed, read-only fixture.
 struct NavigationPrototypeView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   @State private var fixture: NavigationPrototypeFixture?
   @State private var loadError: String?
   @State private var section = "list"
+  @State private var layout: NavigationPrototypeLayout = .library
   @State private var columnVisibility: NavigationSplitViewVisibility = .all
   @State private var selectedContainerId: UUID?
   @State private var selectedAppearance: NavigationPrototypeFixture.Appearance?
@@ -32,42 +39,98 @@ struct NavigationPrototypeView: View {
     }
   }
 
+  private var prototypeToolbar: some ToolbarContent {
+    ToolbarItem(placement: .primaryAction) { prototypeLayoutMenu }
+  }
+
+  private var prototypeLayoutMenu: some View {
+    Menu {
+      ForEach(NavigationPrototypeLayout.allCases, id: \.self) { candidate in
+        Button(candidate.rawValue) { chooseLayout(candidate) }
+      }
+    } label: {
+      Label(layout.rawValue, systemImage: "rectangle.3.group")
+    }
+    .accessibilityLabel("Prototype layouts")
+    .accessibilityIdentifier("prototype.layouts")
+    .help("Navigation prototype layout comparison")
+  }
+
+  @ViewBuilder
+  private var tabletPrototypeControls: some View {
+    #if os(iOS)
+      if horizontalSizeClass == .regular {
+        Section("Prototype layout") { prototypeLayoutMenu }
+      }
+    #endif
+  }
+
   @ViewBuilder
   private func nativeLayout(_ fixture: NavigationPrototypeFixture) -> some View {
     #if os(macOS)
-      splitLayout(fixture)
-        .frame(minWidth: 820, minHeight: 540)
+      if layout == .itinerary {
+        planningLayout(fixture).frame(minWidth: 820, minHeight: 540)
+      } else {
+        splitLayout(fixture).frame(minWidth: 820, minHeight: 540)
+      }
     #else
       if horizontalSizeClass == .compact {
         phoneLayout(fixture)
+      } else if layout == .itinerary {
+        planningLayout(fixture)
       } else {
         splitLayout(fixture)
       }
     #endif
   }
 
+  private func chooseLayout(_ candidate: NavigationPrototypeLayout) {
+    layout = candidate
+    selectSection(candidate == .itinerary ? "itinerary" : "list")
+    columnVisibility = .all
+  }
+
+  private func planningLayout(_ fixture: NavigationPrototypeFixture) -> some View {
+    NavigationSplitView(columnVisibility: $columnVisibility) {
+      catalog(fixture, kind: "itinerary")
+        .navigationTitle("Itineraries")
+        .navigationSplitViewColumnWidth(min: 200, ideal: 250)
+    } detail: {
+      ContentUnavailableView(
+        "Choose an Itinerary", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+    }
+    .navigationSplitViewStyle(.balanced)
+    .toolbar { prototypeToolbar }
+  }
+
   private func phoneLayout(_ fixture: NavigationPrototypeFixture) -> some View {
-    TabView {
+    TabView(selection: $section) {
       NavigationStack {
         catalog(fixture, kind: "list")
           .navigationTitle("Lists")
+          .toolbar { prototypeToolbar }
       }
       .tabItem { Label("Lists", systemImage: "list.bullet") }
       .accessibilityIdentifier("nav.lists")
+      .tag("list")
       NavigationStack {
         catalog(fixture, kind: "item")
           .navigationTitle("Items")
+          .toolbar { prototypeToolbar }
       }
       .tabItem { Label("Items", systemImage: "square.stack") }
       .accessibilityIdentifier("nav.items")
+      .tag("item")
       NavigationStack {
         catalog(fixture, kind: "itinerary")
           .navigationTitle("Itineraries")
+          .toolbar { prototypeToolbar }
       }
       .tabItem {
         Label("Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
       }
       .accessibilityIdentifier("nav.itineraries")
+      .tag("itinerary")
     }
   }
 
@@ -103,6 +166,7 @@ struct NavigationPrototypeView: View {
           }
         }
         fixtureNotice
+        tabletPrototypeControls
       }
       .navigationTitle("Planner")
       .navigationSplitViewColumnWidth(min: 190, ideal: 230)
@@ -121,14 +185,19 @@ struct NavigationPrototypeView: View {
       if let selectedSourceId, let source = fixture.source(selectedSourceId) {
         PrototypeItemDetail(fixture: fixture, source: source, appearance: nil)
       } else if let selectedAppearance, let source = fixture.source(selectedAppearance.sourceId) {
-        PrototypeItemDetail(fixture: fixture, source: source, appearance: selectedAppearance) {
-          selectedSourceId = source.id
+        if layout == .map {
+          PrototypeMapItemDetail(fixture: fixture, source: source, appearance: selectedAppearance)
+        } else {
+          PrototypeItemDetail(fixture: fixture, source: source, appearance: selectedAppearance) {
+            selectedSourceId = source.id
+          }
         }
       } else {
         ContentUnavailableView("Choose an Item", systemImage: "square.stack")
       }
     }
     .navigationSplitViewStyle(.balanced)
+    .toolbar { prototypeToolbar }
   }
 
   private var sectionTitle: String {
@@ -153,7 +222,7 @@ struct NavigationPrototypeView: View {
           if source.kind == "item" {
             PrototypeItemDetail(fixture: fixture, source: source, appearance: nil)
           } else {
-            PrototypeContainerView(fixture: fixture, container: source)
+            PrototypeContainerView(fixture: fixture, container: source, showMap: layout == .map)
           }
         } label: {
           VStack(alignment: .leading) {
@@ -166,6 +235,7 @@ struct NavigationPrototypeView: View {
         .accessibilityIdentifier("\(source.kind).\(source.id.uuidString)")
       }
       fixtureNotice
+      tabletPrototypeControls
     }
   }
 
@@ -182,6 +252,7 @@ struct NavigationPrototypeView: View {
 private struct PrototypeContainerView: View {
   let fixture: NavigationPrototypeFixture
   let container: NavigationPrototypeFixture.Source
+  var showMap = false
   var selectAppearance: ((NavigationPrototypeFixture.Appearance) -> Void)?
   @State private var completion = "todo"
   @State private var archive = "active"
@@ -224,7 +295,11 @@ private struct PrototypeContainerView: View {
               .accessibilityIdentifier("appearance.\(appearance.id)")
             } else {
               NavigationLink {
-                PrototypeItemDetail(fixture: fixture, source: source, appearance: appearance)
+                if showMap {
+                  PrototypeMapItemDetail(fixture: fixture, source: source, appearance: appearance)
+                } else {
+                  PrototypeItemDetail(fixture: fixture, source: source, appearance: appearance)
+                }
               } label: {
                 row(source, appearance: appearance)
               }
@@ -264,7 +339,7 @@ private struct PrototypeContainerView: View {
   }
 }
 
-private struct PrototypeItemDetail: View {
+struct PrototypeItemDetail: View {
   let fixture: NavigationPrototypeFixture
   let source: NavigationPrototypeFixture.Source
   let appearance: NavigationPrototypeFixture.Appearance?
@@ -293,19 +368,19 @@ private struct PrototypeItemDetail: View {
         }
       }
       Section("Prototype identity inspection") {
-        identityValue("Source identity", identifier: source.id)
+        identityValue("Source identity", identifier: source.id.uuidString)
         if let appearance {
-          identityValue("Appearance identity", identifier: appearance.associationId)
+          identityValue("Appearance identity", identifier: appearance.id)
         }
       }
     }
     .navigationTitle(source.title)
   }
 
-  private func identityValue(_ label: String, identifier: UUID) -> some View {
+  private func identityValue(_ label: String, identifier: String) -> some View {
     VStack(alignment: .leading, spacing: 4) {
       Text(label).font(.caption).foregroundStyle(.secondary)
-      Text(identifier.uuidString).font(.caption.monospaced()).textSelection(.enabled)
+      Text(identifier).font(.caption.monospaced()).textSelection(.enabled)
     }
   }
 }

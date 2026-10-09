@@ -51,6 +51,43 @@ DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild \
 
 Substitute `platform=iOS Simulator,name=iPhone 18 Pro` for phone. Use `platform=macOS,arch=arm64` and a separate derived-data directory for Mac compilation. Mac UI execution remains unqualified. Xcode's unsuccessful simulator diagnostic collection reported that its subprocess could not locate simctl under the global Command Line Tools selection; the executed test logs and result summaries still exist. No global toolchain setting was changed.
 
+## Three layout comparisons
+
+The layout selector now offers Library first, Itinerary first and Map alongside list. On phone it is a native navigation toolbar menu; Itinerary first initially selects the Itineraries tab. On iPad regular width it is a clearly marked menu row in the native sidebar. Mac uses the native toolbar. The earlier global inset chooser interfered with phone tab or iPad sidebar taps; regression checks exposed this and the chooser was moved into platform controls.
+
+Library first presents the catalog, contextual contents and detail columns. Itinerary first uses a two-column itinerary catalog/ordered-child view on larger screens. Map alongside list replaces selected appearance detail with native MapKit and opens its unchanged appearance in a native inspection sheet. An Item without owned coordinates has a No location view and remains available. The map renders the fixture's owned coordinate, not a geocoded position for the museum's name. It currently shows the selected appearance; a full filtered map of all places remains unqualified. This is a presentation comparison over the same read-only fixture, with no completion, archive or saved-content writes.
+
+| Public journey | Phone | iPad portrait | Observable outcome |
+| --- | --- | --- | --- |
+| Library filter/selection/source | Pass | Pass | 1 of 2; membership 401 Local Done / Global Todo; explicit source 101; itinerary 0 of 3. |
+| Itinerary-first selection | Pass | Pass | Direct entry 451 Local Todo / Global Todo, independently of membership 401; itinerary 0 of 3. |
+| Map pin and generic Item | Pass | Pass | Pin opens membership 401 with retained local/global flags; archived generic membership 402 remains visible under All and shows No location. |
+
+The complete affected UI target executes three journeys on each simulator, with zero failures/skips: [phone summary](evidence/navigation/layouts-phone.json), [tablet summary](evidence/navigation/layouts-tablet.json). The new slices each started with an executed failing test: [itinerary-first red](evidence/navigation/planning-red.json), [map red](evidence/navigation/map-red.json). The chooser accessibility probes were adapted to native controls and collapsed iPad sidebars; the agreed observable identities, completion flags and progress did not change.
+
+| Comparison | Actual phone | Actual iPad |
+| --- | --- | --- |
+| Library detail | [Phone](evidence/navigation/layouts/phone-library.png) | [iPad](evidence/navigation/layouts/tablet-library.png) |
+| Itinerary first | [Phone](evidence/navigation/layouts/phone-planning.png) | [iPad](evidence/navigation/layouts/tablet-planning.png) |
+| Map alongside list | [Phone](evidence/navigation/layouts/phone-map.png) | [iPad](evidence/navigation/layouts/tablet-map.png) |
+| Generic Item | [Phone](evidence/navigation/layouts/phone-no-location.png) | [iPad](evidence/navigation/layouts/tablet-no-location.png) |
+
+Raw current UI bundles are `/private/tmp/PlannerNavigationThreeJourneysPhone.xcresult` and `/private/tmp/PlannerNavigationThreeJourneysTablet.xcresult`. Use the same focused scheme/destinations above without the single `-only-testing` argument to run its three UI journeys. The current native Mac app and UI runner also compile with local ad hoc signing; Mac UI automation remains unqualified because runner initialization timed out. The updated app host's two existing public MCP read/command suites pass four test methods, with [reported counts and outcome](evidence/navigation/mac-host-regression.json). That verifies the affected host still supports those local routes, not every MCP feature or client.
+
+MapKit uses Apple's [native Map and Annotation API](https://developer.apple.com/documentation/mapkit/map). Fixture location values use the existing shared PlannerCore owned-location type. No additional package, provider enrichment, location permission or Calendar export is introduced.
+
+Q36 asks how a live List entry should appear inside an itinerary. The current two identically titled Nezu Museum rows expose the issue. Expanded named List groups, flat rows with source-List subtitles and compact navigable List rows have different scanning/navigation costs; none changes independent appearance state or child-based progress. The user has not yet selected that presentation. Final layouts remain subject to actual human review.
+
+## Expanded appearance identity correction
+
+The next agreed journey opens Nezu Museum through Tokyo Food inside Tokyo Weekend. Its detail must show Local Todo / Global Todo even though the standalone List membership is locally Done. The inspector must expose entry 452 and membership 401 together, because membership 401 can occur under multiple itinerary List entries.
+
+The [executed red](evidence/navigation/expanded-identity-red.json) reached that detail and failed at its incomplete displayed identity. The inspector showed only membership 401. The [focused green](evidence/navigation/expanded-identity-green.json) passes after displaying the complete appearance address. The [actual phone screenshot](evidence/navigation/layouts/phone-expanded-appearance.png) shows the unchanged source identity 101, independent Todo flags and full address. The redundant single association ID was removed from the temporary projection.
+
+Raw bundles are `/private/tmp/PlannerNavigationExpandedIdentityRed.xcresult` and `/private/tmp/PlannerNavigationExpandedIdentityGreen.xcresult`. Each executed one test, with one failure before the correction and zero afterward. These focused runs took about 266 seconds overall, including substantial native test startup/teardown time; their action logs span about 12 seconds. They are correctness checks, not the accepted 300 ms physical-device query measurement.
+
+The updated native Mac app and four-journey UI runner compile. A standalone local Mac app process was also launched from its derived products. Process launch does not establish rendered Mac layout, interaction or keyboard/accessibility behavior; the earlier automation startup failure still leaves those gates open. [Source hashes](evidence/navigation/layout-comparison-source.json) identify the corrected comparison code, tests and unchanged fixture.
+
 ## Remaining gates
 
 The first read-only UI slice cannot establish completion writes, query generation/window completeness, ordinary import, recovery, capture, schedules, CloudKit or Share feasibility. Those journeys must use their approved public seams and truthful outcomes as implementation proceeds. All three structural alternatives, persistence/reopen, orientation/resizing, keyboard/focus, Dynamic Type, VoiceOver and human layout decisions remain required. Physical-device long-list latency and memory, signed Share and account/sync tests remain deferred rather than waived.

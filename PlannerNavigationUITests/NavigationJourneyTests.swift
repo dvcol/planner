@@ -39,6 +39,51 @@ final class NavigationJourneyTests: XCTestCase {
     recordScreenshot(application, name: "Tokyo Weekend initial progress")
   }
 
+  func testPlanningLayoutKeepsItineraryAppearanceCompletionIndependent() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launch()
+    openLayoutChooser(in: application)
+    application.buttons["Itinerary first"].tap()
+    let itinerary = application.buttons["itinerary.00000000-0000-4000-8000-000000000301"]
+    if !itinerary.exists { application.buttons["Show Sidebar"].tap() }
+    XCTAssertTrue(itinerary.waitForExistence(timeout: 5))
+    itinerary.tap()
+    XCTAssertTrue(application.staticTexts["0 of 3 done"].exists)
+    recordScreenshot(application, name: "Itinerary first layout")
+    application.buttons["appearance.00000000-0000-4000-8000-000000000451"].tap()
+    XCTAssertTrue(application.staticTexts["Local: Todo"].waitForExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["Global: Todo"].exists)
+    XCTAssertTrue(application.staticTexts["00000000-0000-4000-8000-000000000451"].exists)
+    recordScreenshot(application, name: "Independent itinerary appearance 451")
+  }
+
+  func testExpandedListAppearanceRetainsItsFullItineraryIdentityAndOwnCompletion() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launch()
+    openSection("Itineraries", in: application)
+    application.buttons["itinerary.00000000-0000-4000-8000-000000000301"].tap()
+    application.buttons[
+      "appearance.00000000-0000-4000-8000-000000000452/00000000-0000-4000-8000-000000000401"
+    ].tap()
+    XCTAssertTrue(application.staticTexts["Itinerary list appearance"].waitForExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["Local: Todo"].exists)
+    XCTAssertTrue(application.staticTexts["Global: Todo"].exists)
+    XCTAssertTrue(
+      application.staticTexts[
+        "00000000-0000-4000-8000-000000000452/00000000-0000-4000-8000-000000000401"
+      ].exists)
+    recordScreenshot(application, name: "Expanded itinerary appearance 452 membership 401")
+  }
+
+  private func openLayoutChooser(in application: XCUIApplication) {
+    let layouts = application.descendants(matching: .any)["prototype.layouts"]
+    if !layouts.exists { application.buttons["Show Sidebar"].tap() }
+    XCTAssertTrue(layouts.waitForExistence(timeout: 5))
+    layouts.tap()
+  }
+
   private func openSection(_ title: String, in application: XCUIApplication) {
     if !application.buttons[title].exists {
       let sidebar = application.buttons["Show Sidebar"]
