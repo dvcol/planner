@@ -11,6 +11,7 @@ public struct PlannerPortableList: Sendable {
 }
 
 public enum PlannerPortableSource: Sendable {
+  case itinerary(PlannerPortableItinerary)
   case item(PlannerPortableItem)
   case list(PlannerPortableList)
   case category(PlannerPortableCategory)
@@ -18,6 +19,7 @@ public enum PlannerPortableSource: Sendable {
 
   public var id: UUID {
     switch self {
+    case .itinerary(let itinerary): itinerary.id
     case .item(let item): item.id
     case .list(let list): list.id
     case .category(let category): category.id
@@ -27,6 +29,7 @@ public enum PlannerPortableSource: Sendable {
 
   public var kind: PlannerEntityKind {
     switch self {
+    case .itinerary: .itinerary
     case .item: .item
     case .list: .list
     case .category: .category
@@ -114,6 +117,7 @@ struct PortableListRecord: Codable {
 }
 
 enum PortableSourceRecord: Codable {
+  case itinerary(PortableItineraryRecord)
   case item(PortableItemRecord)
   case list(PortableListRecord)
   case category(PortableCategoryRecord)
@@ -124,6 +128,7 @@ enum PortableSourceRecord: Codable {
   init(from decoder: any Decoder) throws {
     let fields = try decoder.container(keyedBy: CodingKeys.self)
     switch try fields.decode(PlannerEntityKind.self, forKey: .kind) {
+    case .itinerary: self = .itinerary(try PortableItineraryRecord(from: decoder))
     case .item: self = .item(try PortableItemRecord(from: decoder))
     case .list: self = .list(try PortableListRecord(from: decoder))
     case .category: self = .category(try PortableCategoryRecord(from: decoder))
@@ -136,6 +141,7 @@ enum PortableSourceRecord: Codable {
 
   func encode(to encoder: any Encoder) throws {
     switch self {
+    case .itinerary(let itinerary): try itinerary.encode(to: encoder)
     case .item(let item): try item.encode(to: encoder)
     case .list(let list): try list.encode(to: encoder)
     case .category(let category): try category.encode(to: encoder)
@@ -145,6 +151,7 @@ enum PortableSourceRecord: Codable {
 
   var id: UUID {
     switch self {
+    case .itinerary(let itinerary): itinerary.id
     case .item(let item): item.id
     case .list(let list): list.id
     case .category(let category): category.id
@@ -154,6 +161,7 @@ enum PortableSourceRecord: Codable {
 
   var kind: PlannerEntityKind {
     switch self {
+    case .itinerary: .itinerary
     case .item: .item
     case .list: .list
     case .category: .category

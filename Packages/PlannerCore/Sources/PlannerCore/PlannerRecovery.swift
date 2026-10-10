@@ -104,7 +104,8 @@ struct PlannerDataSnapshot: Codable {
   }
 
   init(
-    labelAssociations: [LabelAssociationSnapshot], tags: [TagSnapshot],
+    itineraries: [ItinerarySnapshot], labelAssociations: [LabelAssociationSnapshot],
+    tags: [TagSnapshot],
     categories: [CategorySnapshot],
     items: [ItemSnapshot], lists: [ListSnapshot], memberships: [MembershipSnapshot],
     deletionMarkers: [PortableDeletionMarker]
@@ -123,13 +124,18 @@ struct PlannerDataSnapshot: Codable {
     sources =
       (items.map { PortableSourceRecord.item(PortableItemRecord($0)) }
       + lists.map { PortableSourceRecord.list(PortableListRecord($0)) }
+      + itineraries.map { PortableSourceRecord.itinerary(PortableItineraryRecord($0)) }
       + categories.map { PortableSourceRecord.category(PortableCategoryRecord($0)) }
       + tags.map { PortableSourceRecord.tag(PortableTagRecord($0)) }).sorted {
         $0.id.uuidString < $1.id.uuidString
       }
-    ownedLinks = items.flatMap { item in
-      item.links.map { PortableOwnedLink($0, owner: item) }
-    }.sorted { $0.id.uuidString < $1.id.uuidString }
+    ownedLinks =
+      (items.flatMap { item in
+        item.links.map { PortableOwnedLink($0, owner: item) }
+      }
+      + itineraries.flatMap { itinerary in
+        itinerary.links.map { PortableOwnedLink($0, owner: itinerary) }
+      }).sorted { $0.id.uuidString < $1.id.uuidString }
     schedules = items.flatMap { item in
       item.schedules.map { PortableScheduleRecord($0, owner: item) }
     }.sorted { $0.id.uuidString < $1.id.uuidString }
@@ -206,6 +212,10 @@ struct PlannerDataSnapshot: Codable {
       if case .list(let list) = $0 { return list }
       return nil
     }
+    let itineraryRecords = sources.compactMap { source -> PortableItineraryRecord? in
+      guard case .itinerary(let itinerary) = source else { return nil }
+      return itinerary
+    }
     let lists = try listRecords.map { try $0.validated() }
     let categories = try sources.compactMap { source -> PlannerPortableCategory? in
       guard case .category(let category) = source else { return nil }
@@ -216,7 +226,8 @@ struct PlannerDataSnapshot: Codable {
       return try tag.validated()
     }
     let labels = try labelAssociations.map {
-      try $0.validated(items: itemRecords, categories: categories, tags: tags)
+      try $0.validated(
+        items: itemRecords, itineraries: itineraryRecords, categories: categories, tags: tags)
     }
     let pairs = labels.map {
       $0.owner.kind.rawValue + ":" + $0.owner.id.uuidString + ":" + $0.label.kind.rawValue + ":"
@@ -227,10 +238,12 @@ struct PlannerDataSnapshot: Codable {
         "recoveryIntegrityFailure", "The snapshot contains duplicate label associations or pairs.")
     }
     let linksByOwner = try Dictionary(
-      grouping: ownedLinks.map { try $0.validated(sources: itemRecords) }, by: \.ownerId)
+      grouping: ownedLinks.map {
+        try $0.validated(sources: itemRecords, itineraries: itineraryRecords)
+      }, by: { $0.owner.kind.rawValue + ":" + $0.owner.id.uuidString })
     let items = try itemRecords.map { source in
       let item = try source.validated()
-      let links = (linksByOwner[item.id] ?? []).sorted { left, right in
+      let links = (linksByOwner["item:" + item.id.uuidString] ?? []).sorted { left, right in
         if left.rank != right.rank { return left.rank < right.rank }
         return left.id.uuidString < right.id.uuidString
       }.map(\.read)
@@ -242,14 +255,43 @@ struct PlannerDataSnapshot: Codable {
           notes: item.content.notes, location: item.content.location,
           estimate: item.content.estimate,
           categoryIds: Set(
-            labels.filter { $0.owner.id == item.id && $0.label.kind == .category }.map {
+            labels.filter {
+              $0.owner.kind == .item && $0.owner.id == item.id && $0.label.kind == .category
+            }.map {
               $0.label.id
             }),
           tagIds: Set(
-            labels.filter { $0.owner.id == item.id && $0.label.kind == .tag }.map { $0.label.id })
+            labels.filter {
+              $0.owner.kind == .item && $0.owner.id == item.id && $0.label.kind == .tag
+            }.map { $0.label.id })
         )
         .readContent(links: links),
         globalDone: item.globalDone, archived: item.archived, contentOrigins: item.contentOrigins)
+    }
+    let itineraries = try itineraryRecords.map { record in
+      let itinerary = try record.validated()
+      let links = (linksByOwner["itinerary:" + itinerary.id.uuidString] ?? []).sorted {
+        left, right in
+        if left.rank != right.rank { return left.rank < right.rank }
+        return left.id.uuidString < right.id.uuidString
+      }.map(\.read)
+      let input = PlannerItineraryContentInput(
+        title: itinerary.content.title, notes: itinerary.content.notes,
+        color: itinerary.content.color,
+        iconName: itinerary.content.iconName, location: itinerary.content.location,
+        categoryIds: Set(
+          labels.filter {
+            $0.owner.kind == .itinerary && $0.owner.id == itinerary.id && $0.label.kind == .category
+          }.map { $0.label.id }),
+        tagIds: Set(
+          labels.filter {
+            $0.owner.kind == .itinerary && $0.owner.id == itinerary.id && $0.label.kind == .tag
+          }.map { $0.label.id }))
+      return PlannerPortableItinerary(
+        id: itinerary.id, lifetimeId: itinerary.lifetimeId,
+        createdAt: itinerary.createdAt, updatedAt: itinerary.updatedAt,
+        content: input.readContent(links: links), archived: itinerary.archived,
+        contentOrigins: itinerary.contentOrigins)
     }
     guard Set(schedules.map(\.id)).count == schedules.count else {
       throw PlannerFailure(
@@ -262,6 +304,7 @@ struct PlannerDataSnapshot: Codable {
     return PlannerDecodedBackup(
       backup: PlannerPortableBackup(
         sources: items.map(PlannerPortableSource.item) + lists.map(PlannerPortableSource.list)
+          + itineraries.map(PlannerPortableSource.itinerary)
           + categories.map(PlannerPortableSource.category)
           + tags.map(PlannerPortableSource.tag),
         labelAssociations: labels,
@@ -333,7 +376,7 @@ struct RecoveryEnvelope: Codable {
 
   func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
     guard format == "planner-recovery", formatVersion == 1,
-      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].contains(storageSchemaVersion),
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"].contains(storageSchemaVersion),
       namespaceId == identity.namespaceId, datasetId == identity.datasetId,
       ownershipBinding == identity.ownershipBinding, !ownershipBinding.isEmpty,
       let generation = Int64(checkpointGeneration), generation > 0,
@@ -413,7 +456,8 @@ struct PlannerRecoveryArchive {
   }
 
   func publish(
-    labelAssociations: [LabelAssociationSnapshot], tags: [TagSnapshot],
+    itineraries: [ItinerarySnapshot], labelAssociations: [LabelAssociationSnapshot],
+    tags: [TagSnapshot],
     categories: [CategorySnapshot],
     items: [ItemSnapshot], lists: [ListSnapshot], memberships: [MembershipSnapshot],
     deletionMarkers: [PortableDeletionMarker],
@@ -427,7 +471,8 @@ struct PlannerRecoveryArchive {
     }
     let bytes = try JSONEncoder().encode(
       PlannerDataSnapshot(
-        labelAssociations: labelAssociations, tags: tags, categories: categories,
+        itineraries: itineraries, labelAssociations: labelAssociations, tags: tags,
+        categories: categories,
         items: items, lists: lists, memberships: memberships,
         deletionMarkers: deletionMarkers))
     let priorCheckpoints = Dictionary(

@@ -592,3 +592,24 @@ extension PlannerTagChanges {
     return plannerDigest(bytes, prefix: "sha256-payload-v1:")
   }
 }
+
+extension ItinerarySnapshot {
+  func fieldHashes(datasetId: UUID) -> [PlannerItineraryField: PlannerFieldHash] {
+    guard case .record(var values) = input.canonicalContent else { return [:] }
+    values["links"] = .ordered(links.map { $0.read.canonicalValue })
+    values["categoryIds"] = .identitySet(
+      labelAssociations.filter { $0.label.kind == "category" }.map(\.selectionValue))
+    values["tagIds"] = .identitySet(
+      labelAssociations.filter { $0.label.kind == "tag" }.map(\.selectionValue))
+    return Dictionary(
+      uniqueKeysWithValues: PlannerItineraryField.allCases.compactMap { field in
+        guard let value = values[field.rawValue] else { return nil }
+        let name = Data(field.rawValue.utf8)
+        var bytes = Data("PlannerFieldHash".utf8) + Data([0, 0, 0, 0, 1])
+        bytes +=
+          identityBytes(datasetId) + Data([3]) + identityBytes(id) + identityBytes(lifetimeId)
+        bytes += unsigned(UInt64(name.count)) + name + value.encoded()
+        return (field, PlannerFieldHash(value: plannerDigest(bytes, prefix: "sha256-v1:")))
+      })
+  }
+}
