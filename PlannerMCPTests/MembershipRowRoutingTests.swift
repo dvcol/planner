@@ -336,8 +336,8 @@ struct MembershipRowRoutingTests {
       (
         [
           "kind": "items", "scope": listScope,
-          "sort": ["mode": "created", "direction": "ascending"],
-        ], "unavailable", "/query/sort/mode"
+          "sort": ["mode": "calendar", "direction": "ascending"],
+        ], "invalidInput", "/query/sort/mode"
       ),
     ]
     for value in [NSNull(), "invalid", [Any]()] as [Any] {
