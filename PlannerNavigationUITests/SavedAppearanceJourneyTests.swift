@@ -4,6 +4,66 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testOwnedAddressCreatesANativePreviewAndRemainsLiveInACompletedList() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    openItemEditor(application)
+    let name = application.textFields["saved.item.edit.location.name"]
+    let address = application.textFields["saved.item.edit.location.address"]
+    XCTAssertTrue(address.waitForExistence(timeout: 5))
+    revealEditorElement(name, application: application)
+    replaceText(name, with: "Apple Park stop", application: application)
+    revealEditorElement(address, application: application)
+    replaceText(address, with: "1 Apple Park Way, Cupertino, CA", application: application)
+    application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
+    XCTAssertFalse(application.staticTexts["Apple Park stop"].exists)
+
+    openItemEditor(application)
+    revealEditorElement(name, application: application)
+    replaceText(name, with: "Apple Park stop", application: application)
+    revealEditorElement(address, application: application)
+    replaceText(address, with: "1 Apple Park Way, Cupertino, CA", application: application)
+    application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Apple Park stop"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["1 Apple Park Way, Cupertino, CA"].exists)
+    let preview = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.location.preview.map").firstMatch
+    XCTAssertTrue(preview.waitForExistence(timeout: 45))
+    recordScreenshot(application, name: "Saved owned address renders a native MapKit pin")
+
+    createList("Tokyo", application: application)
+    addItem(application)
+    let membership = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    let membershipIdentifier = membership.identifier
+    XCTAssertTrue(
+      membership.waitForPlannerValue("Apple Park stop, 1 Apple Park Way, Cupertino, CA"))
+    recordScreenshot(application, name: "List row includes a compact saved location preview")
+    let completion = application.buttons[
+      membershipIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    completion.activateForPlannerJourney()
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    membership.activateForPlannerJourney()
+    XCTAssertTrue(preview.waitForExistence(timeout: 45))
+    XCTAssertTrue(application.staticTexts["Apple Park stop"].exists)
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    recordScreenshot(
+      application, name: "Completed List appearance retains the owned address preview")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Tokyo", application: application)
+    XCTAssertEqual(membership.identifier, membershipIdentifier)
+    assertProgress(1, application: application)
+    membership.activateForPlannerJourney()
+    XCTAssertTrue(preview.waitForExistence(timeout: 45))
+    XCTAssertTrue(application.staticTexts["Apple Park stop"].exists)
+    XCTAssertTrue(application.staticTexts["1 Apple Park Way, Cupertino, CA"].exists)
+    recordScreenshot(application, name: "Owned address and local completion survive reopening")
+  }
+
   func testNativePreviewFailureKeepsTheOwnedLinkAndAllowsRetry() throws {
     continueAfterFailure = false
     let application = XCUIApplication()

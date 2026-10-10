@@ -1,4 +1,5 @@
 import PlannerCore
+import PlannerPreviews
 import SwiftUI
 
 struct SavedMembershipRow: View {
@@ -48,6 +49,7 @@ struct SavedMembershipRow: View {
 }
 
 struct SavedAppearanceDetail: View {
+  @Environment(SavedPlannerStore.self) private var store
   let item: PlannerAppearanceRead
   let listName: String
   let canChange: Bool
@@ -74,7 +76,8 @@ struct SavedAppearanceDetail: View {
       if let notes = item.content.notes, !notes.isEmpty {
         Section("Notes") { Text(notes).textSelection(.enabled) }
       }
-      ItemLocationSection(title: item.content.title, location: item.content.location)
+      ItemLocationSection(
+        title: item.content.title, location: item.content.location, previewSource: previewSource)
       ItemLinksSection(
         links: item.content.links, sourceId: item.source.id,
         sourceLifetimeId: item.sourceLifetimeId)
@@ -98,5 +101,11 @@ struct SavedAppearanceDetail: View {
         .accessibilityIdentifier("saved.appearance.actions")
       }
     }
+  }
+
+  private var previewSource: PlannerPreviewSource? {
+    guard let namespace = store.devicePreferenceNamespace else { return nil }
+    return .init(
+      namespace: namespace, sourceId: item.source.id, sourceLifetimeId: item.sourceLifetimeId)
   }
 }

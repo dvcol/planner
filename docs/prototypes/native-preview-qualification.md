@@ -8,7 +8,7 @@ Q50 accepts a production cache/provider boundary for temporary native previews, 
 
 The module uses a bounded memory cache, limited to 128 entries and 32 MiB of image bytes. It stores no owned content, credentials, backup data or device preferences. Apple's current `LinkMetadata` API supplies title and optional image data through a native Transferable image representation. An absent image remains a successful preview. Failed metadata retrieval is a retryable preview failure; the original bookmark remains an input, never a provider rewrite.
 
-The boundary commit qualifies the link cache and Apple adapter. The subsequent UI integration also qualifies website cards and row thumbnails on the iPhone/iPad simulators. Q50 remains incomplete because address lookup, ambiguous candidate selection and address invalidation are still open. Compile-only Mac builds are not runtime UI evidence.
+The boundary commit qualifies the link cache and Apple adapter. The subsequent UI integration also qualifies website cards and row thumbnails on the iPhone/iPad simulators. The address boundary separately qualifies controlled candidate and stale-response behavior. Q50 remains incomplete until the remaining native address presentation and invalidation checks pass. Compile-only Mac builds are not runtime UI evidence.
 
 ## Tests and evidence
 
@@ -31,7 +31,7 @@ Three affected native functions pass per simulator: rich/plain previews with rem
 ## Open gates
 
 - Qualify Mac runtime, keyboard/accessibility behavior, window resizing, long-list performance and final human layout review.
-- Add the address provider and prove zero/one/multiple candidates and stale-result isolation.
+- Qualify native ambiguous/empty/error address presentation and address-change invalidation; the provider boundary covers controlled zero/one/multiple candidates and stale-result isolation.
 - Keep physical CloudKit, account recovery and Share validation in their existing signed-device gates.
 
 ## Address boundary
@@ -42,4 +42,20 @@ The address cache/provider now accepts an immutable source namespace/identity/li
 
 The combined preview package passes ten functions in four suites, including fifteen case invocations and both real Apple SDK tests enabled. Mac and iPhone app/test bundles compile with zero runtime UI functions in these builds. The [address boundary evidence](evidence/navigation/native-address-boundary.json) records commands, source hashes and compile red/green history. The initial missing-adapter red also produced a cascading expression type-check error; the implemented adapter resolves both.
 
-Native address detail presentation, candidate selection and location editing remain open. Q51 asks how an address edit should affect an existing owned pin; it does not block this readonly provider boundary. No schema, backup or agent administration interface changes are introduced.
+This boundary milestone does not itself qualify native address detail, candidate selection or location editing. The subsequent saved-address slice below qualifies a sole live result. Q51 still asks how an address edit should affect an existing owned pin. No schema, backup or agent administration interface changes are introduced.
+
+## Saved address presentation
+
+Before this slice, the Item editor offered title, subtitle, notes and bookmarks. An address without saved coordinates remained text in Item/List details. The goal is staged location editing and a useful native pin preview while retaining owned data and independent completion.
+
+DoR is the accepted Q42/Q50 contract, the qualified public Core location-edit command, and dataset/source lifetime binding. The native journey first failed because the address field was missing. After integration it passed Save, Cancel, live List detail and relaunch. A second red failed at the missing List-row location summary; the compact caption then passed in the final source epoch.
+
+The grouped Item form now stages a place name and address for locations without owned coordinates. Its existing guarded Save applies location alongside other changed fields; Cancel discards the draft. Clearing both fields clears that textual location. An Item with owned coordinates retains its existing location and readonly map until Q51 is settled. This is a limited editing slice, not completion of the full location editor.
+
+Saved Item and List appearance details use the shared temporary address cache. A sole candidate displays a native MapKit map and marker. Empty/error results retain the saved address with a native label and Retry; multiple candidates offer a native Picker without an automatic selection. These controls are implemented, but their controlled native UI journeys remain open. Request identity resets the temporary choice when address/source ownership changes. Existing owned coordinates take precedence and do not invoke address lookup. Provider candidates never enter the Core edit command.
+
+Rows show a small location label, preferring the owned place name, then address, then a generic Location label for coordinate-only content. Accessibility retains the full owned address alongside the caption. This row presentation does not start geocoding.
+
+Two affected native functions pass on each iPhone/iPad simulator: the address Save/Cancel, row caption, completed List detail and relaunch journey, and the bookmark validation/edit/order/removal regression. Original captures were inspected for the painted map marker, owned address, compact caption and contextual completion. The two affected Core location functions also pass. Mac app/UI-test bundles compile with zero runtime UI functions. Strict affected Swift lint and whitespace checks pass. The raw native builds retain the AppIntents metadata-extraction warning.
+
+[Saved address evidence](evidence/navigation/native-address-ui.json) records commands, source hashes, red/green outcomes and original captures. The [iPhone row](evidence/navigation/layouts/phone-saved-address-row.png), [iPhone contextual pin](evidence/navigation/layouts/phone-saved-address-context.png), [iPad row](evidence/navigation/layouts/tablet-saved-address-row.png) and [iPad contextual pin](evidence/navigation/layouts/tablet-saved-address-context.png) establish this local simulator presentation. Native ambiguous/empty/error and address-change invalidation, existing-pin editing, Mac runtime, physical devices and whole-app polish remain open. Q48/Q49 estimate choices and Q51 existing-pin behavior remain unanswered.

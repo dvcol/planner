@@ -48,6 +48,8 @@ struct SavedEditItemForm: View {
   @State private var title: String
   @State private var subtitle: String
   @State private var notes: String
+  @State private var locationName: String
+  @State private var locationAddress: String
   @State private var links: [SavedItemLinkDraft]
   @FocusState private var focusedLinkIdentifier: UUID?
   @State private var operationIdentifier = UUID()
@@ -58,6 +60,8 @@ struct SavedEditItemForm: View {
     _title = State(initialValue: item.content.title)
     _subtitle = State(initialValue: item.content.subtitle ?? "")
     _notes = State(initialValue: item.content.notes ?? "")
+    _locationName = State(initialValue: item.content.location?.displayName ?? "")
+    _locationAddress = State(initialValue: item.content.location?.formattedAddress ?? "")
     _links = State(initialValue: item.content.links.map(SavedItemLinkDraft.init))
   }
 
@@ -65,6 +69,15 @@ struct SavedEditItemForm: View {
     title != item.content.title || subtitle != (item.content.subtitle ?? "")
       || notes != (item.content.notes ?? "")
       || links.map(\.input) != item.content.links.map(\.editInput)
+      || location != item.content.location
+  }
+
+  private var location: PlannerOwnedLocation? {
+    if item.content.location?.coordinate != nil { return item.content.location }
+    if locationName.isEmpty && locationAddress.isEmpty { return nil }
+    return PlannerOwnedLocation(
+      displayName: locationName.isEmpty ? nil : locationName,
+      formattedAddress: locationAddress.isEmpty ? nil : locationAddress, coordinate: nil)
   }
 
   var body: some View {
@@ -80,6 +93,16 @@ struct SavedEditItemForm: View {
             .accessibilityIdentifier("saved.item.edit.notes")
         } footer: {
           Text("Changes appear wherever this Item is used.")
+        }
+        if item.content.location?.coordinate == nil {
+          Section("Location") {
+            TextField("Place name", text: $locationName)
+              .accessibilityIdentifier("saved.item.edit.location.name")
+            TextField("Address", text: $locationAddress)
+              .accessibilityIdentifier("saved.item.edit.location.address")
+          }
+        } else {
+          ItemLocationSection(title: title, location: item.content.location)
         }
         Section("Links") {
           ForEach($links) { $link in
@@ -141,9 +164,10 @@ struct SavedEditItemForm: View {
         }
         ToolbarItem(placement: .confirmationAction) {
           Button("Save") {
-            Task { [title, subtitle, notes, links] in
+            Task { [title, subtitle, notes, links, location] in
               if await store.editItem(
                 item, title: title, subtitle: subtitle, notes: notes, links: links.map(\.input),
+                location: location,
                 operationIdentifier: operationIdentifier)
               {
                 dismiss()
