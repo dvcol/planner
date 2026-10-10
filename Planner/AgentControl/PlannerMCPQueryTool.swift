@@ -53,7 +53,10 @@
           "properties": .object([
             "mode": .object([
               "type": .string("string"),
-              "enum": .array([.string("title"), .string("duration"), .string("manual")]),
+              "enum": .array([
+                .string("title"), .string("created"), .string("lastUpdated"), .string("duration"),
+                .string("manual"),
+              ]),
             ]),
             "direction": .object([
               "type": .string("string"),

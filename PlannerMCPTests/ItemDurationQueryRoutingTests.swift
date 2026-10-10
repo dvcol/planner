@@ -64,7 +64,7 @@ struct ItemDurationQueryRoutingTests {
       let sortProperties = try #require(sort["properties"] as? [String: Any])
       #expect(
         (sortProperties["mode"] as? [String: Any])?["enum"] as? [String] == [
-          "title", "duration", "manual",
+          "title", "created", "lastUpdated", "duration", "manual",
         ])
       let cases: [(direction: String, indices: [Int])] = [
         ("ascending", [6, 5, 2, 4, 1, 3, 0]),
