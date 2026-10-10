@@ -5,6 +5,195 @@ import Testing
 @testable import Planner
 
 struct ItemDurationQueryRoutingTests {
+  @Test func advertisedDurationSortingOverHTTPKeepsUnknownLastAndSavedListOrderIndependent()
+    async throws
+  {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = planner(at: directory)
+    guard case .ready(let session) = await planner.bootstrap() else {
+      Issue.record("The real Planner dataset must initialize.")
+      return
+    }
+    var sources: [PlannerEntityReference] = []
+    for content in [
+      PlannerItemContentInput(title: "Unknown Zulu"),
+      PlannerItemContentInput(
+        title: "Upper neighbor",
+        estimate: PlannerEstimate(minutes: 9_007_199_254_740_993, displayUnit: .year)),
+      PlannerItemContentInput(
+        title: "Zulu lunch", estimate: PlannerEstimate(minutes: 180, displayUnit: .hour)),
+      PlannerItemContentInput(title: "Unknown Alpha"),
+      PlannerItemContentInput(
+        title: "Lower neighbor",
+        estimate: PlannerEstimate(minutes: 9_007_199_254_740_992, displayUnit: .year)),
+      PlannerItemContentInput(
+        title: "Alpha lunch", estimate: PlannerEstimate(minutes: 180, displayUnit: .minute)),
+      PlannerItemContentInput(
+        title: "Short walk", estimate: PlannerEstimate(minutes: 119, displayUnit: .day)),
+    ] {
+      sources.append(try await createItem(content, planner: planner, session: session))
+    }
+    let listener = listener(planner: planner, session: session)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      var catalogRequest = try toolRequest(
+        endpoint: endpoint, name: "planner_query", arguments: [:])
+      catalogRequest.httpBody = try JSONSerialization.data(withJSONObject: [
+        "jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": [:],
+      ])
+      let (catalogData, catalogResponse) = try await httpSession.data(for: catalogRequest)
+      #expect((catalogResponse as? HTTPURLResponse)?.statusCode == 200)
+      let catalog = try #require(JSONSerialization.jsonObject(with: catalogData) as? [String: Any])
+      let tools = try #require((catalog["result"] as? [String: Any])?["tools"] as? [[String: Any]])
+      let queryTool = try #require(tools.first { $0["name"] as? String == "planner_query" })
+      let properties = try #require(
+        (queryTool["inputSchema"] as? [String: Any])?["properties"] as? [String: Any])
+      let variants = try #require(
+        (properties["query"] as? [String: Any])?["oneOf"] as? [[String: Any]])
+      let itemSchema = try #require(
+        variants.first {
+          let fields = $0["properties"] as? [String: Any]
+          return (fields?["kind"] as? [String: Any])?["const"] as? String == "items"
+        })
+      let itemProperties = try #require(itemSchema["properties"] as? [String: Any])
+      let sort = try #require(itemProperties["sort"] as? [String: Any])
+      #expect(sort["additionalProperties"] as? Bool == false)
+      let sortProperties = try #require(sort["properties"] as? [String: Any])
+      #expect(
+        (sortProperties["mode"] as? [String: Any])?["enum"] as? [String] == [
+          "title", "duration", "manual",
+        ])
+      let cases: [(direction: String, indices: [Int])] = [
+        ("ascending", [6, 5, 2, 4, 1, 3, 0]),
+        ("descending", [1, 4, 5, 2, 6, 3, 0]),
+      ]
+      for scope in ["global", "inbox"] {
+        for example in cases {
+          let sorted = try await query(
+            [
+              "kind": "items", "scope": ["kind": scope],
+              "sort": ["mode": "duration", "direction": example.direction],
+            ], endpoint: endpoint, httpSession: httpSession)
+          #expect(sorted["matchingCount"] as? String == "7")
+          #expect(
+            try sourceIdentifiers(sorted) == example.indices.map { sources[$0].id.uuidString })
+        }
+      }
+      guard
+        case .applied(let creation, .complete) = await planner.execute(
+          PlannerOperation(
+            operationId: UUID(), session: session,
+            command: .createList(content: .init(name: "Tokyo")))
+        ).outcome,
+        let list = creation.generated.first
+      else {
+        Issue.record("A shared List must save before contextual HTTP sorting.")
+        await listener.stop()
+        return
+      }
+      var membershipIdentifiers: [UUID] = []
+      for source in sources {
+        guard
+          case .applied(let addition, .complete) = await planner.execute(
+            PlannerOperation(
+              operationId: UUID(), session: session,
+              command: .addMembership(itemId: source.id, listId: list.id, placement: .last))
+          ).outcome,
+          case .membership(let membershipIdentifier, _, _)? = addition.generatedReferences.first
+        else {
+          Issue.record("Each source must have one saved List appearance.")
+          await listener.stop()
+          return
+        }
+        membershipIdentifiers.append(membershipIdentifier)
+      }
+      let completedAppearance = PlannerAppearance.listMembership(
+        listId: list.id, membershipId: membershipIdentifiers[2])
+      for command: PlannerCommand in [
+        .setCompletion(scope: .appearance(completedAppearance), done: true),
+        .setCompletion(scope: .globalItem(itemId: sources[6].id), done: true),
+        .setArchive(source: sources[6], archived: true),
+      ] {
+        guard
+          case .applied(_, .complete) = await planner.execute(
+            PlannerOperation(operationId: UUID(), session: session, command: command)
+          ).outcome
+        else {
+          Issue.record("Independent completion/archive must save before sorting.")
+          await listener.stop()
+          return
+        }
+      }
+      guard
+        case .source(.list(let original)) = await planner.read(
+          session: session, request: .source(list))
+      else {
+        Issue.record("Saved Manual order must be publicly readable.")
+        await listener.stop()
+        return
+      }
+      for example in cases {
+        let sorted = try await query(
+          [
+            "kind": "items", "scope": ["kind": "list", "listId": list.id.uuidString],
+            "completion": "all", "archive": "all",
+            "sort": ["mode": "duration", "direction": example.direction],
+          ], endpoint: endpoint, httpSession: httpSession)
+        #expect(sorted["matchingCount"] as? String == "7")
+        #expect(try sourceIdentifiers(sorted) == example.indices.map { sources[$0].id.uuidString })
+        let rows = try #require(sorted["rows"] as? [[String: Any]])
+        #expect(
+          rows.compactMap { ($0["appearance"] as? [String: String])?["membershipId"] }
+            == example.indices.map { membershipIdentifiers[$0].uuidString })
+        let progress = try #require((sorted["progress"] as? [[String: Any]])?.first)
+        #expect(progress["doneCount"] as? String == "2")
+        #expect(progress["totalCount"] as? String == "7")
+        let generation = try #require(sorted["generation"] as? String)
+        let readRequest = try toolRequest(
+          endpoint: endpoint, name: "planner_read",
+          arguments: [
+            "formatVersion": 1,
+            "request": ["kind": "rows", "generation": generation, "offset": "5", "limit": "2"],
+          ])
+        let window = try toolValue(try await httpSession.data(for: readRequest), isError: false)
+        #expect(window["matchingCount"] as? String == "7")
+        let readRows = try #require(window["rows"] as? [[String: Any]])
+        #expect(
+          readRows.compactMap { $0["title"] as? String } == ["Unknown Alpha", "Unknown Zulu"])
+      }
+      let manual = try await query(
+        [
+          "kind": "items", "scope": ["kind": "list", "listId": list.id.uuidString],
+          "completion": "all", "archive": "all",
+          "sort": ["mode": "manual", "direction": "ascending"],
+        ], endpoint: endpoint, httpSession: httpSession)
+      #expect(try sourceIdentifiers(manual) == sources.map { $0.id.uuidString })
+      guard
+        case .source(.list(let current)) = await planner.read(
+          session: session, request: .source(list)),
+        case .appearance(let completed) = await planner.read(
+          session: session, request: .appearance(completedAppearance))
+      else {
+        Issue.record("HTTP sorts must preserve saved order and the exact local state.")
+        await listener.stop()
+        return
+      }
+      #expect(current.references == original.references)
+      #expect(current.updatedAt == original.updatedAt)
+      #expect(current.fieldHashes == original.fieldHashes)
+      #expect(completed.localDone)
+      #expect(completed.effectiveDone)
+      #expect(completed.globalDone == false)
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   @Test func durationSchemaAndAdmissionOverHTTPPreserveExactIntegersAndRejectInvalidGroups()
     async throws
   {
