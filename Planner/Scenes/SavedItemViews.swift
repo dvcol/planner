@@ -34,6 +34,8 @@ struct SavedItemCatalog: View {
             SavedItemRowContent(row: item.row)
           }
         }
+        .accessibilityLabel(item.row.title)
+        .accessibilityValue(item.row.metadataDescription)
         .accessibilityIdentifier("saved.item.\(item.id.uuidString)")
       }
     }
@@ -101,6 +103,7 @@ struct SavedItemDetail: View {
         Section("Notes") { Text(notes).textSelection(.enabled) }
       }
       ItemLocationSection(title: item.content.title, location: item.content.location)
+      ItemLinksSection(links: item.content.links)
     }
     .formStyle(.grouped)
     .navigationTitle(item.content.title)

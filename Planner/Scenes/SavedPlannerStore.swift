@@ -202,6 +202,7 @@ final class SavedPlannerStore {
 
   func editItem(
     _ item: PlannerItemSourceRead, title: String, subtitle: String, notes: String,
+    links: [PlannerLinkInput],
     operationIdentifier: UUID
   ) async -> Bool {
     let titleChange: PlannerFieldChange<String>
@@ -226,10 +227,17 @@ final class SavedPlannerStore {
     } else {
       notesChange = .set(notes)
     }
+    let linksChange: PlannerFieldChange<[PlannerLinkInput]>
+    if links == item.content.links.map(\.editInput) {
+      linksChange = .unchanged
+    } else {
+      linksChange = .set(links)
+    }
     return await executeChange(
       .editItem(
         sourceId: item.source.id,
-        changes: .init(title: titleChange, subtitle: subtitleChange, notes: notesChange),
+        changes: .init(
+          title: titleChange, subtitle: subtitleChange, notes: notesChange, links: linksChange),
         expectedFieldHashes: item.fieldHashes), operationId: operationIdentifier) != nil
   }
 

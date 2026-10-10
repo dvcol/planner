@@ -172,6 +172,14 @@ An ordinary global or contextual Item detail with saved coordinates must show it
 
 Use the accepted public native UI seam to reproduce the missing map and unclear counts before implementation, then qualify ordinary detail, cumulative archive filters, full-scope progress, group collapse and identity navigation. Inspect actual captures on phone, tablet and Mac; record unavailable runtime checks separately. The requested whole-application polish follows feature completion in [ticket 23](https://github.com/dvcol/planner/issues/23), with its [full completion gate](native-ui-polish.md).
 
+## Native preview test boundary
+
+Q50 A is accepted. Link images and address lookup use a small native preview module as the production cache/provider boundary. Its public tests control responses at the external I/O boundary; native integration separately exercises Apple's SDK and the Planner UI. Provider results remain temporary and excluded from owned content and backups.
+
+Starting state: saved coordinate maps work, Core exposes owned bookmarks and row preview selection, but saved native details have no automatic image/address providers. Live services cannot reliably reproduce errors, ambiguous addresses or delayed callbacks on demand. The goal is useful native previews with predictable failure and refresh behavior, preserving the original bookmark/address and completion state.
+
+DoR: the accepted Q41/Q42 behavior, dataset/source lifetime binding and native request identity are specified before implementation. DoD: tests cover image/no-image/error, address zero/one/multiple matches, cache invalidation and late results after URL/address or ownership changes. Integration verifies the Apple adapter and actual native content/loading/fallback presentation. A stale result cannot replace a newer preview or pin; provider output never becomes owned data through preview loading. This adds the agreed seam and does not relax the existing native UI, Core or HTTP gates.
+
 ## Definition of ready and done
 
 - [x] Contract public interfaces accepted, prerequisite resolutions reviewed, local toolchain inventory refreshed and fixture inputs/expected transitions specified.

@@ -6,6 +6,41 @@ struct SavedItemEditDraft: Identifiable {
   var id: UUID { item.source.id }
 }
 
+struct SavedItemLinkDraft: Identifiable {
+  let id: UUID
+  let savedLinkIdentifier: UUID?
+  let originalLabel: String?
+  var originalURL: String
+  var label: String
+
+  init(link: PlannerOwnedLinkRead) {
+    id = link.linkId
+    savedLinkIdentifier = link.linkId
+    originalLabel = link.label
+    originalURL = link.originalUrl
+    label = link.label ?? ""
+  }
+
+  init() {
+    id = UUID()
+    savedLinkIdentifier = nil
+    originalLabel = nil
+    originalURL = ""
+    label = ""
+  }
+
+  var input: PlannerLinkInput {
+    let savedLabel: String?
+    if label == (originalLabel ?? "") {
+      savedLabel = originalLabel
+    } else {
+      savedLabel = label.isEmpty ? nil : label
+    }
+    return PlannerLinkInput(
+      linkId: savedLinkIdentifier, originalUrl: originalURL, label: savedLabel)
+  }
+}
+
 struct SavedEditItemForm: View {
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
@@ -13,6 +48,8 @@ struct SavedEditItemForm: View {
   @State private var title: String
   @State private var subtitle: String
   @State private var notes: String
+  @State private var links: [SavedItemLinkDraft]
+  @FocusState private var focusedLinkIdentifier: UUID?
   @State private var operationIdentifier = UUID()
 
   init(store: SavedPlannerStore, item: PlannerItemSourceRead) {
@@ -21,11 +58,13 @@ struct SavedEditItemForm: View {
     _title = State(initialValue: item.content.title)
     _subtitle = State(initialValue: item.content.subtitle ?? "")
     _notes = State(initialValue: item.content.notes ?? "")
+    _links = State(initialValue: item.content.links.map(SavedItemLinkDraft.init))
   }
 
   private var hasChanges: Bool {
     title != item.content.title || subtitle != (item.content.subtitle ?? "")
       || notes != (item.content.notes ?? "")
+      || links.map(\.input) != item.content.links.map(\.editInput)
   }
 
   var body: some View {
@@ -42,10 +81,57 @@ struct SavedEditItemForm: View {
         } footer: {
           Text("Changes appear wherever this Item is used.")
         }
+        Section("Links") {
+          ForEach($links) { $link in
+            VStack(alignment: .leading) {
+              HStack {
+                TextField("URL", text: $link.originalURL)
+                  .autocorrectionDisabled()
+                  .focused($focusedLinkIdentifier, equals: link.id)
+                  .accessibilityIdentifier("saved.item.edit.link.url.\(link.id.uuidString)")
+                  #if os(iOS)
+                    .textInputAutocapitalization(.never)
+                    .keyboardType(.URL)
+                  #endif
+                Menu {
+                  Button("Move Up", systemImage: "arrow.up") {
+                    moveLink(link.id, offset: -1)
+                  }
+                  .disabled(links.first?.id == link.id)
+                  Button("Move Down", systemImage: "arrow.down") {
+                    moveLink(link.id, offset: 1)
+                  }
+                  .disabled(links.last?.id == link.id)
+                  Divider()
+                  Button("Remove Link", systemImage: "minus.circle", role: .destructive) {
+                    if focusedLinkIdentifier == link.id { focusedLinkIdentifier = nil }
+                    links.removeAll { $0.id == link.id }
+                  }
+                } label: {
+                  Label("Link actions", systemImage: "ellipsis.circle")
+                }
+                .labelStyle(.iconOnly)
+                .help("Link actions")
+                .accessibilityIdentifier("saved.item.edit.link.actions.\(link.id.uuidString)")
+              }
+              TextField("Label", text: $link.label)
+                .accessibilityIdentifier("saved.item.edit.link.label.\(link.id.uuidString)")
+            }
+          }
+          Button("Add Link", systemImage: "plus") {
+            let draft = SavedItemLinkDraft()
+            links.append(draft)
+            focusedLinkIdentifier = draft.id
+          }
+          .accessibilityIdentifier("saved.item.edit.link.add")
+        }
       }
       .disabled(store.isSaving)
       .formStyle(.grouped)
       .navigationTitle("Edit Item")
+      #if os(iOS)
+        .navigationBarTitleDisplayMode(.inline)
+      #endif
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {
           Button("Cancel") { dismiss() }
@@ -55,9 +141,9 @@ struct SavedEditItemForm: View {
         }
         ToolbarItem(placement: .confirmationAction) {
           Button("Save") {
-            Task { [title, subtitle, notes] in
+            Task { [title, subtitle, notes, links] in
               if await store.editItem(
-                item, title: title, subtitle: subtitle, notes: notes,
+                item, title: title, subtitle: subtitle, notes: notes, links: links.map(\.input),
                 operationIdentifier: operationIdentifier)
               {
                 dismiss()
@@ -90,5 +176,12 @@ struct SavedEditItemForm: View {
     #if os(macOS)
       .frame(minWidth: 400, minHeight: 320)
     #endif
+  }
+
+  private func moveLink(_ identifier: UUID, offset: Int) {
+    guard let index = links.firstIndex(where: { $0.id == identifier }),
+      links.indices.contains(index + offset)
+    else { return }
+    links.swapAt(index, index + offset)
   }
 }

@@ -23,7 +23,7 @@ struct SavedMembershipRow: View {
         SavedItemRowContent(row: item.row)
           .accessibilityElement(children: .ignore)
           .accessibilityLabel(item.row.title)
-          .accessibilityValue(item.row.subtitle ?? "")
+          .accessibilityValue(item.row.metadataDescription)
           .frame(maxWidth: .infinity, alignment: .leading)
           .accessibilityIdentifier("saved.appearance.\(item.id.uuidString)")
       #else
@@ -31,7 +31,7 @@ struct SavedMembershipRow: View {
           SavedItemRowContent(row: item.row)
         }
         .accessibilityLabel(item.row.title)
-        .accessibilityValue(item.row.subtitle ?? "")
+        .accessibilityValue(item.row.metadataDescription)
         .accessibilityIdentifier("saved.appearance.\(item.id.uuidString)")
       #endif
       if item.row.archived == true {
@@ -75,6 +75,7 @@ struct SavedAppearanceDetail: View {
         Section("Notes") { Text(notes).textSelection(.enabled) }
       }
       ItemLocationSection(title: item.content.title, location: item.content.location)
+      ItemLinksSection(links: item.content.links)
     }
     .formStyle(.grouped)
     .navigationTitle(item.content.title)
