@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create and edit Items and Lists, add live Item references to Lists, complete/reopen Items or exact List appearances, archive/unarchive Items and Lists, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
+        "Create and edit Items and Lists, add and reorder live Item references in Lists, complete/reopen Items or exact List appearances, archive/unarchive Items and Lists, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -16,7 +16,9 @@
           "operationId": .object(["type": .string("string"), "format": .string("uuid")]),
           "command": .object([
             "oneOf": .array([
-              creationSchema, listCreationSchema, membershipCreationSchema, editSchema,
+              creationSchema, listCreationSchema, membershipCreationSchema,
+              membershipReorderingSchema,
+              editSchema,
               listEditSchema, archiveSchema,
               completionSchema,
               scheduleCreationSchema,
@@ -116,6 +118,30 @@
       ]),
     ])
 
+    private static let membershipPlacementSchema = Value.object([
+      "oneOf": .array([
+        .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "required": .array([.string("kind")]),
+          "properties": .object([
+            "kind": .object([
+              "type": .string("string"), "enum": .array([.string("first"), .string("last")]),
+            ])
+          ]),
+        ]),
+        .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "required": .array([.string("kind"), .string("associationId")]),
+          "properties": .object([
+            "kind": .object([
+              "type": .string("string"), "enum": .array([.string("before"), .string("after")]),
+            ]),
+            "associationId": .object(["type": .string("string"), "format": .string("uuid")]),
+          ]),
+        ]),
+      ])
+    ])
+
     private static let membershipCreationSchema = Value.object([
       "type": .string("object"), "additionalProperties": .bool(false),
       "required": .array([
@@ -125,29 +151,20 @@
         "type": .object(["type": .string("string"), "const": .string("addMembership")]),
         "itemId": .object(["type": .string("string"), "format": .string("uuid")]),
         "listId": .object(["type": .string("string"), "format": .string("uuid")]),
-        "placement": .object([
-          "oneOf": .array([
-            .object([
-              "type": .string("object"), "additionalProperties": .bool(false),
-              "required": .array([.string("kind")]),
-              "properties": .object([
-                "kind": .object([
-                  "type": .string("string"), "enum": .array([.string("first"), .string("last")]),
-                ])
-              ]),
-            ]),
-            .object([
-              "type": .string("object"), "additionalProperties": .bool(false),
-              "required": .array([.string("kind"), .string("associationId")]),
-              "properties": .object([
-                "kind": .object([
-                  "type": .string("string"), "enum": .array([.string("before"), .string("after")]),
-                ]),
-                "associationId": .object(["type": .string("string"), "format": .string("uuid")]),
-              ]),
-            ]),
-          ])
-        ]),
+        "placement": membershipPlacementSchema,
+      ]),
+    ])
+
+    private static let membershipReorderingSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([
+        .string("type"), .string("listId"), .string("membershipId"), .string("placement"),
+      ]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("reorderMembership")]),
+        "listId": .object(["type": .string("string"), "format": .string("uuid")]),
+        "membershipId": .object(["type": .string("string"), "format": .string("uuid")]),
+        "placement": membershipPlacementSchema,
       ]),
     ])
 
@@ -413,6 +430,7 @@
         case "createItem": command = try creationCommand(arguments["command"])
         case "createList": command = try listCreationCommand(arguments["command"])
         case "addMembership": command = try membershipCreationCommand(arguments["command"])
+        case "reorderMembership": command = try membershipReorderingCommand(arguments["command"])
         case "editList": command = try listEditCommand(arguments["command"])
         case "editItem": command = try editCommand(arguments["command"])
         case "setArchive": command = try archiveCommand(arguments["command"])
@@ -477,18 +495,44 @@
       else {
         throw AdmissionFailure("invalidInput", "/command/listId", "Expected a List UUID.")
       }
+      return .addMembership(
+        itemId: itemIdentifier, listId: listIdentifier,
+        placement: try membershipPlacement(command["placement"]))
+    }
+
+    private static func membershipReorderingCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "listId", "membershipId", "placement"],
+        required: ["type", "listId", "membershipId", "placement"], path: "/command")
+      guard case .string(let listSpelling) = command["listId"],
+        let listIdentifier = UUID(uuidString: listSpelling)
+      else {
+        throw AdmissionFailure("invalidInput", "/command/listId", "Expected a List UUID.")
+      }
+      guard case .string(let membershipSpelling) = command["membershipId"],
+        let membershipIdentifier = UUID(uuidString: membershipSpelling)
+      else {
+        throw AdmissionFailure(
+          "invalidInput", "/command/membershipId", "Expected a membership UUID.")
+      }
+      return .reorderMembership(
+        listId: listIdentifier, membershipId: membershipIdentifier,
+        placement: try membershipPlacement(command["placement"]))
+    }
+
+    private static func membershipPlacement(_ value: Value?) throws -> PlannerPlacement {
       let suppliedPlacement = try object(
-        command["placement"], allowed: ["kind", "associationId"], required: ["kind"],
+        value, allowed: ["kind", "associationId"], required: ["kind"],
         path: "/command/placement")
       let placement: PlannerPlacement
       switch suppliedPlacement["kind"] {
       case .string("first"), .string("last"):
         _ = try object(
-          command["placement"], allowed: ["kind"], required: ["kind"], path: "/command/placement")
+          value, allowed: ["kind"], required: ["kind"], path: "/command/placement")
         placement = suppliedPlacement["kind"] == .string("first") ? .first : .last
       case .string("before"), .string("after"):
         _ = try object(
-          command["placement"], allowed: ["kind", "associationId"],
+          value, allowed: ["kind", "associationId"],
           required: ["kind", "associationId"], path: "/command/placement")
         guard case .string(let associationSpelling) = suppliedPlacement["associationId"],
           let associationIdentifier = UUID(uuidString: associationSpelling)
@@ -506,7 +550,7 @@
           "invalidInput", "/command/placement/kind",
           "Expected first, last, before or after placement.")
       }
-      return .addMembership(itemId: itemIdentifier, listId: listIdentifier, placement: placement)
+      return placement
     }
 
     private static func listEditCommand(_ value: Value?) throws -> PlannerCommand {
