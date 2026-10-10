@@ -19,6 +19,7 @@ import UniformTypeIdentifiers
     let list: PlannerListSourceRead
     let items: [SavedPlannerItem]
     let selection: Binding<UUID?>
+    let removeMembership: (UUID) -> Void
 
     var body: some View {
       VStack(alignment: .leading, spacing: 0) {
@@ -37,6 +38,9 @@ import UniformTypeIdentifiers
                 .disabled(!store.canCreate || items.first?.id == item.id)
               Button("Move to End") { reorder(item.id, placement: .last) }
                 .disabled(!store.canCreate || items.last?.id == item.id)
+              Divider()
+              Button("Remove from List", role: .destructive) { removeMembership(item.id) }
+                .disabled(!store.canCreate)
             }
           }
         } rows: {

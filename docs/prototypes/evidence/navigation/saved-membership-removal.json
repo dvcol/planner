@@ -1,0 +1,167 @@
+{
+  "baseCommit": "5e08659",
+  "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+  "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+  "seam": "Accepted public native UI with isolated real durable local datasets and existing Core removeMembership commands. No private persistence reads or test-only production injection.",
+  "commands": {
+    "behaviorRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testRemovingASelectedListItemKeepsItsSourceAndOtherListStateWhileReAddStartsTodo -resultBundlePath /private/tmp/PlannerSavedMembershipRemovalPhoneRed.xcresult test > /private/tmp/PlannerSavedMembershipRemovalPhoneRed.log 2>&1",
+    "green": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testRemovingASelectedListItemKeepsItsSourceAndOtherListStateWhileReAddStartsTodo -resultBundlePath /private/tmp/PlannerSavedMembershipRemovalPhoneGreen.xcresult test > /private/tmp/PlannerSavedMembershipRemovalPhoneGreen.log 2>&1",
+    "final": {
+      "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation -resultBundlePath /private/tmp/PlannerSavedMembershipRemovalPhoneFinal.xcresult test > /private/tmp/PlannerSavedMembershipRemovalPhoneFinal.log 2>&1",
+      "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testRemovingASelectedListItemKeepsItsSourceAndOtherListStateWhileReAddStartsTodo -resultBundlePath /private/tmp/PlannerSavedMembershipRemovalTabletFinal.xcresult test > /private/tmp/PlannerSavedMembershipRemovalTabletFinal.log 2>&1",
+      "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerSavedMembershipRemovalMacFinal.xcresult build-for-testing > /private/tmp/PlannerSavedMembershipRemovalMacFinal.log 2>&1"
+    }
+  },
+  "sourceSnapshots": {
+    "red": {
+      "Planner/Scenes/SavedPlannerStore.swift": "86f7f76ae61b275f49685f6865a74adfb9776a0474befefc4bded68d6f4a9cc7",
+      "Planner/Scenes/SavedPlannerView.swift": "7e8a338c93aa1616ee1b90049094b60349a516d745b0f675f77819d903165aa7",
+      "Planner/Scenes/SavedAppearanceViews.swift": "a16e24ba61679eca97b9faf56144a44c2ef632404ccec2aedf0a2236f97fa414",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "35266d52b5294ab9178484af1d868a7fd03f182767268ed79fd8a4f1679ba4cb",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "2082a3f6ac412aeed5526dfd303c42b38cc2add9cbe28a62abe4e22b69bc0cd3"
+    },
+    "green": {
+      "Planner/Scenes/SavedPlannerStore.swift": "c29c8c7bbf38755043b74280b0bf519816555cc1711c217dc79fce549cb05ba5",
+      "Planner/Scenes/SavedPlannerView.swift": "a2133e8fdd0418dc85cfba6190e61727214d1b5d0741dee9657b27b5ab55b204",
+      "Planner/Scenes/SavedAppearanceViews.swift": "b12ebd20cae1db515f680bf424b93e60a1fa973a2019f5c0424cb5b48a3ab154",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "3eb7f5eb7c23657ad643d545d894838b548fdc2cfa99cfa190a99684d61c391f",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "2082a3f6ac412aeed5526dfd303c42b38cc2add9cbe28a62abe4e22b69bc0cd3"
+    },
+    "captionReview": {
+      "Planner/Scenes/SavedPlannerStore.swift": "c29c8c7bbf38755043b74280b0bf519816555cc1711c217dc79fce549cb05ba5",
+      "Planner/Scenes/SavedPlannerView.swift": "03ae243983551a2369e1d9e06dd049206fe1f318c79bc17642283983c68c4a6c",
+      "Planner/Scenes/SavedAppearanceViews.swift": "b12ebd20cae1db515f680bf424b93e60a1fa973a2019f5c0424cb5b48a3ab154",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "3eb7f5eb7c23657ad643d545d894838b548fdc2cfa99cfa190a99684d61c391f",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "2082a3f6ac412aeed5526dfd303c42b38cc2add9cbe28a62abe4e22b69bc0cd3"
+    }
+  },
+  "results": {
+    "phoneRed": {
+      "result": "Failed",
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testRemovingASelectedListItemKeepsItsSourceAndOtherListStateWhileReAddStartsTodo()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testRemovingASelectedListItemKeepsItsSourceAndOtherListStateWhileReAddStartsTodo",
+          "testName": "testRemovingASelectedListItemKeepsItsSourceAndOtherListStateWhileReAddStartsTodo()"
+        }
+      ],
+      "summaryPath": "/private/tmp/PlannerSavedMembershipRemovalPhoneRedSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedMembershipRemovalPhoneRed.xcresult",
+      "logPath": "/private/tmp/PlannerSavedMembershipRemovalPhoneRed.log",
+      "sourceSnapshot": "red"
+    },
+    "phoneGreen": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [],
+      "summaryPath": "/private/tmp/PlannerSavedMembershipRemovalPhoneGreenSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedMembershipRemovalPhoneGreen.xcresult",
+      "logPath": "/private/tmp/PlannerSavedMembershipRemovalPhoneGreen.log",
+      "sourceSnapshot": "green"
+    },
+    "phone": {
+      "result": "Passed",
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 2,
+      "testFailures": [],
+      "summaryPath": "/private/tmp/PlannerSavedMembershipRemovalPhoneFinalSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedMembershipRemovalPhoneFinal.xcresult",
+      "logPath": "/private/tmp/PlannerSavedMembershipRemovalPhoneFinal.log",
+      "sourceSnapshot": "green"
+    },
+    "tablet": {
+      "result": "Passed",
+      "passedTests": 3,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 3,
+      "testFailures": [],
+      "summaryPath": "/private/tmp/PlannerSavedMembershipRemovalTabletFinalSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedMembershipRemovalTabletFinal.xcresult",
+      "logPath": "/private/tmp/PlannerSavedMembershipRemovalTabletFinal.log",
+      "sourceSnapshot": "green"
+    },
+    "tabletcaption": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [],
+      "summaryPath": "/private/tmp/PlannerSavedMembershipRemovalTabletCaptionSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedMembershipRemovalTabletCaption.xcresult",
+      "logPath": "/private/tmp/PlannerSavedMembershipRemovalTabletCaption.log",
+      "sourceSnapshot": "captionReview"
+    }
+  },
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-member-removed.png",
+      "sha256": "ef9a0294070fc11330523730dfb8785f3312df17645e9d670939eacc9bd74ea4",
+      "visuallyInspected": true,
+      "sourceSnapshot": "green"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-member-readded.png",
+      "sha256": "649a8a4399febde75dd509df2ec2f76da5189f8daf7a3a030b3bacf5f475506d",
+      "visuallyInspected": true,
+      "sourceSnapshot": "green"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-member-removed.png",
+      "sha256": "3ca60f5bc4c58384900e8efffe0a3289966e8580f143ea31fdc8bb8a2cc58415",
+      "visuallyInspected": true,
+      "sourceSnapshot": "captionReview"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-member-readded.png",
+      "sha256": "179557ed669d03c02915a30374d1664249d22211090dc9df70012445352b6de4",
+      "visuallyInspected": true,
+      "sourceSnapshot": "captionReview"
+    }
+  ],
+  "checks": [
+    "Strict swift-format lint on five affected Swift files",
+    "Affected app/UI-test compilation on native Mac and simulators",
+    "Actual simulator removal and affected completion/detail regressions as recorded",
+    "Affected Markdown lint",
+    "git diff --check"
+  ],
+  "limits": [
+    "Core/schema/transport are unchanged; schema 7/portable format 1 remain localOnly with CloudKit disabled.",
+    "The executed removal journey uses contextual Item actions. Row context-menu removal is wired and compiled but its interaction qualification remains open.",
+    "Native Move, other Add paths, Undo, external refresh, other graph views and native failures/recovery remain open.",
+    "Compilation does not establish current Mac runtime, visual behavior or window restoration. The earlier Mac automation initialization condition remains unresolved.",
+    "Physical signing/Share/account/sync, accessibility/keyboard/resizing/long-list memory and whole-application polish remain separate gates."
+  ],
+  "behaviorRed": {
+    "failure": "The Remove from List action was absent in saved contextual Item actions.",
+    "resultBundle": "/private/tmp/PlannerSavedMembershipRemovalPhoneRed.xcresult",
+    "sourceSnapshot": "red"
+  },
+  "captionCommands": {
+    "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testRemovingASelectedListItemKeepsItsSourceAndOtherListStateWhileReAddStartsTodo -resultBundlePath /private/tmp/PlannerSavedMembershipRemovalTabletCaption.xcresult test > /private/tmp/PlannerSavedMembershipRemovalTabletCaption.log 2>&1",
+    "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerSavedMembershipRemovalMacCaption.xcresult build-for-testing > /private/tmp/PlannerSavedMembershipRemovalMacCaption.log 2>&1"
+  },
+  "captionReview": "The initial iPad removal capture repeated the same preservation explanation in both empty columns. The detail pane now prompts selection of another Item, while the List keeps the preservation explanation. The same iPad removal/re-add journey passed again after this text-only correction.",
+  "macCompilation": {
+    "result": "Passed",
+    "processExitCode": 0,
+    "executedBehaviorFunctions": 0,
+    "logPath": "/private/tmp/PlannerSavedMembershipRemovalMacCaption.log",
+    "resultBundle": "/private/tmp/PlannerSavedMembershipRemovalMacCaption.xcresult",
+    "sourceSnapshot": "captionReview"
+  }
+}
