@@ -105,6 +105,19 @@
       ]),
     ])
 
+    private static let labelCatalogQuerySchema: Value = .object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("kind"), .string("sourceKind"), .string("archive")]),
+      "properties": .object([
+        "kind": .object(["type": .string("string"), "const": .string("catalog")]),
+        "sourceKind": .object([
+          "type": .string("string"), "enum": .array([.string("category"), .string("tag")]),
+        ]),
+        "text": .object(["type": .string("string")]),
+        "archive": .object(["type": .string("string"), "const": .string("all")]),
+      ]),
+    ])
+
     static let definition = Tool(
       name: "planner_query",
       description:
@@ -114,7 +127,9 @@
         "required": .array([.string("formatVersion"), .string("query")]),
         "properties": .object([
           "formatVersion": .object(["type": .string("integer"), "const": .int(1)]),
-          "query": .object(["oneOf": .array([itemQuerySchema, catalogQuerySchema])]),
+          "query": .object([
+            "oneOf": .array([itemQuerySchema, catalogQuerySchema, labelCatalogQuerySchema])
+          ]),
         ]),
       ]),
       annotations: .init(

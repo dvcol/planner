@@ -49,7 +49,7 @@
                       "kind": .object([
                         "type": .string("string"),
                         "enum": .array([
-                          .string("item"), .string("list"), .string("category"),
+                          .string("item"), .string("list"), .string("category"), .string("tag"),
                           .string("schedule"),
                         ]),
                       ]),
@@ -123,9 +123,10 @@
           structured = .object([
             "formatVersion": .int(1), "kind": .string("source"), "value": categoryValue(read),
           ])
-        case .source(.tag):
-          return failure(
-            code: "unavailable", message: "Tag source reads are not yet exposed by this adapter.")
+        case .source(.tag(let read)):
+          structured = .object([
+            "formatVersion": .int(1), "kind": .string("source"), "value": tagValue(read),
+          ])
         case .source(.item(let read)):
           guard read.content.categoryIds.isEmpty,
             read.content.tagIds.isEmpty,
@@ -199,11 +200,11 @@
         let source = try object(request["source"], keys: ["kind", "id"], path: "/request/source")
         guard case .string(let spelling) = source["kind"],
           let sourceKind = PlannerEntityKind(rawValue: spelling),
-          [.item, .list, .category, .schedule].contains(sourceKind)
+          [.item, .list, .category, .tag, .schedule].contains(sourceKind)
         else {
           throw AdmissionFailure(
             code: "invalidInput", path: "/request/source/kind",
-            message: "This prototype supports Item, List, Category and Schedule sources.")
+            message: "This prototype supports Item, List, Category, Tag and Schedule sources.")
         }
         return .source(
           PlannerEntityReference(
@@ -287,6 +288,28 @@
     }
 
     private static func categoryValue(_ read: PlannerCategorySourceRead) -> Value {
+      .object([
+        "source": .object([
+          "kind": .string(read.source.kind.rawValue), "id": .string(read.source.id.uuidString),
+        ]),
+        "content": .object([
+          "name": .string(read.content.name), "color": read.content.color.map(colorValue) ?? .null,
+          "iconName": read.content.iconName.map(Value.string) ?? .null,
+        ]),
+        "createdAt": .double(read.createdAt.timeIntervalSinceReferenceDate),
+        "updatedAt": .double(read.updatedAt.timeIntervalSinceReferenceDate),
+        "fieldHashes": .object(
+          Dictionary(
+            uniqueKeysWithValues: read.fieldHashes.map {
+              ($0.key.rawValue, .string($0.value.value))
+            })),
+        "state": .object(["globalDone": .null, "archived": .null]),
+        "labels": .array([]), "references": .array(read.references.map(referenceValue)),
+        "progress": .null,
+      ])
+    }
+
+    private static func tagValue(_ read: PlannerTagSourceRead) -> Value {
       .object([
         "source": .object([
           "kind": .string(read.source.kind.rawValue), "id": .string(read.source.id.uuidString),

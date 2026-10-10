@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create and edit Items, Lists and Categories, add, remove, move and reorder live Item references in Lists, complete/reopen Items or exact List appearances, archive/unarchive Items and Lists, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
+        "Create Items, Lists, Categories and Tags; edit Items, Lists and Categories; add, remove, move and reorder live Item references in Lists, complete/reopen Items or exact List appearances, archive/unarchive Items and Lists, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -16,7 +16,8 @@
           "operationId": .object(["type": .string("string"), "format": .string("uuid")]),
           "command": .object([
             "oneOf": .array([
-              creationSchema, listCreationSchema, categoryCreationSchema, membershipCreationSchema,
+              creationSchema, listCreationSchema, categoryCreationSchema, tagCreationSchema,
+              membershipCreationSchema,
               membershipReorderingSchema, membershipRemovalSchema, membershipMoveSchema,
               editSchema,
               listEditSchema, categoryEditSchema, archiveSchema,
@@ -130,6 +131,10 @@
       PlannerCategoryField(rawValue: $0.key) != nil
     }
 
+    private static let tagContentProperties = listContentProperties.filter {
+      PlannerTagField(rawValue: $0.key) != nil
+    }
+
     private static let listCreationSchema = Value.object([
       "type": .string("object"), "additionalProperties": .bool(false),
       "required": .array([.string("type"), .string("content")]),
@@ -151,6 +156,19 @@
           "type": .string("object"), "additionalProperties": .bool(false),
           "required": .array([.string("name")]),
           "properties": .object(categoryContentProperties),
+        ]),
+      ]),
+    ])
+
+    private static let tagCreationSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("type"), .string("content")]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("createTag")]),
+        "content": .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "required": .array([.string("name")]),
+          "properties": .object(tagContentProperties),
         ]),
       ]),
     ])
@@ -522,6 +540,7 @@
         case "createItem": command = try creationCommand(arguments["command"])
         case "createList": command = try listCreationCommand(arguments["command"])
         case "createCategory": command = try categoryCreationCommand(arguments["command"])
+        case "createTag": command = try tagCreationCommand(arguments["command"])
         case "addMembership": command = try membershipCreationCommand(arguments["command"])
         case "removeMembership": command = try membershipRemovalCommand(arguments["command"])
         case "moveMembership": command = try membershipMoveCommand(arguments["command"])
@@ -570,6 +589,28 @@
       }
       return .createCategory(
         content: PlannerCategoryContentInput(
+          name: name, color: color,
+          iconName: try nullableText(
+            content["iconName"] ?? .null, path: "/command/content/iconName")))
+    }
+
+    private static func tagCreationCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "content"], required: ["type", "content"], path: "/command")
+      let content = try object(
+        command["content"], allowed: Set(PlannerTagField.allCases.map(\.rawValue)),
+        required: ["name"], path: "/command/content")
+      guard case .string(let name) = content["name"] else {
+        throw AdmissionFailure(
+          "invalidInput", "/command/content/name", "Expected a Tag name String.")
+      }
+      let color: PlannerColor?
+      switch try colorChange(content["color"], path: "/command/content/color") {
+      case .set(let value): color = value
+      case .clear, .unchanged: color = nil
+      }
+      return .createTag(
+        content: PlannerTagContentInput(
           name: name, color: color,
           iconName: try nullableText(
             content["iconName"] ?? .null, path: "/command/content/iconName")))
