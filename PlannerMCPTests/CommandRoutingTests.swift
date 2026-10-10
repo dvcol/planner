@@ -5,6 +5,241 @@ import Testing
 @testable import Planner
 
 struct CommandRoutingTests {
+  @Test func categoryWireAdvertisementAndValidationKeepRejectedDataUnapplied() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(
+      configuration: PlannerStorageConfiguration(
+        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+        controlURL: directory.appendingPathComponent("control/writer"),
+        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+        processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let session) = await planner.bootstrap() else {
+      Issue.record("Initialize the local dataset before validating agent input.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: session)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      var advertisementRequest = try executionRequest(
+        endpoint: endpoint, operationIdentifier: UUID(),
+        command: ["type": "createCategory", "content": ["name": "Food"]])
+      advertisementRequest.httpBody = try JSONSerialization.data(withJSONObject: [
+        "jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": [:],
+      ])
+      let advertisement = try await httpSession.data(for: advertisementRequest)
+      #expect((advertisement.1 as? HTTPURLResponse)?.statusCode == 200)
+      let envelope = try #require(
+        JSONSerialization.jsonObject(with: advertisement.0) as? [String: Any])
+      let advertised = try #require(envelope["result"] as? [String: Any])
+      let tools = try #require(advertised["tools"] as? [[String: Any]])
+      let executeTool = try #require(tools.first { $0["name"] as? String == "planner_execute" })
+      let inputSchema = try #require(executeTool["inputSchema"] as? [String: Any])
+      let properties = try #require(inputSchema["properties"] as? [String: Any])
+      let commandSchema = try #require(properties["command"] as? [String: Any])
+      let commandVariants = try #require(commandSchema["oneOf"] as? [[String: Any]])
+      let categoryVariant = try #require(
+        commandVariants.first { variant in
+          let variantProperties = variant["properties"] as? [String: Any]
+          return (variantProperties?["type"] as? [String: Any])?["const"] as? String
+            == "createCategory"
+        })
+      let categoryProperties = try #require(categoryVariant["properties"] as? [String: Any])
+      let categoryContent = try #require(categoryProperties["content"] as? [String: Any])
+      #expect(
+        Set(try #require(categoryContent["properties"] as? [String: Any]).keys) == [
+          "name", "color", "iconName",
+        ])
+      #expect(categoryContent["required"] as? [String] == ["name"])
+      let readTool = try #require(tools.first { $0["name"] as? String == "planner_read" })
+      let readSchema = try #require(readTool["inputSchema"] as? [String: Any])
+      let readProperties = try #require(readSchema["properties"] as? [String: Any])
+      let readRequestSchema = try #require(readProperties["request"] as? [String: Any])
+      let readVariants = try #require(readRequestSchema["oneOf"] as? [[String: Any]])
+      let sourceVariant = try #require(
+        readVariants.first { variant in
+          let variantProperties = variant["properties"] as? [String: Any]
+          return (variantProperties?["kind"] as? [String: Any])?["const"] as? String == "source"
+        })
+      let sourceProperties = try #require(sourceVariant["properties"] as? [String: Any])
+      let sourceSchema = try #require(sourceProperties["source"] as? [String: Any])
+      let sourceFields = try #require(sourceSchema["properties"] as? [String: Any])
+      let kindSchema = try #require(sourceFields["kind"] as? [String: Any])
+      #expect((kindSchema["enum"] as? [String])?.contains("category") == true)
+      let invalidContents: [([String: Any], String, String)] = [
+        ([:], "invalidInput", "/command/content/name"),
+        (["name": NSNull()], "invalidInput", "/command/content/name"),
+        (["name": " \n\t"], "invalidInput", "/command/content/name"),
+        (["name": "Food", "notes": "Forbidden"], "unknownField", "/command/content/notes"),
+        (["name": "Food", "color": "blue"], "invalidInput", "/command/content/color"),
+        (
+          ["name": "Food", "color": ["red": 2, "green": 0, "blue": 0, "alpha": 1]],
+          "invalidInput", "/command/content/color/red"
+        ),
+      ]
+      for (content, code, propertyPath) in invalidContents {
+        let operationIdentifier = UUID()
+        let request = try executionRequest(
+          endpoint: endpoint, operationIdentifier: operationIdentifier,
+          command: ["type": "createCategory", "content": content])
+        let rejected = try operationValue(try await httpSession.data(for: request), isError: true)
+        #expect(rejected["state"] as? String == "rejected")
+        let reason = try #require(rejected["reason"] as? [String: Any])
+        #expect(reason["code"] as? String == code)
+        #expect(reason["propertyPath"] as? String == propertyPath)
+        guard
+          case .noReliableEvidence = await planner.operationStatus(
+            session: session,
+            operationId: operationIdentifier)
+        else {
+          Issue.record("Rejected input must not fabricate applied operation evidence.")
+          await listener.stop()
+          return
+        }
+      }
+      guard
+        case .snapshot(let empty) = await planner.query(
+          PlannerQuery(
+            session: session,
+            request: .catalog(PlannerCatalogQuery(sourceKind: .category, archive: .all)))),
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
+      else {
+        Issue.record("Validation must leave the initial dataset and recovery namespace readable.")
+        await listener.stop()
+        return
+      }
+      #expect(empty.matchingCount == 0)
+      #expect(namespaces.first?.acknowledgedSnapshot == nil)
+      #expect(namespaces.first?.preparedProposals.isEmpty == true)
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
+  @Test func categoryCreationOverHTTPReplaysAndReadsTheSameDurableSource() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = PlannerCore.Planner(configuration: configuration)
+    guard case .ready(let datasetSession) = await planner.bootstrap() else {
+      Issue.record("Initialize the real local dataset before agent creation.")
+      return
+    }
+    let operationIdentifier = UUID()
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    let createRequest = try executionRequest(
+      endpoint: endpoint, operationIdentifier: operationIdentifier,
+      command: [
+        "type": "createCategory",
+        "content": [
+          "name": " Café food ", "color": ["red": 0.125, "green": 0.5, "blue": 0.75, "alpha": 1],
+          "iconName": "fork.knife",
+        ],
+      ])
+    do {
+      let created = try operationValue(
+        try await httpSession.data(for: createRequest), isError: false)
+      #expect(created["state"] as? String == "applied")
+      let result = try #require(created["result"] as? [String: Any])
+      let generated = try #require(result["generated"] as? [[String: Any]])
+      #expect(generated.count == 1)
+      let source = try #require(generated.first)
+      #expect(source["kind"] as? String == "category")
+      let identifierSpelling = try #require(source["id"] as? String)
+      let identifier = try #require(UUID(uuidString: identifierSpelling))
+      let replay = try operationValue(
+        try await httpSession.data(for: createRequest), isError: false)
+      #expect(NSDictionary(dictionary: replay).isEqual(to: created))
+      var readRequest = createRequest
+      readRequest.httpBody = try JSONSerialization.data(withJSONObject: [
+        "jsonrpc": "2.0", "id": 2, "method": "tools/call",
+        "params": [
+          "name": "planner_read",
+          "arguments": [
+            "formatVersion": 1, "request": ["kind": "source", "source": source],
+          ],
+        ],
+      ])
+      let wireRead = try operationValue(
+        try await httpSession.data(for: readRequest), isError: false)
+      #expect(wireRead["kind"] as? String == "source")
+      let value = try #require(wireRead["value"] as? [String: Any])
+      let content = try #require(value["content"] as? [String: Any])
+      #expect(Set(content.keys) == ["name", "color", "iconName"])
+      #expect(content["name"] as? String == " Café food ")
+      #expect(content["iconName"] as? String == "fork.knife")
+      #expect(
+        NSDictionary(dictionary: try #require(content["color"] as? [String: Any])).isEqual(to: [
+          "red": 0.125, "green": 0.5, "blue": 0.75, "alpha": 1,
+        ]))
+      let state = try #require(value["state"] as? [String: Any])
+      #expect(state["globalDone"] is NSNull)
+      #expect(state["archived"] is NSNull)
+      #expect(value["progress"] is NSNull)
+      let reopened = PlannerCore.Planner(configuration: configuration)
+      guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+        case .source(.category(let read)) = await reopened.read(
+          session: reopenedSession,
+          request: .source(PlannerEntityReference(kind: .category, id: identifier))),
+        case .appliedRecoveryComplete(let saved, let checkpoint) = await reopened.operationStatus(
+          session: reopenedSession, operationId: operationIdentifier)
+      else {
+        Issue.record("Agent-created Category must reopen with the original receipt and recovery.")
+        await listener.stop()
+        return
+      }
+      #expect(value["createdAt"] as? Double == read.createdAt.timeIntervalSinceReferenceDate)
+      #expect(value["updatedAt"] as? Double == read.updatedAt.timeIntervalSinceReferenceDate)
+      #expect(
+        value["fieldHashes"] as? [String: String]
+          == Dictionary(
+            uniqueKeysWithValues:
+              read.fieldHashes.map { ($0.key.rawValue, $0.value.value) }))
+      #expect(saved.generated == [read.source])
+      #expect(checkpoint == 1)
+      var queryRequest = createRequest
+      queryRequest.httpBody = try JSONSerialization.data(withJSONObject: [
+        "jsonrpc": "2.0", "id": 3, "method": "tools/call",
+        "params": [
+          "name": "planner_query",
+          "arguments": [
+            "formatVersion": 1,
+            "query": [
+              "kind": "catalog", "sourceKind": "category", "archive": "all", "text": "FOOD cafe",
+            ],
+          ],
+        ],
+      ])
+      let catalog = try operationValue(
+        try await httpSession.data(for: queryRequest), isError: false)
+      #expect(catalog["matchingCount"] as? String == "1")
+      let rows = try #require(catalog["rows"] as? [[String: Any]])
+      #expect(rows.count == 1)
+      #expect((rows.first?["source"] as? [String: Any])?["id"] as? String == identifier.uuidString)
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   @Test func subtitleEditOverHTTPPreservesNotesAndRejectsStaleChangesBeforeClearing() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }

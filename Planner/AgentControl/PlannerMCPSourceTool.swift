@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_read",
       description:
-        "Read an Item, List or Schedule source, an exact List item appearance, or a generation-bound Item row window from the local Planner prototype.",
+        "Read an Item, List, Category or Schedule source, an exact List item appearance, or a generation-bound row window from the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("request")]),
@@ -48,7 +48,10 @@
                     "properties": .object([
                       "kind": .object([
                         "type": .string("string"),
-                        "enum": .array([.string("item"), .string("list"), .string("schedule")]),
+                        "enum": .array([
+                          .string("item"), .string("list"), .string("category"),
+                          .string("schedule"),
+                        ]),
                       ]),
                       "id": .object(["type": .string("string"), "format": .string("uuid")]),
                     ]),
@@ -116,9 +119,10 @@
           structured = .object([
             "formatVersion": .int(1), "kind": .string("source"), "value": scheduleValue(read),
           ])
-        case .source(.category):
-          return failure(
-            code: "unavailable", message: "Category transport admission is not implemented yet.")
+        case .source(.category(let read)):
+          structured = .object([
+            "formatVersion": .int(1), "kind": .string("source"), "value": categoryValue(read),
+          ])
         case .source(.item(let read)):
           guard read.content.categoryIds.isEmpty,
             read.content.tagIds.isEmpty,
@@ -192,11 +196,11 @@
         let source = try object(request["source"], keys: ["kind", "id"], path: "/request/source")
         guard case .string(let spelling) = source["kind"],
           let sourceKind = PlannerEntityKind(rawValue: spelling),
-          [.item, .list, .schedule].contains(sourceKind)
+          [.item, .list, .category, .schedule].contains(sourceKind)
         else {
           throw AdmissionFailure(
             code: "invalidInput", path: "/request/source/kind",
-            message: "This prototype supports Item, List and Schedule sources.")
+            message: "This prototype supports Item, List, Category and Schedule sources.")
         }
         return .source(
           PlannerEntityReference(
@@ -234,7 +238,8 @@
               ($0.key.rawValue, .string($0.value.value))
             })),
         "state": .object(["globalDone": .null, "archived": .null]),
-        "labels": .array([]), "references": .array([]), "progress": .null,
+        "labels": .array([]), "references": .array([]),
+        "progress": .null,
       ])
     }
 
@@ -276,6 +281,28 @@
           message: "Required property is missing: \(missing).")
       }
       return fields
+    }
+
+    private static func categoryValue(_ read: PlannerCategorySourceRead) -> Value {
+      .object([
+        "source": .object([
+          "kind": .string(read.source.kind.rawValue), "id": .string(read.source.id.uuidString),
+        ]),
+        "content": .object([
+          "name": .string(read.content.name), "color": read.content.color.map(colorValue) ?? .null,
+          "iconName": read.content.iconName.map(Value.string) ?? .null,
+        ]),
+        "createdAt": .double(read.createdAt.timeIntervalSinceReferenceDate),
+        "updatedAt": .double(read.updatedAt.timeIntervalSinceReferenceDate),
+        "fieldHashes": .object(
+          Dictionary(
+            uniqueKeysWithValues: read.fieldHashes.map {
+              ($0.key.rawValue, .string($0.value.value))
+            })),
+        "state": .object(["globalDone": .null, "archived": .null]),
+        "labels": .array([]), "references": .array(read.references.map(referenceValue)),
+        "progress": .null,
+      ])
     }
 
     private static func listValue(_ read: PlannerListSourceRead) -> Value {
