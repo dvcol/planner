@@ -2,6 +2,76 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testRowMenuMoveKeepsAnExistingDestinationIdentityCompletionAndOrderAfterRelaunch() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    createItem(application, title: "Hotel")
+    createList("Tokyo Food", application: application)
+    addItem(application)
+    let item = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    let removedIdentifier = item.identifier
+    createList("Wishlist", application: application)
+    addItem(application)
+    addItem(application, title: "Hotel")
+    let retainedIdentifier = item.identifier
+    let retainedCompletion = application.buttons[
+      retainedIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    retainedCompletion.activateForPlannerJourney()
+    XCTAssertTrue(retainedCompletion.waitForPlannerValue("Completed"))
+    assertProgress(0.5, application: application)
+    let hotel = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(hotel.waitForExistence(timeout: 5))
+    XCTAssertLessThan(item.frame.midY, hotel.frame.midY)
+    openList("Tokyo Food", application: application)
+    XCTAssertEqual(item.identifier, removedIdentifier)
+    #if os(macOS)
+      item.rightClick()
+    #else
+      item.press(forDuration: 1)
+    #endif
+    let moveToList = application.plannerElement("Move to List")
+    XCTAssertTrue(moveToList.waitForExistence(timeout: 5))
+    moveToList.activateForPlannerJourney()
+    let destination = moveDestination("Wishlist", application: application)
+    XCTAssertTrue(destination.waitForExistence(timeout: 5))
+    destination.activateForPlannerJourney()
+    recordScreenshot(application, name: "Row-menu move reviews an already populated destination")
+    application.plannerElement("saved.membership.move").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    XCTAssertFalse(item.exists)
+    openList("Wishlist", application: application)
+    XCTAssertEqual(item.identifier, retainedIdentifier)
+    XCTAssertEqual(application.savedPlannerItemRows("Nezu Museum").count, 1)
+    XCTAssertTrue(retainedCompletion.waitForPlannerValue("Completed"))
+    XCTAssertTrue(hotel.waitForExistence(timeout: 5))
+    XCTAssertLessThan(item.frame.midY, hotel.frame.midY)
+    assertProgress(0.5, application: application)
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Lists", application: application)
+    let emptiedList = application.savedPlannerListRow("Tokyo Food")
+    revealSidebarIfNeeded(application, element: emptiedList)
+    emptiedList.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    openList("Wishlist", application: application)
+    XCTAssertEqual(item.identifier, retainedIdentifier)
+    XCTAssertEqual(application.savedPlannerItemRows("Nezu Museum").count, 1)
+    XCTAssertTrue(retainedCompletion.waitForPlannerValue("Completed"))
+    XCTAssertTrue(hotel.waitForExistence(timeout: 5))
+    XCTAssertLessThan(item.frame.midY, hotel.frame.midY)
+    assertProgress(0.5, application: application)
+    recordScreenshot(application, name: "Existing destination keeps identity completion and order")
+    viewGlobalItem(application)
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+  }
+
   func testMovingASelectedListItemCancelsWithoutChangeThenCreatesANewTodoDestination() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -482,13 +552,13 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     ).matching(NSPredicate(format: "label == %@ OR value == %@", title, title)).firstMatch
   }
 
-  private func createItem(_ application: XCUIApplication) {
+  private func createItem(_ application: XCUIApplication, title: String = "Nezu Museum") {
     openSection("Items", application: application)
     application.plannerElement("saved.item.new").activateForPlannerJourney()
-    let title = application.textFields["saved.item.title"]
-    XCTAssertTrue(title.waitForExistence(timeout: 5))
-    title.activateForPlannerJourney()
-    title.typeText("Nezu Museum")
+    let titleField = application.textFields["saved.item.title"]
+    XCTAssertTrue(titleField.waitForExistence(timeout: 5))
+    titleField.activateForPlannerJourney()
+    titleField.typeText(title)
     let notes = application.textFields["saved.item.notes"]
     notes.activateForPlannerJourney()
     notes.typeText("Meet at the garden entrance")
@@ -510,15 +580,15 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
   }
 
-  private func addItem(_ application: XCUIApplication) {
+  private func addItem(_ application: XCUIApplication, title: String = "Nezu Museum") {
     application.plannerElement("saved.list.add").activateForPlannerJourney()
-    let candidate = application.staticTexts["Nezu Museum"].firstMatch
+    let candidate = application.staticTexts[title].firstMatch
     XCTAssertTrue(candidate.waitForExistence(timeout: 5))
     candidate.activateForPlannerJourney()
     application.plannerElement("saved.membership.add").activateForPlannerJourney()
     XCTAssertFalse(application.plannerElement("saved.membership.add").waitForExistence(timeout: 2))
     XCTAssertTrue(
-      application.savedPlannerItemRows("Nezu Museum").firstMatch.waitForExistence(timeout: 10))
+      application.savedPlannerItemRows(title).firstMatch.waitForExistence(timeout: 10))
   }
 
   private func openList(_ title: String, application: XCUIApplication) {

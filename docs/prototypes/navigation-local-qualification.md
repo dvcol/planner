@@ -2,7 +2,7 @@
 
 Work for [Navigation prototype](https://github.com/dvcol/planner/issues/14) on `prototype/navigation`. Q34 accepts the native UI journeys and fixtures. Q35 requires confirmation before deleting a Category/Tag with any association. The user delayed signing and physical setup while authorizing simulator and local Mac work.
 
-The latest saved-data work is in [Native membership move](#native-membership-move), [Native row-menu removal](#native-row-menu-removal) and [Native membership removal](#native-membership-removal). [Archive and cumulative saved filters](#archive-and-cumulative-saved-filters) records the preceding saved filters and hidden-member drag qualification. Other sections retain their recorded revisions.
+The latest saved-data work is in [Native row-menu move](#native-row-menu-move), [Native membership move](#native-membership-move), [Native row-menu removal](#native-row-menu-removal) and [Native membership removal](#native-membership-removal). [Archive and cumulative saved filters](#archive-and-cumulative-saved-filters) records the preceding saved filters and hidden-member drag qualification. Other sections retain their recorded revisions.
 
 The human accepted Q38 A, Q39 B, Q40 A, Q41 A and Q42 A, then accepted Q43 A, Q44 A, Q45 A and Q46 A. The [accepted row decisions](../navigation-prototype-review.md#accepted-review-answers) and [row contract review](../navigation-row-contract-review.md) record the exact declarations and required tests. The accepted amendment itself added no runtime qualification to the seven-journey presentation evidence below. Later sections qualify saved Item/List appearance completion and standalone List reordering. Native rich rows, cross-List drag-and-drop and provider lookup remain open.
 
@@ -401,4 +401,21 @@ Chooser copy was then clarified to include the global completion exception. Only
 
 The [evidence record](evidence/navigation/saved-membership-move.json) preserves commands, executed red, the test correction, passing runs, source snapshots and captures. Raw result bundles/logs remain under `/private/tmp/PlannerNativeMove{PhoneRed,PhoneGreen,PhoneCorrected,TabletCorrected,PhoneRemovalRegression,TabletRemovalRegression,MacCorrected,PhoneCopyReview,TabletCopyReview,MacCopyReview}` with their respective extensions.
 
-Core's [membership mutation evidence](evidence/navigation/core-membership-mutations.json) separately proves existing-destination preservation, global Done precedence, replay and failure behavior at its recorded revision. Those are not all native UI outcomes here. Row-menu Move and existing-destination UI interaction remain open, alongside other Add paths, external refresh, Undo, native failure/recovery presentation, Mac runtime, signed/physical-device, CloudKit, Share, accessibility/keyboard, large-data and final human review. The final whole-app polish still follows feature completion.
+Core's [membership mutation evidence](evidence/navigation/core-membership-mutations.json) separately proves existing-destination preservation, global Done precedence, replay and failure behavior at its recorded revision. Those are not all native UI outcomes here. The following row-menu slice qualifies Move and existing-destination interaction. Other Add paths remain open, alongside external refresh, Undo, native failure/recovery presentation, Mac runtime, signed/physical-device, CloudKit, Share, accessibility/keyboard, large-data and final human review. The final whole-app polish still follows feature completion.
+
+## Native row-menu move
+
+Before this slice, Move to List was available only after opening contextual detail. Native row menus now offer the same destination sheet for an unselected Item: long press on iPhone/iPad, right click in the Mac Table. They retain the exact source membership and use the already qualified move command. The shared Item is preserved.
+
+The public journey creates Tokyo Food with Nezu Museum, and Wishlist with Nezu Museum first and Hotel second. Wishlist's Nezu appearance is locally Done while the global Item remains Todo. Moving from Tokyo Food to the existing Wishlist destination removes the source membership, preserves the destination identity/local completion/first position, and leaves exactly one Nezu appearance. Relaunch retains both the empty source and unchanged destination. Explicitly opening the global Item verifies its notes and Todo state.
+
+The first executed red failed at the missing row-menu Move action. Adding the native menu entries made the journey pass on both simulators. The original fixture had Nezu last; it was strengthened to place Nezu first so an accidental move to the end would fail. Production stayed unchanged. The stronger journey passes once on each simulator, with zero failures/skips. The affected row-menu removal journey separately passes once on each simulator. Native Mac app/test bundles compile; no Mac runtime is claimed. Strict affected Swift lint and source/capture hashes pass.
+
+| Native outcome | iPhone | iPad |
+| --- | --- | --- |
+| Existing destination review | [Chooser](evidence/navigation/phone-saved-row-menu-move-chooser.png) | [Chooser](evidence/navigation/tablet-saved-row-menu-move-chooser.png) |
+| Preserved completion and first position after relaunch | [Wishlist](evidence/navigation/phone-saved-row-menu-move-destination-reopened.png) | [Wishlist](evidence/navigation/tablet-saved-row-menu-move-destination-reopened.png) |
+
+All four final app-owned captures were inspected. The [evidence record](evidence/navigation/saved-row-menu-move.json) preserves exact commands, source snapshots, initial red/green, stronger fixture runs and removal regression. Raw bundles/logs remain under `/private/tmp/PlannerNativeRowMove{PhoneRed,PhoneGreen,TabletGreen,MacGreen,PhoneRemovalRegression,TabletRemovalRegression,PhonePositionReview,TabletPositionReview,MacPositionReview}`. Context-menu animation waits remain recorded.
+
+Other Add paths, cross-List drag, external refresh, Undo, native failure/recovery presentation, Mac runtime, signed/physical-device, CloudKit, Share, accessibility/keyboard, large-data and final human review remain open. Whole-app polish follows feature completion.
