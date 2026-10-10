@@ -71,6 +71,26 @@
       ]),
     ])
 
+    private static let estimateSchema = Value.object([
+      "type": .array([.string("object"), .string("null")]),
+      "additionalProperties": .bool(false),
+      "required": .array([.string("minutes"), .string("displayUnit")]),
+      "properties": .object([
+        "minutes": .object([
+          "type": .string("string"), "pattern": .string("^[1-9][0-9]*$"),
+          "description": .string(
+            "Positive canonical decimal Int64 minutes, at most 9223372036854775807."),
+        ]),
+        "displayUnit": .object([
+          "type": .string("string"),
+          "enum": .array([
+            .string("minute"), .string("hour"), .string("day"), .string("week"), .string("month"),
+            .string("year"),
+          ]),
+        ]),
+      ]),
+    ])
+
     private static let creationSchema = Value.object([
       "type": .string("object"), "additionalProperties": .bool(false),
       "required": .array([.string("type"), .string("content")]),
@@ -235,6 +255,7 @@
             "title": .object(["type": .string("string")]),
             "subtitle": .object(["type": .array([.string("string"), .string("null")])]),
             "notes": .object(["type": .array([.string("string"), .string("null")])]),
+            "estimate": estimateSchema,
             "location": locationSchema,
             "links": linksSchema,
           ]),
@@ -1033,13 +1054,13 @@
       let changes = try object(
         command["changes"], allowed: fieldNames, required: [], path: "/command/changes")
       if let unsupported = Set(changes.keys).subtracting([
-        "title", "subtitle", "notes", "location", "links",
+        "title", "subtitle", "notes", "estimate", "location", "links",
       ])
       .sorted()
       .first {
         throw AdmissionFailure(
           "unavailable", "/command/changes/" + unsupported,
-          "This edit slice supports title, subtitle, notes, location and links only.")
+          "This edit slice supports title, subtitle, notes, estimate, location and links only.")
       }
       let hashValues = try object(
         command["expectedFieldHashes"], allowed: fieldNames, required: [],
@@ -1066,8 +1087,32 @@
           subtitle: try textChange(changes["subtitle"], path: "/command/changes/subtitle"),
           notes: try textChange(changes["notes"], path: "/command/changes/notes"),
           location: try locationChange(changes["location"], path: "/command/changes/location"),
+          estimate: try estimateChange(changes["estimate"], path: "/command/changes/estimate"),
           links: linkChanges),
         expectedFieldHashes: hashes)
+    }
+
+    private static func estimateChange(
+      _ value: Value?, path: String
+    ) throws -> PlannerFieldChange<PlannerEstimate> {
+      guard let value else { return .unchanged }
+      if case .null = value { return .clear }
+      let fields = try object(
+        value, allowed: ["minutes", "displayUnit"], required: ["minutes", "displayUnit"], path: path
+      )
+      guard case .string(let spelling) = fields["minutes"], let minutes = Int64(spelling),
+        minutes > 0, String(minutes) == spelling
+      else {
+        throw AdmissionFailure(
+          "invalidInput", path + "/minutes", "Expected positive canonical decimal Int64 minutes.")
+      }
+      guard case .string(let spelling) = fields["displayUnit"],
+        let displayUnit = PlannerEstimateUnit(rawValue: spelling)
+      else {
+        throw AdmissionFailure(
+          "invalidInput", path + "/displayUnit", "Expected a supported estimate unit.")
+      }
+      return .set(PlannerEstimate(minutes: minutes, displayUnit: displayUnit))
     }
 
     private static func archiveCommand(_ value: Value?) throws -> PlannerCommand {
