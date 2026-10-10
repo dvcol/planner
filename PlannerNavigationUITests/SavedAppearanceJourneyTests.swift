@@ -2,6 +2,44 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testRemovingAnUnselectedListItemFromItsRowMenuKeepsTheSharedItem() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    createList("Tokyo Food", application: application)
+    addItem(application)
+    let item = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    XCTAssertTrue(item.waitForPlannerHittability())
+    #if os(macOS)
+      item.rightClick()
+    #else
+      item.press(forDuration: 1)
+    #endif
+    let remove = application.plannerElement("Remove from List")
+    XCTAssertTrue(remove.waitForExistence(timeout: 5))
+    remove.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    XCTAssertFalse(item.exists)
+    XCTAssertFalse(application.progressIndicators["saved.list.progress"].exists)
+    recordScreenshot(application, name: "Native row menu removes an unselected List membership")
+    openSection("Items", application: application)
+    revealSidebarIfNeeded(application, element: application.plannerElement("saved.item.new"))
+    let retainedItem = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.")
+    ).matching(
+      NSPredicate(format: "label CONTAINS %@ OR value CONTAINS %@", "Nezu Museum", "Nezu Museum")
+    ).firstMatch
+    XCTAssertTrue(retainedItem.waitForExistence(timeout: 10))
+    retainedItem.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Meet at the garden entrance"].waitForExistence(timeout: 10))
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+  }
+
   func testRemovingASelectedListItemKeepsItsSourceAndOtherListStateWhileReAddStartsTodo() throws {
     continueAfterFailure = false
     let application = XCUIApplication()

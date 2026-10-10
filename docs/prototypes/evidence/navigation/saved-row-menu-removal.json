@@ -1,0 +1,64 @@
+{
+  "baseCommit": "08c9403",
+  "seam": "Accepted public native UI with real isolated durable local datasets. Row long press on simulators and compiled native Mac right-click path. No private store reads or production injection.",
+  "classification": "Interaction qualification. Both journeys passed on their first executed run against the already implemented row-menu action. No behavior red is claimed.",
+  "sourceSnapshot": {
+    "Planner/Scenes/SavedPlannerStore.swift": "c29c8c7bbf38755043b74280b0bf519816555cc1711c217dc79fce549cb05ba5",
+    "Planner/Scenes/SavedPlannerView.swift": "03ae243983551a2369e1d9e06dd049206fe1f318c79bc17642283983c68c4a6c",
+    "Planner/Scenes/SavedAppearanceViews.swift": "b12ebd20cae1db515f680bf424b93e60a1fa973a2019f5c0424cb5b48a3ab154",
+    "Planner/Scenes/SavedMacMembershipTable.swift": "3eb7f5eb7c23657ad643d545d894838b548fdc2cfa99cfa190a99684d61c391f",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "0a0a4113158e6741b52d90f7d1f2690b5bf44ec555d65fdd1237f9f28db319fc"
+  },
+  "commands": {
+    "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testRemovingAnUnselectedListItemFromItsRowMenuKeepsTheSharedItem -resultBundlePath /private/tmp/PlannerRowRemovalPhone.xcresult test > /private/tmp/PlannerRowRemovalPhone.log 2>&1",
+    "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testRemovingAnUnselectedListItemFromItsRowMenuKeepsTheSharedItem -resultBundlePath /private/tmp/PlannerRowRemovalTablet.xcresult test > /private/tmp/PlannerRowRemovalTablet.log 2>&1",
+    "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerRowRemovalMac.xcresult build-for-testing > /private/tmp/PlannerRowRemovalMac.log 2>&1"
+  },
+  "results": {
+    "Phone": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "resultBundle": "/private/tmp/PlannerRowRemovalPhone.xcresult"
+    },
+    "Tablet": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "resultBundle": "/private/tmp/PlannerRowRemovalTablet.xcresult"
+    },
+    "Mac": {
+      "action": "build-for-testing",
+      "result": "Passed",
+      "executedBehaviorFunctions": 0,
+      "resultBundle": "/private/tmp/PlannerRowRemovalMac.xcresult"
+    }
+  },
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-row-menu-removal.png",
+      "sha256": "16d720ffccea275e0689b7b242bc68a3a3cee158e73a67a20ec1a03b46369576",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-row-menu-removal.png",
+      "sha256": "3c8e621579404f6f04ee7e2d064d606ec8ef0fc5a4ac4edf65cbb961358a5212",
+      "inspected": true
+    }
+  ],
+  "validation": [
+    "Affected Swift test lint passes strictly.",
+    "Both simulator app/test targets and the Mac app/test bundle compile.",
+    "Source hashes remained fixed across the runs."
+  ],
+  "limits": [
+    "Only ordinary unselected membership removal and retained source notes/global Todo are qualified here. Selected removal/re-add persistence is covered by the preceding evidence.",
+    "Native Mac runtime remains unqualified after the previously recorded automation startup failures.",
+    "No external refresh, Undo, signed/physical-device, CloudKit, Share, failure presentation or large-data claim.",
+    "Xcode waited for context-menu animations before continuing. Raw logs and bundles retain this delay."
+  ]
+}
