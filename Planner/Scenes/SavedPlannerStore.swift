@@ -183,6 +183,29 @@ final class SavedPlannerStore {
     return applied.generated.first { $0.kind == .item }
   }
 
+  func editItem(
+    _ item: PlannerItemSourceRead, title: String, notes: String, operationIdentifier: UUID
+  ) async -> Bool {
+    let titleChange: PlannerFieldChange<String>
+    if title == item.content.title {
+      titleChange = .unchanged
+    } else {
+      titleChange = .set(title)
+    }
+    let notesChange: PlannerFieldChange<String>
+    if notes == (item.content.notes ?? "") {
+      notesChange = .unchanged
+    } else if notes.isEmpty {
+      notesChange = .clear
+    } else {
+      notesChange = .set(notes)
+    }
+    return await executeChange(
+      .editItem(
+        sourceId: item.source.id, changes: .init(title: titleChange, notes: notesChange),
+        expectedFieldHashes: item.fieldHashes), operationId: operationIdentifier) != nil
+  }
+
   func setItemCompletion(_ identifier: UUID, done: Bool) async -> Bool {
     guard
       await executeChange(

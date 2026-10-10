@@ -57,6 +57,7 @@ struct SavedItemDetail: View {
   let canChange: Bool
   let isSaving: Bool
   let addToList: () -> Void
+  let editItem: () -> Void
   let setCompletion: @MainActor @Sendable (Bool) -> Void
   let setArchive: @MainActor @Sendable (Bool) -> Void
 
@@ -89,6 +90,8 @@ struct SavedItemDetail: View {
     .toolbar {
       ToolbarItem(placement: .primaryAction) {
         Menu {
+          Button("Edit Item", action: editItem)
+            .disabled(!canChange)
           Button("Add to List", action: addToList)
             .disabled(!canChange)
           Button(item.state.archived == true ? "Unarchive Item" : "Archive Item") {

@@ -1,0 +1,233 @@
+{
+  "baseCommit": "c1f67bc",
+  "seam": "Public native UI with isolated real durable local datasets. Native text selection and editing, no private store reads or production injection.",
+  "sourceSnapshots": {
+    "Red": {
+      "Planner/Scenes/SavedPlannerView.swift": "e420cb075b6b30bdd178c065bcd095e0ad048a5b15837d8e02ff0a52c18bf9cf",
+      "Planner/Scenes/SavedItemViews.swift": "6892dbd6702bbcf8026ff6fe64163895eeeb7b0c20d59d0ced6b4d75f387ddc9",
+      "Planner/Scenes/SavedPlannerStore.swift": "a786998526a052b534bcadc1e642144e3e6a0aafe08001e5e78716e2a591ea8f",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "a01c8770fbd8bd3bb765f0ee58707c1f1766867a2368155c2c07991db47b43ce"
+    },
+    "Green": {
+      "Planner/Scenes/SavedPlannerView.swift": "c9c3e98e5dd1957d8a0c055981c7d7c31fb4d7e56b7f2bebc687828a8d096e3b",
+      "Planner/Scenes/SavedItemViews.swift": "e0fa66b2c243a0c588fad330c8497ca037bca868183ea25b9fad13f2bd31f8da",
+      "Planner/Scenes/SavedPlannerStore.swift": "9ec0441ac1e324bb2031e461a00923399f70a19e20c9274160381cc22a83bcc3",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "a01c8770fbd8bd3bb765f0ee58707c1f1766867a2368155c2c07991db47b43ce",
+      "Planner/Scenes/SavedEditItemForm.swift": "1b4762bdeb21e307efa3fe46abf258c1d91341504a0182e91591feb7f0b377fd"
+    },
+    "Selection": {
+      "Planner/Scenes/SavedPlannerView.swift": "c9c3e98e5dd1957d8a0c055981c7d7c31fb4d7e56b7f2bebc687828a8d096e3b",
+      "Planner/Scenes/SavedItemViews.swift": "e0fa66b2c243a0c588fad330c8497ca037bca868183ea25b9fad13f2bd31f8da",
+      "Planner/Scenes/SavedPlannerStore.swift": "9ec0441ac1e324bb2031e461a00923399f70a19e20c9274160381cc22a83bcc3",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "ba4808271adc1313444c49e073f16232eb47a9317386fad34b53fad43631a322",
+      "Planner/Scenes/SavedEditItemForm.swift": "1b4762bdeb21e307efa3fe46abf258c1d91341504a0182e91591feb7f0b377fd"
+    },
+    "Qualification": {
+      "Planner/Scenes/SavedPlannerView.swift": "c9c3e98e5dd1957d8a0c055981c7d7c31fb4d7e56b7f2bebc687828a8d096e3b",
+      "Planner/Scenes/SavedItemViews.swift": "e0fa66b2c243a0c588fad330c8497ca037bca868183ea25b9fad13f2bd31f8da",
+      "Planner/Scenes/SavedPlannerStore.swift": "9ec0441ac1e324bb2031e461a00923399f70a19e20c9274160381cc22a83bcc3",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "da1a1e9df01dea642f90d8ac8b28dbe15f54fe9204d7e6185dc6af97e0e63433",
+      "Planner/Scenes/SavedEditItemForm.swift": "1b4762bdeb21e307efa3fe46abf258c1d91341504a0182e91591feb7f0b377fd"
+    }
+  },
+  "commands": {
+    "behaviorRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testEditingAnItemUpdatesItsLiveListReferencesAndKeepsTheirCompletionAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeItemEditPhoneRed.xcresult test > /private/tmp/PlannerNativeItemEditPhoneRed.log 2>&1",
+    "green": {
+      "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeItemEditPhoneGreen.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testEditingAnItemUpdatesItsLiveListReferencesAndKeepsTheirCompletionAfterRelaunch test > /private/tmp/PlannerNativeItemEditPhoneGreen.log 2>&1",
+      "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeItemEditTabletGreen.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testEditingAnItemUpdatesItsLiveListReferencesAndKeepsTheirCompletionAfterRelaunch test > /private/tmp/PlannerNativeItemEditTabletGreen.log 2>&1",
+      "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeItemEditMacGreen.xcresult build-for-testing > /private/tmp/PlannerNativeItemEditMacGreen.log 2>&1"
+    },
+    "selectionReview": {
+      "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeItemEditPhoneSelectionReview.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testEditingAnItemUpdatesItsLiveListReferencesAndKeepsTheirCompletionAfterRelaunch test > /private/tmp/PlannerNativeItemEditPhoneSelectionReview.log 2>&1",
+      "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeItemEditTabletSelectionReview.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testEditingAnItemUpdatesItsLiveListReferencesAndKeepsTheirCompletionAfterRelaunch test > /private/tmp/PlannerNativeItemEditTabletSelectionReview.log 2>&1",
+      "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeItemEditMacSelectionReview.xcresult build-for-testing > /private/tmp/PlannerNativeItemEditMacSelectionReview.log 2>&1"
+    },
+    "qualification": {
+      "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeItemEditPhoneQualification.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testEditingOneFieldAtATimePreservesOtherContentAndGlobalCompletionAfterRelaunch test > /private/tmp/PlannerNativeItemEditPhoneQualification.log 2>&1",
+      "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeItemEditTabletQualification.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testEditingOneFieldAtATimePreservesOtherContentAndGlobalCompletionAfterRelaunch test > /private/tmp/PlannerNativeItemEditTabletQualification.log 2>&1",
+      "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeItemEditMacQualification.xcresult build-for-testing > /private/tmp/PlannerNativeItemEditMacQualification.log 2>&1"
+    }
+  },
+  "results": {
+    "behaviorRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testEditingAnItemUpdatesItsLiveListReferencesAndKeepsTheirCompletionAfterRelaunch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testEditingAnItemUpdatesItsLiveListReferencesAndKeepsTheirCompletionAfterRelaunch",
+          "testName": "testEditingAnItemUpdatesItsLiveListReferencesAndKeepsTheirCompletionAfterRelaunch()"
+        }
+      ],
+      "resultBundle": "/private/tmp/PlannerNativeItemEditPhoneRed.xcresult"
+    },
+    "initialGreen": {
+      "Phone": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedAppearanceJourneyTests/testEditingAnItemUpdatesItsLiveListReferencesAndKeepsTheirCompletionAfterRelaunch()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testEditingAnItemUpdatesItsLiveListReferencesAndKeepsTheirCompletionAfterRelaunch",
+            "testName": "testEditingAnItemUpdatesItsLiveListReferencesAndKeepsTheirCompletionAfterRelaunch()"
+          }
+        ],
+        "resultBundle": "/private/tmp/PlannerNativeItemEditPhoneGreen.xcresult"
+      },
+      "Tablet": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedAppearanceJourneyTests/testEditingAnItemUpdatesItsLiveListReferencesAndKeepsTheirCompletionAfterRelaunch()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testEditingAnItemUpdatesItsLiveListReferencesAndKeepsTheirCompletionAfterRelaunch",
+            "testName": "testEditingAnItemUpdatesItsLiveListReferencesAndKeepsTheirCompletionAfterRelaunch()"
+          }
+        ],
+        "resultBundle": "/private/tmp/PlannerNativeItemEditTabletGreen.xcresult"
+      },
+      "Mac": {
+        "action": "build-for-testing",
+        "result": "Passed",
+        "executedBehaviorFunctions": 0,
+        "resultBundle": "/private/tmp/PlannerNativeItemEditMacGreen.xcresult"
+      }
+    },
+    "selectionReview": {
+      "Phone": {
+        "result": "Passed",
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "testFailures": [],
+        "resultBundle": "/private/tmp/PlannerNativeItemEditPhoneSelectionReview.xcresult"
+      },
+      "Tablet": {
+        "result": "Passed",
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "testFailures": [],
+        "resultBundle": "/private/tmp/PlannerNativeItemEditTabletSelectionReview.xcresult"
+      },
+      "Mac": {
+        "action": "build-for-testing",
+        "result": "Passed",
+        "executedBehaviorFunctions": 0,
+        "resultBundle": "/private/tmp/PlannerNativeItemEditMacSelectionReview.xcresult"
+      }
+    },
+    "qualification": {
+      "Phone": {
+        "result": "Passed",
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "testFailures": [],
+        "resultBundle": "/private/tmp/PlannerNativeItemEditPhoneQualification.xcresult"
+      },
+      "Tablet": {
+        "result": "Passed",
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "testFailures": [],
+        "resultBundle": "/private/tmp/PlannerNativeItemEditTabletQualification.xcresult"
+      },
+      "Mac": {
+        "action": "build-for-testing",
+        "result": "Passed",
+        "executedBehaviorFunctions": 0,
+        "resultBundle": "/private/tmp/PlannerNativeItemEditMacQualification.xcresult"
+      }
+    }
+  },
+  "classification": "The executed behavior red fails at the missing Edit Item action. Initial green runs fail in test text replacement before saving. App-owned accessibility values establish that the helper assumed the wrong caret position. Production stays fixed; native Select All corrects the test helper, and the main journey passes on both simulators. A separate first-run qualification then passes title-only and notes-clear edits on both simulators. These are two distinct passing functions per platform across separate recorded runs, not one clean two-function run.",
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-item-edit-local-todo-reopened.png",
+      "sha256": "7503d9d8c0b81cd0242137619135872cd759152ed3e8bad31b58469112e9dd83",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-item-edit-local-done.png",
+      "sha256": "4ac28339bb583cd973c2e67dad4f0c46e8a2b0f4062955ad854067a382cc5b8f",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-item-edit-editor.png",
+      "sha256": "4ac5ef15c283bbb7c86fd3be6ab6e9265ad4f2e95d34fe454725e9c1a0150692",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-item-edit-global-done-reopened.png",
+      "sha256": "afb24995b6d99de58b0968762912e4ac53ed7742eaf1e57bcf55bd477f44523e",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-item-edit-notes-cleared.png",
+      "sha256": "d6b11acff543159867081e4f28355ab8bd5fee2b12f6dd70b1e2034245ba701a",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-item-edit-local-todo-reopened.png",
+      "sha256": "e80c29c5782d8bc72765238cbbdb52bced8f4f843f896d5f7fe5d55f3a9ea2f8",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-item-edit-local-done.png",
+      "sha256": "d927cd79a0b3b54f61f3e39beeb52a9040f4c4eec1ce7d16ef49e1fe37bebfff",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-item-edit-editor.png",
+      "sha256": "c30d26ee7f81601d87edf5c0771906dd1add888a269538ac3d32b30730340e4a",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-item-edit-global-done-reopened.png",
+      "sha256": "379b020af320f583243208b2ebdda5d36c225c386ad090fb16b71c3bd753fd94",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-item-edit-notes-cleared.png",
+      "sha256": "e82a2866982357f006cb7466cd4cfff765bfe6ef8bedff0adad26b0509ab6160",
+      "inspected": true
+    }
+  ],
+  "validation": [
+    "Both distinct native journeys pass on each simulator with zero failures/skips in their final recorded runs.",
+    "All ten app-owned captures were inspected and copied without pixel changes.",
+    "Final native Mac app/test bundles compile; zero Mac runtime functions execute.",
+    "Strict affected Swift lint, Markdown lint, source/capture hashes and diff checks pass."
+  ],
+  "limits": [
+    "Only title and notes are editable in this slice. Location, estimates, links, labels and schedule editing remain open.",
+    "Core, HTTP, schema and backup implementations are unchanged. Field guards remain enforced by existing Core commands; no native concurrent/stale/failure/recovery journey is claimed.",
+    "Mac runtime remains unqualified after prior automation startup failures.",
+    "No signed/physical-device, CloudKit, Share, Undo, accessibility/keyboard, large-data or final human review claim.",
+    "Native row-menu animation waits remain in raw logs."
+  ]
+}
