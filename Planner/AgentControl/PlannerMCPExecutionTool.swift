@@ -16,7 +16,8 @@
           "operationId": .object(["type": .string("string"), "format": .string("uuid")]),
           "command": .object([
             "oneOf": .array([
-              creationSchema, listCreationSchema, categoryCreationSchema, tagCreationSchema,
+              creationSchema, itineraryCreationSchema, listCreationSchema, categoryCreationSchema,
+              tagCreationSchema,
               membershipCreationSchema,
               membershipReorderingSchema, membershipRemovalSchema, membershipMoveSchema,
               editSchema,
@@ -141,6 +142,26 @@
     private static let tagContentProperties = listContentProperties.filter {
       PlannerTagField(rawValue: $0.key) != nil
     }
+
+    private static let itineraryCreationSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("type"), .string("content")]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("createItinerary")]),
+        "content": .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "required": .array([.string("title")]),
+          "properties": .object([
+            "title": .object(["type": .string("string")]),
+            "notes": .object(["type": .array([.string("string"), .string("null")])]),
+            "color": colorSchema,
+            "iconName": .object(["type": .array([.string("string"), .string("null")])]),
+            "location": locationSchema, "links": linksSchema,
+            "categoryIds": labelSelectionSchema, "tagIds": labelSelectionSchema,
+          ]),
+        ]),
+      ]),
+    ])
 
     private static let listCreationSchema = Value.object([
       "type": .string("object"), "additionalProperties": .bool(false),
@@ -575,6 +596,7 @@
         let command: PlannerCommand
         switch commandType {
         case "createItem": command = try creationCommand(arguments["command"])
+        case "createItinerary": command = try itineraryCreationCommand(arguments["command"])
         case "createList": command = try listCreationCommand(arguments["command"])
         case "createCategory": command = try categoryCreationCommand(arguments["command"])
         case "createTag": command = try tagCreationCommand(arguments["command"])
@@ -652,6 +674,40 @@
           name: name, color: color,
           iconName: try nullableText(
             content["iconName"] ?? .null, path: "/command/content/iconName")))
+    }
+
+    private static func itineraryCreationCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "content"], required: ["type", "content"], path: "/command")
+      let content = try object(
+        command["content"], allowed: Set(PlannerItineraryField.allCases.map(\.rawValue)),
+        required: ["title"], path: "/command/content")
+      guard case .string(let title) = content["title"] else {
+        throw AdmissionFailure(
+          "invalidInput", "/command/content/title", "Expected an Itinerary title String.")
+      }
+      let color: PlannerColor?
+      switch try colorChange(content["color"], path: "/command/content/color") {
+      case .set(let value): color = value
+      case .clear, .unchanged: color = nil
+      }
+      let location: PlannerOwnedLocation?
+      switch try locationChange(content["location"], path: "/command/content/location") {
+      case .set(let value): location = value
+      case .clear, .unchanged: location = nil
+      }
+      return .createItinerary(
+        content: .init(
+          title: title,
+          notes: try nullableText(content["notes"] ?? .null, path: "/command/content/notes"),
+          color: color,
+          iconName: try nullableText(
+            content["iconName"] ?? .null, path: "/command/content/iconName"),
+          location: location,
+          links: try linksInput(content["links"], path: "/command/content/links"),
+          categoryIds: try labelSelection(
+            content["categoryIds"], path: "/command/content/categoryIds"),
+          tagIds: try labelSelection(content["tagIds"], path: "/command/content/tagIds")))
     }
 
     private static func listCreationCommand(_ value: Value?) throws -> PlannerCommand {
