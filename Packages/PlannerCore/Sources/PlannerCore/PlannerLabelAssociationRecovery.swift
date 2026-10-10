@@ -23,16 +23,28 @@ struct PortableLabelAssociationRecord: Codable {
   }
 
   func validated(
-    items: [PortableItemRecord], categories: [PlannerPortableCategory],
+    items: [PortableItemRecord], itineraries: [PortableItineraryRecord],
+    categories: [PlannerPortableCategory],
     tags: [PlannerPortableTag]
   ) throws -> PlannerPortableLabelAssociation {
-    guard owner.kind == "item",
-      items.contains(where: {
-        $0.id == owner.id && $0.lifetimeId == owner.lifetimeId
-      })
-    else {
+    let ownerKind: PlannerEntityKind
+    switch owner.kind {
+    case "item":
+      guard items.contains(where: { $0.id == owner.id && $0.lifetimeId == owner.lifetimeId }) else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "The label association has an unresolved Item owner.")
+      }
+      ownerKind = .item
+    case "itinerary":
+      guard itineraries.contains(where: { $0.id == owner.id && $0.lifetimeId == owner.lifetimeId })
+      else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "The label association has an unresolved Itinerary owner.")
+      }
+      ownerKind = .itinerary
+    default:
       throw PlannerFailure(
-        "recoveryIntegrityFailure", "The label association has an unresolved Item owner.")
+        "recoveryIntegrityFailure", "The label association has an unsupported owner kind.")
     }
     let labelKind: PlannerEntityKind
     switch label.kind {
@@ -55,7 +67,8 @@ struct PortableLabelAssociationRecord: Codable {
     }
     return PlannerPortableLabelAssociation(
       id: id, lifetimeId: lifetimeId,
-      owner: PlannerEntityReference(kind: .item, id: owner.id), ownerLifetimeId: owner.lifetimeId,
+      owner: PlannerEntityReference(kind: ownerKind, id: owner.id),
+      ownerLifetimeId: owner.lifetimeId,
       label: PlannerEntityReference(kind: labelKind, id: label.id),
       labelLifetimeId: label.lifetimeId)
   }

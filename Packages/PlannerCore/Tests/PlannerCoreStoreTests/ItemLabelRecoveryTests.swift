@@ -45,13 +45,25 @@ struct ItemLabelRecoveryTests {
       let labelledItem = itemCreation.generated.first,
       case .source(.item(let originalItem)) = await planner.read(
         session: session, request: .source(labelledItem)),
+      case .applied(let itineraryCreation, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: session,
+          command: .createItinerary(
+            content: .init(
+              title: "Tokyo", notes: "Retained itinerary notes",
+              links: [.init(originalUrl: "https://example.com/route", label: "Route")],
+              categoryIds: [selectedCategory.id], tagIds: [tag.id])))
+      ).outcome,
+      let itinerary = itineraryCreation.generated.first,
+      case .source(.itinerary(let originalItinerary)) = await planner.read(
+        session: session, request: .source(itinerary)),
       case .listedNamespaces(let startingNamespaces) = await planner.inspectRecovery(
         request: .namespaces),
       let startingNamespace = startingNamespaces.first,
       case .selected(let originalRecovery) = await planner.inspectRecovery(
         request: .acknowledgedSnapshot(
           namespaceId: startingNamespace.namespaceId,
-          checkpointGeneration: 3))
+          checkpointGeneration: 4))
     else {
       Issue.record("Save a labelled Item before exercising unrelated writers.")
       return
@@ -121,6 +133,28 @@ struct ItemLabelRecoveryTests {
         }.first)
       #expect(recoveredItem.content.categoryIds == [selectedCategory.id])
       #expect(recoveredItem.content.tagIds == [tag.id])
+      guard
+        case .source(.itinerary(let currentItinerary)) = await planner.read(
+          session: session, request: .source(itinerary)),
+        let recoveredItinerary = recovery.decodedBackup.backup.sources.compactMap({
+          source -> PlannerPortableItinerary? in
+          guard case .itinerary(let value) = source, value.id == itinerary.id else { return nil }
+          return value
+        }).first
+      else {
+        Issue.record("Every writer must retain the complete Itinerary and its typed owned records.")
+        throw MissingSavedResult()
+      }
+      #expect(currentItinerary.content == originalItinerary.content)
+      #expect(currentItinerary.labels == originalItinerary.labels)
+      #expect(currentItinerary.references == originalItinerary.references)
+      #expect(currentItinerary.fieldHashes == originalItinerary.fieldHashes)
+      #expect(currentItinerary.createdAt == originalItinerary.createdAt)
+      #expect(currentItinerary.updatedAt == originalItinerary.updatedAt)
+      #expect(recoveredItinerary.content == originalItinerary.content)
+      #expect(recoveredItinerary.createdAt == originalItinerary.createdAt)
+      #expect(recoveredItinerary.updatedAt == originalItinerary.updatedAt)
+      #expect(recoveredItinerary.archived == false)
       #expect(namespace.preparedProposals.isEmpty)
       return result
     }

@@ -102,6 +102,9 @@
         let result = await planner.read(session: session, request: request)
         let structured: Value
         switch result {
+        case .source(.itinerary):
+          return failure(
+            code: "unavailable", message: "Itinerary wire reads are not implemented yet.")
         case .appearance(let read):
           structured = .object([
             "formatVersion": .int(1), "kind": .string("appearance"),

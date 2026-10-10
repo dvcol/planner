@@ -174,6 +174,7 @@ public struct PlannerItemContentInput: Sendable, Equatable {
 public enum PlannerCommand: Sendable {
   case createItem(content: PlannerItemContentInput)
   case createList(content: PlannerListContentInput)
+  case createItinerary(content: PlannerItineraryContentInput)
   case createCategory(content: PlannerCategoryContentInput)
   case createTag(content: PlannerTagContentInput)
   case editCategory(
@@ -342,6 +343,7 @@ public enum PlannerReferenceRead: Sendable, Equatable {
 }
 
 public enum PlannerSourceRead: Sendable {
+  case itinerary(PlannerItinerarySourceRead)
   case list(PlannerListSourceRead)
   case item(PlannerItemSourceRead)
   case schedule(PlannerScheduleSourceRead)

@@ -15,9 +15,20 @@ struct PortableOwnedLink: Codable {
   }
 
   init(_ link: OwnedLinkSnapshot, owner: ItemSnapshot) {
+    self.init(
+      link, owner: PlannerBoundIdentity(kind: "item", id: owner.id, lifetimeId: owner.lifetimeId))
+  }
+
+  init(_ link: OwnedLinkSnapshot, owner: ItinerarySnapshot) {
+    self.init(
+      link,
+      owner: PlannerBoundIdentity(kind: "itinerary", id: owner.id, lifetimeId: owner.lifetimeId))
+  }
+
+  private init(_ link: OwnedLinkSnapshot, owner: PlannerBoundIdentity) {
     id = link.id
     lifetimeId = link.lifetimeId
-    self.owner = PlannerBoundIdentity(kind: "item", id: owner.id, lifetimeId: owner.lifetimeId)
+    self.owner = owner
     rank = String(link.rank)
     originalUrl = link.originalUrl
     label = link.label
@@ -25,9 +36,30 @@ struct PortableOwnedLink: Codable {
     providerReference = nil
   }
 
-  func validated(sources: [PortableItemRecord]) throws -> ValidatedPortableLink {
-    guard owner.kind == "item",
-      sources.contains(where: { $0.id == owner.id && $0.lifetimeId == owner.lifetimeId }),
+  func validated(sources: [PortableItemRecord], itineraries: [PortableItineraryRecord]) throws
+    -> ValidatedPortableLink
+  {
+    let ownerKind: PlannerEntityKind
+    switch owner.kind {
+    case "item":
+      guard sources.contains(where: { $0.id == owner.id && $0.lifetimeId == owner.lifetimeId })
+      else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "The owned link has an unresolved Item owner.")
+      }
+      ownerKind = .item
+    case "itinerary":
+      guard itineraries.contains(where: { $0.id == owner.id && $0.lifetimeId == owner.lifetimeId })
+      else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "The owned link has an unresolved Itinerary owner.")
+      }
+      ownerKind = .itinerary
+    default:
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "The owned link has an unsupported owner kind.")
+    }
+    guard
       let parsedRank = Int64(rank), String(parsedRank) == rank,
       providerReference == nil
     else {
@@ -40,7 +72,7 @@ struct PortableOwnedLink: Codable {
         "recoveryIntegrityFailure", "The owned link classification is inconsistent.")
     }
     return ValidatedPortableLink(
-      ownerId: owner.id, id: id, rank: parsedRank,
+      owner: PlannerEntityReference(kind: ownerKind, id: owner.id), id: id, rank: parsedRank,
       read: PlannerOwnedLinkRead(
         linkId: id, originalUrl: originalUrl, label: label, kind: kind, providerReference: nil))
   }
@@ -59,7 +91,7 @@ struct PortableOwnedLink: Codable {
 }
 
 struct ValidatedPortableLink {
-  let ownerId: UUID
+  let owner: PlannerEntityReference
   let id: UUID
   let rank: Int64
   let read: PlannerOwnedLinkRead

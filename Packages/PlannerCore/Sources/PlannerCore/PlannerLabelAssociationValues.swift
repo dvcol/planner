@@ -6,7 +6,9 @@ struct LabelAssociationSnapshot {
   let owner: PlannerBoundIdentity
   let label: PlannerBoundIdentity
 
-  var ownerReference: PlannerEntityReference { PlannerEntityReference(kind: .item, id: owner.id) }
+  var ownerReference: PlannerEntityReference {
+    PlannerEntityReference(kind: owner.kind == "itinerary" ? .itinerary : .item, id: owner.id)
+  }
   var labelReference: PlannerEntityReference {
     PlannerEntityReference(kind: label.kind == "category" ? .category : .tag, id: label.id)
   }

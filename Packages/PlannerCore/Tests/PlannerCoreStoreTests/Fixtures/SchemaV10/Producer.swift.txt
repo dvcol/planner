@@ -1,0 +1,62 @@
+import Foundation
+import PlannerCore
+import Testing
+
+struct Schema10ProducerTests {
+  @Test func produceGenuineSchema10Fixture() async throws {
+    let directory = URL(fileURLWithPath: "/private/tmp/PlannerSchema10Fixture-272183b", isDirectory: true)
+    let planner = Planner(configuration: PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let session) = await planner.bootstrap() else {
+      Issue.record("Produce the fixture with the unmodified schema-10 Core.")
+      return
+    }
+    func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
+      guard case .applied(let result, .complete) = await planner.execute(
+        PlannerOperation(operationId: UUID(), session: session, command: command)).outcome else {
+        throw CancellationError()
+      }
+      return result
+    }
+    let category = try #require(try await save(.createCategory(content: .init(name: "Food"))).generated.first)
+    let tag = try #require(try await save(.createTag(content: .init(name: "Rain"))).generated.first)
+    let list = try #require(try await save(.createList(content: .init(name: "Stops"))).generated.first)
+    let item = try #require(try await save(.createItem(content: .init(
+      title: "Hotel", notes: "Original notes", links: [.init(originalUrl: "https://example.com/hotel", label: "Hotel")],
+      categoryIds: [category.id], tagIds: [tag.id]))).generated.first)
+    _ = try await save(.addMembership(itemId: item.id, listId: list.id, placement: .last))
+    _ = try await save(.setCompletion(scope: .globalItem(itemId: item.id), done: true))
+    _ = try await save(.setArchive(source: list, archived: true))
+    _ = try await save(.createSchedule(source: item, form: .timed(
+      start: Date(timeIntervalSinceReferenceDate: 800000000), end: nil, planningTimeZone: "Asia/Tokyo")))
+    guard case .source(.item(let read)) = await planner.read(session: session, request: .source(item)),
+      case .source(.list(let listRead)) = await planner.read(session: session, request: .source(list)),
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first,
+      case .selected(let recovery) = await planner.inspectRecovery(request: .acknowledgedSnapshot(
+        namespaceId: namespace.namespaceId, checkpointGeneration: 8)) else {
+      Issue.record("Read the actual schema-10 native graph and acknowledged recovery.")
+      return
+    }
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 10)
+    #expect(recovery.checkpointGeneration == 8)
+    let manifest: [String: Any] = [
+      "producerCommit": "272183b", "storageSchemaVersion": 10,
+      "datasetId": session.datasetId.uuidString,
+      "namespaceId": namespace.namespaceId.uuidString, "checkpoint": 8,
+      "itemId": item.id.uuidString, "listId": list.id.uuidString,
+      "categoryId": category.id.uuidString, "tagId": tag.id.uuidString,
+      "itemCreatedAt": read.createdAt.timeIntervalSinceReferenceDate,
+      "itemUpdatedAt": read.updatedAt.timeIntervalSinceReferenceDate,
+      "itemHashes": Dictionary(uniqueKeysWithValues: read.fieldHashes.map { ($0.key.rawValue, $0.value.value) }),
+      "listHashes": Dictionary(uniqueKeysWithValues: listRead.fieldHashes.map { ($0.key.rawValue, $0.value.value) }),
+      "linkId": try #require(read.content.links.first).linkId.uuidString,
+      "portableDataBase64": recovery.portableData.base64EncodedString()
+    ]
+    try JSONSerialization.data(withJSONObject: manifest, options: [.prettyPrinted, .sortedKeys]).write(
+      to: directory.appendingPathComponent("manifest.json"))
+  }
+}
