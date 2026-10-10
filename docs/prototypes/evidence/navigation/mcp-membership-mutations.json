@@ -1,0 +1,148 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "68324d1",
+  "scope": "Authenticated loopback HTTP removal and cross-List Move adapters with strict discovery schemas, preserved shared content/context state and operation replay. Core mutation proof remains separately recorded.",
+  "executions": {
+    "RemovalRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "failureText": "Expectation failed: removed[\"state\"] as? String == \"applied\"\nremoved[\"state\"] as? String \u2192 \"rejected\"",
+          "targetName": "PlannerMCPTests",
+          "testIdentifier": 1,
+          "testIdentifierString": "MembershipMutationRoutingTests/removalOverHTTPPreservesSharedItemAndReplayCannotRemoveANewMembership()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/MembershipMutationRoutingTests/removalOverHTTPPreservesSharedItemAndReplayCannotRemoveANewMembership()",
+          "testName": "removalOverHTTPPreservesSharedItemAndReplayCannotRemoveANewMembership()"
+        }
+      ],
+      "log": "/private/tmp/PlannerMCPMembershipMutationRemovalRed.log",
+      "resultBundle": "/private/tmp/PlannerMCPMembershipMutationRemovalRed.xcresult",
+      "summaryPath": "/private/tmp/PlannerMCPMembershipMutationRemovalRedSummary.json",
+      "sourceSHA256": {
+        "Planner/AgentControl/PlannerMCPExecutionTool.swift": "6a5fca356c40317600b6084a32ba1422a6913de78c7831849387613b8a1bc00e",
+        "PlannerMCPTests/MembershipMutationRoutingTests.swift": "03ae52033d4453542b03e64787e0e2281beca8ace54f4b59e32fd808b83ba109"
+      },
+      "logSHA256": "8edb47759cd6f04f0fdc211fd3f1e5af0979d560207ef6591012a7f80050cd59",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerMCPTests/MembershipMutationRoutingTests -resultBundlePath /private/tmp/PlannerMCPMembershipMutationRemovalRed.xcresult test"
+    },
+    "RemovalGreen": {
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "log": "/private/tmp/PlannerMCPMembershipMutationRemovalGreen.log",
+      "resultBundle": "/private/tmp/PlannerMCPMembershipMutationRemovalGreen.xcresult",
+      "summaryPath": "/private/tmp/PlannerMCPMembershipMutationRemovalGreenSummary.json",
+      "sourceSHA256": {
+        "Planner/AgentControl/PlannerMCPExecutionTool.swift": "9ede4d0c161b40004ed2b20e973e0d615b2584282287dc82e738402a1c0d5131",
+        "PlannerMCPTests/MembershipMutationRoutingTests.swift": "03ae52033d4453542b03e64787e0e2281beca8ace54f4b59e32fd808b83ba109"
+      },
+      "logSHA256": "b317a9cb0550fdaecd15eaaab3e28ee1eed7e4d086a75de9ca99ae6ec87687ea",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerMCPTests/MembershipMutationRoutingTests -resultBundlePath /private/tmp/PlannerMCPMembershipMutationRemovalGreen.xcresult test"
+    },
+    "MoveRed": {
+      "result": "Failed",
+      "totalTestCount": 2,
+      "passedTests": 1,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "failureText": "Expectation failed: moved[\"state\"] as? String == \"applied\"\nmoved[\"state\"] as? String \u2192 \"rejected\"",
+          "targetName": "PlannerMCPTests",
+          "testIdentifier": 2,
+          "testIdentifierString": "MembershipMutationRoutingTests/moveOverHTTPCreatesTodoOrRetainsTheExistingDestinationWithoutCopyingTheItem()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/MembershipMutationRoutingTests/moveOverHTTPCreatesTodoOrRetainsTheExistingDestinationWithoutCopyingTheItem()",
+          "testName": "moveOverHTTPCreatesTodoOrRetainsTheExistingDestinationWithoutCopyingTheItem()"
+        }
+      ],
+      "log": "/private/tmp/PlannerMCPMembershipMutationMoveRed.log",
+      "resultBundle": "/private/tmp/PlannerMCPMembershipMutationMoveRed.xcresult",
+      "summaryPath": "/private/tmp/PlannerMCPMembershipMutationMoveRedSummary.json",
+      "sourceSHA256": {
+        "Planner/AgentControl/PlannerMCPExecutionTool.swift": "9ede4d0c161b40004ed2b20e973e0d615b2584282287dc82e738402a1c0d5131",
+        "PlannerMCPTests/MembershipMutationRoutingTests.swift": "ab7e1bbfafacfb6962c9267ebe581ca256ee350b79eb9f5020af6ea55d894542"
+      },
+      "logSHA256": "ae3804a31dc44e0102d7c940435d2d56e0fdbeb0afb6389526e85ca8e65f5cc2",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerMCPTests/MembershipMutationRoutingTests -resultBundlePath /private/tmp/PlannerMCPMembershipMutationMoveRed.xcresult test"
+    },
+    "MoveGreen": {
+      "result": "Passed",
+      "totalTestCount": 2,
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "log": "/private/tmp/PlannerMCPMembershipMutationMoveGreen.log",
+      "resultBundle": "/private/tmp/PlannerMCPMembershipMutationMoveGreen.xcresult",
+      "summaryPath": "/private/tmp/PlannerMCPMembershipMutationMoveGreenSummary.json",
+      "sourceSHA256": {
+        "Planner/AgentControl/PlannerMCPExecutionTool.swift": "e1e42f3534d270ab9137559f54a148728b38cf4ff7f6d7b57851e877d3b9fef7",
+        "PlannerMCPTests/MembershipMutationRoutingTests.swift": "ab7e1bbfafacfb6962c9267ebe581ca256ee350b79eb9f5020af6ea55d894542"
+      },
+      "logSHA256": "7214c61df287b4e618e329fb6addb5a2601eb5fa69bca8001a0a531f53f3b57a",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerMCPTests/MembershipMutationRoutingTests -resultBundlePath /private/tmp/PlannerMCPMembershipMutationMoveGreen.xcresult test"
+    },
+    "Admission": {
+      "result": "Failed",
+      "totalTestCount": 17,
+      "passedTests": 16,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "failureText": "Expectation failed: reason[\"code\"] as? String == code\nreason[\"code\"] as? String \u2192 \"unknownField\"\ncode \u2192 \"invalidInput\"",
+          "targetName": "PlannerMCPTests",
+          "testIdentifier": 15,
+          "testIdentifierString": "MembershipMutationRoutingTests/strictAdvertisedMutationShapesRejectInvalidRequestsWithoutChangingEitherList()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerMCPTests/MembershipMutationRoutingTests/strictAdvertisedMutationShapesRejectInvalidRequestsWithoutChangingEitherList()",
+          "testName": "strictAdvertisedMutationShapesRejectInvalidRequestsWithoutChangingEitherList()"
+        }
+      ],
+      "log": "/private/tmp/PlannerMCPMembershipMutationAdmission.log",
+      "resultBundle": "/private/tmp/PlannerMCPMembershipMutationAdmission.xcresult",
+      "summaryPath": "/private/tmp/PlannerMCPMembershipMutationAdmissionSummary.json",
+      "sourceSHA256": {
+        "Planner/AgentControl/PlannerMCPExecutionTool.swift": "e1e42f3534d270ab9137559f54a148728b38cf4ff7f6d7b57851e877d3b9fef7",
+        "PlannerMCPTests/MembershipMutationRoutingTests.swift": "02cbfd62f49abeb429014e722321234788a6b5d7f7b20451c3e649249cffa6ab"
+      },
+      "logSHA256": "141ae2ed51328c715afb32fd31ea1cb722768de3396802997ebc24a4a167d97f",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerMCPTests/MembershipMutationRoutingTests -only-testing:PlannerMCPTests/MembershipReorderingRoutingTests -only-testing:PlannerMCPTests/MembershipCreationRoutingTests -only-testing:PlannerMCPTests/CommandRoutingTests -only-testing:PlannerMCPTests/ListRoutingTests -resultBundlePath /private/tmp/PlannerMCPMembershipMutationAdmission.xcresult test"
+    },
+    "Qualification": {
+      "result": "Passed",
+      "totalTestCount": 17,
+      "passedTests": 17,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "log": "/private/tmp/PlannerMCPMembershipMutationQualification.log",
+      "resultBundle": "/private/tmp/PlannerMCPMembershipMutationQualification.xcresult",
+      "summaryPath": "/private/tmp/PlannerMCPMembershipMutationQualificationSummary.json",
+      "sourceSHA256": {
+        "Planner/AgentControl/PlannerMCPExecutionTool.swift": "e1e42f3534d270ab9137559f54a148728b38cf4ff7f6d7b57851e877d3b9fef7",
+        "PlannerMCPTests/MembershipMutationRoutingTests.swift": "7e2c66a13825ce30d3cf556a4d6545989d54ff978ebb7adb9d39b979b794f13b"
+      },
+      "logSHA256": "5e4f01ad98ce9e1695aaa1a8a69f5f51bc8c4812d872cd32a80de5105da04425",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerMCPTests/MembershipMutationRoutingTests -only-testing:PlannerMCPTests/MembershipReorderingRoutingTests -only-testing:PlannerMCPTests/MembershipCreationRoutingTests -only-testing:PlannerMCPTests/CommandRoutingTests -only-testing:PlannerMCPTests/ListRoutingTests -resultBundlePath /private/tmp/PlannerMCPMembershipMutationQualification.xcresult test"
+    }
+  },
+  "checks": {
+    "strictChangedSwiftFormatLint": "Passed for both changed Swift files",
+    "typeCheck": "Native Mac app and MCP test bundle compiled in each executed qualification",
+    "scope": "Five affected HTTP suites, no full-repository test pass."
+  },
+  "notes": [
+    "RemovalRed and MoveRed each failed at the absent HTTP route.",
+    "Admission executed 17 functions: 16 passed, one failed on three fixture expectations. The existing parser reports unknownField for extra fields; the expected literals were corrected without changing production behavior.",
+    "Qualification executed 17 functions in five affected suites, all passed with no skips.",
+    "No native UI mutation action, physical CloudKit convergence, real client provisioning or backup/import administration is qualified by this slice."
+  ]
+}
