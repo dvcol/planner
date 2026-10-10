@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_read",
       description:
-        "Read an Item, List, Category or Schedule source, an exact List item appearance, or a generation-bound row window from the local Planner prototype.",
+        "Read an Item, List, Category, Tag or Schedule source, an exact List item appearance, or a generation-bound row window from the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("request")]),
@@ -128,14 +128,6 @@
             "formatVersion": .int(1), "kind": .string("source"), "value": tagValue(read),
           ])
         case .source(.item(let read)):
-          guard read.content.categoryIds.isEmpty,
-            read.content.tagIds.isEmpty,
-            read.labels.isEmpty
-          else {
-            return failure(
-              code: "unavailable",
-              message: "This first read slice does not yet encode source associations.")
-          }
           structured = Value.object([
             "formatVersion": .int(1), "kind": .string("source"), "value": sourceValue(read),
           ])
@@ -443,8 +435,20 @@
           "globalDone": read.state.globalDone.map(Value.bool) ?? .null,
           "archived": read.state.archived.map(Value.bool) ?? .null,
         ]),
-        "labels": .array([]), "references": .array(read.references.map(referenceValue)),
+        "labels": .array(read.labels.map(labelValue)),
+        "references": .array(read.references.map(referenceValue)),
         "progress": .null,
+      ])
+    }
+
+    private static func labelValue(_ label: PlannerLabelRead) -> Value {
+      .object([
+        "reference": .object([
+          "kind": .string(label.reference.kind.rawValue),
+          "id": .string(label.reference.id.uuidString),
+        ]),
+        "name": .string(label.name), "color": label.color.map(colorValue) ?? .null,
+        "iconName": label.iconName.map(Value.string) ?? .null,
       ])
     }
 
