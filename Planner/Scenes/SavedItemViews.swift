@@ -1,7 +1,17 @@
 import PlannerCore
 import SwiftUI
 
+enum SavedItemCatalogScope: String {
+  case items, inbox
+
+  var title: String { self == .inbox ? "Inbox" : "Items" }
+  var searchPrompt: String { self == .inbox ? "Search Inbox" : "Search Items" }
+  var identifierPrefix: String { "saved.\(rawValue)" }
+  var queryValue: PlannerItemQuery.Scope { self == .inbox ? .inbox : .global }
+}
+
 struct SavedItemCatalog: View {
+  let scope: SavedItemCatalogScope
   let items: [SavedPlannerItem]
   @Binding var selection: UUID?
   @Binding var filters: SavedItemFilters
@@ -39,15 +49,16 @@ struct SavedItemCatalog: View {
         }
       }
     }
-    .navigationTitle("Items")
-    .searchable(text: $searchText, prompt: "Search Items")
+    .navigationTitle(scope.title)
+    .searchable(text: $searchText, prompt: Text(scope.searchPrompt))
     .searchPresentationToolbarBehavior(.avoidHidingContent)
     .toolbar {
       ToolbarItem {
-        SavedItemFilterMenu(filters: $filters, accessibilityIdentifier: "saved.items.filters")
+        SavedItemFilterMenu(
+          filters: $filters, accessibilityIdentifier: "\(scope.identifierPrefix).filters")
       }
       ToolbarItem {
-        SavedItemSortMenu(sort: $sort, accessibilityIdentifier: "saved.items.sort")
+        SavedItemSortMenu(sort: $sort, accessibilityIdentifier: "\(scope.identifierPrefix).sort")
       }
       ToolbarItem {
         Button("New Item", systemImage: "plus", action: create)

@@ -1,0 +1,1521 @@
+{
+  "baseCommit": "0d40af8dfd55b48ff45c7f05f8d3c958a521b148",
+  "seams": [
+    "Existing approved PlannerCore public query/command interface",
+    "Existing approved real native app UI through XCUITest"
+  ],
+  "sourceSnapshots": {
+    "Red": {
+      "Planner/Scenes/SavedPlannerView.swift": "b88c0c37c689fc4fa176dea5c7bf84024ac0ff8753e657d92228e57eadea1599",
+      "Planner/Scenes/SavedPlannerStore.swift": "a94a6b8dfa758e89f2ca7933352803fc752fd952fbf028ef53ee09fb005f0a6e",
+      "Planner/Scenes/SavedItemViews.swift": "12a20cbaec8d0f1f5d9a44b20bb4ff13d20835a112f05033be0f9c29a502c0ed",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "7baead792177cfb0ebfff52d9dc2e38b83cdea3a6ee67a7f596b058370a3d3cb"
+    },
+    "Green": {
+      "Planner/Scenes/SavedPlannerView.swift": "f197aa5fc9f2f8dc6fc1e7f10691fbc3f7e3e1fc7d195fc884554d5c96fe4814",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemViews.swift": "8dd9ad0fb6818145719b6b1df8ca8923520b40d8f80e7455fc55801c2434eda8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "7baead792177cfb0ebfff52d9dc2e38b83cdea3a6ee67a7f596b058370a3d3cb"
+    },
+    "NavigationGreen": {
+      "Planner/Scenes/SavedPlannerView.swift": "f197aa5fc9f2f8dc6fc1e7f10691fbc3f7e3e1fc7d195fc884554d5c96fe4814",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemViews.swift": "8dd9ad0fb6818145719b6b1df8ca8923520b40d8f80e7455fc55801c2434eda8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "799868f1401dd9ba251e773287a6ec37718aa4418e552de0a6a255a6b4887e52"
+    },
+    "ArchiveGreen": {
+      "Planner/Scenes/SavedPlannerView.swift": "f197aa5fc9f2f8dc6fc1e7f10691fbc3f7e3e1fc7d195fc884554d5c96fe4814",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemViews.swift": "8dd9ad0fb6818145719b6b1df8ca8923520b40d8f80e7455fc55801c2434eda8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "e00ee8744cd7c7f3ee81c9c49df5970cbf6302008056a84b3338cb91b4c92219"
+    },
+    "Qualified": {
+      "Planner/Scenes/SavedPlannerView.swift": "f197aa5fc9f2f8dc6fc1e7f10691fbc3f7e3e1fc7d195fc884554d5c96fe4814",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemViews.swift": "8dd9ad0fb6818145719b6b1df8ca8923520b40d8f80e7455fc55801c2434eda8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "f5a42b3b2535553f5003b3d1669433e7b5a36e9df76237e045f80758eb84b699"
+    },
+    "SearchDismiss": {
+      "Planner/Scenes/SavedPlannerView.swift": "f197aa5fc9f2f8dc6fc1e7f10691fbc3f7e3e1fc7d195fc884554d5c96fe4814",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemViews.swift": "8dd9ad0fb6818145719b6b1df8ca8923520b40d8f80e7455fc55801c2434eda8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "b8d06aab692254eda8c5cdc0b487385405ace441a7140c9fea4ad10e5c1da75a"
+    },
+    "SearchClose": {
+      "Planner/Scenes/SavedPlannerView.swift": "f197aa5fc9f2f8dc6fc1e7f10691fbc3f7e3e1fc7d195fc884554d5c96fe4814",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemViews.swift": "8dd9ad0fb6818145719b6b1df8ca8923520b40d8f80e7455fc55801c2434eda8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "e55d46ce6117490d2577fd1b06fb5a4c327f7b8a4c15bcbb2892672d7bbb2422"
+    },
+    "Keyboard": {
+      "Planner/Scenes/SavedPlannerView.swift": "f197aa5fc9f2f8dc6fc1e7f10691fbc3f7e3e1fc7d195fc884554d5c96fe4814",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemViews.swift": "8dd9ad0fb6818145719b6b1df8ca8923520b40d8f80e7455fc55801c2434eda8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "e776c915a4e5ddf159e4b0e9844130e8894dd22f883cf1ba042b868bdff4559d"
+    },
+    "TabProbe": {
+      "Planner/Scenes/SavedPlannerView.swift": "f197aa5fc9f2f8dc6fc1e7f10691fbc3f7e3e1fc7d195fc884554d5c96fe4814",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemViews.swift": "8dd9ad0fb6818145719b6b1df8ca8923520b40d8f80e7455fc55801c2434eda8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "ac559c693902a9b14247453aba302426d180a4b9a39a97b5c5f787625a4c0a66"
+    },
+    "TabLeafProbe": {
+      "Planner/Scenes/SavedPlannerView.swift": "f197aa5fc9f2f8dc6fc1e7f10691fbc3f7e3e1fc7d195fc884554d5c96fe4814",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemViews.swift": "8dd9ad0fb6818145719b6b1df8ca8923520b40d8f80e7455fc55801c2434eda8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "ca84dc36493b87fcee8fb083ec3bc733862869a508f4d8f7b9128228f81d17d1"
+    },
+    "SearchPresentation": {
+      "Planner/Scenes/SavedPlannerView.swift": "f197aa5fc9f2f8dc6fc1e7f10691fbc3f7e3e1fc7d195fc884554d5c96fe4814",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemViews.swift": "881d31a0bd996d40b0f3701935d79c5096a5350910f7b9b0d5eadd7d6f014232",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "ac559c693902a9b14247453aba302426d180a4b9a39a97b5c5f787625a4c0a66"
+    },
+    "FixedTabScopes": {
+      "Planner/Scenes/SavedPlannerView.swift": "d7bb04f9a377c12ca45528ba65aa7d12fcb8e33b3e18fec4e2750075ab434b68",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemViews.swift": "8dd9ad0fb6818145719b6b1df8ca8923520b40d8f80e7455fc55801c2434eda8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "ac559c693902a9b14247453aba302426d180a4b9a39a97b5c5f787625a4c0a66"
+    },
+    "OutsideFocus": {
+      "Planner/Scenes/SavedPlannerView.swift": "f197aa5fc9f2f8dc6fc1e7f10691fbc3f7e3e1fc7d195fc884554d5c96fe4814",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemViews.swift": "8dd9ad0fb6818145719b6b1df8ca8923520b40d8f80e7455fc55801c2434eda8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "e10a31106e2e77e74a00c3ca9196ff0be95a7eceb689d3c3c148a0d59f2fdce7"
+    },
+    "HeadingFocus": {
+      "Planner/Scenes/SavedPlannerView.swift": "f197aa5fc9f2f8dc6fc1e7f10691fbc3f7e3e1fc7d195fc884554d5c96fe4814",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemViews.swift": "8dd9ad0fb6818145719b6b1df8ca8923520b40d8f80e7455fc55801c2434eda8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "8e610784bcc85dcc4d20ae5bbccd26995737a335a176bc985adbd6017bf72468"
+    },
+    "ListFocus": {
+      "Planner/Scenes/SavedPlannerView.swift": "f197aa5fc9f2f8dc6fc1e7f10691fbc3f7e3e1fc7d195fc884554d5c96fe4814",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemViews.swift": "8dd9ad0fb6818145719b6b1df8ca8923520b40d8f80e7455fc55801c2434eda8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "15ab681debac3212b62eedbfd9532879b68d08524758b01ea5f34ecbdc14c02d"
+    },
+    "Final": {
+      "Planner/Scenes/SavedPlannerView.swift": "f197aa5fc9f2f8dc6fc1e7f10691fbc3f7e3e1fc7d195fc884554d5c96fe4814",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemViews.swift": "8dd9ad0fb6818145719b6b1df8ca8923520b40d8f80e7455fc55801c2434eda8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "1b3ce151723125b6cb4d89a848ef900d866a60b39e268bcc4c81929e55848406"
+    },
+    "Corrected": {
+      "Planner/Scenes/SavedPlannerView.swift": "f197aa5fc9f2f8dc6fc1e7f10691fbc3f7e3e1fc7d195fc884554d5c96fe4814",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemViews.swift": "8dd9ad0fb6818145719b6b1df8ca8923520b40d8f80e7455fc55801c2434eda8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "cf8787d9d4502df0a2a82d1a64ad20591b1d836a45b990954be9dfd37a6dcf6d"
+    }
+  },
+  "commands": {
+    "Red": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeInboxRed.xcresult test > /private/tmp/PlannerNativeInboxRed.log 2>&1",
+    "Green": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeInboxGreen.xcresult test > /private/tmp/PlannerNativeInboxGreen.log 2>&1",
+    "NavigationGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeInboxNavigationGreen.xcresult test > /private/tmp/PlannerNativeInboxNavigationGreen.log 2>&1",
+    "ArchiveGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeInboxArchiveGreen.xcresult test > /private/tmp/PlannerNativeInboxArchiveGreen.log 2>&1",
+    "PhoneQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeItemSortUsesCanonicalModesAndRemembersDatasetScopedDeviceChoiceAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters -resultBundlePath /private/tmp/PlannerNativeInboxPhoneQualification.xcresult test > /private/tmp/PlannerNativeInboxPhoneQualification.log 2>&1",
+    "TabletQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeItemSortUsesCanonicalModesAndRemembersDatasetScopedDeviceChoiceAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters -resultBundlePath /private/tmp/PlannerNativeInboxTabletQualification.xcresult test > /private/tmp/PlannerNativeInboxTabletQualification.log 2>&1",
+    "MacBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeInboxMacBuild.xcresult build-for-testing > /private/tmp/PlannerNativeInboxMacBuild.log 2>&1",
+    "CoreQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter 'MembershipCreationTests|MembershipRemovalTests|ItemTextQueryTests' > /private/tmp/PlannerNativeInboxCoreQualification.log 2>&1",
+    "PhoneSearchDismissQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeInboxPhoneSearchDismissQualification.xcresult test > /private/tmp/PlannerNativeInboxPhoneSearchDismissQualification.log 2>&1",
+    "TabletSearchDismissQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeInboxTabletSearchDismissQualification.xcresult test > /private/tmp/PlannerNativeInboxTabletSearchDismissQualification.log 2>&1",
+    "PhoneSearchCloseQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeInboxPhoneSearchCloseQualification.xcresult test > /private/tmp/PlannerNativeInboxPhoneSearchCloseQualification.log 2>&1",
+    "TabletSearchCloseQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeInboxTabletSearchCloseQualification.xcresult test > /private/tmp/PlannerNativeInboxTabletSearchCloseQualification.log 2>&1",
+    "PhoneKeyboardQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeInboxPhoneKeyboardQualification.xcresult test > /private/tmp/PlannerNativeInboxPhoneKeyboardQualification.log 2>&1",
+    "TabletKeyboardQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeInboxTabletKeyboardQualification.xcresult test > /private/tmp/PlannerNativeInboxTabletKeyboardQualification.log 2>&1",
+    "TabletTabProbe": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch -resultBundlePath /private/tmp/PlannerNativeInboxTabletTabProbe.xcresult test > /private/tmp/PlannerNativeInboxTabletTabProbe.log 2>&1",
+    "TabletTabLeafProbe": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch -resultBundlePath /private/tmp/PlannerNativeInboxTabletTabLeafProbe.xcresult test > /private/tmp/PlannerNativeInboxTabletTabLeafProbe.log 2>&1",
+    "TabletTabRepeatProbe": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch -resultBundlePath /private/tmp/PlannerNativeInboxTabletTabRepeatProbe.xcresult test > /private/tmp/PlannerNativeInboxTabletTabRepeatProbe.log 2>&1",
+    "TabletSearchPresentation": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch -resultBundlePath /private/tmp/PlannerNativeInboxTabletSearchPresentation.xcresult test > /private/tmp/PlannerNativeInboxTabletSearchPresentation.log 2>&1",
+    "TabletFixedTabScopes": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch -resultBundlePath /private/tmp/PlannerNativeInboxTabletFixedTabScopes.xcresult test > /private/tmp/PlannerNativeInboxTabletFixedTabScopes.log 2>&1",
+    "TabletOutsideFocus": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch -resultBundlePath /private/tmp/PlannerNativeInboxTabletOutsideFocus.xcresult test > /private/tmp/PlannerNativeInboxTabletOutsideFocus.log 2>&1",
+    "TabletHeadingFocus": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch -resultBundlePath /private/tmp/PlannerNativeInboxTabletHeadingFocus.xcresult test > /private/tmp/PlannerNativeInboxTabletHeadingFocus.log 2>&1",
+    "TabletListFocus": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch -resultBundlePath /private/tmp/PlannerNativeInboxTabletListFocus.xcresult test > /private/tmp/PlannerNativeInboxTabletListFocus.log 2>&1",
+    "PhoneFinalQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeItemSortUsesCanonicalModesAndRemembersDatasetScopedDeviceChoiceAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch -resultBundlePath /private/tmp/PlannerNativeInboxPhoneFinalQualification.xcresult test > /private/tmp/PlannerNativeInboxPhoneFinalQualification.log 2>&1",
+    "TabletFinalQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeItemSortUsesCanonicalModesAndRemembersDatasetScopedDeviceChoiceAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch -resultBundlePath /private/tmp/PlannerNativeInboxTabletFinalQualification.xcresult test > /private/tmp/PlannerNativeInboxTabletFinalQualification.log 2>&1",
+    "MacFinalBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeInboxMacFinalBuild.xcresult build-for-testing > /private/tmp/PlannerNativeInboxMacFinalBuild.log 2>&1",
+    "PhoneCorrectedQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeInboxPhoneCorrectedQualification.xcresult test > /private/tmp/PlannerNativeInboxPhoneCorrectedQualification.log 2>&1",
+    "TabletCorrectedQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeInboxTabletCorrectedQualification.xcresult test > /private/tmp/PlannerNativeInboxTabletCorrectedQualification.log 2>&1"
+  },
+  "runs": {
+    "Red": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxRed.log",
+        "sha256": "163a0ff6c698f637977fcab5f3196f084e27a9ae064d1632b65ed3834bdfff1d"
+      },
+      "sourceSnapshot": "Red",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxRedSummary.json",
+        "sha256": "d2c3970c0c86a3440deb33049a8c80b3356a8d46bdf0e8b6e29a2e8c6a45a166"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxRed.xcresult",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch",
+          "testName": "testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()"
+        }
+      ]
+    },
+    "Green": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxGreen.log",
+        "sha256": "ce2cf8042eae422eb753735ba58efa5513bbb9e17b5abcf961f88d939e0206f5"
+      },
+      "sourceSnapshot": "Green",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxGreenSummary.json",
+        "sha256": "da83f9dc39986eb595de7362c16699580fa8f2ab8c0d4368ed63accfcc52019c"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxGreen.xcresult",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch",
+          "testName": "testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()"
+        }
+      ]
+    },
+    "NavigationGreen": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxNavigationGreen.log",
+        "sha256": "a7c1a501ab67b439acad1a4f19d8cbd6b95957efb5db12596ebe08e9f128b911"
+      },
+      "sourceSnapshot": "NavigationGreen",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxNavigationGreenSummary.json",
+        "sha256": "3e95ee65193f214c585ea262922b2ddafaf77587a151ab1ad40080a3167a0cdd"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxNavigationGreen.xcresult",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "failureText": "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Expected Middle before Alpha",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch",
+          "testName": "testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()"
+        }
+      ]
+    },
+    "ArchiveGreen": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxArchiveGreen.log",
+        "sha256": "1589b433127a0070ca2c7bdfe773dfb8622a2f37e906d508f3b5e16c6ecffcdb"
+      },
+      "sourceSnapshot": "ArchiveGreen",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxArchiveGreenSummary.json",
+        "sha256": "1bf6ee7a9ba006a433d40e5752361ced1b8ac6b2dc27bd4702c129bdd695e9df"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxArchiveGreen.xcresult",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 1,
+      "passedFunctions": 1,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 1,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": []
+    },
+    "PhoneQualification": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneQualification.log",
+        "sha256": "6d5faab94482e14afdd9339a263a2d1ac69a5caaae358f6ceb523100750f20c2"
+      },
+      "sourceSnapshot": "Qualified",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneQualificationSummary.json",
+        "sha256": "184dea4f9d38d503583a2e33c000d2edc6004e7e22d94eab8c5c111940aee859"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxPhoneQualification.xcresult",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 4,
+      "passedFunctions": 3,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 3,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "failureText": "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\")",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch",
+          "testName": "testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()"
+        }
+      ]
+    },
+    "TabletQualification": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxTabletQualification.log",
+        "sha256": "81a051ba490b506da55e606923496f13b221c017b03881f5d78c6df2c95ff44b"
+      },
+      "sourceSnapshot": "Qualified",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxTabletQualificationSummary.json",
+        "sha256": "901cb4f632a2cbd635ef73ce8ea6bb1a986fbaf39d3813ee5e3f4abb192884fb"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxTabletQualification.xcresult",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 4,
+      "passedFunctions": 3,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 3,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "failureText": "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\")",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch",
+          "testName": "testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()"
+        }
+      ]
+    },
+    "MacBuild": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxMacBuild.log",
+        "sha256": "0d7014a65f7e604522ce3dedbd4d9d72cb6883faf3ce78ce1f06aeb7d0720259"
+      },
+      "sourceSnapshot": "Qualified",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxMacBuildSummary.json",
+        "sha256": "1467dafda6169dda274157035799778823f553d2a2e6ee47dd8af9a03ae137c5"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxMacBuild.xcresult",
+      "exitCode": 0,
+      "outcome": "Compiled",
+      "executedFunctions": 0,
+      "compilerErrors": 0,
+      "metadataWarnings": [
+        "2026-10-10 21:09:20.195 appintentsmetadataprocessor[2189:16727296] warning: Metadata extraction skipped, no AppIntents.framework dependency found",
+        "2026-10-10 21:09:22.666 appintentsmetadataprocessor[2244:16727562] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    "CoreQualification": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxCoreQualification.log",
+        "sha256": "2574879b02034f22ee0d90f65ce9cf49213e03ef58677e3b75136aa5b6e60aa1"
+      },
+      "sourceSnapshot": "Unchanged PlannerCore at baseCommit",
+      "outcome": "Passed",
+      "executedFunctions": 10,
+      "passedFunctions": 10,
+      "failedFunctions": 0,
+      "suites": 3,
+      "parameterizedSearchCases": 20,
+      "exitCode": null,
+      "exitCodeNote": "PTY return was not retained. The completed Swift Testing log reports ten tests in three suites passed; the process was no longer running."
+    },
+    "PhoneSearchDismissQualification": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneSearchDismissQualification.log",
+        "sha256": "9853c2d1ab9d12d761184d51a50fd995bbe8e23d55590677b1eeeff11bf8a4f3"
+      },
+      "sourceSnapshot": "SearchDismiss",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneSearchDismissQualificationSummary.json",
+        "sha256": "87f0e05aa6b5776a262c324fea72c5a33219acbc2b1104c8a8998edf088df8f1"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxPhoneSearchDismissQualification.xcresult",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch",
+          "testName": "testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()"
+        }
+      ]
+    },
+    "TabletSearchDismissQualification": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxTabletSearchDismissQualification.log",
+        "sha256": "572b9a84da38d10d8fc6c9ad113270c15d30c9a2ff90e9f50787ef6bcb0ca864"
+      },
+      "sourceSnapshot": "SearchDismiss",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxTabletSearchDismissQualificationSummary.json",
+        "sha256": "5a254cc4a625fb251f7aa0b726e4f34a0d4da05d22422fac204ef2adb6f53edd"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxTabletSearchDismissQualification.xcresult",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch",
+          "testName": "testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()"
+        }
+      ]
+    },
+    "PhoneSearchCloseQualification": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneSearchCloseQualification.log",
+        "sha256": "8647f0df7e08a71f836b568a9b0e03749a4a6a2f7292f355dccbd5463f4efe1f"
+      },
+      "sourceSnapshot": "SearchClose",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneSearchCloseQualificationSummary.json",
+        "sha256": "a4afd406ebd9d1d16bf4e6ec1945cf7fb28024f1ea6b23be60d04a404742be0f"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxPhoneSearchCloseQualification.xcresult",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 1,
+      "passedFunctions": 1,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 1,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": []
+    },
+    "TabletSearchCloseQualification": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxTabletSearchCloseQualification.log",
+        "sha256": "eefa9089d4ebc5426e72b38505438d59c5de6e90039318d75ea1231f46419c0a"
+      },
+      "sourceSnapshot": "SearchClose",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxTabletSearchCloseQualificationSummary.json",
+        "sha256": "8b91b0afa6fee64bdd264e59887910ef1e6463d91c6ab377b484a42e16b56c03"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxTabletSearchCloseQualification.xcresult",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch",
+          "testName": "testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()"
+        }
+      ]
+    },
+    "PhoneKeyboardQualification": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneKeyboardQualification.log",
+        "sha256": "b8f4d5148cb1249ed44e6ea9adb20b45a0545e57c94da83fbae448527b5f5cab"
+      },
+      "sourceSnapshot": "Keyboard",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneKeyboardQualificationSummary.json",
+        "sha256": "e199466563d7010c3fd57926759272412852b58a293c76001a627570222f6338"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxPhoneKeyboardQualification.xcresult",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 1,
+      "passedFunctions": 1,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 1,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": []
+    },
+    "TabletKeyboardQualification": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxTabletKeyboardQualification.log",
+        "sha256": "0e0a255f1f862d70a55bed655f5cffebe97037ed9d2a288237214c5bb94a417f"
+      },
+      "sourceSnapshot": "Keyboard",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxTabletKeyboardQualificationSummary.json",
+        "sha256": "51221874a2fbf29244ff2b53b3e7ed804d5260d8aaa1d049f3f81b05c068cea8"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxTabletKeyboardQualification.xcresult",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "failureText": "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\")",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch",
+          "testName": "testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()"
+        }
+      ]
+    },
+    "TabletTabProbe": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxTabletTabProbe.log",
+        "sha256": "010cf14ae3ec25364070ac77497b6a7e8864314ad806ae02f1aa955f5c455f5e"
+      },
+      "sourceSnapshot": "TabProbe",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxTabletTabProbeSummary.json",
+        "sha256": "1eef85f255b74ee3b9c1b78cc93a7380f0ec50d49b3378fe92c9557923eb856b"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxTabletTabProbe.xcresult",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch",
+          "testName": "testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()"
+        }
+      ]
+    },
+    "TabletTabLeafProbe": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxTabletTabLeafProbe.log",
+        "sha256": "dc2cec9a128f18b58ecb9fcbe7d2291866eda7afdbd2a339400278fadb2b7f0a"
+      },
+      "sourceSnapshot": "TabLeafProbe",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxTabletTabLeafProbeSummary.json",
+        "sha256": "27e6d1968f67d3e41b5d4449758d5d4962c1a5de5b494c66f087315f88fac443"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxTabletTabLeafProbe.xcresult",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch",
+          "testName": "testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()"
+        }
+      ]
+    },
+    "TabletTabRepeatProbe": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxTabletTabRepeatProbe.log",
+        "sha256": "a97100a98e2cda840405edde41c6e8f2ce6749f6bc3835a0f37184df17359f10"
+      },
+      "sourceSnapshot": "App source Green; exact repeated-tap test file hash was not retained",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxTabletTabRepeatProbeSummary.json",
+        "sha256": "6053ff51a5ec3a70a76c4d09fe6e432785d4d42025338c01651c122eb997598d"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxTabletTabRepeatProbe.xcresult",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 1,
+      "passedFunctions": 1,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 1,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": []
+    },
+    "TabletSearchPresentation": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxTabletSearchPresentation.log",
+        "sha256": "0c0547afdb7fdfedcdb374027c27fbabd7e68c27863c7b04c407eb8dad37d94b"
+      },
+      "sourceSnapshot": "SearchPresentation",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxTabletSearchPresentationSummary.json",
+        "sha256": "e7049e9b290a13b0823a85a473d50f0ac7ac6df249dcaa0c33ae04fc72e708a7"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxTabletSearchPresentation.xcresult",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch",
+          "testName": "testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()"
+        }
+      ]
+    },
+    "TabletFixedTabScopes": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxTabletFixedTabScopes.log",
+        "sha256": "323606f4d3ca22c1672f263ecd243367f7a8345ceab78b055a349747dc24a470"
+      },
+      "sourceSnapshot": "FixedTabScopes",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxTabletFixedTabScopesSummary.json",
+        "sha256": "b1bde89ea012f9a82bf306920bbff2a517112121653dc10663b5e23a98bb27b4"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxTabletFixedTabScopes.xcresult",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch",
+          "testName": "testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()"
+        }
+      ]
+    },
+    "TabletOutsideFocus": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxTabletOutsideFocus.log",
+        "sha256": "7d958801f70eb4d225c60ec004f6c4672ee973e2b65ce160f5e536591d79a695"
+      },
+      "sourceSnapshot": "OutsideFocus",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxTabletOutsideFocusSummary.json",
+        "sha256": "133c8a3ae6a21d5b029ee52b2005257563e3d8b0bc6af1d2e2db73a4f1246a2f"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxTabletOutsideFocus.xcresult",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "failureText": "Failed to tap \"Inbox\" StaticText: No matches found for first query match sequence: `Descendants matching type NavigationBar` -> `Elements matching predicate '\"Inbox\" IN identifiers'` -> `Descendants matching type StaticText` -> `Elements matching predicate '\"Inbox\" IN identifiers'`, given input App element pid: 44598",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch",
+          "testName": "testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()"
+        }
+      ]
+    },
+    "TabletHeadingFocus": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxTabletHeadingFocus.log",
+        "sha256": "d276392f8e9f4ea6d01e2a3867777ccf55bae3f6a278b4dcdf1ead595a25fabd"
+      },
+      "sourceSnapshot": "HeadingFocus",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxTabletHeadingFocusSummary.json",
+        "sha256": "3ee922bece850abcf3e4033fca717c555fd6c1836abbaa363e5226c7232d037f"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxTabletHeadingFocus.xcresult",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 1,
+          "passedTests": 0,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch",
+          "testName": "testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()"
+        }
+      ]
+    },
+    "TabletListFocus": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxTabletListFocus.log",
+        "sha256": "2b3d75a581f5062ef11b9524c3d1263ea4b356678677214972f0e1c69a48f15d"
+      },
+      "sourceSnapshot": "ListFocus",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxTabletListFocusSummary.json",
+        "sha256": "cbf7a9303182a66c8d56e2cdb95e6151c86cf36b0c2757c91438930e3fb0b362"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxTabletListFocus.xcresult",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 1,
+      "passedFunctions": 1,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 1,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": []
+    },
+    "PhoneFinalQualification": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneFinalQualification.log",
+        "sha256": "2d2bf94f7e3b5f7c3ff61a07217f9c586e1c73aab3405c96069294e9b099c91f"
+      },
+      "sourceSnapshot": "Final",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneFinalQualificationSummary.json",
+        "sha256": "f985b86d56b35800c8424020bb8913fa3ac2267d22fec7bd51b36b882e8603d2"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxPhoneFinalQualification.xcresult",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 5,
+      "passedFunctions": 3,
+      "failedFunctions": 2,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 2,
+          "passedTests": 3,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": [
+        {
+          "failureText": "Failed to get matching snapshot: No matches found for first query match sequence: `Descendants matching type Button` -> `Elements matching predicate 'label IN {\"Close\", \"Hide keyboard\"}'`, given input App element pid: 51148\nPossibly caused by runtime issues:\nAutomation type mismatch: computed Button from legacy attributes vs PopUpButton from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 14;\n    \"XC_kAXXCAttributeElementBaseType\" = NSObject;\n    \"XC_kAXXCAttributeElementType\" = \"SwiftUI.AccessibilityNode\";\n    \"XC_kAXXCAttributeTraits\" = 1108101562369;\n}\nSee test report attachments for more detail.",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch",
+          "testName": "testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch()"
+        },
+        {
+          "failureText": "Failed to get matching snapshot: No matches found for first query match sequence: `Descendants matching type Button` -> `Elements matching predicate 'label IN {\"Close\", \"Hide keyboard\"}'`, given input App element pid: 52008\nPossibly caused by runtime issues:\nAutomation type mismatch: computed Button from legacy attributes vs PopUpButton from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 14;\n    \"XC_kAXXCAttributeElementBaseType\" = NSObject;\n    \"XC_kAXXCAttributeElementType\" = \"SwiftUI.AccessibilityNode\";\n    \"XC_kAXXCAttributeTraits\" = 1108101562369;\n}\nSee test report attachments for more detail.",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 2,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch",
+          "testName": "testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()"
+        }
+      ]
+    },
+    "TabletFinalQualification": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxTabletFinalQualification.log",
+        "sha256": "635267ce9167ab81eb5ac33a38c8a3ceb3f21213e83f1b124dea859fc16b3f0c"
+      },
+      "sourceSnapshot": "Final",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxTabletFinalQualificationSummary.json",
+        "sha256": "8060114558e1215170b4b8bbaf76fc52695b6d3f6db525aab9d1444153c5a449"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxTabletFinalQualification.xcresult",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 5,
+      "passedFunctions": 5,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 5,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": []
+    },
+    "MacFinalBuild": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxMacFinalBuild.log",
+        "sha256": "682c659da0af2bbf8520740ae21c64e606c347473bb54c6d09d5f3869ce07928"
+      },
+      "sourceSnapshot": "Final",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxMacFinalBuildSummary.json",
+        "sha256": "6fd363ad4851ee6ad32eea8fbd23c51da3938db91ff286d8c3ba5df7d050aa1d"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxMacFinalBuild.xcresult",
+      "exitCode": 0,
+      "outcome": "Compiled",
+      "executedFunctions": 0,
+      "compilerErrors": 0,
+      "metadataWarnings": [
+        "2026-10-10 21:55:03.143 appintentsmetadataprocessor[51031:16971234] warning: Metadata extraction skipped, no AppIntents.framework dependency found",
+        "2026-10-10 21:55:04.611 appintentsmetadataprocessor[51074:16971759] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    "PhoneCorrectedQualification": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneCorrectedQualification.log",
+        "sha256": "66ebb3c65677a9d43cf6ce6f8ac7e6e5377b1d7e8362c3b395ce2059493d1a7b"
+      },
+      "sourceSnapshot": "Corrected",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneCorrectedQualificationSummary.json",
+        "sha256": "ec23f404756b1baf59d6dc6ac86a62e08031dcbe6625dbede9b95873804cf0a3"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxPhoneCorrectedQualification.xcresult",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 2,
+      "passedFunctions": 2,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 2,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": []
+    },
+    "TabletCorrectedQualification": {
+      "log": {
+        "path": "/private/tmp/PlannerNativeInboxTabletCorrectedQualification.log",
+        "sha256": "4be3846caee115f90d3f6aa4478695198d9c1c239d953896f7f4f6532af58dd4"
+      },
+      "sourceSnapshot": "Corrected",
+      "summary": {
+        "path": "/private/tmp/PlannerNativeInboxTabletCorrectedQualificationSummary.json",
+        "sha256": "0488b3a32a0675346365c0512f53a0cd1ebda3484c8a28dedafa1c6f71a9d817"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeInboxTabletCorrectedQualification.xcresult",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 2,
+      "passedFunctions": 2,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 2,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "failures": []
+    }
+  },
+  "corrections": [
+    "Red executes setup and fails at the absent native Inbox destination.",
+    "First green retains the previously selected detail in compact navigation; the test uses the native Back control.",
+    "Archive navigation green exposes a menu tap that did not apply. Hittability and stable archived source identity correct the test.",
+    "Final four-function runs pass the three existing regressions per simulator, but fail the Inbox tab switch with search active.",
+    "The first dismissal retry uses an obsolete Cancel accessibility label and fails on both simulators. Captured hierarchy identifies Close.",
+    "The Close retry passes on phone and fails on iPad. The iPad capture identifies Hide keyboard; the final test uses the visible verified native control.",
+    "The phone keyboard retry passes; the iPad still fails its tab switch. The empty-dataset reproduction fails in 28.680 seconds. A hittable inner tab button also fails; two tab activations succeed only as a diagnostic.",
+    "Explicit search presentation and fixed child tab scopes do not fix the reproduction and are removed. Heading queries fail before testing focus, so they prove no focus outcome.",
+    "Tapping the native list background after Hide keyboard ends editing on iPad. The minimized test then activates Items once and verifies selected state and toolbar hittability. The full journey uses the same native sequence.",
+    "The five-function iPad run passes all five. The phone run passes the three existing regressions but the two new functions query Close after that native control disappears. The correction captures its label before activation.",
+    "The corrected two-function run passes on each simulator, qualifying all five behaviors per device across the recorded runs. Final production matches the original Green source exactly; final Mac app and UI-test bundles compile with zero runtime functions."
+  ],
+  "failureObservations": [
+    {
+      "run": "NavigationGreen",
+      "observation": "After the archive option tap, the native menu remains open with Active selected; the test now waits for option hittability.",
+      "frame": {
+        "path": "/private/tmp/PlannerNativeInboxArchiveFailure.png",
+        "sha256": "96b213ce462ca1dcc05c66042e8ff9d13b7a5cd227e59b3ce6152a5885b1e421"
+      },
+      "recording": {
+        "path": "/private/tmp/PlannerNativeInboxNavigationGreenCaptures/40008952-A985-44DA-ACAC-558870DB83B2.mp4",
+        "sha256": "33984f2cb130f1541e415b1bfc5cb6bff8e1ce4c393db6522e6c611ed3d8854e"
+      }
+    },
+    {
+      "run": "PhoneQualification",
+      "observation": "Clearing search leaves its keyboard over the native tab bar. The Items tap has no valid hit point.",
+      "frame": {
+        "path": "/private/tmp/PlannerNativeInboxSearchFailure.png",
+        "sha256": "3209852e1f5ecbf47682ed9eceaaf560365513e8596fe283dacc5f8936617205"
+      },
+      "recording": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneQualificationCaptures/31A15FE8-A693-4010-9DAD-257C34E8AB65.mp4",
+        "sha256": "bec076f0366c6d8f6b50b2fad30d00385a7e02f7134e3c900eef11bad3ca1977"
+      }
+    },
+    {
+      "run": "PhoneSearchDismissQualification",
+      "observation": "The native search dismissal button is labeled Close on iOS 27, rather than the Cancel label initially used by the test.",
+      "hierarchy": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneSearchDismissQualificationCaptures/09BC1564-8DDF-476D-9D44-F40C5A04F122.txt",
+        "sha256": "762eb4a7ea09e84dee69b08ec052f0399ed3b26f2db1450ca0589df8142a34a2"
+      }
+    },
+    {
+      "run": "TabletSearchCloseQualification",
+      "observation": "The iPad search presentation has no Close control; its captured keyboard exposes Hide keyboard.",
+      "hierarchy": {
+        "path": "/private/tmp/PlannerNativeInboxTabletSearchCloseQualificationCaptures/4B220945-ADC3-4854-86AE-0D72977A1204.txt",
+        "sha256": "ae761806f7148b56e1993b607f2aabb74b868b93fc0a1cd36b0fd9e338fa50e5"
+      }
+    },
+    {
+      "run": "TabletKeyboardQualification",
+      "observation": "Hiding the iPad keyboard alone retains search editing; a following tab activation does not show Items. The recording still shows Inbox.",
+      "frame": {
+        "path": "/private/tmp/PlannerNativeInboxTabletSwitchFailure.png",
+        "sha256": "85d35cf6d0475da410beaa08ef1d2793c62260a849bbdca7a5964c7bbfafb4eb"
+      },
+      "recording": {
+        "path": "/private/tmp/PlannerNativeInboxTabletKeyboardQualificationCaptures/7AE02FC9-CD2B-45AA-9340-E799E5E4EA2A.mp4",
+        "sha256": "598fb0c2a49b0c964ea214de7f0c84b2fa88d505d104fa08679616b2e63c5322"
+      }
+    }
+  ],
+  "captures": [
+    {
+      "file": "docs/prototypes/evidence/navigation/phone-saved-inbox.png",
+      "sha256": "566edcfeaa30cda8117cf1d92270ee54d9806469d45b505809b76a65529eb16d",
+      "original": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneCorrectedQualificationCaptures/361D6267-0BC1-4593-9495-E57CDE817872.png",
+        "sha256": "566edcfeaa30cda8117cf1d92270ee54d9806469d45b505809b76a65529eb16d"
+      },
+      "run": "PhoneCorrectedQualification",
+      "sourceSnapshot": "Corrected",
+      "name": "Native Inbox excludes listed Items_0_9A8EFCBE-0AF8-486E-9FF4-04EC06D4576B.png",
+      "device": "iPhone 18 Pro",
+      "timestamp": 1791637874.625
+    },
+    {
+      "file": "docs/prototypes/evidence/navigation/phone-saved-inbox-archive.png",
+      "sha256": "c1260330da446426393a4b36f1b92d007fc3c5cc7da44f2dc23c3cff60efd00c",
+      "original": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneCorrectedQualificationCaptures/794D5ECF-B9B6-47C2-A443-1E2C5EE3A9B1.png",
+        "sha256": "c1260330da446426393a4b36f1b92d007fc3c5cc7da44f2dc23c3cff60efd00c"
+      },
+      "run": "PhoneCorrectedQualification",
+      "sourceSnapshot": "Corrected",
+      "name": "Inbox includes archived completed Items through cumulative filters_0_1FE0405E-5D48-4F04-AE97-1D083DB58C5C.png",
+      "device": "iPhone 18 Pro",
+      "timestamp": 1791637901.46
+    },
+    {
+      "file": "docs/prototypes/evidence/navigation/phone-saved-inbox-reopened.png",
+      "sha256": "cc3234b10ccbe531ab6df603964c6cbb0b4246927f90ea67f7d3faf7526c8c53",
+      "original": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneCorrectedQualificationCaptures/F3E6985D-C7EB-40A1-8BF9-0081B3422494.png",
+        "sha256": "cc3234b10ccbe531ab6df603964c6cbb0b4246927f90ea67f7d3faf7526c8c53"
+      },
+      "run": "PhoneCorrectedQualification",
+      "sourceSnapshot": "Corrected",
+      "name": "Relaunched Inbox retains sort and last-membership removal_0_163A4745-AA12-47CF-BCC0-994F7DD79DC9.png",
+      "device": "iPhone 18 Pro",
+      "timestamp": 1791638093.019
+    },
+    {
+      "file": "docs/prototypes/evidence/navigation/phone-saved-inbox-tab-switch.png",
+      "sha256": "df1949f1c6793499c3ec71c4920d51ab9e11df905f44962d5e23a027f8afac4f",
+      "original": {
+        "path": "/private/tmp/PlannerNativeInboxPhoneCorrectedQualificationCaptures/9E090C06-E08A-4DE8-8ABB-F0B3CDA28E55.png",
+        "sha256": "df1949f1c6793499c3ec71c4920d51ab9e11df905f44962d5e23a027f8afac4f"
+      },
+      "run": "PhoneCorrectedQualification",
+      "sourceSnapshot": "Corrected",
+      "name": "Items catalog after cleared Inbox search_0_EBF329B5-D332-4608-94EB-7059B4DA0698.png",
+      "device": "iPhone 18 Pro",
+      "timestamp": 1791637810.121
+    },
+    {
+      "file": "docs/prototypes/evidence/navigation/tablet-saved-inbox.png",
+      "sha256": "ec6aaf1243cb7d236f0be26cde2c8538d74164d022ea17096da52dcae8c85202",
+      "original": {
+        "path": "/private/tmp/PlannerNativeInboxTabletCorrectedQualificationCaptures/DE72F279-5950-4A81-ABF9-C3940F289B60.png",
+        "sha256": "ec6aaf1243cb7d236f0be26cde2c8538d74164d022ea17096da52dcae8c85202"
+      },
+      "run": "TabletCorrectedQualification",
+      "sourceSnapshot": "Corrected",
+      "name": "Native Inbox excludes listed Items_0_F06DECD9-B79F-4210-A95F-E2096B94DE4C.png",
+      "device": "iPad Air 11-inch (M4)",
+      "timestamp": 1791637883.376
+    },
+    {
+      "file": "docs/prototypes/evidence/navigation/tablet-saved-inbox-archive.png",
+      "sha256": "430f7d4ec46eb5300e0142839de0dca89936d855afeb6deb5181f4730d06de64",
+      "original": {
+        "path": "/private/tmp/PlannerNativeInboxTabletCorrectedQualificationCaptures/A363F59E-2265-4271-B900-6193CD586C40.png",
+        "sha256": "430f7d4ec46eb5300e0142839de0dca89936d855afeb6deb5181f4730d06de64"
+      },
+      "run": "TabletCorrectedQualification",
+      "sourceSnapshot": "Corrected",
+      "name": "Inbox includes archived completed Items through cumulative filters_0_E9CBB3CF-E938-4617-B341-610C40A652AD.png",
+      "device": "iPad Air 11-inch (M4)",
+      "timestamp": 1791637909.874
+    },
+    {
+      "file": "docs/prototypes/evidence/navigation/tablet-saved-inbox-reopened.png",
+      "sha256": "cee5e8d67cf6f3a30e1aa4ea8f2053d48f6e5fea1983a20ca065609f2d9ebdc8",
+      "original": {
+        "path": "/private/tmp/PlannerNativeInboxTabletCorrectedQualificationCaptures/BCDB1DB9-4FC6-405D-87BB-7DE390411B0B.png",
+        "sha256": "cee5e8d67cf6f3a30e1aa4ea8f2053d48f6e5fea1983a20ca065609f2d9ebdc8"
+      },
+      "run": "TabletCorrectedQualification",
+      "sourceSnapshot": "Corrected",
+      "name": "Relaunched Inbox retains sort and last-membership removal_0_49D70825-C64B-4D3E-B8C5-CEF1FB4F378D.png",
+      "device": "iPad Air 11-inch (M4)",
+      "timestamp": 1791638102.438
+    },
+    {
+      "file": "docs/prototypes/evidence/navigation/tablet-saved-inbox-tab-switch.png",
+      "sha256": "db686e23ca47d179ee94823e86c3f97315b1d4541cf668cdf254e2148f1a6a14",
+      "original": {
+        "path": "/private/tmp/PlannerNativeInboxTabletCorrectedQualificationCaptures/04F766E4-36A8-462B-BAB7-37323291EE1E.png",
+        "sha256": "db686e23ca47d179ee94823e86c3f97315b1d4541cf668cdf254e2148f1a6a14"
+      },
+      "run": "TabletCorrectedQualification",
+      "sourceSnapshot": "Corrected",
+      "name": "Items catalog after cleared Inbox search_0_040EEA93-BAB3-4F97-9746-789D04550623.png",
+      "device": "iPad Air 11-inch (M4)",
+      "timestamp": 1791637814.817
+    }
+  ],
+  "captureReview": "All eight final originals inspected. Inbox excludes listed Zulu under Todo/Active; All shows archived/completed Alpha; relaunch returns Zulu with Middle after last-membership removal. The selected Items tab is visibly active after search ends. Narrow iPad toolbar titles hide or truncate beside filter controls; resizing and whole-app polish remain open.",
+  "remainingGates": [
+    "Native estimate controls pending Q48/Q49; rich content/labels, remaining filters/paging and Itinerary presentation",
+    "External-writer refresh, bulk review, container archive, cross-List drag, Undo and failure/recovery paths",
+    "Actual account transitions, renamed/restored same-ID views and multiwindow preference refresh",
+    "Mac runtime and visual review; this build executes zero runtime functions",
+    "Human review of iPad search ending: Hide keyboard retains editing; the qualified sequence taps the native list background before choosing a tab",
+    "Physical iCloud/Share, accessibility/keyboard, resizing, 5000-Item/200-List responsiveness and final human review",
+    "Whole-app polish after features 14\u201317",
+    "Narrow iPad toolbar title visibility beside filter controls; resizing and whole-app polish"
+  ],
+  "storage": {
+    "schemaVersion": 7,
+    "portableVersion": 1,
+    "mode": "localOnly",
+    "cloudKitEnabled": false,
+    "preferences": "Per-device UserDefaults; separate Inbox view key in the existing dataset/opaque ownership namespace; excluded from backups"
+  },
+  "checks": {
+    "swiftFormat": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift format lint --strict Planner/Scenes/SavedItemViews.swift Planner/Scenes/SavedPlannerStore.swift Planner/Scenes/SavedPlannerView.swift PlannerNavigationUITests/SavedAppearanceJourneyTests.swift",
+      "exitCode": 0
+    },
+    "markdownLint": {
+      "command": "pnpm --registry=https://registry.npmjs.org dlx markdownlint-cli2 --config /private/tmp/planner-markdownlint.jsonc docs/prototypes/navigation-local-qualification.md",
+      "exitCode": 0
+    },
+    "diffCheck": {
+      "command": "git diff --check",
+      "exitCode": 0
+    },
+    "sourceAndCaptureHashes": {
+      "sourceFiles": 4,
+      "originalCaptures": 8,
+      "outcome": "Matched"
+    },
+    "newReportLinks": "Verified existing relative targets",
+    "coreSource": "Unchanged from baseCommit"
+  }
+}
