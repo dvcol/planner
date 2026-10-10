@@ -143,7 +143,7 @@
       "resultBundle": "/private/tmp/PlannerNativeSubtitleNotesHTTPReview.xcresult"
     }
   },
-  "classification": "Executed native behavior red at the missing subtitle field. Initial native implementation exposed Core rejecting subtitle edits; both subtitle journeys failed without dismissing the draft, while the affected iPhone title/notes regression passed. Public Core red/green then qualified set/clear, recovery, stale-field values and replay in 4032864. Native/test source remained fixed across that Core correction; the same subtitle function then passed on both simulators. The notes HTTP attempt initially selected a nonexistent scheme and executed zero tests; selecting the existing Planner scheme passed one focused regression.",
+  "classification": "Executed native behavior red at the missing subtitle field. Initial native implementation exposed Core rejecting subtitle edits; both subtitle journeys failed without dismissing the draft, while the affected iPhone title/notes regression passed. Public Core red/green then qualified set/clear, recovery, stale-field values and replay in 4032864. Native/test source remained fixed across that Core correction; the same subtitle function then passed on both simulators. The notes HTTP attempt initially selected a nonexistent scheme and executed zero tests; selecting the existing Planner scheme exited successfully but selected zero functions. It does not qualify the notes HTTP regression.",
   "captures": [
     {
       "path": "docs/prototypes/evidence/navigation/phone-saved-subtitle-cleared.png",
@@ -179,7 +179,7 @@
   "validation": [
     "Final subtitle journey passes one function per simulator with zero failures/skips.",
     "Mac app/test bundles compile; zero native Mac runtime functions execute.",
-    "One actual notes-over-HTTP regression passes with zero failures/skips.",
+    "The attempted notes-over-HTTP regression selected zero functions and is not qualified by that run.",
     "Six original owned captures were inspected. Strict affected Swift lint, Markdown lint, source/capture hashes and diff checks pass."
   ],
   "limits": [

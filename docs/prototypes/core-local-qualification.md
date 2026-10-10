@@ -360,4 +360,4 @@ The initial package attempt had a test-fixture compilation error in its completi
 
 Strict affected Swift lint, Markdown lint and source/diff checks pass. CloudKit stays disabled. The HTTP edit route still rejects subtitle changes until its own routing/admission slice. Native rendering and stale-save presentation, device/account/Share sync, interruption and physical performance remain separate gates.
 
-The [native subtitle follow-up](navigation-local-qualification.md#shared-subtitle-editing-and-row-preview) qualifies the saved editor/List row against this Core revision on both simulators. Its separate evidence also records one passing notes-over-HTTP regression, while HTTP subtitle admission remains unsupported.
+The [native subtitle follow-up](navigation-local-qualification.md#shared-subtitle-editing-and-row-preview) qualifies the saved editor/List row against this Core revision on both simulators. Its separate notes-over-HTTP command selected zero functions and does not qualify that regression. HTTP subtitle admission remains unsupported.
