@@ -15,6 +15,12 @@ struct SavedPlannerItem: Identifiable {
   let row: PlannerRowRead
 }
 
+struct SavedPlannerCategory: Identifiable {
+  let source: PlannerEntityReference
+  let name: String
+  var id: UUID { source.id }
+}
+
 @MainActor @Observable
 final class SavedPlannerStore {
   private let planner: PlannerCore.Planner?
@@ -121,6 +127,44 @@ final class SavedPlannerStore {
     case .source(.list(let list)): return list
     case .failed(let reason): alertMessage = reason.message
     default: alertMessage = "Planner could not open this List."
+    }
+    return nil
+  }
+
+  func readCategories() async -> [SavedPlannerCategory]? {
+    guard let planner, let session else { return nil }
+    switch await planner.query(
+      PlannerQuery(session: session, request: .catalog(.init(sourceKind: .category, archive: .all)))
+    )
+    {
+    case .failed(let reason): alertMessage = reason.message
+    case .snapshot(let snapshot):
+      switch await planner.read(
+        session: session,
+        request: .rows(generation: snapshot.generation, offset: 0, limit: Int64.max))
+      {
+      case .rows(let window):
+        return window.rows.compactMap { row in
+          guard case .source(let source) = row.identity, source.kind == .category else {
+            return nil
+          }
+          return SavedPlannerCategory(source: source, name: row.title)
+        }
+      case .failed(let reason): alertMessage = reason.message
+      default: alertMessage = "Planner could not read its Categories."
+      }
+    }
+    return nil
+  }
+
+  func readCategory(_ identifier: UUID) async -> PlannerCategorySourceRead? {
+    guard let planner, let session else { return nil }
+    switch await planner.read(
+      session: session, request: .source(.init(kind: .category, id: identifier)))
+    {
+    case .source(.category(let category)): return category
+    case .failed(let reason): alertMessage = reason.message
+    default: alertMessage = "Planner could not open this Category."
     }
     return nil
   }
@@ -342,6 +386,21 @@ final class SavedPlannerStore {
       }
       return applied
     }
+  }
+
+  func createCategory(name: String, operationIdentifier: UUID) async -> PlannerEntityReference? {
+    let result = await executeChange(
+      .createCategory(content: .init(name: name)), operationId: operationIdentifier)
+    return result?.generated.first { $0.kind == .category }
+  }
+
+  func renameCategory(
+    _ category: PlannerCategorySourceRead, name: String, operationIdentifier: UUID
+  ) async -> Bool {
+    await executeChange(
+      .editCategory(
+        sourceId: category.source.id, changes: .init(name: .set(name)),
+        expectedFieldHashes: category.fieldHashes), operationId: operationIdentifier) != nil
   }
 
   func createList(name: String, operationId: UUID) async -> PlannerEntityReference? {
