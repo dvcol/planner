@@ -1,4 +1,5 @@
 import PlannerCore
+import PlannerPreviews
 import SwiftUI
 
 extension PlannerOwnedLinkRead {
@@ -19,6 +20,9 @@ extension PlannerOwnedLinkRead {
 
 struct ItemLinksSection: View {
   let links: [PlannerOwnedLinkRead]
+  let sourceId: UUID
+  let sourceLifetimeId: UUID
+  @Environment(SavedPlannerStore.self) private var store
 
   var body: some View {
     if !links.isEmpty {
@@ -32,6 +36,17 @@ struct ItemLinksSection: View {
             .accessibilityLabel(link.displayTitle)
             .accessibilityValue(link.originalUrl)
             .accessibilityIdentifier("saved.item.link.\(link.linkId.uuidString)")
+            if link.kind != .appleMaps && link.kind != .googleMaps,
+              let namespace = store.devicePreferenceNamespace
+            {
+              ItemLinkPreviewCard(
+                link: link,
+                request: .init(
+                  source: .init(
+                    namespace: namespace, sourceId: sourceId,
+                    sourceLifetimeId: sourceLifetimeId),
+                  linkId: link.linkId, originalURL: link.originalUrl))
+            }
           }
         }
       }

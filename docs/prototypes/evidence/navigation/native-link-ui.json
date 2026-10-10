@@ -1,0 +1,131 @@
+{
+  "date": "2026-10-11",
+  "feature": "Saved native website cards and selected row thumbnails",
+  "baseCommit": "d26aafa",
+  "nativeTests": [
+    {
+      "device": "iPhone18 Pro iOS27",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeWebsitePreviewsKeepOwnedLinksAndRemainLiveInAList -resultBundlePath /private/tmp/PlannerPreviewsSwiftUIPhone.xcresult test",
+      "log": "/private/tmp/PlannerPreviewsSwiftUIPhone.log",
+      "resultBundle": "/private/tmp/PlannerPreviewsSwiftUIPhone.xcresult",
+      "exitCode": 0,
+      "executedFunctions": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "device": "iPhone18 Pro iOS27",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativePreviewFailureKeepsTheOwnedLinkAndAllowsRetry -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch -resultBundlePath /private/tmp/PlannerPreviewsSwiftUIPhoneRegression.xcresult test",
+      "log": "/private/tmp/PlannerPreviewsSwiftUIPhoneRegression.log",
+      "resultBundle": "/private/tmp/PlannerPreviewsSwiftUIPhoneRegression.xcresult",
+      "exitCode": 0,
+      "executedFunctions": 2,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "device": "iPad Air 11 M4 iOS27",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeWebsitePreviewsKeepOwnedLinksAndRemainLiveInAList -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativePreviewFailureKeepsTheOwnedLinkAndAllowsRetry -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch -resultBundlePath /private/tmp/PlannerPreviewsSwiftUITablet.xcresult test",
+      "log": "/private/tmp/PlannerPreviewsSwiftUITablet.log",
+      "resultBundle": "/private/tmp/PlannerPreviewsSwiftUITablet.xcresult",
+      "exitCode": 0,
+      "executedFunctions": 3,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "nativeMacBuild": {
+    "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -resultBundlePath /private/tmp/PlannerPreviewsSwiftUIMac.xcresult build-for-testing",
+    "log": "/private/tmp/PlannerPreviewsSwiftUIMac.log",
+    "exitCode": 0,
+    "executedRuntimeFunctions": 0,
+    "warning": "AppIntents metadata extraction skipped"
+  },
+  "priorOutcomes": [
+    {
+      "log": "/private/tmp/PlannerPreviewsNativeRed.log",
+      "outcome": "Actual UI failed with missing preview card before integration"
+    },
+    {
+      "log": "/private/tmp/PlannerPreviewsNativePortable.log",
+      "outcome": "Actual UI provider request cancelled when SwiftUI caller disappeared; separately fixed and regression-tested in the boundary"
+    },
+    {
+      "log": "/private/tmp/PlannerPreviewsPhoneFinal.log",
+      "outcome": "Metadata-only assertions passed, but inspection showed a loading placeholder; not image-paint proof"
+    },
+    {
+      "log": "/private/tmp/PlannerPreviewsPhoneRendered.log",
+      "outcome": "Strengthened image-paint regression failed"
+    },
+    {
+      "log": "/private/tmp/PlannerPreviewsIntrinsicLayout.log",
+      "outcome": "Native bridge layout probe failed at image painting"
+    },
+    {
+      "log": "/private/tmp/PlannerPreviewsSingleMetadata.log",
+      "outcome": "Native bridge metadata-update probe failed at image painting"
+    },
+    {
+      "log": "/private/tmp/PlannerPreviewsNativeImage.log",
+      "outcome": "Supported native image-provider probe failed at image painting"
+    },
+    {
+      "log": "/private/tmp/PlannerPreviewsProviderProbe.log",
+      "outcome": "Native bridge still failed; tagged provider probe decoded successfully with no error"
+    },
+    {
+      "log": "/private/tmp/PlannerPreviewProviderProbeMessages.log",
+      "outcome": "One metadata image construction; provider decoded 269036 bytes, error=nil; debug instrumentation removed"
+    }
+  ],
+  "diagnosisLimit": "Small native SDK/view/form/navigation cases rendered the same image. The exact cause of the LPLinkView bridge integration stall was not established. Native SwiftUI Link/GroupBox/Image bypass its extra image-loader path; actual full app journeys now pass.",
+  "verification": {
+    "swiftFormatStrictLog": "/private/tmp/PlannerPreviewsSwiftUIFormatLint.log",
+    "swiftFormatExitCode": 0,
+    "diffCheckExitCode": 0,
+    "paintAssertion": "Actual app screenshot crop must contain the controlled colorful fixture in Item and List detail cards; byte availability alone cannot pass"
+  },
+  "sourceHashes": {
+    "Planner.xcodeproj/project.pbxproj": "394bc79fda2ba0384f851e5f6593344f86370fb3efaf51af93f5d8d1cba3997a",
+    "Planner/PlannerApp.swift": "b9cef8b094948bc063e9c8547a929a28f7c3b6d4750329527efaaa07f1b1643f",
+    "Planner/Scenes/ItemLinkPreviewCard.swift": "5642f7ea644af29c6bc907e1dba457f1cbc3dfeba21b971c07ab4d8d1b7b1995",
+    "Planner/Scenes/ItemLinksSection.swift": "a6ecc9c5335ebafbd6f9af82feb76343ea21907558ea3f6efccff5cf476ee6fa",
+    "Planner/Scenes/SavedAppearanceViews.swift": "1207f30f7d5845826d27fd48356fa3753daa8fc0c196c7c0af661ac936e4e029",
+    "Planner/Scenes/SavedItemRowContent.swift": "1f040ac1217243b69e843ce338dd316f905eb0d3d07c52880e8e560614e022eb",
+    "Planner/Scenes/SavedItemViews.swift": "b627af28d4232fee66258c9f3c2476677774d51244cbaf7f44fcc262ce0d89ec",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "1d320270e6742167827259c31ed17918ff5ffb0613bff9b5611680fbc6be11d4"
+  },
+  "inspectedCaptures": [
+    {
+      "original": "/private/tmp/PlannerPreviewsSwiftUIPhoneCaptures/CD90D4DB-92F1-4040-840C-7D86BACAFDF0.png",
+      "saved": "docs/prototypes/evidence/navigation/layouts/phone-saved-preview-context.png",
+      "sha256": "15e08b776b25126eeedd4bc8caf7994afb059d0957c29bbee741ac6817c5a850",
+      "inspection": "iPhone image visible in locally completed List appearance"
+    },
+    {
+      "original": "/private/tmp/PlannerPreviewsSwiftUIPhoneCaptures/CCA2BE31-98BB-4997-93D6-FD5B51304729.png",
+      "saved": "docs/prototypes/evidence/navigation/layouts/phone-saved-preview-plain.png",
+      "sha256": "10dad8f2a0fddee61ee49311212c088e20f0883c005a4d2e996ffa9c16fb2be3",
+      "inspection": "iPhone owned plain website survives removal of the image bookmark"
+    },
+    {
+      "original": "/private/tmp/PlannerPreviewsSwiftUITabletCaptures/8E8B185F-7516-4A73-85E5-926AD80C96E1.png",
+      "saved": "docs/prototypes/evidence/navigation/layouts/tablet-saved-preview-context.png",
+      "sha256": "abf86d40b6f30309fc8f45639a92af16922e379f4334e5d7e74e486f4b332765",
+      "inspection": "iPad contextual card, row thumbnail and retained 1/1 progress"
+    },
+    {
+      "original": "/private/tmp/PlannerPreviewsSwiftUITabletCaptures/29F3B622-F0CC-4ADB-97A3-C5E51CF3F47B.png",
+      "saved": "docs/prototypes/evidence/navigation/layouts/tablet-saved-preview-failure.png",
+      "sha256": "2077fc883e56f6e435ffdb535d2900474fda2367d68ed5fabf6cb27437398d1d",
+      "inspection": "iPad owned bookmark, notes and Retry after provider failure"
+    }
+  ],
+  "openGates": [
+    "Address zero/one/multiple candidates and invalidation",
+    "Mac runtime and human layout review",
+    "Keyboard/accessibility/resizing and long-list responsiveness",
+    "Signed physical CloudKit/account recovery/Share qualification"
+  ]
+}

@@ -1,8 +1,10 @@
+import PlannerPreviews
 import SwiftUI
 
 @main
 struct PlannerApp: App {
   @State private var savedPlanner = SavedPlannerStore()
+  @State private var previews = PlannerPreviews(provider: AppleLinkPreviewProvider())
   #if os(macOS)
     @Environment(\.openWindow) private var openWindow
     @FocusedBinding(\.navigationPrototypeLayout) private var prototypeLayout:
@@ -17,6 +19,8 @@ struct PlannerApp: App {
         NavigationPrototypeView()
       } else {
         SavedPlannerView(store: savedPlanner)
+          .environment(savedPlanner)
+          .environment(previews)
       }
     }
     #if os(macOS)

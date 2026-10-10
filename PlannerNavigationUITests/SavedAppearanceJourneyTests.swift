@@ -1,7 +1,113 @@
+import CoreGraphics
+import ImageIO
 import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testNativePreviewFailureKeepsTheOwnedLinkAndAllowsRetry() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    openItemEditor(application)
+    _ = addBookmark(
+      "http://127.0.0.1:1/unavailable", label: "Unavailable website", application: application)
+    application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+    let link = savedBookmarkRows(application).matching(
+      NSPredicate(format: "label == %@", "Unavailable website")
+    ).firstMatch
+    XCTAssertTrue(link.waitForPlannerValue("http://127.0.0.1:1/unavailable"))
+    let failure = application.staticTexts["Preview unavailable"]
+    XCTAssertTrue(failure.waitForExistence(timeout: 35))
+    let retry = application.plannerElement("Retry")
+    XCTAssertTrue(retry.isEnabled)
+    retry.activateForPlannerJourney()
+    XCTAssertTrue(failure.waitForExistence(timeout: 35))
+    XCTAssertTrue(link.waitForPlannerValue("http://127.0.0.1:1/unavailable"))
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    recordScreenshot(
+      application, name: "A provider failure preserves the owned link and native retry")
+  }
+
+  func testNativeWebsitePreviewsKeepOwnedLinksAndRemainLiveInAList() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    openItemEditor(application)
+    let imageDraft = addBookmark(
+      "http://127.0.0.1:44555/image", label: "Museum guide", application: application)
+    _ = addBookmark(
+      "http://127.0.0.1:44555/plain", label: "Plain website",
+      existingURLIdentifiers: [imageDraft], application: application)
+    application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+    let imageLink = savedBookmarkRows(application).matching(
+      NSPredicate(format: "label == %@", "Museum guide")
+    ).firstMatch
+    XCTAssertTrue(imageLink.waitForPlannerValue("http://127.0.0.1:44555/image"))
+    let imageIdentity = imageLink.identifier.replacingOccurrences(of: "saved.item.link.", with: "")
+    let card = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.preview.card.\(imageIdentity)").firstMatch
+    XCTAssertTrue(card.waitForExistence(timeout: 30))
+    XCTAssertTrue(card.waitForPlannerValue("Image available"))
+    waitForRenderedPreviewImage(card, application: application)
+    recordScreenshot(application, name: "Native rich website card keeps owned bookmark labels")
+
+    createList("Tokyo", application: application)
+    addItem(application)
+    let membership = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    let membershipIdentifier = membership.identifier
+    let thumbnail = application.images["saved.item.preview.thumbnail.\(imageIdentity)"]
+    XCTAssertTrue(thumbnail.waitForExistence(timeout: 15))
+    let localCompletion = application.buttons[
+      membershipIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    localCompletion.activateForPlannerJourney()
+    XCTAssertTrue(localCompletion.waitForPlannerValue("Completed"))
+    membership.activateForPlannerJourney()
+    XCTAssertTrue(card.waitForExistence(timeout: 10))
+    XCTAssertTrue(card.waitForPlannerValue("Image available"))
+    waitForRenderedPreviewImage(card, application: application)
+    recordScreenshot(application, name: "Live List appearance reuses the native website preview")
+    let actions = application.plannerElement("saved.appearance.actions")
+    actions.activateForPlannerJourney()
+    application.plannerElement("View Item").activateForPlannerJourney()
+    openItemEditor(application)
+    removeBookmark(imageIdentity, application: application)
+    application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+    XCTAssertFalse(imageLink.exists)
+    XCTAssertFalse(card.exists)
+    let plain = savedBookmarkRows(application).matching(
+      NSPredicate(format: "label == %@", "Plain website")
+    )
+    .firstMatch
+    XCTAssertTrue(plain.waitForPlannerValue("http://127.0.0.1:44555/plain"))
+    let plainIdentity = plain.identifier.replacingOccurrences(of: "saved.item.link.", with: "")
+    let plainCard = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.preview.card.\(plainIdentity)").firstMatch
+    XCTAssertTrue(plainCard.waitForExistence(timeout: 30))
+    XCTAssertTrue(plainCard.waitForPlannerValue("No image"))
+    recordScreenshot(application, name: "Plain website remains useful without an image")
+    openList("Tokyo", application: application)
+    XCTAssertEqual(membership.identifier, membershipIdentifier)
+    XCTAssertTrue(membership.waitForPlannerValue("Plain website"))
+    XCTAssertFalse(thumbnail.exists)
+    assertProgress(1, application: application)
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Tokyo", application: application)
+    XCTAssertEqual(membership.identifier, membershipIdentifier)
+    membership.activateForPlannerJourney()
+    XCTAssertTrue(plainCard.waitForExistence(timeout: 30))
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    recordScreenshot(application, name: "Reopening reloads temporary previews from the saved link")
+  }
+
   func testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -1760,6 +1866,46 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     let option = application.plannerElement(title)
     XCTAssertTrue(option.waitForExistence(timeout: 5))
     option.activateForPlannerJourney()
+  }
+
+  private func waitForRenderedPreviewImage(_ card: XCUIElement, application: XCUIApplication) {
+    let rendered = NSPredicate { _, _ in
+      guard card.exists else { return false }
+      let cardFrame = card.frame
+      let windowFrame = application.windows.firstMatch.frame
+      guard !cardFrame.isEmpty, !windowFrame.isEmpty else { return false }
+      let snapshot = application.screenshot().pngRepresentation
+      guard let source = CGImageSourceCreateWithData(snapshot as CFData, nil),
+        let image = CGImageSourceCreateImageAtIndex(source, 0, nil)
+      else { return false }
+      let scale = CGFloat(image.width) / windowFrame.width
+      let imageFrame = CGRect(
+        x: cardFrame.minX * scale, y: cardFrame.minY * scale,
+        width: cardFrame.width * scale, height: cardFrame.height * scale / 2)
+      guard let top = image.cropping(to: imageFrame) else { return false }
+      var pixels = [UInt8](repeating: 0, count: 32 * 32 * 4)
+      let drewImage = pixels.withUnsafeMutableBytes { buffer in
+        guard
+          let context = CGContext(
+            data: buffer.baseAddress, width: 32, height: 32, bitsPerComponent: 8,
+            bytesPerRow: 32 * 4, space: CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+              | CGBitmapInfo.byteOrder32Big.rawValue)
+        else { return false }
+        context.draw(top, in: CGRect(x: 0, y: 0, width: 32, height: 32))
+        return true
+      }
+      guard drewImage else { return false }
+      let coloredPixels = stride(from: 0, to: pixels.count, by: 4).filter { offset in
+        let channels = [Int(pixels[offset]), Int(pixels[offset + 1]), Int(pixels[offset + 2])]
+        return (channels.max() ?? 0) - (channels.min() ?? 0) > 40
+      }.count
+      return coloredPixels > 256
+    }
+    XCTAssertEqual(
+      XCTWaiter.wait(
+        for: [XCTNSPredicateExpectation(predicate: rendered, object: card)], timeout: 20),
+      .completed, "The detailed color fixture must be painted inside the native link card.")
   }
 
   private func openItemEditor(_ application: XCUIApplication) {
