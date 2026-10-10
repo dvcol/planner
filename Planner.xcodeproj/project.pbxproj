@@ -14,7 +14,7 @@
             knownRegions = (en, Base);
             mainGroup = 000000000000000000000101;
             minimizedProjectReferenceProxies = 1;
-            packageReferences = (000000000000000000000301, 000000000000000000000302, 000000000000000000000303);
+            packageReferences = (000000000000000000000301, 000000000000000000000302, 000000000000000000000303, 000000000000000000000304);
             preferredProjectObjectVersion = 77;
             productRefGroup = 000000000000000000000104;
             projectDirPath = "";
@@ -61,7 +61,7 @@
             dependencies = ();
             fileSystemSynchronizedGroups = (000000000000000000000102);
             name = Planner;
-            packageProductDependencies = (000000000000000000000311, 000000000000000000000312, 000000000000000000000313, 000000000000000000000314, 000000000000000000000315);
+            packageProductDependencies = (000000000000000000000311, 000000000000000000000312, 000000000000000000000313, 000000000000000000000314, 000000000000000000000315, 000000000000000000000316);
             productName = Planner;
             productReference = 000000000000000000000111;
             productType = "com.apple.product-type.application";
@@ -120,13 +120,16 @@
         000000000000000000000551 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000118; buildSettings = {}; name = Debug; };
         000000000000000000000552 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000118; buildSettings = {}; name = Release; };
         000000000000000000000211 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
-        000000000000000000000212 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000411, 000000000000000000000412, 000000000000000000000413, 000000000000000000000414, 000000000000000000000415); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000212 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000411, 000000000000000000000412, 000000000000000000000413, 000000000000000000000414, 000000000000000000000415, 000000000000000000000416); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000213 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000416); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000221 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000222 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000422); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000223 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000231 = { isa = PBXTargetDependency; target = 000000000000000000000201; targetProxy = 000000000000000000000232; };
         000000000000000000000232 = { isa = PBXContainerItemProxy; containerPortal = 000000000000000000000001; proxyType = 1; remoteGlobalIDString = 000000000000000000000201; remoteInfo = Planner; };
+        000000000000000000000304 = { isa = XCLocalSwiftPackageReference; relativePath = Packages/PlannerPreviews; };
+        000000000000000000000316 = { isa = XCSwiftPackageProductDependency; package = 000000000000000000000304; productName = PlannerPreviews; };
+        000000000000000000000416 = { isa = PBXBuildFile; productRef = 000000000000000000000316; };
         000000000000000000000301 = { isa = XCLocalSwiftPackageReference; relativePath = Packages/PlannerCore; };
         000000000000000000000302 = { isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/modelcontextprotocol/swift-sdk"; requirement = { kind = exactVersion; version = 0.12.1; }; };
         000000000000000000000303 = { isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/apple/swift-nio.git"; requirement = { kind = exactVersion; version = 2.104.0; }; };

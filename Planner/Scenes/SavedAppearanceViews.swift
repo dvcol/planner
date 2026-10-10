@@ -75,7 +75,9 @@ struct SavedAppearanceDetail: View {
         Section("Notes") { Text(notes).textSelection(.enabled) }
       }
       ItemLocationSection(title: item.content.title, location: item.content.location)
-      ItemLinksSection(links: item.content.links)
+      ItemLinksSection(
+        links: item.content.links, sourceId: item.source.id,
+        sourceLifetimeId: item.sourceLifetimeId)
     }
     .formStyle(.grouped)
     .navigationTitle(item.content.title)

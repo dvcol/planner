@@ -180,6 +180,8 @@ Starting state: saved coordinate maps work, Core exposes owned bookmarks and row
 
 DoR: the accepted Q41/Q42 behavior, dataset/source lifetime binding and native request identity are specified before implementation. DoD: tests cover image/no-image/error, address zero/one/multiple matches, cache invalidation and late results after URL/address or ownership changes. Integration verifies the Apple adapter and actual native content/loading/fallback presentation. A stale result cannot replace a newer preview or pin; provider output never becomes owned data through preview loading. This adds the agreed seam and does not relax the existing native UI, Core or HTTP gates.
 
+Saved website cards render with native SwiftUI `Link`, `GroupBox` and `Image`. The initial `LPLinkView` bridge repeatedly retained a loading placeholder in the real Item/List journey despite successful provider decoding; isolated SDK/view cases did not reproduce that integration failure. Direct image presentation passes the painted-image journey on iPhone and iPad while retaining Apple's metadata adapter, exact owned URLs and temporary cache boundary. This is a renderer change, with the [qualification and limits](prototypes/native-preview-qualification.md) recorded separately. Address lookup and Mac runtime remain open.
+
 ## Definition of ready and done
 
 - [x] Contract public interfaces accepted, prerequisite resolutions reviewed, local toolchain inventory refreshed and fixture inputs/expected transitions specified.
