@@ -441,10 +441,10 @@ public actor Planner {
                 "invalidInput", "Manual order requires an ascending standalone List query.",
                 propertyPath: "/query/sort")
             }
-          case .title: break
-          case .created, .lastUpdated, .duration:
+          case .title, .duration: break
+          case .created, .lastUpdated:
             throw PlannerFailure(
-              "unavailable", "This query slice supports title and saved Manual order.",
+              "unavailable", "This query slice supports title, duration and saved Manual order.",
               propertyPath: "/query/sort/mode")
           }
           let historyToken = try latestHistoryToken(in: context)
@@ -472,7 +472,7 @@ public actor Planner {
           let locale = Locale(identifier: "en_US_POSIX")
           var descriptor = FetchDescriptor<PlannerSchemaV7.Item>()
           if textTerms.isEmpty, itemQuery.duration?.minimumMinutes == nil,
-            itemQuery.duration?.maximumMinutes == nil
+            itemQuery.duration?.maximumMinutes == nil, itemQuery.sort.mode != .duration
           {
             descriptor.propertiesToFetch = [\.id, \.title, \.globalDone, \.archived]
           }
@@ -498,10 +498,15 @@ public actor Planner {
               throw PlannerFailure(
                 "readUnavailable", "A query Item has unresolved identity or title.")
             }
+            var durationMinutes: Int64?
+            if itemQuery.sort.mode == .duration {
+              durationMinutes = try item.value().input.estimate?.minutes
+            }
             return (
               reference: PlannerEntityReference(kind: .item, id: id),
               comparisonTitle: item.title.folding(
-                options: [.caseInsensitive, .diacriticInsensitive], locale: locale)
+                options: [.caseInsensitive, .diacriticInsensitive], locale: locale),
+              durationMinutes: durationMinutes
             )
           }
           guard Set(values.map { $0.reference.id }).count == values.count else {
@@ -513,9 +518,17 @@ public actor Planner {
             locale: locale
           )
           let sorted = values.sorted { first, second in
+            if itemQuery.sort.mode == .duration,
+              let precedes = durationPrecedes(
+                first.durationMinutes, second.durationMinutes, direction: itemQuery.sort.direction)
+            {
+              return precedes
+            }
             let comparison = comparator.compare(first.comparisonTitle, second.comparisonTitle)
             if comparison != .orderedSame {
-              if itemQuery.sort.direction == .ascending { return comparison == .orderedAscending }
+              if itemQuery.sort.mode == .duration || itemQuery.sort.direction == .ascending {
+                return comparison == .orderedAscending
+              }
               return comparison == .orderedDescending
             }
             return first.reference.id.uuidString < second.reference.id.uuidString
@@ -589,6 +602,20 @@ public actor Planner {
     if let minimum = duration.minimumMinutes, estimate.minutes < minimum { return false }
     if let maximum = duration.maximumMinutes, estimate.minutes > maximum { return false }
     return true
+  }
+
+  /// Equal estimates return nil so the caller uses the fixed ascending title/identity tie-break.
+  private func durationPrecedes(
+    _ firstMinutes: Int64?, _ secondMinutes: Int64?, direction: PlannerItemQuery.Sort.Direction
+  ) -> Bool? {
+    guard let firstMinutes else {
+      if secondMinutes == nil { return nil }
+      return false
+    }
+    guard let secondMinutes else { return true }
+    if firstMinutes == secondMinutes { return nil }
+    if direction == .ascending { return firstMinutes < secondMinutes }
+    return firstMinutes > secondMinutes
   }
 
   private func listCatalogSnapshot(
@@ -673,14 +700,18 @@ public actor Planner {
     var items = FetchDescriptor<PlannerSchemaV7.Item>(
       predicate: #Predicate { itemIdentifiers.contains($0.id) })
     if textTerms.isEmpty, query.duration?.minimumMinutes == nil,
-      query.duration?.maximumMinutes == nil
+      query.duration?.maximumMinutes == nil, query.sort.mode != .duration
     {
       items.propertiesToFetch = [\.id, \.lifetimeId, \.title, \.globalDone, \.archived]
     }
     let sources = Dictionary(grouping: try context.fetch(items), by: \.id)
     var doneCount: Int64 = 0
     let locale = Locale(identifier: "en_US_POSIX")
-    var matching: [(identity: PlannerRowIdentity, comparisonTitle: String, itemId: UUID)] = []
+    var matching:
+      [(
+        identity: PlannerRowIdentity, comparisonTitle: String, itemId: UUID, durationMinutes: Int64?
+      )] =
+        []
     for membership in children {
       guard let matches = sources[membership.item.id], matches.count == 1,
         let item = matches.first, item.lifetimeId == membership.item.lifetimeId,
@@ -702,6 +733,10 @@ public actor Planner {
       }
       if !(try matchesItemDuration(item, duration: query.duration)) { continue }
       if !(try matchesItemText(item, terms: textTerms, locale: locale)) { continue }
+      var durationMinutes: Int64?
+      if query.sort.mode == .duration {
+        durationMinutes = try item.value().input.estimate?.minutes
+      }
       matching.append(
         (
           identity: .appearance(
@@ -709,17 +744,25 @@ public actor Planner {
             appearance: .listMembership(listId: listId, membershipId: membership.id)),
           comparisonTitle: item.title.folding(
             options: [.caseInsensitive, .diacriticInsensitive], locale: locale),
-          itemId: membership.item.id
+          itemId: membership.item.id, durationMinutes: durationMinutes
         ))
     }
-    if query.sort.mode == .title {
+    if query.sort.mode != .manual {
       let comparator = String.Comparator(
         options: [.caseInsensitive, .diacriticInsensitive],
         locale: locale)
       matching.sort { first, second in
+        if query.sort.mode == .duration,
+          let precedes = durationPrecedes(
+            first.durationMinutes, second.durationMinutes, direction: query.sort.direction)
+        {
+          return precedes
+        }
         let comparison = comparator.compare(first.comparisonTitle, second.comparisonTitle)
         if comparison != .orderedSame {
-          if query.sort.direction == .ascending { return comparison == .orderedAscending }
+          if query.sort.mode == .duration || query.sort.direction == .ascending {
+            return comparison == .orderedAscending
+          }
           return comparison == .orderedDescending
         }
         return first.itemId.uuidString < second.itemId.uuidString
