@@ -2,11 +2,11 @@ import PlannerCore
 import SwiftUI
 
 private enum SavedPlannerSection: Hashable {
-  case lists, items
+  case lists, items, inbox
 }
 
 private enum SavedPlannerSidebarSelection: Hashable {
-  case lists, items
+  case lists, items, inbox
   case list(UUID)
 }
 
@@ -28,6 +28,8 @@ struct SavedPlannerView: View {
   @State private var catalogItems: [SavedPlannerItem]?
   @State private var itemFilters = SavedItemFilters(archive: .active)
   @State private var itemSearchText = ""
+  @State private var inboxFilters = SavedItemFilters(completion: .todo, archive: .active)
+  @State private var inboxSearchText = ""
   @State private var isOpeningCatalog = false
   @State private var sortPreferences = SavedItemSortPreferences()
   @State private var selectedAppearanceIdentity: PlannerAppearance?
@@ -61,8 +63,9 @@ struct SavedPlannerView: View {
     }
     .task { await store.open() }
     .task(id: store.isReady) { await loadCatalogItems() }
-    .task(id: itemFilters) { await loadCatalogItems() }
-    .task(id: itemSearchText) { await loadCatalogItems() }
+    .task(id: catalogScope) { await loadCatalogItems() }
+    .task(id: catalogFilters.wrappedValue) { await loadCatalogItems() }
+    .task(id: catalogSearchText.wrappedValue) { await loadCatalogItems() }
     .task(id: itemSort.wrappedValue) { await loadCatalogItems() }
     .task(id: store.devicePreferenceNamespace) {
       await loadCatalogItems()
@@ -135,15 +138,18 @@ struct SavedPlannerView: View {
     #else
       TabView(selection: $selectedSection) {
         Tab("Lists", systemImage: "list.bullet", value: .lists) { plannerColumns }
-        Tab("Items", systemImage: "square.stack", value: .items) {
-          NavigationSplitView {
-            itemCatalog
-          } detail: {
-            itemDetail
-          }
-        }
+        Tab("Items", systemImage: "square.stack", value: .items) { catalogColumns }
+        Tab("Inbox", systemImage: "tray", value: .inbox) { catalogColumns }
       }
     #endif
+  }
+
+  private var catalogColumns: some View {
+    NavigationSplitView {
+      itemCatalog
+    } detail: {
+      itemDetail
+    }
   }
 
   private var sidebarSelection: Binding<SavedPlannerSidebarSelection?> {
@@ -151,6 +157,7 @@ struct SavedPlannerView: View {
       get: {
         #if os(macOS)
           if selectedSection == .items { return .items }
+          if selectedSection == .inbox { return .inbox }
         #endif
         if let selectedListId { return .list(selectedListId) }
         #if os(macOS)
@@ -162,6 +169,7 @@ struct SavedPlannerView: View {
       set: { selection in
         switch selection {
         case .items: selectedSection = .items
+        case .inbox: selectedSection = .inbox
         case .list(let identifier):
           selectedSection = .lists
           selectedListId = identifier
@@ -178,7 +186,7 @@ struct SavedPlannerView: View {
 
   private var isItemSection: Bool {
     #if os(macOS)
-      selectedSection == .items
+      selectedSection == .items || selectedSection == .inbox
     #else
       false
     #endif
@@ -188,8 +196,8 @@ struct SavedPlannerView: View {
   private var itemCatalog: some View {
     if let catalogItems {
       SavedItemCatalog(
-        items: catalogItems, selection: $selectedItemId, filters: $itemFilters,
-        searchText: $itemSearchText, sort: itemSort,
+        scope: catalogScope, items: catalogItems, selection: $selectedItemId,
+        filters: catalogFilters, searchText: catalogSearchText, sort: itemSort,
         canCreate: store.canCreate
       ) { showNewItem = true }
       .overlay(alignment: .topTrailing) {
@@ -209,15 +217,17 @@ struct SavedPlannerView: View {
   private func loadCatalogItems() async {
     guard store.isReady else { return }
     isOpeningCatalog = true
-    let filters = itemFilters
-    let searchText = itemSearchText
+    let scope = catalogScope
+    let filters = catalogFilters.wrappedValue
+    let searchText = catalogSearchText.wrappedValue
     let revision = store.changeRevision
     let namespace = store.devicePreferenceNamespace
     let sort = itemSort.wrappedValue
     let loaded = await store.readItems(
-      text: searchText, completion: filters.completion.queryValue,
+      scope: scope.queryValue, text: searchText, completion: filters.completion.queryValue,
       archive: filters.archive.queryValue, sort: sort.queryValue)
-    guard !Task.isCancelled, itemFilters == filters, itemSearchText == searchText,
+    guard !Task.isCancelled, catalogScope == scope, catalogFilters.wrappedValue == filters,
+      catalogSearchText.wrappedValue == searchText,
       store.changeRevision == revision, store.devicePreferenceNamespace == namespace,
       itemSort.wrappedValue == sort
     else {
@@ -227,8 +237,20 @@ struct SavedPlannerView: View {
     isOpeningCatalog = false
   }
 
+  private var catalogScope: SavedItemCatalogScope {
+    selectedSection == .inbox ? .inbox : .items
+  }
+
+  private var catalogFilters: Binding<SavedItemFilters> {
+    catalogScope == .inbox ? $inboxFilters : $itemFilters
+  }
+
+  private var catalogSearchText: Binding<String> {
+    catalogScope == .inbox ? $inboxSearchText : $itemSearchText
+  }
+
   private var itemSort: Binding<SavedItemSort> {
-    let key = store.devicePreferenceNamespace.map { "planner.sort.\($0).items" }
+    let key = store.devicePreferenceNamespace.map { "planner.sort.\($0).\(catalogScope.rawValue)" }
     return Binding(
       get: { sortPreferences.selection(for: key, default: SavedItemSort()) },
       set: { sortPreferences.select($0, for: key) })
@@ -470,6 +492,10 @@ struct SavedPlannerView: View {
               Label("Items", systemImage: "square.stack")
             }
             .accessibilityIdentifier("saved.section.items")
+            NavigationLink(value: SavedPlannerSidebarSelection.inbox) {
+              Label("Inbox", systemImage: "tray")
+            }
+            .accessibilityIdentifier("saved.section.inbox")
           }
         #endif
         Section("Lists") {

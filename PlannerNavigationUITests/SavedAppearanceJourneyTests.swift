@@ -2,6 +2,178 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openCatalogSection("Inbox", application: application)
+    let search = application.searchFields["Search Inbox"]
+    if !search.exists { application.swipeDown() }
+    XCTAssertTrue(search.waitForExistence(timeout: 5))
+    replaceText(search, with: "garden", application: application)
+    replaceText(search, with: "", application: application)
+    #if os(iOS)
+      let dismissSearch = application.buttons.matching(
+        NSPredicate(format: "label IN %@", ["Close", "Hide keyboard"])
+      ).firstMatch
+      XCTAssertTrue(dismissSearch.waitForExistence(timeout: 5))
+      XCTAssertTrue(dismissSearch.waitForPlannerHittability())
+      let retainsSearchFocus = dismissSearch.label == "Hide keyboard"
+      dismissSearch.activateForPlannerJourney()
+      if retainsSearchFocus {
+        let catalog = application.collectionViews["Sidebar"].firstMatch
+        XCTAssertTrue(catalog.waitForExistence(timeout: 5))
+        XCTAssertTrue(catalog.waitForPlannerHittability())
+        catalog.activateForPlannerJourney()
+      }
+    #endif
+    recordScreenshot(application, name: "Cleared Inbox search before native tab switch")
+    openCatalogSection("Items", application: application)
+    let itemSort = application.plannerElement("saved.items.sort")
+    XCTAssertTrue(itemSort.waitForExistence(timeout: 5))
+    XCTAssertTrue(itemSort.waitForPlannerHittability())
+    #if os(iOS)
+      XCTAssertTrue(application.buttons["Items"].firstMatch.isSelected)
+    #endif
+    XCTAssertTrue(application.searchFields["Search Items"].exists)
+    recordScreenshot(application, name: "Items catalog after cleared Inbox search")
+  }
+
+  func testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()
+    throws
+  {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application, title: "Zulu")
+    createItem(application, title: "Alpha")
+    createItem(application, title: "Middle")
+    createList("Tokyo", application: application)
+    addItem(application, title: "Zulu")
+    let membership = application.savedPlannerItemRows("Zulu").firstMatch
+    let localCompletion = application.buttons[
+      membership.identifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    localCompletion.activateForPlannerJourney()
+    XCTAssertTrue(localCompletion.waitForPlannerValue("Completed"))
+    openCatalogSection("Inbox", application: application)
+    let sort = application.plannerElement("saved.inbox.sort")
+    let filters = application.plannerElement("saved.inbox.filters")
+    XCTAssertTrue(sort.waitForExistence(timeout: 5))
+    assertSortChoice("Title · Ascending", menu: sort)
+    XCTAssertEqual(filters.label, "Todo · Active")
+    assertItemOrder(["Alpha", "Middle"], application: application)
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Zulu").firstMatch.waitForNonExistence(timeout: 5))
+    chooseSort("Descending", menu: sort, application: application)
+    assertItemOrder(["Middle", "Alpha"], application: application)
+    recordScreenshot(application, name: "Native Inbox excludes listed Items")
+    let alpha = application.savedPlannerItemRows("Alpha").firstMatch
+    let alphaIdentifier = alpha.identifier
+    alpha.activateForPlannerJourney()
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    activateGlobalCompletion(globalCompletion)
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+    #if os(iOS)
+      let back = application.plannerElement("BackButton")
+      if back.exists { back.activateForPlannerJourney() }
+    #endif
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Alpha").firstMatch.waitForNonExistence(timeout: 5))
+    chooseFilter("All completion states", menu: filters, application: application)
+    assertItemOrder(["Middle", "Alpha"], application: application)
+    application.savedPlannerItemRows("Alpha").firstMatch.activateForPlannerJourney()
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Archive Item").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
+    #if os(iOS)
+      if back.exists { back.activateForPlannerJourney() }
+    #endif
+    XCTAssertTrue(application.plannerElement(alphaIdentifier).waitForNonExistence(timeout: 5))
+    chooseFilter("All archive states", menu: filters, application: application)
+    let archivedAlpha = application.plannerElement(alphaIdentifier)
+    XCTAssertTrue(archivedAlpha.waitForExistence(timeout: 10))
+    XCTAssertLessThan(
+      application.savedPlannerItemRows("Middle").firstMatch.frame.midY, archivedAlpha.frame.midY)
+    XCTAssertEqual(filters.label, "All")
+    XCTAssertFalse(application.savedPlannerItemRows("Zulu").firstMatch.exists)
+    recordScreenshot(
+      application, name: "Inbox includes archived completed Items through cumulative filters")
+    let search = application.searchFields["Search Inbox"]
+    if !search.exists { application.swipeDown() }
+    XCTAssertTrue(search.waitForExistence(timeout: 5))
+    replaceText(search, with: "alpha garden", application: application)
+    XCTAssertTrue(archivedAlpha.waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Middle").firstMatch.waitForNonExistence(timeout: 5))
+    XCTAssertFalse(application.savedPlannerItemRows("Zulu").firstMatch.exists)
+    replaceText(search, with: "", application: application)
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Middle").firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(archivedAlpha.exists)
+    XCTAssertEqual(filters.label, "All")
+    #if os(iOS)
+      let dismissSearch = application.buttons.matching(
+        NSPredicate(format: "label IN %@", ["Close", "Hide keyboard"])
+      ).firstMatch
+      XCTAssertTrue(dismissSearch.waitForExistence(timeout: 5))
+      XCTAssertTrue(dismissSearch.waitForPlannerHittability())
+      let retainsSearchFocus = dismissSearch.label == "Hide keyboard"
+      dismissSearch.activateForPlannerJourney()
+      if retainsSearchFocus {
+        let catalog = application.collectionViews["Sidebar"].firstMatch
+        XCTAssertTrue(catalog.waitForExistence(timeout: 5))
+        XCTAssertTrue(catalog.waitForPlannerHittability())
+        catalog.activateForPlannerJourney()
+      }
+    #endif
+    openCatalogSection("Items", application: application)
+    let itemSort = application.plannerElement("saved.items.sort")
+    assertSortChoice("Title · Ascending", menu: itemSort)
+    XCTAssertEqual(application.plannerElement("saved.items.filters").label, "Active")
+    chooseSort("Created", menu: itemSort, application: application)
+    chooseSort("Descending", menu: itemSort, application: application)
+    openCatalogSection("Inbox", application: application)
+    assertSortChoice("Title · Descending", menu: sort)
+    XCTAssertEqual(filters.label, "All")
+    XCTAssertTrue(archivedAlpha.waitForExistence(timeout: 10))
+    XCTAssertLessThan(
+      application.savedPlannerItemRows("Middle").firstMatch.frame.midY, archivedAlpha.frame.midY)
+    openList("Tokyo", itemTitle: "Zulu", application: application)
+    XCTAssertTrue(localCompletion.waitForPlannerValue("Completed"))
+    #if os(macOS)
+      membership.rightClick()
+    #else
+      membership.press(forDuration: 1)
+    #endif
+    application.plannerElement("Remove from List").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    openCatalogSection("Inbox", application: application)
+    assertItemOrder(["Zulu", "Middle"], application: application)
+    XCTAssertTrue(archivedAlpha.waitForExistence(timeout: 10))
+    XCTAssertLessThan(
+      application.savedPlannerItemRows("Middle").firstMatch.frame.midY, archivedAlpha.frame.midY)
+    application.savedPlannerItemRows("Zulu").firstMatch.activateForPlannerJourney()
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openCatalogSection("Inbox", application: application)
+    assertSortChoice("Title · Descending", menu: sort)
+    XCTAssertEqual(filters.label, "Todo · Active")
+    assertItemOrder(["Zulu", "Middle"], application: application)
+    XCTAssertFalse(application.plannerElement(alphaIdentifier).exists)
+    recordScreenshot(application, name: "Relaunched Inbox retains sort and last-membership removal")
+    openCatalogSection("Items", application: application)
+    assertSortChoice("Created · Descending", menu: itemSort)
+    assertItemOrder(["Middle", "Zulu"], application: application)
+  }
+
   func testNativeItemSortUsesCanonicalModesAndRemembersDatasetScopedDeviceChoiceAfterRelaunch()
     throws
   {
@@ -1276,6 +1448,16 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     option.activateForPlannerJourney()
   }
 
+  private func chooseFilter(
+    _ title: String, menu: XCUIElement, application: XCUIApplication
+  ) {
+    menu.activateForPlannerJourney()
+    let option = application.plannerElement(title)
+    XCTAssertTrue(option.waitForExistence(timeout: 5))
+    XCTAssertTrue(option.waitForPlannerHittability())
+    option.activateForPlannerJourney()
+  }
+
   private func assertSortChoice(_ choice: String, menu: XCUIElement) {
     let selected = NSPredicate(format: "label == %@", "Sort: \(choice)")
     XCTAssertEqual(
@@ -1358,6 +1540,14 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     #endif
     XCTAssertTrue(section.waitForExistence(timeout: 10))
     section.activateForPlannerJourney()
+  }
+
+  private func openCatalogSection(_ title: String, application: XCUIApplication) {
+    openSection(title, application: application)
+    #if os(iOS)
+      let back = application.plannerElement("BackButton")
+      if back.exists { back.activateForPlannerJourney() }
+    #endif
   }
 
   private func revealSidebarIfNeeded(_ application: XCUIApplication, element: XCUIElement) {

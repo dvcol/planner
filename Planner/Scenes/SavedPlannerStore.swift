@@ -126,7 +126,8 @@ final class SavedPlannerStore {
   }
 
   func readItems(
-    text: String = "", completion: PlannerItemQuery.Completion, archive: PlannerItemQuery.Archive,
+    scope: PlannerItemQuery.Scope = .global, text: String = "",
+    completion: PlannerItemQuery.Completion, archive: PlannerItemQuery.Archive,
     sort: PlannerItemQuery.Sort = .init(mode: .title)
   ) async -> [SavedPlannerItem]? {
     guard let planner, let session else { return nil }
@@ -134,7 +135,7 @@ final class SavedPlannerStore {
       PlannerQuery(
         session: session,
         request: .items(
-          .init(scope: .global, text: text, completion: completion, archive: archive, sort: sort))
+          .init(scope: scope, text: text, completion: completion, archive: archive, sort: sort))
       ))
     {
     case .failed(let reason): alertMessage = reason.message
