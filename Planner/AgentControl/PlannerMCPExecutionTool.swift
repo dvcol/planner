@@ -105,9 +105,16 @@
             "notes": .object(["type": .array([.string("string"), .string("null")])]),
             "location": locationSchema,
             "links": linksSchema,
+            "categoryIds": labelSelectionSchema,
+            "tagIds": labelSelectionSchema,
           ]),
         ]),
       ]),
+    ])
+
+    private static let labelSelectionSchema = Value.object([
+      "type": .string("array"),
+      "items": .object(["type": .string("string"), "format": .string("uuid")]),
     ])
 
     private static let colorSchema = Value.object([
@@ -349,6 +356,8 @@
             "estimate": estimateSchema,
             "location": locationSchema,
             "links": linksSchema,
+            "categoryIds": labelSelectionSchema,
+            "tagIds": labelSelectionSchema,
           ]),
         ]),
         "expectedFieldHashes": .object([
@@ -1128,12 +1137,14 @@
           "title", "notes", "subtitle", "location", "estimate", "links", "categoryIds", "tagIds",
         ],
         required: ["title"], path: "/command/content")
-      if let unsupported = Set(content.keys).subtracting(["title", "notes", "links", "location"])
-        .sorted().first
-      {
+      if let unsupported = Set(content.keys).subtracting([
+        "title", "notes", "links", "location", "categoryIds", "tagIds",
+      ])
+      .sorted().first {
         throw AdmissionFailure(
           "unavailable", "/command/content/" + unsupported,
-          "This HTTP creation slice supports title, notes, owned location and links only.")
+          "This HTTP creation slice supports title, notes, owned location, links and label selections."
+        )
       }
       guard case .string(let title) = content["title"] else {
         throw AdmissionFailure(
@@ -1155,7 +1166,32 @@
       return .createItem(
         content: PlannerItemContentInput(
           title: title, notes: notes, location: location,
-          links: try linksInput(content["links"], path: "/command/content/links")))
+          links: try linksInput(content["links"], path: "/command/content/links"),
+          categoryIds: try labelSelection(
+            content["categoryIds"], path: "/command/content/categoryIds"),
+          tagIds: try labelSelection(content["tagIds"], path: "/command/content/tagIds")))
+    }
+
+    private static func labelSelection(_ value: Value?, path: String) throws -> Set<UUID> {
+      guard let value else { return [] }
+      guard case .array(let identifiers) = value else {
+        throw AdmissionFailure("invalidInput", path, "Expected an array of label UUIDs.")
+      }
+      return try Set(
+        identifiers.enumerated().map { index, value in
+          guard case .string(let spelling) = value, let identifier = UUID(uuidString: spelling)
+          else {
+            throw AdmissionFailure("invalidInput", path + "/\(index)", "Expected a label UUID.")
+          }
+          return identifier
+        })
+    }
+
+    private static func labelSelectionChange(_ value: Value?, path: String) throws
+      -> PlannerFieldChange<Set<UUID>>
+    {
+      guard let value else { return .unchanged }
+      return .set(try labelSelection(value, path: path))
     }
 
     private static func locationChange(
@@ -1258,15 +1294,6 @@
       let fieldNames = Set(PlannerItemField.allCases.map(\.rawValue))
       let changes = try object(
         command["changes"], allowed: fieldNames, required: [], path: "/command/changes")
-      if let unsupported = Set(changes.keys).subtracting([
-        "title", "subtitle", "notes", "estimate", "location", "links",
-      ])
-      .sorted()
-      .first {
-        throw AdmissionFailure(
-          "unavailable", "/command/changes/" + unsupported,
-          "This edit slice supports title, subtitle, notes, estimate, location and links only.")
-      }
       let hashValues = try object(
         command["expectedFieldHashes"], allowed: fieldNames, required: [],
         path: "/command/expectedFieldHashes")
@@ -1293,7 +1320,10 @@
           notes: try textChange(changes["notes"], path: "/command/changes/notes"),
           location: try locationChange(changes["location"], path: "/command/changes/location"),
           estimate: try estimateChange(changes["estimate"], path: "/command/changes/estimate"),
-          links: linkChanges),
+          links: linkChanges,
+          categoryIds: try labelSelectionChange(
+            changes["categoryIds"], path: "/command/changes/categoryIds"),
+          tagIds: try labelSelectionChange(changes["tagIds"], path: "/command/changes/tagIds")),
         expectedFieldHashes: hashes)
     }
 
