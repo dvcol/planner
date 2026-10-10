@@ -6,6 +6,7 @@ struct SavedItemCatalog: View {
   @Binding var selection: UUID?
   @Binding var filters: SavedItemFilters
   @Binding var searchText: String
+  @Binding var sort: SavedItemSort
   let canCreate: Bool
   let create: () -> Void
 
@@ -44,6 +45,9 @@ struct SavedItemCatalog: View {
     .toolbar {
       ToolbarItem {
         SavedItemFilterMenu(filters: $filters, accessibilityIdentifier: "saved.items.filters")
+      }
+      ToolbarItem {
+        SavedItemSortMenu(sort: $sort, accessibilityIdentifier: "saved.items.sort")
       }
       ToolbarItem {
         Button("New Item", systemImage: "plus", action: create)

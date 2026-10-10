@@ -1,3 +1,4 @@
+import CryptoKit
 import Foundation
 import Observation
 import PlannerCore
@@ -27,6 +28,12 @@ final class SavedPlannerStore {
   var alertMessage: String?
   var isReady: Bool { session != nil && !isOpening }
   var canCreate: Bool { isReady && !isOpening && !isSaving && !recoveryBlocked }
+
+  var devicePreferenceNamespace: String? {
+    guard let session else { return nil }
+    let identity = session.datasetId.uuidString + ":" + session.ownershipBinding
+    return SHA256.hash(data: Data(identity.utf8)).map { String(format: "%02x", $0) }.joined()
+  }
 
   init() {
     let arguments = ProcessInfo.processInfo.arguments
@@ -119,13 +126,15 @@ final class SavedPlannerStore {
   }
 
   func readItems(
-    text: String = "", completion: PlannerItemQuery.Completion, archive: PlannerItemQuery.Archive
+    text: String = "", completion: PlannerItemQuery.Completion, archive: PlannerItemQuery.Archive,
+    sort: PlannerItemQuery.Sort = .init(mode: .title)
   ) async -> [SavedPlannerItem]? {
     guard let planner, let session else { return nil }
     switch await planner.query(
       PlannerQuery(
         session: session,
-        request: .items(.init(scope: .global, text: text, completion: completion, archive: archive))
+        request: .items(
+          .init(scope: .global, text: text, completion: completion, archive: archive, sort: sort))
       ))
     {
     case .failed(let reason): alertMessage = reason.message
@@ -330,7 +339,7 @@ final class SavedPlannerStore {
 
   func readListItems(
     _ identifier: UUID, text: String = "", completion: PlannerItemQuery.Completion,
-    archive: PlannerItemQuery.Archive
+    archive: PlannerItemQuery.Archive, sort: PlannerItemQuery.Sort = .init(mode: .manual)
   ) async -> [SavedPlannerItem]? {
     guard let planner, let session else { return nil }
     switch await planner.query(
@@ -339,7 +348,7 @@ final class SavedPlannerStore {
         request: .items(
           .init(
             scope: .list(identifier), text: text, completion: completion, archive: archive,
-            sort: .init(mode: .manual)))))
+            sort: sort))))
     {
     case .failed(let reason): alertMessage = reason.message
     case .snapshot(let snapshot):

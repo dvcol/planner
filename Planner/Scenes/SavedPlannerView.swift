@@ -29,6 +29,7 @@ struct SavedPlannerView: View {
   @State private var itemFilters = SavedItemFilters(archive: .active)
   @State private var itemSearchText = ""
   @State private var isOpeningCatalog = false
+  @State private var sortPreferences = SavedItemSortPreferences()
   @State private var selectedAppearanceIdentity: PlannerAppearance?
   @State private var selectedAppearance: PlannerAppearanceRead?
   @State private var appearanceChangeMessage: String?
@@ -38,6 +39,9 @@ struct SavedPlannerView: View {
   @State private var itemEditDraft: SavedItemEditDraft?
   @State private var isOpeningAppearance = false
   @State private var columnVisibility: NavigationSplitViewVisibility = .all
+  #if os(iOS)
+    @State private var listEditMode: EditMode = .inactive
+  #endif
 
   var body: some View {
     Group {
@@ -59,9 +63,21 @@ struct SavedPlannerView: View {
     .task(id: store.isReady) { await loadCatalogItems() }
     .task(id: itemFilters) { await loadCatalogItems() }
     .task(id: itemSearchText) { await loadCatalogItems() }
+    .task(id: itemSort.wrappedValue) { await loadCatalogItems() }
+    .task(id: store.devicePreferenceNamespace) {
+      await loadCatalogItems()
+      await loadSelectedList()
+    }
     .task(id: selectedListId) { await loadSelectedList() }
     .task(id: listFilters) { await loadSelectedList() }
     .task(id: listSearchText) { await loadSelectedList() }
+    .task(id: listSort.wrappedValue) { await loadSelectedList() }
+    #if os(iOS)
+      .onChange(of: listSort.wrappedValue) {
+        if listSort.wrappedValue.mode != .manual { listEditMode = .inactive }
+      }
+      .onChange(of: selectedListId) { listEditMode = .inactive }
+    #endif
     .task(id: selectedItemId) { await loadSelectedItem() }
     .task(id: selectedAppearanceIdentity) { await loadSelectedAppearance() }
     .task(id: store.changeRevision) {
@@ -173,7 +189,7 @@ struct SavedPlannerView: View {
     if let catalogItems {
       SavedItemCatalog(
         items: catalogItems, selection: $selectedItemId, filters: $itemFilters,
-        searchText: $itemSearchText,
+        searchText: $itemSearchText, sort: itemSort,
         canCreate: store.canCreate
       ) { showNewItem = true }
       .overlay(alignment: .topTrailing) {
@@ -196,16 +212,42 @@ struct SavedPlannerView: View {
     let filters = itemFilters
     let searchText = itemSearchText
     let revision = store.changeRevision
+    let namespace = store.devicePreferenceNamespace
+    let sort = itemSort.wrappedValue
     let loaded = await store.readItems(
       text: searchText, completion: filters.completion.queryValue,
-      archive: filters.archive.queryValue)
+      archive: filters.archive.queryValue, sort: sort.queryValue)
     guard !Task.isCancelled, itemFilters == filters, itemSearchText == searchText,
-      store.changeRevision == revision
+      store.changeRevision == revision, store.devicePreferenceNamespace == namespace,
+      itemSort.wrappedValue == sort
     else {
       return
     }
     catalogItems = loaded
     isOpeningCatalog = false
+  }
+
+  private var itemSort: Binding<SavedItemSort> {
+    let key = store.devicePreferenceNamespace.map { "planner.sort.\($0).items" }
+    return Binding(
+      get: { sortPreferences.selection(for: key, default: SavedItemSort()) },
+      set: { sortPreferences.select($0, for: key) })
+  }
+
+  private var listSort: Binding<SavedItemSort> {
+    let key: String?
+    if let namespace = store.devicePreferenceNamespace, let identifier = selectedListId {
+      key = "planner.sort.\(namespace).list.\(identifier.uuidString)"
+    } else {
+      key = nil
+    }
+    return Binding(
+      get: { sortPreferences.selection(for: key, default: SavedItemSort(mode: .manual)) },
+      set: { sortPreferences.select($0, for: key) })
+  }
+
+  private var canReorderMemberships: Bool {
+    store.canCreate && selectedListId != nil && listSort.wrappedValue.mode == .manual
   }
 
   @ViewBuilder
@@ -265,6 +307,8 @@ struct SavedPlannerView: View {
     let revision = store.changeRevision
     let filters = listFilters
     let searchText = listSearchText
+    let namespace = store.devicePreferenceNamespace
+    let sort = listSort.wrappedValue
     if selectedList?.source.id != identifier {
       selectedList = nil
       listItems = nil
@@ -274,12 +318,13 @@ struct SavedPlannerView: View {
     if loaded != nil {
       loadedItems = await store.readListItems(
         identifier, text: searchText, completion: filters.completion.queryValue,
-        archive: filters.archive.queryValue)
+        archive: filters.archive.queryValue, sort: sort.queryValue)
     } else {
       loadedItems = nil
     }
     guard !Task.isCancelled, selectedListId == identifier, store.changeRevision == revision,
-      listFilters == filters, listSearchText == searchText
+      listFilters == filters, listSearchText == searchText,
+      store.devicePreferenceNamespace == namespace, listSort.wrappedValue == sort
     else {
       return
     }
@@ -473,7 +518,7 @@ struct SavedPlannerView: View {
               #if os(macOS)
                 SavedMacMembershipTable(
                   store: store, list: selectedList, items: listItems,
-                  selection: membershipSelection,
+                  selection: membershipSelection, canReorderMemberships: canReorderMemberships,
                   addToList: proposeListAddition,
                   moveMembership: { item in
                     proposeMembershipMove(item.id, itemTitle: item.row.title, list: selectedList)
@@ -501,14 +546,14 @@ struct SavedPlannerView: View {
                               item.id, listId: selectedList.source.id, placement: .first)
                           }
                         }
-                        .disabled(!store.canCreate || listItems.first?.id == item.id)
+                        .disabled(!canReorderMemberships || listItems.first?.id == item.id)
                         Button("Move to End") {
                           Task {
                             _ = await store.reorderMembership(
                               item.id, listId: selectedList.source.id, placement: .last)
                           }
                         }
-                        .disabled(!store.canCreate || listItems.last?.id == item.id)
+                        .disabled(!canReorderMemberships || listItems.last?.id == item.id)
                         Divider()
                         Button("Add to List") { proposeListAddition(item) }
                           .disabled(!store.canCreate)
@@ -522,7 +567,7 @@ struct SavedPlannerView: View {
                         }
                         .disabled(!store.canCreate)
                       }
-                      .moveDisabled(!store.canCreate)
+                      .moveDisabled(!canReorderMemberships)
                     }
                     .onMove { offsets, destination in
                       moveMembership(
@@ -535,6 +580,7 @@ struct SavedPlannerView: View {
                     ).textCase(nil)
                   }
                 }
+                .environment(\.editMode, $listEditMode)
               #endif
             }
           } else {
@@ -556,10 +602,15 @@ struct SavedPlannerView: View {
             SavedItemFilterMenu(
               filters: $listFilters, accessibilityIdentifier: "saved.list.filters")
           }
+          ToolbarItem {
+            SavedItemSortMenu(
+              sort: listSort, allowsManual: true, accessibilityIdentifier: "saved.list.sort")
+          }
           #if os(iOS)
             ToolbarItem {
               EditButton()
-                .disabled(!store.canCreate || (listItems?.count ?? 0) < 2)
+                .environment(\.editMode, $listEditMode)
+                .disabled(!canReorderMemberships || (listItems?.count ?? 0) < 2)
                 .accessibilityIdentifier("saved.list.edit")
             }
           #endif
@@ -608,7 +659,7 @@ struct SavedPlannerView: View {
     private func moveMembership(
       from offsets: IndexSet, to destination: Int, in items: [SavedPlannerItem], listId: UUID
     ) {
-      guard store.canCreate else { return }
+      guard canReorderMemberships else { return }
       guard offsets.count == 1, let source = offsets.first, items.indices.contains(source),
         (0...items.count).contains(destination)
       else {

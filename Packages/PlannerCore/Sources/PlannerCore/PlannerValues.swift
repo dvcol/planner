@@ -25,7 +25,8 @@ public struct PlannerStorageConfiguration: Sendable {
 public struct PlannerDatasetSession: Sendable, Equatable {
   public let datasetId: UUID
   public let sessionId: UUID
-  let ownershipBinding: String
+  /// Opaque ownership identity for account-scoped device preferences; never an account selector.
+  public let ownershipBinding: String
   let epochId: UUID
 }
 
