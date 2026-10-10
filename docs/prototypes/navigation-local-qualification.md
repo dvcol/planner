@@ -2,7 +2,7 @@
 
 Work for [Navigation prototype](https://github.com/dvcol/planner/issues/14) on `prototype/navigation`. Q34 accepts the native UI journeys and fixtures. Q35 requires confirmation before deleting a Category/Tag with any association. The user delayed signing and physical setup while authorizing simulator and local Mac work.
 
-The latest saved-data work is in [Native membership removal](#native-membership-removal). [Archive and cumulative saved filters](#archive-and-cumulative-saved-filters) records the preceding saved filters and hidden-member drag qualification. Other sections retain their recorded revisions.
+The latest saved-data work is in [Native row-menu removal](#native-row-menu-removal) and [Native membership removal](#native-membership-removal). [Archive and cumulative saved filters](#archive-and-cumulative-saved-filters) records the preceding saved filters and hidden-member drag qualification. Other sections retain their recorded revisions.
 
 The human accepted Q38 A, Q39 B, Q40 A, Q41 A and Q42 A, then accepted Q43 A, Q44 A, Q45 A and Q46 A. The [accepted row decisions](../navigation-prototype-review.md#accepted-review-answers) and [row contract review](../navigation-row-contract-review.md) record the exact declarations and required tests. The accepted amendment itself added no runtime qualification to the seven-journey presentation evidence below. Later sections qualify saved Item/List appearance completion and standalone List reordering. Native rich rows, cross-List drag-and-drop and provider lookup remain open.
 
@@ -372,3 +372,13 @@ The [manifest](evidence/navigation/saved-membership-removal.json) preserves comm
 ## Remaining gates
 
 The first read-only UI slice cannot establish completion writes, query generation/window completeness, ordinary import, recovery, capture, schedules, CloudKit or Share feasibility. Those journeys must use their approved public seams and truthful outcomes as implementation proceeds. Further comparison must cover Calendar content, iPad tab/sidebar adaptation, persistence/reopen, orientation/resizing, keyboard/focus, Dynamic Type, VoiceOver and final human layout decisions. Physical-device long-list latency and memory, signed Share and account/sync tests remain deferred rather than waived.
+
+## Native row-menu removal
+
+The next qualifier exercises Remove from List from an unselected row's native context menu. Long press on iPhone and iPad removes the membership, shows No items without an empty progress percentage, and leaves the source Item's notes and global Todo available in Items. This qualifies an alternative user entry point to the preceding selected-detail removal; it does not add a mutation or change Core.
+
+One journey passes on each OS 27 simulator with zero failures/skips on the first executed run. This is interaction qualification, with no manufactured behavior red. Native arm64 Mac app/test bundles compile; its row-menu runtime is still unqualified. Strict affected Swift lint and source-hash checks pass. Xcode's context-menu animation waits remain in the raw logs.
+
+Both app-owned captures were inspected. The [phone empty List](evidence/navigation/phone-saved-row-menu-removal.png) and [iPad empty List](evidence/navigation/tablet-saved-row-menu-removal.png) show the ordinary unselected state. The iPad detail remains Choose an Item. The [evidence record](evidence/navigation/saved-row-menu-removal.json) keeps exact commands, source hashes, result counts and capture hashes. Raw bundles and logs are `/private/tmp/PlannerRowRemoval{Phone,Tablet,Mac}` with their respective extensions.
+
+Selected-context persistence remains covered by the preceding removal evidence. No native Move, external refresh, Undo, failure/recovery presentation, Mac runtime, signed/physical-device, CloudKit, Share, accessibility/keyboard or long-list performance result is established by this qualifier. The feature and final polish gates remain open.
