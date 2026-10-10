@@ -394,6 +394,19 @@ public struct PlannerItemQuery: Sendable {
   }
   public enum Completion: Sendable { case todo, done, all }
   public enum Archive: Sendable { case active, archived, all }
+  public struct Duration: Sendable {
+    public let minimumMinutes: Int64?
+    public let maximumMinutes: Int64?
+    public let includeUnknown: Bool
+
+    public init(
+      minimumMinutes: Int64? = nil, maximumMinutes: Int64? = nil, includeUnknown: Bool = false
+    ) {
+      self.minimumMinutes = minimumMinutes
+      self.maximumMinutes = maximumMinutes
+      self.includeUnknown = includeUnknown
+    }
+  }
   public struct Sort: Sendable {
     public enum Mode: String, Sendable { case title, created, lastUpdated, duration, manual }
     public enum Direction: String, Sendable { case ascending, descending }
@@ -409,18 +422,20 @@ public struct PlannerItemQuery: Sendable {
   public let text: String
   public let completion: Completion
   public let archive: Archive
+  public let duration: Duration?
   public let sort: Sort
   public let rowPresentation: PlannerRowPresentationContext?
 
   public init(
     scope: Scope = .global, text: String = "", completion: Completion = .todo,
-    archive: Archive = .active,
+    archive: Archive = .active, duration: Duration? = nil,
     sort: Sort = Sort(), rowPresentation: PlannerRowPresentationContext? = nil
   ) {
     self.scope = scope
     self.text = text
     self.completion = completion
     self.archive = archive
+    self.duration = duration
     self.sort = sort
     self.rowPresentation = rowPresentation
   }

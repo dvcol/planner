@@ -429,6 +429,7 @@ public actor Planner {
             snapshot: snapshot, historyToken: historyToken)
           return .snapshot(snapshot)
         case .items(let itemQuery):
+          try validateItemDuration(itemQuery.duration)
           let presentation = try
             (itemQuery.rowPresentation
             ?? PlannerRowPresentationContext(
@@ -470,7 +471,9 @@ public actor Planner {
           let textTerms = itemQuery.text.split(whereSeparator: \.isWhitespace).map(String.init)
           let locale = Locale(identifier: "en_US_POSIX")
           var descriptor = FetchDescriptor<PlannerSchemaV7.Item>()
-          if textTerms.isEmpty {
+          if textTerms.isEmpty, itemQuery.duration?.minimumMinutes == nil,
+            itemQuery.duration?.maximumMinutes == nil
+          {
             descriptor.propertiesToFetch = [\.id, \.title, \.globalDone, \.archived]
           }
           let items = try context.fetch(descriptor).filter { item in
@@ -485,6 +488,7 @@ public actor Planner {
             case .archived: if !item.archived { return false }
             case .all: break
             }
+            guard try matchesItemDuration(item, duration: itemQuery.duration) else { return false }
             return try matchesItemText(item, terms: textTerms, locale: locale)
           }
           let values = try items.map { item in
@@ -552,6 +556,39 @@ public actor Planner {
           != nil
       }
     }
+  }
+
+  private func validateItemDuration(_ duration: PlannerItemQuery.Duration?) throws {
+    guard let duration else { return }
+    if let minimum = duration.minimumMinutes, minimum < 0 {
+      throw PlannerFailure(
+        "invalidInput", "The minimum duration must be nonnegative.",
+        propertyPath: "/query/duration/minimumMinutes")
+    }
+    if let maximum = duration.maximumMinutes, maximum < 0 {
+      throw PlannerFailure(
+        "invalidInput", "The maximum duration must be nonnegative.",
+        propertyPath: "/query/duration/maximumMinutes")
+    }
+    if let minimum = duration.minimumMinutes, let maximum = duration.maximumMinutes,
+      maximum < minimum
+    {
+      throw PlannerFailure(
+        "invalidInput", "The maximum duration must not be below the minimum.",
+        propertyPath: "/query/duration")
+    }
+  }
+
+  private func matchesItemDuration(
+    _ item: PlannerSchemaV7.Item, duration: PlannerItemQuery.Duration?
+  ) throws -> Bool {
+    guard let duration, duration.minimumMinutes != nil || duration.maximumMinutes != nil else {
+      return true
+    }
+    guard let estimate = try item.value().input.estimate else { return duration.includeUnknown }
+    if let minimum = duration.minimumMinutes, estimate.minutes < minimum { return false }
+    if let maximum = duration.maximumMinutes, estimate.minutes > maximum { return false }
+    return true
   }
 
   private func listCatalogSnapshot(
@@ -635,7 +672,9 @@ public actor Planner {
     let textTerms = query.text.split(whereSeparator: \.isWhitespace).map(String.init)
     var items = FetchDescriptor<PlannerSchemaV7.Item>(
       predicate: #Predicate { itemIdentifiers.contains($0.id) })
-    if textTerms.isEmpty {
+    if textTerms.isEmpty, query.duration?.minimumMinutes == nil,
+      query.duration?.maximumMinutes == nil
+    {
       items.propertiesToFetch = [\.id, \.lifetimeId, \.title, \.globalDone, \.archived]
     }
     let sources = Dictionary(grouping: try context.fetch(items), by: \.id)
@@ -661,6 +700,7 @@ public actor Planner {
       case .archived: if !item.archived { continue }
       case .all: break
       }
+      if !(try matchesItemDuration(item, duration: query.duration)) { continue }
       if !(try matchesItemText(item, terms: textTerms, locale: locale)) { continue }
       matching.append(
         (

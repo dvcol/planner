@@ -1,0 +1,155 @@
+{
+  "baseCommit": "642c7a0",
+  "seam": "Accepted A21/A22 public Planner Core query/read/execute facade, real local stores and native package runtime. HTTP compatibility uses the actual authenticated loopback adapter and public Core; no mocks or private-store assertions.",
+  "sourceSnapshots": {
+    "MaximumRed": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "b8e2c4dc01f68368daa893c6b586a99485193decf3c89dd4a3f93caaeae7b245",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationQueryTests.swift": "7f65cc7402edfe6b813616e6650d93e588bad65c25ea069c20477b2f343d8dab"
+    },
+    "MaximumGreen": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "58764b1226bc3067ffff24918805969470079a2f9aa72984f579ce70ae7a2cb0",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationQueryTests.swift": "7f65cc7402edfe6b813616e6650d93e588bad65c25ea069c20477b2f343d8dab"
+    },
+    "ListRed": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "58764b1226bc3067ffff24918805969470079a2f9aa72984f579ce70ae7a2cb0",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationQueryTests.swift": "edd87c8c70c34e16401ffd35af4669b1235e935c0160aee24019dfff2b7ad680"
+    },
+    "ListGreen": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "99bce7178cbcf8402e02795d489758e3ec6aab0d17179f7d5a9c960e4eb2f478",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationQueryTests.swift": "edd87c8c70c34e16401ffd35af4669b1235e935c0160aee24019dfff2b7ad680"
+    },
+    "ValidationRed": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "99bce7178cbcf8402e02795d489758e3ec6aab0d17179f7d5a9c960e4eb2f478",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationQueryTests.swift": "fd43d8909f98aa5282db20e2a8edb813bcb091072067fc60cb1f18779820e549"
+    },
+    "ValidationGreen": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1e0238f87b556c2c77893f842d312383b0948e64bca6bfdcaa1fea35806c8a6a",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationQueryTests.swift": "fd43d8909f98aa5282db20e2a8edb813bcb091072067fc60cb1f18779820e549"
+    },
+    "Qualification": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1e0238f87b556c2c77893f842d312383b0948e64bca6bfdcaa1fea35806c8a6a",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationQueryTests.swift": "fd43d8909f98aa5282db20e2a8edb813bcb091072067fc60cb1f18779820e549"
+    }
+  },
+  "commands": {
+    "maximumRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter maximumDurationIsInclusiveAndUnknownEstimatesAreAnExplicitChoice > /private/tmp/PlannerCoreDurationQueryMaximumRed.log 2>&1",
+    "maximumGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter maximumDurationIsInclusiveAndUnknownEstimatesAreAnExplicitChoice > /private/tmp/PlannerCoreDurationQueryMaximumGreen.log 2>&1",
+    "listRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter listDurationRangeNarrowsCumulativelyWithoutChangingFullProgressOrManualOrder > /private/tmp/PlannerCoreDurationQueryListRed.log 2>&1",
+    "listGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter listDurationRangeNarrowsCumulativelyWithoutChangingFullProgressOrManualOrder > /private/tmp/PlannerCoreDurationQueryListGreen.log 2>&1",
+    "validationRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter invalidDurationBoundsRejectTogetherAndExactIntegerQueriesKeepIssuedRowsReadable > /private/tmp/PlannerCoreDurationQueryValidationRed.log 2>&1",
+    "validationGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter invalidDurationBoundsRejectTogetherAndExactIntegerQueriesKeepIssuedRowsReadable > /private/tmp/PlannerCoreDurationQueryValidationGreen.log 2>&1",
+    "qualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter 'ItemDurationQueryTests|ItemEstimateEditTests|ItemQueryTests|ItemTextQueryTests|ItemRowReadTests|MembershipRowTests|MembershipCompletionTests|MembershipReorderingTests|ItemArchiveTests|ItemCompletionTests' > /private/tmp/PlannerCoreDurationQueryQualification.log 2>&1",
+    "httpCompatibility": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter 'ItemTextQueryRoutingTests|CommandRoutingTests|EstimateRoutingTests|QueryRoutingTests|ListCatalogRoutingTests|MembershipRowRoutingTests|MembershipReorderingRoutingTests' > /private/tmp/PlannerCoreDurationQueryHTTPCompatibility.log 2>&1",
+    "macBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerCoreDurationQueryMacBuild.xcresult build-for-testing > /private/tmp/PlannerCoreDurationQueryMacBuild.log 2>&1"
+  },
+  "results": {
+    "MaximumRed": {
+      "exitCode": 1,
+      "executedFunctions": 1,
+      "suites": 1,
+      "outcome": "failed",
+      "issues": 8,
+      "logPath": "/private/tmp/PlannerCoreDurationQueryMaximumRed.log",
+      "logSHA256": "b200a871e08ab389f731ef6cbc5b76161f2b3bfa4ec41f929141ef198c49a17f"
+    },
+    "MaximumGreen": {
+      "exitCode": 0,
+      "executedFunctions": 1,
+      "suites": 1,
+      "outcome": "passed",
+      "issues": 0,
+      "logPath": "/private/tmp/PlannerCoreDurationQueryMaximumGreen.log",
+      "logSHA256": "2611440e17fa833722677b237eb03619c4ff39f7d13b9ebe978d301b544f4153"
+    },
+    "ListRed": {
+      "exitCode": 1,
+      "executedFunctions": 1,
+      "suites": 1,
+      "outcome": "failed",
+      "issues": 9,
+      "logPath": "/private/tmp/PlannerCoreDurationQueryListRed.log",
+      "logSHA256": "7e8d4b2f6131b0c9ecde52722d568928e70ad7d6c2557b865c9931a7f7f0f161"
+    },
+    "ListGreen": {
+      "exitCode": 0,
+      "executedFunctions": 1,
+      "suites": 1,
+      "outcome": "passed",
+      "issues": 0,
+      "logPath": "/private/tmp/PlannerCoreDurationQueryListGreen.log",
+      "logSHA256": "b343894a36b42871fe882838970be2fa755624f71e6d401e57916d3cde33f163"
+    },
+    "ValidationRed": {
+      "exitCode": 1,
+      "executedFunctions": 1,
+      "suites": 1,
+      "outcome": "failed",
+      "issues": 4,
+      "logPath": "/private/tmp/PlannerCoreDurationQueryValidationRed.log",
+      "logSHA256": "5b39bc85b61c30d707a96072aa0c487b4f5b9b1befe11433bbe78814b0473e8c"
+    },
+    "ValidationGreen": {
+      "exitCode": 0,
+      "executedFunctions": 1,
+      "suites": 1,
+      "outcome": "passed",
+      "issues": 0,
+      "logPath": "/private/tmp/PlannerCoreDurationQueryValidationGreen.log",
+      "logSHA256": "f355d4b65422ae13eca7baa3b6fa08cdbe7569bb412e8b907c5c481767ab4be1"
+    },
+    "Qualification": {
+      "exitCode": 0,
+      "executedFunctions": 27,
+      "suites": 10,
+      "outcome": "passed",
+      "issues": 0,
+      "logPath": "/private/tmp/PlannerCoreDurationQueryQualification.log",
+      "logSHA256": "7c8c51fd9ad77c2bdc43f7ec932004e1df5f3fc24a8fecb6aafb2ea375972af8"
+    },
+    "HTTPCompatibility": {
+      "exitCode": 0,
+      "executedFunctions": 17,
+      "suites": 7,
+      "outcome": "passed",
+      "issues": 0,
+      "logPath": "/private/tmp/PlannerCoreDurationQueryHTTPCompatibility.log",
+      "logSHA256": "aae22105fca42e35e34c5392d48dd9e5cbaffbacd0853da5126c150134387a7d"
+    },
+    "MacBuild": {
+      "exitCode": 0,
+      "outcome": "Build succeeded",
+      "executedFunctions": 0,
+      "logPath": "/private/tmp/PlannerCoreDurationQueryMacBuild.log",
+      "logSHA256": "8b803ed295ee6fdae4d3ac0b94a5db79144b7e32024be1f863457040b562cb4e"
+    }
+  },
+  "dependencyRevisions": {
+    "eventsource": "86b5096ac59ab46e66bd1f6377c604bc1dab0bc2",
+    "swift-atomics": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+    "swift-collections": "3b69cedbaa49957e97c092ae400bb57602ef941f",
+    "swift-log": "4038b6a4f74a1426f47eb1dd5b4bb5628a15d597",
+    "swift-nio": "6db9d9abd92ad7399b8a564cafbb87d3507245fa",
+    "swift-sdk": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+    "swift-system": "869129b7bf4ecc57b97d0193ad29690ca2134750"
+  },
+  "classification": "Three executed one-function reds precede unchanged greens. Maximum/unknown Global and Inbox matching fails with eight issues, List/range/cumulative progress with nine, and invalid duration admission with four. Fixed-source qualification passes 27 functions in ten affected Core suites; seventeen existing HTTP functions in seven suites remain compatible. Native Mac app/test build succeeds with zero runtime functions.",
+  "validation": {
+    "swiftLint": "Strict lint passes for all three changed Swift files.",
+    "typeChecking": "Core and native macOS build-for-testing pass.",
+    "diffCheck": "git diff --check passes.",
+    "markdownLint": "Core qualification report passes markdownlint-cli2."
+  },
+  "limits": [
+    "This adds canonical transient queries only; no storage, portable backup, native UI control or MCP duration admission change.",
+    "An omitted/empty duration group is inactive; any nonnegative bound enables matching and explicit Include unknown.",
+    "Native estimate quantity/unit controls remain pending Q48/Q49.",
+    "Shared labels, structured identity groups, other sorts/paging, external native observation, performance/physical CloudKit/Share and earlier prototype gates remain open."
+  ]
+}
