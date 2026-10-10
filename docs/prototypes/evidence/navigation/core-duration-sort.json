@@ -1,0 +1,569 @@
+{
+  "baselineCommit": "f101cda",
+  "seam": "Accepted public Core query/read/execute facade with real local stores, recovery evidence and reopening. No mocks, private store assertions or production injection.",
+  "sourceSnapshots": {
+    "GlobalRed": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerAppliedValues.swift": "7bd92cdaab57c37a778813f84ad492c1c03c07a94d0be4098cf2a809d7247808",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCivilDate.swift": "d8ae4943ef8af8030c13f12af2f93ffb873de32e328a97245b9c05adbed92306",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1e0238f87b556c2c77893f842d312383b0948e64bca6bfdcaa1fea35806c8a6a",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "247a8b9fad5f0692151f8030f3c6f8ff92dae2c0af3034e504a1dc8404594472",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkRecovery.swift": "76e82b80e6be3200a1cc0a9c4eb439094c9085c30939d543dacaaf70cbd60b1b",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkValues.swift": "1d56582bc53cdd9b0e1844269dfed4f441309997f0c6b134a8f64265cae2e5c9",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListRecovery.swift": "77ac9d1b81c6534d3f9fcbf9c8f278008432d0d2a78b4f01fd4b9e1f489e538f",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift": "cc858d8b5901779245572e6b0fbb8a5babbfc1b55cd88895194b838cf5e6c577",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipRecovery.swift": "132e5752b86d01a9038c6404b6d2455335294da8cede1a9673fc9efd43e371ce",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift": "75f90481dee6e5931746acb2c7923154d94e2bfb0a0cbf3b9cdad4b6fbb4e5bc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift": "02a5cdae131a35460b5f29cf928733fba03eb722d24cfb915e144cce01b643a5",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleRecovery.swift": "04cd468445d0110b980aff89b94b1e3f4ca1ff641ce46dc9ecb1eb6518667a22",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "a3393d67c3c5d64042ab504a9010a72e530779a0892abb6ba2043b594a415504",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV2.swift": "efbe703445f557022a2fb25fe40b4cadde725cfaa23c2293864099726e1b5af1",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV3.swift": "16597d7095a886a1736b908877359b110a4d527d6aadb77e4ced5f13cfc9facc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV5.swift": "e2347043ee4c5d0267391e40119d6cc25f463f181c833c9a9c4b3bed0e10f0f6",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV6.swift": "9ec7f806f24a4666d02f9a2b16e94bf10330705b4cd4989cb52792e30757fd83",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV7.swift": "7dce5ff7a8df9a69eaf6f7cdc70d1b19df524b67976889b6669b9f424e6ca398",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "bbdd9f97ffb8eab40c1e8b5db963151fda5dc2d6d9580c3ffc959f29b0e7574e",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift": "f55597673c4bc0deefc7ae5bfa52ae6863d34d0dd770eaf9cd0238d39d267920",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DirectScheduleTests.swift": "3f1148695b499a04cbf62f1807e79f26a3a5e2c2d507e392a8548e389c55282d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemArchiveTests.swift": "748743d255db0613db7ee2e39c03c439afcf83fa31cf8cf416eb39b66c6bf7a2",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCompletionTests.swift": "90622f5f7087eea57a7992a14b57d8bb61102f439749531b8753f9dbe38bc79d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCreationTests.swift": "cce7f91e2a638989d5922168d781e2f51c2f13ee2d5e0d1875a20f00f232ebf8",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationQueryTests.swift": "fd43d8909f98aa5282db20e2a8edb813bcb091072067fc60cb1f18779820e549",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationSortTests.swift": "24e14d8ba2db39cb922de18fca71e4e7c3dc011c51dc42a68101e63578790b4a",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEditTests.swift": "76dc86b75124410f45443170320ac6a774bdb3c91c518102bbce9a48cbc91314",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEstimateEditTests.swift": "f1c13514cfee4b1c5863b497cd027f48a2dda1231bdbeb4a7a9795f310c49dfc",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkEditTests.swift": "1797fb47a943f82ab1f2dcb9dc6a59cc0b653151182c9bfb18dc594d20f8e5fd",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift": "eda2dd044c3c630db41c6f5b7ff0fabcd8cca5d0b78a37d7c99f2217618972bf",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkTests.swift": "4284ec284db6e3e3b269bed171b95d96a66d14df959d22e9790e4bd484f8ad2d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLocationEditTests.swift": "de312ef15e594aa81f18e8344b01095c628eea72c9fac059f6d555babcd7ae31",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemQueryTests.swift": "d78739e8e6a260413d277b785f2c7aa21193e5123740544032099b443b7633f7",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemReferenceReadTests.swift": "cacd8855cacc69426abbf6eb8cd2ef88d9ec85e4a2966ac77ad22cc20b1db022",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemRowReadTests.swift": "1597c7a2480bba06797738d8991d4043fdb35a6c12e7b4f597fc0ee6bb969caa",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemSubtitleEditTests.swift": "95ce0088ba89394c7d2cc4eda0cefc75afdbbb5ba539a649f44a91fba9364066",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemTextQueryTests.swift": "fec0d6e60c9cfbe4243e3e12368b27b27203e41a2a5f0d1cd6d387457a35ab92",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListArchiveTests.swift": "393b5114ef81d5cef09ab39d0936c0998d101beda77d1bfc30a87a2f3683d687",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCatalogTests.swift": "12b21a0a379f892d5714976c77a184e6ddd26471cb29d09596c92364c8802b68",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCreationTests.swift": "694915bb33d1a54ace2b6c0771a0bb0a8f0487f9a69249a414ee7505ae2ad4f2",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListEditTests.swift": "103b7b0d95a9d3945d9a097c9b3766646622f1652b359b4030e5aaf2d7a94c57",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipAppearanceTests.swift": "c7e78a9a5fa0495f896e1c1b5e839b1e6b2b03d3a75e6e4cd98ecf019e00d359",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCompletionTests.swift": "6f81461fab270a43f687eec965a8182f96c3c67a5bf6a5ad61b2aa23fc403425",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift": "0d17ef73650029f0c7b98625af62c6af1c184405693dbe5b4fbf1573957f20f1",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMigrationTests.swift": "a7ee75320b039c22ba06924fd068649ff388e46caad71a11c0c991a2436dedee",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift": "984e7c5b172c2592e5d60537946923723695ed997c6fc01271f8ec7da416c25f",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipReorderingTests.swift": "719ec8cb0dd2a95eb2758d9d4459bee8cf28646e5f0a8a10093df54d67fb412d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRowTests.swift": "72277f8ef9501f600eeda71730067f68d0b3d910e5a443563689cb78c0bb7c5d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoveryFailureTests.swift": "a30332eb67867c9cf240ea22bf58c9d3c9c36f085149ff44b49a9c83a328ac79",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleEditTests.swift": "d00e72c8541f3124da7997a064e7f963ff816ba96f8d3ee8fca115b5138034a5",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleRemovalTests.swift": "c70e40d77fc71f59ab1f9a7f6952c71412482b27e4aef4b5d5e3a3e99c79b157",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleSourceReadTests.swift": "6e2575c710d5a52aa251fa8f6138b01392fbbff32e664316aeb8b015bcb1724e",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleZoneTests.swift": "9f9ab4b11626cccf3f8a3bcc3bd743ad33fa817e3a8c96ca33d8631f31b4d475",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/TestDiscovery.swift": "4a609491daa4c05723f4a184967438edeb6a767a29dd2ddc709859ab373dd765",
+      "Packages/PlannerCore/Tests/PlannerCoreTests/TestDiscovery.swift": "4a609491daa4c05723f4a184967438edeb6a767a29dd2ddc709859ab373dd765"
+    },
+    "GlobalGreen": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerAppliedValues.swift": "7bd92cdaab57c37a778813f84ad492c1c03c07a94d0be4098cf2a809d7247808",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCivilDate.swift": "d8ae4943ef8af8030c13f12af2f93ffb873de32e328a97245b9c05adbed92306",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "03374b35b43fd72514c75de29d8ab2c7fd9b0c21265291bd6b00a1fcb8cd55e5",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "247a8b9fad5f0692151f8030f3c6f8ff92dae2c0af3034e504a1dc8404594472",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkRecovery.swift": "76e82b80e6be3200a1cc0a9c4eb439094c9085c30939d543dacaaf70cbd60b1b",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkValues.swift": "1d56582bc53cdd9b0e1844269dfed4f441309997f0c6b134a8f64265cae2e5c9",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListRecovery.swift": "77ac9d1b81c6534d3f9fcbf9c8f278008432d0d2a78b4f01fd4b9e1f489e538f",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift": "cc858d8b5901779245572e6b0fbb8a5babbfc1b55cd88895194b838cf5e6c577",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipRecovery.swift": "132e5752b86d01a9038c6404b6d2455335294da8cede1a9673fc9efd43e371ce",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift": "75f90481dee6e5931746acb2c7923154d94e2bfb0a0cbf3b9cdad4b6fbb4e5bc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift": "02a5cdae131a35460b5f29cf928733fba03eb722d24cfb915e144cce01b643a5",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleRecovery.swift": "04cd468445d0110b980aff89b94b1e3f4ca1ff641ce46dc9ecb1eb6518667a22",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "a3393d67c3c5d64042ab504a9010a72e530779a0892abb6ba2043b594a415504",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV2.swift": "efbe703445f557022a2fb25fe40b4cadde725cfaa23c2293864099726e1b5af1",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV3.swift": "16597d7095a886a1736b908877359b110a4d527d6aadb77e4ced5f13cfc9facc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV5.swift": "e2347043ee4c5d0267391e40119d6cc25f463f181c833c9a9c4b3bed0e10f0f6",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV6.swift": "9ec7f806f24a4666d02f9a2b16e94bf10330705b4cd4989cb52792e30757fd83",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV7.swift": "7dce5ff7a8df9a69eaf6f7cdc70d1b19df524b67976889b6669b9f424e6ca398",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "bbdd9f97ffb8eab40c1e8b5db963151fda5dc2d6d9580c3ffc959f29b0e7574e",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift": "f55597673c4bc0deefc7ae5bfa52ae6863d34d0dd770eaf9cd0238d39d267920",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DirectScheduleTests.swift": "3f1148695b499a04cbf62f1807e79f26a3a5e2c2d507e392a8548e389c55282d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemArchiveTests.swift": "748743d255db0613db7ee2e39c03c439afcf83fa31cf8cf416eb39b66c6bf7a2",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCompletionTests.swift": "90622f5f7087eea57a7992a14b57d8bb61102f439749531b8753f9dbe38bc79d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCreationTests.swift": "cce7f91e2a638989d5922168d781e2f51c2f13ee2d5e0d1875a20f00f232ebf8",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationQueryTests.swift": "fd43d8909f98aa5282db20e2a8edb813bcb091072067fc60cb1f18779820e549",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationSortTests.swift": "24e14d8ba2db39cb922de18fca71e4e7c3dc011c51dc42a68101e63578790b4a",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEditTests.swift": "76dc86b75124410f45443170320ac6a774bdb3c91c518102bbce9a48cbc91314",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEstimateEditTests.swift": "f1c13514cfee4b1c5863b497cd027f48a2dda1231bdbeb4a7a9795f310c49dfc",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkEditTests.swift": "1797fb47a943f82ab1f2dcb9dc6a59cc0b653151182c9bfb18dc594d20f8e5fd",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift": "eda2dd044c3c630db41c6f5b7ff0fabcd8cca5d0b78a37d7c99f2217618972bf",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkTests.swift": "4284ec284db6e3e3b269bed171b95d96a66d14df959d22e9790e4bd484f8ad2d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLocationEditTests.swift": "de312ef15e594aa81f18e8344b01095c628eea72c9fac059f6d555babcd7ae31",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemQueryTests.swift": "d78739e8e6a260413d277b785f2c7aa21193e5123740544032099b443b7633f7",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemReferenceReadTests.swift": "cacd8855cacc69426abbf6eb8cd2ef88d9ec85e4a2966ac77ad22cc20b1db022",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemRowReadTests.swift": "1597c7a2480bba06797738d8991d4043fdb35a6c12e7b4f597fc0ee6bb969caa",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemSubtitleEditTests.swift": "95ce0088ba89394c7d2cc4eda0cefc75afdbbb5ba539a649f44a91fba9364066",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemTextQueryTests.swift": "fec0d6e60c9cfbe4243e3e12368b27b27203e41a2a5f0d1cd6d387457a35ab92",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListArchiveTests.swift": "393b5114ef81d5cef09ab39d0936c0998d101beda77d1bfc30a87a2f3683d687",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCatalogTests.swift": "12b21a0a379f892d5714976c77a184e6ddd26471cb29d09596c92364c8802b68",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCreationTests.swift": "694915bb33d1a54ace2b6c0771a0bb0a8f0487f9a69249a414ee7505ae2ad4f2",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListEditTests.swift": "103b7b0d95a9d3945d9a097c9b3766646622f1652b359b4030e5aaf2d7a94c57",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipAppearanceTests.swift": "c7e78a9a5fa0495f896e1c1b5e839b1e6b2b03d3a75e6e4cd98ecf019e00d359",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCompletionTests.swift": "6f81461fab270a43f687eec965a8182f96c3c67a5bf6a5ad61b2aa23fc403425",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift": "0d17ef73650029f0c7b98625af62c6af1c184405693dbe5b4fbf1573957f20f1",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMigrationTests.swift": "a7ee75320b039c22ba06924fd068649ff388e46caad71a11c0c991a2436dedee",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift": "984e7c5b172c2592e5d60537946923723695ed997c6fc01271f8ec7da416c25f",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipReorderingTests.swift": "719ec8cb0dd2a95eb2758d9d4459bee8cf28646e5f0a8a10093df54d67fb412d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRowTests.swift": "72277f8ef9501f600eeda71730067f68d0b3d910e5a443563689cb78c0bb7c5d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoveryFailureTests.swift": "a30332eb67867c9cf240ea22bf58c9d3c9c36f085149ff44b49a9c83a328ac79",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleEditTests.swift": "d00e72c8541f3124da7997a064e7f963ff816ba96f8d3ee8fca115b5138034a5",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleRemovalTests.swift": "c70e40d77fc71f59ab1f9a7f6952c71412482b27e4aef4b5d5e3a3e99c79b157",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleSourceReadTests.swift": "6e2575c710d5a52aa251fa8f6138b01392fbbff32e664316aeb8b015bcb1724e",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleZoneTests.swift": "9f9ab4b11626cccf3f8a3bcc3bd743ad33fa817e3a8c96ca33d8631f31b4d475",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/TestDiscovery.swift": "4a609491daa4c05723f4a184967438edeb6a767a29dd2ddc709859ab373dd765",
+      "Packages/PlannerCore/Tests/PlannerCoreTests/TestDiscovery.swift": "4a609491daa4c05723f4a184967438edeb6a767a29dd2ddc709859ab373dd765"
+    },
+    "ListRed": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerAppliedValues.swift": "7bd92cdaab57c37a778813f84ad492c1c03c07a94d0be4098cf2a809d7247808",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCivilDate.swift": "d8ae4943ef8af8030c13f12af2f93ffb873de32e328a97245b9c05adbed92306",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "03374b35b43fd72514c75de29d8ab2c7fd9b0c21265291bd6b00a1fcb8cd55e5",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "247a8b9fad5f0692151f8030f3c6f8ff92dae2c0af3034e504a1dc8404594472",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkRecovery.swift": "76e82b80e6be3200a1cc0a9c4eb439094c9085c30939d543dacaaf70cbd60b1b",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkValues.swift": "1d56582bc53cdd9b0e1844269dfed4f441309997f0c6b134a8f64265cae2e5c9",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListRecovery.swift": "77ac9d1b81c6534d3f9fcbf9c8f278008432d0d2a78b4f01fd4b9e1f489e538f",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift": "cc858d8b5901779245572e6b0fbb8a5babbfc1b55cd88895194b838cf5e6c577",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipRecovery.swift": "132e5752b86d01a9038c6404b6d2455335294da8cede1a9673fc9efd43e371ce",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift": "75f90481dee6e5931746acb2c7923154d94e2bfb0a0cbf3b9cdad4b6fbb4e5bc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift": "02a5cdae131a35460b5f29cf928733fba03eb722d24cfb915e144cce01b643a5",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleRecovery.swift": "04cd468445d0110b980aff89b94b1e3f4ca1ff641ce46dc9ecb1eb6518667a22",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "a3393d67c3c5d64042ab504a9010a72e530779a0892abb6ba2043b594a415504",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV2.swift": "efbe703445f557022a2fb25fe40b4cadde725cfaa23c2293864099726e1b5af1",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV3.swift": "16597d7095a886a1736b908877359b110a4d527d6aadb77e4ced5f13cfc9facc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV5.swift": "e2347043ee4c5d0267391e40119d6cc25f463f181c833c9a9c4b3bed0e10f0f6",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV6.swift": "9ec7f806f24a4666d02f9a2b16e94bf10330705b4cd4989cb52792e30757fd83",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV7.swift": "7dce5ff7a8df9a69eaf6f7cdc70d1b19df524b67976889b6669b9f424e6ca398",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "bbdd9f97ffb8eab40c1e8b5db963151fda5dc2d6d9580c3ffc959f29b0e7574e",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift": "f55597673c4bc0deefc7ae5bfa52ae6863d34d0dd770eaf9cd0238d39d267920",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DirectScheduleTests.swift": "3f1148695b499a04cbf62f1807e79f26a3a5e2c2d507e392a8548e389c55282d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemArchiveTests.swift": "748743d255db0613db7ee2e39c03c439afcf83fa31cf8cf416eb39b66c6bf7a2",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCompletionTests.swift": "90622f5f7087eea57a7992a14b57d8bb61102f439749531b8753f9dbe38bc79d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCreationTests.swift": "cce7f91e2a638989d5922168d781e2f51c2f13ee2d5e0d1875a20f00f232ebf8",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationQueryTests.swift": "fd43d8909f98aa5282db20e2a8edb813bcb091072067fc60cb1f18779820e549",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationSortTests.swift": "5bd645d016fdb77a4d6e1366514a9d12b588689f480898bcedce1e841361ad32",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEditTests.swift": "76dc86b75124410f45443170320ac6a774bdb3c91c518102bbce9a48cbc91314",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEstimateEditTests.swift": "f1c13514cfee4b1c5863b497cd027f48a2dda1231bdbeb4a7a9795f310c49dfc",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkEditTests.swift": "1797fb47a943f82ab1f2dcb9dc6a59cc0b653151182c9bfb18dc594d20f8e5fd",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift": "eda2dd044c3c630db41c6f5b7ff0fabcd8cca5d0b78a37d7c99f2217618972bf",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkTests.swift": "4284ec284db6e3e3b269bed171b95d96a66d14df959d22e9790e4bd484f8ad2d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLocationEditTests.swift": "de312ef15e594aa81f18e8344b01095c628eea72c9fac059f6d555babcd7ae31",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemQueryTests.swift": "d78739e8e6a260413d277b785f2c7aa21193e5123740544032099b443b7633f7",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemReferenceReadTests.swift": "cacd8855cacc69426abbf6eb8cd2ef88d9ec85e4a2966ac77ad22cc20b1db022",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemRowReadTests.swift": "1597c7a2480bba06797738d8991d4043fdb35a6c12e7b4f597fc0ee6bb969caa",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemSubtitleEditTests.swift": "95ce0088ba89394c7d2cc4eda0cefc75afdbbb5ba539a649f44a91fba9364066",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemTextQueryTests.swift": "fec0d6e60c9cfbe4243e3e12368b27b27203e41a2a5f0d1cd6d387457a35ab92",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListArchiveTests.swift": "393b5114ef81d5cef09ab39d0936c0998d101beda77d1bfc30a87a2f3683d687",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCatalogTests.swift": "12b21a0a379f892d5714976c77a184e6ddd26471cb29d09596c92364c8802b68",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCreationTests.swift": "694915bb33d1a54ace2b6c0771a0bb0a8f0487f9a69249a414ee7505ae2ad4f2",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListEditTests.swift": "103b7b0d95a9d3945d9a097c9b3766646622f1652b359b4030e5aaf2d7a94c57",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipAppearanceTests.swift": "c7e78a9a5fa0495f896e1c1b5e839b1e6b2b03d3a75e6e4cd98ecf019e00d359",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCompletionTests.swift": "6f81461fab270a43f687eec965a8182f96c3c67a5bf6a5ad61b2aa23fc403425",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift": "0d17ef73650029f0c7b98625af62c6af1c184405693dbe5b4fbf1573957f20f1",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMigrationTests.swift": "a7ee75320b039c22ba06924fd068649ff388e46caad71a11c0c991a2436dedee",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift": "984e7c5b172c2592e5d60537946923723695ed997c6fc01271f8ec7da416c25f",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipReorderingTests.swift": "719ec8cb0dd2a95eb2758d9d4459bee8cf28646e5f0a8a10093df54d67fb412d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRowTests.swift": "72277f8ef9501f600eeda71730067f68d0b3d910e5a443563689cb78c0bb7c5d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoveryFailureTests.swift": "a30332eb67867c9cf240ea22bf58c9d3c9c36f085149ff44b49a9c83a328ac79",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleEditTests.swift": "d00e72c8541f3124da7997a064e7f963ff816ba96f8d3ee8fca115b5138034a5",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleRemovalTests.swift": "c70e40d77fc71f59ab1f9a7f6952c71412482b27e4aef4b5d5e3a3e99c79b157",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleSourceReadTests.swift": "6e2575c710d5a52aa251fa8f6138b01392fbbff32e664316aeb8b015bcb1724e",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleZoneTests.swift": "9f9ab4b11626cccf3f8a3bcc3bd743ad33fa817e3a8c96ca33d8631f31b4d475",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/TestDiscovery.swift": "4a609491daa4c05723f4a184967438edeb6a767a29dd2ddc709859ab373dd765",
+      "Packages/PlannerCore/Tests/PlannerCoreTests/TestDiscovery.swift": "4a609491daa4c05723f4a184967438edeb6a767a29dd2ddc709859ab373dd765"
+    },
+    "ListGreen": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerAppliedValues.swift": "7bd92cdaab57c37a778813f84ad492c1c03c07a94d0be4098cf2a809d7247808",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCivilDate.swift": "d8ae4943ef8af8030c13f12af2f93ffb873de32e328a97245b9c05adbed92306",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1e742b7ff402aafcb3f43f82d83a12881bad9b065a7aa9a29f01487b581c5a36",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "247a8b9fad5f0692151f8030f3c6f8ff92dae2c0af3034e504a1dc8404594472",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkRecovery.swift": "76e82b80e6be3200a1cc0a9c4eb439094c9085c30939d543dacaaf70cbd60b1b",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkValues.swift": "1d56582bc53cdd9b0e1844269dfed4f441309997f0c6b134a8f64265cae2e5c9",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListRecovery.swift": "77ac9d1b81c6534d3f9fcbf9c8f278008432d0d2a78b4f01fd4b9e1f489e538f",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift": "cc858d8b5901779245572e6b0fbb8a5babbfc1b55cd88895194b838cf5e6c577",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipRecovery.swift": "132e5752b86d01a9038c6404b6d2455335294da8cede1a9673fc9efd43e371ce",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift": "75f90481dee6e5931746acb2c7923154d94e2bfb0a0cbf3b9cdad4b6fbb4e5bc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift": "02a5cdae131a35460b5f29cf928733fba03eb722d24cfb915e144cce01b643a5",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleRecovery.swift": "04cd468445d0110b980aff89b94b1e3f4ca1ff641ce46dc9ecb1eb6518667a22",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "a3393d67c3c5d64042ab504a9010a72e530779a0892abb6ba2043b594a415504",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV2.swift": "efbe703445f557022a2fb25fe40b4cadde725cfaa23c2293864099726e1b5af1",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV3.swift": "16597d7095a886a1736b908877359b110a4d527d6aadb77e4ced5f13cfc9facc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV5.swift": "e2347043ee4c5d0267391e40119d6cc25f463f181c833c9a9c4b3bed0e10f0f6",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV6.swift": "9ec7f806f24a4666d02f9a2b16e94bf10330705b4cd4989cb52792e30757fd83",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV7.swift": "7dce5ff7a8df9a69eaf6f7cdc70d1b19df524b67976889b6669b9f424e6ca398",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "bbdd9f97ffb8eab40c1e8b5db963151fda5dc2d6d9580c3ffc959f29b0e7574e",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift": "f55597673c4bc0deefc7ae5bfa52ae6863d34d0dd770eaf9cd0238d39d267920",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DirectScheduleTests.swift": "3f1148695b499a04cbf62f1807e79f26a3a5e2c2d507e392a8548e389c55282d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemArchiveTests.swift": "748743d255db0613db7ee2e39c03c439afcf83fa31cf8cf416eb39b66c6bf7a2",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCompletionTests.swift": "90622f5f7087eea57a7992a14b57d8bb61102f439749531b8753f9dbe38bc79d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCreationTests.swift": "cce7f91e2a638989d5922168d781e2f51c2f13ee2d5e0d1875a20f00f232ebf8",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationQueryTests.swift": "fd43d8909f98aa5282db20e2a8edb813bcb091072067fc60cb1f18779820e549",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationSortTests.swift": "5bd645d016fdb77a4d6e1366514a9d12b588689f480898bcedce1e841361ad32",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEditTests.swift": "76dc86b75124410f45443170320ac6a774bdb3c91c518102bbce9a48cbc91314",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEstimateEditTests.swift": "f1c13514cfee4b1c5863b497cd027f48a2dda1231bdbeb4a7a9795f310c49dfc",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkEditTests.swift": "1797fb47a943f82ab1f2dcb9dc6a59cc0b653151182c9bfb18dc594d20f8e5fd",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift": "eda2dd044c3c630db41c6f5b7ff0fabcd8cca5d0b78a37d7c99f2217618972bf",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkTests.swift": "4284ec284db6e3e3b269bed171b95d96a66d14df959d22e9790e4bd484f8ad2d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLocationEditTests.swift": "de312ef15e594aa81f18e8344b01095c628eea72c9fac059f6d555babcd7ae31",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemQueryTests.swift": "d78739e8e6a260413d277b785f2c7aa21193e5123740544032099b443b7633f7",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemReferenceReadTests.swift": "cacd8855cacc69426abbf6eb8cd2ef88d9ec85e4a2966ac77ad22cc20b1db022",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemRowReadTests.swift": "1597c7a2480bba06797738d8991d4043fdb35a6c12e7b4f597fc0ee6bb969caa",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemSubtitleEditTests.swift": "95ce0088ba89394c7d2cc4eda0cefc75afdbbb5ba539a649f44a91fba9364066",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemTextQueryTests.swift": "fec0d6e60c9cfbe4243e3e12368b27b27203e41a2a5f0d1cd6d387457a35ab92",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListArchiveTests.swift": "393b5114ef81d5cef09ab39d0936c0998d101beda77d1bfc30a87a2f3683d687",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCatalogTests.swift": "12b21a0a379f892d5714976c77a184e6ddd26471cb29d09596c92364c8802b68",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCreationTests.swift": "694915bb33d1a54ace2b6c0771a0bb0a8f0487f9a69249a414ee7505ae2ad4f2",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListEditTests.swift": "103b7b0d95a9d3945d9a097c9b3766646622f1652b359b4030e5aaf2d7a94c57",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipAppearanceTests.swift": "c7e78a9a5fa0495f896e1c1b5e839b1e6b2b03d3a75e6e4cd98ecf019e00d359",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCompletionTests.swift": "6f81461fab270a43f687eec965a8182f96c3c67a5bf6a5ad61b2aa23fc403425",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift": "0d17ef73650029f0c7b98625af62c6af1c184405693dbe5b4fbf1573957f20f1",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMigrationTests.swift": "a7ee75320b039c22ba06924fd068649ff388e46caad71a11c0c991a2436dedee",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift": "984e7c5b172c2592e5d60537946923723695ed997c6fc01271f8ec7da416c25f",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipReorderingTests.swift": "719ec8cb0dd2a95eb2758d9d4459bee8cf28646e5f0a8a10093df54d67fb412d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRowTests.swift": "72277f8ef9501f600eeda71730067f68d0b3d910e5a443563689cb78c0bb7c5d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoveryFailureTests.swift": "a30332eb67867c9cf240ea22bf58c9d3c9c36f085149ff44b49a9c83a328ac79",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleEditTests.swift": "d00e72c8541f3124da7997a064e7f963ff816ba96f8d3ee8fca115b5138034a5",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleRemovalTests.swift": "c70e40d77fc71f59ab1f9a7f6952c71412482b27e4aef4b5d5e3a3e99c79b157",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleSourceReadTests.swift": "6e2575c710d5a52aa251fa8f6138b01392fbbff32e664316aeb8b015bcb1724e",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleZoneTests.swift": "9f9ab4b11626cccf3f8a3bcc3bd743ad33fa817e3a8c96ca33d8631f31b4d475",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/TestDiscovery.swift": "4a609491daa4c05723f4a184967438edeb6a767a29dd2ddc709859ab373dd765",
+      "Packages/PlannerCore/Tests/PlannerCoreTests/TestDiscovery.swift": "4a609491daa4c05723f4a184967438edeb6a767a29dd2ddc709859ab373dd765"
+    },
+    "Qualification": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerAppliedValues.swift": "7bd92cdaab57c37a778813f84ad492c1c03c07a94d0be4098cf2a809d7247808",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCivilDate.swift": "d8ae4943ef8af8030c13f12af2f93ffb873de32e328a97245b9c05adbed92306",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1e742b7ff402aafcb3f43f82d83a12881bad9b065a7aa9a29f01487b581c5a36",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "247a8b9fad5f0692151f8030f3c6f8ff92dae2c0af3034e504a1dc8404594472",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkRecovery.swift": "76e82b80e6be3200a1cc0a9c4eb439094c9085c30939d543dacaaf70cbd60b1b",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkValues.swift": "1d56582bc53cdd9b0e1844269dfed4f441309997f0c6b134a8f64265cae2e5c9",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListRecovery.swift": "77ac9d1b81c6534d3f9fcbf9c8f278008432d0d2a78b4f01fd4b9e1f489e538f",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift": "cc858d8b5901779245572e6b0fbb8a5babbfc1b55cd88895194b838cf5e6c577",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipRecovery.swift": "132e5752b86d01a9038c6404b6d2455335294da8cede1a9673fc9efd43e371ce",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift": "75f90481dee6e5931746acb2c7923154d94e2bfb0a0cbf3b9cdad4b6fbb4e5bc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift": "02a5cdae131a35460b5f29cf928733fba03eb722d24cfb915e144cce01b643a5",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleRecovery.swift": "04cd468445d0110b980aff89b94b1e3f4ca1ff641ce46dc9ecb1eb6518667a22",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "a3393d67c3c5d64042ab504a9010a72e530779a0892abb6ba2043b594a415504",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV2.swift": "efbe703445f557022a2fb25fe40b4cadde725cfaa23c2293864099726e1b5af1",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV3.swift": "16597d7095a886a1736b908877359b110a4d527d6aadb77e4ced5f13cfc9facc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV5.swift": "e2347043ee4c5d0267391e40119d6cc25f463f181c833c9a9c4b3bed0e10f0f6",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV6.swift": "9ec7f806f24a4666d02f9a2b16e94bf10330705b4cd4989cb52792e30757fd83",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV7.swift": "7dce5ff7a8df9a69eaf6f7cdc70d1b19df524b67976889b6669b9f424e6ca398",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "bbdd9f97ffb8eab40c1e8b5db963151fda5dc2d6d9580c3ffc959f29b0e7574e",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift": "f55597673c4bc0deefc7ae5bfa52ae6863d34d0dd770eaf9cd0238d39d267920",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DirectScheduleTests.swift": "3f1148695b499a04cbf62f1807e79f26a3a5e2c2d507e392a8548e389c55282d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemArchiveTests.swift": "748743d255db0613db7ee2e39c03c439afcf83fa31cf8cf416eb39b66c6bf7a2",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCompletionTests.swift": "90622f5f7087eea57a7992a14b57d8bb61102f439749531b8753f9dbe38bc79d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCreationTests.swift": "cce7f91e2a638989d5922168d781e2f51c2f13ee2d5e0d1875a20f00f232ebf8",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationQueryTests.swift": "fd43d8909f98aa5282db20e2a8edb813bcb091072067fc60cb1f18779820e549",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationSortTests.swift": "5bd645d016fdb77a4d6e1366514a9d12b588689f480898bcedce1e841361ad32",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEditTests.swift": "76dc86b75124410f45443170320ac6a774bdb3c91c518102bbce9a48cbc91314",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEstimateEditTests.swift": "f1c13514cfee4b1c5863b497cd027f48a2dda1231bdbeb4a7a9795f310c49dfc",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkEditTests.swift": "1797fb47a943f82ab1f2dcb9dc6a59cc0b653151182c9bfb18dc594d20f8e5fd",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift": "eda2dd044c3c630db41c6f5b7ff0fabcd8cca5d0b78a37d7c99f2217618972bf",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkTests.swift": "4284ec284db6e3e3b269bed171b95d96a66d14df959d22e9790e4bd484f8ad2d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLocationEditTests.swift": "de312ef15e594aa81f18e8344b01095c628eea72c9fac059f6d555babcd7ae31",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemQueryTests.swift": "d78739e8e6a260413d277b785f2c7aa21193e5123740544032099b443b7633f7",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemReferenceReadTests.swift": "cacd8855cacc69426abbf6eb8cd2ef88d9ec85e4a2966ac77ad22cc20b1db022",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemRowReadTests.swift": "1597c7a2480bba06797738d8991d4043fdb35a6c12e7b4f597fc0ee6bb969caa",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemSubtitleEditTests.swift": "95ce0088ba89394c7d2cc4eda0cefc75afdbbb5ba539a649f44a91fba9364066",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemTextQueryTests.swift": "fec0d6e60c9cfbe4243e3e12368b27b27203e41a2a5f0d1cd6d387457a35ab92",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListArchiveTests.swift": "393b5114ef81d5cef09ab39d0936c0998d101beda77d1bfc30a87a2f3683d687",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCatalogTests.swift": "12b21a0a379f892d5714976c77a184e6ddd26471cb29d09596c92364c8802b68",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCreationTests.swift": "694915bb33d1a54ace2b6c0771a0bb0a8f0487f9a69249a414ee7505ae2ad4f2",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListEditTests.swift": "103b7b0d95a9d3945d9a097c9b3766646622f1652b359b4030e5aaf2d7a94c57",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipAppearanceTests.swift": "c7e78a9a5fa0495f896e1c1b5e839b1e6b2b03d3a75e6e4cd98ecf019e00d359",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCompletionTests.swift": "6f81461fab270a43f687eec965a8182f96c3c67a5bf6a5ad61b2aa23fc403425",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift": "0d17ef73650029f0c7b98625af62c6af1c184405693dbe5b4fbf1573957f20f1",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMigrationTests.swift": "a7ee75320b039c22ba06924fd068649ff388e46caad71a11c0c991a2436dedee",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift": "984e7c5b172c2592e5d60537946923723695ed997c6fc01271f8ec7da416c25f",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipReorderingTests.swift": "719ec8cb0dd2a95eb2758d9d4459bee8cf28646e5f0a8a10093df54d67fb412d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRowTests.swift": "72277f8ef9501f600eeda71730067f68d0b3d910e5a443563689cb78c0bb7c5d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoveryFailureTests.swift": "a30332eb67867c9cf240ea22bf58c9d3c9c36f085149ff44b49a9c83a328ac79",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleEditTests.swift": "d00e72c8541f3124da7997a064e7f963ff816ba96f8d3ee8fca115b5138034a5",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleRemovalTests.swift": "c70e40d77fc71f59ab1f9a7f6952c71412482b27e4aef4b5d5e3a3e99c79b157",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleSourceReadTests.swift": "6e2575c710d5a52aa251fa8f6138b01392fbbff32e664316aeb8b015bcb1724e",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleZoneTests.swift": "9f9ab4b11626cccf3f8a3bcc3bd743ad33fa817e3a8c96ca33d8631f31b4d475",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/TestDiscovery.swift": "4a609491daa4c05723f4a184967438edeb6a767a29dd2ddc709859ab373dd765",
+      "Packages/PlannerCore/Tests/PlannerCoreTests/TestDiscovery.swift": "4a609491daa4c05723f4a184967438edeb6a767a29dd2ddc709859ab373dd765"
+    }
+  },
+  "commands": {
+    "globalRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter durationSortKeepsUnknownLastAndTitleTiesAscendingInBothDirectionsAfterReopen > /private/tmp/PlannerCoreDurationSortGlobalRed.log 2>&1",
+    "globalGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter durationSortKeepsUnknownLastAndTitleTiesAscendingInBothDirectionsAfterReopen > /private/tmp/PlannerCoreDurationSortGlobalGreen.log 2>&1",
+    "listRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter listDurationSortRetainsManualOrderLocalCompletionAndFullProgressAcrossFilters > /private/tmp/PlannerCoreDurationSortListRed.log 2>&1",
+    "listGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter listDurationSortRetainsManualOrderLocalCompletionAndFullProgressAcrossFilters > /private/tmp/PlannerCoreDurationSortListGreen.log 2>&1",
+    "qualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter 'ItemDurationSortTests|ItemDurationQueryTests|ItemEstimateEditTests|ItemQueryTests|ItemTextQueryTests|ItemRowReadTests|MembershipRowTests|MembershipCompletionTests|MembershipReorderingTests|ItemArchiveTests|ItemCompletionTests' > /private/tmp/PlannerCoreDurationSortQualification.log 2>&1",
+    "httpCompatibility": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter 'ItemDurationQueryRoutingTests|ItemTextQueryRoutingTests|CommandRoutingTests|EstimateRoutingTests|QueryRoutingTests|ListCatalogRoutingTests|MembershipRowRoutingTests|MembershipReorderingRoutingTests' > /private/tmp/PlannerCoreDurationSortHTTPCompatibility.log 2>&1",
+    "macBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerCoreDurationSortMacBuild.xcresult build-for-testing > /private/tmp/PlannerCoreDurationSortMacBuild.log 2>&1"
+  },
+  "results": {
+    "globalRed": {
+      "exitCode": 1,
+      "functions": 1,
+      "suites": 1,
+      "issues": 1,
+      "classification": "Declared duration sorting fails to issue a snapshot because the existing public query rejects the sort as unavailable."
+    },
+    "globalGreen": {
+      "exitCode": 0,
+      "functions": 1,
+      "suites": 1,
+      "classification": "Unchanged test proves Global/Inbox ascending/descending sequences, fixed title ties, unknown-last, adjacent large integers, row windows and reopening."
+    },
+    "listRed": {
+      "exitCode": 1,
+      "functions": 1,
+      "suites": 1,
+      "issues": 4,
+      "classification": "Actual List snapshots retain Manual sequence instead of requested duration ordering; saved state assertions continue to run."
+    },
+    "listGreen": {
+      "exitCode": 0,
+      "functions": 1,
+      "suites": 1,
+      "classification": "Unchanged test proves both List directions, cumulative filters, full 2-of-5 progress, local/global precedence and original Manual order after reopening."
+    },
+    "qualification": {
+      "exitCode": 0,
+      "functions": 29,
+      "suites": 11,
+      "newFunctions": 2,
+      "failures": 0,
+      "skips": 0
+    },
+    "httpCompatibility": {
+      "exitCode": 0,
+      "functions": 20,
+      "suites": 8,
+      "classification": "Existing actual HTTP journeys pass. No duration-sort wire journey is executed by this compatibility run."
+    },
+    "macBuild": {
+      "exitCode": 0,
+      "runtimeFunctions": 0,
+      "classification": "Native app and test bundles compile. Mac app-host runtime remains unqualified."
+    }
+  },
+  "logs": {
+    "GlobalRed": {
+      "path": "/private/tmp/PlannerCoreDurationSortGlobalRed.log",
+      "sha256": "d08afcc1140635a82ddb306bac63919fd6bc22eb464ba3c40bb906e886666e1e"
+    },
+    "GlobalGreen": {
+      "path": "/private/tmp/PlannerCoreDurationSortGlobalGreen.log",
+      "sha256": "f600a5c77b1bdacbebe6b00a2d4df59b9140b9a4be1154a4b740b33e11a3a505"
+    },
+    "ListRed": {
+      "path": "/private/tmp/PlannerCoreDurationSortListRed.log",
+      "sha256": "a6264b39b887c5c671115a2bf6e3dfa90e8aae62a493c18db3f6d61a8f28b56e"
+    },
+    "ListGreen": {
+      "path": "/private/tmp/PlannerCoreDurationSortListGreen.log",
+      "sha256": "32395b6d17629ff6b9dd255064f6e368fee47dfb836f4556b1427085806086f0"
+    },
+    "Qualification": {
+      "path": "/private/tmp/PlannerCoreDurationSortQualification.log",
+      "sha256": "1d5437f7fa12fd215a6cceee09bd3ec0a017258e15d28cb096cb133d639add4c"
+    },
+    "HTTPCompatibility": {
+      "path": "/private/tmp/PlannerCoreDurationSortHTTPCompatibility.log",
+      "sha256": "b9674d337a74d19b1ac653a78dc77cc0e417d61cb5ecd5957b7a034ce22231af"
+    },
+    "MacBuild": {
+      "path": "/private/tmp/PlannerCoreDurationSortMacBuild.log",
+      "sha256": "5ba90ebe711f171c12d975ddc3429e52375bb37014706a0135e41ccd26060c2b"
+    }
+  },
+  "runnerDependencies": {
+    "applicationResolved": {
+      "originHash": "34d1fa9a75bd4e992c153939d70c2a220dd2bfe02f65c75be323740fc6d6a538",
+      "pins": [
+        {
+          "identity": "eventsource",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/mattt/eventsource.git",
+          "state": {
+            "revision": "86b5096ac59ab46e66bd1f6377c604bc1dab0bc2",
+            "version": "1.5.1"
+          }
+        },
+        {
+          "identity": "swift-atomics",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-atomics.git",
+          "state": {
+            "revision": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+            "version": "1.3.1"
+          }
+        },
+        {
+          "identity": "swift-collections",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-collections.git",
+          "state": {
+            "revision": "3b69cedbaa49957e97c092ae400bb57602ef941f",
+            "version": "1.7.2"
+          }
+        },
+        {
+          "identity": "swift-log",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-log.git",
+          "state": {
+            "revision": "4038b6a4f74a1426f47eb1dd5b4bb5628a15d597",
+            "version": "1.16.1"
+          }
+        },
+        {
+          "identity": "swift-nio",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-nio.git",
+          "state": {
+            "revision": "6db9d9abd92ad7399b8a564cafbb87d3507245fa",
+            "version": "2.104.0"
+          }
+        },
+        {
+          "identity": "swift-sdk",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/modelcontextprotocol/swift-sdk",
+          "state": {
+            "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+            "version": "0.12.1"
+          }
+        },
+        {
+          "identity": "swift-system",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-system.git",
+          "state": {
+            "revision": "869129b7bf4ecc57b97d0193ad29690ca2134750",
+            "version": "1.8.1"
+          }
+        }
+      ],
+      "version": 3
+    },
+    "temporaryRunnerResolved": {
+      "originHash": "34d1fa9a75bd4e992c153939d70c2a220dd2bfe02f65c75be323740fc6d6a538",
+      "pins": [
+        {
+          "identity": "eventsource",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/mattt/eventsource.git",
+          "state": {
+            "revision": "86b5096ac59ab46e66bd1f6377c604bc1dab0bc2",
+            "version": "1.5.1"
+          }
+        },
+        {
+          "identity": "swift-atomics",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-atomics.git",
+          "state": {
+            "revision": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+            "version": "1.3.1"
+          }
+        },
+        {
+          "identity": "swift-collections",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-collections.git",
+          "state": {
+            "revision": "3b69cedbaa49957e97c092ae400bb57602ef941f",
+            "version": "1.7.2"
+          }
+        },
+        {
+          "identity": "swift-log",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-log.git",
+          "state": {
+            "revision": "4038b6a4f74a1426f47eb1dd5b4bb5628a15d597",
+            "version": "1.16.1"
+          }
+        },
+        {
+          "identity": "swift-nio",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-nio.git",
+          "state": {
+            "revision": "6db9d9abd92ad7399b8a564cafbb87d3507245fa",
+            "version": "2.104.0"
+          }
+        },
+        {
+          "identity": "swift-sdk",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/modelcontextprotocol/swift-sdk",
+          "state": {
+            "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+            "version": "0.12.1"
+          }
+        },
+        {
+          "identity": "swift-system",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-system.git",
+          "state": {
+            "revision": "869129b7bf4ecc57b97d0193ad29690ca2134750",
+            "version": "1.8.1"
+          }
+        }
+      ],
+      "version": 3
+    },
+    "matchedRevisions": 7
+  },
+  "checks": {
+    "strictAffectedSwiftLint": {
+      "exitCode": 0,
+      "files": [
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationSortTests.swift"
+      ]
+    },
+    "whitespace": {
+      "exitCode": 0
+    },
+    "sourcesFixedFromListGreenThroughQualification": true
+  },
+  "limitations": [
+    "Schema 7/portable 1 remain localOnly with CloudKit disabled.",
+    "Created/Last updated sorts remain unavailable in Core.",
+    "MCP advertises only title/Manual sort at this revision; duration sorting needs schema and own wire qualification.",
+    "Native estimate/filter/sort controls, external refresh, shared labels, paging and device performance remain open.",
+    "No signed-client, physical sync/account/Share or Mac native runtime qualification in this slice.",
+    "Administration remains manual."
+  ]
+}
