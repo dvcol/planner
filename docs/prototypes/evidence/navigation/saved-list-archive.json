@@ -1,0 +1,866 @@
+{
+  "feature": "Saved native List Archive/Unarchive and canonical List archive catalog filters",
+  "baseCommit": "975c51c2f8b617e91c8b8c8c21ea0743ef3c0395",
+  "publicSeams": [
+    "Native Planner UI",
+    "Existing Planner Core command/query/read facade"
+  ],
+  "sourceEpochs": {
+    "Red": {
+      "Planner/Scenes/SavedPlannerView.swift": "f197aa5fc9f2f8dc6fc1e7f10691fbc3f7e3e1fc7d195fc884554d5c96fe4814",
+      "Planner/Scenes/SavedPlannerStore.swift": "02833908f1347ad352a0ac9e7d03f96454ac77b9cf82e68ce9678e12faedb11b",
+      "Planner/Scenes/SavedItemFilters.swift": "9bb8c974fba8f325061837bacd5dc5cc3e1f41e063a909515fe43141ec9ce6d2",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "761c3fccce0e1c1cd331be907852606330d9e94a66aae62761c3f3e633ca043e",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "5188d335e9850281b3ee4587e35b387f19ec5621608a9ce2afdc45300e4c3e54"
+    },
+    "Green": {
+      "Planner/Scenes/SavedPlannerView.swift": "5cd417a2aaea1b224def4fdf8bf7193ea18e9efd8bb48b7f0161dadd2e341941",
+      "Planner/Scenes/SavedPlannerStore.swift": "a0a562bebe48923e73c5ec78327d1ff76b2223e7c1d3e5651eaf5f1121cf1951",
+      "Planner/Scenes/SavedItemFilters.swift": "f3a7834c365351539ef6119c41cfa33bb521ef2ae5817c5ac3dc8b4bf102fd2c",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "ca82605c09edbc1620ef8206c30d1a3e49582180886e80416091664e8e9c70ce",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "5188d335e9850281b3ee4587e35b387f19ec5621608a9ce2afdc45300e4c3e54"
+    },
+    "Compact": {
+      "Planner/Scenes/SavedPlannerView.swift": "5cd417a2aaea1b224def4fdf8bf7193ea18e9efd8bb48b7f0161dadd2e341941",
+      "Planner/Scenes/SavedPlannerStore.swift": "a0a562bebe48923e73c5ec78327d1ff76b2223e7c1d3e5651eaf5f1121cf1951",
+      "Planner/Scenes/SavedItemFilters.swift": "a59a8287af21005f2ef43fcf563244c81f914738b67c2103080791bbadbbe0de",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "ca82605c09edbc1620ef8206c30d1a3e49582180886e80416091664e8e9c70ce",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "2de448699c25f3647c2e439cd298d1943971e678d717214d46e2ed1ae6d91378"
+    },
+    "Context": {
+      "Planner/Scenes/SavedPlannerView.swift": "0fc676722476196ee537dea0dadd076c43d0f1f7ee48bef1effbee29823541f3",
+      "Planner/Scenes/SavedPlannerStore.swift": "a0a562bebe48923e73c5ec78327d1ff76b2223e7c1d3e5651eaf5f1121cf1951",
+      "Planner/Scenes/SavedItemFilters.swift": "a59a8287af21005f2ef43fcf563244c81f914738b67c2103080791bbadbbe0de",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "ca82605c09edbc1620ef8206c30d1a3e49582180886e80416091664e8e9c70ce",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "c24d8be7004e00fb55e16993f4e75cb77f355c8d0da3c0603878db8c41b20efd"
+    }
+  },
+  "runs": [
+    {
+      "name": "PhoneRed",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeListArchivePhoneRed.xcresult test > /private/tmp/PlannerNativeListArchivePhoneRed.log 2>&1",
+      "exitCode": 65,
+      "sourceEpoch": "Red",
+      "log": {
+        "path": "/private/tmp/PlannerNativeListArchivePhoneRed.log",
+        "sha256": "bc505e3da61a9c62021507ca25fff70873713068c7f21eb51bcd059d838fe212"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeListArchivePhoneRed.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+              "deviceName": "iPhone 18 Pro",
+              "modelName": "iPhone 18 Pro",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 0,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1791639221.238,
+        "passedTests": 0,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791639128.002,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedAppearanceJourneyTests/testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch",
+            "testName": "testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch()"
+          }
+        ],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "summarySha256": "aaf8cd9948a166f43f184bac6bde3dd8dbd74659abf8c37a6fa86c080183e6c9",
+      "runtimeFunctionCount": 1,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch]",
+          "failed",
+          "85.339 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [
+        "/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/SavedAppearanceJourneyTests.swift:36: error: -[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch] : XCTAssertTrue failed",
+        " xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH"
+      ],
+      "animationWaitsFromLog": []
+    },
+    {
+      "name": "Core",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter 'ListArchiveTests|ListCatalogTests.listCatalogRetainsDuplicateNamesAndExactIdentityThroughSearchArchiveRenameAndReopen' > /private/tmp/PlannerNativeListArchiveCore.log 2>&1",
+      "exitCode": 0,
+      "sourceEpoch": "base",
+      "log": {
+        "path": "/private/tmp/PlannerNativeListArchiveCore.log",
+        "sha256": "19e7026c463349a15b95d5d8a5ae4873f96f6e374ae9d1f40ce6825db50b8c8b"
+      },
+      "executedFunctions": 3,
+      "suiteCount": 2,
+      "result": "Passed"
+    },
+    {
+      "name": "PhoneGreen",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeListArchivePhoneGreen.xcresult test > /private/tmp/PlannerNativeListArchivePhoneGreen.log 2>&1",
+      "exitCode": 65,
+      "sourceEpoch": "Green",
+      "log": {
+        "path": "/private/tmp/PlannerNativeListArchivePhoneGreen.log",
+        "sha256": "ccbeb7c398a231b77cbe55d2bfc93beb8492b552c8212c7fa4b4f75f8d62a039"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeListArchivePhoneGreen.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+              "deviceName": "iPhone 18 Pro",
+              "modelName": "iPhone 18 Pro",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 0,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1791639439.39,
+        "passedTests": 0,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791639298.704,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedAppearanceJourneyTests/testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch",
+            "testName": "testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch()"
+          }
+        ],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "summarySha256": "e85fba6a25b2060a743b2f9f1afe4b4af4ad7a8e202a9c8a5afa4123243ec044",
+      "runtimeFunctionCount": 1,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch]",
+          "failed",
+          "130.054 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [
+        "/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/SavedAppearanceJourneyTests.swift:67: error: -[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch] : XCTAssertTrue failed",
+        " xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH"
+      ],
+      "animationWaitsFromLog": []
+    },
+    {
+      "name": "TabletGreen",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeListArchiveTabletGreen.xcresult test > /private/tmp/PlannerNativeListArchiveTabletGreen.log 2>&1",
+      "exitCode": 65,
+      "sourceEpoch": "Green",
+      "log": {
+        "path": "/private/tmp/PlannerNativeListArchiveTabletGreen.log",
+        "sha256": "7550565ee84c0ad4c8b12b98b4c8323e8b0af1c6b693f57417faec14b907aff8"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeListArchiveTabletGreen.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+              "deviceName": "iPad Air 11-inch (M4)",
+              "modelName": "iPad Air 11-inch (M4)",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 0,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1791639366.561,
+        "passedTests": 0,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791639314.313,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedAppearanceJourneyTests/testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch",
+            "testName": "testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch()"
+          }
+        ],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "summarySha256": "6d1790573306b9b8a93ff8a34fbea199386a5b67321dd488b9b83aab6b9a88a4",
+      "runtimeFunctionCount": 1,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch]",
+          "failed",
+          "40.395 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [
+        "/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/SavedAppearanceJourneyTests.swift:1653: error: -[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch] : XCTAssertTrue failed",
+        " xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH"
+      ],
+      "animationWaitsFromLog": []
+    },
+    {
+      "name": "MacBuild",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeListArchiveMacBuild.xcresult build-for-testing > /private/tmp/PlannerNativeListArchiveMacBuild.log 2>&1",
+      "exitCode": 0,
+      "sourceEpoch": "Green",
+      "log": {
+        "path": "/private/tmp/PlannerNativeListArchiveMacBuild.log",
+        "sha256": "8b895a3847f7bb169d1cd877bad65c9870a163cf7fd085a8cdd43982d0666d6e"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeListArchiveMacBuild.xcresult",
+      "summary": {
+        "actionTitle": "Build for Testing \"PlannerNavigation\"",
+        "analyzerWarningCount": 0,
+        "analyzerWarnings": [],
+        "destination": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "endTime": 1791639344.086,
+        "errorCount": 0,
+        "errors": [],
+        "startTime": 1791639329.246,
+        "status": "succeeded",
+        "warningCount": 0,
+        "warnings": []
+      },
+      "summarySha256": "e083a83b4923578bf839e3674f72775d080fc89a22e05d8394bf76c0354c3c44",
+      "runtimeFunctionCount": 0,
+      "caseOutcomesFromLog": [],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 22:35:42.616 appintentsmetadataprocessor[94184:17182510] warning: Metadata extraction skipped, no AppIntents.framework dependency found",
+        "2026-10-10 22:35:44.019 appintentsmetadataprocessor[94224:17182771] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "name": "PhoneCompact",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeListArchivePhoneCompact.xcresult test > /private/tmp/PlannerNativeListArchivePhoneCompact.log 2>&1",
+      "exitCode": 0,
+      "sourceEpoch": "Compact",
+      "log": {
+        "path": "/private/tmp/PlannerNativeListArchivePhoneCompact.log",
+        "sha256": "066483ec03addff1fc2e849543162fe530384bd37ad0979b546c6ceb64f14635"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeListArchivePhoneCompact.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+              "deviceName": "iPhone 18 Pro",
+              "modelName": "iPhone 18 Pro",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 1,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791639641.43,
+        "passedTests": 1,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791639464.599,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "summarySha256": "61f45a47660b9478b840703085dfcaab51224b3aab625da315ea822fe18497d0",
+      "runtimeFunctionCount": 1,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch]",
+          "passed",
+          "167.305 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": []
+    },
+    {
+      "name": "TabletCompact",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeListArchiveTabletCompact.xcresult test > /private/tmp/PlannerNativeListArchiveTabletCompact.log 2>&1",
+      "exitCode": 65,
+      "sourceEpoch": "Compact",
+      "log": {
+        "path": "/private/tmp/PlannerNativeListArchiveTabletCompact.log",
+        "sha256": "c7cc3cb596d788c11f506bb86a18b3fa4267de5323fa6a0dce8142b9986ebb63"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeListArchiveTabletCompact.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+              "deviceName": "iPad Air 11-inch (M4)",
+              "modelName": "iPad Air 11-inch (M4)",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 0,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1791639517.771,
+        "passedTests": 0,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791639467.616,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "Failed to tap \"saved.list.add\" Button: No matches found for Elements matching predicate '\"saved.list.add\" IN identifiers' from input {(\n    Button, identifier: 'list.bullet', label: 'Lists', Selected,\n    Button, identifier: 'square.stack', label: 'Items',\n    Button, identifier: 'tray', label: 'Inbox',\n    Button, identifier: 'list.bullet', label: 'Lists', Selected,\n    Button, identifier: 'square.stack', label: 'Items',\n    Button, identifier: 'tray', label: 'Inbox',\n    Button, label: 'Show Sidebar',\n    Button, identifier: 'saved.list.actions', label: 'List actions',\n    Button, identifier: 'saved.list.sort', label: 'Sort: Manual',\n    Button, identifier: 'OverflowBarButtonItem', label: 'More',\n    Button, identifier: 'saved.list.filters', label: 'All',\n    Button\n)}\nPossibly caused by runtime issues:\nAutomation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 75;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeTraits\" = 146297323528;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Other from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 0;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeTraits\" = 8858370056;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 75;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeTraits\" = 146297323520;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Other from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 0;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeTraits\" = 8858370048;\n}\nAutomation type mismatch: computed Button from legacy attributes vs PopUpButton from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 14;\n    \"XC_kAXXCAttributeElementBaseType\" = NSObject;\n    \"XC_kAXXCAttributeElementType\" = \"SwiftUI.AccessibilityNode\";\n    \"XC_kAXXCAttributeTraits\" = 1108101562369;\n}\nSee test report attachments for more detail.",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedAppearanceJourneyTests/testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch",
+            "testName": "testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch()"
+          }
+        ],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "summarySha256": "ffe6f2808eca8368df534214768597997b5306aeb61c9eab51eb15904f3ccee0",
+      "runtimeFunctionCount": 1,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch]",
+          "failed",
+          "40.215 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [
+        "/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/NativeNavigationElements.swift:164: error: -[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch] : Failed to tap \"saved.list.add\" Button: No matches found for Elements matching predicate '\"saved.list.add\" IN identifiers' from input {(",
+        " xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH"
+      ],
+      "animationWaitsFromLog": []
+    },
+    {
+      "name": "PhoneContext",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeListArchivePhoneContext.xcresult test > /private/tmp/PlannerNativeListArchivePhoneContext.log 2>&1",
+      "exitCode": 0,
+      "sourceEpoch": "Context",
+      "log": {
+        "path": "/private/tmp/PlannerNativeListArchivePhoneContext.log",
+        "sha256": "84e0990d6337b9ede75a6c960c4188ce9ac71bbd3fefec7fc43cbe3124f13ebb"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeListArchivePhoneContext.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+              "deviceName": "iPhone 18 Pro",
+              "modelName": "iPhone 18 Pro",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 1,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791639909.358,
+        "passedTests": 1,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791639697.871,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "summarySha256": "fb6203b1f2cbafc5e60217a1deafd2331b16266005bc39083528639be67ef7b8",
+      "runtimeFunctionCount": 1,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch]",
+          "passed",
+          "199.468 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": []
+    },
+    {
+      "name": "TabletContext",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeListArchiveTabletContext.xcresult test > /private/tmp/PlannerNativeListArchiveTabletContext.log 2>&1",
+      "exitCode": 0,
+      "sourceEpoch": "Context",
+      "log": {
+        "path": "/private/tmp/PlannerNativeListArchiveTabletContext.log",
+        "sha256": "7583bc3c54d639fdfd025bc34d579f19aee2159cdbd3fb5fc43a83aa24484da3"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeListArchiveTabletContext.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+              "deviceName": "iPad Air 11-inch (M4)",
+              "modelName": "iPad Air 11-inch (M4)",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 1,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791639925.693,
+        "passedTests": 1,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791639699.413,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "summarySha256": "88bc58e28efbe21a1cd56e5a432d2ea84cce7e937de22d4b62bc21bd585af041",
+      "runtimeFunctionCount": 1,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch]",
+          "passed",
+          "215.161 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": []
+    },
+    {
+      "name": "MacFinal",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeListArchiveMacFinal.xcresult build-for-testing > /private/tmp/PlannerNativeListArchiveMacFinal.log 2>&1",
+      "exitCode": 0,
+      "sourceEpoch": "Context",
+      "log": {
+        "path": "/private/tmp/PlannerNativeListArchiveMacFinal.log",
+        "sha256": "4e393d16d377ea01ef9871dae6039a420b2f3388afafd13b079361939fce0ca3"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeListArchiveMacFinal.xcresult",
+      "summary": {
+        "actionTitle": "Build for Testing \"PlannerNavigation\"",
+        "analyzerWarningCount": 0,
+        "analyzerWarnings": [],
+        "destination": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "endTime": 1791639746.787,
+        "errorCount": 0,
+        "errors": [],
+        "startTime": 1791639739.031,
+        "status": "succeeded",
+        "warningCount": 0,
+        "warnings": []
+      },
+      "summarySha256": "c5fb3e591732c595a951d362da1e59a2ad155279f4b56272cb5cb8d32d20fb6f",
+      "runtimeFunctionCount": 0,
+      "caseOutcomesFromLog": [],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 22:42:25.160 appintentsmetadataprocessor[2163:17220784] warning: Metadata extraction skipped, no AppIntents.framework dependency found",
+        "2026-10-10 22:42:26.717 appintentsmetadataprocessor[2209:17221064] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "name": "PhoneRegressions",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedListJourneyTests/testListDraftCancellationAndCreationRemainDistinctAfterNativeRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters -resultBundlePath /private/tmp/PlannerNativeListArchivePhoneRegressions.xcresult test > /private/tmp/PlannerNativeListArchivePhoneRegressions.log 2>&1",
+      "exitCode": 0,
+      "sourceEpoch": "Context",
+      "log": {
+        "path": "/private/tmp/PlannerNativeListArchivePhoneRegressions.log",
+        "sha256": "46743b8de0a487284abba0c68df5e533d79d88b842c8e7e2b3334b6c8dc007fe"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeListArchivePhoneRegressions.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+              "deviceName": "iPhone 18 Pro",
+              "modelName": "iPhone 18 Pro",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 2,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791640082.99,
+        "passedTests": 2,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791639938.025,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 2
+      },
+      "summarySha256": "e0e91bb0e29b12b32193b651c35bc2635e272f3ad000495b5446e9f814b9d829",
+      "runtimeFunctionCount": 2,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters]",
+          "passed",
+          "111.972 seconds"
+        ],
+        [
+          "-[PlannerNavigationUITests.SavedListJourneyTests testListDraftCancellationAndCreationRemainDistinctAfterNativeRelaunch]",
+          "passed",
+          "26.866 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": []
+    },
+    {
+      "name": "TabletRegressions",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedListJourneyTests/testListDraftCancellationAndCreationRemainDistinctAfterNativeRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters -resultBundlePath /private/tmp/PlannerNativeListArchiveTabletRegressions.xcresult test > /private/tmp/PlannerNativeListArchiveTabletRegressions.log 2>&1",
+      "exitCode": 0,
+      "sourceEpoch": "Context",
+      "log": {
+        "path": "/private/tmp/PlannerNativeListArchiveTabletRegressions.log",
+        "sha256": "78466861cacf1873cf7dce4fb7f3e20512dcd6f8dd6d276052895c5f95a11d8e"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeListArchiveTabletRegressions.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+              "deviceName": "iPad Air 11-inch (M4)",
+              "modelName": "iPad Air 11-inch (M4)",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 2,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791640527.33,
+        "passedTests": 2,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791639957.391,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 2
+      },
+      "summarySha256": "653261ba3d68a4375ad4f4739c36d50aec9a85652d80d4870ab92a6bd7dc8771",
+      "runtimeFunctionCount": 2,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters]",
+          "passed",
+          "526.911 seconds"
+        ],
+        [
+          "-[PlannerNavigationUITests.SavedListJourneyTests testListDraftCancellationAndCreationRemainDistinctAfterNativeRelaunch]",
+          "passed",
+          "36.269 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": [
+        "    t =   157.60s App animations complete notification not received, will attempt to continue.",
+        "    t =   217.82s App animations complete notification not received, will attempt to continue.",
+        "    t =   279.30s App animations complete notification not received, will attempt to continue.",
+        "    t =   340.44s App animations complete notification not received, will attempt to continue.",
+        "    t =   400.94s App animations complete notification not received, will attempt to continue.",
+        "    t =   460.97s App animations complete notification not received, will attempt to continue.",
+        "    t =   521.46s App animations complete notification not received, will attempt to continue."
+      ]
+    }
+  ],
+  "captures": [
+    {
+      "device": "Phone",
+      "originalPath": "/private/tmp/PlannerNativeListArchivePhoneContextCaptures/838196F7-7D5A-4549-A817-894651649739.png",
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-list-archive-reopened.png",
+      "sha256": "d0ce874cc06282a2887c711188192a0f46e200fae27e9c8897b09477e00b45c1",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "838196F7-7D5A-4549-A817-894651649739.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Unarchived List preserves contextual completion after relaunch_0_97E4CFA8-9973-4940-B282-DC66EA397A0B.png",
+        "timestamp": 1791639908.752
+      },
+      "visualReview": "Inspected original: expected native archive status, item order/progress or archived/active catalog composition visible."
+    },
+    {
+      "device": "Phone",
+      "originalPath": "/private/tmp/PlannerNativeListArchivePhoneContextCaptures/F016AD62-0A7C-4A6B-BBCF-489F3CDAED73.png",
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-list-archive-all.png",
+      "sha256": "49c34e23bc51657a26ff2df0a61b5e39c5ee057b5b440c16b7a629f4f58b71b3",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "F016AD62-0A7C-4A6B-BBCF-489F3CDAED73.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "All Lists filter includes archived and active containers_0_88B886E7-6FD2-4185-8BA3-15A735AFE4DF.png",
+        "timestamp": 1791639835.839
+      },
+      "visualReview": "Inspected original: expected native archive status, item order/progress or archived/active catalog composition visible."
+    },
+    {
+      "device": "Phone",
+      "originalPath": "/private/tmp/PlannerNativeListArchivePhoneContextCaptures/275C8D6A-9902-4D4D-BC6D-9182B5A82A9D.png",
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-list-archive-archived.png",
+      "sha256": "ae44cc4e2c073e391d511681abb1a057992188c950b9c9475f0c0070a5f42e46",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "275C8D6A-9902-4D4D-BC6D-9182B5A82A9D.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Archived List retains saved order and contextual progress_0_72A8AF69-AE85-45BE-8654-E9BC537B7CA1.png",
+        "timestamp": 1791639822.286
+      },
+      "visualReview": "Inspected original: expected native archive status, item order/progress or archived/active catalog composition visible."
+    },
+    {
+      "device": "Tablet",
+      "originalPath": "/private/tmp/PlannerNativeListArchiveTabletContextCaptures/5EBCE19B-6438-4D85-AEE5-11BE54A53504.png",
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-list-archive-reopened.png",
+      "sha256": "01830a66e35bb0da670674e55732e792027eebddfa7b1bdfed26825c11ae5ca3",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "5EBCE19B-6438-4D85-AEE5-11BE54A53504.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Unarchived List preserves contextual completion after relaunch_0_A539E010-FFF1-41AB-8CC5-6E9FBEB3F620.png",
+        "timestamp": 1791639925.068
+      },
+      "visualReview": "Inspected original: expected native archive status, item order/progress or archived/active catalog composition visible."
+    },
+    {
+      "device": "Tablet",
+      "originalPath": "/private/tmp/PlannerNativeListArchiveTabletContextCaptures/EC93AB03-C764-40D0-903A-84D5E2261B80.png",
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-list-archive-all.png",
+      "sha256": "2ae3eb0182f5db60dc1953b7e0d7e2713c414b9368b064f11324f00b656a9fb5",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "EC93AB03-C764-40D0-903A-84D5E2261B80.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "All Lists filter includes archived and active containers_0_54AC29EC-9B4B-419F-925F-0FC664F85815.png",
+        "timestamp": 1791639848.172
+      },
+      "visualReview": "Inspected original: expected native archive status, item order/progress or archived/active catalog composition visible."
+    },
+    {
+      "device": "Tablet",
+      "originalPath": "/private/tmp/PlannerNativeListArchiveTabletContextCaptures/28701C88-38F4-456A-A700-637D35E9DB04.png",
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-list-archive-archived.png",
+      "sha256": "3fd55864cccef0edc1c14df5b29b6a10f17347473d56b720b5d7d643755713f8",
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "28701C88-38F4-456A-A700-637D35E9DB04.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Archived List retains saved order and contextual progress_0_B060420A-A706-4724-9530-F52920FFD5DC.png",
+        "timestamp": 1791639834.718
+      },
+      "visualReview": "Inspected original: expected native archive status, item order/progress or archived/active catalog composition visible."
+    }
+  ],
+  "finalBehavior": {
+    "nativeActions": "Long press/right click the List in the sidebar context menu.",
+    "listCatalog": "Active by default; Archived or All reveals archived List identities.",
+    "preservation": "Tokyo retains Zulu then Alpha, the same membership identities and 1/2 progress; Wishlist Zulu and global Zulu remain Todo and the source remains active.",
+    "relaunch": "Archive persists; catalog visibility resets to Active; Unarchive preserves order and local completion.",
+    "coreChange": "No PlannerCore changes from the base commit.",
+    "schemaChange": false
+  },
+  "historicalCorrections": [
+    "Initial red reaches the missing content-toolbar List actions control.",
+    "First iPhone green fails because its test queries the global Toggle as a Button. The query is corrected to the existing native accessibility boundary.",
+    "First iPad green cannot reach New List because the long sidebar filter label overflows. The visible label is shortened while retaining the full accessibility label.",
+    "Compact iPhone passes. Compact iPad finds that the new content-toolbar List actions control displaces Add Item.",
+    "The final UI uses the sidebar context menu and removes the redundant content-toolbar action. Both final archive journeys pass."
+  ],
+  "visualReview": {
+    "originalsInspected": 6,
+    "findings": [
+      "Archive status and the unchanged 1/2 ProgressView appear with Zulu then Alpha.",
+      "All Lists includes archived Tokyo with an archive icon and active Wishlist.",
+      "After relaunch and Unarchive the two memberships, order and completion remain intact.",
+      "The iPad sidebar title truncates at this width; the archive header uses subdued secondary text. Resizing and contrast/human review remain open in the native polish gate."
+    ]
+  },
+  "checks": {
+    "affectedStrictSwiftFormatLint": "passed",
+    "affectedAppAndUITestTypeChecking": "passed through simulator builds and final Mac build-for-testing",
+    "whitespace": "passed",
+    "affectedMarkdownLint": "passed with zero issues"
+  },
+  "limitations": [
+    "Final archive journeys and affected regressions run separately; three functions qualify per simulator across those runs.",
+    "Mac builds execute zero runtime functions; the previous Mac runtime startup gate remains open.",
+    "Physical CloudKit/account, concurrent external writer, recovery-failure UI, full accessibility, keyboard, resizing and human review remain open.",
+    "Saved Itinerary archive and reviewed bulk completion remain separate unfinished work."
+  ]
+}

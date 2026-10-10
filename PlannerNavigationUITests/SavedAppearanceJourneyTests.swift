@@ -2,6 +2,104 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func
+    testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch()
+    throws
+  {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application, title: "Zulu")
+    createItem(application, title: "Alpha")
+    createList("Tokyo", application: application)
+    addItem(application, title: "Zulu")
+    addItem(application, title: "Alpha")
+    createList("Wishlist", application: application)
+    addItem(application, title: "Zulu")
+    let tokyo = application.savedPlannerListRow("Tokyo")
+    revealSidebarIfNeeded(application, element: tokyo)
+    let tokyoIdentifier = tokyo.identifier
+    openList("Tokyo", itemTitle: "Zulu", application: application)
+    let zulu = application.savedPlannerItemRows("Zulu").firstMatch
+    let alpha = application.savedPlannerItemRows("Alpha").firstMatch
+    let zuluIdentifier = zulu.identifier
+    let alphaIdentifier = alpha.identifier
+    let completion = application.buttons[
+      zuluIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    completion.activateForPlannerJourney()
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(0.5, application: application)
+    assertItemOrder(["Zulu", "Alpha"], application: application)
+    let filters = application.plannerElement("saved.lists.archive")
+    revealSidebarIfNeeded(application, element: filters)
+    openListContextMenu(tokyo)
+    application.plannerElement("Archive List").activateForPlannerJourney()
+    XCTAssertEqual(filters.label, "Active Lists")
+    XCTAssertTrue(application.plannerElement(tokyoIdentifier).waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.savedPlannerListRow("Wishlist").exists)
+    chooseFilter("Archived Lists", menu: filters, application: application)
+    let archivedTokyo = application.savedPlannerListRow("Tokyo")
+    XCTAssertTrue(archivedTokyo.waitForExistence(timeout: 10))
+    XCTAssertEqual(archivedTokyo.identifier, tokyoIdentifier)
+    XCTAssertTrue(archivedTokyo.waitForPlannerValue("Archived"))
+    XCTAssertFalse(application.savedPlannerListRow("Wishlist").exists)
+    openList("Tokyo", itemTitle: "Zulu", application: application)
+    XCTAssertTrue(application.staticTexts["Archived List"].waitForExistence(timeout: 10))
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    XCTAssertEqual(alpha.identifier, alphaIdentifier)
+    assertProgress(0.5, application: application)
+    assertItemOrder(["Zulu", "Alpha"], application: application)
+    recordScreenshot(application, name: "Archived List retains saved order and contextual progress")
+    revealSidebarIfNeeded(application, element: filters)
+    chooseFilter("All Lists", menu: filters, application: application)
+    XCTAssertTrue(archivedTokyo.waitForExistence(timeout: 10))
+    XCTAssertTrue(application.savedPlannerListRow("Wishlist").waitForExistence(timeout: 10))
+    recordScreenshot(application, name: "All Lists filter includes archived and active containers")
+
+    openList("Wishlist", itemTitle: "Zulu", application: application)
+    let otherCompletion = application.buttons[
+      application.savedPlannerItemRows("Zulu").firstMatch.identifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    XCTAssertTrue(otherCompletion.waitForPlannerValue("To do"))
+    viewGlobalItem(application, itemTitle: "Zulu")
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    XCTAssertFalse(application.staticTexts["Archived"].exists)
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    revealSidebarIfNeeded(application, element: filters)
+    XCTAssertEqual(filters.label, "Active Lists")
+    XCTAssertFalse(application.plannerElement(tokyoIdentifier).exists)
+    XCTAssertTrue(application.savedPlannerListRow("Wishlist").exists)
+    chooseFilter("Archived Lists", menu: filters, application: application)
+    XCTAssertTrue(application.plannerElement(tokyoIdentifier).waitForExistence(timeout: 10))
+    openList("Tokyo", itemTitle: "Zulu", application: application)
+    XCTAssertEqual(application.savedPlannerItemRows("Zulu").firstMatch.identifier, zuluIdentifier)
+    XCTAssertEqual(application.savedPlannerItemRows("Alpha").firstMatch.identifier, alphaIdentifier)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(0.5, application: application)
+    assertItemOrder(["Zulu", "Alpha"], application: application)
+    revealSidebarIfNeeded(application, element: filters)
+    openListContextMenu(application.plannerElement(tokyoIdentifier))
+    application.plannerElement("Unarchive List").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement(tokyoIdentifier).waitForNonExistence(timeout: 10))
+    chooseFilter("Active Lists", menu: filters, application: application)
+    XCTAssertTrue(application.plannerElement(tokyoIdentifier).waitForExistence(timeout: 10))
+    XCTAssertTrue(application.savedPlannerListRow("Wishlist").exists)
+    openList("Tokyo", itemTitle: "Zulu", application: application)
+    XCTAssertTrue(application.staticTexts["Archived List"].waitForNonExistence(timeout: 10))
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(0.5, application: application)
+    assertItemOrder(["Zulu", "Alpha"], application: application)
+    recordScreenshot(
+      application, name: "Unarchived List preserves contextual completion after relaunch")
+  }
+
   func testNativeCatalogTabsRemainAvailableAfterClearingInboxSearch() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -1446,6 +1544,15 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     let option = application.plannerElement(title)
     XCTAssertTrue(option.waitForExistence(timeout: 5))
     option.activateForPlannerJourney()
+  }
+
+  private func openListContextMenu(_ list: XCUIElement) {
+    XCTAssertTrue(list.waitForPlannerHittability())
+    #if os(macOS)
+      list.rightClick()
+    #else
+      list.press(forDuration: 1)
+    #endif
   }
 
   private func chooseFilter(

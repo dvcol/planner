@@ -65,14 +65,42 @@ struct SavedItemFilterMenu: View {
   }
 }
 
+struct SavedListArchiveFilterMenu: View {
+  @Binding var archive: SavedItemFilters.Archive
+
+  private var title: String {
+    archive == .all ? "All Lists" : "\(archive.rawValue.capitalized) Lists"
+  }
+
+  var body: some View {
+    Menu {
+      Picker("Archive", selection: $archive) {
+        Text("Active Lists").tag(SavedItemFilters.Archive.active)
+        Text("Archived Lists").tag(SavedItemFilters.Archive.archived)
+        Text("All Lists").tag(SavedItemFilters.Archive.all)
+      }
+      .pickerStyle(.inline)
+    } label: {
+      Text(archive.rawValue.capitalized).fixedSize(horizontal: true, vertical: false)
+    }
+    .accessibilityLabel(title)
+    .accessibilityIdentifier("saved.lists.archive")
+    .help("Show \(title.lowercased())")
+  }
+}
+
 struct SavedListProgress: View {
   let progress: PlannerContainerProgress
   let matchingCount: Int
+  var isArchived = false
 
   var body: some View {
-    if let done = progress.doneCount, let total = progress.totalCount, total > 0 {
-      let unit = total == 1 ? "item" : "items"
-      VStack(alignment: .leading, spacing: 6) {
+    VStack(alignment: .leading, spacing: 6) {
+      if isArchived {
+        Label("Archived List", systemImage: "archivebox").foregroundStyle(.secondary)
+      }
+      if let done = progress.doneCount, let total = progress.totalCount, total > 0 {
+        let unit = total == 1 ? "item" : "items"
         ProgressView(value: Double(done), total: Double(total)) {
           Text("\(done) of \(total) \(unit) done")
         }

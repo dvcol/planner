@@ -20,6 +20,9 @@ struct SavedPlannerView: View {
   @State private var listSearchText = ""
   @State private var isOpeningList = false
   @State private var showNewList = false
+  @State private var listCatalog: [SavedPlannerList]?
+  @State private var listCatalogArchive = SavedItemFilters.Archive.active
+  @State private var isOpeningListCatalog = false
   @State private var showNewItem = false
   @State private var showAddItem = false
   @State private var selectedItemId: UUID?
@@ -63,11 +66,14 @@ struct SavedPlannerView: View {
     }
     .task { await store.open() }
     .task(id: store.isReady) { await loadCatalogItems() }
+    .task(id: store.isReady) { await loadListCatalog() }
+    .task(id: listCatalogArchive) { await loadListCatalog() }
     .task(id: catalogScope) { await loadCatalogItems() }
     .task(id: catalogFilters.wrappedValue) { await loadCatalogItems() }
     .task(id: catalogSearchText.wrappedValue) { await loadCatalogItems() }
     .task(id: itemSort.wrappedValue) { await loadCatalogItems() }
     .task(id: store.devicePreferenceNamespace) {
+      await loadListCatalog()
       await loadCatalogItems()
       await loadSelectedList()
     }
@@ -84,6 +90,7 @@ struct SavedPlannerView: View {
     .task(id: selectedItemId) { await loadSelectedItem() }
     .task(id: selectedAppearanceIdentity) { await loadSelectedAppearance() }
     .task(id: store.changeRevision) {
+      await loadListCatalog()
       await loadSelectedList()
       await loadCatalogItems()
       await loadSelectedItem()
@@ -190,6 +197,20 @@ struct SavedPlannerView: View {
     #else
       false
     #endif
+  }
+
+  private func loadListCatalog() async {
+    guard store.isReady else { return }
+    isOpeningListCatalog = true
+    let archive = listCatalogArchive
+    let revision = store.changeRevision
+    let namespace = store.devicePreferenceNamespace
+    let loaded = await store.readLists(archive: archive.queryValue)
+    guard !Task.isCancelled, listCatalogArchive == archive, store.changeRevision == revision,
+      store.devicePreferenceNamespace == namespace
+    else { return }
+    listCatalog = loaded
+    isOpeningListCatalog = false
   }
 
   @ViewBuilder
@@ -499,27 +520,54 @@ struct SavedPlannerView: View {
           }
         #endif
         Section("Lists") {
-          ForEach(store.lists) { list in
+          ForEach(listCatalog ?? []) { list in
             NavigationLink(value: SavedPlannerSidebarSelection.list(list.id)) {
-              Label(list.name, systemImage: "list.bullet.rectangle")
+              HStack {
+                Label(list.name, systemImage: "list.bullet.rectangle")
+                if list.archived {
+                  Image(systemName: "archivebox").foregroundStyle(.secondary)
+                    .accessibilityHidden(true)
+                }
+              }
             }
+            .accessibilityLabel(list.name)
+            .accessibilityValue(list.archived ? "Archived" : "Active")
             .accessibilityIdentifier("saved.list.\(list.id.uuidString)")
+            .contextMenu {
+              Button(list.archived ? "Unarchive List" : "Archive List", systemImage: "archivebox") {
+                Task { _ = await store.setListArchived(list.id, archived: !list.archived) }
+              }
+              .disabled(!store.canCreate)
+            }
           }
         }
       }
       .listStyle(.sidebar)
       .overlay {
         #if os(iOS)
-          if store.lists.isEmpty {
+          if listCatalog?.isEmpty == true {
             ContentUnavailableView(
-              "No Lists yet", systemImage: "list.bullet.rectangle",
-              description: Text("Create a List to start planning."))
+              listCatalogArchive == .active ? "No Lists yet" : "No matching Lists",
+              systemImage: "list.bullet.rectangle",
+              description: Text("Change the archive filter or create a List to start planning."))
           }
         #endif
+        if isOpeningListCatalog {
+          ProgressView("Updating Lists")
+        } else if listCatalog == nil {
+          ContentUnavailableView {
+            Label("Lists unavailable", systemImage: "exclamationmark.triangle")
+          } actions: {
+            Button("Try Again") { Task { await loadListCatalog() } }
+          }
+        }
       }
       .navigationTitle("Planner")
       .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
       .toolbar {
+        ToolbarItem {
+          SavedListArchiveFilterMenu(archive: $listCatalogArchive)
+        }
         ToolbarItem {
           Button("New List", systemImage: "plus") { showNewList = true }
             .disabled(!store.canCreate)
@@ -534,7 +582,10 @@ struct SavedPlannerView: View {
           if let listItems {
             if listItems.isEmpty {
               VStack(spacing: 0) {
-                SavedListProgress(progress: selectedList.progress, matchingCount: 0).padding()
+                SavedListProgress(
+                  progress: selectedList.progress, matchingCount: 0,
+                  isArchived: selectedList.state.archived == true
+                ).padding()
                 ContentUnavailableView(
                   selectedList.progress.totalCount == 0 ? "No items" : "No matching items",
                   systemImage: "checklist",
@@ -602,7 +653,8 @@ struct SavedPlannerView: View {
                     }
                   } header: {
                     SavedListProgress(
-                      progress: selectedList.progress, matchingCount: listItems.count
+                      progress: selectedList.progress, matchingCount: listItems.count,
+                      isArchived: selectedList.state.archived == true
                     ).textCase(nil)
                   }
                 }
@@ -656,10 +708,11 @@ struct SavedPlannerView: View {
         } actions: {
           Button("Try Again") { Task { await loadSelectedList() } }
         }
-      } else if store.lists.isEmpty {
+      } else if listCatalog?.isEmpty == true {
         ContentUnavailableView(
-          "No Lists yet", systemImage: "list.bullet.rectangle",
-          description: Text("Create a List to start planning."))
+          listCatalogArchive == .active ? "No Lists yet" : "No matching Lists",
+          systemImage: "list.bullet.rectangle",
+          description: Text("Change the archive filter or create a List to start planning."))
       } else {
         ContentUnavailableView("Choose a List", systemImage: "list.bullet.rectangle")
       }
