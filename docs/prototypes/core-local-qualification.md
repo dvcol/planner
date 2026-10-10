@@ -1,6 +1,6 @@
 # Local Core fixture evidence
 
-The accepted [Q36 fixture](core-local-fixture-review.md) has executed native store journeys. The latest slice qualifies [membership removal and moves](#membership-removal-and-cross-list-moves). This is partial evidence for [MCP session prototype](https://github.com/dvcol/planner/issues/16), which remains open. The implementation is a disposable local prototype, with CloudKit mirroring disabled.
+The accepted [Q36 fixture](core-local-fixture-review.md) has executed native store journeys. The latest slice qualifies [guarded Item subtitle editing](#guarded-item-subtitle-editing). Earlier sections retain their recorded revisions. This is partial evidence for [MCP session prototype](https://github.com/dvcol/planner/issues/16), which remains open. The implementation is a disposable local prototype, with CloudKit mirroring disabled.
 
 ## Create, reopen and inspect independent recovery
 
@@ -347,3 +347,15 @@ Removal and move each commit a minimal membership identity/lifetime marker with 
 Five functions qualify removal and moves, including fifteen invalid identity/destination/anchor cases and a real obstruction of the recovery directory for each command. Precommit rejection retains both Lists, Item state, the issued row window and the acknowledged checkpoint. The affected Core store target passes 81 functions across 30 suites with no failures or skips. Native Mac app/MCP and generic iOS simulator test bundles compile; no UI or HTTP execution of these new commands is claimed. Strict format lint passes for the eight changed Swift files. The [execution manifest](evidence/navigation/core-membership-mutations.json) separates initial compilation/setup failures from the two actual behavior reds and records each run's source hashes.
 
 Native/MCP removal and cross-List actions, filtered Manual reordering, external refresh, deletion restoration/Undo, bulk actions and the remaining graph remain open. Physical sync/account/Share, postcommit interruption, accessibility and performance still need their own evidence. CloudKit remains disabled in this localOnly prototype.
+
+## Guarded Item subtitle editing
+
+Before this slice, Core could create/read an optional subtitle but its edit path rejected that field. A native editor journey exposed the gap while retaining its draft and showing the rejection. The existing public edit command now supports subtitle Set/Clear with a prior field hash, canonical payload evidence, the Item transaction and independent recovery. It changes no schema, portable format or public method signature.
+
+The first real-store journey updates an existing subtitle, reopens through a new facade, and inspects the acknowledged backup through the public recovery interface. It retains the Item identity, creation time, title, notes, owned address, exact 91-minute estimate with hour display unit, archive and global Done. Explicit Clear then persists a null subtitle through another reopen. Unchanged fields retain their hashes. Operation status returns the completed save evidence.
+
+The next journey rejects an entire title/subtitle patch when only subtitle is stale. Structured failure identifies subtitle and supplies its current value/hash; neither the title nor the saved timestamp changes. A title-only edit with its still-current earlier hash succeeds. Exact subtitle replay returns the original result without undoing the title change. A different subtitle payload with the original operation identity rejects and retains current content/state.
+
+The initial package attempt had a test-fixture compilation error in its completion-scope case. It is recorded as setup failure. Correcting only that test produces an executed one-function red at the unsupported edit. Minimal implementation passes the same function. The second executed one-function red finds the missing current subtitle in structured conflict values; one added value mapping passes it. The focused edit/location/link/row/subtitle regression passes 15 functions in five suites with no skips. The [evidence record](evidence/navigation/core-subtitle-edit.json) preserves commands, source epochs and exact logs under `/private/tmp/PlannerCoreSubtitle{SetupFailure,Red,Green,StaleRed,StaleGreen,Regression}`.
+
+Strict affected Swift lint, Markdown lint and source/diff checks pass. CloudKit stays disabled. The HTTP edit route still rejects subtitle changes until its own routing/admission slice. Native rendering and stale-save presentation, device/account/Share sync, interruption and physical performance remain separate gates.

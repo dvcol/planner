@@ -1,0 +1,76 @@
+{
+  "baseCommit": "7bc4334",
+  "scope": "Accepted public Core execute/read/operationStatus/inspectRecovery with real durable local datasets. Guarded subtitle set/clear, unchanged fields/state, reopen, independent recovery, stale patch rejection and payload replay.",
+  "sourceSnapshots": {
+    "Setup": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "9d475f5f8ef1a28556651fb75b1ff0f5b9cdaf353db2055cf94bf63bcc59a8f3",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "bac9e6e04bea678f73b27b8f90f2fbb375c4e7ea7f999407639cccdd4b425cac",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemSubtitleEditTests.swift": "eb6f121d0ba6a2dc24577e2234afde56ca17448e9840cc5fbcd2a1b9b4b1d178"
+    },
+    "Red": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "9d475f5f8ef1a28556651fb75b1ff0f5b9cdaf353db2055cf94bf63bcc59a8f3",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "bac9e6e04bea678f73b27b8f90f2fbb375c4e7ea7f999407639cccdd4b425cac",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemSubtitleEditTests.swift": "4324f60c60885b14f14203b9c09671e2897e347378c9cda77780b6ca979bb70f"
+    },
+    "Green": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "f7567f44281850141629dda6881f50d425d14554d549556765f2ab2262e20121",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "aa60181302a176e7774fc5747df1284503975b99112e2821497e61edce637cad",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemSubtitleEditTests.swift": "4324f60c60885b14f14203b9c09671e2897e347378c9cda77780b6ca979bb70f"
+    },
+    "StaleRed": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "f7567f44281850141629dda6881f50d425d14554d549556765f2ab2262e20121",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "aa60181302a176e7774fc5747df1284503975b99112e2821497e61edce637cad",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemSubtitleEditTests.swift": "95ce0088ba89394c7d2cc4eda0cefc75afdbbb5ba539a649f44a91fba9364066"
+    },
+    "StaleGreen": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "881396c7d3a447d1bdbd52c16a5fa1e7f990b47431a54481806f178546ddaf4d",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "aa60181302a176e7774fc5747df1284503975b99112e2821497e61edce637cad",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemSubtitleEditTests.swift": "95ce0088ba89394c7d2cc4eda0cefc75afdbbb5ba539a649f44a91fba9364066"
+    }
+  },
+  "commands": {
+    "behaviorRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --filter ItemSubtitleEditTests/subtitleEditAndClearPreserveOtherContentAndSurviveReopenWithRecovery --scratch-path /private/tmp/PlannerCoreFixturePackageBuild > /private/tmp/PlannerCoreSubtitleRed.log 2>&1",
+    "green": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --filter ItemSubtitleEditTests/subtitleEditAndClearPreserveOtherContentAndSurviveReopenWithRecovery --scratch-path /private/tmp/PlannerCoreFixturePackageBuild > /private/tmp/PlannerCoreSubtitleGreen.log 2>&1",
+    "staleRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --filter ItemSubtitleEditTests/staleSubtitleRejectsWholePatchAndReplayRetainsTheOriginalOperation --scratch-path /private/tmp/PlannerCoreFixturePackageBuild > /private/tmp/PlannerCoreSubtitleStaleRed.log 2>&1",
+    "staleGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --filter ItemSubtitleEditTests/staleSubtitleRejectsWholePatchAndReplayRetainsTheOriginalOperation --scratch-path /private/tmp/PlannerCoreFixturePackageBuild > /private/tmp/PlannerCoreSubtitleStaleGreen.log 2>&1",
+    "regression": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --filter 'ItemSubtitleEditTests|ItemEditTests|ItemLocationEditTests|ItemLinkEditTests|ItemRowReadTests' --scratch-path /private/tmp/PlannerCoreFixturePackageBuild > /private/tmp/PlannerCoreSubtitleRegression.log 2>&1"
+  },
+  "results": {
+    "Red": {
+      "log": "/private/tmp/PlannerCoreSubtitleRed.log",
+      "executedFunctions": 1,
+      "suites": 1,
+      "result": "failed"
+    },
+    "Green": {
+      "log": "/private/tmp/PlannerCoreSubtitleGreen.log",
+      "executedFunctions": 1,
+      "suites": 1,
+      "result": "passed"
+    },
+    "StaleRed": {
+      "log": "/private/tmp/PlannerCoreSubtitleStaleRed.log",
+      "executedFunctions": 1,
+      "suites": 1,
+      "result": "failed"
+    },
+    "StaleGreen": {
+      "log": "/private/tmp/PlannerCoreSubtitleStaleGreen.log",
+      "executedFunctions": 1,
+      "suites": 1,
+      "result": "passed"
+    },
+    "Regression": {
+      "log": "/private/tmp/PlannerCoreSubtitleRegression.log",
+      "executedFunctions": 15,
+      "suites": 5,
+      "result": "passed"
+    }
+  },
+  "classification": "Initial test fixture compilation failed because it used an incorrect completion-scope case. Only the test was corrected before the executed behavior red rejected unsupported subtitle edits. One set/clear function then passed. The second executed red found the missing current subtitle value in the structured stale-edit response; a one-line correction passed that same function. The affected five-suite regression passed 15 functions.",
+  "limits": [
+    "Schema and portable format are unchanged; CloudKit remains disabled.",
+    "The HTTP edit route still rejects subtitle changes pending its own admission/routing qualification.",
+    "Native subtitle UI, stale-save presentation, device sync, account recovery, interruption and physical performance remain separate gates."
+  ]
+}
