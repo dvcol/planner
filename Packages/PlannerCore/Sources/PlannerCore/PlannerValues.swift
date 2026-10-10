@@ -423,6 +423,24 @@ public struct PlannerItemQuery: Sendable {
   }
   public enum Completion: Sendable { case todo, done, all }
   public enum Archive: Sendable { case active, archived, all }
+  public struct IdentityGroup: Sendable {
+    public enum Match: String, Sendable { case any, all }
+    public let ids: Set<UUID>
+    public let match: Match
+
+    public init(ids: Set<UUID>, match: Match = .any) {
+      self.ids = ids
+      self.match = match
+    }
+
+    func matches(_ selectedIdentifiers: Set<UUID>) -> Bool {
+      guard !ids.isEmpty else { return true }
+      switch match {
+      case .any: return !ids.isDisjoint(with: selectedIdentifiers)
+      case .all: return ids.isSubset(of: selectedIdentifiers)
+      }
+    }
+  }
   public struct Duration: Sendable {
     public let minimumMinutes: Int64?
     public let maximumMinutes: Int64?
@@ -451,19 +469,24 @@ public struct PlannerItemQuery: Sendable {
   public let text: String
   public let completion: Completion
   public let archive: Archive
+  public let categories: IdentityGroup?
+  public let tags: IdentityGroup?
   public let duration: Duration?
   public let sort: Sort
   public let rowPresentation: PlannerRowPresentationContext?
 
   public init(
     scope: Scope = .global, text: String = "", completion: Completion = .todo,
-    archive: Archive = .active, duration: Duration? = nil,
+    archive: Archive = .active, categories: IdentityGroup? = nil, tags: IdentityGroup? = nil,
+    duration: Duration? = nil,
     sort: Sort = Sort(), rowPresentation: PlannerRowPresentationContext? = nil
   ) {
     self.scope = scope
     self.text = text
     self.completion = completion
     self.archive = archive
+    self.categories = categories
+    self.tags = tags
     self.duration = duration
     self.sort = sort
     self.rowPresentation = rowPresentation
