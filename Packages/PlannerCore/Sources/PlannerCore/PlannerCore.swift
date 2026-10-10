@@ -529,7 +529,8 @@ public actor Planner {
           let locale = Locale(identifier: "en_US_POSIX")
           var descriptor = FetchDescriptor<PlannerSchemaV10.Item>()
           if textTerms.isEmpty, itemQuery.duration?.minimumMinutes == nil,
-            itemQuery.duration?.maximumMinutes == nil, itemQuery.sort.mode != .duration
+            itemQuery.duration?.maximumMinutes == nil, itemQuery.sort.mode != .duration,
+            itemQuery.categories?.ids.isEmpty != false, itemQuery.tags?.ids.isEmpty != false
           {
             descriptor.propertiesToFetch = [\.id, \.title, \.globalDone, \.archived]
             if itemQuery.sort.mode == .created {
@@ -550,6 +551,7 @@ public actor Planner {
             case .archived: if !item.archived { return false }
             case .all: break
             }
+            guard try matchesItemLabels(item, query: itemQuery) else { return false }
             guard try matchesItemDuration(item, duration: itemQuery.duration) else { return false }
             return try matchesItemText(item, terms: textTerms, locale: locale)
           }
@@ -673,6 +675,17 @@ public actor Planner {
     return true
   }
 
+  private func matchesItemLabels(_ item: PlannerSchemaV10.Item, query: PlannerItemQuery) throws
+    -> Bool
+  {
+    guard query.categories?.ids.isEmpty == false || query.tags?.ids.isEmpty == false else {
+      return true
+    }
+    let content = try item.value().input
+    return (query.categories?.matches(content.categoryIds) ?? true)
+      && (query.tags?.matches(content.tagIds) ?? true)
+  }
+
   /// Equal estimates return nil so the caller uses the fixed ascending title/identity tie-break.
   private func durationPrecedes(
     _ firstMinutes: Int64?, _ secondMinutes: Int64?, direction: PlannerItemQuery.Sort.Direction
@@ -790,7 +803,8 @@ public actor Planner {
     var items = FetchDescriptor<PlannerSchemaV10.Item>(
       predicate: #Predicate { itemIdentifiers.contains($0.id) })
     if textTerms.isEmpty, query.duration?.minimumMinutes == nil,
-      query.duration?.maximumMinutes == nil, query.sort.mode != .duration
+      query.duration?.maximumMinutes == nil, query.sort.mode != .duration,
+      query.categories?.ids.isEmpty != false, query.tags?.ids.isEmpty != false
     {
       items.propertiesToFetch = [\.id, \.lifetimeId, \.title, \.globalDone, \.archived]
       if query.sort.mode == .created {
@@ -828,6 +842,7 @@ public actor Planner {
       case .archived: if !item.archived { continue }
       case .all: break
       }
+      if !(try matchesItemLabels(item, query: query)) { continue }
       if !(try matchesItemDuration(item, duration: query.duration)) { continue }
       if !(try matchesItemText(item, terms: textTerms, locale: locale)) { continue }
       var durationMinutes: Int64?
