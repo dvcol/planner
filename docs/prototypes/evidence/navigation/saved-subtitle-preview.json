@@ -1,0 +1,191 @@
+{
+  "uiBaseCommit": "7bc4334",
+  "qualifiedCoreCommit": "4032864",
+  "seam": "Q34-approved public native UI with isolated real durable datasets. Existing lightweight RowRead supplies subtitle; no full-detail read per row, provider I/O, mocks or production injection.",
+  "sourceSnapshots": {
+    "Red": {
+      "Planner/Scenes/SavedEditItemForm.swift": "1b4762bdeb21e307efa3fe46abf258c1d91341504a0182e91591feb7f0b377fd",
+      "Planner/Scenes/SavedItemViews.swift": "e0fa66b2c243a0c588fad330c8497ca037bca868183ea25b9fad13f2bd31f8da",
+      "Planner/Scenes/SavedAppearanceViews.swift": "155e6ea37f549ee72d3e66fe53e4a1c4879f2ff48a79e377fa966f5f5da0792e",
+      "Planner/Scenes/SavedPlannerStore.swift": "9ec0441ac1e324bb2031e461a00923399f70a19e20c9274160381cc22a83bcc3",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "e8760ddd6a8357f4eb52767a51d80db266e18cd91fcd5f2a316516021e92f724"
+    },
+    "Green": {
+      "Planner/Scenes/SavedEditItemForm.swift": "cf121a48f6461c112c910f42953b3b012ef67d1c8acbd43dfc265920495027c6",
+      "Planner/Scenes/SavedItemViews.swift": "f1d23f3b1a73e65c86eccd95e386dbe55942e2b11a1821db67c95fc4ee9908ef",
+      "Planner/Scenes/SavedAppearanceViews.swift": "5afc3c000a2e92dcfadefb2668d252d9b3fc64d08db735c2fc8036e45136ad2f",
+      "Planner/Scenes/SavedPlannerStore.swift": "ec1cbfe8ab55699aa62c1289a2653e4c5ed4696ce3a16afcb7105d7bb34bf88e",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "e8760ddd6a8357f4eb52767a51d80db266e18cd91fcd5f2a316516021e92f724",
+      "Planner/Scenes/SavedItemRowContent.swift": "1917455ff1ec6fadf20d56e428db80d0c80605223417f78f0f1409509558e714"
+    },
+    "CoreReview": {
+      "Planner/Scenes/SavedEditItemForm.swift": "cf121a48f6461c112c910f42953b3b012ef67d1c8acbd43dfc265920495027c6",
+      "Planner/Scenes/SavedItemViews.swift": "f1d23f3b1a73e65c86eccd95e386dbe55942e2b11a1821db67c95fc4ee9908ef",
+      "Planner/Scenes/SavedAppearanceViews.swift": "5afc3c000a2e92dcfadefb2668d252d9b3fc64d08db735c2fc8036e45136ad2f",
+      "Planner/Scenes/SavedPlannerStore.swift": "ec1cbfe8ab55699aa62c1289a2653e4c5ed4696ce3a16afcb7105d7bb34bf88e",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "e8760ddd6a8357f4eb52767a51d80db266e18cd91fcd5f2a316516021e92f724",
+      "Planner/Scenes/SavedItemRowContent.swift": "1917455ff1ec6fadf20d56e428db80d0c80605223417f78f0f1409509558e714",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "881396c7d3a447d1bdbd52c16a5fa1e7f990b47431a54481806f178546ddaf4d",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "aa60181302a176e7774fc5747df1284503975b99112e2821497e61edce637cad"
+    }
+  },
+  "commands": {
+    "behaviorRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion -resultBundlePath /private/tmp/PlannerNativeSubtitlePhoneRed.xcresult test > /private/tmp/PlannerNativeSubtitlePhoneRed.log 2>&1",
+    "green": {
+      "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeSubtitlePhoneGreen.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testEditingAnItemUpdatesItsLiveListReferencesAndKeepsTheirCompletionAfterRelaunch test > /private/tmp/PlannerNativeSubtitlePhoneGreen.log 2>&1",
+      "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeSubtitleTabletGreen.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion test > /private/tmp/PlannerNativeSubtitleTabletGreen.log 2>&1",
+      "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeSubtitleMacGreen.xcresult build-for-testing > /private/tmp/PlannerNativeSubtitleMacGreen.log 2>&1"
+    },
+    "coreReview": {
+      "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeSubtitlePhoneCoreReview.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion test > /private/tmp/PlannerNativeSubtitlePhoneCoreReview.log 2>&1",
+      "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeSubtitleTabletCoreReview.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion test > /private/tmp/PlannerNativeSubtitleTabletCoreReview.log 2>&1",
+      "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeSubtitleMacCoreReview.xcresult build-for-testing > /private/tmp/PlannerNativeSubtitleMacCoreReview.log 2>&1"
+    },
+    "affectedNotesHTTP": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerMCPTests/CommandRoutingTests/notesEditOverHTTPRejectsStaleHashAndRetainsFridayBooking -resultBundlePath /private/tmp/PlannerNativeSubtitleNotesHTTPReview.xcresult test > /private/tmp/PlannerNativeSubtitleNotesHTTPReview.log 2>&1",
+    "notesHTTPSetupFailure": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerMCP -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerMCPTests/CommandRoutingTests/notesEditOverHTTPRejectsStaleHashAndRetainsFridayBooking -resultBundlePath /private/tmp/PlannerNativeSubtitleNotesHTTP.xcresult test > /private/tmp/PlannerNativeSubtitleNotesHTTP.log 2>&1"
+  },
+  "results": {
+    "behaviorRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion",
+          "testName": "testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion()"
+        }
+      ],
+      "resultBundle": "/private/tmp/PlannerNativeSubtitlePhoneRed.xcresult"
+    },
+    "initialGreen": {
+      "Phone": {
+        "result": "Failed",
+        "totalTestCount": 2,
+        "passedTests": 1,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 2,
+            "testIdentifierString": "SavedAppearanceJourneyTests/testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion",
+            "testName": "testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion()"
+          }
+        ],
+        "resultBundle": "/private/tmp/PlannerNativeSubtitlePhoneGreen.xcresult"
+      },
+      "Tablet": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0,
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedAppearanceJourneyTests/testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion",
+            "testName": "testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion()"
+          }
+        ],
+        "resultBundle": "/private/tmp/PlannerNativeSubtitleTabletGreen.xcresult"
+      },
+      "Mac": {
+        "action": "build-for-testing",
+        "result": "Passed",
+        "executedBehaviorFunctions": 0,
+        "resultBundle": "/private/tmp/PlannerNativeSubtitleMacGreen.xcresult"
+      }
+    },
+    "qualifiedCoreReview": {
+      "Phone": {
+        "result": "Passed",
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "testFailures": [],
+        "resultBundle": "/private/tmp/PlannerNativeSubtitlePhoneCoreReview.xcresult"
+      },
+      "Tablet": {
+        "result": "Passed",
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "testFailures": [],
+        "resultBundle": "/private/tmp/PlannerNativeSubtitleTabletCoreReview.xcresult"
+      },
+      "Mac": {
+        "action": "build-for-testing",
+        "result": "Passed",
+        "executedBehaviorFunctions": 0,
+        "resultBundle": "/private/tmp/PlannerNativeSubtitleMacCoreReview.xcresult"
+      }
+    },
+    "affectedNotesHTTP": {
+      "result": "unknown",
+      "totalTestCount": 0,
+      "passedTests": 0,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "resultBundle": "/private/tmp/PlannerNativeSubtitleNotesHTTPReview.xcresult"
+    }
+  },
+  "classification": "Executed native behavior red at the missing subtitle field. Initial native implementation exposed Core rejecting subtitle edits; both subtitle journeys failed without dismissing the draft, while the affected iPhone title/notes regression passed. Public Core red/green then qualified set/clear, recovery, stale-field values and replay in 4032864. Native/test source remained fixed across that Core correction; the same subtitle function then passed on both simulators. The notes HTTP attempt initially selected a nonexistent scheme and executed zero tests; selecting the existing Planner scheme passed one focused regression.",
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-subtitle-cleared.png",
+      "sha256": "529f35b6f6fd0b5bebda8148d0708e55ee17f546b65fcb8e4b3b27abe05c1ba4",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-subtitle-row.png",
+      "sha256": "6ea59eb9755be3e0ee2c8e5c8e326c0d76b905dced85404eb4e99a2f41ece4bd",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-subtitle-editor.png",
+      "sha256": "2dd6d09041d1db96c508790b3bf7321645c14a175599ea76266a868b0a5fd3e3",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-subtitle-cleared.png",
+      "sha256": "d8f20da6f476e04f4dc5df2438e968a519e49048aa2797384acb930708145985",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-subtitle-row.png",
+      "sha256": "68882ad90e1e2593b7f4aafb4ea65e73e714c84364a3a6d9aef438c04007ab2d",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-subtitle-editor.png",
+      "sha256": "ee74c9e0949628e9dd66ab0d10b6b59e70f2081b2c39656451263ba9fb603d22",
+      "inspected": true
+    }
+  ],
+  "validation": [
+    "Final subtitle journey passes one function per simulator with zero failures/skips.",
+    "Mac app/test bundles compile; zero native Mac runtime functions execute.",
+    "One actual notes-over-HTTP regression passes with zero failures/skips.",
+    "Six original owned captures were inspected. Strict affected Swift lint, Markdown lint, source/capture hashes and diff checks pass."
+  ],
+  "limits": [
+    "This row slice renders title/subtitle only. Owned location/date/estimate/link previews and their saved controls remain open.",
+    "The HTTP route still rejects subtitle edits pending its own routing/admission tests.",
+    "Native conflict/recovery-failure presentation, Mac runtime, keyboard/accessibility, dynamic type, large-data, CloudKit, signing/physical-device/Share, Undo and final human review remain unqualified.",
+    "Native row-menu animation waits and SDK diagnostics remain in raw logs."
+  ]
+}

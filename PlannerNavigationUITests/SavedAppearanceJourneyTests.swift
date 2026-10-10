@@ -2,6 +2,73 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    createList("Tokyo Food", application: application)
+    addItem(application)
+    let row = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    let membershipIdentifier = row.identifier
+    let completion = application.buttons[
+      membershipIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    completion.activateForPlannerJourney()
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    viewGlobalItem(application)
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    let editItem = application.plannerElement("Edit Item")
+    editItem.activateForPlannerJourney()
+    let subtitle = application.textFields["saved.item.edit.subtitle"]
+    XCTAssertTrue(subtitle.waitForExistence(timeout: 5))
+    replaceText(subtitle, with: "Museum and garden", application: application)
+    let save = application.plannerElement("saved.item.edit.save")
+    XCTAssertTrue(save.isEnabled)
+    recordScreenshot(application, name: "Native editor reviews the shared row subtitle")
+    save.activateForPlannerJourney()
+    XCTAssertTrue(save.waitForNonExistence(timeout: 10))
+    XCTAssertTrue(
+      application.staticTexts["Museum and garden"].firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    openList("Tokyo Food", application: application)
+    XCTAssertEqual(row.identifier, membershipIdentifier)
+    XCTAssertTrue(row.waitForPlannerValue("Museum and garden"))
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(1, application: application)
+    recordScreenshot(application, name: "Shared subtitle appears in the completed List row")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Tokyo Food", application: application)
+    XCTAssertEqual(row.identifier, membershipIdentifier)
+    XCTAssertTrue(row.waitForPlannerValue("Museum and garden"))
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(1, application: application)
+    viewGlobalItem(application)
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    editItem.activateForPlannerJourney()
+    XCTAssertTrue(subtitle.waitForExistence(timeout: 5))
+    XCTAssertTrue(subtitle.waitForPlannerValue("Museum and garden"))
+    replaceText(subtitle, with: "", application: application)
+    XCTAssertTrue(save.isEnabled)
+    save.activateForPlannerJourney()
+    XCTAssertTrue(save.waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    openList("Tokyo Food", application: application)
+    XCTAssertEqual(row.identifier, membershipIdentifier)
+    XCTAssertTrue(row.waitForPlannerValue(""))
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(1, application: application)
+    XCTAssertFalse(application.staticTexts["Museum and garden"].exists)
+    recordScreenshot(
+      application, name: "Clearing the subtitle keeps the compact completed List row")
+  }
+
   func testEditingOneFieldAtATimePreservesOtherContentAndGlobalCompletionAfterRelaunch() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
