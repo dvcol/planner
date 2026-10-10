@@ -170,6 +170,7 @@ public enum PlannerCommand: Sendable {
   case createItem(content: PlannerItemContentInput)
   case createList(content: PlannerListContentInput)
   case createCategory(content: PlannerCategoryContentInput)
+  case createTag(content: PlannerTagContentInput)
   case editCategory(
     sourceId: UUID, changes: PlannerCategoryChanges,
     expectedFieldHashes: [PlannerCategoryField: PlannerFieldHash])
@@ -336,6 +337,7 @@ public enum PlannerSourceRead: Sendable {
   case item(PlannerItemSourceRead)
   case schedule(PlannerScheduleSourceRead)
   case category(PlannerCategorySourceRead)
+  case tag(PlannerTagSourceRead)
 }
 
 public struct PlannerItemSourceRead: Sendable {

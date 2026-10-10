@@ -103,7 +103,7 @@ struct PlannerDataSnapshot: Codable {
   }
 
   init(
-    categories: [CategorySnapshot],
+    tags: [TagSnapshot], categories: [CategorySnapshot],
     items: [ItemSnapshot], lists: [ListSnapshot], memberships: [MembershipSnapshot],
     deletionMarkers: [PortableDeletionMarker]
   ) {
@@ -118,7 +118,8 @@ struct PlannerDataSnapshot: Codable {
     sources =
       (items.map { PortableSourceRecord.item(PortableItemRecord($0)) }
       + lists.map { PortableSourceRecord.list(PortableListRecord($0)) }
-      + categories.map { PortableSourceRecord.category(PortableCategoryRecord($0)) }).sorted {
+      + categories.map { PortableSourceRecord.category(PortableCategoryRecord($0)) }
+      + tags.map { PortableSourceRecord.tag(PortableTagRecord($0)) }).sorted {
         $0.id.uuidString < $1.id.uuidString
       }
     ownedLinks = items.flatMap { item in
@@ -199,6 +200,10 @@ struct PlannerDataSnapshot: Codable {
       guard case .category(let category) = source else { return nil }
       return try category.validated()
     }
+    let tags = try sources.compactMap { source -> PlannerPortableTag? in
+      guard case .tag(let tag) = source else { return nil }
+      return try tag.validated()
+    }
     let linksByOwner = try Dictionary(
       grouping: ownedLinks.map { try $0.validated(sources: itemRecords) }, by: \.ownerId)
     let items = try itemRecords.map { source in
@@ -224,7 +229,8 @@ struct PlannerDataSnapshot: Codable {
     return PlannerDecodedBackup(
       backup: PlannerPortableBackup(
         sources: items.map(PlannerPortableSource.item) + lists.map(PlannerPortableSource.list)
-          + categories.map(PlannerPortableSource.category),
+          + categories.map(PlannerPortableSource.category)
+          + tags.map(PlannerPortableSource.tag),
         memberships: try memberships.map {
           try $0.validated(items: itemRecords, lists: listRecords)
         },
@@ -292,7 +298,7 @@ struct RecoveryEnvelope: Codable {
 
   func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
     guard format == "planner-recovery", formatVersion == 1,
-      ["1", "2", "3", "4", "5", "6", "7", "8"].contains(storageSchemaVersion),
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9"].contains(storageSchemaVersion),
       namespaceId == identity.namespaceId, datasetId == identity.datasetId,
       ownershipBinding == identity.ownershipBinding, !ownershipBinding.isEmpty,
       let generation = Int64(checkpointGeneration), generation > 0,
@@ -372,7 +378,7 @@ struct PlannerRecoveryArchive {
   }
 
   func publish(
-    categories: [CategorySnapshot],
+    tags: [TagSnapshot], categories: [CategorySnapshot],
     items: [ItemSnapshot], lists: [ListSnapshot], memberships: [MembershipSnapshot],
     deletionMarkers: [PortableDeletionMarker],
     receipts: [PlannerSchemaV1.Receipt]
@@ -385,7 +391,7 @@ struct PlannerRecoveryArchive {
     }
     let bytes = try JSONEncoder().encode(
       PlannerDataSnapshot(
-        categories: categories, items: items, lists: lists, memberships: memberships,
+        tags: tags, categories: categories, items: items, lists: lists, memberships: memberships,
         deletionMarkers: deletionMarkers))
     let priorCheckpoints = Dictionary(
       uniqueKeysWithValues: (previous?.receipts ?? []).map {
