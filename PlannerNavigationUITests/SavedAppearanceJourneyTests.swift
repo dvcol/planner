@@ -2,6 +2,163 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testNativeItemSortUsesCanonicalModesAndRemembersDatasetScopedDeviceChoiceAfterRelaunch()
+    throws
+  {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    let datasetIdentifier = UUID().uuidString
+    application.launchArguments = ["--local-prototype-dataset", datasetIdentifier]
+    application.launchSavedPlannerJourney()
+    createItem(application, title: "Zulu")
+    createItem(application, title: "Alpha")
+    createItem(application, title: "Middle")
+    openSection("Items", application: application)
+    if !application.savedPlannerItemRows("Alpha").firstMatch.isHittable {
+      application.plannerElement("BackButton").activateForPlannerJourney()
+    }
+    let sort = application.plannerElement("saved.items.sort")
+    XCTAssertTrue(sort.waitForExistence(timeout: 5))
+    assertSortChoice("Title · Ascending", menu: sort)
+    assertItemOrder(["Alpha", "Middle", "Zulu"], application: application)
+    chooseSort("Descending", menu: sort, application: application)
+    assertItemOrder(["Zulu", "Middle", "Alpha"], application: application)
+    chooseSort("Created", menu: sort, application: application)
+    assertItemOrder(["Middle", "Alpha", "Zulu"], application: application)
+    chooseSort("Ascending", menu: sort, application: application)
+    assertItemOrder(["Zulu", "Alpha", "Middle"], application: application)
+    chooseSort("Duration", menu: sort, application: application)
+    assertItemOrder(["Alpha", "Middle", "Zulu"], application: application)
+    chooseSort("Descending", menu: sort, application: application)
+    assertItemOrder(["Alpha", "Middle", "Zulu"], application: application)
+    chooseSort("Last updated", menu: sort, application: application)
+    assertItemOrder(["Middle", "Alpha", "Zulu"], application: application)
+    assertSortChoice("Last updated · Descending", menu: sort)
+    recordScreenshot(application, name: "Native Item chronological sort with device choice")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Items", application: application)
+    assertSortChoice("Last updated · Descending", menu: sort)
+    assertItemOrder(["Middle", "Alpha", "Zulu"], application: application)
+    application.terminate()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openSection("Items", application: application)
+    assertSortChoice("Title · Ascending", menu: sort)
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Zulu").firstMatch.waitForNonExistence(timeout: 5))
+    application.terminate()
+    application.launchArguments = ["--local-prototype-dataset", datasetIdentifier]
+    application.launchSavedPlannerJourney()
+    openSection("Items", application: application)
+    assertSortChoice("Last updated · Descending", menu: sort)
+    assertItemOrder(["Middle", "Alpha", "Zulu"], application: application)
+    recordScreenshot(application, name: "Returning dataset retains native Item sort")
+  }
+
+  func testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress()
+    throws
+  {
+    continueAfterFailure = false
+    #if os(iOS)
+      /// Native iOS progress accessibility exposes whole percentages.
+      let completedFraction = 0.33
+    #else
+      let completedFraction = 1.0 / 3.0
+    #endif
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application, title: "Zulu")
+    createItem(application, title: "Alpha")
+    createItem(application, title: "Middle")
+    createList("Tokyo", application: application)
+    addItem(application, title: "Zulu")
+    addItem(application, title: "Alpha")
+    addItem(application, title: "Middle")
+    let sort = application.plannerElement("saved.list.sort")
+    XCTAssertTrue(sort.waitForExistence(timeout: 5))
+    assertSortChoice("Manual", menu: sort)
+    assertItemOrder(["Zulu", "Alpha", "Middle"], application: application)
+    let titles = ["Zulu", "Alpha", "Middle"]
+    let originalIdentities = titles.map {
+      application.savedPlannerItemRows($0).firstMatch.identifier
+    }
+    let completion = application.buttons[
+      originalIdentities[0].replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    completion.activateForPlannerJourney()
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(completedFraction, application: application)
+    XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
+    #if os(iOS)
+      let edit = application.plannerElement("saved.list.edit")
+      XCTAssertEqual(edit.plannerControlTitle, "Edit")
+      edit.activateForPlannerJourney()
+    #endif
+    chooseSort("Title", menu: sort, application: application)
+    assertSortChoice("Title · Ascending", menu: sort)
+    assertItemOrder(["Alpha", "Middle", "Zulu"], application: application)
+    #if os(iOS)
+      XCTAssertFalse(edit.isEnabled)
+      XCTAssertEqual(edit.plannerControlTitle, "Edit")
+    #endif
+    chooseSort("Descending", menu: sort, application: application)
+    assertItemOrder(["Zulu", "Middle", "Alpha"], application: application)
+    chooseSort("Created", menu: sort, application: application)
+    chooseSort("Ascending", menu: sort, application: application)
+    assertItemOrder(["Zulu", "Alpha", "Middle"], application: application)
+    chooseSort("Manual", menu: sort, application: application)
+    assertSortChoice("Manual", menu: sort)
+    assertItemOrder(["Zulu", "Alpha", "Middle"], application: application)
+    #if os(iOS)
+      XCTAssertTrue(edit.isEnabled)
+      XCTAssertEqual(edit.plannerControlTitle, "Edit")
+    #endif
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(completedFraction, application: application)
+    XCTAssertEqual(
+      titles.map { application.savedPlannerItemRows($0).firstMatch.identifier }, originalIdentities)
+    recordScreenshot(application, name: "Manual order restored with retained List completion")
+    createList("Weekend", application: application)
+    addItem(application, title: "Alpha")
+    addItem(application, title: "Zulu")
+    addItem(application, title: "Middle")
+    assertSortChoice("Manual", menu: sort)
+    chooseSort("Title", menu: sort, application: application)
+    chooseSort("Descending", menu: sort, application: application)
+    assertItemOrder(["Zulu", "Middle", "Alpha"], application: application)
+    openList("Tokyo", itemTitle: "Zulu", application: application)
+    assertSortChoice("Manual", menu: sort)
+    chooseSort("Title", menu: sort, application: application)
+    assertSortChoice("Title · Ascending", menu: sort)
+    assertItemOrder(["Alpha", "Middle", "Zulu"], application: application)
+    openList("Weekend", itemTitle: "Zulu", application: application)
+    assertSortChoice("Title · Descending", menu: sort)
+    assertProgress(0, application: application)
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Tokyo", itemTitle: "Zulu", application: application)
+    assertSortChoice("Title · Ascending", menu: sort)
+    assertItemOrder(["Alpha", "Middle", "Zulu"], application: application)
+    assertProgress(completedFraction, application: application)
+    XCTAssertEqual(
+      titles.map { application.savedPlannerItemRows($0).firstMatch.identifier }, originalIdentities)
+    chooseSort("Manual", menu: sort, application: application)
+    assertItemOrder(["Zulu", "Alpha", "Middle"], application: application)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    recordScreenshot(application, name: "Relaunched List keeps its own sort and source order")
+    openList("Weekend", itemTitle: "Zulu", application: application)
+    assertSortChoice("Title · Descending", menu: sort)
+    assertItemOrder(["Zulu", "Middle", "Alpha"], application: application)
+    assertProgress(0, application: application)
+    openList("Tokyo", itemTitle: "Zulu", application: application)
+    viewGlobalItem(application, itemTitle: "Zulu")
+    XCTAssertTrue(
+      application.descendants(matching: .any).matching(identifier: "saved.item.completion")
+        .firstMatch.waitForPlannerBooleanState(false))
+  }
+
   func testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters()
     throws
   {
@@ -1108,6 +1265,37 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     application.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.membership.destination.")
     ).matching(NSPredicate(format: "label == %@ OR value == %@", title, title)).firstMatch
+  }
+
+  private func chooseSort(
+    _ title: String, menu: XCUIElement, application: XCUIApplication
+  ) {
+    menu.activateForPlannerJourney()
+    let option = application.plannerElement(title)
+    XCTAssertTrue(option.waitForExistence(timeout: 5))
+    option.activateForPlannerJourney()
+  }
+
+  private func assertSortChoice(_ choice: String, menu: XCUIElement) {
+    let selected = NSPredicate(format: "label == %@", "Sort: \(choice)")
+    XCTAssertEqual(
+      XCTWaiter.wait(
+        for: [XCTNSPredicateExpectation(predicate: selected, object: menu)], timeout: 5), .completed
+    )
+  }
+
+  private func assertItemOrder(_ titles: [String], application: XCUIApplication) {
+    for (firstTitle, secondTitle) in zip(titles, titles.dropFirst()) {
+      let first = application.savedPlannerItemRows(firstTitle).firstMatch
+      let second = application.savedPlannerItemRows(secondTitle).firstMatch
+      let ordered = NSPredicate { _, _ in
+        first.exists && second.exists && first.frame.midY < second.frame.midY
+      }
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [XCTNSPredicateExpectation(predicate: ordered, object: application)], timeout: 10),
+        .completed, "Expected \(firstTitle) before \(secondTitle)")
+    }
   }
 
   private func createItem(_ application: XCUIApplication, title: String = "Nezu Museum") {

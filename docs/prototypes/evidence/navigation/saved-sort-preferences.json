@@ -1,0 +1,453 @@
+{
+  "baseCommit": "8103c40eb12c672ded688aff684621001d086466",
+  "seams": [
+    "A21 public Planner facade, actual temporary stores and immutable sessions",
+    "Q34 native app journeys using real native forms, menus, rows and relaunch; no private-model access or test-only production inputs"
+  ],
+  "sourceSnapshots": {
+    "OwnershipRed": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DatasetPresentationScopeTests.swift": "52059a7db6ba9f448d6c76cf597481a65bd4a2b01ef94802a4a44eb955c20c04",
+      "Planner/Scenes/SavedPlannerStore.swift": "83bb2d1da935697b39c4cf3b72a579346138165b8db7a25edbfc7dd2510c0223",
+      "Planner/Scenes/SavedPlannerView.swift": "870565451ee8ca07d2d11cc6e8c54ce95f47c2078a4a4f33390eb1a3876bd49b",
+      "Planner/Scenes/SavedItemViews.swift": "648383d07a051b91cd177d60112ef63cb19c659474f4cbc8ab4646be1ed74b51",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "08fb461df6821844bb467c533778caf0a2f77c94d4b6d56d1604a972936128ce",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "603e1c406e2f56c7e34bdbee8dd39e6282e34ad963ad600281cdc366ac276a70"
+    },
+    "CatalogRed": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "0a069a763fd1971df727ce43bd026bffa1a4cd95f071c2e64c79eea89e3f86f9",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DatasetPresentationScopeTests.swift": "52059a7db6ba9f448d6c76cf597481a65bd4a2b01ef94802a4a44eb955c20c04",
+      "Planner/Scenes/SavedPlannerStore.swift": "83bb2d1da935697b39c4cf3b72a579346138165b8db7a25edbfc7dd2510c0223",
+      "Planner/Scenes/SavedPlannerView.swift": "870565451ee8ca07d2d11cc6e8c54ce95f47c2078a4a4f33390eb1a3876bd49b",
+      "Planner/Scenes/SavedItemViews.swift": "648383d07a051b91cd177d60112ef63cb19c659474f4cbc8ab4646be1ed74b51",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "08fb461df6821844bb467c533778caf0a2f77c94d4b6d56d1604a972936128ce",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "c3d8551d91f617c2f2229b195c80ae1872c13678c0d690d8a8788ccc0cb8c295"
+    },
+    "CatalogGreen": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "0a069a763fd1971df727ce43bd026bffa1a4cd95f071c2e64c79eea89e3f86f9",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DatasetPresentationScopeTests.swift": "52059a7db6ba9f448d6c76cf597481a65bd4a2b01ef94802a4a44eb955c20c04",
+      "Planner/Scenes/SavedPlannerStore.swift": "641a91713bcd41d3f0de597f4379da7e713b8d6b31902e0a7e6bc0f7c03787d9",
+      "Planner/Scenes/SavedPlannerView.swift": "83820fb1d262ad8767778bd7c6b7c71c9cd0266ade15cf0615361e96fecdade5",
+      "Planner/Scenes/SavedItemViews.swift": "12a20cbaec8d0f1f5d9a44b20bb4ff13d20835a112f05033be0f9c29a502c0ed",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "08fb461df6821844bb467c533778caf0a2f77c94d4b6d56d1604a972936128ce",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "c3d8551d91f617c2f2229b195c80ae1872c13678c0d690d8a8788ccc0cb8c295",
+      "Planner/Scenes/SavedItemSort.swift": "340e5c5e2e30eb49c6dc1abe76e0cc35f7d4bec311ca24de4aade28b1a939eec"
+    },
+    "CatalogCorrectedGreen": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "0a069a763fd1971df727ce43bd026bffa1a4cd95f071c2e64c79eea89e3f86f9",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DatasetPresentationScopeTests.swift": "52059a7db6ba9f448d6c76cf597481a65bd4a2b01ef94802a4a44eb955c20c04",
+      "Planner/Scenes/SavedPlannerStore.swift": "641a91713bcd41d3f0de597f4379da7e713b8d6b31902e0a7e6bc0f7c03787d9",
+      "Planner/Scenes/SavedPlannerView.swift": "83820fb1d262ad8767778bd7c6b7c71c9cd0266ade15cf0615361e96fecdade5",
+      "Planner/Scenes/SavedItemViews.swift": "12a20cbaec8d0f1f5d9a44b20bb4ff13d20835a112f05033be0f9c29a502c0ed",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "08fb461df6821844bb467c533778caf0a2f77c94d4b6d56d1604a972936128ce",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "472bd29f954a6030921d8adb3f527089966823221aa7434844c503ebf4f538b3",
+      "Planner/Scenes/SavedItemSort.swift": "323d2ca22a054c0b1f93cfe27ac10e1e851df3dedbac727769b6c5145df79b68"
+    },
+    "ListRed": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "0a069a763fd1971df727ce43bd026bffa1a4cd95f071c2e64c79eea89e3f86f9",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DatasetPresentationScopeTests.swift": "52059a7db6ba9f448d6c76cf597481a65bd4a2b01ef94802a4a44eb955c20c04",
+      "Planner/Scenes/SavedPlannerStore.swift": "641a91713bcd41d3f0de597f4379da7e713b8d6b31902e0a7e6bc0f7c03787d9",
+      "Planner/Scenes/SavedPlannerView.swift": "83820fb1d262ad8767778bd7c6b7c71c9cd0266ade15cf0615361e96fecdade5",
+      "Planner/Scenes/SavedItemViews.swift": "12a20cbaec8d0f1f5d9a44b20bb4ff13d20835a112f05033be0f9c29a502c0ed",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "08fb461df6821844bb467c533778caf0a2f77c94d4b6d56d1604a972936128ce",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "8d78572953b94c78181953d7971176a04b5bf0738ffd9f411242d16c7369305f",
+      "Planner/Scenes/SavedItemSort.swift": "323d2ca22a054c0b1f93cfe27ac10e1e851df3dedbac727769b6c5145df79b68"
+    },
+    "ListGreen": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "0a069a763fd1971df727ce43bd026bffa1a4cd95f071c2e64c79eea89e3f86f9",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DatasetPresentationScopeTests.swift": "52059a7db6ba9f448d6c76cf597481a65bd4a2b01ef94802a4a44eb955c20c04",
+      "Planner/Scenes/SavedPlannerStore.swift": "a94a6b8dfa758e89f2ca7933352803fc752fd952fbf028ef53ee09fb005f0a6e",
+      "Planner/Scenes/SavedPlannerView.swift": "cd10e05dde33773fd16245addbd110b3f2ae02a537a5c4abf863724067932654",
+      "Planner/Scenes/SavedItemViews.swift": "12a20cbaec8d0f1f5d9a44b20bb4ff13d20835a112f05033be0f9c29a502c0ed",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "761c3fccce0e1c1cd331be907852606330d9e94a66aae62761c3f3e633ca043e",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "8d78572953b94c78181953d7971176a04b5bf0738ffd9f411242d16c7369305f",
+      "Planner/Scenes/SavedItemSort.swift": "323d2ca22a054c0b1f93cfe27ac10e1e851df3dedbac727769b6c5145df79b68",
+      "Planner/PrivacyInfo.xcprivacy": "a3799663af4d176d8ce1d87b8f061deddd8ebe7083de64ef5406f9e4844d30f2"
+    },
+    "ListCorrectedGreen": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "0a069a763fd1971df727ce43bd026bffa1a4cd95f071c2e64c79eea89e3f86f9",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DatasetPresentationScopeTests.swift": "52059a7db6ba9f448d6c76cf597481a65bd4a2b01ef94802a4a44eb955c20c04",
+      "Planner/Scenes/SavedPlannerStore.swift": "a94a6b8dfa758e89f2ca7933352803fc752fd952fbf028ef53ee09fb005f0a6e",
+      "Planner/Scenes/SavedPlannerView.swift": "cd10e05dde33773fd16245addbd110b3f2ae02a537a5c4abf863724067932654",
+      "Planner/Scenes/SavedItemViews.swift": "12a20cbaec8d0f1f5d9a44b20bb4ff13d20835a112f05033be0f9c29a502c0ed",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "761c3fccce0e1c1cd331be907852606330d9e94a66aae62761c3f3e633ca043e",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "59f34dc480fe112fe00779a66b6ab7d86a6eab5d46454deefb5c8c147e387a9d",
+      "Planner/Scenes/SavedItemSort.swift": "323d2ca22a054c0b1f93cfe27ac10e1e851df3dedbac727769b6c5145df79b68",
+      "Planner/PrivacyInfo.xcprivacy": "a3799663af4d176d8ce1d87b8f061deddd8ebe7083de64ef5406f9e4844d30f2"
+    },
+    "EditModeRed": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "0a069a763fd1971df727ce43bd026bffa1a4cd95f071c2e64c79eea89e3f86f9",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DatasetPresentationScopeTests.swift": "52059a7db6ba9f448d6c76cf597481a65bd4a2b01ef94802a4a44eb955c20c04",
+      "Planner/Scenes/SavedPlannerStore.swift": "a94a6b8dfa758e89f2ca7933352803fc752fd952fbf028ef53ee09fb005f0a6e",
+      "Planner/Scenes/SavedPlannerView.swift": "cd10e05dde33773fd16245addbd110b3f2ae02a537a5c4abf863724067932654",
+      "Planner/Scenes/SavedItemViews.swift": "12a20cbaec8d0f1f5d9a44b20bb4ff13d20835a112f05033be0f9c29a502c0ed",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "761c3fccce0e1c1cd331be907852606330d9e94a66aae62761c3f3e633ca043e",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "803d48441d816c818d8048125d6affd542e9f11b61dd6e8134cb66b1fab227d2",
+      "Planner/Scenes/SavedItemSort.swift": "323d2ca22a054c0b1f93cfe27ac10e1e851df3dedbac727769b6c5145df79b68",
+      "Planner/PrivacyInfo.xcprivacy": "a3799663af4d176d8ce1d87b8f061deddd8ebe7083de64ef5406f9e4844d30f2"
+    },
+    "EditModeGreen": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "0a069a763fd1971df727ce43bd026bffa1a4cd95f071c2e64c79eea89e3f86f9",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DatasetPresentationScopeTests.swift": "52059a7db6ba9f448d6c76cf597481a65bd4a2b01ef94802a4a44eb955c20c04",
+      "Planner/Scenes/SavedPlannerStore.swift": "a94a6b8dfa758e89f2ca7933352803fc752fd952fbf028ef53ee09fb005f0a6e",
+      "Planner/Scenes/SavedPlannerView.swift": "b88c0c37c689fc4fa176dea5c7bf84024ac0ff8753e657d92228e57eadea1599",
+      "Planner/Scenes/SavedItemViews.swift": "12a20cbaec8d0f1f5d9a44b20bb4ff13d20835a112f05033be0f9c29a502c0ed",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "761c3fccce0e1c1cd331be907852606330d9e94a66aae62761c3f3e633ca043e",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "803d48441d816c818d8048125d6affd542e9f11b61dd6e8134cb66b1fab227d2",
+      "Planner/Scenes/SavedItemSort.swift": "323d2ca22a054c0b1f93cfe27ac10e1e851df3dedbac727769b6c5145df79b68",
+      "Planner/PrivacyInfo.xcprivacy": "a3799663af4d176d8ce1d87b8f061deddd8ebe7083de64ef5406f9e4844d30f2"
+    },
+    "OwnershipGreen": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "0a069a763fd1971df727ce43bd026bffa1a4cd95f071c2e64c79eea89e3f86f9",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DatasetPresentationScopeTests.swift": "52059a7db6ba9f448d6c76cf597481a65bd4a2b01ef94802a4a44eb955c20c04"
+    },
+    "CoreQualification": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "0a069a763fd1971df727ce43bd026bffa1a4cd95f071c2e64c79eea89e3f86f9",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DatasetPresentationScopeTests.swift": "52059a7db6ba9f448d6c76cf597481a65bd4a2b01ef94802a4a44eb955c20c04"
+    },
+    "QualificationBeforeEditFix": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "0a069a763fd1971df727ce43bd026bffa1a4cd95f071c2e64c79eea89e3f86f9",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DatasetPresentationScopeTests.swift": "52059a7db6ba9f448d6c76cf597481a65bd4a2b01ef94802a4a44eb955c20c04",
+      "Planner/Scenes/SavedPlannerStore.swift": "a94a6b8dfa758e89f2ca7933352803fc752fd952fbf028ef53ee09fb005f0a6e",
+      "Planner/Scenes/SavedPlannerView.swift": "cd10e05dde33773fd16245addbd110b3f2ae02a537a5c4abf863724067932654",
+      "Planner/Scenes/SavedItemViews.swift": "12a20cbaec8d0f1f5d9a44b20bb4ff13d20835a112f05033be0f9c29a502c0ed",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "761c3fccce0e1c1cd331be907852606330d9e94a66aae62761c3f3e633ca043e",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "59f34dc480fe112fe00779a66b6ab7d86a6eab5d46454deefb5c8c147e387a9d",
+      "Planner/Scenes/SavedItemSort.swift": "323d2ca22a054c0b1f93cfe27ac10e1e851df3dedbac727769b6c5145df79b68",
+      "Planner/PrivacyInfo.xcprivacy": "a3799663af4d176d8ce1d87b8f061deddd8ebe7083de64ef5406f9e4844d30f2"
+    },
+    "Qualification": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "0a069a763fd1971df727ce43bd026bffa1a4cd95f071c2e64c79eea89e3f86f9",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DatasetPresentationScopeTests.swift": "52059a7db6ba9f448d6c76cf597481a65bd4a2b01ef94802a4a44eb955c20c04",
+      "Planner/Scenes/SavedPlannerStore.swift": "a94a6b8dfa758e89f2ca7933352803fc752fd952fbf028ef53ee09fb005f0a6e",
+      "Planner/Scenes/SavedPlannerView.swift": "b88c0c37c689fc4fa176dea5c7bf84024ac0ff8753e657d92228e57eadea1599",
+      "Planner/Scenes/SavedItemViews.swift": "12a20cbaec8d0f1f5d9a44b20bb4ff13d20835a112f05033be0f9c29a502c0ed",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "761c3fccce0e1c1cd331be907852606330d9e94a66aae62761c3f3e633ca043e",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "803d48441d816c818d8048125d6affd542e9f11b61dd6e8134cb66b1fab227d2",
+      "Planner/Scenes/SavedItemSort.swift": "323d2ca22a054c0b1f93cfe27ac10e1e851df3dedbac727769b6c5145df79b68",
+      "Planner/PrivacyInfo.xcprivacy": "a3799663af4d176d8ce1d87b8f061deddd8ebe7083de64ef5406f9e4844d30f2"
+    }
+  },
+  "commands": {
+    "OwnershipRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter DatasetPresentationScopeTests > /private/tmp/PlannerNativeSortOwnershipRed.log 2>&1",
+    "OwnershipGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter DatasetPresentationScopeTests > /private/tmp/PlannerNativeSortOwnershipGreen.log 2>&1",
+    "CoreQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter 'DatasetPresentationScopeTests|ItemChronologicalSortTests|ItemDurationSortTests' > /private/tmp/PlannerNativeSortCoreQualification.log 2>&1",
+    "CatalogRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeItemSortUsesCanonicalModesAndRemembersDatasetScopedDeviceChoiceAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeSortCatalogRed.xcresult test > /private/tmp/PlannerNativeSortCatalogRed.log 2>&1",
+    "CatalogGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeItemSortUsesCanonicalModesAndRemembersDatasetScopedDeviceChoiceAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeSortCatalogGreen.xcresult test > /private/tmp/PlannerNativeSortCatalogGreen.log 2>&1",
+    "CatalogCorrectedGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeItemSortUsesCanonicalModesAndRemembersDatasetScopedDeviceChoiceAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeSortCatalogCorrectedGreen.xcresult test > /private/tmp/PlannerNativeSortCatalogCorrectedGreen.log 2>&1",
+    "ListRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress -resultBundlePath /private/tmp/PlannerNativeSortListRed.xcresult test > /private/tmp/PlannerNativeSortListRed.log 2>&1",
+    "ListGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress -resultBundlePath /private/tmp/PlannerNativeSortListGreen.xcresult test > /private/tmp/PlannerNativeSortListGreen.log 2>&1",
+    "ListCorrectedGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress -resultBundlePath /private/tmp/PlannerNativeSortListCorrectedGreen.xcresult test > /private/tmp/PlannerNativeSortListCorrectedGreen.log 2>&1",
+    "EditModeRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress -resultBundlePath /private/tmp/PlannerNativeSortEditModeRed.xcresult test > /private/tmp/PlannerNativeSortEditModeRed.log 2>&1",
+    "EditModeGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress -resultBundlePath /private/tmp/PlannerNativeSortEditModeGreen.xcresult test > /private/tmp/PlannerNativeSortEditModeGreen.log 2>&1",
+    "MacBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeSortMacBuild.xcresult build-for-testing > /private/tmp/PlannerNativeSortMacBuild.log 2>&1",
+    "PhoneQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeSortPhoneQualification.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeItemSortUsesCanonicalModesAndRemembersDatasetScopedDeviceChoiceAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters -only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch test > /private/tmp/PlannerNativeSortPhoneQualification.log 2>&1",
+    "TabletQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeSortTabletQualification.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeItemSortUsesCanonicalModesAndRemembersDatasetScopedDeviceChoiceAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters -only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch test > /private/tmp/PlannerNativeSortTabletQualification.log 2>&1",
+    "MacFinalBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeSortMacFinalBuild.xcresult build-for-testing > /private/tmp/PlannerNativeSortMacFinalBuild.log 2>&1",
+    "PhoneEditModeQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeSortPhoneEditModeQualification.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeItemSortUsesCanonicalModesAndRemembersDatasetScopedDeviceChoiceAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters -only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch test > /private/tmp/PlannerNativeSortPhoneEditModeQualification.log 2>&1",
+    "TabletEditModeQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeSortTabletEditModeQualification.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeItemSortUsesCanonicalModesAndRemembersDatasetScopedDeviceChoiceAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters -only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch test > /private/tmp/PlannerNativeSortTabletEditModeQualification.log 2>&1",
+    "MacEditModeBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeSortMacEditModeBuild.xcresult build-for-testing > /private/tmp/PlannerNativeSortMacEditModeBuild.log 2>&1"
+  },
+  "runs": {
+    "OwnershipRed": {
+      "logPath": "/private/tmp/PlannerNativeSortOwnershipRed.log",
+      "logSHA256": "1beee7dc861eb968c76620000db7d5fc9136d3247f7252be9cfe488f9f647bfe",
+      "sourceSnapshot": "OwnershipRed",
+      "exitCode": 1,
+      "outcome": "Compile failure at the unavailable approved ownership field",
+      "executedFunctions": 0
+    },
+    "OwnershipGreen": {
+      "logPath": "/private/tmp/PlannerNativeSortOwnershipGreen.log",
+      "logSHA256": "5a2717ac81eafc0a15aa8eafecad30c6ed678bb14a3d3742793d084d4b17ff93",
+      "sourceSnapshot": "OwnershipGreen",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 1,
+      "passedFunctions": 1,
+      "failedFunctions": 0
+    },
+    "CoreQualification": {
+      "logPath": "/private/tmp/PlannerNativeSortCoreQualification.log",
+      "logSHA256": "8718b4ad19c8376a06d3b81c9a5aca9f079e19b6e26ebd90b37d5ccc74e828b9",
+      "sourceSnapshot": "CoreQualification",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 5,
+      "passedFunctions": 5,
+      "failedFunctions": 0
+    },
+    "CatalogRed": {
+      "logPath": "/private/tmp/PlannerNativeSortCatalogRed.log",
+      "logSHA256": "ed0457fe42c7cd82eff64fe2f14ee97d210234f4cc96e784ab8b65d4d073092f",
+      "sourceSnapshot": "CatalogRed",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "summaryPath": "/private/tmp/PlannerNativeSortCatalogRedSummary.json",
+      "summarySHA256": "4ffd15b3d9ba8d9d4928135923c34471d5b582c1bc8af382bf394d90f23e7f5f",
+      "resultBundlePath": "/private/tmp/PlannerNativeSortCatalogRed.xcresult"
+    },
+    "CatalogGreen": {
+      "logPath": "/private/tmp/PlannerNativeSortCatalogGreen.log",
+      "logSHA256": "8d8cf0f4e8d4bcf3b46b59b04902242285e63d2a736c25250ac3f9561e660cd3",
+      "sourceSnapshot": "CatalogGreen",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "summaryPath": "/private/tmp/PlannerNativeSortCatalogGreenSummary.json",
+      "summarySHA256": "29817eb54e89fdea0bfbf76cad2072f8d67545b089147da74916961b2bfe8627",
+      "resultBundlePath": "/private/tmp/PlannerNativeSortCatalogGreen.xcresult"
+    },
+    "CatalogCorrectedGreen": {
+      "logPath": "/private/tmp/PlannerNativeSortCatalogCorrectedGreen.log",
+      "logSHA256": "d7cdc1625e93c3f3ba4588ad8f8bfc6b955975c68254dbc3ca3b5d34bf257811",
+      "sourceSnapshot": "CatalogCorrectedGreen",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 1,
+      "passedFunctions": 1,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "summaryPath": "/private/tmp/PlannerNativeSortCatalogCorrectedGreenSummary.json",
+      "summarySHA256": "e57a3d1c7612af1dfcf6aae4f18ce5e24f2b109428b2bd501cdfca27bd852616",
+      "resultBundlePath": "/private/tmp/PlannerNativeSortCatalogCorrectedGreen.xcresult"
+    },
+    "ListRed": {
+      "logPath": "/private/tmp/PlannerNativeSortListRed.log",
+      "logSHA256": "5be7995427cf34c0bd73ce28cc517dfff9a9ee8194c66da3e145a7bbcaf0a8d0",
+      "sourceSnapshot": "ListRed",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "summaryPath": "/private/tmp/PlannerNativeSortListRedSummary.json",
+      "summarySHA256": "0de0b229c6d97c951f7de245603c945857a8f84861b71f3aacd14c222975e4b6",
+      "resultBundlePath": "/private/tmp/PlannerNativeSortListRed.xcresult"
+    },
+    "ListGreen": {
+      "logPath": "/private/tmp/PlannerNativeSortListGreen.log",
+      "logSHA256": "b0c98515e16e6da7086bb8b09e0ff93d0a24094aea1d4095fc1e5c56d1b5c8e5",
+      "sourceSnapshot": "ListGreen",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "summaryPath": "/private/tmp/PlannerNativeSortListGreenSummary.json",
+      "summarySHA256": "73a6c0297497acc07b37c05722f9412fd22fb9fc1db28dd30a74a378fe579e40",
+      "resultBundlePath": "/private/tmp/PlannerNativeSortListGreen.xcresult"
+    },
+    "ListCorrectedGreen": {
+      "logPath": "/private/tmp/PlannerNativeSortListCorrectedGreen.log",
+      "logSHA256": "debd2ffaf27d8a6f32b6894392e8e6042bd074623ac8fc36dc7d6d35566aef16",
+      "sourceSnapshot": "ListCorrectedGreen",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 1,
+      "passedFunctions": 1,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "summaryPath": "/private/tmp/PlannerNativeSortListCorrectedGreenSummary.json",
+      "summarySHA256": "90b82749124d4675e2a96e0527363b82277d630ea34be6f53e34756429aabb51",
+      "resultBundlePath": "/private/tmp/PlannerNativeSortListCorrectedGreen.xcresult"
+    },
+    "EditModeRed": {
+      "logPath": "/private/tmp/PlannerNativeSortEditModeRed.log",
+      "logSHA256": "f3127f8067e9221ddc018f05140a7a08a9819ebaf973b7a0ca1cd592ed4f2397",
+      "sourceSnapshot": "EditModeRed",
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "summaryPath": "/private/tmp/PlannerNativeSortEditModeRedSummary.json",
+      "summarySHA256": "d786acf74b2f15724fded713ecbca5d57780ccb622f69701b9779e7b33b7916e",
+      "resultBundlePath": "/private/tmp/PlannerNativeSortEditModeRed.xcresult"
+    },
+    "EditModeGreen": {
+      "logPath": "/private/tmp/PlannerNativeSortEditModeGreen.log",
+      "logSHA256": "0b13c5885e3995f8806c90a5b36587c3876c5f1ccce05640fd2f863baafda5e4",
+      "sourceSnapshot": "EditModeGreen",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 1,
+      "passedFunctions": 1,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "summaryPath": "/private/tmp/PlannerNativeSortEditModeGreenSummary.json",
+      "summarySHA256": "c9f84292b6096fa47557b38febff684903e492e3a781e56774e24a4bbaa7db21",
+      "resultBundlePath": "/private/tmp/PlannerNativeSortEditModeGreen.xcresult"
+    },
+    "MacBuild": {
+      "logPath": "/private/tmp/PlannerNativeSortMacBuild.log",
+      "logSHA256": "9e3796c88ce85f0e980d3b3cf2dd72be8648367607b39434ed53ab4aa5346c95",
+      "sourceSnapshot": "ListGreen",
+      "exitCode": 0,
+      "outcome": "Build for testing succeeded",
+      "executedFunctions": 0
+    },
+    "PhoneQualification": {
+      "logPath": "/private/tmp/PlannerNativeSortPhoneQualification.log",
+      "logSHA256": "e221790d897ffab720e3c573dd28431096d2d8259a7796dae36cd2bac7c3039b",
+      "sourceSnapshot": "QualificationBeforeEditFix",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 4,
+      "passedFunctions": 4,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "summaryPath": "/private/tmp/PlannerNativeSortPhoneQualificationSummary.json",
+      "summarySHA256": "4ca754f50899067449b0a0e117f91ca4a3108411534424d983f5914b876b523b",
+      "resultBundlePath": "/private/tmp/PlannerNativeSortPhoneQualification.xcresult"
+    },
+    "TabletQualification": {
+      "logPath": "/private/tmp/PlannerNativeSortTabletQualification.log",
+      "logSHA256": "f9e3eab412fd83d161a36a7617dba09bd5f90eddd50cc1569a646f1e6a9fd016",
+      "sourceSnapshot": "QualificationBeforeEditFix",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 4,
+      "passedFunctions": 4,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "summaryPath": "/private/tmp/PlannerNativeSortTabletQualificationSummary.json",
+      "summarySHA256": "8c3af23a3fb7dab5f06c7c805b018717844c7be842720931c13b9b96ca6ff2fc",
+      "resultBundlePath": "/private/tmp/PlannerNativeSortTabletQualification.xcresult"
+    },
+    "MacFinalBuild": {
+      "logPath": "/private/tmp/PlannerNativeSortMacFinalBuild.log",
+      "logSHA256": "6cd5e251b5dd3e17546af7be5251040bf8e7a744ff832a3fb30a8cd3257a54ef",
+      "sourceSnapshot": "QualificationBeforeEditFix",
+      "exitCode": 0,
+      "outcome": "Build for testing succeeded",
+      "executedFunctions": 0
+    },
+    "PhoneEditModeQualification": {
+      "logPath": "/private/tmp/PlannerNativeSortPhoneEditModeQualification.log",
+      "logSHA256": "1fb7e13ddad10651b7dee023ba865871a2aea6e08a8ccc5b0e1a5fa14176b04a",
+      "sourceSnapshot": "Qualification",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 4,
+      "passedFunctions": 4,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "summaryPath": "/private/tmp/PlannerNativeSortPhoneEditModeQualificationSummary.json",
+      "summarySHA256": "1ab58eb6919dac22753536e937819fed695c372ab1184c65062d3ebe16c6433d",
+      "resultBundlePath": "/private/tmp/PlannerNativeSortPhoneEditModeQualification.xcresult"
+    },
+    "TabletEditModeQualification": {
+      "logPath": "/private/tmp/PlannerNativeSortTabletEditModeQualification.log",
+      "logSHA256": "c20113525ac61c934c433c580a0c45948c48f219f3c947bbded87c3ce7be2279",
+      "sourceSnapshot": "Qualification",
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 4,
+      "passedFunctions": 4,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "summaryPath": "/private/tmp/PlannerNativeSortTabletEditModeQualificationSummary.json",
+      "summarySHA256": "a24a0bcb39885573b5ab8982757fccb1725c5de8a30312de6625334851051a3e",
+      "resultBundlePath": "/private/tmp/PlannerNativeSortTabletEditModeQualification.xcresult"
+    },
+    "MacEditModeBuild": {
+      "logPath": "/private/tmp/PlannerNativeSortMacEditModeBuild.log",
+      "logSHA256": "e0c64cd7ee4e73b01bff354ee94b4b79b39dbd65784cfecb4aff92b0b21ac62e",
+      "sourceSnapshot": "Qualification",
+      "exitCode": 0,
+      "outcome": "Build for testing succeeded",
+      "executedFunctions": 0
+    }
+  },
+  "corrections": [
+    "CatalogGreen fails at the test assumption that UIKit exposes the Menu accessibility value. The current choice is moved into the native label and the test observes that label.",
+    "ListGreen fails before sorting at the test expectation for 1/3 progress. Native iOS accessibility reports 33%; the corrected test checks that percentage and exact one-of-three text, with the existing Toggle selector.",
+    "Both initial four-function simulator regressions pass, but capture inspection shows editing remains active after computed sorting. EditModeRed reproduces Done versus Edit. The native List and Edit button receive the same explicit binding; the unchanged strengthened journey passes. Final captures and qualification use this corrected source."
+  ],
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-sort-items-returned.png",
+      "phase": "PhoneEditModeQualification",
+      "name": "Returning dataset retains native Item sort",
+      "exportedFileName": "8E33B353-F875-4676-B680-CD39B8B93A29.png",
+      "sha256": "168a3115a07d03a75d27e0ba649e5754bc4b5572ed7c92f5eace2c5b83432634"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-sort-items.png",
+      "phase": "PhoneEditModeQualification",
+      "name": "Native Item chronological sort with device choice",
+      "exportedFileName": "E5BA5984-984F-4922-BED3-D5EBAFD56F48.png",
+      "sha256": "f0c054742465efb8a1be96aea2865fcca3752e998947594a8d973345733beb38"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-sort-list-reopened.png",
+      "phase": "PhoneEditModeQualification",
+      "name": "Relaunched List keeps its own sort and source order",
+      "exportedFileName": "0EED19CD-85BF-43ED-A3C5-59C218342FC5.png",
+      "sha256": "b0dd7bc97dc559f6f48ff9a813cd722f56f3ea1df3538abcf8594a707644904e"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-sort-list-manual.png",
+      "phase": "PhoneEditModeQualification",
+      "name": "Manual order restored with retained List completion",
+      "exportedFileName": "E78B5641-688F-4A14-A73A-ED348D51F257.png",
+      "sha256": "42a9162ffb6a7fe8b71b39917c76af0e4a71850e152d27e7981c0bdc0ed99a39"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-sort-items-returned.png",
+      "phase": "TabletEditModeQualification",
+      "name": "Returning dataset retains native Item sort",
+      "exportedFileName": "503C62CF-3144-4CC0-963A-ECC7E95B7A90.png",
+      "sha256": "5760e7d9045f59e9633f2e68e4f8273e1e5d9cd73b2b01c075adc1966acc4d63"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-sort-items.png",
+      "phase": "TabletEditModeQualification",
+      "name": "Native Item chronological sort with device choice",
+      "exportedFileName": "B0B4D5DB-DD44-411F-84A4-ECAB576FE519.png",
+      "sha256": "773f8d1b72f7ead6114d470e726b5ba99a4eb9a6b446e5537053c1e566fda723"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-sort-list-reopened.png",
+      "phase": "TabletEditModeQualification",
+      "name": "Relaunched List keeps its own sort and source order",
+      "exportedFileName": "46577111-C7AC-4A4F-8830-A4FC4F617F59.png",
+      "sha256": "105e19ab90bf4e4ed0fe31674de6b9db44bd52bc0a14266d191d76cc84b14469"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-sort-list-manual.png",
+      "phase": "TabletEditModeQualification",
+      "name": "Manual order restored with retained List completion",
+      "exportedFileName": "46507197-B134-44F3-9D3C-82C21F1254DE.png",
+      "sha256": "bebdac47a5b15bca27c56d862fa55ce7e1c4516a08ab46c6e480285de8b5ca54"
+    }
+  ],
+  "captureReview": "All eight final originals inspected. Manual List captures show Edit and no drag handles, retained Zulu local Done, one-of-three progress and Zulu/Alpha/Middle order. Narrow iPad Items title truncation remains part of resizing and whole-app polish qualification.",
+  "remainingGates": [
+    "Native numeric estimate entry and Q48/Q49 choices",
+    "List rename, same-UUID restored views across datasets/accounts and actual account transitions",
+    "Multiwindow preference refresh and import/export presentation preference preservation",
+    "Mac runtime, restoration and visual review; compiled bundles execute zero runtime functions",
+    "Physical iCloud/Share, keyboard/accessibility, resizing, paging, external refresh, 5000-Item/200-List responsiveness and final human review",
+    "Whole-app polish after features 14\u201317"
+  ],
+  "storage": {
+    "schemaVersion": 7,
+    "portableVersion": 1,
+    "mode": "localOnly",
+    "cloudKitEnabled": false,
+    "preferences": "App-only UserDefaults, dataset/opaque ownership hash and stable view/List UUID; excluded from shared data and portable backups",
+    "privacyReason": "CA92.1"
+  }
+}

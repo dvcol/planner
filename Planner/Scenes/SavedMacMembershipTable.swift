@@ -19,6 +19,7 @@ import UniformTypeIdentifiers
     let list: PlannerListSourceRead
     let items: [SavedPlannerItem]
     let selection: Binding<UUID?>
+    let canReorderMemberships: Bool
     let addToList: (SavedPlannerItem) -> Void
     let moveMembership: (SavedPlannerItem) -> Void
     let removeMembership: (UUID) -> Void
@@ -37,9 +38,9 @@ import UniformTypeIdentifiers
             }
             .contextMenu {
               Button("Move to Beginning") { reorder(item.id, placement: .first) }
-                .disabled(!store.canCreate || items.first?.id == item.id)
+                .disabled(!canReorderMemberships || items.first?.id == item.id)
               Button("Move to End") { reorder(item.id, placement: .last) }
-                .disabled(!store.canCreate || items.last?.id == item.id)
+                .disabled(!canReorderMemberships || items.last?.id == item.id)
               Divider()
               Button("Add to List") { addToList(item) }
                 .disabled(!store.canCreate)
@@ -51,12 +52,16 @@ import UniformTypeIdentifiers
           }
         } rows: {
           ForEach(items) { item in
-            TableRow(item)
-              .draggable(
-                SavedMembershipDragReference(listId: list.source.id, membershipId: item.id))
+            if canReorderMemberships {
+              TableRow(item)
+                .draggable(
+                  SavedMembershipDragReference(listId: list.source.id, membershipId: item.id))
+            } else {
+              TableRow(item)
+            }
           }
           .dropDestination(for: SavedMembershipDragReference.self) { insertionIndex, references in
-            guard store.canCreate, references.count == 1, let reference = references.first,
+            guard canReorderMemberships, references.count == 1, let reference = references.first,
               reference.listId == list.source.id, (0...items.count).contains(insertionIndex)
             else { return }
             if insertionIndex == items.count {
@@ -73,6 +78,7 @@ import UniformTypeIdentifiers
     }
 
     private func reorder(_ membershipId: UUID, placement: PlannerPlacement) {
+      guard canReorderMemberships else { return }
       Task {
         _ = await store.reorderMembership(
           membershipId, listId: list.source.id, placement: placement)
