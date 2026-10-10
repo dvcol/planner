@@ -13,6 +13,8 @@
         "categories": identityGroupSchema,
         "tags": identityGroupSchema,
         "lists": identityGroupSchema,
+        "hasAddress": .object(["type": .string("boolean"), "default": .bool(false)]),
+        "hasLinks": .object(["type": .string("boolean"), "default": .bool(false)]),
         "duration": .object([
           "oneOf": .array([
             .object(["type": .string("null")]),
@@ -227,13 +229,13 @@
         value, allowed: Set(query.keys), required: ["kind", "scope"], path: "/query")
       if let unsupported = Set(query.keys).subtracting([
         "kind", "scope", "text", "completion", "archive", "categories", "tags", "lists", "duration",
-        "sort", "rowPresentation",
+        "hasAddress", "hasLinks", "sort", "rowPresentation",
       ])
       .sorted().first {
         throw AdmissionFailure(
           code: "unavailable", path: "/query/" + unsupported,
           message:
-            "This query slice supports scope, text, completion, archive, Category/Tag/List groups, duration, sort and row presentation."
+            "This query slice supports scope, text, completion, archive, Category/Tag/List groups, duration, address/link presence, sort and row presentation."
         )
       }
       let nativeScope = try scope(query["scope"])
@@ -272,7 +274,20 @@
           categories: try identityGroup(query["categories"], path: "/query/categories"),
           tags: try identityGroup(query["tags"], path: "/query/tags"),
           lists: try identityGroup(query["lists"], path: "/query/lists"),
-          duration: try duration(query["duration"]), sort: sort, rowPresentation: presentation))
+          duration: try duration(query["duration"]),
+          hasAddress: try presenceRequirement(query["hasAddress"], path: "/query/hasAddress"),
+          hasLinks: try presenceRequirement(query["hasLinks"], path: "/query/hasLinks"),
+          sort: sort, rowPresentation: presentation))
+    }
+
+    private static func presenceRequirement(_ value: Value?, path: String) throws -> Bool {
+      switch value {
+      case nil: return false
+      case .bool(let required): return required
+      default:
+        throw AdmissionFailure(
+          code: "invalidInput", path: path, message: "Expected a Boolean presence requirement.")
+      }
     }
 
     private static func identityGroup(_ value: Value?, path: String) throws
