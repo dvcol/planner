@@ -25,4 +25,6 @@ The earlier read-only navigation comparison remains available with `./scripts/na
 
 Open decisions are native child issues of the map, with native blocking dependencies. Start with the first unblocked, unassigned child, or the decision named by the user.
 
+[Whole-application native UI polish](https://github.com/dvcol/planner/issues/23) follows feature completion. Its [Context, DoR, DoD and validation plan](docs/native-ui-polish.md) cover the finished iPhone, iPad and Mac scenes with native SwiftUI components, actual captures and accessibility/device review.
+
 Planner's own calendar, private iCloud synchronization and JSON portability are included. [Apple Calendar export](docs/itineraries-and-scheduling.md#accepted-export-scope-scheduling-q7) is deferred outside the current V0-V3 map.
