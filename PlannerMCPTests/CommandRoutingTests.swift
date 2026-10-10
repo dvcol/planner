@@ -5,6 +5,220 @@ import Testing
 @testable import Planner
 
 struct CommandRoutingTests {
+  @Test func subtitleEditOverHTTPPreservesNotesAndRejectsStaleChangesBeforeClearing() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(
+      configuration: PlannerStorageConfiguration(
+        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+        controlURL: directory.appendingPathComponent("control/writer"),
+        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+        processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let datasetSession) = await planner.bootstrap() else {
+      Issue.record("The real Planner dataset must initialize.")
+      return
+    }
+    let created = await planner.execute(
+      PlannerOperation(
+        operationId: UUID(), session: datasetSession,
+        command: .createItem(
+          content: PlannerItemContentInput(
+            title: "Hotel", subtitle: "Stay near station", notes: "Original notes"))))
+    guard case .applied(let result, .complete) = created.outcome else {
+      Issue.record("Hotel must be independently saved before editing.")
+      return
+    }
+    let source = try #require(result.generated.first)
+    guard
+      case .source(.item(let original)) = await planner.read(
+        session: datasetSession, request: .source(source))
+    else {
+      Issue.record("The original subtitle hash must come from a public read.")
+      return
+    }
+    let originalHash = try #require(original.fieldHashes[.subtitle])
+    let operationIdentifier = UUID()
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      let edit = try executionRequest(
+        endpoint: endpoint, operationIdentifier: operationIdentifier,
+        command: [
+          "type": "editItem", "sourceId": source.id.uuidString,
+          "changes": ["subtitle": "Museum and garden"],
+          "expectedFieldHashes": ["subtitle": originalHash.value],
+        ])
+      let edited = try operationValue(try await httpSession.data(for: edit), isError: false)
+      #expect(edited["state"] as? String == "applied")
+      let recovery = try #require(edited["recovery"] as? [String: Any])
+      #expect(recovery["state"] as? String == "complete")
+      #expect(recovery["checkpointGeneration"] as? String == "2")
+      guard
+        case .source(.item(let friday)) = await planner.read(
+          session: datasetSession, request: .source(source))
+      else {
+        Issue.record("HTTP must update the shared native Item.")
+        await listener.stop()
+        return
+      }
+      #expect(friday.content.title == "Hotel")
+      #expect(friday.content.notes == "Original notes")
+      #expect(friday.content.subtitle == "Museum and garden")
+      #expect(friday.state.globalDone == false)
+      #expect(friday.state.archived == false)
+      let staleRequest = try executionRequest(
+        endpoint: endpoint, operationIdentifier: UUID(),
+        command: [
+          "type": "editItem", "sourceId": source.id.uuidString,
+          "changes": ["subtitle": "Old subtitle proposal"],
+          "expectedFieldHashes": ["subtitle": originalHash.value],
+        ])
+      let stale = try operationValue(try await httpSession.data(for: staleRequest), isError: true)
+      #expect(stale["state"] as? String == "rejected")
+      let reason = try #require(stale["reason"] as? [String: Any])
+      #expect(reason["code"] as? String == "staleEdit")
+      let details = try #require(reason["details"] as? [String: Any])
+      #expect(details["kind"] as? String == "staleEdit")
+      #expect(details["conflictingFields"] as? [String] == ["subtitle"])
+      let currentValues = try #require(details["currentValues"] as? [String: Any])
+      #expect(currentValues["subtitle"] as? String == "Museum and garden")
+      let hashes = try #require(details["currentFieldHashes"] as? [String: String])
+      #expect(hashes["subtitle"] == friday.fieldHashes[.subtitle]?.value)
+      guard
+        case .source(.item(let current)) = await planner.read(
+          session: datasetSession, request: .source(source))
+      else {
+        Issue.record("A stale agent edit must retain the current Item.")
+        await listener.stop()
+        return
+      }
+      #expect(current.content.subtitle == "Museum and garden")
+      #expect(current.updatedAt == friday.updatedAt)
+      #expect(current.fieldHashes == friday.fieldHashes)
+      guard
+        case .appliedRecoveryComplete(let saved, let checkpoint) = await planner.operationStatus(
+          session: datasetSession, operationId: operationIdentifier)
+      else {
+        Issue.record("The successful edit must retain its original evidence.")
+        await listener.stop()
+        return
+      }
+      #expect(saved.affected == [source])
+      #expect(checkpoint == 2)
+      let currentSubtitleHash = try #require(current.fieldHashes[.subtitle])
+      let clear = try executionRequest(
+        endpoint: endpoint, operationIdentifier: UUID(),
+        command: [
+          "type": "editItem", "sourceId": source.id.uuidString,
+          "changes": ["subtitle": NSNull()],
+          "expectedFieldHashes": ["subtitle": currentSubtitleHash.value],
+        ])
+      let cleared = try operationValue(try await httpSession.data(for: clear), isError: false)
+      #expect(cleared["state"] as? String == "applied")
+      guard
+        case .source(.item(let afterClear)) = await planner.read(
+          session: datasetSession, request: .source(source))
+      else {
+        Issue.record("The cleared subtitle must remain publicly readable.")
+        await listener.stop()
+        return
+      }
+      #expect(afterClear.content.subtitle == nil)
+      #expect(afterClear.content.title == "Hotel")
+      #expect(afterClear.content.notes == "Original notes")
+      #expect(afterClear.state.globalDone == false)
+      #expect(afterClear.state.archived == false)
+      let replay = try operationValue(try await httpSession.data(for: edit), isError: false)
+      #expect(NSDictionary(dictionary: replay).isEqual(to: edited))
+      let changedReplay = try executionRequest(
+        endpoint: endpoint, operationIdentifier: operationIdentifier,
+        command: [
+          "type": "editItem", "sourceId": source.id.uuidString,
+          "changes": ["subtitle": "Different proposal"],
+          "expectedFieldHashes": ["subtitle": originalHash.value],
+        ])
+      let mismatch = try operationValue(
+        try await httpSession.data(for: changedReplay), isError: true)
+      #expect(
+        (mismatch["reason"] as? [String: Any])?["code"] as? String == "operationPayloadMismatch")
+      let invalidCommands: [[String: Any]] = [
+        [
+          "type": "editItem", "sourceId": source.id.uuidString,
+          "changes": ["subtitle": true, "title": "Must not apply"],
+          "expectedFieldHashes": ["subtitle": currentSubtitleHash.value],
+        ],
+        [
+          "type": "editItem", "sourceId": source.id.uuidString,
+          "changes": ["subtitle": "Missing guard"], "expectedFieldHashes": [:],
+        ],
+      ]
+      for invalidCommand in invalidCommands {
+        let invalidOperationIdentifier = UUID()
+        let invalidRequest = try executionRequest(
+          endpoint: endpoint, operationIdentifier: invalidOperationIdentifier,
+          command: invalidCommand)
+        let rejected = try operationValue(
+          try await httpSession.data(for: invalidRequest), isError: true)
+        #expect(rejected["state"] as? String == "rejected")
+        #expect((rejected["reason"] as? [String: Any])?["code"] as? String == "invalidInput")
+        guard
+          case .noReliableEvidence = await planner.operationStatus(
+            session: datasetSession, operationId: invalidOperationIdentifier)
+        else {
+          Issue.record("Invalid subtitle edits must not create an applied receipt.")
+          await listener.stop()
+          return
+        }
+      }
+      guard
+        case .source(.item(let retained)) = await planner.read(
+          session: datasetSession, request: .source(source))
+      else {
+        Issue.record("Replay and invalid requests must retain the cleared Item.")
+        await listener.stop()
+        return
+      }
+      #expect(retained.content.subtitle == nil)
+      #expect(retained.content.title == "Hotel")
+      #expect(retained.content.notes == "Original notes")
+      #expect(retained.updatedAt == afterClear.updatedAt)
+      #expect(retained.fieldHashes == afterClear.fieldHashes)
+      var catalogRequest = edit
+      catalogRequest.httpBody = try JSONSerialization.data(withJSONObject: [
+        "jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": [:],
+      ])
+      let (catalogData, catalogResponse) = try await httpSession.data(for: catalogRequest)
+      #expect((catalogResponse as? HTTPURLResponse)?.statusCode == 200)
+      let catalog = try #require(JSONSerialization.jsonObject(with: catalogData) as? [String: Any])
+      let tools = try #require((catalog["result"] as? [String: Any])?["tools"] as? [[String: Any]])
+      let execution = try #require(tools.first { $0["name"] as? String == "planner_execute" })
+      let properties = try #require(
+        (execution["inputSchema"] as? [String: Any])?["properties"] as? [String: Any])
+      let variants = try #require(
+        (properties["command"] as? [String: Any])?["oneOf"] as? [[String: Any]])
+      let itemEdit = try #require(
+        variants.first {
+          let fields = $0["properties"] as? [String: Any]
+          return (fields?["type"] as? [String: Any])?["const"] as? String == "editItem"
+        })
+      let itemEditProperties = try #require(itemEdit["properties"] as? [String: Any])
+      let changeSchema = try #require(itemEditProperties["changes"] as? [String: Any])
+      let changeProperties = try #require(changeSchema["properties"] as? [String: Any])
+      let subtitleSchema = try #require(changeProperties["subtitle"] as? [String: Any])
+      #expect(subtitleSchema["type"] as? [String] == ["string", "null"])
+      #expect(changeSchema["additionalProperties"] as? Bool == false)
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   @Test func notesEditOverHTTPRejectsStaleHashAndRetainsFridayBooking() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }

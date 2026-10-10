@@ -361,3 +361,5 @@ The initial package attempt had a test-fixture compilation error in its completi
 Strict affected Swift lint, Markdown lint and source/diff checks pass. CloudKit stays disabled. The HTTP edit route still rejects subtitle changes until its own routing/admission slice. Native rendering and stale-save presentation, device/account/Share sync, interruption and physical performance remain separate gates.
 
 The [native subtitle follow-up](navigation-local-qualification.md#shared-subtitle-editing-and-row-preview) qualifies the saved editor/List row against this Core revision on both simulators. Its separate notes-over-HTTP command selected zero functions and does not qualify that regression. HTTP subtitle admission remains unsupported.
+
+The subsequent [HTTP subtitle slice](mcp-http-qualification.md#guarded-item-subtitle-over-http) qualifies guarded Set/Clear, stale values, replay and invalid-input handling through the actual loopback adapter. Four affected functions, including notes editing, pass in the temporary native package runner. Native Mac app/test compilation passes; app-hosted XCTest startup remains open.
