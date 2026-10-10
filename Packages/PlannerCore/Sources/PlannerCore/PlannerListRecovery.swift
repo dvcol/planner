@@ -151,4 +151,13 @@ enum PortableSourceRecord: Codable {
     case .tag(let tag): tag.id
     }
   }
+
+  var kind: PlannerEntityKind {
+    switch self {
+    case .item: .item
+    case .list: .list
+    case .category: .category
+    case .tag: .tag
+    }
+  }
 }
