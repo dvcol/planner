@@ -3,6 +3,7 @@ import Foundation
 enum PortableDeletionTarget: Codable {
   case source(PlannerBoundIdentity)
   case membership(PlannerBoundIdentity)
+  case itineraryEntry(id: UUID, lifetimeId: UUID)
   case labelAssociation(id: UUID, lifetimeId: UUID)
 
   private enum CodingKeys: String, CodingKey { case kind, source, membership, id, lifetimeId }
@@ -14,6 +15,10 @@ enum PortableDeletionTarget: Codable {
       self = .source(try fields.decode(PlannerBoundIdentity.self, forKey: .source))
     case "membership":
       self = .membership(try fields.decode(PlannerBoundIdentity.self, forKey: .membership))
+    case "itineraryEntry":
+      self = .itineraryEntry(
+        id: try fields.decode(UUID.self, forKey: .id),
+        lifetimeId: try fields.decode(UUID.self, forKey: .lifetimeId))
     case "labelAssociation":
       self = .labelAssociation(
         id: try fields.decode(UUID.self, forKey: .id),
@@ -33,6 +38,10 @@ enum PortableDeletionTarget: Codable {
     case .membership(let membership):
       try fields.encode("membership", forKey: .kind)
       try fields.encode(membership, forKey: .membership)
+    case .itineraryEntry(let identifier, let lifetimeId):
+      try fields.encode("itineraryEntry", forKey: .kind)
+      try fields.encode(identifier, forKey: .id)
+      try fields.encode(lifetimeId, forKey: .lifetimeId)
     case .labelAssociation(let identifier, let lifetimeId):
       try fields.encode("labelAssociation", forKey: .kind)
       try fields.encode(identifier, forKey: .id)
@@ -61,12 +70,22 @@ struct PortableDeletionMarker: Codable {
 
   func validated(
     schedules: [PortableScheduleRecord], memberships: [PortableMembershipRecord],
-    labelAssociations: [PortableLabelAssociationRecord]
+    labelAssociations: [PortableLabelAssociationRecord], entries: [PortableItineraryEntryRecord]
   )
     throws
     -> PlannerPortableDeletionMarker
   {
     switch target {
+    case .itineraryEntry(let identifier, let lifetimeId):
+      guard closedFamilyId == nil,
+        !entries.contains(where: { $0.id == identifier && $0.lifetimeId == lifetimeId })
+      else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "The removed itinerary entry is still live or unsupported.")
+      }
+      return .init(
+        deletionId: deletionId, operationId: operationId,
+        target: .itineraryEntry(id: identifier, lifetimeId: lifetimeId), closedFamilyId: nil)
     case .source(let source):
       guard source.kind == "schedule", closedFamilyId == nil,
         !schedules.contains(where: { $0.id == source.id && $0.lifetimeId == source.lifetimeId })
