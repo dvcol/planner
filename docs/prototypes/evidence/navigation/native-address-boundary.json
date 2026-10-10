@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-11",
+  "scope": "Temporary native address cache/provider and real MapKit adapter; no native address UI yet",
+  "baseCommit": "6d5a84a",
+  "qualification": {
+    "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer PLANNER_PREVIEW_FIXTURE_URL=http://127.0.0.1:44555 PLANNER_ADDRESS_FIXTURE='1 Apple Park Way, Cupertino, CA' swift test --package-path Packages/PlannerPreviews --scratch-path /private/tmp/PlannerPreviewsPackageBuild",
+    "log": "/private/tmp/PlannerAddressPreviewQualification.log",
+    "exitCode": 0,
+    "executedFunctions": 10,
+    "executedSuites": 4,
+    "caseInvocations": 15,
+    "appleLinkSDKEnabled": true,
+    "appleAddressSDKEnabled": true
+  },
+  "priorRuns": [
+    {
+      "log": "/private/tmp/PlannerAddressPreviewSingleRed.log",
+      "exitCode": 1,
+      "outcome": "Missing address interface compile red"
+    },
+    {
+      "log": "/private/tmp/PlannerAddressPreviewSingleGreen.log",
+      "exitCode": 0,
+      "functions": 1
+    },
+    {
+      "log": "/private/tmp/PlannerAddressPreviewRetryRed.log",
+      "exitCode": 1,
+      "outcome": "Missing retry command compile red"
+    },
+    {
+      "log": "/private/tmp/PlannerAddressPreviewRetryGreen.log",
+      "exitCode": 0,
+      "functions": 2
+    },
+    {
+      "log": "/private/tmp/PlannerAddressPreviewCacheQualification.log",
+      "exitCode": 0,
+      "functions": 4,
+      "caseInvocations": 7,
+      "outcome": "Controlled stale/cancellation qualification; existing implementation passed these added tests"
+    },
+    {
+      "log": "/private/tmp/PlannerAddressPreviewAppleRed.log",
+      "exitCode": 1,
+      "outcome": "Missing Apple adapter plus cascading expression type-check error"
+    },
+    {
+      "log": "/private/tmp/PlannerAddressPreviewAppleGreen.log",
+      "exitCode": 0,
+      "functions": 1,
+      "outcome": "Real MapKit service result near Cupertino"
+    }
+  ],
+  "nativeBuilds": [
+    {
+      "destination": "iPhone18 Pro iOS27 simulator",
+      "log": "/private/tmp/PlannerAddressPreviewPhoneBuild.log",
+      "resultBundle": "/private/tmp/PlannerAddressPreviewPhoneBuild.xcresult",
+      "exitCode": 0,
+      "runtimeFunctions": 0
+    },
+    {
+      "destination": "macOS arm64",
+      "log": "/private/tmp/PlannerAddressPreviewMacBuild.log",
+      "resultBundle": "/private/tmp/PlannerAddressPreviewMacBuild.xcresult",
+      "exitCode": 0,
+      "runtimeFunctions": 0
+    }
+  ],
+  "sourceHashes": {
+    "Packages/PlannerPreviews/Sources/PlannerPreviews/PlannerAddressPreviews.swift": "1c6d4976574782f73dd7b7e655636804fed20186ab36487d993402bf119be9e3",
+    "Packages/PlannerPreviews/Sources/PlannerPreviews/AppleAddressPreviewProvider.swift": "2361449dd06f367829f77cace3ec6d2cf7bd93f0950c25a2d4674d33aa091b75",
+    "Packages/PlannerPreviews/Tests/PlannerPreviewsTests/AddressPreviewTests.swift": "3214b13eb280f03c3fdde30b8a735a16ba5cd912fefb42a3f3f6df3397c48a87",
+    "Packages/PlannerPreviews/Tests/PlannerPreviewsTests/AppleAddressPreviewTests.swift": "4a02ddfb55203d9b5c794bbaa85623b3c692b6de8dc27c4cec7b95a048ec1f9a"
+  },
+  "openGates": [
+    "Native map detail rendering and candidate selection",
+    "Native location editing awaits Q51 pin-retention decision",
+    "Mac runtime and physical signed-device qualification"
+  ],
+  "warnings": "Native raw build logs retain AppIntents metadata-extraction warning"
+}

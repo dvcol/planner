@@ -33,3 +33,13 @@ Three affected native functions pass per simulator: rich/plain previews with rem
 - Qualify Mac runtime, keyboard/accessibility behavior, window resizing, long-list performance and final human layout review.
 - Add the address provider and prove zero/one/multiple candidates and stale-result isolation.
 - Keep physical CloudKit, account recovery and Share validation in their existing signed-device gates.
+
+## Address boundary
+
+The address cache/provider now accepts an immutable source namespace/identity/lifetime and the exact owned address. It returns zero, one or multiple temporary candidates without selecting one or changing owned content. A failed request remains retryable; an empty successful result is distinct from failure. Equal requests share work and cached results. Address, namespace, source identity and lifetime changes isolate late callbacks. The shared fetch survives a disappearing caller. The memory cache retains at most its configured 128-entry target and has no persisted representation.
+
+`AppleAddressPreviewProvider` uses Apple's [MKGeocodingRequest](https://developer.apple.com/documentation/mapkit/mkgeocodingrequest) and modern `MKMapItem.location`, identifier and address representations. Invalid coordinates are excluded before presentation. The adapter test executes the real service against the known public Apple Park address and verifies a candidate near Cupertino with a formatted address. Zero/multiple/error and delayed cases use controlled responses at the production provider boundary; that live address test does not prove those cases.
+
+The combined preview package passes ten functions in four suites, including fifteen case invocations and both real Apple SDK tests enabled. Mac and iPhone app/test bundles compile with zero runtime UI functions in these builds. The [address boundary evidence](evidence/navigation/native-address-boundary.json) records commands, source hashes and compile red/green history. The initial missing-adapter red also produced a cascading expression type-check error; the implemented adapter resolves both.
+
+Native address detail presentation, candidate selection and location editing remain open. Q51 asks how an address edit should affect an existing owned pin; it does not block this readonly provider boundary. No schema, backup or agent administration interface changes are introduced.
