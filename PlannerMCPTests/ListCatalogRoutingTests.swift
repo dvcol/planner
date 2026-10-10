@@ -280,7 +280,7 @@ struct ListCatalogRoutingTests {
       let querySchema = try #require(
         (schema["properties"] as? [String: Any])?["query"] as? [String: Any])
       let variants = try #require(querySchema["oneOf"] as? [[String: Any]])
-      #expect(variants.count == 2)
+      #expect(variants.count == 3)
       let catalog = try #require(
         variants.first {
           (($0["properties"] as? [String: Any])?["kind"] as? [String: Any])?["const"] as? String
