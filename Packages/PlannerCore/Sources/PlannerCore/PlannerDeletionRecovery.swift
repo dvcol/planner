@@ -3,8 +3,9 @@ import Foundation
 enum PortableDeletionTarget: Codable {
   case source(PlannerBoundIdentity)
   case membership(PlannerBoundIdentity)
+  case labelAssociation(id: UUID, lifetimeId: UUID)
 
-  private enum CodingKeys: String, CodingKey { case kind, source, membership }
+  private enum CodingKeys: String, CodingKey { case kind, source, membership, id, lifetimeId }
 
   init(from decoder: any Decoder) throws {
     let fields = try decoder.container(keyedBy: CodingKeys.self)
@@ -13,6 +14,10 @@ enum PortableDeletionTarget: Codable {
       self = .source(try fields.decode(PlannerBoundIdentity.self, forKey: .source))
     case "membership":
       self = .membership(try fields.decode(PlannerBoundIdentity.self, forKey: .membership))
+    case "labelAssociation":
+      self = .labelAssociation(
+        id: try fields.decode(UUID.self, forKey: .id),
+        lifetimeId: try fields.decode(UUID.self, forKey: .lifetimeId))
     default:
       throw PlannerFailure(
         "recoveryIntegrityFailure", "The deletion target kind is unsupported.")
@@ -28,6 +33,10 @@ enum PortableDeletionTarget: Codable {
     case .membership(let membership):
       try fields.encode("membership", forKey: .kind)
       try fields.encode(membership, forKey: .membership)
+    case .labelAssociation(let identifier, let lifetimeId):
+      try fields.encode("labelAssociation", forKey: .kind)
+      try fields.encode(identifier, forKey: .id)
+      try fields.encode(lifetimeId, forKey: .lifetimeId)
     }
   }
 }
@@ -50,7 +59,10 @@ struct PortableDeletionMarker: Codable {
     try fields.encode(closedFamilyId, forKey: .closedFamilyId)
   }
 
-  func validated(schedules: [PortableScheduleRecord], memberships: [PortableMembershipRecord])
+  func validated(
+    schedules: [PortableScheduleRecord], memberships: [PortableMembershipRecord],
+    labelAssociations: [PortableLabelAssociationRecord]
+  )
     throws
     -> PlannerPortableDeletionMarker
   {
@@ -80,6 +92,16 @@ struct PortableDeletionMarker: Codable {
         deletionId: deletionId, operationId: operationId,
         target: .membership(id: membership.id, lifetimeId: membership.lifetimeId),
         closedFamilyId: nil)
+    case .labelAssociation(let identifier, let lifetimeId):
+      guard closedFamilyId == nil,
+        !labelAssociations.contains(where: { $0.id == identifier && $0.lifetimeId == lifetimeId })
+      else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "The removed label association is still live or unsupported.")
+      }
+      return PlannerPortableDeletionMarker(
+        deletionId: deletionId, operationId: operationId,
+        target: .labelAssociation(id: identifier, lifetimeId: lifetimeId), closedFamilyId: nil)
     }
   }
 }

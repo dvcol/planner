@@ -105,6 +105,11 @@
                       ])
                     } ?? .null
                 case .links(let links): encoded = .array(links.map(PlannerMCPRowValue.link))
+                case .identitySet(let identifiers):
+                  encoded = .array(
+                    identifiers.sorted { $0.uuidString < $1.uuidString }.map {
+                      .string($0.uuidString)
+                    })
                 }
                 return (field.rawValue, encoded)
               })),

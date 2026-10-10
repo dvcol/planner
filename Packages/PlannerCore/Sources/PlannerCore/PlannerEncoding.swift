@@ -204,12 +204,12 @@ extension PlannerFieldChange {
 
 extension PlannerItemChanges {
   func validatedFields() throws -> [PlannerItemField] {
-    guard categoryIds.isUnchanged, tagIds.isUnchanged
-    else {
-      throw PlannerFailure(
-        "unavailable",
-        "This edit fixture currently supports title, subtitle, notes, location, estimate and links only."
-      )
+    for (field, change) in [(PlannerItemField.categoryIds, categoryIds), (.tagIds, tagIds)] {
+      if case .clear = change {
+        throw PlannerFailure(
+          "invalidInput", "A label selection must use an identity set, including an empty set.",
+          propertyPath: "/command/changes/\(field.rawValue)")
+      }
     }
     switch title {
     case .clear:
@@ -262,6 +262,8 @@ extension PlannerItemChanges {
     if !location.isUnchanged { fields.append(.location) }
     if !estimate.isUnchanged { fields.append(.estimate) }
     if !links.isUnchanged { fields.append(.links) }
+    if !categoryIds.isUnchanged { fields.append(.categoryIds) }
+    if !tagIds.isUnchanged { fields.append(.tagIds) }
     guard !fields.isEmpty else {
       throw PlannerFailure(
         "invalidInput", "An Item edit must contain at least one changed field.",
@@ -276,6 +278,8 @@ extension PlannerItemChanges {
     var updatedNotes = input.notes
     var updatedLocation = input.location
     var updatedEstimate = input.estimate
+    var updatedCategoryIds = input.categoryIds
+    var updatedTagIds = input.tagIds
     switch title {
     case .set(let value): updatedTitle = value
     case .clear: throw PlannerFailure("invalidInput", "An Item title cannot be cleared.")
@@ -301,10 +305,12 @@ extension PlannerItemChanges {
     case .clear: updatedEstimate = nil
     case .unchanged: break
     }
+    if case .set(let identifiers) = categoryIds { updatedCategoryIds = identifiers }
+    if case .set(let identifiers) = tagIds { updatedTagIds = identifiers }
     return PlannerItemContentInput(
       title: updatedTitle, subtitle: updatedSubtitle, notes: updatedNotes,
       location: updatedLocation, estimate: updatedEstimate,
-      categoryIds: input.categoryIds, tagIds: input.tagIds
+      categoryIds: updatedCategoryIds, tagIds: updatedTagIds
     )
   }
 
@@ -336,6 +342,12 @@ extension PlannerItemChanges {
     }
     if case .set(let values) = links {
       changedValues["links"] = .ordered(values.map(\.canonicalValue))
+    }
+    if case .set(let identifiers) = categoryIds {
+      changedValues["categoryIds"] = .identitySet(identifiers.map(PlannerCanonicalValue.identity))
+    }
+    if case .set(let identifiers) = tagIds {
+      changedValues["tagIds"] = .identitySet(identifiers.map(PlannerCanonicalValue.identity))
     }
     var usedHashes: [String: PlannerCanonicalValue] = [:]
     for field in fields {

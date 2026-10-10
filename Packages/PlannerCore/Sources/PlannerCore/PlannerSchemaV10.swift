@@ -149,6 +149,40 @@ enum PlannerSchemaV10: VersionedSchema {
         context.delete(record)
       }
     }
+
+    func replaceLabelAssociations(
+      with snapshots: [LabelAssociationSnapshot], categories: [Category], tags: [Tag],
+      context: ModelContext
+    ) throws {
+      let previous = labelAssociations ?? []
+      let replacements = try snapshots.map { snapshot in
+        if let existing = previous.first(where: {
+          $0.id == snapshot.id && $0.lifetimeId == snapshot.lifetimeId
+        }) {
+          return existing
+        }
+        let category = categories.first {
+          $0.id == snapshot.label.id && $0.lifetimeId == snapshot.label.lifetimeId
+            && snapshot.label.kind == "category"
+        }
+        let tag = tags.first {
+          $0.id == snapshot.label.id && $0.lifetimeId == snapshot.label.lifetimeId
+            && snapshot.label.kind == "tag"
+        }
+        guard category != nil || tag != nil else {
+          throw PlannerFailure("missingReference", "A replacement label binding is unresolved.")
+        }
+        let association = LabelAssociation(
+          snapshot: snapshot, item: self, category: category, tag: tag)
+        context.insert(association)
+        return association
+      }
+      labelAssociations = replacements
+      let identifiers = Set(snapshots.map(\.id))
+      for removed in previous where removed.id.map({ !identifiers.contains($0) }) ?? true {
+        context.delete(removed)
+      }
+    }
   }
 
   @Model final class OwnedLink {
@@ -406,6 +440,19 @@ enum PlannerSchemaV10: VersionedSchema {
     var itemOwner: Item? = nil
     var category: Category? = nil
     var tag: Tag? = nil
+
+    init(snapshot: LabelAssociationSnapshot, item: Item, category: Category?, tag: Tag?) {
+      id = snapshot.id
+      lifetimeId = snapshot.lifetimeId
+      ownerId = snapshot.owner.id
+      ownerLifetimeId = snapshot.owner.lifetimeId
+      labelKind = snapshot.label.kind
+      labelId = snapshot.label.id
+      labelLifetimeId = snapshot.label.lifetimeId
+      itemOwner = item
+      self.category = category
+      self.tag = tag
+    }
 
     init(item: Item, category: Category) {
       id = UUID()

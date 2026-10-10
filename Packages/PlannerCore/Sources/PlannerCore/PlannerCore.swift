@@ -1220,7 +1220,10 @@ public actor Planner {
     return snapshots
   }
 
-  private func selectedCategoryRecords(_ identifiers: Set<UUID>, context: ModelContext) throws
+  private func selectedCategoryRecords(
+    _ identifiers: Set<UUID>, context: ModelContext,
+    propertyPath: String = "/command/content/categoryIds"
+  ) throws
     -> [PlannerSchemaV10.Category]
   {
     try identifiers.sorted { $0.uuidString < $1.uuidString }.map { identifier in
@@ -1230,14 +1233,17 @@ public actor Planner {
       guard records.count == 1, let record = records.first else {
         throw PlannerFailure(
           "missingReference", "A selected Category is missing or ambiguous.",
-          propertyPath: "/command/content/categoryIds")
+          propertyPath: propertyPath)
       }
       _ = try record.value()
       return record
     }
   }
 
-  private func selectedTagRecords(_ identifiers: Set<UUID>, context: ModelContext) throws
+  private func selectedTagRecords(
+    _ identifiers: Set<UUID>, context: ModelContext,
+    propertyPath: String = "/command/content/tagIds"
+  ) throws
     -> [PlannerSchemaV10.Tag]
   {
     try identifiers.sorted { $0.uuidString < $1.uuidString }.map { identifier in
@@ -1247,7 +1253,7 @@ public actor Planner {
       guard records.count == 1, let record = records.first else {
         throw PlannerFailure(
           "missingReference", "A selected Tag is missing or ambiguous.",
-          propertyPath: "/command/content/tagIds")
+          propertyPath: propertyPath)
       }
       _ = try record.value()
       return record
@@ -3216,10 +3222,31 @@ public actor Planner {
       throw PlannerFailure("missingReference", "The selected Item is missing or unresolved.")
     }
     let before = try item.value()
+    var selectedCategories: [PlannerSchemaV10.Category] = []
+    var selectedTags: [PlannerSchemaV10.Tag] = []
+    if case .set(let identifiers) = changes.categoryIds {
+      selectedCategories = try selectedCategoryRecords(
+        identifiers, context: context, propertyPath: "/command/changes/categoryIds")
+    }
+    if case .set(let identifiers) = changes.tagIds {
+      selectedTags = try selectedTagRecords(
+        identifiers, context: context, propertyPath: "/command/changes/tagIds")
+    }
+    let selectedBindings =
+      try selectedCategories.map { record in
+        let snapshot = try record.value()
+        return PlannerBoundIdentity(
+          kind: "category", id: snapshot.id, lifetimeId: snapshot.lifetimeId)
+      }
+      + selectedTags.map { record in
+        let snapshot = try record.value()
+        return PlannerBoundIdentity(kind: "tag", id: snapshot.id, lifetimeId: snapshot.lifetimeId)
+      }
     let bindings =
       [
         PlannerBoundIdentity(kind: "item", id: before.id, lifetimeId: before.lifetimeId)
-      ] + (try changes.linkBindings(in: before))
+      ] + (try changes.linkBindings(in: before)) + selectedBindings
+      + changes.labelAssociationBindings(in: before)
     let digest = try changes.editPayloadDigest(
       sourceId: sourceId, fields: changedFields, hashes: hashes, identity: identity,
       bindings: bindings
@@ -3236,7 +3263,7 @@ public actor Planner {
     }
     let fieldHashes = before.input.fieldHashes(
       datasetId: identity.datasetId, itemId: before.id, lifetimeId: before.lifetimeId,
-      links: before.links.map(\.read)
+      links: before.links.map(\.read), labelAssociations: before.labelAssociations
     )
     let conflictingFields = changedFields.filter { fieldHashes[$0] != hashes[$0] }
     if !conflictingFields.isEmpty {
@@ -3253,6 +3280,8 @@ public actor Planner {
         if field == .location { currentValues[field] = .optionalLocation(before.input.location) }
         if field == .estimate { currentValues[field] = .optionalEstimate(before.input.estimate) }
         if field == .links { currentValues[field] = .links(before.links.map(\.read)) }
+        if field == .categoryIds { currentValues[field] = .identitySet(before.input.categoryIds) }
+        if field == .tagIds { currentValues[field] = .identitySet(before.input.tagIds) }
       }
       throw PlannerFailure(
         "staleEdit", "Changed fields differ from the supplied read.",
@@ -3266,26 +3295,69 @@ public actor Planner {
     let updatedLocationData = try updatedInput.location.map { try JSONEncoder().encode($0) }
     let updatedEstimateData = try updatedInput.estimate.map { try JSONEncoder().encode($0) }
     let updatedLinks = try changes.applyingLinks(to: before)
+    let updatedAssociations = changes.applyingLabelAssociations(
+      to: before, selectedLabels: selectedBindings)
+    let availableMetadata =
+      try selectedCategories.map { record in
+        let snapshot = try record.value()
+        return PlannerLabelRead(
+          reference: snapshot.reference, name: snapshot.content.name,
+          color: snapshot.content.color, iconName: snapshot.content.iconName)
+      }
+      + selectedTags.map { record in
+        let snapshot = try record.value()
+        return PlannerLabelRead(
+          reference: snapshot.reference, name: snapshot.content.name,
+          color: snapshot.content.color, iconName: snapshot.content.iconName)
+      } + before.labels
+    let updatedLabels = try updatedAssociations.map { association in
+      guard
+        let metadata = availableMetadata.first(where: { $0.reference == association.labelReference }
+        )
+      else { throw PlannerFailure("readUnavailable", "The selected label metadata is unresolved.") }
+      return metadata
+    }
+    let previousIdentifiers = Set(before.labelAssociations.map(\.id))
+    let updatedIdentifiers = Set(updatedAssociations.map(\.id))
+    let added = updatedAssociations.filter { !previousIdentifiers.contains($0.id) }
+    let removed = before.labelAssociations.filter { !updatedIdentifiers.contains($0.id) }
+    let removalMarkers = removed.map { association in
+      PortableDeletionMarker(
+        deletionId: UUID(), operationId: operation.operationId,
+        target: .labelAssociation(id: association.id, lifetimeId: association.lifetimeId),
+        closedFamilyId: nil)
+    }
+    let markers = try deletionMarkers(context) + removalMarkers
+    let associations =
+      try labelAssociationSnapshots(context).filter {
+        $0.owner.kind != "item" || $0.owner.id != before.id
+          || $0.owner.lifetimeId != before.lifetimeId
+      } + updatedAssociations
     let after = ItemSnapshot(
       id: before.id, lifetimeId: before.lifetimeId, createdAt: before.createdAt, updatedAt: now,
       input: updatedInput, globalDone: before.globalDone, archived: before.archived,
       links: updatedLinks, schedules: before.schedules,
-      labelAssociations: before.labelAssociations, labels: before.labels
+      labelAssociations: updatedAssociations, labels: updatedLabels
     )
     let snapshots = try items.map { record in
       if record.id == sourceId { return after }
       return try record.value()
     }
-    let result = PlannerAppliedResult(generated: [], affected: [before.reference])
+    let result = PlannerAppliedResult(
+      generatedIdentities: added.map { .reference($0.reference) },
+      affectedIdentities: [.source(before.reference)]
+        + (removed + added).sorted { $0.id.uuidString < $1.id.uuidString }.map {
+          .reference($0.reference)
+        })
     let proposal = RecoveryPreparedProposal(
       proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
       proposedBackup: PlannerDataSnapshot(
-        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        labelAssociations: associations, tags: try tagSnapshots(context),
         categories: try categorySnapshots(context),
         items: snapshots, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
-        deletionMarkers: try deletionMarkers(context)),
+        deletionMarkers: markers),
       payloadDigest: digest, evidence: "preparedUnverified"
     )
     try archive.prepare(proposal)
@@ -3297,6 +3369,12 @@ public actor Planner {
     if changedFields.contains(.location) { item.locationData = updatedLocationData }
     if changedFields.contains(.estimate) { item.estimateData = updatedEstimateData }
     if changedFields.contains(.links) { item.replaceLinks(with: updatedLinks, context: context) }
+    if !changes.changedLabelKinds.isEmpty {
+      try item.replaceLabelAssociations(
+        with: updatedAssociations, categories: selectedCategories, tags: selectedTags,
+        context: context)
+    }
+    for marker in removalMarkers { context.insert(PlannerSchemaV4.DeletionMarker(marker)) }
     item.updatedAt = now
     context.insert(receipt)
     do { try context.save() } catch {
@@ -3307,11 +3385,11 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
-        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        labelAssociations: associations, tags: try tagSnapshots(context),
         categories: try categorySnapshots(context),
         items: snapshots, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
-        deletionMarkers: try deletionMarkers(context),
+        deletionMarkers: markers,
         receipts: receipts + [receipt])
       return PlannerOperationResult(
         operationId: operation.operationId,

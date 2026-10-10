@@ -53,6 +53,7 @@ public enum PlannerItemFieldValue: Sendable, Equatable {
   case optionalLocation(PlannerOwnedLocation?)
   case optionalEstimate(PlannerEstimate?)
   case links([PlannerOwnedLinkRead])
+  case identitySet(Set<UUID>)
 }
 
 public enum PlannerFailureDetails: Sendable, Equatable {
