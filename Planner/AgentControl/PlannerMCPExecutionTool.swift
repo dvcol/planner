@@ -233,6 +233,7 @@
           "type": .string("object"), "additionalProperties": .bool(false), "minProperties": .int(1),
           "properties": .object([
             "title": .object(["type": .string("string")]),
+            "subtitle": .object(["type": .array([.string("string"), .string("null")])]),
             "notes": .object(["type": .array([.string("string"), .string("null")])]),
             "location": locationSchema,
             "links": linksSchema,
@@ -1031,13 +1032,14 @@
       let fieldNames = Set(PlannerItemField.allCases.map(\.rawValue))
       let changes = try object(
         command["changes"], allowed: fieldNames, required: [], path: "/command/changes")
-      if let unsupported = Set(changes.keys).subtracting(["title", "notes", "location", "links"])
-        .sorted()
-        .first
-      {
+      if let unsupported = Set(changes.keys).subtracting([
+        "title", "subtitle", "notes", "location", "links",
+      ])
+      .sorted()
+      .first {
         throw AdmissionFailure(
           "unavailable", "/command/changes/" + unsupported,
-          "This edit slice supports title, notes, location and links only.")
+          "This edit slice supports title, subtitle, notes, location and links only.")
       }
       let hashValues = try object(
         command["expectedFieldHashes"], allowed: fieldNames, required: [],
@@ -1061,6 +1063,7 @@
         sourceId: sourceIdentifier,
         changes: PlannerItemChanges(
           title: try textChange(changes["title"], path: "/command/changes/title"),
+          subtitle: try textChange(changes["subtitle"], path: "/command/changes/subtitle"),
           notes: try textChange(changes["notes"], path: "/command/changes/notes"),
           location: try locationChange(changes["location"], path: "/command/changes/location"),
           links: linkChanges),
