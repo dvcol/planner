@@ -107,6 +107,7 @@ public enum PlannerAppearance: Sendable, Equatable, Codable {
 public struct PlannerAppearanceRead: Sendable {
   public let appearance: PlannerAppearance
   public let source: PlannerEntityReference
+  public let sourceLifetimeId: UUID
   public let content: PlannerItemContent
   public let globalDone: Bool
   public let localDone: Bool

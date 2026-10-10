@@ -331,6 +331,7 @@ public enum PlannerSourceRead: Sendable {
 
 public struct PlannerItemSourceRead: Sendable {
   public let source: PlannerEntityReference
+  public let sourceLifetimeId: UUID
   public let content: PlannerItemContent
   public let createdAt: Date
   public let updatedAt: Date

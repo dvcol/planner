@@ -24,6 +24,8 @@ Bind the row presentation's reference instant and display timezone consistently 
 
 Core row reads perform no preview/geocoding request. Native provider lookup starts only under the accepted row/detail triggers. Cache results remain local and bind the current dataset, source lifetime, link/address identity and current input. Obsolete results cannot change a current row/detail or saved content. Keep full notes, links, field hashes and every Schedule in their existing detail reads rather than loading them for each row.
 
+Q50 A approves the production native preview seam. Its ownership key uses the dataset/ownership namespace already returned at bootstrap, the source identity and its existing lifetime UUID. Item rows, source details and appearance details return that same lifetime UUID so callers can share valid previews without hydrating full notes/links/hashes for each row. The selected owned link identity and exact URL, or owned address/coordinate input, complete the request key. Completion/filter/order changes do not create a new source lifetime. Provider results remain temporary. This exposes existing read metadata without changing the stored or portable schema, and it adds no technical values to ordinary UI.
+
 ## Accepted question round and alternatives
 
 The human answered A to each question below. The alternatives are retained to explain the tradeoffs; no answer is inferred from a recommendation.

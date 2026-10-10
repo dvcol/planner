@@ -368,7 +368,7 @@ public actor Planner {
           "missingReference", "The appearance's Item lifetime no longer resolves.")
       }
       return PlannerAppearanceRead(
-        appearance: appearance, source: source.reference,
+        appearance: appearance, source: source.reference, sourceLifetimeId: source.lifetimeId,
         content: source.input.readContent(links: source.links.map(\.read)),
         globalDone: source.globalDone, localDone: binding.localDone,
         effectiveDone: source.globalDone || binding.localDone, archived: source.archived,
@@ -879,13 +879,14 @@ public actor Planner {
         descriptor.fetchLimit = 2
         descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.name, \.archived]
         let records = try context.fetch(descriptor)
-        guard records.count == 1, let list = records.first, list.lifetimeId != nil,
+        guard records.count == 1, let list = records.first, let lifetimeId = list.lifetimeId,
           !list.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         else {
           throw PlannerFailure("readUnavailable", "A snapshot List is missing or unresolved.")
         }
         return PlannerRowRead(
-          identity: identity, title: list.name, subtitle: nil, estimate: nil,
+          identity: identity, sourceLifetimeId: lifetimeId,
+          title: list.name, subtitle: nil, estimate: nil,
           globalDone: nil, localDone: nil, effectiveDone: nil, archived: list.archived,
           hasLocation: false, hasLinks: false, ownedLocation: nil, previewLink: nil,
           scheduleSummary: .none)
