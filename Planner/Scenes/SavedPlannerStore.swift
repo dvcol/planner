@@ -209,6 +209,12 @@ final class SavedPlannerStore {
       != nil
   }
 
+  func removeMembership(_ membershipIdentifier: UUID, listIdentifier: UUID) async -> Bool {
+    await executeChange(
+      .removeMembership(listId: listIdentifier, membershipId: membershipIdentifier),
+      operationId: UUID()) != nil
+  }
+
   func setAppearanceCompletion(_ appearance: PlannerAppearance, done: Bool) async -> Bool {
     await executeChange(
       .setCompletion(scope: .appearance(appearance), done: done), operationId: UUID()) != nil

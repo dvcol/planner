@@ -29,6 +29,7 @@ struct SavedPlannerView: View {
   @State private var isOpeningCatalog = false
   @State private var selectedAppearanceIdentity: PlannerAppearance?
   @State private var selectedAppearance: PlannerAppearanceRead?
+  @State private var appearanceRemovalMessage: String?
   @State private var isOpeningAppearance = false
   @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
@@ -267,6 +268,7 @@ struct SavedPlannerView: View {
           selectedAppearanceIdentity = nil
           return
         }
+        appearanceRemovalMessage = nil
         selectedAppearanceIdentity = .listMembership(listId: listId, membershipId: identifier)
       })
   }
@@ -291,10 +293,19 @@ struct SavedPlannerView: View {
   @ViewBuilder
   private var appearanceDetail: some View {
     if let selectedAppearance, let selectedList {
-      SavedAppearanceDetail(item: selectedAppearance, listName: selectedList.content.name) {
-        selectedItemId = selectedAppearance.source.id
-        selectedSection = .items
-      }
+      SavedAppearanceDetail(
+        item: selectedAppearance, listName: selectedList.content.name, canChange: store.canCreate,
+        viewItem: {
+          selectedItemId = selectedAppearance.source.id
+          selectedSection = .items
+        },
+        removeFromList: {
+          guard
+            case .listMembership(let listIdentifier, let membershipIdentifier) =
+              selectedAppearance.appearance
+          else { return }
+          removeMembership(membershipIdentifier, listIdentifier: listIdentifier)
+        })
     } else if isOpeningAppearance {
       ProgressView("Opening Item")
     } else if selectedAppearanceIdentity != nil {
@@ -304,7 +315,27 @@ struct SavedPlannerView: View {
         Button("Try Again") { Task { await loadSelectedAppearance() } }
       }
     } else {
-      ContentUnavailableView("Choose an Item", systemImage: "square.stack")
+      if appearanceRemovalMessage != nil {
+        ContentUnavailableView(
+          "Item removed from List", systemImage: "list.bullet.rectangle",
+          description: Text("Choose another Item to see its details."))
+      } else {
+        ContentUnavailableView("Choose an Item", systemImage: "square.stack")
+      }
+    }
+  }
+
+  private func removeMembership(_ membershipIdentifier: UUID, listIdentifier: UUID) {
+    Task {
+      guard await store.removeMembership(membershipIdentifier, listIdentifier: listIdentifier)
+      else { return }
+      let removedAppearance = PlannerAppearance.listMembership(
+        listId: listIdentifier, membershipId: membershipIdentifier)
+      guard selectedAppearanceIdentity == removedAppearance else { return }
+      selectedAppearanceIdentity = nil
+      selectedAppearance = nil
+      isOpeningAppearance = false
+      appearanceRemovalMessage = "The Item remains available in Items."
     }
   }
 
@@ -362,13 +393,17 @@ struct SavedPlannerView: View {
                 SavedListProgress(progress: selectedList.progress, matchingCount: 0).padding()
                 ContentUnavailableView(
                   selectedList.progress.totalCount == 0 ? "No items" : "No matching items",
-                  systemImage: "checklist")
+                  systemImage: "checklist",
+                  description: appearanceRemovalMessage.map { Text($0) })
               }
             } else {
               #if os(macOS)
                 SavedMacMembershipTable(
-                  store: store, list: selectedList, items: listItems, selection: membershipSelection
-                )
+                  store: store, list: selectedList, items: listItems,
+                  selection: membershipSelection,
+                  removeMembership: { membershipIdentifier in
+                    removeMembership(membershipIdentifier, listIdentifier: selectedList.source.id)
+                  })
               #else
                 List(selection: membershipSelection) {
                   Section {
@@ -397,6 +432,11 @@ struct SavedPlannerView: View {
                           }
                         }
                         .disabled(!store.canCreate || listItems.last?.id == item.id)
+                        Divider()
+                        Button("Remove from List", role: .destructive) {
+                          removeMembership(item.id, listIdentifier: selectedList.source.id)
+                        }
+                        .disabled(!store.canCreate)
                       }
                       .moveDisabled(!store.canCreate)
                     }
@@ -471,6 +511,7 @@ struct SavedPlannerView: View {
     .onChange(of: selectedListId) { _, identifier in
       selectedAppearanceIdentity = nil
       selectedAppearance = nil
+      appearanceRemovalMessage = nil
       #if os(iOS)
         if identifier != nil { columnVisibility = .doubleColumn }
       #endif

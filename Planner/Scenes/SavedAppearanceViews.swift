@@ -45,7 +45,9 @@ struct SavedMembershipRow: View {
 struct SavedAppearanceDetail: View {
   let item: PlannerAppearanceRead
   let listName: String
+  let canChange: Bool
   let viewItem: () -> Void
+  let removeFromList: () -> Void
 
   var body: some View {
     Form {
@@ -73,6 +75,8 @@ struct SavedAppearanceDetail: View {
       ToolbarItem(placement: .primaryAction) {
         Menu {
           Button("View Item", action: viewItem)
+          Button("Remove from List", role: .destructive, action: removeFromList)
+            .disabled(!canChange)
         } label: {
           Label("Item actions", systemImage: "ellipsis")
         }

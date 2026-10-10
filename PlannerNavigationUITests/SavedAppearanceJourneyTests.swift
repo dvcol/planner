@@ -2,6 +2,80 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testRemovingASelectedListItemKeepsItsSourceAndOtherListStateWhileReAddStartsTodo() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    createList("Tokyo Food", application: application)
+    addItem(application)
+    let item = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    let removedIdentifier = item.identifier
+    let removedCompletion = application.buttons[
+      removedIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    removedCompletion.activateForPlannerJourney()
+    XCTAssertTrue(removedCompletion.waitForPlannerValue("Completed"))
+    createList("Wishlist", application: application)
+    addItem(application)
+    let retainedIdentifier = item.identifier
+    let retainedCompletion = application.buttons[
+      retainedIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    retainedCompletion.activateForPlannerJourney()
+    XCTAssertTrue(retainedCompletion.waitForPlannerValue("Completed"))
+    openList("Tokyo Food", application: application)
+    item.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["In Tokyo Food"].waitForExistence(timeout: 5))
+    application.plannerElement("saved.appearance.actions").activateForPlannerJourney()
+    let remove = application.plannerElement("Remove from List")
+    XCTAssertTrue(remove.waitForExistence(timeout: 5))
+    remove.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["In Tokyo Food"].waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["The Item remains available in Items."].exists)
+    XCTAssertFalse(item.exists)
+    XCTAssertFalse(application.progressIndicators["saved.list.progress"].exists)
+    recordScreenshot(
+      application, name: "Selected List item removed while shared source is retained")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Lists", application: application)
+    let emptyList = application.savedPlannerListRow("Tokyo Food")
+    revealSidebarIfNeeded(application, element: emptyList)
+    emptyList.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    XCTAssertFalse(item.exists)
+    openList("Wishlist", application: application)
+    XCTAssertEqual(item.identifier, retainedIdentifier)
+    XCTAssertTrue(retainedCompletion.waitForPlannerValue("Completed"))
+    assertProgress(1, application: application)
+    viewGlobalItem(application)
+    XCTAssertTrue(
+      application.staticTexts["Meet at the garden entrance"].waitForExistence(timeout: 10))
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    openSection("Lists", application: application)
+    revealSidebarIfNeeded(application, element: emptyList)
+    emptyList.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    addItem(application)
+    XCTAssertNotEqual(item.identifier, removedIdentifier)
+    let replacementCompletion = application.buttons[
+      item.identifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    XCTAssertTrue(replacementCompletion.waitForPlannerValue("To do"))
+    assertProgress(0, application: application)
+    recordScreenshot(
+      application, name: "Ordinary List re-add starts Todo with the same shared Item")
+    openList("Wishlist", application: application)
+    XCTAssertEqual(item.identifier, retainedIdentifier)
+    XCTAssertTrue(retainedCompletion.waitForPlannerValue("Completed"))
+    assertProgress(1, application: application)
+  }
+
   func testArchivedItemWithoutAListCanBeFoundAndUnarchivedInTheItemsCatalog() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
