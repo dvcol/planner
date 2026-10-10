@@ -1,0 +1,87 @@
+{
+  "date": "2026-10-11",
+  "baseCommit": "0d87511",
+  "feature": "Exact UTF-8 identity for temporary URL and address preview requests",
+  "runs": [
+    {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path Packages/PlannerPreviews --scratch-path /private/tmp/PlannerPreviewsPackageBuild --filter unicodeEquivalentURLPathsKeepTheirOwnPreviewResults",
+      "log": "/private/tmp/PlannerPreviewExactURLRed.log",
+      "exitCode": 1,
+      "functions": 1,
+      "expectationFailures": 3,
+      "outcome": "Second byte-distinct URL incorrectly reuses the first preview"
+    },
+    {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path Packages/PlannerPreviews --scratch-path /private/tmp/PlannerPreviewsPackageBuild --filter unicodeEquivalentURLPathsKeepTheirOwnPreviewResults",
+      "log": "/private/tmp/PlannerPreviewExactURLGreen.log",
+      "exitCode": 0,
+      "functions": 1
+    },
+    {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path Packages/PlannerPreviews --scratch-path /private/tmp/PlannerPreviewsPackageBuild --filter byteDistinctUnicodeAddressesKeepSeparatePreviewResults",
+      "log": "/private/tmp/PlannerPreviewExactAddressRed.log",
+      "exitCode": 1,
+      "functions": 1,
+      "expectationFailures": 4,
+      "outcome": "Second byte-distinct address incorrectly reuses the first candidates"
+    },
+    {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path Packages/PlannerPreviews --scratch-path /private/tmp/PlannerPreviewsPackageBuild --filter byteDistinctUnicodeAddressesKeepSeparatePreviewResults",
+      "log": "/private/tmp/PlannerPreviewExactAddressGreen.log",
+      "exitCode": 0,
+      "functions": 1
+    },
+    {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer PLANNER_PREVIEW_FIXTURE_URL=http://127.0.0.1:44555 PLANNER_ADDRESS_FIXTURE='1 Apple Park Way, Cupertino, CA' swift test --package-path Packages/PlannerPreviews --scratch-path /private/tmp/PlannerPreviewsPackageBuild",
+      "log": "/private/tmp/PlannerPreviewExactBytesQualification.log",
+      "exitCode": 0,
+      "functions": 12,
+      "suites": 4,
+      "caseInvocations": 17,
+      "sdkTestsEnabled": 2,
+      "skipped": 0
+    },
+    {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testOwnedAddressCreatesANativePreviewAndRemainsLiveInACompletedList -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeWebsitePreviewsKeepOwnedLinksAndRemainLiveInAList -resultBundlePath /private/tmp/PlannerPreviewExactBytesPhone.xcresult test",
+      "log": "/private/tmp/PlannerPreviewExactBytesPhone.log",
+      "exitCode": 0,
+      "functions": 2,
+      "failed": 0,
+      "skipped": 0,
+      "imagePaintingChecked": true
+    },
+    {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerPreviewExactBytesMac.xcresult build-for-testing",
+      "log": "/private/tmp/PlannerPreviewExactBytesMac.log",
+      "exitCode": 0,
+      "runtimeFunctions": 0
+    }
+  ],
+  "sourceHashes": {
+    "Packages/PlannerPreviews/Package.swift": "5708f6ae8ecb934a67197534dd8c36e531257387c8b7d0fde501bdabef9b2527",
+    "Packages/PlannerPreviews/Sources/PlannerPreviews/AppleAddressPreviewProvider.swift": "2361449dd06f367829f77cace3ec6d2cf7bd93f0950c25a2d4674d33aa091b75",
+    "Packages/PlannerPreviews/Sources/PlannerPreviews/AppleLinkPreviewProvider.swift": "cf737b3de7535a961a1b3e2e008dd0e70e425e1dd92de8322c033b2caac9c319",
+    "Packages/PlannerPreviews/Sources/PlannerPreviews/PlannerAddressPreviews.swift": "d4689307a9ba8f5d2b881c4122ddffb21f79623c9c56cd813889d4ba844ad89b",
+    "Packages/PlannerPreviews/Sources/PlannerPreviews/PlannerPreviews.swift": "e6b1a21906b58dea8a6befbbcfff867cc89f6385147174781998521a5cf23cf0",
+    "Packages/PlannerPreviews/Tests/PlannerPreviewsTests/AddressPreviewTests.swift": "5435c4c3e7c136cf9e9ed9f6ab0d3181684447265e8c2997ec96193024ac7c75",
+    "Packages/PlannerPreviews/Tests/PlannerPreviewsTests/AppleAddressPreviewTests.swift": "4a02ddfb55203d9b5c794bbaa85623b3c692b6de8dc27c4cec7b95a048ec1f9a",
+    "Packages/PlannerPreviews/Tests/PlannerPreviewsTests/AppleLinkPreviewTests.swift": "508ce4affb13ca15cf342f72cb3b7f71bd0e9645a28ebab52f9ab7f48492c820",
+    "Packages/PlannerPreviews/Tests/PlannerPreviewsTests/LinkPreviewTests.swift": "51dc5f232d9f90360d982112a46c1b172ad052193ed8e46b80b388bead55eddc",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "8b7c92b65e10f3dd5c1448655f8751bfc2d0f32d5c35d6bdfd4ea2429b546033"
+  },
+  "primarySource": "https://docs.swift.org/swift-book/LanguageGuide/StringsAndCharacters.html#String-and-Character-Equality",
+  "validation": {
+    "swiftLintLog": "/private/tmp/PlannerPreviewExactBytesSwiftLint.log",
+    "swiftLintExitCode": 0,
+    "diffCheckExitCode": 0,
+    "markdownLintLog": "/private/tmp/PlannerPreviewExactBytesMarkdownLint.log",
+    "markdownLintExitCode": 0
+  },
+  "limits": [
+    "Strict Core bookmark validation rejects the unescaped Unicode URL examples; the URL regression qualifies the reusable preview API",
+    "Controlled Unicode address candidates do not assert real Apple-service normalization behavior",
+    "No native controlled ambiguity/failure/address-change invalidation qualification added",
+    "No Mac runtime, iPad rerun or physical-device qualification added",
+    "No schema, portable backup, owned data or HTTP interface changes"
+  ]
+}

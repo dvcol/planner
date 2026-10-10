@@ -17,11 +17,14 @@ public struct PlannerLinkPreviewRequest: Sendable, Hashable {
   public let source: PlannerPreviewSource
   public let linkId: UUID
   public let originalURL: String
+  /// Swift String equality can equate URLs whose UTF-8 bytes identify different paths.
+  private let originalURLBytes: Data
 
   public init(source: PlannerPreviewSource, linkId: UUID, originalURL: String) {
     self.source = source
     self.linkId = linkId
     self.originalURL = originalURL
+    originalURLBytes = Data(originalURL.utf8)
   }
 }
 

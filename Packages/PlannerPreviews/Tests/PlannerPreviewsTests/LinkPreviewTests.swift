@@ -4,6 +4,31 @@ import Testing
 
 @MainActor
 struct LinkPreviewTests {
+  @Test func unicodeEquivalentURLPathsKeepTheirOwnPreviewResults() async {
+    let source = PlannerPreviewSource(
+      namespace: "local-dataset", sourceId: UUID(), sourceLifetimeId: UUID())
+    let linkIdentifier = UUID()
+    let composed = PlannerLinkPreviewRequest(
+      source: source, linkId: linkIdentifier, originalURL: "https://example.com/caf\u{00E9}")
+    let decomposed = PlannerLinkPreviewRequest(
+      source: source, linkId: linkIdentifier, originalURL: "https://example.com/cafe\u{0301}")
+    let firstContent = PlannerLinkPreviewContent(title: "First resource", imageData: Data([1]))
+    let secondContent = PlannerLinkPreviewContent(title: "Second resource", imageData: Data([2]))
+    let provider = RecordingLinkProvider(content: firstContent)
+    let previews = PlannerPreviews(provider: provider)
+
+    await previews.loadLink(composed)
+    provider.content = secondContent
+    #expect(previews.linkState(for: decomposed) == .idle)
+    await previews.loadLink(decomposed)
+    #expect(previews.linkState(for: composed) == .available(firstContent))
+    #expect(previews.linkState(for: decomposed) == .available(secondContent))
+    #expect(
+      provider.requestedURLs.map { URL(string: $0)?.absoluteString } == [
+        "https://example.com/caf%C3%A9", "https://example.com/cafe%CC%81",
+      ])
+  }
+
   @Test func aVisibleLinkLoadsAnImageAndSharesTheCachedResultOnlyWithItsExactRequest() async {
     let source = PlannerPreviewSource(
       namespace: "local-dataset", sourceId: UUID(), sourceLifetimeId: UUID())
@@ -108,7 +133,7 @@ struct LinkPreviewTests {
 
 @MainActor
 private final class RecordingLinkProvider: PlannerLinkPreviewProvider {
-  let content: PlannerLinkPreviewContent
+  var content: PlannerLinkPreviewContent
   private(set) var requestedURLs: [String] = []
 
   init(content: PlannerLinkPreviewContent) { self.content = content }
