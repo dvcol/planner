@@ -437,6 +437,9 @@ struct SavedPlannerView: View {
                 SavedMacMembershipTable(
                   store: store, list: selectedList, items: listItems,
                   selection: membershipSelection,
+                  moveMembership: { item in
+                    proposeMembershipMove(item.id, itemTitle: item.row.title, list: selectedList)
+                  },
                   removeMembership: { membershipIdentifier in
                     removeMembership(membershipIdentifier, listIdentifier: selectedList.source.id)
                   })
@@ -469,6 +472,11 @@ struct SavedPlannerView: View {
                         }
                         .disabled(!store.canCreate || listItems.last?.id == item.id)
                         Divider()
+                        Button("Move to List") {
+                          proposeMembershipMove(
+                            item.id, itemTitle: item.row.title, list: selectedList)
+                        }
+                        .disabled(!store.canCreate)
                         Button("Remove from List", role: .destructive) {
                           removeMembership(item.id, listIdentifier: selectedList.source.id)
                         }
