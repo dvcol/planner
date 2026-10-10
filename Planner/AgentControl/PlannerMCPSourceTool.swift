@@ -49,7 +49,8 @@
                       "kind": .object([
                         "type": .string("string"),
                         "enum": .array([
-                          .string("item"), .string("list"), .string("category"), .string("tag"),
+                          .string("item"), .string("list"), .string("itinerary"),
+                          .string("category"), .string("tag"),
                           .string("schedule"),
                         ]),
                       ]),
@@ -102,9 +103,10 @@
         let result = await planner.read(session: session, request: request)
         let structured: Value
         switch result {
-        case .source(.itinerary):
-          return failure(
-            code: "unavailable", message: "Itinerary wire reads are not implemented yet.")
+        case .source(.itinerary(let read)):
+          structured = .object([
+            "formatVersion": .int(1), "kind": .string("source"), "value": itineraryValue(read),
+          ])
         case .appearance(let read):
           structured = .object([
             "formatVersion": .int(1), "kind": .string("appearance"),
@@ -195,11 +197,12 @@
         let source = try object(request["source"], keys: ["kind", "id"], path: "/request/source")
         guard case .string(let spelling) = source["kind"],
           let sourceKind = PlannerEntityKind(rawValue: spelling),
-          [.item, .list, .category, .tag, .schedule].contains(sourceKind)
+          [.item, .list, .itinerary, .category, .tag, .schedule].contains(sourceKind)
         else {
           throw AdmissionFailure(
             code: "invalidInput", path: "/request/source/kind",
-            message: "This prototype supports Item, List, Category, Tag and Schedule sources.")
+            message:
+              "This prototype supports Item, List, Itinerary, Category, Tag and Schedule sources.")
         }
         return .source(
           PlannerEntityReference(
@@ -323,6 +326,44 @@
         "state": .object(["globalDone": .null, "archived": .null]),
         "labels": .array([]), "references": .array(read.references.map(referenceValue)),
         "progress": .null,
+      ])
+    }
+
+    private static func itineraryValue(_ read: PlannerItinerarySourceRead) -> Value {
+      .object([
+        "source": .object([
+          "kind": .string(read.source.kind.rawValue), "id": .string(read.source.id.uuidString),
+        ]),
+        "content": .object([
+          "title": .string(read.content.title),
+          "notes": read.content.notes.map(Value.string) ?? .null,
+          "color": read.content.color.map(colorValue) ?? .null,
+          "iconName": read.content.iconName.map(Value.string) ?? .null,
+          "location": read.content.location.map(locationValue) ?? .null,
+          "links": .array(read.content.links.map(PlannerMCPRowValue.link)),
+          "categoryIds": .array(
+            read.content.categoryIds.sorted { $0.uuidString < $1.uuidString }.map {
+              .string($0.uuidString)
+            }),
+          "tagIds": .array(
+            read.content.tagIds.sorted { $0.uuidString < $1.uuidString }.map {
+              .string($0.uuidString)
+            }),
+        ]),
+        "createdAt": .double(read.createdAt.timeIntervalSinceReferenceDate),
+        "updatedAt": .double(read.updatedAt.timeIntervalSinceReferenceDate),
+        "fieldHashes": .object(
+          Dictionary(
+            uniqueKeysWithValues: read.fieldHashes.map {
+              ($0.key.rawValue, .string($0.value.value))
+            })),
+        "state": .object([
+          "globalDone": read.state.globalDone.map(Value.bool) ?? .null,
+          "archived": read.state.archived.map(Value.bool) ?? .null,
+        ]),
+        "labels": .array(read.labels.map(labelValue)),
+        "references": .array(read.references.map(referenceValue)),
+        "progress": progressValue(read.progress),
       ])
     }
 
