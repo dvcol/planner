@@ -24,20 +24,31 @@ enum PlannerSchemaV4: VersionedSchema {
         sourceId = source.id
         sourceLifetimeId = source.lifetimeId
         sourceKind = source.kind
+      case .membership(let membership):
+        sourceId = membership.id
+        sourceLifetimeId = membership.lifetimeId
+        sourceKind = membership.kind
       }
     }
 
     func value() throws -> PortableDeletionMarker {
       guard let deletionId, let operationId, let sourceId, let sourceLifetimeId,
-        sourceKind == "schedule", closedFamilyId == nil
+        ["schedule", "membership"].contains(sourceKind), closedFamilyId == nil
       else {
         throw PlannerFailure(
           "readUnavailable", "The deletion marker has unresolved or unsupported metadata.")
       }
+      let binding = PlannerBoundIdentity(
+        kind: sourceKind, id: sourceId, lifetimeId: sourceLifetimeId)
+      let target: PortableDeletionTarget
+      if sourceKind == "membership" {
+        target = .membership(binding)
+      } else {
+        target = .source(binding)
+      }
       return PortableDeletionMarker(
         deletionId: deletionId, operationId: operationId,
-        target: .source(
-          PlannerBoundIdentity(kind: sourceKind, id: sourceId, lifetimeId: sourceLifetimeId)),
+        target: target,
         closedFamilyId: closedFamilyId)
     }
   }
