@@ -91,7 +91,7 @@ extension PlannerSchemaV7.Item {
     identity: PlannerRowIdentity, localDone: Bool?, hasLinks: Bool,
     previewLink: PlannerOwnedLinkRead?, scheduleSummary: PlannerRowScheduleSummary
   ) throws -> PlannerRowRead {
-    guard id != nil else {
+    guard id != nil, let lifetimeId else {
       throw PlannerFailure("readUnavailable", "The row Item has unresolved identity.")
     }
     let content = PlannerItemContentInput(
@@ -102,7 +102,7 @@ extension PlannerSchemaV7.Item {
       estimate: try estimateData.map { try JSONDecoder().decode(PlannerEstimate.self, from: $0) })
     try content.validate()
     return PlannerRowRead(
-      identity: identity,
+      identity: identity, sourceLifetimeId: lifetimeId,
       title: content.title, subtitle: content.subtitle, estimate: content.estimate,
       globalDone: globalDone, localDone: localDone,
       effectiveDone: globalDone || localDone == true, archived: archived,
@@ -161,7 +161,8 @@ struct ItemSnapshot {
 
   func read(datasetId: UUID, memberships: [MembershipSnapshot]) -> PlannerItemSourceRead {
     PlannerItemSourceRead(
-      source: reference, content: input.readContent(links: links.map(\.read)), createdAt: createdAt,
+      source: reference, sourceLifetimeId: lifetimeId,
+      content: input.readContent(links: links.map(\.read)), createdAt: createdAt,
       updatedAt: updatedAt,
       fieldHashes: input.fieldHashes(
         datasetId: datasetId, itemId: id, lifetimeId: lifetimeId, links: links.map(\.read)),

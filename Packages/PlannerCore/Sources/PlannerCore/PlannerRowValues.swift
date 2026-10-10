@@ -19,6 +19,7 @@ public enum PlannerRowScheduleSummary: Sendable, Equatable {
 
 public struct PlannerRowRead: Sendable {
   public let identity: PlannerRowIdentity
+  public let sourceLifetimeId: UUID
   public let title: String
   public let subtitle: String?
   public let estimate: PlannerEstimate?

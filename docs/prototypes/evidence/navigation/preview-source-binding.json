@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-11",
+  "scope": "Core public read/query source lifetime metadata; schema 7 and portable version 1 unchanged",
+  "baseCommit": "71b384a154f65d70b2625a5307eaaac0832251f0",
+  "tests": {
+    "command": "swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter 'PreviewSourceBindingTests|ItemRowReadTests|MembershipRowTests|ItemLinkTests|ItemLinkEditTests'",
+    "log": "/private/tmp/PlannerPreviewSourceBindingQualification.log",
+    "exitCode": 0,
+    "executedTests": 13,
+    "executedSuites": 5
+  },
+  "priorOutcomes": [
+    {
+      "log": "/private/tmp/PlannerPreviewSourceBindingRed.log",
+      "outcome": "Compile failed for missing lifetime metadata and an incorrect ownershipId test property."
+    },
+    {
+      "log": "/private/tmp/PlannerPreviewSourceBindingCorrectedRed.log",
+      "exitCode": 1,
+      "outcome": "Corrected test compiled against no lifetime metadata; missing properties are the intended red."
+    },
+    {
+      "log": "/private/tmp/PlannerPreviewSourceBindingGreen.log",
+      "exitCode": 1,
+      "outcome": "Production compiled. Test failed because the default Todo query excluded the completed appearance. Test changed to Completion All."
+    }
+  ],
+  "nativeBuilds": [
+    {
+      "platform": "Mac",
+      "action": "build-for-testing",
+      "log": "/private/tmp/PlannerPreviewSourceBindingMac.log",
+      "resultBundle": "/private/tmp/PlannerPreviewSourceBindingMac.xcresult",
+      "exitCode": 0,
+      "executedRuntimeTests": 0,
+      "warnings": [
+        "2026-10-11 00:21:44.757 appintentsmetadataprocessor[10105:17742264] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "platform": "Phone",
+      "action": "build-for-testing",
+      "log": "/private/tmp/PlannerPreviewSourceBindingPhone.log",
+      "resultBundle": "/private/tmp/PlannerPreviewSourceBindingPhone.xcresult",
+      "exitCode": 0,
+      "executedRuntimeTests": 0,
+      "warnings": [
+        "2026-10-11 00:22:17.414 appintentsmetadataprocessor[10652:17745324] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    }
+  ],
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift": "a4bcf5be5ea7b2b1c87a6198637d1c592f7e98f372c5582d8ecb92d3370022fa",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "be350c642a88877a377b6ccbcd5d0d47bcf9667fea21cea55d6fdb4d4dd4f84b",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift": "5facc4514fc6ae6d8acdb235c0c1d904698078e56d6513d3f6579e315209e720",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "68bc6eefc9dcb8a55c9abf5766e9c6b990b62402638dfc5d943c4bcc28c2efa8",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "b39210338b0c9e53d0a209d57811d83f14c9af0bd10473dae9ce032fe5a95637",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/PreviewSourceBindingTests.swift": "21909274777f6c69e82082d405f55e7cadb0d39c8647c433307d03cf447e16cb"
+  }
+}
