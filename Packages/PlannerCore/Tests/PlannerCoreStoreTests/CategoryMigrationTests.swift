@@ -89,7 +89,7 @@ struct CategoryMigrationTests {
     #expect(checkpoint == manifest.latestCheckpoint + 1)
     #expect(read.content.name == "Food")
     #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 7)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 12)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 13)
     #expect(historicalAfter.portableData == historical.portableData)
     let beforeData = try #require(
       JSONSerialization.jsonObject(with: historical.portableData) as? [String: Any])

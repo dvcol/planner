@@ -133,6 +133,7 @@ struct ItinerarySnapshot {
       createdAt: createdAt, updatedAt: updatedAt, fieldHashes: fieldHashes(datasetId: datasetId),
       state: PlannerSourceState(globalDone: nil, archived: archived),
       progress: progress(memberships: memberships, items: items, lists: lists),
-      references: labelAssociations.map(\.reference) + entries.map(\.reference))
+      references: labelAssociations.map(\.reference) + entries.map(\.reference)
+        + entries.flatMap(\.expandedCompletions).map(\.reference))
   }
 }
