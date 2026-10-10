@@ -13,10 +13,18 @@ extension XCUIApplication {
   }
 
   func savedPlannerItemRows(_ title: String) -> XCUIElementQuery {
-    buttons.matching(
-      NSPredicate(
-        format: "(identifier BEGINSWITH %@ OR identifier BEGINSWITH %@) AND label == %@",
-        "saved.item.", "saved.appearance.", title))
+    #if os(macOS)
+      return descendants(matching: .any).matching(
+        NSPredicate(
+          format:
+            "(identifier BEGINSWITH %@ OR identifier BEGINSWITH %@) AND (label == %@ OR value == %@)",
+          "saved.item.", "saved.appearance.", title, title))
+    #else
+      buttons.matching(
+        NSPredicate(
+          format: "(identifier BEGINSWITH %@ OR identifier BEGINSWITH %@) AND label == %@",
+          "saved.item.", "saved.appearance.", title))
+    #endif
   }
 
   func savedPlannerListRow(_ title: String) -> XCUIElement {

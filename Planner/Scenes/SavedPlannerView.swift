@@ -312,29 +312,59 @@ struct SavedPlannerView: View {
             if listItems.isEmpty {
               ContentUnavailableView("No items", systemImage: "checklist")
             } else {
-              List(selection: membershipSelection) {
-                Section {
-                  ForEach(listItems) { item in
-                    SavedMembershipRow(item: item, canChange: store.canCreate) {
-                      guard case .appearance(_, let appearance) = item.row.identity else { return }
-                      Task {
-                        _ = await store.setAppearanceCompletion(
-                          appearance, done: item.row.effectiveDone != true)
+              #if os(macOS)
+                SavedMacMembershipTable(
+                  store: store, list: selectedList, items: listItems, selection: membershipSelection
+                )
+              #else
+                List(selection: membershipSelection) {
+                  Section {
+                    ForEach(listItems) { item in
+                      SavedMembershipRow(item: item, canChange: store.canCreate) {
+                        guard case .appearance(_, let appearance) = item.row.identity else {
+                          return
+                        }
+                        Task {
+                          _ = await store.setAppearanceCompletion(
+                            appearance, done: item.row.effectiveDone != true)
+                        }
                       }
+                      .contextMenu {
+                        Button("Move to Beginning") {
+                          Task {
+                            _ = await store.reorderMembership(
+                              item.id, listId: selectedList.source.id, placement: .first)
+                          }
+                        }
+                        .disabled(!store.canCreate || listItems.first?.id == item.id)
+                        Button("Move to End") {
+                          Task {
+                            _ = await store.reorderMembership(
+                              item.id, listId: selectedList.source.id, placement: .last)
+                          }
+                        }
+                        .disabled(!store.canCreate || listItems.last?.id == item.id)
+                      }
+                      .moveDisabled(!store.canCreate)
                     }
-                  }
-                } header: {
-                  if let done = selectedList.progress.doneCount,
-                    let total = selectedList.progress.totalCount, total > 0
-                  {
-                    ProgressView(value: Double(done), total: Double(total)) {
-                      Text("\(done) of \(total) done")
+                    .onMove { offsets, destination in
+                      moveMembership(
+                        from: offsets, to: destination, in: listItems,
+                        listId: selectedList.source.id)
                     }
-                    .accessibilityIdentifier("saved.list.progress")
-                    .textCase(nil)
+                  } header: {
+                    if let done = selectedList.progress.doneCount,
+                      let total = selectedList.progress.totalCount, total > 0
+                    {
+                      ProgressView(value: Double(done), total: Double(total)) {
+                        Text("\(done) of \(total) done")
+                      }
+                      .accessibilityIdentifier("saved.list.progress")
+                      .textCase(nil)
+                    }
                   }
                 }
-              }
+              #endif
             }
           } else {
             ContentUnavailableView {
@@ -346,6 +376,13 @@ struct SavedPlannerView: View {
         }
         .navigationTitle(selectedList.content.name)
         .toolbar {
+          #if os(iOS)
+            ToolbarItem {
+              EditButton()
+                .disabled(!store.canCreate || (listItems?.count ?? 0) < 2)
+                .accessibilityIdentifier("saved.list.edit")
+            }
+          #endif
           ToolbarItem {
             Button("Add existing Item", systemImage: "plus") { showAddItem = true }
               .disabled(!store.canCreate)
@@ -385,6 +422,30 @@ struct SavedPlannerView: View {
       #endif
     }
   }
+
+  #if os(iOS)
+    private func moveMembership(
+      from offsets: IndexSet, to destination: Int, in items: [SavedPlannerItem], listId: UUID
+    ) {
+      guard store.canCreate else { return }
+      guard offsets.count == 1, let source = offsets.first, items.indices.contains(source),
+        (0...items.count).contains(destination)
+      else {
+        store.alertMessage = "Move one Item at a time."
+        return
+      }
+      guard destination != source, destination != source + 1 else { return }
+      let placement: PlannerPlacement
+      if destination < source {
+        placement = .before(associationId: items[destination].id)
+      } else {
+        placement = .after(associationId: items[destination - 1].id)
+      }
+      Task {
+        _ = await store.reorderMembership(items[source].id, listId: listId, placement: placement)
+      }
+    }
+  #endif
 }
 
 private struct SavedNewListForm: View {

@@ -195,6 +195,14 @@ final class SavedPlannerStore {
       .setCompletion(scope: .appearance(appearance), done: done), operationId: UUID()) != nil
   }
 
+  func reorderMembership(_ membershipId: UUID, listId: UUID, placement: PlannerPlacement) async
+    -> Bool
+  {
+    await executeChange(
+      .reorderMembership(listId: listId, membershipId: membershipId, placement: placement),
+      operationId: UUID()) != nil
+  }
+
   private func executeChange(
     _ command: PlannerCommand, operationId: UUID
   ) async -> PlannerAppliedResult? {
