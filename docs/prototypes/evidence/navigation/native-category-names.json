@@ -1,0 +1,449 @@
+{
+  "baseCommit": "b8a3468",
+  "schemaVersion": 8,
+  "portableFormatVersion": 1,
+  "storageMode": "localOnly",
+  "cloudKitEnabled": false,
+  "scope": "Native Category catalog and name-only staged create/rename. Existing List toolbar and draft compatibility. No association, deletion or metadata-editor completion is claimed.",
+  "publicSeams": [
+    "App-owned XCTest UI actions and relaunch against isolated real local datasets",
+    "Existing qualified public Core creation/field-edit/recovery behavior"
+  ],
+  "ready": "Core Category source, catalog, guards and independent recovery are qualified at 5e5ca95; HTTP edits at b8a3468. Native UI is an accepted seam. Save/Cancel/relaunch outcomes are fixed before the UI test.",
+  "testDevelopment": {
+    "initialRed": {
+      "log": "/private/tmp/PlannerCategoryNativeRed.log",
+      "exitCode": 65,
+      "functions": 1,
+      "failed": 1,
+      "issues": 2,
+      "reason": "Missing Category action. The new test also lacks MainActor and failure-stop conventions, corrected before the next red."
+    },
+    "correctedRed": {
+      "log": "/private/tmp/PlannerCategoryNativeCorrectedRed.log",
+      "exitCode": 65,
+      "functions": 1,
+      "failed": 1,
+      "issues": 1,
+      "summaryPath": "/private/tmp/PlannerCategoryNativeCorrectedRedSummary.json",
+      "testFileSHA256": "36cf2e43dd0075d16bffcee164183f0699360ad8ff98c3a92814d77575341f7a",
+      "reason": "The Category management entry point is absent."
+    },
+    "initialPhoneGreen": {
+      "log": "/private/tmp/PlannerCategoryNativeGreen.log",
+      "exitCode": 0,
+      "functions": 1,
+      "failed": 0,
+      "skipped": 0,
+      "summaryPath": "/private/tmp/PlannerCategoryNativeGreenSummary.json"
+    },
+    "initialPhoneCompatibility": {
+      "log": "/private/tmp/PlannerCategoryNativePhoneCompatibility.log",
+      "exitCode": 0,
+      "functions": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    "tabletToolbarRegression": {
+      "log": "/private/tmp/PlannerCategoryNativeTablet.log",
+      "exitCode": 65,
+      "functions": 2,
+      "passed": 1,
+      "failed": 1,
+      "skipped": 0,
+      "summaryPath": "/private/tmp/PlannerCategoryNativeTabletSummary.json",
+      "reason": "Category journey passes. New List is unavailable in the narrow sidebar after adding a third automatic toolbar action."
+    },
+    "bottomToolbarPhoneRegression": {
+      "log": "/private/tmp/PlannerCategoryNativeFinalPhone.log",
+      "exitCode": 65,
+      "functions": 2,
+      "passed": 1,
+      "failed": 1,
+      "reason": "List journey passes, but the compact phone Category bottom-bar action has an off-screen hit point and never opens its sheet."
+    },
+    "bottomToolbarTablet": {
+      "log": "/private/tmp/PlannerCategoryNativeFinalTablet.log",
+      "exitCode": 0,
+      "functions": 2,
+      "passed": 2,
+      "failed": 0
+    },
+    "finalCorrection": "The Category action uses automatic placement in compact layouts and native bottomBar placement in regular-width iOS layouts. Mac keeps automatic placement. Source changes stop before each qualification epoch; the corrected-red Category test and existing List test remain unchanged."
+  },
+  "sourceEpochs": {
+    "initialManagementViewSHA256": "ecf6b969f1b0259fcaaaf7bca729da31dab695a4d462d7cfbeb69bbd0c2cd6d6",
+    "bottomBarViewSHA256": "9b81a1b50ef861425982cf79e81329a32c4e5b45723501a8a46a0f4cfb67d170",
+    "finalAdaptiveViewSHA256": "ed98de31ac1919023952e4b7292274e03d376eaf15dc9ffb8de11bb100d09fb6",
+    "note": "Only SavedPlannerView.swift changes between these UI implementation epochs."
+  },
+  "qualification": {
+    "phone": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -only-testing:PlannerNavigationUITests/SavedCategoryJourneyTests/testCategoryCreationAndRenameStageCancelAndPersistAfterRelaunch -only-testing:PlannerNavigationUITests/SavedListJourneyTests/testListDraftCancellationAndCreationRemainDistinctAfterNativeRelaunch -resultBundlePath /private/tmp/PlannerCategoryNativeAdaptivePhone.xcresult test > /private/tmp/PlannerCategoryNativeAdaptivePhone.log 2>&1",
+      "exitCode": 0,
+      "functions": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "summaryPath": "/private/tmp/PlannerCategoryNativeAdaptivePhoneSummary.json"
+    },
+    "tablet": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -only-testing:PlannerNavigationUITests/SavedCategoryJourneyTests/testCategoryCreationAndRenameStageCancelAndPersistAfterRelaunch -only-testing:PlannerNavigationUITests/SavedListJourneyTests/testListDraftCancellationAndCreationRemainDistinctAfterNativeRelaunch -resultBundlePath /private/tmp/PlannerCategoryNativeAdaptiveTablet.xcresult test > /private/tmp/PlannerCategoryNativeAdaptiveTablet.log 2>&1",
+      "exitCode": 0,
+      "functions": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "summaryPath": "/private/tmp/PlannerCategoryNativeAdaptiveTabletSummary.json"
+    },
+    "macCompilation": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -resultBundlePath /private/tmp/PlannerCategoryNativeAdaptiveMacBuild.xcresult build-for-testing > /private/tmp/PlannerCategoryNativeAdaptiveMacBuild.log 2>&1",
+      "exitCode": 0,
+      "runtimeFunctions": 0
+    }
+  },
+  "behavior": [
+    "The Category list uses native navigation rows tied to stable source UUIDs, then loads a source detail read before opening its edit form.",
+    "Canceled creation does not appear before or after relaunch; acknowledged creation appears as Food.",
+    "Canceled rename retains Food, acknowledged rename shows Dining and relaunch retains Dining without either canceled name.",
+    "Native writes use the existing operation IDs/guards and recovery handling. Name-only edits leave optional color/icon fields outside the patch.",
+    "Both Category management and existing List draft/relaunch actions stay reachable on the qualified compact phone and regular-width iPad.",
+    "Native form errors remain visible. Stale-save/recovery UI branches are not executed by this slice."
+  ],
+  "checks": {
+    "strictSwiftLint": "/private/tmp/PlannerCategoryNativeAdaptiveSwiftLint.log",
+    "strictSwiftLintExitCode": 0,
+    "markdownLint": "/private/tmp/PlannerCategoryNativeMarkdownLint.log",
+    "markdownLintExitCode": 0,
+    "whitespaceDiffExitCode": 0,
+    "sourceHashesVerified": true
+  },
+  "sourceHashes": [
+    {
+      "path": "Planner/AgentControl/PlannerMCPExecutionTool.swift",
+      "sha256": "70c5b88dc14cb4ba92b506a0b0a12a1bd8a370934a646e0290ddd526c51685cc"
+    },
+    {
+      "path": "Planner/AgentControl/PlannerMCPFailureValue.swift",
+      "sha256": "74e05f6a591d90f665eeb804441bfb8a22d35fd302d301fcf10bcf96a66b14f8"
+    },
+    {
+      "path": "Planner/AgentControl/PlannerMCPLoopbackListener.swift",
+      "sha256": "56e00b716e0680245e521b9f671e43a7990f1c8103a5bd3f85e2bd14d7756e94"
+    },
+    {
+      "path": "Planner/AgentControl/PlannerMCPOperationStatusTool.swift",
+      "sha256": "bcf50d44eb73187d0e04243780cc0172154861d64a6374fc2bef3c2971b2fe8d"
+    },
+    {
+      "path": "Planner/AgentControl/PlannerMCPQueryTool.swift",
+      "sha256": "930d6b33f16f24f17e90e9cffc218dd2d0ddff50c201bf94fbf05f1283e98d49"
+    },
+    {
+      "path": "Planner/AgentControl/PlannerMCPRequestHandler.swift",
+      "sha256": "edfd45746d8da43a5b1d221e02e302f2e652f554de3d5329e1d39cbedfb62f6e"
+    },
+    {
+      "path": "Planner/AgentControl/PlannerMCPRowValue.swift",
+      "sha256": "a95329ee2ceba0e527b06e4b05ead1d63a9ac093ff6dbdf192a367c7c9f93ba6"
+    },
+    {
+      "path": "Planner/AgentControl/PlannerMCPSourceTool.swift",
+      "sha256": "f008da94116de23bd4e78344c437bb60d2ea14716221599688969125b43aeb5b"
+    },
+    {
+      "path": "Planner/NavigationPrototype/NavigationPrototypeFixture.swift",
+      "sha256": "c76b8966df85a22f8d8f10b8d06f7f01f1e2a6779a7110a09152c173a12b6346"
+    },
+    {
+      "path": "Planner/NavigationPrototype/NavigationPrototypeView.swift",
+      "sha256": "cd0641be7a8eaf1a568fe133b0ddf60c0f82a3f50b644b9f33788a0a70832624"
+    },
+    {
+      "path": "Planner/PlannerApp.swift",
+      "sha256": "f1a9d1f680e853eb73cf22e080cbce823dc0a0c247e9de5544a5fc6e337f1146"
+    },
+    {
+      "path": "Planner/Scenes/ItemAddressPreview.swift",
+      "sha256": "7dc96f6f5ea4b567f0d450739f063447dbac4b9b286c96ad5027f5f8cd5b1e6e"
+    },
+    {
+      "path": "Planner/Scenes/ItemLinkPreviewCard.swift",
+      "sha256": "5642f7ea644af29c6bc907e1dba457f1cbc3dfeba21b971c07ab4d8d1b7b1995"
+    },
+    {
+      "path": "Planner/Scenes/ItemLinksSection.swift",
+      "sha256": "a6ecc9c5335ebafbd6f9af82feb76343ea21907558ea3f6efccff5cf476ee6fa"
+    },
+    {
+      "path": "Planner/Scenes/ItemLocationSection.swift",
+      "sha256": "5712c5ac9ff059a73dd6abe162a58fc56532f1049926d8b75dcb105e415f21b9"
+    },
+    {
+      "path": "Planner/Scenes/SavedAddItemForm.swift",
+      "sha256": "41ffacb4686a14c2fa0011d3820195eecf1ce4396deaf0e2eed3fae971007bd8"
+    },
+    {
+      "path": "Planner/Scenes/SavedAddToListForm.swift",
+      "sha256": "4c845b6c1d427e7339798c64f11efcfbaeb279572583477a03aee5a97f724f26"
+    },
+    {
+      "path": "Planner/Scenes/SavedAppearanceViews.swift",
+      "sha256": "bac170a579008020fa0a9808fa7ec3db1ddd29adb5b9d1e010456229455bd737"
+    },
+    {
+      "path": "Planner/Scenes/SavedCategoriesView.swift",
+      "sha256": "39ead06912ef3a7cb0049c1be948ca1e0bf314480d26302c1ffc3c25b0d5b87d"
+    },
+    {
+      "path": "Planner/Scenes/SavedEditItemForm.swift",
+      "sha256": "205f68545a90a091e6a4c9b6a00b789a6b6e799ff4072fbc3a5465566b048ee3"
+    },
+    {
+      "path": "Planner/Scenes/SavedItemFilters.swift",
+      "sha256": "a59a8287af21005f2ef43fcf563244c81f914738b67c2103080791bbadbbe0de"
+    },
+    {
+      "path": "Planner/Scenes/SavedItemRowContent.swift",
+      "sha256": "58fb0c01e07062adafb9d9ecc843113e3a4fc16e039fd63bf2adbf563f2118b8"
+    },
+    {
+      "path": "Planner/Scenes/SavedItemSort.swift",
+      "sha256": "323d2ca22a054c0b1f93cfe27ac10e1e851df3dedbac727769b6c5145df79b68"
+    },
+    {
+      "path": "Planner/Scenes/SavedItemViews.swift",
+      "sha256": "32b2386c6424e5c5e0c7f440175dc81746d9a2e6dae445912305054fa7d65f8d"
+    },
+    {
+      "path": "Planner/Scenes/SavedMacMembershipTable.swift",
+      "sha256": "ca82605c09edbc1620ef8206c30d1a3e49582180886e80416091664e8e9c70ce"
+    },
+    {
+      "path": "Planner/Scenes/SavedMoveItemForm.swift",
+      "sha256": "1b40c23f8b1a00a471b98774a289bfaa361eb0ac6e6b005f21495b36a5e81f1c"
+    },
+    {
+      "path": "Planner/Scenes/SavedPlannerStore.swift",
+      "sha256": "b0a87125230325ca74f2d0aa0b7e185bf7a54161729afbfd20b7482d251badd3"
+    },
+    {
+      "path": "Planner/Scenes/SavedPlannerView.swift",
+      "sha256": "ed98de31ac1919023952e4b7292274e03d376eaf15dc9ffb8de11bb100d09fb6"
+    },
+    {
+      "path": "PlannerNavigationUITests/MapNavigationJourneyTests.swift",
+      "sha256": "2f45ba62db9e533d4d1f6a901f1a94de1f2c57a9d98517e4a980d592cd90c5f4"
+    },
+    {
+      "path": "PlannerNavigationUITests/NativeNavigationElements.swift",
+      "sha256": "822047199214ffa1f892a0500ac644717f3a3606706f7bd7831ff073da4b44f4"
+    },
+    {
+      "path": "PlannerNavigationUITests/NavigationJourneyTests.swift",
+      "sha256": "6d532729cdef8444599622885b5c6aba3c9b96153de108123ec2283121cc3c52"
+    },
+    {
+      "path": "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift",
+      "sha256": "8b7c92b65e10f3dd5c1448655f8751bfc2d0f32d5c35d6bdfd4ea2429b546033"
+    },
+    {
+      "path": "PlannerNavigationUITests/SavedCategoryJourneyTests.swift",
+      "sha256": "36cf2e43dd0075d16bffcee164183f0699360ad8ff98c3a92814d77575341f7a"
+    },
+    {
+      "path": "PlannerNavigationUITests/SavedItemJourneyTests.swift",
+      "sha256": "51e64c357b2f365eed17d806506e07db15de2f9d87c4b300b194c114ebb1aeb5"
+    },
+    {
+      "path": "PlannerNavigationUITests/SavedListJourneyTests.swift",
+      "sha256": "380de78657d782766c035af842ad9ca1260f1a88de9852bf333dfef5d6ebb11f"
+    },
+    {
+      "path": "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift",
+      "sha256": "2972aec7da112b0de7e5929a91b557ea3a55680fd98ba73f80b340041bedf99f"
+    },
+    {
+      "path": "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift",
+      "sha256": "458ed59597d9c73eb8f91d71316f87718ad2c86e5417c52f5abfc5d84588c8b2"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerAppliedValues.swift",
+      "sha256": "7bd92cdaab57c37a778813f84ad492c1c03c07a94d0be4098cf2a809d7247808"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerCategoryRecovery.swift",
+      "sha256": "4d6bc66e47704b706e1c81fd743ba1dffb55a84fe62ad50e5cbb442a67746b41"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerCategoryValues.swift",
+      "sha256": "33a6eebd5b40d2a843e39649797ef851702dc30b6de2d791744dbc1c1c85f1a3"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerCivilDate.swift",
+      "sha256": "d8ae4943ef8af8030c13f12af2f93ffb873de32e328a97245b9c05adbed92306"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+      "sha256": "446f538b03bb0d5b5ce7efba066b9227a4a4ccc68154044cf63267c4450f0d8e"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift",
+      "sha256": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift",
+      "sha256": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift",
+      "sha256": "049991c29d6644fb5a173ae5c8d5dbb7b2d707a5df7f0f07bb7bc6c95d43e70f"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkRecovery.swift",
+      "sha256": "76e82b80e6be3200a1cc0a9c4eb439094c9085c30939d543dacaaf70cbd60b1b"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkValues.swift",
+      "sha256": "1d56582bc53cdd9b0e1844269dfed4f441309997f0c6b134a8f64265cae2e5c9"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerListRecovery.swift",
+      "sha256": "0f6a7109dccec70520c5c1945f8b77b56f3d578cc3bddc6ab0bd65c87e5f714d"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift",
+      "sha256": "cc858d8b5901779245572e6b0fbb8a5babbfc1b55cd88895194b838cf5e6c577"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipRecovery.swift",
+      "sha256": "132e5752b86d01a9038c6404b6d2455335294da8cede1a9673fc9efd43e371ce"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift",
+      "sha256": "5facc4514fc6ae6d8acdb235c0c1d904698078e56d6513d3f6579e315209e720"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift",
+      "sha256": "8c8d205a5c221ac4f94c4e60b71569483e359da65c6c519c01f05403b45fc50c"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift",
+      "sha256": "a4bcf5be5ea7b2b1c87a6198637d1c592f7e98f372c5582d8ecb92d3370022fa"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleRecovery.swift",
+      "sha256": "04cd468445d0110b980aff89b94b1e3f4ca1ff641ce46dc9ecb1eb6518667a22"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift",
+      "sha256": "a3393d67c3c5d64042ab504a9010a72e530779a0892abb6ba2043b594a415504"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV2.swift",
+      "sha256": "efbe703445f557022a2fb25fe40b4cadde725cfaa23c2293864099726e1b5af1"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV3.swift",
+      "sha256": "16597d7095a886a1736b908877359b110a4d527d6aadb77e4ced5f13cfc9facc"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift",
+      "sha256": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV5.swift",
+      "sha256": "e2347043ee4c5d0267391e40119d6cc25f463f181c833c9a9c4b3bed0e10f0f6"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV6.swift",
+      "sha256": "9ec7f806f24a4666d02f9a2b16e94bf10330705b4cd4989cb52792e30757fd83"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV7.swift",
+      "sha256": "7dce5ff7a8df9a69eaf6f7cdc70d1b19df524b67976889b6669b9f424e6ca398"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV8.swift",
+      "sha256": "ff4a06f517c8465db7174a08a0741cc015c2d1899b816ba8dd09509949810c46"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift",
+      "sha256": "061497f9c2e280833d6f9a7581312af74199403c938f61a43f18cfe0158d5b4d"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift",
+      "sha256": "44be6cf8591ac8eb098a159830cff2931b5c7ddc6512447a1c715d4663d80218"
+    },
+    {
+      "path": "Packages/PlannerPreviews/Sources/PlannerPreviews/AppleAddressPreviewProvider.swift",
+      "sha256": "2361449dd06f367829f77cace3ec6d2cf7bd93f0950c25a2d4674d33aa091b75"
+    },
+    {
+      "path": "Packages/PlannerPreviews/Sources/PlannerPreviews/AppleLinkPreviewProvider.swift",
+      "sha256": "cf737b3de7535a961a1b3e2e008dd0e70e425e1dd92de8322c033b2caac9c319"
+    },
+    {
+      "path": "Packages/PlannerPreviews/Sources/PlannerPreviews/PlannerAddressPreviews.swift",
+      "sha256": "d4689307a9ba8f5d2b881c4122ddffb21f79623c9c56cd813889d4ba844ad89b"
+    },
+    {
+      "path": "Packages/PlannerPreviews/Sources/PlannerPreviews/PlannerPreviews.swift",
+      "sha256": "e6b1a21906b58dea8a6befbbcfff867cc89f6385147174781998521a5cf23cf0"
+    }
+  ],
+  "originalCaptures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-category-relaunch.png",
+      "sha256": "9d5c1da1e059fc76a9c1e5e9cbf8b9698ddb87563123d99da5ab30499f2cdada",
+      "resultBundle": "/private/tmp/PlannerCategoryNativeAdaptivePhone.xcresult",
+      "originalName": "Native Category after relaunch_0_E17E69D9-77AA-451B-AAE6-6753C602D4B8.png",
+      "testIdentifier": "SavedCategoryJourneyTests/testCategoryCreationAndRenameStageCancelAndPersistAfterRelaunch()"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-category.png",
+      "sha256": "92bb900ea226d8d6425d938a2ab0273b8cfa2522f669c3a6c4beca07d6391915",
+      "resultBundle": "/private/tmp/PlannerCategoryNativeAdaptivePhone.xcresult",
+      "originalName": "Saved native Category_0_2119592A-2F05-46E7-8BF6-4CBA447C439B.png",
+      "testIdentifier": "SavedCategoryJourneyTests/testCategoryCreationAndRenameStageCancelAndPersistAfterRelaunch()"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-category-toolbar-list.png",
+      "sha256": "06d368eec6b56e3a1025ac63b3f46e6b533fab2f562b25bec73a0d71784a3106",
+      "resultBundle": "/private/tmp/PlannerCategoryNativeAdaptivePhone.xcresult",
+      "originalName": "Saved native List with empty progress_0_39D82A95-5DFC-4E61-987F-7F200D31CC59.png",
+      "testIdentifier": "SavedListJourneyTests/testListDraftCancellationAndCreationRemainDistinctAfterNativeRelaunch()"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-category-relaunch.png",
+      "sha256": "2b25c49bde00e70c5f6cf8a4a023bbe59e08f557f5beb65bc22164079f78e4b3",
+      "resultBundle": "/private/tmp/PlannerCategoryNativeAdaptiveTablet.xcresult",
+      "originalName": "Native Category after relaunch_0_8656EC97-35E1-470B-BDDC-A337EB7ECA31.png",
+      "testIdentifier": "SavedCategoryJourneyTests/testCategoryCreationAndRenameStageCancelAndPersistAfterRelaunch()"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-category.png",
+      "sha256": "6869908909d4b78c5376f911829f435b7868179b1916004e4cef882dcecf2206",
+      "resultBundle": "/private/tmp/PlannerCategoryNativeAdaptiveTablet.xcresult",
+      "originalName": "Saved native Category_0_62C1A2F9-F1C1-4131-B445-ACD3526958E6.png",
+      "testIdentifier": "SavedCategoryJourneyTests/testCategoryCreationAndRenameStageCancelAndPersistAfterRelaunch()"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-category-toolbar-list.png",
+      "sha256": "325f5c1e15c9809a33de5afe4739f4020fdc4231371a02b21ee89314669465c8",
+      "resultBundle": "/private/tmp/PlannerCategoryNativeAdaptiveTablet.xcresult",
+      "originalName": "Saved native List with empty progress_0_98B0F119-AC4F-407C-8125-25439C7EB8CD.png",
+      "testIdentifier": "SavedListJourneyTests/testListDraftCancellationAndCreationRemainDistinctAfterNativeRelaunch()"
+    }
+  ],
+  "limits": [
+    "Mac compilation executes zero app-hosted runtime functions; its existing startup gate remains open.",
+    "Category associations/deletion, native color/icon editors and Tags remain unimplemented.",
+    "Only compact phone and regular-width portrait iPad are exercised. Other sizes, iPad split-window transitions, VoiceOver, keyboard and Dynamic Type remain unqualified.",
+    "Category catalog captures are visually inspected; form controls are observed by XCTest without a separate form pixel capture.",
+    "Large label catalogs still load one full local window; paging and performance are not established.",
+    "External refresh and native stale/recovery branches remain open. Existing Core/HTTP qualifications are not rerun for this UI-only slice.",
+    "AppIntents metadata warnings remain in compilation logs. Failed test runs report a diagnostic collection simctl lookup failure after their executed UI failure; this is not a passing test or the reason those assertions fail.",
+    "CloudKit, signed physical clients, account transitions, Share, manual JSON administration and whole-app polish remain open."
+  ]
+}

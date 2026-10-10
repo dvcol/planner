@@ -11,6 +11,19 @@ private enum SavedPlannerSidebarSelection: Hashable {
 }
 
 struct SavedPlannerView: View {
+  #if os(iOS)
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  #endif
+
+  private var categoryToolbarPlacement: ToolbarItemPlacement {
+    #if os(macOS)
+      return .automatic
+    #else
+      if horizontalSizeClass == .regular { return .bottomBar }
+      return .automatic
+    #endif
+  }
+
   @Bindable var store: SavedPlannerStore
   @State private var selectedSection: SavedPlannerSection = .lists
   @State private var selectedListId: UUID?
@@ -20,6 +33,7 @@ struct SavedPlannerView: View {
   @State private var listSearchText = ""
   @State private var isOpeningList = false
   @State private var showNewList = false
+  @State private var showCategories = false
   @State private var listCatalog: [SavedPlannerList]?
   @State private var listCatalogArchive = SavedItemFilters.Archive.active
   @State private var isOpeningListCatalog = false
@@ -96,6 +110,9 @@ struct SavedPlannerView: View {
       await loadSelectedItem()
       await loadSelectedAppearance()
     }
+    .sheet(isPresented: $showCategories) {
+      SavedCategoriesView(store: store)
+    }
     .sheet(isPresented: $showNewList) {
       SavedNewListForm(store: store) { source in
         selectedSection = .lists
@@ -126,7 +143,7 @@ struct SavedPlannerView: View {
     .alert(
       "Planner",
       isPresented: Binding(
-        get: { store.alertMessage != nil && itemEditDraft == nil },
+        get: { store.alertMessage != nil && itemEditDraft == nil && !showCategories },
         set: { if !$0 { store.alertMessage = nil } })
     ) {
       Button("OK") { store.alertMessage = nil }
@@ -565,6 +582,11 @@ struct SavedPlannerView: View {
       .navigationTitle("Planner")
       .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
       .toolbar {
+        ToolbarItem(placement: categoryToolbarPlacement) {
+          Button("Categories", systemImage: "square.grid.2x2") { showCategories = true }
+            .disabled(!store.isReady)
+            .accessibilityIdentifier("saved.categories.manage")
+        }
         ToolbarItem {
           SavedListArchiveFilterMenu(archive: $listCatalogArchive)
         }
