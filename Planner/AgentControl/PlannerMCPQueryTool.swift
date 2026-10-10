@@ -9,6 +9,7 @@
       "required": .array([.string("kind"), .string("scope")]),
       "properties": .object([
         "kind": .object(["type": .string("string"), "const": .string("items")]),
+        "text": .object(["type": .string("string")]),
         "scope": .object([
           "oneOf": .array([
             .object([
@@ -161,16 +162,25 @@
       _ = try object(
         value, allowed: Set(query.keys), required: ["kind", "scope"], path: "/query")
       if let unsupported = Set(query.keys).subtracting([
-        "kind", "scope", "completion", "archive", "sort", "rowPresentation",
+        "kind", "scope", "text", "completion", "archive", "sort", "rowPresentation",
       ])
       .sorted().first {
         throw AdmissionFailure(
           code: "unavailable", path: "/query/" + unsupported,
           message:
-            "This query slice supports scope, completion, archive, sort and row presentation.")
+            "This query slice supports scope, text, completion, archive, sort and row presentation."
+        )
       }
       let nativeScope = try scope(query["scope"])
       let sort = try sort(query["sort"])
+      let text: String
+      switch query["text"] {
+      case nil: text = ""
+      case .string(let value): text = value
+      default:
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/text", message: "Expected Item search text.")
+      }
       let completion: PlannerItemQuery.Completion
       switch query["completion"] {
       case nil, .string("todo"): completion = .todo
@@ -193,7 +203,7 @@
       let presentation = try rowPresentation(query["rowPresentation"])
       return .items(
         PlannerItemQuery(
-          scope: nativeScope, completion: completion, archive: archive,
+          scope: nativeScope, text: text, completion: completion, archive: archive,
           sort: sort, rowPresentation: presentation))
     }
 
