@@ -1,0 +1,236 @@
+{
+  "baseCommit": "86eea86",
+  "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+  "seam": "Real authenticated loopback HTTP, tools/list and public Core commands/reads/query/reopen; no private persistence assertion or production test injection.",
+  "sourceSnapshots": {
+    "ExecutableRed": {
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift": "47ca521a5952f01ebf126c64a8a0acba9d22309e0761eeb2dc7231505fba670e",
+      "PlannerMCPTests/MembershipReorderingRoutingTests.swift": "3423bc64718362869812204c5898b664fd31abd278eb36e88c1ddb9c43e05e85",
+      "PlannerMCPTests/MembershipCreationRoutingTests.swift": "4ac6e58222a9a63f5d7279314fecd134833b03fca8035c6407ce861d97412639"
+    },
+    "BehaviorRed": {
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift": "47ca521a5952f01ebf126c64a8a0acba9d22309e0761eeb2dc7231505fba670e",
+      "PlannerMCPTests/MembershipReorderingRoutingTests.swift": "3d72b6fb9b22bd8bbb397ac9577e2a3e99d2512ce3ebcb6bcb3b572a1c259320",
+      "PlannerMCPTests/MembershipCreationRoutingTests.swift": "4ac6e58222a9a63f5d7279314fecd134833b03fca8035c6407ce861d97412639"
+    },
+    "Green": {
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift": "507c8f2bcc4bbb282d76526d40945d777c450f39e4e56fa66c64a84fdc21f833",
+      "PlannerMCPTests/MembershipReorderingRoutingTests.swift": "3d72b6fb9b22bd8bbb397ac9577e2a3e99d2512ce3ebcb6bcb3b572a1c259320",
+      "PlannerMCPTests/MembershipCreationRoutingTests.swift": "4ac6e58222a9a63f5d7279314fecd134833b03fca8035c6407ce861d97412639"
+    },
+    "ExecutableGreen": {
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift": "6a5fca356c40317600b6084a32ba1422a6913de78c7831849387613b8a1bc00e",
+      "PlannerMCPTests/MembershipReorderingRoutingTests.swift": "3d72b6fb9b22bd8bbb397ac9577e2a3e99d2512ce3ebcb6bcb3b572a1c259320",
+      "PlannerMCPTests/MembershipCreationRoutingTests.swift": "4ac6e58222a9a63f5d7279314fecd134833b03fca8035c6407ce861d97412639"
+    },
+    "Admission": {
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift": "6a5fca356c40317600b6084a32ba1422a6913de78c7831849387613b8a1bc00e",
+      "PlannerMCPTests/MembershipReorderingRoutingTests.swift": "9fefec75c0cee4db6c1dab7319dcdd89a96a961b176772a3c9945f76a39098df",
+      "PlannerMCPTests/MembershipCreationRoutingTests.swift": "4ac6e58222a9a63f5d7279314fecd134833b03fca8035c6407ce861d97412639"
+    }
+  },
+  "executions": [
+    {
+      "phase": "ExecutableRed",
+      "note": "Fixture setup failed before HTTP; not the missing-route red.",
+      "sources": "ExecutableRed",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests/MembershipReorderingRoutingTests\" -resultBundlePath /private/tmp/PlannerMCPMembershipReorderingExecutableRed.xcresult test",
+      "log": "/private/tmp/PlannerMCPMembershipReorderingExecutableRed.log",
+      "bundle": "/private/tmp/PlannerMCPMembershipReorderingExecutableRed.xcresult",
+      "summary": "/private/tmp/PlannerMCPMembershipReorderingExecutableRedSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "savedMembershipReorderOverHTTPRetainsAppearanceStateAndSharedItemAfterReopen()",
+          "message": "Caught error: TestSetupFailure()"
+        }
+      ],
+      "startTime": 1791595340.247,
+      "finishTime": 1791595361.541,
+      "devices": [
+        {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        }
+      ]
+    },
+    {
+      "phase": "SetupDiagnosis",
+      "note": "The fixture requested generated entities for a membership; Core returns generatedReferences.",
+      "sources": null,
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests/MembershipReorderingRoutingTests\" -resultBundlePath /private/tmp/PlannerMCPMembershipReorderingSetupDiagnosis.xcresult test",
+      "log": "/private/tmp/PlannerMCPMembershipReorderingSetupDiagnosis.log",
+      "bundle": "/private/tmp/PlannerMCPMembershipReorderingSetupDiagnosis.xcresult",
+      "summary": "/private/tmp/PlannerMCPMembershipReorderingSetupDiagnosisSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "savedMembershipReorderOverHTTPRetainsAppearanceStateAndSharedItemAfterReopen()",
+          "message": "Expectation failed: applied.generated.first"
+        }
+      ],
+      "startTime": 1791595432.942,
+      "finishTime": 1791595444.748,
+      "devices": [
+        {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        }
+      ]
+    },
+    {
+      "phase": "BehaviorRed",
+      "note": "Actual authenticated HTTP reorder rejects at the missing route.",
+      "sources": "BehaviorRed",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests/MembershipReorderingRoutingTests\" -resultBundlePath /private/tmp/PlannerMCPMembershipReorderingBehaviorRed.xcresult test",
+      "log": "/private/tmp/PlannerMCPMembershipReorderingBehaviorRed.log",
+      "bundle": "/private/tmp/PlannerMCPMembershipReorderingBehaviorRed.xcresult",
+      "summary": "/private/tmp/PlannerMCPMembershipReorderingBehaviorRedSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "savedMembershipReorderOverHTTPRetainsAppearanceStateAndSharedItemAfterReopen()",
+          "message": "Expectation failed: reordered[\"state\"] as? String == \"applied\""
+        }
+      ],
+      "startTime": 1791595487.926,
+      "finishTime": 1791595497.47,
+      "devices": [
+        {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        }
+      ]
+    },
+    {
+      "phase": "Green",
+      "note": "Extracted schema lacked a Value type; build failed with zero executed tests.",
+      "sources": "Green",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests/MembershipReorderingRoutingTests\" \"-only-testing:PlannerMCPTests/MembershipCreationRoutingTests\" -resultBundlePath /private/tmp/PlannerMCPMembershipReorderingGreen.xcresult test",
+      "log": "/private/tmp/PlannerMCPMembershipReorderingGreen.log",
+      "bundle": "/private/tmp/PlannerMCPMembershipReorderingGreen.xcresult",
+      "summary": "/private/tmp/PlannerMCPMembershipReorderingGreenSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "unknown",
+      "totalTestCount": 0,
+      "passedTests": 0,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "failures": [],
+      "startTime": 1791595559.608,
+      "finishTime": 1791595562.601,
+      "devices": []
+    },
+    {
+      "phase": "ExecutableGreen",
+      "note": "Reorder and both membership-addition journeys pass.",
+      "sources": "ExecutableGreen",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests/MembershipReorderingRoutingTests\" \"-only-testing:PlannerMCPTests/MembershipCreationRoutingTests\" -resultBundlePath /private/tmp/PlannerMCPMembershipReorderingExecutableGreen.xcresult test",
+      "log": "/private/tmp/PlannerMCPMembershipReorderingExecutableGreen.log",
+      "bundle": "/private/tmp/PlannerMCPMembershipReorderingExecutableGreen.xcresult",
+      "summary": "/private/tmp/PlannerMCPMembershipReorderingExecutableGreenSummary.json",
+      "terminalMarker": "** TEST SUCCEEDED **",
+      "result": "Passed",
+      "totalTestCount": 3,
+      "passedTests": 3,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "failures": [],
+      "startTime": 1791595606.778,
+      "finishTime": 1791595613.596,
+      "devices": [
+        {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        }
+      ]
+    },
+    {
+      "phase": "Admission",
+      "note": "Final replay/schema/invalid-input and affected command/List/addition regression.",
+      "sources": "Admission",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests/MembershipReorderingRoutingTests\" \"-only-testing:PlannerMCPTests/MembershipCreationRoutingTests\" \"-only-testing:PlannerMCPTests/CommandRoutingTests\" \"-only-testing:PlannerMCPTests/ListRoutingTests\" -resultBundlePath /private/tmp/PlannerMCPMembershipReorderingAdmission.xcresult test",
+      "log": "/private/tmp/PlannerMCPMembershipReorderingAdmission.log",
+      "bundle": "/private/tmp/PlannerMCPMembershipReorderingAdmission.xcresult",
+      "summary": "/private/tmp/PlannerMCPMembershipReorderingAdmissionSummary.json",
+      "terminalMarker": "** TEST SUCCEEDED **",
+      "result": "Passed",
+      "totalTestCount": 14,
+      "passedTests": 14,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "failures": [],
+      "startTime": 1791595752.081,
+      "finishTime": 1791595759.763,
+      "devices": [
+        {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        }
+      ]
+    }
+  ],
+  "setupAttempt": {
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerMCPTests -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPNativeDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests/MembershipReorderingRoutingTests\" -resultBundlePath /private/tmp/PlannerMCPMembershipReorderingRed.xcresult test",
+    "log": "/private/tmp/PlannerMCPMembershipReorderingRed.log",
+    "executedTests": 0,
+    "reason": "Incorrect PlannerMCPTests scheme; corrected to the existing Planner scheme."
+  },
+  "notes": [
+    "SetupDiagnosis has no saved source fingerprint and is recorded only as failed setup evidence.",
+    "An intermediate test macro syntax error was caught by swift-format before any Xcode test execution and corrected."
+  ],
+  "qualified": [
+    "Exact membership Manual placement through the existing Core command.",
+    "Retained local completion, source content/time/hashes and stable membership identities after reopen.",
+    "Original receipt replay after a later reorder preserves the later order; changed payload rejects.",
+    "Strict advertised first/last and before/after schema; 13 invalid commands leave the List unchanged.",
+    "Existing membership addition and directly affected command/List regressions."
+  ],
+  "limitations": [
+    "Core schema 7 and portable format 1 are unchanged; CloudKit is disabled.",
+    "Other membership removal/move, full-graph itineraries, bulk review and external/cross-window native refresh remain open.",
+    "Chosen clients, signing/reader/Share, physical sync/account/performance/accessibility and ReadLoad remain unqualified.",
+    "Backup/export/import/recovery administration remains manual."
+  ]
+}
