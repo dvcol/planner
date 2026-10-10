@@ -26,7 +26,10 @@ import UniformTypeIdentifiers
 
     var body: some View {
       VStack(alignment: .leading, spacing: 0) {
-        SavedListProgress(progress: list.progress, matchingCount: items.count).padding()
+        SavedListProgress(
+          progress: list.progress, matchingCount: items.count,
+          isArchived: list.state.archived == true
+        ).padding()
         Table(of: SavedPlannerItem.self, selection: selection) {
           TableColumn("Items") { item in
             SavedMembershipRow(item: item, canChange: store.canCreate) {

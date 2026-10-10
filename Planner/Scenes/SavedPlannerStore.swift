@@ -6,6 +6,7 @@ import PlannerCore
 struct SavedPlannerList: Identifiable {
   let source: PlannerEntityReference
   let name: String
+  let archived: Bool
   var id: UUID { source.id }
 }
 
@@ -86,9 +87,13 @@ final class SavedPlannerStore {
   }
 
   func refreshLists() async {
-    guard let planner, let session else { return }
+    if let loaded = await readLists(archive: .active) { lists = loaded }
+  }
+
+  func readLists(archive: PlannerItemQuery.Archive) async -> [SavedPlannerList]? {
+    guard let planner, let session else { return nil }
     switch await planner.query(
-      PlannerQuery(session: session, request: .catalog(.init(sourceKind: .list))))
+      PlannerQuery(session: session, request: .catalog(.init(sourceKind: .list, archive: archive))))
     {
     case .failed(let reason): alertMessage = reason.message
     case .snapshot(let snapshot):
@@ -97,14 +102,15 @@ final class SavedPlannerStore {
         request: .rows(generation: snapshot.generation, offset: 0, limit: Int64.max))
       {
       case .rows(let window):
-        lists = window.rows.compactMap { row in
+        return window.rows.compactMap { row in
           guard case .source(let source) = row.identity, source.kind == .list else { return nil }
-          return SavedPlannerList(source: source, name: row.title)
+          return SavedPlannerList(source: source, name: row.title, archived: row.archived == true)
         }
       case .failed(let reason): alertMessage = reason.message
       default: alertMessage = "Planner could not read its Lists."
       }
     }
+    return nil
   }
 
   func readList(_ identifier: UUID) async -> PlannerListSourceRead? {
@@ -244,6 +250,16 @@ final class SavedPlannerStore {
         operationId: UUID()) != nil
     else { return false }
     await refreshItems()
+    return true
+  }
+
+  func setListArchived(_ identifier: UUID, archived: Bool) async -> Bool {
+    guard
+      await executeChange(
+        .setArchive(source: .init(kind: .list, id: identifier), archived: archived),
+        operationId: UUID()) != nil
+    else { return false }
+    await refreshLists()
     return true
   }
 
