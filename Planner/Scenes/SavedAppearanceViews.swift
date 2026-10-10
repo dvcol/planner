@@ -46,6 +46,7 @@ struct SavedAppearanceDetail: View {
   let item: PlannerAppearanceRead
   let listName: String
   let canChange: Bool
+  let addToList: () -> Void
   let viewItem: () -> Void
   let moveToList: () -> Void
   let removeFromList: () -> Void
@@ -75,6 +76,8 @@ struct SavedAppearanceDetail: View {
     .toolbar {
       ToolbarItem(placement: .primaryAction) {
         Menu {
+          Button("Add to List", action: addToList)
+            .disabled(!canChange)
           Button("View Item", action: viewItem)
           Button("Move to List", action: moveToList)
             .disabled(!canChange)

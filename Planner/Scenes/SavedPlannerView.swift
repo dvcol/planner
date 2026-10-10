@@ -312,6 +312,11 @@ struct SavedPlannerView: View {
     if let selectedAppearance, let selectedList {
       SavedAppearanceDetail(
         item: selectedAppearance, listName: selectedList.content.name, canChange: store.canCreate,
+        addToList: {
+          listAdditionDraft = SavedListAdditionDraft(
+            itemIdentifier: selectedAppearance.source.id,
+            itemTitle: selectedAppearance.content.title)
+        },
         viewItem: {
           selectedItemId = selectedAppearance.source.id
           selectedSection = .items
@@ -349,6 +354,14 @@ struct SavedPlannerView: View {
         ContentUnavailableView("Choose an Item", systemImage: "square.stack")
       }
     }
+  }
+
+  private func proposeListAddition(_ item: SavedPlannerItem) {
+    guard case .appearance(let source, _) = item.row.identity, source.kind == .item else {
+      return
+    }
+    listAdditionDraft = SavedListAdditionDraft(
+      itemIdentifier: source.id, itemTitle: item.row.title)
   }
 
   private func removeMembership(_ membershipIdentifier: UUID, listIdentifier: UUID) {
@@ -445,6 +458,7 @@ struct SavedPlannerView: View {
                 SavedMacMembershipTable(
                   store: store, list: selectedList, items: listItems,
                   selection: membershipSelection,
+                  addToList: proposeListAddition,
                   moveMembership: { item in
                     proposeMembershipMove(item.id, itemTitle: item.row.title, list: selectedList)
                   },
@@ -480,6 +494,8 @@ struct SavedPlannerView: View {
                         }
                         .disabled(!store.canCreate || listItems.last?.id == item.id)
                         Divider()
+                        Button("Add to List") { proposeListAddition(item) }
+                          .disabled(!store.canCreate)
                         Button("Move to List") {
                           proposeMembershipMove(
                             item.id, itemTitle: item.row.title, list: selectedList)

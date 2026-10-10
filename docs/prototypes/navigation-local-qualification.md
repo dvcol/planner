@@ -2,7 +2,7 @@
 
 Work for [Navigation prototype](https://github.com/dvcol/planner/issues/14) on `prototype/navigation`. Q34 accepts the native UI journeys and fixtures. Q35 requires confirmation before deleting a Category/Tag with any association. The user delayed signing and physical setup while authorizing simulator and local Mac work.
 
-The latest saved-data work is in [Add from global Item details](#add-from-global-item-details), [Native row-menu move](#native-row-menu-move), [Native membership move](#native-membership-move), [Native row-menu removal](#native-row-menu-removal) and [Native membership removal](#native-membership-removal). [Archive and cumulative saved filters](#archive-and-cumulative-saved-filters) records the preceding saved filters and hidden-member drag qualification. Other sections retain their recorded revisions.
+The latest saved-data work is in [Contextual and row-menu Add](#contextual-and-row-menu-add), [Add from global Item details](#add-from-global-item-details), [Native row-menu move](#native-row-menu-move), [Native membership move](#native-membership-move), [Native row-menu removal](#native-row-menu-removal) and [Native membership removal](#native-membership-removal). [Archive and cumulative saved filters](#archive-and-cumulative-saved-filters) records the preceding saved filters and hidden-member drag qualification. Other sections retain their recorded revisions.
 
 The human accepted Q38 A, Q39 B, Q40 A, Q41 A and Q42 A, then accepted Q43 A, Q44 A, Q45 A and Q46 A. The [accepted row decisions](../navigation-prototype-review.md#accepted-review-answers) and [row contract review](../navigation-row-contract-review.md) record the exact declarations and required tests. The accepted amendment itself added no runtime qualification to the seven-journey presentation evidence below. Later sections qualify saved Item/List appearance completion and standalone List reordering. Native rich rows, cross-List drag-and-drop and provider lookup remain open.
 
@@ -437,4 +437,21 @@ The first executed red fails at the absent Add to List action. The main journey 
 
 All eight app-owned captures were inspected. The [evidence record](evidence/navigation/saved-global-item-list-addition.json) preserves exact commands, executed red/green, first-run qualification, regression, source snapshots and capture hashes. Raw bundles/logs remain under `/private/tmp/PlannerNativeGlobalAdd{PhoneRed,PhoneGreen,TabletGreen,MacGreen,PhoneQualification,TabletQualification,MacQualification}`. Core, HTTP, schema 7 and portable format 1 are unchanged.
 
-Contextual/row-menu Add paths, archived destination management, advanced filters/sorts/paging, external refresh, bulk review, rich rows and location editing remain open. Earlier remaining Mac runtime, failure/recovery, physical-device/CloudKit/Share, accessibility/keyboard, large-data and human-review limits still apply. Final whole-app polish follows feature completion.
+The following slice qualifies contextual/row-menu Add paths. Archived destination management, advanced filters/sorts/paging, external refresh, bulk review, rich rows and location editing remain open. Earlier remaining Mac runtime, failure/recovery, physical-device/CloudKit/Share, accessibility/keyboard, large-data and human-review limits still apply. Final whole-app polish follows feature completion.
+
+## Contextual and row-menu Add
+
+Before this slice, Add to List required opening the global Item detail or starting from a destination List. Contextual Item actions and native row menus now open the same destination picker directly. Contextual detail uses the appearance's shared Item reference; row actions use the row's source identity, never its membership identity. The existing command/picker keeps its validation, cancellation, operation identity and save/recovery behavior. Adding does not remove the current membership or switch selection to another context.
+
+The public journey creates a locally Done Nezu Museum in Tokyo Food, then adds it to empty Wishlist from its contextual detail. Tokyo Food's selected detail, notes, source membership identity and local Done remain. Wishlist's new appearance starts Todo. The journey marks it locally Done, adds Hotel after it, then adds Nezu again from Tokyo Food's row menu. Wishlist retains its original identity, local Done, first position and one Nezu appearance. Relaunch retains both Lists' completion and identities. Explicit global Item detail remains Todo with its notes.
+
+The first executed red fails at the missing contextual Add action. The minimal native wiring then passes one journey on each simulator, with zero failures/skips. Source hashes stayed fixed during green runs. Native Mac app/test bundles compile with no runtime claim. Strict affected Swift lint and source/capture checks pass. No picker, Core, HTTP, schema or backup-format code changes.
+
+| Native outcome | iPhone | iPad |
+| --- | --- | --- |
+| Original detail retained after Add | [Detail](evidence/navigation/phone-saved-context-add-retained-detail.png) | [List and detail](evidence/navigation/tablet-saved-context-add-retained-detail.png) |
+| Existing destination retained after relaunch | [Wishlist](evidence/navigation/phone-saved-context-add-destination-reopened.png) | [Wishlist](evidence/navigation/tablet-saved-context-add-destination-reopened.png) |
+
+All four app-owned captures were inspected. The [evidence record](evidence/navigation/saved-contextual-list-addition.json) preserves exact commands, executed red/green, fixed source snapshots, result counts and capture hashes. Raw result bundles/logs remain under `/private/tmp/PlannerNativeContextAdd{PhoneRed,PhoneGreen,TabletGreen,MacGreen}`. Native row-menu animation waits remain recorded.
+
+Shared Item content editing, rich rows, advanced filters/sorts/paging, bulk review, repeated Itinerary appearances, archived-container management, cross-List drag and external refresh remain open. Earlier failure/recovery, Undo, Mac runtime, signing/physical-device/CloudKit/Share, accessibility/keyboard, large-data and human-review limits still apply. Whole-app polish follows feature completion.
