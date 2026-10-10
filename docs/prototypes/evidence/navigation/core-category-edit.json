@@ -1,0 +1,194 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-11",
+  "baselineCommit": "76a2d8a",
+  "seam": "Accepted public Planner execute/read/bootstrap/inspectRecovery with real temporary stores and native Xcode Core tests. No private persistence assertions, mocks or test-only production injection.",
+  "scope": "Category changed-field edits, Set/Clear, stale compound rejection, original receipt replay and complete recovery; schema 8 remains unchanged.",
+  "tdd": {
+    "interfaceRed": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter CategoryEditTests > /private/tmp/PlannerCategoryEditRed.log 2>&1",
+      "exitCode": 1,
+      "runtimeFunctions": 0,
+      "reason": "The editCategory command, changes and stale Category value cases are absent. Before implementation the conflict assertions are aligned with the accepted existing contract: current values/hashes report conflicting fields only."
+    },
+    "firstGreen": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter CategoryEditTests > /private/tmp/PlannerCategoryEditGreen.log 2>&1",
+      "exitCode": 0,
+      "runtimeFunctions": 1
+    }
+  },
+  "qualification": {
+    "focusedCategories": {
+      "log": "/private/tmp/PlannerCategoryEditQualification.log",
+      "exitCode": 0,
+      "functions": 6,
+      "suites": 4,
+      "failed": 0,
+      "skipped": 0
+    },
+    "store": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter PlannerCoreStoreTests > /private/tmp/PlannerCategoryEditStoreQualification.log 2>&1",
+      "exitCode": 0,
+      "functions": 106,
+      "suites": 42,
+      "failed": 0,
+      "skipped": 0
+    },
+    "HTTPCompatibility": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter 'ItemDurationQueryRoutingTests|ItemTextQueryRoutingTests|CommandRoutingTests|EstimateRoutingTests|QueryRoutingTests|ListCatalogRoutingTests|MembershipRowRoutingTests|MembershipReorderingRoutingTests' > /private/tmp/PlannerCategoryEditHTTPCompatibility.log 2>&1",
+      "exitCode": 0,
+      "functions": 23,
+      "suites": 8,
+      "failed": 0,
+      "skipped": 0
+    },
+    "nativePhone": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerCore -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerCoreCategoryPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerCoreStoreTests/CategoryCreationTests -only-testing:PlannerCoreStoreTests/CategoryMigrationTests -only-testing:PlannerCoreStoreTests/CategoryRecoveryTests -only-testing:PlannerCoreStoreTests/CategoryEditTests -resultBundlePath /private/tmp/PlannerCategoryEditPhone.xcresult test > /private/tmp/PlannerCategoryEditPhone.log 2>&1",
+      "exitCode": 0,
+      "functions": 6,
+      "suites": 4,
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+              "deviceName": "iPhone 18 Pro",
+              "modelName": "iPhone 18 Pro",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 6,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791657885.109,
+        "passedTests": 6,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791657855.874,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerCore",
+        "topInsights": [],
+        "totalTestCount": 6
+      }
+    },
+    "macCompilation": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerCategoryEditMacBuild.xcresult build-for-testing > /private/tmp/PlannerCategoryEditMacBuild.log 2>&1",
+      "exitCode": 0,
+      "runtimeFunctions": 0
+    }
+  },
+  "behavior": [
+    "Rename with the current name hash saves exact text. Clearing icon with its original unchanged-field hash remains valid after the unrelated rename.",
+    "A compound name/color patch containing a stale name guard rejects entirely. The current name and original color remain; stale detail values/hashes identify only the conflicting name field.",
+    "Reopen preserves edited content, ID/lifetime, creation/update times and hashes. Exact rename replay returns its original affected source/checkpoint without reapplying over the subsequent icon clear.",
+    "Optional color Clear and Set save through complete checkpoints; unrelated name/icon hashes remain unchanged and portable recovery agrees with the public source.",
+    "Six invalid patches reject at exact paths without changing content, timestamp or hashes: empty changes, cleared/blank required name, absent changed-field hash, nonfinite color and malformed hash. Only the three valid saves advance the acknowledged checkpoint."
+  ],
+  "checks": {
+    "strictSwiftLint": "/private/tmp/PlannerCategoryEditSwiftLint.log",
+    "affectedSwiftFiles": 6,
+    "markdownLint": "/private/tmp/PlannerCategoryEditMarkdownLint.log",
+    "diffWhitespace": "passed"
+  },
+  "sourceHashes": {
+    "Packages/PlannerCore/Package.swift": "a581f4fe459fac23b9307ee37f91fd1fe1083afe6d8becec272bbb1081e3cf69",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerAppliedValues.swift": "7bd92cdaab57c37a778813f84ad492c1c03c07a94d0be4098cf2a809d7247808",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCategoryRecovery.swift": "4d6bc66e47704b706e1c81fd743ba1dffb55a84fe62ad50e5cbb442a67746b41",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCategoryValues.swift": "33a6eebd5b40d2a843e39649797ef851702dc30b6de2d791744dbc1c1c85f1a3",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCivilDate.swift": "d8ae4943ef8af8030c13f12af2f93ffb873de32e328a97245b9c05adbed92306",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "446f538b03bb0d5b5ce7efba066b9227a4a4ccc68154044cf63267c4450f0d8e",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "049991c29d6644fb5a173ae5c8d5dbb7b2d707a5df7f0f07bb7bc6c95d43e70f",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkRecovery.swift": "76e82b80e6be3200a1cc0a9c4eb439094c9085c30939d543dacaaf70cbd60b1b",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkValues.swift": "1d56582bc53cdd9b0e1844269dfed4f441309997f0c6b134a8f64265cae2e5c9",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerListRecovery.swift": "0f6a7109dccec70520c5c1945f8b77b56f3d578cc3bddc6ab0bd65c87e5f714d",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift": "cc858d8b5901779245572e6b0fbb8a5babbfc1b55cd88895194b838cf5e6c577",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipRecovery.swift": "132e5752b86d01a9038c6404b6d2455335294da8cede1a9673fc9efd43e371ce",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift": "5facc4514fc6ae6d8acdb235c0c1d904698078e56d6513d3f6579e315209e720",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "8c8d205a5c221ac4f94c4e60b71569483e359da65c6c519c01f05403b45fc50c",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift": "a4bcf5be5ea7b2b1c87a6198637d1c592f7e98f372c5582d8ecb92d3370022fa",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleRecovery.swift": "04cd468445d0110b980aff89b94b1e3f4ca1ff641ce46dc9ecb1eb6518667a22",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "a3393d67c3c5d64042ab504a9010a72e530779a0892abb6ba2043b594a415504",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV2.swift": "efbe703445f557022a2fb25fe40b4cadde725cfaa23c2293864099726e1b5af1",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV3.swift": "16597d7095a886a1736b908877359b110a4d527d6aadb77e4ced5f13cfc9facc",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV5.swift": "e2347043ee4c5d0267391e40119d6cc25f463f181c833c9a9c4b3bed0e10f0f6",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV6.swift": "9ec7f806f24a4666d02f9a2b16e94bf10330705b4cd4989cb52792e30757fd83",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV7.swift": "7dce5ff7a8df9a69eaf6f7cdc70d1b19df524b67976889b6669b9f424e6ca398",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV8.swift": "ff4a06f517c8465db7174a08a0741cc015c2d1899b816ba8dd09509949810c46",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "061497f9c2e280833d6f9a7581312af74199403c938f61a43f18cfe0158d5b4d",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "44be6cf8591ac8eb098a159830cff2931b5c7ddc6512447a1c715d4663d80218",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift": "f55597673c4bc0deefc7ae5bfa52ae6863d34d0dd770eaf9cd0238d39d267920",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CategoryCreationTests.swift": "403e5f92438f69a23c09be6afa54ad41c78cf7f8b656c27a9ca8ad818bddcc13",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CategoryEditTests.swift": "3996f4a2b32d8b210a76fccc495864c9a3bb6b7e59afae84e2efc4ddc96c6c3a",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CategoryMigrationTests.swift": "946dd8d62a92c36aa2c9ab34c241d381c213ac84b03d435a0f301a5457d5f4cf",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CategoryRecoveryTests.swift": "6e9d0d28386a0c3feb0d64617fc78632d93c044c56a1ad073c2909ccf9fa5a48",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DatasetPresentationScopeTests.swift": "52059a7db6ba9f448d6c76cf597481a65bd4a2b01ef94802a4a44eb955c20c04",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DirectScheduleTests.swift": "3f1148695b499a04cbf62f1807e79f26a3a5e2c2d507e392a8548e389c55282d",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemArchiveTests.swift": "748743d255db0613db7ee2e39c03c439afcf83fa31cf8cf416eb39b66c6bf7a2",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemChronologicalSortTests.swift": "ef1075134062054bc08c77a98e919fb3b6c2bef10fd1ea598054515928d251f4",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCompletionTests.swift": "90622f5f7087eea57a7992a14b57d8bb61102f439749531b8753f9dbe38bc79d",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCreationTests.swift": "cce7f91e2a638989d5922168d781e2f51c2f13ee2d5e0d1875a20f00f232ebf8",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationQueryTests.swift": "fd43d8909f98aa5282db20e2a8edb813bcb091072067fc60cb1f18779820e549",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationSortTests.swift": "5bd645d016fdb77a4d6e1366514a9d12b588689f480898bcedce1e841361ad32",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEditTests.swift": "76dc86b75124410f45443170320ac6a774bdb3c91c518102bbce9a48cbc91314",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEstimateEditTests.swift": "f1c13514cfee4b1c5863b497cd027f48a2dda1231bdbeb4a7a9795f310c49dfc",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkEditTests.swift": "1797fb47a943f82ab1f2dcb9dc6a59cc0b653151182c9bfb18dc594d20f8e5fd",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift": "ffe7f647c68b728ba41a15cf765eafb73c129f203621412c340d7dbcb85003ae",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkTests.swift": "4284ec284db6e3e3b269bed171b95d96a66d14df959d22e9790e4bd484f8ad2d",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLocationEditTests.swift": "de312ef15e594aa81f18e8344b01095c628eea72c9fac059f6d555babcd7ae31",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemQueryTests.swift": "d78739e8e6a260413d277b785f2c7aa21193e5123740544032099b443b7633f7",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemReferenceReadTests.swift": "cacd8855cacc69426abbf6eb8cd2ef88d9ec85e4a2966ac77ad22cc20b1db022",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemRowReadTests.swift": "1597c7a2480bba06797738d8991d4043fdb35a6c12e7b4f597fc0ee6bb969caa",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemSubtitleEditTests.swift": "95ce0088ba89394c7d2cc4eda0cefc75afdbbb5ba539a649f44a91fba9364066",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemTextQueryTests.swift": "fec0d6e60c9cfbe4243e3e12368b27b27203e41a2a5f0d1cd6d387457a35ab92",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListArchiveTests.swift": "393b5114ef81d5cef09ab39d0936c0998d101beda77d1bfc30a87a2f3683d687",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCatalogTests.swift": "21cd1e62520989871e889f50ba2626e3358032793ccdbfee71b96ce0f9d0366c",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCreationTests.swift": "694915bb33d1a54ace2b6c0771a0bb0a8f0487f9a69249a414ee7505ae2ad4f2",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListEditTests.swift": "103b7b0d95a9d3945d9a097c9b3766646622f1652b359b4030e5aaf2d7a94c57",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipAppearanceTests.swift": "c7e78a9a5fa0495f896e1c1b5e839b1e6b2b03d3a75e6e4cd98ecf019e00d359",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCompletionTests.swift": "6f81461fab270a43f687eec965a8182f96c3c67a5bf6a5ad61b2aa23fc403425",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift": "0d17ef73650029f0c7b98625af62c6af1c184405693dbe5b4fbf1573957f20f1",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMigrationTests.swift": "cc76aef2a10d081fe9d1aa1de847a28628420184497cd936968a84b68033c483",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift": "984e7c5b172c2592e5d60537946923723695ed997c6fc01271f8ec7da416c25f",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipReorderingTests.swift": "719ec8cb0dd2a95eb2758d9d4459bee8cf28646e5f0a8a10093df54d67fb412d",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRowTests.swift": "72277f8ef9501f600eeda71730067f68d0b3d910e5a443563689cb78c0bb7c5d",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/PreviewSourceBindingTests.swift": "21909274777f6c69e82082d405f55e7cadb0d39c8647c433307d03cf447e16cb",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoveryFailureTests.swift": "a30332eb67867c9cf240ea22bf58c9d3c9c36f085149ff44b49a9c83a328ac79",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleEditTests.swift": "d00e72c8541f3124da7997a064e7f963ff816ba96f8d3ee8fca115b5138034a5",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleRemovalTests.swift": "c70e40d77fc71f59ab1f9a7f6952c71412482b27e4aef4b5d5e3a3e99c79b157",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleSourceReadTests.swift": "6e2575c710d5a52aa251fa8f6138b01392fbbff32e664316aeb8b015bcb1724e",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleZoneTests.swift": "9f9ab4b11626cccf3f8a3bcc3bd743ad33fa817e3a8c96ca33d8631f31b4d475",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/TestDiscovery.swift": "4a609491daa4c05723f4a184967438edeb6a767a29dd2ddc709859ab373dd765",
+    "Packages/PlannerCore/Tests/PlannerCoreTests/TestDiscovery.swift": "4a609491daa4c05723f4a184967438edeb6a767a29dd2ddc709859ab373dd765",
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift": "63f4f72ddbfe6e38672a436c8f03404dd3d2fda973e74b071d6a7b94b3d3dbfb",
+    "Planner/AgentControl/PlannerMCPFailureValue.swift": "74e05f6a591d90f665eeb804441bfb8a22d35fd302d301fcf10bcf96a66b14f8",
+    "Planner/AgentControl/PlannerMCPLoopbackListener.swift": "56e00b716e0680245e521b9f671e43a7990f1c8103a5bd3f85e2bd14d7756e94",
+    "Planner/AgentControl/PlannerMCPOperationStatusTool.swift": "bcf50d44eb73187d0e04243780cc0172154861d64a6374fc2bef3c2971b2fe8d",
+    "Planner/AgentControl/PlannerMCPQueryTool.swift": "930d6b33f16f24f17e90e9cffc218dd2d0ddff50c201bf94fbf05f1283e98d49",
+    "Planner/AgentControl/PlannerMCPRequestHandler.swift": "edfd45746d8da43a5b1d221e02e302f2e652f554de3d5329e1d39cbedfb62f6e",
+    "Planner/AgentControl/PlannerMCPRowValue.swift": "a95329ee2ceba0e527b06e4b05ead1d63a9ac093ff6dbdf192a367c7c9f93ba6",
+    "Planner/AgentControl/PlannerMCPSourceTool.swift": "f008da94116de23bd4e78344c437bb60d2ea14716221599688969125b43aeb5b"
+  },
+  "limits": [
+    "Category edit HTTP/native UI admission remains unimplemented. The added Mac conflict serializer type-checks but its Category case is not executed over HTTP in this slice.",
+    "Category associations/deletion, Tags, native management, full manual administration, physical sync/account/Share, signed clients and Mac app-hosted runtime remain open.",
+    "Schema 8/portable 1 remain localOnly with CloudKit disabled. No owner label association or timestamp fan-out guarantee is claimed before associations exist."
+  ]
+}

@@ -19,6 +19,28 @@
           "currentValues": .object(["form": PlannerMCPRowValue.scheduleForm(form)]),
           "currentFieldHashes": .object(["form": .string(hash.value)]),
         ])
+      case .staleCategoryEdit(let fields, let values, let hashes):
+        details = .object([
+          "kind": .string("staleEdit"),
+          "conflictingFields": .array(fields.map { .string($0.rawValue) }),
+          "currentValues": .object(
+            Dictionary(
+              uniqueKeysWithValues: values.map { field, value in
+                let encoded: Value
+                switch value {
+                case .string(let text): encoded = .string(text)
+                case .optionalString(let text): encoded = text.map(Value.string) ?? .null
+                case .optionalColor(let color):
+                  encoded = color.map(PlannerMCPSourceTool.colorValue) ?? .null
+                }
+                return (field.rawValue, encoded)
+              })),
+          "currentFieldHashes": .object(
+            Dictionary(
+              uniqueKeysWithValues: hashes.map {
+                ($0.key.rawValue, .string($0.value.value))
+              })),
+        ])
       case .staleListEdit(let fields, let values, let hashes):
         details = .object([
           "kind": .string("staleEdit"),

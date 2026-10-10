@@ -65,6 +65,10 @@ public enum PlannerFailureDetails: Sendable, Equatable {
   case staleListEdit(
     conflictingFields: [PlannerListField], currentValues: [PlannerListField: PlannerListFieldValue],
     currentFieldHashes: [PlannerListField: PlannerFieldHash])
+  case staleCategoryEdit(
+    conflictingFields: [PlannerCategoryField],
+    currentValues: [PlannerCategoryField: PlannerCategoryFieldValue],
+    currentFieldHashes: [PlannerCategoryField: PlannerFieldHash])
 }
 
 public enum PlannerBootstrapResult: Sendable {
@@ -166,6 +170,9 @@ public enum PlannerCommand: Sendable {
   case createItem(content: PlannerItemContentInput)
   case createList(content: PlannerListContentInput)
   case createCategory(content: PlannerCategoryContentInput)
+  case editCategory(
+    sourceId: UUID, changes: PlannerCategoryChanges,
+    expectedFieldHashes: [PlannerCategoryField: PlannerFieldHash])
   case addMembership(itemId: UUID, listId: UUID, placement: PlannerPlacement)
   case removeMembership(listId: UUID, membershipId: UUID)
   case moveMembership(

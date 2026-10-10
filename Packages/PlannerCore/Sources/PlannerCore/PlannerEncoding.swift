@@ -460,3 +460,44 @@ extension PlannerListChanges {
     return plannerDigest(bytes, prefix: "sha256-payload-v1:")
   }
 }
+
+extension PlannerCategoryChanges {
+  func payloadDigest(
+    sourceId: UUID, fields: [PlannerCategoryField],
+    hashes: [PlannerCategoryField: PlannerFieldHash],
+    identity: PlannerStoreIdentity, bindings: [PlannerBoundIdentity]
+  ) throws -> String {
+    var values: [String: PlannerCanonicalValue] = [:]
+    if case .set(let value) = name { values["name"] = .string(value) }
+    switch color {
+    case .set(let value): values["color"] = .optional(value.canonicalValue)
+    case .clear: values["color"] = .optional(nil)
+    case .unchanged: break
+    }
+    switch iconName {
+    case .set(let value): values["iconName"] = .optional(.string(value))
+    case .clear: values["iconName"] = .optional(nil)
+    case .unchanged: break
+    }
+    var usedHashes: [String: PlannerCanonicalValue] = [:]
+    for field in fields {
+      guard let hash = hashes[field] else {
+        throw PlannerFailure(
+          "invalidInput", "Every changed field requires its prior hash.",
+          propertyPath: "/command/expectedFieldHashes/\(field.rawValue)")
+      }
+      usedHashes[field.rawValue] = .string(hash.value)
+    }
+    let value = PlannerCanonicalValue.record([
+      "command": .record([
+        "type": .string("editCategory"), "sourceId": .identity(sourceId),
+        "changes": .record(values), "expectedFieldHashes": .record(usedHashes),
+      ]),
+      "datasetId": .identity(identity.datasetId),
+      "ownershipBinding": .string(identity.ownershipBinding),
+      "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
+    ])
+    let bytes = Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded()
+    return plannerDigest(bytes, prefix: "sha256-payload-v1:")
+  }
+}
