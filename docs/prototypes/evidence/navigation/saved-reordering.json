@@ -1,0 +1,1316 @@
+{
+  "baseCommit": "9696ca6",
+  "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+  "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+  "seam": "Real public native UI with an isolated local prototype dataset; no private persistence reads or test-only production injection.",
+  "sourceSnapshots": {
+    "Red": {
+      "Planner/Scenes/SavedPlannerStore.swift": "04627aa299f77d21ee3252088eb4e8a6bf8e381d795bf8948eb13d9f27130927",
+      "Planner/Scenes/SavedPlannerView.swift": "976374a2bf1df3ce63d7cbe4e2964675b1667bdace93bac2a9681e4a9e3bf509",
+      "Planner/Scenes/SavedAppearanceViews.swift": "65076e3e29aa9299cf080dd6c6294ba4668a382bd717486e0d175e62403640a4",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "2166215fe95461d2ea1e9a0485e10129d45295f3ec5e939a78bc8498eb8ccec2"
+    },
+    "MenuGreen": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "9b61c302cf494251b9fed3fd0be54f974bde4fbcd14cec17aa8e9befe97520f1",
+      "Planner/Scenes/SavedAppearanceViews.swift": "65076e3e29aa9299cf080dd6c6294ba4668a382bd717486e0d175e62403640a4",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "2166215fe95461d2ea1e9a0485e10129d45295f3ec5e939a78bc8498eb8ccec2"
+    },
+    "DragRed": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "9b61c302cf494251b9fed3fd0be54f974bde4fbcd14cec17aa8e9befe97520f1",
+      "Planner/Scenes/SavedAppearanceViews.swift": "65076e3e29aa9299cf080dd6c6294ba4668a382bd717486e0d175e62403640a4",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "faf1547783d1b8a6b918d0f9ccfba255b1bfed537b68b8f7274d5d3776ab9fd7"
+    },
+    "DragGreen": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "539bf28384e6210d3c35d622c5580e46a62f379cddecb3165bc9f02820cf9a9d",
+      "Planner/Scenes/SavedAppearanceViews.swift": "65076e3e29aa9299cf080dd6c6294ba4668a382bd717486e0d175e62403640a4",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "faf1547783d1b8a6b918d0f9ccfba255b1bfed537b68b8f7274d5d3776ab9fd7"
+    },
+    "NativeRows": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "539bf28384e6210d3c35d622c5580e46a62f379cddecb3165bc9f02820cf9a9d",
+      "Planner/Scenes/SavedAppearanceViews.swift": "65076e3e29aa9299cf080dd6c6294ba4668a382bd717486e0d175e62403640a4",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "6fa3233b081df7677dbb22996c48a61d4366d97e79218807402c89627251322d"
+    },
+    "ModernMac": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "59da70d72cf0b59b0c494c80b1fa2d689d9f4584d42a1a7ce3f26a7d6d079e28",
+      "Planner/Scenes/SavedAppearanceViews.swift": "65076e3e29aa9299cf080dd6c6294ba4668a382bd717486e0d175e62403640a4",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "6fa3233b081df7677dbb22996c48a61d4366d97e79218807402c89627251322d"
+    },
+    "MacTag": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "9038f8c2dca93f06bd9bb84584dda4afebacdef2966d9917de8fa8f9ffcdb83d",
+      "Planner/Scenes/SavedAppearanceViews.swift": "65076e3e29aa9299cf080dd6c6294ba4668a382bd717486e0d175e62403640a4",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "6fa3233b081df7677dbb22996c48a61d4366d97e79218807402c89627251322d"
+    },
+    "MacSelection": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "9038f8c2dca93f06bd9bb84584dda4afebacdef2966d9917de8fa8f9ffcdb83d",
+      "Planner/Scenes/SavedAppearanceViews.swift": "af2d495836a0942dde3d0e765e411ddeac345d90698b04db505bb896fbd7869a",
+      "PlannerNavigationUITests/NativeNavigationElements.swift": "85dbaf338836294d55de5819fe0f8362f7cd7f5379ce9d4a8039a382c9c90fd0",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "441a9f88505f0c76ce533669175fca46bf1cb22a990c4b3f8fe2c1a09fef39c7"
+    },
+    "MacStaticText": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "9038f8c2dca93f06bd9bb84584dda4afebacdef2966d9917de8fa8f9ffcdb83d",
+      "Planner/Scenes/SavedAppearanceViews.swift": "af2d495836a0942dde3d0e765e411ddeac345d90698b04db505bb896fbd7869a",
+      "PlannerNavigationUITests/NativeNavigationElements.swift": "b23e45cbbb2f9f996d7bd9c127589f80fdd18a1fd2da7a3f070a0396cdc66fe6",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "441a9f88505f0c76ce533669175fca46bf1cb22a990c4b3f8fe2c1a09fef39c7"
+    },
+    "MacActivation": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "278752442949dddd583c491f456b013f2100bc62da06cf10b202ed3e93268903",
+      "Planner/Scenes/SavedAppearanceViews.swift": "961e00384bb75c5cf798fb77cd6265da710c279bdaa82700bbb1df8af73f966b",
+      "PlannerNavigationUITests/NativeNavigationElements.swift": "b23e45cbbb2f9f996d7bd9c127589f80fdd18a1fd2da7a3f070a0396cdc66fe6",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "441a9f88505f0c76ce533669175fca46bf1cb22a990c4b3f8fe2c1a09fef39c7"
+    },
+    "MacInteraction": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "f83af92924ecedd7eee332acc24ac8f3d9f7da70879b2eac5aa2e1fedd48f65a",
+      "Planner/Scenes/SavedAppearanceViews.swift": "961e00384bb75c5cf798fb77cd6265da710c279bdaa82700bbb1df8af73f966b",
+      "PlannerNavigationUITests/NativeNavigationElements.swift": "5244312acddaa4a0e6cd879d5424a7a5a003f33f643ec418c025f490af4eb844",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "6fa3233b081df7677dbb22996c48a61d4366d97e79218807402c89627251322d"
+    },
+    "MacGestureProbe": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "24fda6e5df86fe082922678c26904122e8ca81c4c71caa8f2e4d0b95b147f4c6",
+      "Planner/Scenes/SavedAppearanceViews.swift": "961e00384bb75c5cf798fb77cd6265da710c279bdaa82700bbb1df8af73f966b",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "f0dace989f2bb2dde3be8b25f83de84c3f30c56c0b54ca887aed7f34d62e48cf"
+    },
+    "MacListMove": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "98429256ca96c513f4199f5483d21936789202af240e311b7a555ce51cc7eba6",
+      "Planner/Scenes/SavedAppearanceViews.swift": "961e00384bb75c5cf798fb77cd6265da710c279bdaa82700bbb1df8af73f966b",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "f0dace989f2bb2dde3be8b25f83de84c3f30c56c0b54ca887aed7f34d62e48cf"
+    },
+    "MacTypedDrag": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "0aa6dde0bc1d1483d661403df9c16ed2c9f57ff083360be517957f237e7b285b",
+      "Planner/Scenes/SavedAppearanceViews.swift": "961e00384bb75c5cf798fb77cd6265da710c279bdaa82700bbb1df8af73f966b",
+      "Planner/Scenes/SavedMembershipDragAndDrop.swift": "111949b98cb7e6b2c1e8ac2af8ba9a1526c13adb48de32dbddc96608b9916c5b",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "f0dace989f2bb2dde3be8b25f83de84c3f30c56c0b54ca887aed7f34d62e48cf"
+    },
+    "MacContentDrop": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "0aa6dde0bc1d1483d661403df9c16ed2c9f57ff083360be517957f237e7b285b",
+      "Planner/Scenes/SavedAppearanceViews.swift": "961e00384bb75c5cf798fb77cd6265da710c279bdaa82700bbb1df8af73f966b",
+      "Planner/Scenes/SavedMembershipDragAndDrop.swift": "111949b98cb7e6b2c1e8ac2af8ba9a1526c13adb48de32dbddc96608b9916c5b",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "0a0ad15c8c9cc9c56789844ec711037338378c6c1a0b90418bada7a97549f065"
+    },
+    "MacTitleDrag": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "0aa6dde0bc1d1483d661403df9c16ed2c9f57ff083360be517957f237e7b285b",
+      "Planner/Scenes/SavedAppearanceViews.swift": "961e00384bb75c5cf798fb77cd6265da710c279bdaa82700bbb1df8af73f966b",
+      "Planner/Scenes/SavedMembershipDragAndDrop.swift": "16f136ac1a90d48c5c04fb4c6cfbc4da241b12446d0e250dfce0d029d5e819dd",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "5288769987abc14ebfc04f7a6506b2613861b5000d2ef9774768f92605e919f4"
+    },
+    "MacButtonDrag": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "733183c01f15158e9a1d204a670c875eb347f597d09f73f8d890c231017c8f41",
+      "Planner/Scenes/SavedAppearanceViews.swift": "3731913b642f43db28189fbc190a2f28206a0c6fae6e1eec596b65dcf163bed3",
+      "Planner/Scenes/SavedMembershipDragAndDrop.swift": "3469b3faebcc5f03f15e5597890ecfb7f8d3b92efa0f60ea0108ba9151669770",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "5288769987abc14ebfc04f7a6506b2613861b5000d2ef9774768f92605e919f4"
+    },
+    "MacExplicitDrag": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "733183c01f15158e9a1d204a670c875eb347f597d09f73f8d890c231017c8f41",
+      "Planner/Scenes/SavedAppearanceViews.swift": "3731913b642f43db28189fbc190a2f28206a0c6fae6e1eec596b65dcf163bed3",
+      "Planner/Scenes/SavedMembershipDragAndDrop.swift": "3d61b1a3326b7596845d191e9a14659d65511bb640e0b340abdc21f5de10bbed",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "5288769987abc14ebfc04f7a6506b2613861b5000d2ef9774768f92605e919f4"
+    },
+    "MacDeclaredDrag": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "733183c01f15158e9a1d204a670c875eb347f597d09f73f8d890c231017c8f41",
+      "Planner/Scenes/SavedAppearanceViews.swift": "3731913b642f43db28189fbc190a2f28206a0c6fae6e1eec596b65dcf163bed3",
+      "Planner/Scenes/SavedMembershipDragAndDrop.swift": "3d61b1a3326b7596845d191e9a14659d65511bb640e0b340abdc21f5de10bbed",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "5288769987abc14ebfc04f7a6506b2613861b5000d2ef9774768f92605e919f4",
+      "Configuration/Planner.xcconfig": "171c6ebbf99618c8f6a08b6f6d3b147d1919cb9e97f650a5ab37c1341317a85c",
+      "Configuration/Planner-Info.plist": "4e80412e5dc4d61231c1d73f85c8e830a6260e1406f1da3865e3f506e5097208",
+      "Planner.xcodeproj/project.pbxproj": "f26696ff3ebf16de00566ba44998d9bdca71aef316e077afb46333a9c2409bc1"
+    },
+    "Final": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "78e9b330c11f830f65a75a2ecdcaf3c7b101b0dddc645b1131878638dd2b23a4",
+      "Planner/Scenes/SavedAppearanceViews.swift": "65076e3e29aa9299cf080dd6c6294ba4668a382bd717486e0d175e62403640a4",
+      "PlannerNavigationUITests/NativeNavigationElements.swift": "5244312acddaa4a0e6cd879d5424a7a5a003f33f643ec418c025f490af4eb844",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "e1201d1ff8724ef0b9e78f44f35480c0c6470ea832ac2686568b783f102331e9",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "2ef4d621aaa8b0b2f8153a75a2a0104cddac5ea77967b35b018d79d4702a7c9e",
+      "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "2972aec7da112b0de7e5929a91b557ea3a55680fd98ba73f80b340041bedf99f",
+      "Configuration/Planner.xcconfig": "b7a614c95c420d23b7d0da086bd30e660744abf66e3726a88ce421fe38ec0372",
+      "Planner.xcodeproj/project.pbxproj": "2ab729c39c3f37dcafe0de8912c18fdd896165b14b26d3428d02652985271f47"
+    },
+    "MacMouseRow": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "78e9b330c11f830f65a75a2ecdcaf3c7b101b0dddc645b1131878638dd2b23a4",
+      "Planner/Scenes/SavedAppearanceViews.swift": "65076e3e29aa9299cf080dd6c6294ba4668a382bd717486e0d175e62403640a4",
+      "PlannerNavigationUITests/NativeNavigationElements.swift": "5244312acddaa4a0e6cd879d5424a7a5a003f33f643ec418c025f490af4eb844",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "b2c9ba318075a8832ad8c3021ded8bf831a62e328d168dd9739d12dfc8d409c2",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "2ef4d621aaa8b0b2f8153a75a2a0104cddac5ea77967b35b018d79d4702a7c9e",
+      "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "2972aec7da112b0de7e5929a91b557ea3a55680fd98ba73f80b340041bedf99f",
+      "Configuration/Planner.xcconfig": "b7a614c95c420d23b7d0da086bd30e660744abf66e3726a88ce421fe38ec0372",
+      "Planner.xcodeproj/project.pbxproj": "2ab729c39c3f37dcafe0de8912c18fdd896165b14b26d3428d02652985271f47"
+    },
+    "MacModernMouse": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "f83af92924ecedd7eee332acc24ac8f3d9f7da70879b2eac5aa2e1fedd48f65a",
+      "Planner/Scenes/SavedAppearanceViews.swift": "679a227af1ad1a4ec24e241b869b88c7f83b919b0ba2711d5e149c67e04d86be",
+      "PlannerNavigationUITests/NativeNavigationElements.swift": "5244312acddaa4a0e6cd879d5424a7a5a003f33f643ec418c025f490af4eb844",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "b2c9ba318075a8832ad8c3021ded8bf831a62e328d168dd9739d12dfc8d409c2",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "2ef4d621aaa8b0b2f8153a75a2a0104cddac5ea77967b35b018d79d4702a7c9e",
+      "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "2972aec7da112b0de7e5929a91b557ea3a55680fd98ba73f80b340041bedf99f",
+      "Configuration/Planner.xcconfig": "b7a614c95c420d23b7d0da086bd30e660744abf66e3726a88ce421fe38ec0372",
+      "Planner.xcodeproj/project.pbxproj": "2ab729c39c3f37dcafe0de8912c18fdd896165b14b26d3428d02652985271f47"
+    },
+    "MacContainerSource": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "6e639d042e12a2d4db1c308b9c896c6501b9a5067769a9bb6c995edd7732d94b",
+      "Planner/Scenes/SavedAppearanceViews.swift": "bb25d43584038aa6dfcecd4cb216a73eadcd0e8f8c92ee5505db79c915e2dfa3",
+      "PlannerNavigationUITests/NativeNavigationElements.swift": "5244312acddaa4a0e6cd879d5424a7a5a003f33f643ec418c025f490af4eb844",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "e1201d1ff8724ef0b9e78f44f35480c0c6470ea832ac2686568b783f102331e9",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "2ef4d621aaa8b0b2f8153a75a2a0104cddac5ea77967b35b018d79d4702a7c9e",
+      "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "2972aec7da112b0de7e5929a91b557ea3a55680fd98ba73f80b340041bedf99f",
+      "Configuration/Planner.xcconfig": "b7a614c95c420d23b7d0da086bd30e660744abf66e3726a88ce421fe38ec0372",
+      "Planner.xcodeproj/project.pbxproj": "2ab729c39c3f37dcafe0de8912c18fdd896165b14b26d3428d02652985271f47"
+    },
+    "MacTable": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "ac48f7741da9793dc6eddaea31b45ae05f35df611bc22ed518cd1d1886c38d32",
+      "Planner/Scenes/SavedAppearanceViews.swift": "679a227af1ad1a4ec24e241b869b88c7f83b919b0ba2711d5e149c67e04d86be",
+      "PlannerNavigationUITests/NativeNavigationElements.swift": "5244312acddaa4a0e6cd879d5424a7a5a003f33f643ec418c025f490af4eb844",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "b2c9ba318075a8832ad8c3021ded8bf831a62e328d168dd9739d12dfc8d409c2",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "2ef4d621aaa8b0b2f8153a75a2a0104cddac5ea77967b35b018d79d4702a7c9e",
+      "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "2972aec7da112b0de7e5929a91b557ea3a55680fd98ba73f80b340041bedf99f",
+      "Configuration/Planner.xcconfig": "171c6ebbf99618c8f6a08b6f6d3b147d1919cb9e97f650a5ab37c1341317a85c",
+      "Planner.xcodeproj/project.pbxproj": "2ab729c39c3f37dcafe0de8912c18fdd896165b14b26d3428d02652985271f47",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "827f640bff162d0b3c76251431fac7bfbbfde35e999347524677940ff238abc0",
+      "Configuration/Planner-Info.plist": "47ca3db7a6ec733aab0ae2bc5677a997dc9b0224860e2cf3fc6f654c2b182778"
+    },
+    "MacTableText": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "01dbe3b16a50055fa8e2b51e77b1f3c14480dcbc0823cc158cc47cbe1e943068",
+      "Planner/Scenes/SavedAppearanceViews.swift": "af2d495836a0942dde3d0e765e411ddeac345d90698b04db505bb896fbd7869a",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "1ce8fb26696018220b73f270ea4f7864b6e74649a7853c88dd6fc6e48880ba5a",
+      "PlannerNavigationUITests/NativeNavigationElements.swift": "2106c99928404adc8173ddebe69db01f2ca4c27d896967f283efbb2d16cd437a",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "9d1c9ec23cae8822cfef4d35b6f85e1c32014a5f7ea6aaa1b5e3fc808c2d6445",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "2ef4d621aaa8b0b2f8153a75a2a0104cddac5ea77967b35b018d79d4702a7c9e",
+      "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "2972aec7da112b0de7e5929a91b557ea3a55680fd98ba73f80b340041bedf99f",
+      "Configuration/Planner.xcconfig": "171c6ebbf99618c8f6a08b6f6d3b147d1919cb9e97f650a5ab37c1341317a85c",
+      "Configuration/Planner-Info.plist": "47ca3db7a6ec733aab0ae2bc5677a997dc9b0224860e2cf3fc6f654c2b182778",
+      "Planner.xcodeproj/project.pbxproj": "2ab729c39c3f37dcafe0de8912c18fdd896165b14b26d3428d02652985271f47"
+    },
+    "Release": {
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "Planner/Scenes/SavedPlannerView.swift": "01dbe3b16a50055fa8e2b51e77b1f3c14480dcbc0823cc158cc47cbe1e943068",
+      "Planner/Scenes/SavedAppearanceViews.swift": "af2d495836a0942dde3d0e765e411ddeac345d90698b04db505bb896fbd7869a",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "e50b1c3d5234b1a8bcbbb124b78be6e897596e6ea9cd16273ced1b2e5e8f3b75",
+      "PlannerNavigationUITests/NativeNavigationElements.swift": "9dc27924e4acb84a329d88dfc2b0862c3e1282e04982ccfce3d8c36c1b05993e",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "4598c5be3c69c3e39b7821a8883960357983477b9b1ff4827752fdd5a2049bc8",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "2ef4d621aaa8b0b2f8153a75a2a0104cddac5ea77967b35b018d79d4702a7c9e",
+      "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "2972aec7da112b0de7e5929a91b557ea3a55680fd98ba73f80b340041bedf99f",
+      "Configuration/Planner.xcconfig": "171c6ebbf99618c8f6a08b6f6d3b147d1919cb9e97f650a5ab37c1341317a85c",
+      "Configuration/Planner-Info.plist": "47ca3db7a6ec733aab0ae2bc5677a997dc9b0224860e2cf3fc6f654c2b182778",
+      "Planner.xcodeproj/project.pbxproj": "2ab729c39c3f37dcafe0de8912c18fdd896165b14b26d3428d02652985271f47"
+    }
+  },
+  "executions": [
+    {
+      "phase": "Red",
+      "note": "Missing Move to End.",
+      "sources": "Red",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingRed.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingRed.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingRed.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingRedSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "iPhone 18 Pro",
+          "platform": "iOS Simulator",
+          "osVersion": "27.0"
+        }
+      ],
+      "startTime": 1791589213.074,
+      "finishTime": 1791589278.542
+    },
+    {
+      "phase": "MenuGreen",
+      "note": "Saved endpoint menu and retained appearance state pass.",
+      "sources": "MenuGreen",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMenuGreen.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMenuGreen.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMenuGreen.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMenuGreenSummary.json",
+      "terminalMarker": "** TEST SUCCEEDED **",
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "failures": [],
+      "devices": [
+        {
+          "deviceName": "iPhone 18 Pro",
+          "platform": "iOS Simulator",
+          "osVersion": "27.0"
+        }
+      ],
+      "startTime": 1791589303.293,
+      "finishTime": 1791589382.889
+    },
+    {
+      "phase": "DragRed",
+      "note": "Missing native mobile Edit control.",
+      "sources": "DragRed",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingDragRed.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingDragRed.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingDragRed.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingDragRedSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "iPhone 18 Pro",
+          "platform": "iOS Simulator",
+          "osVersion": "27.0"
+        }
+      ],
+      "startTime": 1791589409.057,
+      "finishTime": 1791589492.852
+    },
+    {
+      "phase": "DragGreen",
+      "note": "Wrong native mobile reorder-handle label.",
+      "sources": "DragGreen",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingDragGreen.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingDragGreen.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingDragGreen.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingDragGreenSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed - Attributes: Application, 0x108ff1b80, pid: 12365, label: 'Planner navigation prototype'"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "iPhone 18 Pro",
+          "platform": "iOS Simulator",
+          "osVersion": "27.0"
+        }
+      ],
+      "startTime": 1791589519.369,
+      "finishTime": 1791589727.3
+    },
+    {
+      "phase": "MacInitialQualification",
+      "note": "Two appearance journeys pass; initial Mac drag does not reorder.",
+      "sources": "DragGreen",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacInitialQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacInitialQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacInitialQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacInitialQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 3,
+      "passedTests": 2,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791589637.681,
+      "finishTime": 1791589888.09
+    },
+    {
+      "phase": "TabletInitialQualification",
+      "note": "Two appearance journeys pass; wrong reorder-handle lookup fails.",
+      "sources": "DragGreen",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingTabletInitialQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingTabletInitialQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingTabletInitialQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingTabletInitialQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 3,
+      "passedTests": 2,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed - Attributes: Application, 0x10a6de800, pid: 19026, label: 'Planner navigation prototype'"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "iPad Air 11-inch (M4)",
+          "platform": "iOS Simulator",
+          "osVersion": "27.0"
+        }
+      ],
+      "startTime": 1791589640.618,
+      "finishTime": 1791590080.831
+    },
+    {
+      "phase": "MacNativeRowsQualification",
+      "note": "Mac cell drag does not reorder.",
+      "sources": "NativeRows",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacNativeRowsQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacNativeRowsQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacNativeRowsQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacNativeRowsQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791590151.144,
+      "finishTime": 1791590233.503
+    },
+    {
+      "phase": "TabletNativeRowsQualification",
+      "note": "Observed native handle; both directions and retained state pass.",
+      "sources": "NativeRows",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingTabletNativeRowsQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingTabletNativeRowsQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingTabletNativeRowsQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingTabletNativeRowsQualificationSummary.json",
+      "terminalMarker": "** TEST SUCCEEDED **",
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "failures": [],
+      "devices": [
+        {
+          "deviceName": "iPad Air 11-inch (M4)",
+          "platform": "iOS Simulator",
+          "osVersion": "27.0"
+        }
+      ],
+      "startTime": 1791590150.223,
+      "finishTime": 1791590393.871
+    },
+    {
+      "phase": "PhoneNativeRowsQualification",
+      "note": "Both appearance journeys and native reorder pass.",
+      "sources": "NativeRows",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingPhoneNativeRowsQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingPhoneNativeRowsQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingPhoneNativeRowsQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingPhoneNativeRowsQualificationSummary.json",
+      "terminalMarker": "** TEST SUCCEEDED **",
+      "result": "Passed",
+      "totalTestCount": 3,
+      "passedTests": 3,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "failures": [],
+      "devices": [
+        {
+          "deviceName": "iPhone 18 Pro",
+          "platform": "iOS Simulator",
+          "osVersion": "27.0"
+        }
+      ],
+      "startTime": 1791590150.94,
+      "finishTime": 1791590616.947
+    },
+    {
+      "phase": "MacModernQualification",
+      "note": "New reorder container interferes with appearance selection.",
+      "sources": "ModernMac",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacModernQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacModernQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacModernQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacModernQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 3,
+      "passedTests": 0,
+      "failedTests": 3,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+          "message": "XCTAssertTrue failed"
+        },
+        {
+          "test": "testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()",
+          "message": "XCTAssertTrue failed - Attributes: Application, 0x75e60a2e40, pid: 28061, title: 'Planner', Disabled"
+        },
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791590473.875,
+      "finishTime": 1791590607.838
+    },
+    {
+      "phase": "MacTagQualification",
+      "note": "Explicit tag and drag-preview shape do not fix selection.",
+      "sources": "MacTag",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacTagQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacTagQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacTagQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacTagQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 3,
+      "passedTests": 0,
+      "failedTests": 3,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+          "message": "XCTAssertTrue failed"
+        },
+        {
+          "test": "testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()",
+          "message": "XCTAssertTrue failed - Attributes: Application, 0x7a9007ae40, pid: 33930, title: 'Planner', Disabled"
+        },
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791590741.871,
+      "finishTime": 1791590887.384
+    },
+    {
+      "phase": "MacSelectionQualification",
+      "note": "Static text exposes value rather than button label; adapter fails before click.",
+      "sources": "MacSelection",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacSelectionQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacSelectionQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacSelectionQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacSelectionQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791591136.129,
+      "finishTime": 1791591180.834
+    },
+    {
+      "phase": "MacStaticTextQualification",
+      "note": "Observed native text click still leaves contextual detail unselected.",
+      "sources": "MacStaticText",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacStaticTextQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacStaticTextQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacStaticTextQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacStaticTextQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()",
+          "message": "XCTAssertTrue failed - Attributes: Application, 0x797589e1c0, pid: 42144, title: 'Planner', Disabled"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791591199.027,
+      "finishTime": 1791591243.961
+    },
+    {
+      "phase": "MacActivationQualification",
+      "note": "Explicit row activation passes selection; drag remains unchanged.",
+      "sources": "MacActivation",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation\" \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacActivationQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacActivationQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacActivationQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacActivationQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 2,
+      "passedTests": 1,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791591269.704,
+      "finishTime": 1791591392.652
+    },
+    {
+      "phase": "MacInteractionQualification",
+      "note": "Full interaction shape does not establish drag reorder.",
+      "sources": "MacInteraction",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacInteractionQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacInteractionQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacInteractionQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacInteractionQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791591422.389,
+      "finishTime": 1791591504.409
+    },
+    {
+      "phase": "MacGestureProbeQualification",
+      "note": "Slow held gesture does not establish reorder; logging visibility was not controlled.",
+      "sources": "MacGestureProbe",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacGestureProbeQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacGestureProbeQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacGestureProbeQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacGestureProbeQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791591531.095,
+      "finishTime": 1791591613.019
+    },
+    {
+      "phase": "MacListMoveQualification",
+      "note": "Native Mac onMove does not establish drag reorder; logging visibility was not controlled.",
+      "sources": "MacListMove",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacListMoveQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacListMoveQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacListMoveQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacListMoveQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791591652.206,
+      "finishTime": 1791591732.971
+    },
+    {
+      "phase": "MacTypedDragQualification",
+      "note": "Initial typed row drop does not reorder.",
+      "sources": "MacTypedDrag",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacTypedDragQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacTypedDragQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacTypedDragQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacTypedDragQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791591803.729,
+      "finishTime": 1791591886.218
+    },
+    {
+      "phase": "MacContentDropQualification",
+      "note": "Drop within title bounds still does not reorder.",
+      "sources": "MacContentDrop",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacContentDropQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacContentDropQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacContentDropQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacContentDropQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791591941.864,
+      "finishTime": 1791592022.163
+    },
+    {
+      "phase": "MacTitleDragQualification",
+      "note": "Typed drag from title does not reorder.",
+      "sources": "MacTitleDrag",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacTitleDragQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacTitleDragQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacTitleDragQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacTitleDragQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791592056.424,
+      "finishTime": 1791592138.476
+    },
+    {
+      "phase": "MacButtonDragQualification",
+      "note": "Typed drag modifier attached directly to title button.",
+      "sources": "MacButtonDrag",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacButtonDragQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacButtonDragQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacButtonDragQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacButtonDragQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791592206.592,
+      "finishTime": 1791592287.896
+    },
+    {
+      "phase": "MacExplicitDragQualification",
+      "note": "Current explicit typed drag and DropSession API probe.",
+      "sources": "MacExplicitDrag",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacExplicitDragQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacExplicitDragQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacExplicitDragQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacExplicitDragQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791592334.648,
+      "finishTime": 1791592414.656
+    },
+    {
+      "phase": "MacDeclaredDragQualification",
+      "note": "Declared the app-owned native transfer type in Info.plist.",
+      "sources": "MacDeclaredDrag",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacDeclaredDragQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacDeclaredDragQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacDeclaredDragQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacDeclaredDragQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791592435.504,
+      "finishTime": 1791592514.596
+    },
+    {
+      "phase": "MacFinalQualification",
+      "note": "Final affected Mac native journeys.",
+      "sources": "Final",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListMembershipJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacFinalQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacFinalQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacFinalQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacFinalQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 4,
+      "passedTests": 3,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791592785.784,
+      "finishTime": 1791593093.443
+    },
+    {
+      "phase": "PhoneFinalQualification",
+      "note": "Final phone native reorder journey.",
+      "sources": "Final",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingPhoneFinalQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingPhoneFinalQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingPhoneFinalQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingPhoneFinalQualificationSummary.json",
+      "terminalMarker": "** TEST SUCCEEDED **",
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "failures": [],
+      "devices": [
+        {
+          "deviceName": "iPhone 18 Pro",
+          "platform": "iOS Simulator",
+          "osVersion": "27.0"
+        }
+      ],
+      "startTime": 1791592785.137,
+      "finishTime": 1791593049.381
+    },
+    {
+      "phase": "TabletFinalQualification",
+      "note": "Final iPad native reorder journey at the earlier frozen sources.",
+      "sources": "Final",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingTabletFinalQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingTabletFinalQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingTabletFinalQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingTabletFinalQualificationSummary.json",
+      "terminalMarker": "** TEST SUCCEEDED **",
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "failures": [],
+      "devices": [
+        {
+          "deviceName": "iPad Air 11-inch (M4)",
+          "platform": "iOS Simulator",
+          "osVersion": "27.0"
+        }
+      ],
+      "startTime": 1791592784.008,
+      "finishTime": 1791593050.744
+    },
+    {
+      "phase": "MacMouseRowQualification",
+      "note": "Correct Mac mouse gesture on a List row still does not reorder.",
+      "sources": "MacMouseRow",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacMouseRowQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacMouseRowQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacMouseRowQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacMouseRowQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791593164.453,
+      "finishTime": 1791593243.317
+    },
+    {
+      "phase": "MacModernMouseQualification",
+      "note": "Selection passes but mouse drag with modern reorder container fails.",
+      "sources": "MacModernMouse",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacModernMouseQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacModernMouseQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacModernMouseQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacModernMouseQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 2,
+      "passedTests": 1,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791593304.702,
+      "finishTime": 1791593424.155
+    },
+    {
+      "phase": "MacContainerSourceQualification",
+      "note": "Explicit container drag source still does not deliver a move.",
+      "sources": "MacContainerSource",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacContainerSourceQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacContainerSourceQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacContainerSourceQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacContainerSourceQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791593641.518,
+      "finishTime": 1791593721.533
+    },
+    {
+      "phase": "MacTableQualification",
+      "note": "Native table with title Button still does not reorder.",
+      "sources": "MacTable",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacTableQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacTableQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacTableQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacTableQualificationSummary.json",
+      "terminalMarker": "** TEST FAILED **",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "failures": [
+        {
+          "test": "testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch()",
+          "message": "XCTAssertTrue failed"
+        }
+      ],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791593953.691,
+      "finishTime": 1791594034.871
+    },
+    {
+      "phase": "MacTableTextQualification",
+      "note": "Native table owns Text row selection/drag; affected journeys.",
+      "sources": "MacTableText",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedListMembershipJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacTableTextQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacTableTextQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacTableTextQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacTableTextQualificationSummary.json",
+      "terminalMarker": "** TEST SUCCEEDED **",
+      "result": "Passed",
+      "totalTestCount": 4,
+      "passedTests": 4,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "failures": [],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791594365.942,
+      "finishTime": 1791594669.531
+    },
+    {
+      "phase": "MacReleaseQualification",
+      "note": "Final styled Mac table and affected native journeys.",
+      "sources": "Release",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingMacReleaseQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingMacReleaseQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingMacReleaseQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingMacReleaseQualificationSummary.json",
+      "terminalMarker": "** TEST SUCCEEDED **",
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "failures": [],
+      "devices": [
+        {
+          "deviceName": "My Mac",
+          "platform": "macOS",
+          "osVersion": "27.0.1"
+        }
+      ],
+      "startTime": 1791594704.693,
+      "finishTime": 1791594793.655
+    },
+    {
+      "phase": "PhoneReleaseQualification",
+      "note": "Final phone native reorder journey.",
+      "sources": "Release",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingPhoneReleaseQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingPhoneReleaseQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingPhoneReleaseQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingPhoneReleaseQualificationSummary.json",
+      "terminalMarker": "** TEST SUCCEEDED **",
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "failures": [],
+      "devices": [
+        {
+          "deviceName": "iPhone 18 Pro",
+          "platform": "iOS Simulator",
+          "osVersion": "27.0"
+        }
+      ],
+      "startTime": 1791594702.354,
+      "finishTime": 1791594954.644
+    },
+    {
+      "phase": "TabletReleaseQualification",
+      "note": "Final iPad native reorder journey.",
+      "sources": "Release",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests\" -resultBundlePath /private/tmp/PlannerSavedReorderingTabletReleaseQualification.xcresult test",
+      "log": "/private/tmp/PlannerSavedReorderingTabletReleaseQualification.log",
+      "bundle": "/private/tmp/PlannerSavedReorderingTabletReleaseQualification.xcresult",
+      "summary": "/private/tmp/PlannerSavedReorderingTabletReleaseQualificationSummary.json",
+      "terminalMarker": "** TEST SUCCEEDED **",
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "failures": [],
+      "devices": [
+        {
+          "deviceName": "iPad Air 11-inch (M4)",
+          "platform": "iOS Simulator",
+          "osVersion": "27.0"
+        }
+      ],
+      "startTime": 1791594703.655,
+      "finishTime": 1791594952.912
+    }
+  ],
+  "macGestureDiagnosis": [
+    {
+      "note": "Disposable app lookup failed before any drag; not drag qualification.",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/NativeDragProbeJourneyTests\" -resultBundlePath /private/tmp/PlannerNativeDragProbeQualification.xcresult test",
+      "bundle": "/private/tmp/PlannerNativeDragProbeQualification.xcresult",
+      "summary": "/private/tmp/PlannerNativeDragProbeQualificationSummary.json",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    {
+      "note": "Plain Text/String drop failed with XCTest touch press-and-drag on Mac.",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/NativeDragProbeJourneyTests\" -resultBundlePath /private/tmp/PlannerNativeDragProbeURLQualification.xcresult test",
+      "bundle": "/private/tmp/PlannerNativeDragProbeURLQualification.xcresult",
+      "summary": "/private/tmp/PlannerNativeDragProbeURLQualificationSummary.json",
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    {
+      "note": "The same native probe passed with the Mac mouse click-and-drag API.",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/NativeDragProbeJourneyTests\" -resultBundlePath /private/tmp/PlannerNativeMouseDragProbeQualification.xcresult test",
+      "bundle": "/private/tmp/PlannerNativeMouseDragProbeQualification.xcresult",
+      "summary": "/private/tmp/PlannerNativeMouseDragProbeQualificationSummary.json",
+      "result": "Passed",
+      "totalTestCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    {
+      "note": "Two equivalent native table probes: title Button fails the mouse drop; plain Text succeeds.",
+      "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/NativeTableDragProbeJourneyTests\" -resultBundlePath /private/tmp/PlannerNativeTableDragProbeQualification.xcresult test",
+      "bundle": "/private/tmp/PlannerNativeTableDragProbeQualification.xcresult",
+      "summary": "/private/tmp/PlannerNativeTableDragProbeQualificationSummary.json",
+      "result": "Failed",
+      "totalTestCount": 2,
+      "passedTests": 1,
+      "failedTests": 1,
+      "skippedTests": 0
+    }
+  ],
+  "screenshots": [
+    {
+      "platform": "Mac",
+      "path": "docs/prototypes/evidence/navigation/layouts/mac-saved-list-reordered.png",
+      "sha256": "75530549c065ff0e84cab6cbe9b12b68a4828366a5bbb2675cde5de9c3cc668c",
+      "byteCount": 180136,
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "00006030-001A586C3EA3001C",
+        "deviceName": "My Mac",
+        "exportedFileName": "E1BFC2DE-2BE4-428A-A2BD-73C32630238E.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Saved List after native drag_0_477839D9-F9BD-41E2-9825-4A85C6C55ECD.png",
+        "timestamp": 1791594782.964
+      },
+      "resultBundle": "/private/tmp/PlannerSavedReorderingMacReleaseQualification.xcresult"
+    },
+    {
+      "platform": "Phone",
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-list-reordered.png",
+      "sha256": "a87b46522833c148d7f0cfe2ccced403c10839da1559b666d0318dfdc7771479",
+      "byteCount": 133415,
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "3A88AB0B-3E23-4073-B5B7-6F0954762132.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Saved List after native drag_0_98ECD1BA-A0F2-4051-9CDC-67882483324E.png",
+        "timestamp": 1791594939.679
+      },
+      "resultBundle": "/private/tmp/PlannerSavedReorderingPhoneReleaseQualification.xcresult"
+    },
+    {
+      "platform": "Tablet",
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-list-reordered.png",
+      "sha256": "81a472c9e911b1c6f8ea41ad1d113e49fdb32cf2a859debedddba590690cbff7",
+      "byteCount": 141347,
+      "attachment": {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "05B55DA8-7E1C-47A6-992F-4D97A7036BEA.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Saved List after native drag_0_9BD8A996-5DD4-4BE0-982E-7DCAC0AE9C20.png",
+        "timestamp": 1791594938.839
+      },
+      "resultBundle": "/private/tmp/PlannerSavedReorderingTabletReleaseQualification.xcresult"
+    }
+  ],
+  "scope": "Unfiltered Manual order in one saved standalone List; exact membership, local completion and shared content survive reorder and relaunch.",
+  "limitations": [
+    "Filtered Manual reordering, cross-List Move/Add, external/cross-window writes and multi-selection are not qualified.",
+    "Mobile context-menu quiescence delays remain in raw logs; these tests do not establish user latency or long-list performance.",
+    "Mac automatic window restoration, broader accessibility/keyboard, orientation/resizing and final human review remain open.",
+    "Core schema 7 and portable format 1 are unchanged; CloudKit, signing, physical devices and Share remain unqualified.",
+    "Historical and final executions have separate source hashes; earlier passes are not attributed to later source revisions."
+  ],
+  "macGestureDiagnosisNote": "Mac attempts through MacDeclaredDragQualification used the touch API and cannot establish a native reordering API defect. Proper mouse attempts subsequently failed in the List and the table with title Buttons. The isolated Text-versus-Button table comparison found the interaction conflict. Final Mac rows use native Table selection and row Transferable drag/drop, with plain Text titles and a separate completion Button. The app-owned identity-only transfer type remains declared in Info.plist. Debug logging and disposable probe tests were removed."
+}

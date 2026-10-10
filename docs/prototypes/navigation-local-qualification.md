@@ -2,9 +2,9 @@
 
 Work for [Navigation prototype](https://github.com/dvcol/planner/issues/14) on `prototype/navigation`. Q34 accepts the native UI journeys and fixtures. Q35 requires confirmation before deleting a Category/Tag with any association. The user delayed signing and physical setup while authorizing simulator and local Mac work.
 
-The latest qualified source and screenshots are in [Useful Item details and roomier referenced Lists](#useful-item-details-and-roomier-referenced-lists). Earlier sections preserve the outcomes and presentation of previous revisions.
+The latest saved local runtime and screenshots are in [Saved native List reordering](#saved-native-list-reordering). The earlier [useful Item details and roomier referenced Lists](#useful-item-details-and-roomier-referenced-lists) section preserves the read-only full-graph comparison. Other sections retain their recorded revisions.
 
-The human accepted Q38 A, Q39 B, Q40 A, Q41 A and Q42 A, then accepted Q43 A, Q44 A, Q45 A and Q46 A. The [accepted row decisions](../navigation-prototype-review.md#accepted-review-answers) and [row contract review](../navigation-row-contract-review.md) record the exact declarations and required tests. Native rich rows, completion writes, drag-and-drop and provider lookup remain unimplemented. These documentation amendments add no runtime qualification to the seven-journey presentation evidence below.
+The human accepted Q38 A, Q39 B, Q40 A, Q41 A and Q42 A, then accepted Q43 A, Q44 A, Q45 A and Q46 A. The [accepted row decisions](../navigation-prototype-review.md#accepted-review-answers) and [row contract review](../navigation-row-contract-review.md) record the exact declarations and required tests. The accepted amendment itself added no runtime qualification to the seven-journey presentation evidence below. Later sections qualify saved Item/List appearance completion and standalone List reordering. Native rich rows, cross-List drag-and-drop and provider lookup remain open.
 
 ## Owned Item row foundation
 
@@ -16,7 +16,7 @@ This is the existing Item-only schema. The Item row wire path is now qualified t
 
 [Global Item completion and Reopen](core-local-qualification.md#global-item-completion-and-reopen) now save through Core with independent recovery. Completing an archived Item preserves its content/archive state, updates its effective row state and invalidates an old Todo window. No-op timestamp and identical/changed replay checks preserve the current state after Reopen. Nineteen store functions and two native completion functions pass; the affected 24-function MCP target passes and simulator Core test bundles compile.
 
-The [global Item MCP route](mcp-http-qualification.md#global-item-completion-over-http) is now qualified with replay and strict scope rejection through actual HTTP. The native UI remains the recorded read-only fixture. This adds no contextual flag, bulk action, provider I/O or simulated checkbox save. Those interactions still need full-graph persistence and their own native tests before Navigation prototype can complete.
+The [global Item MCP route](mcp-http-qualification.md#global-item-completion-over-http) is now qualified with replay and strict scope rejection through actual HTTP. At this global-only revision, the native UI remained the recorded read-only fixture. That slice added no contextual flag, bulk action, provider I/O or simulated checkbox save. Those interactions still need full-graph persistence and their own native tests before Navigation prototype can complete.
 
 ## Starting state and first goal
 
@@ -282,6 +282,26 @@ Five saved journeys pass on each of Mac, iPhone 18 Pro and iPad Air M4 after the
 The final contextual and globally completed captures are linked for [Mac](evidence/navigation/layouts/mac-saved-appearance-completed.png), [Mac global Done](evidence/navigation/layouts/mac-saved-appearance-global-done.png), [phone](evidence/navigation/layouts/phone-saved-appearance-completed.png), [phone global Done](evidence/navigation/layouts/phone-saved-appearance-global-done.png), [iPad](evidence/navigation/layouts/tablet-saved-appearance-completed.png) and [iPad global Done](evidence/navigation/layouts/tablet-saved-appearance-global-done.png). Native test builds compile the affected app and UI tests on each platform. Strict affected Swift/Markdown lint and diff checks pass. SDK/debugger/accessibility diagnostics remain in raw logs.
 
 This reuses qualified public Core commands and reads on schema 7/portable format 1, with CloudKit disabled. It adds no HTTP route, provider requests or new persistence model. The app-owned refresh revision is not an external Core/CloudKit observer. Cross-window runtime, external writes, contextual removal/deletion, filtering/paging, drag/bulk actions, recovery failures/interruption, broader accessibility, rotation/resizing, physical signing/Share/sync and final human layout review remain unqualified.
+
+## Saved native List reordering
+
+Before this slice, saved List appearances could be selected and completed locally but had no native saved-order controls. This slice submits the existing Core reorderMembership command for one exact membership. Move to Beginning/End is available in each row's native context menu. Mobile Lists use EditButton and List.onMove. macOS uses a native Table with row Transferable drag payloads and insertion destinations; its selection binding opens the contextual third-pane details. This uses Apple's [native Table row drag-and-drop](https://developer.apple.com/documentation/swiftui/adopting-drag-and-drop-using-swiftui). Drag payloads contain List/membership identities only. A different List's payload is not accepted by this reorder-only destination.
+
+The app preserves the membership identity, local completion and shared Item content. It refreshes rows, progress and selected details after the durable command outcome. The selected Item remains attached to that same appearance. Busy controls and destinations refuse another change; errors use the existing save/recovery presentation. The current scope is one unfiltered standalone List in saved Manual order. Filtered Manual reordering, cross-List Move/Add, multi-selection, external writes and other sort modes still require separate work.
+
+The native journey creates Hotel/Museum and their Tokyo List through normal UI, completes Hotel locally, moves it using the context menu, and checks exact appearance identity, notes and completion after relaunch. It then drags Hotel before, after and before Museum, checks literal row geometry each time, and relaunches again to check the final order and retained state. It reads no private persistence state. Existing Core reorder proof at 3fb72a5 covers rejected anchors/payloads, replay, recovery obstruction, rank rebalance and unchanged Item data; this UI slice changes no Core schema or command contract.
+
+The initial red run failed at the missing Move to End action. Mobile qualification then caught a missing Edit control and an incorrect assumed reorder-handle label. The adapter now locates the actual native handle within the exact appearance's cell. Earlier Mac experiments incorrectly used XCTest's touch press-and-drag. A disposable plain SwiftUI probe failed with that gesture and passed with the native mouse click-and-drag API. That corrected gesture still failed in the Planner List/table experiments. A smaller native Table probe isolated a second cause: plain Text rows accepted mouse drags, while otherwise equivalent title Button rows did not. The final Mac table lets the native row select and drag; only the independent completion circle remains a Button. Probe source/tests are removed from the app.
+
+Four affected Mac journeys passed after the Text-row correction, with zero failures/skips. The subsequent native inset style and formatting correction have a separately recorded final reorder journey on each of Mac, iPhone 18 Pro and iPad Air M4, all passing with zero failures/skips at the same frozen source hashes. Test builds compile the affected app/UI bundle on every platform. Strict affected Swift/Markdown lint, Info.plist validation and diff checks pass.
+
+[Execution manifest](evidence/navigation/saved-reordering.json) records the failed and passed runs, separate source snapshots, exact commands and local result bundles. Earlier passes are not attributed to later source hashes. The phone capture shows retained contextual detail after drag; row order is established by native geometry assertions. The tablet and Mac captures show the List order and selected details together. Captures are exported from the named test attachments, checked by byte count/hash and inspected visually.
+
+- [Mac saved List after drag](evidence/navigation/layouts/mac-saved-list-reordered.png)
+- [Phone contextual detail after drag](evidence/navigation/layouts/phone-saved-list-reordered.png)
+- [iPad saved List after drag](evidence/navigation/layouts/tablet-saved-list-reordered.png)
+
+Mobile raw logs include context-menu animation/quiescence delays. These runs establish functional behavior, not interaction latency, long-list performance or every accessibility/keyboard path. macOS automatic window restoration, orientation/resizing, native failure/interruption, full-graph persistence, provider previews, physical signing/Share/CloudKit and final human review remain open. The Navigation prototype gate stays open.
 
 ## Remaining gates
 

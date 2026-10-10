@@ -8,6 +8,7 @@ TARGETED_DEVICE_FAMILY = 1,2
 SUPPORTS_MACCATALYST = NO
 ENABLE_APP_SANDBOX = YES
 CODE_SIGN_ENTITLEMENTS[sdk=macosx*] = Configuration/PlannerMacPrototype.entitlements
+INFOPLIST_FILE = Configuration/Planner-Info.plist
 INFOPLIST_KEY_CFBundleDisplayName = Planner navigation prototype
 INFOPLIST_KEY_LSApplicationCategoryType = public.app-category.productivity
 INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES

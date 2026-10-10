@@ -19,10 +19,16 @@ struct SavedMembershipRow: View {
       .accessibilityValue(item.row.effectiveDone == true ? "Completed" : "To do")
       .accessibilityIdentifier("saved.appearance.completion.\(item.id.uuidString)")
       .help(completionLabel)
-      NavigationLink(value: item.id) {
+      #if os(macOS)
         Text(item.row.title)
-      }
-      .accessibilityIdentifier("saved.appearance.\(item.id.uuidString)")
+          .frame(maxWidth: .infinity, alignment: .leading)
+          .accessibilityIdentifier("saved.appearance.\(item.id.uuidString)")
+      #else
+        NavigationLink(value: item.id) {
+          Text(item.row.title)
+        }
+        .accessibilityIdentifier("saved.appearance.\(item.id.uuidString)")
+      #endif
     }
   }
 
