@@ -10,6 +10,21 @@
       "properties": .object([
         "kind": .object(["type": .string("string"), "const": .string("items")]),
         "text": .object(["type": .string("string")]),
+        "duration": .object([
+          "oneOf": .array([
+            .object(["type": .string("null")]),
+            .object([
+              "type": .string("object"), "additionalProperties": .bool(false),
+              "required": .array([
+                .string("minimumMinutes"), .string("maximumMinutes"), .string("includeUnknown"),
+              ]),
+              "properties": .object([
+                "minimumMinutes": durationBoundSchema, "maximumMinutes": durationBoundSchema,
+                "includeUnknown": .object(["type": .string("boolean")]),
+              ]),
+            ]),
+          ])
+        ]),
         "scope": .object([
           "oneOf": .array([
             .object([
@@ -63,6 +78,14 @@
           "enum": .array([.string("active"), .string("archived"), .string("all")]),
         ]),
       ]),
+    ])
+
+    private static let durationBoundSchema: Value = .object([
+      "type": .array([.string("string"), .string("null")]),
+      "pattern": .string("^(0|[1-9][0-9]*)$"),
+      "description": .string(
+        "Nonnegative canonical decimal Int64 minutes, at most 9223372036854775807; null is unbounded."
+      ),
     ])
 
     private static let catalogQuerySchema: Value = .object([
@@ -162,13 +185,13 @@
       _ = try object(
         value, allowed: Set(query.keys), required: ["kind", "scope"], path: "/query")
       if let unsupported = Set(query.keys).subtracting([
-        "kind", "scope", "text", "completion", "archive", "sort", "rowPresentation",
+        "kind", "scope", "text", "completion", "archive", "duration", "sort", "rowPresentation",
       ])
       .sorted().first {
         throw AdmissionFailure(
           code: "unavailable", path: "/query/" + unsupported,
           message:
-            "This query slice supports scope, text, completion, archive, sort and row presentation."
+            "This query slice supports scope, text, completion, archive, duration, sort and row presentation."
         )
       }
       let nativeScope = try scope(query["scope"])
@@ -204,7 +227,38 @@
       return .items(
         PlannerItemQuery(
           scope: nativeScope, text: text, completion: completion, archive: archive,
-          sort: sort, rowPresentation: presentation))
+          duration: try duration(query["duration"]), sort: sort, rowPresentation: presentation))
+    }
+
+    private static func duration(_ value: Value?) throws -> PlannerItemQuery.Duration? {
+      guard let value else { return nil }
+      if case .null = value { return nil }
+      let fields = try object(
+        value, allowed: ["minimumMinutes", "maximumMinutes", "includeUnknown"],
+        required: ["minimumMinutes", "maximumMinutes", "includeUnknown"], path: "/query/duration")
+      guard case .bool(let includeUnknown) = fields["includeUnknown"] else {
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/duration/includeUnknown",
+          message: "Expected a Boolean choice for unknown estimates.")
+      }
+      return PlannerItemQuery.Duration(
+        minimumMinutes: try durationBound(
+          fields["minimumMinutes"], path: "/query/duration/minimumMinutes"),
+        maximumMinutes: try durationBound(
+          fields["maximumMinutes"], path: "/query/duration/maximumMinutes"),
+        includeUnknown: includeUnknown)
+    }
+
+    private static func durationBound(_ value: Value?, path: String) throws -> Int64? {
+      if case .null = value { return nil }
+      guard case .string(let spelling) = value, let minutes = Int64(spelling),
+        minutes >= 0, String(minutes) == spelling
+      else {
+        throw AdmissionFailure(
+          code: "invalidInput", path: path,
+          message: "Expected null or nonnegative canonical decimal Int64 minutes.")
+      }
+      return minutes
     }
 
     private static func catalog(_ value: Value?) throws -> PlannerCatalogQuery {
