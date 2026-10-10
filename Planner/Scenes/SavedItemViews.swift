@@ -56,6 +56,7 @@ struct SavedItemDetail: View {
   let item: PlannerItemSourceRead
   let canChange: Bool
   let isSaving: Bool
+  let addToList: () -> Void
   let setCompletion: @MainActor @Sendable (Bool) -> Void
   let setArchive: @MainActor @Sendable (Bool) -> Void
 
@@ -88,6 +89,8 @@ struct SavedItemDetail: View {
     .toolbar {
       ToolbarItem(placement: .primaryAction) {
         Menu {
+          Button("Add to List", action: addToList)
+            .disabled(!canChange)
           Button(item.state.archived == true ? "Unarchive Item" : "Archive Item") {
             setArchive(item.state.archived != true)
           }

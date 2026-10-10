@@ -1,0 +1,175 @@
+{
+  "baseCommit": "312e140",
+  "seam": "Accepted public native UI with isolated real durable local datasets. No private store assertions or production test injection.",
+  "sourceSnapshots": {
+    "Red": {
+      "Planner/Scenes/SavedPlannerView.swift": "93a2f6662de7bbf21392af31a12b827ccd493d80deee8d06be6a3338cb418518",
+      "Planner/Scenes/SavedItemViews.swift": "650703fcf939ec13a210beda99742f66bf66fd6e55d97593f4892aa86dccbe83",
+      "Planner/Scenes/SavedPlannerStore.swift": "a786998526a052b534bcadc1e642144e3e6a0aafe08001e5e78716e2a591ea8f",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "c30c6c6e899f43e9ec25510f39aa3b7e53dd3ea18e678f48a155e720d5c5869f"
+    },
+    "Green": {
+      "Planner/Scenes/SavedPlannerView.swift": "e94a820734f7cc530df6f788add8b07b7b0638cae47b448c341323a3ccf4ad60",
+      "Planner/Scenes/SavedItemViews.swift": "6892dbd6702bbcf8026ff6fe64163895eeeb7b0c20d59d0ced6b4d75f387ddc9",
+      "Planner/Scenes/SavedPlannerStore.swift": "a786998526a052b534bcadc1e642144e3e6a0aafe08001e5e78716e2a591ea8f",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "c30c6c6e899f43e9ec25510f39aa3b7e53dd3ea18e678f48a155e720d5c5869f",
+      "Planner/Scenes/SavedAddToListForm.swift": "4c845b6c1d427e7339798c64f11efcfbaeb279572583477a03aee5a97f724f26"
+    },
+    "Qualification": {
+      "Planner/Scenes/SavedPlannerView.swift": "e94a820734f7cc530df6f788add8b07b7b0638cae47b448c341323a3ccf4ad60",
+      "Planner/Scenes/SavedItemViews.swift": "6892dbd6702bbcf8026ff6fe64163895eeeb7b0c20d59d0ced6b4d75f387ddc9",
+      "Planner/Scenes/SavedPlannerStore.swift": "a786998526a052b534bcadc1e642144e3e6a0aafe08001e5e78716e2a591ea8f",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "4e8b7999fe99b4d257ae543779470bc863a3b1d5e40251b436ad0b173a27f23b",
+      "Planner/Scenes/SavedAddToListForm.swift": "4c845b6c1d427e7339798c64f11efcfbaeb279572583477a03aee5a97f724f26"
+    }
+  },
+  "newFileAbsentAtRed": "Planner/Scenes/SavedAddToListForm.swift",
+  "commands": {
+    "behaviorRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testAddingFromGlobalItemDetailRetainsItsSourceAndRevealsNewLocalTodoAfterReopening -resultBundlePath /private/tmp/PlannerNativeGlobalAddPhoneRed.xcresult test > /private/tmp/PlannerNativeGlobalAddPhoneRed.log 2>&1",
+    "green": {
+      "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeGlobalAddPhoneGreen.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testAddingFromGlobalItemDetailRetainsItsSourceAndRevealsNewLocalTodoAfterReopening test > /private/tmp/PlannerNativeGlobalAddPhoneGreen.log 2>&1",
+      "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeGlobalAddTabletGreen.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testAddingFromGlobalItemDetailRetainsItsSourceAndRevealsNewLocalTodoAfterReopening test > /private/tmp/PlannerNativeGlobalAddTabletGreen.log 2>&1",
+      "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeGlobalAddMacGreen.xcresult build-for-testing > /private/tmp/PlannerNativeGlobalAddMacGreen.log 2>&1"
+    },
+    "qualification": {
+      "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeGlobalAddPhoneQualification.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testAddingFromGlobalItemDetailWithoutListsExplainsTheEmptyStateAndCancels -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testArchivedItemWithoutAListCanBeFoundAndUnarchivedInTheItemsCatalog test > /private/tmp/PlannerNativeGlobalAddPhoneQualification.log 2>&1",
+      "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeGlobalAddTabletQualification.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testAddingFromGlobalItemDetailWithoutListsExplainsTheEmptyStateAndCancels -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testArchivedItemWithoutAListCanBeFoundAndUnarchivedInTheItemsCatalog test > /private/tmp/PlannerNativeGlobalAddTabletQualification.log 2>&1",
+      "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeGlobalAddMacQualification.xcresult build-for-testing > /private/tmp/PlannerNativeGlobalAddMacQualification.log 2>&1"
+    }
+  },
+  "results": {
+    "behaviorRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testAddingFromGlobalItemDetailRetainsItsSourceAndRevealsNewLocalTodoAfterReopening()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testAddingFromGlobalItemDetailRetainsItsSourceAndRevealsNewLocalTodoAfterReopening",
+          "testName": "testAddingFromGlobalItemDetailRetainsItsSourceAndRevealsNewLocalTodoAfterReopening()"
+        }
+      ],
+      "resultBundle": "/private/tmp/PlannerNativeGlobalAddPhoneRed.xcresult"
+    },
+    "Green": {
+      "Phone": {
+        "result": "Passed",
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "testFailures": [],
+        "resultBundle": "/private/tmp/PlannerNativeGlobalAddPhoneGreen.xcresult"
+      },
+      "Tablet": {
+        "result": "Passed",
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "testFailures": [],
+        "resultBundle": "/private/tmp/PlannerNativeGlobalAddTabletGreen.xcresult"
+      },
+      "Mac": {
+        "action": "build-for-testing",
+        "result": "Passed",
+        "executedBehaviorFunctions": 0,
+        "resultBundle": "/private/tmp/PlannerNativeGlobalAddMacGreen.xcresult"
+      }
+    },
+    "Qualification": {
+      "Phone": {
+        "result": "Passed",
+        "totalTestCount": 2,
+        "passedTests": 2,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "testFailures": [],
+        "resultBundle": "/private/tmp/PlannerNativeGlobalAddPhoneQualification.xcresult"
+      },
+      "Tablet": {
+        "result": "Passed",
+        "totalTestCount": 2,
+        "passedTests": 2,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "testFailures": [],
+        "resultBundle": "/private/tmp/PlannerNativeGlobalAddTabletQualification.xcresult"
+      },
+      "Mac": {
+        "action": "build-for-testing",
+        "result": "Passed",
+        "executedBehaviorFunctions": 0,
+        "resultBundle": "/private/tmp/PlannerNativeGlobalAddMacQualification.xcresult"
+      }
+    }
+  },
+  "classification": "Executed behavior red at the missing Add to List action. The main journey then passes on each simulator. A first-run empty-state qualifier and affected archive regression pass separately at the Qualification snapshot; only the test file changed after Green. No extra behavior red is claimed for the empty-state qualifier.",
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-global-add-chooser.png",
+      "sha256": "c18f0a9c3c5e45cc12f053eb183d321768fb2cf14ceceee9d9fea7b567c033ca",
+      "inspected": true,
+      "sourceEpoch": "Green"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-global-add-global-done.png",
+      "sha256": "e5c858798b66987c339a5e55af3b7ac41ec4f1d603716ce17bcbec4991c33b5f",
+      "inspected": true,
+      "sourceEpoch": "Green"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-global-add-reopened.png",
+      "sha256": "549632bfa0085b688da58fa8619ed5df8f4c9076815ce282507c4ada25933c0b",
+      "inspected": true,
+      "sourceEpoch": "Green"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-global-add-chooser.png",
+      "sha256": "4db1c0969dfd51441764f1904ac6baa64337a9fa04aeb620c56dacb6e1713812",
+      "inspected": true,
+      "sourceEpoch": "Green"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-global-add-global-done.png",
+      "sha256": "e29b1ad605b53693ae08ed145df4bad9d709e92e34cb6ad97cdf8d42fccb0848",
+      "inspected": true,
+      "sourceEpoch": "Green"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-global-add-reopened.png",
+      "sha256": "23df29364c734c51a77b3dbcebf3f049c4c6584a15afc99497771237c38043b5",
+      "inspected": true,
+      "sourceEpoch": "Green"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-global-add-empty.png",
+      "sha256": "1056897d3740dbd253d31c53bc15478c6e8d8d456cf815f8766eb602d08ee0d8",
+      "inspected": true,
+      "sourceEpoch": "Qualification"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-global-add-empty.png",
+      "sha256": "ad22a25fb93a8d3fccb14c387c7f352554e558a81d395c14dff39061d4d6cbf5",
+      "inspected": true,
+      "sourceEpoch": "Qualification"
+    }
+  ],
+  "validation": [
+    "Three distinct journeys per simulator pass across Green and Qualification, with zero failures/skips in those runs.",
+    "Strict affected Swift lint and simulator/Mac compilation pass.",
+    "Production hashes are unchanged from Green to Qualification; final source/capture hashes match."
+  ],
+  "limits": [
+    "Only active Lists are currently offered as destinations. Archived-container management, paging and external refresh remain open.",
+    "Mac runtime remains unqualified after earlier recorded automation startup failures. Its app/test bundles compile without UI function execution here.",
+    "No contextual/row-menu Add path, cross-List drag, Undo, native failure/recovery presentation, signed/physical-device, CloudKit, Share, accessibility/keyboard, large-data or final human review claim.",
+    "Core/HTTP/schema/backup formats are unchanged. Earlier public Core evidence separately qualifies membership replay, failure behavior and existing destination order.",
+    "Raw bundles/logs retain Xcode SDK/debugger/accessibility diagnostics."
+  ]
+}

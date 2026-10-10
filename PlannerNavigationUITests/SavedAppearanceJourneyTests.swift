@@ -2,6 +2,127 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testAddingFromGlobalItemDetailWithoutListsExplainsTheEmptyStateAndCancels() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    let addToList = application.plannerElement("Add to List")
+    XCTAssertTrue(addToList.waitForExistence(timeout: 5))
+    addToList.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No Lists yet"].waitForExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["Create a List before adding this Item."].exists)
+    let add = application.plannerElement("saved.item.list.add")
+    XCTAssertTrue(add.waitForExistence(timeout: 5))
+    XCTAssertFalse(add.isEnabled)
+    recordScreenshot(application, name: "Add to List explains that no destination exists")
+    application.plannerElement("saved.item.list.cancel").activateForPlannerJourney()
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    openSection("Lists", application: application)
+    XCTAssertTrue(application.staticTexts["No Lists yet"].waitForExistence(timeout: 10))
+  }
+
+  func testAddingFromGlobalItemDetailRetainsItsSourceAndRevealsNewLocalTodoAfterReopening() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    createList("Tokyo Food", application: application)
+    addItem(application)
+    let item = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    let sourceIdentifier = item.identifier
+    let sourceCompletion = application.buttons[
+      sourceIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    sourceCompletion.activateForPlannerJourney()
+    XCTAssertTrue(sourceCompletion.waitForPlannerValue("Completed"))
+    createList("Wishlist", application: application)
+    openList("Tokyo Food", application: application)
+    viewGlobalItem(application)
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    activateGlobalCompletion(globalCompletion)
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    let addToList = application.plannerElement("Add to List")
+    XCTAssertTrue(addToList.waitForExistence(timeout: 5))
+    addToList.activateForPlannerJourney()
+    let add = application.plannerElement("saved.item.list.add")
+    XCTAssertTrue(add.waitForExistence(timeout: 5))
+    XCTAssertFalse(add.isEnabled)
+    let destination = moveDestination("Wishlist", application: application)
+    XCTAssertTrue(destination.waitForExistence(timeout: 5))
+    destination.activateForPlannerJourney()
+    application.plannerElement("saved.item.list.cancel").activateForPlannerJourney()
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+    openSection("Lists", application: application)
+    let wishlist = application.savedPlannerListRow("Wishlist")
+    revealSidebarIfNeeded(application, element: wishlist)
+    wishlist.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    openList("Tokyo Food", application: application)
+    XCTAssertEqual(item.identifier, sourceIdentifier)
+    viewGlobalItem(application)
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    addToList.activateForPlannerJourney()
+    XCTAssertTrue(destination.waitForExistence(timeout: 5))
+    destination.activateForPlannerJourney()
+    recordScreenshot(application, name: "Global Item reviews adding a live reference to Wishlist")
+    add.activateForPlannerJourney()
+    XCTAssertTrue(add.waitForNonExistence(timeout: 10))
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    openList("Wishlist", application: application)
+    let destinationIdentifier = item.identifier
+    XCTAssertNotEqual(destinationIdentifier, sourceIdentifier)
+    let destinationCompletion = application.buttons[
+      destinationIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    XCTAssertTrue(destinationCompletion.waitForPlannerValue("Completed"))
+    XCTAssertFalse(destinationCompletion.isEnabled)
+    assertProgress(1, application: application)
+    recordScreenshot(application, name: "New List reference inherits global Done display")
+    viewGlobalItem(application)
+    activateGlobalCompletion(globalCompletion)
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    openList("Wishlist", application: application)
+    XCTAssertTrue(destinationCompletion.waitForPlannerValue("To do"))
+    XCTAssertTrue(destinationCompletion.isEnabled)
+    assertProgress(0, application: application)
+    viewGlobalItem(application)
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    addToList.activateForPlannerJourney()
+    XCTAssertTrue(destination.waitForExistence(timeout: 5))
+    destination.activateForPlannerJourney()
+    add.activateForPlannerJourney()
+    XCTAssertTrue(add.waitForNonExistence(timeout: 10))
+    openList("Wishlist", application: application)
+    XCTAssertEqual(item.identifier, destinationIdentifier)
+    XCTAssertEqual(application.savedPlannerItemRows("Nezu Museum").count, 1)
+    XCTAssertTrue(destinationCompletion.waitForPlannerValue("To do"))
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Tokyo Food", application: application)
+    XCTAssertEqual(item.identifier, sourceIdentifier)
+    XCTAssertTrue(sourceCompletion.waitForPlannerValue("Completed"))
+    assertProgress(1, application: application)
+    openList("Wishlist", application: application)
+    XCTAssertEqual(item.identifier, destinationIdentifier)
+    XCTAssertEqual(application.savedPlannerItemRows("Nezu Museum").count, 1)
+    XCTAssertTrue(destinationCompletion.waitForPlannerValue("To do"))
+    assertProgress(0, application: application)
+    recordScreenshot(application, name: "Relaunch preserves new local Todo after global reopening")
+    viewGlobalItem(application)
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+  }
+
   func testRowMenuMoveKeepsAnExistingDestinationIdentityCompletionAndOrderAfterRelaunch() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
