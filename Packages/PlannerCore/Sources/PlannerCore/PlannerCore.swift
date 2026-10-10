@@ -112,6 +112,10 @@ public actor Planner {
         let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
         let envelope = try archive.latest()
         switch operation.command {
+        case .editCategory(let sourceId, let changes, let hashes):
+          return try executeCategoryEdit(
+            operation, sourceId: sourceId, changes: changes, hashes: hashes, identity: identity,
+            context: context, archive: archive, receipts: receipts, envelope: envelope)
         case .createCategory(let content):
           return try executeCategoryCreation(
             operation, content: content, identity: identity, context: context, archive: archive,
@@ -1363,6 +1367,134 @@ public actor Planner {
         outcome: .applied(
           result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))
         ))
+    }
+  }
+
+  private func executeCategoryEdit(
+    _ operation: PlannerOperation, sourceId: UUID, changes: PlannerCategoryChanges,
+    hashes: [PlannerCategoryField: PlannerFieldHash],
+    identity: PlannerStoreIdentity,
+    context: ModelContext, archive: PlannerRecoveryArchive,
+    receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    let fields = try changes.validatedFields()
+    for field in fields where hashes[field] == nil {
+      throw PlannerFailure(
+        "invalidInput", "Every changed field requires its prior hash.",
+        propertyPath: "/command/expectedFieldHashes/\(field.rawValue)")
+    }
+    for (field, hash) in hashes {
+      let prefix = "sha256-v1:"
+      let suffix = hash.value.dropFirst(prefix.count)
+      guard hash.value.hasPrefix(prefix), suffix.count == 64,
+        suffix.allSatisfy({ "0123456789abcdef".contains($0) })
+      else {
+        throw PlannerFailure(
+          "invalidInput", "A supplied field hash has an unsupported format.",
+          propertyPath: "/command/expectedFieldHashes/\(field.rawValue)")
+      }
+    }
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let stored = try receipt.evidence()
+      let digest = try changes.payloadDigest(
+        sourceId: sourceId, fields: fields, hashes: hashes, identity: identity,
+        bindings: stored.bindings)
+      guard receipt.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "This operation identity already describes a different edit.")
+      }
+      return appliedResult(
+        operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
+        envelope: envelope)
+    }
+    let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    let categories = try context.fetch(FetchDescriptor<PlannerSchemaV8.Category>())
+    let matches = categories.filter { $0.id == sourceId }
+    guard matches.count == 1, let category = matches.first else {
+      throw PlannerFailure("missingReference", "The selected Category is missing or unresolved.")
+    }
+    let before = try category.value()
+    let bindings = [
+      PlannerBoundIdentity(kind: "category", id: before.id, lifetimeId: before.lifetimeId)
+    ]
+    let digest = try changes.payloadDigest(
+      sourceId: sourceId, fields: fields, hashes: hashes, identity: identity, bindings: bindings)
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes a different edit.")
+      }
+      return PlannerOperationResult(
+        operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    let currentHashes = before.fieldHashes(datasetId: identity.datasetId)
+    let conflictingFields = fields.filter { currentHashes[$0] != hashes[$0] }
+    if !conflictingFields.isEmpty {
+      throw PlannerFailure(
+        "staleEdit", "Changed fields differ from the supplied read.",
+        details: .staleCategoryEdit(
+          conflictingFields: conflictingFields,
+          currentValues: Dictionary(
+            uniqueKeysWithValues: conflictingFields.map { ($0, before.fieldValue($0)) }),
+          currentFieldHashes: currentHashes.filter { conflictingFields.contains($0.key) }))
+    }
+    let content = changes.applying(to: before.content)
+    let updatedAt = Date()
+    let colorData = try content.color.map { try JSONEncoder().encode($0) }
+    let after = CategorySnapshot(
+      id: before.id, lifetimeId: before.lifetimeId, createdAt: before.createdAt,
+      updatedAt: updatedAt,
+      content: content)
+    let snapshots = try categories.map { record in
+      if record.id == sourceId { return after }
+      return try record.value()
+    }
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>()).map { try $0.value() }
+    let result = PlannerAppliedResult(generated: [], affected: [before.reference])
+    let proposal = RecoveryPreparedProposal(
+      proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
+      ownershipBinding: identity.ownershipBinding,
+      proposedBackup: PlannerDataSnapshot(
+        categories: snapshots,
+        items: items, lists: try listSnapshots(context),
+        memberships: try membershipSnapshots(context),
+        deletionMarkers: try deletionMarkers(context)),
+      payloadDigest: digest, evidence: "preparedUnverified")
+    try archive.prepare(proposal)
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result, bindings: bindings)
+    if fields.contains(.name) { category.name = content.name }
+    if fields.contains(.color) { category.colorData = colorData }
+    if fields.contains(.iconName) { category.iconName = content.iconName }
+    category.updatedAt = updatedAt
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The complete Category action was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(
+        categories: snapshots,
+        items: items, lists: try listSnapshots(context),
+        memberships: try membershipSnapshots(context),
+        deletionMarkers: try deletionMarkers(context),
+        receipts: receipts + [receipt])
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
     }
   }
 
