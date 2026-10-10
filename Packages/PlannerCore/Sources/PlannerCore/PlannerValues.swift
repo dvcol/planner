@@ -181,6 +181,8 @@ public enum PlannerCommand: Sendable {
   case createItinerary(content: PlannerItineraryContentInput)
   case addItineraryEntry(
     itineraryId: UUID, source: PlannerEntityReference, placement: PlannerPlacement)
+  case removeItineraryEntry(itineraryId: UUID, entryId: UUID)
+  case reorderItineraryEntry(itineraryId: UUID, entryId: UUID, placement: PlannerPlacement)
   case editItinerary(
     sourceId: UUID, changes: PlannerItineraryChanges,
     expectedFieldHashes: [PlannerItineraryField: PlannerFieldHash])

@@ -341,7 +341,8 @@ struct PlannerDataSnapshot: Codable {
         schedules: try schedules.map { try $0.validated(sources: itemRecords) },
         deletionMarkers: try deletionMarkers.map {
           try $0.validated(
-            schedules: schedules, memberships: memberships, labelAssociations: labelAssociations)
+            schedules: schedules, memberships: memberships, labelAssociations: labelAssociations,
+            entries: itineraryEntries)
         }))
   }
 }
@@ -416,7 +417,13 @@ struct RecoveryEnvelope: Codable {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "Recovery ownership, version or digest validation failed.")
     }
-    let decoded = try JSONDecoder().decode(PlannerDataSnapshot.self, from: bytes).validated()
+    let decoded: PlannerDecodedBackup
+    do {
+      decoded = try JSONDecoder().decode(PlannerDataSnapshot.self, from: bytes).validated()
+    } catch is DecodingError {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "The recovery snapshot contains malformed data records.")
+    }
     for receipt in receipts {
       guard receipt.datasetId == datasetId, receipt.ownershipBinding == ownershipBinding,
         receipt.commitState == "applied", let checkpoint = receipt.checkpointGeneration,

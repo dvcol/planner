@@ -112,6 +112,15 @@ public actor Planner {
         let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
         let envelope = try archive.latest()
         switch operation.command {
+        case .reorderItineraryEntry(let itineraryId, let entryId, let placement):
+          return try executeItineraryEntryReordering(
+            operation, itineraryId: itineraryId, entryId: entryId, placement: placement,
+            identity: identity, context: context, archive: archive, receipts: receipts,
+            envelope: envelope)
+        case .removeItineraryEntry(let itineraryId, let entryId):
+          return try executeItineraryEntryRemoval(
+            operation, itineraryId: itineraryId, entryId: entryId, identity: identity,
+            context: context, archive: archive, receipts: receipts, envelope: envelope)
         case .addItineraryEntry(let itineraryId, let source, let placement):
           return try executeItineraryEntryCreation(
             operation, itineraryId: itineraryId, sourceReference: source, placement: placement,
@@ -2350,6 +2359,302 @@ public actor Planner {
         datasetId: datasetId, itemId: source.id,
         lifetimeId: source.lifetimeId, links: source.links.map(\.read),
         labelAssociations: source.labelAssociations))
+  }
+
+  private func executeItineraryEntryReordering(
+    _ operation: PlannerOperation, itineraryId: UUID, entryId: UUID, placement: PlannerPlacement,
+    identity: PlannerStoreIdentity, context: ModelContext, archive: PlannerRecoveryArchive,
+    receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let digest = itineraryEntryReorderingDigest(
+        itineraryId: itineraryId, entryId: entryId, placement: placement, identity: identity,
+        bindings: try receipt.evidence().bindings)
+      guard receipt.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "This operation identity describes another entry reorder.")
+      }
+      return appliedResult(
+        operationId: operation.operationId,
+        evidence: try RecoveryReceipt(receipt, checkpoint: nil), envelope: envelope)
+    }
+    let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    var descriptor = FetchDescriptor<PlannerSchemaV13.ItineraryEntry>(
+      predicate: #Predicate { $0.id == entryId && $0.itineraryId == itineraryId })
+    descriptor.fetchLimit = 2
+    let selected = try context.fetch(descriptor)
+    guard selected.count == 1, let record = selected.first, let owner = record.itinerary else {
+      throw PlannerFailure(
+        "missingReference", "The selected itinerary entry is missing or unresolved.")
+    }
+    let before = try record.value()
+    let ownerSnapshot = try owner.value()
+    switch placement {
+    case .before(let identifier), .after(let identifier):
+      guard identifier != entryId else {
+        throw PlannerFailure(
+          "invalidInput", "An entry cannot use itself as its placement anchor.",
+          propertyPath: "/command/placement/associationId")
+      }
+    case .first, .last: break
+    }
+    var entries = ownerSnapshot.entries
+    let ordered = entries
+    let remaining = ordered.filter { $0.id != entryId }
+    let insertionIndex = try associationInsertionIndex(placement, in: remaining)
+    var desiredOrder = remaining.map(\.id)
+    desiredOrder.insert(entryId, at: insertionIndex)
+    let changed = desiredOrder != ordered.map(\.id)
+    var bindings = [
+      PlannerBoundIdentity(kind: "itineraryEntry", id: before.id, lifetimeId: before.lifetimeId),
+      before.itinerary, before.source,
+    ]
+    switch placement {
+    case .before(let identifier), .after(let identifier):
+      if let anchor = remaining.first(where: { $0.id == identifier }) {
+        bindings.append(.init(kind: "itineraryEntry", id: anchor.id, lifetimeId: anchor.lifetimeId))
+      }
+    case .first, .last: break
+    }
+    let digest = itineraryEntryReorderingDigest(
+      itineraryId: itineraryId, entryId: entryId, placement: placement, identity: identity,
+      bindings: bindings)
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another entry reorder.")
+      }
+      return .init(operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    if changed {
+      let rank = try associationInsertionRank(
+        at: insertionIndex, ordered: remaining, associations: &entries)
+      guard let selectedIndex = entries.firstIndex(where: { $0.id == entryId }) else {
+        throw PlannerFailure("missingReference", "The selected itinerary entry is missing.")
+      }
+      entries[selectedIndex].rank = rank
+      entries.sort {
+        if $0.rank != $1.rank { return $0.rank < $1.rank }
+        return $0.id.uuidString < $1.id.uuidString
+      }
+    }
+    let updatedAt = changed ? Date() : ownerSnapshot.updatedAt
+    let ownerAfter = ItinerarySnapshot(
+      id: ownerSnapshot.id, lifetimeId: ownerSnapshot.lifetimeId,
+      createdAt: ownerSnapshot.createdAt, updatedAt: updatedAt, input: ownerSnapshot.input,
+      archived: ownerSnapshot.archived, links: ownerSnapshot.links,
+      labelAssociations: ownerSnapshot.labelAssociations, labels: ownerSnapshot.labels,
+      entries: entries)
+    let snapshots = try context.fetch(FetchDescriptor<PlannerSchemaV13.Itinerary>()).map {
+      if $0.id == itineraryId { return ownerAfter }
+      return try $0.value()
+    }
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV13.Item>()).map { try $0.value() }
+    let lists = try listSnapshots(context)
+    let memberships = try membershipSnapshots(context)
+    let labels = try labelAssociationSnapshots(context)
+    let tags = try tagSnapshots(context)
+    let categories = try categorySnapshots(context)
+    let markers = try deletionMarkers(context)
+    let result = PlannerAppliedResult(
+      generatedIdentities: [],
+      affectedIdentities: [.reference(before.reference), .source(ownerSnapshot.reference)])
+    try archive.prepare(
+      .init(
+        proposalId: UUID(), originalOperationId: operation.operationId,
+        datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
+        proposedBackup: PlannerDataSnapshot(
+          itineraries: snapshots, labelAssociations: labels, tags: tags, categories: categories,
+          items: items, lists: lists, memberships: memberships, deletionMarkers: markers),
+        payloadDigest: digest, evidence: "preparedUnverified"))
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result, bindings: bindings)
+    let ranks = Dictionary(uniqueKeysWithValues: entries.map { ($0.id, $0.rank) })
+    for entry in owner.entries ?? [] {
+      if let identifier = entry.id, let rank = ranks[identifier], entry.rank != rank {
+        entry.rank = rank
+      }
+    }
+    owner.updatedAt = updatedAt
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The complete entry reorder was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(
+        itineraries: snapshots, labelAssociations: labels, tags: tags, categories: categories,
+        items: items, lists: lists, memberships: memberships, deletionMarkers: markers,
+        receipts: receipts + [receipt])
+      return .init(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return .init(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
+  }
+
+  private func itineraryEntryReorderingDigest(
+    itineraryId: UUID, entryId: UUID, placement: PlannerPlacement, identity: PlannerStoreIdentity,
+    bindings: [PlannerBoundIdentity]
+  ) -> String {
+    let placementValue: PlannerCanonicalValue
+    switch placement {
+    case .first: placementValue = .record(["kind": .string("first")])
+    case .last: placementValue = .record(["kind": .string("last")])
+    case .before(let identifier):
+      placementValue = .record(["kind": .string("before"), "associationId": .identity(identifier)])
+    case .after(let identifier):
+      placementValue = .record(["kind": .string("after"), "associationId": .identity(identifier)])
+    }
+    let value = PlannerCanonicalValue.record([
+      "command": .record([
+        "type": .string("reorderItineraryEntry"), "itineraryId": .identity(itineraryId),
+        "entryId": .identity(entryId), "placement": placementValue,
+      ]),
+      "datasetId": .identity(identity.datasetId),
+      "ownershipBinding": .string(identity.ownershipBinding),
+      "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
+    ])
+    let bytes = Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded()
+    return plannerDigest(bytes, prefix: "sha256-payload-v1:")
+  }
+
+  private func executeItineraryEntryRemoval(
+    _ operation: PlannerOperation, itineraryId: UUID, entryId: UUID,
+    identity: PlannerStoreIdentity, context: ModelContext, archive: PlannerRecoveryArchive,
+    receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let digest = itineraryEntryRemovalDigest(
+        itineraryId: itineraryId, entryId: entryId, identity: identity,
+        bindings: try receipt.evidence().bindings)
+      guard receipt.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "This operation identity describes another entry removal.")
+      }
+      return appliedResult(
+        operationId: operation.operationId,
+        evidence: try RecoveryReceipt(receipt, checkpoint: nil), envelope: envelope)
+    }
+    let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    var descriptor = FetchDescriptor<PlannerSchemaV13.ItineraryEntry>(
+      predicate: #Predicate { $0.id == entryId && $0.itineraryId == itineraryId })
+    descriptor.fetchLimit = 2
+    let selected = try context.fetch(descriptor)
+    guard selected.count == 1, let entry = selected.first, let owner = entry.itinerary else {
+      throw PlannerFailure(
+        "missingReference", "The selected itinerary entry is missing or unresolved.")
+    }
+    let before = try entry.value()
+    let ownerSnapshot = try owner.value()
+    let bindings = [
+      PlannerBoundIdentity(kind: "itineraryEntry", id: before.id, lifetimeId: before.lifetimeId),
+      before.itinerary, before.source,
+    ]
+    let digest = itineraryEntryRemovalDigest(
+      itineraryId: itineraryId, entryId: entryId, identity: identity, bindings: bindings)
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another entry removal.")
+      }
+      return .init(operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    let updatedAt = Date()
+    let ownerAfter = ItinerarySnapshot(
+      id: ownerSnapshot.id, lifetimeId: ownerSnapshot.lifetimeId,
+      createdAt: ownerSnapshot.createdAt, updatedAt: updatedAt, input: ownerSnapshot.input,
+      archived: ownerSnapshot.archived, links: ownerSnapshot.links,
+      labelAssociations: ownerSnapshot.labelAssociations, labels: ownerSnapshot.labels,
+      entries: ownerSnapshot.entries.filter { $0.id != entryId })
+    let snapshots = try context.fetch(FetchDescriptor<PlannerSchemaV13.Itinerary>()).map {
+      if $0.id == itineraryId { return ownerAfter }
+      return try $0.value()
+    }
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV13.Item>()).map { try $0.value() }
+    let lists = try listSnapshots(context)
+    let memberships = try membershipSnapshots(context)
+    let labels = try labelAssociationSnapshots(context)
+    let tags = try tagSnapshots(context)
+    let categories = try categorySnapshots(context)
+    let removalMarker = PortableDeletionMarker(
+      deletionId: UUID(), operationId: operation.operationId,
+      target: .itineraryEntry(id: before.id, lifetimeId: before.lifetimeId), closedFamilyId: nil)
+    let markers = try deletionMarkers(context) + [removalMarker]
+    let result = PlannerAppliedResult(
+      generatedIdentities: [],
+      affectedIdentities: [.reference(before.reference), .source(ownerSnapshot.reference)]
+        + before.expandedCompletions.map { .reference($0.reference) })
+    try archive.prepare(
+      .init(
+        proposalId: UUID(), originalOperationId: operation.operationId,
+        datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
+        proposedBackup: PlannerDataSnapshot(
+          itineraries: snapshots, labelAssociations: labels, tags: tags, categories: categories,
+          items: items, lists: lists, memberships: memberships, deletionMarkers: markers),
+        payloadDigest: digest, evidence: "preparedUnverified"))
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result, bindings: bindings)
+    for completion in entry.expandedCompletions ?? [] { context.delete(completion) }
+    context.delete(entry)
+    context.insert(PlannerSchemaV4.DeletionMarker(removalMarker))
+    owner.updatedAt = updatedAt
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The complete entry removal was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(
+        itineraries: snapshots, labelAssociations: labels, tags: tags, categories: categories,
+        items: items, lists: lists, memberships: memberships, deletionMarkers: markers,
+        receipts: receipts + [receipt])
+      return .init(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return .init(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
+  }
+
+  private func itineraryEntryRemovalDigest(
+    itineraryId: UUID, entryId: UUID, identity: PlannerStoreIdentity,
+    bindings: [PlannerBoundIdentity]
+  ) -> String {
+    let value = PlannerCanonicalValue.record([
+      "command": .record([
+        "type": .string("removeItineraryEntry"), "itineraryId": .identity(itineraryId),
+        "entryId": .identity(entryId),
+      ]),
+      "datasetId": .identity(identity.datasetId),
+      "ownershipBinding": .string(identity.ownershipBinding),
+      "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
+    ])
+    let bytes = Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded()
+    return plannerDigest(bytes, prefix: "sha256-payload-v1:")
   }
 
   private func executeItineraryEntryCreation(

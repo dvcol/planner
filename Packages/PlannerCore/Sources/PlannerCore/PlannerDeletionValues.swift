@@ -3,6 +3,7 @@ import Foundation
 public enum PlannerPortableDeletionTarget: Sendable, Equatable {
   case source(PlannerEntityReference, lifetimeId: UUID)
   case membership(id: UUID, lifetimeId: UUID)
+  case itineraryEntry(id: UUID, lifetimeId: UUID)
   case labelAssociation(id: UUID, lifetimeId: UUID)
 }
 
