@@ -4,10 +4,13 @@ import Observation
 public struct PlannerAddressPreviewRequest: Sendable, Hashable {
   public let source: PlannerPreviewSource
   public let address: String
+  /// Keep byte-distinct address edits separate despite Swift's Unicode-equivalent String equality.
+  private let addressBytes: Data
 
   public init(source: PlannerPreviewSource, address: String) {
     self.source = source
     self.address = address
+    addressBytes = Data(address.utf8)
   }
 }
 

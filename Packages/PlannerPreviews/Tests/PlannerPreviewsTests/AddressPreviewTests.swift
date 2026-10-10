@@ -4,6 +4,30 @@ import Testing
 
 @MainActor
 struct AddressPreviewTests {
+  @Test func byteDistinctUnicodeAddressesKeepSeparatePreviewResults() async {
+    let source = PlannerPreviewSource(
+      namespace: "local-dataset", sourceId: UUID(), sourceLifetimeId: UUID())
+    let composed = PlannerAddressPreviewRequest(source: source, address: "Caf\u{00E9} Road")
+    let decomposed = PlannerAddressPreviewRequest(source: source, address: "Cafe\u{0301} Road")
+    let first = PlannerAddressCandidate(
+      id: "first-place", name: "First place", address: "First address",
+      latitude: 35, longitude: 139)
+    let second = PlannerAddressCandidate(
+      id: "second-place", name: "Second place", address: "Second address",
+      latitude: 36, longitude: 140)
+    let provider = RecordingAddressProvider(candidates: [first])
+    let previews = PlannerAddressPreviews(provider: provider)
+
+    await previews.loadAddress(composed)
+    provider.candidates = [second]
+    #expect(previews.addressState(for: decomposed) == .idle)
+    await previews.loadAddress(decomposed)
+    #expect(previews.addressState(for: composed) == .available([first]))
+    #expect(previews.addressState(for: decomposed) == .available([second]))
+    #expect(provider.requestedAddresses.count == 2)
+    #expect(provider.requestedAddresses.last?.utf8.elementsEqual("Cafe\u{0301} Road".utf8) == true)
+  }
+
   @Test func aRequestedAddressLoadsOneCandidateAndReusesOnlyItsExactCacheKey() async {
     let request = PlannerAddressPreviewRequest(
       source: .init(namespace: "local-dataset", sourceId: UUID(), sourceLifetimeId: UUID()),
@@ -118,7 +142,7 @@ struct AddressPreviewTests {
 
 @MainActor
 private final class RecordingAddressProvider: PlannerAddressPreviewProvider {
-  let candidates: [PlannerAddressCandidate]
+  var candidates: [PlannerAddressCandidate]
   private(set) var requestedAddresses: [String] = []
 
   init(candidates: [PlannerAddressCandidate]) { self.candidates = candidates }
