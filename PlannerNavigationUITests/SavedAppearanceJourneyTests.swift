@@ -2,6 +2,89 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testMovingASelectedListItemCancelsWithoutChangeThenCreatesANewTodoDestination() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    createList("Tokyo Food", application: application)
+    addItem(application)
+    let item = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    let originalIdentifier = item.identifier
+    let originalCompletion = application.buttons[
+      originalIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    originalCompletion.activateForPlannerJourney()
+    XCTAssertTrue(originalCompletion.waitForPlannerValue("Completed"))
+    createList("Wishlist", application: application)
+    openList("Tokyo Food", application: application)
+    item.activateForPlannerJourney()
+    application.plannerElement("saved.appearance.actions").activateForPlannerJourney()
+    let moveToList = application.plannerElement("Move to List")
+    XCTAssertTrue(moveToList.waitForExistence(timeout: 5))
+    moveToList.activateForPlannerJourney()
+    let move = application.plannerElement("saved.membership.move")
+    XCTAssertTrue(move.waitForExistence(timeout: 5))
+    XCTAssertFalse(move.isEnabled)
+    XCTAssertFalse(moveDestination("Tokyo Food", application: application).exists)
+    let destination = moveDestination("Wishlist", application: application)
+    XCTAssertTrue(destination.waitForExistence(timeout: 5))
+    destination.activateForPlannerJourney()
+    recordScreenshot(application, name: "Native move destination review before cancellation")
+    application.plannerElement("saved.membership.move.cancel").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["In Tokyo Food"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Completed"].exists)
+    #if os(iOS)
+      let back = application.plannerElement("BackButton")
+      if back.exists { back.activateForPlannerJourney() }
+    #endif
+    XCTAssertTrue(item.waitForExistence(timeout: 10))
+    XCTAssertEqual(item.identifier, originalIdentifier)
+    XCTAssertTrue(originalCompletion.waitForPlannerValue("Completed"))
+    item.activateForPlannerJourney()
+    application.plannerElement("saved.appearance.actions").activateForPlannerJourney()
+    moveToList.activateForPlannerJourney()
+    XCTAssertTrue(destination.waitForExistence(timeout: 5))
+    destination.activateForPlannerJourney()
+    move.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["In Tokyo Food"].waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    XCTAssertFalse(item.exists)
+    XCTAssertFalse(application.progressIndicators["saved.list.progress"].exists)
+    recordScreenshot(application, name: "Source List after confirmed native move")
+    openList("Wishlist", application: application)
+    let destinationIdentifier = item.identifier
+    XCTAssertNotEqual(destinationIdentifier, originalIdentifier)
+    let destinationCompletion = application.buttons[
+      destinationIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    XCTAssertTrue(destinationCompletion.waitForPlannerValue("To do"))
+    assertProgress(0, application: application)
+    viewGlobalItem(application)
+    XCTAssertTrue(
+      application.staticTexts["Meet at the garden entrance"].waitForExistence(timeout: 10))
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Lists", application: application)
+    let emptiedList = application.savedPlannerListRow("Tokyo Food")
+    revealSidebarIfNeeded(application, element: emptiedList)
+    emptiedList.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    openList("Wishlist", application: application)
+    XCTAssertEqual(item.identifier, destinationIdentifier)
+    XCTAssertTrue(destinationCompletion.waitForPlannerValue("To do"))
+    assertProgress(0, application: application)
+    item.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["In Wishlist"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    recordScreenshot(
+      application, name: "Moved Item retains its new Todo destination after relaunch")
+  }
+
   func testRemovingAnUnselectedListItemFromItsRowMenuKeepsTheSharedItem() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -391,6 +474,12 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     application.savedPlannerItemRows("Nezu Museum").firstMatch.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["In Tokyo Food"].waitForExistence(timeout: 10))
     XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+  }
+
+  private func moveDestination(_ title: String, application: XCUIApplication) -> XCUIElement {
+    application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.membership.destination.")
+    ).matching(NSPredicate(format: "label == %@ OR value == %@", title, title)).firstMatch
   }
 
   private func createItem(_ application: XCUIApplication) {

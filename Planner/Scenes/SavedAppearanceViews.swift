@@ -47,6 +47,7 @@ struct SavedAppearanceDetail: View {
   let listName: String
   let canChange: Bool
   let viewItem: () -> Void
+  let moveToList: () -> Void
   let removeFromList: () -> Void
 
   var body: some View {
@@ -75,6 +76,8 @@ struct SavedAppearanceDetail: View {
       ToolbarItem(placement: .primaryAction) {
         Menu {
           Button("View Item", action: viewItem)
+          Button("Move to List", action: moveToList)
+            .disabled(!canChange)
           Button("Remove from List", role: .destructive, action: removeFromList)
             .disabled(!canChange)
         } label: {

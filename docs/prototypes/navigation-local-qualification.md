@@ -2,7 +2,7 @@
 
 Work for [Navigation prototype](https://github.com/dvcol/planner/issues/14) on `prototype/navigation`. Q34 accepts the native UI journeys and fixtures. Q35 requires confirmation before deleting a Category/Tag with any association. The user delayed signing and physical setup while authorizing simulator and local Mac work.
 
-The latest saved-data work is in [Native row-menu removal](#native-row-menu-removal) and [Native membership removal](#native-membership-removal). [Archive and cumulative saved filters](#archive-and-cumulative-saved-filters) records the preceding saved filters and hidden-member drag qualification. Other sections retain their recorded revisions.
+The latest saved-data work is in [Native membership move](#native-membership-move), [Native row-menu removal](#native-row-menu-removal) and [Native membership removal](#native-membership-removal). [Archive and cumulative saved filters](#archive-and-cumulative-saved-filters) records the preceding saved filters and hidden-member drag qualification. Other sections retain their recorded revisions.
 
 The human accepted Q38 A, Q39 B, Q40 A, Q41 A and Q42 A, then accepted Q43 A, Q44 A, Q45 A and Q46 A. The [accepted row decisions](../navigation-prototype-review.md#accepted-review-answers) and [row contract review](../navigation-row-contract-review.md) record the exact declarations and required tests. The accepted amendment itself added no runtime qualification to the seven-journey presentation evidence below. Later sections qualify saved Item/List appearance completion and standalone List reordering. Native rich rows, cross-List drag-and-drop and provider lookup remain open.
 
@@ -382,3 +382,23 @@ One journey passes on each OS 27 simulator with zero failures/skips on the first
 Both app-owned captures were inspected. The [phone empty List](evidence/navigation/phone-saved-row-menu-removal.png) and [iPad empty List](evidence/navigation/tablet-saved-row-menu-removal.png) show the ordinary unselected state. The iPad detail remains Choose an Item. The [evidence record](evidence/navigation/saved-row-menu-removal.json) keeps exact commands, source hashes, result counts and capture hashes. Raw bundles and logs are `/private/tmp/PlannerRowRemoval{Phone,Tablet,Mac}` with their respective extensions.
 
 Selected-context persistence remains covered by the preceding removal evidence. No native Move, external refresh, Undo, failure/recovery presentation, Mac runtime, signed/physical-device, CloudKit, Share, accessibility/keyboard or long-list performance result is established by this qualifier. The feature and final polish gates remain open.
+
+## Native membership move
+
+Before this slice, Core and authenticated HTTP could move a membership atomically, but contextual native Item actions could only view or remove it. The new Move to List action opens a native sheet with the Item, its source List and a destination selection. The source List is excluded. Move requires a valid selected destination and available mutation access; Cancel changes no data. The form retains one operation identity for its proposal and uses the existing domain command with end placement. It cannot change the shared Item or offer global completion from the List.
+
+The public journey creates Nezu Museum with saved notes, marks its Tokyo Food appearance Done, then cancels a move to Wishlist. The source identity and completion remain. Confirming the next proposal empties Tokyo Food and clears only the removed appearance's selected detail. Wishlist receives a new membership, locally Todo; the global Item remains Todo with its notes. Relaunch keeps the empty source and the destination's new identity/state. The user selects the destination explicitly; the source detail never silently becomes a global or destination action.
+
+The first executed red failed at the absent Move to List action. Initial green reached review/cancellation, then a test tried to inspect a hidden iPhone List row while detail remained visible. This was a test interaction error. Navigating back before checking the row corrected it, without mutation changes. The corrected move journey passes on both simulators. The affected selected-removal/re-add journey also passes on each, proving its retained other-List state and new local-Todo re-add after sharing selection clearing. These are two distinct journeys per simulator across recorded runs, with zero failures/skips in the passing runs.
+
+Chooser copy was then clarified to include the global completion exception. Only its footer changed. The move journey passes again on both simulators at that source snapshot; all six final captures were inspected. Native arm64 Mac app/test bundles compile at both snapshots, with no runtime claim. Strict affected Swift lint and source/capture hash checks pass. No new Core, HTTP, schema or backup-format implementation is introduced.
+
+| Native outcome | iPhone | iPad |
+| --- | --- | --- |
+| Destination review | [Chooser](evidence/navigation/phone-saved-move-chooser.png) | [Chooser](evidence/navigation/tablet-saved-move-chooser.png) |
+| Selected source removed | [Empty source](evidence/navigation/phone-saved-move-source-empty.png) | [Empty source and cleared detail](evidence/navigation/tablet-saved-move-source-empty.png) |
+| New Todo destination after relaunch | [Detail](evidence/navigation/phone-saved-move-destination-reopened.png) | [List and detail](evidence/navigation/tablet-saved-move-destination-reopened.png) |
+
+The [evidence record](evidence/navigation/saved-membership-move.json) preserves commands, executed red, the test correction, passing runs, source snapshots and captures. Raw result bundles/logs remain under `/private/tmp/PlannerNativeMove{PhoneRed,PhoneGreen,PhoneCorrected,TabletCorrected,PhoneRemovalRegression,TabletRemovalRegression,MacCorrected,PhoneCopyReview,TabletCopyReview,MacCopyReview}` with their respective extensions.
+
+Core's [membership mutation evidence](evidence/navigation/core-membership-mutations.json) separately proves existing-destination preservation, global Done precedence, replay and failure behavior at its recorded revision. Those are not all native UI outcomes here. Row-menu Move and existing-destination UI interaction remain open, alongside other Add paths, external refresh, Undo, native failure/recovery presentation, Mac runtime, signed/physical-device, CloudKit, Share, accessibility/keyboard, large-data and final human review. The final whole-app polish still follows feature completion.
