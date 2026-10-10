@@ -471,6 +471,7 @@ public struct PlannerItemQuery: Sendable {
   public let archive: Archive
   public let categories: IdentityGroup?
   public let tags: IdentityGroup?
+  public let lists: IdentityGroup?
   public let duration: Duration?
   public let sort: Sort
   public let rowPresentation: PlannerRowPresentationContext?
@@ -478,6 +479,7 @@ public struct PlannerItemQuery: Sendable {
   public init(
     scope: Scope = .global, text: String = "", completion: Completion = .todo,
     archive: Archive = .active, categories: IdentityGroup? = nil, tags: IdentityGroup? = nil,
+    lists: IdentityGroup? = nil,
     duration: Duration? = nil,
     sort: Sort = Sort(), rowPresentation: PlannerRowPresentationContext? = nil
   ) {
@@ -487,6 +489,7 @@ public struct PlannerItemQuery: Sendable {
     self.archive = archive
     self.categories = categories
     self.tags = tags
+    self.lists = lists
     self.duration = duration
     self.sort = sort
     self.rowPresentation = rowPresentation
