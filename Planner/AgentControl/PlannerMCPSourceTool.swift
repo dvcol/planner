@@ -471,6 +471,17 @@
             "membershipId": .string(identifier.uuidString),
           ]),
         ])
+      case .labelAssociation(let identifier, let owner, let label):
+        return .object([
+          "kind": .string("labelAssociation"), "id": .string(identifier.uuidString),
+          "owner": .object([
+            "kind": .string(owner.kind.rawValue), "id": .string(owner.id.uuidString),
+          ]),
+          "source": .object([
+            "kind": .string(label.kind.rawValue), "id": .string(label.id.uuidString),
+          ]),
+          "appearance": .null,
+        ])
       case .ownedLink(let identifier, let owner):
         return .object([
           "kind": .string("ownedLink"), "id": .string(identifier.uuidString),

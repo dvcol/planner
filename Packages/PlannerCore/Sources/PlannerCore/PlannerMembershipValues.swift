@@ -141,6 +141,14 @@ extension PlannerReferenceRead: Codable {
           forKey: .source, in: fields, debugDescription: "Invalid Schedule reference.")
       }
       self = .schedule(id: identifier, source: source)
+    case "labelAssociation":
+      guard let owner, [.item, .itinerary].contains(owner.kind), let source,
+        [.category, .tag].contains(source.kind), appearance == nil
+      else {
+        throw DecodingError.dataCorruptedError(
+          forKey: .source, in: fields, debugDescription: "Invalid label association reference.")
+      }
+      self = .labelAssociation(id: identifier, owner: owner, label: source)
     case "membership":
       guard let owner, owner.kind == .list, let source, source.kind == .item,
         appearance == .listMembership(listId: owner.id, membershipId: identifier)
@@ -174,6 +182,12 @@ extension PlannerReferenceRead: Codable {
       identifier = value
       owner = nil
       source = sourceValue
+      appearance = nil
+    case .labelAssociation(let value, let ownerValue, let labelValue):
+      kind = "labelAssociation"
+      identifier = value
+      owner = ownerValue
+      source = labelValue
       appearance = nil
     case .membership(let value, let list, let item):
       kind = "membership"

@@ -118,7 +118,7 @@ struct TagMigrationTests {
     #expect(checkpoint == manifest.latestCheckpoint + 1)
     #expect(read.content.name == "Food")
     #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 8)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 9)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 10)
     #expect(historicalAfter.portableData == historical.portableData)
     let beforeData = try #require(
       JSONSerialization.jsonObject(with: historical.portableData) as? [String: Any])
