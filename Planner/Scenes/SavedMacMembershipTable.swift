@@ -22,13 +22,7 @@ import UniformTypeIdentifiers
 
     var body: some View {
       VStack(alignment: .leading, spacing: 0) {
-        if let done = list.progress.doneCount, let total = list.progress.totalCount, total > 0 {
-          ProgressView(value: Double(done), total: Double(total)) {
-            Text("\(done) of \(total) \(total == 1 ? "item" : "items") done")
-          }
-          .accessibilityIdentifier("saved.list.progress")
-          .padding()
-        }
+        SavedListProgress(progress: list.progress, matchingCount: items.count).padding()
         Table(of: SavedPlannerItem.self, selection: selection) {
           TableColumn("Items") { item in
             SavedMembershipRow(item: item, canChange: store.canCreate) {

@@ -103,6 +103,13 @@ extension XCUIApplication {
 }
 
 extension XCUIElement {
+  func waitForPlannerValue(_ expected: String) -> Bool {
+    let predicate = NSPredicate(format: "value == %@", expected)
+    return XCTWaiter.wait(
+      for: [XCTNSPredicateExpectation(predicate: predicate, object: self)], timeout: 5)
+      == .completed
+  }
+
   func waitForPlannerHittability() -> Bool {
     let predicate = NSPredicate(format: "hittable == true")
     return XCTWaiter.wait(

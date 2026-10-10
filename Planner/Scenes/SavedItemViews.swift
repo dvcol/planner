@@ -4,6 +4,7 @@ import SwiftUI
 struct SavedItemCatalog: View {
   let items: [SavedPlannerItem]
   @Binding var selection: UUID?
+  @Binding var filters: SavedItemFilters
   let canCreate: Bool
   let create: () -> Void
 
@@ -15,6 +16,9 @@ struct SavedItemCatalog: View {
             Image(systemName: item.row.globalDone == true ? "checkmark.circle.fill" : "circle")
               .foregroundStyle(.secondary)
               .accessibilityHidden(true)
+            if item.row.archived == true {
+              Image(systemName: "archivebox").accessibilityLabel("Archived")
+            }
             VStack(alignment: .leading, spacing: 4) {
               Text(item.row.title)
               if let subtitle = item.row.subtitle, !subtitle.isEmpty {
@@ -29,12 +33,16 @@ struct SavedItemCatalog: View {
     .overlay {
       if items.isEmpty {
         ContentUnavailableView(
-          "No Items yet", systemImage: "square.stack",
-          description: Text("Create an Item to start planning."))
+          filters.summary == "All" ? "No Items yet" : "No matching items",
+          systemImage: "square.stack",
+          description: Text("Change the filters or create an Item to start planning."))
       }
     }
     .navigationTitle("Items")
     .toolbar {
+      ToolbarItem {
+        SavedItemFilterMenu(filters: $filters, accessibilityIdentifier: "saved.items.filters")
+      }
       ToolbarItem {
         Button("New Item", systemImage: "plus", action: create)
           .disabled(!canCreate)
@@ -49,6 +57,7 @@ struct SavedItemDetail: View {
   let canChange: Bool
   let isSaving: Bool
   let setCompletion: @MainActor @Sendable (Bool) -> Void
+  let setArchive: @MainActor @Sendable (Bool) -> Void
 
   var body: some View {
     Form {
@@ -56,6 +65,9 @@ struct SavedItemDetail: View {
         Text(item.content.title).font(.title2).fontWeight(.semibold)
         if let subtitle = item.content.subtitle, !subtitle.isEmpty {
           Text(subtitle).foregroundStyle(.secondary)
+        }
+        if item.state.archived == true {
+          Label("Archived", systemImage: "archivebox").foregroundStyle(.secondary)
         }
         Toggle(
           "Completed",
@@ -73,6 +85,20 @@ struct SavedItemDetail: View {
     }
     .formStyle(.grouped)
     .navigationTitle(item.content.title)
+    .toolbar {
+      ToolbarItem(placement: .primaryAction) {
+        Menu {
+          Button(item.state.archived == true ? "Unarchive Item" : "Archive Item") {
+            setArchive(item.state.archived != true)
+          }
+          .disabled(!canChange)
+        } label: {
+          Label("Item actions", systemImage: "ellipsis")
+        }
+        .help("Item actions")
+        .accessibilityIdentifier("saved.item.actions")
+      }
+    }
     .overlay {
       if isSaving { ProgressView("Saving change") }
     }

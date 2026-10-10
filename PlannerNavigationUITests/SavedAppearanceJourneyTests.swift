@@ -2,6 +2,179 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testArchivedItemWithoutAListCanBeFoundAndUnarchivedInTheItemsCatalog() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Archive Item").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Items", application: application)
+    let filters = application.plannerElement("saved.items.filters")
+    revealSidebarIfNeeded(application, element: application.plannerElement("saved.item.new"))
+    XCTAssertTrue(filters.waitForExistence(timeout: 5))
+    XCTAssertEqual(filters.plannerControlTitle, "Active")
+    filters.activateForPlannerJourney()
+    application.plannerElement("Archived").activateForPlannerJourney()
+    #if os(macOS)
+      let archivedItem = application.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.")
+      ).matching(
+        NSPredicate(format: "label CONTAINS %@ OR value CONTAINS %@", "Nezu Museum", "Nezu Museum")
+      ).firstMatch
+    #else
+      let archivedItem = application.buttons.matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.")
+      ).matching(NSPredicate(format: "label CONTAINS %@", "Nezu Museum")).firstMatch
+    #endif
+    XCTAssertTrue(archivedItem.waitForExistence(timeout: 10))
+    archivedItem.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Meet at the garden entrance"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Archived"].exists)
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Unarchive Item").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    recordScreenshot(application, name: "Unlisted archived Item restored through the Items catalog")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Items", application: application)
+    revealSidebarIfNeeded(application, element: application.plannerElement("saved.item.new"))
+    XCTAssertEqual(filters.plannerControlTitle, "Active")
+    XCTAssertTrue(archivedItem.waitForExistence(timeout: 10))
+    archivedItem.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Meet at the garden entrance"].waitForExistence(timeout: 10))
+  }
+
+  func testSavedListFiltersIncludeArchivedItemsAndKeepFullProgressWithNoMatches() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    createList("Tokyo Food", application: application)
+    addItem(application)
+    let completion = application.buttons.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.appearance.completion.")
+    ).firstMatch
+    completion.activateForPlannerJourney()
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    viewGlobalItem(application)
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Archive Item").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
+    openList("Tokyo Food", application: application)
+    let item = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    let membershipIdentifier = item.identifier
+    let filters = application.plannerElement("saved.list.filters")
+    XCTAssertTrue(filters.waitForExistence(timeout: 5))
+    XCTAssertEqual(filters.plannerControlTitle, "All")
+    assertProgress(1, application: application)
+    item.activateForPlannerJourney()
+    let keepsSimultaneousDetail = filters.isHittable
+    if !keepsSimultaneousDetail {
+      application.plannerElement("BackButton").activateForPlannerJourney()
+    }
+
+    filters.activateForPlannerJourney()
+    application.plannerElement("Active").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No matching items"].waitForExistence(timeout: 10))
+    XCTAssertFalse(item.exists)
+    XCTAssertTrue(application.staticTexts["1 of 1 item done"].exists)
+    XCTAssertTrue(application.staticTexts["Showing 0 of 1 item"].exists)
+    assertProgress(1, application: application)
+    if keepsSimultaneousDetail {
+      XCTAssertTrue(application.staticTexts["In Tokyo Food"].exists)
+      XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    }
+    filters.activateForPlannerJourney()
+    application.plannerElement("Todo").activateForPlannerJourney()
+    XCTAssertEqual(filters.plannerControlTitle, "Todo · Active")
+    filters.activateForPlannerJourney()
+    application.plannerElement("Archived").activateForPlannerJourney()
+    XCTAssertEqual(filters.plannerControlTitle, "Todo · Archived")
+    XCTAssertFalse(item.exists)
+    assertProgress(1, application: application)
+    recordScreenshot(
+      application, name: "Saved cumulative filters with full progress and no matches")
+
+    filters.activateForPlannerJourney()
+    application.plannerElement("All completion states").activateForPlannerJourney()
+    XCTAssertTrue(item.waitForExistence(timeout: 10))
+    XCTAssertEqual(item.identifier, membershipIdentifier)
+    XCTAssertEqual(filters.plannerControlTitle, "Archived")
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    filters.activateForPlannerJourney()
+    application.plannerElement("Done").activateForPlannerJourney()
+    XCTAssertEqual(filters.plannerControlTitle, "Done · Archived")
+    completion.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No matching items"].waitForExistence(timeout: 10))
+    assertProgress(0, application: application)
+    XCTAssertTrue(application.staticTexts["0 of 1 item done"].exists)
+    filters.activateForPlannerJourney()
+    application.plannerElement("All completion states").activateForPlannerJourney()
+    filters.activateForPlannerJourney()
+    application.plannerElement("All archive states").activateForPlannerJourney()
+    XCTAssertTrue(item.waitForExistence(timeout: 10))
+    XCTAssertEqual(item.identifier, membershipIdentifier)
+    XCTAssertEqual(filters.plannerControlTitle, "All")
+    XCTAssertTrue(completion.waitForPlannerValue("To do"))
+    assertProgress(0, application: application)
+    recordScreenshot(application, name: "Saved archived Item visible with All filters")
+  }
+
+  func testItemArchivePreservesItsSavedListReferenceAndLocalCompletion() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    createList("Tokyo Food", application: application)
+    addItem(application)
+    let completion = application.buttons.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.appearance.completion.")
+    ).firstMatch
+    completion.activateForPlannerJourney()
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(1, application: application)
+    viewGlobalItem(application)
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    let actions = application.plannerElement("saved.item.actions")
+    XCTAssertTrue(actions.waitForExistence(timeout: 5))
+    actions.activateForPlannerJourney()
+    application.plannerElement("Archive Item").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+
+    openList("Tokyo Food", application: application)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(1, application: application)
+    recordScreenshot(application, name: "Saved archived Item retains List progress")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Tokyo Food", application: application)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(1, application: application)
+    viewGlobalItem(application)
+    XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
+    actions.activateForPlannerJourney()
+    application.plannerElement("Unarchive Item").activateForPlannerJourney()
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    XCTAssertTrue(
+      application.staticTexts["Archived"].waitForNonExistence(timeout: 10))
+    openList("Tokyo Food", application: application)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(1, application: application)
+  }
+
   func testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -222,14 +395,5 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     attachment.name = name
     attachment.lifetime = .keepAlways
     add(attachment)
-  }
-}
-
-extension XCUIElement {
-  fileprivate func waitForPlannerValue(_ expected: String) -> Bool {
-    let predicate = NSPredicate(format: "value == %@", expected)
-    return XCTWaiter.wait(
-      for: [XCTNSPredicateExpectation(predicate: predicate, object: self)], timeout: 5)
-      == .completed
   }
 }

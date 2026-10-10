@@ -1,0 +1,374 @@
+{
+  "baseCommit": "9ff9563",
+  "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+  "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+  "seam": "Accepted public native UI journeys with isolated durable local datasets and real Core queries/commands. No private persistence reads, mocks or test-only production injection.",
+  "sourceSnapshots": {
+    "archiveRed": {
+      "Planner/Scenes/SavedItemViews.swift": "a6869d804aead7d1dcb2701b39b9175c6c0609dfe5efcde5c2a0947adfa8e42a",
+      "Planner/Scenes/SavedAppearanceViews.swift": "6957c1ca3a96f98a245b62a2b16bf78bc2acce752a40597546af2be41f629442",
+      "Planner/Scenes/SavedPlannerView.swift": "40d689cedc577d0297a6eef18a543f4239d348c6c7f885bc6e010b1b7611583b",
+      "Planner/Scenes/SavedPlannerStore.swift": "17e4e293aae166c9113d47fccabbaae64ebf9d591b3b6e9eb62dc6bc8d71ae8f",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "83adfde526ac8359e130281892f87b09ed5ae9a0679f34227dbd28dca561ba8f"
+    },
+    "archiveGreen": {
+      "Planner/Scenes/SavedItemViews.swift": "ce76434569e250397bc9ada0ad1503dfa0c7c8b2afaec0dcb1d45403a6691054",
+      "Planner/Scenes/SavedAppearanceViews.swift": "a16e24ba61679eca97b9faf56144a44c2ef632404ccec2aedf0a2236f97fa414",
+      "Planner/Scenes/SavedPlannerView.swift": "91b724a8b0a082686f2df211b58eb9a27c07f48d01d9d00936ba13786a45f636",
+      "Planner/Scenes/SavedPlannerStore.swift": "0069948b3f67c023c24b6df6a5b9126106952f1412084560addfc03e717912ae",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "83adfde526ac8359e130281892f87b09ed5ae9a0679f34227dbd28dca561ba8f"
+    },
+    "listFilterRed": {
+      "Planner/Scenes/SavedPlannerView.swift": "91b724a8b0a082686f2df211b58eb9a27c07f48d01d9d00936ba13786a45f636",
+      "Planner/Scenes/SavedPlannerStore.swift": "0069948b3f67c023c24b6df6a5b9126106952f1412084560addfc03e717912ae",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "4fe3cbeb81d38092906f970f5473ebc8343a85add4d1238c5dd99c20dbc74a2b",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "923b6d8e050ca75bc666e1671af6c3a093379af0a125111954fbf7de8ee1461f"
+    },
+    "listFilterGreen": {
+      "Planner/Scenes/SavedItemFilters.swift": "b012ce718fc998c5364012d8d3d020b3a05bb67713dcf752f77a0f51b60b12f5",
+      "Planner/Scenes/SavedPlannerStore.swift": "99431e63586b2b953a7a8993f7585be5beebe6a70851d71c5e4d7935eb10d925",
+      "Planner/Scenes/SavedPlannerView.swift": "9a4ead70643148f2e0f820c59cf3978602a0ca57a6dff53d1fa66de57f1fa96c",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "35266d52b5294ab9178484af1d868a7fd03f182767268ed79fd8a4f1679ba4cb",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "923b6d8e050ca75bc666e1671af6c3a093379af0a125111954fbf7de8ee1461f"
+    },
+    "catalogNavigationCorrection": {
+      "Planner/Scenes/SavedItemViews.swift": "ce76434569e250397bc9ada0ad1503dfa0c7c8b2afaec0dcb1d45403a6691054",
+      "Planner/Scenes/SavedPlannerStore.swift": "99431e63586b2b953a7a8993f7585be5beebe6a70851d71c5e4d7935eb10d925",
+      "Planner/Scenes/SavedPlannerView.swift": "9a4ead70643148f2e0f820c59cf3978602a0ca57a6dff53d1fa66de57f1fa96c",
+      "Planner/Scenes/SavedItemFilters.swift": "b012ce718fc998c5364012d8d3d020b3a05bb67713dcf752f77a0f51b60b12f5",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "503a35f1d6d18588ada4c9101db2b7f8fb836dca157f572bedc88340c95a7511"
+    },
+    "catalogFilterRed": {
+      "Planner/Scenes/SavedItemViews.swift": "ce76434569e250397bc9ada0ad1503dfa0c7c8b2afaec0dcb1d45403a6691054",
+      "Planner/Scenes/SavedPlannerStore.swift": "99431e63586b2b953a7a8993f7585be5beebe6a70851d71c5e4d7935eb10d925",
+      "Planner/Scenes/SavedPlannerView.swift": "9a4ead70643148f2e0f820c59cf3978602a0ca57a6dff53d1fa66de57f1fa96c",
+      "Planner/Scenes/SavedItemFilters.swift": "b012ce718fc998c5364012d8d3d020b3a05bb67713dcf752f77a0f51b60b12f5",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "d9f28d3fda0eaee639968ce5da83125ae3996cafdbcb4a40cc0740bf8d3b009c"
+    },
+    "catalogFilterGreen": {
+      "Planner/Scenes/SavedItemViews.swift": "650703fcf939ec13a210beda99742f66bf66fd6e55d97593f4892aa86dccbe83",
+      "Planner/Scenes/SavedPlannerStore.swift": "86f7f76ae61b275f49685f6865a74adfb9776a0474befefc4bded68d6f4a9cc7",
+      "Planner/Scenes/SavedPlannerView.swift": "7e8a338c93aa1616ee1b90049094b60349a516d745b0f675f77819d903165aa7",
+      "Planner/Scenes/SavedItemFilters.swift": "c90e5ce1684bf54f780787d141aaf2dbcd93a6fb4889d80dddc6870b2b21392f",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "d9f28d3fda0eaee639968ce5da83125ae3996cafdbcb4a40cc0740bf8d3b009c"
+    },
+    "visibleFilterLabel": {
+      "Planner/Scenes/SavedAppearanceViews.swift": "a16e24ba61679eca97b9faf56144a44c2ef632404ccec2aedf0a2236f97fa414",
+      "Planner/Scenes/SavedItemViews.swift": "650703fcf939ec13a210beda99742f66bf66fd6e55d97593f4892aa86dccbe83",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "35266d52b5294ab9178484af1d868a7fd03f182767268ed79fd8a4f1679ba4cb",
+      "Planner/Scenes/SavedPlannerStore.swift": "86f7f76ae61b275f49685f6865a74adfb9776a0474befefc4bded68d6f4a9cc7",
+      "Planner/Scenes/SavedPlannerView.swift": "7e8a338c93aa1616ee1b90049094b60349a516d745b0f675f77819d903165aa7",
+      "Planner/Scenes/SavedItemFilters.swift": "9bb8c974fba8f325061837bacd5dc5cc3e1f41e063a909515fe43141ec9ce6d2",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "11055dcfb9ac50a0f276998e4ea30f81787b4d8e242ed3bba3ce7b1711252c29",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "4598c5be3c69c3e39b7821a8883960357983477b9b1ff4827752fdd5a2049bc8"
+    },
+    "initialQualificationBuild": {
+      "Planner/Scenes/SavedAppearanceViews.swift": "a16e24ba61679eca97b9faf56144a44c2ef632404ccec2aedf0a2236f97fa414",
+      "Planner/Scenes/SavedItemViews.swift": "650703fcf939ec13a210beda99742f66bf66fd6e55d97593f4892aa86dccbe83",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "35266d52b5294ab9178484af1d868a7fd03f182767268ed79fd8a4f1679ba4cb",
+      "Planner/Scenes/SavedPlannerStore.swift": "86f7f76ae61b275f49685f6865a74adfb9776a0474befefc4bded68d6f4a9cc7",
+      "Planner/Scenes/SavedPlannerView.swift": "7e8a338c93aa1616ee1b90049094b60349a516d745b0f675f77819d903165aa7",
+      "Planner/Scenes/SavedItemFilters.swift": "9bb8c974fba8f325061837bacd5dc5cc3e1f41e063a909515fe43141ec9ce6d2",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "d5a3f8bad504615ed1f788a3e2fb46e42ffb65b2133e87c2ab56c72fa6507f46",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "458ed59597d9c73eb8f91d71316f87718ad2c86e5417c52f5abfc5d84588c8b2"
+    },
+    "verified": {
+      "Planner/Scenes/SavedAppearanceViews.swift": "a16e24ba61679eca97b9faf56144a44c2ef632404ccec2aedf0a2236f97fa414",
+      "Planner/Scenes/SavedItemViews.swift": "650703fcf939ec13a210beda99742f66bf66fd6e55d97593f4892aa86dccbe83",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "35266d52b5294ab9178484af1d868a7fd03f182767268ed79fd8a4f1679ba4cb",
+      "Planner/Scenes/SavedPlannerStore.swift": "86f7f76ae61b275f49685f6865a74adfb9776a0474befefc4bded68d6f4a9cc7",
+      "Planner/Scenes/SavedPlannerView.swift": "7e8a338c93aa1616ee1b90049094b60349a516d745b0f675f77819d903165aa7",
+      "Planner/Scenes/SavedItemFilters.swift": "9bb8c974fba8f325061837bacd5dc5cc3e1f41e063a909515fe43141ec9ce6d2",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "875c1145e563126b5469a24fa09a17432daefdada49066d86acc847fb2c5691f",
+      "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "458ed59597d9c73eb8f91d71316f87718ad2c86e5417c52f5abfc5d84588c8b2",
+      "PlannerNavigationUITests/NativeNavigationElements.swift": "822047199214ffa1f892a0500ac644717f3a3606706f7bd7831ff073da4b44f4"
+    }
+  },
+  "results": {
+    "archiveRed": {
+      "result": "Failed",
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testItemArchivePreservesItsSavedListReferenceAndLocalCompletion()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testItemArchivePreservesItsSavedListReferenceAndLocalCompletion",
+          "testName": "testItemArchivePreservesItsSavedListReferenceAndLocalCompletion()"
+        }
+      ],
+      "summaryPath": "/private/tmp/PlannerSavedArchivePhoneRedSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedArchivePhoneRed.xcresult",
+      "logPath": "/private/tmp/PlannerSavedArchivePhoneRed.log"
+    },
+    "archiveGreen": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [],
+      "summaryPath": "/private/tmp/PlannerSavedArchivePhoneGreenSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedArchivePhoneGreen.xcresult",
+      "logPath": "/private/tmp/PlannerSavedArchivePhoneGreen.log"
+    },
+    "listFilterRed": {
+      "result": "Failed",
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testSavedListFiltersIncludeArchivedItemsAndKeepFullProgressWithNoMatches()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testSavedListFiltersIncludeArchivedItemsAndKeepFullProgressWithNoMatches",
+          "testName": "testSavedListFiltersIncludeArchivedItemsAndKeepFullProgressWithNoMatches()"
+        }
+      ],
+      "summaryPath": "/private/tmp/PlannerSavedListFilterPhoneRedSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedListFilterPhoneRed.xcresult",
+      "logPath": "/private/tmp/PlannerSavedListFilterPhoneRed.log"
+    },
+    "listFilterPhoneGreen": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [],
+      "summaryPath": "/private/tmp/PlannerSavedListFilterPhoneGreenSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedListFilterPhoneGreen.xcresult",
+      "logPath": "/private/tmp/PlannerSavedListFilterPhoneGreen.log"
+    },
+    "listFilterTabletGreen": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [],
+      "summaryPath": "/private/tmp/PlannerSavedListFilterTabletGreenSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedListFilterTabletGreen.xcresult",
+      "logPath": "/private/tmp/PlannerSavedListFilterTabletGreen.log"
+    },
+    "catalogFilterRed": {
+      "result": "Failed",
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testArchivedItemWithoutAListCanBeFoundAndUnarchivedInTheItemsCatalog()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testArchivedItemWithoutAListCanBeFoundAndUnarchivedInTheItemsCatalog",
+          "testName": "testArchivedItemWithoutAListCanBeFoundAndUnarchivedInTheItemsCatalog()"
+        }
+      ],
+      "summaryPath": "/private/tmp/PlannerSavedCatalogFilterPhoneCorrectedRedSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedCatalogFilterPhoneCorrectedRed.xcresult",
+      "logPath": "/private/tmp/PlannerSavedCatalogFilterPhoneCorrectedRed.log"
+    },
+    "catalogFilterPhoneGreen": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [],
+      "summaryPath": "/private/tmp/PlannerSavedCatalogFilterPhoneGreenSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedCatalogFilterPhoneGreen.xcresult",
+      "logPath": "/private/tmp/PlannerSavedCatalogFilterPhoneGreen.log"
+    },
+    "catalogFilterTabletGreen": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [],
+      "summaryPath": "/private/tmp/PlannerSavedCatalogFilterTabletGreenSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedCatalogFilterTabletGreen.xcresult",
+      "logPath": "/private/tmp/PlannerSavedCatalogFilterTabletGreen.log"
+    },
+    "phoneRegression": {
+      "result": "Passed",
+      "passedTests": 6,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 6,
+      "testFailures": [],
+      "summaryPath": "/private/tmp/PlannerSavedArchiveFiltersPhoneFinalSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedArchiveFiltersPhoneFinal.xcresult",
+      "logPath": "/private/tmp/PlannerSavedArchiveFiltersPhoneFinal.log"
+    },
+    "tabletRegression": {
+      "result": "Failed",
+      "passedTests": 5,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 6,
+      "testFailures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testArchivedItemWithoutAListCanBeFoundAndUnarchivedInTheItemsCatalog()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testArchivedItemWithoutAListCanBeFoundAndUnarchivedInTheItemsCatalog",
+          "testName": "testArchivedItemWithoutAListCanBeFoundAndUnarchivedInTheItemsCatalog()"
+        }
+      ],
+      "summaryPath": "/private/tmp/PlannerSavedArchiveFiltersTabletFinalSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedArchiveFiltersTabletFinal.xcresult",
+      "logPath": "/private/tmp/PlannerSavedArchiveFiltersTabletFinal.log"
+    },
+    "phoneVerified": {
+      "result": "Passed",
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 2,
+      "testFailures": [],
+      "summaryPath": "/private/tmp/PlannerSavedArchiveFiltersPhoneVerifiedSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedArchiveFiltersPhoneVerified.xcresult",
+      "logPath": "/private/tmp/PlannerSavedArchiveFiltersPhoneVerified.log"
+    },
+    "tabletVerified": {
+      "result": "Passed",
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 2,
+      "testFailures": [],
+      "summaryPath": "/private/tmp/PlannerSavedArchiveFiltersTabletVerifiedSummary.json",
+      "resultBundle": "/private/tmp/PlannerSavedArchiveFiltersTabletVerified.xcresult",
+      "logPath": "/private/tmp/PlannerSavedArchiveFiltersTabletVerified.log"
+    }
+  },
+  "behaviorReds": [
+    {
+      "resultBundle": "/private/tmp/PlannerSavedArchivePhoneRed.xcresult",
+      "failure": "The Item actions control was absent."
+    },
+    {
+      "resultBundle": "/private/tmp/PlannerSavedListFilterPhoneRed.xcresult",
+      "failure": "The saved List filter menu was absent."
+    },
+    {
+      "resultBundle": "/private/tmp/PlannerSavedCatalogFilterPhoneCorrectedRed.xcresult",
+      "failure": "After navigation reached the catalog, its saved Item filter menu was absent."
+    }
+  ],
+  "corrections": [
+    {
+      "resultBundle": "/private/tmp/PlannerSavedCatalogFilterPhoneRed.xcresult",
+      "classification": "Test navigation correction, not the feature behavior red.",
+      "detail": "The sidebar helper initially waited for the missing new filter. It was corrected to use the existing New Item control before the actual missing-filter red."
+    },
+    {
+      "resultBundle": "/private/tmp/PlannerSavedArchiveFiltersTabletFinal.xcresult",
+      "classification": "Ambiguous UI assertion after the visible filter-label correction.",
+      "detail": "Five journeys passed. The catalog journey incorrectly required every Archived static text to disappear after unarchiving. Its matching filter label remains visible. The redundant assertion was replaced by retained detail content; the existing relaunch and Active-catalog read establish saved Unarchive without ambiguous labels. Production source was unchanged."
+    },
+    {
+      "classification": "UI-test compilation correction, zero behavior functions executed.",
+      "detail": "The new filtered-drag test initially called a fileprivate value-wait helper from another test file. The helper moved unchanged to the existing shared native UI adapter file with test-target visibility. Production sources were unchanged.",
+      "logs": [
+        "/private/tmp/PlannerSavedArchiveFiltersPhoneQualified.log",
+        "/private/tmp/PlannerSavedArchiveFiltersTabletQualified.log",
+        "/private/tmp/PlannerSavedArchiveFiltersMacQualified.log"
+      ],
+      "processExitCodes": {
+        "Phone": 65,
+        "Tablet": 65,
+        "Mac": 65
+      }
+    }
+  ],
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-filter-no-matches.png",
+      "sha256": "303bd6fbb445b6d975bc3f1b80aec1bf5788b22fcda4f93abd2498138ecf3ba8",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-filter-no-matches.png",
+      "sha256": "4d3c3999254192f7bff045b2022ac3df4ddae8844a420e1d88c03d0bf3b73937",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-archived-all.png",
+      "sha256": "6a4bb892930aaac9e99b0a393eacc8b5b8241be148ce3fe3981ee7f623231887",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-filtered-drag.png",
+      "sha256": "c8399c34a43f1d1b13a3bba683afc428bf00241def3223243a615a41aed25107",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-filtered-drag-reopened.png",
+      "sha256": "65fd3840c93cc7eb4407e1441c3d3cbde557afa3be59d9cd46a1fcc67af87462",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-catalog-unarchived.png",
+      "sha256": "dc793f5d45ea288a152a4520ec39bad31e4a585128ae77eb19ef03cd20b1f685",
+      "visuallyInspected": true
+    }
+  ],
+  "checks": [
+    "Strict swift-format lint on nine affected Swift source/test files",
+    "Mac app and updated UI-test compilation passed, zero runtime behavior functions",
+    "Selected simulator regressions and corrected qualification journeys passed as recorded",
+    "Affected Markdown lint",
+    "git diff --check"
+  ],
+  "limits": [
+    "Schema 7 and portable format 1 remain localOnly with CloudKit disabled.",
+    "Saved List filters default All/All; Item catalog filters default All completion/Active archive. Window-local choices are not persisted or backed up in this slice.",
+    "Advanced filtering, sorting, paging, other filtered reorder combinations, external refresh, native failures/recovery and remaining graph views remain open. The newly qualified hidden-Todo drag case runs only on simulators; Mac filtered-drag runtime remains open.",
+    "Mac compilation does not establish runtime or visual behavior. The preceding Mac automation-mode initialization failures remain unresolved.",
+    "Physical signing/Share/account/sync, accessibility/resizing/long-list memory and final human review remain separate gates."
+  ],
+  "finalCommands": {
+    "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests -only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests -resultBundlePath /private/tmp/PlannerSavedArchiveFiltersPhoneFinal.xcresult test > /private/tmp/PlannerSavedArchiveFiltersPhoneFinal.log 2>&1",
+    "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests -only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests -resultBundlePath /private/tmp/PlannerSavedArchiveFiltersTabletFinal.xcresult test > /private/tmp/PlannerSavedArchiveFiltersTabletFinal.log 2>&1",
+    "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerSavedArchiveFiltersMacFinal.xcresult build-for-testing > /private/tmp/PlannerSavedArchiveFiltersMacFinal.log 2>&1"
+  },
+  "qualifiedCommands": {
+    "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testArchivedItemWithoutAListCanBeFoundAndUnarchivedInTheItemsCatalog -only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch -resultBundlePath /private/tmp/PlannerSavedArchiveFiltersPhoneQualified.xcresult test > /private/tmp/PlannerSavedArchiveFiltersPhoneQualified.log 2>&1",
+    "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testArchivedItemWithoutAListCanBeFoundAndUnarchivedInTheItemsCatalog -only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch -resultBundlePath /private/tmp/PlannerSavedArchiveFiltersTabletQualified.xcresult test > /private/tmp/PlannerSavedArchiveFiltersTabletQualified.log 2>&1",
+    "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerSavedArchiveFiltersMacQualified.xcresult build-for-testing > /private/tmp/PlannerSavedArchiveFiltersMacQualified.log 2>&1"
+  },
+  "verifiedCommands": {
+    "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testArchivedItemWithoutAListCanBeFoundAndUnarchivedInTheItemsCatalog -only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch -resultBundlePath /private/tmp/PlannerSavedArchiveFiltersPhoneVerified.xcresult test > /private/tmp/PlannerSavedArchiveFiltersPhoneVerified.log 2>&1",
+    "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testArchivedItemWithoutAListCanBeFoundAndUnarchivedInTheItemsCatalog -only-testing:PlannerNavigationUITests/SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch -resultBundlePath /private/tmp/PlannerSavedArchiveFiltersTabletVerified.xcresult test > /private/tmp/PlannerSavedArchiveFiltersTabletVerified.log 2>&1",
+    "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerSavedArchiveFiltersMacVerified.xcresult build-for-testing > /private/tmp/PlannerSavedArchiveFiltersMacVerified.log 2>&1"
+  },
+  "macCompilation": {
+    "result": "Passed",
+    "processExitCode": 0,
+    "executedBehaviorFunctions": 0,
+    "logPath": "/private/tmp/PlannerSavedArchiveFiltersMacVerified.log",
+    "resultBundle": "/private/tmp/PlannerSavedArchiveFiltersMacVerified.xcresult",
+    "sourceSnapshot": "verified"
+  },
+  "qualifications": [
+    {
+      "test": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch",
+      "classification": "Qualification of existing native reorder under the new filters, passed on its first executed run after the test-only compile correction.",
+      "expected": "Start Hotel/Museum/Cafe, locally complete Hotel, show Todo, drag Cafe before Museum, restore All and relaunch. Full order Hotel/Cafe/Museum, all original membership IDs, Hotel local Done and progress 1 of 3 remain."
+    }
+  ],
+  "productionSourcesUnchangedAcrossRegressionAndVerified": true
+}

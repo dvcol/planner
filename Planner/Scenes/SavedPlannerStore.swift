@@ -113,11 +113,19 @@ final class SavedPlannerStore {
   }
 
   func refreshItems() async {
-    guard let planner, let session else { return }
+    if let loaded = await readItems(completion: .all, archive: .active) {
+      items = loaded
+    }
+  }
+
+  func readItems(
+    completion: PlannerItemQuery.Completion, archive: PlannerItemQuery.Archive
+  ) async -> [SavedPlannerItem]? {
+    guard let planner, let session else { return nil }
     switch await planner.query(
       PlannerQuery(
         session: session,
-        request: .items(.init(scope: .global, completion: .all, archive: .active))))
+        request: .items(.init(scope: .global, completion: completion, archive: archive))))
     {
     case .failed(let reason): alertMessage = reason.message
     case .snapshot(let snapshot):
@@ -130,15 +138,16 @@ final class SavedPlannerStore {
         for row in window.rows {
           guard case .source(let source) = row.identity, source.kind == .item else {
             alertMessage = "Planner could not resolve its Items."
-            return
+            return nil
           }
           loadedItems.append(SavedPlannerItem(id: source.id, row: row))
         }
-        items = loadedItems
+        return loadedItems
       case .failed(let reason): alertMessage = reason.message
       default: alertMessage = "Planner could not read its Items."
       }
     }
+    return nil
   }
 
   func readItem(_ identifier: UUID) async -> PlannerItemSourceRead? {
@@ -179,6 +188,16 @@ final class SavedPlannerStore {
       await executeChange(
         .setCompletion(scope: .globalItem(itemId: identifier), done: done), operationId: UUID())
         != nil
+    else { return false }
+    await refreshItems()
+    return true
+  }
+
+  func setItemArchived(_ identifier: UUID, archived: Bool) async -> Bool {
+    guard
+      await executeChange(
+        .setArchive(source: .init(kind: .item, id: identifier), archived: archived),
+        operationId: UUID()) != nil
     else { return false }
     await refreshItems()
     return true
@@ -258,14 +277,16 @@ final class SavedPlannerStore {
     }
   }
 
-  func readListItems(_ identifier: UUID) async -> [SavedPlannerItem]? {
+  func readListItems(
+    _ identifier: UUID, completion: PlannerItemQuery.Completion, archive: PlannerItemQuery.Archive
+  ) async -> [SavedPlannerItem]? {
     guard let planner, let session else { return nil }
     switch await planner.query(
       PlannerQuery(
         session: session,
         request: .items(
           .init(
-            scope: .list(identifier), completion: .all, archive: .all,
+            scope: .list(identifier), completion: completion, archive: archive,
             sort: .init(mode: .manual)))))
     {
     case .failed(let reason): alertMessage = reason.message
