@@ -2384,6 +2384,7 @@ public actor Planner {
         }
         currentHashes[field] = hash
         if field == .title { currentValues[field] = .string(before.input.title) }
+        if field == .subtitle { currentValues[field] = .optionalString(before.input.subtitle) }
         if field == .notes { currentValues[field] = .optionalString(before.input.notes) }
         if field == .location { currentValues[field] = .optionalLocation(before.input.location) }
         if field == .links { currentValues[field] = .links(before.links.map(\.read)) }
@@ -2422,6 +2423,7 @@ public actor Planner {
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
     if changedFields.contains(.title) { item.title = updatedInput.title }
+    if changedFields.contains(.subtitle) { item.subtitle = updatedInput.subtitle }
     if changedFields.contains(.notes) { item.notes = updatedInput.notes }
     if changedFields.contains(.location) { item.locationData = updatedLocationData }
     if changedFields.contains(.links) { item.replaceLinks(with: updatedLinks, context: context) }

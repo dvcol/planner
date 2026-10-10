@@ -198,11 +198,12 @@ extension PlannerFieldChange {
 
 extension PlannerItemChanges {
   func validatedFields() throws -> [PlannerItemField] {
-    guard subtitle.isUnchanged, estimate.isUnchanged,
+    guard estimate.isUnchanged,
       categoryIds.isUnchanged, tagIds.isUnchanged
     else {
       throw PlannerFailure(
-        "unavailable", "This edit fixture currently supports title, notes, location and links only."
+        "unavailable",
+        "This edit fixture currently supports title, subtitle, notes, location and links only."
       )
     }
     switch title {
@@ -246,6 +247,7 @@ extension PlannerItemChanges {
     }
     var fields: [PlannerItemField] = []
     if !title.isUnchanged { fields.append(.title) }
+    if !subtitle.isUnchanged { fields.append(.subtitle) }
     if !notes.isUnchanged { fields.append(.notes) }
     if !location.isUnchanged { fields.append(.location) }
     if !links.isUnchanged { fields.append(.links) }
@@ -259,11 +261,17 @@ extension PlannerItemChanges {
 
   func applyingChanges(to input: PlannerItemContentInput) throws -> PlannerItemContentInput {
     var updatedTitle = input.title
+    var updatedSubtitle = input.subtitle
     var updatedNotes = input.notes
     var updatedLocation = input.location
     switch title {
     case .set(let value): updatedTitle = value
     case .clear: throw PlannerFailure("invalidInput", "An Item title cannot be cleared.")
+    case .unchanged: break
+    }
+    switch subtitle {
+    case .set(let value): updatedSubtitle = value
+    case .clear: updatedSubtitle = nil
     case .unchanged: break
     }
     switch notes {
@@ -277,7 +285,7 @@ extension PlannerItemChanges {
     case .unchanged: break
     }
     return PlannerItemContentInput(
-      title: updatedTitle, subtitle: input.subtitle, notes: updatedNotes,
+      title: updatedTitle, subtitle: updatedSubtitle, notes: updatedNotes,
       location: updatedLocation, estimate: input.estimate
     )
   }
@@ -288,6 +296,11 @@ extension PlannerItemChanges {
   ) throws -> String {
     var changedValues: [String: PlannerCanonicalValue] = [:]
     if case .set(let value) = title { changedValues["title"] = .string(value) }
+    switch subtitle {
+    case .set(let value): changedValues["subtitle"] = .optional(.string(value))
+    case .clear: changedValues["subtitle"] = .optional(nil)
+    case .unchanged: break
+    }
     switch notes {
     case .set(let value): changedValues["notes"] = .optional(.string(value))
     case .clear: changedValues["notes"] = .optional(nil)
