@@ -345,6 +345,7 @@ public struct PlannerProviderReference: Sendable, Codable, Equatable {
 }
 
 public enum PlannerReferenceRead: Sendable, Equatable {
+  case expandedCompletion(itineraryId: UUID, listEntryId: UUID, membershipId: UUID)
   case itineraryEntry(id: UUID, itinerary: PlannerEntityReference, source: PlannerEntityReference)
   case membership(id: UUID, list: PlannerEntityReference, item: PlannerEntityReference)
   case ownedLink(id: UUID, owner: PlannerEntityReference)
@@ -608,6 +609,7 @@ public struct PlannerPortableBackup: Sendable {
   public let sources: [PlannerPortableSource]
   public let memberships: [PlannerPortableMembership]
   public let itineraryEntries: [PlannerPortableItineraryEntry]
+  public let expandedCompletions: [PlannerPortableExpandedCompletion]
   public let schedules: [PlannerPortableSchedule]
   public let deletionMarkers: [PlannerPortableDeletionMarker]
 
@@ -615,6 +617,7 @@ public struct PlannerPortableBackup: Sendable {
     sources: [PlannerPortableSource], labelAssociations: [PlannerPortableLabelAssociation],
     memberships: [PlannerPortableMembership],
     itineraryEntries: [PlannerPortableItineraryEntry],
+    expandedCompletions: [PlannerPortableExpandedCompletion],
     schedules: [PlannerPortableSchedule] = [],
     deletionMarkers: [PlannerPortableDeletionMarker]
   ) {
@@ -622,6 +625,7 @@ public struct PlannerPortableBackup: Sendable {
     self.labelAssociations = labelAssociations
     self.memberships = memberships
     self.itineraryEntries = itineraryEntries
+    self.expandedCompletions = expandedCompletions
     self.schedules = schedules
     self.deletionMarkers = deletionMarkers
   }

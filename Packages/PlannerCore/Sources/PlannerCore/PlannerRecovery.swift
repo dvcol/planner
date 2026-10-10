@@ -92,6 +92,7 @@ struct PlannerDataSnapshot: Codable {
   let sources: [PortableSourceRecord]
   let memberships: [PortableMembershipRecord]
   let itineraryEntries: [PortableItineraryEntryRecord]
+  let expandedCompletions: [PortableExpandedCompletionRecord]
   let labelAssociations: [PortableLabelAssociationRecord]
   let ownedLinks: [PortableOwnedLink]
   let schedules: [PortableScheduleRecord]
@@ -113,6 +114,9 @@ struct PlannerDataSnapshot: Codable {
   ) {
     self.itineraryEntries = itineraries.flatMap(\.entries).map(PortableItineraryEntryRecord.init)
       .sorted { $0.id.uuidString < $1.id.uuidString }
+    self.expandedCompletions = itineraries.flatMap(\.entries).flatMap(\.expandedCompletions).map(
+      PortableExpandedCompletionRecord.init
+    ).sorted { $0.context.orderingKey < $1.context.orderingKey }
     self.labelAssociations = labelAssociations.map(PortableLabelAssociationRecord.init).sorted {
       $0.id.uuidString < $1.id.uuidString
     }
@@ -152,6 +156,8 @@ struct PlannerDataSnapshot: Codable {
     memberships = try container.decode([PortableMembershipRecord].self, forKey: .memberships)
     itineraryEntries = try container.decode(
       [PortableItineraryEntryRecord].self, forKey: .itineraryEntries)
+    expandedCompletions = try container.decode(
+      [PortableExpandedCompletionRecord].self, forKey: .expandedCompletions)
     labelAssociations = try container.decode(
       [PortableLabelAssociationRecord].self, forKey: .labelAssociations)
     ownedLinks = try container.decode([PortableOwnedLink].self, forKey: .ownedLinks)
@@ -160,7 +166,7 @@ struct PlannerDataSnapshot: Codable {
     for key in CodingKeys.allCases
     where key != .format && key != .formatVersion && key != .sources && key != .ownedLinks
       && key != .schedules && key != .deletionMarkers && key != .memberships
-      && key != .labelAssociations && key != .itineraryEntries
+      && key != .labelAssociations && key != .itineraryEntries && key != .expandedCompletions
     {
       guard try container.decode([String].self, forKey: key).isEmpty else {
         throw PlannerFailure(
@@ -177,6 +183,7 @@ struct PlannerDataSnapshot: Codable {
     try container.encode(sources, forKey: .sources)
     try container.encode(memberships, forKey: .memberships)
     try container.encode(itineraryEntries, forKey: .itineraryEntries)
+    try container.encode(expandedCompletions, forKey: .expandedCompletions)
     try container.encode(labelAssociations, forKey: .labelAssociations)
     try container.encode(ownedLinks, forKey: .ownedLinks)
     try container.encode(schedules, forKey: .schedules)
@@ -184,7 +191,7 @@ struct PlannerDataSnapshot: Codable {
     for key in CodingKeys.allCases
     where key != .format && key != .formatVersion && key != .sources && key != .ownedLinks
       && key != .schedules && key != .deletionMarkers && key != .memberships
-      && key != .labelAssociations && key != .itineraryEntries
+      && key != .labelAssociations && key != .itineraryEntries && key != .expandedCompletions
     {
       try container.encode([String](), forKey: key)
     }
@@ -213,6 +220,10 @@ struct PlannerDataSnapshot: Codable {
     guard Set(itineraryEntries.map(\.id)).count == itineraryEntries.count else {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "The snapshot contains duplicate itinerary entries.")
+    }
+    guard Set(expandedCompletions.map(\.context)).count == expandedCompletions.count else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "The snapshot contains duplicate expanded completion contexts.")
     }
     let itemRecords = sources.compactMap {
       if case .item(let item) = $0 { return item }
@@ -324,6 +335,9 @@ struct PlannerDataSnapshot: Codable {
         itineraryEntries: try itineraryEntries.map {
           try $0.validated(items: itemRecords, lists: listRecords, itineraries: itineraryRecords)
         },
+        expandedCompletions: try expandedCompletions.map {
+          try $0.validated(entries: itineraryEntries, memberships: memberships)
+        },
         schedules: try schedules.map { try $0.validated(sources: itemRecords) },
         deletionMarkers: try deletionMarkers.map {
           try $0.validated(
@@ -389,7 +403,7 @@ struct RecoveryEnvelope: Codable {
 
   func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
     guard format == "planner-recovery", formatVersion == 1,
-      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"].contains(
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"].contains(
         storageSchemaVersion),
       namespaceId == identity.namespaceId, datasetId == identity.datasetId,
       ownershipBinding == identity.ownershipBinding, !ownershipBinding.isEmpty,

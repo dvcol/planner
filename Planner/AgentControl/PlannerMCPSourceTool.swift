@@ -437,6 +437,12 @@
 
     static func appearanceIdentityValue(_ appearance: PlannerAppearance) -> Value {
       switch appearance {
+      case .expandedListItem(let itineraryId, let listEntryId, let membershipId):
+        return .object([
+          "kind": .string("expandedListItem"), "itineraryId": .string(itineraryId.uuidString),
+          "listEntryId": .string(listEntryId.uuidString),
+          "membershipId": .string(membershipId.uuidString),
+        ])
       case .directItineraryItem(let itineraryId, let entryId):
         return .object([
           "kind": .string("directItineraryItem"), "itineraryId": .string(itineraryId.uuidString),
@@ -511,6 +517,13 @@
 
     static func referenceValue(_ reference: PlannerReferenceRead) -> Value {
       switch reference {
+      case .expandedCompletion(let itineraryId, let listEntryId, let membershipId):
+        return .object([
+          "kind": .string("expandedCompletion"),
+          "appearance": appearanceIdentityValue(
+            .expandedListItem(
+              itineraryId: itineraryId, listEntryId: listEntryId, membershipId: membershipId)),
+        ])
       case .itineraryEntry(let identifier, let itinerary, let source):
         return .object([
           "kind": .string("itineraryEntry"), "id": .string(identifier.uuidString),

@@ -87,14 +87,20 @@ func associationInsertionRank<Association: PlannerRankedAssociation>(
 public enum PlannerAppearance: Sendable, Equatable, Codable {
   case listMembership(listId: UUID, membershipId: UUID)
   case directItineraryItem(itineraryId: UUID, entryId: UUID)
+  case expandedListItem(itineraryId: UUID, listEntryId: UUID, membershipId: UUID)
 
   private enum CodingKeys: String, CodingKey {
-    case kind, listId, membershipId, itineraryId, entryId
+    case kind, listId, membershipId, itineraryId, entryId, listEntryId
   }
 
   public init(from decoder: any Decoder) throws {
     let fields = try decoder.container(keyedBy: CodingKeys.self)
     switch try fields.decode(String.self, forKey: .kind) {
+    case "expandedListItem":
+      self = .expandedListItem(
+        itineraryId: try fields.decode(UUID.self, forKey: .itineraryId),
+        listEntryId: try fields.decode(UUID.self, forKey: .listEntryId),
+        membershipId: try fields.decode(UUID.self, forKey: .membershipId))
     case "listMembership":
       self = .listMembership(
         listId: try fields.decode(UUID.self, forKey: .listId),
@@ -112,6 +118,11 @@ public enum PlannerAppearance: Sendable, Equatable, Codable {
   public func encode(to encoder: any Encoder) throws {
     var fields = encoder.container(keyedBy: CodingKeys.self)
     switch self {
+    case .expandedListItem(let itineraryId, let listEntryId, let membershipId):
+      try fields.encode("expandedListItem", forKey: .kind)
+      try fields.encode(itineraryId, forKey: .itineraryId)
+      try fields.encode(listEntryId, forKey: .listEntryId)
+      try fields.encode(membershipId, forKey: .membershipId)
     case .directItineraryItem(let itineraryId, let entryId):
       try fields.encode("directItineraryItem", forKey: .kind)
       try fields.encode(itineraryId, forKey: .itineraryId)
@@ -142,6 +153,19 @@ extension PlannerReferenceRead: Codable {
   public init(from decoder: any Decoder) throws {
     let fields = try decoder.container(keyedBy: CodingKeys.self)
     let kind = try fields.decode(String.self, forKey: .kind)
+    if kind == "expandedCompletion" {
+      guard
+        case .expandedListItem(let itineraryId, let listEntryId, let membershipId) =
+          try fields.decode(PlannerAppearance.self, forKey: .appearance)
+      else {
+        throw DecodingError.dataCorruptedError(
+          forKey: .appearance, in: fields,
+          debugDescription: "Invalid expanded completion appearance.")
+      }
+      self = .expandedCompletion(
+        itineraryId: itineraryId, listEntryId: listEntryId, membershipId: membershipId)
+      return
+    }
     let identifier = try fields.decode(UUID.self, forKey: .id)
     let owner = try fields.decode(PlannerEntityReference?.self, forKey: .owner)
     let source = try fields.decode(PlannerEntityReference?.self, forKey: .source)
@@ -205,6 +229,13 @@ extension PlannerReferenceRead: Codable {
     let source: PlannerEntityReference?
     let appearance: PlannerAppearance?
     switch self {
+    case .expandedCompletion(let itineraryId, let listEntryId, let membershipId):
+      try fields.encode("expandedCompletion", forKey: .kind)
+      try fields.encode(
+        PlannerAppearance.expandedListItem(
+          itineraryId: itineraryId, listEntryId: listEntryId, membershipId: membershipId),
+        forKey: .appearance)
+      return
     case .itineraryEntry(let value, let itinerary, let sourceValue):
       kind = "itineraryEntry"
       identifier = value

@@ -7,6 +7,7 @@ struct ItineraryEntrySnapshot: PlannerRankedAssociation {
   let source: PlannerBoundIdentity
   var rank: Int64
   let localDone: Bool?
+  var expandedCompletions: [ExpandedCompletionSnapshot] = []
 
   var sourceReference: PlannerEntityReference {
     .init(kind: source.kind == "item" ? .item : .list, id: source.id)
@@ -44,7 +45,12 @@ extension ItinerarySnapshot {
       {
         let item = try resolvedItem(membership.item, in: items)
         totalCount += 1
-        if item.globalDone { doneCount += 1 }
+        let localDone =
+          entry.expandedCompletions.first {
+            $0.context.membershipId == membership.id
+              && $0.context.membershipLifetimeId == membership.lifetimeId
+          }?.localDone ?? false
+        if item.globalDone || localDone { doneCount += 1 }
       }
     }
     let state: PlannerContainerProgressState
