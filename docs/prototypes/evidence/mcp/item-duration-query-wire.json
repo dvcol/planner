@@ -1,0 +1,493 @@
+{
+  "baselineCommit": "f01092a",
+  "qualifiedCoreCommit": "f01092a",
+  "seam": "Pre-agreed actual authenticated loopback tools/call and tools/list, actual adapter and durable local Core with public source/query/appearance reads. No mocks, private database assertions or production injection.",
+  "sourceSnapshots": {
+    "fixtureCompile": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerAppliedValues.swift": "7bd92cdaab57c37a778813f84ad492c1c03c07a94d0be4098cf2a809d7247808",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCivilDate.swift": "d8ae4943ef8af8030c13f12af2f93ffb873de32e328a97245b9c05adbed92306",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1e0238f87b556c2c77893f842d312383b0948e64bca6bfdcaa1fea35806c8a6a",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "247a8b9fad5f0692151f8030f3c6f8ff92dae2c0af3034e504a1dc8404594472",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkRecovery.swift": "76e82b80e6be3200a1cc0a9c4eb439094c9085c30939d543dacaaf70cbd60b1b",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkValues.swift": "1d56582bc53cdd9b0e1844269dfed4f441309997f0c6b134a8f64265cae2e5c9",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListRecovery.swift": "77ac9d1b81c6534d3f9fcbf9c8f278008432d0d2a78b4f01fd4b9e1f489e538f",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift": "cc858d8b5901779245572e6b0fbb8a5babbfc1b55cd88895194b838cf5e6c577",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipRecovery.swift": "132e5752b86d01a9038c6404b6d2455335294da8cede1a9673fc9efd43e371ce",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift": "75f90481dee6e5931746acb2c7923154d94e2bfb0a0cbf3b9cdad4b6fbb4e5bc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift": "02a5cdae131a35460b5f29cf928733fba03eb722d24cfb915e144cce01b643a5",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleRecovery.swift": "04cd468445d0110b980aff89b94b1e3f4ca1ff641ce46dc9ecb1eb6518667a22",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "a3393d67c3c5d64042ab504a9010a72e530779a0892abb6ba2043b594a415504",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV2.swift": "efbe703445f557022a2fb25fe40b4cadde725cfaa23c2293864099726e1b5af1",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV3.swift": "16597d7095a886a1736b908877359b110a4d527d6aadb77e4ced5f13cfc9facc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV5.swift": "e2347043ee4c5d0267391e40119d6cc25f463f181c833c9a9c4b3bed0e10f0f6",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV6.swift": "9ec7f806f24a4666d02f9a2b16e94bf10330705b4cd4989cb52792e30757fd83",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV7.swift": "7dce5ff7a8df9a69eaf6f7cdc70d1b19df524b67976889b6669b9f424e6ca398",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "bbdd9f97ffb8eab40c1e8b5db963151fda5dc2d6d9580c3ffc959f29b0e7574e",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift": "e58276bea383c9610957d0278a67fa44a37e9ea054a588dfd73cdc51fbf2a742",
+      "Planner/AgentControl/PlannerMCPFailureValue.swift": "973280224751dd66f9a59ff9c5b3eb0ad7f8ed6b9a070f59b420907bb3c82185",
+      "Planner/AgentControl/PlannerMCPLoopbackListener.swift": "56e00b716e0680245e521b9f671e43a7990f1c8103a5bd3f85e2bd14d7756e94",
+      "Planner/AgentControl/PlannerMCPOperationStatusTool.swift": "bcf50d44eb73187d0e04243780cc0172154861d64a6374fc2bef3c2971b2fe8d",
+      "Planner/AgentControl/PlannerMCPQueryTool.swift": "1294904f4c8fdab4f8a34c6f2b4beac7da7e34bdd4080f762f5d3a5684a2adf3",
+      "Planner/AgentControl/PlannerMCPRequestHandler.swift": "edfd45746d8da43a5b1d221e02e302f2e652f554de3d5329e1d39cbedfb62f6e",
+      "Planner/AgentControl/PlannerMCPRowValue.swift": "a95329ee2ceba0e527b06e4b05ead1d63a9ac093ff6dbdf192a367c7c9f93ba6",
+      "Planner/AgentControl/PlannerMCPSourceTool.swift": "e930443ca3c4e31ec03ecb13c21c746c5493aca6f223ef640bd220913165cce8",
+      "PlannerMCPTests/AllDayScheduleRoutingTests.swift": "12687aae9c613c09f86f2a7318dac6f0442fcbe8f0decbddf2787d7d7c380099",
+      "PlannerMCPTests/ArchiveRoutingTests.swift": "ad255ec0210088e92f99e6c962c5b7a725d1773aa0d2159dff37399bcffd44bf",
+      "PlannerMCPTests/AuthenticationTests.swift": "32e3d1b0354904c7ebb61a7e4276a8972b502a5de1fc41f5dd3a29214f5ee5f4",
+      "PlannerMCPTests/CommandRoutingTests.swift": "30def46ccb0db719441db801abe0f3536b53063fbc01023dcf9a6c420b0c2350",
+      "PlannerMCPTests/ConcurrentRoutingTests.swift": "3d8fcec4f36ee4ad0a59b7ae0f8ab1a7eb37b2d9a57f2e20578b28fe0c5c7cd9",
+      "PlannerMCPTests/EstimateRoutingTests.swift": "4c476e681496ea795e25f716863427b8958a6fa7a56e0279a18e0b966da7f477",
+      "PlannerMCPTests/IncompleteRequestTests.swift": "13fbe5feb56d2d9631b4652451c51275873b1b3e0d29f7461c71e165a3cd7902",
+      "PlannerMCPTests/InitializationTests.swift": "0eac9aa4ae5c17443b6582954a15e13c35cd63703b092b851658db39cb562544",
+      "PlannerMCPTests/ItemDurationQueryRoutingTests.swift": "2af0d0c76d8757453a21de973b9e5b514dbe870aa132105ff1afb1feaa24119d",
+      "PlannerMCPTests/ItemTextQueryRoutingTests.swift": "8b7acddcd2e800afb2be5d7d4f53ac0f68c6d54d8c5c66733eaa54e78ddff20d",
+      "PlannerMCPTests/ListCatalogRoutingTests.swift": "91662dbf5bb643bff79c30fb0b77cea43af0fd9f4b6adb1d8257b0be3e366861",
+      "PlannerMCPTests/ListRoutingTests.swift": "5834c6ea20dea912f61c5182fbe482b9e4d1ddd804292cccb58f20e1fd963d2d",
+      "PlannerMCPTests/ListenerTests.swift": "38906132ef00ca1ed3f92b9e13c080de4b64a6d7d62490e5a36dfa33edf1b073",
+      "PlannerMCPTests/MembershipCreationRoutingTests.swift": "4ac6e58222a9a63f5d7279314fecd134833b03fca8035c6407ce861d97412639",
+      "PlannerMCPTests/MembershipMutationRoutingTests.swift": "7e2c66a13825ce30d3cf556a4d6545989d54ff978ebb7adb9d39b979b794f13b",
+      "PlannerMCPTests/MembershipReorderingRoutingTests.swift": "9fefec75c0cee4db6c1dab7319dcdd89a96a961b176772a3c9945f76a39098df",
+      "PlannerMCPTests/MembershipRowRoutingTests.swift": "3932f871199fbbd20f328c4261b84c031a3278e609f6bdf52df641d2ff283d9d",
+      "PlannerMCPTests/OperationStatusRoutingTests.swift": "eb59a16a1c080543f440c3562633cd6f64a012b53158c20963bb002cce554c95",
+      "PlannerMCPTests/PingTests.swift": "ae901410e1f0a3c0e705da5a82832c52581310aaf34ea3887338df3ab3faaed4",
+      "PlannerMCPTests/QueryRoutingTests.swift": "556408b169767e7754207ead8945a9642228f4623d66b84a940cf39a729fba02",
+      "PlannerMCPTests/ReadLoadTests.swift": "15db5773518413fae4d34c06f7d4f09c24032922e811864fd5e525176c339b04",
+      "PlannerMCPTests/RoutingTests.swift": "411b4995c0c0601fadc9511aae0d03dc95fa8cb81896074c9d4d98d809f8e2ed",
+      "PlannerMCPTests/RowRoutingTests.swift": "4686846f3e16a637ebab6e652c41d51fdcc72f0f0581bc7040d0359b215513a5",
+      "PlannerMCPTests/SourceRoutingTests.swift": "59589e984a0a199ce56e7a75ed3370eb17d93c17d044e135e7a3e7c4d3a42b33",
+      "PlannerMCPTests/TestDiscovery.swift": "dbaf9baeb1ee95a92b3d3b11c0781f70044af56090de929723fc1be47a1dbe7a",
+      "PlannerMCPTests/ValidationTests.swift": "aca210b0f6298c8b474e18c6896fe08745b440eba46cab7c9ba0080a4a80ed8d"
+    },
+    "red": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerAppliedValues.swift": "7bd92cdaab57c37a778813f84ad492c1c03c07a94d0be4098cf2a809d7247808",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCivilDate.swift": "d8ae4943ef8af8030c13f12af2f93ffb873de32e328a97245b9c05adbed92306",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1e0238f87b556c2c77893f842d312383b0948e64bca6bfdcaa1fea35806c8a6a",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "247a8b9fad5f0692151f8030f3c6f8ff92dae2c0af3034e504a1dc8404594472",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkRecovery.swift": "76e82b80e6be3200a1cc0a9c4eb439094c9085c30939d543dacaaf70cbd60b1b",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkValues.swift": "1d56582bc53cdd9b0e1844269dfed4f441309997f0c6b134a8f64265cae2e5c9",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListRecovery.swift": "77ac9d1b81c6534d3f9fcbf9c8f278008432d0d2a78b4f01fd4b9e1f489e538f",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift": "cc858d8b5901779245572e6b0fbb8a5babbfc1b55cd88895194b838cf5e6c577",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipRecovery.swift": "132e5752b86d01a9038c6404b6d2455335294da8cede1a9673fc9efd43e371ce",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift": "75f90481dee6e5931746acb2c7923154d94e2bfb0a0cbf3b9cdad4b6fbb4e5bc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift": "02a5cdae131a35460b5f29cf928733fba03eb722d24cfb915e144cce01b643a5",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleRecovery.swift": "04cd468445d0110b980aff89b94b1e3f4ca1ff641ce46dc9ecb1eb6518667a22",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "a3393d67c3c5d64042ab504a9010a72e530779a0892abb6ba2043b594a415504",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV2.swift": "efbe703445f557022a2fb25fe40b4cadde725cfaa23c2293864099726e1b5af1",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV3.swift": "16597d7095a886a1736b908877359b110a4d527d6aadb77e4ced5f13cfc9facc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV5.swift": "e2347043ee4c5d0267391e40119d6cc25f463f181c833c9a9c4b3bed0e10f0f6",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV6.swift": "9ec7f806f24a4666d02f9a2b16e94bf10330705b4cd4989cb52792e30757fd83",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV7.swift": "7dce5ff7a8df9a69eaf6f7cdc70d1b19df524b67976889b6669b9f424e6ca398",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "bbdd9f97ffb8eab40c1e8b5db963151fda5dc2d6d9580c3ffc959f29b0e7574e",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift": "e58276bea383c9610957d0278a67fa44a37e9ea054a588dfd73cdc51fbf2a742",
+      "Planner/AgentControl/PlannerMCPFailureValue.swift": "973280224751dd66f9a59ff9c5b3eb0ad7f8ed6b9a070f59b420907bb3c82185",
+      "Planner/AgentControl/PlannerMCPLoopbackListener.swift": "56e00b716e0680245e521b9f671e43a7990f1c8103a5bd3f85e2bd14d7756e94",
+      "Planner/AgentControl/PlannerMCPOperationStatusTool.swift": "bcf50d44eb73187d0e04243780cc0172154861d64a6374fc2bef3c2971b2fe8d",
+      "Planner/AgentControl/PlannerMCPQueryTool.swift": "1294904f4c8fdab4f8a34c6f2b4beac7da7e34bdd4080f762f5d3a5684a2adf3",
+      "Planner/AgentControl/PlannerMCPRequestHandler.swift": "edfd45746d8da43a5b1d221e02e302f2e652f554de3d5329e1d39cbedfb62f6e",
+      "Planner/AgentControl/PlannerMCPRowValue.swift": "a95329ee2ceba0e527b06e4b05ead1d63a9ac093ff6dbdf192a367c7c9f93ba6",
+      "Planner/AgentControl/PlannerMCPSourceTool.swift": "e930443ca3c4e31ec03ecb13c21c746c5493aca6f223ef640bd220913165cce8",
+      "PlannerMCPTests/AllDayScheduleRoutingTests.swift": "12687aae9c613c09f86f2a7318dac6f0442fcbe8f0decbddf2787d7d7c380099",
+      "PlannerMCPTests/ArchiveRoutingTests.swift": "ad255ec0210088e92f99e6c962c5b7a725d1773aa0d2159dff37399bcffd44bf",
+      "PlannerMCPTests/AuthenticationTests.swift": "32e3d1b0354904c7ebb61a7e4276a8972b502a5de1fc41f5dd3a29214f5ee5f4",
+      "PlannerMCPTests/CommandRoutingTests.swift": "30def46ccb0db719441db801abe0f3536b53063fbc01023dcf9a6c420b0c2350",
+      "PlannerMCPTests/ConcurrentRoutingTests.swift": "3d8fcec4f36ee4ad0a59b7ae0f8ab1a7eb37b2d9a57f2e20578b28fe0c5c7cd9",
+      "PlannerMCPTests/EstimateRoutingTests.swift": "4c476e681496ea795e25f716863427b8958a6fa7a56e0279a18e0b966da7f477",
+      "PlannerMCPTests/IncompleteRequestTests.swift": "13fbe5feb56d2d9631b4652451c51275873b1b3e0d29f7461c71e165a3cd7902",
+      "PlannerMCPTests/InitializationTests.swift": "0eac9aa4ae5c17443b6582954a15e13c35cd63703b092b851658db39cb562544",
+      "PlannerMCPTests/ItemDurationQueryRoutingTests.swift": "b1aff3511d63da497f38f5fa8997fa76678025de4ea3cf4d4be9d8f1c6cd3c30",
+      "PlannerMCPTests/ItemTextQueryRoutingTests.swift": "8b7acddcd2e800afb2be5d7d4f53ac0f68c6d54d8c5c66733eaa54e78ddff20d",
+      "PlannerMCPTests/ListCatalogRoutingTests.swift": "91662dbf5bb643bff79c30fb0b77cea43af0fd9f4b6adb1d8257b0be3e366861",
+      "PlannerMCPTests/ListRoutingTests.swift": "5834c6ea20dea912f61c5182fbe482b9e4d1ddd804292cccb58f20e1fd963d2d",
+      "PlannerMCPTests/ListenerTests.swift": "38906132ef00ca1ed3f92b9e13c080de4b64a6d7d62490e5a36dfa33edf1b073",
+      "PlannerMCPTests/MembershipCreationRoutingTests.swift": "4ac6e58222a9a63f5d7279314fecd134833b03fca8035c6407ce861d97412639",
+      "PlannerMCPTests/MembershipMutationRoutingTests.swift": "7e2c66a13825ce30d3cf556a4d6545989d54ff978ebb7adb9d39b979b794f13b",
+      "PlannerMCPTests/MembershipReorderingRoutingTests.swift": "9fefec75c0cee4db6c1dab7319dcdd89a96a961b176772a3c9945f76a39098df",
+      "PlannerMCPTests/MembershipRowRoutingTests.swift": "3932f871199fbbd20f328c4261b84c031a3278e609f6bdf52df641d2ff283d9d",
+      "PlannerMCPTests/OperationStatusRoutingTests.swift": "eb59a16a1c080543f440c3562633cd6f64a012b53158c20963bb002cce554c95",
+      "PlannerMCPTests/PingTests.swift": "ae901410e1f0a3c0e705da5a82832c52581310aaf34ea3887338df3ab3faaed4",
+      "PlannerMCPTests/QueryRoutingTests.swift": "556408b169767e7754207ead8945a9642228f4623d66b84a940cf39a729fba02",
+      "PlannerMCPTests/ReadLoadTests.swift": "15db5773518413fae4d34c06f7d4f09c24032922e811864fd5e525176c339b04",
+      "PlannerMCPTests/RoutingTests.swift": "411b4995c0c0601fadc9511aae0d03dc95fa8cb81896074c9d4d98d809f8e2ed",
+      "PlannerMCPTests/RowRoutingTests.swift": "4686846f3e16a637ebab6e652c41d51fdcc72f0f0581bc7040d0359b215513a5",
+      "PlannerMCPTests/SourceRoutingTests.swift": "59589e984a0a199ce56e7a75ed3370eb17d93c17d044e135e7a3e7c4d3a42b33",
+      "PlannerMCPTests/TestDiscovery.swift": "dbaf9baeb1ee95a92b3d3b11c0781f70044af56090de929723fc1be47a1dbe7a",
+      "PlannerMCPTests/ValidationTests.swift": "aca210b0f6298c8b474e18c6896fe08745b440eba46cab7c9ba0080a4a80ed8d"
+    },
+    "green": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerAppliedValues.swift": "7bd92cdaab57c37a778813f84ad492c1c03c07a94d0be4098cf2a809d7247808",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCivilDate.swift": "d8ae4943ef8af8030c13f12af2f93ffb873de32e328a97245b9c05adbed92306",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1e0238f87b556c2c77893f842d312383b0948e64bca6bfdcaa1fea35806c8a6a",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "247a8b9fad5f0692151f8030f3c6f8ff92dae2c0af3034e504a1dc8404594472",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkRecovery.swift": "76e82b80e6be3200a1cc0a9c4eb439094c9085c30939d543dacaaf70cbd60b1b",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkValues.swift": "1d56582bc53cdd9b0e1844269dfed4f441309997f0c6b134a8f64265cae2e5c9",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListRecovery.swift": "77ac9d1b81c6534d3f9fcbf9c8f278008432d0d2a78b4f01fd4b9e1f489e538f",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift": "cc858d8b5901779245572e6b0fbb8a5babbfc1b55cd88895194b838cf5e6c577",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipRecovery.swift": "132e5752b86d01a9038c6404b6d2455335294da8cede1a9673fc9efd43e371ce",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift": "75f90481dee6e5931746acb2c7923154d94e2bfb0a0cbf3b9cdad4b6fbb4e5bc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift": "02a5cdae131a35460b5f29cf928733fba03eb722d24cfb915e144cce01b643a5",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleRecovery.swift": "04cd468445d0110b980aff89b94b1e3f4ca1ff641ce46dc9ecb1eb6518667a22",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "a3393d67c3c5d64042ab504a9010a72e530779a0892abb6ba2043b594a415504",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV2.swift": "efbe703445f557022a2fb25fe40b4cadde725cfaa23c2293864099726e1b5af1",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV3.swift": "16597d7095a886a1736b908877359b110a4d527d6aadb77e4ced5f13cfc9facc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV5.swift": "e2347043ee4c5d0267391e40119d6cc25f463f181c833c9a9c4b3bed0e10f0f6",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV6.swift": "9ec7f806f24a4666d02f9a2b16e94bf10330705b4cd4989cb52792e30757fd83",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV7.swift": "7dce5ff7a8df9a69eaf6f7cdc70d1b19df524b67976889b6669b9f424e6ca398",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "bbdd9f97ffb8eab40c1e8b5db963151fda5dc2d6d9580c3ffc959f29b0e7574e",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift": "e58276bea383c9610957d0278a67fa44a37e9ea054a588dfd73cdc51fbf2a742",
+      "Planner/AgentControl/PlannerMCPFailureValue.swift": "973280224751dd66f9a59ff9c5b3eb0ad7f8ed6b9a070f59b420907bb3c82185",
+      "Planner/AgentControl/PlannerMCPLoopbackListener.swift": "56e00b716e0680245e521b9f671e43a7990f1c8103a5bd3f85e2bd14d7756e94",
+      "Planner/AgentControl/PlannerMCPOperationStatusTool.swift": "bcf50d44eb73187d0e04243780cc0172154861d64a6374fc2bef3c2971b2fe8d",
+      "Planner/AgentControl/PlannerMCPQueryTool.swift": "7973dca921158b7ea8a612cd15c912a4fe4ad8bf957a94693c4b17620c33fc24",
+      "Planner/AgentControl/PlannerMCPRequestHandler.swift": "edfd45746d8da43a5b1d221e02e302f2e652f554de3d5329e1d39cbedfb62f6e",
+      "Planner/AgentControl/PlannerMCPRowValue.swift": "a95329ee2ceba0e527b06e4b05ead1d63a9ac093ff6dbdf192a367c7c9f93ba6",
+      "Planner/AgentControl/PlannerMCPSourceTool.swift": "e930443ca3c4e31ec03ecb13c21c746c5493aca6f223ef640bd220913165cce8",
+      "PlannerMCPTests/AllDayScheduleRoutingTests.swift": "12687aae9c613c09f86f2a7318dac6f0442fcbe8f0decbddf2787d7d7c380099",
+      "PlannerMCPTests/ArchiveRoutingTests.swift": "ad255ec0210088e92f99e6c962c5b7a725d1773aa0d2159dff37399bcffd44bf",
+      "PlannerMCPTests/AuthenticationTests.swift": "32e3d1b0354904c7ebb61a7e4276a8972b502a5de1fc41f5dd3a29214f5ee5f4",
+      "PlannerMCPTests/CommandRoutingTests.swift": "30def46ccb0db719441db801abe0f3536b53063fbc01023dcf9a6c420b0c2350",
+      "PlannerMCPTests/ConcurrentRoutingTests.swift": "3d8fcec4f36ee4ad0a59b7ae0f8ab1a7eb37b2d9a57f2e20578b28fe0c5c7cd9",
+      "PlannerMCPTests/EstimateRoutingTests.swift": "4c476e681496ea795e25f716863427b8958a6fa7a56e0279a18e0b966da7f477",
+      "PlannerMCPTests/IncompleteRequestTests.swift": "13fbe5feb56d2d9631b4652451c51275873b1b3e0d29f7461c71e165a3cd7902",
+      "PlannerMCPTests/InitializationTests.swift": "0eac9aa4ae5c17443b6582954a15e13c35cd63703b092b851658db39cb562544",
+      "PlannerMCPTests/ItemDurationQueryRoutingTests.swift": "b1aff3511d63da497f38f5fa8997fa76678025de4ea3cf4d4be9d8f1c6cd3c30",
+      "PlannerMCPTests/ItemTextQueryRoutingTests.swift": "8b7acddcd2e800afb2be5d7d4f53ac0f68c6d54d8c5c66733eaa54e78ddff20d",
+      "PlannerMCPTests/ListCatalogRoutingTests.swift": "91662dbf5bb643bff79c30fb0b77cea43af0fd9f4b6adb1d8257b0be3e366861",
+      "PlannerMCPTests/ListRoutingTests.swift": "5834c6ea20dea912f61c5182fbe482b9e4d1ddd804292cccb58f20e1fd963d2d",
+      "PlannerMCPTests/ListenerTests.swift": "38906132ef00ca1ed3f92b9e13c080de4b64a6d7d62490e5a36dfa33edf1b073",
+      "PlannerMCPTests/MembershipCreationRoutingTests.swift": "4ac6e58222a9a63f5d7279314fecd134833b03fca8035c6407ce861d97412639",
+      "PlannerMCPTests/MembershipMutationRoutingTests.swift": "7e2c66a13825ce30d3cf556a4d6545989d54ff978ebb7adb9d39b979b794f13b",
+      "PlannerMCPTests/MembershipReorderingRoutingTests.swift": "9fefec75c0cee4db6c1dab7319dcdd89a96a961b176772a3c9945f76a39098df",
+      "PlannerMCPTests/MembershipRowRoutingTests.swift": "3932f871199fbbd20f328c4261b84c031a3278e609f6bdf52df641d2ff283d9d",
+      "PlannerMCPTests/OperationStatusRoutingTests.swift": "eb59a16a1c080543f440c3562633cd6f64a012b53158c20963bb002cce554c95",
+      "PlannerMCPTests/PingTests.swift": "ae901410e1f0a3c0e705da5a82832c52581310aaf34ea3887338df3ab3faaed4",
+      "PlannerMCPTests/QueryRoutingTests.swift": "556408b169767e7754207ead8945a9642228f4623d66b84a940cf39a729fba02",
+      "PlannerMCPTests/ReadLoadTests.swift": "15db5773518413fae4d34c06f7d4f09c24032922e811864fd5e525176c339b04",
+      "PlannerMCPTests/RoutingTests.swift": "411b4995c0c0601fadc9511aae0d03dc95fa8cb81896074c9d4d98d809f8e2ed",
+      "PlannerMCPTests/RowRoutingTests.swift": "4686846f3e16a637ebab6e652c41d51fdcc72f0f0581bc7040d0359b215513a5",
+      "PlannerMCPTests/SourceRoutingTests.swift": "59589e984a0a199ce56e7a75ed3370eb17d93c17d044e135e7a3e7c4d3a42b33",
+      "PlannerMCPTests/TestDiscovery.swift": "dbaf9baeb1ee95a92b3d3b11c0781f70044af56090de929723fc1be47a1dbe7a",
+      "PlannerMCPTests/ValidationTests.swift": "aca210b0f6298c8b474e18c6896fe08745b440eba46cab7c9ba0080a4a80ed8d"
+    },
+    "qualification": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerAppliedValues.swift": "7bd92cdaab57c37a778813f84ad492c1c03c07a94d0be4098cf2a809d7247808",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCivilDate.swift": "d8ae4943ef8af8030c13f12af2f93ffb873de32e328a97245b9c05adbed92306",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1e0238f87b556c2c77893f842d312383b0948e64bca6bfdcaa1fea35806c8a6a",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "247a8b9fad5f0692151f8030f3c6f8ff92dae2c0af3034e504a1dc8404594472",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkRecovery.swift": "76e82b80e6be3200a1cc0a9c4eb439094c9085c30939d543dacaaf70cbd60b1b",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkValues.swift": "1d56582bc53cdd9b0e1844269dfed4f441309997f0c6b134a8f64265cae2e5c9",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListRecovery.swift": "77ac9d1b81c6534d3f9fcbf9c8f278008432d0d2a78b4f01fd4b9e1f489e538f",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift": "cc858d8b5901779245572e6b0fbb8a5babbfc1b55cd88895194b838cf5e6c577",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipRecovery.swift": "132e5752b86d01a9038c6404b6d2455335294da8cede1a9673fc9efd43e371ce",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift": "75f90481dee6e5931746acb2c7923154d94e2bfb0a0cbf3b9cdad4b6fbb4e5bc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift": "02a5cdae131a35460b5f29cf928733fba03eb722d24cfb915e144cce01b643a5",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleRecovery.swift": "04cd468445d0110b980aff89b94b1e3f4ca1ff641ce46dc9ecb1eb6518667a22",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "a3393d67c3c5d64042ab504a9010a72e530779a0892abb6ba2043b594a415504",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV2.swift": "efbe703445f557022a2fb25fe40b4cadde725cfaa23c2293864099726e1b5af1",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV3.swift": "16597d7095a886a1736b908877359b110a4d527d6aadb77e4ced5f13cfc9facc",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV5.swift": "e2347043ee4c5d0267391e40119d6cc25f463f181c833c9a9c4b3bed0e10f0f6",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV6.swift": "9ec7f806f24a4666d02f9a2b16e94bf10330705b4cd4989cb52792e30757fd83",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV7.swift": "7dce5ff7a8df9a69eaf6f7cdc70d1b19df524b67976889b6669b9f424e6ca398",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "bbdd9f97ffb8eab40c1e8b5db963151fda5dc2d6d9580c3ffc959f29b0e7574e",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "c22a6a4599ac90728604c15b9f20b3cc929c53ad34a34e4b009e2554455b19d1",
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift": "e58276bea383c9610957d0278a67fa44a37e9ea054a588dfd73cdc51fbf2a742",
+      "Planner/AgentControl/PlannerMCPFailureValue.swift": "973280224751dd66f9a59ff9c5b3eb0ad7f8ed6b9a070f59b420907bb3c82185",
+      "Planner/AgentControl/PlannerMCPLoopbackListener.swift": "56e00b716e0680245e521b9f671e43a7990f1c8103a5bd3f85e2bd14d7756e94",
+      "Planner/AgentControl/PlannerMCPOperationStatusTool.swift": "bcf50d44eb73187d0e04243780cc0172154861d64a6374fc2bef3c2971b2fe8d",
+      "Planner/AgentControl/PlannerMCPQueryTool.swift": "7973dca921158b7ea8a612cd15c912a4fe4ad8bf957a94693c4b17620c33fc24",
+      "Planner/AgentControl/PlannerMCPRequestHandler.swift": "edfd45746d8da43a5b1d221e02e302f2e652f554de3d5329e1d39cbedfb62f6e",
+      "Planner/AgentControl/PlannerMCPRowValue.swift": "a95329ee2ceba0e527b06e4b05ead1d63a9ac093ff6dbdf192a367c7c9f93ba6",
+      "Planner/AgentControl/PlannerMCPSourceTool.swift": "e930443ca3c4e31ec03ecb13c21c746c5493aca6f223ef640bd220913165cce8",
+      "PlannerMCPTests/AllDayScheduleRoutingTests.swift": "12687aae9c613c09f86f2a7318dac6f0442fcbe8f0decbddf2787d7d7c380099",
+      "PlannerMCPTests/ArchiveRoutingTests.swift": "ad255ec0210088e92f99e6c962c5b7a725d1773aa0d2159dff37399bcffd44bf",
+      "PlannerMCPTests/AuthenticationTests.swift": "32e3d1b0354904c7ebb61a7e4276a8972b502a5de1fc41f5dd3a29214f5ee5f4",
+      "PlannerMCPTests/CommandRoutingTests.swift": "30def46ccb0db719441db801abe0f3536b53063fbc01023dcf9a6c420b0c2350",
+      "PlannerMCPTests/ConcurrentRoutingTests.swift": "3d8fcec4f36ee4ad0a59b7ae0f8ab1a7eb37b2d9a57f2e20578b28fe0c5c7cd9",
+      "PlannerMCPTests/EstimateRoutingTests.swift": "4c476e681496ea795e25f716863427b8958a6fa7a56e0279a18e0b966da7f477",
+      "PlannerMCPTests/IncompleteRequestTests.swift": "13fbe5feb56d2d9631b4652451c51275873b1b3e0d29f7461c71e165a3cd7902",
+      "PlannerMCPTests/InitializationTests.swift": "0eac9aa4ae5c17443b6582954a15e13c35cd63703b092b851658db39cb562544",
+      "PlannerMCPTests/ItemDurationQueryRoutingTests.swift": "f4bf4dd6aca67af2cdd3702190c9829a76ddfed940c19fbf0205d24198de5c31",
+      "PlannerMCPTests/ItemTextQueryRoutingTests.swift": "8b7acddcd2e800afb2be5d7d4f53ac0f68c6d54d8c5c66733eaa54e78ddff20d",
+      "PlannerMCPTests/ListCatalogRoutingTests.swift": "91662dbf5bb643bff79c30fb0b77cea43af0fd9f4b6adb1d8257b0be3e366861",
+      "PlannerMCPTests/ListRoutingTests.swift": "5834c6ea20dea912f61c5182fbe482b9e4d1ddd804292cccb58f20e1fd963d2d",
+      "PlannerMCPTests/ListenerTests.swift": "38906132ef00ca1ed3f92b9e13c080de4b64a6d7d62490e5a36dfa33edf1b073",
+      "PlannerMCPTests/MembershipCreationRoutingTests.swift": "4ac6e58222a9a63f5d7279314fecd134833b03fca8035c6407ce861d97412639",
+      "PlannerMCPTests/MembershipMutationRoutingTests.swift": "7e2c66a13825ce30d3cf556a4d6545989d54ff978ebb7adb9d39b979b794f13b",
+      "PlannerMCPTests/MembershipReorderingRoutingTests.swift": "9fefec75c0cee4db6c1dab7319dcdd89a96a961b176772a3c9945f76a39098df",
+      "PlannerMCPTests/MembershipRowRoutingTests.swift": "3932f871199fbbd20f328c4261b84c031a3278e609f6bdf52df641d2ff283d9d",
+      "PlannerMCPTests/OperationStatusRoutingTests.swift": "eb59a16a1c080543f440c3562633cd6f64a012b53158c20963bb002cce554c95",
+      "PlannerMCPTests/PingTests.swift": "ae901410e1f0a3c0e705da5a82832c52581310aaf34ea3887338df3ab3faaed4",
+      "PlannerMCPTests/QueryRoutingTests.swift": "556408b169767e7754207ead8945a9642228f4623d66b84a940cf39a729fba02",
+      "PlannerMCPTests/ReadLoadTests.swift": "15db5773518413fae4d34c06f7d4f09c24032922e811864fd5e525176c339b04",
+      "PlannerMCPTests/RoutingTests.swift": "411b4995c0c0601fadc9511aae0d03dc95fa8cb81896074c9d4d98d809f8e2ed",
+      "PlannerMCPTests/RowRoutingTests.swift": "4686846f3e16a637ebab6e652c41d51fdcc72f0f0581bc7040d0359b215513a5",
+      "PlannerMCPTests/SourceRoutingTests.swift": "59589e984a0a199ce56e7a75ed3370eb17d93c17d044e135e7a3e7c4d3a42b33",
+      "PlannerMCPTests/TestDiscovery.swift": "dbaf9baeb1ee95a92b3d3b11c0781f70044af56090de929723fc1be47a1dbe7a",
+      "PlannerMCPTests/ValidationTests.swift": "aca210b0f6298c8b474e18c6896fe08745b440eba46cab7c9ba0080a4a80ed8d"
+    }
+  },
+  "commands": {
+    "red": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter inclusiveDurationQueriesOverHTTPKeepUnknownEstimatesExplicitAndRowsReadable > /private/tmp/PlannerMCPDurationQueryRed.log 2>&1",
+    "green": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter inclusiveDurationQueriesOverHTTPKeepUnknownEstimatesExplicitAndRowsReadable > /private/tmp/PlannerMCPDurationQueryGreen.log 2>&1",
+    "qualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter 'ItemDurationQueryRoutingTests|ItemTextQueryRoutingTests|CommandRoutingTests|EstimateRoutingTests|QueryRoutingTests|ListCatalogRoutingTests|MembershipRowRoutingTests|MembershipReorderingRoutingTests' > /private/tmp/PlannerMCPDurationQueryQualification.log 2>&1",
+    "macBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerMCPDurationQueryMacBuild.xcresult build-for-testing > /private/tmp/PlannerMCPDurationQueryMacBuild.log 2>&1"
+  },
+  "results": {
+    "fixtureCompile": {
+      "exitCode": 1,
+      "runtimeFunctions": 0,
+      "classification": "New test compared PlannerItemContent values, which are not Equatable. Corrected to public title/estimate values before the executed red. This is not behavioral red evidence."
+    },
+    "red": {
+      "exitCode": 1,
+      "functions": 1,
+      "suites": 1,
+      "issues": 1,
+      "classification": "Actual duration query returns tool isError for unavailable admission. Required success assertion fails before success-only text parsing."
+    },
+    "green": {
+      "exitCode": 0,
+      "functions": 1,
+      "suites": 1,
+      "classification": "The unchanged inclusive Global/Inbox duration journey passes; only PlannerMCPQueryTool changed from executed red."
+    },
+    "qualification": {
+      "exitCode": 0,
+      "functions": 20,
+      "suites": 8,
+      "newFunctions": 3,
+      "invalidDurationRequests": 38,
+      "exactBoundaryQueries": 7,
+      "failures": 0,
+      "skips": 0,
+      "classification": "Stronger first-run schema/admission/List qualification with adapter source unchanged after green."
+    },
+    "nativeMacBuild": {
+      "exitCode": 0,
+      "runtimeFunctions": 0,
+      "classification": "Native app and test bundles compile in Xcode. Mac app-host runtime remains unqualified."
+    }
+  },
+  "logs": {
+    "FixtureCompile": {
+      "path": "/private/tmp/PlannerMCPDurationQueryFixtureCompile.log",
+      "sha256": "d84d9c49ddf61533233623efbd754620eb62769c90456c030f0b4b8d1e20f8ca"
+    },
+    "Red": {
+      "path": "/private/tmp/PlannerMCPDurationQueryRed.log",
+      "sha256": "691fa0459223dce71e90f0a11b4cdb6dbc896090bf6eb2faa62928df54dafc7c"
+    },
+    "Green": {
+      "path": "/private/tmp/PlannerMCPDurationQueryGreen.log",
+      "sha256": "b5c36697b6199cf90f873ac0f49c84990d86ff28aac77a96dc45a6acc6b30b0c"
+    },
+    "Qualification": {
+      "path": "/private/tmp/PlannerMCPDurationQueryQualification.log",
+      "sha256": "4ea5c367fa0720040a21bc70e046e5c0921abbe9e7ca6bc8ec07989831834785"
+    },
+    "MacBuild": {
+      "path": "/private/tmp/PlannerMCPDurationQueryMacBuild.log",
+      "sha256": "2bf7fd9e5022522c9a42fcd7ab51dcb8e55b778dde5ce07f1c5e9227cfdb4c13"
+    }
+  },
+  "runner": {
+    "manifest": "// swift-tools-version: 6.2\nimport PackageDescription\n\nlet package = Package(\n    name: \"PlannerMCPWireQualification\",\n    platforms: [.macOS(\"27.0\")],\n    dependencies: [\n        .package(path: \"/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore\"),\n        .package(url: \"https://github.com/modelcontextprotocol/swift-sdk\", exact: \"0.12.1\"),\n        .package(url: \"https://github.com/apple/swift-nio.git\", exact: \"2.104.0\"),\n    ],\n    targets: [\n        .target(name: \"Planner\", dependencies: [\n            .product(name: \"PlannerCore\", package: \"PlannerCore\"),\n            .product(name: \"MCP\", package: \"swift-sdk\"),\n            .product(name: \"NIOCore\", package: \"swift-nio\"),\n            .product(name: \"NIOHTTP1\", package: \"swift-nio\"),\n            .product(name: \"NIOPosix\", package: \"swift-nio\"),\n        ]),\n        .testTarget(name: \"PlannerMCPTests\", dependencies: [\n            \"Planner\", .product(name: \"PlannerCore\", package: \"PlannerCore\"),\n        ]),\n    ])\n",
+    "resolved": {
+      "originHash": "34d1fa9a75bd4e992c153939d70c2a220dd2bfe02f65c75be323740fc6d6a538",
+      "pins": [
+        {
+          "identity": "eventsource",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/mattt/eventsource.git",
+          "state": {
+            "revision": "86b5096ac59ab46e66bd1f6377c604bc1dab0bc2",
+            "version": "1.5.1"
+          }
+        },
+        {
+          "identity": "swift-atomics",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-atomics.git",
+          "state": {
+            "revision": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+            "version": "1.3.1"
+          }
+        },
+        {
+          "identity": "swift-collections",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-collections.git",
+          "state": {
+            "revision": "3b69cedbaa49957e97c092ae400bb57602ef941f",
+            "version": "1.7.2"
+          }
+        },
+        {
+          "identity": "swift-log",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-log.git",
+          "state": {
+            "revision": "4038b6a4f74a1426f47eb1dd5b4bb5628a15d597",
+            "version": "1.16.1"
+          }
+        },
+        {
+          "identity": "swift-nio",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-nio.git",
+          "state": {
+            "revision": "6db9d9abd92ad7399b8a564cafbb87d3507245fa",
+            "version": "2.104.0"
+          }
+        },
+        {
+          "identity": "swift-sdk",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/modelcontextprotocol/swift-sdk",
+          "state": {
+            "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+            "version": "0.12.1"
+          }
+        },
+        {
+          "identity": "swift-system",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-system.git",
+          "state": {
+            "revision": "869129b7bf4ecc57b97d0193ad29690ca2134750",
+            "version": "1.8.1"
+          }
+        }
+      ],
+      "version": 3
+    },
+    "applicationResolved": {
+      "originHash": "34d1fa9a75bd4e992c153939d70c2a220dd2bfe02f65c75be323740fc6d6a538",
+      "pins": [
+        {
+          "identity": "eventsource",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/mattt/eventsource.git",
+          "state": {
+            "revision": "86b5096ac59ab46e66bd1f6377c604bc1dab0bc2",
+            "version": "1.5.1"
+          }
+        },
+        {
+          "identity": "swift-atomics",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-atomics.git",
+          "state": {
+            "revision": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+            "version": "1.3.1"
+          }
+        },
+        {
+          "identity": "swift-collections",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-collections.git",
+          "state": {
+            "revision": "3b69cedbaa49957e97c092ae400bb57602ef941f",
+            "version": "1.7.2"
+          }
+        },
+        {
+          "identity": "swift-log",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-log.git",
+          "state": {
+            "revision": "4038b6a4f74a1426f47eb1dd5b4bb5628a15d597",
+            "version": "1.16.1"
+          }
+        },
+        {
+          "identity": "swift-nio",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-nio.git",
+          "state": {
+            "revision": "6db9d9abd92ad7399b8a564cafbb87d3507245fa",
+            "version": "2.104.0"
+          }
+        },
+        {
+          "identity": "swift-sdk",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/modelcontextprotocol/swift-sdk",
+          "state": {
+            "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+            "version": "0.12.1"
+          }
+        },
+        {
+          "identity": "swift-system",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-system.git",
+          "state": {
+            "revision": "869129b7bf4ecc57b97d0193ad29690ca2134750",
+            "version": "1.8.1"
+          }
+        }
+      ],
+      "version": 3
+    },
+    "matchedDependencyRevisions": 7,
+    "actualAdapterFiles": [
+      "PlannerMCPExecutionTool.swift",
+      "PlannerMCPFailureValue.swift",
+      "PlannerMCPLoopbackListener.swift",
+      "PlannerMCPOperationStatusTool.swift",
+      "PlannerMCPQueryTool.swift",
+      "PlannerMCPRequestHandler.swift",
+      "PlannerMCPRowValue.swift",
+      "PlannerMCPSourceTool.swift"
+    ],
+    "actualTestFiles": [
+      "CommandRoutingTests.swift",
+      "EstimateRoutingTests.swift",
+      "ItemDurationQueryRoutingTests.swift",
+      "ItemTextQueryRoutingTests.swift",
+      "ListCatalogRoutingTests.swift",
+      "MembershipReorderingRoutingTests.swift",
+      "MembershipRowRoutingTests.swift",
+      "QueryRoutingTests.swift"
+    ]
+  },
+  "checks": {
+    "strictAffectedSwiftLint": {
+      "exitCode": 0,
+      "files": [
+        "Planner/AgentControl/PlannerMCPQueryTool.swift",
+        "PlannerMCPTests/ItemDurationQueryRoutingTests.swift"
+      ]
+    },
+    "whitespace": {
+      "exitCode": 0
+    },
+    "fixedSourcesAfterQualification": true
+  },
+  "limitations": [
+    "Schema 7 and portable format 1; localOnly with CloudKit disabled.",
+    "Native duration controls await Q48/Q49.",
+    "Other structured filters and sorts, shared labels, full graph, automatic refresh and device performance remain open.",
+    "No native Mac runtime, signed clients or physical sync/account/Share qualification in this slice.",
+    "Administration remains manual."
+  ]
+}
