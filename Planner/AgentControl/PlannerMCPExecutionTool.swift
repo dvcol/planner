@@ -21,7 +21,7 @@
               membershipCreationSchema,
               membershipReorderingSchema, membershipRemovalSchema, membershipMoveSchema,
               editSchema,
-              listEditSchema, categoryEditSchema, tagEditSchema, archiveSchema,
+              itineraryEditSchema, listEditSchema, categoryEditSchema, tagEditSchema, archiveSchema,
               completionSchema,
               scheduleCreationSchema,
               scheduleEditSchema, scheduleZoneSchema, scheduleRemovalSchema,
@@ -273,6 +273,41 @@
         "listId": .object(["type": .string("string"), "format": .string("uuid")]),
         "membershipId": .object(["type": .string("string"), "format": .string("uuid")]),
         "placement": membershipPlacementSchema,
+      ]),
+    ])
+
+    private static let itineraryEditSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([
+        .string("type"), .string("sourceId"), .string("changes"), .string("expectedFieldHashes"),
+      ]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("editItinerary")]),
+        "sourceId": .object(["type": .string("string"), "format": .string("uuid")]),
+        "changes": .object([
+          "type": .string("object"), "additionalProperties": .bool(false), "minProperties": .int(1),
+          "properties": .object([
+            "title": .object(["type": .string("string")]),
+            "notes": .object(["type": .array([.string("string"), .string("null")])]),
+            "color": colorSchema,
+            "iconName": .object(["type": .array([.string("string"), .string("null")])]),
+            "location": locationSchema, "links": linksSchema,
+            "categoryIds": labelSelectionSchema, "tagIds": labelSelectionSchema,
+          ]),
+        ]),
+        "expectedFieldHashes": .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "properties": .object(
+            Dictionary(
+              uniqueKeysWithValues: PlannerItineraryField.allCases.map {
+                (
+                  $0.rawValue,
+                  .object([
+                    "type": .string("string"), "pattern": .string("^sha256-v1:[0-9a-f]{64}$"),
+                  ])
+                )
+              })),
+        ]),
       ]),
     ])
 
@@ -604,6 +639,7 @@
         case "removeMembership": command = try membershipRemovalCommand(arguments["command"])
         case "moveMembership": command = try membershipMoveCommand(arguments["command"])
         case "reorderMembership": command = try membershipReorderingCommand(arguments["command"])
+        case "editItinerary": command = try itineraryEditCommand(arguments["command"])
         case "editList": command = try listEditCommand(arguments["command"])
         case "editCategory": command = try categoryEditCommand(arguments["command"])
         case "editTag": command = try tagEditCommand(arguments["command"])
@@ -1336,6 +1372,51 @@
         }
         return PlannerLinkInput(linkId: linkIdentifier, originalUrl: originalUrl, label: label)
       }
+    }
+
+    private static func itineraryEditCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "sourceId", "changes", "expectedFieldHashes"],
+        required: ["type", "sourceId", "changes", "expectedFieldHashes"], path: "/command")
+      guard case .string(let spelling) = command["sourceId"],
+        let sourceIdentifier = UUID(uuidString: spelling)
+      else {
+        throw AdmissionFailure("invalidInput", "/command/sourceId", "Expected an Itinerary UUID.")
+      }
+      let fieldNames = Set(PlannerItineraryField.allCases.map(\.rawValue))
+      let changes = try object(
+        command["changes"], allowed: fieldNames, required: [], path: "/command/changes")
+      let hashValues = try object(
+        command["expectedFieldHashes"], allowed: fieldNames, required: [],
+        path: "/command/expectedFieldHashes")
+      var hashes: [PlannerItineraryField: PlannerFieldHash] = [:]
+      for (name, value) in hashValues {
+        guard let field = PlannerItineraryField(rawValue: name), case .string(let spelling) = value
+        else {
+          throw AdmissionFailure(
+            "invalidInput", "/command/expectedFieldHashes/" + name, "Expected a field hash String.")
+        }
+        hashes[field] = PlannerFieldHash(value: spelling)
+      }
+      let linkChanges: PlannerFieldChange<[PlannerLinkInput]>
+      if let value = changes["links"] {
+        linkChanges = .set(try linksInput(value, path: "/command/changes/links"))
+      } else {
+        linkChanges = .unchanged
+      }
+      return .editItinerary(
+        sourceId: sourceIdentifier,
+        changes: PlannerItineraryChanges(
+          title: try textChange(changes["title"], path: "/command/changes/title"),
+          notes: try textChange(changes["notes"], path: "/command/changes/notes"),
+          color: try colorChange(changes["color"], path: "/command/changes/color"),
+          iconName: try textChange(changes["iconName"], path: "/command/changes/iconName"),
+          location: try locationChange(changes["location"], path: "/command/changes/location"),
+          links: linkChanges,
+          categoryIds: try labelSelectionChange(
+            changes["categoryIds"], path: "/command/changes/categoryIds"),
+          tagIds: try labelSelectionChange(changes["tagIds"], path: "/command/changes/tagIds")),
+        expectedFieldHashes: hashes)
     }
 
     private static func editCommand(_ value: Value?) throws -> PlannerCommand {
