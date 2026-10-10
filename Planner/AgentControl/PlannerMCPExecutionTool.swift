@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create and edit Items and Lists, add and reorder live Item references in Lists, complete/reopen Items or exact List appearances, archive/unarchive Items and Lists, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
+        "Create and edit Items and Lists, add, remove, move and reorder live Item references in Lists, complete/reopen Items or exact List appearances, archive/unarchive Items and Lists, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -17,7 +17,7 @@
           "command": .object([
             "oneOf": .array([
               creationSchema, listCreationSchema, membershipCreationSchema,
-              membershipReorderingSchema,
+              membershipReorderingSchema, membershipRemovalSchema, membershipMoveSchema,
               editSchema,
               listEditSchema, archiveSchema,
               completionSchema,
@@ -152,6 +152,31 @@
         "itemId": .object(["type": .string("string"), "format": .string("uuid")]),
         "listId": .object(["type": .string("string"), "format": .string("uuid")]),
         "placement": membershipPlacementSchema,
+      ]),
+    ])
+
+    private static let membershipMoveSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([
+        .string("type"), .string("listId"), .string("membershipId"),
+        .string("destinationListId"), .string("placement"),
+      ]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("moveMembership")]),
+        "listId": .object(["type": .string("string"), "format": .string("uuid")]),
+        "membershipId": .object(["type": .string("string"), "format": .string("uuid")]),
+        "destinationListId": .object(["type": .string("string"), "format": .string("uuid")]),
+        "placement": membershipPlacementSchema,
+      ]),
+    ])
+
+    private static let membershipRemovalSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("type"), .string("listId"), .string("membershipId")]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("removeMembership")]),
+        "listId": .object(["type": .string("string"), "format": .string("uuid")]),
+        "membershipId": .object(["type": .string("string"), "format": .string("uuid")]),
       ]),
     ])
 
@@ -430,6 +455,8 @@
         case "createItem": command = try creationCommand(arguments["command"])
         case "createList": command = try listCreationCommand(arguments["command"])
         case "addMembership": command = try membershipCreationCommand(arguments["command"])
+        case "removeMembership": command = try membershipRemovalCommand(arguments["command"])
+        case "moveMembership": command = try membershipMoveCommand(arguments["command"])
         case "reorderMembership": command = try membershipReorderingCommand(arguments["command"])
         case "editList": command = try listEditCommand(arguments["command"])
         case "editItem": command = try editCommand(arguments["command"])
@@ -498,6 +525,52 @@
       return .addMembership(
         itemId: itemIdentifier, listId: listIdentifier,
         placement: try membershipPlacement(command["placement"]))
+    }
+
+    private static func membershipMoveCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "listId", "membershipId", "destinationListId", "placement"],
+        required: ["type", "listId", "membershipId", "destinationListId", "placement"],
+        path: "/command")
+      guard case .string(let listSpelling) = command["listId"],
+        let listIdentifier = UUID(uuidString: listSpelling)
+      else {
+        throw AdmissionFailure("invalidInput", "/command/listId", "Expected a List UUID.")
+      }
+      guard case .string(let membershipSpelling) = command["membershipId"],
+        let membershipIdentifier = UUID(uuidString: membershipSpelling)
+      else {
+        throw AdmissionFailure(
+          "invalidInput", "/command/membershipId", "Expected a membership UUID.")
+      }
+      guard case .string(let destinationSpelling) = command["destinationListId"],
+        let destinationIdentifier = UUID(uuidString: destinationSpelling)
+      else {
+        throw AdmissionFailure(
+          "invalidInput", "/command/destinationListId", "Expected a destination List UUID.")
+      }
+      return .moveMembership(
+        listId: listIdentifier, membershipId: membershipIdentifier,
+        destinationListId: destinationIdentifier,
+        placement: try membershipPlacement(command["placement"]))
+    }
+
+    private static func membershipRemovalCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "listId", "membershipId"],
+        required: ["type", "listId", "membershipId"], path: "/command")
+      guard case .string(let listSpelling) = command["listId"],
+        let listIdentifier = UUID(uuidString: listSpelling)
+      else {
+        throw AdmissionFailure("invalidInput", "/command/listId", "Expected a List UUID.")
+      }
+      guard case .string(let membershipSpelling) = command["membershipId"],
+        let membershipIdentifier = UUID(uuidString: membershipSpelling)
+      else {
+        throw AdmissionFailure(
+          "invalidInput", "/command/membershipId", "Expected a membership UUID.")
+      }
+      return .removeMembership(listId: listIdentifier, membershipId: membershipIdentifier)
     }
 
     private static func membershipReorderingCommand(_ value: Value?) throws -> PlannerCommand {
