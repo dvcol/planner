@@ -28,12 +28,16 @@ enum PlannerSchemaV4: VersionedSchema {
         sourceId = membership.id
         sourceLifetimeId = membership.lifetimeId
         sourceKind = membership.kind
+      case .labelAssociation(let identifier, let lifetimeId):
+        sourceId = identifier
+        sourceLifetimeId = lifetimeId
+        sourceKind = "labelAssociation"
       }
     }
 
     func value() throws -> PortableDeletionMarker {
       guard let deletionId, let operationId, let sourceId, let sourceLifetimeId,
-        ["schedule", "membership"].contains(sourceKind), closedFamilyId == nil
+        ["schedule", "membership", "labelAssociation"].contains(sourceKind), closedFamilyId == nil
       else {
         throw PlannerFailure(
           "readUnavailable", "The deletion marker has unresolved or unsupported metadata.")
@@ -43,6 +47,8 @@ enum PlannerSchemaV4: VersionedSchema {
       let target: PortableDeletionTarget
       if sourceKind == "membership" {
         target = .membership(binding)
+      } else if sourceKind == "labelAssociation" {
+        target = .labelAssociation(id: sourceId, lifetimeId: sourceLifetimeId)
       } else {
         target = .source(binding)
       }
