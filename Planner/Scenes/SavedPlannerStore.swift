@@ -184,13 +184,22 @@ final class SavedPlannerStore {
   }
 
   func editItem(
-    _ item: PlannerItemSourceRead, title: String, notes: String, operationIdentifier: UUID
+    _ item: PlannerItemSourceRead, title: String, subtitle: String, notes: String,
+    operationIdentifier: UUID
   ) async -> Bool {
     let titleChange: PlannerFieldChange<String>
     if title == item.content.title {
       titleChange = .unchanged
     } else {
       titleChange = .set(title)
+    }
+    let subtitleChange: PlannerFieldChange<String>
+    if subtitle == (item.content.subtitle ?? "") {
+      subtitleChange = .unchanged
+    } else if subtitle.isEmpty {
+      subtitleChange = .clear
+    } else {
+      subtitleChange = .set(subtitle)
     }
     let notesChange: PlannerFieldChange<String>
     if notes == (item.content.notes ?? "") {
@@ -202,7 +211,8 @@ final class SavedPlannerStore {
     }
     return await executeChange(
       .editItem(
-        sourceId: item.source.id, changes: .init(title: titleChange, notes: notesChange),
+        sourceId: item.source.id,
+        changes: .init(title: titleChange, subtitle: subtitleChange, notes: notesChange),
         expectedFieldHashes: item.fieldHashes), operationId: operationIdentifier) != nil
   }
 

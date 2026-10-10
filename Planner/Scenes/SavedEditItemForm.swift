@@ -11,6 +11,7 @@ struct SavedEditItemForm: View {
   let store: SavedPlannerStore
   let item: PlannerItemSourceRead
   @State private var title: String
+  @State private var subtitle: String
   @State private var notes: String
   @State private var operationIdentifier = UUID()
 
@@ -18,11 +19,13 @@ struct SavedEditItemForm: View {
     self.store = store
     self.item = item
     _title = State(initialValue: item.content.title)
+    _subtitle = State(initialValue: item.content.subtitle ?? "")
     _notes = State(initialValue: item.content.notes ?? "")
   }
 
   private var hasChanges: Bool {
-    title != item.content.title || notes != (item.content.notes ?? "")
+    title != item.content.title || subtitle != (item.content.subtitle ?? "")
+      || notes != (item.content.notes ?? "")
   }
 
   var body: some View {
@@ -31,6 +34,8 @@ struct SavedEditItemForm: View {
         Section {
           TextField("Title", text: $title)
             .accessibilityIdentifier("saved.item.edit.title")
+          TextField("Subtitle", text: $subtitle)
+            .accessibilityIdentifier("saved.item.edit.subtitle")
           TextField("Notes", text: $notes, axis: .vertical)
             .lineLimit(3...8)
             .accessibilityIdentifier("saved.item.edit.notes")
@@ -50,9 +55,10 @@ struct SavedEditItemForm: View {
         }
         ToolbarItem(placement: .confirmationAction) {
           Button("Save") {
-            Task { [title, notes] in
+            Task { [title, subtitle, notes] in
               if await store.editItem(
-                item, title: title, notes: notes, operationIdentifier: operationIdentifier)
+                item, title: title, subtitle: subtitle, notes: notes,
+                operationIdentifier: operationIdentifier)
               {
                 dismiss()
               }

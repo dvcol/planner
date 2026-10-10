@@ -19,12 +19,7 @@ struct SavedItemCatalog: View {
             if item.row.archived == true {
               Image(systemName: "archivebox").accessibilityLabel("Archived")
             }
-            VStack(alignment: .leading, spacing: 4) {
-              Text(item.row.title)
-              if let subtitle = item.row.subtitle, !subtitle.isEmpty {
-                Text(subtitle).font(.subheadline).foregroundStyle(.secondary).lineLimit(1)
-              }
-            }
+            SavedItemRowContent(row: item.row)
           }
         }
         .accessibilityIdentifier("saved.item.\(item.id.uuidString)")
