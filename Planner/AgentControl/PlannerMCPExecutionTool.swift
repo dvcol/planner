@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create Items, Lists, Categories and Tags; edit Items, Lists and Categories; add, remove, move and reorder live Item references in Lists, complete/reopen Items or exact List appearances, archive/unarchive Items and Lists, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
+        "Create Items, Lists, Categories and Tags; edit Items, Lists, Categories and Tags; add, remove, move and reorder live Item references in Lists, complete/reopen Items or exact List appearances, archive/unarchive Items and Lists, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -20,7 +20,7 @@
               membershipCreationSchema,
               membershipReorderingSchema, membershipRemovalSchema, membershipMoveSchema,
               editSchema,
-              listEditSchema, categoryEditSchema, archiveSchema,
+              listEditSchema, categoryEditSchema, tagEditSchema, archiveSchema,
               completionSchema,
               scheduleCreationSchema,
               scheduleEditSchema, scheduleZoneSchema, scheduleRemovalSchema,
@@ -304,6 +304,34 @@
       ]),
     ])
 
+    private static let tagEditSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([
+        .string("type"), .string("sourceId"), .string("changes"), .string("expectedFieldHashes"),
+      ]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("editTag")]),
+        "sourceId": .object(["type": .string("string"), "format": .string("uuid")]),
+        "changes": .object([
+          "type": .string("object"), "additionalProperties": .bool(false), "minProperties": .int(1),
+          "properties": .object(tagContentProperties),
+        ]),
+        "expectedFieldHashes": .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "properties": .object(
+            Dictionary(
+              uniqueKeysWithValues: PlannerTagField.allCases.map {
+                (
+                  $0.rawValue,
+                  .object([
+                    "type": .string("string"), "pattern": .string("^sha256-v1:[0-9a-f]{64}$"),
+                  ])
+                )
+              })),
+        ]),
+      ]),
+    ])
+
     private static let editSchema = Value.object([
       "type": .string("object"), "additionalProperties": .bool(false),
       "required": .array([
@@ -547,6 +575,7 @@
         case "reorderMembership": command = try membershipReorderingCommand(arguments["command"])
         case "editList": command = try listEditCommand(arguments["command"])
         case "editCategory": command = try categoryEditCommand(arguments["command"])
+        case "editTag": command = try tagEditCommand(arguments["command"])
         case "editItem": command = try editCommand(arguments["command"])
         case "setArchive": command = try archiveCommand(arguments["command"])
         case "setCompletion": command = try completionCommand(arguments["command"])
@@ -819,6 +848,39 @@
       return .editCategory(
         sourceId: sourceIdentifier,
         changes: PlannerCategoryChanges(
+          name: try textChange(changes["name"], path: "/command/changes/name"),
+          color: try colorChange(changes["color"], path: "/command/changes/color"),
+          iconName: try textChange(changes["iconName"], path: "/command/changes/iconName")),
+        expectedFieldHashes: hashes)
+    }
+
+    private static func tagEditCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "sourceId", "changes", "expectedFieldHashes"],
+        required: ["type", "sourceId", "changes", "expectedFieldHashes"], path: "/command")
+      guard case .string(let spelling) = command["sourceId"],
+        let sourceIdentifier = UUID(uuidString: spelling)
+      else {
+        throw AdmissionFailure("invalidInput", "/command/sourceId", "Expected a Tag UUID.")
+      }
+      let fieldNames = Set(PlannerTagField.allCases.map(\.rawValue))
+      let changes = try object(
+        command["changes"], allowed: fieldNames, required: [], path: "/command/changes")
+      let hashValues = try object(
+        command["expectedFieldHashes"], allowed: fieldNames, required: [],
+        path: "/command/expectedFieldHashes")
+      var hashes: [PlannerTagField: PlannerFieldHash] = [:]
+      for (name, value) in hashValues {
+        guard let field = PlannerTagField(rawValue: name), case .string(let spelling) = value
+        else {
+          throw AdmissionFailure(
+            "invalidInput", "/command/expectedFieldHashes/" + name, "Expected a field hash String.")
+        }
+        hashes[field] = PlannerFieldHash(value: spelling)
+      }
+      return .editTag(
+        sourceId: sourceIdentifier,
+        changes: PlannerTagChanges(
           name: try textChange(changes["name"], path: "/command/changes/name"),
           color: try colorChange(changes["color"], path: "/command/changes/color"),
           iconName: try textChange(changes["iconName"], path: "/command/changes/iconName")),
