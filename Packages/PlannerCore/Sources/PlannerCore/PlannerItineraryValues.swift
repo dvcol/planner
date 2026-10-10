@@ -121,16 +121,18 @@ struct ItinerarySnapshot {
   var links: [OwnedLinkSnapshot] = []
   var labelAssociations: [LabelAssociationSnapshot] = []
   var labels: [PlannerLabelRead] = []
+  var entries: [ItineraryEntrySnapshot] = []
 
   var reference: PlannerEntityReference { .init(kind: .itinerary, id: id) }
 
-  func read(datasetId: UUID) -> PlannerItinerarySourceRead {
-    PlannerItinerarySourceRead(
+  func read(
+    datasetId: UUID, memberships: [MembershipSnapshot], items: [ItemSnapshot], lists: [ListSnapshot]
+  ) throws -> PlannerItinerarySourceRead {
+    try PlannerItinerarySourceRead(
       source: reference, content: input.readContent(links: links.map(\.read)), labels: labels,
       createdAt: createdAt, updatedAt: updatedAt, fieldHashes: fieldHashes(datasetId: datasetId),
       state: PlannerSourceState(globalDone: nil, archived: archived),
-      progress: PlannerContainerProgress(
-        container: reference, state: .empty, doneCount: 0, totalCount: 0),
-      references: labelAssociations.map(\.reference))
+      progress: progress(memberships: memberships, items: items, lists: lists),
+      references: labelAssociations.map(\.reference) + entries.map(\.reference))
   }
 }

@@ -1,6 +1,11 @@
 import Foundation
 
-struct MembershipSnapshot {
+protocol PlannerRankedAssociation {
+  var id: UUID { get }
+  var rank: Int64 { get set }
+}
+
+struct MembershipSnapshot: PlannerRankedAssociation {
   let id: UUID
   let lifetimeId: UUID
   let list: PlannerBoundIdentity
@@ -21,8 +26,8 @@ public enum PlannerPlacement: Sendable {
   case after(associationId: UUID)
 }
 
-func membershipInsertionIndex(
-  _ placement: PlannerPlacement, in ordered: [MembershipSnapshot]
+func associationInsertionIndex<Association: PlannerRankedAssociation>(
+  _ placement: PlannerPlacement, in ordered: [Association]
 ) throws -> Int {
   switch placement {
   case .first: return 0
@@ -30,7 +35,7 @@ func membershipInsertionIndex(
   case .before(let identifier), .after(let identifier):
     guard let index = ordered.firstIndex(where: { $0.id == identifier }) else {
       throw PlannerFailure(
-        "missingReference", "The placement anchor is not in the destination List.",
+        "missingReference", "The placement anchor is not in the destination container.",
         propertyPath: "/command/placement/associationId")
     }
     if case .before = placement { return index }
@@ -38,7 +43,9 @@ func membershipInsertionIndex(
   }
 }
 
-func membershipRank(at index: Int, in ordered: [MembershipSnapshot]) -> Int64? {
+func associationRank<Association: PlannerRankedAssociation>(
+  at index: Int, in ordered: [Association]
+) -> Int64? {
   if ordered.isEmpty { return 0 }
   if index == 0 {
     let (rank, overflow) = ordered[0].rank.subtractingReportingOverflow(1024)
@@ -55,10 +62,10 @@ func membershipRank(at index: Int, in ordered: [MembershipSnapshot]) -> Int64? {
   return additionOverflow ? nil : rank
 }
 
-func membershipInsertionRank(
-  at index: Int, ordered: [MembershipSnapshot], memberships: inout [MembershipSnapshot]
+func associationInsertionRank<Association: PlannerRankedAssociation>(
+  at index: Int, ordered: [Association], associations: inout [Association]
 ) throws -> Int64 {
-  if let rank = membershipRank(at: index, in: ordered) { return rank }
+  if let rank = associationRank(at: index, in: ordered) { return rank }
   var balanced = ordered
   for position in balanced.indices {
     let (rank, overflow) = Int64(position).multipliedReportingOverflow(by: 1024)
@@ -67,35 +74,48 @@ func membershipInsertionRank(
     }
     balanced[position].rank = rank
   }
-  guard let rank = membershipRank(at: index, in: balanced) else {
+  guard let rank = associationRank(at: index, in: balanced) else {
     throw PlannerFailure("invalidInput", "The saved order exceeds rank capacity.")
   }
   let ranks = Dictionary(uniqueKeysWithValues: balanced.map { ($0.id, $0.rank) })
-  for position in memberships.indices {
-    if let rank = ranks[memberships[position].id] { memberships[position].rank = rank }
+  for position in associations.indices {
+    if let rank = ranks[associations[position].id] { associations[position].rank = rank }
   }
   return rank
 }
 
 public enum PlannerAppearance: Sendable, Equatable, Codable {
   case listMembership(listId: UUID, membershipId: UUID)
+  case directItineraryItem(itineraryId: UUID, entryId: UUID)
 
-  private enum CodingKeys: String, CodingKey { case kind, listId, membershipId }
+  private enum CodingKeys: String, CodingKey {
+    case kind, listId, membershipId, itineraryId, entryId
+  }
 
   public init(from decoder: any Decoder) throws {
     let fields = try decoder.container(keyedBy: CodingKeys.self)
-    guard try fields.decode(String.self, forKey: .kind) == "listMembership" else {
+    switch try fields.decode(String.self, forKey: .kind) {
+    case "listMembership":
+      self = .listMembership(
+        listId: try fields.decode(UUID.self, forKey: .listId),
+        membershipId: try fields.decode(UUID.self, forKey: .membershipId))
+    case "directItineraryItem":
+      self = .directItineraryItem(
+        itineraryId: try fields.decode(UUID.self, forKey: .itineraryId),
+        entryId: try fields.decode(UUID.self, forKey: .entryId))
+    default:
       throw DecodingError.dataCorruptedError(
         forKey: .kind, in: fields, debugDescription: "Unsupported appearance kind.")
     }
-    self = .listMembership(
-      listId: try fields.decode(UUID.self, forKey: .listId),
-      membershipId: try fields.decode(UUID.self, forKey: .membershipId))
   }
 
   public func encode(to encoder: any Encoder) throws {
     var fields = encoder.container(keyedBy: CodingKeys.self)
     switch self {
+    case .directItineraryItem(let itineraryId, let entryId):
+      try fields.encode("directItineraryItem", forKey: .kind)
+      try fields.encode(itineraryId, forKey: .itineraryId)
+      try fields.encode(entryId, forKey: .entryId)
     case .listMembership(let listId, let membershipId):
       try fields.encode("listMembership", forKey: .kind)
       try fields.encode(listId, forKey: .listId)
@@ -127,6 +147,20 @@ extension PlannerReferenceRead: Codable {
     let source = try fields.decode(PlannerEntityReference?.self, forKey: .source)
     let appearance = try fields.decode(PlannerAppearance?.self, forKey: .appearance)
     switch kind {
+    case "itineraryEntry":
+      guard let owner, owner.kind == .itinerary, let source, [.item, .list].contains(source.kind)
+      else {
+        throw DecodingError.dataCorruptedError(
+          forKey: .source, in: fields, debugDescription: "Invalid itinerary entry reference.")
+      }
+      let expectedAppearance: PlannerAppearance? =
+        source.kind == .item
+        ? .directItineraryItem(itineraryId: owner.id, entryId: identifier) : nil
+      guard appearance == expectedAppearance else {
+        throw DecodingError.dataCorruptedError(
+          forKey: .appearance, in: fields, debugDescription: "Invalid itinerary entry appearance.")
+      }
+      self = .itineraryEntry(id: identifier, itinerary: owner, source: source)
     case "ownedLink":
       guard let owner, [.item, .itinerary].contains(owner.kind), source == nil, appearance == nil
       else {
@@ -171,6 +205,14 @@ extension PlannerReferenceRead: Codable {
     let source: PlannerEntityReference?
     let appearance: PlannerAppearance?
     switch self {
+    case .itineraryEntry(let value, let itinerary, let sourceValue):
+      kind = "itineraryEntry"
+      identifier = value
+      owner = itinerary
+      source = sourceValue
+      appearance =
+        sourceValue.kind == .item
+        ? .directItineraryItem(itineraryId: itinerary.id, entryId: value) : nil
     case .ownedLink(let value, let ownerValue):
       kind = "ownedLink"
       identifier = value

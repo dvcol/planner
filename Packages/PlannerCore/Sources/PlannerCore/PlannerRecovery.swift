@@ -91,6 +91,7 @@ struct PlannerDataSnapshot: Codable {
   let formatVersion: Int
   let sources: [PortableSourceRecord]
   let memberships: [PortableMembershipRecord]
+  let itineraryEntries: [PortableItineraryEntryRecord]
   let labelAssociations: [PortableLabelAssociationRecord]
   let ownedLinks: [PortableOwnedLink]
   let schedules: [PortableScheduleRecord]
@@ -110,6 +111,8 @@ struct PlannerDataSnapshot: Codable {
     items: [ItemSnapshot], lists: [ListSnapshot], memberships: [MembershipSnapshot],
     deletionMarkers: [PortableDeletionMarker]
   ) {
+    self.itineraryEntries = itineraries.flatMap(\.entries).map(PortableItineraryEntryRecord.init)
+      .sorted { $0.id.uuidString < $1.id.uuidString }
     self.labelAssociations = labelAssociations.map(PortableLabelAssociationRecord.init).sorted {
       $0.id.uuidString < $1.id.uuidString
     }
@@ -147,6 +150,8 @@ struct PlannerDataSnapshot: Codable {
     formatVersion = try container.decode(Int.self, forKey: .formatVersion)
     sources = try container.decode([PortableSourceRecord].self, forKey: .sources)
     memberships = try container.decode([PortableMembershipRecord].self, forKey: .memberships)
+    itineraryEntries = try container.decode(
+      [PortableItineraryEntryRecord].self, forKey: .itineraryEntries)
     labelAssociations = try container.decode(
       [PortableLabelAssociationRecord].self, forKey: .labelAssociations)
     ownedLinks = try container.decode([PortableOwnedLink].self, forKey: .ownedLinks)
@@ -155,7 +160,7 @@ struct PlannerDataSnapshot: Codable {
     for key in CodingKeys.allCases
     where key != .format && key != .formatVersion && key != .sources && key != .ownedLinks
       && key != .schedules && key != .deletionMarkers && key != .memberships
-      && key != .labelAssociations
+      && key != .labelAssociations && key != .itineraryEntries
     {
       guard try container.decode([String].self, forKey: key).isEmpty else {
         throw PlannerFailure(
@@ -171,6 +176,7 @@ struct PlannerDataSnapshot: Codable {
     try container.encode(formatVersion, forKey: .formatVersion)
     try container.encode(sources, forKey: .sources)
     try container.encode(memberships, forKey: .memberships)
+    try container.encode(itineraryEntries, forKey: .itineraryEntries)
     try container.encode(labelAssociations, forKey: .labelAssociations)
     try container.encode(ownedLinks, forKey: .ownedLinks)
     try container.encode(schedules, forKey: .schedules)
@@ -178,7 +184,7 @@ struct PlannerDataSnapshot: Codable {
     for key in CodingKeys.allCases
     where key != .format && key != .formatVersion && key != .sources && key != .ownedLinks
       && key != .schedules && key != .deletionMarkers && key != .memberships
-      && key != .labelAssociations
+      && key != .labelAssociations && key != .itineraryEntries
     {
       try container.encode([String](), forKey: key)
     }
@@ -203,6 +209,10 @@ struct PlannerDataSnapshot: Codable {
     else {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "The snapshot contains duplicate memberships.")
+    }
+    guard Set(itineraryEntries.map(\.id)).count == itineraryEntries.count else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "The snapshot contains duplicate itinerary entries.")
     }
     let itemRecords = sources.compactMap {
       if case .item(let item) = $0 { return item }
@@ -311,6 +321,9 @@ struct PlannerDataSnapshot: Codable {
         memberships: try memberships.map {
           try $0.validated(items: itemRecords, lists: listRecords)
         },
+        itineraryEntries: try itineraryEntries.map {
+          try $0.validated(items: itemRecords, lists: listRecords, itineraries: itineraryRecords)
+        },
         schedules: try schedules.map { try $0.validated(sources: itemRecords) },
         deletionMarkers: try deletionMarkers.map {
           try $0.validated(
@@ -376,7 +389,8 @@ struct RecoveryEnvelope: Codable {
 
   func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
     guard format == "planner-recovery", formatVersion == 1,
-      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"].contains(storageSchemaVersion),
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"].contains(
+        storageSchemaVersion),
       namespaceId == identity.namespaceId, datasetId == identity.datasetId,
       ownershipBinding == identity.ownershipBinding, !ownershipBinding.isEmpty,
       let generation = Int64(checkpointGeneration), generation > 0,

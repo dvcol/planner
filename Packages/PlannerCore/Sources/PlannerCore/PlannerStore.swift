@@ -86,7 +86,7 @@ enum PlannerSchemaV1: VersionedSchema {
   }
 }
 
-extension PlannerSchemaV11.Item {
+extension PlannerSchemaV12.Item {
   func rowRead(
     identity: PlannerRowIdentity, localDone: Bool?, hasLinks: Bool,
     previewLink: PlannerOwnedLinkRead?, scheduleSummary: PlannerRowScheduleSummary
@@ -132,7 +132,7 @@ enum PlannerMigrationPlan: SchemaMigrationPlan {
     [
       PlannerSchemaV1.self, PlannerSchemaV2.self, PlannerSchemaV3.self, PlannerSchemaV4.self,
       PlannerSchemaV5.self, PlannerSchemaV6.self, PlannerSchemaV7.self, PlannerSchemaV8.self,
-      PlannerSchemaV9.self, PlannerSchemaV10.self, PlannerSchemaV11.self,
+      PlannerSchemaV9.self, PlannerSchemaV10.self, PlannerSchemaV11.self, PlannerSchemaV12.self,
     ]
   }
   static var stages: [MigrationStage] {
@@ -147,6 +147,7 @@ enum PlannerMigrationPlan: SchemaMigrationPlan {
       .lightweight(fromVersion: PlannerSchemaV8.self, toVersion: PlannerSchemaV9.self),
       .lightweight(fromVersion: PlannerSchemaV9.self, toVersion: PlannerSchemaV10.self),
       .lightweight(fromVersion: PlannerSchemaV10.self, toVersion: PlannerSchemaV11.self),
+      .lightweight(fromVersion: PlannerSchemaV11.self, toVersion: PlannerSchemaV12.self),
     ]
   }
 }
@@ -166,7 +167,9 @@ struct ItemSnapshot {
 
   var reference: PlannerEntityReference { PlannerEntityReference(kind: .item, id: id) }
 
-  func read(datasetId: UUID, memberships: [MembershipSnapshot]) -> PlannerItemSourceRead {
+  func read(
+    datasetId: UUID, memberships: [MembershipSnapshot], entries: [ItineraryEntrySnapshot] = []
+  ) -> PlannerItemSourceRead {
     PlannerItemSourceRead(
       source: reference, sourceLifetimeId: lifetimeId,
       content: input.readContent(links: links.map(\.read)), createdAt: createdAt,
@@ -182,6 +185,9 @@ struct ItemSnapshot {
         }
         + memberships.filter { $0.item.id == id }.sorted { $0.id.uuidString < $1.id.uuidString }
         .map(\.reference)
+        + entries.filter {
+          $0.source.kind == "item" && $0.source.id == id && $0.source.lifetimeId == lifetimeId
+        }.sorted { $0.id.uuidString < $1.id.uuidString }.map(\.reference)
     )
   }
 }
