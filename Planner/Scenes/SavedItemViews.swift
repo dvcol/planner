@@ -1,4 +1,5 @@
 import PlannerCore
+import PlannerPreviews
 import SwiftUI
 
 enum SavedItemCatalogScope: String {
@@ -72,6 +73,7 @@ struct SavedItemCatalog: View {
 }
 
 struct SavedItemDetail: View {
+  @Environment(SavedPlannerStore.self) private var store
   let item: PlannerItemSourceRead
   let canChange: Bool
   let isSaving: Bool
@@ -102,7 +104,8 @@ struct SavedItemDetail: View {
       if let notes = item.content.notes, !notes.isEmpty {
         Section("Notes") { Text(notes).textSelection(.enabled) }
       }
-      ItemLocationSection(title: item.content.title, location: item.content.location)
+      ItemLocationSection(
+        title: item.content.title, location: item.content.location, previewSource: previewSource)
       ItemLinksSection(
         links: item.content.links, sourceId: item.source.id,
         sourceLifetimeId: item.sourceLifetimeId)
@@ -130,6 +133,12 @@ struct SavedItemDetail: View {
     .overlay {
       if isSaving { ProgressView("Saving change") }
     }
+  }
+
+  private var previewSource: PlannerPreviewSource? {
+    guard let namespace = store.devicePreferenceNamespace else { return nil }
+    return .init(
+      namespace: namespace, sourceId: item.source.id, sourceLifetimeId: item.sourceLifetimeId)
   }
 }
 

@@ -1,0 +1,128 @@
+{
+  "date": "2026-10-11",
+  "feature": "Saved textual location editing, compact row captions and native address pins",
+  "baseCommit": "83e52f3",
+  "nativeTests": [
+    {
+      "device": "Phone",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testOwnedAddressCreatesANativePreviewAndRemainsLiveInACompletedList -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch -resultBundlePath /private/tmp/PlannerAddressNativeFinalPhone.xcresult test",
+      "log": "/private/tmp/PlannerAddressNativeFinalPhone.log",
+      "resultBundle": "/private/tmp/PlannerAddressNativeFinalPhone.xcresult",
+      "exitCode": 0,
+      "executedFunctions": 2,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "device": "Tablet",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testOwnedAddressCreatesANativePreviewAndRemainsLiveInACompletedList -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch -resultBundlePath /private/tmp/PlannerAddressNativeFinalTablet.xcresult test",
+      "log": "/private/tmp/PlannerAddressNativeFinalTablet.log",
+      "resultBundle": "/private/tmp/PlannerAddressNativeFinalTablet.xcresult",
+      "exitCode": 0,
+      "executedFunctions": 2,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "macBuild": {
+    "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -resultBundlePath /private/tmp/PlannerAddressNativeFinalMac.xcresult build-for-testing",
+    "log": "/private/tmp/PlannerAddressNativeFinalMac.log",
+    "exitCode": 0,
+    "executedRuntimeFunctions": 0,
+    "warning": "AppIntents metadata extraction skipped"
+  },
+  "coreRegression": {
+    "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter ItemLocationEditTests",
+    "log": "/private/tmp/PlannerAddressNativeCoreRegression.log",
+    "exitCode": 0,
+    "functions": 2,
+    "suites": 1
+  },
+  "priorRuns": [
+    {
+      "log": "/private/tmp/PlannerAddressNativeSingleRed.log",
+      "outcome": "Native journey fails at missing address editor field",
+      "exitCode": null,
+      "terminalStatus": "TEST FAILED recorded in log; original tool exit result unavailable"
+    },
+    {
+      "log": "/private/tmp/PlannerAddressNativeSingleGreen.log",
+      "outcome": "Save/Cancel, actual address pin, completed List detail and reopening pass before row caption assertion",
+      "exitCode": 0,
+      "executedFunctions": 1
+    },
+    {
+      "log": "/private/tmp/PlannerAddressNativeRowRed.log",
+      "outcome": "Native journey fails at missing row location summary",
+      "exitCode": 65
+    }
+  ],
+  "sourceHashes": {
+    "Planner/PlannerApp.swift": "f1a9d1f680e853eb73cf22e080cbce823dc0a0c247e9de5544a5fc6e337f1146",
+    "Planner/Scenes/ItemLocationSection.swift": "5712c5ac9ff059a73dd6abe162a58fc56532f1049926d8b75dcb105e415f21b9",
+    "Planner/Scenes/ItemAddressPreview.swift": "7dc96f6f5ea4b567f0d450739f063447dbac4b9b286c96ad5027f5f8cd5b1e6e",
+    "Planner/Scenes/SavedItemViews.swift": "32b2386c6424e5c5e0c7f440175dc81746d9a2e6dae445912305054fa7d65f8d",
+    "Planner/Scenes/SavedAppearanceViews.swift": "bac170a579008020fa0a9808fa7ec3db1ddd29adb5b9d1e010456229455bd737",
+    "Planner/Scenes/SavedEditItemForm.swift": "205f68545a90a091e6a4c9b6a00b789a6b6e799ff4072fbc3a5465566b048ee3",
+    "Planner/Scenes/SavedPlannerStore.swift": "5687197158ab48ee7b667aaa5d5a52d91f1187488a75dbd4990d679fd42e08f1",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "8b7c92b65e10f3dd5c1448655f8751bfc2d0f32d5c35d6bdfd4ea2429b546033",
+    "Planner/Scenes/SavedItemRowContent.swift": "58fb0c01e07062adafb9d9ecc843113e3a4fc16e039fd63bf2adbf563f2118b8"
+  },
+  "captures": [
+    {
+      "name": "phone-row",
+      "original": "/private/tmp/PlannerAddressNativeFinalPhoneCaptures/782CE1D0-76C7-4E30-8BF7-D37A720C4852.png",
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-address-row.png",
+      "sha256": "7a769bba90214a58a675ce21a6d6f2653c9ff50f1deee3cb79f32a560c0b43f3",
+      "inspected": true,
+      "observation": "Native owned location caption"
+    },
+    {
+      "name": "phone-context",
+      "original": "/private/tmp/PlannerAddressNativeFinalPhoneCaptures/8350B138-CDD5-4C76-9F00-A5F8016A4014.png",
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-address-context.png",
+      "sha256": "ded679be1891923aac239bbfdc948c5d2bf90514d5531e866f8efbec33131aff",
+      "inspected": true,
+      "observation": "Painted MapKit pin beside owned address, notes and contextual Completed state"
+    },
+    {
+      "name": "tablet-row",
+      "original": "/private/tmp/PlannerAddressNativeFinalTabletCaptures/A27674C4-D330-42CE-93A0-F22D75DCF40D.png",
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-address-row.png",
+      "sha256": "ef4dca5b0fb2d523103819294cdf7e40e85199fb418015bf18b53d9b56ce9401",
+      "inspected": true,
+      "observation": "Native owned location caption"
+    },
+    {
+      "name": "tablet-context",
+      "original": "/private/tmp/PlannerAddressNativeFinalTabletCaptures/12397F3C-3609-4F0C-AD6E-41E405F0D9A2.png",
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-address-context.png",
+      "sha256": "a402ed2cd19b2a9bd4e8864d5b32211965041d266d59793cd77c8d6af7a90c5f",
+      "inspected": true,
+      "observation": "Painted MapKit pin beside owned address, notes and contextual Completed state"
+    }
+  ],
+  "validation": {
+    "swiftFormatLog": "/private/tmp/PlannerAddressNativeFinalSwiftLint.log",
+    "swiftFormatExitCode": 0,
+    "affectedSwiftFiles": 9,
+    "diffCheckExitCode": 0,
+    "markdownLintLog": "/private/tmp/PlannerAddressNativeMarkdownLint.log",
+    "markdownLintExitCode": 0
+  },
+  "openGates": [
+    "Native controlled ambiguous/empty/error address presentation",
+    "Native address-change stale-result invalidation",
+    "Q51 existing owned pin editing decision",
+    "Q48/Q49 native estimate editing decisions",
+    "Mac runtime/accessibility/keyboard/resizing",
+    "Physical signed CloudKit/account/Share tests",
+    "Whole-application UI polish and final human review"
+  ],
+  "scopeLimits": [
+    "Location fields are editable only when no owned coordinates exist",
+    "Candidate selection and caches are temporary; no provider result enters owned content or backups",
+    "Schema 7 and portable format 1 unchanged; no agent administration changes",
+    "No new controlled native UI seam or fixture-only production signature added"
+  ]
+}

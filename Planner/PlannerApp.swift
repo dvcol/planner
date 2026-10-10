@@ -5,6 +5,8 @@ import SwiftUI
 struct PlannerApp: App {
   @State private var savedPlanner = SavedPlannerStore()
   @State private var previews = PlannerPreviews(provider: AppleLinkPreviewProvider())
+  @State private var addressPreviews = PlannerAddressPreviews(
+    provider: AppleAddressPreviewProvider())
   #if os(macOS)
     @Environment(\.openWindow) private var openWindow
     @FocusedBinding(\.navigationPrototypeLayout) private var prototypeLayout:
@@ -21,6 +23,7 @@ struct PlannerApp: App {
         SavedPlannerView(store: savedPlanner)
           .environment(savedPlanner)
           .environment(previews)
+          .environment(addressPreviews)
       }
     }
     #if os(macOS)

@@ -203,6 +203,7 @@ final class SavedPlannerStore {
   func editItem(
     _ item: PlannerItemSourceRead, title: String, subtitle: String, notes: String,
     links: [PlannerLinkInput],
+    location: PlannerOwnedLocation?,
     operationIdentifier: UUID
   ) async -> Bool {
     let titleChange: PlannerFieldChange<String>
@@ -233,11 +234,20 @@ final class SavedPlannerStore {
     } else {
       linksChange = .set(links)
     }
+    let locationChange: PlannerFieldChange<PlannerOwnedLocation>
+    if location == item.content.location {
+      locationChange = .unchanged
+    } else if let location {
+      locationChange = .set(location)
+    } else {
+      locationChange = .clear
+    }
     return await executeChange(
       .editItem(
         sourceId: item.source.id,
         changes: .init(
-          title: titleChange, subtitle: subtitleChange, notes: notesChange, links: linksChange),
+          title: titleChange, subtitle: subtitleChange, notes: notesChange,
+          location: locationChange, links: linksChange),
         expectedFieldHashes: item.fieldHashes), operationId: operationIdentifier) != nil
   }
 

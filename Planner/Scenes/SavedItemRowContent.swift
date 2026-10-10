@@ -6,6 +6,10 @@ extension PlannerRowRead {
   var metadataDescription: String {
     var descriptions = [String]()
     if let subtitle, !subtitle.isEmpty { descriptions.append(subtitle) }
+    if let locationCaption { descriptions.append(locationCaption) }
+    if let address = ownedLocation?.formattedAddress, address != locationCaption {
+      descriptions.append(address)
+    }
     if let previewLink {
       descriptions.append(previewLink.displayTitle)
     } else if hasLinks {
@@ -13,6 +17,14 @@ extension PlannerRowRead {
     }
     if archived == true { descriptions.append("Archived") }
     return descriptions.joined(separator: ", ")
+  }
+
+  var locationCaption: String? {
+    guard let location = ownedLocation else { return nil }
+    if let name = location.displayName, !name.isEmpty { return name }
+    if let address = location.formattedAddress, !address.isEmpty { return address }
+    if location.coordinate != nil { return "Location" }
+    return nil
   }
 }
 
@@ -84,6 +96,12 @@ struct SavedItemRowContent: View {
         Label("Maps", systemImage: "map")
           .font(.caption)
           .foregroundStyle(.secondary)
+      }
+      if let location = row.locationCaption {
+        Label(location, systemImage: "mappin.and.ellipse")
+          .font(.caption)
+          .foregroundStyle(.secondary)
+          .lineLimit(1)
       }
     }
   }
