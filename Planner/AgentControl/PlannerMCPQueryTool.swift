@@ -10,6 +10,8 @@
       "properties": .object([
         "kind": .object(["type": .string("string"), "const": .string("items")]),
         "text": .object(["type": .string("string")]),
+        "categories": identityGroupSchema,
+        "tags": identityGroupSchema,
         "duration": .object([
           "oneOf": .array([
             .object(["type": .string("null")]),
@@ -81,6 +83,26 @@
           "enum": .array([.string("active"), .string("archived"), .string("all")]),
         ]),
       ]),
+    ])
+
+    private static let identityGroupSchema: Value = .object([
+      "oneOf": .array([
+        .object(["type": .string("null")]),
+        .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "required": .array([.string("ids")]),
+          "properties": .object([
+            "ids": .object([
+              "type": .string("array"),
+              "items": .object(["type": .string("string"), "format": .string("uuid")]),
+            ]),
+            "match": .object([
+              "type": .string("string"), "enum": .array([.string("any"), .string("all")]),
+              "default": .string("any"),
+            ]),
+          ]),
+        ]),
+      ])
     ])
 
     private static let durationBoundSchema: Value = .object([
@@ -203,13 +225,14 @@
       _ = try object(
         value, allowed: Set(query.keys), required: ["kind", "scope"], path: "/query")
       if let unsupported = Set(query.keys).subtracting([
-        "kind", "scope", "text", "completion", "archive", "duration", "sort", "rowPresentation",
+        "kind", "scope", "text", "completion", "archive", "categories", "tags", "duration", "sort",
+        "rowPresentation",
       ])
       .sorted().first {
         throw AdmissionFailure(
           code: "unavailable", path: "/query/" + unsupported,
           message:
-            "This query slice supports scope, text, completion, archive, duration, sort and row presentation."
+            "This query slice supports scope, text, completion, archive, Category/Tag groups, duration, sort and row presentation."
         )
       }
       let nativeScope = try scope(query["scope"])
@@ -245,7 +268,37 @@
       return .items(
         PlannerItemQuery(
           scope: nativeScope, text: text, completion: completion, archive: archive,
+          categories: try identityGroup(query["categories"], path: "/query/categories"),
+          tags: try identityGroup(query["tags"], path: "/query/tags"),
           duration: try duration(query["duration"]), sort: sort, rowPresentation: presentation))
+    }
+
+    private static func identityGroup(_ value: Value?, path: String) throws
+      -> PlannerItemQuery.IdentityGroup?
+    {
+      guard let value else { return nil }
+      if case .null = value { return nil }
+      let fields = try object(value, allowed: ["ids", "match"], required: ["ids"], path: path)
+      guard case .array(let values) = fields["ids"] else {
+        throw AdmissionFailure(
+          code: "invalidInput", path: path + "/ids", message: "Expected an array of UUIDs.")
+      }
+      let identifiers = try values.enumerated().map { index, value in
+        guard case .string(let spelling) = value, let identifier = UUID(uuidString: spelling) else {
+          throw AdmissionFailure(
+            code: "invalidInput", path: path + "/ids/\(index)", message: "Expected a UUID.")
+        }
+        return identifier
+      }
+      let match: PlannerItemQuery.IdentityGroup.Match
+      switch fields["match"] {
+      case nil, .string("any"): match = .any
+      case .string("all"): match = .all
+      default:
+        throw AdmissionFailure(
+          code: "invalidInput", path: path + "/match", message: "Expected any or all.")
+      }
+      return PlannerItemQuery.IdentityGroup(ids: Set(identifiers), match: match)
     }
 
     private static func duration(_ value: Value?) throws -> PlannerItemQuery.Duration? {
