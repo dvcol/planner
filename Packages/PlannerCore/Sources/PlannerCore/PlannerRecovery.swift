@@ -85,12 +85,13 @@ struct PortableItemRecord: Codable {
   }
 }
 
-/// This slice supports Items, Lists, Categories, memberships, owned links, direct timed/all-day Schedules and minimal deletion metadata. Other graph groups must be empty.
+/// This slice supports Items, Lists, Categories, Tags, label associations, memberships, owned links, direct timed/all-day Schedules and minimal deletion metadata. Other graph groups must be empty.
 struct PlannerDataSnapshot: Codable {
   let format: String
   let formatVersion: Int
   let sources: [PortableSourceRecord]
   let memberships: [PortableMembershipRecord]
+  let labelAssociations: [PortableLabelAssociationRecord]
   let ownedLinks: [PortableOwnedLink]
   let schedules: [PortableScheduleRecord]
   let deletionMarkers: [PortableDeletionMarker]
@@ -103,10 +104,14 @@ struct PlannerDataSnapshot: Codable {
   }
 
   init(
-    tags: [TagSnapshot], categories: [CategorySnapshot],
+    labelAssociations: [LabelAssociationSnapshot], tags: [TagSnapshot],
+    categories: [CategorySnapshot],
     items: [ItemSnapshot], lists: [ListSnapshot], memberships: [MembershipSnapshot],
     deletionMarkers: [PortableDeletionMarker]
   ) {
+    self.labelAssociations = labelAssociations.map(PortableLabelAssociationRecord.init).sorted {
+      $0.id.uuidString < $1.id.uuidString
+    }
     self.memberships = memberships.map(PortableMembershipRecord.init).sorted {
       $0.id.uuidString < $1.id.uuidString
     }
@@ -136,12 +141,15 @@ struct PlannerDataSnapshot: Codable {
     formatVersion = try container.decode(Int.self, forKey: .formatVersion)
     sources = try container.decode([PortableSourceRecord].self, forKey: .sources)
     memberships = try container.decode([PortableMembershipRecord].self, forKey: .memberships)
+    labelAssociations = try container.decode(
+      [PortableLabelAssociationRecord].self, forKey: .labelAssociations)
     ownedLinks = try container.decode([PortableOwnedLink].self, forKey: .ownedLinks)
     schedules = try container.decode([PortableScheduleRecord].self, forKey: .schedules)
     deletionMarkers = try container.decode([PortableDeletionMarker].self, forKey: .deletionMarkers)
     for key in CodingKeys.allCases
     where key != .format && key != .formatVersion && key != .sources && key != .ownedLinks
       && key != .schedules && key != .deletionMarkers && key != .memberships
+      && key != .labelAssociations
     {
       guard try container.decode([String].self, forKey: key).isEmpty else {
         throw PlannerFailure(
@@ -157,12 +165,14 @@ struct PlannerDataSnapshot: Codable {
     try container.encode(formatVersion, forKey: .formatVersion)
     try container.encode(sources, forKey: .sources)
     try container.encode(memberships, forKey: .memberships)
+    try container.encode(labelAssociations, forKey: .labelAssociations)
     try container.encode(ownedLinks, forKey: .ownedLinks)
     try container.encode(schedules, forKey: .schedules)
     try container.encode(deletionMarkers, forKey: .deletionMarkers)
     for key in CodingKeys.allCases
     where key != .format && key != .formatVersion && key != .sources && key != .ownedLinks
       && key != .schedules && key != .deletionMarkers && key != .memberships
+      && key != .labelAssociations
     {
       try container.encode([String](), forKey: key)
     }
@@ -204,6 +214,17 @@ struct PlannerDataSnapshot: Codable {
       guard case .tag(let tag) = source else { return nil }
       return try tag.validated()
     }
+    let labels = try labelAssociations.map {
+      try $0.validated(items: itemRecords, categories: categories, tags: tags)
+    }
+    let pairs = labels.map {
+      $0.owner.kind.rawValue + ":" + $0.owner.id.uuidString + ":" + $0.label.kind.rawValue + ":"
+        + $0.label.id.uuidString
+    }
+    guard Set(labels.map(\.id)).count == labels.count, Set(pairs).count == labels.count else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "The snapshot contains duplicate label associations or pairs.")
+    }
     let linksByOwner = try Dictionary(
       grouping: ownedLinks.map { try $0.validated(sources: itemRecords) }, by: \.ownerId)
     let items = try itemRecords.map { source in
@@ -215,7 +236,18 @@ struct PlannerDataSnapshot: Codable {
       return PlannerPortableItem(
         kind: item.kind, id: item.id, lifetimeId: item.lifetimeId,
         createdAt: item.createdAt, updatedAt: item.updatedAt,
-        content: source.content.input.readContent(links: links),
+        content: PlannerItemContentInput(
+          title: item.content.title, subtitle: item.content.subtitle,
+          notes: item.content.notes, location: item.content.location,
+          estimate: item.content.estimate,
+          categoryIds: Set(
+            labels.filter { $0.owner.id == item.id && $0.label.kind == .category }.map {
+              $0.label.id
+            }),
+          tagIds: Set(
+            labels.filter { $0.owner.id == item.id && $0.label.kind == .tag }.map { $0.label.id })
+        )
+        .readContent(links: links),
         globalDone: item.globalDone, archived: item.archived, contentOrigins: item.contentOrigins)
     }
     guard Set(schedules.map(\.id)).count == schedules.count else {
@@ -231,6 +263,7 @@ struct PlannerDataSnapshot: Codable {
         sources: items.map(PlannerPortableSource.item) + lists.map(PlannerPortableSource.list)
           + categories.map(PlannerPortableSource.category)
           + tags.map(PlannerPortableSource.tag),
+        labelAssociations: labels,
         memberships: try memberships.map {
           try $0.validated(items: itemRecords, lists: listRecords)
         },
@@ -298,7 +331,7 @@ struct RecoveryEnvelope: Codable {
 
   func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
     guard format == "planner-recovery", formatVersion == 1,
-      ["1", "2", "3", "4", "5", "6", "7", "8", "9"].contains(storageSchemaVersion),
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].contains(storageSchemaVersion),
       namespaceId == identity.namespaceId, datasetId == identity.datasetId,
       ownershipBinding == identity.ownershipBinding, !ownershipBinding.isEmpty,
       let generation = Int64(checkpointGeneration), generation > 0,
@@ -378,7 +411,8 @@ struct PlannerRecoveryArchive {
   }
 
   func publish(
-    tags: [TagSnapshot], categories: [CategorySnapshot],
+    labelAssociations: [LabelAssociationSnapshot], tags: [TagSnapshot],
+    categories: [CategorySnapshot],
     items: [ItemSnapshot], lists: [ListSnapshot], memberships: [MembershipSnapshot],
     deletionMarkers: [PortableDeletionMarker],
     receipts: [PlannerSchemaV1.Receipt]
@@ -391,7 +425,8 @@ struct PlannerRecoveryArchive {
     }
     let bytes = try JSONEncoder().encode(
       PlannerDataSnapshot(
-        tags: tags, categories: categories, items: items, lists: lists, memberships: memberships,
+        labelAssociations: labelAssociations, tags: tags, categories: categories,
+        items: items, lists: lists, memberships: memberships,
         deletionMarkers: deletionMarkers))
     let priorCheckpoints = Dictionary(
       uniqueKeysWithValues: (previous?.receipts ?? []).map {

@@ -34,11 +34,11 @@ public actor Planner {
         var identity: PlannerStoreIdentity
         if FileManager.default.fileExists(atPath: configuration.controlURL.path) {
           identity = try loadIdentity()
-          guard (1...9).contains(identity.schemaVersion) else {
+          guard (1...10).contains(identity.schemaVersion) else {
             throw PlannerFailure(
               "unsupportedVersion", "The dataset uses an unsupported storage schema.")
           }
-          if identity.schemaVersion < 9, configuration.processRole == .shareExtension {
+          if identity.schemaVersion < 10, configuration.processRole == .shareExtension {
             return .mainAppMigrationRequired
           }
           guard FileManager.default.fileExists(atPath: configuration.storeURL.path) else {
@@ -57,15 +57,15 @@ public actor Planner {
           context.autosaveEnabled = false
           try context.save()
           identity = PlannerStoreIdentity(
-            schemaVersion: 9, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
+            schemaVersion: 10, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
             ownershipBinding: "local:" + UUID().uuidString
           )
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
         }
         _ = try openContainer()
-        if identity.schemaVersion < 9 {
+        if identity.schemaVersion < 10 {
           identity = PlannerStoreIdentity(
-            schemaVersion: 9, datasetId: identity.datasetId, epochId: identity.epochId,
+            schemaVersion: 10, datasetId: identity.datasetId, epochId: identity.epochId,
             namespaceId: identity.namespaceId, ownershipBinding: identity.ownershipBinding)
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
         }
@@ -209,9 +209,11 @@ public actor Planner {
             envelope: envelope)
         case .createItem(let content):
           try content.validate()
-          let digest = content.payloadDigest(
-            datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding)
           if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+            let stored = try receipt.evidence()
+            let digest = content.payloadDigest(
+              datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
+              bindings: stored.bindings)
             guard receipt.payloadDigest == digest else {
               throw PlannerFailure(
                 "operationPayloadMismatch",
@@ -221,6 +223,23 @@ public actor Planner {
             return appliedResult(
               operationId: operation.operationId, evidence: evidence, envelope: envelope)
           }
+          let selectedCategories = try selectedCategoryRecords(
+            content.categoryIds, context: context)
+          let selectedTags = try selectedTagRecords(content.tagIds, context: context)
+          let bindings =
+            try selectedCategories.map { record in
+              let snapshot = try record.value()
+              return PlannerBoundIdentity(
+                kind: "category", id: snapshot.id, lifetimeId: snapshot.lifetimeId)
+            }
+            + selectedTags.map { record in
+              let snapshot = try record.value()
+              return PlannerBoundIdentity(
+                kind: "tag", id: snapshot.id, lifetimeId: snapshot.lifetimeId)
+            }
+          let digest = content.payloadDigest(
+            datasetId: identity.datasetId,
+            ownershipBinding: identity.ownershipBinding, bindings: bindings)
           let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
           guard
             receipts.allSatisfy({ receipt in
@@ -240,18 +259,28 @@ public actor Planner {
             return PlannerOperationResult(
               operationId: operation.operationId, outcome: .unverified(proposal.summary))
           }
-          let item = try PlannerSchemaV7.Item(input: content)
-          let snapshot = try item.value()
-          let result = PlannerAppliedResult(
-            generated: [snapshot.reference], affected: [snapshot.reference])
-          let existingItems = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>()).map {
+          let existingItems = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>()).map {
             try $0.value()
           }
+          let existingAssociations = try labelAssociationSnapshots(context)
+          let item = try PlannerSchemaV10.Item(input: content)
+          item.labelAssociations =
+            selectedCategories.map {
+              PlannerSchemaV10.LabelAssociation(item: item, category: $0)
+            } + selectedTags.map { PlannerSchemaV10.LabelAssociation(item: item, tag: $0) }
+          let snapshot = try item.value()
+          let generatedReferences = snapshot.labelAssociations.sorted {
+            $0.id.uuidString < $1.id.uuidString
+          }.map { PlannerAppliedIdentity.reference($0.reference) }
+          let result = PlannerAppliedResult(
+            generatedIdentities: [.source(snapshot.reference)] + generatedReferences,
+            affectedIdentities: [.source(snapshot.reference)] + generatedReferences)
           let proposal = RecoveryPreparedProposal(
             proposalId: UUID(), originalOperationId: operation.operationId,
             datasetId: identity.datasetId,
             ownershipBinding: identity.ownershipBinding,
             proposedBackup: PlannerDataSnapshot(
+              labelAssociations: existingAssociations + snapshot.labelAssociations,
               tags: try tagSnapshots(context), categories: try categorySnapshots(context),
               items: existingItems + [snapshot], lists: try listSnapshots(context),
               memberships: try membershipSnapshots(context),
@@ -260,8 +289,9 @@ public actor Planner {
           )
           try archive.prepare(proposal)
           let receipt = try PlannerSchemaV1.Receipt(
-            operation: operation, digest: digest, result: result)
+            operation: operation, digest: digest, result: result, bindings: bindings)
           context.insert(item)
+          for association in item.labelAssociations ?? [] { context.insert(association) }
           context.insert(receipt)
           do { try context.save() } catch {
             context.rollback()
@@ -271,6 +301,7 @@ public actor Planner {
           }
           do {
             let generation = try archive.publish(
+              labelAssociations: existingAssociations + snapshot.labelAssociations,
               tags: try tagSnapshots(context), categories: try categorySnapshots(context),
               items: existingItems + [snapshot], lists: try listSnapshots(context),
               memberships: try membershipSnapshots(context),
@@ -329,7 +360,7 @@ public actor Planner {
           }
           if source.kind == .list {
             let sourceIdentifier = source.id
-            var descriptor = FetchDescriptor<PlannerSchemaV7.List>(
+            var descriptor = FetchDescriptor<PlannerSchemaV10.List>(
               predicate: #Predicate { $0.id == sourceIdentifier })
             descriptor.fetchLimit = 2
             let records = try context.fetch(descriptor)
@@ -341,7 +372,7 @@ public actor Planner {
               .list(
                 try record.value().read(
                   datasetId: identity.datasetId, memberships: membershipSnapshots(context),
-                  items: context.fetch(FetchDescriptor<PlannerSchemaV7.Item>()).map {
+                  items: context.fetch(FetchDescriptor<PlannerSchemaV10.Item>()).map {
                     try $0.value()
                   })))
           }
@@ -354,7 +385,7 @@ public actor Planner {
             throw PlannerFailure(
               "unavailable", "This fixture currently implements Item reads only.")
           }
-          let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>()).filter {
+          let items = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>()).filter {
             $0.id == source.id
           }
           guard items.count == 1, let item = items.first else {
@@ -374,7 +405,7 @@ public actor Planner {
   ) throws -> PlannerAppearanceRead {
     switch appearance {
     case .listMembership(let listId, let membershipId):
-      var descriptor = FetchDescriptor<PlannerSchemaV7.Membership>(
+      var descriptor = FetchDescriptor<PlannerSchemaV10.Membership>(
         predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
       descriptor.fetchLimit = 2
       let records = try context.fetch(descriptor)
@@ -384,7 +415,7 @@ public actor Planner {
       }
       let binding = try membership.value()
       let itemId = binding.item.id
-      var itemDescriptor = FetchDescriptor<PlannerSchemaV7.Item>(
+      var itemDescriptor = FetchDescriptor<PlannerSchemaV10.Item>(
         predicate: #Predicate { $0.id == itemId })
       itemDescriptor.fetchLimit = 2
       let items = try context.fetch(itemDescriptor)
@@ -404,7 +435,7 @@ public actor Planner {
         effectiveDone: source.globalDone || binding.localDone, archived: source.archived,
         fieldHashes: source.input.fieldHashes(
           datasetId: datasetId, itemId: source.id, lifetimeId: source.lifetimeId,
-          links: source.links.map(\.read)))
+          links: source.links.map(\.read), labelAssociations: source.labelAssociations))
     }
   }
 
@@ -412,7 +443,7 @@ public actor Planner {
     _ source: PlannerEntityReference, datasetId: UUID, context: ModelContext
   ) throws -> PlannerScheduleSourceRead {
     let identifier = source.id
-    var descriptor = FetchDescriptor<PlannerSchemaV7.Schedule>(
+    var descriptor = FetchDescriptor<PlannerSchemaV10.Schedule>(
       predicate: #Predicate { $0.id == identifier })
     descriptor.fetchLimit = 2
     let records = try context.fetch(descriptor)
@@ -422,7 +453,7 @@ public actor Planner {
     guard let ownerIdentifier = record.sourceId, let ownerLifetime = record.sourceLifetimeId else {
       throw PlannerFailure("readUnavailable", "The Schedule's source binding is unresolved.")
     }
-    var owners = FetchDescriptor<PlannerSchemaV7.Item>(
+    var owners = FetchDescriptor<PlannerSchemaV10.Item>(
       predicate: #Predicate { $0.id == ownerIdentifier && $0.lifetimeId == ownerLifetime })
     owners.fetchLimit = 2
     owners.propertiesToFetch = [\.id, \.lifetimeId]
@@ -496,7 +527,7 @@ public actor Planner {
           }
           let textTerms = itemQuery.text.split(whereSeparator: \.isWhitespace).map(String.init)
           let locale = Locale(identifier: "en_US_POSIX")
-          var descriptor = FetchDescriptor<PlannerSchemaV7.Item>()
+          var descriptor = FetchDescriptor<PlannerSchemaV10.Item>()
           if textTerms.isEmpty, itemQuery.duration?.minimumMinutes == nil,
             itemQuery.duration?.maximumMinutes == nil, itemQuery.sort.mode != .duration
           {
@@ -589,7 +620,7 @@ public actor Planner {
   }
 
   private func matchesItemText(
-    _ item: PlannerSchemaV7.Item, terms: [String], locale: Locale
+    _ item: PlannerSchemaV10.Item, terms: [String], locale: Locale
   ) throws -> Bool {
     guard !terms.isEmpty else { return true }
     let value = try item.value()
@@ -631,7 +662,7 @@ public actor Planner {
   }
 
   private func matchesItemDuration(
-    _ item: PlannerSchemaV7.Item, duration: PlannerItemQuery.Duration?
+    _ item: PlannerSchemaV10.Item, duration: PlannerItemQuery.Duration?
   ) throws -> Bool {
     guard let duration, duration.minimumMinutes != nil || duration.maximumMinutes != nil else {
       return true
@@ -657,7 +688,7 @@ public actor Planner {
   }
 
   private func chronologicalSortDate(
-    _ item: PlannerSchemaV7.Item, mode: PlannerItemQuery.Sort.Mode
+    _ item: PlannerSchemaV10.Item, mode: PlannerItemQuery.Sort.Mode
   ) throws -> Date? {
     let date: Date?
     switch mode {
@@ -689,7 +720,7 @@ public actor Planner {
         "unavailable", "This catalog slice supports List discovery only.",
         propertyPath: "/query/sourceKind")
     }
-    var descriptor = FetchDescriptor<PlannerSchemaV7.List>()
+    var descriptor = FetchDescriptor<PlannerSchemaV10.List>()
     descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.name, \.archived]
     let locale = Locale(identifier: "en_US_POSIX")
     let terms = query.text.split(whereSeparator: \.isWhitespace).map(String.init)
@@ -737,7 +768,7 @@ public actor Planner {
     session: PlannerDatasetSession, listId: UUID, query: PlannerItemQuery,
     presentation: PlannerRowPresentationContext, context: ModelContext
   ) throws -> PlannerQuerySnapshot {
-    var lists = FetchDescriptor<PlannerSchemaV7.List>(
+    var lists = FetchDescriptor<PlannerSchemaV10.List>(
       predicate: #Predicate { $0.id == listId })
     lists.fetchLimit = 2
     lists.propertiesToFetch = [\.id, \.lifetimeId]
@@ -745,7 +776,7 @@ public actor Planner {
     guard owners.count == 1, let owner = owners.first, let lifetimeId = owner.lifetimeId else {
       throw PlannerFailure("missingReference", "The selected List is missing or unresolved.")
     }
-    let memberships = FetchDescriptor<PlannerSchemaV7.Membership>(
+    let memberships = FetchDescriptor<PlannerSchemaV10.Membership>(
       predicate: #Predicate { $0.listId == listId && $0.listLifetimeId == lifetimeId },
       sortBy: [SortDescriptor(\.rank), SortDescriptor(\.id)])
     let children = try context.fetch(memberships).map { try $0.value() }
@@ -756,7 +787,7 @@ public actor Planner {
     }
     let itemIdentifiers = children.map { Optional($0.item.id) }
     let textTerms = query.text.split(whereSeparator: \.isWhitespace).map(String.init)
-    var items = FetchDescriptor<PlannerSchemaV7.Item>(
+    var items = FetchDescriptor<PlannerSchemaV10.Item>(
       predicate: #Predicate { itemIdentifiers.contains($0.id) })
     if textTerms.isEmpty, query.duration?.minimumMinutes == nil,
       query.duration?.maximumMinutes == nil, query.sort.mode != .duration
@@ -889,7 +920,7 @@ public actor Planner {
       let expectedLifetimeId: UUID?
       switch identity {
       case .appearance(let reference, .listMembership(let listId, let membershipId)):
-        var memberships = FetchDescriptor<PlannerSchemaV7.Membership>(
+        var memberships = FetchDescriptor<PlannerSchemaV10.Membership>(
           predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
         memberships.fetchLimit = 2
         let records = try context.fetch(memberships)
@@ -928,7 +959,7 @@ public actor Planner {
       }
       if source.kind == .list {
         let sourceIdentifier = source.id
-        var descriptor = FetchDescriptor<PlannerSchemaV7.List>(
+        var descriptor = FetchDescriptor<PlannerSchemaV10.List>(
           predicate: #Predicate { $0.id == sourceIdentifier })
         descriptor.fetchLimit = 2
         descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.name, \.archived]
@@ -949,7 +980,7 @@ public actor Planner {
         throw PlannerFailure("readUnavailable", "The Item query has no presentation context.")
       }
       let sourceIdentifier = source.id
-      var descriptor = FetchDescriptor<PlannerSchemaV7.Item>(
+      var descriptor = FetchDescriptor<PlannerSchemaV10.Item>(
         predicate: #Predicate { $0.id == sourceIdentifier })
       descriptor.fetchLimit = 2
       descriptor.propertiesToFetch = [
@@ -965,11 +996,11 @@ public actor Planner {
       else {
         throw PlannerFailure("readUnavailable", "The row Item has unresolved lifetime.")
       }
-      let owned = FetchDescriptor<PlannerSchemaV7.OwnedLink>(
+      let owned = FetchDescriptor<PlannerSchemaV10.OwnedLink>(
         predicate: #Predicate {
           $0.ownerId == sourceIdentifier && $0.ownerLifetimeId == lifetimeId
         })
-      var selected = FetchDescriptor<PlannerSchemaV7.OwnedLink>(
+      var selected = FetchDescriptor<PlannerSchemaV10.OwnedLink>(
         predicate: #Predicate {
           $0.ownerId == sourceIdentifier && $0.ownerLifetimeId == lifetimeId
             && $0.kind != "appleMaps" && $0.kind != "googleMaps"
@@ -1006,31 +1037,31 @@ public actor Planner {
     var calendar = Calendar(identifier: .gregorian)
     calendar.timeZone = TimeZone(identifier: presentation.displayTimeZone)!
     let currentDate = try scheduleCivilDate(referenceInstant, calendar: calendar)
-    let assignments = FetchDescriptor<PlannerSchemaV7.Schedule>(
+    let assignments = FetchDescriptor<PlannerSchemaV10.Schedule>(
       predicate: #Predicate {
         $0.sourceId == sourceIdentifier && $0.sourceLifetimeId == lifetimeId
       })
     let assignmentCount = try context.fetchCount(assignments)
     guard assignmentCount > 0 else { return .none }
     let candidates = [
-      FetchDescriptor<PlannerSchemaV7.Schedule>(
+      FetchDescriptor<PlannerSchemaV10.Schedule>(
         predicate: #Predicate {
           $0.sourceId == sourceIdentifier && $0.sourceLifetimeId == lifetimeId
             && $0.start != nil && ($0.start ?? referenceInstant) <= referenceInstant
             && $0.end != nil && ($0.end ?? referenceInstant) > referenceInstant
         }, sortBy: [SortDescriptor(\.start, order: .reverse), SortDescriptor(\.id)]),
-      FetchDescriptor<PlannerSchemaV7.Schedule>(
+      FetchDescriptor<PlannerSchemaV10.Schedule>(
         predicate: #Predicate {
           $0.sourceId == sourceIdentifier && $0.sourceLifetimeId == lifetimeId
             && $0.start != nil && ($0.start ?? referenceInstant) >= referenceInstant
         }, sortBy: [SortDescriptor(\.start), SortDescriptor(\.id)]),
-      FetchDescriptor<PlannerSchemaV7.Schedule>(
+      FetchDescriptor<PlannerSchemaV10.Schedule>(
         predicate: #Predicate {
           $0.sourceId == sourceIdentifier && $0.sourceLifetimeId == lifetimeId
             && $0.start != nil && ($0.start ?? referenceInstant) < referenceInstant
         }, sortBy: [SortDescriptor(\.start, order: .reverse), SortDescriptor(\.id)]),
     ]
-    var allDayDescriptor = FetchDescriptor<PlannerSchemaV7.Schedule>(
+    var allDayDescriptor = FetchDescriptor<PlannerSchemaV10.Schedule>(
       predicate: #Predicate {
         $0.sourceId == sourceIdentifier && $0.sourceLifetimeId == lifetimeId
           && $0.formKind == "allDay"
@@ -1171,14 +1202,66 @@ public actor Planner {
     }
   }
 
+  private func labelAssociationSnapshots(_ context: ModelContext) throws
+    -> [LabelAssociationSnapshot]
+  {
+    let snapshots = try context.fetch(FetchDescriptor<PlannerSchemaV10.LabelAssociation>()).map {
+      try $0.value()
+    }
+    let pairs = snapshots.map {
+      $0.owner.kind + ":" + $0.owner.id.uuidString + ":" + $0.owner.lifetimeId.uuidString
+        + ":" + $0.label.kind + ":" + $0.label.id.uuidString + ":" + $0.label.lifetimeId.uuidString
+    }
+    guard Set(snapshots.map(\.id)).count == snapshots.count, Set(pairs).count == snapshots.count
+    else {
+      throw PlannerFailure(
+        "readUnavailable", "The graph has duplicate label association identities or pairs.")
+    }
+    return snapshots
+  }
+
+  private func selectedCategoryRecords(_ identifiers: Set<UUID>, context: ModelContext) throws
+    -> [PlannerSchemaV10.Category]
+  {
+    try identifiers.sorted { $0.uuidString < $1.uuidString }.map { identifier in
+      let records = try context.fetch(
+        FetchDescriptor<PlannerSchemaV10.Category>(
+          predicate: #Predicate { $0.id == identifier }))
+      guard records.count == 1, let record = records.first else {
+        throw PlannerFailure(
+          "missingReference", "A selected Category is missing or ambiguous.",
+          propertyPath: "/command/content/categoryIds")
+      }
+      _ = try record.value()
+      return record
+    }
+  }
+
+  private func selectedTagRecords(_ identifiers: Set<UUID>, context: ModelContext) throws
+    -> [PlannerSchemaV10.Tag]
+  {
+    try identifiers.sorted { $0.uuidString < $1.uuidString }.map { identifier in
+      let records = try context.fetch(
+        FetchDescriptor<PlannerSchemaV10.Tag>(
+          predicate: #Predicate { $0.id == identifier }))
+      guard records.count == 1, let record = records.first else {
+        throw PlannerFailure(
+          "missingReference", "A selected Tag is missing or ambiguous.",
+          propertyPath: "/command/content/tagIds")
+      }
+      _ = try record.value()
+      return record
+    }
+  }
+
   private func categorySnapshots(_ context: ModelContext) throws -> [CategorySnapshot] {
-    try context.fetch(FetchDescriptor<PlannerSchemaV8.Category>()).map { try $0.value() }
+    try context.fetch(FetchDescriptor<PlannerSchemaV10.Category>()).map { try $0.value() }
   }
 
   private func categorySnapshot(_ identifier: UUID, context: ModelContext) throws
     -> CategorySnapshot
   {
-    var descriptor = FetchDescriptor<PlannerSchemaV8.Category>(
+    var descriptor = FetchDescriptor<PlannerSchemaV10.Category>(
       predicate: #Predicate { $0.id == identifier })
     descriptor.fetchLimit = 2
     let records = try context.fetch(descriptor)
@@ -1258,12 +1341,12 @@ public actor Planner {
       return PlannerOperationResult(
         operationId: operation.operationId, outcome: .unverified(proposal.summary))
     }
-    let category = try PlannerSchemaV8.Category(content: content)
+    let category = try PlannerSchemaV10.Category(content: content)
     let snapshot = try category.value()
     let result = PlannerAppliedResult(
       generated: [snapshot.reference], affected: [snapshot.reference])
     let existingCategories = try categorySnapshots(context)
-    let existingItems = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>()).map {
+    let existingItems = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>()).map {
       try $0.value()
     }
     let proposal = RecoveryPreparedProposal(
@@ -1271,7 +1354,8 @@ public actor Planner {
       datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
       proposedBackup: PlannerDataSnapshot(
-        tags: try tagSnapshots(context), categories: existingCategories + [snapshot],
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: existingCategories + [snapshot],
         items: existingItems, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context)),
@@ -1290,7 +1374,8 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
-        tags: try tagSnapshots(context), categories: existingCategories + [snapshot],
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: existingCategories + [snapshot],
         items: existingItems, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context),
@@ -1310,13 +1395,13 @@ public actor Planner {
   }
 
   private func tagSnapshots(_ context: ModelContext) throws -> [TagSnapshot] {
-    try context.fetch(FetchDescriptor<PlannerSchemaV9.Tag>()).map { try $0.value() }
+    try context.fetch(FetchDescriptor<PlannerSchemaV10.Tag>()).map { try $0.value() }
   }
 
   private func tagSnapshot(_ identifier: UUID, context: ModelContext) throws
     -> TagSnapshot
   {
-    var descriptor = FetchDescriptor<PlannerSchemaV9.Tag>(
+    var descriptor = FetchDescriptor<PlannerSchemaV10.Tag>(
       predicate: #Predicate { $0.id == identifier })
     descriptor.fetchLimit = 2
     let records = try context.fetch(descriptor)
@@ -1396,12 +1481,12 @@ public actor Planner {
       return PlannerOperationResult(
         operationId: operation.operationId, outcome: .unverified(proposal.summary))
     }
-    let tag = try PlannerSchemaV9.Tag(content: content)
+    let tag = try PlannerSchemaV10.Tag(content: content)
     let snapshot = try tag.value()
     let result = PlannerAppliedResult(
       generated: [snapshot.reference], affected: [snapshot.reference])
     let existingTags = try tagSnapshots(context)
-    let existingItems = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>()).map {
+    let existingItems = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>()).map {
       try $0.value()
     }
     let proposal = RecoveryPreparedProposal(
@@ -1409,7 +1494,8 @@ public actor Planner {
       datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
       proposedBackup: PlannerDataSnapshot(
-        tags: existingTags + [snapshot], categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: existingTags + [snapshot],
+        categories: try categorySnapshots(context),
         items: existingItems, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context)),
@@ -1428,7 +1514,8 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
-        tags: existingTags + [snapshot], categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: existingTags + [snapshot],
+        categories: try categorySnapshots(context),
         items: existingItems, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context),
@@ -1483,12 +1570,12 @@ public actor Planner {
       return PlannerOperationResult(
         operationId: operation.operationId, outcome: .unverified(proposal.summary))
     }
-    let list = try PlannerSchemaV7.List(content: content)
+    let list = try PlannerSchemaV10.List(content: content)
     let snapshot = try list.value()
     let result = PlannerAppliedResult(
       generated: [snapshot.reference], affected: [snapshot.reference])
     let existingLists = try listSnapshots(context)
-    let existingItems = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>()).map {
+    let existingItems = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>()).map {
       try $0.value()
     }
     let proposal = RecoveryPreparedProposal(
@@ -1496,7 +1583,8 @@ public actor Planner {
       datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
       proposedBackup: PlannerDataSnapshot(
-        tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
         items: existingItems, lists: existingLists + [snapshot],
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context)),
@@ -1515,7 +1603,8 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
-        tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
         items: existingItems, lists: existingLists + [snapshot],
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context),
@@ -1576,7 +1665,7 @@ public actor Planner {
       throw PlannerFailure(
         "mutationBlocked", "A prior applied action still needs independent recovery.")
     }
-    let categories = try context.fetch(FetchDescriptor<PlannerSchemaV8.Category>())
+    let categories = try context.fetch(FetchDescriptor<PlannerSchemaV10.Category>())
     let matches = categories.filter { $0.id == sourceId }
     guard matches.count == 1, let category = matches.first else {
       throw PlannerFailure("missingReference", "The selected Category is missing or unresolved.")
@@ -1619,13 +1708,14 @@ public actor Planner {
       if record.id == sourceId { return after }
       return try record.value()
     }
-    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>()).map { try $0.value() }
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>()).map { try $0.value() }
     let result = PlannerAppliedResult(generated: [], affected: [before.reference])
     let proposal = RecoveryPreparedProposal(
       proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
       proposedBackup: PlannerDataSnapshot(
-        tags: try tagSnapshots(context), categories: snapshots,
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: snapshots,
         items: items, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context)),
@@ -1646,7 +1736,8 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
-        tags: try tagSnapshots(context), categories: snapshots,
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: snapshots,
         items: items, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context),
@@ -1704,7 +1795,7 @@ public actor Planner {
       throw PlannerFailure(
         "mutationBlocked", "A prior applied action still needs independent recovery.")
     }
-    let tags = try context.fetch(FetchDescriptor<PlannerSchemaV9.Tag>())
+    let tags = try context.fetch(FetchDescriptor<PlannerSchemaV10.Tag>())
     let matches = tags.filter { $0.id == sourceId }
     guard matches.count == 1, let tag = matches.first else {
       throw PlannerFailure("missingReference", "The selected Tag is missing or unresolved.")
@@ -1747,13 +1838,14 @@ public actor Planner {
       if record.id == sourceId { return after }
       return try record.value()
     }
-    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>()).map { try $0.value() }
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>()).map { try $0.value() }
     let result = PlannerAppliedResult(generated: [], affected: [before.reference])
     let proposal = RecoveryPreparedProposal(
       proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
       proposedBackup: PlannerDataSnapshot(
-        tags: snapshots, categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: snapshots,
+        categories: try categorySnapshots(context),
         items: items, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context)),
@@ -1774,7 +1866,8 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
-        tags: snapshots, categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: snapshots,
+        categories: try categorySnapshots(context),
         items: items, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context),
@@ -1840,7 +1933,7 @@ public actor Planner {
       throw PlannerFailure(
         "mutationBlocked", "A prior applied action still needs independent recovery.")
     }
-    let lists = try context.fetch(FetchDescriptor<PlannerSchemaV7.List>())
+    let lists = try context.fetch(FetchDescriptor<PlannerSchemaV10.List>())
     let matches = lists.filter { $0.id == sourceId }
     guard matches.count == 1, let list = matches.first else {
       throw PlannerFailure("missingReference", "The selected List is missing or unresolved.")
@@ -1894,13 +1987,14 @@ public actor Planner {
       if record.id == sourceId { return after }
       return try record.value()
     }
-    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>()).map { try $0.value() }
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>()).map { try $0.value() }
     let result = PlannerAppliedResult(generated: [], affected: [before.reference])
     let proposal = RecoveryPreparedProposal(
       proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
       proposedBackup: PlannerDataSnapshot(
-        tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
         items: items, lists: snapshots, memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context)),
       payloadDigest: digest, evidence: "preparedUnverified")
@@ -1922,7 +2016,8 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
-        tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
         items: items, lists: snapshots, memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context),
         receipts: receipts + [receipt])
@@ -1953,11 +2048,11 @@ public actor Planner {
   }
 
   private func listSnapshots(_ context: ModelContext) throws -> [ListSnapshot] {
-    try context.fetch(FetchDescriptor<PlannerSchemaV7.List>()).map { try $0.value() }
+    try context.fetch(FetchDescriptor<PlannerSchemaV10.List>()).map { try $0.value() }
   }
 
   private func membershipSnapshots(_ context: ModelContext) throws -> [MembershipSnapshot] {
-    let snapshots = try context.fetch(FetchDescriptor<PlannerSchemaV7.Membership>()).map {
+    let snapshots = try context.fetch(FetchDescriptor<PlannerSchemaV10.Membership>()).map {
       try $0.value()
     }
     guard Set(snapshots.map(\.id)).count == snapshots.count,
@@ -1991,8 +2086,8 @@ public actor Planner {
       throw PlannerFailure(
         "mutationBlocked", "A prior applied action still needs independent recovery.")
     }
-    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>())
-    let lists = try context.fetch(FetchDescriptor<PlannerSchemaV7.List>())
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>())
+    let lists = try context.fetch(FetchDescriptor<PlannerSchemaV10.List>())
     let itemMatches = items.filter { $0.id == itemId }
     let listMatches = lists.filter { $0.id == listId }
     guard itemMatches.count == 1, let item = itemMatches.first,
@@ -2067,7 +2162,8 @@ public actor Planner {
       proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
       proposedBackup: PlannerDataSnapshot(
-        tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
         items: itemSnapshots, lists: listSnapshots, memberships: memberships,
         deletionMarkers: markers),
       payloadDigest: digest, evidence: "preparedUnverified")
@@ -2075,10 +2171,10 @@ public actor Planner {
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
     if let added {
-      context.insert(PlannerSchemaV7.Membership(snapshot: added, list: list, item: item))
+      context.insert(PlannerSchemaV10.Membership(snapshot: added, list: list, item: item))
     }
     let ranks = Dictionary(uniqueKeysWithValues: memberships.map { ($0.id, $0.rank) })
-    for record in try context.fetch(FetchDescriptor<PlannerSchemaV7.Membership>()) {
+    for record in try context.fetch(FetchDescriptor<PlannerSchemaV10.Membership>()) {
       if let identifier = record.id, let rank = ranks[identifier], record.rank != rank {
         record.rank = rank
       }
@@ -2093,7 +2189,8 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
-        tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
         items: itemSnapshots, lists: listSnapshots, memberships: memberships,
         deletionMarkers: markers, receipts: receipts + [receipt])
       return PlannerOperationResult(
@@ -2129,7 +2226,7 @@ public actor Planner {
       throw PlannerFailure(
         "mutationBlocked", "A prior applied action still needs independent recovery.")
     }
-    var descriptor = FetchDescriptor<PlannerSchemaV7.Membership>(
+    var descriptor = FetchDescriptor<PlannerSchemaV10.Membership>(
       predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
     descriptor.fetchLimit = 2
     let selected = try context.fetch(descriptor)
@@ -2137,8 +2234,8 @@ public actor Planner {
       throw PlannerFailure("missingReference", "The selected membership is missing or unresolved.")
     }
     let before = try record.value()
-    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>())
-    let lists = try context.fetch(FetchDescriptor<PlannerSchemaV7.List>())
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>())
+    let lists = try context.fetch(FetchDescriptor<PlannerSchemaV10.List>())
     let owners = lists.filter { $0.id == before.list.id && $0.lifetimeId == before.list.lifetimeId }
     let sources = items.filter {
       $0.id == before.item.id && $0.lifetimeId == before.item.lifetimeId
@@ -2185,6 +2282,7 @@ public actor Planner {
         proposalId: UUID(), originalOperationId: operation.operationId,
         datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
         proposedBackup: PlannerDataSnapshot(
+          labelAssociations: try labelAssociationSnapshots(context),
           tags: try tagSnapshots(context), categories: try categorySnapshots(context),
           items: itemSnapshots, lists: listSnapshots, memberships: memberships,
           deletionMarkers: markers),
@@ -2203,7 +2301,8 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
-        tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
         items: itemSnapshots, lists: listSnapshots, memberships: memberships,
         deletionMarkers: markers, receipts: receipts + [receipt])
       return PlannerOperationResult(
@@ -2262,7 +2361,7 @@ public actor Planner {
         "invalidInput", "Use reorder to change position in the same List.",
         propertyPath: "/command/destinationListId")
     }
-    var descriptor = FetchDescriptor<PlannerSchemaV7.Membership>(
+    var descriptor = FetchDescriptor<PlannerSchemaV10.Membership>(
       predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
     descriptor.fetchLimit = 2
     let selected = try context.fetch(descriptor)
@@ -2270,8 +2369,8 @@ public actor Planner {
       throw PlannerFailure("missingReference", "The selected membership is missing or unresolved.")
     }
     let before = try record.value()
-    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>())
-    let lists = try context.fetch(FetchDescriptor<PlannerSchemaV7.List>())
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>())
+    let lists = try context.fetch(FetchDescriptor<PlannerSchemaV10.List>())
     let owners = lists.filter { $0.id == before.list.id && $0.lifetimeId == before.list.lifetimeId }
     let sources = items.filter {
       $0.id == before.item.id && $0.lifetimeId == before.item.lifetimeId
@@ -2374,6 +2473,7 @@ public actor Planner {
         proposalId: UUID(), originalOperationId: operation.operationId,
         datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
         proposedBackup: PlannerDataSnapshot(
+          labelAssociations: try labelAssociationSnapshots(context),
           tags: try tagSnapshots(context), categories: try categorySnapshots(context),
           items: itemSnapshots, lists: listSnapshots, memberships: memberships,
           deletionMarkers: markers),
@@ -2382,10 +2482,10 @@ public actor Planner {
       operation: operation, digest: digest, result: result, bindings: bindings)
     context.delete(record)
     if let added {
-      context.insert(PlannerSchemaV7.Membership(snapshot: added, list: destination, item: source))
+      context.insert(PlannerSchemaV10.Membership(snapshot: added, list: destination, item: source))
     }
     let ranks = Dictionary(uniqueKeysWithValues: memberships.map { ($0.id, $0.rank) })
-    for membership in try context.fetch(FetchDescriptor<PlannerSchemaV7.Membership>()) {
+    for membership in try context.fetch(FetchDescriptor<PlannerSchemaV10.Membership>()) {
       if let identifier = membership.id, let rank = ranks[identifier], membership.rank != rank {
         membership.rank = rank
       }
@@ -2402,7 +2502,8 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
-        tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
         items: itemSnapshots, lists: listSnapshots, memberships: memberships,
         deletionMarkers: markers, receipts: receipts + [receipt])
       return PlannerOperationResult(
@@ -2465,7 +2566,7 @@ public actor Planner {
       throw PlannerFailure(
         "mutationBlocked", "A prior applied action still needs independent recovery.")
     }
-    var descriptor = FetchDescriptor<PlannerSchemaV7.Membership>(
+    var descriptor = FetchDescriptor<PlannerSchemaV10.Membership>(
       predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
     descriptor.fetchLimit = 2
     let selected = try context.fetch(descriptor)
@@ -2473,8 +2574,8 @@ public actor Planner {
       throw PlannerFailure("missingReference", "The selected membership is missing or unresolved.")
     }
     let before = try record.value()
-    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>())
-    let lists = try context.fetch(FetchDescriptor<PlannerSchemaV7.List>())
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>())
+    let lists = try context.fetch(FetchDescriptor<PlannerSchemaV10.List>())
     let owners = lists.filter { $0.id == before.list.id && $0.lifetimeId == before.list.lifetimeId }
     let sources = items.filter {
       $0.id == before.item.id && $0.lifetimeId == before.item.lifetimeId
@@ -2555,6 +2656,7 @@ public actor Planner {
         datasetId: identity.datasetId,
         ownershipBinding: identity.ownershipBinding,
         proposedBackup: PlannerDataSnapshot(
+          labelAssociations: try labelAssociationSnapshots(context),
           tags: try tagSnapshots(context), categories: try categorySnapshots(context),
           items: itemSnapshots, lists: listSnapshots, memberships: memberships,
           deletionMarkers: markers),
@@ -2562,7 +2664,7 @@ public actor Planner {
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
     let ranks = Dictionary(uniqueKeysWithValues: memberships.map { ($0.id, $0.rank) })
-    for membership in try context.fetch(FetchDescriptor<PlannerSchemaV7.Membership>()) {
+    for membership in try context.fetch(FetchDescriptor<PlannerSchemaV10.Membership>()) {
       if let identifier = membership.id, let rank = ranks[identifier], membership.rank != rank {
         membership.rank = rank
       }
@@ -2577,7 +2679,8 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
-        tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
         items: itemSnapshots, lists: listSnapshots, memberships: memberships,
         deletionMarkers: markers, receipts: receipts + [receipt])
       return PlannerOperationResult(
@@ -2647,7 +2750,7 @@ public actor Planner {
       listId = ownerIdentifier
       membershipId = associationIdentifier
     }
-    var descriptor = FetchDescriptor<PlannerSchemaV7.Membership>(
+    var descriptor = FetchDescriptor<PlannerSchemaV10.Membership>(
       predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
     descriptor.fetchLimit = 2
     let selected = try context.fetch(descriptor)
@@ -2656,8 +2759,8 @@ public actor Planner {
         "missingReference", "The selected List appearance is missing or unresolved.")
     }
     let before = try record.value()
-    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>())
-    let lists = try context.fetch(FetchDescriptor<PlannerSchemaV7.List>())
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>())
+    let lists = try context.fetch(FetchDescriptor<PlannerSchemaV10.List>())
     let owners = lists.filter { $0.id == before.list.id && $0.lifetimeId == before.list.lifetimeId }
     let sources = items.filter {
       $0.id == before.item.id && $0.lifetimeId == before.item.lifetimeId
@@ -2709,6 +2812,7 @@ public actor Planner {
         datasetId: identity.datasetId,
         ownershipBinding: identity.ownershipBinding,
         proposedBackup: PlannerDataSnapshot(
+          labelAssociations: try labelAssociationSnapshots(context),
           tags: try tagSnapshots(context), categories: try categorySnapshots(context),
           items: itemSnapshots, lists: listSnapshots, memberships: memberships,
           deletionMarkers: markers),
@@ -2726,7 +2830,8 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
-        tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
         items: itemSnapshots, lists: listSnapshots, memberships: memberships,
         deletionMarkers: markers, receipts: receipts + [receipt])
       return PlannerOperationResult(
@@ -2842,7 +2947,7 @@ public actor Planner {
       throw PlannerFailure(
         "mutationBlocked", "A prior applied action still needs independent recovery.")
     }
-    var assignments = FetchDescriptor<PlannerSchemaV7.Schedule>(
+    var assignments = FetchDescriptor<PlannerSchemaV10.Schedule>(
       predicate: #Predicate { $0.id == scheduleId })
     assignments.fetchLimit = 2
     let records = try context.fetch(assignments)
@@ -2851,7 +2956,7 @@ public actor Planner {
     else {
       throw PlannerFailure("missingReference", "The selected Schedule is missing or unresolved.")
     }
-    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>())
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>())
     let owners = items.filter { $0.id == ownerIdentifier && $0.lifetimeId == ownerLifetime }
     guard owners.count == 1 else {
       throw PlannerFailure(
@@ -2918,6 +3023,7 @@ public actor Planner {
         originalOperationId: operation.operationId, datasetId: identity.datasetId,
         ownershipBinding: identity.ownershipBinding,
         proposedBackup: PlannerDataSnapshot(
+          labelAssociations: try labelAssociationSnapshots(context),
           tags: try tagSnapshots(context), categories: try categorySnapshots(context),
           items: snapshots, lists: try listSnapshots(context),
           memberships: try membershipSnapshots(context), deletionMarkers: markers),
@@ -2940,7 +3046,8 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
-        tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
         items: snapshots, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context), deletionMarkers: markers,
         receipts: receipts + [receipt])
@@ -2984,7 +3091,7 @@ public actor Planner {
       throw PlannerFailure(
         "mutationBlocked", "A prior applied action still needs independent recovery.")
     }
-    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>())
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>())
     let matches = items.filter { $0.id == source.id }
     guard matches.count == 1, let item = matches.first else {
       throw PlannerFailure(
@@ -3012,7 +3119,8 @@ public actor Planner {
       updatedAt: before.updatedAt,
       input: before.input, globalDone: before.globalDone, archived: before.archived,
       links: before.links,
-      schedules: before.schedules + [assignment])
+      schedules: before.schedules + [assignment],
+      labelAssociations: before.labelAssociations, labels: before.labels)
     let snapshots = try items.map { record in
       if record.id == source.id { return after }
       return try record.value()
@@ -3025,6 +3133,7 @@ public actor Planner {
         datasetId: identity.datasetId,
         ownershipBinding: identity.ownershipBinding,
         proposedBackup: PlannerDataSnapshot(
+          labelAssociations: try labelAssociationSnapshots(context),
           tags: try tagSnapshots(context), categories: try categorySnapshots(context),
           items: snapshots, lists: try listSnapshots(context),
           memberships: try membershipSnapshots(context),
@@ -3032,7 +3141,7 @@ public actor Planner {
         payloadDigest: digest, evidence: "preparedUnverified"))
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: bindings)
-    context.insert(try PlannerSchemaV7.Schedule(snapshot: assignment, owner: item))
+    context.insert(try PlannerSchemaV10.Schedule(snapshot: assignment, owner: item))
     context.insert(receipt)
     do { try context.save() } catch {
       context.rollback()
@@ -3042,7 +3151,8 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
-        tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
         items: snapshots, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context),
@@ -3100,7 +3210,7 @@ public actor Planner {
       throw PlannerFailure(
         "mutationBlocked", "A prior applied action still needs independent recovery.")
     }
-    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>())
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>())
     let matches = items.filter { $0.id == sourceId }
     guard matches.count == 1, let item = matches.first else {
       throw PlannerFailure("missingReference", "The selected Item is missing or unresolved.")
@@ -3159,7 +3269,8 @@ public actor Planner {
     let after = ItemSnapshot(
       id: before.id, lifetimeId: before.lifetimeId, createdAt: before.createdAt, updatedAt: now,
       input: updatedInput, globalDone: before.globalDone, archived: before.archived,
-      links: updatedLinks, schedules: before.schedules
+      links: updatedLinks, schedules: before.schedules,
+      labelAssociations: before.labelAssociations, labels: before.labels
     )
     let snapshots = try items.map { record in
       if record.id == sourceId { return after }
@@ -3170,7 +3281,8 @@ public actor Planner {
       proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
       proposedBackup: PlannerDataSnapshot(
-        tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
         items: snapshots, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context)),
@@ -3195,7 +3307,8 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
-        tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
         items: snapshots, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context),
@@ -3239,7 +3352,7 @@ public actor Planner {
       throw PlannerFailure(
         "mutationBlocked", "A prior applied action still needs independent recovery.")
     }
-    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>())
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV10.Item>())
     let matches = items.filter { $0.id == source.id }
     guard matches.count == 1, let item = matches.first else {
       throw PlannerFailure("missingReference", "The selected Item is missing or unresolved.")
@@ -3273,7 +3386,8 @@ public actor Planner {
     let after = ItemSnapshot(
       id: before.id, lifetimeId: before.lifetimeId,
       createdAt: before.createdAt, updatedAt: updatedAt, input: before.input,
-      globalDone: globalDone, archived: archived, links: before.links, schedules: before.schedules)
+      globalDone: globalDone, archived: archived, links: before.links, schedules: before.schedules,
+      labelAssociations: before.labelAssociations, labels: before.labels)
     let snapshots = try items.map { record in
       if record.id == source.id { return after }
       return try record.value()
@@ -3283,7 +3397,8 @@ public actor Planner {
       proposalId: UUID(), originalOperationId: operation.operationId,
       datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
       proposedBackup: PlannerDataSnapshot(
-        tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
         items: snapshots, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context)), payloadDigest: digest,
@@ -3305,7 +3420,8 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
-        tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
         items: snapshots, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context),
@@ -3398,7 +3514,7 @@ public actor Planner {
     let identity = try loadIdentity()
     guard sessions[session.sessionId] == session, session.datasetId == identity.datasetId,
       session.ownershipBinding == identity.ownershipBinding, session.epochId == identity.epochId,
-      identity.schemaVersion == 9
+      identity.schemaVersion == 10
     else {
       throw PlannerFailure("staleDatasetSession", "The dataset session is no longer authorized.")
     }
@@ -3406,7 +3522,7 @@ public actor Planner {
   }
 
   private func openContainer() throws -> ModelContainer {
-    let schema = Schema(versionedSchema: PlannerSchemaV9.self)
+    let schema = Schema(versionedSchema: PlannerSchemaV10.self)
     let modelConfiguration = ModelConfiguration(
       schema: schema, url: configuration.storeURL, cloudKitDatabase: .none)
     return try ModelContainer(
@@ -3427,7 +3543,7 @@ public actor Planner {
         PlannerStoreIdentity.self,
         from: Data(contentsOf: directory.appendingPathComponent("identity.json")))
       guard directory.lastPathComponent == identity.namespaceId.uuidString,
-        (1...9).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
+        (1...10).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
       else {
         throw PlannerFailure(
           "ownershipUnverified", "A recovery namespace has invalid ownership metadata.")

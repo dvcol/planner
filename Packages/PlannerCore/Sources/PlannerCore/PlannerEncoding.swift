@@ -90,18 +90,24 @@ extension PlannerItemContentInput {
       "notes": .optional(notes.map { .string($0) }),
       "location": .optional(location.map { $0.canonicalValue }),
       "estimate": .optional(estimate.map { $0.canonicalValue }),
-      "links": .ordered(links.map(\.canonicalValue)), "categoryIds": .identitySet([]),
-      "tagIds": .identitySet([]),
+      "links": .ordered(links.map(\.canonicalValue)),
+      "categoryIds": .identitySet(categoryIds.map(PlannerCanonicalValue.identity)),
+      "tagIds": .identitySet(tagIds.map(PlannerCanonicalValue.identity)),
     ])
   }
 
   func fieldHashes(
-    datasetId: UUID, itemId: UUID, lifetimeId: UUID, links: [PlannerOwnedLinkRead] = []
+    datasetId: UUID, itemId: UUID, lifetimeId: UUID, links: [PlannerOwnedLinkRead] = [],
+    labelAssociations: [LabelAssociationSnapshot] = []
   ) -> [PlannerItemField:
     PlannerFieldHash]
   {
     guard case .record(var fields) = canonicalContent else { return [:] }
     fields["links"] = .ordered(links.map(\.canonicalValue))
+    fields["categoryIds"] = .identitySet(
+      labelAssociations.filter { $0.label.kind == "category" }.map(\.selectionValue))
+    fields["tagIds"] = .identitySet(
+      labelAssociations.filter { $0.label.kind == "tag" }.map(\.selectionValue))
     return Dictionary(
       uniqueKeysWithValues: PlannerItemField.allCases.compactMap { field in
         guard let value = fields[field.rawValue] else { return nil }
@@ -119,11 +125,14 @@ extension PlannerItemContentInput {
       })
   }
 
-  func payloadDigest(datasetId: UUID, ownershipBinding: String) -> String {
+  func payloadDigest(
+    datasetId: UUID, ownershipBinding: String,
+    bindings: [PlannerBoundIdentity] = []
+  ) -> String {
     let value = PlannerCanonicalValue.record([
       "command": .record(["type": .string("createItem"), "content": canonicalContent]),
       "datasetId": .identity(datasetId), "ownershipBinding": .string(ownershipBinding),
-      "resolvedBindings": .identitySet([]),
+      "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
     ])
     let bytes = Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded()
     return plannerDigest(bytes, prefix: "sha256-payload-v1:")
@@ -148,9 +157,6 @@ extension PlannerItemContentInput {
           propertyPath: "/command/content/location/coordinate")
       }
     }
-    guard categoryIds.isEmpty, tagIds.isEmpty else {
-      throw PlannerFailure("unavailable", "This local fixture does not yet implement labels.")
-    }
     for (index, link) in links.enumerated() {
       let path = "/command/content/links/\(index)"
       guard link.linkId == nil else {
@@ -165,7 +171,7 @@ extension PlannerItemContentInput {
   func readContent(links: [PlannerOwnedLinkRead] = []) -> PlannerItemContent {
     PlannerItemContent(
       title: title, subtitle: subtitle, notes: notes, location: location, estimate: estimate,
-      links: links, categoryIds: [], tagIds: []
+      links: links, categoryIds: categoryIds, tagIds: tagIds
     )
   }
 }
@@ -297,7 +303,8 @@ extension PlannerItemChanges {
     }
     return PlannerItemContentInput(
       title: updatedTitle, subtitle: updatedSubtitle, notes: updatedNotes,
-      location: updatedLocation, estimate: updatedEstimate
+      location: updatedLocation, estimate: updatedEstimate,
+      categoryIds: input.categoryIds, tagIds: input.tagIds
     )
   }
 

@@ -337,6 +337,7 @@ public enum PlannerReferenceRead: Sendable, Equatable {
   case membership(id: UUID, list: PlannerEntityReference, item: PlannerEntityReference)
   case ownedLink(id: UUID, owner: PlannerEntityReference)
   case schedule(id: UUID, source: PlannerEntityReference)
+  case labelAssociation(id: UUID, owner: PlannerEntityReference, label: PlannerEntityReference)
 }
 
 public enum PlannerSourceRead: Sendable {
@@ -347,6 +348,13 @@ public enum PlannerSourceRead: Sendable {
   case tag(PlannerTagSourceRead)
 }
 
+public struct PlannerLabelRead: Sendable, Equatable {
+  public let reference: PlannerEntityReference
+  public let name: String
+  public let color: PlannerColor?
+  public let iconName: String?
+}
+
 public struct PlannerItemSourceRead: Sendable {
   public let source: PlannerEntityReference
   public let sourceLifetimeId: UUID
@@ -355,7 +363,7 @@ public struct PlannerItemSourceRead: Sendable {
   public let updatedAt: Date
   public let fieldHashes: [PlannerItemField: PlannerFieldHash]
   public let state: PlannerSourceState
-  public let labels: [PlannerEntityReference]
+  public let labels: [PlannerLabelRead]
   public let references: [PlannerReferenceRead]
 }
 
@@ -538,6 +546,7 @@ public struct PlannerDecodedBackup: Sendable {
 }
 
 public struct PlannerPortableBackup: Sendable {
+  public let labelAssociations: [PlannerPortableLabelAssociation]
   public var items: [PlannerPortableItem] {
     sources.compactMap {
       if case .item(let item) = $0 { return item }
@@ -558,11 +567,13 @@ public struct PlannerPortableBackup: Sendable {
   public let deletionMarkers: [PlannerPortableDeletionMarker]
 
   init(
-    sources: [PlannerPortableSource], memberships: [PlannerPortableMembership],
+    sources: [PlannerPortableSource], labelAssociations: [PlannerPortableLabelAssociation],
+    memberships: [PlannerPortableMembership],
     schedules: [PlannerPortableSchedule] = [],
     deletionMarkers: [PlannerPortableDeletionMarker]
   ) {
     self.sources = sources
+    self.labelAssociations = labelAssociations
     self.memberships = memberships
     self.schedules = schedules
     self.deletionMarkers = deletionMarkers

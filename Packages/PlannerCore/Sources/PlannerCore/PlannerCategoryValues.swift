@@ -127,6 +127,7 @@ struct CategorySnapshot {
   let createdAt: Date
   let updatedAt: Date
   let content: PlannerCategoryContent
+  var associations: [LabelAssociationSnapshot] = []
 
   var reference: PlannerEntityReference { PlannerEntityReference(kind: .category, id: id) }
 
@@ -142,6 +143,7 @@ struct CategorySnapshot {
     PlannerCategorySourceRead(
       source: reference, sourceLifetimeId: lifetimeId, content: content,
       createdAt: createdAt, updatedAt: updatedAt, fieldHashes: fieldHashes(datasetId: datasetId),
-      state: PlannerSourceState(globalDone: nil, archived: nil), references: [])
+      state: PlannerSourceState(globalDone: nil, archived: nil),
+      references: associations.sorted { $0.id.uuidString < $1.id.uuidString }.map(\.reference))
   }
 }

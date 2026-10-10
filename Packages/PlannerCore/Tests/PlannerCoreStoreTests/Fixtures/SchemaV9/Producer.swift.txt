@@ -1,0 +1,42 @@
+import Foundation
+import PlannerCore
+import Testing
+
+struct Schema9ProducerTests {
+  @Test func produceGenuineSchema9Fixture() async throws {
+    let directory = URL(fileURLWithPath: "/private/tmp/PlannerSchema9Fixture-1dcd857", isDirectory: true)
+    let planner = Planner(configuration: PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly))
+    let tagOperationId = UUID(uuidString: "00000000-0000-4000-8000-000000000991")!
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .applied(let created, .complete(let checkpoint)) = await planner.execute(
+        PlannerOperation(operationId: tagOperationId, session: session,
+          command: .createTag(content: PlannerTagContentInput(
+            name: "Rainy day", color: PlannerColor(red: 0, green: 0.5, blue: 1, alpha: 1),
+            iconName: "cloud.rain")))).outcome,
+      let tag = created.generated.first,
+      case .source(.tag(let read)) = await planner.read(session: session, request: .source(tag)),
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 9
+    else {
+      Issue.record("Schema9 producer must create a Tag with independent recovery.")
+      return
+    }
+    let manifestURL = directory.appendingPathComponent("manifest.json")
+    var manifest = try #require(JSONSerialization.jsonObject(with: Data(contentsOf: manifestURL)) as? [String: Any])
+    manifest["producerCommit"] = "1dcd857"
+    manifest["latestCheckpoint"] = checkpoint
+    manifest["tagId"] = tag.id.uuidString
+    manifest["tagLifetimeId"] = read.sourceLifetimeId.uuidString
+    manifest["tagCreatedAt"] = read.createdAt.timeIntervalSinceReferenceDate
+    manifest["tagUpdatedAt"] = read.updatedAt.timeIntervalSinceReferenceDate
+    manifest["tagFieldHashes"] = Dictionary(uniqueKeysWithValues: read.fieldHashes.map { ($0.key.rawValue, $0.value.value) })
+    manifest["tagOperationId"] = tagOperationId.uuidString
+    manifest["tagCheckpoint"] = checkpoint
+    try JSONSerialization.data(withJSONObject: manifest, options: [.prettyPrinted, .sortedKeys]).write(to: manifestURL)
+    #expect(checkpoint == 18)
+  }
+}

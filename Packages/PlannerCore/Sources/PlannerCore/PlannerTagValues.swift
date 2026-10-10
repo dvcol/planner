@@ -127,6 +127,7 @@ struct TagSnapshot {
   let createdAt: Date
   let updatedAt: Date
   let content: PlannerTagContent
+  var associations: [LabelAssociationSnapshot] = []
 
   var reference: PlannerEntityReference { PlannerEntityReference(kind: .tag, id: id) }
 
@@ -142,6 +143,7 @@ struct TagSnapshot {
     PlannerTagSourceRead(
       source: reference, sourceLifetimeId: lifetimeId, content: content,
       createdAt: createdAt, updatedAt: updatedAt, fieldHashes: fieldHashes(datasetId: datasetId),
-      state: PlannerSourceState(globalDone: nil, archived: nil), references: [])
+      state: PlannerSourceState(globalDone: nil, archived: nil),
+      references: associations.sorted { $0.id.uuidString < $1.id.uuidString }.map(\.reference))
   }
 }

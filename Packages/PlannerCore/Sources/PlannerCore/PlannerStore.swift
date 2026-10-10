@@ -86,7 +86,7 @@ enum PlannerSchemaV1: VersionedSchema {
   }
 }
 
-extension PlannerSchemaV7.Item {
+extension PlannerSchemaV10.Item {
   func rowRead(
     identity: PlannerRowIdentity, localDone: Bool?, hasLinks: Bool,
     previewLink: PlannerOwnedLinkRead?, scheduleSummary: PlannerRowScheduleSummary
@@ -132,7 +132,7 @@ enum PlannerMigrationPlan: SchemaMigrationPlan {
     [
       PlannerSchemaV1.self, PlannerSchemaV2.self, PlannerSchemaV3.self, PlannerSchemaV4.self,
       PlannerSchemaV5.self, PlannerSchemaV6.self, PlannerSchemaV7.self, PlannerSchemaV8.self,
-      PlannerSchemaV9.self,
+      PlannerSchemaV9.self, PlannerSchemaV10.self,
     ]
   }
   static var stages: [MigrationStage] {
@@ -145,6 +145,7 @@ enum PlannerMigrationPlan: SchemaMigrationPlan {
       .lightweight(fromVersion: PlannerSchemaV6.self, toVersion: PlannerSchemaV7.self),
       .lightweight(fromVersion: PlannerSchemaV7.self, toVersion: PlannerSchemaV8.self),
       .lightweight(fromVersion: PlannerSchemaV8.self, toVersion: PlannerSchemaV9.self),
+      .lightweight(fromVersion: PlannerSchemaV9.self, toVersion: PlannerSchemaV10.self),
     ]
   }
 }
@@ -159,6 +160,8 @@ struct ItemSnapshot {
   let archived: Bool
   var links: [OwnedLinkSnapshot] = []
   var schedules: [ScheduleSnapshot] = []
+  var labelAssociations: [LabelAssociationSnapshot] = []
+  var labels: [PlannerLabelRead] = []
 
   var reference: PlannerEntityReference { PlannerEntityReference(kind: .item, id: id) }
 
@@ -168,9 +171,11 @@ struct ItemSnapshot {
       content: input.readContent(links: links.map(\.read)), createdAt: createdAt,
       updatedAt: updatedAt,
       fieldHashes: input.fieldHashes(
-        datasetId: datasetId, itemId: id, lifetimeId: lifetimeId, links: links.map(\.read)),
-      state: PlannerSourceState(globalDone: globalDone, archived: archived), labels: [],
-      references: links.map { .ownedLink(id: $0.id, owner: reference) }
+        datasetId: datasetId, itemId: id, lifetimeId: lifetimeId, links: links.map(\.read),
+        labelAssociations: labelAssociations),
+      state: PlannerSourceState(globalDone: globalDone, archived: archived), labels: labels,
+      references: labelAssociations.sorted { $0.id.uuidString < $1.id.uuidString }.map(\.reference)
+        + links.map { .ownedLink(id: $0.id, owner: reference) }
         + schedules.sorted { $0.id.uuidString < $1.id.uuidString }.map {
           .schedule(id: $0.id, source: reference)
         }
