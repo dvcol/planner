@@ -59,6 +59,7 @@ struct SavedAppearanceDetail: View {
       if let notes = item.content.notes, !notes.isEmpty {
         Section("Notes") { Text(notes).textSelection(.enabled) }
       }
+      ItemLocationSection(title: item.content.title, location: item.content.location)
     }
     .formStyle(.grouped)
     .navigationTitle(item.content.title)

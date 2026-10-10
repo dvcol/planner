@@ -2,6 +2,32 @@ import XCTest
 
 @MainActor
 final class MapNavigationJourneyTests: XCTestCase {
+  func testOrdinaryDetailsShowTheSavedLocationMapWithoutChoosingAMapLayout() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--navigation-prototype"]
+    application.launch()
+    application.choosePrototypeLayout("Library first")
+    application.openPlannerSection("Lists")
+    application.plannerElement("list.00000000-0000-4000-8000-000000000202")
+      .activateForPlannerJourney()
+    application.plannerElement("appearance.00000000-0000-4000-8000-000000000403")
+      .activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["In Wishlist"].waitForExistence(timeout: 5))
+    XCTAssertTrue(
+      application.descendants(matching: .any)["map.location"].waitForExistence(timeout: 5),
+      "A saved location must show its map in ordinary contextual details.")
+    recordScreenshot(application, name: "Ordinary contextual detail with native map")
+    application.openPlannerSection("Items")
+    application.plannerElement("item.00000000-0000-4000-8000-000000000101")
+      .activateForPlannerJourney()
+    XCTAssertTrue(
+      application.descendants(matching: .any)["map.location"].waitForExistence(timeout: 5),
+      "The same location must remain visible in the ordinary global Item details.")
+    XCTAssertFalse(application.buttons["Inspect Item"].exists)
+    recordScreenshot(application, name: "Ordinary global Item detail with native map")
+  }
+
   func testSelectedAppearanceShowsItsMapAndDetailsTogetherWithoutInspection() throws {
     continueAfterFailure = false
     let application = XCUIApplication()

@@ -1,0 +1,252 @@
+{
+  "baseCommit": "a38b787",
+  "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+  "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+  "seam": "Accepted public native UI. Map/count fixtures remain read-only; saved appearance journeys use isolated durable local datasets. No private persistence reads or test-only production injection.",
+  "sourceSnapshots": {
+    "ordinaryMapRed": {
+      "Planner/NavigationPrototype/NavigationPrototypeView.swift": "0c8467d954d6867c7101628d5e1e0d2d9598b1c87eeed1561a97efb52e4e4eeb",
+      "Planner/NavigationPrototype/PrototypeMapItemDetail.swift": "a12593a96500dfda25ed688cd67cbf249348a52fd75a598c9a235cc4b65597c2",
+      "PlannerNavigationUITests/MapNavigationJourneyTests.swift": "2f45ba62db9e533d4d1f6a901f1a94de1f2c57a9d98517e4a980d592cd90c5f4"
+    },
+    "ordinaryMapGreen": {
+      "Planner/Scenes/ItemLocationSection.swift": "462065ae62d2641bb0b03a60232a8792118c3765b8d7f38b86c1ae9612014fac",
+      "Planner/Scenes/SavedItemViews.swift": "a6869d804aead7d1dcb2701b39b9175c6c0609dfe5efcde5c2a0947adfa8e42a",
+      "Planner/Scenes/SavedAppearanceViews.swift": "6957c1ca3a96f98a245b62a2b16bf78bc2acce752a40597546af2be41f629442",
+      "Planner/NavigationPrototype/NavigationPrototypeView.swift": "ba6c9816818e7d4e4048f69712708116c5c4db42eae51066ee5de9a61054e219",
+      "PlannerNavigationUITests/MapNavigationJourneyTests.swift": "2f45ba62db9e533d4d1f6a901f1a94de1f2c57a9d98517e4a980d592cd90c5f4"
+    },
+    "containerCountRed": {
+      "Planner/NavigationPrototype/NavigationPrototypeFixture.swift": "b79ba5cbccb7608690be8e3407fe77b2b33211dca6cf14dc047e7690fe5199e5",
+      "Planner/NavigationPrototype/NavigationPrototypeView.swift": "ba6c9816818e7d4e4048f69712708116c5c4db42eae51066ee5de9a61054e219",
+      "PlannerNavigationUITests/NavigationJourneyTests.swift": "3161526d9d1da3dcb9df0167a1c7cdb9722c55f1dcde3c9d6b8d0f2106b1377d"
+    },
+    "final": {
+      "Planner/NavigationPrototype/NavigationPrototypeFixture.swift": "c76b8966df85a22f8d8f10b8d06f7f01f1e2a6779a7110a09152c173a12b6346",
+      "Planner/NavigationPrototype/NavigationPrototypeView.swift": "cd0641be7a8eaf1a568fe133b0ddf60c0f82a3f50b644b9f33788a0a70832624",
+      "Planner/Scenes/ItemLocationSection.swift": "462065ae62d2641bb0b03a60232a8792118c3765b8d7f38b86c1ae9612014fac",
+      "Planner/Scenes/SavedItemViews.swift": "a6869d804aead7d1dcb2701b39b9175c6c0609dfe5efcde5c2a0947adfa8e42a",
+      "Planner/Scenes/SavedAppearanceViews.swift": "6957c1ca3a96f98a245b62a2b16bf78bc2acce752a40597546af2be41f629442",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "4fe3cbeb81d38092906f970f5473ebc8343a85add4d1238c5dd99c20dbc74a2b",
+      "Planner/Scenes/SavedPlannerView.swift": "40d689cedc577d0297a6eef18a543f4239d348c6c7f885bc6e010b1b7611583b",
+      "PlannerNavigationUITests/NavigationJourneyTests.swift": "6d532729cdef8444599622885b5c6aba3c9b96153de108123ec2283121cc3c52",
+      "PlannerNavigationUITests/MapNavigationJourneyTests.swift": "2f45ba62db9e533d4d1f6a901f1a94de1f2c57a9d98517e4a980d592cd90c5f4"
+    }
+  },
+  "results": {
+    "ordinaryMapRed": {
+      "result": "Failed",
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [
+        {
+          "failureText": "XCTAssertTrue failed - A saved location must show its map in ordinary contextual details.",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "MapNavigationJourneyTests/testOrdinaryDetailsShowTheSavedLocationMapWithoutChoosingAMapLayout()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/MapNavigationJourneyTests/testOrdinaryDetailsShowTheSavedLocationMapWithoutChoosingAMapLayout",
+          "testName": "testOrdinaryDetailsShowTheSavedLocationMapWithoutChoosingAMapLayout()"
+        }
+      ],
+      "summaryPath": "/private/tmp/PlannerOrdinaryMapPhoneRedSummary.json"
+    },
+    "ordinaryMapGreen": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [],
+      "summaryPath": "/private/tmp/PlannerOrdinaryMapPhoneGreenSummary.json"
+    },
+    "containerCountRed": {
+      "result": "Failed",
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "NavigationJourneyTests/testItineraryCountsExplainHiddenArchivedItemsAndContainerComposition()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/NavigationJourneyTests/testItineraryCountsExplainHiddenArchivedItemsAndContainerComposition",
+          "testName": "testItineraryCountsExplainHiddenArchivedItemsAndContainerComposition()"
+        }
+      ],
+      "summaryPath": "/private/tmp/PlannerContainerCountPhoneRedSummary.json"
+    },
+    "containerCountGreen": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [],
+      "summaryPath": "/private/tmp/PlannerContainerCountPhoneGreenSummary.json"
+    },
+    "macInitialSetup": {
+      "result": "Failed",
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [
+        {
+          "failureText": "The test runner failed to initialize for UI testing. (Underlying Error: Timed out while enabling automation mode.)",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "PlannerNavigationUITests-Runner (77969) encountered an error",
+          "testName": "PlannerNavigationUITests-Runner (77969) encountered an error"
+        }
+      ],
+      "summaryPath": "/private/tmp/PlannerOrdinaryMapMacSetupSummary.json",
+      "executedBehaviorFunctions": 0
+    },
+    "macFinalSetup": {
+      "result": "Failed",
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1,
+      "testFailures": [
+        {
+          "failureText": "The test runner failed to initialize for UI testing. (Underlying Error: Timed out while enabling automation mode.)",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "PlannerNavigationUITests-Runner (90243) encountered an error",
+          "testName": "PlannerNavigationUITests-Runner (90243) encountered an error"
+        }
+      ],
+      "summaryPath": "/private/tmp/PlannerNativeCountsAndMapsMacFinalSummary.json",
+      "executedBehaviorFunctions": 0
+    },
+    "phoneFinal": {
+      "result": "Passed",
+      "passedTests": 11,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 11,
+      "testFailures": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "deviceName": "iPhone 18 Pro",
+            "modelName": "iPhone 18 Pro",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 11,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "summaryPath": "/private/tmp/PlannerNativeCountsAndMapsPhoneFinalSummary.json"
+    },
+    "tabletFinal": {
+      "result": "Passed",
+      "passedTests": 11,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 11,
+      "testFailures": [],
+      "devicesAndConfigurations": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "deviceName": "iPad Air 11-inch (M4)",
+            "modelName": "iPad Air 11-inch (M4)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 11,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ],
+      "summaryPath": "/private/tmp/PlannerNativeCountsAndMapsTabletFinalSummary.json"
+    }
+  },
+  "finalCommands": {
+    "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/NavigationJourneyTests -only-testing:PlannerNavigationUITests/MapNavigationJourneyTests -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests -resultBundlePath /private/tmp/PlannerNativeCountsAndMapsMacFinal.xcresult test > /private/tmp/PlannerNativeCountsAndMapsMacFinal.log 2>&1",
+    "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/NavigationJourneyTests -only-testing:PlannerNavigationUITests/MapNavigationJourneyTests -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests -resultBundlePath /private/tmp/PlannerNativeCountsAndMapsPhoneFinal.xcresult test > /private/tmp/PlannerNativeCountsAndMapsPhoneFinal.log 2>&1",
+    "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/NavigationJourneyTests -only-testing:PlannerNavigationUITests/MapNavigationJourneyTests -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests -resultBundlePath /private/tmp/PlannerNativeCountsAndMapsTabletFinal.xcresult test > /private/tmp/PlannerNativeCountsAndMapsTabletFinal.log 2>&1"
+  },
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-ordinary-item-map.png",
+      "sha256": "733b17ae6a7265c04d4c090c756cfedc3e0a7ac1612df7616716edb0c28985e0",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-itinerary-filtered-counts.png",
+      "sha256": "32a3cc6b7771fc8c3a5315dd001649367c0497d2dc9b3314773027e9897da2c3",
+      "visuallyInspected": false
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-itinerary-all-counts.png",
+      "sha256": "739c4c623f57de6a8b59dae8d5a398d9d40531199b35a0a9e36d3b9b7fae311a",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-ordinary-item-map.png",
+      "sha256": "398275650e3fbd946ac73ac5106228b71da8f3ebd6ca8e86982e4bdf7751e340",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-itinerary-filtered-counts.png",
+      "sha256": "0b0f7fb6a4eee041e4c3fc07cc520162d6aaf24a45cff4e7327f9e2ba5ddd4f4",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-itinerary-all-counts.png",
+      "sha256": "34157148d8b32b7aafbb9ec1242f41873657a89ac6a4b23f9944a02c193efdad",
+      "visuallyInspected": false
+    }
+  ],
+  "behaviorReds": [
+    {
+      "resultBundle": "/private/tmp/PlannerOrdinaryMapPhoneRed.xcresult",
+      "failure": "Normal Wishlist appearance details omitted map.location until the special layout was selected. Regression failed at MapNavigationJourneyTests.swift:17."
+    },
+    {
+      "resultBundle": "/private/tmp/PlannerContainerCountPhoneRed.xcresult",
+      "failure": "The accepted 0 of 3 items done label was absent. Regression failed at NavigationJourneyTests.swift:25 before the count implementation."
+    }
+  ],
+  "focusedGreens": [
+    "/private/tmp/PlannerOrdinaryMapPhoneGreen.xcresult",
+    "/private/tmp/PlannerContainerCountPhoneGreen.xcresult"
+  ],
+  "checks": [
+    "Strict swift-format lint on nine affected Swift files",
+    "App and UI-test compilation through the final selected test runs",
+    "Affected Markdown lint",
+    "git diff --check"
+  ],
+  "limits": [
+    "Both Mac attempts failed while enabling automation mode before any behavior function executed. Their runner failures are not behavior reds. Mac runtime qualification remains open.",
+    "Maps render owned synthetic fixture coordinates, not geocoded addresses. Live basemap and address/provider/offline behavior remain separate qualifications.",
+    "The shared section is wired into saved Item and appearance details, but a saved-location native creation/edit/reopen journey is not established here.",
+    "Active, Archived and All filter views are qualified in the read-only comparison. Saved cumulative query-filter controls remain unfinished.",
+    "Schema 7/portable format 1 remain localOnly with CloudKit disabled. Physical signing/Share/account/sync, long-list performance and broader accessibility/resizing review remain open."
+  ]
+}
