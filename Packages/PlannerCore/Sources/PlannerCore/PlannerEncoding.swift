@@ -198,12 +198,11 @@ extension PlannerFieldChange {
 
 extension PlannerItemChanges {
   func validatedFields() throws -> [PlannerItemField] {
-    guard estimate.isUnchanged,
-      categoryIds.isUnchanged, tagIds.isUnchanged
+    guard categoryIds.isUnchanged, tagIds.isUnchanged
     else {
       throw PlannerFailure(
         "unavailable",
-        "This edit fixture currently supports title, subtitle, notes, location and links only."
+        "This edit fixture currently supports title, subtitle, notes, location, estimate and links only."
       )
     }
     switch title {
@@ -226,6 +225,11 @@ extension PlannerItemChanges {
           "invalidInput", "Coordinates must be finite and within their geographic ranges.",
           propertyPath: "/command/changes/location/coordinate")
       }
+    }
+    if case .set(let value) = estimate, value.minutes <= 0 {
+      throw PlannerFailure(
+        "invalidInput", "An estimate must contain positive whole minutes.",
+        propertyPath: "/command/changes/estimate/minutes")
     }
     switch links {
     case .clear:
@@ -250,6 +254,7 @@ extension PlannerItemChanges {
     if !subtitle.isUnchanged { fields.append(.subtitle) }
     if !notes.isUnchanged { fields.append(.notes) }
     if !location.isUnchanged { fields.append(.location) }
+    if !estimate.isUnchanged { fields.append(.estimate) }
     if !links.isUnchanged { fields.append(.links) }
     guard !fields.isEmpty else {
       throw PlannerFailure(
@@ -264,6 +269,7 @@ extension PlannerItemChanges {
     var updatedSubtitle = input.subtitle
     var updatedNotes = input.notes
     var updatedLocation = input.location
+    var updatedEstimate = input.estimate
     switch title {
     case .set(let value): updatedTitle = value
     case .clear: throw PlannerFailure("invalidInput", "An Item title cannot be cleared.")
@@ -284,9 +290,14 @@ extension PlannerItemChanges {
     case .clear: updatedLocation = nil
     case .unchanged: break
     }
+    switch estimate {
+    case .set(let value): updatedEstimate = value
+    case .clear: updatedEstimate = nil
+    case .unchanged: break
+    }
     return PlannerItemContentInput(
       title: updatedTitle, subtitle: updatedSubtitle, notes: updatedNotes,
-      location: updatedLocation, estimate: input.estimate
+      location: updatedLocation, estimate: updatedEstimate
     )
   }
 
@@ -309,6 +320,11 @@ extension PlannerItemChanges {
     switch location {
     case .set(let value): changedValues["location"] = .optional(value.canonicalValue)
     case .clear: changedValues["location"] = .optional(nil)
+    case .unchanged: break
+    }
+    switch estimate {
+    case .set(let value): changedValues["estimate"] = .optional(value.canonicalValue)
+    case .clear: changedValues["estimate"] = .optional(nil)
     case .unchanged: break
     }
     if case .set(let values) = links {

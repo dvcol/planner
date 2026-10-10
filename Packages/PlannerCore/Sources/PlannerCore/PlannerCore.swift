@@ -2387,6 +2387,7 @@ public actor Planner {
         if field == .subtitle { currentValues[field] = .optionalString(before.input.subtitle) }
         if field == .notes { currentValues[field] = .optionalString(before.input.notes) }
         if field == .location { currentValues[field] = .optionalLocation(before.input.location) }
+        if field == .estimate { currentValues[field] = .optionalEstimate(before.input.estimate) }
         if field == .links { currentValues[field] = .links(before.links.map(\.read)) }
       }
       throw PlannerFailure(
@@ -2399,6 +2400,7 @@ public actor Planner {
     let now = Date()
     let updatedInput = try changes.applyingChanges(to: before.input)
     let updatedLocationData = try updatedInput.location.map { try JSONEncoder().encode($0) }
+    let updatedEstimateData = try updatedInput.estimate.map { try JSONEncoder().encode($0) }
     let updatedLinks = try changes.applyingLinks(to: before)
     let after = ItemSnapshot(
       id: before.id, lifetimeId: before.lifetimeId, createdAt: before.createdAt, updatedAt: now,
@@ -2426,6 +2428,7 @@ public actor Planner {
     if changedFields.contains(.subtitle) { item.subtitle = updatedInput.subtitle }
     if changedFields.contains(.notes) { item.notes = updatedInput.notes }
     if changedFields.contains(.location) { item.locationData = updatedLocationData }
+    if changedFields.contains(.estimate) { item.estimateData = updatedEstimateData }
     if changedFields.contains(.links) { item.replaceLinks(with: updatedLinks, context: context) }
     item.updatedAt = now
     context.insert(receipt)
