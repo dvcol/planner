@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-11",
+  "scope": "Temporary link preview cache and Apple SDK adapter only; native rich-card and address gates remain open",
+  "baseCommit": "1e6acd6",
+  "tests": {
+    "command": "env PLANNER_PREVIEW_FIXTURE_URL=http://127.0.0.1:44555 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path Packages/PlannerPreviews --scratch-path /private/tmp/PlannerPreviewsPackageBuild",
+    "log": "/private/tmp/PlannerPreviewsCancellationGreen.log",
+    "exitCode": 0,
+    "executedFunctions": 5,
+    "executedSuites": 2,
+    "caseInvocations": 7,
+    "appleSDKTestEnabled": true
+  },
+  "priorOutcomes": [
+    {
+      "log": "/private/tmp/PlannerPreviewsLinkRed.log",
+      "outcome": "New interface compile red"
+    },
+    {
+      "log": "/private/tmp/PlannerPreviewsRetryRed.log",
+      "outcome": "Retry interface compile red"
+    },
+    {
+      "log": "/private/tmp/PlannerPreviewsAppleRed.log",
+      "outcome": "Apple adapter interface compile red"
+    },
+    {
+      "log": "/private/tmp/PlannerPreviewsAppleGreen.log",
+      "outcome": "Apple SDK test failed to obtain image with initial flat fixture"
+    },
+    {
+      "log": "/private/tmp/PlannerPreviewsAppleDetailedImage.log",
+      "outcome": "Detailed fixture produced image; Apple SDK test passed"
+    },
+    {
+      "log": "/private/tmp/PlannerPreviewsCancellationRed.log",
+      "outcome": "Runtime cancellation regression failed; SDK test skipped without fixture environment"
+    },
+    {
+      "log": "/private/tmp/PlannerPreviewsCancellationGreen.log",
+      "outcome": "Cancellation regression and actual Apple SDK tests passed"
+    }
+  ],
+  "sourceHashes": {
+    "Packages/PlannerPreviews/Package.swift": "5708f6ae8ecb934a67197534dd8c36e531257387c8b7d0fde501bdabef9b2527",
+    "Packages/PlannerPreviews/Sources/PlannerPreviews/AppleLinkPreviewProvider.swift": "cf737b3de7535a961a1b3e2e008dd0e70e425e1dd92de8322c033b2caac9c319",
+    "Packages/PlannerPreviews/Sources/PlannerPreviews/PlannerPreviews.swift": "bfed9c5fd589a0cb1c3ebe514f82fc691c91cc26284541df285b971bf7bc0be1",
+    "Packages/PlannerPreviews/Tests/PlannerPreviewsTests/AppleLinkPreviewTests.swift": "508ce4affb13ca15cf342f72cb3b7f71bd0e9645a28ebab52f9ab7f48492c820",
+    "Packages/PlannerPreviews/Tests/PlannerPreviewsTests/LinkPreviewTests.swift": "c8a9c9083e7575359e5fd64a31406f01befd7ca90d6dc7e792eb39fdce962c4d",
+    "scripts/preview-fixture-server.py": "4cb6d5057db93f8fcafdec6dcc77b0d53140885a56bb5928ef54e512f0a62ea5"
+  },
+  "limits": [
+    "No native card painting qualification in this boundary commit",
+    "No address lookup implemented",
+    "No Mac runtime UI evidence",
+    "No signed physical-device CloudKit, account recovery or Share evidence"
+  ]
+}
