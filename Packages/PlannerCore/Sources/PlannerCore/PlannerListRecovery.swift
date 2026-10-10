@@ -14,12 +14,14 @@ public enum PlannerPortableSource: Sendable {
   case item(PlannerPortableItem)
   case list(PlannerPortableList)
   case category(PlannerPortableCategory)
+  case tag(PlannerPortableTag)
 
   public var id: UUID {
     switch self {
     case .item(let item): item.id
     case .list(let list): list.id
     case .category(let category): category.id
+    case .tag(let tag): tag.id
     }
   }
 
@@ -28,6 +30,7 @@ public enum PlannerPortableSource: Sendable {
     case .item: .item
     case .list: .list
     case .category: .category
+    case .tag: .tag
     }
   }
 }
@@ -114,6 +117,7 @@ enum PortableSourceRecord: Codable {
   case item(PortableItemRecord)
   case list(PortableListRecord)
   case category(PortableCategoryRecord)
+  case tag(PortableTagRecord)
 
   private enum CodingKeys: String, CodingKey { case kind }
 
@@ -123,6 +127,7 @@ enum PortableSourceRecord: Codable {
     case .item: self = .item(try PortableItemRecord(from: decoder))
     case .list: self = .list(try PortableListRecord(from: decoder))
     case .category: self = .category(try PortableCategoryRecord(from: decoder))
+    case .tag: self = .tag(try PortableTagRecord(from: decoder))
     default:
       throw PlannerFailure(
         "recoveryIntegrityFailure", "The source kind is not supported by this snapshot slice.")
@@ -134,6 +139,7 @@ enum PortableSourceRecord: Codable {
     case .item(let item): try item.encode(to: encoder)
     case .list(let list): try list.encode(to: encoder)
     case .category(let category): try category.encode(to: encoder)
+    case .tag(let tag): try tag.encode(to: encoder)
     }
   }
 
@@ -142,6 +148,7 @@ enum PortableSourceRecord: Codable {
     case .item(let item): item.id
     case .list(let list): list.id
     case .category(let category): category.id
+    case .tag(let tag): tag.id
     }
   }
 }

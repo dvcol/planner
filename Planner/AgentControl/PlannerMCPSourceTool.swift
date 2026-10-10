@@ -123,6 +123,9 @@
           structured = .object([
             "formatVersion": .int(1), "kind": .string("source"), "value": categoryValue(read),
           ])
+        case .source(.tag):
+          return failure(
+            code: "unavailable", message: "Tag source reads are not yet exposed by this adapter.")
         case .source(.item(let read)):
           guard read.content.categoryIds.isEmpty,
             read.content.tagIds.isEmpty,
