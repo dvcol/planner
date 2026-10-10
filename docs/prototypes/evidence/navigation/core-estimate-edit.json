@@ -1,0 +1,155 @@
+{
+  "baselineCommit": "87489ed",
+  "seam": "A21/A22-approved public Planner execute/read/operationStatus/inspectRecovery boundary with real durable storage. No mocks, private persistence assertions or production injection.",
+  "sourceSnapshots": {
+    "SetupFailure": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "881396c7d3a447d1bdbd52c16a5fa1e7f990b47431a54481806f178546ddaf4d",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "aa60181302a176e7774fc5747df1284503975b99112e2821497e61edce637cad",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "d79d95287dfeb6af2e2e43596b65c1e007f6e94dfa6636b07b4977eb12bd857a",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEstimateEditTests.swift": "e1c9cbbdf5ed6573795e60e6450792b4f1f89ff10613114acc8551c1d41937c3"
+    },
+    "Red": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "881396c7d3a447d1bdbd52c16a5fa1e7f990b47431a54481806f178546ddaf4d",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "aa60181302a176e7774fc5747df1284503975b99112e2821497e61edce637cad",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "d79d95287dfeb6af2e2e43596b65c1e007f6e94dfa6636b07b4977eb12bd857a",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEstimateEditTests.swift": "74fb285919cabbac69eeb6c28772632576dc906df19399ad7543217fcd02a7ae"
+    },
+    "Green": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "a49a55d1c6ec0ecaed99378a6324b973c95f9730e108a242ff4ea5e6b6323ca5",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "eb1e9513fe924a9b29295e7d8f146f9425969092ee1a7e89300dd4c3d8237a3c",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "d79d95287dfeb6af2e2e43596b65c1e007f6e94dfa6636b07b4977eb12bd857a",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEstimateEditTests.swift": "74fb285919cabbac69eeb6c28772632576dc906df19399ad7543217fcd02a7ae"
+    },
+    "StaleRed": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "a49a55d1c6ec0ecaed99378a6324b973c95f9730e108a242ff4ea5e6b6323ca5",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "eb1e9513fe924a9b29295e7d8f146f9425969092ee1a7e89300dd4c3d8237a3c",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "d79d95287dfeb6af2e2e43596b65c1e007f6e94dfa6636b07b4977eb12bd857a",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEstimateEditTests.swift": "e107931d33abf9a941f11896d7a59bbbdabd68537387d78f0a379efd50f70653",
+      "Planner/AgentControl/PlannerMCPFailureValue.swift": "c687a70985dc6c25214572a499da512c16a822b3148e390acceced842f1a1c04"
+    },
+    "StaleGreen": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "d1ede520efcef43c8c4b72d564d8f75bd3e1fbe700ccbc7f9fb3bab0874ca87d",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "eb1e9513fe924a9b29295e7d8f146f9425969092ee1a7e89300dd4c3d8237a3c",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "9ab06d1f6bf79708d85858d647dbc11209503f9d465229363b62b7139c12b781",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEstimateEditTests.swift": "e107931d33abf9a941f11896d7a59bbbdabd68537387d78f0a379efd50f70653",
+      "Planner/AgentControl/PlannerMCPFailureValue.swift": "973280224751dd66f9a59ff9c5b3eb0ad7f8ed6b9a070f59b420907bb3c82185"
+    },
+    "InvalidRed": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "d1ede520efcef43c8c4b72d564d8f75bd3e1fbe700ccbc7f9fb3bab0874ca87d",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "eb1e9513fe924a9b29295e7d8f146f9425969092ee1a7e89300dd4c3d8237a3c",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "9ab06d1f6bf79708d85858d647dbc11209503f9d465229363b62b7139c12b781",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEstimateEditTests.swift": "0f022c7bef78ccc00e6a9fd100ce97a3889c4d6b69857c5ab216861f678554cb",
+      "Planner/AgentControl/PlannerMCPFailureValue.swift": "973280224751dd66f9a59ff9c5b3eb0ad7f8ed6b9a070f59b420907bb3c82185"
+    },
+    "InvalidGreen": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "d1ede520efcef43c8c4b72d564d8f75bd3e1fbe700ccbc7f9fb3bab0874ca87d",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "247a8b9fad5f0692151f8030f3c6f8ff92dae2c0af3034e504a1dc8404594472",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "9ab06d1f6bf79708d85858d647dbc11209503f9d465229363b62b7139c12b781",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEstimateEditTests.swift": "0f022c7bef78ccc00e6a9fd100ce97a3889c4d6b69857c5ab216861f678554cb",
+      "Planner/AgentControl/PlannerMCPFailureValue.swift": "973280224751dd66f9a59ff9c5b3eb0ad7f8ed6b9a070f59b420907bb3c82185"
+    },
+    "Qualification": {
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "d1ede520efcef43c8c4b72d564d8f75bd3e1fbe700ccbc7f9fb3bab0874ca87d",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "247a8b9fad5f0692151f8030f3c6f8ff92dae2c0af3034e504a1dc8404594472",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "9ab06d1f6bf79708d85858d647dbc11209503f9d465229363b62b7139c12b781",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEstimateEditTests.swift": "f1c13514cfee4b1c5863b497cd027f48a2dda1231bdbeb4a7a9795f310c49dfc",
+      "Planner/AgentControl/PlannerMCPFailureValue.swift": "973280224751dd66f9a59ff9c5b3eb0ad7f8ed6b9a070f59b420907bb3c82185"
+    }
+  },
+  "commands": {
+    "setupFailure": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --filter 'ItemEstimateEditTests.estimateEditAndClearPreserveContentAndStartOnlyScheduleAcrossRecoveryAndReopen' --scratch-path /private/tmp/PlannerCoreFixturePackageBuild > /private/tmp/PlannerCoreEstimateRed.log 2>&1",
+    "behaviorRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --filter 'ItemEstimateEditTests.estimateEditAndClearPreserveContentAndStartOnlyScheduleAcrossRecoveryAndReopen' --scratch-path /private/tmp/PlannerCoreFixturePackageBuild > /private/tmp/PlannerCoreEstimateSelectedRed.log 2>&1",
+    "green": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --filter 'ItemEstimateEditTests.estimateEditAndClearPreserveContentAndStartOnlyScheduleAcrossRecoveryAndReopen' --scratch-path /private/tmp/PlannerCoreFixturePackageBuild > /private/tmp/PlannerCoreEstimateGreen.log 2>&1",
+    "staleRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --filter 'ItemEstimateEditTests.staleEstimateRejectsWholePatchAndReplayRetainsTheOriginalRepresentation' --scratch-path /private/tmp/PlannerCoreFixturePackageBuild > /private/tmp/PlannerCoreEstimateStaleRed.log 2>&1",
+    "staleGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --filter 'ItemEstimateEditTests.staleEstimateRejectsWholePatchAndReplayRetainsTheOriginalRepresentation' --scratch-path /private/tmp/PlannerCoreFixturePackageBuild > /private/tmp/PlannerCoreEstimateStaleGreen.log 2>&1",
+    "invalidRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --filter 'ItemEstimateEditTests.nonPositiveEstimateRejectsWholePatchWithoutChangingSavedData' --scratch-path /private/tmp/PlannerCoreFixturePackageBuild > /private/tmp/PlannerCoreEstimateInvalidRed.log 2>&1",
+    "invalidGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --filter 'ItemEstimateEditTests.nonPositiveEstimateRejectsWholePatchWithoutChangingSavedData' --scratch-path /private/tmp/PlannerCoreFixturePackageBuild > /private/tmp/PlannerCoreEstimateInvalidGreen.log 2>&1",
+    "qualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --filter 'ItemEstimateEditTests|ItemEditTests|ItemSubtitleEditTests|ItemLocationEditTests|ItemLinkEditTests|ItemRowReadTests|ScheduleEditTests' --scratch-path /private/tmp/PlannerCoreFixturePackageBuild > /private/tmp/PlannerCoreEstimateQualification.log 2>&1",
+    "httpReview": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter 'CommandRoutingTests' > /private/tmp/PlannerCoreEstimateHTTPReview.log 2>&1",
+    "nativeMacBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerCoreEstimateMacBuild.xcresult build-for-testing > /private/tmp/PlannerCoreEstimateMacBuild.log 2>&1"
+  },
+  "results": {
+    "setupFailure": {
+      "exitCode": 1,
+      "executedFunctions": 0,
+      "reason": "New test assumed a Schedule updatedAt property absent from its public read. Corrected to source identity, form and hash without production changes; original log also preserved as PlannerCoreEstimateSetupFailure.log."
+    },
+    "behaviorRed": {
+      "exitCode": 1,
+      "executedFunctions": 1,
+      "failedFunctions": 1,
+      "reason": "Estimate edit returns unavailable."
+    },
+    "green": {
+      "exitCode": 0,
+      "executedFunctions": 1,
+      "passedFunctions": 1
+    },
+    "staleRed": {
+      "exitCode": 1,
+      "executedFunctions": 1,
+      "failedFunctions": 1,
+      "reason": "Stale rejection omits the current estimate value."
+    },
+    "staleGreen": {
+      "exitCode": 0,
+      "executedFunctions": 1,
+      "passedFunctions": 1
+    },
+    "invalidRed": {
+      "exitCode": 1,
+      "executedFunctions": 1,
+      "parameterCases": 3,
+      "failedCases": 3,
+      "reason": "Zero and negative edits apply the patch before recovery validation reports incomplete. Observed only in isolated temporary datasets and corrected before commit."
+    },
+    "invalidGreen": {
+      "exitCode": 0,
+      "executedFunctions": 1,
+      "passedFunctions": 1,
+      "parameterCases": 3,
+      "passedCases": 3
+    },
+    "qualification": {
+      "exitCode": 0,
+      "executedFunctions": 22,
+      "passedFunctions": 22,
+      "suites": 7,
+      "newEstimateFunctions": 4,
+      "newEstimateInvocations": 7,
+      "classification": "Production fixed after invalid-value green. First-run stronger typed current/cleared value assertions and positive numeric-bound cases pass alongside affected edit/row/Schedule regressions."
+    },
+    "httpReview": {
+      "exitCode": 0,
+      "executedFunctions": 4,
+      "passedFunctions": 4,
+      "suites": 1,
+      "runner": "The native temporary package runner documented in item-subtitle-wire.json; same real adapter/test/Core files and seven pinned application dependency revisions."
+    },
+    "nativeMacBuild": {
+      "exitCode": 0,
+      "result": "TEST BUILD SUCCEEDED",
+      "executedFunctions": 0,
+      "resultBundle": "/private/tmp/PlannerCoreEstimateMacBuild.xcresult"
+    }
+  },
+  "verifiedBehavior": [
+    "Exact minutes and chosen display unit survive set/clear, reopened public reads and independent acknowledged backup inspection.",
+    "One minute and Int64.max remain exact across independent title edit, reopen, receipt replay and the original recovery checkpoint.",
+    "Stale compound patch rejects together with typed current estimate or explicit nil plus the current hash, without applying its title change.",
+    "Exact old replay after clear preserves nil and the original receipt; changing only display unit rejects operationPayloadMismatch.",
+    "Zero, negative one and Int64.min reject invalidInput at /command/changes/estimate/minutes before saving/preparing/recording any patch. Original checkpoint 4, content, timestamps, hashes, references and completion/archive states remain intact.",
+    "Existing fixed-instant start-only Schedule identity/form/hash are retained; an estimate never supplies its end."
+  ],
+  "validation": [
+    "Strict swift-format lint passes five changed Swift files.",
+    "Final five-file source hashes match qualification; git diff --check passes.",
+    "Native Mac app/test bundle compiles. Four existing real HTTP routing functions pass after the additive typed-value adapter update.",
+    "Markdown lint passes the changed Core report; all focused runners and native build completed."
+  ],
+  "limitations": [
+    "Native estimate pickers/row previews and HTTP estimate admission remain separate unimplemented work. This slice preserves supplied minutes/display units; it does not implement picker unit conversion.",
+    "The nullable estimate failure encoder type-checks; its wire behavior is not executed because estimate commands remain unavailable over HTTP.",
+    "App-hosted XCTest startup, native runtime/device/CloudKit/Share, account recovery, interruption/failure, accessibility and performance remain open. Schema 7/portable format 1 stay unchanged; CloudKit is disabled."
+  ]
+}

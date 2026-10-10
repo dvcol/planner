@@ -50,6 +50,7 @@ public enum PlannerItemFieldValue: Sendable, Equatable {
   case string(String)
   case optionalString(String?)
   case optionalLocation(PlannerOwnedLocation?)
+  case optionalEstimate(PlannerEstimate?)
   case links([PlannerOwnedLinkRead])
 }
 
