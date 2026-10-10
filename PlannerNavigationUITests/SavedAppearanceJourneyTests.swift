@@ -2,6 +2,102 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testAddingFromListDetailAndRowMenuKeepsTheOriginalContextAndExistingDestination() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    createItem(application, title: "Hotel")
+    createList("Tokyo Food", application: application)
+    addItem(application)
+    let item = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    let sourceIdentifier = item.identifier
+    let sourceCompletion = application.buttons[
+      sourceIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    sourceCompletion.activateForPlannerJourney()
+    XCTAssertTrue(sourceCompletion.waitForPlannerValue("Completed"))
+    createList("Wishlist", application: application)
+    openList("Tokyo Food", application: application)
+    item.activateForPlannerJourney()
+    application.plannerElement("saved.appearance.actions").activateForPlannerJourney()
+    let addToList = application.plannerElement("Add to List")
+    XCTAssertTrue(addToList.waitForExistence(timeout: 5))
+    addToList.activateForPlannerJourney()
+    let destination = moveDestination("Wishlist", application: application)
+    XCTAssertTrue(destination.waitForExistence(timeout: 5))
+    destination.activateForPlannerJourney()
+    let add = application.plannerElement("saved.item.list.add")
+    add.activateForPlannerJourney()
+    XCTAssertTrue(add.waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["In Tokyo Food"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Completed"].exists)
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    recordScreenshot(application, name: "Adding elsewhere retains the selected List detail")
+    #if os(iOS)
+      let back = application.plannerElement("BackButton")
+      if back.exists { back.activateForPlannerJourney() }
+    #endif
+    XCTAssertEqual(item.identifier, sourceIdentifier)
+    XCTAssertTrue(sourceCompletion.waitForPlannerValue("Completed"))
+    assertProgress(1, application: application)
+    openList("Wishlist", application: application)
+    let destinationIdentifier = item.identifier
+    XCTAssertNotEqual(destinationIdentifier, sourceIdentifier)
+    let destinationCompletion = application.buttons[
+      destinationIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    XCTAssertTrue(destinationCompletion.waitForPlannerValue("To do"))
+    destinationCompletion.activateForPlannerJourney()
+    XCTAssertTrue(destinationCompletion.waitForPlannerValue("Completed"))
+    addItem(application, title: "Hotel")
+    let hotel = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(hotel.waitForExistence(timeout: 5))
+    XCTAssertLessThan(item.frame.midY, hotel.frame.midY)
+    openList("Tokyo Food", application: application)
+    #if os(macOS)
+      item.rightClick()
+    #else
+      item.press(forDuration: 1)
+    #endif
+    XCTAssertTrue(addToList.waitForExistence(timeout: 5))
+    addToList.activateForPlannerJourney()
+    XCTAssertTrue(destination.waitForExistence(timeout: 5))
+    destination.activateForPlannerJourney()
+    add.activateForPlannerJourney()
+    XCTAssertTrue(add.waitForNonExistence(timeout: 10))
+    XCTAssertEqual(item.identifier, sourceIdentifier)
+    XCTAssertTrue(sourceCompletion.waitForPlannerValue("Completed"))
+    assertProgress(1, application: application)
+    openList("Wishlist", application: application)
+    XCTAssertEqual(item.identifier, destinationIdentifier)
+    XCTAssertEqual(application.savedPlannerItemRows("Nezu Museum").count, 1)
+    XCTAssertTrue(destinationCompletion.waitForPlannerValue("Completed"))
+    XCTAssertTrue(hotel.waitForExistence(timeout: 5))
+    XCTAssertLessThan(item.frame.midY, hotel.frame.midY)
+    assertProgress(0.5, application: application)
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Tokyo Food", application: application)
+    XCTAssertEqual(item.identifier, sourceIdentifier)
+    XCTAssertTrue(sourceCompletion.waitForPlannerValue("Completed"))
+    openList("Wishlist", application: application)
+    XCTAssertEqual(item.identifier, destinationIdentifier)
+    XCTAssertEqual(application.savedPlannerItemRows("Nezu Museum").count, 1)
+    XCTAssertTrue(destinationCompletion.waitForPlannerValue("Completed"))
+    XCTAssertTrue(hotel.waitForExistence(timeout: 5))
+    XCTAssertLessThan(item.frame.midY, hotel.frame.midY)
+    assertProgress(0.5, application: application)
+    recordScreenshot(
+      application, name: "Row-menu addition preserves existing destination after relaunch")
+    viewGlobalItem(application)
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+  }
+
   func testAddingFromGlobalItemDetailWithoutListsExplainsTheEmptyStateAndCancels() throws {
     continueAfterFailure = false
     let application = XCUIApplication()

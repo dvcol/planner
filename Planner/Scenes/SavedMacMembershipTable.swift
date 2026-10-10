@@ -19,6 +19,7 @@ import UniformTypeIdentifiers
     let list: PlannerListSourceRead
     let items: [SavedPlannerItem]
     let selection: Binding<UUID?>
+    let addToList: (SavedPlannerItem) -> Void
     let moveMembership: (SavedPlannerItem) -> Void
     let removeMembership: (UUID) -> Void
 
@@ -40,6 +41,8 @@ import UniformTypeIdentifiers
               Button("Move to End") { reorder(item.id, placement: .last) }
                 .disabled(!store.canCreate || items.last?.id == item.id)
               Divider()
+              Button("Add to List") { addToList(item) }
+                .disabled(!store.canCreate)
               Button("Move to List") { moveMembership(item) }
                 .disabled(!store.canCreate)
               Button("Remove from List", role: .destructive) { removeMembership(item.id) }

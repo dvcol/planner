@@ -1,0 +1,110 @@
+{
+  "baseCommit": "f62ddbd",
+  "seam": "Accepted public native UI with isolated real durable local datasets, simulator long press and compiled native Mac right-click path. No private store reads or production injection.",
+  "sourceSnapshots": {
+    "Red": {
+      "Planner/Scenes/SavedPlannerView.swift": "e94a820734f7cc530df6f788add8b07b7b0638cae47b448c341323a3ccf4ad60",
+      "Planner/Scenes/SavedAppearanceViews.swift": "a24d3f0806ad6e2acfcb5639da7600b24984fe8d8139f6c57956095bdec1fbf1",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "e4fd34f87d9a77fec29c85d42a6a0516b944adcc4806796a5e5ded4b42a0f881",
+      "Planner/Scenes/SavedAddToListForm.swift": "4c845b6c1d427e7339798c64f11efcfbaeb279572583477a03aee5a97f724f26",
+      "Planner/Scenes/SavedPlannerStore.swift": "a786998526a052b534bcadc1e642144e3e6a0aafe08001e5e78716e2a591ea8f",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "2dbba462b17a2c90d3a4f25e24f588d82caa673b4a3669c4a592bf892e4be86f"
+    },
+    "Green": {
+      "Planner/Scenes/SavedPlannerView.swift": "e420cb075b6b30bdd178c065bcd095e0ad048a5b15837d8e02ff0a52c18bf9cf",
+      "Planner/Scenes/SavedAppearanceViews.swift": "155e6ea37f549ee72d3e66fe53e4a1c4879f2ff48a79e377fa966f5f5da0792e",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "08fb461df6821844bb467c533778caf0a2f77c94d4b6d56d1604a972936128ce",
+      "Planner/Scenes/SavedAddToListForm.swift": "4c845b6c1d427e7339798c64f11efcfbaeb279572583477a03aee5a97f724f26",
+      "Planner/Scenes/SavedPlannerStore.swift": "a786998526a052b534bcadc1e642144e3e6a0aafe08001e5e78716e2a591ea8f",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "2dbba462b17a2c90d3a4f25e24f588d82caa673b4a3669c4a592bf892e4be86f"
+    }
+  },
+  "commands": {
+    "behaviorRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testAddingFromListDetailAndRowMenuKeepsTheOriginalContextAndExistingDestination -resultBundlePath /private/tmp/PlannerNativeContextAddPhoneRed.xcresult test > /private/tmp/PlannerNativeContextAddPhoneRed.log 2>&1",
+    "green": {
+      "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeContextAddPhoneGreen.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testAddingFromListDetailAndRowMenuKeepsTheOriginalContextAndExistingDestination test > /private/tmp/PlannerNativeContextAddPhoneGreen.log 2>&1",
+      "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeContextAddTabletGreen.xcresult -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testAddingFromListDetailAndRowMenuKeepsTheOriginalContextAndExistingDestination test > /private/tmp/PlannerNativeContextAddTabletGreen.log 2>&1",
+      "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeContextAddMacGreen.xcresult build-for-testing > /private/tmp/PlannerNativeContextAddMacGreen.log 2>&1"
+    }
+  },
+  "results": {
+    "behaviorRed": {
+      "result": "Failed",
+      "totalTestCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testAddingFromListDetailAndRowMenuKeepsTheOriginalContextAndExistingDestination()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testAddingFromListDetailAndRowMenuKeepsTheOriginalContextAndExistingDestination",
+          "testName": "testAddingFromListDetailAndRowMenuKeepsTheOriginalContextAndExistingDestination()"
+        }
+      ],
+      "resultBundle": "/private/tmp/PlannerNativeContextAddPhoneRed.xcresult"
+    },
+    "green": {
+      "Phone": {
+        "result": "Passed",
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "testFailures": [],
+        "resultBundle": "/private/tmp/PlannerNativeContextAddPhoneGreen.xcresult"
+      },
+      "Tablet": {
+        "result": "Passed",
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "testFailures": [],
+        "resultBundle": "/private/tmp/PlannerNativeContextAddTabletGreen.xcresult"
+      },
+      "Mac": {
+        "action": "build-for-testing",
+        "result": "Passed",
+        "executedBehaviorFunctions": 0,
+        "resultBundle": "/private/tmp/PlannerNativeContextAddMacGreen.xcresult"
+      }
+    }
+  },
+  "classification": "Executed behavior red at the missing contextual Add to List action. One journey then passes on each simulator, covering both contextual detail and row-menu entry points against fixed green source.",
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-context-add-retained-detail.png",
+      "sha256": "885629ec36b51d3204cb9e727edadf0e2a8919ad1a27a06171a0c3a591596302",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-context-add-destination-reopened.png",
+      "sha256": "bfc241f08997d4d52e0260e33e59d82b280f5116ea73265f6e1bd74a41fba2f0",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-context-add-retained-detail.png",
+      "sha256": "5b7694acbf7eb5506ac490b2fce76791187ceac61d91a66538b68c19a3f4a088",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-context-add-destination-reopened.png",
+      "sha256": "d62537b37f62b31aadd46134e298f0da62c62afa4fc9479f74ca56a54600b9b3",
+      "inspected": true
+    }
+  ],
+  "validation": [
+    "One journey per simulator passes with zero failures/skips.",
+    "The native Mac app and test bundle compile; zero Mac runtime functions execute.",
+    "Strict affected Swift lint and source/capture hash checks pass."
+  ],
+  "limits": [
+    "Existing picker/Core/HTTP/schema/backup implementations are unchanged; earlier manifests qualify their own recorded revisions.",
+    "Mac runtime remains unqualified after the prior recorded automation startup failures.",
+    "No cross-List drag, archived destination management, external refresh, native failure/recovery presentation, Undo, signed/physical-device, CloudKit, Share, accessibility/keyboard, large-data or final human review claim.",
+    "Xcode waited for row-menu animations; raw logs retain those delays and SDK/debugger/accessibility diagnostics."
+  ]
+}
