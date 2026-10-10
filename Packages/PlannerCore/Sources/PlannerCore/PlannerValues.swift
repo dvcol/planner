@@ -179,6 +179,8 @@ public enum PlannerCommand: Sendable {
   case createItem(content: PlannerItemContentInput)
   case createList(content: PlannerListContentInput)
   case createItinerary(content: PlannerItineraryContentInput)
+  case addItineraryEntry(
+    itineraryId: UUID, source: PlannerEntityReference, placement: PlannerPlacement)
   case editItinerary(
     sourceId: UUID, changes: PlannerItineraryChanges,
     expectedFieldHashes: [PlannerItineraryField: PlannerFieldHash])
@@ -343,6 +345,7 @@ public struct PlannerProviderReference: Sendable, Codable, Equatable {
 }
 
 public enum PlannerReferenceRead: Sendable, Equatable {
+  case itineraryEntry(id: UUID, itinerary: PlannerEntityReference, source: PlannerEntityReference)
   case membership(id: UUID, list: PlannerEntityReference, item: PlannerEntityReference)
   case ownedLink(id: UUID, owner: PlannerEntityReference)
   case schedule(id: UUID, source: PlannerEntityReference)
@@ -604,18 +607,21 @@ public struct PlannerPortableBackup: Sendable {
 
   public let sources: [PlannerPortableSource]
   public let memberships: [PlannerPortableMembership]
+  public let itineraryEntries: [PlannerPortableItineraryEntry]
   public let schedules: [PlannerPortableSchedule]
   public let deletionMarkers: [PlannerPortableDeletionMarker]
 
   init(
     sources: [PlannerPortableSource], labelAssociations: [PlannerPortableLabelAssociation],
     memberships: [PlannerPortableMembership],
+    itineraryEntries: [PlannerPortableItineraryEntry],
     schedules: [PlannerPortableSchedule] = [],
     deletionMarkers: [PlannerPortableDeletionMarker]
   ) {
     self.sources = sources
     self.labelAssociations = labelAssociations
     self.memberships = memberships
+    self.itineraryEntries = itineraryEntries
     self.schedules = schedules
     self.deletionMarkers = deletionMarkers
   }

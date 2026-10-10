@@ -1,0 +1,63 @@
+import Foundation
+import PlannerCore
+import Testing
+
+struct Schema11ProducerTests {
+  @Test func produceGenuineSchema11Fixture() async throws {
+    let directory = URL(fileURLWithPath: "/private/tmp/PlannerSchema11Fixture-dcf5fba")
+    let planner = Planner(configuration: .init(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let session) = await planner.bootstrap() else {
+      Issue.record("Produce the fixture with the unchanged schema-11 Core.")
+      return
+    }
+    func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
+      guard case .applied(let result, .complete) = await planner.execute(
+        PlannerOperation(operationId: UUID(), session: session, command: command)).outcome else {
+        throw CancellationError()
+      }
+      return result
+    }
+    let category = try #require(try await save(.createCategory(content: .init(name: "Food"))).generated.first)
+    let tag = try #require(try await save(.createTag(content: .init(name: "Rain"))).generated.first)
+    let list = try #require(try await save(.createList(content: .init(name: "Stops"))).generated.first)
+    let item = try #require(try await save(.createItem(content: .init(
+      title: "Hotel", notes: "Original notes", links: [.init(originalUrl: "https://example.com/hotel")],
+      categoryIds: [category.id], tagIds: [tag.id]))).generated.first)
+    let membership = try #require(try await save(.addMembership(itemId: item.id, listId: list.id, placement: .last)).generatedReferences.first)
+    let itinerary = try #require(try await save(.createItinerary(content: .init(
+      title: "Tokyo", notes: "Original plan", links: [.init(originalUrl: "https://example.com/route")],
+      categoryIds: [category.id], tagIds: [tag.id]))).generated.first)
+    guard case .source(.itinerary(let initial)) = await planner.read(session: session, request: .source(itinerary)),
+      case .membership(let membershipId, _, _) = membership else { throw CancellationError() }
+    _ = try await save(.editItinerary(sourceId: itinerary.id, changes: .init(notes: .set("Updated plan")),
+      expectedFieldHashes: [.notes: try #require(initial.fieldHashes[.notes])]))
+    _ = try await save(.setCompletion(scope: .globalItem(itemId: item.id), done: true))
+    _ = try await save(.setArchive(source: item, archived: true))
+    _ = try await save(.setCompletion(scope: .appearance(.listMembership(listId: list.id, membershipId: membershipId)), done: true))
+    _ = try await save(.createSchedule(source: item, form: .timed(
+      start: Date(timeIntervalSinceReferenceDate: 800000000), end: nil, planningTimeZone: "Asia/Tokyo")))
+    guard case .source(.itinerary(let read)) = await planner.read(session: session, request: .source(itinerary)),
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first,
+      case .selected(let recovery) = await planner.inspectRecovery(request: .acknowledgedSnapshot(
+        namespaceId: namespace.namespaceId, checkpointGeneration: 11)) else { throw CancellationError() }
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 11)
+    let manifest: [String: Any] = [
+      "producerCommit": "dcf5fba", "storageSchemaVersion": 11, "checkpoint": 11,
+      "datasetId": session.datasetId.uuidString, "namespaceId": namespace.namespaceId.uuidString,
+      "itemId": item.id.uuidString, "listId": list.id.uuidString, "itineraryId": itinerary.id.uuidString,
+      "categoryId": category.id.uuidString, "tagId": tag.id.uuidString,
+      "membershipId": membershipId.uuidString,
+      "itineraryCreatedAt": read.createdAt.timeIntervalSinceReferenceDate,
+      "itineraryUpdatedAt": read.updatedAt.timeIntervalSinceReferenceDate,
+      "itineraryHashes": Dictionary(uniqueKeysWithValues: read.fieldHashes.map { ($0.key.rawValue, $0.value.value) }),
+      "portableDataBase64": recovery.portableData.base64EncodedString()
+    ]
+    try JSONSerialization.data(withJSONObject: manifest, options: [.prettyPrinted, .sortedKeys]).write(
+      to: directory.appendingPathComponent("manifest.json"))
+  }
+}

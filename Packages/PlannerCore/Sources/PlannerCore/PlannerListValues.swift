@@ -193,7 +193,10 @@ struct ListSnapshot {
     }
   }
 
-  func read(datasetId: UUID, memberships: [MembershipSnapshot], items: [ItemSnapshot]) throws
+  func read(
+    datasetId: UUID, memberships: [MembershipSnapshot], items: [ItemSnapshot],
+    entries: [ItineraryEntrySnapshot] = []
+  ) throws
     -> PlannerListSourceRead
   {
     let children = memberships.filter { $0.list.id == id }.sorted {
@@ -224,6 +227,9 @@ struct ListSnapshot {
       state: PlannerSourceState(globalDone: nil, archived: archived),
       progress: PlannerContainerProgress(
         container: reference, state: progressState, doneCount: doneCount, totalCount: totalCount),
-      references: children.map(\.reference))
+      references: children.map(\.reference)
+        + entries.filter {
+          $0.source.kind == "list" && $0.source.id == id && $0.source.lifetimeId == lifetimeId
+        }.sorted { $0.id.uuidString < $1.id.uuidString }.map(\.reference))
   }
 }
