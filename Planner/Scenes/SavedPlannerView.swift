@@ -32,6 +32,7 @@ struct SavedPlannerView: View {
   @State private var appearanceChangeMessage: String?
   @State private var appearanceChangeTitle = "Item removed from List"
   @State private var membershipMoveDraft: SavedMembershipMoveDraft?
+  @State private var listAdditionDraft: SavedListAdditionDraft?
   @State private var isOpeningAppearance = false
   @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
@@ -84,6 +85,9 @@ struct SavedPlannerView: View {
           draft.membershipIdentifier, listIdentifier: draft.sourceListIdentifier,
           explanation: "The Item is now in \(destination.name).", detailTitle: "Item moved")
       }
+    }
+    .sheet(item: $listAdditionDraft) { draft in
+      SavedAddToListForm(store: store, draft: draft)
     }
     .alert(
       "Planner",
@@ -196,6 +200,10 @@ struct SavedPlannerView: View {
     if let selectedItem {
       SavedItemDetail(
         item: selectedItem, canChange: store.canCreate, isSaving: store.isSaving,
+        addToList: {
+          listAdditionDraft = SavedListAdditionDraft(
+            itemIdentifier: selectedItem.source.id, itemTitle: selectedItem.content.title)
+        },
         setCompletion: { done in
           Task { _ = await store.setItemCompletion(selectedItem.source.id, done: done) }
         },

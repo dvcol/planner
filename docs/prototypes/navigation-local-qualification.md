@@ -2,7 +2,7 @@
 
 Work for [Navigation prototype](https://github.com/dvcol/planner/issues/14) on `prototype/navigation`. Q34 accepts the native UI journeys and fixtures. Q35 requires confirmation before deleting a Category/Tag with any association. The user delayed signing and physical setup while authorizing simulator and local Mac work.
 
-The latest saved-data work is in [Native row-menu move](#native-row-menu-move), [Native membership move](#native-membership-move), [Native row-menu removal](#native-row-menu-removal) and [Native membership removal](#native-membership-removal). [Archive and cumulative saved filters](#archive-and-cumulative-saved-filters) records the preceding saved filters and hidden-member drag qualification. Other sections retain their recorded revisions.
+The latest saved-data work is in [Add from global Item details](#add-from-global-item-details), [Native row-menu move](#native-row-menu-move), [Native membership move](#native-membership-move), [Native row-menu removal](#native-row-menu-removal) and [Native membership removal](#native-membership-removal). [Archive and cumulative saved filters](#archive-and-cumulative-saved-filters) records the preceding saved filters and hidden-member drag qualification. Other sections retain their recorded revisions.
 
 The human accepted Q38 A, Q39 B, Q40 A, Q41 A and Q42 A, then accepted Q43 A, Q44 A, Q45 A and Q46 A. The [accepted row decisions](../navigation-prototype-review.md#accepted-review-answers) and [row contract review](../navigation-row-contract-review.md) record the exact declarations and required tests. The accepted amendment itself added no runtime qualification to the seven-journey presentation evidence below. Later sections qualify saved Item/List appearance completion and standalone List reordering. Native rich rows, cross-List drag-and-drop and provider lookup remain open.
 
@@ -419,3 +419,22 @@ The first executed red failed at the missing row-menu Move action. Adding the na
 All four final app-owned captures were inspected. The [evidence record](evidence/navigation/saved-row-menu-move.json) preserves exact commands, source snapshots, initial red/green, stronger fixture runs and removal regression. Raw bundles/logs remain under `/private/tmp/PlannerNativeRowMove{PhoneRed,PhoneGreen,TabletGreen,MacGreen,PhoneRemovalRegression,TabletRemovalRegression,PhonePositionReview,TabletPositionReview,MacPositionReview}`. Context-menu animation waits remain recorded.
 
 Other Add paths, cross-List drag, external refresh, Undo, native failure/recovery presentation, Mac runtime, signed/physical-device, CloudKit, Share, accessibility/keyboard, large-data and final human review remain open. Whole-app polish follows feature completion.
+
+## Add from global Item details
+
+Before this slice, a saved Item could only be added by opening a List's existing-Item picker. Item actions now include Add to List. The native sheet names the Item and offers one destination List, with explicit Add/Cancel. Add requires a valid selection and mutation availability. Without Lists, ContentUnavailableView explains the next step and Add stays disabled. The proposal pins the Item identity and retains one operation identity; it uses the existing Core addMembership command at the end of Manual order. Success keeps the Item detail open and refreshes saved references. No content is copied.
+
+The public journey creates a locally Done Tokyo Food appearance, completes its source Item globally, then selects Wishlist and Cancels. Wishlist remains empty and Tokyo Food retains its identity. Confirmed addition creates a different membership in Wishlist, displayed Done because the Item is globally Done, with its local circle disabled. Reopening the global Item reveals Wishlist's new local Todo while Tokyo Food stays locally Done. Adding to Wishlist again retains the same membership identity and one visible appearance. Relaunch retains both contexts, source notes and global Todo.
+
+The first executed red fails at the absent Add to List action. The main journey then passes once on each simulator. Production remains fixed while a separate no-Lists interaction qualifier and the affected Archive/Unarchive catalog regression pass: two functions on each simulator, zero failures/skips. These are three distinct passing journeys per simulator across the recorded runs. The empty-state qualifier passes on its first run, so it has no claimed behavior red. Native Mac app/test bundles compile at both snapshots; Mac runtime remains unqualified. Strict affected Swift lint and source/capture hash checks pass.
+
+| Native outcome | iPhone | iPad |
+| --- | --- | --- |
+| Add destination review | [Chooser](evidence/navigation/phone-saved-global-add-chooser.png) | [Chooser](evidence/navigation/tablet-saved-global-add-chooser.png) |
+| Global Done display | [Wishlist](evidence/navigation/phone-saved-global-add-global-done.png) | [Wishlist](evidence/navigation/tablet-saved-global-add-global-done.png) |
+| Local Todo after global reopening and relaunch | [Wishlist](evidence/navigation/phone-saved-global-add-reopened.png) | [Wishlist](evidence/navigation/tablet-saved-global-add-reopened.png) |
+| No destination available | [Empty chooser](evidence/navigation/phone-saved-global-add-empty.png) | [Empty chooser](evidence/navigation/tablet-saved-global-add-empty.png) |
+
+All eight app-owned captures were inspected. The [evidence record](evidence/navigation/saved-global-item-list-addition.json) preserves exact commands, executed red/green, first-run qualification, regression, source snapshots and capture hashes. Raw bundles/logs remain under `/private/tmp/PlannerNativeGlobalAdd{PhoneRed,PhoneGreen,TabletGreen,MacGreen,PhoneQualification,TabletQualification,MacQualification}`. Core, HTTP, schema 7 and portable format 1 are unchanged.
+
+Contextual/row-menu Add paths, archived destination management, advanced filters/sorts/paging, external refresh, bulk review, rich rows and location editing remain open. Earlier remaining Mac runtime, failure/recovery, physical-device/CloudKit/Share, accessibility/keyboard, large-data and human-review limits still apply. Final whole-app polish follows feature completion.
