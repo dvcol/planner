@@ -16,6 +16,7 @@ struct SavedPlannerView: View {
   @State private var selectedListId: UUID?
   @State private var selectedList: PlannerListSourceRead?
   @State private var listItems: [SavedPlannerItem]?
+  @State private var listFilters = SavedItemFilters()
   @State private var isOpeningList = false
   @State private var showNewList = false
   @State private var showNewItem = false
@@ -23,6 +24,9 @@ struct SavedPlannerView: View {
   @State private var selectedItemId: UUID?
   @State private var selectedItem: PlannerItemSourceRead?
   @State private var isOpeningItem = false
+  @State private var catalogItems: [SavedPlannerItem]?
+  @State private var itemFilters = SavedItemFilters(archive: .active)
+  @State private var isOpeningCatalog = false
   @State private var selectedAppearanceIdentity: PlannerAppearance?
   @State private var selectedAppearance: PlannerAppearanceRead?
   @State private var isOpeningAppearance = false
@@ -45,11 +49,15 @@ struct SavedPlannerView: View {
       }
     }
     .task { await store.open() }
+    .task(id: store.isReady) { await loadCatalogItems() }
+    .task(id: itemFilters) { await loadCatalogItems() }
     .task(id: selectedListId) { await loadSelectedList() }
+    .task(id: listFilters) { await loadSelectedList() }
     .task(id: selectedItemId) { await loadSelectedItem() }
     .task(id: selectedAppearanceIdentity) { await loadSelectedAppearance() }
     .task(id: store.changeRevision) {
       await loadSelectedList()
+      await loadCatalogItems()
       await loadSelectedItem()
       await loadSelectedAppearance()
     }
@@ -138,21 +146,52 @@ struct SavedPlannerView: View {
     #endif
   }
 
+  @ViewBuilder
   private var itemCatalog: some View {
-    SavedItemCatalog(
-      items: store.items, selection: $selectedItemId, canCreate: store.canCreate
-    ) { showNewItem = true }
+    if let catalogItems {
+      SavedItemCatalog(
+        items: catalogItems, selection: $selectedItemId, filters: $itemFilters,
+        canCreate: store.canCreate
+      ) { showNewItem = true }
+      .overlay(alignment: .topTrailing) {
+        if isOpeningCatalog { ProgressView("Updating Items").controlSize(.small).padding() }
+      }
+    } else if isOpeningCatalog {
+      ProgressView("Opening Items")
+    } else {
+      ContentUnavailableView {
+        Label("Items unavailable", systemImage: "exclamationmark.triangle")
+      } actions: {
+        Button("Try Again") { Task { await loadCatalogItems() } }
+      }
+    }
+  }
+
+  private func loadCatalogItems() async {
+    guard store.isReady else { return }
+    isOpeningCatalog = true
+    let filters = itemFilters
+    let revision = store.changeRevision
+    let loaded = await store.readItems(
+      completion: filters.completion.queryValue, archive: filters.archive.queryValue)
+    guard !Task.isCancelled, itemFilters == filters, store.changeRevision == revision else {
+      return
+    }
+    catalogItems = loaded
+    isOpeningCatalog = false
   }
 
   @ViewBuilder
   private var itemDetail: some View {
     if let selectedItem {
-      SavedItemDetail(item: selectedItem, canChange: store.canCreate, isSaving: store.isSaving) {
-        done in
-        Task {
-          _ = await store.setItemCompletion(selectedItem.source.id, done: done)
-        }
-      }
+      SavedItemDetail(
+        item: selectedItem, canChange: store.canCreate, isSaving: store.isSaving,
+        setCompletion: { done in
+          Task { _ = await store.setItemCompletion(selectedItem.source.id, done: done) }
+        },
+        setArchive: { archived in
+          Task { _ = await store.setItemArchived(selectedItem.source.id, archived: archived) }
+        })
     } else if isOpeningItem {
       ProgressView("Opening Item")
     } else if selectedItemId != nil {
@@ -192,13 +231,22 @@ struct SavedPlannerView: View {
     }
     isOpeningList = true
     let revision = store.changeRevision
+    let filters = listFilters
     if selectedList?.source.id != identifier {
       selectedList = nil
       listItems = nil
     }
     let loaded = await store.readList(identifier)
-    let loadedItems = loaded == nil ? nil : await store.readListItems(identifier)
-    guard !Task.isCancelled, selectedListId == identifier, store.changeRevision == revision else {
+    let loadedItems: [SavedPlannerItem]?
+    if loaded != nil {
+      loadedItems = await store.readListItems(
+        identifier, completion: filters.completion.queryValue, archive: filters.archive.queryValue)
+    } else {
+      loadedItems = nil
+    }
+    guard !Task.isCancelled, selectedListId == identifier, store.changeRevision == revision,
+      listFilters == filters
+    else {
       return
     }
     selectedList = loaded
@@ -310,7 +358,12 @@ struct SavedPlannerView: View {
         Group {
           if let listItems {
             if listItems.isEmpty {
-              ContentUnavailableView("No items", systemImage: "checklist")
+              VStack(spacing: 0) {
+                SavedListProgress(progress: selectedList.progress, matchingCount: 0).padding()
+                ContentUnavailableView(
+                  selectedList.progress.totalCount == 0 ? "No items" : "No matching items",
+                  systemImage: "checklist")
+              }
             } else {
               #if os(macOS)
                 SavedMacMembershipTable(
@@ -353,15 +406,9 @@ struct SavedPlannerView: View {
                         listId: selectedList.source.id)
                     }
                   } header: {
-                    if let done = selectedList.progress.doneCount,
-                      let total = selectedList.progress.totalCount, total > 0
-                    {
-                      ProgressView(value: Double(done), total: Double(total)) {
-                        Text("\(done) of \(total) \(total == 1 ? "item" : "items") done")
-                      }
-                      .accessibilityIdentifier("saved.list.progress")
-                      .textCase(nil)
-                    }
+                    SavedListProgress(
+                      progress: selectedList.progress, matchingCount: listItems.count
+                    ).textCase(nil)
                   }
                 }
               #endif
@@ -375,7 +422,14 @@ struct SavedPlannerView: View {
           }
         }
         .navigationTitle(selectedList.content.name)
+        .overlay(alignment: .topTrailing) {
+          if isOpeningList { ProgressView("Updating List").controlSize(.small).padding() }
+        }
         .toolbar {
+          ToolbarItem {
+            SavedItemFilterMenu(
+              filters: $listFilters, accessibilityIdentifier: "saved.list.filters")
+          }
           #if os(iOS)
             ToolbarItem {
               EditButton()

@@ -29,6 +29,9 @@ struct SavedMembershipRow: View {
         }
         .accessibilityIdentifier("saved.appearance.\(item.id.uuidString)")
       #endif
+      if item.row.archived == true {
+        Image(systemName: "archivebox").accessibilityLabel("Archived")
+      }
     }
   }
 
@@ -52,6 +55,9 @@ struct SavedAppearanceDetail: View {
           item.effectiveDone ? "Completed" : "To do",
           systemImage: item.effectiveDone ? "checkmark.circle.fill" : "circle")
         Text("In \(listName)").font(.subheadline).foregroundStyle(.secondary)
+        if item.archived {
+          Label("Archived", systemImage: "archivebox").foregroundStyle(.secondary)
+        }
         if let subtitle = item.content.subtitle, !subtitle.isEmpty {
           Text(subtitle).foregroundStyle(.secondary)
         }

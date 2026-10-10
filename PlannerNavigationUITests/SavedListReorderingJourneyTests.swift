@@ -2,6 +2,82 @@ import XCTest
 
 @MainActor
 final class SavedListReorderingJourneyTests: XCTestCase {
+  func testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem("Hotel", application: application)
+    createItem("Museum", application: application)
+    createItem("Cafe", application: application)
+    openSection("Lists", application: application)
+    let create = application.plannerElement("saved.list.new")
+    revealSidebarIfNeeded(application, element: create)
+    create.activateForPlannerJourney()
+    let name = application.textFields["saved.list.name"]
+    XCTAssertTrue(name.waitForExistence(timeout: 5))
+    name.activateForPlannerJourney()
+    name.typeText("Tokyo")
+    application.plannerElement("saved.list.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    addItem("Hotel", application: application)
+    addItem("Museum", application: application)
+    addItem("Cafe", application: application)
+    let hotel = application.savedPlannerItemRows("Hotel").firstMatch
+    let museum = application.savedPlannerItemRows("Museum").firstMatch
+    let cafe = application.savedPlannerItemRows("Cafe").firstMatch
+    let hotelIdentifier = hotel.identifier
+    let museumIdentifier = museum.identifier
+    let cafeIdentifier = cafe.identifier
+    let hotelCompletion = application.buttons[
+      hotelIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    hotelCompletion.activateForPlannerJourney()
+    XCTAssertTrue(hotelCompletion.waitForPlannerValue("Completed"))
+    let filters = application.plannerElement("saved.list.filters")
+    filters.activateForPlannerJourney()
+    application.plannerElement("Todo").activateForPlannerJourney()
+    XCTAssertTrue(hotel.waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
+    XCTAssertTrue(application.staticTexts["Showing 2 of 3 items"].exists)
+    #if os(iOS)
+      let edit = application.plannerElement("saved.list.edit")
+      edit.activateForPlannerJourney()
+    #endif
+    dragItem(cafe, relativeTo: museum, before: true, application: application)
+    XCTAssertTrue(waitForOrder(cafe, before: museum))
+    #if os(iOS)
+      edit.activateForPlannerJourney()
+    #endif
+    XCTAssertFalse(hotel.exists)
+    XCTAssertEqual(museum.identifier, museumIdentifier)
+    XCTAssertEqual(cafe.identifier, cafeIdentifier)
+    recordScreenshot(application, name: "Filtered Manual drag keeps full List progress")
+    filters.activateForPlannerJourney()
+    application.plannerElement("All completion states").activateForPlannerJourney()
+    XCTAssertTrue(hotel.waitForExistence(timeout: 10))
+    XCTAssertTrue(waitForOrder(hotel, before: cafe))
+    XCTAssertTrue(waitForOrder(cafe, before: museum))
+    XCTAssertEqual(hotel.identifier, hotelIdentifier)
+    XCTAssertTrue(hotelCompletion.waitForPlannerValue("Completed"))
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Lists", application: application)
+    let list = application.savedPlannerListRow("Tokyo")
+    revealSidebarIfNeeded(application, element: list)
+    list.activateForPlannerJourney()
+    XCTAssertTrue(hotel.waitForExistence(timeout: 10))
+    XCTAssertTrue(waitForOrder(hotel, before: cafe))
+    XCTAssertTrue(waitForOrder(cafe, before: museum))
+    XCTAssertEqual(hotel.identifier, hotelIdentifier)
+    XCTAssertEqual(museum.identifier, museumIdentifier)
+    XCTAssertEqual(cafe.identifier, cafeIdentifier)
+    XCTAssertTrue(hotelCompletion.waitForPlannerValue("Completed"))
+    XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
+    recordScreenshot(
+      application, name: "Hidden membership retained after filtered drag and relaunch")
+  }
+
   func testManualMoveRetainsAppearanceCompletionDetailsAndOrderAfterRelaunch() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
