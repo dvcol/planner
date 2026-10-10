@@ -5,6 +5,7 @@ struct SavedItemCatalog: View {
   let items: [SavedPlannerItem]
   @Binding var selection: UUID?
   @Binding var filters: SavedItemFilters
+  @Binding var searchText: String
   let canCreate: Bool
   let create: () -> Void
 
@@ -27,13 +28,19 @@ struct SavedItemCatalog: View {
     }
     .overlay {
       if items.isEmpty {
-        ContentUnavailableView(
-          filters.summary == "All" ? "No Items yet" : "No matching items",
-          systemImage: "square.stack",
-          description: Text("Change the filters or create an Item to start planning."))
+        if !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+          ContentUnavailableView.search(text: searchText)
+        } else {
+          ContentUnavailableView(
+            filters.summary == "All" ? "No Items yet" : "No matching items",
+            systemImage: "square.stack",
+            description: Text("Change the filters or create an Item to start planning."))
+        }
       }
     }
     .navigationTitle("Items")
+    .searchable(text: $searchText, prompt: "Search Items")
+    .searchPresentationToolbarBehavior(.avoidHidingContent)
     .toolbar {
       ToolbarItem {
         SavedItemFilterMenu(filters: $filters, accessibilityIdentifier: "saved.items.filters")

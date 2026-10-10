@@ -17,6 +17,7 @@ struct SavedPlannerView: View {
   @State private var selectedList: PlannerListSourceRead?
   @State private var listItems: [SavedPlannerItem]?
   @State private var listFilters = SavedItemFilters()
+  @State private var listSearchText = ""
   @State private var isOpeningList = false
   @State private var showNewList = false
   @State private var showNewItem = false
@@ -26,6 +27,7 @@ struct SavedPlannerView: View {
   @State private var isOpeningItem = false
   @State private var catalogItems: [SavedPlannerItem]?
   @State private var itemFilters = SavedItemFilters(archive: .active)
+  @State private var itemSearchText = ""
   @State private var isOpeningCatalog = false
   @State private var selectedAppearanceIdentity: PlannerAppearance?
   @State private var selectedAppearance: PlannerAppearanceRead?
@@ -56,8 +58,10 @@ struct SavedPlannerView: View {
     .task { await store.open() }
     .task(id: store.isReady) { await loadCatalogItems() }
     .task(id: itemFilters) { await loadCatalogItems() }
+    .task(id: itemSearchText) { await loadCatalogItems() }
     .task(id: selectedListId) { await loadSelectedList() }
     .task(id: listFilters) { await loadSelectedList() }
+    .task(id: listSearchText) { await loadSelectedList() }
     .task(id: selectedItemId) { await loadSelectedItem() }
     .task(id: selectedAppearanceIdentity) { await loadSelectedAppearance() }
     .task(id: store.changeRevision) {
@@ -169,6 +173,7 @@ struct SavedPlannerView: View {
     if let catalogItems {
       SavedItemCatalog(
         items: catalogItems, selection: $selectedItemId, filters: $itemFilters,
+        searchText: $itemSearchText,
         canCreate: store.canCreate
       ) { showNewItem = true }
       .overlay(alignment: .topTrailing) {
@@ -189,10 +194,14 @@ struct SavedPlannerView: View {
     guard store.isReady else { return }
     isOpeningCatalog = true
     let filters = itemFilters
+    let searchText = itemSearchText
     let revision = store.changeRevision
     let loaded = await store.readItems(
-      completion: filters.completion.queryValue, archive: filters.archive.queryValue)
-    guard !Task.isCancelled, itemFilters == filters, store.changeRevision == revision else {
+      text: searchText, completion: filters.completion.queryValue,
+      archive: filters.archive.queryValue)
+    guard !Task.isCancelled, itemFilters == filters, itemSearchText == searchText,
+      store.changeRevision == revision
+    else {
       return
     }
     catalogItems = loaded
@@ -255,6 +264,7 @@ struct SavedPlannerView: View {
     isOpeningList = true
     let revision = store.changeRevision
     let filters = listFilters
+    let searchText = listSearchText
     if selectedList?.source.id != identifier {
       selectedList = nil
       listItems = nil
@@ -263,12 +273,13 @@ struct SavedPlannerView: View {
     let loadedItems: [SavedPlannerItem]?
     if loaded != nil {
       loadedItems = await store.readListItems(
-        identifier, completion: filters.completion.queryValue, archive: filters.archive.queryValue)
+        identifier, text: searchText, completion: filters.completion.queryValue,
+        archive: filters.archive.queryValue)
     } else {
       loadedItems = nil
     }
     guard !Task.isCancelled, selectedListId == identifier, store.changeRevision == revision,
-      listFilters == filters
+      listFilters == filters, listSearchText == searchText
     else {
       return
     }
@@ -535,6 +546,8 @@ struct SavedPlannerView: View {
           }
         }
         .navigationTitle(selectedList.content.name)
+        .searchable(text: $listSearchText, prompt: "Search this List")
+        .searchPresentationToolbarBehavior(.avoidHidingContent)
         .overlay(alignment: .topTrailing) {
           if isOpeningList { ProgressView("Updating List").controlSize(.small).padding() }
         }

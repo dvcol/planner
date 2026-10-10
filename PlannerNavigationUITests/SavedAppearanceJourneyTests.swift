@@ -2,6 +2,108 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters()
+    throws
+  {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    createItem(application, title: "Hotel")
+    createList("Tokyo Food", application: application)
+    addItem(application)
+    addItem(application, title: "Hotel")
+    let museum = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    let membershipIdentifier = museum.identifier
+    let completion = application.buttons[
+      membershipIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    completion.activateForPlannerJourney()
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    viewGlobalItem(application)
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Archive Item").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
+    openList("Tokyo Food", application: application)
+    assertProgress(0.5, application: application)
+    let search = application.searchFields["Search this List"]
+    if !search.exists { application.swipeDown() }
+    XCTAssertTrue(search.waitForExistence(timeout: 5), application.debugDescription)
+    museum.activateForPlannerJourney()
+    let keepsSimultaneousDetail = search.isHittable
+    if !keepsSimultaneousDetail {
+      application.plannerElement("BackButton").activateForPlannerJourney()
+    }
+    replaceText(search, with: "nezu garden", application: application)
+    XCTAssertTrue(museum.waitForExistence(timeout: 10))
+    let hotel = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(hotel.waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Showing 1 of 2 items"].exists)
+    assertProgress(0.5, application: application)
+    recordScreenshot(application, name: "List search shows one match and full archived progress")
+    let filters = application.plannerElement("saved.list.filters")
+    filters.activateForPlannerJourney()
+    application.plannerElement("Active").activateForPlannerJourney()
+    XCTAssertTrue(museum.waitForNonExistence(timeout: 10))
+    XCTAssertFalse(hotel.exists)
+    XCTAssertTrue(application.staticTexts["Showing 0 of 2 items"].exists)
+    assertProgress(0.5, application: application)
+    if keepsSimultaneousDetail {
+      XCTAssertTrue(application.staticTexts["In Tokyo Food"].exists)
+      XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    }
+    recordScreenshot(application, name: "Active search hides the row and retains valid detail")
+    filters.activateForPlannerJourney()
+    application.plannerElement("All archive states").activateForPlannerJourney()
+    XCTAssertTrue(museum.waitForExistence(timeout: 10))
+    XCTAssertFalse(hotel.exists)
+    replaceText(search, with: "", application: application)
+    XCTAssertTrue(museum.waitForExistence(timeout: 10))
+    XCTAssertTrue(hotel.waitForExistence(timeout: 10))
+    XCTAssertEqual(museum.identifier, membershipIdentifier)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(0.5, application: application)
+    recordScreenshot(application, name: "All archive states and cleared search restore both rows")
+  }
+
+  func testNativeItemSearchMatchesEveryWordAcrossSharedContentAndClearsWithoutEditingItems()
+    throws
+  {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application, title: "Café Lunch")
+    createItem(application, title: "Hotel")
+    openSection("Items", application: application)
+    let cafe = application.savedPlannerItemRows("Café Lunch").firstMatch
+    if !cafe.isHittable {
+      application.plannerElement("BackButton").activateForPlannerJourney()
+    }
+    let search = application.searchFields.firstMatch
+    if !search.exists { application.swipeDown() }
+    XCTAssertTrue(search.waitForExistence(timeout: 5), application.debugDescription)
+    replaceText(search, with: "cafe garden", application: application)
+    XCTAssertTrue(cafe.waitForExistence(timeout: 10))
+    let hotel = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(hotel.waitForNonExistence(timeout: 10))
+    recordScreenshot(application, name: "Native search matches title and notes across one Item")
+    replaceText(search, with: "cafe hotel", application: application)
+    XCTAssertTrue(cafe.waitForNonExistence(timeout: 10))
+    XCTAssertFalse(hotel.exists)
+    replaceText(search, with: "", application: application)
+    XCTAssertTrue(cafe.waitForExistence(timeout: 10))
+    XCTAssertTrue(hotel.waitForExistence(timeout: 10))
+    cafe.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Meet at the garden entrance"].waitForExistence(timeout: 10))
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    recordScreenshot(application, name: "Clearing native search keeps Item content and Todo")
+  }
+
   func testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion() throws {
     continueAfterFailure = false
     let application = XCUIApplication()

@@ -1,0 +1,182 @@
+{
+  "baseCommit": "7e31c4af351ea480512ae1e9fa31ced8b5465d2a",
+  "seam": "Q34 native UI journeys, using real native controls and the public Planner Core through the saved app; no mocks or private-store assertions.",
+  "sourceSnapshots": {
+    "GlobalRed": {
+      "Planner/Scenes/SavedPlannerView.swift": "c9c3e98e5dd1957d8a0c055981c7d7c31fb4d7e56b7f2bebc687828a8d096e3b",
+      "Planner/Scenes/SavedPlannerStore.swift": "ec1cbfe8ab55699aa62c1289a2653e4c5ed4696ce3a16afcb7105d7bb34bf88e",
+      "Planner/Scenes/SavedItemViews.swift": "f1d23f3b1a73e65c86eccd95e386dbe55942e2b11a1821db67c95fc4ee9908ef",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "88df777ff82f0ae55b4251b92830897cc9e507bdde2c1ab818367bf2482160a7"
+    },
+    "GlobalGreen": {
+      "Planner/Scenes/SavedPlannerView.swift": "b67bd79487a195f692d972bbd0297e9e97fa0656708038c6fb965d1b24c1313d",
+      "Planner/Scenes/SavedPlannerStore.swift": "5482668047a916ca5d8c6ca53543268d033aab8b7ec6ffd5a6bc7e79c651cc45",
+      "Planner/Scenes/SavedItemViews.swift": "1091acf133e2efeba2063f124ed6c31b9c4380539fd8bf04b348e6729f1e5c2c",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "88df777ff82f0ae55b4251b92830897cc9e507bdde2c1ab818367bf2482160a7"
+    },
+    "ListRed": {
+      "Planner/Scenes/SavedPlannerView.swift": "b67bd79487a195f692d972bbd0297e9e97fa0656708038c6fb965d1b24c1313d",
+      "Planner/Scenes/SavedPlannerStore.swift": "5482668047a916ca5d8c6ca53543268d033aab8b7ec6ffd5a6bc7e79c651cc45",
+      "Planner/Scenes/SavedItemViews.swift": "1091acf133e2efeba2063f124ed6c31b9c4380539fd8bf04b348e6729f1e5c2c",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "603e1c406e2f56c7e34bdbee8dd39e6282e34ad963ad600281cdc366ac276a70"
+    },
+    "ListGreen": {
+      "Planner/Scenes/SavedPlannerView.swift": "870565451ee8ca07d2d11cc6e8c54ce95f47c2078a4a4f33390eb1a3876bd49b",
+      "Planner/Scenes/SavedPlannerStore.swift": "83bb2d1da935697b39c4cf3b72a579346138165b8db7a25edbfc7dd2510c0223",
+      "Planner/Scenes/SavedItemViews.swift": "648383d07a051b91cd177d60112ef63cb19c659474f4cbc8ab4646be1ed74b51",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "603e1c406e2f56c7e34bdbee8dd39e6282e34ad963ad600281cdc366ac276a70"
+    },
+    "Qualification": {
+      "Planner/Scenes/SavedPlannerView.swift": "870565451ee8ca07d2d11cc6e8c54ce95f47c2078a4a4f33390eb1a3876bd49b",
+      "Planner/Scenes/SavedPlannerStore.swift": "83bb2d1da935697b39c4cf3b72a579346138165b8db7a25edbfc7dd2510c0223",
+      "Planner/Scenes/SavedItemViews.swift": "648383d07a051b91cd177d60112ef63cb19c659474f4cbc8ab4646be1ed74b51",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "603e1c406e2f56c7e34bdbee8dd39e6282e34ad963ad600281cdc366ac276a70"
+    }
+  },
+  "commands": {
+    "globalRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeItemSearchMatchesEveryWordAcrossSharedContentAndClearsWithoutEditingItems -resultBundlePath /private/tmp/PlannerNativeTextSearchGlobalRed.xcresult test > /private/tmp/PlannerNativeTextSearchGlobalRed.log 2>&1",
+    "globalGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeItemSearchMatchesEveryWordAcrossSharedContentAndClearsWithoutEditingItems -resultBundlePath /private/tmp/PlannerNativeTextSearchGlobalGreen.xcresult test > /private/tmp/PlannerNativeTextSearchGlobalGreen.log 2>&1",
+    "listRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters -resultBundlePath /private/tmp/PlannerNativeTextSearchListRed.xcresult test > /private/tmp/PlannerNativeTextSearchListRed.log 2>&1",
+    "listGreen": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters -resultBundlePath /private/tmp/PlannerNativeTextSearchListGreen.xcresult test > /private/tmp/PlannerNativeTextSearchListGreen.log 2>&1",
+    "macBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeTextSearchMacBuild.xcresult build-for-testing > /private/tmp/PlannerNativeTextSearchMacBuild.log 2>&1",
+    "phoneQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeItemSearchMatchesEveryWordAcrossSharedContentAndClearsWithoutEditingItems -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testSavedListFiltersIncludeArchivedItemsAndKeepFullProgressWithNoMatches -resultBundlePath /private/tmp/PlannerNativeTextSearchPhoneQualification.xcresult test > /private/tmp/PlannerNativeTextSearchPhoneQualification.log 2>&1",
+    "tabletQualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeItemSearchMatchesEveryWordAcrossSharedContentAndClearsWithoutEditingItems -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testSavedListFiltersIncludeArchivedItemsAndKeepFullProgressWithNoMatches -resultBundlePath /private/tmp/PlannerNativeTextSearchTabletQualification.xcresult test > /private/tmp/PlannerNativeTextSearchTabletQualification.log 2>&1"
+  },
+  "results": {
+    "GlobalRed": {
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "logPath": "/private/tmp/PlannerNativeTextSearchGlobalRed.log",
+      "logSHA256": "da3633ed195964896ab826141125a535380a0d3edbd2fc6a758e8d475bf6d05a"
+    },
+    "GlobalGreen": {
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 1,
+      "passedFunctions": 1,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "logPath": "/private/tmp/PlannerNativeTextSearchGlobalGreen.log",
+      "logSHA256": "0fac8472d4e7118039a40b6c18c921b8779f2648afc1bebfd6b6253f991f3c22"
+    },
+    "ListRed": {
+      "exitCode": 65,
+      "outcome": "Failed",
+      "executedFunctions": 1,
+      "passedFunctions": 0,
+      "failedFunctions": 1,
+      "skippedFunctions": 0,
+      "logPath": "/private/tmp/PlannerNativeTextSearchListRed.log",
+      "logSHA256": "de9f86c12ffd22c6adc30181c0592369917d3a11df686cde49ddb5cb5e25bb19"
+    },
+    "ListGreen": {
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 1,
+      "passedFunctions": 1,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "logPath": "/private/tmp/PlannerNativeTextSearchListGreen.log",
+      "logSHA256": "552f9fc9ba3f861930867efeb7e8e89bd780e06119fcf2dc0dabb7aa431f2056"
+    },
+    "PhoneQualification": {
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 2,
+      "passedFunctions": 2,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "logPath": "/private/tmp/PlannerNativeTextSearchPhoneQualification.log",
+      "logSHA256": "b4ebbcd4c9f5db088ad58e16fd67a72b115a383e2474a4f64ce479f425b32d24"
+    },
+    "TabletQualification": {
+      "exitCode": 0,
+      "outcome": "Passed",
+      "executedFunctions": 3,
+      "passedFunctions": 3,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "logPath": "/private/tmp/PlannerNativeTextSearchTabletQualification.log",
+      "logSHA256": "d3dbb2f432a548dcb201d359782a22fc59348e193ba96698bd4406caa4116bd9"
+    },
+    "MacBuild": {
+      "exitCode": 0,
+      "outcome": "Build succeeded",
+      "executedFunctions": 0,
+      "logPath": "/private/tmp/PlannerNativeTextSearchMacBuild.log",
+      "logSHA256": "288b19c619bc5bd526df889dcd6f1051e8f560017e38dc7225c195156fa4baaf"
+    }
+  },
+  "classification": "Two executed native behavior reds fail at missing Item/List search fields after successful native setup. Each unchanged function then passes on iPhone. Final source qualification passes two affected functions on iPhone and three on iPad, with three distinct qualified journeys per simulator including the separate iPhone List green. Mac app/test bundles compile with no Mac runtime claim. All source/test files remain fixed from the List green through final qualification and Mac compilation.",
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-search-items-cleared.png",
+      "sha256": "c3fd72d534c87bccc18ffa5e880920c231af38541f5abafd3ddb3c4ba32d67fa",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-search-items-matching.png",
+      "sha256": "6873245c910c5b21c6e9e35e53b15e4885775802326af85cb799a45616149639",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-search-list-cleared.png",
+      "sha256": "3dc9063fced7b2dd0c55f03c649816998e47ec524eafbb1b014c632438b2de23",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-search-list-hidden.png",
+      "sha256": "d35f39b0e3fff15a5a6abbe50ee49bf8d9e9b3567ae17692ac4153f7c07bb45d",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-search-list-matching.png",
+      "sha256": "0f35edacaa22e671f62f9fcb71c3446f6535651c1d3da77434084d028696aa3a",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-search-items-cleared.png",
+      "sha256": "9ba499684c28a3049188a9f09e3b6c6a86449e3c7a96e22803e2ba5cb680ef63",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-search-items-matching.png",
+      "sha256": "2fbabccde085fccff75bdcaad2cd703ff557a2efd0440431f44afa30314da269",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-search-list-cleared.png",
+      "sha256": "082914d5bbcfcae16603f5c62e607ecc11e80c201ca0e10f673dd211ecc7bfa7",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-search-list-hidden.png",
+      "sha256": "fa62121bc8fc1bbea8862dde02c149618bda7682e8937ea7e72f79f8661cefe2",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-search-list-matching.png",
+      "sha256": "aa5c6477eb62a89d9c2dc3f5f64d3470f0dd8078ce4e3f9c113157cff6074465",
+      "inspected": true
+    }
+  ],
+  "validation": {
+    "swiftLint": "Strict lint passes for all four affected Swift files.",
+    "typeChecking": "iPhone/iPad test builds and macOS build-for-testing pass.",
+    "markdownLint": "Native report passes markdownlint-cli2.",
+    "diffCheck": "git diff --check passes.",
+    "metadataWarning": "The same app-intents metadata extraction skip is present in /private/tmp/PlannerMCPTextQueryMacBuild.log, before this native change.",
+    "observedGlobalSelection": "The inspected iPad Item-search capture retains Hotel detail when its row leaves the query. Automated retained-detail assertions exercise the List appearance path."
+  },
+  "limits": [
+    "Only currently saved Item fields are searchable; shared labels are not implemented.",
+    "Inbox UI, structured filters/sorts/paging, external-writer observation, filtered reorder and estimate controls remain open.",
+    "No performance claim from slow XCTest startup/teardown; 5000 Items/200 Lists/300 ms physical-device qualification remains open.",
+    "Mac runtime/window restoration, keyboard/accessibility, rotation/resizing, physical iCloud/Share, recovery/failure/stale-save presentation and final human review remain open.",
+    "Schema 7 and portable version 1 remain localOnly; no CloudKit or administration change."
+  ]
+}
