@@ -162,6 +162,16 @@ Required /tdd: full graph itinerary appearance 452/401 opens with In Tokyo Weeke
 
 Validate roomier hierarchy with actual native screenshots, rather than tests tied to padding constants. Use the same phone/iPad/Mac destinations and affected formatting/compilation checks; no private fixture unit seam is added. A successful native diagnostic sheet is evidence for read-only appearance state, not durable mutation or recovery. Q43-Q46 now have accepted declarations; full-graph persistence, physical performance, accessibility/orientation and final human review remain open.
 
+## Accepted count and ordinary-map correction
+
+Q47 A is accepted. Completion labels name their units, such as 0 of 3 items done. An Itinerary separately describes its top-level composition, such as 1 direct item · 1 list. Referenced List headers retain their own complete child progress. When cumulative filters hide children, a secondary Showing 2 of 3 items label explains the matching item appearances; changing or collapsing a filter/group does not change full completion progress. Repeated Item/List entries retain the accepted independent appearance semantics.
+
+The user's answer also requires archive visibility. The read-only comparison already has Active, Archived and All archive states in the same cumulative filter menu. Qualify Archived-only and All views against literal fixture results, including an archived child of a live List. Saved-query filter controls remain part of the unfinished saved feature work.
+
+An ordinary global or contextual Item detail with saved coordinates must show its native map without choosing a special comparison layout. Reuse the same owned-location section in saved Item and appearance details. Name/address-only data stays readable without inventing coordinates or treating fixture rendering as geocoding proof. Keep the comparison's missing-location fallback.
+
+Use the accepted public native UI seam to reproduce the missing map and unclear counts before implementation, then qualify ordinary detail, cumulative archive filters, full-scope progress, group collapse and identity navigation. Inspect actual captures on phone, tablet and Mac; record unavailable runtime checks separately. The requested whole-application polish follows feature completion in [ticket 23](https://github.com/dvcol/planner/issues/23), with its [full completion gate](native-ui-polish.md).
+
 ## Definition of ready and done
 
 - [x] Contract public interfaces accepted, prerequisite resolutions reviewed, local toolchain inventory refreshed and fixture inputs/expected transitions specified.

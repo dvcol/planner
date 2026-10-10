@@ -2,7 +2,7 @@
 
 Work for [Navigation prototype](https://github.com/dvcol/planner/issues/14) on `prototype/navigation`. Q34 accepts the native UI journeys and fixtures. Q35 requires confirmation before deleting a Category/Tag with any association. The user delayed signing and physical setup while authorizing simulator and local Mac work.
 
-The latest saved local runtime and screenshots are in [Saved native List reordering](#saved-native-list-reordering). The earlier [useful Item details and roomier referenced Lists](#useful-item-details-and-roomier-referenced-lists) section preserves the read-only full-graph comparison. Other sections retain their recorded revisions.
+The latest presentation correction is in [Clear counts and ordinary location maps](#clear-counts-and-ordinary-location-maps). Saved local reordering runtime and screenshots remain in [Saved native List reordering](#saved-native-list-reordering). The earlier [useful Item details and roomier referenced Lists](#useful-item-details-and-roomier-referenced-lists) section preserves the read-only full-graph comparison. Other sections retain their recorded revisions.
 
 The human accepted Q38 A, Q39 B, Q40 A, Q41 A and Q42 A, then accepted Q43 A, Q44 A, Q45 A and Q46 A. The [accepted row decisions](../navigation-prototype-review.md#accepted-review-answers) and [row contract review](../navigation-row-contract-review.md) record the exact declarations and required tests. The accepted amendment itself added no runtime qualification to the seven-journey presentation evidence below. Later sections qualify saved Item/List appearance completion and standalone List reordering. Native rich rows, cross-List drag-and-drop and provider lookup remain open.
 
@@ -302,6 +302,30 @@ Four affected Mac journeys passed after the Text-row correction, with zero failu
 - [iPad saved List after drag](evidence/navigation/layouts/tablet-saved-list-reordered.png)
 
 Mobile raw logs include context-menu animation/quiescence delays. These runs establish functional behavior, not interaction latency, long-list performance or every accessibility/keyboard path. macOS automatic window restoration, orientation/resizing, native failure/interruption, full-graph persistence, provider previews, physical signing/Share/CloudKit and final human review remain open. The Navigation prototype gate stays open.
+
+## Clear counts and ordinary location maps
+
+The user accepted Q47 A after noticing that full progress exceeded the visible rows, and requested archived-item visibility. The starting comparison showed 0 of 3 done for one direct Item plus a live List with two children, although Active hid one archived child. Its map was also restricted to the Map alongside list comparison.
+
+Progress now names its item units, including singular item for one child. The Itinerary separately shows 1 direct item · 1 list. When cumulative filters hide children, the container shows Showing 2 of 3 items and the referenced List shows Showing 1 of 2 items. Full completion totals still include archived/filtered children and independent repeated appearances. Disclosure collapse changes presentation only. Active, Archived and All already existed in the native archive picker; the new journey explicitly exercises all three and verifies unchanged full progress. Saved flat Lists use the same clearer item units, while saved cumulative query-filter controls remain unfinished.
+
+A shared native ItemLocationSection now displays owned name/address data and a MapKit marker whenever saved coordinates exist, in ordinary global and contextual details. Both saved detail adapters use this section. The map's identity follows its coordinates so selecting another place resets the initial region. The comparison retains its missing-location fallback. No coordinates are invented from an address, and no new provider lookup or metadata cache is implemented.
+
+The accepted public native UI seam establishes two separate red/green pairs. The ordinary-map test failed at the absent map in normal Wishlist appearance details, then passed in both contextual and global Item detail without selecting the special layout. The count test failed at the absent accepted label, then passed through Active, Archived and All with literal child visibility, container composition, group counts and unchanged progress. Mac's initial runner timeout occurred before test execution and is separately recorded, rather than counted as a behavior red.
+
+The [evidence manifest](evidence/navigation/native-counts-and-maps.json) records exact source hashes, commands, summaries, raw result paths and capture hashes. All final runs used the same nine affected source files without edits during execution.
+
+| Destination | Executed journeys | Failures/skips | Result |
+| --- | --- | --- | --- |
+| iPhone 18 Pro simulator | 11 | 0/0 | Passed |
+| iPad Air 11-inch M4 simulator | 11 | 0/0 | Passed |
+| Native arm64 Mac | 0 | Runner initialization failed | App/test bundles compiled; automation mode timed out |
+
+The eleven journeys on each simulator cover ordinary and comparison maps, useful details/diagnostics separation, cumulative filtering, appearance-to-source identity, independent itinerary appearances, disclosure/relaunch, and two real saved-data appearance completion/detail journeys. The saved journeys retain global OR local precedence and relaunch behavior; they do not create a saved location. Wiring saved location presentation is therefore distinct from a future native location edit/reopen proof.
+
+Four final captures were visually inspected: [phone ordinary map](evidence/navigation/layouts/phone-ordinary-item-map.png), [phone with archived children](evidence/navigation/layouts/phone-itinerary-all-counts.png), [iPad ordinary map](evidence/navigation/layouts/tablet-ordinary-item-map.png), and [iPad filtered counts](evidence/navigation/layouts/tablet-itinerary-filtered-counts.png). Additional captures retain the opposite filter states. These maps use the fixture's synthetic owned coordinate, not the museum's geocoded address. Visible tiles do not establish general live-network availability or offline map behavior.
+
+Strict formatting/lint on the nine affected Swift files, compiler checks through the selected native builds, affected Markdown lint and diff checks pass. Both Mac attempts failed before executing a behavior function; current Mac runtime and visual qualification remain open. This correction does not close Navigation prototype or waive its physical, accessibility, resizing, long-list, sync or Share requirements. The [whole-application polish ticket](https://github.com/dvcol/planner/issues/23) follows feature completion and records its own Context, DoR, DoD and `/tdd`/visual/device checks.
 
 ## Remaining gates
 

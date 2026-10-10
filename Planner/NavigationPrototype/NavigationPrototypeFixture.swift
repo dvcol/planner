@@ -117,6 +117,7 @@ struct NavigationPrototypeFixture: Decodable {
 
   func progress(in children: [Appearance]) -> String {
     guard !children.isEmpty else { return "No items" }
-    return "\(children.filter(isDone).count) of \(children.count) done"
+    let unit = children.count == 1 ? "item" : "items"
+    return "\(children.filter(isDone).count) of \(children.count) \(unit) done"
   }
 }

@@ -357,7 +357,7 @@ struct SavedPlannerView: View {
                       let total = selectedList.progress.totalCount, total > 0
                     {
                       ProgressView(value: Double(done), total: Double(total)) {
-                        Text("\(done) of \(total) done")
+                        Text("\(done) of \(total) \(total == 1 ? "item" : "items") done")
                       }
                       .accessibilityIdentifier("saved.list.progress")
                       .textCase(nil)

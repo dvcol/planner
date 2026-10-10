@@ -2,6 +2,59 @@ import XCTest
 
 @MainActor
 final class NavigationJourneyTests: XCTestCase {
+  func testItineraryCountsExplainHiddenArchivedItemsAndContainerComposition() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--navigation-prototype"]
+    application.launch()
+    application.openPlannerSection("Itineraries")
+    application.plannerElement("itinerary.00000000-0000-4000-8000-000000000301")
+      .activateForPlannerJourney()
+    let nestedItem = application.plannerElement(
+      "appearance.00000000-0000-4000-8000-000000000452/00000000-0000-4000-8000-000000000401")
+    if !nestedItem.exists {
+      #if os(macOS)
+        application.disclosureTriangles.firstMatch.activateForPlannerJourney()
+      #else
+        application.descendants(matching: .any)
+          .matching(identifier: "group.00000000-0000-4000-8000-000000000452").firstMatch
+          .activateForPlannerJourney()
+      #endif
+    }
+
+    XCTAssertTrue(application.staticTexts["0 of 3 items done"].waitForExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["1 direct item · 1 list"].exists)
+    XCTAssertTrue(application.staticTexts["Showing 2 of 3 items"].exists)
+    XCTAssertTrue(application.staticTexts["0 of 2 items done"].exists)
+    XCTAssertTrue(application.staticTexts["Showing 1 of 2 items"].exists)
+    XCTAssertTrue(nestedItem.exists)
+    let archivedItem = application.plannerElement(
+      "appearance.00000000-0000-4000-8000-000000000452/00000000-0000-4000-8000-000000000402")
+    XCTAssertFalse(archivedItem.exists)
+    recordScreenshot(application, name: "Itinerary counts explain hidden archived child")
+
+    application.plannerElement("filter.options").activateForPlannerJourney()
+    application.plannerElement("Archived").activateForPlannerJourney()
+    XCTAssertTrue(archivedItem.waitForExistence(timeout: 5))
+    XCTAssertFalse(nestedItem.exists)
+    XCTAssertTrue(application.staticTexts["Showing 1 of 3 items"].exists)
+    XCTAssertTrue(application.staticTexts["0 of 3 items done"].exists)
+
+    application.plannerElement("filter.options").activateForPlannerJourney()
+    application.plannerElement("All archive states").activateForPlannerJourney()
+    XCTAssertTrue(archivedItem.waitForExistence(timeout: 5))
+    XCTAssertTrue(nestedItem.exists)
+    XCTAssertTrue(
+      application.plannerElement("appearance.00000000-0000-4000-8000-000000000451").exists)
+    XCTAssertFalse(application.staticTexts["Showing 2 of 3 items"].exists)
+    XCTAssertFalse(application.staticTexts["Showing 1 of 2 items"].exists)
+    XCTAssertTrue(application.staticTexts["0 of 3 items done"].exists)
+    XCTAssertTrue(application.staticTexts["1 direct item · 1 list"].exists)
+    XCTAssertEqual(application.progressIndicators["progress.container"].plannerProgressFraction, 0)
+    recordScreenshot(
+      application, name: "Itinerary includes archived children with unchanged progress")
+  }
+
   func testContextualDetailsKeepUsefulContentSeparateFromPrototypeDiagnostics() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -56,7 +109,7 @@ final class NavigationJourneyTests: XCTestCase {
     XCTAssertTrue(application.progressIndicators["progress.container"].waitForExistence(timeout: 5))
     XCTAssertEqual(
       application.progressIndicators["progress.container"].plannerProgressFraction, 0.5)
-    XCTAssertTrue(application.staticTexts["1 of 2 done"].exists)
+    XCTAssertTrue(application.staticTexts["1 of 2 items done"].exists)
     XCTAssertTrue(
       application.plannerElement("filter.options").plannerControlTitle.contains("Todo"),
       application.windows.firstMatch.debugDescription)
@@ -85,7 +138,7 @@ final class NavigationJourneyTests: XCTestCase {
       application.plannerElement("appearance.00000000-0000-4000-8000-000000000401").exists)
     XCTAssertFalse(
       application.plannerElement("appearance.00000000-0000-4000-8000-000000000402").exists)
-    XCTAssertTrue(application.staticTexts["1 of 2 done"].exists)
+    XCTAssertTrue(application.staticTexts["1 of 2 items done"].exists)
     recordScreenshot(application, name: "Cumulative filters with native completion progress")
   }
 
@@ -103,7 +156,7 @@ final class NavigationJourneyTests: XCTestCase {
       recordScreenshot(application, name: "Mac native sidebar selection")
     #endif
     XCTAssertTrue(
-      application.staticTexts["1 of 2 done"].waitForExistence(timeout: 5),
+      application.staticTexts["1 of 2 items done"].waitForExistence(timeout: 5),
       application.windows.firstMatch.debugDescription)
     XCTAssertFalse(
       application.plannerElement("appearance.00000000-0000-4000-8000-000000000401").exists)
@@ -162,7 +215,7 @@ final class NavigationJourneyTests: XCTestCase {
     application.openPlannerSection("Itineraries")
     application.plannerElement("itinerary.00000000-0000-4000-8000-000000000301")
       .activateForPlannerJourney()
-    XCTAssertTrue(application.staticTexts["0 of 3 done"].exists)
+    XCTAssertTrue(application.staticTexts["0 of 3 items done"].exists)
     recordScreenshot(application, name: "Tokyo Weekend initial progress")
   }
 
@@ -179,7 +232,7 @@ final class NavigationJourneyTests: XCTestCase {
     if !itinerary.exists { application.plannerElement("Show Sidebar").activateForPlannerJourney() }
     XCTAssertTrue(itinerary.waitForExistence(timeout: 5))
     itinerary.activateForPlannerJourney()
-    XCTAssertTrue(application.staticTexts["0 of 3 done"].exists)
+    XCTAssertTrue(application.staticTexts["0 of 3 items done"].exists)
     recordScreenshot(application, name: "Itinerary first layout")
     application.plannerElement("appearance.00000000-0000-4000-8000-000000000451")
       .activateForPlannerJourney()
@@ -238,13 +291,13 @@ final class NavigationJourneyTests: XCTestCase {
     XCTAssertTrue(expandedItem.exists)
     XCTAssertTrue(
       groupProgress(in: application).exists, application.windows.firstMatch.debugDescription)
-    XCTAssertTrue(application.staticTexts["0 of 3 done"].exists)
+    XCTAssertTrue(application.staticTexts["0 of 3 items done"].exists)
     group.activateForPlannerJourney()
     XCTAssertFalse(expandedItem.exists)
     XCTAssertTrue(
       application.plannerElement("appearance.00000000-0000-4000-8000-000000000451").exists)
     XCTAssertTrue(groupProgress(in: application).exists)
-    XCTAssertTrue(application.staticTexts["0 of 3 done"].exists)
+    XCTAssertTrue(application.staticTexts["0 of 3 items done"].exists)
     recordScreenshot(application, name: "Collapsed live List with unchanged progress")
 
     application.terminate()
@@ -273,10 +326,12 @@ final class NavigationJourneyTests: XCTestCase {
   private func groupProgress(in application: XCUIApplication) -> XCUIElement {
     #if os(macOS)
       application.descendants(matching: .any).matching(
-        NSPredicate(format: "label CONTAINS %@ OR value CONTAINS %@", "0 of 2 done", "0 of 2 done")
+        NSPredicate(
+          format: "label CONTAINS %@ OR value CONTAINS %@", "0 of 2 items done", "0 of 2 items done"
+        )
       ).firstMatch
     #else
-      application.staticTexts["0 of 2 done"]
+      application.staticTexts["0 of 2 items done"]
     #endif
   }
 

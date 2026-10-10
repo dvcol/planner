@@ -306,7 +306,11 @@ private struct PrototypeContainerView: View {
       VStack(alignment: .leading, spacing: 10) {
         PrototypeCompletionProgress(
           fixture: fixture, appearances: fixture.appearances(in: container),
+          matchingCount: visibleAppearances.count,
           accessibilityIdentifier: "progress.container")
+        if let compositionSummary {
+          Text(compositionSummary).font(.caption).foregroundStyle(.secondary)
+        }
         #if os(iOS)
           filterMenu
         #endif
@@ -401,6 +405,16 @@ private struct PrototypeContainerView: View {
     fixture.appearances(in: container).filter(matchesFilters)
   }
 
+  private var compositionSummary: String? {
+    guard container.kind == "itinerary" else { return nil }
+    let entries = fixture.itineraryEntries.filter { $0.itinerary.id == container.id }
+    let itemCount = entries.filter { fixture.source($0.source.id)?.kind == "item" }.count
+    let listCount = entries.filter { fixture.source($0.source.id)?.kind == "list" }.count
+    let itemUnit = itemCount == 1 ? "direct item" : "direct items"
+    let listUnit = listCount == 1 ? "list" : "lists"
+    return "\(itemCount) \(itemUnit) · \(listCount) \(listUnit)"
+  }
+
   private func matchesFilters(_ appearance: NavigationPrototypeFixture.Appearance) -> Bool {
     guard let source = fixture.source(appearance.sourceId) else { return false }
     let done = fixture.isDone(appearance)
@@ -465,6 +479,7 @@ private struct PrototypeItineraryListGroup: View {
         .font(.headline)
         PrototypeCompletionProgress(
           fixture: fixture, appearances: fixture.appearances(in: entry),
+          matchingCount: visibleAppearances.count,
           accessibilityIdentifier: "progress.group.\(entry.id.uuidString)")
       }
       .padding(.vertical, 10)
@@ -476,6 +491,7 @@ private struct PrototypeItineraryListGroup: View {
 private struct PrototypeCompletionProgress: View {
   let fixture: NavigationPrototypeFixture
   let appearances: [NavigationPrototypeFixture.Appearance]
+  let matchingCount: Int
   let accessibilityIdentifier: String
 
   var body: some View {
@@ -488,6 +504,10 @@ private struct PrototypeCompletionProgress: View {
         .progressViewStyle(.linear)
         .accessibilityLabel("Completion")
         .accessibilityIdentifier(accessibilityIdentifier)
+      }
+      if matchingCount < appearances.count {
+        Text("Showing \(matchingCount) of \(appearances.count) items")
+          .font(.caption).foregroundStyle(.secondary)
       }
     }
   }
@@ -566,15 +586,8 @@ struct PrototypeItemDetail: View {
       if let notes = source.content.notes {
         Section("Notes") { Text(notes).textSelection(.enabled) }
       }
-      if source.content.location != nil || showMap {
-        Section("Location") {
-          if let name = source.content.location?.displayName { Text(name) }
-          if let address = source.content.location?.formattedAddress {
-            Label(address, systemImage: "mappin.and.ellipse")
-          }
-          if showMap { PrototypeMapItemDetail(source: source) }
-        }
-      }
+      ItemLocationSection(
+        title: source.title, location: source.content.location, showMissingLocation: showMap)
     }
     .formStyle(.grouped)
     .frame(maxWidth: 760)
