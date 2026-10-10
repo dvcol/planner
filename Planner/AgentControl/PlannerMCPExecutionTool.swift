@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create and edit Items and Lists, add, remove, move and reorder live Item references in Lists, complete/reopen Items or exact List appearances, archive/unarchive Items and Lists, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
+        "Create and edit Items, Lists and Categories, add, remove, move and reorder live Item references in Lists, complete/reopen Items or exact List appearances, archive/unarchive Items and Lists, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -19,7 +19,7 @@
               creationSchema, listCreationSchema, categoryCreationSchema, membershipCreationSchema,
               membershipReorderingSchema, membershipRemovalSchema, membershipMoveSchema,
               editSchema,
-              listEditSchema, archiveSchema,
+              listEditSchema, categoryEditSchema, archiveSchema,
               completionSchema,
               scheduleCreationSchema,
               scheduleEditSchema, scheduleZoneSchema, scheduleRemovalSchema,
@@ -126,6 +126,10 @@
       "iconName": .object(["type": .array([.string("string"), .string("null")])]),
     ]
 
+    private static let categoryContentProperties = listContentProperties.filter {
+      PlannerCategoryField(rawValue: $0.key) != nil
+    }
+
     private static let listCreationSchema = Value.object([
       "type": .string("object"), "additionalProperties": .bool(false),
       "required": .array([.string("type"), .string("content")]),
@@ -146,10 +150,7 @@
         "content": .object([
           "type": .string("object"), "additionalProperties": .bool(false),
           "required": .array([.string("name")]),
-          "properties": .object(
-            listContentProperties.filter {
-              PlannerCategoryField(rawValue: $0.key) != nil
-            }),
+          "properties": .object(categoryContentProperties),
         ]),
       ]),
     ])
@@ -246,6 +247,34 @@
           "properties": .object(
             Dictionary(
               uniqueKeysWithValues: PlannerListField.allCases.map {
+                (
+                  $0.rawValue,
+                  .object([
+                    "type": .string("string"), "pattern": .string("^sha256-v1:[0-9a-f]{64}$"),
+                  ])
+                )
+              })),
+        ]),
+      ]),
+    ])
+
+    private static let categoryEditSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([
+        .string("type"), .string("sourceId"), .string("changes"), .string("expectedFieldHashes"),
+      ]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("editCategory")]),
+        "sourceId": .object(["type": .string("string"), "format": .string("uuid")]),
+        "changes": .object([
+          "type": .string("object"), "additionalProperties": .bool(false), "minProperties": .int(1),
+          "properties": .object(categoryContentProperties),
+        ]),
+        "expectedFieldHashes": .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "properties": .object(
+            Dictionary(
+              uniqueKeysWithValues: PlannerCategoryField.allCases.map {
                 (
                   $0.rawValue,
                   .object([
@@ -498,6 +527,7 @@
         case "moveMembership": command = try membershipMoveCommand(arguments["command"])
         case "reorderMembership": command = try membershipReorderingCommand(arguments["command"])
         case "editList": command = try listEditCommand(arguments["command"])
+        case "editCategory": command = try categoryEditCommand(arguments["command"])
         case "editItem": command = try editCommand(arguments["command"])
         case "setArchive": command = try archiveCommand(arguments["command"])
         case "setCompletion": command = try completionCommand(arguments["command"])
@@ -716,6 +746,39 @@
         changes: PlannerListChanges(
           name: try textChange(changes["name"], path: "/command/changes/name"),
           notes: try textChange(changes["notes"], path: "/command/changes/notes"),
+          color: try colorChange(changes["color"], path: "/command/changes/color"),
+          iconName: try textChange(changes["iconName"], path: "/command/changes/iconName")),
+        expectedFieldHashes: hashes)
+    }
+
+    private static func categoryEditCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "sourceId", "changes", "expectedFieldHashes"],
+        required: ["type", "sourceId", "changes", "expectedFieldHashes"], path: "/command")
+      guard case .string(let spelling) = command["sourceId"],
+        let sourceIdentifier = UUID(uuidString: spelling)
+      else {
+        throw AdmissionFailure("invalidInput", "/command/sourceId", "Expected a Category UUID.")
+      }
+      let fieldNames = Set(PlannerCategoryField.allCases.map(\.rawValue))
+      let changes = try object(
+        command["changes"], allowed: fieldNames, required: [], path: "/command/changes")
+      let hashValues = try object(
+        command["expectedFieldHashes"], allowed: fieldNames, required: [],
+        path: "/command/expectedFieldHashes")
+      var hashes: [PlannerCategoryField: PlannerFieldHash] = [:]
+      for (name, value) in hashValues {
+        guard let field = PlannerCategoryField(rawValue: name), case .string(let spelling) = value
+        else {
+          throw AdmissionFailure(
+            "invalidInput", "/command/expectedFieldHashes/" + name, "Expected a field hash String.")
+        }
+        hashes[field] = PlannerFieldHash(value: spelling)
+      }
+      return .editCategory(
+        sourceId: sourceIdentifier,
+        changes: PlannerCategoryChanges(
+          name: try textChange(changes["name"], path: "/command/changes/name"),
           color: try colorChange(changes["color"], path: "/command/changes/color"),
           iconName: try textChange(changes["iconName"], path: "/command/changes/iconName")),
         expectedFieldHashes: hashes)

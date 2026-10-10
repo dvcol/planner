@@ -1,0 +1,585 @@
+{
+  "schemaVersion": 8,
+  "portableFormatVersion": 1,
+  "storageMode": "localOnly",
+  "cloudKitEnabled": false,
+  "baseCommit": "5e5ca95",
+  "scope": "Typed Category content edit admission through the actual stateless official-SDK HTTP adapter. Ordinary data only; no administration tools.",
+  "publicSeams": [
+    "Actual loopback HTTP tools/list and tools/call",
+    "Public Planner.read/operationStatus/inspectRecovery and persistence reopen"
+  ],
+  "testDevelopment": {
+    "initialCompileCorrection": {
+      "log": "/private/tmp/PlannerCategoryEditWireRed.log",
+      "exitCode": 1,
+      "runtimeFunctions": 0,
+      "reason": "The new test guessed a storage initializer coordinationDirectory argument and omitted required controlURL/processRole/storageMode."
+    },
+    "secondCompileCorrection": {
+      "log": "/private/tmp/PlannerCategoryEditWireCompiledRed.log",
+      "exitCode": 1,
+      "runtimeFunctions": 0,
+      "reason": "The recovery parameter label is recoveryDirectoryURL, not recoveryDirectory."
+    },
+    "executedRed": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter categoryFieldGuardsOverHTTPKeepConflictsAtomicAndReplayOriginalReceipts > /private/tmp/PlannerCategoryEditWireExecutedRed.log 2>&1",
+      "exitCode": 1,
+      "runtimeFunctions": 1,
+      "issues": 2,
+      "testFileSHA256": "906e6ef92892f9af250b2837cabb6bbe3a198ad75ad7928adf429afe124f14b9",
+      "reason": "The adapter returns a rejected unavailable result for editCategory."
+    },
+    "postAdmissionTestCorrection": {
+      "log": "/private/tmp/PlannerCategoryEditWireGreen.log",
+      "exitCode": 1,
+      "runtimeFunctions": 1,
+      "issues": 1,
+      "reason": "All other journey assertions pass; the test incorrectly expects notApplied rather than the declared rejected wire discriminator."
+    },
+    "correctedGreen": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter categoryFieldGuardsOverHTTPKeepConflictsAtomicAndReplayOriginalReceipts > /private/tmp/PlannerCategoryEditWireCorrectedGreen.log 2>&1",
+      "exitCode": 0,
+      "runtimeFunctions": 1
+    },
+    "qualificationNote": "The primary test corrects the wire discriminator after the functional red. A separate admission qualification function is then added. The file is not claimed unchanged from red to final green."
+  },
+  "qualification": {
+    "focusedAdmission": {
+      "log": "/private/tmp/PlannerCategoryEditWireAdmission.log",
+      "exitCode": 0,
+      "functions": 2,
+      "suites": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    "finalHTTP": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter 'ItemDurationQueryRoutingTests|ItemTextQueryRoutingTests|CommandRoutingTests|EstimateRoutingTests|QueryRoutingTests|ListCatalogRoutingTests|ListRoutingTests|MembershipRowRoutingTests|MembershipReorderingRoutingTests' > /private/tmp/PlannerCategoryEditWireQualification.log 2>&1",
+      "exitCode": 0,
+      "functions": 32,
+      "suites": 9,
+      "failed": 0,
+      "skipped": 0,
+      "runnerNote": "Adds a symlink to the existing real ListRoutingTests.swift. Core and adapter sources remain the actual workspace files."
+    },
+    "macCompilation": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerCategoryEditWireMacBuild.xcresult build-for-testing > /private/tmp/PlannerCategoryEditWireMacBuild.log 2>&1",
+      "exitCode": 0,
+      "runtimeFunctions": 0,
+      "warning": "AppIntents metadata extraction is skipped because the targets have no AppIntents framework dependency."
+    }
+  },
+  "behavior": [
+    "tools/list advertises editCategory with sourceId, a nonempty name/color/iconName patch and the same declared hash fields; no List-only notes or admin operations are added.",
+    "A guarded rename and subsequent icon/color clears preserve unrelated changes despite old guards for fields absent from each patch. The final Category reopens with exact content/timestamps/hashes.",
+    "A compound name/color patch with stale name rejects together. Only the conflicting name/current value/hash are reported and the complete prior wire read remains equal.",
+    "A stale color edit after clearing reports current color null. Original rename replay returns its original complete result/checkpoint and preserves the later clears.",
+    "Eleven invalid source/patch/hash cases reject with exact classification and JSON Pointer. Saved content, lifetime, dates and hashes remain unchanged, no applied operation evidence appears, and recovery retains only the original creation checkpoint.",
+    "Structured and text JSON agree across executed success and rejection responses. Seven existing List journeys also pass."
+  ],
+  "checks": {
+    "strictSwiftLint": "/private/tmp/PlannerCategoryEditWireSwiftLint.log",
+    "strictSwiftLintExitCode": 0,
+    "markdownLint": "/private/tmp/PlannerCategoryEditWireMarkdownLint.log",
+    "markdownLintExitCode": 0,
+    "whitespaceDiffExitCode": 0,
+    "sourceHashesVerified": true
+  },
+  "dependencyRevisions": [
+    {
+      "identity": "eventsource",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/mattt/eventsource.git",
+      "state": {
+        "revision": "86b5096ac59ab46e66bd1f6377c604bc1dab0bc2",
+        "version": "1.5.1"
+      }
+    },
+    {
+      "identity": "swift-atomics",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/apple/swift-atomics.git",
+      "state": {
+        "revision": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+        "version": "1.3.1"
+      }
+    },
+    {
+      "identity": "swift-collections",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/apple/swift-collections.git",
+      "state": {
+        "revision": "3b69cedbaa49957e97c092ae400bb57602ef941f",
+        "version": "1.7.2"
+      }
+    },
+    {
+      "identity": "swift-log",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/apple/swift-log.git",
+      "state": {
+        "revision": "4038b6a4f74a1426f47eb1dd5b4bb5628a15d597",
+        "version": "1.16.1"
+      }
+    },
+    {
+      "identity": "swift-nio",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/apple/swift-nio.git",
+      "state": {
+        "revision": "6db9d9abd92ad7399b8a564cafbb87d3507245fa",
+        "version": "2.104.0"
+      }
+    },
+    {
+      "identity": "swift-sdk",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/modelcontextprotocol/swift-sdk",
+      "state": {
+        "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+        "version": "0.12.1"
+      }
+    },
+    {
+      "identity": "swift-system",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/apple/swift-system.git",
+      "state": {
+        "revision": "869129b7bf4ecc57b97d0193ad29690ca2134750",
+        "version": "1.8.1"
+      }
+    }
+  ],
+  "sourceHashes": [
+    {
+      "path": "Planner/AgentControl/PlannerMCPExecutionTool.swift",
+      "sha256": "70c5b88dc14cb4ba92b506a0b0a12a1bd8a370934a646e0290ddd526c51685cc"
+    },
+    {
+      "path": "Planner/AgentControl/PlannerMCPFailureValue.swift",
+      "sha256": "74e05f6a591d90f665eeb804441bfb8a22d35fd302d301fcf10bcf96a66b14f8"
+    },
+    {
+      "path": "Planner/AgentControl/PlannerMCPLoopbackListener.swift",
+      "sha256": "56e00b716e0680245e521b9f671e43a7990f1c8103a5bd3f85e2bd14d7756e94"
+    },
+    {
+      "path": "Planner/AgentControl/PlannerMCPOperationStatusTool.swift",
+      "sha256": "bcf50d44eb73187d0e04243780cc0172154861d64a6374fc2bef3c2971b2fe8d"
+    },
+    {
+      "path": "Planner/AgentControl/PlannerMCPQueryTool.swift",
+      "sha256": "930d6b33f16f24f17e90e9cffc218dd2d0ddff50c201bf94fbf05f1283e98d49"
+    },
+    {
+      "path": "Planner/AgentControl/PlannerMCPRequestHandler.swift",
+      "sha256": "edfd45746d8da43a5b1d221e02e302f2e652f554de3d5329e1d39cbedfb62f6e"
+    },
+    {
+      "path": "Planner/AgentControl/PlannerMCPRowValue.swift",
+      "sha256": "a95329ee2ceba0e527b06e4b05ead1d63a9ac093ff6dbdf192a367c7c9f93ba6"
+    },
+    {
+      "path": "Planner/AgentControl/PlannerMCPSourceTool.swift",
+      "sha256": "f008da94116de23bd4e78344c437bb60d2ea14716221599688969125b43aeb5b"
+    },
+    {
+      "path": "PlannerMCPTests/AllDayScheduleRoutingTests.swift",
+      "sha256": "12687aae9c613c09f86f2a7318dac6f0442fcbe8f0decbddf2787d7d7c380099"
+    },
+    {
+      "path": "PlannerMCPTests/ArchiveRoutingTests.swift",
+      "sha256": "ad255ec0210088e92f99e6c962c5b7a725d1773aa0d2159dff37399bcffd44bf"
+    },
+    {
+      "path": "PlannerMCPTests/AuthenticationTests.swift",
+      "sha256": "32e3d1b0354904c7ebb61a7e4276a8972b502a5de1fc41f5dd3a29214f5ee5f4"
+    },
+    {
+      "path": "PlannerMCPTests/CommandRoutingTests.swift",
+      "sha256": "0c51156837b55924ed836701031798ce6e2f0e3c53ad36d74b188c49011c45e5"
+    },
+    {
+      "path": "PlannerMCPTests/ConcurrentRoutingTests.swift",
+      "sha256": "3d8fcec4f36ee4ad0a59b7ae0f8ab1a7eb37b2d9a57f2e20578b28fe0c5c7cd9"
+    },
+    {
+      "path": "PlannerMCPTests/EstimateRoutingTests.swift",
+      "sha256": "4c476e681496ea795e25f716863427b8958a6fa7a56e0279a18e0b966da7f477"
+    },
+    {
+      "path": "PlannerMCPTests/IncompleteRequestTests.swift",
+      "sha256": "13fbe5feb56d2d9631b4652451c51275873b1b3e0d29f7461c71e165a3cd7902"
+    },
+    {
+      "path": "PlannerMCPTests/InitializationTests.swift",
+      "sha256": "0eac9aa4ae5c17443b6582954a15e13c35cd63703b092b851658db39cb562544"
+    },
+    {
+      "path": "PlannerMCPTests/ItemChronologicalSortRoutingTests.swift",
+      "sha256": "2f72ee55f25b881c0eec1b205cc3fae3bc963f8a2f64bc938670add151a5a754"
+    },
+    {
+      "path": "PlannerMCPTests/ItemDurationQueryRoutingTests.swift",
+      "sha256": "bcc597e7cc72693d2746676cb1edefd422eb192655f865c0ed39340443f934e4"
+    },
+    {
+      "path": "PlannerMCPTests/ItemTextQueryRoutingTests.swift",
+      "sha256": "8b7acddcd2e800afb2be5d7d4f53ac0f68c6d54d8c5c66733eaa54e78ddff20d"
+    },
+    {
+      "path": "PlannerMCPTests/ListCatalogRoutingTests.swift",
+      "sha256": "6c2b6a5678f591d26f9dbd0f410fbcfb17965282a563758e9f341c2e7ca65659"
+    },
+    {
+      "path": "PlannerMCPTests/ListRoutingTests.swift",
+      "sha256": "5834c6ea20dea912f61c5182fbe482b9e4d1ddd804292cccb58f20e1fd963d2d"
+    },
+    {
+      "path": "PlannerMCPTests/ListenerTests.swift",
+      "sha256": "38906132ef00ca1ed3f92b9e13c080de4b64a6d7d62490e5a36dfa33edf1b073"
+    },
+    {
+      "path": "PlannerMCPTests/MembershipCreationRoutingTests.swift",
+      "sha256": "4ac6e58222a9a63f5d7279314fecd134833b03fca8035c6407ce861d97412639"
+    },
+    {
+      "path": "PlannerMCPTests/MembershipMutationRoutingTests.swift",
+      "sha256": "7e2c66a13825ce30d3cf556a4d6545989d54ff978ebb7adb9d39b979b794f13b"
+    },
+    {
+      "path": "PlannerMCPTests/MembershipReorderingRoutingTests.swift",
+      "sha256": "9fefec75c0cee4db6c1dab7319dcdd89a96a961b176772a3c9945f76a39098df"
+    },
+    {
+      "path": "PlannerMCPTests/MembershipRowRoutingTests.swift",
+      "sha256": "4b88d90d4baa6392f7c0b2616fbfeca67754e81d674f2f7aea063c109e3cab9c"
+    },
+    {
+      "path": "PlannerMCPTests/OperationStatusRoutingTests.swift",
+      "sha256": "eb59a16a1c080543f440c3562633cd6f64a012b53158c20963bb002cce554c95"
+    },
+    {
+      "path": "PlannerMCPTests/PingTests.swift",
+      "sha256": "ae901410e1f0a3c0e705da5a82832c52581310aaf34ea3887338df3ab3faaed4"
+    },
+    {
+      "path": "PlannerMCPTests/QueryRoutingTests.swift",
+      "sha256": "556408b169767e7754207ead8945a9642228f4623d66b84a940cf39a729fba02"
+    },
+    {
+      "path": "PlannerMCPTests/ReadLoadTests.swift",
+      "sha256": "15db5773518413fae4d34c06f7d4f09c24032922e811864fd5e525176c339b04"
+    },
+    {
+      "path": "PlannerMCPTests/RoutingTests.swift",
+      "sha256": "411b4995c0c0601fadc9511aae0d03dc95fa8cb81896074c9d4d98d809f8e2ed"
+    },
+    {
+      "path": "PlannerMCPTests/RowRoutingTests.swift",
+      "sha256": "4686846f3e16a637ebab6e652c41d51fdcc72f0f0581bc7040d0359b215513a5"
+    },
+    {
+      "path": "PlannerMCPTests/SourceRoutingTests.swift",
+      "sha256": "59589e984a0a199ce56e7a75ed3370eb17d93c17d044e135e7a3e7c4d3a42b33"
+    },
+    {
+      "path": "PlannerMCPTests/TestDiscovery.swift",
+      "sha256": "dbaf9baeb1ee95a92b3d3b11c0781f70044af56090de929723fc1be47a1dbe7a"
+    },
+    {
+      "path": "PlannerMCPTests/ValidationTests.swift",
+      "sha256": "aca210b0f6298c8b474e18c6896fe08745b440eba46cab7c9ba0080a4a80ed8d"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerAppliedValues.swift",
+      "sha256": "7bd92cdaab57c37a778813f84ad492c1c03c07a94d0be4098cf2a809d7247808"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerCategoryRecovery.swift",
+      "sha256": "4d6bc66e47704b706e1c81fd743ba1dffb55a84fe62ad50e5cbb442a67746b41"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerCategoryValues.swift",
+      "sha256": "33a6eebd5b40d2a843e39649797ef851702dc30b6de2d791744dbc1c1c85f1a3"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerCivilDate.swift",
+      "sha256": "d8ae4943ef8af8030c13f12af2f93ffb873de32e328a97245b9c05adbed92306"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+      "sha256": "446f538b03bb0d5b5ce7efba066b9227a4a4ccc68154044cf63267c4450f0d8e"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift",
+      "sha256": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift",
+      "sha256": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift",
+      "sha256": "049991c29d6644fb5a173ae5c8d5dbb7b2d707a5df7f0f07bb7bc6c95d43e70f"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkRecovery.swift",
+      "sha256": "76e82b80e6be3200a1cc0a9c4eb439094c9085c30939d543dacaaf70cbd60b1b"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkValues.swift",
+      "sha256": "1d56582bc53cdd9b0e1844269dfed4f441309997f0c6b134a8f64265cae2e5c9"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerListRecovery.swift",
+      "sha256": "0f6a7109dccec70520c5c1945f8b77b56f3d578cc3bddc6ab0bd65c87e5f714d"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift",
+      "sha256": "cc858d8b5901779245572e6b0fbb8a5babbfc1b55cd88895194b838cf5e6c577"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipRecovery.swift",
+      "sha256": "132e5752b86d01a9038c6404b6d2455335294da8cede1a9673fc9efd43e371ce"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift",
+      "sha256": "5facc4514fc6ae6d8acdb235c0c1d904698078e56d6513d3f6579e315209e720"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift",
+      "sha256": "8c8d205a5c221ac4f94c4e60b71569483e359da65c6c519c01f05403b45fc50c"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift",
+      "sha256": "a4bcf5be5ea7b2b1c87a6198637d1c592f7e98f372c5582d8ecb92d3370022fa"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleRecovery.swift",
+      "sha256": "04cd468445d0110b980aff89b94b1e3f4ca1ff641ce46dc9ecb1eb6518667a22"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift",
+      "sha256": "a3393d67c3c5d64042ab504a9010a72e530779a0892abb6ba2043b594a415504"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV2.swift",
+      "sha256": "efbe703445f557022a2fb25fe40b4cadde725cfaa23c2293864099726e1b5af1"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV3.swift",
+      "sha256": "16597d7095a886a1736b908877359b110a4d527d6aadb77e4ced5f13cfc9facc"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift",
+      "sha256": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV5.swift",
+      "sha256": "e2347043ee4c5d0267391e40119d6cc25f463f181c833c9a9c4b3bed0e10f0f6"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV6.swift",
+      "sha256": "9ec7f806f24a4666d02f9a2b16e94bf10330705b4cd4989cb52792e30757fd83"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV7.swift",
+      "sha256": "7dce5ff7a8df9a69eaf6f7cdc70d1b19df524b67976889b6669b9f424e6ca398"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV8.swift",
+      "sha256": "ff4a06f517c8465db7174a08a0741cc015c2d1899b816ba8dd09509949810c46"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift",
+      "sha256": "061497f9c2e280833d6f9a7581312af74199403c938f61a43f18cfe0158d5b4d"
+    },
+    {
+      "path": "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift",
+      "sha256": "44be6cf8591ac8eb098a159830cff2931b5c7ddc6512447a1c715d4663d80218"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift",
+      "sha256": "f55597673c4bc0deefc7ae5bfa52ae6863d34d0dd770eaf9cd0238d39d267920"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CategoryCreationTests.swift",
+      "sha256": "403e5f92438f69a23c09be6afa54ad41c78cf7f8b656c27a9ca8ad818bddcc13"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CategoryEditTests.swift",
+      "sha256": "3996f4a2b32d8b210a76fccc495864c9a3bb6b7e59afae84e2efc4ddc96c6c3a"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CategoryMigrationTests.swift",
+      "sha256": "946dd8d62a92c36aa2c9ab34c241d381c213ac84b03d435a0f301a5457d5f4cf"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CategoryRecoveryTests.swift",
+      "sha256": "6e9d0d28386a0c3feb0d64617fc78632d93c044c56a1ad073c2909ccf9fa5a48"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DatasetPresentationScopeTests.swift",
+      "sha256": "52059a7db6ba9f448d6c76cf597481a65bd4a2b01ef94802a4a44eb955c20c04"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DirectScheduleTests.swift",
+      "sha256": "3f1148695b499a04cbf62f1807e79f26a3a5e2c2d507e392a8548e389c55282d"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemArchiveTests.swift",
+      "sha256": "748743d255db0613db7ee2e39c03c439afcf83fa31cf8cf416eb39b66c6bf7a2"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemChronologicalSortTests.swift",
+      "sha256": "ef1075134062054bc08c77a98e919fb3b6c2bef10fd1ea598054515928d251f4"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCompletionTests.swift",
+      "sha256": "90622f5f7087eea57a7992a14b57d8bb61102f439749531b8753f9dbe38bc79d"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCreationTests.swift",
+      "sha256": "cce7f91e2a638989d5922168d781e2f51c2f13ee2d5e0d1875a20f00f232ebf8"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationQueryTests.swift",
+      "sha256": "fd43d8909f98aa5282db20e2a8edb813bcb091072067fc60cb1f18779820e549"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationSortTests.swift",
+      "sha256": "5bd645d016fdb77a4d6e1366514a9d12b588689f480898bcedce1e841361ad32"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEditTests.swift",
+      "sha256": "76dc86b75124410f45443170320ac6a774bdb3c91c518102bbce9a48cbc91314"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEstimateEditTests.swift",
+      "sha256": "f1c13514cfee4b1c5863b497cd027f48a2dda1231bdbeb4a7a9795f310c49dfc"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkEditTests.swift",
+      "sha256": "1797fb47a943f82ab1f2dcb9dc6a59cc0b653151182c9bfb18dc594d20f8e5fd"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift",
+      "sha256": "ffe7f647c68b728ba41a15cf765eafb73c129f203621412c340d7dbcb85003ae"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkTests.swift",
+      "sha256": "4284ec284db6e3e3b269bed171b95d96a66d14df959d22e9790e4bd484f8ad2d"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLocationEditTests.swift",
+      "sha256": "de312ef15e594aa81f18e8344b01095c628eea72c9fac059f6d555babcd7ae31"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemQueryTests.swift",
+      "sha256": "d78739e8e6a260413d277b785f2c7aa21193e5123740544032099b443b7633f7"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemReferenceReadTests.swift",
+      "sha256": "cacd8855cacc69426abbf6eb8cd2ef88d9ec85e4a2966ac77ad22cc20b1db022"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemRowReadTests.swift",
+      "sha256": "1597c7a2480bba06797738d8991d4043fdb35a6c12e7b4f597fc0ee6bb969caa"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemSubtitleEditTests.swift",
+      "sha256": "95ce0088ba89394c7d2cc4eda0cefc75afdbbb5ba539a649f44a91fba9364066"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemTextQueryTests.swift",
+      "sha256": "fec0d6e60c9cfbe4243e3e12368b27b27203e41a2a5f0d1cd6d387457a35ab92"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListArchiveTests.swift",
+      "sha256": "393b5114ef81d5cef09ab39d0936c0998d101beda77d1bfc30a87a2f3683d687"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCatalogTests.swift",
+      "sha256": "21cd1e62520989871e889f50ba2626e3358032793ccdbfee71b96ce0f9d0366c"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCreationTests.swift",
+      "sha256": "694915bb33d1a54ace2b6c0771a0bb0a8f0487f9a69249a414ee7505ae2ad4f2"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListEditTests.swift",
+      "sha256": "103b7b0d95a9d3945d9a097c9b3766646622f1652b359b4030e5aaf2d7a94c57"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipAppearanceTests.swift",
+      "sha256": "c7e78a9a5fa0495f896e1c1b5e839b1e6b2b03d3a75e6e4cd98ecf019e00d359"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCompletionTests.swift",
+      "sha256": "6f81461fab270a43f687eec965a8182f96c3c67a5bf6a5ad61b2aa23fc403425"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift",
+      "sha256": "0d17ef73650029f0c7b98625af62c6af1c184405693dbe5b4fbf1573957f20f1"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMigrationTests.swift",
+      "sha256": "cc76aef2a10d081fe9d1aa1de847a28628420184497cd936968a84b68033c483"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift",
+      "sha256": "984e7c5b172c2592e5d60537946923723695ed997c6fc01271f8ec7da416c25f"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift",
+      "sha256": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipReorderingTests.swift",
+      "sha256": "719ec8cb0dd2a95eb2758d9d4459bee8cf28646e5f0a8a10093df54d67fb412d"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRowTests.swift",
+      "sha256": "72277f8ef9501f600eeda71730067f68d0b3d910e5a443563689cb78c0bb7c5d"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/PreviewSourceBindingTests.swift",
+      "sha256": "21909274777f6c69e82082d405f55e7cadb0d39c8647c433307d03cf447e16cb"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoveryFailureTests.swift",
+      "sha256": "a30332eb67867c9cf240ea22bf58c9d3c9c36f085149ff44b49a9c83a328ac79"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleEditTests.swift",
+      "sha256": "d00e72c8541f3124da7997a064e7f963ff816ba96f8d3ee8fca115b5138034a5"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleRemovalTests.swift",
+      "sha256": "c70e40d77fc71f59ab1f9a7f6952c71412482b27e4aef4b5d5e3a3e99c79b157"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleSourceReadTests.swift",
+      "sha256": "6e2575c710d5a52aa251fa8f6138b01392fbbff32e664316aeb8b015bcb1724e"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleZoneTests.swift",
+      "sha256": "9f9ab4b11626cccf3f8a3bcc3bd743ad33fa817e3a8c96ca33d8631f31b4d475"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/TestDiscovery.swift",
+      "sha256": "4a609491daa4c05723f4a184967438edeb6a767a29dd2ddc709859ab373dd765"
+    },
+    {
+      "path": "Packages/PlannerCore/Tests/PlannerCoreTests/TestDiscovery.swift",
+      "sha256": "4a609491daa4c05723f4a184967438edeb6a767a29dd2ddc709859ab373dd765"
+    }
+  ],
+  "limits": [
+    "This wire-only slice does not rerun the Core/iPhone qualifications at 5e5ca95. Their results remain in core-category-edit.json.",
+    "Mac app/test compilation executes zero app-hosted runtime functions; the existing Mac startup gate remains open.",
+    "Category associations/deletion, Tags and native label management remain unimplemented.",
+    "Manual backup/import/export/recovery administration, signed clients, physical CloudKit/account/Share, interruption, performance and whole-app polish remain open."
+  ]
+}
