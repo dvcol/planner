@@ -116,6 +116,9 @@
           structured = .object([
             "formatVersion": .int(1), "kind": .string("source"), "value": scheduleValue(read),
           ])
+        case .source(.category):
+          return failure(
+            code: "unavailable", message: "Category transport admission is not implemented yet.")
         case .source(.item(let read)):
           guard read.content.categoryIds.isEmpty,
             read.content.tagIds.isEmpty,

@@ -141,7 +141,7 @@ struct MembershipMigrationTests {
     #expect(
       after.decodedBackup.backup.deletionMarkers == before.decodedBackup.backup.deletionMarkers)
     #expect(historical.portableData == before.portableData)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 7)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 8)
     #expect(updatedNamespaces.first?.preparedProposals.isEmpty == true)
     for original in originalLists where original.source != list {
       guard

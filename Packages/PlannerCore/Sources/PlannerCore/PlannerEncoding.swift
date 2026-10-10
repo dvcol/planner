@@ -373,6 +373,37 @@ extension ListSnapshot {
   }
 }
 
+extension CategorySnapshot {
+  func fieldHashes(datasetId: UUID) -> [PlannerCategoryField: PlannerFieldHash] {
+    let values: [PlannerCategoryField: PlannerCanonicalValue] = [
+      .name: .string(content.name),
+      .color: .optional(content.color.map(\.canonicalValue)),
+      .iconName: .optional(content.iconName.map(PlannerCanonicalValue.string)),
+    ]
+    return Dictionary(
+      uniqueKeysWithValues: values.map { field, value in
+        let name = Data(field.rawValue.utf8)
+        var bytes = Data("PlannerFieldHash".utf8) + Data([0, 0, 0, 0, 1])
+        bytes +=
+          identityBytes(datasetId) + Data([4]) + identityBytes(id) + identityBytes(lifetimeId)
+        bytes += unsigned(UInt64(name.count)) + name + value.encoded()
+        return (field, PlannerFieldHash(value: plannerDigest(bytes, prefix: "sha256-v1:")))
+      })
+  }
+}
+
+extension PlannerCategoryContentInput {
+  func payloadDigest(identity: PlannerStoreIdentity) -> String {
+    let value = PlannerCanonicalValue.record([
+      "command": .record(["type": .string("createCategory"), "content": canonicalContent]),
+      "datasetId": .identity(identity.datasetId),
+      "ownershipBinding": .string(identity.ownershipBinding), "resolvedBindings": .identitySet([]),
+    ])
+    let bytes = Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded()
+    return plannerDigest(bytes, prefix: "sha256-payload-v1:")
+  }
+}
+
 extension PlannerListContentInput {
   func payloadDigest(identity: PlannerStoreIdentity) -> String {
     let value = PlannerCanonicalValue.record([

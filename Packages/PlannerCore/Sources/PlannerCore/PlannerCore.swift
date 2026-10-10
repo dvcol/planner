@@ -34,11 +34,11 @@ public actor Planner {
         var identity: PlannerStoreIdentity
         if FileManager.default.fileExists(atPath: configuration.controlURL.path) {
           identity = try loadIdentity()
-          guard (1...7).contains(identity.schemaVersion) else {
+          guard (1...8).contains(identity.schemaVersion) else {
             throw PlannerFailure(
               "unsupportedVersion", "The dataset uses an unsupported storage schema.")
           }
-          if identity.schemaVersion < 7, configuration.processRole == .shareExtension {
+          if identity.schemaVersion < 8, configuration.processRole == .shareExtension {
             return .mainAppMigrationRequired
           }
           guard FileManager.default.fileExists(atPath: configuration.storeURL.path) else {
@@ -57,15 +57,15 @@ public actor Planner {
           context.autosaveEnabled = false
           try context.save()
           identity = PlannerStoreIdentity(
-            schemaVersion: 7, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
+            schemaVersion: 8, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
             ownershipBinding: "local:" + UUID().uuidString
           )
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
         }
         _ = try openContainer()
-        if identity.schemaVersion < 7 {
+        if identity.schemaVersion < 8 {
           identity = PlannerStoreIdentity(
-            schemaVersion: 7, datasetId: identity.datasetId, epochId: identity.epochId,
+            schemaVersion: 8, datasetId: identity.datasetId, epochId: identity.epochId,
             namespaceId: identity.namespaceId, ownershipBinding: identity.ownershipBinding)
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
         }
@@ -112,6 +112,10 @@ public actor Planner {
         let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
         let envelope = try archive.latest()
         switch operation.command {
+        case .createCategory(let content):
+          return try executeCategoryCreation(
+            operation, content: content, identity: identity, context: context, archive: archive,
+            receipts: receipts, envelope: envelope)
         case .moveMembership(let listId, let membershipId, let destinationListId, let placement):
           return try executeMembershipMove(
             operation, listId: listId, membershipId: membershipId,
@@ -236,6 +240,7 @@ public actor Planner {
             datasetId: identity.datasetId,
             ownershipBinding: identity.ownershipBinding,
             proposedBackup: PlannerDataSnapshot(
+              categories: try categorySnapshots(context),
               items: existingItems + [snapshot], lists: try listSnapshots(context),
               memberships: try membershipSnapshots(context),
               deletionMarkers: try deletionMarkers(context)),
@@ -254,6 +259,7 @@ public actor Planner {
           }
           do {
             let generation = try archive.publish(
+              categories: try categorySnapshots(context),
               items: existingItems + [snapshot], lists: try listSnapshots(context),
               memberships: try membershipSnapshots(context),
               deletionMarkers: try deletionMarkers(context),
@@ -297,6 +303,12 @@ public actor Planner {
               session: session, context: context, generation: generation, offset: offset,
               limit: limit))
         case .source(let source):
+          if source.kind == .category {
+            return .source(
+              .category(
+                try categorySnapshot(source.id, context: context).read(
+                  datasetId: identity.datasetId)))
+          }
           if source.kind == .list {
             let sourceIdentifier = source.id
             var descriptor = FetchDescriptor<PlannerSchemaV7.List>(
@@ -648,6 +660,9 @@ public actor Planner {
       throw PlannerFailure(
         "invalidInput", "Item discovery requires an Item query.", propertyPath: "/query/sourceKind")
     }
+    if query.sourceKind == .category {
+      return try categoryCatalogSnapshot(session: session, query: query, context: context)
+    }
     guard query.sourceKind == .list else {
       throw PlannerFailure(
         "unavailable", "This catalog slice supports List discovery only.",
@@ -871,6 +886,15 @@ public actor Planner {
         source = reference
         localDone = nil
         expectedLifetimeId = nil
+      }
+      if source.kind == .category {
+        let category = try categorySnapshot(source.id, context: context)
+        return PlannerRowRead(
+          identity: identity, sourceLifetimeId: category.lifetimeId,
+          title: category.content.name, subtitle: nil, estimate: nil,
+          globalDone: nil, localDone: nil, effectiveDone: nil, archived: nil,
+          hasLocation: false, hasLinks: false, ownedLocation: nil, previewLink: nil,
+          scheduleSummary: .none)
       }
       if source.kind == .list {
         let sourceIdentifier = source.id
@@ -1117,6 +1141,144 @@ public actor Planner {
     }
   }
 
+  private func categorySnapshots(_ context: ModelContext) throws -> [CategorySnapshot] {
+    try context.fetch(FetchDescriptor<PlannerSchemaV8.Category>()).map { try $0.value() }
+  }
+
+  private func categorySnapshot(_ identifier: UUID, context: ModelContext) throws
+    -> CategorySnapshot
+  {
+    var descriptor = FetchDescriptor<PlannerSchemaV8.Category>(
+      predicate: #Predicate { $0.id == identifier })
+    descriptor.fetchLimit = 2
+    let records = try context.fetch(descriptor)
+    guard records.count == 1, let record = records.first else {
+      throw PlannerFailure("missingReference", "The selected Category is missing or unresolved.")
+    }
+    return try record.value()
+  }
+
+  private func categoryCatalogSnapshot(
+    session: PlannerDatasetSession, query: PlannerCatalogQuery, context: ModelContext
+  ) throws -> PlannerQuerySnapshot {
+    guard query.archive == .all else {
+      throw PlannerFailure(
+        "invalidInput", "Categories have no archive state; select all.",
+        propertyPath: "/query/archive")
+    }
+    let locale = Locale(identifier: "en_US_POSIX")
+    let terms = query.text.split(whereSeparator: \.isWhitespace).map(String.init)
+    let matches = try categorySnapshots(context).filter { category in
+      terms.allSatisfy {
+        category.content.name.range(
+          of: $0, options: [.caseInsensitive, .diacriticInsensitive], locale: locale) != nil
+      }
+    }
+    guard Set(matches.map(\.id)).count == matches.count else {
+      throw PlannerFailure(
+        "readUnavailable", "Catalog Category identities are duplicated and unresolved.")
+    }
+    let comparator = String.Comparator(
+      options: [.caseInsensitive, .diacriticInsensitive], locale: locale)
+    let sorted = matches.sorted { first, second in
+      let comparison = comparator.compare(first.content.name, second.content.name)
+      if comparison != .orderedSame { return comparison == .orderedAscending }
+      return first.id.uuidString < second.id.uuidString
+    }
+    return PlannerQuerySnapshot(
+      session: session, generation: UUID(), rows: sorted.map { .source($0.reference) },
+      matchingCount: Int64(sorted.count), rowPresentation: nil, progress: [],
+      unresolvedReferences: [])
+  }
+
+  private func executeCategoryCreation(
+    _ operation: PlannerOperation, content: PlannerCategoryContentInput,
+    identity: PlannerStoreIdentity,
+    context: ModelContext, archive: PlannerRecoveryArchive, receipts: [PlannerSchemaV1.Receipt],
+    envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    try content.validate()
+    let digest = content.payloadDigest(identity: identity)
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      guard receipt.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch",
+          "This operation identity already describes different content.")
+      }
+      let evidence = try RecoveryReceipt(receipt, checkpoint: nil)
+      return appliedResult(
+        operationId: operation.operationId, evidence: evidence, envelope: envelope)
+    }
+    let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard
+      receipts.allSatisfy({ receipt in
+        receipt.operationId.map { completedIds.contains($0) } ?? false
+      })
+    else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes a different payload.")
+      }
+      return PlannerOperationResult(
+        operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    let category = try PlannerSchemaV8.Category(content: content)
+    let snapshot = try category.value()
+    let result = PlannerAppliedResult(
+      generated: [snapshot.reference], affected: [snapshot.reference])
+    let existingCategories = try categorySnapshots(context)
+    let existingItems = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>()).map {
+      try $0.value()
+    }
+    let proposal = RecoveryPreparedProposal(
+      proposalId: UUID(), originalOperationId: operation.operationId,
+      datasetId: identity.datasetId,
+      ownershipBinding: identity.ownershipBinding,
+      proposedBackup: PlannerDataSnapshot(
+        categories: existingCategories + [snapshot],
+        items: existingItems, lists: try listSnapshots(context),
+        memberships: try membershipSnapshots(context),
+        deletionMarkers: try deletionMarkers(context)),
+      payloadDigest: digest, evidence: "preparedUnverified"
+    )
+    try archive.prepare(proposal)
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result)
+    context.insert(category)
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The complete Category action was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(
+        categories: existingCategories + [snapshot],
+        items: existingItems, lists: try listSnapshots(context),
+        memberships: try membershipSnapshots(context),
+        deletionMarkers: try deletionMarkers(context),
+        receipts: receipts + [receipt])
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .complete(checkpointGeneration: generation)
+        ))
+    } catch {
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))
+        ))
+    }
+  }
+
   private func executeListCreation(
     _ operation: PlannerOperation, content: PlannerListContentInput, identity: PlannerStoreIdentity,
     context: ModelContext, archive: PlannerRecoveryArchive, receipts: [PlannerSchemaV1.Receipt],
@@ -1166,6 +1328,7 @@ public actor Planner {
       datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
       proposedBackup: PlannerDataSnapshot(
+        categories: try categorySnapshots(context),
         items: existingItems, lists: existingLists + [snapshot],
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context)),
@@ -1184,6 +1347,7 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
+        categories: try categorySnapshots(context),
         items: existingItems, lists: existingLists + [snapshot],
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context),
@@ -1312,6 +1476,7 @@ public actor Planner {
       proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
       proposedBackup: PlannerDataSnapshot(
+        categories: try categorySnapshots(context),
         items: items, lists: snapshots, memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context)),
       payloadDigest: digest, evidence: "preparedUnverified")
@@ -1333,6 +1498,7 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
+        categories: try categorySnapshots(context),
         items: items, lists: snapshots, memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context),
         receipts: receipts + [receipt])
@@ -1477,6 +1643,7 @@ public actor Planner {
       proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
       proposedBackup: PlannerDataSnapshot(
+        categories: try categorySnapshots(context),
         items: itemSnapshots, lists: listSnapshots, memberships: memberships,
         deletionMarkers: markers),
       payloadDigest: digest, evidence: "preparedUnverified")
@@ -1502,6 +1669,7 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
+        categories: try categorySnapshots(context),
         items: itemSnapshots, lists: listSnapshots, memberships: memberships,
         deletionMarkers: markers, receipts: receipts + [receipt])
       return PlannerOperationResult(
@@ -1593,6 +1761,7 @@ public actor Planner {
         proposalId: UUID(), originalOperationId: operation.operationId,
         datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
         proposedBackup: PlannerDataSnapshot(
+          categories: try categorySnapshots(context),
           items: itemSnapshots, lists: listSnapshots, memberships: memberships,
           deletionMarkers: markers),
         payloadDigest: digest, evidence: "preparedUnverified"))
@@ -1610,6 +1779,7 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
+        categories: try categorySnapshots(context),
         items: itemSnapshots, lists: listSnapshots, memberships: memberships,
         deletionMarkers: markers, receipts: receipts + [receipt])
       return PlannerOperationResult(
@@ -1780,6 +1950,7 @@ public actor Planner {
         proposalId: UUID(), originalOperationId: operation.operationId,
         datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
         proposedBackup: PlannerDataSnapshot(
+          categories: try categorySnapshots(context),
           items: itemSnapshots, lists: listSnapshots, memberships: memberships,
           deletionMarkers: markers),
         payloadDigest: digest, evidence: "preparedUnverified"))
@@ -1807,6 +1978,7 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
+        categories: try categorySnapshots(context),
         items: itemSnapshots, lists: listSnapshots, memberships: memberships,
         deletionMarkers: markers, receipts: receipts + [receipt])
       return PlannerOperationResult(
@@ -1959,6 +2131,7 @@ public actor Planner {
         datasetId: identity.datasetId,
         ownershipBinding: identity.ownershipBinding,
         proposedBackup: PlannerDataSnapshot(
+          categories: try categorySnapshots(context),
           items: itemSnapshots, lists: listSnapshots, memberships: memberships,
           deletionMarkers: markers),
         payloadDigest: digest, evidence: "preparedUnverified"))
@@ -1980,6 +2153,7 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
+        categories: try categorySnapshots(context),
         items: itemSnapshots, lists: listSnapshots, memberships: memberships,
         deletionMarkers: markers, receipts: receipts + [receipt])
       return PlannerOperationResult(
@@ -2111,6 +2285,7 @@ public actor Planner {
         datasetId: identity.datasetId,
         ownershipBinding: identity.ownershipBinding,
         proposedBackup: PlannerDataSnapshot(
+          categories: try categorySnapshots(context),
           items: itemSnapshots, lists: listSnapshots, memberships: memberships,
           deletionMarkers: markers),
         payloadDigest: digest, evidence: "preparedUnverified"))
@@ -2127,6 +2302,7 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
+        categories: try categorySnapshots(context),
         items: itemSnapshots, lists: listSnapshots, memberships: memberships,
         deletionMarkers: markers, receipts: receipts + [receipt])
       return PlannerOperationResult(
@@ -2318,6 +2494,7 @@ public actor Planner {
         originalOperationId: operation.operationId, datasetId: identity.datasetId,
         ownershipBinding: identity.ownershipBinding,
         proposedBackup: PlannerDataSnapshot(
+          categories: try categorySnapshots(context),
           items: snapshots, lists: try listSnapshots(context),
           memberships: try membershipSnapshots(context), deletionMarkers: markers),
         payloadDigest: digest, evidence: "preparedUnverified"))
@@ -2339,6 +2516,7 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
+        categories: try categorySnapshots(context),
         items: snapshots, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context), deletionMarkers: markers,
         receipts: receipts + [receipt])
@@ -2423,6 +2601,7 @@ public actor Planner {
         datasetId: identity.datasetId,
         ownershipBinding: identity.ownershipBinding,
         proposedBackup: PlannerDataSnapshot(
+          categories: try categorySnapshots(context),
           items: snapshots, lists: try listSnapshots(context),
           memberships: try membershipSnapshots(context),
           deletionMarkers: try deletionMarkers(context)),
@@ -2439,6 +2618,7 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
+        categories: try categorySnapshots(context),
         items: snapshots, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context),
@@ -2566,6 +2746,7 @@ public actor Planner {
       proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
       ownershipBinding: identity.ownershipBinding,
       proposedBackup: PlannerDataSnapshot(
+        categories: try categorySnapshots(context),
         items: snapshots, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context)),
@@ -2590,6 +2771,7 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
+        categories: try categorySnapshots(context),
         items: snapshots, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context),
@@ -2677,6 +2859,7 @@ public actor Planner {
       proposalId: UUID(), originalOperationId: operation.operationId,
       datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
       proposedBackup: PlannerDataSnapshot(
+        categories: try categorySnapshots(context),
         items: snapshots, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context)), payloadDigest: digest,
@@ -2698,6 +2881,7 @@ public actor Planner {
     }
     do {
       let generation = try archive.publish(
+        categories: try categorySnapshots(context),
         items: snapshots, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context),
@@ -2790,7 +2974,7 @@ public actor Planner {
     let identity = try loadIdentity()
     guard sessions[session.sessionId] == session, session.datasetId == identity.datasetId,
       session.ownershipBinding == identity.ownershipBinding, session.epochId == identity.epochId,
-      identity.schemaVersion == 7
+      identity.schemaVersion == 8
     else {
       throw PlannerFailure("staleDatasetSession", "The dataset session is no longer authorized.")
     }
@@ -2798,7 +2982,7 @@ public actor Planner {
   }
 
   private func openContainer() throws -> ModelContainer {
-    let schema = Schema(versionedSchema: PlannerSchemaV7.self)
+    let schema = Schema(versionedSchema: PlannerSchemaV8.self)
     let modelConfiguration = ModelConfiguration(
       schema: schema, url: configuration.storeURL, cloudKitDatabase: .none)
     return try ModelContainer(
@@ -2819,7 +3003,7 @@ public actor Planner {
         PlannerStoreIdentity.self,
         from: Data(contentsOf: directory.appendingPathComponent("identity.json")))
       guard directory.lastPathComponent == identity.namespaceId.uuidString,
-        (1...7).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
+        (1...8).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
       else {
         throw PlannerFailure(
           "ownershipUnverified", "A recovery namespace has invalid ownership metadata.")

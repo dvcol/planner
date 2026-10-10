@@ -85,7 +85,7 @@ struct PortableItemRecord: Codable {
   }
 }
 
-/// This slice supports Items, Lists and their memberships, owned links, direct timed/all-day Schedules and minimal Schedule deletion metadata. Other graph groups must be empty.
+/// This slice supports Items, Lists, Categories, memberships, owned links, direct timed/all-day Schedules and minimal deletion metadata. Other graph groups must be empty.
 struct PlannerDataSnapshot: Codable {
   let format: String
   let formatVersion: Int
@@ -103,6 +103,7 @@ struct PlannerDataSnapshot: Codable {
   }
 
   init(
+    categories: [CategorySnapshot],
     items: [ItemSnapshot], lists: [ListSnapshot], memberships: [MembershipSnapshot],
     deletionMarkers: [PortableDeletionMarker]
   ) {
@@ -116,7 +117,8 @@ struct PlannerDataSnapshot: Codable {
     formatVersion = 1
     sources =
       (items.map { PortableSourceRecord.item(PortableItemRecord($0)) }
-      + lists.map { PortableSourceRecord.list(PortableListRecord($0)) }).sorted {
+      + lists.map { PortableSourceRecord.list(PortableListRecord($0)) }
+      + categories.map { PortableSourceRecord.category(PortableCategoryRecord($0)) }).sorted {
         $0.id.uuidString < $1.id.uuidString
       }
     ownedLinks = items.flatMap { item in
@@ -193,6 +195,10 @@ struct PlannerDataSnapshot: Codable {
       return nil
     }
     let lists = try listRecords.map { try $0.validated() }
+    let categories = try sources.compactMap { source -> PlannerPortableCategory? in
+      guard case .category(let category) = source else { return nil }
+      return try category.validated()
+    }
     let linksByOwner = try Dictionary(
       grouping: ownedLinks.map { try $0.validated(sources: itemRecords) }, by: \.ownerId)
     let items = try itemRecords.map { source in
@@ -217,7 +223,8 @@ struct PlannerDataSnapshot: Codable {
     }
     return PlannerDecodedBackup(
       backup: PlannerPortableBackup(
-        sources: items.map(PlannerPortableSource.item) + lists.map(PlannerPortableSource.list),
+        sources: items.map(PlannerPortableSource.item) + lists.map(PlannerPortableSource.list)
+          + categories.map(PlannerPortableSource.category),
         memberships: try memberships.map {
           try $0.validated(items: itemRecords, lists: listRecords)
         },
@@ -285,7 +292,7 @@ struct RecoveryEnvelope: Codable {
 
   func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
     guard format == "planner-recovery", formatVersion == 1,
-      ["1", "2", "3", "4", "5", "6", "7"].contains(storageSchemaVersion),
+      ["1", "2", "3", "4", "5", "6", "7", "8"].contains(storageSchemaVersion),
       namespaceId == identity.namespaceId, datasetId == identity.datasetId,
       ownershipBinding == identity.ownershipBinding, !ownershipBinding.isEmpty,
       let generation = Int64(checkpointGeneration), generation > 0,
@@ -365,6 +372,7 @@ struct PlannerRecoveryArchive {
   }
 
   func publish(
+    categories: [CategorySnapshot],
     items: [ItemSnapshot], lists: [ListSnapshot], memberships: [MembershipSnapshot],
     deletionMarkers: [PortableDeletionMarker],
     receipts: [PlannerSchemaV1.Receipt]
@@ -377,7 +385,8 @@ struct PlannerRecoveryArchive {
     }
     let bytes = try JSONEncoder().encode(
       PlannerDataSnapshot(
-        items: items, lists: lists, memberships: memberships, deletionMarkers: deletionMarkers))
+        categories: categories, items: items, lists: lists, memberships: memberships,
+        deletionMarkers: deletionMarkers))
     let priorCheckpoints = Dictionary(
       uniqueKeysWithValues: (previous?.receipts ?? []).map {
         ($0.operationId, $0.checkpointGeneration.flatMap(Int64.init))

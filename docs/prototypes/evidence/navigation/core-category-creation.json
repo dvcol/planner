@@ -1,0 +1,276 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-11",
+  "baselineCommit": "6ce8411",
+  "seam": "Accepted public Planner bootstrap/execute/read/query/inspectRecovery, temporary real stores, genuine older fixtures and native Xcode Core tests. No private database assertions or test-only production callbacks.",
+  "scope": "Durable Category creation, catalog/rows, exact replay, typed portable recovery and schema-8 migration. Labels have no completion/archive state; source Item/Itinerary label associations remain subsequent work.",
+  "tdd": {
+    "interfaceRed": {
+      "log": "/private/tmp/PlannerCategoryCreationRed.log",
+      "exitCode": 1,
+      "runtimeFunctions": 0,
+      "failure": "The declared Category content, create command, read and portable-source cases are absent; compilation fails."
+    },
+    "firstCompiledFailure": {
+      "log": "/private/tmp/PlannerCategoryCreationGreen.log",
+      "exitCode": 1,
+      "runtimeFunctions": 1,
+      "issues": 1
+    },
+    "publicDiagnosis": {
+      "log": "/private/tmp/PlannerCategoryCreationDiagnosis.log",
+      "failure": "The public result rejects staleDatasetSession because the session guard still requires schema 7. Inspection also finds that recovery envelope validation needs schema 8."
+    },
+    "compiledGreen": {
+      "log": "/private/tmp/PlannerCategoryCreationCompiledGreen.log",
+      "exitCode": 0,
+      "runtimeFunctions": 1
+    }
+  },
+  "qualification": {
+    "coreStore": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter PlannerCoreStoreTests > /private/tmp/PlannerCategoryFinalStoreQualification.log 2>&1",
+      "exitCode": 0,
+      "functions": 104,
+      "suites": 41,
+      "failed": 0,
+      "skipped": 0
+    },
+    "httpCompatibility": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter 'ItemDurationQueryRoutingTests|ItemTextQueryRoutingTests|CommandRoutingTests|EstimateRoutingTests|QueryRoutingTests|ListCatalogRoutingTests|MembershipRowRoutingTests|MembershipReorderingRoutingTests' > /private/tmp/PlannerCategoryHTTPQualified.log 2>&1",
+      "exitCode": 0,
+      "functions": 21,
+      "suites": 8,
+      "failed": 0,
+      "skipped": 0,
+      "dependencyRevisionsMatchApplication": 7
+    },
+    "nativePhone": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerCore -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerCoreCategoryPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerCoreStoreTests/CategoryCreationTests -only-testing:PlannerCoreStoreTests/CategoryMigrationTests -only-testing:PlannerCoreStoreTests/CategoryRecoveryTests -resultBundlePath /private/tmp/PlannerCategoryFinalPhone.xcresult test > /private/tmp/PlannerCategoryFinalPhone.log 2>&1",
+      "exitCode": 0,
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+              "deviceName": "iPhone 18 Pro",
+              "modelName": "iPhone 18 Pro",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 4,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerCore \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791656799.129,
+        "passedTests": 4,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791656778.404,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerCore",
+        "topInsights": [],
+        "totalTestCount": 4
+      },
+      "functions": 4,
+      "suites": 3,
+      "failed": 0,
+      "skipped": 0
+    },
+    "macCompilation": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerCategoryMacBuild.xcresult build-for-testing > /private/tmp/PlannerCategoryMacBuild.log 2>&1",
+      "exitCode": 0,
+      "runtimeFunctions": 0,
+      "warning": "AppIntents metadata extraction skipped because no AppIntents framework dependency exists. Production sources match the final qualification; the subsequent test-only conditional bundle helper is not compiled by this navigation scheme."
+    }
+  },
+  "corrections": [
+    {
+      "log": "/private/tmp/PlannerCategoryMigrationQualification.log",
+      "runtimeFunctions": 0,
+      "reason": "The new test used a nonexistent appearance.reference property; its expected membership reference now uses the declared public identity."
+    },
+    {
+      "log": "/private/tmp/PlannerCategoryStoreQualification.log",
+      "functions": 104,
+      "failedFunctions": 1,
+      "issues": 2,
+      "reason": "An older catalog fixture expected Category discovery to remain unavailable. The newly supported Category kind is removed from that unsupported-kind loop."
+    },
+    {
+      "log": "/private/tmp/PlannerCategoryHTTPCompatibility.log",
+      "functions": 21,
+      "failedFunctions": 1,
+      "issues": 4,
+      "reason": "The old invalid-request list included a now-valid Category all-state catalog. Its replacement uses forbidden Category archive active and checks invalidInput at /query/archive."
+    },
+    {
+      "log": "/private/tmp/PlannerCategoryPhone.log",
+      "runtimeFunctions": 0,
+      "reason": "The command used a nonexistent PlannerCoreFixture scheme; the actual native scheme is PlannerCore."
+    },
+    {
+      "log": "/private/tmp/PlannerCategoryPhoneQualified.log",
+      "runtimeFunctions": 0,
+      "reason": "The new native migration test omitted its nested Bundle lookup helper. The helper is included only outside SWIFT_PACKAGE, then final native tests execute."
+    }
+  ],
+  "behavior": [
+    "Exact submitted name, optional color and icon survive reopen with one Core-issued identity and lifetime. Required text/color validation runs before receipts or proposals; equal names remain separate sources.",
+    "The name field hash matches independently framed literal bytes with Category kind byte 04 and issued dataset/source/lifetime IDs. Portable source content has exactly name/color/iconName, with null completion/archive flags.",
+    "Case/diacritic-insensitive cumulative name search and ascending name/UUID order return stable Category identities and generation-bound rows. Archive filtering other than all rejects.",
+    "Every implemented existing domain command retains the Category ID/lifetime/content/timestamps in its acknowledged checkpoint; unrelated Item, List, membership, completion/archive and Schedule writers cannot omit Category data from the required snapshot/publish arguments.",
+    "Genuine schema-7 migration preserves memberships/local Done, Item content/state/hash/timestamps, links, both Schedule forms, deletion metadata and replayable receipts. Historical portable bytes remain unchanged, and Share-role Category saving works only after main migration."
+  ],
+  "fixture": {
+    "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV7",
+    "producerCommit": "6ce8411",
+    "producerLog": "/private/tmp/PlannerSchema7Producer-6ce8411.log",
+    "schema": 7,
+    "latestCheckpoint": 16,
+    "checksums": {
+      "Producer.swift.txt": "da985dc3103be2b76230572cc0c2637676ee58231073c3cfbc72bb977583fa8d",
+      "control/writer": "60b1dc0da911fb806da9cb1a3cb262ef7ba79f9157e4cc86be1ef23d61502184",
+      "manifest.json": "abbd32a31ccfcaac685a012d42914d6c57ee998202674b730edf56da9c9c0920",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/checkpoint-1.json": "5a89b85b310a6eb26c5badab614f736b62cf4941ceb19ee2110447b73ae93502",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/checkpoint-10.json": "bae089152b1418d4d621e714336ab24a46da74518276c95ac852093c40b1a657",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/checkpoint-11.json": "6565ed117a5eb942aaea2cec630beea16891c6a3c0da59b97a0dd33f26110b4b",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/checkpoint-12.json": "d1a6492c8e7ad4c2c968ed54d99dcdef02615df82a1857391ae839dcddfa5593",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/checkpoint-13.json": "351fb689207c175c6970008215287d2a7af8ff12acfd9085aaf5425bee4e066c",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/checkpoint-14.json": "5d2a7077a30314a47abc0199fe106a8bf8ed5bd1b5366205aa12b85e5c8dc29d",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/checkpoint-15.json": "20de61cb41b3d12753e1fb85f15665e257b8bcb466e7c52b47d310114f708e5e",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/checkpoint-16.json": "070ba82d934b9d9f4a830079b906ed0e754ddde48fd4cc75d94e9ff3dda7b9ef",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/checkpoint-2.json": "df069dd9a7f8a33559b1ec509ec4dc5314c50ca6c8b81531c541090664d27bd9",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/checkpoint-3.json": "c13bf0bbf515b4ebd6f69e90fa0e8525928aa3d17e51ff902eac2d5e86307a58",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/checkpoint-4.json": "fcd3ff030e81253aeb0b8e9398ca4be8434110812b3b1651a6c3d3063e34d7f6",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/checkpoint-5.json": "5014e31a1ca9823ec90bf8c7c182139ea8a48503f493a5d33979db29973d9d06",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/checkpoint-6.json": "0ff15bc6c3094d59368096947cf2c3959caa99d9cfef5326de7fa4328ff86ef5",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/checkpoint-7.json": "9916ac666761d6c8f0930e00f93bb9fc182227b9eb3207ef99234c85032e8708",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/checkpoint-8.json": "76889a42614c785d59c9206c453391d4cfdac965b0dd9d03753d5e7384c5d7f7",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/checkpoint-9.json": "f489760e73a6d1295763916fb1a9c22bca86e8cc370cfcdf598c14c993896e46",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/identity.json": "60b1dc0da911fb806da9cb1a3cb262ef7ba79f9157e4cc86be1ef23d61502184",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/proposal-0D8BB258-7B8C-4D07-8249-6C2FA0287010.json": "252c0c9d8328b022f9a599baa12011a4b4bbbb49f1339da3c8175367b479e89a",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/proposal-1232071E-FD80-4043-A150-C4DFA6E54B04.json": "5f0054b7150188e60d9472eef71fe4105d3e6db39c8d7be0d0c84e2c598e3c39",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/proposal-2872EFC1-A3A7-41D7-8F9C-FB2CB15C3957.json": "d65bb93f0f79e1713fb176e65ee16f95d8a4b0b092fa1b562386a9b377c123a2",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/proposal-29E3CD9A-983F-4329-9505-BFF1D56FDEDF.json": "2d28e5866e3cc01c04d31f82b86ef6bb5507fc20d78a36a18ca1a6e68148a127",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/proposal-3A0F5CEF-F5F0-42BE-BBE0-8C83D681EA86.json": "c4929278aa2efee052b295596fd208e5009704bfdd7f2a676544dd8aba073aa9",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/proposal-4AD2D116-B87D-4FF0-9DB3-CA808336F6AE.json": "93dcb3f17dba23aaf7ca7acdc1b8f8e42c510f1051489eb76e0e4bebaa857907",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/proposal-5943A41D-9172-4D73-AE4A-8A27C2AD432A.json": "c1eec8ce99ac96bb5d4d6bbaf6e6f7f01879584dbb826ff3301aa5930c5a9bf5",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/proposal-7F006C36-7427-41C7-AD3F-FC770BF9A686.json": "f5aec565c964f41d817c4ab702e2c7edb98575443d37321b49dc3a4b8f0cee11",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/proposal-99ECD5D3-5B80-4CC9-94B2-A209361A2C46.json": "d07d3b2fd797beb77cacb4e4eec88a1c481126e65b5bf392d7d74e7ace3c3e4c",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/proposal-B1421B7B-99F4-4DF9-972A-531E34AD36BD.json": "2efa5370390318e70ee3b72b7de838db90c503178843699b1448072c3b9675ce",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/proposal-B2D3E496-3A76-4691-9CDD-2D671A982230.json": "7e225a9ecdaf195543616ac72a6ceae74cae5bbc3ec9a2df55eee181b5fa2c03",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/proposal-B6353706-E633-4557-88DD-9A99BE64C414.json": "f255bf2a5168c57be2b098b893efd61b3aa16cfa0fdc791f4f938de8f81326a2",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/proposal-D02C5C7C-8A71-4387-A705-C487ADD8903B.json": "eb2bda6cf71ae7795559dcc16e7bf0a7065db8789fef1d1722ab2628e3649aaf",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/proposal-D2D86598-27A1-4CE4-9005-1A5B0102B824.json": "5b62eec82807f31e2ea57fe7af74c6e2c83da9e660c1cf3efc753caf38671510",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/proposal-E5F43704-FC5D-4CFA-9665-F49C1A6CB359.json": "f49828612687a29ef50d90932183c9f890c8bbff76eead36286dbcec6fb9213f",
+      "recovery/785D2182-2125-46A1-AAD6-F839417548CF/proposal-F8525544-96CF-4415-8EF3-2BD0AD702CAF.json": "de98cd02a4827ea5bac536772498c8207527ea0e71a5928f799c046ec9c2e384",
+      "store/Planner.sqlite": "5ff8d3bc64a3c9ddc5540a38258d56fdd56c794570d4079e9d28d017f618d808",
+      "store/Planner.sqlite-shm": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb",
+      "store/Planner.sqlite-wal": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "checks": {
+    "strictSwiftLintFiles": 17,
+    "logs": [
+      "/private/tmp/PlannerCategorySwiftLint.log",
+      "/private/tmp/PlannerCategoryHTTPTestSwiftLint.log",
+      "/private/tmp/PlannerCategoryBundleSwiftLint.log"
+    ],
+    "diffWhitespace": "passed"
+  },
+  "sourceHashes": {
+    "Packages/PlannerCore/Package.swift": "a581f4fe459fac23b9307ee37f91fd1fe1083afe6d8becec272bbb1081e3cf69",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerAppliedValues.swift": "7bd92cdaab57c37a778813f84ad492c1c03c07a94d0be4098cf2a809d7247808",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCategoryRecovery.swift": "4d6bc66e47704b706e1c81fd743ba1dffb55a84fe62ad50e5cbb442a67746b41",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCategoryValues.swift": "9fb029f9411f7f4bcf7ed8a0c66dda4cd9fbf94cac60982969b904042aa8bf2a",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCivilDate.swift": "d8ae4943ef8af8030c13f12af2f93ffb873de32e328a97245b9c05adbed92306",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "94a2269a61f16ac070be44be74c2373fe4459219bec76975122297e072d7084a",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "79fc9d4f715460e828bebfde55941badc2b104fb5c3124e5d0641a4236e37172",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkRecovery.swift": "76e82b80e6be3200a1cc0a9c4eb439094c9085c30939d543dacaaf70cbd60b1b",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerLinkValues.swift": "1d56582bc53cdd9b0e1844269dfed4f441309997f0c6b134a8f64265cae2e5c9",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerListRecovery.swift": "0f6a7109dccec70520c5c1945f8b77b56f3d578cc3bddc6ab0bd65c87e5f714d",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift": "cc858d8b5901779245572e6b0fbb8a5babbfc1b55cd88895194b838cf5e6c577",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipRecovery.swift": "132e5752b86d01a9038c6404b6d2455335294da8cede1a9673fc9efd43e371ce",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMembershipValues.swift": "5facc4514fc6ae6d8acdb235c0c1d904698078e56d6513d3f6579e315209e720",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "8c8d205a5c221ac4f94c4e60b71569483e359da65c6c519c01f05403b45fc50c",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift": "a4bcf5be5ea7b2b1c87a6198637d1c592f7e98f372c5582d8ecb92d3370022fa",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleRecovery.swift": "04cd468445d0110b980aff89b94b1e3f4ca1ff641ce46dc9ecb1eb6518667a22",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerScheduleValues.swift": "a3393d67c3c5d64042ab504a9010a72e530779a0892abb6ba2043b594a415504",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV2.swift": "efbe703445f557022a2fb25fe40b4cadde725cfaa23c2293864099726e1b5af1",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV3.swift": "16597d7095a886a1736b908877359b110a4d527d6aadb77e4ced5f13cfc9facc",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV5.swift": "e2347043ee4c5d0267391e40119d6cc25f463f181c833c9a9c4b3bed0e10f0f6",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV6.swift": "9ec7f806f24a4666d02f9a2b16e94bf10330705b4cd4989cb52792e30757fd83",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV7.swift": "7dce5ff7a8df9a69eaf6f7cdc70d1b19df524b67976889b6669b9f424e6ca398",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV8.swift": "ff4a06f517c8465db7174a08a0741cc015c2d1899b816ba8dd09509949810c46",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "061497f9c2e280833d6f9a7581312af74199403c938f61a43f18cfe0158d5b4d",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "1ad5646a2db78cd982466fe8bc56bf5d4e1cc80b0d34a985a851b38b3f7adb23",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift": "f55597673c4bc0deefc7ae5bfa52ae6863d34d0dd770eaf9cd0238d39d267920",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CategoryCreationTests.swift": "403e5f92438f69a23c09be6afa54ad41c78cf7f8b656c27a9ca8ad818bddcc13",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CategoryMigrationTests.swift": "946dd8d62a92c36aa2c9ab34c241d381c213ac84b03d435a0f301a5457d5f4cf",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CategoryRecoveryTests.swift": "6e9d0d28386a0c3feb0d64617fc78632d93c044c56a1ad073c2909ccf9fa5a48",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DatasetPresentationScopeTests.swift": "52059a7db6ba9f448d6c76cf597481a65bd4a2b01ef94802a4a44eb955c20c04",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/DirectScheduleTests.swift": "3f1148695b499a04cbf62f1807e79f26a3a5e2c2d507e392a8548e389c55282d",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemArchiveTests.swift": "748743d255db0613db7ee2e39c03c439afcf83fa31cf8cf416eb39b66c6bf7a2",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemChronologicalSortTests.swift": "ef1075134062054bc08c77a98e919fb3b6c2bef10fd1ea598054515928d251f4",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCompletionTests.swift": "90622f5f7087eea57a7992a14b57d8bb61102f439749531b8753f9dbe38bc79d",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemCreationTests.swift": "cce7f91e2a638989d5922168d781e2f51c2f13ee2d5e0d1875a20f00f232ebf8",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationQueryTests.swift": "fd43d8909f98aa5282db20e2a8edb813bcb091072067fc60cb1f18779820e549",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemDurationSortTests.swift": "5bd645d016fdb77a4d6e1366514a9d12b588689f480898bcedce1e841361ad32",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEditTests.swift": "76dc86b75124410f45443170320ac6a774bdb3c91c518102bbce9a48cbc91314",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemEstimateEditTests.swift": "f1c13514cfee4b1c5863b497cd027f48a2dda1231bdbeb4a7a9795f310c49dfc",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkEditTests.swift": "1797fb47a943f82ab1f2dcb9dc6a59cc0b653151182c9bfb18dc594d20f8e5fd",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift": "ffe7f647c68b728ba41a15cf765eafb73c129f203621412c340d7dbcb85003ae",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkTests.swift": "4284ec284db6e3e3b269bed171b95d96a66d14df959d22e9790e4bd484f8ad2d",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLocationEditTests.swift": "de312ef15e594aa81f18e8344b01095c628eea72c9fac059f6d555babcd7ae31",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemQueryTests.swift": "d78739e8e6a260413d277b785f2c7aa21193e5123740544032099b443b7633f7",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemReferenceReadTests.swift": "cacd8855cacc69426abbf6eb8cd2ef88d9ec85e4a2966ac77ad22cc20b1db022",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemRowReadTests.swift": "1597c7a2480bba06797738d8991d4043fdb35a6c12e7b4f597fc0ee6bb969caa",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemSubtitleEditTests.swift": "95ce0088ba89394c7d2cc4eda0cefc75afdbbb5ba539a649f44a91fba9364066",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemTextQueryTests.swift": "fec0d6e60c9cfbe4243e3e12368b27b27203e41a2a5f0d1cd6d387457a35ab92",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListArchiveTests.swift": "393b5114ef81d5cef09ab39d0936c0998d101beda77d1bfc30a87a2f3683d687",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCatalogTests.swift": "21cd1e62520989871e889f50ba2626e3358032793ccdbfee71b96ce0f9d0366c",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListCreationTests.swift": "694915bb33d1a54ace2b6c0771a0bb0a8f0487f9a69249a414ee7505ae2ad4f2",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ListEditTests.swift": "103b7b0d95a9d3945d9a097c9b3766646622f1652b359b4030e5aaf2d7a94c57",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipAppearanceTests.swift": "c7e78a9a5fa0495f896e1c1b5e839b1e6b2b03d3a75e6e4cd98ecf019e00d359",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCompletionTests.swift": "6f81461fab270a43f687eec965a8182f96c3c67a5bf6a5ad61b2aa23fc403425",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift": "0d17ef73650029f0c7b98625af62c6af1c184405693dbe5b4fbf1573957f20f1",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMigrationTests.swift": "cc76aef2a10d081fe9d1aa1de847a28628420184497cd936968a84b68033c483",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift": "984e7c5b172c2592e5d60537946923723695ed997c6fc01271f8ec7da416c25f",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipReorderingTests.swift": "719ec8cb0dd2a95eb2758d9d4459bee8cf28646e5f0a8a10093df54d67fb412d",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRowTests.swift": "72277f8ef9501f600eeda71730067f68d0b3d910e5a443563689cb78c0bb7c5d",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/PreviewSourceBindingTests.swift": "21909274777f6c69e82082d405f55e7cadb0d39c8647c433307d03cf447e16cb",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoveryFailureTests.swift": "a30332eb67867c9cf240ea22bf58c9d3c9c36f085149ff44b49a9c83a328ac79",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleEditTests.swift": "d00e72c8541f3124da7997a064e7f963ff816ba96f8d3ee8fca115b5138034a5",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleRemovalTests.swift": "c70e40d77fc71f59ab1f9a7f6952c71412482b27e4aef4b5d5e3a3e99c79b157",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleSourceReadTests.swift": "6e2575c710d5a52aa251fa8f6138b01392fbbff32e664316aeb8b015bcb1724e",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ScheduleZoneTests.swift": "9f9ab4b11626cccf3f8a3bcc3bd743ad33fa817e3a8c96ca33d8631f31b4d475",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/TestDiscovery.swift": "4a609491daa4c05723f4a184967438edeb6a767a29dd2ddc709859ab373dd765",
+    "Packages/PlannerCore/Tests/PlannerCoreTests/TestDiscovery.swift": "4a609491daa4c05723f4a184967438edeb6a767a29dd2ddc709859ab373dd765",
+    "Planner/AgentControl/PlannerMCPSourceTool.swift": "ef31b13ea4ee672a56bbc8f05af65126758f85f9e5b0d57d7cc097f1ac315f7d",
+    "PlannerMCPTests/ListCatalogRoutingTests.swift": "6c2b6a5678f591d26f9dbd0f410fbcfb17965282a563758e9f341c2e7ca65659"
+  },
+  "limits": [
+    "Schema 8 remains localOnly with CloudKit disabled. No signed extension/device, physical sync/account, termination/reconciliation or Mac app-hosted runtime result is claimed.",
+    "Share-role migration tests exercise the public facade as a configured role; an actual signed Share extension is a separate gate.",
+    "Category associations, editing/deletion, Tag sources, native management and MCP Category create/source-read admission are not implemented here. Catalog requests already delegated to Core now support Category discovery.",
+    "Portable recovery contains Category records. Manual JSON export/import/restore administration is still unimplemented; this is not a completed backup UI or full import guarantee."
+  ]
+}
