@@ -406,16 +406,19 @@ public struct PlannerItemQuery: Sendable {
     }
   }
   public let scope: Scope
+  public let text: String
   public let completion: Completion
   public let archive: Archive
   public let sort: Sort
   public let rowPresentation: PlannerRowPresentationContext?
 
   public init(
-    scope: Scope = .global, completion: Completion = .todo, archive: Archive = .active,
+    scope: Scope = .global, text: String = "", completion: Completion = .todo,
+    archive: Archive = .active,
     sort: Sort = Sort(), rowPresentation: PlannerRowPresentationContext? = nil
   ) {
     self.scope = scope
+    self.text = text
     self.completion = completion
     self.archive = archive
     self.sort = sort

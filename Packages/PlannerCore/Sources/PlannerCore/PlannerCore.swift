@@ -467,8 +467,12 @@ public actor Planner {
             throw PlannerFailure(
               "unavailable", "This Item-only fixture does not implement contextual queries.")
           }
+          let textTerms = itemQuery.text.split(whereSeparator: \.isWhitespace).map(String.init)
+          let locale = Locale(identifier: "en_US_POSIX")
           var descriptor = FetchDescriptor<PlannerSchemaV7.Item>()
-          descriptor.propertiesToFetch = [\.id, \.title, \.globalDone, \.archived]
+          if textTerms.isEmpty {
+            descriptor.propertiesToFetch = [\.id, \.title, \.globalDone, \.archived]
+          }
           let items = try context.fetch(descriptor).filter { item in
             if let identifier = item.id, listedIdentifiers.contains(identifier) { return false }
             switch itemQuery.completion {
@@ -477,12 +481,12 @@ public actor Planner {
             case .all: break
             }
             switch itemQuery.archive {
-            case .active: return !item.archived
-            case .archived: return item.archived
-            case .all: return true
+            case .active: if item.archived { return false }
+            case .archived: if !item.archived { return false }
+            case .all: break
             }
+            return try matchesItemText(item, terms: textTerms, locale: locale)
           }
-          let locale = Locale(identifier: "en_US_POSIX")
           let values = try items.map { item in
             guard let id = item.id,
               !item.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -527,6 +531,27 @@ public actor Planner {
         }
       }
     } catch { return .failed(failure(error, code: "readUnavailable")) }
+  }
+
+  private func matchesItemText(
+    _ item: PlannerSchemaV7.Item, terms: [String], locale: Locale
+  ) throws -> Bool {
+    guard !terms.isEmpty else { return true }
+    let value = try item.value()
+    let searchableFields =
+      [
+        value.input.title, value.input.subtitle, value.input.notes,
+        value.input.location?.displayName, value.input.location?.formattedAddress,
+      ].compactMap { $0 }
+      + value.links.flatMap { link in
+        [link.originalUrl, link.label].compactMap { $0 }
+      }
+    return terms.allSatisfy { term in
+      searchableFields.contains { field in
+        field.range(of: term, options: [.caseInsensitive, .diacriticInsensitive], locale: locale)
+          != nil
+      }
+    }
   }
 
   private func listCatalogSnapshot(
@@ -607,9 +632,12 @@ public actor Planner {
       throw PlannerFailure("readUnavailable", "List memberships are duplicated and unresolved.")
     }
     let itemIdentifiers = children.map { Optional($0.item.id) }
+    let textTerms = query.text.split(whereSeparator: \.isWhitespace).map(String.init)
     var items = FetchDescriptor<PlannerSchemaV7.Item>(
       predicate: #Predicate { itemIdentifiers.contains($0.id) })
-    items.propertiesToFetch = [\.id, \.lifetimeId, \.title, \.globalDone, \.archived]
+    if textTerms.isEmpty {
+      items.propertiesToFetch = [\.id, \.lifetimeId, \.title, \.globalDone, \.archived]
+    }
     let sources = Dictionary(grouping: try context.fetch(items), by: \.id)
     var doneCount: Int64 = 0
     let locale = Locale(identifier: "en_US_POSIX")
@@ -633,6 +661,7 @@ public actor Planner {
       case .archived: if !item.archived { continue }
       case .all: break
       }
+      if !(try matchesItemText(item, terms: textTerms, locale: locale)) { continue }
       matching.append(
         (
           identity: .appearance(
