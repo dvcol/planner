@@ -161,6 +161,161 @@ struct CommandRoutingTests {
     }
   }
 
+  @Test func tagFieldGuardsOverHTTPKeepConflictsAtomicAndReplayOriginalReceipts() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = PlannerCore.Planner(configuration: configuration)
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let created, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createTag(
+            content: PlannerTagContentInput(
+              name: "Food", color: PlannerColor(red: 0, green: 0, blue: 1, alpha: 1),
+              iconName: "fork.knife")))
+      ).outcome,
+      let tag = created.generated.first
+    else {
+      Issue.record("A durable Tag must exist before its HTTP edit journey.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    var readRequest = try executionRequest(
+      endpoint: endpoint, operationIdentifier: UUID(), command: [:])
+    readRequest.httpBody = try JSONSerialization.data(withJSONObject: [
+      "jsonrpc": "2.0", "id": 2, "method": "tools/call",
+      "params": [
+        "name": "planner_read",
+        "arguments": [
+          "formatVersion": 1,
+          "request": [
+            "kind": "source", "source": ["kind": "tag", "id": tag.id.uuidString],
+          ],
+        ],
+      ],
+    ])
+    do {
+      let original = try operationValue(
+        try await httpSession.data(for: readRequest), isError: false)
+      let originalValue = try #require(original["value"] as? [String: Any])
+      let originalHashes = try #require(originalValue["fieldHashes"] as? [String: String])
+      let renameRequest = try executionRequest(
+        endpoint: endpoint, operationIdentifier: UUID(),
+        command: [
+          "type": "editTag", "sourceId": tag.id.uuidString,
+          "changes": ["name": " Dining "], "expectedFieldHashes": originalHashes,
+        ])
+      let renamed = try operationValue(
+        try await httpSession.data(for: renameRequest), isError: false)
+      try #require(renamed["state"] as? String == "applied")
+      #expect((renamed["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "2")
+      let iconCleared = try operationValue(
+        try await httpSession.data(
+          for: executionRequest(
+            endpoint: endpoint, operationIdentifier: UUID(),
+            command: [
+              "type": "editTag", "sourceId": tag.id.uuidString,
+              "changes": ["iconName": NSNull()], "expectedFieldHashes": originalHashes,
+            ])), isError: false)
+      #expect(iconCleared["state"] as? String == "applied")
+      #expect(
+        (iconCleared["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "3")
+      let beforeConflict = try operationValue(
+        try await httpSession.data(for: readRequest), isError: false)
+      let beforeValue = try #require(beforeConflict["value"] as? [String: Any])
+      let beforeHashes = try #require(beforeValue["fieldHashes"] as? [String: String])
+      let stale = try operationValue(
+        try await httpSession.data(
+          for: executionRequest(
+            endpoint: endpoint, operationIdentifier: UUID(),
+            command: [
+              "type": "editTag", "sourceId": tag.id.uuidString,
+              "changes": [
+                "name": "Must not save", "color": ["red": 1, "green": 0, "blue": 0, "alpha": 1],
+              ], "expectedFieldHashes": originalHashes,
+            ])), isError: true)
+      #expect(stale["state"] as? String == "rejected")
+      let reason = try #require(stale["reason"] as? [String: Any])
+      #expect(reason["code"] as? String == "staleEdit")
+      let details = try #require(reason["details"] as? [String: Any])
+      #expect(details["kind"] as? String == "staleEdit")
+      #expect(details["conflictingFields"] as? [String] == ["name"])
+      #expect(details["currentValues"] as? [String: String] == ["name": " Dining "])
+      let currentNameHash = try #require(beforeHashes["name"])
+      #expect(details["currentFieldHashes"] as? [String: String] == ["name": currentNameHash])
+      let afterConflict = try operationValue(
+        try await httpSession.data(for: readRequest), isError: false)
+      #expect(NSDictionary(dictionary: afterConflict).isEqual(to: beforeConflict))
+      let colorCleared = try operationValue(
+        try await httpSession.data(
+          for: executionRequest(
+            endpoint: endpoint, operationIdentifier: UUID(),
+            command: [
+              "type": "editTag", "sourceId": tag.id.uuidString,
+              "changes": ["color": NSNull()], "expectedFieldHashes": originalHashes,
+            ])), isError: false)
+      #expect(colorCleared["state"] as? String == "applied")
+      #expect(
+        (colorCleared["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "4")
+      let staleNull = try operationValue(
+        try await httpSession.data(
+          for: executionRequest(
+            endpoint: endpoint, operationIdentifier: UUID(),
+            command: [
+              "type": "editTag", "sourceId": tag.id.uuidString,
+              "changes": ["color": ["red": 0, "green": 0, "blue": 1, "alpha": 1]],
+              "expectedFieldHashes": originalHashes,
+            ])), isError: true)
+      let nullReason = try #require(staleNull["reason"] as? [String: Any])
+      #expect(nullReason["code"] as? String == "staleEdit")
+      let nullDetails = try #require(nullReason["details"] as? [String: Any])
+      #expect(nullDetails["conflictingFields"] as? [String] == ["color"])
+      #expect((nullDetails["currentValues"] as? [String: Any])?["color"] is NSNull)
+      let replayed = try operationValue(
+        try await httpSession.data(for: renameRequest), isError: false)
+      #expect(NSDictionary(dictionary: replayed).isEqual(to: renamed))
+      let latest = try operationValue(try await httpSession.data(for: readRequest), isError: false)
+      let latestValue = try #require(latest["value"] as? [String: Any])
+      let latestContent = try #require(latestValue["content"] as? [String: Any])
+      #expect(latestContent["name"] as? String == " Dining ")
+      #expect(latestContent["color"] is NSNull)
+      #expect(latestContent["iconName"] is NSNull)
+      #expect(latestValue["createdAt"] as? Double == originalValue["createdAt"] as? Double)
+      let reopened = PlannerCore.Planner(configuration: configuration)
+      guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+        case .source(.tag(let saved)) = await reopened.read(
+          session: reopenedSession, request: .source(tag))
+      else {
+        Issue.record("HTTP Tag edits must remain readable after reopening.")
+        await listener.stop()
+        return
+      }
+      #expect(saved.content.name == " Dining ")
+      #expect(saved.content.color == nil)
+      #expect(saved.content.iconName == nil)
+      #expect(saved.updatedAt.timeIntervalSinceReferenceDate == latestValue["updatedAt"] as? Double)
+      #expect(
+        latestValue["fieldHashes"] as? [String: String]
+          == Dictionary(
+            uniqueKeysWithValues: saved.fieldHashes.map { ($0.key.rawValue, $0.value.value) }))
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   @Test func categoryEditAdvertisementAndInvalidPatchesPreserveSavedDataOverHTTP() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
@@ -276,6 +431,146 @@ struct CommandRoutingTests {
             session: datasetSession, operationId: operationIdentifier)
         else {
           Issue.record("Invalid edits must retain the saved Category without applied evidence.")
+          await listener.stop()
+          return
+        }
+        #expect(unchanged.content == original.content)
+        #expect(unchanged.sourceLifetimeId == original.sourceLifetimeId)
+        #expect(unchanged.createdAt == original.createdAt)
+        #expect(unchanged.updatedAt == original.updatedAt)
+        #expect(unchanged.fieldHashes == original.fieldHashes)
+      }
+      guard
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
+      else {
+        Issue.record("Invalid requests must leave recovery readable.")
+        await listener.stop()
+        return
+      }
+      #expect(namespaces.first?.acknowledgedSnapshot?.checkpointGeneration == 1)
+      #expect(namespaces.first?.preparedProposals.isEmpty == true)
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
+  @Test func tagEditAdvertisementAndInvalidPatchesPreserveSavedDataOverHTTP() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(
+      configuration: PlannerStorageConfiguration(
+        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+        controlURL: directory.appendingPathComponent("control/writer"),
+        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+        processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let datasetSession) = await planner.bootstrap(),
+      case .applied(let created, .complete) = await planner.execute(
+        PlannerOperation(
+          operationId: UUID(), session: datasetSession,
+          command: .createTag(content: PlannerTagContentInput(name: "Food")))
+      ).outcome,
+      let tag = created.generated.first,
+      case .source(.tag(let original)) = await planner.read(
+        session: datasetSession, request: .source(tag))
+    else {
+      Issue.record("A saved Tag must exist before edit admission qualification.")
+      return
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    let hashes = Dictionary(
+      uniqueKeysWithValues: original.fieldHashes.map { ($0.key.rawValue, $0.value.value) })
+    let valid: [String: Any] = [
+      "type": "editTag", "sourceId": tag.id.uuidString,
+      "changes": ["name": "Dining"], "expectedFieldHashes": hashes,
+    ]
+    do {
+      var advertisementRequest = try executionRequest(
+        endpoint: endpoint, operationIdentifier: UUID(), command: valid)
+      advertisementRequest.httpBody = try JSONSerialization.data(withJSONObject: [
+        "jsonrpc": "2.0", "id": 3, "method": "tools/list", "params": [:],
+      ])
+      let advertisement = try await httpSession.data(for: advertisementRequest)
+      #expect((advertisement.1 as? HTTPURLResponse)?.statusCode == 200)
+      let envelope = try #require(
+        JSONSerialization.jsonObject(with: advertisement.0) as? [String: Any])
+      let tools = try #require((envelope["result"] as? [String: Any])?["tools"] as? [[String: Any]])
+      let executeTool = try #require(tools.first { $0["name"] as? String == "planner_execute" })
+      let properties = try #require(
+        (executeTool["inputSchema"] as? [String: Any])?["properties"] as? [String: Any])
+      let variants = try #require(
+        (properties["command"] as? [String: Any])?["oneOf"] as? [[String: Any]])
+      let tagVariant = try #require(
+        variants.first { variant in
+          let fields = variant["properties"] as? [String: Any]
+          return (fields?["type"] as? [String: Any])?["const"] as? String == "editTag"
+        })
+      #expect(tagVariant["additionalProperties"] as? Bool == false)
+      #expect(
+        Set(tagVariant["required"] as? [String] ?? []) == [
+          "type", "sourceId", "changes", "expectedFieldHashes",
+        ])
+      let fields = try #require(tagVariant["properties"] as? [String: Any])
+      let changes = try #require(fields["changes"] as? [String: Any])
+      #expect(changes["additionalProperties"] as? Bool == false)
+      #expect(changes["minProperties"] as? Int == 1)
+      #expect(
+        Set(try #require(changes["properties"] as? [String: Any]).keys) == [
+          "name", "color", "iconName",
+        ])
+      let guards = try #require(fields["expectedFieldHashes"] as? [String: Any])
+      #expect(guards["additionalProperties"] as? Bool == false)
+      #expect(
+        Set(try #require(guards["properties"] as? [String: Any]).keys) == [
+          "name", "color", "iconName",
+        ])
+      let invalidOverrides: [([String: Any], String, String)] = [
+        (["sourceId": "invalid"], "invalidInput", "/command/sourceId"),
+        (["changes": [:]], "invalidInput", "/command/changes"),
+        (["changes": ["name": NSNull()]], "invalidInput", "/command/changes/name"),
+        (["changes": ["name": " \n\t"]], "invalidInput", "/command/changes/name"),
+        (["changes": ["notes": "Forbidden"]], "unknownField", "/command/changes/notes"),
+        (["changes": ["color": "blue"]], "invalidInput", "/command/changes/color"),
+        (
+          ["changes": ["color": ["red": 2, "green": 0, "blue": 0, "alpha": 1]]],
+          "invalidInput", "/command/changes/color/red"
+        ),
+        (["expectedFieldHashes": [:]], "invalidInput", "/command/expectedFieldHashes/name"),
+        (["expectedFieldHashes": ["name": 1]], "invalidInput", "/command/expectedFieldHashes/name"),
+        (
+          ["expectedFieldHashes": ["name": "invalid"]], "invalidInput",
+          "/command/expectedFieldHashes/name"
+        ),
+        (
+          ["expectedFieldHashes": ["notes": "invalid"]], "unknownField",
+          "/command/expectedFieldHashes/notes"
+        ),
+      ]
+      for (overrides, code, propertyPath) in invalidOverrides {
+        let operationIdentifier = UUID()
+        let rejected = try operationValue(
+          try await httpSession.data(
+            for: executionRequest(
+              endpoint: endpoint, operationIdentifier: operationIdentifier,
+              command: valid.merging(overrides) { _, incoming in incoming })), isError: true)
+        #expect(rejected["state"] as? String == "rejected")
+        let reason = try #require(rejected["reason"] as? [String: Any])
+        #expect(reason["code"] as? String == code)
+        #expect(reason["propertyPath"] as? String == propertyPath)
+        guard
+          case .source(.tag(let unchanged)) = await planner.read(
+            session: datasetSession, request: .source(tag)),
+          case .noReliableEvidence = await planner.operationStatus(
+            session: datasetSession, operationId: operationIdentifier)
+        else {
+          Issue.record("Invalid edits must retain the saved Tag without applied evidence.")
           await listener.stop()
           return
         }
