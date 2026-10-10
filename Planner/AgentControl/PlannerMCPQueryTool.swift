@@ -12,6 +12,7 @@
         "text": .object(["type": .string("string")]),
         "categories": identityGroupSchema,
         "tags": identityGroupSchema,
+        "lists": identityGroupSchema,
         "duration": .object([
           "oneOf": .array([
             .object(["type": .string("null")]),
@@ -225,14 +226,14 @@
       _ = try object(
         value, allowed: Set(query.keys), required: ["kind", "scope"], path: "/query")
       if let unsupported = Set(query.keys).subtracting([
-        "kind", "scope", "text", "completion", "archive", "categories", "tags", "duration", "sort",
-        "rowPresentation",
+        "kind", "scope", "text", "completion", "archive", "categories", "tags", "lists", "duration",
+        "sort", "rowPresentation",
       ])
       .sorted().first {
         throw AdmissionFailure(
           code: "unavailable", path: "/query/" + unsupported,
           message:
-            "This query slice supports scope, text, completion, archive, Category/Tag groups, duration, sort and row presentation."
+            "This query slice supports scope, text, completion, archive, Category/Tag/List groups, duration, sort and row presentation."
         )
       }
       let nativeScope = try scope(query["scope"])
@@ -270,6 +271,7 @@
           scope: nativeScope, text: text, completion: completion, archive: archive,
           categories: try identityGroup(query["categories"], path: "/query/categories"),
           tags: try identityGroup(query["tags"], path: "/query/tags"),
+          lists: try identityGroup(query["lists"], path: "/query/lists"),
           duration: try duration(query["duration"]), sort: sort, rowPresentation: presentation))
     }
 
