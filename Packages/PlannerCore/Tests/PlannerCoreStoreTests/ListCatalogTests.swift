@@ -22,7 +22,7 @@ struct ListCatalogTests {
     #expect(empty.rows.isEmpty)
     #expect(empty.matchingCount == 0)
     #expect(empty.rowPresentation == nil)
-    for kind in [PlannerEntityKind.item, .itinerary, .category, .tag, .schedule] {
+    for kind in [PlannerEntityKind.item, .itinerary, .tag, .schedule] {
       guard
         case .failed(let failure) = await planner.query(
           PlannerQuery(session: session, request: .catalog(.init(sourceKind: kind))))

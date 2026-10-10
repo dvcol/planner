@@ -165,6 +165,7 @@ public struct PlannerItemContentInput: Sendable, Equatable {
 public enum PlannerCommand: Sendable {
   case createItem(content: PlannerItemContentInput)
   case createList(content: PlannerListContentInput)
+  case createCategory(content: PlannerCategoryContentInput)
   case addMembership(itemId: UUID, listId: UUID, placement: PlannerPlacement)
   case removeMembership(listId: UUID, membershipId: UUID)
   case moveMembership(
@@ -327,6 +328,7 @@ public enum PlannerSourceRead: Sendable {
   case list(PlannerListSourceRead)
   case item(PlannerItemSourceRead)
   case schedule(PlannerScheduleSourceRead)
+  case category(PlannerCategorySourceRead)
 }
 
 public struct PlannerItemSourceRead: Sendable {

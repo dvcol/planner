@@ -61,8 +61,8 @@ struct ListCatalogRoutingTests {
       ),
       (["kind": "catalog", "sourceKind": "itinerary"], "unavailable", "/query/sourceKind"),
       (
-        ["kind": "catalog", "sourceKind": "category", "archive": "all"], "unavailable",
-        "/query/sourceKind"
+        ["kind": "catalog", "sourceKind": "category", "archive": "active"], "invalidInput",
+        "/query/archive"
       ),
       (
         ["kind": "catalog", "sourceKind": "tag", "archive": "all"], "unavailable",
