@@ -182,7 +182,8 @@ struct PlannerDataSnapshot: Codable {
     guard format == "planner-data", formatVersion == 1 else {
       throw PlannerFailure("recoveryIntegrityFailure", "Unsupported portable recovery format.")
     }
-    guard Set(sources.map(\.id)).count == sources.count else {
+    guard Set(sources.map { $0.kind.rawValue + ":" + $0.id.uuidString }).count == sources.count
+    else {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "The snapshot contains duplicate source identities.")
     }
