@@ -157,6 +157,55 @@ struct CategoryRecoveryTests {
         scheduleId: schedule.id, planningTimeZone: "Europe/Paris",
         expectedFieldHashes: beforeZone.fieldHashes))
     _ = try await save(.removeSchedule(scheduleId: schedule.id))
+    let tagCreation = try await save(.createTag(content: PlannerTagContentInput(name: "Rainy")))
+    let tag = try #require(tagCreation.generated.first)
+    guard
+      case .source(.tag(let tagRead)) = await planner.read(
+        session: session, request: .source(tag)),
+      case .listedNamespaces(let beforeNamespaces) = await planner.inspectRecovery(
+        request: .namespaces),
+      let beforeNamespace = beforeNamespaces.first,
+      let beforeCheckpoint = beforeNamespace.acknowledgedSnapshot?.checkpointGeneration,
+      case .selected(let beforeEdit) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: beforeNamespace.namespaceId,
+          checkpointGeneration: beforeCheckpoint))
+    else {
+      Issue.record("Capture the complete saved graph before changing only Tag metadata.")
+      return
+    }
+    _ = try await save(
+      .editTag(
+        sourceId: tag.id,
+        changes: PlannerTagChanges(name: .set("Rainy day")),
+        expectedFieldHashes: tagRead.fieldHashes))
+    guard
+      case .listedNamespaces(let afterNamespaces) = await planner.inspectRecovery(
+        request: .namespaces),
+      let afterNamespace = afterNamespaces.first,
+      let afterCheckpoint = afterNamespace.acknowledgedSnapshot?.checkpointGeneration,
+      case .selected(let afterEdit) = await planner.inspectRecovery(
+        request: .acknowledgedSnapshot(
+          namespaceId: afterNamespace.namespaceId,
+          checkpointGeneration: afterCheckpoint))
+    else {
+      Issue.record("Read the complete recovery copy after the unrelated Tag edit.")
+      return
+    }
+    let beforeGraph = try #require(
+      JSONSerialization.jsonObject(with: beforeEdit.portableData) as? [String: Any])
+    let afterGraph = try #require(
+      JSONSerialization.jsonObject(with: afterEdit.portableData) as? [String: Any])
+    for collection in ["memberships", "ownedLinks", "schedules", "deletionMarkers"] {
+      let beforeValues = try #require(beforeGraph[collection] as? [Any])
+      let afterValues = try #require(afterGraph[collection] as? [Any])
+      #expect(NSArray(array: beforeValues).isEqual(to: afterValues))
+    }
+    let beforeSources = try #require(beforeGraph["sources"] as? [[String: Any]])
+    let afterSources = try #require(afterGraph["sources"] as? [[String: Any]])
+    let unrelatedBefore = beforeSources.filter { $0["id"] as? String != tag.id.uuidString }
+    let unrelatedAfter = afterSources.filter { $0["id"] as? String != tag.id.uuidString }
+    #expect(NSArray(array: unrelatedBefore).isEqual(to: unrelatedAfter))
   }
 
   private struct MissingSavedResult: Error {}
