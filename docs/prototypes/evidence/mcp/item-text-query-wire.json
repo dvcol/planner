@@ -1,0 +1,222 @@
+{
+  "baselineCommit": "c004152",
+  "qualifiedCoreCommit": "c004152",
+  "seam": "Accepted actual authenticated loopback tools/call and tools/list, real durable Core data and public source/query/appearance reads. No private database assertions, mocks or production injection.",
+  "sourceSnapshots": {
+    "Red": {
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift": "e58276bea383c9610957d0278a67fa44a37e9ea054a588dfd73cdc51fbf2a742",
+      "Planner/AgentControl/PlannerMCPFailureValue.swift": "973280224751dd66f9a59ff9c5b3eb0ad7f8ed6b9a070f59b420907bb3c82185",
+      "Planner/AgentControl/PlannerMCPLoopbackListener.swift": "56e00b716e0680245e521b9f671e43a7990f1c8103a5bd3f85e2bd14d7756e94",
+      "Planner/AgentControl/PlannerMCPOperationStatusTool.swift": "bcf50d44eb73187d0e04243780cc0172154861d64a6374fc2bef3c2971b2fe8d",
+      "Planner/AgentControl/PlannerMCPQueryTool.swift": "417580631dff3d04f52582199d8fc41c61e80fc59184ad71b8b5b0c5045fe34c",
+      "Planner/AgentControl/PlannerMCPRequestHandler.swift": "edfd45746d8da43a5b1d221e02e302f2e652f554de3d5329e1d39cbedfb62f6e",
+      "Planner/AgentControl/PlannerMCPRowValue.swift": "a95329ee2ceba0e527b06e4b05ead1d63a9ac093ff6dbdf192a367c7c9f93ba6",
+      "Planner/AgentControl/PlannerMCPSourceTool.swift": "e930443ca3c4e31ec03ecb13c21c746c5493aca6f223ef640bd220913165cce8",
+      "PlannerMCPTests/CommandRoutingTests.swift": "30def46ccb0db719441db801abe0f3536b53063fbc01023dcf9a6c420b0c2350",
+      "PlannerMCPTests/EstimateRoutingTests.swift": "4c476e681496ea795e25f716863427b8958a6fa7a56e0279a18e0b966da7f477",
+      "PlannerMCPTests/ItemTextQueryRoutingTests.swift": "ab8631b59f23ebf0d9a58f6c70789ddefd6994cc83e4c2c62d83796bcf2d3439",
+      "PlannerMCPTests/ListCatalogRoutingTests.swift": "91662dbf5bb643bff79c30fb0b77cea43af0fd9f4b6adb1d8257b0be3e366861",
+      "PlannerMCPTests/MembershipReorderingRoutingTests.swift": "9fefec75c0cee4db6c1dab7319dcdd89a96a961b176772a3c9945f76a39098df",
+      "PlannerMCPTests/MembershipRowRoutingTests.swift": "3932f871199fbbd20f328c4261b84c031a3278e609f6bdf52df641d2ff283d9d",
+      "PlannerMCPTests/QueryRoutingTests.swift": "556408b169767e7754207ead8945a9642228f4623d66b84a940cf39a729fba02"
+    },
+    "Green": {
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift": "e58276bea383c9610957d0278a67fa44a37e9ea054a588dfd73cdc51fbf2a742",
+      "Planner/AgentControl/PlannerMCPFailureValue.swift": "973280224751dd66f9a59ff9c5b3eb0ad7f8ed6b9a070f59b420907bb3c82185",
+      "Planner/AgentControl/PlannerMCPLoopbackListener.swift": "56e00b716e0680245e521b9f671e43a7990f1c8103a5bd3f85e2bd14d7756e94",
+      "Planner/AgentControl/PlannerMCPOperationStatusTool.swift": "bcf50d44eb73187d0e04243780cc0172154861d64a6374fc2bef3c2971b2fe8d",
+      "Planner/AgentControl/PlannerMCPQueryTool.swift": "1294904f4c8fdab4f8a34c6f2b4beac7da7e34bdd4080f762f5d3a5684a2adf3",
+      "Planner/AgentControl/PlannerMCPRequestHandler.swift": "edfd45746d8da43a5b1d221e02e302f2e652f554de3d5329e1d39cbedfb62f6e",
+      "Planner/AgentControl/PlannerMCPRowValue.swift": "a95329ee2ceba0e527b06e4b05ead1d63a9ac093ff6dbdf192a367c7c9f93ba6",
+      "Planner/AgentControl/PlannerMCPSourceTool.swift": "e930443ca3c4e31ec03ecb13c21c746c5493aca6f223ef640bd220913165cce8",
+      "PlannerMCPTests/CommandRoutingTests.swift": "30def46ccb0db719441db801abe0f3536b53063fbc01023dcf9a6c420b0c2350",
+      "PlannerMCPTests/EstimateRoutingTests.swift": "4c476e681496ea795e25f716863427b8958a6fa7a56e0279a18e0b966da7f477",
+      "PlannerMCPTests/ItemTextQueryRoutingTests.swift": "ab8631b59f23ebf0d9a58f6c70789ddefd6994cc83e4c2c62d83796bcf2d3439",
+      "PlannerMCPTests/ListCatalogRoutingTests.swift": "91662dbf5bb643bff79c30fb0b77cea43af0fd9f4b6adb1d8257b0be3e366861",
+      "PlannerMCPTests/MembershipReorderingRoutingTests.swift": "9fefec75c0cee4db6c1dab7319dcdd89a96a961b176772a3c9945f76a39098df",
+      "PlannerMCPTests/MembershipRowRoutingTests.swift": "3932f871199fbbd20f328c4261b84c031a3278e609f6bdf52df641d2ff283d9d",
+      "PlannerMCPTests/QueryRoutingTests.swift": "556408b169767e7754207ead8945a9642228f4623d66b84a940cf39a729fba02"
+    },
+    "Qualification": {
+      "Planner/AgentControl/PlannerMCPExecutionTool.swift": "e58276bea383c9610957d0278a67fa44a37e9ea054a588dfd73cdc51fbf2a742",
+      "Planner/AgentControl/PlannerMCPFailureValue.swift": "973280224751dd66f9a59ff9c5b3eb0ad7f8ed6b9a070f59b420907bb3c82185",
+      "Planner/AgentControl/PlannerMCPLoopbackListener.swift": "56e00b716e0680245e521b9f671e43a7990f1c8103a5bd3f85e2bd14d7756e94",
+      "Planner/AgentControl/PlannerMCPOperationStatusTool.swift": "bcf50d44eb73187d0e04243780cc0172154861d64a6374fc2bef3c2971b2fe8d",
+      "Planner/AgentControl/PlannerMCPQueryTool.swift": "1294904f4c8fdab4f8a34c6f2b4beac7da7e34bdd4080f762f5d3a5684a2adf3",
+      "Planner/AgentControl/PlannerMCPRequestHandler.swift": "edfd45746d8da43a5b1d221e02e302f2e652f554de3d5329e1d39cbedfb62f6e",
+      "Planner/AgentControl/PlannerMCPRowValue.swift": "a95329ee2ceba0e527b06e4b05ead1d63a9ac093ff6dbdf192a367c7c9f93ba6",
+      "Planner/AgentControl/PlannerMCPSourceTool.swift": "e930443ca3c4e31ec03ecb13c21c746c5493aca6f223ef640bd220913165cce8",
+      "PlannerMCPTests/CommandRoutingTests.swift": "30def46ccb0db719441db801abe0f3536b53063fbc01023dcf9a6c420b0c2350",
+      "PlannerMCPTests/EstimateRoutingTests.swift": "4c476e681496ea795e25f716863427b8958a6fa7a56e0279a18e0b966da7f477",
+      "PlannerMCPTests/ItemTextQueryRoutingTests.swift": "8b7acddcd2e800afb2be5d7d4f53ac0f68c6d54d8c5c66733eaa54e78ddff20d",
+      "PlannerMCPTests/ListCatalogRoutingTests.swift": "91662dbf5bb643bff79c30fb0b77cea43af0fd9f4b6adb1d8257b0be3e366861",
+      "PlannerMCPTests/MembershipReorderingRoutingTests.swift": "9fefec75c0cee4db6c1dab7319dcdd89a96a961b176772a3c9945f76a39098df",
+      "PlannerMCPTests/MembershipRowRoutingTests.swift": "3932f871199fbbd20f328c4261b84c031a3278e609f6bdf52df641d2ff283d9d",
+      "PlannerMCPTests/QueryRoutingTests.swift": "556408b169767e7754207ead8945a9642228f4623d66b84a940cf39a729fba02"
+    }
+  },
+  "commands": {
+    "behaviorRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter 'ItemTextQueryRoutingTests.crossFieldTextSearchOverHTTPReturnsOnlyMatchingIdentitiesWithoutEditingData' > /private/tmp/PlannerMCPTextQueryRed.log 2>&1",
+    "green": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter 'ItemTextQueryRoutingTests.crossFieldTextSearchOverHTTPReturnsOnlyMatchingIdentitiesWithoutEditingData' > /private/tmp/PlannerMCPTextQueryGreen.log 2>&1",
+    "qualification": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter 'ItemTextQueryRoutingTests|CommandRoutingTests|EstimateRoutingTests|QueryRoutingTests|ListCatalogRoutingTests|MembershipRowRoutingTests|MembershipReorderingRoutingTests' > /private/tmp/PlannerMCPTextQueryQualification.log 2>&1",
+    "nativeMacBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerMCPTextQueryMacBuild.xcresult build-for-testing > /private/tmp/PlannerMCPTextQueryMacBuild.log 2>&1"
+  },
+  "results": {
+    "behaviorRed": {
+      "exitCode": 1,
+      "functions": 1,
+      "suites": 1,
+      "issues": 2,
+      "log": "/private/tmp/PlannerMCPTextQueryRed.log",
+      "classification": "Executed HTTP text query returns tool isError. The success-only JSON text assertion then encounters the plain-text failure message; no fixture/build failure. The unchanged adapter source rejects Item text as unavailable."
+    },
+    "green": {
+      "exitCode": 0,
+      "functions": 1,
+      "suites": 1,
+      "log": "/private/tmp/PlannerMCPTextQueryGreen.log"
+    },
+    "qualification": {
+      "exitCode": 0,
+      "functions": 17,
+      "suites": 7,
+      "newFunctions": 2,
+      "failures": 0,
+      "skips": 0,
+      "invalidTextRequests": 5,
+      "additionalFieldQueries": 6,
+      "log": "/private/tmp/PlannerMCPTextQueryQualification.log",
+      "classification": "Stronger first-run actual schema/admission/List qualification with production fixed after green."
+    },
+    "nativeMacBuild": {
+      "exitCode": 0,
+      "runtimeFunctions": 0,
+      "log": "/private/tmp/PlannerMCPTextQueryMacBuild.log",
+      "bundle": "/private/tmp/PlannerMCPTextQueryMacBuild.xcresult",
+      "classification": "Native app and test bundle compile; no app-host runtime qualification."
+    }
+  },
+  "runner": {
+    "manifest": "// swift-tools-version: 6.2\nimport PackageDescription\n\nlet package = Package(\n    name: \"PlannerMCPWireQualification\",\n    platforms: [.macOS(\"27.0\")],\n    dependencies: [\n        .package(path: \"/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore\"),\n        .package(url: \"https://github.com/modelcontextprotocol/swift-sdk\", exact: \"0.12.1\"),\n        .package(url: \"https://github.com/apple/swift-nio.git\", exact: \"2.104.0\"),\n    ],\n    targets: [\n        .target(name: \"Planner\", dependencies: [\n            .product(name: \"PlannerCore\", package: \"PlannerCore\"),\n            .product(name: \"MCP\", package: \"swift-sdk\"),\n            .product(name: \"NIOCore\", package: \"swift-nio\"),\n            .product(name: \"NIOHTTP1\", package: \"swift-nio\"),\n            .product(name: \"NIOPosix\", package: \"swift-nio\"),\n        ]),\n        .testTarget(name: \"PlannerMCPTests\", dependencies: [\n            \"Planner\", .product(name: \"PlannerCore\", package: \"PlannerCore\"),\n        ]),\n    ])\n",
+    "resolved": {
+      "originHash": "34d1fa9a75bd4e992c153939d70c2a220dd2bfe02f65c75be323740fc6d6a538",
+      "pins": [
+        {
+          "identity": "eventsource",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/mattt/eventsource.git",
+          "state": {
+            "revision": "86b5096ac59ab46e66bd1f6377c604bc1dab0bc2",
+            "version": "1.5.1"
+          }
+        },
+        {
+          "identity": "swift-atomics",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-atomics.git",
+          "state": {
+            "revision": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+            "version": "1.3.1"
+          }
+        },
+        {
+          "identity": "swift-collections",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-collections.git",
+          "state": {
+            "revision": "3b69cedbaa49957e97c092ae400bb57602ef941f",
+            "version": "1.7.2"
+          }
+        },
+        {
+          "identity": "swift-log",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-log.git",
+          "state": {
+            "revision": "4038b6a4f74a1426f47eb1dd5b4bb5628a15d597",
+            "version": "1.16.1"
+          }
+        },
+        {
+          "identity": "swift-nio",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-nio.git",
+          "state": {
+            "revision": "6db9d9abd92ad7399b8a564cafbb87d3507245fa",
+            "version": "2.104.0"
+          }
+        },
+        {
+          "identity": "swift-sdk",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/modelcontextprotocol/swift-sdk",
+          "state": {
+            "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+            "version": "0.12.1"
+          }
+        },
+        {
+          "identity": "swift-system",
+          "kind": "remoteSourceControl",
+          "location": "https://github.com/apple/swift-system.git",
+          "state": {
+            "revision": "869129b7bf4ecc57b97d0193ad29690ca2134750",
+            "version": "1.8.1"
+          }
+        }
+      ],
+      "version": 3
+    },
+    "matchingApplicationDependencyRevisions": 7,
+    "sourceMechanism": "Symlinks to the actual adapter/test files listed in each epoch; existing local PlannerCore package."
+  },
+  "rawLogSHA256": {
+    "/private/tmp/PlannerMCPTextQueryRed.log": "b1732b4e142120920ce60d9de4243559326628ca1a194eec9fa8d47ad2f6604d",
+    "/private/tmp/PlannerMCPTextQueryGreen.log": "4dfd763e856d0eeafbee98f1acbd3d0bdeb6648478c02595fd2dfc8996bf8ac1",
+    "/private/tmp/PlannerMCPTextQueryQualification.log": "d7b372c3b93778471cea4005ddd911c78ddaf8c08057dcf6dee7c031659a4394",
+    "/private/tmp/PlannerMCPTextQueryMacBuild.log": "3986ddd15543ff6210dac9537c837f13bdc76fb3ef2becfb52c55134870067c4"
+  },
+  "qualifiedBehavior": [
+    "Optional Item text String passes unchanged to canonical Core; absent text defaults empty. No independent search engine or data write.",
+    "Global and Inbox all-word cross-field search returns only Ramen for vegetarian/menu. Issued actual HTTP row reads return the matching title/subtitle and same count.",
+    "Six additional queries exercise subtitle, notes, address, URL, link-label and title matching through HTTP. Success structured and text JSON agree.",
+    "Five malformed text requests cover null, Boolean, number, array and object. They return failed invalidInput at /query/text; the original issued row window remains byte-equivalent as decoded JSON, and public source time/hashes/references stay unchanged.",
+    "Actual tools/list advertises optional String text and strict Item-query properties.",
+    "List text plus ordinary Todo/Active returns no matches while progress remains 1 of 3. Including all state pairs returns two matching appearances in saved Manual order, with the same progress and independent local Done/global Todo state.",
+    "Fifteen existing affected HTTP command/estimate/query/catalog/contextual-row/reorder functions pass with the two new journeys."
+  ],
+  "scope": {
+    "storageSchemaVersion": 7,
+    "portableFormatVersion": 1,
+    "cloudKit": "disabled; localOnly",
+    "remaining": [
+      "native Item search controls",
+      "shared Category/Tag search and identity filters",
+      "other structured filters/sorts and full graph",
+      "automatic native refresh",
+      "5,000 Items/200 Lists and 300ms device performance",
+      "app-host Mac runtime",
+      "signed clients/reader and physical sync/account/Share"
+    ],
+    "administration": "Manual only; no backup/export/import/recovery tool added."
+  },
+  "validation": {
+    "strictSwiftFormatLint": {
+      "exitCode": 0,
+      "files": [
+        "Planner/AgentControl/PlannerMCPQueryTool.swift",
+        "PlannerMCPTests/ItemTextQueryRoutingTests.swift"
+      ]
+    },
+    "markdownLint": {
+      "exitCode": 0,
+      "files": [
+        "docs/prototypes/core-local-qualification.md",
+        "docs/prototypes/mcp-http-qualification.md"
+      ]
+    },
+    "gitDiffCheck": {
+      "exitCode": 0
+    }
+  }
+}
