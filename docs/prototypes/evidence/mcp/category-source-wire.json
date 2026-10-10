@@ -1,0 +1,95 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-11",
+  "baselineCommit": "85d33b6",
+  "scope": "Category create/read/catalog/exact replay through actual authenticated stateless SDK loopback HTTP with durable Core sources.",
+  "seam": "Previously accepted real tools/list and tools/call transport; public Core reread, reopen and operation status. No internal database assertions, mocks or test-only production injection.",
+  "tdd": {
+    "initialCompileFailure": {
+      "log": "/private/tmp/PlannerCategoryWireRed.log",
+      "exitCode": 1,
+      "runtimeFunctions": 0,
+      "reason": "Nested Swift Testing require macros are not supported; the identity extraction is split before the functional red."
+    },
+    "functionalRed": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter categoryCreationOverHTTPReplaysAndReadsTheSameDurableSource > /private/tmp/PlannerCategoryWireCompiledRed.log 2>&1",
+      "exitCode": 1,
+      "runtimeFunctions": 1,
+      "issues": 3,
+      "reason": "Category creation is rejected as unavailable, with no applied result."
+    },
+    "firstGreen": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter categoryCreationOverHTTPReplaysAndReadsTheSameDurableSource > /private/tmp/PlannerCategoryWireGreen.log 2>&1",
+      "exitCode": 0,
+      "runtimeFunctions": 1
+    },
+    "qualificationCompileCorrection": {
+      "log": "/private/tmp/PlannerCategoryWireAdmissionQualification.log",
+      "exitCode": 1,
+      "runtimeFunctions": 0,
+      "reason": "The reference mapping was mistakenly added to Schedule serialization. It is restored there and applied only to Category reads before the passing qualification."
+    }
+  },
+  "qualification": {
+    "focusedAdmission": {
+      "log": "/private/tmp/PlannerCategoryWireCompiledAdmissionQualification.log",
+      "exitCode": 0,
+      "functions": 8,
+      "suites": 2,
+      "failed": 0,
+      "skipped": 0
+    },
+    "finalHTTP": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path /private/tmp/PlannerMCPWireQualification --scratch-path /private/tmp/PlannerMCPWireQualificationBuild --filter 'ItemDurationQueryRoutingTests|ItemTextQueryRoutingTests|CommandRoutingTests|EstimateRoutingTests|QueryRoutingTests|ListCatalogRoutingTests|MembershipRowRoutingTests|MembershipReorderingRoutingTests' > /private/tmp/PlannerCategoryWireFinalQualification.log 2>&1",
+      "exitCode": 0,
+      "functions": 23,
+      "suites": 8,
+      "failed": 0,
+      "skipped": 0
+    },
+    "macCompilation": {
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerCategoryWireMacBuild.xcresult build-for-testing > /private/tmp/PlannerCategoryWireMacBuild.log 2>&1",
+      "exitCode": 0,
+      "runtimeFunctions": 0,
+      "warning": "AppIntents metadata extraction is skipped because the targets have no AppIntents framework dependency."
+    }
+  },
+  "behavior": [
+    "tools/list advertises createCategory with exactly name/color/iconName and required name, and Category source reads. No manual administration tool is added.",
+    "Submitted Unicode/whitespace name and exact sRGB color/icon save through Planner.execute. Identical operation replay returns the original complete result and checkpoint; a public reopen reads the same source and receipt.",
+    "HTTP source content, timestamps and field hashes agree with the public native read. Inapplicable completion/archive/progress are null, with no List-only notes field.",
+    "Category discovery narrows by both case/diacritic-insensitive name terms and returns the generated identity. Structured and text JSON agree.",
+    "Missing/null/blank name, a List-only notes property, wrong color type and out-of-range red reject at the expected paths. No source, receipt, prepared proposal or acknowledgement appears after these six invalid inputs."
+  ],
+  "checks": {
+    "strictSwiftLint": "/private/tmp/PlannerCategoryWireSwiftLint.log",
+    "affectedSwiftFiles": 3,
+    "markdownLint": "/private/tmp/PlannerCategoryWireMarkdownLint.log",
+    "diffWhitespace": "passed",
+    "applicationAndRunnerDependencyRevisions": 7
+  },
+  "sourceHashes": {
+    "/Users/dinh-van.colomban/Workspace/private/planner/Planner/AgentControl/PlannerMCPExecutionTool.swift": "63f4f72ddbfe6e38672a436c8f03404dd3d2fda973e74b071d6a7b94b3d3dbfb",
+    "/Users/dinh-van.colomban/Workspace/private/planner/Planner/AgentControl/PlannerMCPFailureValue.swift": "973280224751dd66f9a59ff9c5b3eb0ad7f8ed6b9a070f59b420907bb3c82185",
+    "/Users/dinh-van.colomban/Workspace/private/planner/Planner/AgentControl/PlannerMCPLoopbackListener.swift": "56e00b716e0680245e521b9f671e43a7990f1c8103a5bd3f85e2bd14d7756e94",
+    "/Users/dinh-van.colomban/Workspace/private/planner/Planner/AgentControl/PlannerMCPOperationStatusTool.swift": "bcf50d44eb73187d0e04243780cc0172154861d64a6374fc2bef3c2971b2fe8d",
+    "/Users/dinh-van.colomban/Workspace/private/planner/Planner/AgentControl/PlannerMCPQueryTool.swift": "930d6b33f16f24f17e90e9cffc218dd2d0ddff50c201bf94fbf05f1283e98d49",
+    "/Users/dinh-van.colomban/Workspace/private/planner/Planner/AgentControl/PlannerMCPRequestHandler.swift": "edfd45746d8da43a5b1d221e02e302f2e652f554de3d5329e1d39cbedfb62f6e",
+    "/Users/dinh-van.colomban/Workspace/private/planner/Planner/AgentControl/PlannerMCPRowValue.swift": "a95329ee2ceba0e527b06e4b05ead1d63a9ac093ff6dbdf192a367c7c9f93ba6",
+    "/Users/dinh-van.colomban/Workspace/private/planner/Planner/AgentControl/PlannerMCPSourceTool.swift": "f008da94116de23bd4e78344c437bb60d2ea14716221599688969125b43aeb5b",
+    "/Users/dinh-van.colomban/Workspace/private/planner/PlannerMCPTests/CommandRoutingTests.swift": "f7f7bd01fa989fca27d06793bd5dda512c16cfd421d8bffeaca82bf9958a20b6",
+    "/Users/dinh-van.colomban/Workspace/private/planner/PlannerMCPTests/EstimateRoutingTests.swift": "4c476e681496ea795e25f716863427b8958a6fa7a56e0279a18e0b966da7f477",
+    "/Users/dinh-van.colomban/Workspace/private/planner/PlannerMCPTests/ItemChronologicalSortRoutingTests.swift": "2f72ee55f25b881c0eec1b205cc3fae3bc963f8a2f64bc938670add151a5a754",
+    "/Users/dinh-van.colomban/Workspace/private/planner/PlannerMCPTests/ItemDurationQueryRoutingTests.swift": "bcc597e7cc72693d2746676cb1edefd422eb192655f865c0ed39340443f934e4",
+    "/Users/dinh-van.colomban/Workspace/private/planner/PlannerMCPTests/ItemTextQueryRoutingTests.swift": "8b7acddcd2e800afb2be5d7d4f53ac0f68c6d54d8c5c66733eaa54e78ddff20d",
+    "/Users/dinh-van.colomban/Workspace/private/planner/PlannerMCPTests/ListCatalogRoutingTests.swift": "6c2b6a5678f591d26f9dbd0f410fbcfb17965282a563758e9f341c2e7ca65659",
+    "/Users/dinh-van.colomban/Workspace/private/planner/PlannerMCPTests/MembershipReorderingRoutingTests.swift": "9fefec75c0cee4db6c1dab7319dcdd89a96a961b176772a3c9945f76a39098df",
+    "/Users/dinh-van.colomban/Workspace/private/planner/PlannerMCPTests/MembershipRowRoutingTests.swift": "4b88d90d4baa6392f7c0b2616fbfeca67754e81d674f2f7aea063c109e3cab9c",
+    "/Users/dinh-van.colomban/Workspace/private/planner/PlannerMCPTests/QueryRoutingTests.swift": "556408b169767e7754207ead8945a9642228f4623d66b84a940cf39a729fba02"
+  },
+  "limits": [
+    "Schema 8/portable format 1 remain localOnly with CloudKit disabled. The Core implementation and native iPhone data tests are separately qualified in commit 85d33b6.",
+    "Category editing, associations/deletion, Tags and native label management remain open. No full JSON administration, physical sync/account/Share, signed agent-client or Mac app-hosted runtime result is claimed.",
+    "The temporary Apple SPM runner uses real symlinked adapter/test sources and the existing Core package; the application continues to use its native Xcode project."
+  ]
+}

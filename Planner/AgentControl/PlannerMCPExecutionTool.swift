@@ -16,7 +16,7 @@
           "operationId": .object(["type": .string("string"), "format": .string("uuid")]),
           "command": .object([
             "oneOf": .array([
-              creationSchema, listCreationSchema, membershipCreationSchema,
+              creationSchema, listCreationSchema, categoryCreationSchema, membershipCreationSchema,
               membershipReorderingSchema, membershipRemovalSchema, membershipMoveSchema,
               editSchema,
               listEditSchema, archiveSchema,
@@ -134,6 +134,22 @@
         "content": .object([
           "type": .string("object"), "additionalProperties": .bool(false),
           "required": .array([.string("name")]), "properties": .object(listContentProperties),
+        ]),
+      ]),
+    ])
+
+    private static let categoryCreationSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("type"), .string("content")]),
+      "properties": .object([
+        "type": .object(["type": .string("string"), "const": .string("createCategory")]),
+        "content": .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "required": .array([.string("name")]),
+          "properties": .object(
+            listContentProperties.filter {
+              PlannerCategoryField(rawValue: $0.key) != nil
+            }),
         ]),
       ]),
     ])
@@ -476,6 +492,7 @@
         switch commandType {
         case "createItem": command = try creationCommand(arguments["command"])
         case "createList": command = try listCreationCommand(arguments["command"])
+        case "createCategory": command = try categoryCreationCommand(arguments["command"])
         case "addMembership": command = try membershipCreationCommand(arguments["command"])
         case "removeMembership": command = try membershipRemovalCommand(arguments["command"])
         case "moveMembership": command = try membershipMoveCommand(arguments["command"])
@@ -504,6 +521,28 @@
           message: "The operation outcome could not be encoded; inspect its status before retrying."
         )
       }
+    }
+
+    private static func categoryCreationCommand(_ value: Value?) throws -> PlannerCommand {
+      let command = try object(
+        value, allowed: ["type", "content"], required: ["type", "content"], path: "/command")
+      let content = try object(
+        command["content"], allowed: Set(PlannerCategoryField.allCases.map(\.rawValue)),
+        required: ["name"], path: "/command/content")
+      guard case .string(let name) = content["name"] else {
+        throw AdmissionFailure(
+          "invalidInput", "/command/content/name", "Expected a Category name String.")
+      }
+      let color: PlannerColor?
+      switch try colorChange(content["color"], path: "/command/content/color") {
+      case .set(let value): color = value
+      case .clear, .unchanged: color = nil
+      }
+      return .createCategory(
+        content: PlannerCategoryContentInput(
+          name: name, color: color,
+          iconName: try nullableText(
+            content["iconName"] ?? .null, path: "/command/content/iconName")))
     }
 
     private static func listCreationCommand(_ value: Value?) throws -> PlannerCommand {
