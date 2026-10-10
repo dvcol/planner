@@ -112,6 +112,10 @@ public actor Planner {
         let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
         let envelope = try archive.latest()
         switch operation.command {
+        case .editItinerary(let sourceId, let changes, let hashes):
+          return try executeItineraryEdit(
+            operation, sourceId: sourceId, changes: changes, hashes: hashes, identity: identity,
+            context: context, archive: archive, receipts: receipts, envelope: envelope)
         case .createItinerary(let content):
           return try executeItineraryCreation(
             operation, content: content, identity: identity, context: context, archive: archive,
@@ -3386,6 +3390,230 @@ public actor Planner {
         items: snapshots, lists: try listSnapshots(context),
         memberships: try membershipSnapshots(context),
         deletionMarkers: try deletionMarkers(context),
+        receipts: receipts + [receipt])
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
+  }
+
+  private func executeItineraryEdit(
+    _ operation: PlannerOperation, sourceId: UUID, changes: PlannerItineraryChanges,
+    hashes: [PlannerItineraryField: PlannerFieldHash], identity: PlannerStoreIdentity,
+    context: ModelContext, archive: PlannerRecoveryArchive,
+    receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    let changedFields = try changes.validatedFields()
+    for field in changedFields where hashes[field] == nil {
+      throw PlannerFailure(
+        "invalidInput", "Every changed field requires its prior hash.",
+        propertyPath: "/command/expectedFieldHashes/\(field.rawValue)")
+    }
+    for (field, hash) in hashes {
+      let prefix = "sha256-v1:"
+      let suffix = hash.value.dropFirst(prefix.count)
+      guard hash.value.hasPrefix(prefix), suffix.count == 64,
+        suffix.allSatisfy({ "0123456789abcdef".contains($0) })
+      else {
+        throw PlannerFailure(
+          "invalidInput", "A supplied field hash has an unsupported format.",
+          propertyPath: "/command/expectedFieldHashes/\(field.rawValue)")
+      }
+    }
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let stored = try receipt.evidence()
+      let digest = try changes.editPayloadDigest(
+        sourceId: sourceId, fields: changedFields, hashes: hashes,
+        identity: identity, bindings: stored.bindings
+      )
+      guard receipt.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "This operation identity already describes a different edit.")
+      }
+      return appliedResult(
+        operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
+        envelope: envelope)
+    }
+    let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    let itineraries = try context.fetch(FetchDescriptor<PlannerSchemaV11.Itinerary>())
+    let matches = itineraries.filter { $0.id == sourceId }
+    guard matches.count == 1, let itinerary = matches.first else {
+      throw PlannerFailure("missingReference", "The selected Itinerary is missing or unresolved.")
+    }
+    let before = try itinerary.value()
+    var selectedCategories: [PlannerSchemaV11.Category] = []
+    var selectedTags: [PlannerSchemaV11.Tag] = []
+    if case .set(let identifiers) = changes.categoryIds {
+      selectedCategories = try selectedCategoryRecords(
+        identifiers, context: context, propertyPath: "/command/changes/categoryIds")
+    }
+    if case .set(let identifiers) = changes.tagIds {
+      selectedTags = try selectedTagRecords(
+        identifiers, context: context, propertyPath: "/command/changes/tagIds")
+    }
+    let selectedBindings =
+      try selectedCategories.map { record in
+        let snapshot = try record.value()
+        return PlannerBoundIdentity(
+          kind: "category", id: snapshot.id, lifetimeId: snapshot.lifetimeId)
+      }
+      + selectedTags.map { record in
+        let snapshot = try record.value()
+        return PlannerBoundIdentity(kind: "tag", id: snapshot.id, lifetimeId: snapshot.lifetimeId)
+      }
+    let bindings =
+      [
+        PlannerBoundIdentity(kind: "itinerary", id: before.id, lifetimeId: before.lifetimeId)
+      ] + (try changes.linkBindings(in: before)) + selectedBindings
+      + changes.labelAssociationBindings(in: before)
+    let digest = try changes.editPayloadDigest(
+      sourceId: sourceId, fields: changedFields, hashes: hashes, identity: identity,
+      bindings: bindings
+    )
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes a different edit.")
+      }
+      return PlannerOperationResult(
+        operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    let fieldHashes = before.fieldHashes(datasetId: identity.datasetId)
+    let conflictingFields = changedFields.filter { fieldHashes[$0] != hashes[$0] }
+    if !conflictingFields.isEmpty {
+      var currentValues: [PlannerItineraryField: PlannerItineraryFieldValue] = [:]
+      var currentHashes: [PlannerItineraryField: PlannerFieldHash] = [:]
+      for field in conflictingFields {
+        guard let hash = fieldHashes[field] else {
+          throw PlannerFailure("readUnavailable", "A changed field has no current hash.")
+        }
+        currentHashes[field] = hash
+        currentValues[field] = before.fieldValue(field)
+      }
+      throw PlannerFailure(
+        "staleEdit", "Changed fields differ from the supplied read.",
+        details: .staleItineraryEdit(
+          conflictingFields: conflictingFields, currentValues: currentValues,
+          currentFieldHashes: currentHashes
+        ))
+    }
+    let now = Date()
+    let updatedInput = changes.applyingChanges(to: before.input)
+    let updatedLocationData = try updatedInput.location.map { try JSONEncoder().encode($0) }
+    let updatedColorData = try updatedInput.color.map { try JSONEncoder().encode($0) }
+    let updatedLinks = try changes.applyingLinks(to: before)
+    let updatedAssociations = changes.applyingLabelAssociations(
+      to: before, selectedLabels: selectedBindings)
+    let availableMetadata =
+      try selectedCategories.map { record in
+        let snapshot = try record.value()
+        return PlannerLabelRead(
+          reference: snapshot.reference, name: snapshot.content.name,
+          color: snapshot.content.color, iconName: snapshot.content.iconName)
+      }
+      + selectedTags.map { record in
+        let snapshot = try record.value()
+        return PlannerLabelRead(
+          reference: snapshot.reference, name: snapshot.content.name,
+          color: snapshot.content.color, iconName: snapshot.content.iconName)
+      } + before.labels
+    let updatedLabels = try updatedAssociations.map { association in
+      guard
+        let metadata = availableMetadata.first(where: { $0.reference == association.labelReference }
+        )
+      else { throw PlannerFailure("readUnavailable", "The selected label metadata is unresolved.") }
+      return metadata
+    }
+    let previousIdentifiers = Set(before.labelAssociations.map(\.id))
+    let updatedIdentifiers = Set(updatedAssociations.map(\.id))
+    let added = updatedAssociations.filter { !previousIdentifiers.contains($0.id) }
+    let removed = before.labelAssociations.filter { !updatedIdentifiers.contains($0.id) }
+    let removalMarkers = removed.map { association in
+      PortableDeletionMarker(
+        deletionId: UUID(), operationId: operation.operationId,
+        target: .labelAssociation(id: association.id, lifetimeId: association.lifetimeId),
+        closedFamilyId: nil)
+    }
+    let markers = try deletionMarkers(context) + removalMarkers
+    let associations =
+      try labelAssociationSnapshots(context).filter {
+        $0.owner.kind != "itinerary" || $0.owner.id != before.id
+          || $0.owner.lifetimeId != before.lifetimeId
+      } + updatedAssociations
+    let after = ItinerarySnapshot(
+      id: before.id, lifetimeId: before.lifetimeId, createdAt: before.createdAt, updatedAt: now,
+      input: updatedInput, archived: before.archived,
+      links: updatedLinks,
+      labelAssociations: updatedAssociations, labels: updatedLabels
+    )
+    let snapshots = try itineraries.map { record in
+      if record.id == sourceId { return after }
+      return try record.value()
+    }
+    let result = PlannerAppliedResult(
+      generatedIdentities: added.map { .reference($0.reference) },
+      affectedIdentities: [.source(before.reference)]
+        + (removed + added).sorted { $0.id.uuidString < $1.id.uuidString }.map {
+          .reference($0.reference)
+        })
+    let proposal = RecoveryPreparedProposal(
+      proposalId: UUID(), originalOperationId: operation.operationId, datasetId: identity.datasetId,
+      ownershipBinding: identity.ownershipBinding,
+      proposedBackup: PlannerDataSnapshot(
+        itineraries: snapshots,
+        labelAssociations: associations, tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
+        items: try context.fetch(FetchDescriptor<PlannerSchemaV11.Item>()).map { try $0.value() },
+        lists: try listSnapshots(context),
+        memberships: try membershipSnapshots(context),
+        deletionMarkers: markers),
+      payloadDigest: digest, evidence: "preparedUnverified"
+    )
+    try archive.prepare(proposal)
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result, bindings: bindings)
+    if changedFields.contains(.title) { itinerary.title = updatedInput.title }
+    if changedFields.contains(.notes) { itinerary.notes = updatedInput.notes }
+    if changedFields.contains(.location) { itinerary.locationData = updatedLocationData }
+    if changedFields.contains(.color) { itinerary.colorData = updatedColorData }
+    if changedFields.contains(.iconName) { itinerary.iconName = updatedInput.iconName }
+    if changedFields.contains(.links) {
+      try itinerary.replaceLinks(with: updatedLinks, context: context)
+    }
+    if !changes.changedLabelKinds.isEmpty {
+      try itinerary.replaceLabelAssociations(
+        with: updatedAssociations, categories: selectedCategories, tags: selectedTags,
+        context: context)
+    }
+    for marker in removalMarkers { context.insert(PlannerSchemaV4.DeletionMarker(marker)) }
+    itinerary.updatedAt = now
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The complete Itinerary edit was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(
+        itineraries: snapshots,
+        labelAssociations: associations, tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
+        items: try context.fetch(FetchDescriptor<PlannerSchemaV11.Item>()).map { try $0.value() },
+        lists: try listSnapshots(context),
+        memberships: try membershipSnapshots(context),
+        deletionMarkers: markers,
         receipts: receipts + [receipt])
       return PlannerOperationResult(
         operationId: operation.operationId,

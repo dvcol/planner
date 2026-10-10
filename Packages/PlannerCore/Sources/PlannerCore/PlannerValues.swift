@@ -62,6 +62,10 @@ public enum PlannerFailureDetails: Sendable, Equatable {
     conflictingFields: [PlannerItemField], currentValues: [PlannerItemField: PlannerItemFieldValue],
     currentFieldHashes: [PlannerItemField: PlannerFieldHash]
   )
+  case staleItineraryEdit(
+    conflictingFields: [PlannerItineraryField],
+    currentValues: [PlannerItineraryField: PlannerItineraryFieldValue],
+    currentFieldHashes: [PlannerItineraryField: PlannerFieldHash])
   case staleScheduleEdit(currentForm: PlannerScheduleForm, currentFormHash: PlannerFieldHash)
   case staleListEdit(
     conflictingFields: [PlannerListField], currentValues: [PlannerListField: PlannerListFieldValue],
@@ -175,6 +179,9 @@ public enum PlannerCommand: Sendable {
   case createItem(content: PlannerItemContentInput)
   case createList(content: PlannerListContentInput)
   case createItinerary(content: PlannerItineraryContentInput)
+  case editItinerary(
+    sourceId: UUID, changes: PlannerItineraryChanges,
+    expectedFieldHashes: [PlannerItineraryField: PlannerFieldHash])
   case createCategory(content: PlannerCategoryContentInput)
   case createTag(content: PlannerTagContentInput)
   case editCategory(
