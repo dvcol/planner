@@ -1,0 +1,1278 @@
+{
+  "feature": "Saved native Item bookmarks with staged editing and live List presentation",
+  "baseCommit": "635d43d78affcfd7637bdab402ec6fe9b488b2a8",
+  "publicSeams": [
+    "Native Planner UI",
+    "Existing Planner Core command/query/read facade"
+  ],
+  "toolchain": {
+    "xcode": "27.0",
+    "xcodeBuild": "27A266a",
+    "swift": "6.4",
+    "macOS": "27.0"
+  },
+  "sourceEpochs": {
+    "Red": {
+      "Planner/Scenes/SavedPlannerStore.swift": "a0a562bebe48923e73c5ec78327d1ff76b2223e7c1d3e5651eaf5f1121cf1951",
+      "Planner/Scenes/SavedEditItemForm.swift": "cf121a48f6461c112c910f42953b3b012ef67d1c8acbd43dfc265920495027c6",
+      "Planner/Scenes/SavedItemViews.swift": "8dd9ad0fb6818145719b6b1df8ca8923520b40d8f80e7455fc55801c2434eda8",
+      "Planner/Scenes/SavedAppearanceViews.swift": "5afc3c000a2e92dcfadefb2668d252d9b3fc64d08db735c2fc8036e45136ad2f",
+      "Planner/Scenes/SavedItemRowContent.swift": "1917455ff1ec6fadf20d56e428db80d0c80605223417f78f0f1409509558e714",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "5d460f0d574cba29eeb99734fd9be2adf0e9c4b3e2810828d8f933c28116369c"
+    },
+    "Green": {
+      "Planner/Scenes/SavedPlannerStore.swift": "ce88e17fedcf2f391e9c4d88344d18d7d0da8cea8706c4235240b53cd6f09851",
+      "Planner/Scenes/SavedEditItemForm.swift": "3f0271968addcb484f9765d543b5248c6a63a6f06ff2d02249edc8e96fe9b44e",
+      "Planner/Scenes/ItemLinksSection.swift": "2e9a05325a6855f2f90406702aed51818ccac91dcce638f6680033b63386d010",
+      "Planner/Scenes/SavedItemViews.swift": "f3e66dee811174c416c2b9ed9df462618a6851278dce1e1845dc9aba92e7bb3f",
+      "Planner/Scenes/SavedAppearanceViews.swift": "3d93390a8bbac23ae12108e00ef70d09d93e10938336e6928d949022690068c0",
+      "Planner/Scenes/SavedItemRowContent.swift": "318e362d8499ad855efc5c4750cbd28aa259694c6a25acea09d89b45f059a240",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "5d460f0d574cba29eeb99734fd9be2adf0e9c4b3e2810828d8f933c28116369c"
+    },
+    "Corrected": {
+      "Planner/Scenes/SavedPlannerStore.swift": "ce88e17fedcf2f391e9c4d88344d18d7d0da8cea8706c4235240b53cd6f09851",
+      "Planner/Scenes/SavedEditItemForm.swift": "3f0271968addcb484f9765d543b5248c6a63a6f06ff2d02249edc8e96fe9b44e",
+      "Planner/Scenes/ItemLinksSection.swift": "2e9a05325a6855f2f90406702aed51818ccac91dcce638f6680033b63386d010",
+      "Planner/Scenes/SavedItemViews.swift": "f3e66dee811174c416c2b9ed9df462618a6851278dce1e1845dc9aba92e7bb3f",
+      "Planner/Scenes/SavedAppearanceViews.swift": "3d93390a8bbac23ae12108e00ef70d09d93e10938336e6928d949022690068c0",
+      "Planner/Scenes/SavedItemRowContent.swift": "318e362d8499ad855efc5c4750cbd28aa259694c6a25acea09d89b45f059a240",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "0bd9671dc4389720184a74e93d69954082c2fa67e5ee516d53e5b0d6eec21c11"
+    },
+    "ManageRed": {
+      "Planner/Scenes/SavedPlannerStore.swift": "ce88e17fedcf2f391e9c4d88344d18d7d0da8cea8706c4235240b53cd6f09851",
+      "Planner/Scenes/SavedEditItemForm.swift": "3f0271968addcb484f9765d543b5248c6a63a6f06ff2d02249edc8e96fe9b44e",
+      "Planner/Scenes/ItemLinksSection.swift": "2e9a05325a6855f2f90406702aed51818ccac91dcce638f6680033b63386d010",
+      "Planner/Scenes/SavedItemViews.swift": "f3e66dee811174c416c2b9ed9df462618a6851278dce1e1845dc9aba92e7bb3f",
+      "Planner/Scenes/SavedAppearanceViews.swift": "3d93390a8bbac23ae12108e00ef70d09d93e10938336e6928d949022690068c0",
+      "Planner/Scenes/SavedItemRowContent.swift": "318e362d8499ad855efc5c4750cbd28aa259694c6a25acea09d89b45f059a240",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "f45024f98727bf9c0e48fbfe4b9998de6d15cc118c50d375cab9d1ccb2369f70"
+    },
+    "ManageGreen": {
+      "Planner/Scenes/SavedPlannerStore.swift": "ce88e17fedcf2f391e9c4d88344d18d7d0da8cea8706c4235240b53cd6f09851",
+      "Planner/Scenes/SavedEditItemForm.swift": "492456528a656acc54422ce40aadc75795e9756ceef60e357eb74c54d2642c2d",
+      "Planner/Scenes/ItemLinksSection.swift": "2e9a05325a6855f2f90406702aed51818ccac91dcce638f6680033b63386d010",
+      "Planner/Scenes/SavedItemViews.swift": "f3e66dee811174c416c2b9ed9df462618a6851278dce1e1845dc9aba92e7bb3f",
+      "Planner/Scenes/SavedAppearanceViews.swift": "3d93390a8bbac23ae12108e00ef70d09d93e10938336e6928d949022690068c0",
+      "Planner/Scenes/SavedItemRowContent.swift": "318e362d8499ad855efc5c4750cbd28aa259694c6a25acea09d89b45f059a240",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "f45024f98727bf9c0e48fbfe4b9998de6d15cc118c50d375cab9d1ccb2369f70"
+    },
+    "MapsRed": {
+      "Planner/Scenes/SavedPlannerStore.swift": "ce88e17fedcf2f391e9c4d88344d18d7d0da8cea8706c4235240b53cd6f09851",
+      "Planner/Scenes/SavedEditItemForm.swift": "492456528a656acc54422ce40aadc75795e9756ceef60e357eb74c54d2642c2d",
+      "Planner/Scenes/ItemLinksSection.swift": "2e9a05325a6855f2f90406702aed51818ccac91dcce638f6680033b63386d010",
+      "Planner/Scenes/SavedItemViews.swift": "f3e66dee811174c416c2b9ed9df462618a6851278dce1e1845dc9aba92e7bb3f",
+      "Planner/Scenes/SavedAppearanceViews.swift": "3d93390a8bbac23ae12108e00ef70d09d93e10938336e6928d949022690068c0",
+      "Planner/Scenes/SavedItemRowContent.swift": "318e362d8499ad855efc5c4750cbd28aa259694c6a25acea09d89b45f059a240",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "a5e9c0263cd7181b5bae4009ff30a304befbe35050457b6a84cb06534b970944"
+    },
+    "Final": {
+      "Planner/Scenes/SavedPlannerStore.swift": "ce88e17fedcf2f391e9c4d88344d18d7d0da8cea8706c4235240b53cd6f09851",
+      "Planner/Scenes/SavedEditItemForm.swift": "492456528a656acc54422ce40aadc75795e9756ceef60e357eb74c54d2642c2d",
+      "Planner/Scenes/ItemLinksSection.swift": "2e9a05325a6855f2f90406702aed51818ccac91dcce638f6680033b63386d010",
+      "Planner/Scenes/SavedItemViews.swift": "f3e66dee811174c416c2b9ed9df462618a6851278dce1e1845dc9aba92e7bb3f",
+      "Planner/Scenes/SavedAppearanceViews.swift": "3d93390a8bbac23ae12108e00ef70d09d93e10938336e6928d949022690068c0",
+      "Planner/Scenes/SavedItemRowContent.swift": "95a4d84868c9a7366a316d4f932c79038a06a11103544d4abe5236d911f959a3",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "48d6dae8796075f8c818371b875709844fdc90bc66f6debbdcac3fd766132b7b"
+    },
+    "Inline": {
+      "Planner/Scenes/SavedPlannerStore.swift": "ce88e17fedcf2f391e9c4d88344d18d7d0da8cea8706c4235240b53cd6f09851",
+      "Planner/Scenes/SavedEditItemForm.swift": "7aa73f5b55d54cdfaa4af7ce404b6e5e55a664f11812a733823eecae7820cf3f",
+      "Planner/Scenes/ItemLinksSection.swift": "2e9a05325a6855f2f90406702aed51818ccac91dcce638f6680033b63386d010",
+      "Planner/Scenes/SavedItemViews.swift": "f3e66dee811174c416c2b9ed9df462618a6851278dce1e1845dc9aba92e7bb3f",
+      "Planner/Scenes/SavedAppearanceViews.swift": "3d93390a8bbac23ae12108e00ef70d09d93e10938336e6928d949022690068c0",
+      "Planner/Scenes/SavedItemRowContent.swift": "95a4d84868c9a7366a316d4f932c79038a06a11103544d4abe5236d911f959a3",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "48d6dae8796075f8c818371b875709844fdc90bc66f6debbdcac3fd766132b7b"
+    }
+  },
+  "finalPresentationDelta": "After functional qualification, SavedEditItemForm adds only the native iOS inline title modifier. The live bookmark journey is requalified on each simulator, and the affected Mac target recompiles.",
+  "runs": [
+    {
+      "name": "PhoneRed",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeBookmarksPhoneRed.xcresult test > /private/tmp/PlannerNativeBookmarksPhoneRed.log 2>&1",
+      "sourceEpoch": "Red",
+      "exitCode": null,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksPhoneRed.log",
+        "sha256": "cf48d6cb58f62623e876d0df47bfb7a85a0e37963fc2fb8d71bf95ed09c5bbe5"
+      },
+      "terminationEvidence": "Completed log ends with TEST FAILED; failed xcresult summary. Original exec response was not retained.",
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksPhoneRed.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+              "deviceName": "iPhone 18 Pro",
+              "modelName": "iPhone 18 Pro",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 0,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1791642059.113,
+        "passedTests": 0,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791641978.368,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedAppearanceJourneyTests/testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch",
+            "testName": "testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch()"
+          }
+        ],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "summarySha256": "60cf18cc728c29c5e3f91c84791c2e74414f050aa2b9510497d68b257b852ffc",
+      "runtimeFunctionCount": 1,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch]",
+          "failed",
+          "72.052 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [
+        "/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/SavedAppearanceJourneyTests.swift:1649: error: -[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch] : XCTAssertTrue failed",
+        " xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH"
+      ],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 23:19:41.741 appintentsmetadataprocessor[41964:17412882] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "name": "PhoneGreen",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeBookmarksPhoneGreen.xcresult test > /private/tmp/PlannerNativeBookmarksPhoneGreen.log 2>&1",
+      "sourceEpoch": "Green",
+      "exitCode": 65,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksPhoneGreen.log",
+        "sha256": "8f9cc5f6371b7f37d6148aa77071a43525ae13dc157b9af11c7ccedcb43ada84"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksPhoneGreen.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+              "deviceName": "iPhone 18 Pro",
+              "modelName": "iPhone 18 Pro",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 0,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1791642396.036,
+        "passedTests": 0,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791642254.279,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedAppearanceJourneyTests/testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch",
+            "testName": "testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch()"
+          }
+        ],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "summarySha256": "eeee2681edf53d36543257573365ae5bf1e9366546f92d8d84e36ae3bb0de8a5",
+      "runtimeFunctionCount": 1,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch]",
+          "failed",
+          "130.611 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [
+        "/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/SavedAppearanceJourneyTests.swift:66: error: -[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch] : XCTAssertTrue failed",
+        " xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH"
+      ],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 23:24:20.673 appintentsmetadataprocessor[47555:17437360] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "name": "PhoneCorrected",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeBookmarksPhoneCorrected.xcresult test > /private/tmp/PlannerNativeBookmarksPhoneCorrected.log 2>&1",
+      "sourceEpoch": "Corrected",
+      "exitCode": 0,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksPhoneCorrected.log",
+        "sha256": "3e4b8c7a14434b78bf2dd3028631451a2383d8615e336ffb9a0a035a00dc54fd"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksPhoneCorrected.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+              "deviceName": "iPhone 18 Pro",
+              "modelName": "iPhone 18 Pro",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 1,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791642597.775,
+        "passedTests": 1,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791642435.043,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "summarySha256": "df2a31235eec04b52e153f07b2382b937bfef939bd603e51c1d4600e6cfe9389",
+      "runtimeFunctionCount": 1,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch]",
+          "passed",
+          "154.482 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 23:27:18.404 appintentsmetadataprocessor[50872:17453322] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "name": "Core",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter 'ItemLinkTests|ItemLinkEditTests' > /private/tmp/PlannerNativeBookmarksCore.log 2>&1",
+      "sourceEpoch": "base",
+      "exitCode": 0,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksCore.log",
+        "sha256": "a9a1ec45497267b88f70800610dc2e27a73dbc2ef52680eb2f8f79aedec46b1c"
+      },
+      "executedFunctions": 6,
+      "suiteCount": 2,
+      "result": "Passed"
+    },
+    {
+      "name": "MacBuild",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeBookmarksMacBuild.xcresult build-for-testing > /private/tmp/PlannerNativeBookmarksMacBuild.log 2>&1",
+      "sourceEpoch": "Green",
+      "exitCode": 0,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksMacBuild.log",
+        "sha256": "39dc55dd4028b2aaee80a6d511616127e6807b6f687276702830b12eb0fffdd1"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksMacBuild.xcresult",
+      "summary": {
+        "actionTitle": "Build for Testing \"PlannerNavigation\"",
+        "analyzerWarningCount": 0,
+        "analyzerWarnings": [],
+        "destination": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "endTime": 1791642363.11,
+        "errorCount": 0,
+        "errors": [],
+        "startTime": 1791642354.433,
+        "status": "succeeded",
+        "warningCount": 0,
+        "warnings": []
+      },
+      "summarySha256": "87d31364cc4f39227fbb67c1d8935539715f3a0c6399702b923f393e37d4af9b",
+      "runtimeFunctionCount": 0,
+      "caseOutcomesFromLog": [],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 23:26:01.830 appintentsmetadataprocessor[49487:17446490] warning: Metadata extraction skipped, no AppIntents.framework dependency found",
+        "2026-10-10 23:26:03.046 appintentsmetadataprocessor[49521:17446715] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "name": "ManageRed",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeBookmarksManageRed.xcresult test > /private/tmp/PlannerNativeBookmarksManageRed.log 2>&1",
+      "sourceEpoch": "ManageRed",
+      "exitCode": 65,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksManageRed.log",
+        "sha256": "37f34cb65c037546bad7b2a27eee6247062d0bfb499513425282868961ea7b2e"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksManageRed.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+              "deviceName": "iPhone 18 Pro",
+              "modelName": "iPhone 18 Pro",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 0,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1791642744.428,
+        "passedTests": 0,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791642666.584,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch",
+            "testName": "testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch()"
+          }
+        ],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "summarySha256": "db6b4628c37499d7640720c3118188e834a034becff12e117bb0105a7c6bdb00",
+      "runtimeFunctionCount": 1,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch]",
+          "failed",
+          "69.988 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [
+        "/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/SavedAppearanceJourneyTests.swift:54: error: -[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch] : XCTAssertTrue failed",
+        " xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH"
+      ],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 23:31:09.985 appintentsmetadataprocessor[55631:17475700] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "name": "ManageGreen",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeBookmarksManageGreen.xcresult test > /private/tmp/PlannerNativeBookmarksManageGreen.log 2>&1",
+      "sourceEpoch": "ManageGreen",
+      "exitCode": 65,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksManageGreen.log",
+        "sha256": "66bcd37286082d412d1a0b9db7f549a6dedfe9ec89c3157797b4eae11989e046"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksManageGreen.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+              "deviceName": "iPhone 18 Pro",
+              "modelName": "iPhone 18 Pro",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 0,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1791642904.282,
+        "passedTests": 0,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791642801.785,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch",
+            "testName": "testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch()"
+          }
+        ],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "summarySha256": "b06884d40d4f954173279a3462e3babb31b34b65c67f3827d3722c53f0c3f939",
+      "runtimeFunctionCount": 1,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch]",
+          "failed",
+          "92.073 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [
+        "/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/SavedAppearanceJourneyTests.swift:66: error: -[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch] : XCTAssertTrue failed",
+        " xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH"
+      ],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 23:33:27.053 appintentsmetadataprocessor[58321:17487809] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "name": "TabletQualification",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeBookmarksTabletQualification.xcresult test > /private/tmp/PlannerNativeBookmarksTabletQualification.log 2>&1",
+      "sourceEpoch": "ManageGreen",
+      "exitCode": 65,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksTabletQualification.log",
+        "sha256": "5c5026656b7e7c074c43ca70e07142e5d324db3a35a498c177b52fce0efc34ec"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksTabletQualification.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+              "deviceName": "iPad Air 11-inch (M4)",
+              "modelName": "iPad Air 11-inch (M4)",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 1,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1791643112.362,
+        "passedTests": 1,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791642830.92,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 2,
+            "testIdentifierString": "SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch",
+            "testName": "testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch()"
+          }
+        ],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 2
+      },
+      "summarySha256": "4b63f7246a1283f9a21a15ba217e72772dd877e60361b3dfd4f84fc02375160e",
+      "runtimeFunctionCount": 2,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch]",
+          "passed",
+          "175.098 seconds"
+        ],
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch]",
+          "failed",
+          "92.919 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [
+        "/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/SavedAppearanceJourneyTests.swift:66: error: -[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch] : XCTAssertTrue failed",
+        " xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH"
+      ],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 23:33:59.120 appintentsmetadataprocessor[58889:17491142] warning: Metadata extraction skipped, no AppIntents.framework dependency found",
+        "2026-10-10 23:33:59.517 appintentsmetadataprocessor[58909:17491208] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "name": "MacFinal",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeBookmarksMacFinal.xcresult build-for-testing > /private/tmp/PlannerNativeBookmarksMacFinal.log 2>&1",
+      "sourceEpoch": "ManageGreen",
+      "exitCode": 0,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksMacFinal.log",
+        "sha256": "2b6c303b4c39934fb74e319a1c0e9355acd4d6897bc47a87232750882f803c49"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksMacFinal.xcresult",
+      "summary": {
+        "actionTitle": "Build for Testing \"PlannerNavigation\"",
+        "analyzerWarningCount": 0,
+        "analyzerWarnings": [],
+        "destination": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "endTime": 1791642835.083,
+        "errorCount": 0,
+        "errors": [],
+        "startTime": 1791642827.369,
+        "status": "succeeded",
+        "warningCount": 0,
+        "warnings": []
+      },
+      "summarySha256": "778eb1f527f3f383aa4236be466194c4ad7c1d0b18a3c2ec6e65098c24c1843e",
+      "runtimeFunctionCount": 0,
+      "caseOutcomesFromLog": [],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 23:33:53.130 appintentsmetadataprocessor[58726:17490386] warning: Metadata extraction skipped, no AppIntents.framework dependency found",
+        "2026-10-10 23:33:54.928 appintentsmetadataprocessor[58783:17490678] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "name": "MapsRed",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeBookmarksMapsRed.xcresult test > /private/tmp/PlannerNativeBookmarksMapsRed.log 2>&1",
+      "sourceEpoch": "MapsRed",
+      "exitCode": 65,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksMapsRed.log",
+        "sha256": "a3f8e341054afca43ac19b691488907574182f30138b480d97debd2e98c1ce6a"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksMapsRed.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+              "deviceName": "iPhone 18 Pro",
+              "modelName": "iPhone 18 Pro",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 0,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1791643335.67,
+        "passedTests": 0,
+        "result": "Failed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791643204.394,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "PlannerNavigationUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch()",
+            "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch",
+            "testName": "testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch()"
+          }
+        ],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "summarySha256": "90c8bbe774aa50f5a464fbe6d3c90ef575ee390d60beab7a25d856306b4f7b50",
+      "runtimeFunctionCount": 1,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch]",
+          "failed",
+          "123.446 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [
+        "/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/SavedAppearanceJourneyTests.swift:98: error: -[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch] : XCTAssertTrue failed",
+        " xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH"
+      ],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 23:40:07.618 appintentsmetadataprocessor[65300:17522974] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "name": "PhoneQualification",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeBookmarksPhoneQualification.xcresult test > /private/tmp/PlannerNativeBookmarksPhoneQualification.log 2>&1",
+      "sourceEpoch": "Final",
+      "exitCode": 0,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksPhoneQualification.log",
+        "sha256": "f6fc84559840ba5ea959852a70321e65e004851ede12c86f44ef7e31d5f4e40d"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksPhoneQualification.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+              "deviceName": "iPhone 18 Pro",
+              "modelName": "iPhone 18 Pro",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 2,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791643758.842,
+        "passedTests": 2,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791643448.656,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 2
+      },
+      "summarySha256": "defd4cb7a8a4df2ad9351f406cb515f21953649b971c54fa2e489a692c7ee5b2",
+      "runtimeFunctionCount": 2,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch]",
+          "passed",
+          "154.138 seconds"
+        ],
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch]",
+          "passed",
+          "145.083 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 23:44:12.455 appintentsmetadataprocessor[69767:17544835] warning: Metadata extraction skipped, no AppIntents.framework dependency found",
+        "2026-10-10 23:44:13.999 appintentsmetadataprocessor[69801:17545013] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "name": "TabletFinal",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeBookmarksTabletFinal.xcresult test > /private/tmp/PlannerNativeBookmarksTabletFinal.log 2>&1",
+      "sourceEpoch": "Final",
+      "exitCode": 0,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksTabletFinal.log",
+        "sha256": "56248d2e8581a99cc9df4eefea5792a851bd0210969bbb7bb970e8cc5a8d3fc1"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksTabletFinal.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+              "deviceName": "iPad Air 11-inch (M4)",
+              "modelName": "iPad Air 11-inch (M4)",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 2,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791643789.313,
+        "passedTests": 2,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791643451.937,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 2
+      },
+      "summarySha256": "5e94cabedde1bf45e350c8cb38b5a3e150281e413326b93c78afcf5d08d61aeb",
+      "runtimeFunctionCount": 2,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch]",
+          "passed",
+          "177.221 seconds"
+        ],
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch]",
+          "passed",
+          "149.230 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 23:44:17.087 appintentsmetadataprocessor[69878:17545741] warning: Metadata extraction skipped, no AppIntents.framework dependency found",
+        "2026-10-10 23:44:18.046 appintentsmetadataprocessor[69898:17545800] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "name": "MacQualification",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeBookmarksMacQualification.xcresult build-for-testing > /private/tmp/PlannerNativeBookmarksMacQualification.log 2>&1",
+      "sourceEpoch": "Final",
+      "exitCode": 0,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksMacQualification.log",
+        "sha256": "3817294ab058b1b2bd9dad4f7d3771ca90383792eb15ce61d5f73a59bcbb088b"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksMacQualification.xcresult",
+      "summary": {
+        "actionTitle": "Build for Testing \"PlannerNavigation\"",
+        "analyzerWarningCount": 0,
+        "analyzerWarnings": [],
+        "destination": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "endTime": 1791643456.244,
+        "errorCount": 0,
+        "errors": [],
+        "startTime": 1791643449.588,
+        "status": "succeeded",
+        "warningCount": 0,
+        "warnings": []
+      },
+      "summarySha256": "9b0c01dedb0c085f53540c597687b097fc66cd564c9ba1673d596ae243bef5e3",
+      "runtimeFunctionCount": 0,
+      "caseOutcomesFromLog": [],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 23:44:14.252 appintentsmetadataprocessor[69810:17545110] warning: Metadata extraction skipped, no AppIntents.framework dependency found",
+        "2026-10-10 23:44:16.171 appintentsmetadataprocessor[69852:17545620] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "name": "PhoneRegressions",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion -resultBundlePath /private/tmp/PlannerNativeBookmarksPhoneRegressions.xcresult test > /private/tmp/PlannerNativeBookmarksPhoneRegressions.log 2>&1",
+      "sourceEpoch": "Final",
+      "exitCode": 0,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksPhoneRegressions.log",
+        "sha256": "b2d9d6e425b320f55e4ba22527c6d8b2294cd2f75b5b1c96a918d70d717aac34"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksPhoneRegressions.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+              "deviceName": "iPhone 18 Pro",
+              "modelName": "iPhone 18 Pro",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 2,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791644238.069,
+        "passedTests": 2,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791643809.438,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 2
+      },
+      "summarySha256": "7315b5ab151971aa99d8b1fda059411c3d8241cdaddc1d773e981541d0c7cd63",
+      "runtimeFunctionCount": 2,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch]",
+          "passed",
+          "287.893 seconds"
+        ],
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion]",
+          "passed",
+          "134.474 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": [
+        "    t =   200.56s App animations complete notification not received, will attempt to continue.",
+        "    t =   260.59s App animations complete notification not received, will attempt to continue."
+      ],
+      "metadataWarningsFromLog": []
+    },
+    {
+      "name": "TabletRegressions",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion -resultBundlePath /private/tmp/PlannerNativeBookmarksTabletRegressions.xcresult test > /private/tmp/PlannerNativeBookmarksTabletRegressions.log 2>&1",
+      "sourceEpoch": "Final",
+      "exitCode": 0,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksTabletRegressions.log",
+        "sha256": "c8dbd2f1a6260ca880fcdbc703dd4e627d4506252ec08844b705124e08e91c42"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksTabletRegressions.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+              "deviceName": "iPad Air 11-inch (M4)",
+              "modelName": "iPad Air 11-inch (M4)",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 2,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791644266.738,
+        "passedTests": 2,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791643830.029,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 2
+      },
+      "summarySha256": "7e35b2da1d9f36e85df454d3176bc898f8b41d3c16c87615434c914f44e6e60c",
+      "runtimeFunctionCount": 2,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch]",
+          "passed",
+          "296.565 seconds"
+        ],
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testSubtitlePreviewUpdatesTheListRowAndCanBeClearedWithoutChangingCompletion]",
+          "passed",
+          "132.327 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": [
+        "    t =   210.07s App animations complete notification not received, will attempt to continue.",
+        "    t =   270.10s App animations complete notification not received, will attempt to continue."
+      ],
+      "metadataWarningsFromLog": []
+    },
+    {
+      "name": "PhoneInline",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeBookmarksPhoneInline.xcresult test > /private/tmp/PlannerNativeBookmarksPhoneInline.log 2>&1",
+      "sourceEpoch": "Inline",
+      "exitCode": 0,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksPhoneInline.log",
+        "sha256": "71cfec015ec2721c16950b324305e293ece3b6bc73b10f58acdcdd59d35970f1"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksPhoneInline.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+              "deviceName": "iPhone 18 Pro",
+              "modelName": "iPhone 18 Pro",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 1,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791644469.053,
+        "passedTests": 1,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791644304.155,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "summarySha256": "66661c66011f90d95a2fc946661ef775af4eb92d15dda0436f571a02c4e809fa",
+      "runtimeFunctionCount": 1,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch]",
+          "passed",
+          "154.474 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 23:58:28.884 appintentsmetadataprocessor[84331:17619526] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "name": "TabletInline",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch -resultBundlePath /private/tmp/PlannerNativeBookmarksTabletInline.xcresult test > /private/tmp/PlannerNativeBookmarksTabletInline.log 2>&1",
+      "sourceEpoch": "Inline",
+      "exitCode": 0,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksTabletInline.log",
+        "sha256": "fb7b5448fd2a63bf05a5399186d6b3480f5b374cae7e0ea1b2be1e25687a49f8"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksTabletInline.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+              "deviceName": "iPad Air 11-inch (M4)",
+              "modelName": "iPad Air 11-inch (M4)",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 1,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791644487.519,
+        "passedTests": 1,
+        "result": "Passed",
+        "runtimeWarnings": [],
+        "skippedTests": 0,
+        "startTime": 1791644303.365,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - PlannerNavigation",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "summarySha256": "280016413a4e5dabdf9e1bb437585f01b6ae8d68e113dbe8f91c9d029483162a",
+      "runtimeFunctionCount": 1,
+      "caseOutcomesFromLog": [
+        [
+          "-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch]",
+          "passed",
+          "174.691 seconds"
+        ]
+      ],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 23:58:27.715 appintentsmetadataprocessor[84290:17619099] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    },
+    {
+      "name": "MacInline",
+      "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeBookmarksMacInline.xcresult build-for-testing > /private/tmp/PlannerNativeBookmarksMacInline.log 2>&1",
+      "sourceEpoch": "Inline",
+      "exitCode": 0,
+      "log": {
+        "path": "/private/tmp/PlannerNativeBookmarksMacInline.log",
+        "sha256": "aef62cd467ba78af8057fca7488d55e46139a06bcf8245debd51ae2e37fc74a5"
+      },
+      "resultBundlePath": "/private/tmp/PlannerNativeBookmarksMacInline.xcresult",
+      "summary": {
+        "actionTitle": "Build for Testing \"PlannerNavigation\"",
+        "analyzerWarningCount": 0,
+        "analyzerWarnings": [],
+        "destination": {
+          "architecture": "arm64",
+          "deviceId": "00006030-001A586C3EA3001C",
+          "deviceName": "My Mac",
+          "modelName": "MacBook Pro",
+          "osBuildNumber": "26A434",
+          "osVersion": "27.0.1",
+          "platform": "macOS"
+        },
+        "endTime": 1791644308.41,
+        "errorCount": 0,
+        "errors": [],
+        "startTime": 1791644303.323,
+        "status": "succeeded",
+        "warningCount": 0,
+        "warnings": []
+      },
+      "summarySha256": "5039dd3e0bf8daf444bd684c716fe6add4c0fdf4af52031881c377bb60766bea",
+      "runtimeFunctionCount": 0,
+      "caseOutcomesFromLog": [],
+      "failureLinesFromLog": [],
+      "animationWaitsFromLog": [],
+      "metadataWarningsFromLog": [
+        "2026-10-10 23:58:28.028 appintentsmetadataprocessor[84296:17619156] warning: Metadata extraction skipped, no AppIntents.framework dependency found"
+      ]
+    }
+  ],
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-bookmarks-editor.png",
+      "originalPath": "/private/tmp/PlannerNativeBookmarksPhoneInlineCaptures/3302BABB-76D2-448E-AA98-F5F42F792B63.png",
+      "phase": "PhoneInline",
+      "sourceEpoch": "Inline",
+      "name": "Native bookmark editor reviews two owned links",
+      "sha256": "add6905fce626c94a606d360d673c1dc5481d027b7d397c182af0539e57e72c7",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-bookmarks-editor.png",
+      "originalPath": "/private/tmp/PlannerNativeBookmarksTabletInlineCaptures/12B6B283-2FA5-45A4-A449-24B08E6281B7.png",
+      "phase": "TabletInline",
+      "sourceEpoch": "Inline",
+      "name": "Native bookmark editor reviews two owned links",
+      "sha256": "264445679de832e6f6625f5b3cf84bb345cea19c8520f0723781410c96a4d660",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-bookmarks-reopened.png",
+      "originalPath": "/private/tmp/PlannerNativeBookmarksPhoneInlineCaptures/40A1D3AB-3C4F-464C-9BDE-0A56CAE14C63.png",
+      "phase": "PhoneInline",
+      "sourceEpoch": "Inline",
+      "name": "Reopened List retains bookmark identities and local completion",
+      "sha256": "d86f664da05cad4bb21ffe73529f703288bc0e1683dd292bb6f99e542716e279",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-bookmarks-reopened.png",
+      "originalPath": "/private/tmp/PlannerNativeBookmarksTabletInlineCaptures/25B5F0D2-E085-4AE6-9A3D-042E59BB4A25.png",
+      "phase": "TabletInline",
+      "sourceEpoch": "Inline",
+      "name": "Reopened List retains bookmark identities and local completion",
+      "sha256": "ab966988a48996e5c89f11b97078a13e98ade31e2bf4b3088939f88052b49fff",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-bookmarks-reordered.png",
+      "originalPath": "/private/tmp/PlannerNativeBookmarksPhoneQualificationCaptures/7EB37339-FBAC-455A-9438-7398F9EA7046.png",
+      "phase": "PhoneQualification",
+      "sourceEpoch": "Final",
+      "name": "Editing and ordering bookmarks preserves their saved identities",
+      "sha256": "d417c426badf54a118175829fb08711a138684f7b44f99ec5aa6fd84b634887b",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-bookmarks-reordered.png",
+      "originalPath": "/private/tmp/PlannerNativeBookmarksTabletFinalCaptures/849AA4D8-F973-4D40-831F-C59ADB515618.png",
+      "phase": "TabletFinal",
+      "sourceEpoch": "Final",
+      "name": "Editing and ordering bookmarks preserves their saved identities",
+      "sha256": "7a8990b8cb43442e3745de7ffe64fc6b3ec2660439872a34d283645adf4afce7",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/phone-saved-bookmarks-maps-only.png",
+      "originalPath": "/private/tmp/PlannerNativeBookmarksPhoneQualificationCaptures/2ABB6E65-C6E6-4C2B-B56C-B0363D1252B2.png",
+      "phase": "PhoneQualification",
+      "sourceEpoch": "Final",
+      "name": "Maps-only Item keeps a compact row hint",
+      "sha256": "3d3388b5b99b77f0db47847a2f46a2e6d6ac74017327b1611d2c58510385b560",
+      "visuallyInspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/layouts/tablet-saved-bookmarks-maps-only.png",
+      "originalPath": "/private/tmp/PlannerNativeBookmarksTabletFinalCaptures/ACD7251A-D6E7-4F06-A9CD-BCCE5152C203.png",
+      "phase": "TabletFinal",
+      "sourceEpoch": "Final",
+      "name": "Maps-only Item keeps a compact row hint",
+      "sha256": "9e21257e2f3aee471390e25cb6c27aa867f61a23be331d8c51ac228df1194784",
+      "visuallyInspected": true
+    }
+  ],
+  "finalBehavior": {
+    "draftCancelPreservesSavedContent": true,
+    "invalidURLRejectsCombinedTitleAndLinkEdit": true,
+    "exactURLsAndOwnedLinkIdentitiesSurviveReopen": true,
+    "nativeOrderingAndRemovalAreStagedUntilSave": true,
+    "contentRemainsLiveAcrossIndependentListCompletion": true,
+    "mapsOnlyRowsRetainNativeCaption": true,
+    "emptyLinksPersistAfterRemovingLastBookmark": true,
+    "providerFetchesInThisSlice": false
+  },
+  "checks": {
+    "affectedSwiftLint": {
+      "result": "Passed",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "coreChangedSinceBase": false,
+    "affectedMarkdownLint": {
+      "result": "Passed",
+      "logSha256": "bb3cfdbd8511ea948855a53a88af433108ed8a370f9b0ca4d53d9ef5dd7566b6"
+    }
+  },
+  "limitations": [
+    "Mac app and UI test bundles compile; zero Mac runtime functions were executed.",
+    "Automatic link images and address lookup remain unimplemented. Q50 approves their native preview boundary.",
+    "Saved coordinates still use the existing native Map; Maps bookmarks alone do not supply saved coordinates.",
+    "Schema 7/portable 1 remain localOnly with CloudKit disabled.",
+    "Physical sync/account/Share, paging/performance, keyboard/accessibility, resizing, Mac restoration and human review remain open.",
+    "Whole-app native UI polish follows feature completion in ticket 23."
+  ]
+}

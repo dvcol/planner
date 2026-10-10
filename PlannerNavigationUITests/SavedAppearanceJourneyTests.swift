@@ -2,6 +2,222 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    activateGlobalCompletion(globalCompletion)
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+    openItemEditor(application)
+    replaceText(
+      application.textFields["saved.item.edit.title"], with: "Rejected title",
+      application: application)
+    _ = addBookmark(
+      "file:///private/tmp/bookmark", label: "Invalid bookmark", application: application)
+    application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+    let alert = application.alerts.firstMatch
+    XCTAssertTrue(alert.waitForExistence(timeout: 10))
+    XCTAssertTrue(alert.staticTexts["A bookmark must be an absolute HTTP or HTTPS URL."].exists)
+    recordScreenshot(application, name: "Invalid bookmark rejects the staged Item edit")
+    alert.buttons["OK"].activateForPlannerJourney()
+    application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Nezu Museum"].firstMatch.waitForExistence(timeout: 5))
+    XCTAssertFalse(application.staticTexts["Rejected title"].exists)
+    XCTAssertEqual(savedBookmarkRows(application).count, 0)
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+
+    openItemEditor(application)
+    let guideDraftIdentifier = addBookmark(
+      "https://example.com/original", label: "Guide", application: application)
+    _ = addBookmark(
+      "https://maps.apple.com/?q=Nezu", label: "Map",
+      existingURLIdentifiers: [guideDraftIdentifier],
+      application: application)
+    application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+    let initialGuide = savedBookmarkRows(application).matching(
+      NSPredicate(format: "label == %@", "Guide")
+    )
+    .firstMatch
+    let map = savedBookmarkRows(application).matching(NSPredicate(format: "label == %@", "Map"))
+      .firstMatch
+    XCTAssertTrue(initialGuide.waitForExistence(timeout: 10))
+    XCTAssertTrue(map.exists)
+    let guideIdentifier = initialGuide.identifier
+    let guide = savedBookmarkRows(application).matching(identifier: guideIdentifier).firstMatch
+    let mapIdentifier = map.identifier
+    let guideIdentity = guideIdentifier.replacingOccurrences(of: "saved.item.link.", with: "")
+    let mapIdentity = mapIdentifier.replacingOccurrences(of: "saved.item.link.", with: "")
+
+    openItemEditor(application)
+    let guideActions = application.plannerElement("saved.item.edit.link.actions.\(guideIdentity)")
+    XCTAssertTrue(guideActions.waitForExistence(timeout: 5))
+    revealEditorElement(guideActions, application: application)
+    guideActions.activateForPlannerJourney()
+    XCTAssertFalse(application.plannerElement("Move Up").isEnabled)
+    application.plannerElement("Move Down").activateForPlannerJourney()
+    revealEditorElement(guideActions, application: application)
+    guideActions.activateForPlannerJourney()
+    XCTAssertFalse(application.plannerElement("Move Down").isEnabled)
+    application.plannerElement("Move Up").activateForPlannerJourney()
+    guideActions.activateForPlannerJourney()
+    application.plannerElement("Move Down").activateForPlannerJourney()
+    let guideURL = application.textFields["saved.item.edit.link.url.\(guideIdentity)"]
+    revealEditorElement(guideURL, application: application)
+    replaceText(
+      guideURL, with: "https://example.com/Revised?Offer=Tea+Cake", application: application)
+    let guideLabel = application.textFields["saved.item.edit.link.label.\(guideIdentity)"]
+    revealEditorElement(guideLabel, application: application)
+    replaceText(guideLabel, with: "Revised guide", application: application)
+    application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+    XCTAssertTrue(guide.waitForPlannerValue("https://example.com/Revised?Offer=Tea+Cake"))
+    XCTAssertEqual(guide.label, "Revised guide")
+    XCTAssertEqual(
+      savedBookmarkRows(application).allElementsBoundByIndex.map(\.identifier),
+      [mapIdentifier, guideIdentifier])
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    recordScreenshot(
+      application, name: "Editing and ordering bookmarks preserves their saved identities")
+
+    openItemEditor(application)
+    removeBookmark(guideIdentity, application: application)
+    application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
+    XCTAssertTrue(guide.waitForExistence(timeout: 5))
+    openItemEditor(application)
+    removeBookmark(guideIdentity, application: application)
+    application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+    XCTAssertTrue(guide.waitForNonExistence(timeout: 10))
+    XCTAssertTrue(map.exists)
+    XCTAssertEqual(savedBookmarkRows(application).count, 1)
+    openCatalogSection("Items", application: application)
+    let mapsOnlyRow = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    XCTAssertTrue(mapsOnlyRow.waitForPlannerValue("Maps"))
+    recordScreenshot(application, name: "Maps-only Item keeps a compact row hint")
+    mapsOnlyRow.activateForPlannerJourney()
+    XCTAssertTrue(map.waitForExistence(timeout: 10))
+    openItemEditor(application)
+    removeBookmark(mapIdentity, application: application)
+    application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.plannerElement("saved.item.edit.save").waitForNonExistence(timeout: 10))
+    XCTAssertEqual(savedBookmarkRows(application).count, 0)
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openCatalogSection("Items", application: application)
+    application.savedPlannerItemRows("Nezu Museum").firstMatch.activateForPlannerJourney()
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+    XCTAssertEqual(savedBookmarkRows(application).count, 0)
+    XCTAssertFalse(application.staticTexts["Links"].exists)
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    recordScreenshot(
+      application, name: "Removing every bookmark survives reopening without changing Item state")
+  }
+
+  func testNativeBookmarksCancelSaveAndRemainLiveAcrossListsAfterRelaunch() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    createList("Tokyo", application: application)
+    addItem(application)
+    let membership = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    let membershipIdentifier = membership.identifier
+    let localCompletion = application.buttons[
+      membershipIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    localCompletion.activateForPlannerJourney()
+    XCTAssertTrue(localCompletion.waitForPlannerValue("Completed"))
+    createList("Wishlist", application: application)
+    addItem(application)
+    openList("Tokyo", application: application)
+    viewGlobalItem(application)
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    openItemEditor(application)
+    _ = addBookmark(
+      "https://example.com/canceled", label: "Canceled bookmark", application: application)
+    application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
+    XCTAssertFalse(application.staticTexts["Canceled bookmark"].exists)
+    XCTAssertEqual(savedBookmarkRows(application).count, 0)
+
+    openItemEditor(application)
+    let guideURL = "https://example.com/Museum?Offer=Tea+Cake"
+    let mapsURL = "https://maps.apple.com/?q=Nezu%20Museum"
+    let guideDraftIdentifier = addBookmark(
+      guideURL, label: "Museum guide", application: application)
+    _ = addBookmark(
+      mapsURL, label: "Map bookmark", existingURLIdentifiers: [guideDraftIdentifier],
+      application: application)
+    recordScreenshot(application, name: "Native bookmark editor reviews two owned links")
+    application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+    let guide = savedBookmarkRows(application).matching(
+      NSPredicate(format: "label == %@", "Museum guide")
+    ).firstMatch
+    let maps = savedBookmarkRows(application).matching(
+      NSPredicate(format: "label == %@", "Map bookmark")
+    ).firstMatch
+    XCTAssertTrue(guide.waitForExistence(timeout: 10))
+    XCTAssertTrue(guide.waitForPlannerValue(guideURL))
+    XCTAssertTrue(maps.waitForPlannerValue(mapsURL))
+    let guideIdentifier = guide.identifier
+    let mapsIdentifier = maps.identifier
+    XCTAssertEqual(savedBookmarkRows(application).count, 2)
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    XCTAssertTrue(application.staticTexts["Meet at the garden entrance"].exists)
+    recordScreenshot(application, name: "Item details show useful owned bookmarks without previews")
+
+    openList("Tokyo", application: application)
+    XCTAssertEqual(membership.identifier, membershipIdentifier)
+    XCTAssertTrue(membership.waitForPlannerValue("Museum guide"))
+    XCTAssertTrue(localCompletion.waitForPlannerValue("Completed"))
+    assertProgress(1, application: application)
+    membership.activateForPlannerJourney()
+    XCTAssertTrue(
+      savedBookmarkRows(application).matching(identifier: guideIdentifier).firstMatch
+        .waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      savedBookmarkRows(application).matching(identifier: mapsIdentifier).firstMatch.exists)
+    openList("Wishlist", application: application)
+    let otherMembership = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    XCTAssertTrue(otherMembership.waitForPlannerValue("Museum guide"))
+    let otherCompletion = application.buttons[
+      otherMembership.identifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    XCTAssertTrue(otherCompletion.waitForPlannerValue("To do"))
+    otherMembership.activateForPlannerJourney()
+    XCTAssertTrue(
+      savedBookmarkRows(application).matching(identifier: guideIdentifier).firstMatch
+        .waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      savedBookmarkRows(application).matching(identifier: mapsIdentifier).firstMatch.exists)
+
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Tokyo", application: application)
+    XCTAssertEqual(membership.identifier, membershipIdentifier)
+    XCTAssertTrue(membership.waitForPlannerValue("Museum guide"))
+    XCTAssertTrue(localCompletion.waitForPlannerValue("Completed"))
+    assertProgress(1, application: application)
+    membership.activateForPlannerJourney()
+    XCTAssertTrue(
+      savedBookmarkRows(application).matching(identifier: guideIdentifier).firstMatch
+        .waitForPlannerValue(guideURL))
+    XCTAssertTrue(
+      savedBookmarkRows(application).matching(identifier: mapsIdentifier).firstMatch
+        .waitForPlannerValue(mapsURL))
+    XCTAssertEqual(savedBookmarkRows(application).count, 2)
+    recordScreenshot(
+      application, name: "Reopened List retains bookmark identities and local completion")
+  }
+
   func
     testNativeListArchiveFiltersPreserveSourceItemsMembershipOrderAndLocalCompletionAfterRelaunch()
     throws
@@ -1544,6 +1760,60 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     let option = application.plannerElement(title)
     XCTAssertTrue(option.waitForExistence(timeout: 5))
     option.activateForPlannerJourney()
+  }
+
+  private func openItemEditor(_ application: XCUIApplication) {
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Edit Item").activateForPlannerJourney()
+    XCTAssertTrue(application.textFields["saved.item.edit.title"].waitForExistence(timeout: 5))
+  }
+
+  private func addBookmark(
+    _ originalURL: String, label: String, existingURLIdentifiers: [String] = [],
+    application: XCUIApplication
+  ) -> String {
+    let add = application.plannerElement("saved.item.edit.link.add")
+    XCTAssertTrue(add.waitForExistence(timeout: 5))
+    revealEditorElement(add, application: application)
+    add.activateForPlannerJourney()
+    let newURL = application.textFields.matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND NOT (identifier IN %@)",
+        "saved.item.edit.link.url.", existingURLIdentifiers)
+    ).firstMatch
+    XCTAssertTrue(newURL.waitForExistence(timeout: 5))
+    revealEditorElement(newURL, application: application)
+    newURL.activateForPlannerJourney()
+    newURL.typeText(originalURL)
+    let labelField = application.textFields[
+      newURL.identifier.replacingOccurrences(
+        of: "saved.item.edit.link.url.", with: "saved.item.edit.link.label.")]
+    revealEditorElement(labelField, application: application)
+    labelField.activateForPlannerJourney()
+    labelField.typeText(label)
+    return newURL.identifier
+  }
+
+  private func revealEditorElement(_ element: XCUIElement, application: XCUIApplication) {
+    if element.isHittable { return }
+    for _ in 0..<3 {
+      application.swipeUp()
+      if element.isHittable { return }
+    }
+    XCTAssertTrue(element.waitForPlannerHittability())
+  }
+
+  private func savedBookmarkRows(_ application: XCUIApplication) -> XCUIElementQuery {
+    application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link."))
+  }
+
+  private func removeBookmark(_ identity: String, application: XCUIApplication) {
+    let actions = application.plannerElement("saved.item.edit.link.actions.\(identity)")
+    XCTAssertTrue(actions.waitForExistence(timeout: 5))
+    revealEditorElement(actions, application: application)
+    actions.activateForPlannerJourney()
+    application.plannerElement("Remove Link").activateForPlannerJourney()
   }
 
   private func openListContextMenu(_ list: XCUIElement) {
