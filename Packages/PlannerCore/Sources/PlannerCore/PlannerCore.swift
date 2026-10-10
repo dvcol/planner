@@ -505,14 +505,26 @@ public actor Planner {
           case .title, .created, .lastUpdated, .duration: break
           }
           let historyToken = try latestHistoryToken(in: context)
+          var membershipListsByItem: [UUID: Set<UUID>] = [:]
+          if itemQuery.lists?.ids.isEmpty == false {
+            for membership in try membershipSnapshots(context) {
+              membershipListsByItem[membership.item.id, default: []].insert(membership.list.id)
+            }
+          }
           let listedIdentifiers: Set<UUID>
           switch itemQuery.scope {
           case .global: listedIdentifiers = []
-          case .inbox: listedIdentifiers = Set(try membershipSnapshots(context).map { $0.item.id })
+          case .inbox:
+            if itemQuery.lists?.ids.isEmpty == false {
+              listedIdentifiers = Set(membershipListsByItem.keys)
+            } else {
+              listedIdentifiers = Set(try membershipSnapshots(context).map { $0.item.id })
+            }
           case .list(let listId):
             let snapshot = try listQuerySnapshot(
               session: query.session, listId: listId, query: itemQuery,
-              presentation: presentation, context: context)
+              presentation: presentation, membershipListsByItem: membershipListsByItem,
+              context: context)
             guard try latestHistoryToken(in: context) == historyToken else {
               throw PlannerFailure(
                 "readUnavailable", "The store changed while building this query.")
@@ -550,6 +562,13 @@ public actor Planner {
             case .active: if item.archived { return false }
             case .archived: if !item.archived { return false }
             case .all: break
+            }
+            if let group = itemQuery.lists, !group.ids.isEmpty {
+              guard let identifier = item.id else {
+                throw PlannerFailure(
+                  "readUnavailable", "A membership-filtered Item has unresolved identity.")
+              }
+              guard group.matches(membershipListsByItem[identifier] ?? []) else { return false }
             }
             guard try matchesItemLabels(item, query: itemQuery) else { return false }
             guard try matchesItemDuration(item, duration: itemQuery.duration) else { return false }
@@ -779,7 +798,8 @@ public actor Planner {
 
   private func listQuerySnapshot(
     session: PlannerDatasetSession, listId: UUID, query: PlannerItemQuery,
-    presentation: PlannerRowPresentationContext, context: ModelContext
+    presentation: PlannerRowPresentationContext, membershipListsByItem: [UUID: Set<UUID>],
+    context: ModelContext
   ) throws -> PlannerQuerySnapshot {
     var lists = FetchDescriptor<PlannerSchemaV10.List>(
       predicate: #Predicate { $0.id == listId })
@@ -841,6 +861,9 @@ public actor Planner {
       case .active: if item.archived { continue }
       case .archived: if !item.archived { continue }
       case .all: break
+      }
+      if let group = query.lists, !group.matches(membershipListsByItem[membership.item.id] ?? []) {
+        continue
       }
       if !(try matchesItemLabels(item, query: query)) { continue }
       if !(try matchesItemDuration(item, duration: query.duration)) { continue }
