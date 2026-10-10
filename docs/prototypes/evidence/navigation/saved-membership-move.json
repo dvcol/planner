@@ -1,0 +1,216 @@
+{
+  "baseCommit": "07d92ee",
+  "seam": "Accepted public native UI with isolated real durable local datasets and the existing Core moveMembership command. No private persistence reads or production injection.",
+  "sourceSnapshots": {
+    "red": {
+      "Planner/Scenes/SavedPlannerStore.swift": "c29c8c7bbf38755043b74280b0bf519816555cc1711c217dc79fce549cb05ba5",
+      "Planner/Scenes/SavedPlannerView.swift": "03ae243983551a2369e1d9e06dd049206fe1f318c79bc17642283983c68c4a6c",
+      "Planner/Scenes/SavedAppearanceViews.swift": "b12ebd20cae1db515f680bf424b93e60a1fa973a2019f5c0424cb5b48a3ab154",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "3eb7f5eb7c23657ad643d545d894838b548fdc2cfa99cfa190a99684d61c391f",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "220340155f4796deb5579dd8c39456b8616e3464607e1859b233ff1e67279c6b"
+    },
+    "green": {
+      "Planner/Scenes/SavedPlannerStore.swift": "a786998526a052b534bcadc1e642144e3e6a0aafe08001e5e78716e2a591ea8f",
+      "Planner/Scenes/SavedPlannerView.swift": "ad25515f2505f513460988ebcd4a0bf87ae6717b9fe921a61df6e4d4f519fd07",
+      "Planner/Scenes/SavedAppearanceViews.swift": "a24d3f0806ad6e2acfcb5639da7600b24984fe8d8139f6c57956095bdec1fbf1",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "3eb7f5eb7c23657ad643d545d894838b548fdc2cfa99cfa190a99684d61c391f",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "220340155f4796deb5579dd8c39456b8616e3464607e1859b233ff1e67279c6b",
+      "Planner/Scenes/SavedMoveItemForm.swift": "b939a617a3bb78e7065ab70ed434724105e26d11156021d97e7ac511800077d8"
+    },
+    "corrected": {
+      "Planner/Scenes/SavedPlannerStore.swift": "a786998526a052b534bcadc1e642144e3e6a0aafe08001e5e78716e2a591ea8f",
+      "Planner/Scenes/SavedPlannerView.swift": "ad25515f2505f513460988ebcd4a0bf87ae6717b9fe921a61df6e4d4f519fd07",
+      "Planner/Scenes/SavedAppearanceViews.swift": "a24d3f0806ad6e2acfcb5639da7600b24984fe8d8139f6c57956095bdec1fbf1",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "3eb7f5eb7c23657ad643d545d894838b548fdc2cfa99cfa190a99684d61c391f",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "4fbc261c500bad7753a270b57fcc1b9dcdeac1a864fabdf7334b1ac22a70b00b",
+      "Planner/Scenes/SavedMoveItemForm.swift": "bfa1ee3034891e5a711f6cc12978b5f7a82cb05323b36d38a1b7c69f866c34c2"
+    },
+    "copy": {
+      "Planner/Scenes/SavedPlannerStore.swift": "a786998526a052b534bcadc1e642144e3e6a0aafe08001e5e78716e2a591ea8f",
+      "Planner/Scenes/SavedPlannerView.swift": "ad25515f2505f513460988ebcd4a0bf87ae6717b9fe921a61df6e4d4f519fd07",
+      "Planner/Scenes/SavedAppearanceViews.swift": "a24d3f0806ad6e2acfcb5639da7600b24984fe8d8139f6c57956095bdec1fbf1",
+      "Planner/Scenes/SavedMacMembershipTable.swift": "3eb7f5eb7c23657ad643d545d894838b548fdc2cfa99cfa190a99684d61c391f",
+      "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "4fbc261c500bad7753a270b57fcc1b9dcdeac1a864fabdf7334b1ac22a70b00b",
+      "Planner/Scenes/SavedMoveItemForm.swift": "1b40c23f8b1a00a471b98774a289bfaa361eb0ac6e6b005f21495b36a5e81f1c"
+    }
+  },
+  "commands": {
+    "behaviorRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testMovingASelectedListItemCancelsWithoutChangeThenCreatesANewTodoDestination -resultBundlePath /private/tmp/PlannerNativeMovePhoneRed.xcresult test > /private/tmp/PlannerNativeMovePhoneRed.log 2>&1",
+    "green": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testMovingASelectedListItemCancelsWithoutChangeThenCreatesANewTodoDestination -resultBundlePath /private/tmp/PlannerNativeMovePhoneGreen.xcresult test > /private/tmp/PlannerNativeMovePhoneGreen.log 2>&1",
+    "corrected": {
+      "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testMovingASelectedListItemCancelsWithoutChangeThenCreatesANewTodoDestination -resultBundlePath /private/tmp/PlannerNativeMovePhoneCorrected.xcresult test > /private/tmp/PlannerNativeMovePhoneCorrected.log 2>&1",
+      "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testMovingASelectedListItemCancelsWithoutChangeThenCreatesANewTodoDestination -resultBundlePath /private/tmp/PlannerNativeMoveTabletCorrected.xcresult test > /private/tmp/PlannerNativeMoveTabletCorrected.log 2>&1",
+      "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeMoveMacCorrected.xcresult build-for-testing > /private/tmp/PlannerNativeMoveMacCorrected.log 2>&1"
+    },
+    "regression": {
+      "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testRemovingASelectedListItemKeepsItsSourceAndOtherListStateWhileReAddStartsTodo -resultBundlePath /private/tmp/PlannerNativeMovePhoneRemovalRegression.xcresult test > /private/tmp/PlannerNativeMovePhoneRemovalRegression.log 2>&1",
+      "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testRemovingASelectedListItemKeepsItsSourceAndOtherListStateWhileReAddStartsTodo -resultBundlePath /private/tmp/PlannerNativeMoveTabletRemovalRegression.xcresult test > /private/tmp/PlannerNativeMoveTabletRemovalRegression.log 2>&1"
+    },
+    "copyReview": {
+      "Phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testMovingASelectedListItemCancelsWithoutChangeThenCreatesANewTodoDestination -resultBundlePath /private/tmp/PlannerNativeMovePhoneCopyReview.xcresult test > /private/tmp/PlannerNativeMovePhoneCopyReview.log 2>&1",
+      "Tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testMovingASelectedListItemCancelsWithoutChangeThenCreatesANewTodoDestination -resultBundlePath /private/tmp/PlannerNativeMoveTabletCopyReview.xcresult test > /private/tmp/PlannerNativeMoveTabletCopyReview.log 2>&1",
+      "Mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -resultBundlePath /private/tmp/PlannerNativeMoveMacCopyReview.xcresult build-for-testing > /private/tmp/PlannerNativeMoveMacCopyReview.log 2>&1"
+    }
+  },
+  "results": {
+    "PhoneRed": {
+      "result": "Failed",
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "failureText": "XCTAssertTrue failed",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testMovingASelectedListItemCancelsWithoutChangeThenCreatesANewTodoDestination()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testMovingASelectedListItemCancelsWithoutChangeThenCreatesANewTodoDestination",
+          "testName": "testMovingASelectedListItemCancelsWithoutChangeThenCreatesANewTodoDestination()"
+        }
+      ],
+      "sourceSnapshot": "red",
+      "resultBundle": "/private/tmp/PlannerNativeMovePhoneRed.xcresult"
+    },
+    "PhoneGreen": {
+      "result": "Failed",
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "testFailures": [
+        {
+          "failureText": "Failed to get matching snapshot: No matches found for first query match sequence: `Descendants matching type Button` -> `Elements matching predicate '(identifier BEGINSWITH \"saved.item.\" OR identifier BEGINSWITH \"saved.appearance.\") AND label == \"Nezu Museum\"'`, given input App element pid: 16985",
+          "targetName": "PlannerNavigationUITests",
+          "testIdentifier": 1,
+          "testIdentifierString": "SavedAppearanceJourneyTests/testMovingASelectedListItemCancelsWithoutChangeThenCreatesANewTodoDestination()",
+          "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testMovingASelectedListItemCancelsWithoutChangeThenCreatesANewTodoDestination",
+          "testName": "testMovingASelectedListItemCancelsWithoutChangeThenCreatesANewTodoDestination()"
+        }
+      ],
+      "sourceSnapshot": "green",
+      "resultBundle": "/private/tmp/PlannerNativeMovePhoneGreen.xcresult"
+    },
+    "PhoneCorrected": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "sourceSnapshot": "corrected",
+      "resultBundle": "/private/tmp/PlannerNativeMovePhoneCorrected.xcresult"
+    },
+    "TabletCorrected": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "sourceSnapshot": "corrected",
+      "resultBundle": "/private/tmp/PlannerNativeMoveTabletCorrected.xcresult"
+    },
+    "PhoneRemovalRegression": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "sourceSnapshot": "corrected",
+      "resultBundle": "/private/tmp/PlannerNativeMovePhoneRemovalRegression.xcresult"
+    },
+    "TabletRemovalRegression": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "sourceSnapshot": "corrected",
+      "resultBundle": "/private/tmp/PlannerNativeMoveTabletRemovalRegression.xcresult"
+    },
+    "MacCorrected": {
+      "action": "build-for-testing",
+      "result": "Passed",
+      "executedBehaviorFunctions": 0,
+      "sourceSnapshot": "corrected",
+      "resultBundle": "/private/tmp/PlannerNativeMoveMacCorrected.xcresult"
+    },
+    "PhoneCopyReview": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "sourceSnapshot": "copy",
+      "resultBundle": "/private/tmp/PlannerNativeMovePhoneCopyReview.xcresult"
+    },
+    "TabletCopyReview": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "testFailures": [],
+      "sourceSnapshot": "copy",
+      "resultBundle": "/private/tmp/PlannerNativeMoveTabletCopyReview.xcresult"
+    },
+    "MacCopyReview": {
+      "action": "build-for-testing",
+      "result": "Passed",
+      "executedBehaviorFunctions": 0,
+      "sourceSnapshot": "copy",
+      "resultBundle": "/private/tmp/PlannerNativeMoveMacCopyReview.xcresult"
+    }
+  },
+  "reviewCorrections": [
+    "Initial executed red failed at the missing Move to List action.",
+    "Initial green reached chooser selection and cancellation, then the test attempted to inspect a hidden iPhone List row while detail remained visible. The test now navigates back before checking identity/completion; no mutation code changed for this correction.",
+    "Chooser wording was clarified to include global Item completion precedence. Only the form footer changed after the two passing behavior/regression runs."
+  ],
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-move-destination-reopened.png",
+      "sha256": "23a8716b68e7d312a3a057815bb819688be1d833d91b0a242d654750000d2163",
+      "sourceSnapshot": "copy",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-move-source-empty.png",
+      "sha256": "8859cb9e330ce48a5c6137d12c502add5d0217c205d1b799936f8f40bb69451b",
+      "sourceSnapshot": "copy",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/phone-saved-move-chooser.png",
+      "sha256": "87195245231a4677616823c773c44ad5cd6dd86a6534741aa27382def6b3d605",
+      "sourceSnapshot": "copy",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-move-destination-reopened.png",
+      "sha256": "b1dbcb5fb485b5f94473fd472a1cc892a04bd129eee2940f2d9b2e0417cd3704",
+      "sourceSnapshot": "copy",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-move-source-empty.png",
+      "sha256": "95485a76bdc727e8bdc6b84d50131b140096d533c4939e69dd9b837bba4aa94b",
+      "sourceSnapshot": "copy",
+      "inspected": true
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/tablet-saved-move-chooser.png",
+      "sha256": "297eacb84a4376b6aae399b2ada292a74baae0797ade5ce477a767ddf391715d",
+      "sourceSnapshot": "copy",
+      "inspected": true
+    }
+  ],
+  "limits": [
+    "This slice exposes Move from contextual Item actions. Native row-menu Move, existing-destination UI interaction and other Add entry paths remain open.",
+    "Only localOnly schema-7 data with portable format 1 is exercised; CloudKit is disabled.",
+    "Core proves atomic moves, existing destination preservation, global Done precedence, failure and replay at its recorded revision. Those outcomes are not all additional native UI results here.",
+    "No native Mac runtime, external refresh, Undo, failure/recovery presentation, signed/physical-device, CloudKit, Share, accessibility/keyboard or large-data claim."
+  ],
+  "validation": [
+    "Strict lint passes for the five affected Swift files.",
+    "Both simulator app/test targets and the Mac app/test bundle compile.",
+    "Two distinct journeys pass per simulator across recorded move/removal runs; copy review repeats the move journey on each simulator.",
+    "The only production difference between corrected/regression and copy-review snapshots is the form footer."
+  ]
+}

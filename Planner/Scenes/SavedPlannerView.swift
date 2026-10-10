@@ -29,7 +29,9 @@ struct SavedPlannerView: View {
   @State private var isOpeningCatalog = false
   @State private var selectedAppearanceIdentity: PlannerAppearance?
   @State private var selectedAppearance: PlannerAppearanceRead?
-  @State private var appearanceRemovalMessage: String?
+  @State private var appearanceChangeMessage: String?
+  @State private var appearanceChangeTitle = "Item removed from List"
+  @State private var membershipMoveDraft: SavedMembershipMoveDraft?
   @State private var isOpeningAppearance = false
   @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
@@ -74,6 +76,13 @@ struct SavedPlannerView: View {
     .sheet(isPresented: $showAddItem) {
       if let selectedList {
         SavedAddItemForm(store: store, list: selectedList) {}
+      }
+    }
+    .sheet(item: $membershipMoveDraft) { draft in
+      SavedMoveItemForm(store: store, draft: draft) { destination in
+        clearRemovedMembershipSelection(
+          draft.membershipIdentifier, listIdentifier: draft.sourceListIdentifier,
+          explanation: "The Item is now in \(destination.name).", detailTitle: "Item moved")
       }
     }
     .alert(
@@ -268,7 +277,7 @@ struct SavedPlannerView: View {
           selectedAppearanceIdentity = nil
           return
         }
-        appearanceRemovalMessage = nil
+        appearanceChangeMessage = nil
         selectedAppearanceIdentity = .listMembership(listId: listId, membershipId: identifier)
       })
   }
@@ -299,6 +308,15 @@ struct SavedPlannerView: View {
           selectedItemId = selectedAppearance.source.id
           selectedSection = .items
         },
+        moveToList: {
+          guard
+            case .listMembership(let listIdentifier, let membershipIdentifier) =
+              selectedAppearance.appearance,
+            listIdentifier == selectedList.source.id
+          else { return }
+          proposeMembershipMove(
+            membershipIdentifier, itemTitle: selectedAppearance.content.title, list: selectedList)
+        },
         removeFromList: {
           guard
             case .listMembership(let listIdentifier, let membershipIdentifier) =
@@ -315,9 +333,9 @@ struct SavedPlannerView: View {
         Button("Try Again") { Task { await loadSelectedAppearance() } }
       }
     } else {
-      if appearanceRemovalMessage != nil {
+      if appearanceChangeMessage != nil {
         ContentUnavailableView(
-          "Item removed from List", systemImage: "list.bullet.rectangle",
+          appearanceChangeTitle, systemImage: "list.bullet.rectangle",
           description: Text("Choose another Item to see its details."))
       } else {
         ContentUnavailableView("Choose an Item", systemImage: "square.stack")
@@ -329,14 +347,32 @@ struct SavedPlannerView: View {
     Task {
       guard await store.removeMembership(membershipIdentifier, listIdentifier: listIdentifier)
       else { return }
-      let removedAppearance = PlannerAppearance.listMembership(
-        listId: listIdentifier, membershipId: membershipIdentifier)
-      guard selectedAppearanceIdentity == removedAppearance else { return }
-      selectedAppearanceIdentity = nil
-      selectedAppearance = nil
-      isOpeningAppearance = false
-      appearanceRemovalMessage = "The Item remains available in Items."
+      clearRemovedMembershipSelection(
+        membershipIdentifier, listIdentifier: listIdentifier,
+        explanation: "The Item remains available in Items.", detailTitle: "Item removed from List")
     }
+  }
+
+  private func clearRemovedMembershipSelection(
+    _ membershipIdentifier: UUID, listIdentifier: UUID, explanation: String, detailTitle: String
+  ) {
+    let removedAppearance = PlannerAppearance.listMembership(
+      listId: listIdentifier, membershipId: membershipIdentifier)
+    guard selectedAppearanceIdentity == removedAppearance else { return }
+    selectedAppearanceIdentity = nil
+    selectedAppearance = nil
+    isOpeningAppearance = false
+    appearanceChangeMessage = explanation
+    appearanceChangeTitle = detailTitle
+  }
+
+  private func proposeMembershipMove(
+    _ membershipIdentifier: UUID, itemTitle: String, list: PlannerListSourceRead
+  ) {
+    guard store.canCreate else { return }
+    membershipMoveDraft = SavedMembershipMoveDraft(
+      sourceListIdentifier: list.source.id, membershipIdentifier: membershipIdentifier,
+      sourceListName: list.content.name, itemTitle: itemTitle)
   }
 
   private var plannerColumns: some View {
@@ -394,7 +430,7 @@ struct SavedPlannerView: View {
                 ContentUnavailableView(
                   selectedList.progress.totalCount == 0 ? "No items" : "No matching items",
                   systemImage: "checklist",
-                  description: appearanceRemovalMessage.map { Text($0) })
+                  description: appearanceChangeMessage.map { Text($0) })
               }
             } else {
               #if os(macOS)
@@ -511,7 +547,7 @@ struct SavedPlannerView: View {
     .onChange(of: selectedListId) { _, identifier in
       selectedAppearanceIdentity = nil
       selectedAppearance = nil
-      appearanceRemovalMessage = nil
+      appearanceChangeMessage = nil
       #if os(iOS)
         if identifier != nil { columnVisibility = .doubleColumn }
       #endif

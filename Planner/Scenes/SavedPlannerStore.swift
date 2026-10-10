@@ -215,6 +215,17 @@ final class SavedPlannerStore {
       operationId: UUID()) != nil
   }
 
+  func moveMembership(
+    _ membershipIdentifier: UUID, listIdentifier: UUID, destinationListIdentifier: UUID,
+    operationIdentifier: UUID
+  ) async -> Bool {
+    await executeChange(
+      .moveMembership(
+        listId: listIdentifier, membershipId: membershipIdentifier,
+        destinationListId: destinationListIdentifier, placement: .last),
+      operationId: operationIdentifier) != nil
+  }
+
   func setAppearanceCompletion(_ appearance: PlannerAppearance, done: Bool) async -> Bool {
     await executeChange(
       .setCompletion(scope: .appearance(appearance), done: done), operationId: UUID()) != nil
