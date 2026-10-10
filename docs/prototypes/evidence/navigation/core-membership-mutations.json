@@ -1,0 +1,305 @@
+{
+  "formatVersion": 1,
+  "recordedDate": "2026-10-10",
+  "baselineCommit": "eb24e44",
+  "scope": "Local removeMembership and atomic cross-List moveMembership through public Planner, including minimal removed-membership recovery metadata. Native/MCP actions and CloudKit convergence remain unqualified.",
+  "executions": {
+    "RemovalSetupReadCase": {
+      "log": "/private/tmp/PlannerCoreMembershipRemovalRed.log",
+      "logSHA256": "48d660d71eb30ff1bdfdf0b720722912865ecf18457b7f320469332d7f382619",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "xcrun swift test --package-path Packages/PlannerCore --filter MembershipRemovalTests --scratch-path /private/tmp/PlannerCoreFixturePackageBuild",
+      "result": "Compilation failed; no behavior executed",
+      "totalTestCount": 0,
+      "failedTests": 0,
+      "passedTests": 0,
+      "skippedTests": 0,
+      "compileDiagnostics": [
+        "error: SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift failed with a nonzero exit code. Command line:     cd /Users/dinh-van.colomban/Workspace/private/planner/Packages",
+        "/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift:99:34: error: binary operator '==' cannot be applied to two 'PlannerItemContent' operands",
+        "    |                                  `- error: binary operator '==' cannot be applied to two 'PlannerItemContent' operands",
+        "/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift:114:36: error: expression pattern of type 'Self' cannot match values of type 'PlannerReadResult'",
+        "    |                                    `- error: expression pattern of type 'Self' cannot match values of type 'PlannerReadResult'",
+        "/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift:114:13: error: type '_ErrorCodeProtocol' has no member 'unavailable'",
+        "    |             `- error: type '_ErrorCodeProtocol' has no member 'unavailable'",
+        "error: Build failed",
+        "error: fatalError"
+      ],
+      "sourceSnapshotNote": "No source snapshot captured for this initial compilation failure."
+    },
+    "RemovalSetupContentComparison": {
+      "log": "/private/tmp/PlannerCoreMembershipRemovalBehaviorRed.log",
+      "logSHA256": "bb36087eb91169108ab9ed64c70039a31be2ba915798ccb0bd79ee3c53ef1cbb",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "xcrun swift test --package-path Packages/PlannerCore --filter MembershipRemovalTests --scratch-path /private/tmp/PlannerCoreFixturePackageBuild",
+      "result": "Compilation failed; no behavior executed",
+      "totalTestCount": 0,
+      "failedTests": 0,
+      "passedTests": 0,
+      "skippedTests": 0,
+      "compileDiagnostics": [
+        "error: SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift failed with a nonzero exit code. Command line:     cd /Users/dinh-van.colomban/Workspace/private/planner/Packages",
+        "/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift:99:34: error: binary operator '==' cannot be applied to two 'PlannerItemContent' operands",
+        "    |                                  `- error: binary operator '==' cannot be applied to two 'PlannerItemContent' operands",
+        "error: Build failed",
+        "error: fatalError"
+      ],
+      "sourceSHA256": {
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "cab4d910fafc1654e6d710e3472361a755a182a582ea7a8f2a985908b1fe7577",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "321bf44b2677714715c2eb4ec5f0525920c2a7b5793df5f2ea6e6f7ae4803aa4",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "67fa6cc4fb95ea9c847c755dbbab63340c5fb2b5daa5f6ccd453e6b676777d22"
+      }
+    },
+    "RemovalBehaviorRed": {
+      "log": "/private/tmp/PlannerCoreMembershipRemovalExecutableRed.log",
+      "logSHA256": "d4350d0c1475d0aeb98f0a497262fcbaaf7967087d0c2c0f34a7f41c3e728e67",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "xcrun swift test --package-path Packages/PlannerCore --filter MembershipRemovalTests --scratch-path /private/tmp/PlannerCoreFixturePackageBuild",
+      "result": "failed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "sourceSHA256": {
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "cab4d910fafc1654e6d710e3472361a755a182a582ea7a8f2a985908b1fe7577",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "321bf44b2677714715c2eb4ec5f0525920c2a7b5793df5f2ea6e6f7ae4803aa4",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "3e1c45b91aebdcd662626f5b48445f4ff930f65cdd136f2110a09da003bb05d1"
+      }
+    },
+    "RemovalGreen": {
+      "log": "/private/tmp/PlannerCoreMembershipRemovalGreen.log",
+      "logSHA256": "4452a87aefa726fb1eec757c63985c3df1eaffe21cbeeb5cc647648fb9531dc1",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "xcrun swift test --package-path Packages/PlannerCore --filter MembershipRemovalTests --scratch-path /private/tmp/PlannerCoreFixturePackageBuild",
+      "result": "passed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "sourceSHA256": {
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "cab4d910fafc1654e6d710e3472361a755a182a582ea7a8f2a985908b1fe7577",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "c1798309111836978fe6da1c7ad7ef2a8084794dc7e6d3fc34eb98de9b527adc",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "3e1c45b91aebdcd662626f5b48445f4ff930f65cdd136f2110a09da003bb05d1"
+      }
+    },
+    "RemovalBoundary": {
+      "log": "/private/tmp/PlannerCoreMembershipRemovalBoundary.log",
+      "logSHA256": "aecdba66f02fadce89853944b3e95a30fda7d999e3405995e9122607e9e73d54",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "xcrun swift test --package-path Packages/PlannerCore --filter MembershipRemovalTests --scratch-path /private/tmp/PlannerCoreFixturePackageBuild",
+      "result": "passed",
+      "totalTestCount": 2,
+      "suiteCount": 1,
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "sourceSHA256": {
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "cab4d910fafc1654e6d710e3472361a755a182a582ea7a8f2a985908b1fe7577",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "c1798309111836978fe6da1c7ad7ef2a8084794dc7e6d3fc34eb98de9b527adc",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093"
+      }
+    },
+    "MoveSetupLabels": {
+      "log": "/private/tmp/PlannerCoreMembershipMoveRed.log",
+      "logSHA256": "0ab3e6457fbf4a8b04602e823011fe831d5ebf812bbc4e3ef509dd02d99ab727",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "xcrun swift test --package-path Packages/PlannerCore --filter MembershipMoveTests --scratch-path /private/tmp/PlannerCoreFixturePackageBuild",
+      "result": "Compilation failed; no behavior executed",
+      "totalTestCount": 0,
+      "failedTests": 0,
+      "passedTests": 0,
+      "skippedTests": 0,
+      "compileDiagnostics": [
+        "error: SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift failed with a nonzero exit code. Command line:     cd /Users/dinh-van.colomban/Workspace/private/planner/Packages",
+        "/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift:39:50: error: missing argument label 'itemId:' in call",
+        "    |                                                  `- error: missing argument label 'itemId:' in call",
+        "/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift:101:50: error: missing argument label 'itemId:' in call",
+        "    |                                                  `- error: missing argument label 'itemId:' in call",
+        "/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift:162:56: error: cannot convert value of type 'PlannerAppearance' to closure result type 'PlannerEntityReference'",
+        "    |                                                        `- error: cannot convert value of type 'PlannerAppearance' to closure result type 'PlannerEntityReference'",
+        "error: Build failed",
+        "error: fatalError"
+      ],
+      "sourceSHA256": {
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "d79d95287dfeb6af2e2e43596b65c1e007f6e94dfa6636b07b4977eb12bd857a",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1e151c20b2f4e3018cf72406e22dc1e6e61960186d05d26448ed938faeca9820",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift": "37082d501d6f230698775fe5066c23d6854b24ecf78f4d7127cd0436551cb00c"
+      }
+    },
+    "MoveBehaviorRed": {
+      "log": "/private/tmp/PlannerCoreMembershipMoveExecutableRed.log",
+      "logSHA256": "6bec8c008161393caa8f7b44b5cabe63ce241e0c0f032cb2ae33f5f661d8e416",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "xcrun swift test --package-path Packages/PlannerCore --filter MembershipMoveTests --scratch-path /private/tmp/PlannerCoreFixturePackageBuild",
+      "result": "failed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "sourceSHA256": {
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "d79d95287dfeb6af2e2e43596b65c1e007f6e94dfa6636b07b4977eb12bd857a",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1e151c20b2f4e3018cf72406e22dc1e6e61960186d05d26448ed938faeca9820",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift": "cd26b2c4a79ce5d886fe1c479012e9b52890f99ebea792e4dba71facced63a76"
+      }
+    },
+    "MoveCompileBindingComparison": {
+      "log": "/private/tmp/PlannerCoreMembershipMoveGreen.log",
+      "logSHA256": "b10357de4882931e50c16a5211484050ce204d82ee3e3b3edea23d29c27676ed",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "xcrun swift test --package-path Packages/PlannerCore --filter MembershipMoveTests --scratch-path /private/tmp/PlannerCoreFixturePackageBuild",
+      "result": "Compilation failed; no behavior executed",
+      "totalTestCount": 0,
+      "failedTests": 0,
+      "passedTests": 0,
+      "skippedTests": 0,
+      "compileDiagnostics": [
+        "error: SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift failed with a nonzero exit code. Command line:     cd /Users/dinh-van.colomban/Workspace/private/planner/Packages",
+        "/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift:1555:44: error: referencing operator function '==' on 'Equatable' requires that 'PlannerBoundIdentity' conform to 'Equatable'",
+        "     |                                            `- error: referencing operator function '==' on 'Equatable' requires that 'PlannerBoundIdentity' conform to 'Equatable'",
+        "error: Build failed",
+        "error: fatalError"
+      ],
+      "sourceSHA256": {
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "d79d95287dfeb6af2e2e43596b65c1e007f6e94dfa6636b07b4977eb12bd857a",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "af58418e62a1d0eb5334f0f53fb5aa967f816249e9a034733006c547d75ad1e9",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift": "cd26b2c4a79ce5d886fe1c479012e9b52890f99ebea792e4dba71facced63a76"
+      }
+    },
+    "MoveGreen": {
+      "log": "/private/tmp/PlannerCoreMembershipMoveExecutableGreen.log",
+      "logSHA256": "d01f63568cd191ec7b7b4cb54796dc598f9baae6ec150ddea21d4353258e0b46",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "xcrun swift test --package-path Packages/PlannerCore --filter MembershipMoveTests --scratch-path /private/tmp/PlannerCoreFixturePackageBuild",
+      "result": "passed",
+      "totalTestCount": 1,
+      "suiteCount": 1,
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "sourceSHA256": {
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "d79d95287dfeb6af2e2e43596b65c1e007f6e94dfa6636b07b4977eb12bd857a",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "9d475f5f8ef1a28556651fb75b1ff0f5b9cdaf353db2055cf94bf63bcc59a8f3",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift": "cd26b2c4a79ce5d886fe1c479012e9b52890f99ebea792e4dba71facced63a76"
+      }
+    },
+    "MoveBoundary": {
+      "log": "/private/tmp/PlannerCoreMembershipMoveBoundary.log",
+      "logSHA256": "5f41993a7143a24160f387f4c670ee52afc23233595aac8f85eef77cd7f6cf1c",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "xcrun swift test --package-path Packages/PlannerCore --filter MembershipMoveTests --scratch-path /private/tmp/PlannerCoreFixturePackageBuild",
+      "result": "passed",
+      "totalTestCount": 3,
+      "suiteCount": 1,
+      "passedTests": 3,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "sourceSHA256": {
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "d79d95287dfeb6af2e2e43596b65c1e007f6e94dfa6636b07b4977eb12bd857a",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "9d475f5f8ef1a28556651fb75b1ff0f5b9cdaf353db2055cf94bf63bcc59a8f3",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift": "984e7c5b172c2592e5d60537946923723695ed997c6fc01271f8ec7da416c25f"
+      }
+    },
+    "FinalStoreQualification": {
+      "log": "/private/tmp/PlannerCoreMembershipMutationQualification.log",
+      "logSHA256": "617827e3afca30457554a79a6ede7ecd24e59773526f06f01da12d4996cd2adb",
+      "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+      "command": "xcrun swift test --package-path Packages/PlannerCore --filter PlannerCoreStoreTests --scratch-path /private/tmp/PlannerCoreFixturePackageBuild",
+      "result": "passed",
+      "totalTestCount": 81,
+      "suiteCount": 30,
+      "passedTests": 81,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "sourceSHA256": {
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "d79d95287dfeb6af2e2e43596b65c1e007f6e94dfa6636b07b4977eb12bd857a",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "9d475f5f8ef1a28556651fb75b1ff0f5b9cdaf353db2055cf94bf63bcc59a8f3",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift": "984e7c5b172c2592e5d60537946923723695ed997c6fc01271f8ec7da416c25f"
+      }
+    }
+  },
+  "nativeBuilds": {
+    "SimulatorBuild": {
+      "result": "Test build succeeded",
+      "runtimeExecuted": false,
+      "log": "/private/tmp/PlannerCoreMembershipMutationSimulatorBuild.log",
+      "logSHA256": "475c676a17aae2bc777d41dc715b8f1a6c9104527aeee44b8e665e2a1762b1e6",
+      "scheme": "PlannerCore",
+      "destination": "generic/platform=iOS Simulator",
+      "derivedDataPath": "/private/tmp/PlannerCoreOwnedRowsSimulatorDerivedData",
+      "sourceSHA256": {
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "d79d95287dfeb6af2e2e43596b65c1e007f6e94dfa6636b07b4977eb12bd857a",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "9d475f5f8ef1a28556651fb75b1ff0f5b9cdaf353db2055cf94bf63bcc59a8f3",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift": "984e7c5b172c2592e5d60537946923723695ed997c6fc01271f8ec7da416c25f"
+      }
+    },
+    "MacBuild": {
+      "result": "Test build succeeded",
+      "runtimeExecuted": false,
+      "log": "/private/tmp/PlannerCoreMembershipMutationMacBuild.log",
+      "logSHA256": "d6ea6813d87f558ecfc3ab917444cb5b4b248c04b1fb22d02d59020605ae48b5",
+      "scheme": "Planner",
+      "destination": "platform=macOS,arch=arm64",
+      "derivedDataPath": "/private/tmp/PlannerMCPNativeDerivedData",
+      "sourceSHA256": {
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "d79d95287dfeb6af2e2e43596b65c1e007f6e94dfa6636b07b4977eb12bd857a",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "9d475f5f8ef1a28556651fb75b1ff0f5b9cdaf353db2055cf94bf63bcc59a8f3",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionRecovery.swift": "a6e852617b7c23733ae3549224f61136b2ce59b5b40fffa7e1c807e5d7fe0299",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerDeletionValues.swift": "32ef8773efe148db0a17bff9fc7a2403fb381cd7d38fafdb4179bd2b4a96e27c",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV4.swift": "a1fb650f4267678a3069f8163e6d0d4ab9f81af294ffef00532b3bc6a385bd88",
+        "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "952aaa5b699661cefa4fb7a48e95f27bdbe9ae012a3fe0a84cbfb69adca81968",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift": "60fd74f444387e604c67fb49fa409fa33bd0d0a6d3ab9ba2a35d697dcf8b0093",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMoveTests.swift": "984e7c5b172c2592e5d60537946923723695ed997c6fc01271f8ec7da416c25f"
+      }
+    }
+  },
+  "checks": {
+    "strictChangedSwiftFormatLint": "Passed",
+    "scope": "Eight changed Swift files; native builds type-check Core and app/MCP integration."
+  }
+}

@@ -2,6 +2,7 @@ import Foundation
 
 public enum PlannerPortableDeletionTarget: Sendable, Equatable {
   case source(PlannerEntityReference, lifetimeId: UUID)
+  case membership(id: UUID, lifetimeId: UUID)
 }
 
 public struct PlannerPortableDeletionMarker: Sendable, Equatable {

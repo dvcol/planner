@@ -112,6 +112,17 @@ public actor Planner {
         let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
         let envelope = try archive.latest()
         switch operation.command {
+        case .moveMembership(let listId, let membershipId, let destinationListId, let placement):
+          return try executeMembershipMove(
+            operation, listId: listId, membershipId: membershipId,
+            destinationListId: destinationListId, placement: placement,
+            identity: identity, context: context, archive: archive, receipts: receipts,
+            envelope: envelope)
+        case .removeMembership(let listId, let membershipId):
+          return try executeMembershipRemoval(
+            operation, listId: listId, membershipId: membershipId,
+            identity: identity, context: context, archive: archive, receipts: receipts,
+            envelope: envelope)
         case .reorderMembership(let listId, let membershipId, let placement):
           return try executeMembershipReordering(
             operation, listId: listId, membershipId: membershipId, placement: placement,
@@ -1352,6 +1363,338 @@ public actor Planner {
         outcome: .applied(
           result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
     }
+  }
+
+  private func executeMembershipRemoval(
+    _ operation: PlannerOperation, listId: UUID, membershipId: UUID,
+    identity: PlannerStoreIdentity, context: ModelContext, archive: PlannerRecoveryArchive,
+    receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let digest = membershipRemovalDigest(
+        listId: listId, membershipId: membershipId, identity: identity,
+        bindings: try receipt.evidence().bindings)
+      guard receipt.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "This operation identity describes another removal.")
+      }
+      return appliedResult(
+        operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
+        envelope: envelope)
+    }
+    let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    var descriptor = FetchDescriptor<PlannerSchemaV7.Membership>(
+      predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
+    descriptor.fetchLimit = 2
+    let selected = try context.fetch(descriptor)
+    guard selected.count == 1, let record = selected.first else {
+      throw PlannerFailure("missingReference", "The selected membership is missing or unresolved.")
+    }
+    let before = try record.value()
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>())
+    let lists = try context.fetch(FetchDescriptor<PlannerSchemaV7.List>())
+    let owners = lists.filter { $0.id == before.list.id && $0.lifetimeId == before.list.lifetimeId }
+    let sources = items.filter {
+      $0.id == before.item.id && $0.lifetimeId == before.item.lifetimeId
+    }
+    guard owners.count == 1, let owner = owners.first, sources.count == 1 else {
+      throw PlannerFailure(
+        "missingReference", "The membership's Item or List lifetime is unresolved.")
+    }
+    let membershipBinding = PlannerBoundIdentity(
+      kind: "membership", id: before.id, lifetimeId: before.lifetimeId)
+    let bindings = [membershipBinding, before.list, before.item]
+    let digest = membershipRemovalDigest(
+      listId: listId, membershipId: membershipId, identity: identity, bindings: bindings)
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another removal.")
+      }
+      return PlannerOperationResult(
+        operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    let memberships = try membershipSnapshots(context).filter { $0.id != membershipId }
+    let ownerSnapshot = try owner.value()
+    let updatedAt = Date()
+    let itemSnapshots = try items.map { try $0.value() }
+    let listSnapshots = try lists.map { list in
+      if list.id != listId { return try list.value() }
+      return ListSnapshot(
+        id: ownerSnapshot.id, lifetimeId: ownerSnapshot.lifetimeId,
+        createdAt: ownerSnapshot.createdAt, updatedAt: updatedAt,
+        content: ownerSnapshot.content, archived: ownerSnapshot.archived)
+    }
+    let removalMarker = PortableDeletionMarker(
+      deletionId: UUID(), operationId: operation.operationId,
+      target: .membership(membershipBinding), closedFamilyId: nil)
+    let markers = try deletionMarkers(context) + [removalMarker]
+    let result = PlannerAppliedResult(
+      generatedIdentities: [],
+      affectedIdentities: [.reference(before.reference), .source(ownerSnapshot.reference)])
+    try archive.prepare(
+      RecoveryPreparedProposal(
+        proposalId: UUID(), originalOperationId: operation.operationId,
+        datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
+        proposedBackup: PlannerDataSnapshot(
+          items: itemSnapshots, lists: listSnapshots, memberships: memberships,
+          deletionMarkers: markers),
+        payloadDigest: digest, evidence: "preparedUnverified"))
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result, bindings: bindings)
+    context.delete(record)
+    context.insert(PlannerSchemaV4.DeletionMarker(removalMarker))
+    owner.updatedAt = updatedAt
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The complete membership removal was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(
+        items: itemSnapshots, lists: listSnapshots, memberships: memberships,
+        deletionMarkers: markers, receipts: receipts + [receipt])
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
+  }
+
+  private func membershipRemovalDigest(
+    listId: UUID, membershipId: UUID, identity: PlannerStoreIdentity,
+    bindings: [PlannerBoundIdentity]
+  ) -> String {
+    let value = PlannerCanonicalValue.record([
+      "command": .record([
+        "type": .string("removeMembership"), "listId": .identity(listId),
+        "membershipId": .identity(membershipId),
+      ]),
+      "datasetId": .identity(identity.datasetId),
+      "ownershipBinding": .string(identity.ownershipBinding),
+      "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
+    ])
+    let bytes = Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded()
+    return plannerDigest(bytes, prefix: "sha256-payload-v1:")
+  }
+
+  private func executeMembershipMove(
+    _ operation: PlannerOperation, listId: UUID, membershipId: UUID,
+    destinationListId: UUID, placement: PlannerPlacement,
+    identity: PlannerStoreIdentity, context: ModelContext, archive: PlannerRecoveryArchive,
+    receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let digest = membershipMoveDigest(
+        listId: listId, membershipId: membershipId, destinationListId: destinationListId,
+        placement: placement, identity: identity, bindings: try receipt.evidence().bindings)
+      guard receipt.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "This operation identity describes another move.")
+      }
+      return appliedResult(
+        operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
+        envelope: envelope)
+    }
+    let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    guard listId != destinationListId else {
+      throw PlannerFailure(
+        "invalidInput", "Use reorder to change position in the same List.",
+        propertyPath: "/command/destinationListId")
+    }
+    var descriptor = FetchDescriptor<PlannerSchemaV7.Membership>(
+      predicate: #Predicate { $0.id == membershipId && $0.listId == listId })
+    descriptor.fetchLimit = 2
+    let selected = try context.fetch(descriptor)
+    guard selected.count == 1, let record = selected.first else {
+      throw PlannerFailure("missingReference", "The selected membership is missing or unresolved.")
+    }
+    let before = try record.value()
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV7.Item>())
+    let lists = try context.fetch(FetchDescriptor<PlannerSchemaV7.List>())
+    let owners = lists.filter { $0.id == before.list.id && $0.lifetimeId == before.list.lifetimeId }
+    let sources = items.filter {
+      $0.id == before.item.id && $0.lifetimeId == before.item.lifetimeId
+    }
+    let destinations = lists.filter { $0.id == destinationListId }
+    guard owners.count == 1, let owner = owners.first,
+      sources.count == 1, let source = sources.first,
+      destinations.count == 1, let destination = destinations.first
+    else {
+      throw PlannerFailure(
+        "missingReference", "The membership's sources or destination List are unresolved.")
+    }
+    let ownerSnapshot = try owner.value()
+    let destinationSnapshot = try destination.value()
+    let membershipBinding = PlannerBoundIdentity(
+      kind: "membership", id: before.id, lifetimeId: before.lifetimeId)
+    let destinationBinding = PlannerBoundIdentity(
+      kind: "list", id: destinationSnapshot.id, lifetimeId: destinationSnapshot.lifetimeId)
+    var memberships = try membershipSnapshots(context)
+    let ordered = memberships.filter { $0.list.id == destinationListId }.sorted {
+      if $0.rank != $1.rank { return $0.rank < $1.rank }
+      return $0.id.uuidString < $1.id.uuidString
+    }
+    let insertionIndex = try membershipInsertionIndex(placement, in: ordered)
+    let existing = ordered.first {
+      $0.item.id == before.item.id && $0.item.lifetimeId == before.item.lifetimeId
+    }
+    var bindings = [membershipBinding, before.list, before.item, destinationBinding]
+    if let existing {
+      bindings.append(
+        PlannerBoundIdentity(kind: "membership", id: existing.id, lifetimeId: existing.lifetimeId))
+    }
+    switch placement {
+    case .before(let identifier), .after(let identifier):
+      if let anchor = ordered.first(where: { $0.id == identifier }) {
+        bindings.append(
+          PlannerBoundIdentity(kind: "membership", id: anchor.id, lifetimeId: anchor.lifetimeId))
+      }
+    case .first, .last: break
+    }
+    let digest = membershipMoveDigest(
+      listId: listId, membershipId: membershipId, destinationListId: destinationListId,
+      placement: placement, identity: identity, bindings: bindings)
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another move.")
+      }
+      return PlannerOperationResult(
+        operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    memberships.removeAll { $0.id == membershipId }
+    let added: MembershipSnapshot?
+    let destinationReference: PlannerReferenceRead
+    if let existing {
+      added = nil
+      destinationReference = existing.reference
+    } else {
+      let rank = try membershipInsertionRank(
+        at: insertionIndex, ordered: ordered, memberships: &memberships)
+      let identifier = UUID()
+      let membership = MembershipSnapshot(
+        id: identifier, lifetimeId: identifier, list: destinationBinding, item: before.item,
+        rank: rank, localDone: false)
+      added = membership
+      destinationReference = membership.reference
+      memberships.append(membership)
+    }
+    let updatedAt = Date()
+    let listSnapshots = try lists.map { list in
+      if list.id == listId {
+        return ListSnapshot(
+          id: ownerSnapshot.id, lifetimeId: ownerSnapshot.lifetimeId,
+          createdAt: ownerSnapshot.createdAt, updatedAt: updatedAt,
+          content: ownerSnapshot.content, archived: ownerSnapshot.archived)
+      }
+      if list.id == destinationListId, added != nil {
+        return ListSnapshot(
+          id: destinationSnapshot.id, lifetimeId: destinationSnapshot.lifetimeId,
+          createdAt: destinationSnapshot.createdAt, updatedAt: updatedAt,
+          content: destinationSnapshot.content, archived: destinationSnapshot.archived)
+      }
+      return try list.value()
+    }
+    let itemSnapshots = try items.map { try $0.value() }
+    let removalMarker = PortableDeletionMarker(
+      deletionId: UUID(), operationId: operation.operationId,
+      target: .membership(membershipBinding), closedFamilyId: nil)
+    let markers = try deletionMarkers(context) + [removalMarker]
+    let result = PlannerAppliedResult(
+      generatedIdentities: added == nil ? [] : [.reference(destinationReference)],
+      affectedIdentities: [
+        .reference(before.reference), .reference(destinationReference),
+        .source(ownerSnapshot.reference), .source(destinationSnapshot.reference),
+      ])
+    try archive.prepare(
+      RecoveryPreparedProposal(
+        proposalId: UUID(), originalOperationId: operation.operationId,
+        datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
+        proposedBackup: PlannerDataSnapshot(
+          items: itemSnapshots, lists: listSnapshots, memberships: memberships,
+          deletionMarkers: markers),
+        payloadDigest: digest, evidence: "preparedUnverified"))
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result, bindings: bindings)
+    context.delete(record)
+    if let added {
+      context.insert(PlannerSchemaV7.Membership(snapshot: added, list: destination, item: source))
+    }
+    let ranks = Dictionary(uniqueKeysWithValues: memberships.map { ($0.id, $0.rank) })
+    for membership in try context.fetch(FetchDescriptor<PlannerSchemaV7.Membership>()) {
+      if let identifier = membership.id, let rank = ranks[identifier], membership.rank != rank {
+        membership.rank = rank
+      }
+    }
+    owner.updatedAt = updatedAt
+    if added != nil { destination.updatedAt = updatedAt }
+    context.insert(PlannerSchemaV4.DeletionMarker(removalMarker))
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The complete membership move was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(
+        items: itemSnapshots, lists: listSnapshots, memberships: memberships,
+        deletionMarkers: markers, receipts: receipts + [receipt])
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
+  }
+
+  private func membershipMoveDigest(
+    listId: UUID, membershipId: UUID, destinationListId: UUID, placement: PlannerPlacement,
+    identity: PlannerStoreIdentity, bindings: [PlannerBoundIdentity]
+  ) -> String {
+    let placementValue: PlannerCanonicalValue
+    switch placement {
+    case .first: placementValue = .record(["kind": .string("first")])
+    case .last: placementValue = .record(["kind": .string("last")])
+    case .before(let identifier):
+      placementValue = .record(["kind": .string("before"), "associationId": .identity(identifier)])
+    case .after(let identifier):
+      placementValue = .record(["kind": .string("after"), "associationId": .identity(identifier)])
+    }
+    let value = PlannerCanonicalValue.record([
+      "command": .record([
+        "type": .string("moveMembership"), "listId": .identity(listId),
+        "membershipId": .identity(membershipId), "destinationListId": .identity(destinationListId),
+        "placement": placementValue,
+      ]),
+      "datasetId": .identity(identity.datasetId),
+      "ownershipBinding": .string(identity.ownershipBinding),
+      "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
+    ])
+    let bytes = Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded()
+    return plannerDigest(bytes, prefix: "sha256-payload-v1:")
   }
 
   private func executeMembershipReordering(

@@ -222,7 +222,9 @@ struct PlannerDataSnapshot: Codable {
           try $0.validated(items: itemRecords, lists: listRecords)
         },
         schedules: try schedules.map { try $0.validated(sources: itemRecords) },
-        deletionMarkers: try deletionMarkers.map { try $0.validated(schedules: schedules) }))
+        deletionMarkers: try deletionMarkers.map {
+          try $0.validated(schedules: schedules, memberships: memberships)
+        }))
   }
 }
 
