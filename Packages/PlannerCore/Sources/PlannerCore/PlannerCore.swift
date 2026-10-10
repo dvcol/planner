@@ -542,7 +542,8 @@ public actor Planner {
           var descriptor = FetchDescriptor<PlannerSchemaV10.Item>()
           if textTerms.isEmpty, itemQuery.duration?.minimumMinutes == nil,
             itemQuery.duration?.maximumMinutes == nil, itemQuery.sort.mode != .duration,
-            itemQuery.categories?.ids.isEmpty != false, itemQuery.tags?.ids.isEmpty != false
+            itemQuery.categories?.ids.isEmpty != false, itemQuery.tags?.ids.isEmpty != false,
+            !itemQuery.hasAddress, !itemQuery.hasLinks
           {
             descriptor.propertiesToFetch = [\.id, \.title, \.globalDone, \.archived]
             if itemQuery.sort.mode == .created {
@@ -571,6 +572,7 @@ public actor Planner {
               guard group.matches(membershipListsByItem[identifier] ?? []) else { return false }
             }
             guard try matchesItemLabels(item, query: itemQuery) else { return false }
+            guard try matchesItemPresence(item, query: itemQuery) else { return false }
             guard try matchesItemDuration(item, duration: itemQuery.duration) else { return false }
             return try matchesItemText(item, terms: textTerms, locale: locale)
           }
@@ -659,6 +661,22 @@ public actor Planner {
           != nil
       }
     }
+  }
+
+  private func matchesItemPresence(_ item: PlannerSchemaV10.Item, query: PlannerItemQuery) throws
+    -> Bool
+  {
+    guard query.hasAddress || query.hasLinks else { return true }
+    let value = try item.value()
+    if query.hasAddress,
+      value.input.location?.formattedAddress?.trimmingCharacters(in: .whitespacesAndNewlines)
+        .isEmpty
+        != false
+    {
+      return false
+    }
+    if query.hasLinks, value.links.isEmpty { return false }
+    return true
   }
 
   private func validateItemDuration(_ duration: PlannerItemQuery.Duration?) throws {
@@ -824,7 +842,8 @@ public actor Planner {
       predicate: #Predicate { itemIdentifiers.contains($0.id) })
     if textTerms.isEmpty, query.duration?.minimumMinutes == nil,
       query.duration?.maximumMinutes == nil, query.sort.mode != .duration,
-      query.categories?.ids.isEmpty != false, query.tags?.ids.isEmpty != false
+      query.categories?.ids.isEmpty != false, query.tags?.ids.isEmpty != false,
+      !query.hasAddress, !query.hasLinks
     {
       items.propertiesToFetch = [\.id, \.lifetimeId, \.title, \.globalDone, \.archived]
       if query.sort.mode == .created {
@@ -866,6 +885,7 @@ public actor Planner {
         continue
       }
       if !(try matchesItemLabels(item, query: query)) { continue }
+      if !(try matchesItemPresence(item, query: query)) { continue }
       if !(try matchesItemDuration(item, duration: query.duration)) { continue }
       if !(try matchesItemText(item, terms: textTerms, locale: locale)) { continue }
       var durationMinutes: Int64?
