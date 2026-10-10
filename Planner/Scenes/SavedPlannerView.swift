@@ -33,6 +33,7 @@ struct SavedPlannerView: View {
   @State private var appearanceChangeTitle = "Item removed from List"
   @State private var membershipMoveDraft: SavedMembershipMoveDraft?
   @State private var listAdditionDraft: SavedListAdditionDraft?
+  @State private var itemEditDraft: SavedItemEditDraft?
   @State private var isOpeningAppearance = false
   @State private var columnVisibility: NavigationSplitViewVisibility = .all
 
@@ -89,10 +90,13 @@ struct SavedPlannerView: View {
     .sheet(item: $listAdditionDraft) { draft in
       SavedAddToListForm(store: store, draft: draft)
     }
+    .sheet(item: $itemEditDraft) { draft in
+      SavedEditItemForm(store: store, item: draft.item)
+    }
     .alert(
       "Planner",
       isPresented: Binding(
-        get: { store.alertMessage != nil },
+        get: { store.alertMessage != nil && itemEditDraft == nil },
         set: { if !$0 { store.alertMessage = nil } })
     ) {
       Button("OK") { store.alertMessage = nil }
@@ -204,6 +208,7 @@ struct SavedPlannerView: View {
           listAdditionDraft = SavedListAdditionDraft(
             itemIdentifier: selectedItem.source.id, itemTitle: selectedItem.content.title)
         },
+        editItem: { itemEditDraft = SavedItemEditDraft(item: selectedItem) },
         setCompletion: { done in
           Task { _ = await store.setItemCompletion(selectedItem.source.id, done: done) }
         },
