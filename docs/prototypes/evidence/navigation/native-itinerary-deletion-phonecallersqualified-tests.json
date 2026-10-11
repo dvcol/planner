@@ -1,0 +1,130 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName" : "iPhone 18 Pro",
+      "modelName" : "iPhone 18 Pro",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "1m 24s",
+                  "durationInSeconds" : 84.28979802131653,
+                  "name" : "testDeletingTheOriginalItemFromAListAppearanceClearsTheRemovedSelectionAndKeepsTheList()",
+                  "nodeIdentifier" : "SavedItemDeletionJourneyTests/testDeletingTheOriginalItemFromAListAppearanceClearsTheRemovedSelectionAndKeepsTheList()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItemDeletionJourneyTests/testDeletingTheOriginalItemFromAListAppearanceClearsTheRemovedSelectionAndKeepsTheList",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SavedItemDeletionJourneyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItemDeletionJourneyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "54s",
+                  "durationInSeconds" : 54.91171705722809,
+                  "name" : "testCreatingASecondItineraryOpensItsOwnEmptyContents()",
+                  "nodeIdentifier" : "SavedItineraryDeletionJourneyTests/testCreatingASecondItineraryOpensItsOwnEmptyContents()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItineraryDeletionJourneyTests/testCreatingASecondItineraryOpensItsOwnEmptyContents",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SavedItineraryDeletionJourneyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItineraryDeletionJourneyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "1m 21s",
+                  "durationInSeconds" : 81.69301199913025,
+                  "name" : "testItineraryDraftsCancelAndGuardedTitleNotesPersistAfterRelaunch()",
+                  "nodeIdentifier" : "SavedItineraryJourneyTests/testItineraryDraftsCancelAndGuardedTitleNotesPersistAfterRelaunch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItineraryJourneyTests/testItineraryDraftsCancelAndGuardedTitleNotesPersistAfterRelaunch",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SavedItineraryJourneyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItineraryJourneyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "2m 14s",
+                  "durationInSeconds" : 134.69945192337036,
+                  "name" : "testItineraryOnlyTagDeletionRequiresConfirmationAndRetainsTheOtherSameNameIdentity()",
+                  "nodeIdentifier" : "SavedLabelsJourneyTests/testItineraryOnlyTagDeletionRequiresConfirmationAndRetainsTheOtherSameNameIdentity()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedLabelsJourneyTests/testItineraryOnlyTagDeletionRequiresConfirmationAndRetainsTheOtherSameNameIdentity",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SavedLabelsJourneyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedLabelsJourneyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "2m 16s",
+                  "durationInSeconds" : 136.05752897262573,
+                  "name" : "testEmptyListDeletionAndSelectedMembershipCleanupPreserveTheOriginalItem()",
+                  "nodeIdentifier" : "SavedListDeletionJourneyTests/testEmptyListDeletionAndSelectedMembershipCleanupPreserveTheOriginalItem()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedListDeletionJourneyTests/testEmptyListDeletionAndSelectedMembershipCleanupPreserveTheOriginalItem",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "4m 32s",
+                  "durationInSeconds" : 272.70107901096344,
+                  "name" : "testListDeletionReviewsRepeatedUsesAndRetainsItemsAndTheRemainingRouteAfterCancelAndRelaunch()",
+                  "nodeIdentifier" : "SavedListDeletionJourneyTests/testListDeletionReviewsRepeatedUsesAndRetainsItemsAndTheRemainingRouteAfterCancelAndRelaunch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedListDeletionJourneyTests/testListDeletionReviewsRepeatedUsesAndRetainsItemsAndTheRemainingRouteAfterCancelAndRelaunch",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SavedListDeletionJourneyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedListDeletionJourneyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "PlannerNavigationUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "PlannerNavigation",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

@@ -93,6 +93,7 @@ struct SavedItineraryItemRow: View {
 struct SavedItineraryItemDetail: View {
   @Environment(SavedPlannerStore.self) private var store
   let appearance: PlannerAppearance
+  let isReviewingDeletion: Bool
   @State private var item: PlannerAppearanceRead?
   @State private var failure: String?
 
@@ -136,12 +137,16 @@ struct SavedItineraryItemDetail: View {
       }
     }
     .task(id: store.changeRevision) { await loadItem() }
+    .onChange(of: isReviewingDeletion) {
+      if !isReviewingDeletion { Task { await loadItem() } }
+    }
   }
 
   private func loadItem() async {
+    guard !isReviewingDeletion else { return }
     let revision = store.changeRevision
     let loaded = await store.readAppearance(appearance)
-    guard !Task.isCancelled, store.changeRevision == revision else { return }
+    guard !Task.isCancelled, !isReviewingDeletion, store.changeRevision == revision else { return }
     item = loaded
     failure = loaded == nil ? store.alertMessage ?? "This Item is no longer in the Itinerary." : nil
     if loaded == nil { store.alertMessage = nil }
