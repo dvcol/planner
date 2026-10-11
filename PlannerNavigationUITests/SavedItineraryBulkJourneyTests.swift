@@ -2,6 +2,84 @@ import XCTest
 
 @MainActor
 final class SavedItineraryBulkJourneyTests: XCTestCase {
+  func testNativeEntryReorderingPreservesRepeatedAppearanceCompletionAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem("Museum", application: application)
+    createList(application)
+    createItinerary(application)
+    for source in ["Museum", "Museum", "Food stops"] {
+      addEntry(source, application: application)
+    }
+    let rows = itineraryRows(application)
+    XCTAssertEqual(rows.count, 3)
+    let originalIdentifiers = rows.allElementsBoundByIndex.map(\.identifier)
+    let firstCompletion = originalIdentifiers[0].replacingOccurrences(
+      of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")
+    application.plannerElement(firstCompletion).activateForPlannerJourney()
+    assertProgress("1 of 3 items done", application: application)
+    assertChecks(["Completed", "To do", "To do"], application: application)
+    let first = application.plannerElement(originalIdentifiers[0])
+    openEntryMenu(first)
+    let moveToEnd = application.plannerElement("Move to End")
+    XCTAssertTrue(moveToEnd.waitForExistence(timeout: 5))
+    XCTAssertTrue(moveToEnd.isEnabled)
+    recordScreenshot(application, name: "Native Itinerary entry ordering menu")
+    moveToEnd.activateForPlannerJourney()
+    let afterDirectMove = [originalIdentifiers[1], originalIdentifiers[2], originalIdentifiers[0]]
+    XCTAssertTrue(waitForItineraryOrder(afterDirectMove, application: application))
+    assertChecks(["To do", "To do", "Completed"], application: application)
+    assertProgress("1 of 3 items done", application: application)
+    let listHeader = application.staticTexts["Food stops"].firstMatch
+    XCTAssertTrue(listHeader.waitForExistence(timeout: 5))
+    openEntryMenu(listHeader)
+    let moveToBeginning = application.plannerElement("Move to Beginning")
+    XCTAssertTrue(moveToBeginning.waitForExistence(timeout: 5))
+    XCTAssertTrue(moveToBeginning.isEnabled)
+    moveToBeginning.activateForPlannerJourney()
+    let finalIdentifiers = [originalIdentifiers[2], originalIdentifiers[1], originalIdentifiers[0]]
+    XCTAssertTrue(waitForItineraryOrder(finalIdentifiers, application: application))
+    assertChecks(["To do", "To do", "Completed"], application: application)
+    assertProgress("1 of 3 items done", application: application)
+    assertProgress("0 of 1 item done", application: application)
+    recordScreenshot(application, name: "Native reordered List group and repeated Item entries")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItinerary(application)
+    XCTAssertTrue(waitForItineraryOrder(finalIdentifiers, application: application))
+    assertChecks(["To do", "To do", "Completed"], application: application)
+    assertProgress("1 of 3 items done", application: application)
+    assertProgress("0 of 1 item done", application: application)
+    recordScreenshot(
+      application, name: "Native Itinerary order and local completion after relaunch")
+    openItem("Museum", application: application)
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+  }
+
+  private func openEntryMenu(_ entry: XCUIElement) {
+    #if os(macOS)
+      entry.rightClick()
+    #else
+      entry.press(forDuration: 1.2)
+    #endif
+  }
+
+  private func waitForItineraryOrder(
+    _ identifiers: [String], application: XCUIApplication
+  ) -> Bool {
+    let rows = itineraryRows(application)
+    let predicate = NSPredicate { _, _ in
+      rows.allElementsBoundByIndex.map(\.identifier) == identifiers
+    }
+    return XCTWaiter.wait(
+      for: [XCTNSPredicateExpectation(predicate: predicate, object: application)], timeout: 10)
+      == .completed
+  }
+
   func testRepeatedListEntryBulkCompletionStaysWithinTheReviewedEntry() {
     continueAfterFailure = false
     let application = XCUIApplication()
