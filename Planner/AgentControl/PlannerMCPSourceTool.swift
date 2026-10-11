@@ -440,6 +440,7 @@
           "kind": .string(read.source.kind.rawValue), "id": .string(read.source.id.uuidString),
         ]),
         "content": itemContentValue(read.content),
+        "labels": .array(read.labels.map(labelValue)),
         "globalDone": .bool(read.globalDone), "localDone": .bool(read.localDone),
         "effectiveDone": .bool(read.effectiveDone), "archived": .bool(read.archived),
         "fieldHashes": .object(

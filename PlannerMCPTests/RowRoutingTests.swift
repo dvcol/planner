@@ -3160,6 +3160,18 @@ struct RowRoutingTests {
       }
       let original = try await source(hotel)
       let expectedLabels = try #require(original["labels"] as? [[String: Any]])
+      func appearanceDetails(_ row: [String: Any]) async throws -> [String: Any]? {
+        guard let identity = row["identity"] as? [String: Any],
+          let appearance = identity["appearance"] as? [String: Any]
+        else { return nil }
+        let read = try await call(
+          "planner_read",
+          [
+            "formatVersion": 1,
+            "request": ["kind": "appearance", "appearance": appearance],
+          ])
+        return try #require(read["value"] as? [String: Any])
+      }
       #expect(expectedLabels.count == 2)
       var oldGeneration: String?
       for scope: [String: Any] in [
@@ -3176,6 +3188,11 @@ struct RowRoutingTests {
         for row in values {
           let labels = try #require(row["labels"] as? [[String: Any]])
           #expect(NSArray(array: labels).isEqual(to: expectedLabels))
+          if let detail = try await appearanceDetails(row) {
+            let detailLabels = try #require(detail["labels"] as? [[String: Any]])
+            #expect(NSArray(array: detailLabels).isEqual(to: expectedLabels))
+            #expect(detail["globalDone"] as? Bool == false && detail["localDone"] as? Bool == false)
+          }
           #expect(row["notes"] == nil && row["links"] == nil && row["fieldHashes"] == nil)
           for label in labels {
             #expect(Set(label.keys) == ["reference", "name", "color", "iconName"])
@@ -3225,6 +3242,10 @@ struct RowRoutingTests {
       ])
       for row in try #require(current["rows"] as? [[String: Any]]) {
         let labels = try #require(row["labels"] as? [[String: Any]])
+        let detail = try #require(try await appearanceDetails(row))
+        let detailLabels = try #require(detail["labels"] as? [[String: Any]])
+        #expect(NSArray(array: detailLabels).isEqual(to: labels))
+        #expect(detail["globalDone"] as? Bool == false && detail["localDone"] as? Bool == false)
         #expect(
           labels.first {
             ($0["reference"] as? [String: String])?["id"] == category.id.uuidString

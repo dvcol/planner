@@ -107,6 +107,15 @@ struct RowLabelReadTests {
       generations.append(window.generation)
       #expect(window.rows.count == (index == 2 ? 3 : 1))
       #expect(window.rows.allSatisfy { $0.labels == original.labels })
+      for row in window.rows {
+        guard case .appearance(_, let appearance) = row.identity else { continue }
+        guard
+          case .appearance(let detail) = await planner.read(
+            session: session, request: .appearance(appearance))
+        else { throw CancellationError() }
+        #expect(detail.labels == original.labels)
+        #expect(detail.globalDone == false && detail.localDone == false)
+      }
     }
     let routeRows = try await readWindow(
       planner, session: session, request: .catalog(.init(sourceKind: .itinerary)))
@@ -160,6 +169,16 @@ struct RowLabelReadTests {
     for request in requests {
       let window = try await readWindow(reopened, session: reopenedSession, request: request)
       #expect(window.rows.allSatisfy { $0.labels == afterRename.labels })
+      for row in window.rows {
+        guard case .appearance(_, let appearance) = row.identity else { continue }
+        guard
+          case .appearance(let detail) = await reopened.read(
+            session: reopenedSession, request: .appearance(appearance))
+        else { throw CancellationError() }
+        #expect(detail.labels.first { $0.reference == category }?.name == "Dining")
+        #expect(detail.labels.first { $0.reference == tag }?.name == "Wet weather")
+        #expect(detail.globalDone == false && detail.localDone == false)
+      }
       for row in window.rows {
         #expect(row.labels.first { $0.reference == category }?.name == "Dining")
         #expect(row.labels.first { $0.reference == tag }?.name == "Wet weather")
