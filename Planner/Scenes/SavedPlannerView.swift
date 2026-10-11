@@ -867,7 +867,7 @@ struct SavedPlannerView: View {
           scope: .list(listId: list.source.id), done: done),
         selectedListId == list.source.id
       else { return }
-      bulkCompletionDraft = .init(listName: list.content.name, review: review)
+      bulkCompletionDraft = .init(containerName: list.content.name, review: review)
     }
   }
 
