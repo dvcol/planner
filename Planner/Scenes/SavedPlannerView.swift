@@ -36,7 +36,7 @@ struct SavedPlannerView: View {
   @State private var listSearchText = ""
   @State private var isOpeningList = false
   @State private var showNewList = false
-  @State private var showCategories = false
+  @State private var showLabels = false
   @State private var listCatalog: [SavedPlannerList]?
   @State private var listCatalogArchive = SavedItemFilters.Archive.active
   @State private var isOpeningListCatalog = false
@@ -116,8 +116,8 @@ struct SavedPlannerView: View {
       await loadSelectedItem()
       await loadSelectedAppearance()
     }
-    .sheet(isPresented: $showCategories) {
-      SavedCategoriesView(store: store)
+    .sheet(isPresented: $showLabels) {
+      SavedLabelsView(store: store)
     }
     .sheet(isPresented: $showNewList) {
       SavedNewListForm(store: store) { source in
@@ -154,7 +154,7 @@ struct SavedPlannerView: View {
       isPresented: Binding(
         get: {
           store.alertMessage != nil && itemEditDraft == nil && bulkCompletionDraft == nil
-            && !showCategories
+            && !showLabels
             && (selectedSection != .itineraries || showNewList || showNewItem)
         },
         set: { if !$0 { store.alertMessage = nil } })
@@ -653,7 +653,7 @@ struct SavedPlannerView: View {
       .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
       .toolbar {
         ToolbarItem(placement: categoryToolbarPlacement) {
-          Button("Categories", systemImage: "square.grid.2x2") { showCategories = true }
+          Button("Manage Labels", systemImage: "square.grid.2x2") { showLabels = true }
             .disabled(!store.isReady)
             .accessibilityIdentifier("saved.categories.manage")
         }
