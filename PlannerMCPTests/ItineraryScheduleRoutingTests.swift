@@ -5,6 +5,137 @@ import Testing
 @testable import Planner
 
 struct ItineraryScheduleRoutingTests {
+  @Test func rowWindowsOverHttpDistinguishDirectAppointmentsPlanSpansAndInheritedPlanning()
+    async throws
+  {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(
+      configuration: .init(
+        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+        controlURL: directory.appendingPathComponent("control/writer"),
+        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+        processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
+      guard
+        case .applied(let applied, .complete) = await planner.execute(
+          .init(operationId: UUID(), session: session, command: command)
+        ).outcome
+      else { throw CancellationError() }
+      return applied
+    }
+    let item = try #require(
+      try await save(.createItem(content: .init(title: "Hotel"))).generated.first)
+    let list = try #require(
+      try await save(.createList(content: .init(name: "Food"))).generated.first)
+    let itinerary = try #require(
+      try await save(.createItinerary(content: .init(title: "Trip"))).generated.first)
+    _ = try await save(.addMembership(itemId: item.id, listId: list.id, placement: .last))
+    for source in [item, list] {
+      _ = try await save(
+        .addItineraryEntry(itineraryId: itinerary.id, source: source, placement: .last))
+    }
+    let direct = try #require(
+      try await save(
+        .createSchedule(
+          source: item,
+          form: .timed(
+            start: Date(timeIntervalSinceReferenceDate: 813_200_400), end: nil,
+            planningTimeZone: "Asia/Tokyo"))
+      )
+      .generated.first)
+    let plan = try #require(
+      try await save(
+        .createSchedule(
+          source: itinerary,
+          form: .allDay(
+            start: .init(year: 2026, month: 10, day: 9), end: .init(year: 2026, month: 10, day: 11))
+        )
+      )
+      .generated.first)
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: session)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    func rows(_ scope: [String: String]) async throws -> [[String: Any]] {
+      let query = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_query",
+            arguments: [
+              "formatVersion": 1,
+              "query": [
+                "kind": "items", "scope": scope, "completion": "all", "archive": "all",
+                "rowPresentation": [
+                  "referenceInstant": 813202200.0, "displayTimeZone": "Asia/Tokyo",
+                ],
+              ],
+            ])))
+      let generation = try #require(query["generation"] as? String)
+      let window = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_read",
+            arguments: [
+              "formatVersion": 1,
+              "request": ["kind": "rows", "generation": generation, "offset": "0", "limit": "10"],
+            ])))
+      return try #require(window["rows"] as? [[String: Any]])
+    }
+    func remove(_ identifier: UUID) async throws {
+      let result = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_execute",
+            arguments: [
+              "formatVersion": 1, "operationId": UUID().uuidString,
+              "command": ["type": "removeSchedule", "scheduleId": identifier.uuidString],
+            ])))
+      #expect(result["state"] as? String == "applied")
+    }
+    do {
+      for scope in [["kind": "global"], ["kind": "list", "listId": list.id.uuidString]] {
+        let window = try await rows(scope)
+        #expect(window.count == 1)
+        let summary = try #require(window.first?["scheduleSummary"] as? [String: Any])
+        #expect(summary["kind"] as? String == "directItem")
+        #expect((summary["schedule"] as? [String: Any])?["id"] as? String == direct.id.uuidString)
+        #expect((summary["owner"] as? [String: Any])?["kind"] as? String == "item")
+      }
+      let contextual = try await rows(["kind": "itinerary", "itineraryId": itinerary.id.uuidString])
+      #expect(contextual.count == 2)
+      for row in contextual {
+        let summary = try #require(row["scheduleSummary"] as? [String: Any])
+        #expect(summary["kind"] as? String == "itinerarySpan")
+        #expect(summary["additionalCount"] as? String == "0")
+        #expect((summary["schedule"] as? [String: Any])?["id"] as? String == plan.id.uuidString)
+        #expect((summary["owner"] as? [String: Any])?["id"] as? String == itinerary.id.uuidString)
+        #expect((summary["owner"] as? [String: Any])?["kind"] as? String == "itinerary")
+        let form = try #require(summary["form"] as? [String: Any])
+        #expect(form["kind"] as? String == "allDay")
+        #expect((form["end"] as? [String: Any])?["day"] as? Int == 11)
+      }
+      try await remove(direct.id)
+      let inherited = try await rows(["kind": "global"])
+      let inheritedSummary = try #require(inherited.first?["scheduleSummary"] as? [String: Any])
+      #expect(NSDictionary(dictionary: inheritedSummary).isEqual(to: ["kind": "inScheduledPlan"]))
+      try await remove(plan.id)
+      let disconnected = try await rows(["kind": "global"])
+      let disconnectedSummary = try #require(
+        disconnected.first?["scheduleSummary"] as? [String: Any])
+      #expect(NSDictionary(dictionary: disconnectedSummary).isEqual(to: ["kind": "none"]))
+      #expect(disconnected.first?["globalDone"] as? Bool == false)
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   @Test func itineraryScheduleUsesOwnedIdentityForHttpCreateReadEditReplayAndRemoval() async throws
   {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)

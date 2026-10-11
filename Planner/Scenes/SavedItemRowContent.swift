@@ -50,13 +50,26 @@ extension PlannerRowRead {
   }
 
   var additionalScheduleCount: Int64 {
-    guard case .directItem(_, _, _, let count) = scheduleSummary else { return 0 }
-    return count
+    switch scheduleSummary {
+    case .directItem(_, _, _, let count), .itinerarySpan(_, _, _, let count): return count
+    case .none, .inScheduledPlan: return 0
+    }
   }
 
   func scheduleDescription(presentation: PlannerRowPresentationContext?) -> String? {
-    guard case .directItem(_, _, let form, _) = scheduleSummary,
-      let presentation,
+    let form: PlannerScheduleForm
+    let prefix: String
+    switch scheduleSummary {
+    case .none: return nil
+    case .inScheduledPlan: return "In scheduled plan"
+    case .directItem(_, _, let value, _):
+      form = value
+      prefix = ""
+    case .itinerarySpan(_, _, let value, _):
+      form = value
+      prefix = "Plan · "
+    }
+    guard let presentation,
       let displayTimeZone = TimeZone(identifier: presentation.displayTimeZone)
     else { return nil }
     let dateIntervalFormatter = DateIntervalFormatter()
@@ -65,10 +78,10 @@ extension PlannerRowRead {
     case .timed(let start, let end, _):
       dateIntervalFormatter.timeZone = displayTimeZone
       dateIntervalFormatter.timeStyle = .short
-      if let end { return dateIntervalFormatter.string(from: start, to: end) }
+      if let end { return prefix + dateIntervalFormatter.string(from: start, to: end) }
       var dateFormatStyle = Date.FormatStyle(date: .abbreviated, time: .shortened)
       dateFormatStyle.timeZone = displayTimeZone
-      return start.formatted(dateFormatStyle)
+      return prefix + start.formatted(dateFormatStyle)
     case .allDay(let start, let end):
       var calendar = Calendar(identifier: .gregorian)
       calendar.timeZone = .gmt
@@ -83,7 +96,7 @@ extension PlannerRowRead {
       dateIntervalFormatter.calendar = calendar
       dateIntervalFormatter.timeZone = .gmt
       dateIntervalFormatter.timeStyle = .none
-      return dateIntervalFormatter.string(from: startDate, to: endDate) + " · All day"
+      return prefix + dateIntervalFormatter.string(from: startDate, to: endDate) + " · All day"
     }
   }
 }

@@ -1394,8 +1394,30 @@ public actor Planner {
       let preview = try context.fetch(selected).first?.value(
         ownerId: sourceIdentifier, ownerLifetimeId: lifetimeId
       ).read
+      var scheduleSource = source
+      var scheduleLifetimeId = lifetimeId
+      if case .appearance(_, let appearance) = identity {
+        let itineraryId: UUID?
+        switch appearance {
+        case .directItineraryItem(let identifier, _), .expandedListItem(let identifier, _, _):
+          itineraryId = identifier
+        case .listMembership: itineraryId = nil
+        }
+        if let itineraryId {
+          var descriptor = FetchDescriptor<PlannerSchemaV14.Itinerary>(
+            predicate: #Predicate { $0.id == itineraryId })
+          descriptor.fetchLimit = 2
+          descriptor.propertiesToFetch = [\.id, \.lifetimeId]
+          let owners = try context.fetch(descriptor)
+          guard owners.count == 1, let ownerLifetimeId = owners.first?.lifetimeId else {
+            throw PlannerFailure("readUnavailable", "The row's planning Itinerary is unresolved.")
+          }
+          scheduleSource = .init(kind: .itinerary, id: itineraryId)
+          scheduleLifetimeId = ownerLifetimeId
+        }
+      }
       let summary = try rowScheduleSummary(
-        source: source, lifetimeId: lifetimeId,
+        source: scheduleSource, lifetimeId: scheduleLifetimeId,
         presentation: presentation, context: context)
       return try item.rowRead(
         identity: identity, localDone: localDone,
@@ -1494,7 +1516,14 @@ public actor Planner {
           && $0.sourceLifetimeId == lifetimeId
       })
     let assignmentCount = try context.fetchCount(assignments)
-    guard assignmentCount > 0 else { return .none }
+    guard assignmentCount > 0 else {
+      if source.kind == .item,
+        try hasInheritedSchedule(itemId: sourceIdentifier, lifetimeId: lifetimeId, context: context)
+      {
+        return .inScheduledPlan
+      }
+      return .none
+    }
     let candidates = [
       FetchDescriptor<PlannerSchemaV14.Schedule>(
         predicate: #Predicate {
@@ -1528,7 +1557,7 @@ public actor Planner {
       \.civilEndData, \.start, \.end, \.planningTimeZone,
     ]
     let civilAssignments = try context.fetch(allDayDescriptor).map {
-      try $0.value(ownerId: sourceIdentifier, ownerLifetimeId: lifetimeId)
+      try $0.value(ownerId: sourceIdentifier, ownerLifetimeId: lifetimeId, ownerKind: sourceKind)
     }
     for (phase, candidateDescriptor) in candidates.enumerated() {
       var descriptor = candidateDescriptor
@@ -1548,7 +1577,9 @@ public actor Planner {
         return phase == 2
       }
       if let record = try context.fetch(descriptor).first {
-        eligible.append(try record.value(ownerId: sourceIdentifier, ownerLifetimeId: lifetimeId))
+        eligible.append(
+          try record.value(
+            ownerId: sourceIdentifier, ownerLifetimeId: lifetimeId, ownerKind: sourceKind))
       }
       let keyed = try eligible.map {
         (assignment: $0, components: try scheduleStartComponents($0.form, calendar: calendar))
@@ -1561,11 +1592,54 @@ public actor Planner {
         return second.components.lexicographicallyPrecedes(first.components)
       }.first
       guard let value = selected?.assignment else { continue }
+      if source.kind == .itinerary {
+        return .itinerarySpan(
+          schedule: value.reference, owner: source, form: value.form,
+          additionalCount: Int64(assignmentCount - 1))
+      }
       return .directItem(
         schedule: value.reference, owner: source, form: value.form,
         additionalCount: Int64(assignmentCount - 1))
     }
-    throw PlannerFailure("readUnavailable", "The Item's Schedule assignments are unresolved.")
+    throw PlannerFailure("readUnavailable", "The row owner's Schedule assignments are unresolved.")
+  }
+
+  private func hasInheritedSchedule(itemId: UUID, lifetimeId: UUID, context: ModelContext) throws
+    -> Bool
+  {
+    let directEntries = FetchDescriptor<PlannerSchemaV14.ItineraryEntry>(
+      predicate: #Predicate {
+        $0.sourceKind == "item" && $0.sourceId == itemId && $0.sourceLifetimeId == lifetimeId
+      })
+    var itineraries = try context.fetch(directEntries).map { try $0.value().itinerary }
+    let memberships = FetchDescriptor<PlannerSchemaV14.Membership>(
+      predicate: #Predicate { $0.itemId == itemId && $0.itemLifetimeId == lifetimeId })
+    for membership in try context.fetch(memberships) {
+      let list = try membership.value().list
+      let listId = list.id
+      let listLifetimeId = list.lifetimeId
+      let listEntries = FetchDescriptor<PlannerSchemaV14.ItineraryEntry>(
+        predicate: #Predicate {
+          $0.sourceKind == "list" && $0.sourceId == listId && $0.sourceLifetimeId == listLifetimeId
+        })
+      itineraries.append(
+        contentsOf: try context.fetch(listEntries).map { try $0.value().itinerary })
+    }
+    for itinerary in itineraries {
+      let itineraryId = itinerary.id
+      let itineraryLifetimeId = itinerary.lifetimeId
+      var assignments = FetchDescriptor<PlannerSchemaV14.Schedule>(
+        predicate: #Predicate {
+          $0.sourceKind == "itinerary" && $0.sourceId == itineraryId
+            && $0.sourceLifetimeId == itineraryLifetimeId
+        })
+      assignments.fetchLimit = 1
+      guard let assignment = try context.fetch(assignments).first else { continue }
+      _ = try assignment.value(
+        ownerId: itineraryId, ownerLifetimeId: itineraryLifetimeId, ownerKind: "itinerary")
+      return true
+    }
+    return false
   }
 
   private func latestHistoryToken(in context: ModelContext) throws -> DefaultHistoryToken? {
