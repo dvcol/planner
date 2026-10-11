@@ -2,6 +2,89 @@ import XCTest
 
 @MainActor
 final class SavedItemJourneyTests: XCTestCase {
+  func testEditingScheduleCanCancelOrClearEndWithoutReplacingIdentityAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    let title = application.textFields["saved.item.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Gallery appointment")
+    let notes = application.textFields["saved.item.notes"]
+    notes.activateForPlannerJourney()
+    notes.typeText("Keep the gallery notes")
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Keep the gallery notes"].waitForExistence(timeout: 10))
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    let includeEnd = application.descendants(matching: .any)
+      .matching(identifier: "saved.schedule.hasEnd").firstMatch
+    XCTAssertTrue(includeEnd.waitForPlannerBooleanState(false))
+    activateCompletion(includeEnd)
+    application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+    let scheduleRows = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule."))
+    let schedule = scheduleRows.firstMatch
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    XCTAssertEqual(scheduleRows.count, 1)
+    XCTAssertEqual(schedule.label, "Timed")
+    let identity = schedule.identifier
+    let originalDescription = schedule.value as? String
+    XCTAssertFalse(originalDescription?.isEmpty ?? true)
+    openScheduleMenu(schedule)
+    let editAction = application.plannerElement("Edit Schedule")
+    XCTAssertTrue(editAction.waitForExistence(timeout: 5))
+    editAction.activateForPlannerJourney()
+    XCTAssertTrue(includeEnd.waitForPlannerBooleanState(true))
+    activateCompletion(includeEnd)
+    XCTAssertTrue(application.staticTexts["This schedule has no end time."].exists)
+    application.plannerElement("saved.schedule.cancel").activateForPlannerJourney()
+    XCTAssertTrue(schedule.waitForExistence(timeout: 5))
+    XCTAssertEqual(schedule.identifier, identity)
+    XCTAssertEqual(schedule.label, "Timed")
+    XCTAssertEqual(schedule.value as? String, originalDescription)
+    openScheduleMenu(schedule)
+    editAction.activateForPlannerJourney()
+    XCTAssertTrue(includeEnd.waitForPlannerBooleanState(true))
+    activateCompletion(includeEnd)
+    recordScreenshot(application, name: "Native Schedule edit clears only its draft end")
+    application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    XCTAssertEqual(
+      XCTWaiter.wait(
+        for: [
+          XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "label == %@", "Start only"), object: schedule)
+        ], timeout: 10), .completed)
+    XCTAssertEqual(schedule.identifier, identity)
+    XCTAssertEqual(scheduleRows.count, 1)
+    let editedDescription = schedule.value as? String
+    XCTAssertFalse(editedDescription?.isEmpty ?? true)
+    XCTAssertNotEqual(editedDescription, originalDescription)
+    XCTAssertTrue(application.staticTexts["Keep the gallery notes"].exists)
+    XCTAssertFalse(application.alerts["Planner"].exists)
+    recordScreenshot(application, name: "Native Schedule edit preserves its identity")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    let row = application.savedPlannerItemRows("Gallery appointment").firstMatch
+    XCTAssertTrue(row.waitForExistence(timeout: 10))
+    row.activateForPlannerJourney()
+    let restored = application.descendants(matching: .any).matching(identifier: identity).firstMatch
+    XCTAssertTrue(restored.waitForExistence(timeout: 10))
+    XCTAssertEqual(restored.label, "Start only")
+    XCTAssertEqual(restored.value as? String, editedDescription)
+    XCTAssertEqual(scheduleRows.count, 1)
+    XCTAssertTrue(application.staticTexts["Keep the gallery notes"].exists)
+    let completion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+    recordScreenshot(application, name: "Native Schedule edit survives relaunch")
+  }
+
   func testEditedAllDayRangeRejectsEarlierEndAndKeepsInclusiveDatesAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()
