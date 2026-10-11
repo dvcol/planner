@@ -50,6 +50,14 @@
                 "listId": .object(["type": .string("string"), "format": .string("uuid")]),
               ]),
             ]),
+            .object([
+              "type": .string("object"), "additionalProperties": .bool(false),
+              "required": .array([.string("kind"), .string("itineraryId")]),
+              "properties": .object([
+                "kind": .object(["type": .string("string"), "const": .string("itinerary")]),
+                "itineraryId": .object(["type": .string("string"), "format": .string("uuid")]),
+              ]),
+            ]),
           ])
         ]),
         "sort": .object([
@@ -148,7 +156,7 @@
     static let definition = Tool(
       name: "planner_query",
       description:
-        "Discover Item or exact List appearance identities, List/Itinerary title catalogs and shared labels in the local Planner prototype. Catalog title matching is insensitive; archive selection remains separate. Read lightweight rows through their issued generation.",
+        "Discover Item or exact List/Itinerary appearance identities, List/Itinerary title catalogs and shared labels in the local Planner prototype. Filters narrow cumulatively; contextual progress includes hidden/archived appearances. Read rows through their issued generation.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("query")]),
@@ -385,7 +393,7 @@
 
     private static func scope(_ value: Value?) throws -> PlannerItemQuery.Scope {
       let fields = try object(
-        value, allowed: ["kind", "listId"], required: ["kind"], path: "/query/scope")
+        value, allowed: ["kind", "listId", "itineraryId"], required: ["kind"], path: "/query/scope")
       switch fields["kind"] {
       case .string("global"), .string("inbox"):
         _ = try object(value, allowed: ["kind"], required: ["kind"], path: "/query/scope")
@@ -400,10 +408,22 @@
             code: "invalidInput", path: "/query/scope/listId", message: "Expected a List UUID.")
         }
         return .list(identifier)
+      case .string("itinerary"):
+        _ = try object(
+          value, allowed: ["kind", "itineraryId"], required: ["kind", "itineraryId"],
+          path: "/query/scope")
+        guard case .string(let encoded) = fields["itineraryId"],
+          let identifier = UUID(uuidString: encoded)
+        else {
+          throw AdmissionFailure(
+            code: "invalidInput", path: "/query/scope/itineraryId",
+            message: "Expected an Itinerary UUID.")
+        }
+        return .itinerary(identifier)
       default:
         throw AdmissionFailure(
           code: "invalidInput", path: "/query/scope/kind",
-          message: "Expected global, inbox or list scope.")
+          message: "Expected global, inbox, list or itinerary scope.")
       }
     }
 
