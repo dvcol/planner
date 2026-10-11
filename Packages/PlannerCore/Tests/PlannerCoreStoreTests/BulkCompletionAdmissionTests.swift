@@ -327,7 +327,7 @@ private struct BulkCompletionFixture {
   }
 }
 
-private final class NativeSaveRecoveryObstruction: @unchecked Sendable {
+final class NativeSaveRecoveryObstruction: @unchecked Sendable {
   private let lock = NSLock()
   private let storeURL: URL
   private let recoveryURL: URL
