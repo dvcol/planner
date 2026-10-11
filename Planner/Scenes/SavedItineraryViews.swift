@@ -118,6 +118,9 @@ struct SavedItineraryDetail: View {
             Section("Notes") { Text(notes).textSelection(.enabled) }
           }
           ItemLabelsSection(labels: itinerary.labels)
+          ItemLinksSection(
+            links: itinerary.content.links, sourceId: itinerary.source.id,
+            sourceLifetimeId: itinerary.sourceLifetimeId)
           SavedSchedulesSection(
             source: itinerary.source, references: itinerary.references, canChange: store.canCreate
           ) { scheduleToEdit = $0 }
@@ -441,6 +444,7 @@ private struct SavedItineraryForm: View {
   let didSave: (PlannerEntityReference) -> Void
   @State private var title: String
   @State private var notes: String
+  @State private var links: [SavedOwnedLinkDraft]
   @State private var categoryIdentifiers: Set<UUID>
   @State private var tagIdentifiers: Set<UUID>
   @State private var operationIdentifier = UUID()
@@ -454,6 +458,7 @@ private struct SavedItineraryForm: View {
     self.didSave = didSave
     _title = State(initialValue: itinerary?.content.title ?? "")
     _notes = State(initialValue: itinerary?.content.notes ?? "")
+    _links = State(initialValue: itinerary?.content.links.map(SavedOwnedLinkDraft.init) ?? [])
     _categoryIdentifiers = State(initialValue: itinerary?.content.categoryIds ?? [])
     _tagIdentifiers = State(initialValue: itinerary?.content.tagIds ?? [])
   }
@@ -464,6 +469,7 @@ private struct SavedItineraryForm: View {
     }
     guard let itinerary else { return true }
     return title != itinerary.content.title || notes != (itinerary.content.notes ?? "")
+      || links.map(\.input) != itinerary.content.links.map(\.editInput)
       || categoryIdentifiers != itinerary.content.categoryIds
       || tagIdentifiers != itinerary.content.tagIds
   }
@@ -490,6 +496,7 @@ private struct SavedItineraryForm: View {
           }
           .accessibilityIdentifier("saved.itinerary.tags")
         }
+        SavedOwnedLinksEditor(links: $links, accessibilityIdentifierPrefix: "saved.itinerary.link")
       }
       .disabled(store.isSaving)
       .formStyle(.grouped)
@@ -535,12 +542,14 @@ private struct SavedItineraryForm: View {
     let source: PlannerEntityReference?
     if let itinerary {
       let saved = await store.editItinerary(
-        itinerary, title: title, notes: notes, categoryIdentifiers: categoryIdentifiers,
+        itinerary, title: title, notes: notes, links: links.map(\.input),
+        categoryIdentifiers: categoryIdentifiers,
         tagIdentifiers: tagIdentifiers, operationIdentifier: operationIdentifier)
       source = saved ? itinerary.source : nil
     } else {
       source = await store.createItinerary(
-        title: title, notes: notes, categoryIdentifiers: categoryIdentifiers,
+        title: title, notes: notes, links: links.map(\.input),
+        categoryIdentifiers: categoryIdentifiers,
         tagIdentifiers: tagIdentifiers, operationIdentifier: operationIdentifier)
     }
     guard let source, store.alertMessage == nil else { return }

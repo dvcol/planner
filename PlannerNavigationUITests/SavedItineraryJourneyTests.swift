@@ -2,6 +2,185 @@ import XCTest
 
 @MainActor
 final class SavedItineraryJourneyTests: XCTestCase {
+  func testItineraryLinksStageCancelPreserveIdentityAndOrderAcrossEditAndRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openItineraries(application)
+    application.plannerElement("saved.itinerary.new").activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Route bookmarks")
+    let notes = application.textFields["saved.itinerary.notes"]
+    notes.activateForPlannerJourney()
+    notes.typeText("Keep the route notes")
+    let addLink = application.plannerElement("saved.itinerary.link.add")
+    XCTAssertTrue(addLink.waitForExistence(timeout: 5))
+    addItineraryLink(
+      "https://maps.apple.com/?q=Tokyo", label: "Tokyo Map", application: application)
+    addItineraryLink(
+      "https://maps.apple.com/?q=Kyoto", label: "Kyoto Map", application: application)
+    recordScreenshot(application, name: "Native Itinerary stages two owned links")
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    let links = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link."))
+    let tokyo = links.matching(NSPredicate(format: "label == %@", "Tokyo Map")).firstMatch
+    let kyoto = links.matching(NSPredicate(format: "label == %@", "Kyoto Map")).firstMatch
+    XCTAssertTrue(tokyo.waitForExistence(timeout: 10))
+    XCTAssertTrue(kyoto.waitForExistence(timeout: 10))
+    XCTAssertEqual(links.count, 2)
+    let tokyoIdentity = tokyo.identifier
+    let kyotoIdentity = kyoto.identifier
+    XCTAssertEqual(links.allElementsBoundByIndex.map(\.identifier), [tokyoIdentity, kyotoIdentity])
+    XCTAssertTrue(tokyo.waitForPlannerValue("https://maps.apple.com/?q=Tokyo"))
+    XCTAssertTrue(kyoto.waitForPlannerValue("https://maps.apple.com/?q=Kyoto"))
+    application.plannerElement("saved.itinerary.edit").activateForPlannerJourney()
+    addItineraryLink(
+      "https://maps.apple.com/?q=Osaka", label: "Canceled Map", application: application)
+    application.plannerElement("saved.itinerary.cancel").activateForPlannerJourney()
+    XCTAssertTrue(tokyo.waitForExistence(timeout: 5))
+    XCTAssertEqual(links.count, 2)
+    XCTAssertFalse(application.staticTexts["Canceled Map"].exists)
+    application.plannerElement("saved.itinerary.edit").activateForPlannerJourney()
+    let tokyoIdentifier = tokyoIdentity.replacingOccurrences(of: "saved.item.link.", with: "")
+    let tokyoURL = application.textFields["saved.itinerary.link.url.\(tokyoIdentifier)"]
+    XCTAssertTrue(tokyoURL.waitForExistence(timeout: 5))
+    replaceText(tokyoURL, with: "https://maps.apple.com/?q=Kobe", application: application)
+    replaceText(
+      application.textFields["saved.itinerary.link.label.\(tokyoIdentifier)"], with: "Kobe Map",
+      application: application)
+    application.plannerElement("saved.itinerary.link.actions.\(tokyoIdentifier)")
+      .activateForPlannerJourney()
+    application.plannerElement("Move Down").activateForPlannerJourney()
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    let retainedTokyo = links.matching(identifier: tokyoIdentity).firstMatch
+    XCTAssertTrue(retainedTokyo.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedTokyo.label, "Kobe Map")
+    XCTAssertTrue(retainedTokyo.waitForPlannerValue("https://maps.apple.com/?q=Kobe"))
+    XCTAssertEqual(links.allElementsBoundByIndex.map(\.identifier), [kyotoIdentity, tokyoIdentity])
+    recordScreenshot(
+      application, name: "Itinerary detail retains owned link identities after reorder and edit")
+    let kyotoIdentifier = kyotoIdentity.replacingOccurrences(of: "saved.item.link.", with: "")
+    for confirmsRemoval in [false, true] {
+      application.plannerElement("saved.itinerary.edit").activateForPlannerJourney()
+      application.plannerElement("saved.itinerary.link.actions.\(kyotoIdentifier)")
+        .activateForPlannerJourney()
+      application.plannerElement("Remove Link").activateForPlannerJourney()
+      let action = confirmsRemoval ? "saved.itinerary.save" : "saved.itinerary.cancel"
+      application.plannerElement(action).activateForPlannerJourney()
+      XCTAssertTrue(retainedTokyo.waitForExistence(timeout: 10))
+      XCTAssertEqual(links.count, confirmsRemoval ? 1 : 2)
+      XCTAssertEqual(links.matching(identifier: kyotoIdentity).firstMatch.exists, !confirmsRemoval)
+    }
+    XCTAssertTrue(application.staticTexts["Keep the route notes"].exists)
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    openCatalog(application)
+    let itinerary = itineraryRow(application, title: "Route bookmarks")
+    XCTAssertTrue(itinerary.waitForExistence(timeout: 10))
+    let itineraryIdentity = itinerary.identifier
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItineraries(application)
+    XCTAssertTrue(itinerary.waitForExistence(timeout: 10))
+    XCTAssertEqual(itinerary.identifier, itineraryIdentity)
+    itinerary.activateForPlannerJourney()
+    XCTAssertTrue(retainedTokyo.waitForExistence(timeout: 10))
+    XCTAssertEqual(links.count, 1)
+    XCTAssertEqual(retainedTokyo.label, "Kobe Map")
+    XCTAssertTrue(retainedTokyo.waitForPlannerValue("https://maps.apple.com/?q=Kobe"))
+    XCTAssertFalse(links.matching(identifier: kyotoIdentity).firstMatch.exists)
+    XCTAssertTrue(application.staticTexts["Keep the route notes"].exists)
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    recordScreenshot(
+      application, name: "Itinerary owned links survive relaunch without canceled edits")
+  }
+
+  private func addItineraryLink(_ originalURL: String, label: String, application: XCUIApplication)
+  {
+    let fields = application.textFields.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.link.url."))
+    let existing = Set(fields.allElementsBoundByIndex.map(\.identifier))
+    application.plannerElement("saved.itinerary.link.add").activateForPlannerJourney()
+    let field = fields.matching(NSPredicate(format: "NOT identifier IN %@", Array(existing)))
+      .firstMatch
+    XCTAssertTrue(field.waitForExistence(timeout: 5))
+    field.activateForPlannerJourney()
+    field.typeText(originalURL)
+    let labelIdentifier = field.identifier.replacingOccurrences(
+      of: "saved.itinerary.link.url.", with: "saved.itinerary.link.label.")
+    let labelField = application.textFields[labelIdentifier]
+    labelField.activateForPlannerJourney()
+    labelField.typeText(label)
+  }
+
+  func testInvalidItineraryLinksKeepTheDraftAndSavedOwnerUntilCorrectedOrCanceled() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openItineraries(application)
+    application.plannerElement("saved.itinerary.new").activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Route validation")
+    let notes = application.textFields["saved.itinerary.notes"]
+    notes.activateForPlannerJourney()
+    notes.typeText("Original route notes")
+    addItineraryLink("file:///private/tmp/route", label: "Route Map", application: application)
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    let alert = application.alerts.firstMatch
+    XCTAssertTrue(alert.waitForExistence(timeout: 10))
+    XCTAssertTrue(alert.staticTexts["A bookmark must be an absolute HTTP or HTTPS URL."].exists)
+    recordScreenshot(application, name: "Invalid Itinerary creation retains the staged draft")
+    alert.buttons["OK"].activateForPlannerJourney()
+    let urlFields = application.textFields.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.link.url."))
+    replaceText(
+      urlFields.firstMatch, with: "https://maps.apple.com/?q=Tokyo", application: application)
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    let links = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link."))
+    let link = links.firstMatch
+    XCTAssertTrue(link.waitForExistence(timeout: 10))
+    let identity = link.identifier
+    XCTAssertEqual(links.count, 1)
+    XCTAssertTrue(link.waitForPlannerValue("https://maps.apple.com/?q=Tokyo"))
+    application.plannerElement("saved.itinerary.edit").activateForPlannerJourney()
+    XCTAssertTrue(notes.waitForExistence(timeout: 5))
+    replaceText(notes, with: "Unapplied route notes", application: application)
+    replaceText(
+      urlFields.firstMatch, with: "file:///private/tmp/edited-route", application: application)
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    XCTAssertTrue(alert.waitForExistence(timeout: 10))
+    XCTAssertTrue(alert.staticTexts["A bookmark must be an absolute HTTP or HTTPS URL."].exists)
+    recordScreenshot(application, name: "Invalid link rejects the complete Itinerary edit")
+    alert.buttons["OK"].activateForPlannerJourney()
+    application.plannerElement("saved.itinerary.cancel").activateForPlannerJourney()
+    XCTAssertTrue(link.waitForExistence(timeout: 10))
+    XCTAssertEqual(link.identifier, identity)
+    XCTAssertEqual(links.count, 1)
+    XCTAssertTrue(link.waitForPlannerValue("https://maps.apple.com/?q=Tokyo"))
+    XCTAssertTrue(application.staticTexts["Original route notes"].exists)
+    XCTAssertFalse(application.staticTexts["Unapplied route notes"].exists)
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItineraries(application)
+    let itinerary = itineraryRow(application, title: "Route validation")
+    XCTAssertTrue(itinerary.waitForExistence(timeout: 10))
+    itinerary.activateForPlannerJourney()
+    XCTAssertTrue(link.waitForExistence(timeout: 10))
+    XCTAssertEqual(link.identifier, identity)
+    XCTAssertEqual(links.count, 1)
+    XCTAssertTrue(link.waitForPlannerValue("https://maps.apple.com/?q=Tokyo"))
+    XCTAssertTrue(application.staticTexts["Original route notes"].exists)
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    recordScreenshot(
+      application, name: "Rejected Itinerary edits leave the saved owner unchanged after relaunch")
+  }
+
   func testEmptyItineraryCanCancelAndSaveItsOwnStartOnlyScheduleAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()
