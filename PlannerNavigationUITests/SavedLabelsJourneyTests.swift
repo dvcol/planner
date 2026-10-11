@@ -2,6 +2,132 @@ import XCTest
 
 @MainActor
 final class SavedLabelsJourneyTests: XCTestCase {
+  func testItineraryLabelSelectionStagesChangesAndPreservesLiveNamesAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openLabels(application)
+    createLabel("Category", name: "Culture", application: application)
+    createLabel("Tag", name: "Rain", application: application)
+    application.plannerElement("saved.categories.done").activateForPlannerJourney()
+    openItineraries(application)
+    application.plannerElement("saved.itinerary.new").activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Canceled route")
+    selectLabels(
+      "Categories", names: ["Culture"], identifierPrefix: "saved.itinerary",
+      application: application)
+    application.plannerElement("saved.itinerary.cancel").activateForPlannerJourney()
+    XCTAssertFalse(application.staticTexts["Canceled route"].exists)
+    application.plannerElement("saved.itinerary.new").activateForPlannerJourney()
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Weekend route")
+    selectLabels(
+      "Categories", names: ["Culture"], identifierPrefix: "saved.itinerary",
+      application: application)
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Culture"].firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    openItineraries(application)
+    let row = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.",
+        "Weekend route")
+    ).firstMatch
+    XCTAssertTrue(row.waitForExistence(timeout: 10))
+    let sourceIdentifier = row.identifier
+    row.activateForPlannerJourney()
+    openItineraryEditor(application)
+    let save = application.plannerElement("saved.itinerary.save")
+    XCTAssertFalse(save.isEnabled)
+    selectLabels(
+      "Tags", names: ["Rain"], identifierPrefix: "saved.itinerary", application: application)
+    XCTAssertTrue(save.isEnabled)
+    application.plannerElement("saved.itinerary.cancel").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Culture"].firstMatch.waitForExistence(timeout: 10))
+    XCTAssertFalse(application.staticTexts["Rain"].exists)
+    openItineraryEditor(application)
+    selectLabels(
+      "Tags", names: ["Rain"], identifierPrefix: "saved.itinerary", application: application)
+    recordLabelsScreenshot(application, name: "Staged Itinerary Category and Tag selections")
+    save.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Rain"].firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Culture"].exists)
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    recordLabelsScreenshot(application, name: "Complete Itinerary labels after guarded save")
+    openLabels(application)
+    application.staticTexts["Culture"].firstMatch.activateForPlannerJourney()
+    let categoryName = application.textFields["saved.category.name"]
+    XCTAssertTrue(categoryName.waitForExistence(timeout: 5))
+    replaceText(categoryName, with: "Art", application: application)
+    application.plannerElement("saved.category.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Art"].firstMatch.waitForExistence(timeout: 10))
+    application.staticTexts["Rain"].firstMatch.activateForPlannerJourney()
+    let tagName = application.textFields["saved.tag.name"]
+    XCTAssertTrue(tagName.waitForExistence(timeout: 5))
+    replaceText(tagName, with: "Wet weather", application: application)
+    application.plannerElement("saved.tag.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Wet weather"].firstMatch.waitForExistence(timeout: 10))
+    application.plannerElement("saved.categories.done").activateForPlannerJourney()
+    openItineraries(application)
+    XCTAssertEqual(row.identifier, sourceIdentifier)
+    row.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Art"].firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Wet weather"].exists)
+    XCTAssertFalse(application.staticTexts["Culture"].exists)
+    XCTAssertFalse(application.staticTexts["Rain"].exists)
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItineraries(application)
+    XCTAssertEqual(row.identifier, sourceIdentifier)
+    row.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Art"].firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Wet weather"].exists)
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    recordLabelsScreenshot(application, name: "Live Itinerary labels after rename and relaunch")
+    openItineraryEditor(application)
+    selectLabels(
+      "Tags", names: ["Wet weather"], identifierPrefix: "saved.itinerary", selected: false,
+      application: application)
+    save.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Wet weather"].waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Art"].exists)
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+  }
+
+  private func openItineraries(_ application: XCUIApplication) {
+    #if os(macOS)
+      let section = application.plannerElement("saved.section.itineraries")
+    #else
+      let section = application.buttons["Itineraries"].firstMatch
+    #endif
+    XCTAssertTrue(section.waitForExistence(timeout: 10))
+    section.activateForPlannerJourney()
+    let creation = application.plannerElement("saved.itinerary.new")
+    if !creation.waitForExistence(timeout: 2) {
+      let sidebar = application.plannerElement("Show Sidebar")
+      if sidebar.exists {
+        sidebar.activateForPlannerJourney()
+      } else {
+        let back = application.plannerElement("BackButton")
+        XCTAssertTrue(back.exists)
+        back.activateForPlannerJourney()
+      }
+    }
+    XCTAssertTrue(creation.waitForExistence(timeout: 10))
+  }
+
+  private func openItineraryEditor(_ application: XCUIApplication) {
+    let editor = application.plannerElement("saved.itinerary.edit")
+    XCTAssertTrue(editor.waitForExistence(timeout: 10))
+    editor.activateForPlannerJourney()
+    XCTAssertTrue(application.textFields["saved.itinerary.title"].waitForExistence(timeout: 5))
+  }
+
   func testManageLabelsStagesTagCreationAndRenameAndRetainsIdentityAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -359,6 +485,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
 
   private func selectLabels(
     _ kind: String, names: [String], identifierPrefix: String = "saved.item.edit",
+    selected: Bool = true,
     application: XCUIApplication
   ) {
     let picker = application.plannerElement("\(identifierPrefix).\(kind.lowercased())")
@@ -372,7 +499,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
         NSPredicate(format: "identifier BEGINSWITH %@ AND label == %@", "saved.item.label.", name)
       ).firstMatch
       XCTAssertTrue(toggle.waitForExistence(timeout: 5))
-      XCTAssertEqual(toggle.plannerBooleanState, false)
+      XCTAssertEqual(toggle.plannerBooleanState, !selected)
       #if os(macOS)
         toggle.click()
       #else
@@ -380,7 +507,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
         XCTAssertTrue(control.exists)
         control.tap()
       #endif
-      XCTAssertTrue(toggle.waitForPlannerBooleanState(true))
+      XCTAssertTrue(toggle.waitForPlannerBooleanState(selected))
     }
     application.plannerElement("saved.item.labels.done").activateForPlannerJourney()
   }
