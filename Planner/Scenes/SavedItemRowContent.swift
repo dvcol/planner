@@ -16,7 +16,22 @@ extension PlannerRowRead {
       descriptions.append("Maps")
     }
     if archived == true { descriptions.append("Archived") }
+    let categories = labels.sortedLabels(of: .category)
+    if !categories.isEmpty {
+      descriptions.append("Categories: \(categories.map(\.name).joined(separator: ", "))")
+    }
+    let tags = labels.sortedLabels(of: .tag)
+    if !tags.isEmpty {
+      descriptions.append("Tags: \(tags.map(\.name).joined(separator: ", "))")
+    }
     return descriptions.joined(separator: ", ")
+  }
+
+  var compactLabelDescription: String? {
+    let tags = labels.sortedLabels(of: .tag)
+    var names = labels.sortedLabels(of: .category).map(\.name) + tags.prefix(2).map(\.name)
+    if tags.count > 2 { names.append("+\(tags.count - 2)") }
+    return names.isEmpty ? nil : names.joined(separator: " · ")
   }
 
   var locationCaption: String? {
@@ -99,6 +114,12 @@ struct SavedItemRowContent: View {
       }
       if let location = row.locationCaption {
         Label(location, systemImage: "mappin.and.ellipse")
+          .font(.caption)
+          .foregroundStyle(.secondary)
+          .lineLimit(1)
+      }
+      if let labels = row.compactLabelDescription {
+        Text(labels)
           .font(.caption)
           .foregroundStyle(.secondary)
           .lineLimit(1)

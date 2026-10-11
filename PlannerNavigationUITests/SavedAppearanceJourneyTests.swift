@@ -314,8 +314,8 @@ final class SavedAppearanceJourneyTests: XCTestCase {
 
     openItemEditor(application)
     let guideActions = application.plannerElement("saved.item.edit.link.actions.\(guideIdentity)")
-    XCTAssertTrue(guideActions.waitForExistence(timeout: 5))
     revealEditorElement(guideActions, application: application)
+    XCTAssertTrue(guideActions.waitForExistence(timeout: 5))
     guideActions.activateForPlannerJourney()
     XCTAssertFalse(application.plannerElement("Move Up").isEnabled)
     application.plannerElement("Move Down").activateForPlannerJourney()
@@ -323,6 +323,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     guideActions.activateForPlannerJourney()
     XCTAssertFalse(application.plannerElement("Move Down").isEnabled)
     application.plannerElement("Move Up").activateForPlannerJourney()
+    revealEditorElement(guideActions, application: application)
     guideActions.activateForPlannerJourney()
     application.plannerElement("Move Down").activateForPlannerJourney()
     let guideURL = application.textFields["saved.item.edit.link.url.\(guideIdentity)"]
@@ -2073,16 +2074,16 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     application: XCUIApplication
   ) -> String {
     let add = application.plannerElement("saved.item.edit.link.add")
-    XCTAssertTrue(add.waitForExistence(timeout: 5))
     revealEditorElement(add, application: application)
+    XCTAssertTrue(add.waitForExistence(timeout: 5))
     add.activateForPlannerJourney()
     let newURL = application.textFields.matching(
       NSPredicate(
         format: "identifier BEGINSWITH %@ AND NOT (identifier IN %@)",
         "saved.item.edit.link.url.", existingURLIdentifiers)
     ).firstMatch
-    XCTAssertTrue(newURL.waitForExistence(timeout: 5))
     revealEditorElement(newURL, application: application)
+    XCTAssertTrue(newURL.waitForExistence(timeout: 5))
     newURL.activateForPlannerJourney()
     newURL.typeText(originalURL)
     let labelField = application.textFields[
@@ -2110,8 +2111,8 @@ final class SavedAppearanceJourneyTests: XCTestCase {
 
   private func removeBookmark(_ identity: String, application: XCUIApplication) {
     let actions = application.plannerElement("saved.item.edit.link.actions.\(identity)")
-    XCTAssertTrue(actions.waitForExistence(timeout: 5))
     revealEditorElement(actions, application: application)
+    XCTAssertTrue(actions.waitForExistence(timeout: 5))
     actions.activateForPlannerJourney()
     application.plannerElement("Remove Link").activateForPlannerJourney()
   }

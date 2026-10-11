@@ -369,6 +369,7 @@ final class SavedPlannerStore {
     _ item: PlannerItemSourceRead, title: String, subtitle: String, notes: String,
     links: [PlannerLinkInput],
     location: PlannerOwnedLocation?,
+    categoryIdentifiers: Set<UUID>, tagIdentifiers: Set<UUID>,
     operationIdentifier: UUID
   ) async -> Bool {
     let titleChange: PlannerFieldChange<String>
@@ -407,12 +408,25 @@ final class SavedPlannerStore {
     } else {
       locationChange = .clear
     }
+    let categoryChange: PlannerFieldChange<Set<UUID>>
+    if categoryIdentifiers == item.content.categoryIds {
+      categoryChange = .unchanged
+    } else {
+      categoryChange = .set(categoryIdentifiers)
+    }
+    let tagChange: PlannerFieldChange<Set<UUID>>
+    if tagIdentifiers == item.content.tagIds {
+      tagChange = .unchanged
+    } else {
+      tagChange = .set(tagIdentifiers)
+    }
     return await executeChange(
       .editItem(
         sourceId: item.source.id,
         changes: .init(
           title: titleChange, subtitle: subtitleChange, notes: notesChange,
-          location: locationChange, links: linksChange),
+          location: locationChange, links: linksChange, categoryIds: categoryChange,
+          tagIds: tagChange),
         expectedFieldHashes: item.fieldHashes), operationId: operationIdentifier) != nil
   }
 
