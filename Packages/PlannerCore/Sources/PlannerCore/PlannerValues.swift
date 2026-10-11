@@ -177,6 +177,7 @@ public struct PlannerItemContentInput: Sendable, Equatable {
 }
 
 public enum PlannerCommand: Sendable {
+  case deleteSource(source: PlannerEntityReference)
   case createItem(content: PlannerItemContentInput)
   case createList(content: PlannerListContentInput)
   case createItinerary(content: PlannerItineraryContentInput)

@@ -69,7 +69,8 @@ struct PortableDeletionMarker: Codable {
   }
 
   func validated(
-    schedules: [PortableScheduleRecord], memberships: [PortableMembershipRecord],
+    schedules: [PortableScheduleRecord], categories: [PlannerPortableCategory],
+    memberships: [PortableMembershipRecord],
     labelAssociations: [PortableLabelAssociationRecord], entries: [PortableItineraryEntryRecord]
   )
     throws
@@ -87,16 +88,26 @@ struct PortableDeletionMarker: Codable {
         deletionId: deletionId, operationId: operationId,
         target: .itineraryEntry(id: identifier, lifetimeId: lifetimeId), closedFamilyId: nil)
     case .source(let source):
-      guard source.kind == "schedule", closedFamilyId == nil,
-        !schedules.contains(where: { $0.id == source.id && $0.lifetimeId == source.lifetimeId })
-      else {
+      let kind: PlannerEntityKind
+      let isLive: Bool
+      switch source.kind {
+      case "schedule":
+        kind = .schedule
+        isLive = schedules.contains { $0.id == source.id && $0.lifetimeId == source.lifetimeId }
+      case "category":
+        kind = .category
+        isLive = categories.contains { $0.id == source.id && $0.lifetimeId == source.lifetimeId }
+      default:
+        throw PlannerFailure("recoveryIntegrityFailure", "The deletion source kind is unsupported.")
+      }
+      guard closedFamilyId == nil, !isLive else {
         throw PlannerFailure(
           "recoveryIntegrityFailure", "The deletion target is unsupported or still live.")
       }
       return PlannerPortableDeletionMarker(
         deletionId: deletionId, operationId: operationId,
         target: .source(
-          PlannerEntityReference(kind: .schedule, id: source.id), lifetimeId: source.lifetimeId),
+          PlannerEntityReference(kind: kind, id: source.id), lifetimeId: source.lifetimeId),
         closedFamilyId: closedFamilyId)
     case .membership(let membership):
       guard membership.kind == "membership", closedFamilyId == nil,

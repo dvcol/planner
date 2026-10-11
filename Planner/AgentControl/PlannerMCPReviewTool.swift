@@ -58,10 +58,15 @@
             "reviewToken": .string(review.reviewToken.opaqueValue),
             "command": try PlannerMCPBulkCompletion.commandValue(review.command),
             "targets": .array(
-              review.targets.map {
-                .object([
+              try review.targets.map { target in
+                guard case .appearance(let appearance) = target else {
+                  throw PlannerMCPBulkCompletion.Failure(
+                    code: "readUnavailable", path: "/targets",
+                    message: "The bulk review contains another target kind.")
+                }
+                return .object([
                   "kind": .string("appearance"),
-                  "appearance": PlannerMCPSourceTool.appearanceIdentityValue($0),
+                  "appearance": PlannerMCPSourceTool.appearanceIdentityValue(appearance),
                 ])
               }),
             "impact": .object([

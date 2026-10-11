@@ -89,7 +89,8 @@ struct BulkCompletionTests {
     let listReview = try await review(.list(listId: list.id), done: true)
     #expect(listReview.targetCount == 2 && !listReview.globalFlagsChanged)
     #expect(
-      listReview.targets == memberships.map { .listMembership(listId: list.id, membershipId: $0) })
+      listReview.targets
+        == memberships.map { .appearance(.listMembership(listId: list.id, membershipId: $0)) })
     _ = try await apply(listReview)
     try await progress(.list(list.id), done: 2, total: 2)
     try await progress(.itinerary(itinerary.id), done: 0, total: 6)
@@ -99,7 +100,8 @@ struct BulkCompletionTests {
     #expect(
       entryReview.targets
         == memberships.map {
-          .expandedListItem(itineraryId: itinerary.id, listEntryId: entries[2], membershipId: $0)
+          .appearance(
+            .expandedListItem(itineraryId: itinerary.id, listEntryId: entries[2], membershipId: $0))
         })
     _ = try await apply(entryReview)
     try await progress(.itinerary(itinerary.id), done: 2, total: 6)
