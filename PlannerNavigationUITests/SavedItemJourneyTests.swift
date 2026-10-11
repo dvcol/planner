@@ -2,6 +2,104 @@ import XCTest
 
 @MainActor
 final class SavedItemJourneyTests: XCTestCase {
+  func testEditingAllDayScheduleReloadsCivilDatesAndKeepsIdentityAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    let title = application.textFields["saved.item.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Updated gallery days")
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    let allDay = application.descendants(matching: .any)
+      .matching(identifier: "saved.schedule.allDay").firstMatch
+    XCTAssertTrue(allDay.waitForPlannerBooleanState(false))
+    activateCompletion(allDay)
+    let includeEnd = application.descendants(matching: .any)
+      .matching(identifier: "saved.schedule.hasEnd").firstMatch
+    XCTAssertTrue(includeEnd.waitForPlannerBooleanState(false))
+    activateCompletion(includeEnd)
+    selectScheduleDay(application, pickerIdentifier: "saved.schedule.start", day: 9)
+    selectScheduleDay(application, pickerIdentifier: "saved.schedule.end", day: 11)
+    let startButton = application.descendants(matching: .any)
+      .matching(identifier: "saved.schedule.start").firstMatch.buttons.firstMatch
+    let endButton = application.descendants(matching: .any)
+      .matching(identifier: "saved.schedule.end").firstMatch.buttons.firstMatch
+    let originalStartLabel = startButton.label
+    let originalEndLabel = endButton.label
+    XCTAssertFalse(originalStartLabel.isEmpty)
+    XCTAssertFalse(originalEndLabel.isEmpty)
+    application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+    let scheduleRows = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule."))
+    let schedule = scheduleRows.firstMatch
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    XCTAssertEqual(scheduleRows.count, 1)
+    XCTAssertEqual(schedule.label, "All day")
+    let identity = schedule.identifier
+    let originalDescription = schedule.value as? String
+    XCTAssertTrue(originalDescription?.contains("9") == true)
+    XCTAssertTrue(originalDescription?.contains("11") == true)
+    openScheduleMenu(schedule)
+    let editAction = application.plannerElement("Edit Schedule")
+    XCTAssertTrue(editAction.waitForExistence(timeout: 5))
+    editAction.activateForPlannerJourney()
+    XCTAssertTrue(allDay.waitForPlannerBooleanState(true))
+    XCTAssertTrue(includeEnd.waitForPlannerBooleanState(true))
+    XCTAssertEqual(startButton.label, originalStartLabel)
+    XCTAssertEqual(endButton.label, originalEndLabel)
+    recordScreenshot(application, name: "Native all-day edit reloads the saved civil range")
+    selectScheduleDay(application, pickerIdentifier: "saved.schedule.end", day: 12)
+    application.plannerElement("saved.schedule.cancel").activateForPlannerJourney()
+    XCTAssertTrue(schedule.waitForExistence(timeout: 5))
+    XCTAssertEqual(schedule.identifier, identity)
+    XCTAssertEqual(schedule.value as? String, originalDescription)
+    XCTAssertEqual(scheduleRows.count, 1)
+    openScheduleMenu(schedule)
+    editAction.activateForPlannerJourney()
+    XCTAssertTrue(allDay.waitForPlannerBooleanState(true))
+    XCTAssertTrue(includeEnd.waitForPlannerBooleanState(true))
+    XCTAssertEqual(startButton.label, originalStartLabel)
+    XCTAssertEqual(endButton.label, originalEndLabel)
+    selectScheduleDay(application, pickerIdentifier: "saved.schedule.end", day: 12)
+    XCTAssertTrue(application.staticTexts["Includes both selected dates."].exists)
+    XCTAssertTrue(application.plannerElement("saved.schedule.save").isEnabled)
+    recordScreenshot(application, name: "Native all-day edit changes only the range end")
+    application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    XCTAssertEqual(
+      XCTWaiter.wait(
+        for: [
+          XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value CONTAINS %@", "12"), object: schedule)
+        ], timeout: 10), .completed)
+    XCTAssertEqual(schedule.identifier, identity)
+    XCTAssertEqual(schedule.label, "All day")
+    XCTAssertEqual(scheduleRows.count, 1)
+    let editedDescription = schedule.value as? String
+    XCTAssertTrue(editedDescription?.contains("9") == true)
+    XCTAssertNotEqual(editedDescription, originalDescription)
+    recordScreenshot(application, name: "Native saved all-day edit preserves schedule identity")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    let row = application.savedPlannerItemRows("Updated gallery days").firstMatch
+    XCTAssertTrue(row.waitForExistence(timeout: 10))
+    row.activateForPlannerJourney()
+    let restored = application.descendants(matching: .any).matching(identifier: identity).firstMatch
+    XCTAssertTrue(restored.waitForExistence(timeout: 10))
+    XCTAssertEqual(restored.label, "All day")
+    XCTAssertEqual(restored.value as? String, editedDescription)
+    XCTAssertEqual(scheduleRows.count, 1)
+    recordScreenshot(application, name: "Native all-day edit preserves civil dates after relaunch")
+  }
+
   func testEditingScheduleCanCancelOrClearEndWithoutReplacingIdentityAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()
