@@ -591,9 +591,14 @@ public actor Planner {
               referenceInstant: Date(), displayTimeZone: TimeZone.current.identifier)).validated()
           switch itemQuery.sort.mode {
           case .manual:
-            guard case .list = itemQuery.scope, itemQuery.sort.direction == .ascending else {
+            let hasSavedOrder: Bool
+            switch itemQuery.scope {
+            case .list, .itinerary: hasSavedOrder = true
+            case .global, .inbox: hasSavedOrder = false
+            }
+            guard hasSavedOrder, itemQuery.sort.direction == .ascending else {
               throw PlannerFailure(
-                "invalidInput", "Manual order requires an ascending standalone List query.",
+                "invalidInput", "Manual order requires an ascending List or Itinerary query.",
                 propertyPath: "/query/sort")
             }
           case .title, .created, .lastUpdated, .duration: break
