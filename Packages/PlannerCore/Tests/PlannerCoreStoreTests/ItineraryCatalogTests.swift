@@ -102,6 +102,7 @@ struct ItineraryCatalogTests {
         session: session, request: .source(sources[1]))
     else { throw CancellationError() }
     #expect(rich.previewLink?.linkId == original.content.links[1].linkId)
+    #expect(original.sourceLifetimeId == rich.sourceLifetimeId)
     let otherWriter = Planner(configuration: configuration)
     guard case .ready(let otherSession) = await otherWriter.bootstrap(),
       case .applied(_, .complete) = await otherWriter.execute(

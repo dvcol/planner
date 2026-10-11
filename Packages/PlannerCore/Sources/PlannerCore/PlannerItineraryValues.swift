@@ -43,6 +43,7 @@ public enum PlannerItineraryField: String, Sendable, CaseIterable {
 
 public struct PlannerItinerarySourceRead: Sendable {
   public let source: PlannerEntityReference
+  public let sourceLifetimeId: UUID
   public let content: PlannerItineraryContent
   public let labels: [PlannerLabelRead]
   public let createdAt: Date
@@ -130,7 +131,8 @@ struct ItinerarySnapshot {
     datasetId: UUID, memberships: [MembershipSnapshot], items: [ItemSnapshot], lists: [ListSnapshot]
   ) throws -> PlannerItinerarySourceRead {
     try PlannerItinerarySourceRead(
-      source: reference, content: input.readContent(links: links.map(\.read)), labels: labels,
+      source: reference, sourceLifetimeId: lifetimeId,
+      content: input.readContent(links: links.map(\.read)), labels: labels,
       createdAt: createdAt, updatedAt: updatedAt, fieldHashes: fieldHashes(datasetId: datasetId),
       state: PlannerSourceState(globalDone: nil, archived: archived),
       progress: progress(memberships: memberships, items: items, lists: lists),

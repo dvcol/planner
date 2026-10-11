@@ -6,41 +6,6 @@ struct SavedItemEditDraft: Identifiable {
   var id: UUID { item.source.id }
 }
 
-struct SavedItemLinkDraft: Identifiable {
-  let id: UUID
-  let savedLinkIdentifier: UUID?
-  let originalLabel: String?
-  var originalURL: String
-  var label: String
-
-  init(link: PlannerOwnedLinkRead) {
-    id = link.linkId
-    savedLinkIdentifier = link.linkId
-    originalLabel = link.label
-    originalURL = link.originalUrl
-    label = link.label ?? ""
-  }
-
-  init() {
-    id = UUID()
-    savedLinkIdentifier = nil
-    originalLabel = nil
-    originalURL = ""
-    label = ""
-  }
-
-  var input: PlannerLinkInput {
-    let savedLabel: String?
-    if label == (originalLabel ?? "") {
-      savedLabel = originalLabel
-    } else {
-      savedLabel = label.isEmpty ? nil : label
-    }
-    return PlannerLinkInput(
-      linkId: savedLinkIdentifier, originalUrl: originalURL, label: savedLabel)
-  }
-}
-
 struct SavedEditItemForm: View {
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
@@ -50,10 +15,9 @@ struct SavedEditItemForm: View {
   @State private var notes: String
   @State private var locationName: String
   @State private var locationAddress: String
-  @State private var links: [SavedItemLinkDraft]
+  @State private var links: [SavedOwnedLinkDraft]
   @State private var categoryIdentifiers: Set<UUID>
   @State private var tagIdentifiers: Set<UUID>
-  @FocusState private var focusedLinkIdentifier: UUID?
   @State private var operationIdentifier = UUID()
 
   init(store: SavedPlannerStore, item: PlannerItemSourceRead) {
@@ -64,7 +28,7 @@ struct SavedEditItemForm: View {
     _notes = State(initialValue: item.content.notes ?? "")
     _locationName = State(initialValue: item.content.location?.displayName ?? "")
     _locationAddress = State(initialValue: item.content.location?.formattedAddress ?? "")
-    _links = State(initialValue: item.content.links.map(SavedItemLinkDraft.init))
+    _links = State(initialValue: item.content.links.map(SavedOwnedLinkDraft.init))
     _categoryIdentifiers = State(initialValue: item.content.categoryIds)
     _tagIdentifiers = State(initialValue: item.content.tagIds)
   }
@@ -123,50 +87,8 @@ struct SavedEditItemForm: View {
         } else {
           ItemLocationSection(title: title, location: item.content.location)
         }
-        Section("Links") {
-          ForEach($links) { $link in
-            VStack(alignment: .leading) {
-              HStack {
-                TextField("URL", text: $link.originalURL)
-                  .autocorrectionDisabled()
-                  .focused($focusedLinkIdentifier, equals: link.id)
-                  .accessibilityIdentifier("saved.item.edit.link.url.\(link.id.uuidString)")
-                  #if os(iOS)
-                    .textInputAutocapitalization(.never)
-                    .keyboardType(.URL)
-                  #endif
-                Menu {
-                  Button("Move Up", systemImage: "arrow.up") {
-                    moveLink(link.id, offset: -1)
-                  }
-                  .disabled(links.first?.id == link.id)
-                  Button("Move Down", systemImage: "arrow.down") {
-                    moveLink(link.id, offset: 1)
-                  }
-                  .disabled(links.last?.id == link.id)
-                  Divider()
-                  Button("Remove Link", systemImage: "minus.circle", role: .destructive) {
-                    if focusedLinkIdentifier == link.id { focusedLinkIdentifier = nil }
-                    links.removeAll { $0.id == link.id }
-                  }
-                } label: {
-                  Label("Link actions", systemImage: "ellipsis.circle")
-                }
-                .labelStyle(.iconOnly)
-                .help("Link actions")
-                .accessibilityIdentifier("saved.item.edit.link.actions.\(link.id.uuidString)")
-              }
-              TextField("Label", text: $link.label)
-                .accessibilityIdentifier("saved.item.edit.link.label.\(link.id.uuidString)")
-            }
-          }
-          Button("Add Link", systemImage: "plus") {
-            let draft = SavedItemLinkDraft()
-            links.append(draft)
-            focusedLinkIdentifier = draft.id
-          }
-          .accessibilityIdentifier("saved.item.edit.link.add")
-        }
+        SavedOwnedLinksEditor(
+          links: $links, accessibilityIdentifierPrefix: "saved.item.edit.link")
       }
       .disabled(store.isSaving)
       .formStyle(.grouped)
@@ -220,13 +142,6 @@ struct SavedEditItemForm: View {
     #if os(macOS)
       .frame(minWidth: 400, minHeight: 320)
     #endif
-  }
-
-  private func moveLink(_ identifier: UUID, offset: Int) {
-    guard let index = links.firstIndex(where: { $0.id == identifier }),
-      links.indices.contains(index + offset)
-    else { return }
-    links.swapAt(index, index + offset)
   }
 
   private func selectionSummary(_ identifiers: Set<UUID>) -> String {
