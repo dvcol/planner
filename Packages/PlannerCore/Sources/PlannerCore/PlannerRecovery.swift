@@ -347,7 +347,7 @@ struct PlannerDataSnapshot: Codable {
         },
         deletionMarkers: try deletionMarkers.map {
           try $0.validated(
-            schedules: schedules, categories: categories, memberships: memberships,
+            schedules: schedules, categories: categories, tags: tags, memberships: memberships,
             labelAssociations: labelAssociations,
             entries: itineraryEntries)
         }))

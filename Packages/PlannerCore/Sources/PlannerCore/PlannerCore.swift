@@ -161,7 +161,7 @@ public actor Planner {
           digest = bulkCompletionDigest(
             scope: scope, done: done, identity: identity, bindings: resolution.bindings)
         case .deleteSource(let source):
-          let resolution = try resolveCategoryDeletion(source, context: context)
+          let resolution = try resolveLabelDeletion(source, context: context)
           let removals = resolution.associations.map(\.reference)
           targets = [.source(source)] + removals.map { .reference($0) }
           impact = .init(
@@ -198,7 +198,7 @@ public actor Planner {
         let envelope = try archive.latest()
         switch operation.command {
         case .deleteSource(let source):
-          return try executeCategoryDeletion(
+          return try executeLabelDeletion(
             operation, source: source, identity: identity, context: context, archive: archive,
             receipts: receipts, envelope: envelope)
         case .setBulkCompletion(let scope, let done):
@@ -4333,57 +4333,87 @@ public actor Planner {
     }
   }
 
-  private struct CategoryDeletionResolution {
-    let record: PlannerSchemaV14.Category
-    let snapshot: CategorySnapshot
+  private enum LabelDeletionRecord {
+    case category(PlannerSchemaV14.Category)
+    case tag(PlannerSchemaV14.Tag)
+
+    func delete(context: ModelContext) {
+      switch self {
+      case .category(let record): context.delete(record)
+      case .tag(let record): context.delete(record)
+      }
+    }
+  }
+
+  private struct LabelDeletionResolution {
+    let record: LabelDeletionRecord
+    let source: PlannerBoundIdentity
     let records: [PlannerSchemaV14.LabelAssociation]
     let associations: [LabelAssociationSnapshot]
 
     var bindings: [PlannerBoundIdentity] {
-      [.init(kind: "category", id: snapshot.id, lifetimeId: snapshot.lifetimeId)]
+      [source]
         + associations.flatMap {
           [.init(kind: "labelAssociation", id: $0.id, lifetimeId: $0.lifetimeId), $0.owner]
         }
     }
   }
 
-  private func resolveCategoryDeletion(_ source: PlannerEntityReference, context: ModelContext)
-    throws -> CategoryDeletionResolution
+  private func resolveLabelDeletion(_ source: PlannerEntityReference, context: ModelContext)
+    throws -> LabelDeletionResolution
   {
-    guard source.kind != .schedule else {
+    let sourceId = source.id
+    let record: LabelDeletionRecord
+    let binding: PlannerBoundIdentity
+    let associationCount: Int
+    switch source.kind {
+    case .category:
+      var descriptor = FetchDescriptor<PlannerSchemaV14.Category>(
+        predicate: #Predicate { $0.id == sourceId })
+      descriptor.fetchLimit = 2
+      let records = try context.fetch(descriptor)
+      guard records.count == 1, let category = records.first else {
+        throw PlannerFailure("missingReference", "The selected Category is missing or unresolved.")
+      }
+      let snapshot = try category.value()
+      record = .category(category)
+      binding = .init(kind: "category", id: snapshot.id, lifetimeId: snapshot.lifetimeId)
+      associationCount = snapshot.associations.count
+    case .tag:
+      var descriptor = FetchDescriptor<PlannerSchemaV14.Tag>(
+        predicate: #Predicate { $0.id == sourceId })
+      descriptor.fetchLimit = 2
+      let records = try context.fetch(descriptor)
+      guard records.count == 1, let tag = records.first else {
+        throw PlannerFailure("missingReference", "The selected Tag is missing or unresolved.")
+      }
+      let snapshot = try tag.value()
+      record = .tag(tag)
+      binding = .init(kind: "tag", id: snapshot.id, lifetimeId: snapshot.lifetimeId)
+      associationCount = snapshot.associations.count
+    case .schedule:
       throw PlannerFailure(
         "invalidInput", "Source deletion accepts Items, Lists, Itineraries, Categories or Tags.",
         propertyPath: "/command/source/kind")
-    }
-    guard source.kind == .category else {
+    default:
       throw PlannerFailure(
         "unavailable", "Reviewed deletion of this source kind is not implemented.")
     }
-    let sourceId = source.id
-    var descriptor = FetchDescriptor<PlannerSchemaV14.Category>(
-      predicate: #Predicate { $0.id == sourceId })
-    descriptor.fetchLimit = 2
-    let categories = try context.fetch(descriptor)
-    guard categories.count == 1, let record = categories.first else {
-      throw PlannerFailure("missingReference", "The selected Category is missing or unresolved.")
-    }
-    let snapshot = try record.value()
     let associations = try labelAssociationSnapshots(context).filter {
-      $0.label.kind == "category" && $0.label.id == snapshot.id
-        && $0.label.lifetimeId == snapshot.lifetimeId
+      $0.label.kind == binding.kind && $0.label.id == binding.id
+        && $0.label.lifetimeId == binding.lifetimeId
     }.sorted { $0.id.uuidString < $1.id.uuidString }
     let records = try context.fetch(FetchDescriptor<PlannerSchemaV14.LabelAssociation>()).filter {
-      $0.labelKind == "category" && $0.labelId == snapshot.id
-        && $0.labelLifetimeId == snapshot.lifetimeId
+      $0.labelKind == binding.kind && $0.labelId == binding.id
+        && $0.labelLifetimeId == binding.lifetimeId
     }
-    guard snapshot.associations.count == associations.count, records.count == associations.count
-    else {
-      throw PlannerFailure("readUnavailable", "The Category associations are unresolved.")
+    guard associationCount == associations.count, records.count == associations.count else {
+      throw PlannerFailure("readUnavailable", "The shared label associations are unresolved.")
     }
-    return .init(record: record, snapshot: snapshot, records: records, associations: associations)
+    return .init(record: record, source: binding, records: records, associations: associations)
   }
 
-  private func executeCategoryDeletion(
+  private func executeLabelDeletion(
     _ operation: PlannerOperation, source: PlannerEntityReference,
     identity: PlannerStoreIdentity, context: ModelContext, archive: PlannerRecoveryArchive,
     receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
@@ -4414,7 +4444,7 @@ public actor Planner {
         "staleReview", "Review the complete deletion impact in the current dataset session.",
         propertyPath: "/reviewToken", details: .staleReview)
     }
-    let resolution = try resolveCategoryDeletion(source, context: context)
+    let resolution = try resolveLabelDeletion(source, context: context)
     let digest = sourceDeletionDigest(
       source: source, identity: identity, bindings: resolution.bindings)
     guard digest == review.payloadDigest else {
@@ -4433,8 +4463,10 @@ public actor Planner {
     }
     let removedIds = Set(resolution.associations.map(\.id))
     let labels = try labelAssociationSnapshots(context).filter { !removedIds.contains($0.id) }
-    let categories = try categorySnapshots(context).filter { $0.id != source.id }
-    let tags = try tagSnapshots(context)
+    let categories = try categorySnapshots(context).filter {
+      source.kind != .category || $0.id != source.id
+    }
+    let tags = try tagSnapshots(context).filter { source.kind != .tag || $0.id != source.id }
     let updatedAt = Date()
     let affectedOwners = resolution.associations.map(\.owner)
     let items = try context.fetch(FetchDescriptor<PlannerSchemaV14.Item>()).map { record in
@@ -4470,9 +4502,7 @@ public actor Planner {
     let memberships = try membershipSnapshots(context)
     let sourceMarker = PortableDeletionMarker(
       deletionId: UUID(), operationId: operation.operationId,
-      target: .source(
-        .init(
-          kind: "category", id: resolution.snapshot.id, lifetimeId: resolution.snapshot.lifetimeId)),
+      target: .source(resolution.source),
       closedFamilyId: nil)
     let newMarkers =
       [sourceMarker]
@@ -4505,7 +4535,7 @@ public actor Planner {
       association.itineraryOwner?.updatedAt = updatedAt
       context.delete(association)
     }
-    context.delete(resolution.record)
+    resolution.record.delete(context: context)
     context.insert(receipt)
     do { try context.save() } catch {
       context.rollback()

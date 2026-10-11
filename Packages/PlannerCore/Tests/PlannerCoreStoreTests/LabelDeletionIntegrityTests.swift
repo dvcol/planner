@@ -3,8 +3,11 @@ import Foundation
 import PlannerCore
 import Testing
 
-struct CategoryDeletionIntegrityTests {
-  @Test func liveCategoryClosureAndUnsupportedFamilyRejectTheEntireRecoverySnapshot() async throws {
+struct LabelDeletionIntegrityTests {
+  @Test(arguments: [PlannerEntityKind.category, .tag])
+  func liveLabelClosureAndUnsupportedFamilyRejectTheEntireRecoverySnapshot(
+    _ labelKind: PlannerEntityKind
+  ) async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
     let recoveryDirectory = directory.appendingPathComponent("recovery")
@@ -14,20 +17,24 @@ struct CategoryDeletionIntegrityTests {
         controlURL: directory.appendingPathComponent("control/writer"),
         recoveryDirectoryURL: recoveryDirectory, processRole: .mainApplication,
         storageMode: .localOnly))
+    func createLabel(_ name: String) -> PlannerCommand {
+      if labelKind == .category { return .createCategory(content: .init(name: name)) }
+      return .createTag(content: .init(name: name))
+    }
     guard case .ready(let session) = await planner.bootstrap(),
       case .applied(let deletedResult, .complete) = await planner.execute(
         .init(
           operationId: UUID(), session: session,
-          command: .createCategory(content: .init(name: "Remove")))
+          command: createLabel("Remove"))
       ).outcome,
       let deleted = deletedResult.generated.first,
       case .applied(let retainedResult, .complete) = await planner.execute(
         .init(
           operationId: UUID(), session: session,
-          command: .createCategory(content: .init(name: "Keep")))
+          command: createLabel("Keep"))
       ).outcome,
       let retained = retainedResult.generated.first,
-      case .source(.category(let before)) = await planner.read(
+      case .source(let beforeSource) = await planner.read(
         session: session, request: .source(retained)),
       case .reviewed(let review) = await planner.prepareReview(
         session: session, command: .deleteSource(source: deleted)),
@@ -42,6 +49,12 @@ struct CategoryDeletionIntegrityTests {
         request: .acknowledgedSnapshot(
           namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
     else { throw CancellationError() }
+    let sourceLifetimeId: UUID
+    switch beforeSource {
+    case .category(let before): sourceLifetimeId = before.sourceLifetimeId
+    case .tag(let before): sourceLifetimeId = before.sourceLifetimeId
+    default: throw CancellationError()
+    }
     let checkpointURL = recoveryDirectory.appendingPathComponent(namespace.namespaceId.uuidString)
       .appendingPathComponent("checkpoint-\(checkpoint).json")
     let originalEnvelope = try Data(contentsOf: checkpointURL)
@@ -55,8 +68,8 @@ struct CategoryDeletionIntegrityTests {
     live["target"] = [
       "kind": "source",
       "source": [
-        "kind": "category", "id": retained.id.uuidString,
-        "lifetimeId": before.sourceLifetimeId.uuidString,
+        "kind": labelKind.rawValue, "id": retained.id.uuidString,
+        "lifetimeId": sourceLifetimeId.uuidString,
       ],
     ]
     var family = marker
@@ -75,20 +88,26 @@ struct CategoryDeletionIntegrityTests {
             namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
       else {
         Issue.record(
-          "Reject recovery containing a live Category closure or unsupported deletion metadata.")
+          "Reject recovery containing a live label closure or unsupported deletion metadata.")
         continue
       }
       #expect(failure.code == "recoveryIntegrityFailure")
     }
     try originalEnvelope.write(to: checkpointURL, options: .atomic)
     guard
-      case .source(.category(let after)) = await planner.read(
+      case .source(let afterSource) = await planner.read(
         session: session, request: .source(retained)),
       case .selected(let restored) = await planner.inspectRecovery(
         request: .acknowledgedSnapshot(
           namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
     else { throw CancellationError() }
-    #expect(after.fieldHashes == before.fieldHashes && after.updatedAt == before.updatedAt)
+    switch (beforeSource, afterSource) {
+    case (.category(let before), .category(let after)):
+      #expect(after.fieldHashes == before.fieldHashes && after.updatedAt == before.updatedAt)
+    case (.tag(let before), .tag(let after)):
+      #expect(after.fieldHashes == before.fieldHashes && after.updatedAt == before.updatedAt)
+    default: throw CancellationError()
+    }
     #expect(restored.portableData == original.portableData)
   }
 }
