@@ -2,11 +2,11 @@ import PlannerCore
 import SwiftUI
 
 private enum SavedPlannerSection: Hashable {
-  case lists, items, inbox
+  case lists, items, inbox, itineraries
 }
 
 private enum SavedPlannerSidebarSelection: Hashable {
-  case lists, items, inbox
+  case lists, items, inbox, itineraries
   case list(UUID)
 }
 
@@ -26,6 +26,7 @@ struct SavedPlannerView: View {
 
   @Bindable var store: SavedPlannerStore
   @State private var selectedSection: SavedPlannerSection = .lists
+  @State private var selectedItineraryIdentifier: UUID?
   @State private var selectedListId: UUID?
   @State private var selectedList: PlannerListSourceRead?
   @State private var listItems: [SavedPlannerItem]?
@@ -151,6 +152,7 @@ struct SavedPlannerView: View {
         get: {
           store.alertMessage != nil && itemEditDraft == nil && bulkCompletionDraft == nil
             && !showCategories
+            && (selectedSection != .itineraries || showNewList || showNewItem)
         },
         set: { if !$0 { store.alertMessage = nil } })
     ) {
@@ -172,6 +174,16 @@ struct SavedPlannerView: View {
         Tab("Lists", systemImage: "list.bullet", value: .lists) { plannerColumns }
         Tab("Items", systemImage: "square.stack", value: .items) { catalogColumns }
         Tab("Inbox", systemImage: "tray", value: .inbox) { catalogColumns }
+        Tab(
+          "Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath",
+          value: .itineraries
+        ) {
+          NavigationSplitView {
+            itineraryCatalog
+          } detail: {
+            itineraryDetail
+          }
+        }
       }
     #endif
   }
@@ -190,6 +202,7 @@ struct SavedPlannerView: View {
         #if os(macOS)
           if selectedSection == .items { return .items }
           if selectedSection == .inbox { return .inbox }
+          if selectedSection == .itineraries { return .itineraries }
         #endif
         if let selectedListId { return .list(selectedListId) }
         #if os(macOS)
@@ -202,6 +215,7 @@ struct SavedPlannerView: View {
         switch selection {
         case .items: selectedSection = .items
         case .inbox: selectedSection = .inbox
+        case .itineraries: selectedSection = .itineraries
         case .list(let identifier):
           selectedSection = .lists
           selectedListId = identifier
@@ -214,6 +228,21 @@ struct SavedPlannerView: View {
         case nil: break
         }
       })
+  }
+
+  private var itineraryCatalog: some View {
+    SavedItineraryCatalog(store: store, selection: $selectedItineraryIdentifier)
+  }
+
+  @ViewBuilder
+  private var itineraryDetail: some View {
+    if let selectedItineraryIdentifier {
+      SavedItineraryDetail(store: store, identifier: selectedItineraryIdentifier)
+        .id(selectedItineraryIdentifier)
+    } else {
+      ContentUnavailableView(
+        "Choose an Itinerary", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+    }
   }
 
   private var isItemSection: Bool {
@@ -542,6 +571,11 @@ struct SavedPlannerView: View {
               Label("Inbox", systemImage: "tray")
             }
             .accessibilityIdentifier("saved.section.inbox")
+            NavigationLink(value: SavedPlannerSidebarSelection.itineraries) {
+              Label(
+                "Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+            }
+            .accessibilityIdentifier("saved.section.itineraries")
           }
         #endif
         Section("Lists") {
@@ -605,7 +639,9 @@ struct SavedPlannerView: View {
         }
       }
     } content: {
-      if isItemSection {
+      if selectedSection == .itineraries {
+        itineraryCatalog
+      } else if isItemSection {
         itemCatalog
       } else if let selectedList {
         Group {
@@ -763,7 +799,9 @@ struct SavedPlannerView: View {
         ContentUnavailableView("Choose a List", systemImage: "list.bullet.rectangle")
       }
     } detail: {
-      if isItemSection {
+      if selectedSection == .itineraries {
+        itineraryDetail
+      } else if isItemSection {
         itemDetail
       } else {
         appearanceDetail

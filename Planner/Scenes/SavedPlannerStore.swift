@@ -21,6 +21,12 @@ struct SavedPlannerCategory: Identifiable {
   var id: UUID { source.id }
 }
 
+struct SavedPlannerItinerary: Identifiable {
+  let source: PlannerEntityReference
+  let title: String
+  var id: UUID { source.id }
+}
+
 enum SavedBulkCompletionResult {
   case applied
   case reviewChanged(PlannerReview)
@@ -171,6 +177,43 @@ final class SavedPlannerStore {
     case .source(.category(let category)): return category
     case .failed(let reason): alertMessage = reason.message
     default: alertMessage = "Planner could not open this Category."
+    }
+    return nil
+  }
+
+  func readItineraries() async -> [SavedPlannerItinerary]? {
+    guard let planner, let session else { return nil }
+    switch await planner.query(
+      .init(session: session, request: .catalog(.init(sourceKind: .itinerary, archive: .active))))
+    {
+    case .snapshot(let snapshot):
+      switch await planner.read(
+        session: session,
+        request: .rows(generation: snapshot.generation, offset: 0, limit: Int64.max))
+      {
+      case .rows(let window):
+        return window.rows.compactMap { row in
+          guard case .source(let source) = row.identity, source.kind == .itinerary else {
+            return nil
+          }
+          return SavedPlannerItinerary(source: source, title: row.title)
+        }
+      case .failed(let reason): alertMessage = reason.message
+      default: alertMessage = "Planner could not read its Itineraries."
+      }
+    case .failed(let reason): alertMessage = reason.message
+    }
+    return nil
+  }
+
+  func readItinerary(_ identifier: UUID) async -> PlannerItinerarySourceRead? {
+    guard let planner, let session else { return nil }
+    switch await planner.read(
+      session: session, request: .source(.init(kind: .itinerary, id: identifier)))
+    {
+    case .source(.itinerary(let itinerary)): return itinerary
+    case .failed(let reason): alertMessage = reason.message
+    default: alertMessage = "Planner could not open this Itinerary."
     }
     return nil
   }
@@ -437,6 +480,33 @@ final class SavedPlannerStore {
     let result = await executeChange(
       .createCategory(content: .init(name: name)), operationId: operationIdentifier)
     return result?.generated.first { $0.kind == .category }
+  }
+
+  func createItinerary(
+    title: String, notes: String, operationIdentifier: UUID
+  ) async -> PlannerEntityReference? {
+    let result = await executeChange(
+      .createItinerary(content: .init(title: title, notes: notes.isEmpty ? nil : notes)),
+      operationId: operationIdentifier)
+    return result?.generated.first { $0.kind == .itinerary }
+  }
+
+  func editItinerary(
+    _ itinerary: PlannerItinerarySourceRead, title: String, notes: String,
+    operationIdentifier: UUID
+  ) async -> Bool {
+    let titleChange: PlannerFieldChange<String> =
+      title == itinerary.content.title ? .unchanged : .set(title)
+    let notesChange: PlannerFieldChange<String>
+    if notes == (itinerary.content.notes ?? "") {
+      notesChange = .unchanged
+    } else {
+      notesChange = notes.isEmpty ? .clear : .set(notes)
+    }
+    return await executeChange(
+      .editItinerary(
+        sourceId: itinerary.source.id, changes: .init(title: titleChange, notes: notesChange),
+        expectedFieldHashes: itinerary.fieldHashes), operationId: operationIdentifier) != nil
   }
 
   func renameCategory(
