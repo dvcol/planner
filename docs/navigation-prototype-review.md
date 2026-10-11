@@ -186,6 +186,8 @@ The [native Itinerary drag qualification](prototypes/navigation-local-qualificat
 
 The [native Itinerary removal qualification](prototypes/navigation-local-qualification.md#native-itinerary-entry-removal) adds removal from direct Item and List-entry menus. Two affected UI journeys pass per simulator, preserving sources, surviving local states and ordinary re-add/relaunch identity behavior. iPad clears the selected removed appearance with feedback. Failed navigation and canceled compatibility evidence remain recorded. A recovery-warning reporting follow-up compiles after those runtime checks; its controlled native failure branch and Mac runtime remain unqualified. The remaining map gates stay open.
 
+The [native start-only scheduling qualification](prototypes/navigation-local-qualification.md#native-start-only-item-scheduling) adds Schedule Item and saved direct schedule summaries through native DatePicker/Form and the existing durable Core command. Cancellation creates nothing; save/relaunch preserves one schedule identity, date description, notes and global Todo. This is the first scheduling slice. End/all-day creation, zone selection, editing/removal, Itinerary schedules, calendar navigation, controlled failures and Mac runtime retain their gates.
+
 ## Definition of ready and done
 
 - [x] Contract public interfaces accepted, prerequisite resolutions reviewed, local toolchain inventory refreshed and fixture inputs/expected transitions specified.

@@ -81,6 +81,7 @@ struct SavedItemDetail: View {
   let editItem: () -> Void
   let setCompletion: @MainActor @Sendable (Bool) -> Void
   let setArchive: @MainActor @Sendable (Bool) -> Void
+  @State private var showNewSchedule = false
 
   var body: some View {
     Form {
@@ -104,6 +105,7 @@ struct SavedItemDetail: View {
       if let notes = item.content.notes, !notes.isEmpty {
         Section("Notes") { Text(notes).textSelection(.enabled) }
       }
+      SavedItemSchedulesSection(item: item)
       ItemLabelsSection(labels: item.labels)
       ItemLocationSection(
         title: item.content.title, location: item.content.location, previewSource: previewSource)
@@ -120,6 +122,8 @@ struct SavedItemDetail: View {
             .disabled(!canChange)
           Button("Add to List", action: addToList)
             .disabled(!canChange)
+          Button("Schedule Item") { showNewSchedule = true }
+            .disabled(!canChange)
           Button(item.state.archived == true ? "Unarchive Item" : "Archive Item") {
             setArchive(item.state.archived != true)
           }
@@ -133,6 +137,9 @@ struct SavedItemDetail: View {
     }
     .overlay {
       if isSaving { ProgressView("Saving change") }
+    }
+    .sheet(isPresented: $showNewSchedule) {
+      SavedNewItemScheduleForm(store: store, item: item)
     }
   }
 

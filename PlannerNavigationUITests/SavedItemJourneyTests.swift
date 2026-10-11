@@ -2,6 +2,69 @@ import XCTest
 
 @MainActor
 final class SavedItemJourneyTests: XCTestCase {
+  func testCancelingScheduleDraftAndSavingStartOnlyAssignmentPreserveItemAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    let title = application.textFields["saved.item.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Garden visit")
+    let notes = application.textFields["saved.item.notes"]
+    notes.activateForPlannerJourney()
+    notes.typeText("Meet by the entrance")
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Meet by the entrance"].waitForExistence(timeout: 10))
+    let itemCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(itemCompletion.waitForPlannerBooleanState(false))
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    let scheduleAction = application.plannerElement("Schedule Item")
+    XCTAssertTrue(scheduleAction.waitForExistence(timeout: 5))
+    scheduleAction.activateForPlannerJourney()
+    let startPicker = application.descendants(matching: .any)
+      .matching(identifier: "saved.schedule.start").firstMatch
+    XCTAssertTrue(startPicker.waitForExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["This schedule has no end time."].exists)
+    application.plannerElement("saved.schedule.cancel").activateForPlannerJourney()
+    XCTAssertFalse(startPicker.waitForExistence(timeout: 2))
+    let scheduleRows = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.item.schedule.", "Start only"))
+    XCTAssertEqual(scheduleRows.count, 0)
+    XCTAssertTrue(itemCompletion.waitForPlannerBooleanState(false))
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    scheduleAction.activateForPlannerJourney()
+    XCTAssertTrue(startPicker.waitForExistence(timeout: 5))
+    application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+    let savedSchedule = scheduleRows.firstMatch
+    XCTAssertTrue(savedSchedule.waitForExistence(timeout: 10))
+    XCTAssertEqual(scheduleRows.count, 1)
+    let savedIdentifier = savedSchedule.identifier
+    let savedDescription = savedSchedule.value as? String
+    XCTAssertNotNil(savedDescription)
+    XCTAssertFalse(startPicker.exists)
+    XCTAssertTrue(itemCompletion.waitForPlannerBooleanState(false))
+    XCTAssertTrue(application.staticTexts["Meet by the entrance"].exists)
+    recordScreenshot(application, name: "Native saved start-only Item schedule")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    let retainedItem = application.savedPlannerItemRows("Garden visit").firstMatch
+    XCTAssertTrue(retainedItem.waitForExistence(timeout: 10))
+    retainedItem.activateForPlannerJourney()
+    XCTAssertTrue(savedSchedule.waitForExistence(timeout: 10))
+    XCTAssertEqual(scheduleRows.count, 1)
+    XCTAssertEqual(savedSchedule.identifier, savedIdentifier)
+    XCTAssertEqual(savedSchedule.value as? String, savedDescription)
+    XCTAssertTrue(itemCompletion.waitForPlannerBooleanState(false))
+    XCTAssertTrue(application.staticTexts["Meet by the entrance"].exists)
+    recordScreenshot(application, name: "Native start-only Item schedule after relaunch")
+  }
+
   func testItemDraftCancellationAndGlobalCompletionSurviveNativeRelaunch() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
