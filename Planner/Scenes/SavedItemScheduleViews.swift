@@ -1,9 +1,10 @@
 import PlannerCore
 import SwiftUI
 
-struct SavedItemSchedulesSection: View {
+struct SavedSchedulesSection: View {
   @Environment(SavedPlannerStore.self) private var store
-  let item: PlannerItemSourceRead
+  let source: PlannerEntityReference
+  let references: [PlannerReferenceRead]
   let canChange: Bool
   let editSchedule: (PlannerScheduleSourceRead) -> Void
   @State private var schedules: [PlannerScheduleSourceRead] = []
@@ -13,8 +14,8 @@ struct SavedItemSchedulesSection: View {
   @State private var removalOperationIdentifier = UUID()
 
   private var scheduleIdentifiers: [UUID] {
-    item.references.compactMap { reference in
-      guard case .schedule(let identifier, let source) = reference, source == item.source else {
+    references.compactMap { reference in
+      guard case .schedule(let identifier, let owner) = reference, owner == source else {
         return nil
       }
       return identifier
@@ -22,7 +23,7 @@ struct SavedItemSchedulesSection: View {
   }
 
   private var loadRevision: String {
-    item.source.id.uuidString + store.changeRevision.uuidString
+    source.id.uuidString + store.changeRevision.uuidString
       + scheduleIdentifiers.map(\.uuidString).joined(separator: ":")
   }
 
@@ -37,7 +38,7 @@ struct SavedItemSchedulesSection: View {
             Button("Try Again") { Task { await loadSchedules() } }
           } else {
             ForEach(schedules, id: \.source.id) { schedule in
-              SavedItemScheduleRow(schedule: schedule)
+              SavedScheduleRow(schedule: schedule)
                 .contextMenu {
                   Button("Edit Schedule", systemImage: "pencil") {
                     editSchedule(schedule)
@@ -74,7 +75,9 @@ struct SavedItemSchedulesSection: View {
       }
       Button("Cancel", role: .cancel) { scheduleToRemove = nil }
     } message: {
-      Text("1 schedule will be removed. The Item and its other schedules stay available.")
+      Text(
+        "1 schedule will be removed. The \(source.kind.rawValue.capitalized) and its other schedules stay available."
+      )
     }
   }
 
@@ -99,7 +102,7 @@ struct SavedItemSchedulesSection: View {
   }
 }
 
-private struct SavedItemScheduleRow: View {
+private struct SavedScheduleRow: View {
   let schedule: PlannerScheduleSourceRead
 
   private var title: String {
@@ -156,14 +159,16 @@ private struct SavedItemScheduleRow: View {
     .accessibilityElement(children: .ignore)
     .accessibilityLabel(title)
     .accessibilityValue(description)
-    .accessibilityIdentifier("saved.item.schedule.\(schedule.source.id.uuidString)")
+    .accessibilityIdentifier(
+      "saved.\(schedule.content.source.kind.rawValue).schedule.\(schedule.source.id.uuidString)")
   }
 }
 
-struct SavedItemScheduleForm: View {
+struct SavedScheduleForm: View {
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
-  let item: PlannerItemSourceRead
+  let source: PlannerEntityReference
+  let sourceTitle: String
   let schedule: PlannerScheduleSourceRead?
   private let initialDatesAvailable: Bool
   @State private var startInstant: Date
@@ -174,11 +179,12 @@ struct SavedItemScheduleForm: View {
   @State private var operationIdentifier = UUID()
 
   init(
-    store: SavedPlannerStore, item: PlannerItemSourceRead,
+    store: SavedPlannerStore, source: PlannerEntityReference, sourceTitle: String,
     schedule: PlannerScheduleSourceRead? = nil
   ) {
     self.store = store
-    self.item = item
+    self.source = source
+    self.sourceTitle = sourceTitle
     self.schedule = schedule
     let initialStart = Calendar.current.dateInterval(of: .minute, for: Date())?.start ?? Date()
     switch schedule?.content.form {
@@ -244,7 +250,7 @@ struct SavedItemScheduleForm: View {
     NavigationStack {
       Form {
         Section {
-          Text(item.content.title).font(.headline)
+          Text(sourceTitle).font(.headline)
           Toggle("All day", isOn: $isAllDay)
             .accessibilityIdentifier("saved.schedule.allDay")
           DatePicker(
@@ -281,7 +287,9 @@ struct SavedItemScheduleForm: View {
         if allDay { endInstant = startInstant }
       }
       .disabled(store.isSaving)
-      .navigationTitle(schedule == nil ? "Schedule Item" : "Edit Schedule")
+      .navigationTitle(
+        schedule == nil ? "Schedule \(source.kind.rawValue.capitalized)" : "Edit Schedule"
+      )
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {
           Button("Cancel") { dismiss() }
@@ -297,8 +305,8 @@ struct SavedItemScheduleForm: View {
                 saved = await store.editSchedule(
                   schedule, form: scheduleForm, operationIdentifier: operationIdentifier)
               } else {
-                saved = await store.createItemSchedule(
-                  itemIdentifier: item.source.id, form: scheduleForm,
+                saved = await store.createSchedule(
+                  source: source, form: scheduleForm,
                   operationIdentifier: operationIdentifier)
               }
               if saved && store.alertMessage == nil { dismiss() }

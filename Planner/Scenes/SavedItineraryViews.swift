@@ -80,6 +80,8 @@ struct SavedItineraryDetail: View {
   @State private var loadingFailure: String?
   @State private var editDraft: SavedItineraryEditDraft?
   @State private var showAddEntry = false
+  @State private var showNewSchedule = false
+  @State private var scheduleToEdit: PlannerScheduleSourceRead?
   @State private var collapsedEntries: Set<UUID> = []
   @State private var bulkCompletionDraft: SavedBulkCompletionDraft?
   @State private var isPreparingBulkCompletion = false
@@ -116,6 +118,9 @@ struct SavedItineraryDetail: View {
             Section("Notes") { Text(notes).textSelection(.enabled) }
           }
           ItemLabelsSection(labels: itinerary.labels)
+          SavedSchedulesSection(
+            source: itinerary.source, references: itinerary.references, canChange: store.canCreate
+          ) { scheduleToEdit = $0 }
           Section("Entries") {
             ForEach(contents.entries) { entry in
               VStack(alignment: .leading) {
@@ -220,22 +225,25 @@ struct SavedItineraryDetail: View {
           }
           ToolbarItem(placement: .primaryAction) {
             Menu {
-              Button("Mark all Done") {
-                prepareBulkCompletion(
-                  .itinerary(itineraryId: identifier), containerName: itinerary.content.title,
-                  done: true)
+              Button("Schedule Itinerary") { showNewSchedule = true }
+              Divider()
+              Group {
+                Button("Mark all Done") {
+                  prepareBulkCompletion(
+                    .itinerary(itineraryId: identifier), containerName: itinerary.content.title,
+                    done: true)
+                }
+                Button("Mark all Undone") {
+                  prepareBulkCompletion(
+                    .itinerary(itineraryId: identifier), containerName: itinerary.content.title,
+                    done: false)
+                }
               }
-              Button("Mark all Undone") {
-                prepareBulkCompletion(
-                  .itinerary(itineraryId: identifier), containerName: itinerary.content.title,
-                  done: false)
-              }
+              .disabled(itinerary.progress.totalCount == 0)
             } label: {
               Label("Itinerary actions", systemImage: "ellipsis")
             }
-            .disabled(
-              !store.canCreate || isPreparingBulkCompletion || itinerary.progress.totalCount == 0
-            )
+            .disabled(!store.canCreate || isPreparingBulkCompletion)
             .help("Itinerary actions")
             .accessibilityIdentifier("saved.itinerary.actions")
           }
@@ -262,13 +270,29 @@ struct SavedItineraryDetail: View {
     .sheet(item: $bulkCompletionDraft) { draft in
       SavedBulkCompletionForm(store: store, draft: draft)
     }
+    .sheet(
+      isPresented: Binding(
+        get: { showNewSchedule || scheduleToEdit != nil },
+        set: {
+          if !$0 {
+            showNewSchedule = false
+            scheduleToEdit = nil
+          }
+        })
+    ) {
+      if let itinerary = contents?.itinerary {
+        SavedScheduleForm(
+          store: store, source: itinerary.source, sourceTitle: itinerary.content.title,
+          schedule: scheduleToEdit)
+      }
+    }
     .alert(
       "Planner",
       isPresented: Binding(
         get: {
           (store.alertMessage != nil || removedSelectionMessage != nil)
             && editDraft == nil && !showAddEntry
-            && bulkCompletionDraft == nil
+            && bulkCompletionDraft == nil && !showNewSchedule && scheduleToEdit == nil
         },
         set: {
           if !$0 {
