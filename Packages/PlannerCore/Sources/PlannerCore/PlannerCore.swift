@@ -579,6 +579,17 @@ public actor Planner {
     guard records.count == 1, let record = records.first else {
       throw PlannerFailure("missingReference", "The selected Schedule is missing or unresolved.")
     }
+    let resolved = try resolvedSchedule(record, context: context)
+    return PlannerScheduleSourceRead(
+      source: resolved.snapshot.reference,
+      content: PlannerScheduleContent(
+        source: resolved.source, form: resolved.snapshot.form),
+      fieldHashes: [.form: resolved.snapshot.formHash(datasetId: datasetId)])
+  }
+
+  private func resolvedSchedule(_ record: PlannerSchemaV14.Schedule, context: ModelContext) throws
+    -> (snapshot: ScheduleSnapshot, source: PlannerEntityReference, owner: ScheduleOwner)
+  {
     guard let ownerIdentifier = record.sourceId, let ownerLifetime = record.sourceLifetimeId else {
       throw PlannerFailure("readUnavailable", "The Schedule's source binding is unresolved.")
     }
@@ -586,17 +597,14 @@ public actor Planner {
       throw PlannerFailure("readUnavailable", "The Schedule has an unsupported source kind.")
     }
     let owner = PlannerEntityReference(kind: ownerKind, id: ownerIdentifier)
-    let binding = try resolveScheduleOwner(owner, context: context).binding
+    let resolvedOwner = try resolveScheduleOwner(owner, context: context)
+    let binding = try resolvedOwner.binding
     guard binding.lifetimeId == ownerLifetime else {
       throw PlannerFailure("readUnavailable", "The Schedule's source lifetime no longer resolves.")
     }
     let snapshot = try record.value(
       ownerId: ownerIdentifier, ownerLifetimeId: ownerLifetime, ownerKind: binding.kind)
-    return PlannerScheduleSourceRead(
-      source: snapshot.reference,
-      content: PlannerScheduleContent(
-        source: owner, form: snapshot.form),
-      fieldHashes: [.form: snapshot.formHash(datasetId: datasetId)])
+    return (snapshot, owner, resolvedOwner)
   }
 
   private func resolveScheduleOwner(
@@ -943,6 +951,9 @@ public actor Planner {
     if query.sourceKind == .itinerary {
       return try itineraryCatalogSnapshot(session: session, query: query, context: context)
     }
+    if query.sourceKind == .schedule {
+      return try scheduleCatalogSnapshot(session: session, query: query, context: context)
+    }
     guard query.sourceKind == .list else {
       throw PlannerFailure(
         "unavailable", "This catalog slice supports List discovery only.",
@@ -1036,6 +1047,31 @@ public actor Planner {
     }
     return PlannerQuerySnapshot(
       session: session, generation: UUID(), rows: sorted.map { .source($0.source) },
+      matchingCount: Int64(sorted.count), rowPresentation: nil,
+      progress: [], unresolvedReferences: [])
+  }
+
+  private func scheduleCatalogSnapshot(
+    session: PlannerDatasetSession, query: PlannerCatalogQuery, context: ModelContext
+  ) throws -> PlannerQuerySnapshot {
+    guard query.text.isEmpty else {
+      throw PlannerFailure(
+        "invalidInput", "Schedule catalogs require empty text.", propertyPath: "/query/text")
+    }
+    guard query.archive == .all else {
+      throw PlannerFailure(
+        "invalidInput", "Schedules have no archive state; select all.",
+        propertyPath: "/query/archive")
+    }
+    let sources = try context.fetch(FetchDescriptor<PlannerSchemaV14.Schedule>()).map {
+      try resolvedSchedule($0, context: context).snapshot.reference
+    }
+    guard Set(sources.map(\.id)).count == sources.count else {
+      throw PlannerFailure("readUnavailable", "Catalog Schedule identities are duplicated.")
+    }
+    let sorted = sources.sorted { $0.id.uuidString < $1.id.uuidString }
+    return PlannerQuerySnapshot(
+      session: session, generation: UUID(), rows: sorted.map(PlannerRowIdentity.source),
       matchingCount: Int64(sorted.count), rowPresentation: nil,
       progress: [], unresolvedReferences: [])
   }
@@ -1364,6 +1400,9 @@ public actor Planner {
       if source.kind == .itinerary {
         return try itineraryCatalogRow(identity: identity, sourceId: source.id, context: context)
       }
+      if source.kind == .schedule {
+        return try scheduleCatalogRow(identity: identity, sourceId: source.id, context: context)
+      }
       guard let presentation = snapshot.rowPresentation else {
         throw PlannerFailure("readUnavailable", "The Item query has no presentation context.")
       }
@@ -1504,6 +1543,33 @@ public actor Planner {
       labels: try rowLabels(
         source: .init(kind: .itinerary, id: sourceId), lifetimeId: lifetimeId, context: context),
       scheduleSummary: .none)
+  }
+
+  private func scheduleCatalogRow(
+    identity: PlannerRowIdentity, sourceId: UUID, context: ModelContext
+  ) throws -> PlannerRowRead {
+    var descriptor = FetchDescriptor<PlannerSchemaV14.Schedule>(
+      predicate: #Predicate { $0.id == sourceId })
+    descriptor.fetchLimit = 2
+    let records = try context.fetch(descriptor)
+    guard records.count == 1, let record = records.first else {
+      throw PlannerFailure("readUnavailable", "A snapshot Schedule is missing or unresolved.")
+    }
+    let resolved = try resolvedSchedule(record, context: context)
+    let title: String
+    switch resolved.owner {
+    case .item(let owner): title = owner.title
+    case .itinerary(let owner): title = owner.title
+    }
+    guard !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+      throw PlannerFailure("readUnavailable", "The Schedule owner has an unresolved title.")
+    }
+    return PlannerRowRead(
+      identity: identity, sourceLifetimeId: resolved.snapshot.lifetimeId,
+      title: title, subtitle: nil, estimate: nil,
+      globalDone: nil, localDone: nil, effectiveDone: nil, archived: nil,
+      hasLocation: false, hasLinks: false, ownedLocation: nil, previewLink: nil,
+      labels: [], scheduleSummary: .none)
   }
 
   private func rowScheduleSummary(

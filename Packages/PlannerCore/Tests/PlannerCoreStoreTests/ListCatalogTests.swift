@@ -3,7 +3,8 @@ import PlannerCore
 import Testing
 
 struct ListCatalogTests {
-  @Test func catalogRejectsItemKindAndKeepsUnimplementedKindsDistinctFromEmptyLists() async throws {
+  @Test func catalogRejectsItemKindAndInvalidScheduleArchiveWithoutChangingEmptyLists() async throws
+  {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
     let planner = Planner(
@@ -22,16 +23,18 @@ struct ListCatalogTests {
     #expect(empty.rows.isEmpty)
     #expect(empty.matchingCount == 0)
     #expect(empty.rowPresentation == nil)
-    for kind in [PlannerEntityKind.item, .schedule] {
+    for (kind, path) in [
+      (PlannerEntityKind.item, "/query/sourceKind"), (.schedule, "/query/archive"),
+    ] {
       guard
         case .failed(let failure) = await planner.query(
           PlannerQuery(session: session, request: .catalog(.init(sourceKind: kind))))
       else {
-        Issue.record("Unsupported catalog kinds must not report a successful empty dataset.")
+        Issue.record("Invalid catalog requests must not report a successful empty dataset.")
         continue
       }
-      #expect(failure.code == (kind == .item ? "invalidInput" : "unavailable"))
-      #expect(failure.propertyPath == "/query/sourceKind")
+      #expect(failure.code == "invalidInput")
+      #expect(failure.propertyPath == path)
     }
     guard
       case .rows(let retainedWindow) = await planner.read(

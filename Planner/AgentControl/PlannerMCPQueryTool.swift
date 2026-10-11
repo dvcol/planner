@@ -161,17 +161,31 @@
       ]),
     ])
 
+    private static let scheduleCatalogQuerySchema: Value = .object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("kind"), .string("sourceKind"), .string("archive")]),
+      "properties": .object([
+        "kind": .object(["type": .string("string"), "const": .string("catalog")]),
+        "sourceKind": .object(["type": .string("string"), "const": .string("schedule")]),
+        "text": .object(["type": .string("string"), "const": .string("")]),
+        "archive": .object(["type": .string("string"), "const": .string("all")]),
+      ]),
+    ])
+
     static let definition = Tool(
       name: "planner_query",
       description:
-        "Discover Item or exact List/Itinerary appearance identities, List/Itinerary title catalogs and shared labels in the local Planner prototype. Filters narrow cumulatively; contextual progress includes hidden/archived appearances. Explicit ascending Manual preserves saved List/Itinerary order; omitted sort is alphabetical. Read rows through their issued generation.",
+        "Discover Item or exact List/Itinerary appearance identities, List/Itinerary title catalogs, shared labels and source-bound Schedule identities in the local Planner prototype. Schedule catalogs require empty text and archive all; their order is UUID ascending. Filters narrow cumulatively; contextual progress includes hidden/archived appearances. Explicit ascending Manual preserves saved List/Itinerary order; omitted sort is alphabetical. Read rows through their issued generation.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("query")]),
         "properties": .object([
           "formatVersion": .object(["type": .string("integer"), "const": .int(1)]),
           "query": .object([
-            "oneOf": .array([itemQuerySchema, catalogQuerySchema, labelCatalogQuerySchema])
+            "oneOf": .array([
+              itemQuerySchema, catalogQuerySchema, labelCatalogQuerySchema,
+              scheduleCatalogQuerySchema,
+            ])
           ]),
         ]),
       ]),
