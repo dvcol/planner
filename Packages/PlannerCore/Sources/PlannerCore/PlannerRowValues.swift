@@ -31,6 +31,7 @@ public struct PlannerRowRead: Sendable {
   public let hasLinks: Bool
   public let ownedLocation: PlannerOwnedLocation?
   public let previewLink: PlannerOwnedLinkRead?
+  public let labels: [PlannerLabelRead]
   public let scheduleSummary: PlannerRowScheduleSummary
 }
 
