@@ -31,7 +31,7 @@ struct SavedSourceDeletionForm: View {
   private var sourceKindTitle: String { draft.source.kind.rawValue.capitalized }
 
   private var usageSummary: String {
-    if draft.source.kind == .item {
+    if draft.source.kind == .item || draft.source.kind == .list {
       let count = review.impact.referenceRemovals.count
       if count == 0 { return "No saved references" }
       return "\(count) saved \(count == 1 ? "reference" : "references")"
@@ -59,6 +59,10 @@ struct SavedSourceDeletionForm: View {
               "This Item, its links and appointments will be deleted, and it will be removed from all Lists and Itineraries."
             )
             Text("Your other Items, Lists, Itineraries and shared labels stay available.")
+              .foregroundStyle(.secondary)
+          } else if draft.source.kind == .list {
+            Text("This List, its memberships and its references in Itineraries will be deleted.")
+            Text("Your Items, other Lists, Itineraries and appointments stay available.")
               .foregroundStyle(.secondary)
           } else {
             Text(

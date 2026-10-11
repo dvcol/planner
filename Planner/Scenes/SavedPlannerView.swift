@@ -65,6 +65,9 @@ struct SavedPlannerView: View {
   @State private var itemDeletionDraft: SavedSourceDeletionDraft?
   @State private var isPreparingItemDeletion = false
   @State private var itemDeletionMessage: String?
+  @State private var listDeletionDraft: SavedSourceDeletionDraft?
+  @State private var isPreparingListDeletion = false
+  @State private var listDeletionMessage: String?
   @State private var isOpeningAppearance = false
   @State private var columnVisibility: NavigationSplitViewVisibility = .all
   #if os(iOS)
@@ -163,6 +166,11 @@ struct SavedPlannerView: View {
         clearDeletedItemSelection(draft, review: review)
       }
     }
+    .sheet(item: $listDeletionDraft, onDismiss: refreshAfterDeletionReview) { draft in
+      SavedSourceDeletionForm(store: store, draft: draft) { review in
+        clearDeletedListSelection(draft, review: review)
+      }
+    }
     .sheet(item: $bulkCompletionDraft) { draft in
       SavedBulkCompletionForm(store: store, draft: draft)
     }
@@ -171,6 +179,7 @@ struct SavedPlannerView: View {
       isPresented: Binding(
         get: {
           store.alertMessage != nil && itemEditDraft == nil && itemDeletionDraft == nil
+            && listDeletionDraft == nil
             && bulkCompletionDraft == nil
             && !showLabels
             && !showSettings
@@ -482,9 +491,45 @@ struct SavedPlannerView: View {
 
   private func refreshAfterDeletionReview() {
     Task {
+      await loadSelectedList()
       await loadSelectedItem()
       await loadSelectedAppearance()
     }
+  }
+
+  private func prepareListDeletion(_ list: PlannerListSourceRead) async {
+    guard !isPreparingListDeletion else { return }
+    isPreparingListDeletion = true
+    defer { isPreparingListDeletion = false }
+    if let review = await store.prepareSourceDeletion(list.source) {
+      listDeletionDraft = .init(source: list.source, name: list.content.name, review: review)
+    }
+  }
+
+  private func clearDeletedListSelection(_ draft: SavedSourceDeletionDraft, review: PlannerReview) {
+    if selectedListId == draft.source.id {
+      selectedListId = nil
+      selectedList = nil
+      listItems = nil
+      isOpeningList = false
+      selectedAppearanceIdentity = nil
+      selectedAppearance = nil
+      isOpeningAppearance = false
+      listDeletionMessage = "\(draft.name) was deleted. Its Items remain available."
+    }
+    guard let selectedItineraryRow else { return }
+    let selectedWasRemoved = review.impact.referenceRemovals.contains { reference in
+      switch (selectedItineraryRow, reference) {
+      case (.direct(let entryIdentifier), .itineraryEntry(let removedIdentifier, _, _)):
+        return entryIdentifier == removedIdentifier
+      case (.expanded(let entryIdentifier, _), .itineraryEntry(let removedIdentifier, _, _)):
+        return entryIdentifier == removedIdentifier
+      case (.expanded(_, let membershipIdentifier), .membership(let removedIdentifier, _, _)):
+        return membershipIdentifier == removedIdentifier
+      default: return false
+      }
+    }
+    if selectedWasRemoved { self.selectedItineraryRow = nil }
   }
 
   private func loadSelectedItem() async {
@@ -511,6 +556,7 @@ struct SavedPlannerView: View {
       isOpeningList = false
       return
     }
+    if listDeletionDraft?.source.id == identifier { return }
     isOpeningList = true
     let revision = store.changeRevision
     let filters = listFilters
@@ -568,6 +614,11 @@ struct SavedPlannerView: View {
       isOpeningAppearance = false
       return
     }
+    if case .listMembership(let listIdentifier, _) = identity,
+      listDeletionDraft?.source.id == listIdentifier
+    {
+      return
+    }
     isOpeningAppearance = true
     let revision = store.changeRevision
     if selectedAppearance?.appearance != identity { selectedAppearance = nil }
@@ -618,7 +669,10 @@ struct SavedPlannerView: View {
         Button("Try Again") { Task { await loadSelectedAppearance() } }
       }
     } else {
-      if appearanceChangeMessage != nil {
+      if let listDeletionMessage {
+        ContentUnavailableView(
+          "List deleted", systemImage: "trash", description: Text(listDeletionMessage))
+      } else if appearanceChangeMessage != nil {
         ContentUnavailableView(
           appearanceChangeTitle, systemImage: "list.bullet.rectangle",
           description: Text("Choose another Item to see its details."))
@@ -875,6 +929,9 @@ struct SavedPlannerView: View {
           if isPreparingBulkCompletion {
             ProgressView("Preparing review").controlSize(.small).padding()
           }
+          if isPreparingListDeletion {
+            ProgressView("Reviewing deletion").controlSize(.small).padding()
+          }
         }
         .toolbar {
           ToolbarItem {
@@ -900,13 +957,21 @@ struct SavedPlannerView: View {
           }
           ToolbarItem(placement: .primaryAction) {
             Menu {
-              Button("Mark all Done") { prepareListBulkCompletion(selectedList, done: true) }
-              Button("Mark all Undone") { prepareListBulkCompletion(selectedList, done: false) }
+              Group {
+                Button("Mark all Done") { prepareListBulkCompletion(selectedList, done: true) }
+                Button("Mark all Undone") { prepareListBulkCompletion(selectedList, done: false) }
+              }
+              .disabled(selectedList.progress.totalCount == 0)
+              Divider()
+              Button("Delete List", role: .destructive) {
+                Task { await prepareListDeletion(selectedList) }
+              }
+              .accessibilityIdentifier("saved.list.delete")
             } label: {
               Label("List actions", systemImage: "ellipsis")
             }
             .disabled(
-              !store.canCreate || isPreparingBulkCompletion || selectedList.progress.totalCount == 0
+              !store.canCreate || isPreparingBulkCompletion || isPreparingListDeletion
             )
             .help("List actions")
             .accessibilityIdentifier("saved.list.actions")
@@ -922,6 +987,9 @@ struct SavedPlannerView: View {
         } actions: {
           Button("Try Again") { Task { await loadSelectedList() } }
         }
+      } else if let listDeletionMessage {
+        ContentUnavailableView(
+          "List deleted", systemImage: "trash", description: Text(listDeletionMessage))
       } else if listCatalog?.isEmpty == true {
         ContentUnavailableView(
           listCatalogArchive == .active ? "No Lists yet" : "No matching Lists",
@@ -944,6 +1012,7 @@ struct SavedPlannerView: View {
       selectedAppearanceIdentity = nil
       selectedAppearance = nil
       appearanceChangeMessage = nil
+      if identifier != nil { listDeletionMessage = nil }
       #if os(iOS)
         if identifier != nil { columnVisibility = .doubleColumn }
       #endif

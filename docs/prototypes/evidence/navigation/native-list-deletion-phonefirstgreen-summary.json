@@ -1,0 +1,52 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "modelName" : "iPhone 18 Pro",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "PlannerNavigation · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1791751033.04,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1791750844.639,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "XCTAssertEqual failed: (\"[\"saved.itinerary.appearance.548EF196-7F11-4D7F-8C3C-3EDF828930C2\", \"saved.itinerary.appearance.CC35C6A6-D68E-47B8-9365-275C2AF8E09A.D2C0B94F-92CB-4B0E-AAC9-0F5C269D518F\", \"saved.itinerary.appearance.CC35C6A6-D68E-47B8-9365-275C2AF8E09A.FC3BF567-0BA6-4D31-942F-C13D78CB8E61\", \"saved.itinerary.appearance.79EC368B-BEFA-4E46-ABF1-E5E8CD82A078.D2C0B94F-92CB-4B0E-AAC9-0F5C269D518F\", \"saved.itinerary.appearance.79EC368B-BEFA-4E46-ABF1-E5E8CD82A078.FC3BF567-0BA6-4D31-942F-C13D78CB8E61\"]\") is not equal to (\"[\"saved.itinerary.appearance.548EF196-7F11-4D7F-8C3C-3EDF828930C2\", \"saved.itinerary.appearance.CC35C6A6-D68E-47B8-9365-275C2AF8E09A.D2C0B94F-92CB-4B0E-AAC9-0F5C269D518F\", \"saved.itinerary.appearance.CC35C6A6-D68E-47B8-9365-275C2AF8E09A.FC3BF567-0BA6-4D31-942F-C13D78CB8E61\", \"saved.itinerary.appearance.79EC368B-BEFA-4E46-ABF1-E5E8CD82A078.D2C0B94F-92CB-4B0E-AAC9-0F5C269D518F\", \"saved.itinerary.appearance.79EC368B-BEFA-4E46-ABF1-E5E8CD82A078.FC3BF567-0BA6-4D31-942F-C13D78CB8E61\", \"saved.itinerary.appearance.3EE623FB-6DF6-436D-8579-09F5BF037FB3.9242D40F-5461-46B4-A2C3-E1E3E9873B71\"]\")",
+      "targetName" : "PlannerNavigationUITests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "SavedListDeletionJourneyTests/testListDeletionReviewsRepeatedUsesAndRetainsItemsAndTheRemainingRouteAfterCancelAndRelaunch()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedListDeletionJourneyTests/testListDeletionReviewsRepeatedUsesAndRetainsItemsAndTheRemainingRouteAfterCancelAndRelaunch",
+      "testName" : "testListDeletionReviewsRepeatedUsesAndRetainsItemsAndTheRemainingRouteAfterCancelAndRelaunch()"
+    }
+  ],
+  "title" : "Test - PlannerNavigation",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 1
+}
