@@ -267,16 +267,28 @@ struct SavedScheduleForm: View {
             )
             .accessibilityIdentifier("saved.schedule.end")
           }
-          if !isAllDay { LabeledContent("Time zone", value: planningTimeZone) }
+          if !isAllDay {
+            NavigationLink {
+              SavedPlanningTimeZonePicker(selectedTimeZoneIdentifier: $planningTimeZone)
+            } label: {
+              LabeledContent("Time zone", value: planningTimeZone)
+            }
+            .accessibilityIdentifier("saved.schedule.zone")
+          }
         } footer: {
-          if !initialDatesAvailable {
-            Text("This schedule's dates could not be opened.")
-          } else if !isValid {
-            Text(isAllDay ? "End date cannot precede Start." : "End must be later than Start.")
-          } else if isAllDay {
-            Text(includesEnd ? "Includes both selected dates." : "Covers the selected day.")
-          } else if !includesEnd {
-            Text("This schedule has no end time.")
+          VStack(alignment: .leading, spacing: 4) {
+            if !initialDatesAvailable {
+              Text("This schedule's dates could not be opened.")
+            } else if !isValid {
+              Text(isAllDay ? "End date cannot precede Start." : "End must be later than Start.")
+            } else if isAllDay {
+              Text(includesEnd ? "Includes both selected dates." : "Covers the selected day.")
+            } else if !includesEnd {
+              Text("This schedule has no end time.")
+            }
+            if !isAllDay {
+              Text("Changing the time zone keeps the same moment.")
+            }
           }
         }
       }

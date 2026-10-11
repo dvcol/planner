@@ -2,6 +2,104 @@ import XCTest
 
 @MainActor
 final class SavedItemJourneyTests: XCTestCase {
+  func testPlanningTimeZoneSelectionStagesCancelAndPreservesInstantAfterRelaunch() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    let title = application.textFields["saved.item.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Travel appointment")
+    let notes = application.textFields["saved.item.notes"]
+    notes.activateForPlannerJourney()
+    notes.typeText("Keep the travel notes")
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    let timeZoneControl = application.plannerElement("saved.schedule.zone")
+    XCTAssertTrue(timeZoneControl.waitForExistence(timeout: 5))
+    selectPlanningTimeZone("Europe/Paris", search: "Paris", application: application)
+    application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+    let scheduleRows = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule."))
+    let schedule = scheduleRows.firstMatch
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    XCTAssertEqual(scheduleRows.count, 1)
+    XCTAssertEqual(schedule.label, "Start only")
+    let identity = schedule.identifier
+    let originalDescription = try XCTUnwrap(schedule.value as? String)
+    XCTAssertTrue(originalDescription.hasSuffix(" · Europe/Paris"))
+    let originalInstant = try displayedStartInstant(originalDescription)
+    openScheduleMenu(schedule)
+    application.plannerElement("Edit Schedule").activateForPlannerJourney()
+    selectPlanningTimeZone("America/New_York", search: "New York", application: application)
+    application.plannerElement("saved.schedule.cancel").activateForPlannerJourney()
+    XCTAssertTrue(schedule.waitForPlannerValue(originalDescription))
+    XCTAssertEqual(scheduleRows.count, 1)
+    openScheduleMenu(schedule)
+    application.plannerElement("Edit Schedule").activateForPlannerJourney()
+    selectPlanningTimeZone("Asia/Tokyo", search: "Tokyo", application: application)
+    recordScreenshot(application, name: "Native timezone selection stages the existing instant")
+    application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+    XCTAssertEqual(
+      XCTWaiter.wait(
+        for: [
+          XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value ENDSWITH %@", " · Asia/Tokyo"), object: schedule)
+        ], timeout: 10), .completed)
+    let changedDescription = try XCTUnwrap(schedule.value as? String)
+    XCTAssertNotEqual(changedDescription, originalDescription)
+    XCTAssertEqual(try displayedStartInstant(changedDescription), originalInstant)
+    XCTAssertEqual(schedule.identifier, identity)
+    XCTAssertEqual(scheduleRows.count, 1)
+    XCTAssertTrue(application.staticTexts["Keep the travel notes"].exists)
+    recordScreenshot(application, name: "Native timezone edit preserves the scheduled instant")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    let row = application.savedPlannerItemRows("Travel appointment").firstMatch
+    XCTAssertTrue(row.waitForExistence(timeout: 10))
+    row.activateForPlannerJourney()
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    XCTAssertTrue(schedule.waitForPlannerValue(changedDescription))
+    XCTAssertEqual(schedule.identifier, identity)
+    XCTAssertEqual(scheduleRows.count, 1)
+    XCTAssertEqual(
+      try displayedStartInstant(try XCTUnwrap(schedule.value as? String)), originalInstant)
+    XCTAssertTrue(application.staticTexts["Keep the travel notes"].exists)
+    recordScreenshot(application, name: "Native planning timezone survives relaunch")
+  }
+
+  private func selectPlanningTimeZone(
+    _ identifier: String, search: String, application: XCUIApplication
+  ) {
+    let timeZoneControl = application.plannerElement("saved.schedule.zone")
+    XCTAssertTrue(timeZoneControl.waitForExistence(timeout: 5))
+    timeZoneControl.activateForPlannerJourney()
+    let searchField = application.searchFields.firstMatch
+    XCTAssertTrue(searchField.waitForExistence(timeout: 5))
+    searchField.activateForPlannerJourney()
+    searchField.typeText(search)
+    let option = application.plannerElement("saved.schedule.zone.option.\(identifier)")
+    XCTAssertTrue(option.waitForExistence(timeout: 5))
+    recordScreenshot(application, name: "Native time zone search choices for \(identifier)")
+    option.activateForPlannerJourney()
+    XCTAssertTrue(timeZoneControl.waitForExistence(timeout: 5))
+  }
+
+  private func displayedStartInstant(_ description: String) throws -> Date {
+    let components = description.components(separatedBy: " · ")
+    XCTAssertEqual(components.count, 2)
+    let timeZone = try XCTUnwrap(TimeZone(identifier: components[1]))
+    var formatStyle = Date.FormatStyle(date: .abbreviated, time: .shortened)
+    formatStyle.timeZone = timeZone
+    return try formatStyle.parseStrategy.parse(components[0])
+  }
+
   func testEditingAllDayScheduleReloadsCivilDatesAndKeepsIdentityAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()
