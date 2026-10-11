@@ -922,9 +922,15 @@ struct ListRoutingTests {
       #expect(Set(try #require(variant["required"] as? [String])) == ["kind", "appearance"])
       let appearanceSchema = try #require(
         (variant["properties"] as? [String: Any])?["appearance"] as? [String: Any])
-      #expect(appearanceSchema["additionalProperties"] as? Bool == false)
+      let appearanceVariants = try #require(appearanceSchema["oneOf"] as? [[String: Any]])
+      let membershipSchema = try #require(
+        appearanceVariants.first {
+          (($0["properties"] as? [String: Any])?["kind"] as? [String: Any])?["const"] as? String
+            == "listMembership"
+        })
+      #expect(membershipSchema["additionalProperties"] as? Bool == false)
       #expect(
-        Set(try #require(appearanceSchema["required"] as? [String])) == [
+        Set(try #require(membershipSchema["required"] as? [String])) == [
           "kind", "listId", "membershipId",
         ])
       await listener.stop()
@@ -982,7 +988,7 @@ struct ListRoutingTests {
       ([], "invalidInput", "/request/appearance"),
       (
         [
-          "kind": "directItineraryItem", "listId": list.id.uuidString,
+          "kind": "unknown", "listId": list.id.uuidString,
           "membershipId": membershipIdentifier.uuidString,
         ], "invalidInput", "/request/appearance/kind"
       ),

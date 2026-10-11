@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create Items, Lists, Categories and Tags; edit Items, Lists, Categories and Tags; add, remove, move and reorder live Item references in Lists, complete/reopen Items or exact List appearances, archive/unarchive Items and Lists, and create, edit or remove direct timed/all-day Schedules. Change planning zones of timed Schedules through the local Planner prototype.",
+        "Create and edit Items, Lists, Itineraries, Categories and Tags; organize live List references and repeated itinerary entries. Entry removal preserves sources; reordering retains local completion. Set global Item completion or exact List/direct/expanded appearance completion. Global Done overrides display; global Reopen reveals retained local flags. Archive Items/Lists and edit direct Schedules through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -20,6 +20,9 @@
               tagCreationSchema,
               membershipCreationSchema,
               membershipReorderingSchema, membershipRemovalSchema, membershipMoveSchema,
+              itineraryEntrySchema("addItineraryEntry"),
+              itineraryEntrySchema("removeItineraryEntry"),
+              itineraryEntrySchema("reorderItineraryEntry"),
               editSchema,
               itineraryEditSchema, listEditSchema, categoryEditSchema, tagEditSchema, archiveSchema,
               completionSchema,
@@ -224,6 +227,38 @@
         ]),
       ])
     ])
+
+    private static func itineraryEntrySchema(_ commandType: String) -> Value {
+      var required = ["type", "itineraryId"]
+      var properties: [String: Value] = [
+        "type": .object(["type": .string("string"), "const": .string(commandType)]),
+        "itineraryId": .object(["type": .string("string"), "format": .string("uuid")]),
+      ]
+      if commandType == "addItineraryEntry" {
+        required.append("source")
+        properties["source"] = .object([
+          "type": .string("object"), "additionalProperties": .bool(false),
+          "required": .array([.string("kind"), .string("id")]),
+          "properties": .object([
+            "kind": .object([
+              "type": .string("string"), "enum": .array([.string("item"), .string("list")]),
+            ]),
+            "id": .object(["type": .string("string"), "format": .string("uuid")]),
+          ]),
+        ])
+      } else {
+        required.append("entryId")
+        properties["entryId"] = .object(["type": .string("string"), "format": .string("uuid")])
+      }
+      if commandType != "removeItineraryEntry" {
+        required.append("placement")
+        properties["placement"] = membershipPlacementSchema
+      }
+      return .object([
+        "type": .string("object"), "additionalProperties": .bool(false),
+        "required": .array(required.map(Value.string)), "properties": .object(properties),
+      ])
+    }
 
     private static let membershipCreationSchema = Value.object([
       "type": .string("object"), "additionalProperties": .bool(false),
@@ -471,16 +506,7 @@
               "required": .array([.string("kind"), .string("appearance")]),
               "properties": .object([
                 "kind": .object(["type": .string("string"), "const": .string("appearance")]),
-                "appearance": .object([
-                  "type": .string("object"), "additionalProperties": .bool(false),
-                  "required": .array([.string("kind"), .string("listId"), .string("membershipId")]),
-                  "properties": .object([
-                    "kind": .object(["type": .string("string"), "const": .string("listMembership")]
-                    ),
-                    "listId": .object(["type": .string("string"), "format": .string("uuid")]),
-                    "membershipId": .object(["type": .string("string"), "format": .string("uuid")]),
-                  ]),
-                ]),
+                "appearance": PlannerMCPAppearance.schema,
               ]),
             ]),
           ])
@@ -639,6 +665,8 @@
         case "removeMembership": command = try membershipRemovalCommand(arguments["command"])
         case "moveMembership": command = try membershipMoveCommand(arguments["command"])
         case "reorderMembership": command = try membershipReorderingCommand(arguments["command"])
+        case "addItineraryEntry", "removeItineraryEntry", "reorderItineraryEntry":
+          command = try itineraryEntryCommand(arguments["command"], commandType: commandType)
         case "editItinerary": command = try itineraryEditCommand(arguments["command"])
         case "editList": command = try listEditCommand(arguments["command"])
         case "editCategory": command = try categoryEditCommand(arguments["command"])
@@ -658,6 +686,9 @@
           PlannerOperation(operationId: identity, session: session, command: command))
         return try encoded(outcome)
       } catch let failure as AdmissionFailure {
+        return rejection(
+          operationIdentifier, code: failure.code, path: failure.path, message: failure.message)
+      } catch let failure as PlannerMCPAppearance.Failure {
         return rejection(
           operationIdentifier, code: failure.code, path: failure.path, message: failure.message)
       } catch {
@@ -768,6 +799,51 @@
           color: color,
           iconName: try nullableText(
             content["iconName"] ?? .null, path: "/command/content/iconName")))
+    }
+
+    private static func itineraryEntryCommand(_ value: Value?, commandType: String) throws
+      -> PlannerCommand
+    {
+      var fields: Set<String> = ["type", "itineraryId"]
+      fields.insert(commandType == "addItineraryEntry" ? "source" : "entryId")
+      if commandType != "removeItineraryEntry" { fields.insert("placement") }
+      let command = try object(value, allowed: fields, required: fields, path: "/command")
+      guard case .string(let spelling) = command["itineraryId"],
+        let itineraryId = UUID(uuidString: spelling)
+      else {
+        throw AdmissionFailure(
+          "invalidInput", "/command/itineraryId", "Expected an Itinerary UUID.")
+      }
+      if commandType == "addItineraryEntry" {
+        let source = try object(
+          command["source"], allowed: ["kind", "id"], required: ["kind", "id"],
+          path: "/command/source")
+        guard case .string(let kindSpelling) = source["kind"],
+          let kind = PlannerEntityKind(rawValue: kindSpelling), [.item, .list].contains(kind)
+        else {
+          throw AdmissionFailure(
+            "invalidInput", "/command/source/kind", "Expected an Item or List source.")
+        }
+        guard case .string(let identifierSpelling) = source["id"],
+          let sourceId = UUID(uuidString: identifierSpelling)
+        else {
+          throw AdmissionFailure("invalidInput", "/command/source/id", "Expected a source UUID.")
+        }
+        return .addItineraryEntry(
+          itineraryId: itineraryId, source: .init(kind: kind, id: sourceId),
+          placement: try membershipPlacement(command["placement"]))
+      }
+      guard case .string(let entrySpelling) = command["entryId"],
+        let entryId = UUID(uuidString: entrySpelling)
+      else {
+        throw AdmissionFailure("invalidInput", "/command/entryId", "Expected an entry UUID.")
+      }
+      if commandType == "removeItineraryEntry" {
+        return .removeItineraryEntry(itineraryId: itineraryId, entryId: entryId)
+      }
+      return .reorderItineraryEntry(
+        itineraryId: itineraryId, entryId: entryId,
+        placement: try membershipPlacement(command["placement"]))
     }
 
     private static func membershipCreationCommand(_ value: Value?) throws -> PlannerCommand {
@@ -1178,27 +1254,9 @@
         let localScope = try object(
           command["scope"], allowed: ["kind", "appearance"], required: ["kind", "appearance"],
           path: "/command/scope")
-        let appearance = try object(
-          localScope["appearance"], allowed: ["kind", "listId", "membershipId"],
-          required: ["kind", "listId", "membershipId"], path: "/command/scope/appearance")
-        guard appearance["kind"] == .string("listMembership") else {
-          throw AdmissionFailure(
-            "invalidInput", "/command/scope/appearance/kind",
-            "Expected a List membership appearance.")
-        }
-        guard case .string(let listSpelling) = appearance["listId"],
-          let listId = UUID(uuidString: listSpelling)
-        else {
-          throw AdmissionFailure(
-            "invalidInput", "/command/scope/appearance/listId", "Expected a List UUID.")
-        }
-        guard case .string(let membershipSpelling) = appearance["membershipId"],
-          let membershipId = UUID(uuidString: membershipSpelling)
-        else {
-          throw AdmissionFailure(
-            "invalidInput", "/command/scope/appearance/membershipId", "Expected a membership UUID.")
-        }
-        completionScope = .appearance(.listMembership(listId: listId, membershipId: membershipId))
+        completionScope = .appearance(
+          try PlannerMCPAppearance.decode(
+            localScope["appearance"], path: "/command/scope/appearance"))
       case .string("globalItem"):
         let globalScope = try object(
           command["scope"], allowed: ["kind", "itemId"], required: ["kind", "itemId"],

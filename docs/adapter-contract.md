@@ -263,3 +263,9 @@ The [operation expectations](fixtures/adapter-operation-expectations-v1.json), [
 - [x] Reconcile requested changes, publish verified source/ticket pointers and close the contract ticket only when its applicable criteria pass.
 
 Runnable configuration, Swift 6 compilation, affected-target lint, unit/store/UI/device/client execution and discovery/executed counts belong to the prototype tickets. Follow `/tdd` one failing independently specified behavior and its minimum implementation at a time; mock actual I/O and do not add production test seams.
+
+## Implemented entry and appearance admission
+
+The local HTTP prototype now admits the declared add/remove/reorder itinerary entry commands and exact direct/expanded appearance reads/completion. It shares strict appearance schemas/decoding between both adapters and delegates all state changes to Core. Expanded completion references contain only kind/appearance, with no scalar ID. Missing/removed/wrong-scope appearances reject without global fallback. Removing an entry retains its source and other appearances; ordinary re-add starts local Todo. Saved-order changes preserve every flag.
+
+The [HTTP qualification](prototypes/mcp-http-qualification.md#itinerary-entries-and-appearances-over-http) records actual SDK/listener execution, wire discovery, native reopen/recovery and invalid admission. This is partial local implementation evidence. Full-context bulk, additional Itinerary archive/query/schedule/native UI, physical convergence and the other map gates remain open.
