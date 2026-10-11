@@ -2,6 +2,71 @@ import XCTest
 
 @MainActor
 final class SavedItemJourneyTests: XCTestCase {
+  func testOptionalScheduleEndCanBeClearedCanceledAndSavedAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    let title = application.textFields["saved.item.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Timed visit")
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    let includeEnd = application.descendants(matching: .any)
+      .matching(identifier: "saved.schedule.hasEnd").firstMatch
+    XCTAssertTrue(includeEnd.waitForExistence(timeout: 5))
+    XCTAssertTrue(includeEnd.waitForPlannerBooleanState(false))
+    let endPicker = application.descendants(matching: .any)
+      .matching(identifier: "saved.schedule.end").firstMatch
+    XCTAssertFalse(endPicker.exists)
+    activateCompletion(includeEnd)
+    XCTAssertTrue(includeEnd.waitForPlannerBooleanState(true))
+    XCTAssertTrue(endPicker.waitForExistence(timeout: 5))
+    XCTAssertFalse(application.staticTexts["This schedule has no end time."].exists)
+    activateCompletion(includeEnd)
+    XCTAssertTrue(includeEnd.waitForPlannerBooleanState(false))
+    XCTAssertFalse(endPicker.exists)
+    XCTAssertTrue(application.staticTexts["This schedule has no end time."].exists)
+    activateCompletion(includeEnd)
+    XCTAssertTrue(endPicker.waitForExistence(timeout: 5))
+    application.plannerElement("saved.schedule.cancel").activateForPlannerJourney()
+    let timedSchedules = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.item.schedule.", "Timed"))
+    XCTAssertEqual(timedSchedules.count, 0)
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Schedule Item").activateForPlannerJourney()
+    XCTAssertTrue(includeEnd.waitForPlannerBooleanState(false))
+    activateCompletion(includeEnd)
+    XCTAssertTrue(endPicker.waitForExistence(timeout: 5))
+    application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+    let savedSchedule = timedSchedules.firstMatch
+    XCTAssertTrue(savedSchedule.waitForExistence(timeout: 10))
+    XCTAssertEqual(timedSchedules.count, 1)
+    let identifier = savedSchedule.identifier
+    let description = savedSchedule.value as? String
+    XCTAssertNotNil(description)
+    recordScreenshot(application, name: "Native saved Item schedule with optional end")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    let retainedItem = application.savedPlannerItemRows("Timed visit").firstMatch
+    XCTAssertTrue(retainedItem.waitForExistence(timeout: 10))
+    retainedItem.activateForPlannerJourney()
+    XCTAssertTrue(savedSchedule.waitForExistence(timeout: 10))
+    XCTAssertEqual(timedSchedules.count, 1)
+    XCTAssertEqual(savedSchedule.identifier, identifier)
+    XCTAssertEqual(savedSchedule.value as? String, description)
+    let itemCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(itemCompletion.waitForPlannerBooleanState(false))
+    recordScreenshot(application, name: "Native Item schedule with optional end after relaunch")
+  }
+
   func testCancelingScheduleDraftAndSavingStartOnlyAssignmentPreserveItemAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()

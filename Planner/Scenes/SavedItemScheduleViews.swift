@@ -127,10 +127,21 @@ struct SavedNewItemScheduleForm: View {
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
   let item: PlannerItemSourceRead
-  @State private var startInstant =
-    Calendar.current.dateInterval(of: .minute, for: Date())?.start ?? Date()
+  @State private var startInstant: Date
+  @State private var endInstant: Date
+  @State private var includesEnd = false
   @State private var planningTimeZone = TimeZone.current.identifier
   @State private var operationIdentifier = UUID()
+
+  init(store: SavedPlannerStore, item: PlannerItemSourceRead) {
+    self.store = store
+    self.item = item
+    let initialStart = Calendar.current.dateInterval(of: .minute, for: Date())?.start ?? Date()
+    _startInstant = State(initialValue: initialStart)
+    _endInstant = State(initialValue: initialStart.addingTimeInterval(3600))
+  }
+
+  private var isValid: Bool { !includesEnd || endInstant > startInstant }
 
   var body: some View {
     NavigationStack {
@@ -141,9 +152,21 @@ struct SavedNewItemScheduleForm: View {
             "Start", selection: $startInstant, displayedComponents: [.date, .hourAndMinute]
           )
           .accessibilityIdentifier("saved.schedule.start")
+          Toggle("Include end time", isOn: $includesEnd)
+            .accessibilityIdentifier("saved.schedule.hasEnd")
+          if includesEnd {
+            DatePicker(
+              "End", selection: $endInstant, displayedComponents: [.date, .hourAndMinute]
+            )
+            .accessibilityIdentifier("saved.schedule.end")
+          }
           LabeledContent("Time zone", value: planningTimeZone)
         } footer: {
-          Text("This schedule has no end time.")
+          if !isValid {
+            Text("End must be later than Start.")
+          } else if !includesEnd {
+            Text("This schedule has no end time.")
+          }
         }
       }
       .formStyle(.grouped)
@@ -160,13 +183,14 @@ struct SavedNewItemScheduleForm: View {
         ToolbarItem(placement: .confirmationAction) {
           Button("Save") {
             Task {
-              let saved = await store.createStartOnlyItemSchedule(
+              let saved = await store.createItemSchedule(
                 itemIdentifier: item.source.id, startInstant: startInstant,
+                endInstant: includesEnd ? endInstant : nil,
                 planningTimeZone: planningTimeZone, operationIdentifier: operationIdentifier)
               if saved && store.alertMessage == nil { dismiss() }
             }
           }
-          .disabled(!store.canCreate)
+          .disabled(!store.canCreate || !isValid)
           .keyboardShortcut(.defaultAction)
           .accessibilityIdentifier("saved.schedule.save")
         }
