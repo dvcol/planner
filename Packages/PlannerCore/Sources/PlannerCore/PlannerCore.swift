@@ -589,9 +589,19 @@ public actor Planner {
             querySnapshots[snapshot.generation] = QueryBinding(
               snapshot: snapshot, historyToken: historyToken)
             return .snapshot(snapshot)
-          case .itinerary:
-            throw PlannerFailure(
-              "unavailable", "This Item-only fixture does not implement contextual queries.")
+          case .itinerary(let itineraryId):
+            let snapshot = try itineraryItemQuerySnapshot(
+              session: query.session, itineraryId: itineraryId, query: itemQuery,
+              presentation: presentation, membershipListsByItem: membershipListsByItem,
+              context: context)
+            guard try latestHistoryToken(in: context) == historyToken else {
+              throw PlannerFailure(
+                "readUnavailable", "The store changed while building this query.")
+            }
+            querySnapshots = querySnapshots.filter { $0.value.historyToken == historyToken }
+            querySnapshots[snapshot.generation] = QueryBinding(
+              snapshot: snapshot, historyToken: historyToken)
+            return .snapshot(snapshot)
           }
           let textTerms = itemQuery.text.split(whereSeparator: \.isWhitespace).map(String.init)
           let locale = Locale(identifier: "en_US_POSIX")
@@ -943,7 +953,93 @@ public actor Planner {
     else {
       throw PlannerFailure("readUnavailable", "List memberships are duplicated and unresolved.")
     }
-    let itemIdentifiers = children.map { Optional($0.item.id) }
+    let appearances = children.map {
+      ContextualQueryAppearance(
+        item: $0.item, appearance: .listMembership(listId: listId, membershipId: $0.id),
+        localDone: $0.localDone)
+    }
+    return try contextualItemQuerySnapshot(
+      session: session, container: .init(kind: .list, id: listId), appearances: appearances,
+      query: query, presentation: presentation, membershipListsByItem: membershipListsByItem,
+      context: context)
+  }
+
+  private func itineraryItemQuerySnapshot(
+    session: PlannerDatasetSession, itineraryId: UUID, query: PlannerItemQuery,
+    presentation: PlannerRowPresentationContext, membershipListsByItem: [UUID: Set<UUID>],
+    context: ModelContext
+  ) throws -> PlannerQuerySnapshot {
+    var itineraries = FetchDescriptor<PlannerSchemaV13.Itinerary>(
+      predicate: #Predicate { $0.id == itineraryId })
+    itineraries.fetchLimit = 2
+    itineraries.propertiesToFetch = [\.id, \.lifetimeId]
+    let owners = try context.fetch(itineraries)
+    guard owners.count == 1, let owner = owners.first, let lifetimeId = owner.lifetimeId else {
+      throw PlannerFailure("missingReference", "The selected Itinerary is missing or unresolved.")
+    }
+    let descriptor = FetchDescriptor<PlannerSchemaV13.ItineraryEntry>(
+      predicate: #Predicate {
+        $0.itineraryId == itineraryId && $0.itineraryLifetimeId == lifetimeId
+      }, sortBy: [SortDescriptor(\.rank), SortDescriptor(\.id)])
+    let entries = try context.fetch(descriptor).map { try $0.value() }
+    guard Set(entries.map(\.id)).count == entries.count else {
+      throw PlannerFailure("readUnavailable", "Itinerary entries are duplicated and unresolved.")
+    }
+    var appearances: [ContextualQueryAppearance] = []
+    for entry in entries {
+      if entry.source.kind == "item" {
+        appearances.append(
+          .init(
+            item: entry.source,
+            appearance: .directItineraryItem(itineraryId: itineraryId, entryId: entry.id),
+            localDone: entry.localDone == true))
+        continue
+      }
+      let listId = entry.source.id
+      let listLifetimeId = entry.source.lifetimeId
+      let memberships = FetchDescriptor<PlannerSchemaV13.Membership>(
+        predicate: #Predicate { $0.listId == listId && $0.listLifetimeId == listLifetimeId },
+        sortBy: [SortDescriptor(\.rank), SortDescriptor(\.id)])
+      let children = try context.fetch(memberships).map { try $0.value() }
+      guard Set(children.map(\.id)).count == children.count,
+        Set(children.map { $0.item.id }).count == children.count
+      else {
+        throw PlannerFailure("readUnavailable", "List memberships are duplicated and unresolved.")
+      }
+      for membership in children {
+        let localDone =
+          entry.expandedCompletions.first {
+            $0.context.membershipId == membership.id
+              && $0.context.membershipLifetimeId == membership.lifetimeId
+          }?.localDone ?? false
+        appearances.append(
+          .init(
+            item: membership.item,
+            appearance: .expandedListItem(
+              itineraryId: itineraryId, listEntryId: entry.id, membershipId: membership.id),
+            localDone: localDone))
+      }
+    }
+    return try contextualItemQuerySnapshot(
+      session: session, container: .init(kind: .itinerary, id: itineraryId),
+      appearances: appearances,
+      query: query, presentation: presentation, membershipListsByItem: membershipListsByItem,
+      context: context)
+  }
+
+  private struct ContextualQueryAppearance {
+    let item: PlannerBoundIdentity
+    let appearance: PlannerAppearance
+    let localDone: Bool
+  }
+
+  private func contextualItemQuerySnapshot(
+    session: PlannerDatasetSession, container: PlannerEntityReference,
+    appearances: [ContextualQueryAppearance], query: PlannerItemQuery,
+    presentation: PlannerRowPresentationContext, membershipListsByItem: [UUID: Set<UUID>],
+    context: ModelContext
+  ) throws -> PlannerQuerySnapshot {
+    let itemIdentifiers = appearances.map { Optional($0.item.id) }
     let textTerms = query.text.split(whereSeparator: \.isWhitespace).map(String.init)
     var items = FetchDescriptor<PlannerSchemaV13.Item>(
       predicate: #Predicate { itemIdentifiers.contains($0.id) })
@@ -966,17 +1062,17 @@ public actor Planner {
       [(
         identity: PlannerRowIdentity, comparisonTitle: String, itemId: UUID,
         durationMinutes: Int64?,
-        comparisonDate: Date?
+        comparisonDate: Date?, appearanceOrder: Int
       )] =
         []
-    for membership in children {
-      guard let matches = sources[membership.item.id], matches.count == 1,
-        let item = matches.first, item.lifetimeId == membership.item.lifetimeId,
+    for (appearanceOrder, appearance) in appearances.enumerated() {
+      guard let matches = sources[appearance.item.id], matches.count == 1,
+        let item = matches.first, item.lifetimeId == appearance.item.lifetimeId,
         !item.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
       else {
-        throw PlannerFailure("readUnavailable", "A List child source is unresolved.")
+        throw PlannerFailure("readUnavailable", "A contextual child Item is unresolved.")
       }
-      let effectiveDone = item.globalDone || membership.localDone
+      let effectiveDone = item.globalDone || appearance.localDone
       if effectiveDone { doneCount += 1 }
       switch query.completion {
       case .todo: if effectiveDone { continue }
@@ -988,7 +1084,7 @@ public actor Planner {
       case .archived: if !item.archived { continue }
       case .all: break
       }
-      if let group = query.lists, !group.matches(membershipListsByItem[membership.item.id] ?? []) {
+      if let group = query.lists, !group.matches(membershipListsByItem[appearance.item.id] ?? []) {
         continue
       }
       if !(try matchesItemLabels(item, query: query)) { continue }
@@ -1002,12 +1098,13 @@ public actor Planner {
       matching.append(
         (
           identity: .appearance(
-            source: PlannerEntityReference(kind: .item, id: membership.item.id),
-            appearance: .listMembership(listId: listId, membershipId: membership.id)),
+            source: PlannerEntityReference(kind: .item, id: appearance.item.id),
+            appearance: appearance.appearance),
           comparisonTitle: item.title.folding(
             options: [.caseInsensitive, .diacriticInsensitive], locale: locale),
-          itemId: membership.item.id, durationMinutes: durationMinutes,
-          comparisonDate: try chronologicalSortDate(item, mode: query.sort.mode)
+          itemId: appearance.item.id, durationMinutes: durationMinutes,
+          comparisonDate: try chronologicalSortDate(item, mode: query.sort.mode),
+          appearanceOrder: appearanceOrder
         ))
     }
     if query.sort.mode != .manual {
@@ -1034,11 +1131,14 @@ public actor Planner {
           }
           return comparison == .orderedDescending
         }
-        return first.itemId.uuidString < second.itemId.uuidString
+        if first.itemId != second.itemId {
+          return first.itemId.uuidString < second.itemId.uuidString
+        }
+        return first.appearanceOrder < second.appearanceOrder
       }
     }
     let rows = matching.map(\.identity)
-    let totalCount = Int64(children.count)
+    let totalCount = Int64(appearances.count)
     let state: PlannerContainerProgressState
     if totalCount == 0 {
       state = .empty
@@ -1052,7 +1152,7 @@ public actor Planner {
       rowPresentation: presentation,
       progress: [
         PlannerContainerProgress(
-          container: PlannerEntityReference(kind: .list, id: listId), state: state,
+          container: container, state: state,
           doneCount: doneCount, totalCount: totalCount)
       ], unresolvedReferences: [])
   }

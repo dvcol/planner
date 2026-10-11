@@ -115,7 +115,7 @@ struct MembershipRowRoutingTests {
       let properties = try #require(querySchema["properties"] as? [String: Any])
       let scopeSchema = try #require(properties["scope"] as? [String: Any])
       let scopes = try #require(scopeSchema["oneOf"] as? [[String: Any]])
-      #expect(scopes.count == 2)
+      #expect(scopes.count == 3)
       let listSchema = try #require(
         scopes.first {
           (($0["properties"] as? [String: Any])?["kind"] as? [String: Any])?["const"] as? String
@@ -294,7 +294,10 @@ struct MembershipRowRoutingTests {
         ["kind": "items", "scope": ["kind": "inbox", "listId": list.id.uuidString]], "unknownField",
         "/query/scope/listId"
       ),
-      (["kind": "items", "scope": ["kind": "itinerary"]], "invalidInput", "/query/scope/kind"),
+      (
+        ["kind": "items", "scope": ["kind": "itinerary"]], "invalidInput",
+        "/query/scope/itineraryId"
+      ),
       (
         [
           "kind": "items",

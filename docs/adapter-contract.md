@@ -281,3 +281,9 @@ The [archive qualification](prototypes/mcp-http-qualification.md#itinerary-archi
 The local prototype now discovers named Itinerary sources through the existing catalog query and generation-bound row windows. Container discovery advertises List/Itinerary; labels retain their separate archive-all variant. Active/Archived/All, insensitive title terms and UUID ties preserve distinct source identities. Itinerary rows carry owned location and the selected non-Maps link, without copying full content or provider data; non-Item schedule summaries remain none.
 
 The [catalog qualification](prototypes/mcp-http-qualification.md#itinerary-catalogs-over-http) records actual HTTP discovery, compact serialization, invalid admission and unchanged recovery. Itinerary Item queries, schedules and native screens remain open. The accepted Manual-query restriction remains standalone Lists pending Q56.
+
+## Implemented contextual Itinerary query admission
+
+Item query discovery now advertises strict global, Inbox, List and Itinerary scopes. Itinerary requires itineraryId and rejects unrelated fields. Its rows retain exact direct or expanded appearance identities, with local completion independent for repeated entries. Cumulative filters affect matching rows while full progress includes hidden/archived appearances. Compact row windows stay bound to their issued generation and presentation context.
+
+The [HTTP qualification](prototypes/mcp-http-qualification.md#contextual-itinerary-item-queries-over-http) records discovery, serialization, invalid scope admission and unchanged recovery. The current Manual restriction remains ascending standalone Lists pending Q56. Itinerary bulk, schedules and native screens remain open.
