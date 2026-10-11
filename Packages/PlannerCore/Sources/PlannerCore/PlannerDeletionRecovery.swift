@@ -69,7 +69,9 @@ struct PortableDeletionMarker: Codable {
   }
 
   func validated(
-    items: [PortableItemRecord], lists: [PortableListRecord], schedules: [PortableScheduleRecord],
+    items: [PortableItemRecord], lists: [PortableListRecord],
+    itineraries: [PortableItineraryRecord],
+    schedules: [PortableScheduleRecord],
     categories: [PlannerPortableCategory],
     tags: [PlannerPortableTag],
     memberships: [PortableMembershipRecord],
@@ -99,6 +101,9 @@ struct PortableDeletionMarker: Codable {
       case "list":
         kind = .list
         isLive = lists.contains { $0.id == source.id && $0.lifetimeId == source.lifetimeId }
+      case "itinerary":
+        kind = .itinerary
+        isLive = itineraries.contains { $0.id == source.id && $0.lifetimeId == source.lifetimeId }
       case "schedule":
         kind = .schedule
         isLive = schedules.contains { $0.id == source.id && $0.lifetimeId == source.lifetimeId }

@@ -42,7 +42,8 @@ enum PlannerSchemaV4: VersionedSchema {
     func value() throws -> PortableDeletionMarker {
       guard let deletionId, let operationId, let sourceId, let sourceLifetimeId,
         [
-          "item", "list", "schedule", "category", "tag", "membership", "labelAssociation",
+          "item", "list", "itinerary", "schedule", "category", "tag", "membership",
+          "labelAssociation",
           "itineraryEntry",
         ]
         .contains(

@@ -161,7 +161,16 @@ public actor Planner {
           digest = bulkCompletionDigest(
             scope: scope, done: done, identity: identity, bindings: resolution.bindings)
         case .deleteSource(let source):
-          if source.kind == .list {
+          if source.kind == .itinerary {
+            let resolution = try resolveItineraryDeletion(source, context: context)
+            targets = [.source(source)] + resolution.removals.map { .reference($0) }
+            impact = .init(
+              kind: .deleteSource, targetCount: Int64(targets.count), globalFlagsChanged: false,
+              sourceDeletes: resolution.sourceDeletes, referenceRemovals: resolution.removals)
+            digest = sourceDeletionDigest(
+              source: source, identity: identity, bindings: resolution.bindings,
+              removals: resolution.removals)
+          } else if source.kind == .list {
             let resolution = try resolveListDeletion(source, context: context)
             targets = [.source(source)] + resolution.removals.map { .reference($0) }
             impact = .init(
@@ -218,6 +227,11 @@ public actor Planner {
         let envelope = try archive.latest()
         switch operation.command {
         case .deleteSource(let source):
+          if source.kind == .itinerary {
+            return try executeItineraryDeletion(
+              operation, source: source, identity: identity, context: context, archive: archive,
+              receipts: receipts, envelope: envelope)
+          }
           if source.kind == .list {
             return try executeListDeletion(
               operation, source: source, identity: identity, context: context, archive: archive,
@@ -4352,6 +4366,268 @@ public actor Planner {
         itineraries: snapshots, labelAssociations: labels,
         tags: tags, categories: categories, items: items, lists: lists, memberships: memberships,
         deletionMarkers: markers, receipts: receipts + [receipt])
+      return .init(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return .init(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
+  }
+
+  private struct ItineraryDeletionResolution {
+    let record: PlannerSchemaV14.Itinerary
+    let snapshot: ItinerarySnapshot
+    let entries: [ItineraryEntrySnapshot]
+    let associations: [LabelAssociationSnapshot]
+    let expanded: [ExpandedCompletionSnapshot]
+    let expandedBindings: [PlannerBoundIdentity]
+    let entryRecords: [PlannerSchemaV14.ItineraryEntry]
+    let associationRecords: [PlannerSchemaV14.LabelAssociation]
+    let linkRecords: [PlannerSchemaV14.OwnedLink]
+    let scheduleRecords: [PlannerSchemaV14.Schedule]
+    let expandedRecords: [PlannerSchemaV14.ExpandedCompletion]
+
+    var source: PlannerBoundIdentity {
+      .init(kind: "itinerary", id: snapshot.id, lifetimeId: snapshot.lifetimeId)
+    }
+
+    var bindings: [PlannerBoundIdentity] {
+      [source]
+        + snapshot.links.map { .init(kind: "ownedLink", id: $0.id, lifetimeId: $0.lifetimeId) }
+        + snapshot.schedules.map { .init(kind: "schedule", id: $0.id, lifetimeId: $0.lifetimeId) }
+        + entries.flatMap {
+          [.init(kind: "itineraryEntry", id: $0.id, lifetimeId: $0.lifetimeId), $0.source]
+        }
+        + associations.flatMap {
+          [.init(kind: "labelAssociation", id: $0.id, lifetimeId: $0.lifetimeId), $0.label]
+        }
+        + expandedBindings
+    }
+
+    var removals: [PlannerReferenceRead] {
+      associations.map(\.reference)
+        + snapshot.links.map { .ownedLink(id: $0.id, owner: snapshot.reference) }
+        + snapshot.schedules.sorted { $0.id.uuidString < $1.id.uuidString }.map {
+          .schedule(id: $0.id, source: snapshot.reference)
+        }
+        + entries.map(\.reference) + expanded.map(\.reference)
+    }
+
+    var sourceDeletes: [PlannerEntityReference] {
+      [snapshot.reference]
+        + snapshot.schedules.sorted { $0.id.uuidString < $1.id.uuidString }.map {
+          .init(kind: .schedule, id: $0.id)
+        }
+    }
+  }
+
+  private func resolveItineraryDeletion(_ source: PlannerEntityReference, context: ModelContext)
+    throws -> ItineraryDeletionResolution
+  {
+    let identifier = source.id
+    var descriptor = FetchDescriptor<PlannerSchemaV14.Itinerary>(
+      predicate: #Predicate { $0.id == identifier })
+    descriptor.fetchLimit = 2
+    let records = try context.fetch(descriptor)
+    guard records.count == 1, let record = records.first else {
+      throw PlannerFailure("missingReference", "The selected Itinerary is missing or unresolved.")
+    }
+    let snapshot = try record.value()
+    let entries = try itineraryEntrySnapshots(context).filter { $0.itinerary.id == identifier }
+      .sorted { $0.id.uuidString < $1.id.uuidString }
+    let associations = try labelAssociationSnapshots(context).filter {
+      $0.owner.kind == "itinerary" && $0.owner.id == identifier
+    }.sorted { $0.id.uuidString < $1.id.uuidString }
+    let entryRecords = try context.fetch(FetchDescriptor<PlannerSchemaV14.ItineraryEntry>()).filter
+    {
+      $0.itineraryId == identifier
+    }
+    let associationRecords = try context.fetch(FetchDescriptor<PlannerSchemaV14.LabelAssociation>())
+      .filter { $0.ownerKind == "itinerary" && $0.ownerId == identifier }
+    let linkRecords = try context.fetch(FetchDescriptor<PlannerSchemaV14.OwnedLink>()).filter {
+      $0.ownerKind == "itinerary" && $0.ownerId == identifier
+    }
+    let scheduleRecords = try context.fetch(FetchDescriptor<PlannerSchemaV14.Schedule>()).filter {
+      $0.sourceKind == "itinerary" && $0.sourceId == identifier
+    }
+    let links = try linkRecords.map {
+      try $0.value(
+        ownerId: identifier, ownerLifetimeId: snapshot.lifetimeId, ownerKind: "itinerary")
+    }
+    let schedules = try scheduleRecords.map {
+      try $0.value(
+        ownerId: identifier, ownerLifetimeId: snapshot.lifetimeId, ownerKind: "itinerary")
+    }
+    guard entries.allSatisfy({ $0.itinerary.lifetimeId == snapshot.lifetimeId }),
+      associations.allSatisfy({ $0.owner.lifetimeId == snapshot.lifetimeId }),
+      Set(entries.map(\.id)) == Set(snapshot.entries.map(\.id)),
+      entryRecords.count == entries.count,
+      Set(associations.map(\.id)) == Set(snapshot.labelAssociations.map(\.id)),
+      associationRecords.count == associations.count,
+      links.count == snapshot.links.count, Set(links.map(\.id)) == Set(snapshot.links.map(\.id)),
+      schedules.count == snapshot.schedules.count,
+      Set(schedules.map(\.id)) == Set(snapshot.schedules.map(\.id))
+    else {
+      throw PlannerFailure(
+        "readUnavailable", "The Itinerary's complete deletion closure is unresolved.")
+    }
+    let entryIdentifiers = Set(entries.map(\.id))
+    let expandedRecords = try context.fetch(FetchDescriptor<PlannerSchemaV14.ExpandedCompletion>())
+      .filter { $0.listEntryId.map(entryIdentifiers.contains) == true }
+    let expanded = try expandedRecords.map { try $0.value() }.sorted {
+      $0.context.orderingKey < $1.context.orderingKey
+    }
+    let expectedContexts = entries.flatMap(\.expandedCompletions)
+    guard Set(expanded.map(\.context)).count == expanded.count,
+      Set(expanded.map(\.context)) == Set(expectedContexts.map(\.context)),
+      expanded.count == entryRecords.flatMap({ $0.expandedCompletions ?? [] }).count
+    else {
+      throw PlannerFailure(
+        "readUnavailable", "The Itinerary's expanded completion contexts are unresolved.")
+    }
+    let memberships = try membershipSnapshots(context)
+    let expandedBindings = try expanded.flatMap { completion -> [PlannerBoundIdentity] in
+      guard
+        let membership = memberships.first(where: {
+          $0.id == completion.context.membershipId
+            && $0.lifetimeId == completion.context.membershipLifetimeId
+        })
+      else {
+        throw PlannerFailure(
+          "readUnavailable", "An expanded completion's membership is unresolved.")
+      }
+      return [
+        .init(kind: "membership", id: membership.id, lifetimeId: membership.lifetimeId),
+        membership.list, membership.item,
+      ]
+    }
+    return .init(
+      record: record, snapshot: snapshot, entries: entries, associations: associations,
+      expanded: expanded, expandedBindings: expandedBindings, entryRecords: entryRecords,
+      associationRecords: associationRecords, linkRecords: linkRecords,
+      scheduleRecords: scheduleRecords, expandedRecords: expandedRecords)
+  }
+
+  private func executeItineraryDeletion(
+    _ operation: PlannerOperation, source: PlannerEntityReference,
+    identity: PlannerStoreIdentity, context: ModelContext, archive: PlannerRecoveryArchive,
+    receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let stored = try receipt.evidence()
+      guard
+        receipt.payloadDigest
+          == sourceDeletionDigest(
+            source: source, identity: identity, bindings: stored.bindings,
+            removals: stored.result.affectedReferences)
+      else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "This operation describes another deletion.")
+      }
+      return appliedResult(
+        operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
+        envelope: envelope)
+    }
+    let completedIdentifiers = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { completedIdentifiers.contains($0) } ?? false })
+    else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    guard let token = operation.reviewToken, let review = reviews[token.reviewId],
+      review.session == operation.session
+    else {
+      throw PlannerFailure(
+        "staleReview", "Review the complete deletion impact in the current dataset session.",
+        propertyPath: "/reviewToken", details: .staleReview)
+    }
+    let resolution = try resolveItineraryDeletion(source, context: context)
+    let digest = sourceDeletionDigest(
+      source: source, identity: identity, bindings: resolution.bindings,
+      removals: resolution.removals)
+    guard digest == review.payloadDigest else {
+      throw PlannerFailure(
+        "staleReview", "The command or complete removal set changed; review it again.",
+        details: .staleReview)
+    }
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another deletion.")
+      }
+      return .init(operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    let removedAssociationIdentifiers = Set(resolution.associations.map(\.id))
+    let itineraries = try itinerarySnapshots(context).filter { $0.id != source.id }
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV14.Item>()).map { try $0.value() }
+    let lists = try listSnapshots(context)
+    let memberships = try membershipSnapshots(context)
+    let labels = try labelAssociationSnapshots(context).filter {
+      !removedAssociationIdentifiers.contains($0.id)
+    }
+    let categories = try categorySnapshots(context)
+    let tags = try tagSnapshots(context)
+    let newMarkers =
+      [
+        PortableDeletionMarker(
+          deletionId: UUID(), operationId: operation.operationId,
+          target: .source(resolution.source), closedFamilyId: nil)
+      ]
+      + resolution.snapshot.schedules.map {
+        PortableDeletionMarker(
+          deletionId: UUID(), operationId: operation.operationId,
+          target: .source(.init(kind: "schedule", id: $0.id, lifetimeId: $0.lifetimeId)),
+          closedFamilyId: nil)
+      }
+      + resolution.entries.map {
+        PortableDeletionMarker(
+          deletionId: UUID(), operationId: operation.operationId,
+          target: .itineraryEntry(id: $0.id, lifetimeId: $0.lifetimeId), closedFamilyId: nil)
+      }
+      + resolution.associations.map {
+        PortableDeletionMarker(
+          deletionId: UUID(), operationId: operation.operationId,
+          target: .labelAssociation(id: $0.id, lifetimeId: $0.lifetimeId), closedFamilyId: nil)
+      }
+    let markers = try deletionMarkers(context) + newMarkers
+    let result = PlannerAppliedResult(
+      generatedIdentities: [],
+      affectedIdentities: resolution.sourceDeletes.map { .source($0) }
+        + resolution.removals.map { .reference($0) })
+    try archive.prepare(
+      .init(
+        proposalId: UUID(), originalOperationId: operation.operationId,
+        datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
+        proposedBackup: PlannerDataSnapshot(
+          itineraries: itineraries, labelAssociations: labels, tags: tags, categories: categories,
+          items: items, lists: lists, memberships: memberships, deletionMarkers: markers),
+        payloadDigest: digest, evidence: "preparedUnverified"))
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result, bindings: resolution.bindings)
+    for marker in newMarkers { context.insert(PlannerSchemaV4.DeletionMarker(marker)) }
+    for record in resolution.expandedRecords { context.delete(record) }
+    for record in resolution.entryRecords { context.delete(record) }
+    for record in resolution.associationRecords { context.delete(record) }
+    for record in resolution.linkRecords { context.delete(record) }
+    for record in resolution.scheduleRecords { context.delete(record) }
+    context.delete(resolution.record)
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The complete Itinerary deletion was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(
+        itineraries: itineraries, labelAssociations: labels, tags: tags, categories: categories,
+        items: items, lists: lists, memberships: memberships, deletionMarkers: markers,
+        receipts: receipts + [receipt])
       return .init(
         operationId: operation.operationId,
         outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
