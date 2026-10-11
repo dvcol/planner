@@ -27,6 +27,8 @@ struct SavedPlannerView: View {
   @Bindable var store: SavedPlannerStore
   @State private var selectedSection: SavedPlannerSection = .lists
   @State private var selectedItineraryIdentifier: UUID?
+  @State private var selectedItineraryRow: SavedItineraryRowSelection?
+  @State private var itineraryColumnVisibility: NavigationSplitViewVisibility = .all
   @State private var selectedListId: UUID?
   @State private var selectedList: PlannerListSourceRead?
   @State private var listItems: [SavedPlannerItem]?
@@ -105,6 +107,7 @@ struct SavedPlannerView: View {
       .onChange(of: selectedListId) { listEditMode = .inactive }
     #endif
     .task(id: selectedItemId) { await loadSelectedItem() }
+    .onChange(of: selectedItineraryIdentifier) { selectedItineraryRow = nil }
     .task(id: selectedAppearanceIdentity) { await loadSelectedAppearance() }
     .task(id: store.changeRevision) {
       await loadListCatalog()
@@ -178,10 +181,12 @@ struct SavedPlannerView: View {
           "Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath",
           value: .itineraries
         ) {
-          NavigationSplitView {
+          NavigationSplitView(columnVisibility: $itineraryColumnVisibility) {
             itineraryCatalog
-          } detail: {
+          } content: {
             itineraryDetail
+          } detail: {
+            itineraryAppearanceDetail
           }
         }
       }
@@ -231,17 +236,40 @@ struct SavedPlannerView: View {
   }
 
   private var itineraryCatalog: some View {
-    SavedItineraryCatalog(store: store, selection: $selectedItineraryIdentifier)
+    SavedItineraryCatalog(
+      store: store,
+      selection: Binding(
+        get: { selectedItineraryIdentifier },
+        set: { identifier in
+          selectedItineraryIdentifier = identifier
+          #if os(iOS)
+            if identifier != nil { itineraryColumnVisibility = .doubleColumn }
+          #endif
+        }))
   }
 
   @ViewBuilder
   private var itineraryDetail: some View {
     if let selectedItineraryIdentifier {
-      SavedItineraryDetail(store: store, identifier: selectedItineraryIdentifier)
-        .id(selectedItineraryIdentifier)
+      SavedItineraryDetail(
+        store: store, identifier: selectedItineraryIdentifier, selection: $selectedItineraryRow
+      )
+      .id(selectedItineraryIdentifier)
     } else {
       ContentUnavailableView(
         "Choose an Itinerary", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+    }
+  }
+
+  @ViewBuilder
+  private var itineraryAppearanceDetail: some View {
+    if let selectedItineraryIdentifier, let selectedItineraryRow {
+      SavedItineraryItemDetail(
+        appearance: selectedItineraryRow.appearance(itineraryId: selectedItineraryIdentifier)
+      )
+      .id(selectedItineraryRow)
+    } else {
+      ContentUnavailableView("Choose an Item", systemImage: "square.stack")
     }
   }
 
@@ -640,7 +668,18 @@ struct SavedPlannerView: View {
       }
     } content: {
       if selectedSection == .itineraries {
-        itineraryCatalog
+        if selectedItineraryIdentifier != nil {
+          itineraryDetail
+            .toolbar {
+              ToolbarItem(placement: .navigation) {
+                Button("Itineraries", systemImage: "chevron.backward") {
+                  selectedItineraryIdentifier = nil
+                }
+              }
+            }
+        } else {
+          itineraryCatalog
+        }
       } else if isItemSection {
         itemCatalog
       } else if let selectedList {
@@ -800,7 +839,7 @@ struct SavedPlannerView: View {
       }
     } detail: {
       if selectedSection == .itineraries {
-        itineraryDetail
+        itineraryAppearanceDetail
       } else if isItemSection {
         itemDetail
       } else {

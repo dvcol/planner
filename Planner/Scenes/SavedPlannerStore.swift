@@ -224,6 +224,76 @@ final class SavedPlannerStore {
     }
   }
 
+  func readItineraryContents(_ identifier: UUID) async -> SavedItineraryContents? {
+    guard let planner, let session else { return nil }
+    guard
+      case .snapshot(let snapshot) = await planner.query(
+        .init(
+          session: session,
+          request: .items(
+            .init(
+              scope: .itinerary(identifier), completion: .all, archive: .all,
+              sort: .init(mode: .manual)))))
+    else {
+      alertMessage = "Planner could not read this Itinerary's entries."
+      return nil
+    }
+    guard let itinerary = await readItinerary(identifier) else { return nil }
+    var listNames: [UUID: String] = [:]
+    for reference in itinerary.references {
+      guard case .itineraryEntry(_, _, let source) = reference, source.kind == .list,
+        listNames[source.id] == nil
+      else { continue }
+      guard let list = await readList(source.id) else { return nil }
+      listNames[source.id] = list.content.name
+    }
+    /** Reading the window last rejects source/header reads if their history has changed. */
+    guard
+      case .rows(let window) = await planner.read(
+        session: session,
+        request: .rows(generation: snapshot.generation, offset: 0, limit: Int64.max))
+    else {
+      alertMessage = "The Itinerary changed while opening. Try again."
+      return nil
+    }
+    var itemsByEntry: [UUID: [SavedItineraryItem]] = [:]
+    for row in window.rows {
+      guard case .appearance(_, let appearance) = row.identity,
+        let selection = SavedItineraryRowSelection(appearance, itineraryId: identifier)
+      else {
+        alertMessage = "Planner could not resolve this Itinerary's Items."
+        return nil
+      }
+      let entryId: UUID
+      switch selection {
+      case .direct(let identifier): entryId = identifier
+      case .expanded(let identifier, _): entryId = identifier
+      }
+      itemsByEntry[entryId, default: []].append(.init(id: selection, row: row))
+    }
+    let entries = itinerary.references.compactMap { reference -> SavedItineraryEntryRows? in
+      guard case .itineraryEntry(let entryId, _, let source) = reference else { return nil }
+      let items = itemsByEntry[entryId] ?? []
+      let title: String
+      if source.kind == .list {
+        title = listNames[source.id] ?? "List"
+      } else {
+        title = items.first?.row.title ?? "Item"
+      }
+      return .init(
+        id: entryId, source: source, title: title, items: items)
+    }
+    return .init(itinerary: itinerary, entries: entries)
+  }
+
+  func addItineraryEntry(
+    itineraryId: UUID, source: PlannerEntityReference, operationIdentifier: UUID
+  ) async -> Bool {
+    await executeChange(
+      .addItineraryEntry(itineraryId: itineraryId, source: source, placement: .last),
+      operationId: operationIdentifier) != nil
+  }
+
   func readItems(
     scope: PlannerItemQuery.Scope = .global, text: String = "",
     completion: PlannerItemQuery.Completion, archive: PlannerItemQuery.Archive,
