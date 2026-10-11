@@ -3,7 +3,7 @@ import PlannerPreviews
 import SwiftUI
 
 extension PlannerRowRead {
-  var metadataDescription: String {
+  func metadataDescription(presentation: PlannerRowPresentationContext?) -> String {
     var descriptions = [String]()
     if let subtitle, !subtitle.isEmpty { descriptions.append(subtitle) }
     if let locationCaption { descriptions.append(locationCaption) }
@@ -16,6 +16,13 @@ extension PlannerRowRead {
       descriptions.append("Maps")
     }
     if archived == true { descriptions.append("Archived") }
+    if let schedule = scheduleDescription(presentation: presentation) {
+      descriptions.append("Scheduled: \(schedule)")
+      if additionalScheduleCount > 0 {
+        let noun = additionalScheduleCount == 1 ? "schedule" : "schedules"
+        descriptions.append("\(additionalScheduleCount) additional \(noun)")
+      }
+    }
     let categories = labels.sortedLabels(of: .category)
     if !categories.isEmpty {
       descriptions.append("Categories: \(categories.map(\.name).joined(separator: ", "))")
@@ -41,10 +48,49 @@ extension PlannerRowRead {
     if location.coordinate != nil { return "Location" }
     return nil
   }
+
+  var additionalScheduleCount: Int64 {
+    guard case .directItem(_, _, _, let count) = scheduleSummary else { return 0 }
+    return count
+  }
+
+  func scheduleDescription(presentation: PlannerRowPresentationContext?) -> String? {
+    guard case .directItem(_, _, let form, _) = scheduleSummary,
+      let presentation,
+      let displayTimeZone = TimeZone(identifier: presentation.displayTimeZone)
+    else { return nil }
+    let dateIntervalFormatter = DateIntervalFormatter()
+    dateIntervalFormatter.dateStyle = .medium
+    switch form {
+    case .timed(let start, let end, _):
+      dateIntervalFormatter.timeZone = displayTimeZone
+      dateIntervalFormatter.timeStyle = .short
+      if let end { return dateIntervalFormatter.string(from: start, to: end) }
+      var dateFormatStyle = Date.FormatStyle(date: .abbreviated, time: .shortened)
+      dateFormatStyle.timeZone = displayTimeZone
+      return start.formatted(dateFormatStyle)
+    case .allDay(let start, let end):
+      var calendar = Calendar(identifier: .gregorian)
+      calendar.timeZone = .gmt
+      let finalDate = end ?? start
+      guard
+        let startDate = calendar.date(
+          from: DateComponents(year: start.year, month: start.month, day: start.day, hour: 12)),
+        let endDate = calendar.date(
+          from: DateComponents(
+            year: finalDate.year, month: finalDate.month, day: finalDate.day, hour: 12))
+      else { return "Date unavailable" }
+      dateIntervalFormatter.calendar = calendar
+      dateIntervalFormatter.timeZone = .gmt
+      dateIntervalFormatter.timeStyle = .none
+      return dateIntervalFormatter.string(from: startDate, to: endDate) + " · All day"
+    }
+  }
 }
 
 struct SavedItemRowContent: View {
   let row: PlannerRowRead
+  let rowPresentation: PlannerRowPresentationContext?
   @Environment(SavedPlannerStore.self) private var store
   @Environment(PlannerPreviews.self) private var previews
 
@@ -117,6 +163,16 @@ struct SavedItemRowContent: View {
           .font(.caption)
           .foregroundStyle(.secondary)
           .lineLimit(1)
+      }
+      if let schedule = row.scheduleDescription(presentation: rowPresentation) {
+        let additionalCount = row.additionalScheduleCount
+        Label(
+          additionalCount > 0 ? "\(schedule) · +\(additionalCount)" : schedule,
+          systemImage: "calendar"
+        )
+        .font(.caption)
+        .foregroundStyle(.secondary)
+        .lineLimit(1)
       }
       if let labels = row.compactLabelDescription {
         Text(labels)

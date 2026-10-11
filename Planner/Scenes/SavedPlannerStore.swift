@@ -13,6 +13,7 @@ struct SavedPlannerList: Identifiable {
 struct SavedPlannerItem: Identifiable {
   let id: UUID
   let row: PlannerRowRead
+  let rowPresentation: PlannerRowPresentationContext?
 }
 
 struct SavedPlannerLabel: Identifiable {
@@ -293,7 +294,8 @@ final class SavedPlannerStore {
       case .direct(let identifier): entryId = identifier
       case .expanded(let identifier, _): entryId = identifier
       }
-      itemsByEntry[entryId, default: []].append(.init(id: selection, row: row))
+      itemsByEntry[entryId, default: []].append(
+        .init(id: selection, row: row, rowPresentation: window.rowPresentation))
     }
     let entries = itinerary.references.compactMap { reference -> SavedItineraryEntryRows? in
       guard case .itineraryEntry(let entryId, _, let source) = reference else { return nil }
@@ -366,7 +368,8 @@ final class SavedPlannerStore {
             alertMessage = "Planner could not resolve its Items."
             return nil
           }
-          loadedItems.append(SavedPlannerItem(id: source.id, row: row))
+          loadedItems.append(
+            SavedPlannerItem(id: source.id, row: row, rowPresentation: window.rowPresentation))
         }
         return loadedItems
       case .failed(let reason): alertMessage = reason.message
@@ -743,7 +746,8 @@ final class SavedPlannerStore {
             alertMessage = "Planner could not resolve this List's Items."
             return nil
           }
-          items.append(SavedPlannerItem(id: membershipId, row: row))
+          items.append(
+            SavedPlannerItem(id: membershipId, row: row, rowPresentation: window.rowPresentation))
         }
         return items
       case .failed(let reason): alertMessage = reason.message
