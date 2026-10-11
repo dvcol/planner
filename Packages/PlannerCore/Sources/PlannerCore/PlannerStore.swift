@@ -89,7 +89,8 @@ enum PlannerSchemaV1: VersionedSchema {
 extension PlannerSchemaV13.Item {
   func rowRead(
     identity: PlannerRowIdentity, localDone: Bool?, hasLinks: Bool,
-    previewLink: PlannerOwnedLinkRead?, scheduleSummary: PlannerRowScheduleSummary
+    previewLink: PlannerOwnedLinkRead?, labels: [PlannerLabelRead],
+    scheduleSummary: PlannerRowScheduleSummary
   ) throws -> PlannerRowRead {
     guard id != nil, let lifetimeId else {
       throw PlannerFailure("readUnavailable", "The row Item has unresolved identity.")
@@ -108,7 +109,7 @@ extension PlannerSchemaV13.Item {
       effectiveDone: globalDone || localDone == true, archived: archived,
       hasLocation: content.location != nil, hasLinks: hasLinks,
       ownedLocation: content.location, previewLink: previewLink,
-      scheduleSummary: scheduleSummary)
+      labels: labels, scheduleSummary: scheduleSummary)
   }
 }
 

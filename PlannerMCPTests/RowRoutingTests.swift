@@ -3075,6 +3075,177 @@ struct RowRoutingTests {
     }
   }
 
+  @Test func rowLabelsStayLiveAndKeepDistinctSourceBindingsOverHTTP() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    guard case .ready(let datasetSession) = await planner.bootstrap() else {
+      throw CancellationError()
+    }
+    func save(_ command: PlannerCommand) async throws -> PlannerEntityReference {
+      guard
+        case .applied(let result, .complete) = await planner.execute(
+          .init(operationId: UUID(), session: datasetSession, command: command)
+        ).outcome,
+        let source = result.generated.first
+      else { throw CancellationError() }
+      return source
+    }
+    let category = try await save(
+      .createCategory(content: .init(name: "Food", iconName: "fork.knife")))
+    let tag = try await save(.createTag(content: .init(name: "Food")))
+    let routeTag = try await save(.createTag(content: .init(name: "Travel")))
+    let hotel = try await save(
+      .createItem(
+        content: .init(
+          title: "Hotel", notes: "Owned notes", categoryIds: [category.id],
+          tagIds: [tag.id])))
+    let list = try await save(.createList(content: .init(name: "Food List")))
+    guard
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: datasetSession,
+          command: .addMembership(itemId: hotel.id, listId: list.id, placement: .last))
+      ).outcome
+    else { throw CancellationError() }
+    let itinerary = try await save(
+      .createItinerary(content: .init(title: "Weekend", tagIds: [routeTag.id])))
+    for source in [hotel, list, hotel] {
+      guard
+        case .applied(_, .complete) = await planner.execute(
+          .init(
+            operationId: UUID(), session: datasetSession,
+            command: .addItineraryEntry(itineraryId: itinerary.id, source: source, placement: .last)
+          )
+        ).outcome
+      else { throw CancellationError() }
+    }
+    let handler = PlannerMCPRequestHandler(
+      credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+      planner: planner, datasetSession: datasetSession)
+    let listener = PlannerMCPLoopbackListener(requestHandler: handler)
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      func call(_ name: String, _ arguments: [String: Any]) async throws -> [String: Any] {
+        try value(
+          try await httpSession.data(
+            for: request(endpoint: endpoint, name: name, arguments: arguments)))
+      }
+      func source(_ reference: PlannerEntityReference) async throws -> [String: Any] {
+        let read = try await call(
+          "planner_read",
+          [
+            "formatVersion": 1,
+            "request": [
+              "kind": "source",
+              "source": ["kind": reference.kind.rawValue, "id": reference.id.uuidString],
+            ],
+          ])
+        return try #require(read["value"] as? [String: Any])
+      }
+      func rows(_ query: [String: Any]) async throws -> [String: Any] {
+        let snapshot = try await call("planner_query", ["formatVersion": 1, "query": query])
+        let generation = try #require(snapshot["generation"] as? String)
+        return try await call(
+          "planner_read",
+          [
+            "formatVersion": 1,
+            "request": [
+              "kind": "rows",
+              "generation": generation, "offset": "0", "limit": "100",
+            ],
+          ])
+      }
+      let original = try await source(hotel)
+      let expectedLabels = try #require(original["labels"] as? [[String: Any]])
+      #expect(expectedLabels.count == 2)
+      var oldGeneration: String?
+      for scope: [String: Any] in [
+        ["kind": "global"], ["kind": "list", "listId": list.id.uuidString],
+        ["kind": "itinerary", "itineraryId": itinerary.id.uuidString],
+      ] {
+        let window = try await rows([
+          "kind": "items", "scope": scope,
+          "completion": "all", "archive": "all",
+        ])
+        oldGeneration = try #require(window["generation"] as? String)
+        let values = try #require(window["rows"] as? [[String: Any]])
+        #expect(values.count == (scope["kind"] as? String == "itinerary" ? 3 : 1))
+        for row in values {
+          let labels = try #require(row["labels"] as? [[String: Any]])
+          #expect(NSArray(array: labels).isEqual(to: expectedLabels))
+          #expect(row["notes"] == nil && row["links"] == nil && row["fieldHashes"] == nil)
+          for label in labels {
+            #expect(Set(label.keys) == ["reference", "name", "color", "iconName"])
+            #expect(label["name"] as? String == "Food")
+          }
+        }
+      }
+      let catalog = try await rows(["kind": "catalog", "sourceKind": "itinerary"])
+      let routeRows = try #require(catalog["rows"] as? [[String: Any]])
+      let routeLabels = try #require(routeRows.first?["labels"] as? [[String: Any]])
+      #expect(routeLabels.count == 1)
+      #expect(routeLabels.first?["name"] as? String == "Travel")
+      #expect(
+        routeLabels.first?["reference"] as? [String: String]
+          == ["kind": "tag", "id": routeTag.id.uuidString])
+      let categoryRead = try await source(category)
+      let renamed = try await call(
+        "planner_execute",
+        [
+          "formatVersion": 1,
+          "operationId": UUID().uuidString,
+          "command": [
+            "type": "editCategory",
+            "sourceId": category.id.uuidString, "changes": ["name": "Dining"],
+            "expectedFieldHashes": try #require(categoryRead["fieldHashes"] as? [String: String]),
+          ],
+        ])
+      #expect(renamed["state"] as? String == "applied")
+      let stale = try failure(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_read",
+            arguments: [
+              "formatVersion": 1,
+              "request": [
+                "kind": "rows", "generation": try #require(oldGeneration),
+                "offset": "0", "limit": "100",
+              ],
+            ])))
+      #expect(stale["code"] as? String == "staleSnapshot")
+      let current = try await rows([
+        "kind": "items",
+        "scope": [
+          "kind": "itinerary",
+          "itineraryId": itinerary.id.uuidString,
+        ], "completion": "all", "archive": "all",
+      ])
+      for row in try #require(current["rows"] as? [[String: Any]]) {
+        let labels = try #require(row["labels"] as? [[String: Any]])
+        #expect(
+          labels.first {
+            ($0["reference"] as? [String: String])?["id"] == category.id.uuidString
+          }?["name"] as? String == "Dining")
+        #expect(
+          labels.first {
+            ($0["reference"] as? [String: String])?["id"] == tag.id.uuidString
+          }?["name"] as? String == "Food")
+      }
+      let afterRename = try await source(hotel)
+      #expect(
+        afterRename["fieldHashes"] as? [String: String] == original["fieldHashes"]
+          as? [String: String])
+      #expect(afterRename["updatedAt"] as? Double == original["updatedAt"] as? Double)
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   private func storageConfiguration(_ directory: URL) -> PlannerStorageConfiguration {
     PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

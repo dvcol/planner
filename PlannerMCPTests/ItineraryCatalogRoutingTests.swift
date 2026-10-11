@@ -133,8 +133,10 @@ struct ItineraryCatalogRoutingTests {
       #expect(
         Set(row.keys) == [
           "identity", "title", "subtitle", "estimate", "globalDone", "localDone", "effectiveDone",
-          "archived", "hasLocation", "hasLinks", "ownedLocation", "previewLink", "scheduleSummary",
+          "archived", "hasLocation", "hasLinks", "ownedLocation", "previewLink", "labels",
+          "scheduleSummary",
         ])
+      #expect((row["labels"] as? [Any])?.isEmpty == true)
       #expect(row["title"] as? String == "CAFÉ GUIDE")
       #expect(
         row["globalDone"] is NSNull && row["localDone"] is NSNull && row["effectiveDone"] is NSNull)

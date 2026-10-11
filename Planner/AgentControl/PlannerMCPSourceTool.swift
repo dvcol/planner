@@ -473,7 +473,7 @@
       ])
     }
 
-    private static func labelValue(_ label: PlannerLabelRead) -> Value {
+    static func labelValue(_ label: PlannerLabelRead) -> Value {
       .object([
         "reference": .object([
           "kind": .string(label.reference.kind.rawValue),

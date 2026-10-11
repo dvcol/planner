@@ -172,8 +172,9 @@ struct MembershipRowRoutingTests {
         Set(row.keys) == [
           "identity", "title", "subtitle", "estimate", "globalDone",
           "localDone", "effectiveDone", "archived", "hasLocation", "hasLinks", "ownedLocation",
-          "previewLink", "scheduleSummary",
+          "previewLink", "labels", "scheduleSummary",
         ])
+      #expect((row["labels"] as? [Any])?.isEmpty == true)
       #expect(
         NSDictionary(dictionary: try #require(row["identity"] as? [String: Any]))
           .isEqual(to: identity))

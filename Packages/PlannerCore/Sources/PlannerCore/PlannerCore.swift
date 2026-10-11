@@ -1262,7 +1262,7 @@ public actor Planner {
           title: category.content.name, subtitle: nil, estimate: nil,
           globalDone: nil, localDone: nil, effectiveDone: nil, archived: nil,
           hasLocation: false, hasLinks: false, ownedLocation: nil, previewLink: nil,
-          scheduleSummary: .none)
+          labels: [], scheduleSummary: .none)
       }
       if source.kind == .tag {
         let tag = try tagSnapshot(source.id, context: context)
@@ -1271,7 +1271,7 @@ public actor Planner {
           title: tag.content.name, subtitle: nil, estimate: nil,
           globalDone: nil, localDone: nil, effectiveDone: nil, archived: nil,
           hasLocation: false, hasLinks: false, ownedLocation: nil, previewLink: nil,
-          scheduleSummary: .none)
+          labels: [], scheduleSummary: .none)
       }
       if source.kind == .list {
         let sourceIdentifier = source.id
@@ -1290,7 +1290,7 @@ public actor Planner {
           title: list.name, subtitle: nil, estimate: nil,
           globalDone: nil, localDone: nil, effectiveDone: nil, archived: list.archived,
           hasLocation: false, hasLinks: false, ownedLocation: nil, previewLink: nil,
-          scheduleSummary: .none)
+          labels: [], scheduleSummary: .none)
       }
       if source.kind == .itinerary {
         return try itineraryCatalogRow(identity: identity, sourceId: source.id, context: context)
@@ -1336,7 +1336,9 @@ public actor Planner {
         presentation: presentation, context: context)
       return try item.rowRead(
         identity: identity, localDone: localDone,
-        hasLinks: context.fetchCount(owned) > 0, previewLink: preview, scheduleSummary: summary)
+        hasLinks: context.fetchCount(owned) > 0, previewLink: preview,
+        labels: rowLabels(source: source, lifetimeId: lifetimeId, context: context),
+        scheduleSummary: summary)
     }
     guard try latestHistoryToken(in: context) == binding.historyToken else {
       querySnapshots.removeValue(forKey: generation)
@@ -1345,6 +1347,26 @@ public actor Planner {
     return PlannerRowWindow(
       generation: generation, offset: offset, matchingCount: snapshot.matchingCount,
       rowPresentation: snapshot.rowPresentation, rows: rows)
+  }
+
+  private func rowLabels(
+    source: PlannerEntityReference, lifetimeId: UUID, context: ModelContext
+  ) throws -> [PlannerLabelRead] {
+    let ownerKind = source.kind.rawValue
+    let ownerId = source.id
+    let descriptor = FetchDescriptor<PlannerSchemaV13.LabelAssociation>(
+      predicate: #Predicate {
+        $0.ownerKind == ownerKind && $0.ownerId == ownerId && $0.ownerLifetimeId == lifetimeId
+      }, sortBy: [SortDescriptor(\.id)])
+    let associations = try context.fetch(descriptor)
+    let labels = try associations.map { try $0.labelRead() }
+    let pairs = labels.map { $0.reference.kind.rawValue + ":" + $0.reference.id.uuidString }
+    guard Set(associations.compactMap(\.id)).count == associations.count,
+      Set(pairs).count == labels.count
+    else {
+      throw PlannerFailure("readUnavailable", "The row has duplicate label associations.")
+    }
+    return labels
   }
 
   private func itineraryCatalogRow(
@@ -1387,7 +1409,10 @@ public actor Planner {
       subtitle: nil, estimate: nil, globalDone: nil, localDone: nil, effectiveDone: nil,
       archived: itinerary.archived, hasLocation: content.location != nil,
       hasLinks: try context.fetchCount(owned) > 0,
-      ownedLocation: content.location, previewLink: preview, scheduleSummary: .none)
+      ownedLocation: content.location, previewLink: preview,
+      labels: try rowLabels(
+        source: .init(kind: .itinerary, id: sourceId), lifetimeId: lifetimeId, context: context),
+      scheduleSummary: .none)
   }
 
   private func rowScheduleSummary(

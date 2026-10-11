@@ -103,6 +103,7 @@
         "hasLocation": .bool(row.hasLocation), "hasLinks": .bool(row.hasLinks),
         "ownedLocation": row.ownedLocation.map(PlannerMCPSourceTool.locationValue) ?? .null,
         "previewLink": row.previewLink.map(link) ?? .null,
+        "labels": .array(row.labels.map(PlannerMCPSourceTool.labelValue)),
         "scheduleSummary": schedule,
       ])
     }
