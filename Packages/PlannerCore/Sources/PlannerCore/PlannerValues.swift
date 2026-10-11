@@ -211,6 +211,7 @@ public enum PlannerCommand: Sendable {
     expectedFieldHashes: [PlannerScheduleField: PlannerFieldHash])
   case removeSchedule(scheduleId: UUID)
   case setCompletion(scope: PlannerCompletionScope, done: Bool)
+  case setBulkCompletion(scope: PlannerBulkScope, done: Bool)
   case setArchive(source: PlannerEntityReference, archived: Bool)
   case editItem(
     sourceId: UUID, changes: PlannerItemChanges,

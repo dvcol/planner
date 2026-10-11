@@ -640,3 +640,9 @@ DoR is the accepted query/appearance contract and public Core tracer. The first 
 The compatibility run records two old expectations: two scope variants and the former error path for itinerary without an ID. Updating only those expectations retains their behavioral preservation checks. Final DoD passes 56 actual HTTP functions in 29 suites on 231 frozen source/resolution hashes, Mac app/test-bundle compilation and strict seven-file Swift lint. Mac compilation executes zero app-hosted runtime functions. The [combined evidence](evidence/navigation/core-itinerary-item-query.json) includes Core/native qualification and every attempt.
 
 Schema 13/portable format 1 remain localOnly. Explicit Manual itinerary queries await Q56. Bulk, schedules/native UI, native controls/paging, deletion/admin, physical sync/account/Share and whole-app polish remain open.
+
+## HTTP compatibility with the Core bulk boundary
+
+The new Core prepareReview/setBulkCompletion API leaves existing HTTP admission unchanged. The actual SDK/listener compatibility target passes 56 functions in 29 suites on the initial 235-file frozen source set. A later change only groups targets inside the unadvertised Core bulk helper; no existing HTTP path invokes it. Final bulk Core/native checks and Mac compilation qualify that change, as recorded in the [combined evidence](evidence/navigation/core-bulk-completion.json).
+
+MCP bulk/review commands are not implemented or qualified by this compatibility run. Existing non-null-token rejection remains. Genuine save/recovery-failure qualification and native/Intent confirmation also remain open.
