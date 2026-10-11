@@ -1,0 +1,39 @@
+Building for debugging...
+[Pre-planning 1 / 154]
+[Planning deferred tasks]
+[1 / 3] PlannerCore_PlannerCoreStoreTests
+[7 / 19] PlannerCoreStoreTests-product
+[9 / 20] PlannerCoreStoreTests-product
+[11 / 22] PlannerCoreStoreTests-product
+[15 / 21] PlannerCoreStoreTests-product
+[17 / 21] PlannerCoreStoreTests-product
+[19 / 21] PlannerCoreStoreTests-product
+Build complete! (4,24 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite RecoveryCheckpointRetryTests started.
+◇ Suite RecoveryCheckpointRetryAdmissionTests started.
+◇ Test knownAppliedCompletionRetryRepairsRecoveryWithoutReapplyingAndUnblocksLaterEdits() started.
+◇ Test bulkCheckpointRetryPreservesEverySupportedGraphGroupAndPriorDeletionMarker() started.
+◇ Test unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test continuedFileFailureRetainsAppliedEvidenceAndMutationBlockUntilRetrySucceeds() started.
+◇ Test concurrentFacadeRetriesPublishOneCheckpointAndPreserveOriginalAppliedResult() started.
+◇ Test case passing 1 argument scenario → "foreignSession" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "unknown" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "preparedOnly" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "separateDataset" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+✔ Test concurrentFacadeRetriesPublishOneCheckpointAndPreserveOriginalAppliedResult() passed after 0.112 seconds.
+✔ Test continuedFileFailureRetainsAppliedEvidenceAndMutationBlockUntilRetrySucceeds() passed after 0.132 seconds.
+✔ Test unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) with 4 test cases passed after 0.137 seconds.
+✔ Test knownAppliedCompletionRetryRepairsRecoveryWithoutReapplyingAndUnblocksLaterEdits() passed after 0.158 seconds.
+✔ Suite RecoveryCheckpointRetryTests passed after 0.158 seconds.
+✘ Test bulkCheckpointRetryPreservesEverySupportedGraphGroupAndPriorDeletionMarker() recorded an issue at RecoveryCheckpointRetryAdmissionTests.swift:288:5: Expectation failed: backup.itineraryEntries.map(\.id) == entries
+↳ backup.itineraryEntries.map(\.id) == entries → false
+↳   backup.itineraryEntries.map(\.id) → [54DC7A86-B242-4A54-AFBC-7FEAEEE61CE4, 7389740E-B93C-41DE-8CC2-EDD1B89B5206, D132CA2D-BFDD-4A5A-86DA-D360C1F0A7B3]
+↳   entries → [D132CA2D-BFDD-4A5A-86DA-D360C1F0A7B3, 54DC7A86-B242-4A54-AFBC-7FEAEEE61CE4, 7389740E-B93C-41DE-8CC2-EDD1B89B5206]
+✘ Test bulkCheckpointRetryPreservesEverySupportedGraphGroupAndPriorDeletionMarker() failed after 0.598 seconds with 1 issue.
+✘ Suite RecoveryCheckpointRetryAdmissionTests failed after 0.598 seconds with 1 issue.
+✘ Test run with 5 tests in 2 suites failed after 0.599 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

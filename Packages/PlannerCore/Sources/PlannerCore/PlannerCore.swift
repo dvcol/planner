@@ -1850,6 +1850,73 @@ public actor Planner {
     } catch { return .unavailable(failure(error, code: "readUnavailable")) }
   }
 
+  public func retryRecovery(session: PlannerDatasetSession, operationId: UUID)
+    -> PlannerOperationResult
+  {
+    var knownAppliedReceipt: RecoveryReceipt?
+    do {
+      return try coordinated {
+        let identity = try validateSession(session)
+        let archive = recoveryArchive(identity)
+        let latestRead = Result { try archive.latest() }
+        if case .success(let envelope) = latestRead,
+          let receipt = envelope?.receipts.first(where: { $0.operationId == operationId }),
+          let checkpoint = receipt.checkpointGeneration.flatMap(Int64.init)
+        {
+          return PlannerOperationResult(
+            operationId: operationId,
+            outcome: .applied(
+              result: receipt.result, recovery: .complete(checkpointGeneration: checkpoint)))
+        }
+        guard FileManager.default.fileExists(atPath: configuration.storeURL.path) else {
+          throw PlannerFailure("readUnavailable", "The committed dataset store is unavailable.")
+        }
+        let context = ModelContext(try openContainer())
+        context.autosaveEnabled = false
+        let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
+        let matches = receipts.filter { $0.operationId == operationId }
+        guard let receipt = matches.first else {
+          throw PlannerFailure(
+            "recoveryNotApplied", "Only a known applied operation can retry its checkpoint.")
+        }
+        guard matches.count == 1 else {
+          throw PlannerFailure("readUnavailable", "Applied operation identities are duplicated.")
+        }
+        let evidence = try RecoveryReceipt(receipt, checkpoint: nil)
+        guard evidence.datasetId == identity.datasetId,
+          evidence.ownershipBinding == identity.ownershipBinding
+        else {
+          throw PlannerFailure(
+            "ownershipUnverified", "The applied operation has a different owner.")
+        }
+        knownAppliedReceipt = evidence
+        _ = try latestRead.get()
+        let generation = try archive.publish(
+          itineraries: try itinerarySnapshots(context),
+          labelAssociations: try labelAssociationSnapshots(context),
+          tags: try tagSnapshots(context),
+          categories: try categorySnapshots(context),
+          items: try context.fetch(FetchDescriptor<PlannerSchemaV14.Item>()).map { try $0.value() },
+          lists: try listSnapshots(context), memberships: try membershipSnapshots(context),
+          deletionMarkers: try deletionMarkers(context), receipts: receipts)
+        return PlannerOperationResult(
+          operationId: operationId,
+          outcome: .applied(
+            result: evidence.result, recovery: .complete(checkpointGeneration: generation)))
+      }
+    } catch {
+      if let knownAppliedReceipt {
+        return PlannerOperationResult(
+          operationId: operationId,
+          outcome: .applied(
+            result: knownAppliedReceipt.result,
+            recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+      }
+      return PlannerOperationResult(
+        operationId: operationId, outcome: .rejected(failure(error, code: "readUnavailable")))
+    }
+  }
+
   public func inspectRecovery(request: PlannerRecoveryRequest) -> PlannerRecoveryInspection {
     do {
       let archives = try discoveredArchives()

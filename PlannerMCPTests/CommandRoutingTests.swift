@@ -1407,7 +1407,7 @@ struct CommandRoutingTests {
     }
   }
 
-  @Test(arguments: ["deleteSource", "applyImport", "restoreRecovery"])
+  @Test(arguments: ["deleteSource", "applyImport", "restoreRecovery", "retryRecovery"])
   func nativeAdministrationIsForbiddenWithoutChangingHotel(_ commandType: String) async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
@@ -1454,7 +1454,8 @@ struct CommandRoutingTests {
       #expect(structured["state"] as? String == "rejected")
       #expect(structured["operationId"] as? String == operationIdentifier.uuidString)
       let reason = try #require(structured["reason"] as? [String: Any])
-      #expect(reason["code"] as? String == "forbiddenOperation")
+      let expectedCode = commandType == "retryRecovery" ? "unavailable" : "forbiddenOperation"
+      #expect(reason["code"] as? String == expectedCode)
       #expect(reason["propertyPath"] as? String == "/command/type")
       guard
         case .source(.item(let current)) = await planner.read(
