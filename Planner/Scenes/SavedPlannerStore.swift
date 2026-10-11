@@ -350,6 +350,7 @@ final class SavedPlannerStore {
     categories: PlannerItemQuery.IdentityGroup? = nil, tags: PlannerItemQuery.IdentityGroup? = nil,
     lists: PlannerItemQuery.IdentityGroup? = nil,
     hasAddress: Bool = false, hasLinks: Bool = false,
+    scheduled: PlannerItemQuery.Scheduling = .all,
     sort: PlannerItemQuery.Sort = .init(mode: .title)
   ) async -> [SavedPlannerItem]? {
     guard let planner, let session else { return nil }
@@ -360,7 +361,7 @@ final class SavedPlannerStore {
           .init(
             scope: scope, text: text, completion: completion, archive: archive,
             categories: categories, tags: tags, lists: lists, hasAddress: hasAddress,
-            hasLinks: hasLinks,
+            hasLinks: hasLinks, scheduled: scheduled,
             sort: sort))
       ))
     {
@@ -727,6 +728,7 @@ final class SavedPlannerStore {
     categories: PlannerItemQuery.IdentityGroup? = nil, tags: PlannerItemQuery.IdentityGroup? = nil,
     lists: PlannerItemQuery.IdentityGroup? = nil,
     hasAddress: Bool = false, hasLinks: Bool = false,
+    scheduled: PlannerItemQuery.Scheduling = .all,
     sort: PlannerItemQuery.Sort = .init(mode: .manual)
   ) async -> [SavedPlannerItem]? {
     guard let planner, let session else { return nil }
@@ -737,7 +739,7 @@ final class SavedPlannerStore {
           .init(
             scope: .list(identifier), text: text, completion: completion, archive: archive,
             categories: categories, tags: tags, lists: lists, hasAddress: hasAddress,
-            hasLinks: hasLinks,
+            hasLinks: hasLinks, scheduled: scheduled,
             sort: sort))))
     {
     case .failed(let reason): alertMessage = reason.message

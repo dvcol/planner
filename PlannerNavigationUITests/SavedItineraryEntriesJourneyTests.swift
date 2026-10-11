@@ -2,6 +2,122 @@ import XCTest
 
 @MainActor
 final class SavedItineraryEntriesJourneyTests: XCTestCase {
+  func testNativeSchedulingFiltersNarrowCatalogInboxAndListWithoutChangingProgress() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem("Hotel", notes: "Meet in the lobby", application: application)
+    createItem("Plain", notes: "Keep for later", application: application)
+    openSection("Itineraries", application: application)
+    reveal(application, identifier: "saved.itinerary.new").activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Weekend route")
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    application.plannerElement("saved.itinerary.entry.new").activateForPlannerJourney()
+    chooseEntry("Hotel", application: application)
+    application.plannerElement("saved.itinerary.entry.add").activateForPlannerJourney()
+    application.plannerElement("saved.itinerary.actions").activateForPlannerJourney()
+    application.plannerElement("Schedule Itinerary").activateForPlannerJourney()
+    application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+    XCTAssertTrue(itineraryRows(application).firstMatch.waitForExistence(timeout: 10))
+    openItemCatalog(application)
+    let hotel = application.savedPlannerItemRows("Hotel").firstMatch
+    let plain = application.savedPlannerItemRows("Plain").firstMatch
+    XCTAssertTrue(hotel.waitForExistence(timeout: 10))
+    XCTAssertTrue(plain.exists)
+    let catalogFilters = application.plannerElement("saved.items.filters")
+    application.chooseSavedPlannerStateFilter("Scheduled", control: catalogFilters)
+    XCTAssertTrue(hotel.waitForExistence(timeout: 10))
+    XCTAssertTrue(plain.waitForNonExistence(timeout: 10))
+    XCTAssertEqual(catalogFilters.plannerControlTitle, "Active · Scheduled")
+    recordScreenshot(application, name: "Native Scheduled catalog filter")
+    application.chooseSavedPlannerStateFilter("Unscheduled", control: catalogFilters)
+    XCTAssertTrue(plain.waitForExistence(timeout: 10))
+    XCTAssertTrue(hotel.waitForNonExistence(timeout: 10))
+    application.chooseSavedPlannerStateFilter("All scheduling states", control: catalogFilters)
+    XCTAssertTrue(hotel.waitForExistence(timeout: 10))
+    XCTAssertTrue(plain.exists)
+    openSection("Inbox", application: application)
+    let inboxFilters = application.plannerElement("saved.inbox.filters")
+    XCTAssertTrue(inboxFilters.waitForExistence(timeout: 10))
+    application.chooseSavedPlannerStateFilter("Scheduled", control: inboxFilters)
+    XCTAssertTrue(hotel.waitForExistence(timeout: 10))
+    XCTAssertTrue(plain.waitForNonExistence(timeout: 10))
+    application.chooseSavedPlannerStateFilter("Unscheduled", control: inboxFilters)
+    XCTAssertTrue(plain.waitForExistence(timeout: 10))
+    XCTAssertTrue(hotel.waitForNonExistence(timeout: 10))
+    XCTAssertEqual(inboxFilters.plannerControlTitle, "Todo · Active · Unscheduled")
+    recordScreenshot(application, name: "Native Unscheduled Inbox filter")
+    openSection("Lists", application: application)
+    reveal(application, identifier: "saved.list.new").activateForPlannerJourney()
+    let name = application.textFields["saved.list.name"]
+    XCTAssertTrue(name.waitForExistence(timeout: 5))
+    name.activateForPlannerJourney()
+    name.typeText("Review")
+    application.plannerElement("saved.list.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    for itemTitle in ["Hotel", "Plain"] {
+      openListAddition(application)
+      let choice = application.staticTexts[itemTitle].firstMatch
+      XCTAssertTrue(choice.waitForExistence(timeout: 5))
+      choice.activateForPlannerJourney()
+      application.plannerElement("saved.membership.add").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.savedPlannerItemRows(itemTitle).firstMatch.waitForExistence(timeout: 10))
+    }
+    let hotelMembership = application.savedPlannerItemRows("Hotel").firstMatch
+    let membershipIdentity = hotelMembership.identifier
+    let check = application.plannerElement(
+      membershipIdentity.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion."))
+    check.activateForPlannerJourney()
+    XCTAssertTrue(check.waitForPlannerValue("Completed"))
+    XCTAssertTrue(application.staticTexts["1 of 2 items done"].exists)
+    let listFilters = application.plannerElement("saved.list.filters")
+    application.chooseSavedPlannerStateFilter("Scheduled", control: listFilters)
+    XCTAssertTrue(hotelMembership.waitForExistence(timeout: 10))
+    XCTAssertTrue(plain.waitForNonExistence(timeout: 10))
+    application.chooseSavedPlannerStateFilter("Todo", control: listFilters)
+    XCTAssertTrue(application.staticTexts["No matching items"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["1 of 2 items done"].exists)
+    XCTAssertTrue(application.staticTexts["Showing 0 of 2 items"].exists)
+    XCTAssertEqual(listFilters.plannerControlTitle, "Todo · Scheduled")
+    recordScreenshot(application, name: "Native cumulative scheduling filter retains full progress")
+    listFilters.activateForPlannerJourney()
+    application.plannerElement("saved.filters.clear").activateForPlannerJourney()
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(hotelMembership.waitForExistence(timeout: 10))
+    XCTAssertEqual(listFilters.plannerControlTitle, "All")
+    XCTAssertTrue(check.waitForPlannerValue("Completed"))
+    application.chooseSavedPlannerStateFilter("Unscheduled", control: listFilters)
+    XCTAssertTrue(plain.waitForExistence(timeout: 10))
+    XCTAssertTrue(hotelMembership.waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["1 of 2 items done"].exists)
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Lists", application: application)
+    let retainedList = application.savedPlannerListRow("Review")
+    if !retainedList.waitForExistence(timeout: 2) {
+      application.plannerElement("Show Sidebar").activateForPlannerJourney()
+    }
+    XCTAssertTrue(retainedList.waitForExistence(timeout: 10))
+    retainedList.activateForPlannerJourney()
+    XCTAssertTrue(hotelMembership.waitForExistence(timeout: 10))
+    XCTAssertEqual(hotelMembership.identifier, membershipIdentity)
+    XCTAssertTrue(check.waitForPlannerValue("Completed"))
+    XCTAssertTrue(application.staticTexts["1 of 2 items done"].exists)
+    application.chooseSavedPlannerStateFilter("Scheduled", control: listFilters)
+    XCTAssertTrue(hotelMembership.waitForExistence(timeout: 10))
+    XCTAssertTrue(plain.waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["1 of 2 items done"].exists)
+    recordScreenshot(
+      application, name: "Native scheduling filter retains membership after relaunch")
+  }
+
   func testSavedRowsShowCurrentPlanDatesAndInheritedPlanningAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()

@@ -36,6 +36,7 @@ struct SavedItemFilters: Equatable {
 
   var completion: Completion = .all
   var archive: Archive = .all
+  var scheduled: PlannerItemQuery.Scheduling = .all
   var categoryIdentifiers: Set<UUID> = []
   var tagIdentifiers: Set<UUID> = []
   var listIdentifiers: Set<UUID> = []
@@ -63,6 +64,7 @@ struct SavedItemFilters: Equatable {
   var summary: String {
     var restrictions = [completion.rawValue, archive.rawValue]
       .filter { $0 != "all" }.map { $0.capitalized }
+    if scheduled != .all { restrictions.append(scheduled.rawValue.capitalized) }
     if !categoryIdentifiers.isEmpty {
       if categoryIdentifiers.count == 1 {
         restrictions.append("1 Category")
@@ -146,6 +148,13 @@ private struct SavedItemFilterForm: View {
           }
           .pickerStyle(.menu)
           .accessibilityIdentifier("saved.filters.archive")
+          Picker("Scheduling", selection: $filters.scheduled) {
+            Text("Scheduled").tag(PlannerItemQuery.Scheduling.scheduled)
+            Text("Unscheduled").tag(PlannerItemQuery.Scheduling.unscheduled)
+            Text("All scheduling states").tag(PlannerItemQuery.Scheduling.all)
+          }
+          .pickerStyle(.menu)
+          .accessibilityIdentifier("saved.filters.scheduled")
         }
         Section("Categories") {
           NavigationLink {
