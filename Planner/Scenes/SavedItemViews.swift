@@ -57,7 +57,7 @@ struct SavedItemCatalog: View {
     .searchPresentationToolbarBehavior(.avoidHidingContent)
     .toolbar {
       ToolbarItem {
-        SavedItemFilterMenu(
+        SavedItemFilterControl(
           filters: $filters, accessibilityIdentifier: "\(scope.identifierPrefix).filters")
       }
       ToolbarItem {

@@ -134,6 +134,203 @@ final class SavedLabelsJourneyTests: XCTestCase {
     recordLabelsScreenshot(application, name: "Shared rename refreshes complete Item labels")
   }
 
+  func testCumulativeLabelFiltersNarrowListRowsAndClearWithoutChangingFullProgress() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openLabels(application)
+    createLabel("Category", name: "Culture", application: application)
+    createLabel("Tag", name: "Rain", application: application)
+    createLabel("Tag", name: "Indoor", application: application)
+    application.plannerElement("saved.categories.done").activateForPlannerJourney()
+    openItems(application)
+    application.plannerElement("saved.items.filters").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.plannerElement("saved.filters.categories").waitForExistence(timeout: 5))
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    createLabeledItem(
+      "Dry museum", categories: ["Culture"], tags: ["Indoor"], application: application)
+    createLabeledItem(
+      "Rain museum", categories: ["Culture"], tags: ["Rain", "Indoor"], application: application)
+    createLabeledItem("Cafe", categories: [], tags: ["Rain"], application: application)
+    openItems(application)
+    let catalogFilters = application.plannerElement("saved.items.filters")
+    catalogFilters.activateForPlannerJourney()
+    selectLabels(
+      "Categories", names: ["Culture"], identifierPrefix: "saved.filters", application: application)
+    selectLabels(
+      "Tags", names: ["Rain"], identifierPrefix: "saved.filters", application: application)
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Cafe").firstMatch.waitForNonExistence(timeout: 10))
+    XCTAssertFalse(application.savedPlannerItemRows("Dry museum").firstMatch.exists)
+    XCTAssertTrue(application.savedPlannerItemRows("Rain museum").firstMatch.exists)
+    XCTAssertEqual(catalogFilters.label, "Active · 1 Category · 1 Tag")
+    recordLabelsScreenshot(application, name: "Cumulative label filters narrow the Item catalog")
+    catalogFilters.activateForPlannerJourney()
+    application.plannerElement("saved.filters.clear").activateForPlannerJourney()
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(application.savedPlannerItemRows("Cafe").firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(application.savedPlannerItemRows("Dry museum").firstMatch.exists)
+    XCTAssertEqual(catalogFilters.label, "All")
+    createListWithItems(
+      "Weekend", itemTitles: ["Dry museum", "Rain museum", "Cafe"], application: application)
+    let rain = application.savedPlannerItemRows("Rain museum").firstMatch
+    let completion = application.plannerElement(
+      rain.identifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion."))
+    completion.activateForPlannerJourney()
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    XCTAssertTrue(rain.waitForPlannerValue("Categories: Culture, Tags: Indoor, Rain"))
+    rain.activateForPlannerJourney()
+    for name in ["Culture", "Indoor", "Rain"] {
+      XCTAssertTrue(application.staticTexts[name].firstMatch.waitForExistence(timeout: 10))
+    }
+    recordLabelsScreenshot(
+      application, name: "Complete shared labels in a completed List appearance")
+    #if os(iOS)
+      let back = application.plannerElement("BackButton")
+      if back.exists { back.activateForPlannerJourney() }
+    #endif
+    let filters = application.plannerElement("saved.list.filters")
+    XCTAssertEqual(filters.label, "All")
+    filters.activateForPlannerJourney()
+    selectLabels(
+      "Categories", names: ["Culture"], identifierPrefix: "saved.filters", application: application)
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Dry museum").firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(rain.exists)
+    XCTAssertFalse(application.savedPlannerItemRows("Cafe").firstMatch.exists)
+    XCTAssertEqual(filters.label, "1 Category")
+    XCTAssertTrue(application.staticTexts["Showing 2 of 3 items"].exists)
+    filters.activateForPlannerJourney()
+    selectLabels(
+      "Tags", names: ["Rain"], identifierPrefix: "saved.filters", application: application)
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(rain.waitForExistence(timeout: 10))
+    XCTAssertFalse(application.savedPlannerItemRows("Dry museum").firstMatch.exists)
+    XCTAssertFalse(application.savedPlannerItemRows("Cafe").firstMatch.exists)
+    XCTAssertEqual(filters.label, "1 Category · 1 Tag")
+    XCTAssertTrue(application.staticTexts["Showing 1 of 3 items"].exists)
+    let progress = application.progressIndicators["saved.list.progress"]
+    XCTAssertEqual(progress.plannerProgressFraction ?? -1, 0.333, accuracy: 0.02)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    recordLabelsScreenshot(application, name: "Cumulative label filters retain full List progress")
+    filters.activateForPlannerJourney()
+    application.plannerElement("Clear Categories").activateForPlannerJourney()
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(application.savedPlannerItemRows("Cafe").firstMatch.waitForExistence(timeout: 10))
+    XCTAssertFalse(application.savedPlannerItemRows("Dry museum").firstMatch.exists)
+    XCTAssertTrue(rain.exists)
+    XCTAssertEqual(filters.label, "1 Tag")
+    filters.activateForPlannerJourney()
+    selectLabels(
+      "Tags", names: ["Indoor"], identifierPrefix: "saved.filters", application: application)
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Dry museum").firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(application.savedPlannerItemRows("Cafe").firstMatch.exists)
+    XCTAssertTrue(rain.exists)
+    XCTAssertEqual(filters.label, "2 Tags")
+    filters.activateForPlannerJourney()
+    let matchPicker = application.plannerElement("saved.filters.tag.match")
+    if !matchPicker.isHittable {
+      let form = application.collectionViews.containing(.button, identifier: "saved.filters.tags")
+        .firstMatch
+      XCTAssertTrue(form.waitForExistence(timeout: 5))
+      form.swipeUp()
+    }
+    XCTAssertTrue(matchPicker.waitForPlannerHittability())
+    matchPicker.activateForPlannerJourney()
+    application.plannerElement("All selected").activateForPlannerJourney()
+    recordLabelsScreenshot(application, name: "Native adaptive Filters with All selected Tags")
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Cafe").firstMatch.waitForNonExistence(timeout: 10))
+    XCTAssertFalse(application.savedPlannerItemRows("Dry museum").firstMatch.exists)
+    XCTAssertTrue(rain.exists)
+    XCTAssertEqual(filters.label, "All 2 Tags")
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    XCTAssertEqual(progress.plannerProgressFraction ?? -1, 0.333, accuracy: 0.02)
+    filters.activateForPlannerJourney()
+    application.plannerElement("saved.filters.clear").activateForPlannerJourney()
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertEqual(filters.label, "All")
+    XCTAssertTrue(application.savedPlannerItemRows("Cafe").firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(application.savedPlannerItemRows("Dry museum").firstMatch.exists)
+    XCTAssertTrue(rain.exists)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    XCTAssertEqual(progress.plannerProgressFraction ?? -1, 0.333, accuracy: 0.02)
+    XCTAssertFalse(application.staticTexts["Showing 1 of 3 items"].exists)
+    recordLabelsScreenshot(
+      application, name: "Clear restores all List rows and preserves completion")
+  }
+
+  private func createLabeledItem(
+    _ name: String, categories: [String], tags: [String], application: XCUIApplication
+  ) {
+    openItems(application)
+    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    let title = application.textFields["saved.item.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText(name)
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    openItemEditor(application)
+    if !categories.isEmpty {
+      selectLabels("Categories", names: categories, application: application)
+    }
+    if !tags.isEmpty { selectLabels("Tags", names: tags, application: application) }
+    let save = application.plannerElement("saved.item.edit.save")
+    save.activateForPlannerJourney()
+    XCTAssertTrue(save.waitForNonExistence(timeout: 10))
+  }
+
+  private func createListWithItems(
+    _ name: String, itemTitles: [String], application: XCUIApplication
+  ) {
+    #if os(macOS)
+      let lists = application.plannerElement("saved.section.lists")
+    #else
+      let lists = application.buttons["Lists"].firstMatch
+    #endif
+    lists.activateForPlannerJourney()
+    let create = application.plannerElement("saved.list.new")
+    if !create.waitForExistence(timeout: 3) {
+      let sidebar = application.plannerElement("Show Sidebar")
+      if sidebar.exists { sidebar.activateForPlannerJourney() }
+    }
+    XCTAssertTrue(create.waitForExistence(timeout: 10))
+    create.activateForPlannerJourney()
+    let title = application.textFields["saved.list.name"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText(name)
+    application.plannerElement("saved.list.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    for itemTitle in itemTitles {
+      let add = application.plannerElement("saved.list.add")
+      if add.exists {
+        add.activateForPlannerJourney()
+      } else {
+        let overflow = application.buttons["OverflowBarButtonItem"].firstMatch
+        XCTAssertTrue(overflow.waitForExistence(timeout: 5), application.debugDescription)
+        overflow.activateForPlannerJourney()
+        let overflowAdd = application.plannerElement("Add existing Item")
+        XCTAssertTrue(overflowAdd.waitForExistence(timeout: 5), application.debugDescription)
+        overflowAdd.activateForPlannerJourney()
+      }
+      let candidate = application.staticTexts[itemTitle].firstMatch
+      XCTAssertTrue(candidate.waitForExistence(timeout: 5))
+      candidate.activateForPlannerJourney()
+      application.plannerElement("saved.membership.add").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.savedPlannerItemRows(itemTitle).firstMatch.waitForExistence(timeout: 10))
+    }
+  }
+
   private func createLabel(_ kind: String, name: String, application: XCUIApplication) {
     application.plannerElement("saved.labels.new").activateForPlannerJourney()
     application.plannerElement("New \(kind)").activateForPlannerJourney()
@@ -166,8 +363,11 @@ final class SavedLabelsJourneyTests: XCTestCase {
     XCTAssertTrue(application.textFields["saved.item.edit.title"].waitForExistence(timeout: 5))
   }
 
-  private func selectLabels(_ kind: String, names: [String], application: XCUIApplication) {
-    let picker = application.plannerElement("saved.item.edit.\(kind.lowercased())")
+  private func selectLabels(
+    _ kind: String, names: [String], identifierPrefix: String = "saved.item.edit",
+    application: XCUIApplication
+  ) {
+    let picker = application.plannerElement("\(identifierPrefix).\(kind.lowercased())")
     XCTAssertTrue(picker.waitForExistence(timeout: 5))
     picker.activateForPlannerJourney()
     for name in names {

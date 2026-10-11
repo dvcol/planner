@@ -299,6 +299,7 @@ final class SavedPlannerStore {
   func readItems(
     scope: PlannerItemQuery.Scope = .global, text: String = "",
     completion: PlannerItemQuery.Completion, archive: PlannerItemQuery.Archive,
+    categories: PlannerItemQuery.IdentityGroup? = nil, tags: PlannerItemQuery.IdentityGroup? = nil,
     sort: PlannerItemQuery.Sort = .init(mode: .title)
   ) async -> [SavedPlannerItem]? {
     guard let planner, let session else { return nil }
@@ -306,7 +307,9 @@ final class SavedPlannerStore {
       PlannerQuery(
         session: session,
         request: .items(
-          .init(scope: scope, text: text, completion: completion, archive: archive, sort: sort))
+          .init(
+            scope: scope, text: text, completion: completion, archive: archive,
+            categories: categories, tags: tags, sort: sort))
       ))
     {
     case .failed(let reason): alertMessage = reason.message
@@ -648,7 +651,9 @@ final class SavedPlannerStore {
 
   func readListItems(
     _ identifier: UUID, text: String = "", completion: PlannerItemQuery.Completion,
-    archive: PlannerItemQuery.Archive, sort: PlannerItemQuery.Sort = .init(mode: .manual)
+    archive: PlannerItemQuery.Archive,
+    categories: PlannerItemQuery.IdentityGroup? = nil, tags: PlannerItemQuery.IdentityGroup? = nil,
+    sort: PlannerItemQuery.Sort = .init(mode: .manual)
   ) async -> [SavedPlannerItem]? {
     guard let planner, let session else { return nil }
     switch await planner.query(
@@ -657,7 +662,7 @@ final class SavedPlannerStore {
         request: .items(
           .init(
             scope: .list(identifier), text: text, completion: completion, archive: archive,
-            sort: sort))))
+            categories: categories, tags: tags, sort: sort))))
     {
     case .failed(let reason): alertMessage = reason.message
     case .snapshot(let snapshot):
