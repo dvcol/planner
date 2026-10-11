@@ -2,6 +2,99 @@ import XCTest
 
 @MainActor
 final class SavedItineraryBulkJourneyTests: XCTestCase {
+  func testNativeEntryDragPreservesListChildrenAndRepeatedCompletionAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem("Museum", application: application)
+    createList(application)
+    createItinerary(application)
+    for source in ["Museum", "Food stops", "Museum"] {
+      addEntry(source, application: application)
+    }
+    let rows = itineraryRows(application)
+    XCTAssertEqual(rows.count, 3)
+    let originalIdentifiers = rows.allElementsBoundByIndex.map(\.identifier)
+    let firstCompletion = originalIdentifiers[0].replacingOccurrences(
+      of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")
+    application.plannerElement(firstCompletion).activateForPlannerJourney()
+    assertProgress("1 of 3 items done", application: application)
+    assertChecks(["Completed", "To do", "To do"], application: application)
+    #if os(iOS)
+      let reorder = application.plannerElement("saved.itinerary.reorder")
+      reorder.activateForPlannerJourney()
+    #endif
+    let lastItem = application.plannerElement(originalIdentifiers[2])
+    let listEntryIdentifier = originalIdentifiers[1].components(separatedBy: ".")[3]
+    let listEntry = application.descendants(matching: .any)
+      .matching(identifier: "saved.itinerary.entry.\(listEntryIdentifier)").firstMatch
+    dragEntry(lastItem, relativeTo: listEntry, before: true, application: application)
+    XCTAssertTrue(
+      waitForItineraryOrder(
+        [originalIdentifiers[0], originalIdentifiers[2], originalIdentifiers[1]],
+        application: application))
+    assertChecks(["Completed", "To do", "To do"], application: application)
+    assertProgress("1 of 3 items done", application: application)
+    recordScreenshot(application, name: "Native direct entry dragged into the middle of a route")
+    let firstItem = application.plannerElement(originalIdentifiers[0])
+    dragEntry(listEntry, relativeTo: firstItem, before: true, application: application)
+    XCTAssertTrue(
+      waitForItineraryOrder(
+        [originalIdentifiers[1], originalIdentifiers[0], originalIdentifiers[2]],
+        application: application))
+    assertChecks(["To do", "Completed", "To do"], application: application)
+    assertProgress("0 of 1 item done", application: application)
+    recordScreenshot(application, name: "Native List group dragged with its expanded child")
+    dragEntry(firstItem, relativeTo: lastItem, before: false, application: application)
+    let finalIdentifiers = [originalIdentifiers[1], originalIdentifiers[2], originalIdentifiers[0]]
+    XCTAssertTrue(waitForItineraryOrder(finalIdentifiers, application: application))
+    assertChecks(["To do", "To do", "Completed"], application: application)
+    assertProgress("1 of 3 items done", application: application)
+    #if os(iOS)
+      reorder.activateForPlannerJourney()
+    #endif
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItinerary(application)
+    XCTAssertTrue(waitForItineraryOrder(finalIdentifiers, application: application))
+    assertChecks(["To do", "To do", "Completed"], application: application)
+    assertProgress("1 of 3 items done", application: application)
+    assertProgress("0 of 1 item done", application: application)
+    recordScreenshot(application, name: "Native dragged route order and completion after relaunch")
+    openItem("Museum", application: application)
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+  }
+
+  private func dragEntry(
+    _ entry: XCUIElement, relativeTo target: XCUIElement, before: Bool,
+    application: XCUIApplication
+  ) {
+    XCTAssertTrue(entry.waitForExistence(timeout: 5))
+    XCTAssertTrue(target.waitForExistence(timeout: 5))
+    #if os(macOS)
+      let origin = entry.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+      let destination = target.coordinate(
+        withNormalizedOffset: CGVector(dx: 0.5, dy: before ? 0.1 : 0.9))
+      origin.click(
+        forDuration: 1, thenDragTo: destination, withVelocity: .slow, thenHoldForDuration: 1)
+    #else
+      let row = application.cells.containing(.any, identifier: entry.identifier).firstMatch
+      let targetRow = application.cells.containing(.any, identifier: target.identifier).firstMatch
+      XCTAssertTrue(row.waitForExistence(timeout: 5))
+      XCTAssertTrue(targetRow.waitForExistence(timeout: 5))
+      let handle = row.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Reorder"))
+        .firstMatch
+      XCTAssertTrue(handle.waitForExistence(timeout: 5), application.debugDescription)
+      let destination = targetRow.coordinate(
+        withNormalizedOffset: CGVector(dx: 0.9, dy: before ? 0.1 : 0.9))
+      handle.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        .press(forDuration: 1, thenDragTo: destination)
+    #endif
+  }
+
   func testNativeEntryReorderingPreservesRepeatedAppearanceCompletionAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()

@@ -83,6 +83,9 @@ struct SavedItineraryDetail: View {
   @State private var collapsedEntries: Set<UUID> = []
   @State private var bulkCompletionDraft: SavedBulkCompletionDraft?
   @State private var isPreparingBulkCompletion = false
+  #if os(iOS)
+    @State private var entryEditMode: EditMode = .inactive
+  #endif
 
   var body: some View {
     Group {
@@ -114,65 +117,75 @@ struct SavedItineraryDetail: View {
           ItemLabelsSection(labels: itinerary.labels)
           Section("Entries") {
             ForEach(contents.entries) { entry in
-              if entry.source.kind == .list {
-                DisclosureGroup(
-                  isExpanded: Binding(
-                    get: { !collapsedEntries.contains(entry.id) },
-                    set: { expanded in
-                      if expanded {
-                        collapsedEntries.remove(entry.id)
-                      } else {
-                        collapsedEntries.insert(entry.id)
-                      }
-                    })
-                ) {
-                  if entry.items.isEmpty {
-                    Text("No items").foregroundStyle(.secondary)
-                  } else {
-                    ForEach(entry.items) { item in itineraryRow(item) }
-                  }
-                } label: {
-                  VStack(alignment: .leading, spacing: 6) {
-                    Label(entry.title, systemImage: "list.bullet.rectangle")
-                      .font(.headline)
-                    if !entry.items.isEmpty {
-                      let done = entry.items.filter { $0.row.effectiveDone == true }.count
-                      ProgressView(value: Double(done), total: Double(entry.items.count)) {
-                        Text(
-                          "\(done) of \(entry.items.count) \(entry.items.count == 1 ? "item" : "items") done"
-                        )
-                        .font(.caption).foregroundStyle(.secondary)
+              VStack(alignment: .leading) {
+                if entry.source.kind == .list {
+                  DisclosureGroup(
+                    isExpanded: Binding(
+                      get: { !collapsedEntries.contains(entry.id) },
+                      set: { expanded in
+                        if expanded {
+                          collapsedEntries.remove(entry.id)
+                        } else {
+                          collapsedEntries.insert(entry.id)
+                        }
+                      })
+                  ) {
+                    if entry.items.isEmpty {
+                      Text("No items").foregroundStyle(.secondary)
+                    } else {
+                      ForEach(entry.items) { item in itineraryRow(item) }
+                    }
+                  } label: {
+                    VStack(alignment: .leading, spacing: 6) {
+                      Label(entry.title, systemImage: "list.bullet.rectangle")
+                        .font(.headline)
+                      if !entry.items.isEmpty {
+                        let done = entry.items.filter { $0.row.effectiveDone == true }.count
+                        ProgressView(value: Double(done), total: Double(entry.items.count)) {
+                          Text(
+                            "\(done) of \(entry.items.count) \(entry.items.count == 1 ? "item" : "items") done"
+                          )
+                          .font(.caption).foregroundStyle(.secondary)
+                        }
                       }
                     }
-                  }
-                  .padding(.vertical, 8)
-                  .contextMenu {
-                    entryReorderingActions(entry, in: contents.entries)
-                    Divider()
-                    Group {
-                      Button("Mark all Done") {
-                        prepareBulkCompletion(
-                          .itineraryListEntry(itineraryId: identifier, listEntryId: entry.id),
-                          containerName: entry.title, done: true)
+                    .padding(.vertical, 8)
+                    .contextMenu {
+                      entryReorderingActions(entry, in: contents.entries)
+                      Divider()
+                      Group {
+                        Button("Mark all Done") {
+                          prepareBulkCompletion(
+                            .itineraryListEntry(itineraryId: identifier, listEntryId: entry.id),
+                            containerName: entry.title, done: true)
+                        }
+                        Button("Mark all Undone") {
+                          prepareBulkCompletion(
+                            .itineraryListEntry(itineraryId: identifier, listEntryId: entry.id),
+                            containerName: entry.title, done: false)
+                        }
                       }
-                      Button("Mark all Undone") {
-                        prepareBulkCompletion(
-                          .itineraryListEntry(itineraryId: identifier, listEntryId: entry.id),
-                          containerName: entry.title, done: false)
-                      }
+                      .disabled(
+                        !store.canCreate || isPreparingBulkCompletion || entry.items.isEmpty)
                     }
-                    .disabled(!store.canCreate || isPreparingBulkCompletion || entry.items.isEmpty)
                   }
-                }
-              } else {
-                ForEach(entry.items) { item in
+                } else if let item = entry.items.first {
                   itineraryRow(item)
                     .contextMenu { entryReorderingActions(entry, in: contents.entries) }
                 }
               }
+              .accessibilityElement(children: .contain)
+              .accessibilityIdentifier("saved.itinerary.entry.\(entry.id.uuidString)")
+              .moveDisabled(!canReorderEntries)
+            }
+            .onMove { offsets, destination in
+              moveEntry(from: offsets, to: destination, in: contents.entries)
             }
           }
         }
+        #if os(iOS)
+          .environment(\.editMode, $entryEditMode)
+        #endif
         .navigationTitle(itinerary.content.title)
         .navigationSplitViewColumnWidth(min: 260, ideal: 400, max: 600)
         .overlay(alignment: .topTrailing) {
@@ -181,6 +194,17 @@ struct SavedItineraryDetail: View {
           }
         }
         .toolbar {
+          #if os(iOS)
+            ToolbarItem(placement: .primaryAction) {
+              EditButton()
+                .environment(\.editMode, $entryEditMode)
+                .accessibilityLabel("Reorder entries")
+                .accessibilityIdentifier("saved.itinerary.reorder")
+                .disabled(
+                  !store.canCreate || isPreparingBulkCompletion
+                    || (contents.entries.count < 2 && !entryEditMode.isEditing))
+            }
+          #endif
           ToolbarItem(placement: .primaryAction) {
             Button("Add entry", systemImage: "plus") { showAddEntry = true }
               .disabled(!store.canCreate)
@@ -282,6 +306,38 @@ struct SavedItineraryDetail: View {
       .disabled(entries.last?.id == entry.id)
     }
     .disabled(!store.canCreate || isPreparingBulkCompletion)
+  }
+
+  private var canReorderEntries: Bool {
+    guard store.canCreate, !isPreparingBulkCompletion else { return false }
+    #if os(iOS)
+      return entryEditMode.isEditing
+    #else
+      return true
+    #endif
+  }
+
+  private func moveEntry(
+    from offsets: IndexSet, to destination: Int, in entries: [SavedItineraryEntryRows]
+  ) {
+    guard canReorderEntries else { return }
+    guard offsets.count == 1, let source = offsets.first, entries.indices.contains(source),
+      (0...entries.count).contains(destination)
+    else {
+      store.alertMessage = "Move one entry at a time."
+      return
+    }
+    guard destination != source, destination != source + 1 else { return }
+    let placement: PlannerPlacement
+    if destination < source {
+      placement = .before(associationId: entries[destination].id)
+    } else {
+      placement = .after(associationId: entries[destination - 1].id)
+    }
+    Task {
+      _ = await store.reorderItineraryEntry(
+        entries[source].id, itineraryIdentifier: identifier, placement: placement)
+    }
   }
 
   private func prepareBulkCompletion(
