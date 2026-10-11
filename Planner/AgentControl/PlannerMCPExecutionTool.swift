@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create and edit Items, Lists, Itineraries, Categories and Tags; organize live List references and repeated itinerary entries. Entry removal preserves sources; reordering retains local completion. Set global Item completion or exact List/direct/expanded appearance completion. Global Done overrides display; global Reopen reveals retained local flags. Archive Items/Lists and edit direct Schedules through the local Planner prototype.",
+        "Create and edit Items, Lists, Itineraries, Categories and Tags; organize live List references and repeated itinerary entries. Entry removal preserves sources; reordering retains local completion. Set global Item completion or exact List/direct/expanded appearance completion. Global Done overrides display; global Reopen reveals retained local flags. Archive Items, Lists or Itineraries without archiving their referenced sources. Edit direct Schedules through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -477,7 +477,8 @@
           "required": .array([.string("kind"), .string("id")]),
           "properties": .object([
             "kind": .object([
-              "type": .string("string"), "enum": .array([.string("item"), .string("list")]),
+              "type": .string("string"),
+              "enum": .array([.string("item"), .string("list"), .string("itinerary")]),
             ]),
             "id": .object(["type": .string("string"), "format": .string("uuid")]),
           ]),

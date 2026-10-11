@@ -269,3 +269,9 @@ Runnable configuration, Swift 6 compilation, affected-target lint, unit/store/UI
 The local HTTP prototype now admits the declared add/remove/reorder itinerary entry commands and exact direct/expanded appearance reads/completion. It shares strict appearance schemas/decoding between both adapters and delegates all state changes to Core. Expanded completion references contain only kind/appearance, with no scalar ID. Missing/removed/wrong-scope appearances reject without global fallback. Removing an entry retains its source and other appearances; ordinary re-add starts local Todo. Saved-order changes preserve every flag.
 
 The [HTTP qualification](prototypes/mcp-http-qualification.md#itinerary-entries-and-appearances-over-http) records actual SDK/listener execution, wire discovery, native reopen/recovery and invalid admission. This is partial local implementation evidence. Full-context bulk, additional Itinerary archive/query/schedule/native UI, physical convergence and the other map gates remain open.
+
+## Implemented Itinerary archive admission
+
+The local prototype now admits container-only Itinerary Archive/Unarchive through the existing setArchive command. tools/list advertises Item, List and Itinerary identities; strict wire validation and durable Core authority remain unchanged. Itinerary references, source archive/completion and local appearance flags are preserved. Receipt replay reports the original result without overwriting later content or Unarchive.
+
+The [archive qualification](prototypes/mcp-http-qualification.md#itinerary-archive-over-http) records actual HTTP discovery/admission, public Core and native recovery execution. Itinerary queries, schedules and native screens remain separate upcoming slices; other map gates are unchanged.
