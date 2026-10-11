@@ -206,6 +206,10 @@ The [native all-day edit qualification](prototypes/navigation-local-qualificatio
 
 The [native label Delete slice](prototypes/native-label-deletion.md) adds explicit review/confirmation to existing Category and Tag editors. It shows separate Item/Itinerary use counts, preserves owners and unrelated labels, and confirms an Itinerary-only Tag use under Q35. Cancel applies no deletion. Three journeys pass on each simulator, including existing bulk completion through the shared adapter, with twelve individually inspected captures and strict affected-file lint. Mac app/test bundles compile with zero native UI runtime functions. Core/HTTP bytes and their preceding qualification remain unchanged. Native controlled stale/recovery-failure presentation, broad graph/device stress, native Mac runtime, physical sync/account/Share and whole-app polish remain open.
 
+## Native Item deletion
+
+The [native Item Delete slice](prototypes/native-item-deletion.md) connects the original Item menu to Core's complete removal review. It keeps contextual appearances' actions local, preserves other sources and plans, and clears deleted source/membership selections. Cancellation, repeated route appearances, separate Item/Itinerary appointments, an unreferenced Item and deletion reached through a List appearance are observed through real native controls and relaunch. The shared Category/Tag confirmation Form retains its existing owner counts. The linked record separates functional red, fixture lookup corrections and final qualification; controlled native failure presentation, physical sync and whole-app polish remain open.
+
 ## Open calendar and itinerary estimate choices
 
 The human asked for time estimates in itinerary rows and a Day/Week/Month calendar. At `b83d000`, itinerary catalog rows show only their title/icon, while saved details retain their Schedule records. Planner's own calendar is already in release scope, but the saved app has no Calendar destination or planning grid. Apple Calendar export remains outside this map. An estimate must never fill an absent Schedule end or change a booked instant.

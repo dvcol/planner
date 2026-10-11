@@ -79,6 +79,7 @@ struct SavedItemDetail: View {
   let isSaving: Bool
   let addToList: () -> Void
   let editItem: () -> Void
+  let deleteItem: () -> Void
   let setCompletion: @MainActor @Sendable (Bool) -> Void
   let setArchive: @MainActor @Sendable (Bool) -> Void
   @State private var showNewSchedule = false
@@ -132,6 +133,10 @@ struct SavedItemDetail: View {
             setArchive(item.state.archived != true)
           }
           .disabled(!canChange)
+          Divider()
+          Button("Delete Item", role: .destructive, action: deleteItem)
+            .disabled(!canChange)
+            .accessibilityIdentifier("saved.item.delete")
         } label: {
           Label("Item actions", systemImage: "ellipsis")
         }
