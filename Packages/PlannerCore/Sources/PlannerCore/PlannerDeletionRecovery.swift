@@ -70,6 +70,7 @@ struct PortableDeletionMarker: Codable {
 
   func validated(
     schedules: [PortableScheduleRecord], categories: [PlannerPortableCategory],
+    tags: [PlannerPortableTag],
     memberships: [PortableMembershipRecord],
     labelAssociations: [PortableLabelAssociationRecord], entries: [PortableItineraryEntryRecord]
   )
@@ -97,6 +98,9 @@ struct PortableDeletionMarker: Codable {
       case "category":
         kind = .category
         isLive = categories.contains { $0.id == source.id && $0.lifetimeId == source.lifetimeId }
+      case "tag":
+        kind = .tag
+        isLive = tags.contains { $0.id == source.id && $0.lifetimeId == source.lifetimeId }
       default:
         throw PlannerFailure("recoveryIntegrityFailure", "The deletion source kind is unsupported.")
       }
