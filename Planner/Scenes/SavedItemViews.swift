@@ -106,7 +106,10 @@ struct SavedItemDetail: View {
       if let notes = item.content.notes, !notes.isEmpty {
         Section("Notes") { Text(notes).textSelection(.enabled) }
       }
-      SavedItemSchedulesSection(item: item, canChange: canChange) { scheduleToEdit = $0 }
+      SavedSchedulesSection(source: item.source, references: item.references, canChange: canChange)
+      {
+        scheduleToEdit = $0
+      }
       ItemLabelsSection(labels: item.labels)
       ItemLocationSection(
         title: item.content.title, location: item.content.location, previewSource: previewSource)
@@ -149,7 +152,9 @@ struct SavedItemDetail: View {
           }
         })
     ) {
-      SavedItemScheduleForm(store: store, item: item, schedule: scheduleToEdit)
+      SavedScheduleForm(
+        store: store, source: item.source, sourceTitle: item.content.title, schedule: scheduleToEdit
+      )
     }
   }
 

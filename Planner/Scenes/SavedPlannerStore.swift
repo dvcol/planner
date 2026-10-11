@@ -233,12 +233,12 @@ final class SavedPlannerStore {
       session: session, request: .source(.init(kind: .schedule, id: identifier)))
   }
 
-  func createItemSchedule(
-    itemIdentifier: UUID, form: PlannerScheduleForm, operationIdentifier: UUID
+  func createSchedule(
+    source: PlannerEntityReference, form: PlannerScheduleForm, operationIdentifier: UUID
   ) async -> Bool {
     await executeChange(
       .createSchedule(
-        source: .init(kind: .item, id: itemIdentifier),
+        source: source,
         form: form),
       operationId: operationIdentifier) != nil
   }

@@ -2,6 +2,73 @@ import XCTest
 
 @MainActor
 final class SavedItineraryJourneyTests: XCTestCase {
+  func testEmptyItineraryCanCancelAndSaveItsOwnStartOnlyScheduleAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openItineraries(application)
+    application.plannerElement("saved.itinerary.new").activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Tokyo afternoon")
+    let notes = application.textFields["saved.itinerary.notes"]
+    notes.activateForPlannerJourney()
+    notes.typeText("Keep the route notes")
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Keep the route notes"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    let actions = application.plannerElement("saved.itinerary.actions")
+    XCTAssertTrue(actions.isEnabled)
+    actions.activateForPlannerJourney()
+    let scheduleAction = application.plannerElement("Schedule Itinerary")
+    XCTAssertTrue(scheduleAction.waitForExistence(timeout: 5))
+    scheduleAction.activateForPlannerJourney()
+    let includeEnd = application.descendants(matching: .any)
+      .matching(identifier: "saved.schedule.hasEnd").firstMatch
+    XCTAssertTrue(includeEnd.waitForPlannerBooleanState(false))
+    XCTAssertTrue(application.staticTexts["This schedule has no end time."].exists)
+    application.plannerElement("saved.schedule.cancel").activateForPlannerJourney()
+    let scheduleRows = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.schedule."))
+    XCTAssertEqual(scheduleRows.count, 0)
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    actions.activateForPlannerJourney()
+    scheduleAction.activateForPlannerJourney()
+    XCTAssertTrue(includeEnd.waitForPlannerBooleanState(false))
+    application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+    let schedule = scheduleRows.firstMatch
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    XCTAssertEqual(scheduleRows.count, 1)
+    XCTAssertEqual(schedule.label, "Start only")
+    let scheduleIdentity = schedule.identifier
+    let description = schedule.value as? String
+    XCTAssertFalse(description?.isEmpty ?? true)
+    XCTAssertTrue(application.staticTexts["Keep the route notes"].exists)
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    recordScreenshot(application, name: "Native empty Itinerary saves its own appointment")
+    openCatalog(application)
+    let itinerary = itineraryRow(application, title: "Tokyo afternoon")
+    XCTAssertTrue(itinerary.waitForExistence(timeout: 10))
+    let itineraryIdentity = itinerary.identifier
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItineraries(application)
+    XCTAssertTrue(itinerary.waitForExistence(timeout: 10))
+    XCTAssertEqual(itinerary.identifier, itineraryIdentity)
+    itinerary.activateForPlannerJourney()
+    let restored = application.descendants(matching: .any)
+      .matching(identifier: scheduleIdentity).firstMatch
+    XCTAssertTrue(restored.waitForExistence(timeout: 10))
+    XCTAssertEqual(restored.label, "Start only")
+    XCTAssertEqual(restored.value as? String, description)
+    XCTAssertEqual(scheduleRows.count, 1)
+    XCTAssertTrue(application.staticTexts["Keep the route notes"].exists)
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    recordScreenshot(application, name: "Native Itinerary appointment survives relaunch")
+  }
+
   func testItineraryDraftsCancelAndGuardedTitleNotesPersistAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()
