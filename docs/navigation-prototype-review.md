@@ -196,6 +196,8 @@ The [native Item row schedule-preview qualification](prototypes/navigation-local
 
 The [native all-day Item schedule qualification](prototypes/navigation-local-qualification.md#native-all-day-item-scheduling) adds a system All day Toggle and date-only pickers, saving inclusive civil dates through the existing Core command. Cancellation saves nothing; one explicit same-day range preserves identity, date description and row metadata after relaunch. The timed optional-end journey checks compatibility. Edited multi-day ranges, native invalid-end feedback and travel retain their gates.
 
+The [edited all-day range qualification](prototypes/navigation-local-qualification.md#native-edited-all-day-ranges) exercises actual date-picker edits from 9–8 to 9–11 October, requiring earlier-end feedback and disabled Save before the valid inclusive range. Saved identity and date description survive relaunch. Only tests/evidence change; native calendar label and iPad popover query failures are retained separately from product behavior. Month/year navigation, cross-month ranges, timed editing and travel remain open.
+
 ## Definition of ready and done
 
 - [x] Contract public interfaces accepted, prerequisite resolutions reviewed, local toolchain inventory refreshed and fixture inputs/expected transitions specified.

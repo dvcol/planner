@@ -1,0 +1,365 @@
+Attributes: Application, 0x10aacb980, pid: 43217, label: 'Planner navigation prototype'
+Element subtree:
+ →Application, 0x10aacb980, pid: 43217, label: 'Planner navigation prototype'
+    Window (Main), 0x10aacbac0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x10aacbc00, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x10aacbd40, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x10aacbe80, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x10abb0000, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x10abb0140, {{-402.0, -874.0}, {1206.0, 2622.0}}
+          Other, 0x10abb0280, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x10abb03c0, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x10abb0500, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x10abb0640, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x10abb0780, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x10abb08c0, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x10abb0a00, {{0.0, 0.0}, {402.0, 874.0}}
+                        Other, 0x10abb0b40, {{0.0, 0.0}, {402.0, 874.0}}
+                          Other, 0x10abb0c80, {{0.0, 0.0}, {402.0, 874.0}}
+                            Other, 0x10abb0dc0, {{0.0, 0.0}, {402.0, 874.0}}
+                              Other, 0x10abb0f00, {{0.0, 0.0}, {402.0, 874.0}}
+                                Other, 0x10abb1040, {{0.0, 0.0}, {402.0, 874.0}}
+                                  Other, 0x10abb1180, {{0.0, 0.0}, {402.0, 874.0}}
+                                    NavigationBar, 0x10abb12c0, {{0.0, 62.0}, {402.0, 54.0}}, identifier: 'Three-day gallery'
+                                      Button, 0x10abb1400, {{16.0, 62.0}, {44.0, 44.0}}, identifier: 'BackButton', label: 'Items'
+                                      StaticText, 0x10abb1540, {{130.3, 73.7}, {141.3, 20.7}}, label: 'Three-day gallery'
+                                      Button, 0x10abb1680, {{346.0, 66.0}, {36.0, 36.0}}, identifier: 'saved.item.actions', label: 'Item actions'
+                                    Other, 0x10abb17c0, {{0.0, 0.0}, {402.0, 874.0}}
+                                      Other, 0x10abb1900, {{0.0, 0.0}, {402.0, 874.0}}
+                                        Other, 0x10abb1a40, {{0.0, 0.0}, {402.0, 874.0}}
+                                          Other, 0x10abb1b80, {{0.0, 0.0}, {402.0, 874.0}}
+                                            CollectionView, 0x10abb1cc0, {{0.0, 0.0}, {402.0, 874.0}}
+                                              Other, 0x10abb1e00, {{-16.0, -1632.0}, {434.0, 3650.0}}
+                                              Other, 0x10abb1f40, {{0.0, 0.0}, {402.0, 874.0}}
+                                                Other, 0x10abb2080, {{0.0, 0.0}, {402.0, 156.0}}
+                                                Other, 0x10abb21c0, {{0.0, 741.0}, {402.0, 133.0}}
+                                              Other, 0x10abb2300, {{0.0, 0.0}, {402.0, 874.0}}
+                                              Cell, 0x10abb2440, {{16.0, 116.0}, {370.0, 56.3}}
+                                                Other, 0x10abb2580, {{16.0, 116.0}, {370.0, 56.3}}
+                                                  Other, 0x10abb26c0, {{16.0, 116.0}, {370.0, 56.3}}
+                                                Other, 0x10abb2800, {{16.0, 116.0}, {370.0, 56.3}}
+                                                  Other, 0x10abb2940, {{16.0, 116.0}, {370.0, 56.3}}
+                                                    Other, 0x10abb2a80, {{16.0, 116.0}, {370.0, 56.3}}
+                                                      StaticText, 0x10abb2bc0, {{16.0, 116.0}, {370.0, 56.3}}, label: 'Three-day gallery'
+                                              Cell, 0x10abb2d00, {{16.0, 172.3}, {370.0, 52.0}}
+                                                Other, 0x10abb2e40, {{16.0, 172.3}, {370.0, 52.0}}
+                                                  Other, 0x10abb2f80, {{16.0, 172.3}, {370.0, 52.0}}
+                                                Other, 0x10abb30c0, {{16.0, 172.3}, {370.0, 52.0}}
+                                                  Other, 0x10abb3200, {{16.0, 172.3}, {370.0, 52.0}}
+                                                    Other, 0x10abb3340, {{16.0, 172.3}, {370.0, 52.0}}
+                                                      Switch, 0x10abb3480, {{16.0, 172.3}, {370.0, 52.0}}, identifier: 'saved.item.completion', label: 'Completed', value: 0
+                                                        StaticText, 0x10abb35c0, {{32.0, 188.2}, {84.0, 20.3}}, label: 'Completed'
+                                                        Switch, 0x10abb3700, {{309.0, 184.3}, {63.0, 28.0}}, value: 0
+                                              Other, 0x10abb3840, {{32.0, 171.3}, {338.0, 1.0}}
+                                              Cell, 0x10abb3980, {{16.0, 224.3}, {370.0, 45.7}}
+                                                Other, 0x10abb3ac0, {{16.0, 224.3}, {370.0, 45.7}}
+                                                Other, 0x10abb3c00, {{16.0, 224.3}, {370.0, 45.7}}
+                                                  Other, 0x10abb3d40, {{16.0, 224.3}, {370.0, 45.7}}
+                                                    Other, 0x10abb3e80, {{16.0, 224.3}, {370.0, 45.7}}
+                                                      StaticText, 0x10abb4000, {{16.0, 224.3}, {370.0, 45.7}}, label: 'Completing this Item shows it as done in every List and Itinerary.'
+                                              Other, 0x10abb4140, {{369.0, 116.0}, {30.0, 675.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+                                                Other, 0x10abb4280, {{396.0, 781.0}, {3.0, 7.0}}
+                                              Other, 0x10abb43c0, {{369.0, 116.0}, {30.0, 675.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+                                                Other, 0x10abb4500, {{396.0, 781.0}, {3.0, 7.0}}
+                                    Toolbar, 0x10abb4640, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                      Other, 0x10abb4780, {{0.0, 0.0}, {402.0, 874.0}}
+                                Toolbar, 0x10abb48c0, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                  Other, 0x10abb4a00, {{0.0, 0.0}, {402.0, 874.0}}
+                            Other, 0x10abb4b40, {{0.0, 0.0}, {402.0, 874.0}}
+                              Other, 0x10abb4c80, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x10abb4dc0, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x10abb4f00, {{0.0, 791.0}, {402.0, 83.0}}
+                    Other, 0x10abb5040, {{0.0, 0.0}, {402.0, 874.0}}
+                      TabBar, 0x10abb5180, {{0.0, 791.0}, {402.0, 83.0}}, label: 'Tab Bar'
+                        Other, 0x10abb52c0, {{21.0, 791.0}, {360.0, 62.0}}
+                          Other, 0x10abb5400, {{21.0, 791.0}, {95.0, 54.0}}
+                          Other, 0x10abb5540, {{21.0, 791.0}, {360.0, 62.0}}
+                            Button, 0x10abb5680, {{25.0, 795.0}, {95.0, 54.0}}, identifier: 'list.bullet', label: 'Lists'
+                              Image, 0x10abb57c0, {{58.0, 804.3}, {29.3, 21.0}}, identifier: 'list.bullet', label: 'List'
+                            Button, 0x10abb5900, {{110.7, 795.0}, {95.0, 54.0}}, identifier: 'square.stack', label: 'Items', Selected
+                              Image, 0x10abb5a40, {{145.3, 799.7}, {26.0, 32.3}}, identifier: 'square.stack.fill', label: 'Stack of squares, filled'
+                            Button, 0x10abb5b80, {{196.3, 795.0}, {95.0, 54.0}}, identifier: 'tray', label: 'Inbox'
+                              Image, 0x10abb5cc0, {{227.3, 803.0}, {33.0, 23.7}}, identifier: 'tray.fill', label: 'inbox'
+                            Button, 0x10abb5e00, {{282.0, 795.0}, {95.0, 54.0}}, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries'
+                              Image, 0x10abb5f40, {{316.3, 800.3}, {26.3, 29.0}}, identifier: 'point.topleft.down.to.point.bottomright.curvepath.fill', label: 'Downward point at the top-left corner of to point at the bottom-right corner of curvepath, filled'
+                          Other, 0x10abb6080, {{21.0, 791.0}, {360.0, 62.0}}
+                          Other, 0x10abb61c0, {{110.7, 795.0}, {95.0, 54.0}}
+                            Other, 0x10abb6300, {{110.7, 795.0}, {95.0, 54.0}}
+                              Other, 0x10abb6440, {{110.7, 795.0}, {95.0, 54.0}}
+                              Other, 0x10abb6580, {{110.7, 795.0}, {95.0, 54.0}}
+                                Other, 0x10abb66c0, {{110.7, 795.0}, {95.0, 54.0}}
+                                  Other, 0x10abb6800, {{110.7, 795.0}, {95.0, 54.0}}
+                                    Other, 0x10abb6940, {{110.7, 795.0}, {95.0, 54.0}}
+                                  Other, 0x10abb6a80, {{110.7, 795.0}, {95.0, 54.0}}
+                                Other, 0x10abb6bc0, {{110.7, 795.0}, {95.0, 54.0}}
+                    Other, 0x10abb6d00, {{0.0, 791.0}, {402.0, 83.0}}
+                      Other, 0x10abb6e40, {{0.0, 791.0}, {402.0, 83.0}}
+                        Other, 0x10abb6f80, {{0.0, 791.0}, {402.0, 83.0}}
+                          Other, 0x10abb70c0, {{0.0, 791.0}, {402.0, 83.0}}
+                            Other, 0x10abb7200, {{0.0, 791.0}, {402.0, 83.0}}
+                              Other, 0x10abb7340, {{0.0, 791.0}, {402.0, 83.0}}
+      Other, 0x10abb7480, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x10abb75c0, {{-402.0, -874.0}, {1206.0, 2622.0}}
+        Other, 0x10abb7700, {{0.0, 62.0}, {402.0, 812.0}}
+          Other, 0x10abb7840, {{0.0, 62.0}, {402.0, 812.0}}
+            Other, 0x10abb7980, {{0.0, 62.0}, {402.0, 812.0}}
+              Other, 0x10abb7ac0, {{0.0, 62.0}, {402.0, 812.0}}
+                Other, 0x10abb7c00, {{0.0, 62.0}, {402.0, 812.0}}
+                  NavigationBar, 0x10abb7d40, {{0.0, 78.0}, {402.0, 106.0}}, identifier: 'Schedule Item'
+                    Other, 0x10abb7e80, {{20.0, 82.0}, {76.7, 36.0}}
+                      Other, 0x10abbc000, {{20.0, 82.0}, {76.7, 36.0}}
+                        Button, 0x10abbc140, {{20.0, 82.0}, {76.7, 36.0}}, identifier: 'saved.schedule.cancel', label: 'Cancel'
+                    Other, 0x10abbc280, {{319.7, 82.0}, {62.3, 36.0}}
+                      Other, 0x10abbc3c0, {{319.7, 82.0}, {62.3, 36.0}}
+                        Button, 0x10abbc500, {{319.7, 82.0}, {62.3, 36.0}}, identifier: 'saved.schedule.save', label: 'Save'
+                    StaticText, 0x10abbc640, {{16.0, 135.7}, {226.7, 40.7}}, label: 'Schedule Item'
+                  Other, 0x10abbc780, {{0.0, 62.0}, {402.0, 812.0}}
+                    Other, 0x10abbc8c0, {{0.0, 62.0}, {402.0, 812.0}}
+                      Other, 0x10abbca00, {{0.0, 62.0}, {402.0, 812.0}}
+                        Other, 0x10abbcb40, {{0.0, 62.0}, {402.0, 812.0}}
+                          CollectionView, 0x10abbcc80, {{0.0, 62.0}, {402.0, 812.0}}
+                            Other, 0x10abbcdc0, {{-16.0, -1440.0}, {434.0, 3563.0}}
+                            Other, 0x10abbcf00, {{0.0, 62.0}, {402.0, 812.0}}
+                              Other, 0x10abbd040, {{0.0, 62.0}, {402.0, 110.0}}
+                            Other, 0x10abbd180, {{0.0, 62.0}, {402.0, 812.0}}
+                            Cell, 0x10abbd2c0, {{16.0, 184.0}, {370.0, 52.0}}
+                              Other, 0x10abbd400, {{16.0, 184.0}, {370.0, 52.0}}
+                                Other, 0x10abbd540, {{16.0, 184.0}, {370.0, 52.0}}
+                              Other, 0x10abbd680, {{16.0, 184.0}, {370.0, 52.0}}
+                                Other, 0x10abbd7c0, {{16.0, 184.0}, {370.0, 52.0}}
+                                  Other, 0x10abbd900, {{16.0, 184.0}, {370.0, 52.0}}
+                                    StaticText, 0x10abbda40, {{16.0, 184.0}, {370.0, 52.0}}, label: 'Three-day gallery'
+                            Cell, 0x10abbdb80, {{16.0, 236.0}, {370.0, 52.0}}
+                              Other, 0x10abbdcc0, {{16.0, 236.0}, {370.0, 52.0}}
+                                Other, 0x10abbde00, {{16.0, 236.0}, {370.0, 52.0}}
+                              Other, 0x10abbdf40, {{16.0, 236.0}, {370.0, 52.0}}
+                                Other, 0x10abbe080, {{16.0, 236.0}, {370.0, 52.0}}
+                                  Other, 0x10abbe1c0, {{16.0, 236.0}, {370.0, 52.0}}
+                                    Switch, 0x10abbe300, {{16.0, 236.0}, {370.0, 52.0}}, identifier: 'saved.schedule.allDay', label: 'All day', value: 1
+                                      StaticText, 0x10abbe440, {{32.0, 251.8}, {50.7, 20.3}}, label: 'All day'
+                                      Switch, 0x10abbe580, {{309.0, 248.0}, {63.0, 28.0}}, value: 1
+                            Other, 0x10abbe6c0, {{32.0, 235.0}, {338.0, 1.0}}
+                            Cell, 0x10abbe800, {{16.0, 288.0}, {370.0, 64.7}}
+                              Other, 0x10abbe940, {{16.0, 288.0}, {370.0, 64.7}}
+                                Other, 0x10abbea80, {{16.0, 288.0}, {370.0, 64.7}}
+                              Other, 0x10abbebc0, {{16.0, 288.0}, {370.0, 64.7}}
+                                Other, 0x10abbed00, {{16.0, 288.0}, {370.0, 64.7}}
+                                  Other, 0x10abbee40, {{16.0, 288.0}, {370.0, 64.7}}
+                                    StaticText, 0x10abbef80, {{32.0, 310.2}, {37.3, 20.3}}, label: 'Start'
+                                    DatePicker, 0x10abbf0c0, {{254.3, 303.0}, {115.7, 34.3}}, identifier: 'saved.schedule.start'
+                                      Other, 0x10abbf200, {{254.3, 303.0}, {115.7, 34.3}}, label: 'Date Picker', value: 11 Oct 2026
+                            Other, 0x10abbf340, {{32.0, 287.0}, {338.0, 1.0}}
+                            Cell, 0x10abbf480, {{16.0, 352.7}, {370.0, 52.0}}
+                              Other, 0x10abbf5c0, {{16.0, 352.7}, {370.0, 52.0}}
+                                Other, 0x10abbf700, {{16.0, 352.7}, {370.0, 52.0}}
+                              Other, 0x10abbf840, {{16.0, 352.7}, {370.0, 52.0}}
+                                Other, 0x10abbf980, {{16.0, 352.7}, {370.0, 52.0}}
+                                  Other, 0x10abbfac0, {{16.0, 352.7}, {370.0, 52.0}}
+                                    Switch, 0x10abbfc00, {{16.0, 352.7}, {370.0, 52.0}}, identifier: 'saved.schedule.hasEnd', label: 'Include end date', value: 1
+                                      StaticText, 0x10abbfd40, {{32.0, 368.5}, {127.0, 20.3}}, label: 'Include end date'
+                                      Switch, 0x10abbfe80, {{309.0, 364.7}, {63.0, 28.0}}, value: 1
+                            Other, 0x10abc0000, {{32.0, 351.7}, {338.0, 1.0}}
+                            Cell, 0x10abc0140, {{16.0, 404.7}, {370.0, 64.7}}
+                              Other, 0x10abc0280, {{16.0, 404.7}, {370.0, 64.7}}
+                                Other, 0x10abc03c0, {{16.0, 404.7}, {370.0, 64.7}}
+                              Other, 0x10abc0500, {{16.0, 404.7}, {370.0, 64.7}}
+                                Other, 0x10abc0640, {{16.0, 404.7}, {370.0, 64.7}}
+                                  Other, 0x10abc0780, {{16.0, 404.7}, {370.0, 64.7}}
+                                    StaticText, 0x10abc08c0, {{32.0, 426.8}, {29.3, 20.3}}, label: 'End'
+                                    DatePicker, 0x10abc0a00, {{254.3, 419.7}, {115.7, 34.3}}, identifier: 'saved.schedule.end'
+                                      Button, 0x10abc0b40, {{254.3, 419.7}, {115.7, 34.3}}, label: 'Date Picker', value: 11 Oct 2026
+                            Other, 0x10abc0c80, {{32.0, 403.7}, {338.0, 1.0}}
+                            Cell, 0x10abc0dc0, {{16.0, 469.3}, {370.0, 29.7}}
+                              Other, 0x10abc0f00, {{16.0, 469.3}, {370.0, 29.7}}
+                              Other, 0x10abc1040, {{16.0, 469.3}, {370.0, 29.7}}
+                                Other, 0x10abc1180, {{16.0, 469.3}, {370.0, 29.7}}
+                                  Other, 0x10abc12c0, {{16.0, 469.3}, {370.0, 29.7}}
+                                    StaticText, 0x10abc1400, {{16.0, 469.3}, {370.0, 29.7}}, label: 'Includes both selected dates.'
+                            Other, 0x10abc1540, {{369.0, 132.0}, {30.0, 680.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+                              Other, 0x10abc1680, {{396.0, 476.0}, {3.0, 333.0}}
+                            Other, 0x10abc17c0, {{369.0, 132.0}, {30.0, 680.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+                              Other, 0x10abc1900, {{396.0, 476.0}, {3.0, 333.0}}
+                  Toolbar, 0x10abc1a40, {{0.0, 62.0}, {402.0, 812.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                    Other, 0x10abc1b80, {{0.0, 62.0}, {402.0, 812.0}}
+      Other, 0x10abc1cc0, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x10abc1e00, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x10abc1f40, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x10abc2080, {{52.7, 346.0}, {320.0, 332.0}}
+              Other, 0x10abc21c0, {{52.7, 346.0}, {320.0, 332.0}}
+                DatePicker, 0x10abc2300, {{52.7, 346.0}, {320.0, 332.0}}
+                  Other, 0x10abc2440, {{52.7, 346.0}, {320.0, 332.0}}
+                    Other, 0x10abc2580, {{52.7, 346.0}, {320.0, 332.0}}
+                      Other, 0x10abc26c0, {{52.7, 346.0}, {320.0, 332.0}}
+                        Button, 0x10abc2800, {{52.7, 362.0}, {320.0, 37.7}}, label: 'Month', value: October 2026
+                          Button, 0x10abc2940, {{284.0, 362.0}, {43.3, 37.7}}, identifier: 'DatePicker.PreviousMonth', label: 'Previous Month'
+                          Button, 0x10abc2a80, {{327.3, 362.0}, {43.3, 37.7}}, identifier: 'DatePicker.NextMonth', label: 'Next Month'
+                          Button, 0x10abc2bc0, {{68.7, 362.0}, {134.0, 37.7}}, identifier: 'DatePicker.Show', label: 'Show year picker', value: October 2026
+                            StaticText, 0x10abc2d00, {{72.7, 366.0}, {111.7, 29.7}}, label: 'October 2026'
+                        Other, 0x10abc2e40, {{52.7, 415.7}, {320.0, 15.7}}
+                        CollectionView, 0x10abc2f80, {{52.7, 431.3}, {320.0, 230.7}}
+                          Button, 0x10abc30c0, {{233.7, 432.3}, {42.7, 45.7}}, label: 'Thursday 1 October'
+                            Other, 0x10abc3200, {{233.7, 432.3}, {42.7, 45.7}}
+                              Other, 0x10abc3340, {{233.7, 432.3}, {42.7, 45.7}}
+                                Other, 0x10abc3480, {{233.7, 433.8}, {42.7, 42.7}}
+                                StaticText, 0x10abc35c0, {{250.5, 443.2}, {9.0, 24.0}}, label: '1'
+                          Button, 0x10abc3700, {{276.3, 432.3}, {42.7, 45.7}}, label: 'Friday 2 October'
+                            Other, 0x10abc3840, {{276.3, 432.3}, {42.7, 45.7}}
+                              Other, 0x10abc3980, {{276.3, 432.3}, {42.7, 45.7}}
+                                Other, 0x10abc3ac0, {{276.3, 433.8}, {42.7, 42.7}}
+                                StaticText, 0x10abc3c00, {{291.8, 443.2}, {11.7, 24.0}}, label: '2'
+                          Button, 0x10abc3d40, {{319.0, 432.3}, {42.7, 45.7}}, label: 'Saturday 3 October'
+                            Other, 0x10abc3e80, {{319.0, 432.3}, {42.7, 45.7}}
+                              Other, 0x10abc4000, {{319.0, 432.3}, {42.7, 45.7}}
+                                Other, 0x10abc4140, {{319.0, 433.8}, {42.7, 42.7}}
+                                StaticText, 0x10abc4280, {{334.3, 443.2}, {12.0, 24.0}}, label: '3'
+                          Button, 0x10abc43c0, {{63.0, 478.0}, {42.7, 45.7}}, label: 'Sunday 4 October'
+                            Other, 0x10abc4500, {{63.0, 478.0}, {42.7, 45.7}}
+                              Other, 0x10abc4640, {{63.0, 478.0}, {42.7, 45.7}}
+                                Other, 0x10abc4780, {{63.0, 479.5}, {42.7, 42.7}}
+                                StaticText, 0x10abc48c0, {{78.2, 488.8}, {12.3, 24.0}}, label: '4'
+                          Button, 0x10abc4a00, {{105.7, 478.0}, {42.7, 45.7}}, label: 'Monday 5 October'
+                            Other, 0x10abc4b40, {{105.7, 478.0}, {42.7, 45.7}}
+                              Other, 0x10abc4c80, {{105.7, 478.0}, {42.7, 45.7}}
+                                Other, 0x10abc4dc0, {{105.7, 479.5}, {42.7, 42.7}}
+                                StaticText, 0x10abc4f00, {{121.0, 488.8}, {12.0, 24.0}}, label: '5'
+                          Button, 0x10abc5040, {{148.3, 478.0}, {42.7, 45.7}}, label: 'Tuesday 6 October'
+                            Other, 0x10abc5180, {{148.3, 478.0}, {42.7, 45.7}}
+                              Other, 0x10abc52c0, {{148.3, 478.0}, {42.7, 45.7}}
+                                Other, 0x10abc5400, {{148.3, 479.5}, {42.7, 42.7}}
+                                StaticText, 0x10abc5540, {{163.5, 488.8}, {12.3, 24.0}}, label: '6'
+                          Button, 0x10abc5680, {{191.0, 478.0}, {42.7, 45.7}}, label: 'Wednesday 7 October'
+                            Other, 0x10abc57c0, {{191.0, 478.0}, {42.7, 45.7}}
+                              Other, 0x10abc5900, {{191.0, 478.0}, {42.7, 45.7}}
+                                Other, 0x10abc5a40, {{191.0, 479.5}, {42.7, 42.7}}
+                                StaticText, 0x10abc5b80, {{206.8, 488.8}, {11.0, 24.0}}, label: '7'
+                          Button, 0x10abc5cc0, {{233.7, 478.0}, {42.7, 45.7}}, label: 'Thursday 8 October'
+                            Other, 0x10abc5e00, {{233.7, 478.0}, {42.7, 45.7}}
+                              Other, 0x10abc5f40, {{233.7, 478.0}, {42.7, 45.7}}
+                                Other, 0x10abc6080, {{233.7, 479.5}, {42.7, 42.7}}
+                                StaticText, 0x10abc61c0, {{248.8, 488.8}, {12.3, 24.0}}, label: '8'
+                          Button, 0x10abc6300, {{276.3, 478.0}, {42.7, 45.7}}, label: 'Friday 9 October'
+                            Other, 0x10abc6440, {{276.3, 478.0}, {42.7, 45.7}}
+                              Other, 0x10abc6580, {{276.3, 478.0}, {42.7, 45.7}}
+                                Other, 0x10abc66c0, {{276.3, 479.5}, {42.7, 42.7}}
+                                StaticText, 0x10abc6800, {{291.5, 488.8}, {12.3, 24.0}}, label: '9'
+                          Button, 0x10abc6940, {{319.0, 478.0}, {42.7, 45.7}}, label: 'Saturday 10 October'
+                            Other, 0x10abc6a80, {{319.0, 478.0}, {42.7, 45.7}}
+                              Other, 0x10abc6bc0, {{319.0, 478.0}, {42.7, 45.7}}
+                                Other, 0x10abc6d00, {{319.0, 479.5}, {42.7, 42.7}}
+                                StaticText, 0x10abc6e40, {{329.8, 488.8}, {21.0, 24.0}}, label: '10'
+                          Button, 0x10abc6f80, {{63.0, 523.7}, {42.7, 45.7}}, label: 'Today, Sunday 11 October', Selected
+                            Other, 0x10abc70c0, {{63.0, 523.7}, {42.7, 45.7}}
+                              Other, 0x10abc7200, {{63.0, 523.7}, {42.7, 45.7}}
+                                Other, 0x10abc7340, {{63.0, 525.2}, {42.7, 42.7}}
+                                StaticText, 0x10abc7480, {{75.0, 534.5}, {18.7, 24.0}}, label: '11'
+                          Button, 0x10abc75c0, {{105.7, 523.7}, {42.7, 45.7}}, label: 'Monday 12 October'
+                            Other, 0x10abc7700, {{105.7, 523.7}, {42.7, 45.7}}
+                              Other, 0x10abc7840, {{105.7, 523.7}, {42.7, 45.7}}
+                                Other, 0x10abc7980, {{105.7, 525.2}, {42.7, 42.7}}
+                                StaticText, 0x10abc7ac0, {{116.8, 534.5}, {20.3, 24.0}}, label: '12'
+                          Button, 0x10abc7c00, {{148.3, 523.7}, {42.7, 45.7}}, label: 'Tuesday 13 October'
+                            Other, 0x10abc7d40, {{148.3, 523.7}, {42.7, 45.7}}
+                              Other, 0x10abc7e80, {{148.3, 523.7}, {42.7, 45.7}}
+                                Other, 0x10abcc000, {{148.3, 525.2}, {42.7, 42.7}}
+                                StaticText, 0x10abcc140, {{159.3, 534.5}, {20.7, 24.0}}, label: '13'
+                          Button, 0x10abcc280, {{191.0, 523.7}, {42.7, 45.7}}, label: 'Wednesday 14 October'
+                            Other, 0x10abcc3c0, {{191.0, 523.7}, {42.7, 45.7}}
+                              Other, 0x10abcc500, {{191.0, 523.7}, {42.7, 45.7}}
+                                Other, 0x10abcc640, {{191.0, 525.2}, {42.7, 42.7}}
+                                StaticText, 0x10abcc780, {{201.8, 534.5}, {21.0, 24.0}}, label: '14'
+                          Button, 0x10abcc8c0, {{233.7, 523.7}, {42.7, 45.7}}, label: 'Thursday 15 October'
+                            Other, 0x10abcca00, {{233.7, 523.7}, {42.7, 45.7}}
+                              Other, 0x10abccb40, {{233.7, 523.7}, {42.7, 45.7}}
+                                Other, 0x10abccc80, {{233.7, 525.2}, {42.7, 42.7}}
+                                StaticText, 0x10abccdc0, {{244.7, 534.5}, {20.7, 24.0}}, label: '15'
+                          Button, 0x10abccf00, {{276.3, 523.7}, {42.7, 45.7}}, label: 'Friday 16 October'
+                            Other, 0x10abcd040, {{276.3, 523.7}, {42.7, 45.7}}
+                              Other, 0x10abcd180, {{276.3, 523.7}, {42.7, 45.7}}
+                                Other, 0x10abcd2c0, {{276.3, 525.2}, {42.7, 42.7}}
+                                StaticText, 0x10abcd400, {{287.2, 534.5}, {21.0, 24.0}}, label: '16'
+                          Button, 0x10abcd540, {{319.0, 523.7}, {42.7, 45.7}}, label: 'Saturday 17 October'
+                            Other, 0x10abcd680, {{319.0, 523.7}, {42.7, 45.7}}
+                              Other, 0x10abcd7c0, {{319.0, 523.7}, {42.7, 45.7}}
+                                Other, 0x10abcd900, {{319.0, 525.2}, {42.7, 42.7}}
+                                StaticText, 0x10abcda40, {{330.5, 534.5}, {19.7, 24.0}}, label: '17'
+                          Button, 0x10abcdb80, {{63.0, 569.3}, {42.7, 45.7}}, label: 'Sunday 18 October'
+                            Other, 0x10abcdcc0, {{63.0, 569.3}, {42.7, 45.7}}
+                              Other, 0x10abcde00, {{63.0, 569.3}, {42.7, 45.7}}
+                                Other, 0x10abcdf40, {{63.0, 570.8}, {42.7, 42.7}}
+                                StaticText, 0x10abce080, {{73.8, 580.2}, {21.0, 24.0}}, label: '18'
+                          Button, 0x10abce1c0, {{105.7, 569.3}, {42.7, 45.7}}, label: 'Monday 19 October'
+                            Other, 0x10abce300, {{105.7, 569.3}, {42.7, 45.7}}
+                              Other, 0x10abce440, {{105.7, 569.3}, {42.7, 45.7}}
+                                Other, 0x10abce580, {{105.7, 570.8}, {42.7, 42.7}}
+                                StaticText, 0x10abce6c0, {{116.5, 580.2}, {21.0, 24.0}}, label: '19'
+                          Button, 0x10abce800, {{148.3, 569.3}, {42.7, 45.7}}, label: 'Tuesday 20 October'
+                            Other, 0x10abce940, {{148.3, 569.3}, {42.7, 45.7}}
+                              Other, 0x10abcea80, {{148.3, 569.3}, {42.7, 45.7}}
+                                Other, 0x10abcebc0, {{148.3, 570.8}, {42.7, 42.7}}
+                                StaticText, 0x10abced00, {{157.8, 580.2}, {23.7, 24.0}}, label: '20'
+                          Button, 0x10abcee40, {{191.0, 569.3}, {42.7, 45.7}}, label: 'Wednesday 21 October'
+                            Other, 0x10abcef80, {{191.0, 569.3}, {42.7, 45.7}}
+                              Other, 0x10abcf0c0, {{191.0, 569.3}, {42.7, 45.7}}
+                                Other, 0x10abcf200, {{191.0, 570.8}, {42.7, 42.7}}
+                                StaticText, 0x10abcf340, {{202.2, 580.2}, {20.3, 24.0}}, label: '21'
+                          Button, 0x10abcf480, {{233.7, 569.3}, {42.7, 45.7}}, label: 'Thursday 22 October'
+                            Other, 0x10abcf5c0, {{233.7, 569.3}, {42.7, 45.7}}
+                              Other, 0x10abcf700, {{233.7, 569.3}, {42.7, 45.7}}
+                                Other, 0x10abcf840, {{233.7, 570.8}, {42.7, 42.7}}
+                                StaticText, 0x10abcf980, {{243.5, 580.2}, {23.0, 24.0}}, label: '22'
+                          Button, 0x10abcfac0, {{276.3, 569.3}, {42.7, 45.7}}, label: 'Friday 23 October'
+                            Other, 0x10abcfc00, {{276.3, 569.3}, {42.7, 45.7}}
+                              Other, 0x10abcfd40, {{276.3, 569.3}, {42.7, 45.7}}
+                                Other, 0x10abcfe80, {{276.3, 570.8}, {42.7, 42.7}}
+                                StaticText, 0x10abd8000, {{285.8, 580.2}, {23.7, 24.0}}, label: '23'
+                          Button, 0x10abd8140, {{319.0, 569.3}, {42.7, 45.7}}, label: 'Saturday 24 October'
+                            Other, 0x10abd8280, {{319.0, 569.3}, {42.7, 45.7}}
+                              Other, 0x10abd83c0, {{319.0, 569.3}, {42.7, 45.7}}
+                                Other, 0x10abd8500, {{319.0, 570.8}, {42.7, 42.7}}
+                                StaticText, 0x10abd8640, {{328.5, 580.2}, {23.7, 24.0}}, label: '24'
+                          Button, 0x10abd8780, {{63.0, 615.0}, {42.7, 45.7}}, label: 'Sunday 25 October'
+                            Other, 0x10abd88c0, {{63.0, 615.0}, {42.7, 45.7}}
+                              Other, 0x10abd8a00, {{63.0, 615.0}, {42.7, 45.7}}
+                                Other, 0x10abd8b40, {{63.0, 616.5}, {42.7, 42.7}}
+                                StaticText, 0x10abd8c80, {{72.7, 625.8}, {23.3, 24.0}}, label: '25'
+                          Button, 0x10abd8dc0, {{105.7, 615.0}, {42.7, 45.7}}, label: 'Monday 26 October'
+                            Other, 0x10abd8f00, {{105.7, 615.0}, {42.7, 45.7}}
+                              Other, 0x10abd9040, {{105.7, 615.0}, {42.7, 45.7}}
+                                Other, 0x10abd9180, {{105.7, 616.5}, {42.7, 42.7}}
+                                StaticText, 0x10abd92c0, {{115.2, 625.8}, {23.7, 24.0}}, label: '26'
+                          Button, 0x10abd9400, {{148.3, 615.0}, {42.7, 45.7}}, label: 'Tuesday 27 October'
+                            Other, 0x10abd9540, {{148.3, 615.0}, {42.7, 45.7}}
+                              Other, 0x10abd9680, {{148.3, 615.0}, {42.7, 45.7}}
+                                Other, 0x10abd97c0, {{148.3, 616.5}, {42.7, 42.7}}
+                                StaticText, 0x10abd9900, {{158.5, 625.8}, {22.3, 24.0}}, label: '27'
+                          Button, 0x10abd9a40, {{191.0, 615.0}, {42.7, 45.7}}, label: 'Wednesday 28 October'
+                            Other, 0x10abd9b80, {{191.0, 615.0}, {42.7, 45.7}}
+                              Other, 0x10abd9cc0, {{191.0, 615.0}, {42.7, 45.7}}
+                                Other, 0x10abd9e00, {{191.0, 616.5}, {42.7, 42.7}}
+                                StaticText, 0x10abd9f40, {{200.5, 625.8}, {23.7, 24.0}}, label: '28'
+                          Button, 0x10abda080, {{233.7, 615.0}, {42.7, 45.7}}, label: 'Thursday 29 October'
+                            Other, 0x10abda1c0, {{233.7, 615.0}, {42.7, 45.7}}
+                              Other, 0x10abda300, {{233.7, 615.0}, {42.7, 45.7}}
+                                Other, 0x10abda440, {{233.7, 616.5}, {42.7, 42.7}}
+                                StaticText, 0x10abda580, {{243.2, 625.8}, {23.7, 24.0}}, label: '29'
+                          Button, 0x10abda6c0, {{276.3, 615.0}, {42.7, 45.7}}, label: 'Friday 30 October'
+                            Other, 0x10abda800, {{276.3, 615.0}, {42.7, 45.7}}
+                              Other, 0x10abda940, {{276.3, 615.0}, {42.7, 45.7}}
+                                Other, 0x10abdaa80, {{276.3, 616.5}, {42.7, 42.7}}
+                                StaticText, 0x10abdabc0, {{285.7, 625.8}, {24.0, 24.0}}, label: '30'
+                          Button, 0x10abdad00, {{319.0, 615.0}, {42.7, 45.7}}, label: 'Saturday 31 October'
+                            Other, 0x10abdae40, {{319.0, 615.0}, {42.7, 45.7}}
+                              Other, 0x10abdaf80, {{319.0, 615.0}, {42.7, 45.7}}
+                                Other, 0x10abdb0c0, {{319.0, 616.5}, {42.7, 42.7}}
+                                StaticText, 0x10abdb200, {{330.0, 625.8}, {20.7, 24.0}}, label: '31'
+          Button, 0x10abdb340, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'PopoverDismissRegion', label: 'dismiss popup'
+    Window, 0x10abdb480, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x10abdb5c0, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x10abdb700, {{0.0, 0.0}, {402.0, 874.0}}
+Path to element:
+ →Application, 0x10aacb980, pid: 43217, label: 'Planner navigation prototype'
+Query chain:
+ →Find: Target Application 'org.example.PlannerMCPPrototype'
+  Output: {
+    Application, 0x10abdb840, pid: 43217, label: 'Planner navigation prototype'
+  }
