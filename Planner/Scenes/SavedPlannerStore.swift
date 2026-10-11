@@ -582,16 +582,21 @@ final class SavedPlannerStore {
   }
 
   func createItinerary(
-    title: String, notes: String, operationIdentifier: UUID
+    title: String, notes: String, categoryIdentifiers: Set<UUID>, tagIdentifiers: Set<UUID>,
+    operationIdentifier: UUID
   ) async -> PlannerEntityReference? {
     let result = await executeChange(
-      .createItinerary(content: .init(title: title, notes: notes.isEmpty ? nil : notes)),
+      .createItinerary(
+        content: .init(
+          title: title, notes: notes.isEmpty ? nil : notes,
+          categoryIds: categoryIdentifiers, tagIds: tagIdentifiers)),
       operationId: operationIdentifier)
     return result?.generated.first { $0.kind == .itinerary }
   }
 
   func editItinerary(
     _ itinerary: PlannerItinerarySourceRead, title: String, notes: String,
+    categoryIdentifiers: Set<UUID>, tagIdentifiers: Set<UUID>,
     operationIdentifier: UUID
   ) async -> Bool {
     let titleChange: PlannerFieldChange<String> =
@@ -602,9 +607,23 @@ final class SavedPlannerStore {
     } else {
       notesChange = notes.isEmpty ? .clear : .set(notes)
     }
+    let categoryChange: PlannerFieldChange<Set<UUID>>
+    if categoryIdentifiers == itinerary.content.categoryIds {
+      categoryChange = .unchanged
+    } else {
+      categoryChange = .set(categoryIdentifiers)
+    }
+    let tagChange: PlannerFieldChange<Set<UUID>>
+    if tagIdentifiers == itinerary.content.tagIds {
+      tagChange = .unchanged
+    } else {
+      tagChange = .set(tagIdentifiers)
+    }
     return await executeChange(
       .editItinerary(
-        sourceId: itinerary.source.id, changes: .init(title: titleChange, notes: notesChange),
+        sourceId: itinerary.source.id,
+        changes: .init(
+          title: titleChange, notes: notesChange, categoryIds: categoryChange, tagIds: tagChange),
         expectedFieldHashes: itinerary.fieldHashes), operationId: operationIdentifier) != nil
   }
 

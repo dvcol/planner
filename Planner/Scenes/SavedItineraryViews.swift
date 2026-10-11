@@ -111,6 +111,7 @@ struct SavedItineraryDetail: View {
           if let notes = itinerary.content.notes, !notes.isEmpty {
             Section("Notes") { Text(notes).textSelection(.enabled) }
           }
+          ItemLabelsSection(labels: itinerary.labels)
           Section("Entries") {
             ForEach(contents.entries) { entry in
               if entry.source.kind == .list {
@@ -292,6 +293,8 @@ private struct SavedItineraryForm: View {
   let didSave: (PlannerEntityReference) -> Void
   @State private var title: String
   @State private var notes: String
+  @State private var categoryIdentifiers: Set<UUID>
+  @State private var tagIdentifiers: Set<UUID>
   @State private var operationIdentifier = UUID()
 
   init(
@@ -303,6 +306,8 @@ private struct SavedItineraryForm: View {
     self.didSave = didSave
     _title = State(initialValue: itinerary?.content.title ?? "")
     _notes = State(initialValue: itinerary?.content.notes ?? "")
+    _categoryIdentifiers = State(initialValue: itinerary?.content.categoryIds ?? [])
+    _tagIdentifiers = State(initialValue: itinerary?.content.tagIds ?? [])
   }
 
   private var canSave: Bool {
@@ -311,6 +316,8 @@ private struct SavedItineraryForm: View {
     }
     guard let itinerary else { return true }
     return title != itinerary.content.title || notes != (itinerary.content.notes ?? "")
+      || categoryIdentifiers != itinerary.content.categoryIds
+      || tagIdentifiers != itinerary.content.tagIds
   }
 
   var body: some View {
@@ -321,6 +328,20 @@ private struct SavedItineraryForm: View {
         TextField("Notes", text: $notes, axis: .vertical)
           .lineLimit(3...8)
           .accessibilityIdentifier("saved.itinerary.notes")
+        Section("Labels") {
+          NavigationLink {
+            SavedItemLabelPicker(store: store, kind: .category, selection: $categoryIdentifiers)
+          } label: {
+            LabeledContent("Categories", value: selectionSummary(categoryIdentifiers))
+          }
+          .accessibilityIdentifier("saved.itinerary.categories")
+          NavigationLink {
+            SavedItemLabelPicker(store: store, kind: .tag, selection: $tagIdentifiers)
+          } label: {
+            LabeledContent("Tags", value: selectionSummary(tagIdentifiers))
+          }
+          .accessibilityIdentifier("saved.itinerary.tags")
+        }
       }
       .disabled(store.isSaving)
       .formStyle(.grouped)
@@ -366,14 +387,20 @@ private struct SavedItineraryForm: View {
     let source: PlannerEntityReference?
     if let itinerary {
       let saved = await store.editItinerary(
-        itinerary, title: title, notes: notes, operationIdentifier: operationIdentifier)
+        itinerary, title: title, notes: notes, categoryIdentifiers: categoryIdentifiers,
+        tagIdentifiers: tagIdentifiers, operationIdentifier: operationIdentifier)
       source = saved ? itinerary.source : nil
     } else {
       source = await store.createItinerary(
-        title: title, notes: notes, operationIdentifier: operationIdentifier)
+        title: title, notes: notes, categoryIdentifiers: categoryIdentifiers,
+        tagIdentifiers: tagIdentifiers, operationIdentifier: operationIdentifier)
     }
     guard let source, store.alertMessage == nil else { return }
     didSave(source)
     dismiss()
+  }
+
+  private func selectionSummary(_ identifiers: Set<UUID>) -> String {
+    identifiers.isEmpty ? "None" : "\(identifiers.count) selected"
   }
 }
