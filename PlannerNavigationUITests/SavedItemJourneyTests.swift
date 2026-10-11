@@ -2,6 +2,72 @@ import XCTest
 
 @MainActor
 final class SavedItemJourneyTests: XCTestCase {
+  func testItemRowsPreviewSavedAppointmentsAndAdditionalCountAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    let title = application.textFields["saved.item.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Museum appointments")
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    returnToItemCatalog(application)
+    let row = application.savedPlannerItemRows("Museum appointments").firstMatch
+    XCTAssertTrue(row.waitForExistence(timeout: 10))
+    let identity = row.identifier
+    XCTAssertFalse((row.value as? String ?? "").contains("Scheduled:"))
+    for includesEnd in [false, true] {
+      row.activateForPlannerJourney()
+      application.plannerElement("saved.item.actions").activateForPlannerJourney()
+      application.plannerElement("Schedule Item").activateForPlannerJourney()
+      let includeEnd = application.descendants(matching: .any)
+        .matching(identifier: "saved.schedule.hasEnd").firstMatch
+      XCTAssertTrue(includeEnd.waitForPlannerBooleanState(false))
+      if includesEnd { activateCompletion(includeEnd) }
+      application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+      let savedSchedule = application.descendants(matching: .any).matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@", "saved.item.schedule.",
+          includesEnd ? "Timed" : "Start only")
+      ).firstMatch
+      XCTAssertTrue(savedSchedule.waitForExistence(timeout: 10))
+      returnToItemCatalog(application)
+      let expectedMetadata = includesEnd ? "1 additional schedule" : "Scheduled:"
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [
+            XCTNSPredicateExpectation(
+              predicate: NSPredicate(format: "value CONTAINS %@", expectedMetadata), object: row)
+          ], timeout: 10), .completed)
+      XCTAssertEqual(row.identifier, identity)
+      if !includesEnd {
+        XCTAssertFalse((row.value as? String ?? "").contains("additional schedule"))
+        recordScreenshot(application, name: "Native Item row shows a start-only appointment")
+      }
+    }
+    let savedMetadata = row.value as? String
+    XCTAssertNotNil(savedMetadata)
+    XCTAssertTrue(savedMetadata?.contains("Scheduled:") == true)
+    recordScreenshot(application, name: "Native Item row shows additional appointments")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    returnToItemCatalog(application)
+    XCTAssertTrue(row.waitForExistence(timeout: 10))
+    XCTAssertEqual(row.identifier, identity)
+    XCTAssertEqual(row.value as? String, savedMetadata)
+    recordScreenshot(application, name: "Native Item appointment row after relaunch")
+  }
+
+  private func returnToItemCatalog(_ application: XCUIApplication) {
+    openItems(application)
+    let back = application.navigationBars.buttons["Items"].firstMatch
+    if back.exists { back.activateForPlannerJourney() }
+    XCTAssertTrue(application.plannerElement("saved.item.new").waitForExistence(timeout: 10))
+  }
+
   func testConfirmedScheduleRemovalKeepsOtherAppointmentsAndSourceItemAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()

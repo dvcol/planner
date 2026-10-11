@@ -32,11 +32,11 @@ struct SavedItemCatalog: View {
             if item.row.archived == true {
               Image(systemName: "archivebox").accessibilityLabel("Archived")
             }
-            SavedItemRowContent(row: item.row)
+            SavedItemRowContent(row: item.row, rowPresentation: item.rowPresentation)
           }
         }
         .accessibilityLabel(item.row.title)
-        .accessibilityValue(item.row.metadataDescription)
+        .accessibilityValue(item.row.metadataDescription(presentation: item.rowPresentation))
         .accessibilityIdentifier("saved.item.\(item.id.uuidString)")
       }
     }

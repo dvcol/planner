@@ -21,18 +21,18 @@ struct SavedMembershipRow: View {
       .accessibilityIdentifier("saved.appearance.completion.\(item.id.uuidString)")
       .help(completionLabel)
       #if os(macOS)
-        SavedItemRowContent(row: item.row)
+        SavedItemRowContent(row: item.row, rowPresentation: item.rowPresentation)
           .accessibilityElement(children: .ignore)
           .accessibilityLabel(item.row.title)
-          .accessibilityValue(item.row.metadataDescription)
+          .accessibilityValue(item.row.metadataDescription(presentation: item.rowPresentation))
           .frame(maxWidth: .infinity, alignment: .leading)
           .accessibilityIdentifier("saved.appearance.\(item.id.uuidString)")
       #else
         NavigationLink(value: item.id) {
-          SavedItemRowContent(row: item.row)
+          SavedItemRowContent(row: item.row, rowPresentation: item.rowPresentation)
         }
         .accessibilityLabel(item.row.title)
-        .accessibilityValue(item.row.metadataDescription)
+        .accessibilityValue(item.row.metadataDescription(presentation: item.rowPresentation))
         .accessibilityIdentifier("saved.appearance.\(item.id.uuidString)")
       #endif
       if item.row.archived == true {

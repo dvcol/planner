@@ -38,6 +38,7 @@ enum SavedItineraryRowSelection: Hashable {
 struct SavedItineraryItem: Identifiable {
   let id: SavedItineraryRowSelection
   let row: PlannerRowRead
+  let rowPresentation: PlannerRowPresentationContext?
 }
 
 struct SavedItineraryEntryRows: Identifiable {
@@ -71,10 +72,10 @@ struct SavedItineraryItemRow: View {
       .accessibilityIdentifier("saved.itinerary.completion.\(item.id.identifier)")
       .help(completionLabel)
       NavigationLink(value: item.id) {
-        SavedItemRowContent(row: item.row)
+        SavedItemRowContent(row: item.row, rowPresentation: item.rowPresentation)
       }
       .accessibilityLabel(item.row.title)
-      .accessibilityValue(item.row.metadataDescription)
+      .accessibilityValue(item.row.metadataDescription(presentation: item.rowPresentation))
       .accessibilityIdentifier("saved.itinerary.appearance.\(item.id.identifier)")
       if item.row.archived == true {
         Image(systemName: "archivebox").accessibilityLabel("Archived")
