@@ -194,6 +194,8 @@ The [native schedule-removal qualification](prototypes/navigation-local-qualific
 
 The [native Item row schedule-preview qualification](prototypes/navigation-local-qualification.md#native-item-row-schedule-previews) adds a compact calendar caption and +N for other direct appointments. The native adapters retain the query display timezone, while Core keeps selecting the summary. Saved row identity and accessible metadata survive relaunch. List/Itinerary-context renderers, all-day formatting, travel and display-zone overrides retain their runtime gates.
 
+The [native all-day Item schedule qualification](prototypes/navigation-local-qualification.md#native-all-day-item-scheduling) adds a system All day Toggle and date-only pickers, saving inclusive civil dates through the existing Core command. Cancellation saves nothing; one explicit same-day range preserves identity, date description and row metadata after relaunch. The timed optional-end journey checks compatibility. Edited multi-day ranges, native invalid-end feedback and travel retain their gates.
+
 ## Definition of ready and done
 
 - [x] Contract public interfaces accepted, prerequisite resolutions reviewed, local toolchain inventory refreshed and fixture inputs/expected transitions specified.
