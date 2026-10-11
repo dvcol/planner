@@ -9,6 +9,11 @@ public actor Planner {
     let historyToken: DefaultHistoryToken?
   }
   private var querySnapshots: [UUID: QueryBinding] = [:]
+  private struct ReviewBinding {
+    let session: PlannerDatasetSession
+    let payloadDigest: String
+  }
+  private var reviews: [UUID: ReviewBinding] = [:]
   private enum ItemStateChange {
     case archive(Bool)
     case completion(Bool)
@@ -101,6 +106,35 @@ public actor Planner {
     }
   }
 
+  public func prepareReview(session: PlannerDatasetSession, command: PlannerCommand)
+    -> PlannerReviewResult
+  {
+    do {
+      return try coordinated {
+        let identity = try validateSession(session)
+        guard case .setBulkCompletion(let scope, let done) = command else {
+          throw PlannerFailure(
+            "invalidInput", "This command has no reviewable impact.", propertyPath: "/command/type")
+        }
+        let context = ModelContext(try openContainer())
+        context.autosaveEnabled = false
+        let resolution = try resolveBulkCompletion(scope, context: context)
+        let reviewId = UUID()
+        reviews[reviewId] = ReviewBinding(
+          session: session,
+          payloadDigest: bulkCompletionDigest(
+            scope: scope, done: done, identity: identity, bindings: resolution.bindings))
+        return .reviewed(
+          .init(
+            reviewId: reviewId, reviewToken: .init(reviewId: reviewId), command: command,
+            targets: resolution.targets.map(\.appearance),
+            targetCount: Int64(resolution.targets.count), globalFlagsChanged: false))
+      }
+    } catch {
+      return .failed(failure(error, code: "readUnavailable"))
+    }
+  }
+
   public func execute(_ operation: PlannerOperation) -> PlannerOperationResult {
     do {
       return try coordinated {
@@ -112,6 +146,10 @@ public actor Planner {
         let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
         let envelope = try archive.latest()
         switch operation.command {
+        case .setBulkCompletion(let scope, let done):
+          return try executeBulkCompletion(
+            operation, scope: scope, done: done, identity: identity, context: context,
+            archive: archive, receipts: receipts, envelope: envelope)
         case .reorderItineraryEntry(let itineraryId, let entryId, let placement):
           return try executeItineraryEntryReordering(
             operation, itineraryId: itineraryId, entryId: entryId, placement: placement,
@@ -3986,6 +4024,123 @@ public actor Planner {
         itineraries: snapshots, labelAssociations: labels,
         tags: tags, categories: categories, items: items, lists: lists, memberships: memberships,
         deletionMarkers: markers, receipts: receipts + [receipt])
+      return .init(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return .init(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
+  }
+
+  private func executeBulkCompletion(
+    _ operation: PlannerOperation, scope: PlannerBulkScope, done: Bool,
+    identity: PlannerStoreIdentity, context: ModelContext, archive: PlannerRecoveryArchive,
+    receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let stored = try receipt.evidence()
+      guard
+        receipt.payloadDigest
+          == bulkCompletionDigest(
+            scope: scope, done: done, identity: identity, bindings: stored.bindings)
+      else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "This operation describes another bulk action.")
+      }
+      return appliedResult(
+        operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
+        envelope: envelope)
+    }
+    let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    guard let token = operation.reviewToken else {
+      throw PlannerFailure(
+        "staleReview", "Review the full contextual target set before applying.",
+        propertyPath: "/reviewToken")
+    }
+    guard let review = reviews[token.reviewId], review.session == operation.session else {
+      throw PlannerFailure(
+        "staleReview", "This review does not belong to the current dataset session.")
+    }
+    let resolution = try resolveBulkCompletion(scope, context: context)
+    let bindings = resolution.bindings
+    let digest = bulkCompletionDigest(
+      scope: scope, done: done, identity: identity, bindings: bindings)
+    guard digest == review.payloadDigest else {
+      throw PlannerFailure(
+        "staleReview", "The command or full target set changed; review it again.")
+    }
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another bulk action.")
+      }
+      return .init(operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    let changed = resolution.targets.contains { $0.localDone != done }
+    let lists = try listSnapshots(context).map { value in
+      guard resolution.list != nil, value.id == resolution.owner.id else { return value }
+      return ListSnapshot(
+        id: value.id, lifetimeId: value.lifetimeId, createdAt: value.createdAt,
+        updatedAt: changed ? Date() : value.updatedAt, content: value.content,
+        archived: value.archived)
+    }
+    let itineraries = try itinerarySnapshots(context).map { value in
+      guard resolution.itinerary != nil, value.id == resolution.owner.id else { return value }
+      return resolution.itineraryAfter(
+        value, done: done, updatedAt: changed ? Date() : value.updatedAt)
+    }
+    let memberships = resolution.membershipsAfter(try membershipSnapshots(context), done: done)
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV13.Item>()).map { try $0.value() }
+    let labels = try labelAssociationSnapshots(context)
+    let tags = try tagSnapshots(context)
+    let categories = try categorySnapshots(context)
+    let markers = try deletionMarkers(context)
+    let result = PlannerAppliedResult(
+      generatedIdentities: [],
+      affectedIdentities: [.source(resolution.reference)]
+        + resolution.targets.map { .reference($0.reference) })
+    try archive.prepare(
+      .init(
+        proposalId: UUID(), originalOperationId: operation.operationId,
+        datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
+        proposedBackup: PlannerDataSnapshot(
+          itineraries: itineraries, labelAssociations: labels, tags: tags, categories: categories,
+          items: items, lists: lists, memberships: memberships, deletionMarkers: markers),
+        payloadDigest: digest, evidence: "preparedUnverified"))
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result, bindings: bindings)
+    for target in resolution.targets { target.apply(done: done, context: context) }
+    if let list = resolution.list,
+      let snapshot = lists.first(where: { $0.id == resolution.owner.id })
+    {
+      list.updatedAt = snapshot.updatedAt
+    }
+    if let itinerary = resolution.itinerary,
+      let snapshot = itineraries.first(where: { $0.id == resolution.owner.id })
+    {
+      itinerary.updatedAt = snapshot.updatedAt
+    }
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The complete bulk action was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(
+        itineraries: itineraries, labelAssociations: labels, tags: tags, categories: categories,
+        items: items, lists: lists, memberships: memberships, deletionMarkers: markers,
+        receipts: receipts + [receipt])
       return .init(
         operationId: operation.operationId,
         outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))

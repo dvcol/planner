@@ -287,3 +287,9 @@ The [catalog qualification](prototypes/mcp-http-qualification.md#itinerary-catal
 Item query discovery now advertises strict global, Inbox, List and Itinerary scopes. Itinerary requires itineraryId and rejects unrelated fields. Its rows retain exact direct or expanded appearance identities, with local completion independent for repeated entries. Cumulative filters affect matching rows while full progress includes hidden/archived appearances. Compact row windows stay bound to their issued generation and presentation context.
 
 The [HTTP qualification](prototypes/mcp-http-qualification.md#contextual-itinerary-item-queries-over-http) records discovery, serialization, invalid scope admission and unchanged recovery. The current Manual restriction remains ascending standalone Lists pending Q56. Itinerary bulk, schedules and native screens remain open.
+
+## Implemented Core bulk review boundary
+
+The local Core facade now implements prepareReview for setBulkCompletion over List, Itinerary and itineraryListEntry scopes. Its opaque native token binds the session, command and complete target lifetimes without time-only expiry. Targets are contextual appearances, including hidden/archived children and repeated entries; global flags stay unchanged. Missing or changed reviews use staleReview. Ordinary commands passed to preparation reject invalidInput at /command/type. Durable receipt replay returns the original evidence without requiring a new review or reapplying later-changed flags.
+
+The [Core qualification](prototypes/core-local-qualification.md#reviewed-full-context-completion-in-core) records local behavior and explicit fault-test gaps. The HTTP adapter still rejects bulk and non-null review tokens; no prepare-review tool is advertised yet. Wire serialization/admission, native confirmation and genuine save/recovery-failure qualification remain open.
