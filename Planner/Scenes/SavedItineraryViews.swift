@@ -76,6 +76,9 @@ struct SavedItineraryDetail: View {
   let store: SavedPlannerStore
   let identifier: UUID
   @Binding var selection: SavedItineraryRowSelection?
+  let isPreparingDeletion: Bool
+  let isReviewingDeletion: Bool
+  let prepareDeletion: (PlannerItinerarySourceRead) -> Void
   @State private var contents: SavedItineraryContents?
   @State private var loadingFailure: String?
   @State private var editDraft: SavedItineraryEditDraft?
@@ -198,7 +201,7 @@ struct SavedItineraryDetail: View {
         .navigationTitle(itinerary.content.title)
         .navigationSplitViewColumnWidth(min: 260, ideal: 400, max: 600)
         .overlay(alignment: .topTrailing) {
-          if isPreparingBulkCompletion {
+          if isPreparingBulkCompletion || isPreparingDeletion {
             ProgressView("Preparing review").controlSize(.small).padding()
           }
         }
@@ -243,10 +246,13 @@ struct SavedItineraryDetail: View {
                 }
               }
               .disabled(itinerary.progress.totalCount == 0)
+              Divider()
+              Button("Delete Itinerary", role: .destructive) { prepareDeletion(itinerary) }
+                .accessibilityIdentifier("saved.itinerary.delete")
             } label: {
               Label("Itinerary actions", systemImage: "ellipsis")
             }
-            .disabled(!store.canCreate || isPreparingBulkCompletion)
+            .disabled(!store.canCreate || isPreparingBulkCompletion || isPreparingDeletion)
             .help("Itinerary actions")
             .accessibilityIdentifier("saved.itinerary.actions")
           }
@@ -264,6 +270,9 @@ struct SavedItineraryDetail: View {
       }
     }
     .task(id: store.changeRevision) { await loadItinerary() }
+    .onChange(of: isReviewingDeletion) {
+      if !isReviewingDeletion { Task { await loadItinerary() } }
+    }
     .sheet(item: $editDraft) { draft in
       SavedItineraryForm(store: store, itinerary: draft.itinerary) { _ in }
     }
@@ -296,6 +305,7 @@ struct SavedItineraryDetail: View {
           (store.alertMessage != nil || removedSelectionMessage != nil)
             && editDraft == nil && !showAddEntry
             && bulkCompletionDraft == nil && !showNewSchedule && scheduleToEdit == nil
+            && !isReviewingDeletion
         },
         set: {
           if !$0 {
@@ -423,10 +433,12 @@ struct SavedItineraryDetail: View {
   }
 
   private func loadItinerary() async {
+    guard !isReviewingDeletion else { return }
     loadingFailure = nil
     let revision = store.changeRevision
     let loaded = await store.readItineraryContents(identifier)
-    guard !Task.isCancelled, store.changeRevision == revision else { return }
+    /** Column transitions can cancel a completed read while retaining this detail's state. */
+    guard !isReviewingDeletion, store.changeRevision == revision else { return }
     if let loaded {
       contents = loaded
     } else {

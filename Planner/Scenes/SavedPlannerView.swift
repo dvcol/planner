@@ -68,6 +68,9 @@ struct SavedPlannerView: View {
   @State private var listDeletionDraft: SavedSourceDeletionDraft?
   @State private var isPreparingListDeletion = false
   @State private var listDeletionMessage: String?
+  @State private var itineraryDeletionDraft: SavedSourceDeletionDraft?
+  @State private var isPreparingItineraryDeletion = false
+  @State private var itineraryDeletionMessage: String?
   @State private var isOpeningAppearance = false
   @State private var columnVisibility: NavigationSplitViewVisibility = .all
   #if os(iOS)
@@ -117,7 +120,10 @@ struct SavedPlannerView: View {
     .onChange(of: selectedItemId) {
       if selectedItemId != nil { itemDeletionMessage = nil }
     }
-    .onChange(of: selectedItineraryIdentifier) { selectedItineraryRow = nil }
+    .onChange(of: selectedItineraryIdentifier) {
+      selectedItineraryRow = nil
+      if selectedItineraryIdentifier != nil { itineraryDeletionMessage = nil }
+    }
     .task(id: selectedAppearanceIdentity) { await loadSelectedAppearance() }
     .task(id: store.changeRevision) {
       await loadListCatalog()
@@ -171,6 +177,11 @@ struct SavedPlannerView: View {
         clearDeletedListSelection(draft, review: review)
       }
     }
+    .sheet(item: $itineraryDeletionDraft, onDismiss: refreshAfterDeletionReview) { draft in
+      SavedSourceDeletionForm(store: store, draft: draft) { _ in
+        clearDeletedItinerarySelection(draft)
+      }
+    }
     .sheet(item: $bulkCompletionDraft) { draft in
       SavedBulkCompletionForm(store: store, draft: draft)
     }
@@ -179,7 +190,7 @@ struct SavedPlannerView: View {
       isPresented: Binding(
         get: {
           store.alertMessage != nil && itemEditDraft == nil && itemDeletionDraft == nil
-            && listDeletionDraft == nil
+            && listDeletionDraft == nil && itineraryDeletionDraft == nil
             && bulkCompletionDraft == nil
             && !showLabels
             && !showSettings
@@ -280,9 +291,15 @@ struct SavedPlannerView: View {
   private var itineraryDetail: some View {
     if let selectedItineraryIdentifier {
       SavedItineraryDetail(
-        store: store, identifier: selectedItineraryIdentifier, selection: $selectedItineraryRow
+        store: store, identifier: selectedItineraryIdentifier, selection: $selectedItineraryRow,
+        isPreparingDeletion: isPreparingItineraryDeletion,
+        isReviewingDeletion: itineraryDeletionDraft?.source.id == selectedItineraryIdentifier,
+        prepareDeletion: { itinerary in Task { await prepareItineraryDeletion(itinerary) } }
       )
       .id(selectedItineraryIdentifier)
+    } else if let itineraryDeletionMessage {
+      ContentUnavailableView(
+        "Itinerary deleted", systemImage: "trash", description: Text(itineraryDeletionMessage))
     } else {
       ContentUnavailableView(
         "Choose an Itinerary", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
@@ -293,7 +310,8 @@ struct SavedPlannerView: View {
   private var itineraryAppearanceDetail: some View {
     if let selectedItineraryIdentifier, let selectedItineraryRow {
       SavedItineraryItemDetail(
-        appearance: selectedItineraryRow.appearance(itineraryId: selectedItineraryIdentifier)
+        appearance: selectedItineraryRow.appearance(itineraryId: selectedItineraryIdentifier),
+        isReviewingDeletion: itineraryDeletionDraft?.source.id == selectedItineraryIdentifier
       )
       .id(selectedItineraryRow)
     } else {
@@ -304,6 +322,14 @@ struct SavedPlannerView: View {
   private var isItemSection: Bool {
     #if os(macOS)
       selectedSection == .items || selectedSection == .inbox
+    #else
+      false
+    #endif
+  }
+
+  private var usesItineraryColumns: Bool {
+    #if os(macOS)
+      selectedSection == .itineraries
     #else
       false
     #endif
@@ -504,6 +530,23 @@ struct SavedPlannerView: View {
     if let review = await store.prepareSourceDeletion(list.source) {
       listDeletionDraft = .init(source: list.source, name: list.content.name, review: review)
     }
+  }
+
+  private func prepareItineraryDeletion(_ itinerary: PlannerItinerarySourceRead) async {
+    guard !isPreparingItineraryDeletion else { return }
+    isPreparingItineraryDeletion = true
+    defer { isPreparingItineraryDeletion = false }
+    if let review = await store.prepareSourceDeletion(itinerary.source) {
+      itineraryDeletionDraft = .init(
+        source: itinerary.source, name: itinerary.content.title, review: review)
+    }
+  }
+
+  private func clearDeletedItinerarySelection(_ draft: SavedSourceDeletionDraft) {
+    guard selectedItineraryIdentifier == draft.source.id else { return }
+    selectedItineraryIdentifier = nil
+    selectedItineraryRow = nil
+    itineraryDeletionMessage = "\(draft.name) was deleted. Its Items and Lists remain available."
   }
 
   private func clearDeletedListSelection(_ draft: SavedSourceDeletionDraft, review: PlannerReview) {
@@ -814,7 +857,7 @@ struct SavedPlannerView: View {
         }
       }
     } content: {
-      if selectedSection == .itineraries {
+      if usesItineraryColumns {
         if selectedItineraryIdentifier != nil {
           itineraryDetail
             .toolbar {
@@ -999,7 +1042,7 @@ struct SavedPlannerView: View {
         ContentUnavailableView("Choose a List", systemImage: "list.bullet.rectangle")
       }
     } detail: {
-      if selectedSection == .itineraries {
+      if usesItineraryColumns {
         itineraryAppearanceDetail
       } else if isItemSection {
         itemDetail
