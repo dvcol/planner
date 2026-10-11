@@ -2,6 +2,129 @@ import XCTest
 
 @MainActor
 final class SavedLabelsJourneyTests: XCTestCase {
+  func testRepeatedItineraryAppearancesKeepLiveLabelsAndIndependentCompletionAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openLabels(application)
+    createLabel("Category", name: "Culture", application: application)
+    for name in ["Indoor", "Rain", "Walking"] {
+      createLabel("Tag", name: name, application: application)
+    }
+    application.plannerElement("saved.categories.done").activateForPlannerJourney()
+    createLabeledItem(
+      "Museum", categories: ["Culture"], tags: ["Indoor", "Rain", "Walking"],
+      application: application)
+    createListWithItems("Food stops", itemTitles: ["Museum"], application: application)
+    openItineraries(application)
+    application.plannerElement("saved.itinerary.new").activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Weekend route")
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    for entry in ["Museum", "Museum", "Food stops"] {
+      addItineraryEntry(entry, application: application)
+    }
+    let rows = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.appearance."))
+    XCTAssertEqual(rows.count, 3)
+    let appearanceIdentifiers = rows.allElementsBoundByIndex.map(\.identifier)
+    XCTAssertEqual(Set(appearanceIdentifiers).count, 3)
+    for row in rows.allElementsBoundByIndex {
+      XCTAssertTrue(row.waitForPlannerValue("Categories: Culture, Tags: Indoor, Rain, Walking"))
+    }
+    XCTAssertTrue(application.staticTexts["Culture · Indoor · Rain · +1"].exists)
+    let completionIdentifiers = appearanceIdentifiers.map {
+      $0.replacingOccurrences(
+        of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")
+    }
+    application.plannerElement(completionIdentifiers[0]).activateForPlannerJourney()
+    XCTAssertTrue(
+      application.plannerElement(completionIdentifiers[0]).waitForPlannerValue("Completed"))
+    for identifier in completionIdentifiers.dropFirst() {
+      XCTAssertTrue(application.plannerElement(identifier).waitForPlannerValue("To do"))
+    }
+    XCTAssertTrue(application.staticTexts["1 of 3 items done"].waitForExistence(timeout: 10))
+    recordLabelsScreenshot(
+      application, name: "Live compact labels in three independent Itinerary appearances")
+    application.plannerElement(appearanceIdentifiers[0]).activateForPlannerJourney()
+    for name in ["Culture", "Indoor", "Rain", "Walking"] {
+      XCTAssertTrue(application.staticTexts[name].firstMatch.waitForExistence(timeout: 10))
+    }
+    recordLabelsScreenshot(
+      application, name: "Complete labels in a completed direct Itinerary appearance")
+    openLabels(application)
+    application.staticTexts["Culture"].firstMatch.activateForPlannerJourney()
+    let categoryName = application.textFields["saved.category.name"]
+    XCTAssertTrue(categoryName.waitForExistence(timeout: 5))
+    replaceText(categoryName, with: "Art", application: application)
+    application.plannerElement("saved.category.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Art"].firstMatch.waitForExistence(timeout: 10))
+    application.staticTexts["Rain"].firstMatch.activateForPlannerJourney()
+    let tagName = application.textFields["saved.tag.name"]
+    XCTAssertTrue(tagName.waitForExistence(timeout: 5))
+    replaceText(tagName, with: "Wet weather", application: application)
+    application.plannerElement("saved.tag.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Wet weather"].firstMatch.waitForExistence(timeout: 10))
+    application.plannerElement("saved.categories.done").activateForPlannerJourney()
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItineraries(application)
+    let itinerary = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.",
+        "Weekend route")
+    ).firstMatch
+    XCTAssertTrue(itinerary.waitForExistence(timeout: 10))
+    itinerary.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.plannerElement(appearanceIdentifiers[0]).waitForExistence(timeout: 10))
+    XCTAssertEqual(rows.allElementsBoundByIndex.map(\.identifier), appearanceIdentifiers)
+    for row in rows.allElementsBoundByIndex {
+      XCTAssertTrue(row.waitForPlannerValue("Categories: Art, Tags: Indoor, Walking, Wet weather"))
+    }
+    XCTAssertTrue(application.staticTexts["Art · Indoor · Walking · +1"].exists)
+    XCTAssertTrue(
+      application.plannerElement(completionIdentifiers[0]).waitForPlannerValue("Completed"))
+    for identifier in completionIdentifiers.dropFirst() {
+      XCTAssertTrue(application.plannerElement(identifier).waitForPlannerValue("To do"))
+    }
+    XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
+    application.plannerElement(appearanceIdentifiers[2]).activateForPlannerJourney()
+    for name in ["Art", "Indoor", "Walking", "Wet weather"] {
+      XCTAssertTrue(application.staticTexts[name].firstMatch.waitForExistence(timeout: 10))
+    }
+    XCTAssertFalse(application.staticTexts["Culture"].exists)
+    XCTAssertFalse(application.staticTexts["Rain"].exists)
+    recordLabelsScreenshot(
+      application, name: "Renamed labels in an expanded List appearance after relaunch")
+    openItems(application)
+    let source = application.savedPlannerItemRows("Museum").firstMatch
+    XCTAssertTrue(source.waitForExistence(timeout: 10))
+    XCTAssertTrue(source.waitForPlannerValue("Categories: Art, Tags: Indoor, Walking, Wet weather"))
+    source.activateForPlannerJourney()
+    let completion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+  }
+
+  private func addItineraryEntry(_ title: String, application: XCUIApplication) {
+    let addition = application.plannerElement("saved.itinerary.entry.new")
+    XCTAssertTrue(addition.waitForExistence(timeout: 10))
+    addition.activateForPlannerJourney()
+    let choice = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.entry.choice.", title)
+    ).firstMatch
+    XCTAssertTrue(choice.waitForExistence(timeout: 5))
+    choice.activateForPlannerJourney()
+    application.plannerElement("saved.itinerary.entry.add").activateForPlannerJourney()
+    XCTAssertTrue(addition.waitForExistence(timeout: 10))
+  }
+
   func testSettingsManageLabelsSharesSavedIdentityWithTheToolbarAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -593,7 +716,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
 
   private func openLabels(_ application: XCUIApplication) {
     let labels = application.plannerElement("saved.categories.manage")
-    if !labels.waitForExistence(timeout: 3) {
+    if !labels.waitForExistence(timeout: 3) || !labels.isHittable {
       #if os(macOS)
         let lists = application.plannerElement("saved.section.lists")
       #else
@@ -601,9 +724,15 @@ final class SavedLabelsJourneyTests: XCTestCase {
       #endif
       XCTAssertTrue(lists.waitForExistence(timeout: 5))
       lists.activateForPlannerJourney()
-      if !labels.waitForExistence(timeout: 2) {
+      if !labels.waitForExistence(timeout: 2) || !labels.isHittable {
         let sidebar = application.plannerElement("Show Sidebar")
-        if sidebar.exists { sidebar.activateForPlannerJourney() }
+        if sidebar.exists {
+          sidebar.activateForPlannerJourney()
+        } else {
+          let back = application.plannerElement("BackButton")
+          XCTAssertTrue(back.exists, application.debugDescription)
+          back.activateForPlannerJourney()
+        }
       }
     }
     XCTAssertTrue(labels.waitForExistence(timeout: 10))
