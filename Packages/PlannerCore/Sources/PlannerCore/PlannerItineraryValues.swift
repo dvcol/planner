@@ -119,6 +119,7 @@ struct ItinerarySnapshot {
   let input: PlannerItineraryContentInput
   let archived: Bool
   var links: [OwnedLinkSnapshot] = []
+  var schedules: [ScheduleSnapshot] = []
   var labelAssociations: [LabelAssociationSnapshot] = []
   var labels: [PlannerLabelRead] = []
   var entries: [ItineraryEntrySnapshot] = []
@@ -134,6 +135,9 @@ struct ItinerarySnapshot {
       state: PlannerSourceState(globalDone: nil, archived: archived),
       progress: progress(memberships: memberships, items: items, lists: lists),
       references: labelAssociations.map(\.reference) + entries.map(\.reference)
-        + entries.flatMap(\.expandedCompletions).map(\.reference))
+        + entries.flatMap(\.expandedCompletions).map(\.reference)
+        + schedules.sorted { $0.id.uuidString < $1.id.uuidString }.map {
+          .schedule(id: $0.id, source: reference)
+        })
   }
 }

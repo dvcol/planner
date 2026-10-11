@@ -1,0 +1,80 @@
+import Foundation
+import PlannerCore
+
+@main struct Schema13Producer {
+  static func main() async throws {
+    let directory = URL(fileURLWithPath: "/private/tmp/PlannerSchema13Fixture-f1114f9")
+    let planner = Planner(configuration: .init(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
+      let result = await planner.execute(.init(operationId: UUID(), session: session, command: command))
+      guard case .applied(let applied, .complete) = result.outcome else {
+        throw NSError(domain: String(describing: result.outcome), code: 1)
+      }
+      return applied
+    }
+    func generated(_ command: PlannerCommand) async throws -> PlannerEntityReference {
+      guard let reference = try await save(command).generated.first else { throw CancellationError() }
+      return reference
+    }
+    let category = try await generated(.createCategory(content: .init(name: "Food")))
+    let tag = try await generated(.createTag(content: .init(name: "Rain")))
+    let item = try await generated(.createItem(content: .init(title: "Hotel", notes: "Keep",
+      links: [.init(originalUrl: "https://example.com/hotel")], categoryIds: [category.id], tagIds: [tag.id])))
+    let list = try await generated(.createList(content: .init(name: "Stops")))
+    let itinerary = try await generated(.createItinerary(content: .init(title: "Route", notes: "Keep route",
+      links: [.init(originalUrl: "https://example.com/route")], categoryIds: [category.id], tagIds: [tag.id])))
+    guard case .membership(let membershipId, _, _) = try await save(
+      .addMembership(itemId: item.id, listId: list.id, placement: .last)).generatedReferences.first
+    else { throw CancellationError() }
+    var entryIds: [UUID] = []
+    for source in [item, item, list, list] {
+      guard case .itineraryEntry(let identifier, _, _) = try await save(
+        .addItineraryEntry(itineraryId: itinerary.id, source: source, placement: .last)).generatedReferences.first
+      else { throw CancellationError() }
+      entryIds.append(identifier)
+    }
+    _ = try await save(.setCompletion(scope: .appearance(.directItineraryItem(
+      itineraryId: itinerary.id, entryId: entryIds[0])), done: true))
+    _ = try await save(.setCompletion(scope: .appearance(.expandedListItem(
+      itineraryId: itinerary.id, listEntryId: entryIds[2], membershipId: membershipId)), done: true))
+    _ = try await save(.setCompletion(scope: .appearance(.listMembership(
+      listId: list.id, membershipId: membershipId)), done: true))
+    _ = try await save(.setArchive(source: list, archived: true))
+    let timed = try await generated(.createSchedule(source: item, form: .timed(
+      start: Date(timeIntervalSinceReferenceDate: 813_200_400), end: nil, planningTimeZone: "Asia/Tokyo")))
+    let allDay = try await generated(.createSchedule(source: item, form: .allDay(
+      start: .init(year: 2026, month: 10, day: 9), end: .init(year: 2026, month: 10, day: 11))))
+    let removed = try await generated(.createSchedule(source: item, form: .timed(
+      start: Date(timeIntervalSinceReferenceDate: 813_214_800), end: nil, planningTimeZone: "Asia/Tokyo")))
+    _ = try await save(.removeSchedule(scheduleId: removed.id))
+    guard case .source(.itinerary(let itineraryRead)) = await planner.read(session: session, request: .source(itinerary)),
+      case .source(.item(let itemRead)) = await planner.read(session: session, request: .source(item)),
+      case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+      let namespace = namespaces.first, let checkpoint = namespace.acknowledgedSnapshot?.checkpointGeneration,
+      case .selected(let recovery) = await planner.inspectRecovery(request: .acknowledgedSnapshot(
+        namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
+    else { throw CancellationError() }
+    guard namespace.acknowledgedSnapshot?.storageSchemaVersion == 13,
+      itineraryRead.progress.totalCount == 4, itineraryRead.progress.doneCount == 2 else { throw CancellationError() }
+    let manifest: [String: Any] = [
+      "producerCommit": "f1114f93dc315ed5e977a0128f2e91b56b2cc1a9", "storageSchemaVersion": 13,
+      "checkpoint": checkpoint, "datasetId": session.datasetId.uuidString,
+      "namespaceId": namespace.namespaceId.uuidString, "itemId": item.id.uuidString,
+      "listId": list.id.uuidString, "itineraryId": itinerary.id.uuidString,
+      "membershipId": membershipId.uuidString, "entryIds": entryIds.map(\.uuidString),
+      "scheduleIds": [timed.id.uuidString, allDay.id.uuidString],
+      "itineraryCreatedAt": itineraryRead.createdAt.timeIntervalSinceReferenceDate,
+      "itineraryUpdatedAt": itineraryRead.updatedAt.timeIntervalSinceReferenceDate,
+      "itineraryHashes": Dictionary(uniqueKeysWithValues: itineraryRead.fieldHashes.map { ($0.key.rawValue, $0.value.value) }),
+      "itemHashes": Dictionary(uniqueKeysWithValues: itemRead.fieldHashes.map { ($0.key.rawValue, $0.value.value) }),
+      "portableDataBase64": recovery.portableData.base64EncodedString()
+    ]
+    try JSONSerialization.data(withJSONObject: manifest, options: [.prettyPrinted, .sortedKeys])
+      .write(to: directory.appendingPathComponent("manifest.json"))
+  }
+}

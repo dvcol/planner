@@ -143,9 +143,13 @@ struct PlannerDataSnapshot: Codable {
       + itineraries.flatMap { itinerary in
         itinerary.links.map { PortableOwnedLink($0, owner: itinerary) }
       }).sorted { $0.id.uuidString < $1.id.uuidString }
-    schedules = items.flatMap { item in
-      item.schedules.map { PortableScheduleRecord($0, owner: item) }
-    }.sorted { $0.id.uuidString < $1.id.uuidString }
+    schedules =
+      (items.flatMap { item in
+        item.schedules.map { PortableScheduleRecord($0, owner: item) }
+      }
+      + itineraries.flatMap { itinerary in
+        itinerary.schedules.map { PortableScheduleRecord($0, owner: itinerary) }
+      }).sorted { $0.id.uuidString < $1.id.uuidString }
   }
 
   init(from decoder: any Decoder) throws {
@@ -338,7 +342,9 @@ struct PlannerDataSnapshot: Codable {
         expandedCompletions: try expandedCompletions.map {
           try $0.validated(entries: itineraryEntries, memberships: memberships)
         },
-        schedules: try schedules.map { try $0.validated(sources: itemRecords) },
+        schedules: try schedules.map {
+          try $0.validated(sources: itemRecords, itineraries: itineraryRecords)
+        },
         deletionMarkers: try deletionMarkers.map {
           try $0.validated(
             schedules: schedules, memberships: memberships, labelAssociations: labelAssociations,
@@ -404,7 +410,7 @@ struct RecoveryEnvelope: Codable {
 
   func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
     guard format == "planner-recovery", formatVersion == 1,
-      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"].contains(
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"].contains(
         storageSchemaVersion),
       namespaceId == identity.namespaceId, datasetId == identity.datasetId,
       ownershipBinding == identity.ownershipBinding, !ownershipBinding.isEmpty,

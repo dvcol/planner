@@ -86,7 +86,7 @@ enum PlannerSchemaV1: VersionedSchema {
   }
 }
 
-extension PlannerSchemaV13.Item {
+extension PlannerSchemaV14.Item {
   func rowRead(
     identity: PlannerRowIdentity, localDone: Bool?, hasLinks: Bool,
     previewLink: PlannerOwnedLinkRead?, labels: [PlannerLabelRead],
@@ -134,7 +134,7 @@ enum PlannerMigrationPlan: SchemaMigrationPlan {
       PlannerSchemaV1.self, PlannerSchemaV2.self, PlannerSchemaV3.self, PlannerSchemaV4.self,
       PlannerSchemaV5.self, PlannerSchemaV6.self, PlannerSchemaV7.self, PlannerSchemaV8.self,
       PlannerSchemaV9.self, PlannerSchemaV10.self, PlannerSchemaV11.self, PlannerSchemaV12.self,
-      PlannerSchemaV13.self,
+      PlannerSchemaV13.self, PlannerSchemaV14.self,
     ]
   }
   static var stages: [MigrationStage] {
@@ -151,6 +151,7 @@ enum PlannerMigrationPlan: SchemaMigrationPlan {
       .lightweight(fromVersion: PlannerSchemaV10.self, toVersion: PlannerSchemaV11.self),
       .lightweight(fromVersion: PlannerSchemaV11.self, toVersion: PlannerSchemaV12.self),
       .lightweight(fromVersion: PlannerSchemaV12.self, toVersion: PlannerSchemaV13.self),
+      .lightweight(fromVersion: PlannerSchemaV13.self, toVersion: PlannerSchemaV14.self),
     ]
   }
 }
