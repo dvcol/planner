@@ -4,6 +4,148 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testListMembershipFiltersUseAnyAllAndKeepContextualCompletionAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application, title: "Shared")
+    openCatalogSection("Items", application: application)
+    let catalogFilters = application.plannerElement("saved.items.filters")
+    catalogFilters.activateForPlannerJourney()
+    application.revealSavedPlannerFilter("saved.filters.lists")
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    application.savedPlannerItemRows("Shared").firstMatch.activateForPlannerJourney()
+    editPresenceContent(address: nil, addLink: true, application: application)
+    for title in ["North only", "South only", "Unlisted"] {
+      createItem(application, title: title)
+    }
+    createList("North", application: application)
+    addItem(application, title: "Shared")
+    addItem(application, title: "North only")
+    createList("South", application: application)
+    addItem(application, title: "Shared")
+    addItem(application, title: "South only")
+    openCatalogSection("Items", application: application)
+    let shared = application.savedPlannerItemRows("Shared").firstMatch
+    let northOnly = application.savedPlannerItemRows("North only").firstMatch
+    let southOnly = application.savedPlannerItemRows("South only").firstMatch
+    let unlisted = application.savedPlannerItemRows("Unlisted").firstMatch
+    XCTAssertTrue(shared.waitForExistence(timeout: 10))
+    let sourceIdentifier = shared.identifier
+    catalogFilters.activateForPlannerJourney()
+    selectFilterLists(["North"], application: application)
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(unlisted.waitForNonExistence(timeout: 10))
+    XCTAssertFalse(southOnly.exists)
+    XCTAssertTrue(shared.exists)
+    XCTAssertTrue(northOnly.exists)
+    XCTAssertEqual(catalogFilters.label, "Active · 1 List")
+    catalogFilters.activateForPlannerJourney()
+    selectFilterLists(["South"], application: application)
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(southOnly.waitForExistence(timeout: 10))
+    XCTAssertTrue(northOnly.exists)
+    XCTAssertTrue(shared.exists)
+    XCTAssertFalse(unlisted.exists)
+    XCTAssertEqual(catalogFilters.label, "Active · 2 Lists")
+    catalogFilters.activateForPlannerJourney()
+    let match = application.plannerElement("saved.filters.list.match")
+    application.revealSavedPlannerFilter("saved.filters.list.match")
+    match.activateForPlannerJourney()
+    application.plannerElement("All selected").activateForPlannerJourney()
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(northOnly.waitForNonExistence(timeout: 10))
+    XCTAssertFalse(southOnly.exists)
+    XCTAssertFalse(unlisted.exists)
+    XCTAssertEqual(shared.identifier, sourceIdentifier)
+    XCTAssertEqual(catalogFilters.label, "Active · All 2 Lists")
+    recordScreenshot(application, name: "All selected Lists retain one shared source Item")
+    catalogFilters.activateForPlannerJourney()
+    setPresenceFilter("saved.filters.hasLinks", to: true, application: application)
+    let clearLists = application.plannerElement("Clear Lists")
+    application.revealSavedPlannerFilter("Clear Lists")
+    clearLists.activateForPlannerJourney()
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertEqual(catalogFilters.label, "Active · Links")
+    XCTAssertTrue(shared.exists)
+    XCTAssertFalse(northOnly.exists)
+    XCTAssertFalse(southOnly.exists)
+    XCTAssertFalse(unlisted.exists)
+    catalogFilters.activateForPlannerJourney()
+    application.plannerElement("saved.filters.clear").activateForPlannerJourney()
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(northOnly.waitForExistence(timeout: 10))
+    XCTAssertTrue(southOnly.exists)
+    XCTAssertTrue(unlisted.exists)
+    XCTAssertEqual(catalogFilters.label, "All")
+
+    openList("North", itemTitle: "Shared", application: application)
+    let appearance = application.savedPlannerItemRows("Shared").firstMatch
+    let appearanceIdentifier = appearance.identifier
+    let completion = application.plannerElement(
+      appearanceIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion."))
+    completion.activateForPlannerJourney()
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(0.5, application: application)
+    let listFilters = application.plannerElement("saved.list.filters")
+    listFilters.activateForPlannerJourney()
+    selectFilterLists(["South"], application: application)
+    recordScreenshot(application, name: "Native List membership filter in the adaptive Form")
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(northOnly.waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Showing 1 of 2 items"].exists)
+    XCTAssertEqual(appearance.identifier, appearanceIdentifier)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(0.5, application: application)
+    recordScreenshot(
+      application, name: "List membership filtering preserves full contextual progress")
+    listFilters.activateForPlannerJourney()
+    application.plannerElement("saved.filters.clear").activateForPlannerJourney()
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(northOnly.waitForExistence(timeout: 10))
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("North", itemTitle: "Shared", application: application)
+    XCTAssertEqual(appearance.identifier, appearanceIdentifier)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(0.5, application: application)
+    openList("South", itemTitle: "Shared", application: application)
+    let otherAppearance = application.savedPlannerItemRows("Shared").firstMatch
+    XCTAssertNotEqual(otherAppearance.identifier, appearanceIdentifier)
+    let otherCompletion = application.plannerElement(
+      otherAppearance.identifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion."))
+    XCTAssertTrue(otherCompletion.waitForPlannerValue("To do"))
+    assertProgress(0, application: application)
+    recordScreenshot(
+      application, name: "Other List keeps its independent completion after relaunch")
+  }
+
+  private func selectFilterLists(_ names: [String], application: XCUIApplication) {
+    let picker = application.plannerElement("saved.filters.lists")
+    application.revealSavedPlannerFilter("saved.filters.lists")
+    picker.activateForPlannerJourney()
+    for name in names {
+      let toggle = application.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@ AND label == %@", "saved.filters.list.", name)
+      ).firstMatch
+      XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+      XCTAssertEqual(toggle.plannerBooleanState, false)
+      #if os(macOS)
+        toggle.click()
+      #else
+        let control = toggle.switches.firstMatch
+        XCTAssertTrue(control.exists)
+        control.tap()
+      #endif
+      XCTAssertTrue(toggle.waitForPlannerBooleanState(true))
+    }
+    application.plannerElement("saved.filters.lists.done").activateForPlannerJourney()
+  }
+
   func testAddressAndLinkFiltersNarrowCumulativelyWithoutChangingSavedContentOrListProgress() {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -122,19 +264,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
   }
 
   private func revealPresenceFilter(_ identifier: String, application: XCUIApplication) {
-    let control = application.descendants(matching: .any).matching(identifier: identifier)
-      .firstMatch
-    if control.isHittable { return }
-    #if os(iOS)
-      let form = application.collectionViews.containing(
-        .button, identifier: "saved.filters.archive"
-      )
-      .firstMatch
-      XCTAssertTrue(form.waitForExistence(timeout: 5))
-      if !control.isHittable { form.swipeUp() }
-    #endif
-    XCTAssertTrue(control.waitForExistence(timeout: 5), application.debugDescription)
-    XCTAssertTrue(control.waitForPlannerHittability())
+    application.revealSavedPlannerFilter(identifier)
   }
 
   private func setPresenceFilter(

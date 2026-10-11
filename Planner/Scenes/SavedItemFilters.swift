@@ -38,8 +38,10 @@ struct SavedItemFilters: Equatable {
   var archive: Archive = .all
   var categoryIdentifiers: Set<UUID> = []
   var tagIdentifiers: Set<UUID> = []
+  var listIdentifiers: Set<UUID> = []
   var categoryMatch: LabelMatch = .any
   var tagMatch: LabelMatch = .any
+  var listMatch: PlannerItemQuery.IdentityGroup.Match = .any
   var hasAddress = false
   var hasLinks = false
 
@@ -51,6 +53,11 @@ struct SavedItemFilters: Equatable {
   var tagQuery: PlannerItemQuery.IdentityGroup? {
     guard !tagIdentifiers.isEmpty else { return nil }
     return .init(ids: tagIdentifiers, match: tagMatch.queryValue)
+  }
+
+  var listQuery: PlannerItemQuery.IdentityGroup? {
+    guard !listIdentifiers.isEmpty else { return nil }
+    return .init(ids: listIdentifiers, match: listMatch)
   }
 
   var summary: String {
@@ -72,6 +79,15 @@ struct SavedItemFilters: Equatable {
         restrictions.append("All \(tagIdentifiers.count) Tags")
       } else {
         restrictions.append("\(tagIdentifiers.count) Tags")
+      }
+    }
+    if !listIdentifiers.isEmpty {
+      if listIdentifiers.count == 1 {
+        restrictions.append("1 List")
+      } else if listMatch == .all {
+        restrictions.append("All \(listIdentifiers.count) Lists")
+      } else {
+        restrictions.append("\(listIdentifiers.count) Lists")
       }
     }
     if hasAddress { restrictions.append("Address") }
@@ -156,6 +172,23 @@ private struct SavedItemFilterForm: View {
             Button("Clear Tags") { filters.tagIdentifiers = [] }
           }
         }
+        Section("Lists") {
+          NavigationLink {
+            SavedFilterListPicker(store: store, selection: $filters.listIdentifiers)
+          } label: {
+            LabeledContent("In Lists", value: selectionSummary(filters.listIdentifiers))
+          }
+          .accessibilityIdentifier("saved.filters.lists")
+          if !filters.listIdentifiers.isEmpty {
+            Picker("Match", selection: $filters.listMatch) {
+              Text("Any selected").tag(PlannerItemQuery.IdentityGroup.Match.any)
+              Text("All selected").tag(PlannerItemQuery.IdentityGroup.Match.all)
+            }
+            .pickerStyle(.menu)
+            .accessibilityIdentifier("saved.filters.list.match")
+            Button("Clear Lists") { filters.listIdentifiers = [] }
+          }
+        }
         Section("Content") {
           Toggle("Has an address", isOn: $filters.hasAddress)
             .accessibilityIdentifier("saved.filters.hasAddress")
@@ -164,6 +197,7 @@ private struct SavedItemFilterForm: View {
         }
       }
       .formStyle(.grouped)
+      .accessibilityIdentifier("saved.filters.form")
       .navigationTitle("Filters")
       #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
@@ -196,6 +230,80 @@ private struct SavedItemFilterForm: View {
 
   private func selectionSummary(_ identifiers: Set<UUID>) -> String {
     identifiers.isEmpty ? "Any" : "\(identifiers.count) selected"
+  }
+}
+
+private struct SavedFilterListPicker: View {
+  @Environment(\.dismiss) private var dismiss
+  let store: SavedPlannerStore
+  @Binding var selection: Set<UUID>
+  @State private var lists: [SavedPlannerList]?
+  @State private var loadingFailure: String?
+
+  var body: some View {
+    List {
+      ForEach(lists ?? []) { list in
+        Toggle(
+          isOn: Binding(
+            get: { selection.contains(list.id) },
+            set: { selected in
+              if selected {
+                selection.insert(list.id)
+              } else {
+                selection.remove(list.id)
+              }
+            })
+        ) {
+          VStack(alignment: .leading) {
+            Text(list.name)
+            if list.archived {
+              Label("Archived", systemImage: "archivebox")
+                .font(.caption).foregroundStyle(.secondary)
+            }
+          }
+        }
+        .accessibilityLabel(list.name)
+        .accessibilityHint(list.archived ? "Archived List" : "Active List")
+        .accessibilityIdentifier("saved.filters.list.\(list.id.uuidString)")
+      }
+    }
+    .overlay {
+      if let loadingFailure {
+        ContentUnavailableView {
+          Label("Lists unavailable", systemImage: "exclamationmark.triangle")
+        } description: {
+          Text(loadingFailure)
+        } actions: {
+          Button("Try Again") { Task { await loadLists() } }
+        }
+      } else if lists == nil {
+        ProgressView("Loading Lists")
+      } else if lists?.isEmpty == true {
+        ContentUnavailableView(
+          "No Lists yet", systemImage: "list.bullet.rectangle",
+          description: Text("Create a List to filter its Items."))
+      }
+    }
+    .navigationTitle("Lists")
+    .toolbar {
+      ToolbarItem(placement: .confirmationAction) {
+        Button("Done") { dismiss() }
+          .accessibilityIdentifier("saved.filters.lists.done")
+      }
+    }
+    .task(id: store.changeRevision) { await loadLists() }
+  }
+
+  private func loadLists() async {
+    let revision = store.changeRevision
+    loadingFailure = nil
+    let loaded = await store.readLists(archive: .all)
+    guard !Task.isCancelled, revision == store.changeRevision else { return }
+    lists = loaded
+    if loaded == nil {
+      loadingFailure = store.alertMessage ?? "Planner could not load its Lists."
+      store.alertMessage = nil
+    }
   }
 }
 
