@@ -821,6 +821,9 @@ public actor Planner {
     if query.sourceKind == .tag {
       return try tagCatalogSnapshot(session: session, query: query, context: context)
     }
+    if query.sourceKind == .itinerary {
+      return try itineraryCatalogSnapshot(session: session, query: query, context: context)
+    }
     guard query.sourceKind == .list else {
       throw PlannerFailure(
         "unavailable", "This catalog slice supports List discovery only.",
@@ -856,6 +859,54 @@ public actor Planner {
     guard Set(values.map { $0.source.id }).count == values.count else {
       throw PlannerFailure(
         "readUnavailable", "Catalog List identities are duplicated and unresolved.")
+    }
+    let comparator = String.Comparator(
+      options: [.caseInsensitive, .diacriticInsensitive], locale: locale)
+    let sorted = values.sorted { first, second in
+      let comparison = comparator.compare(first.comparisonName, second.comparisonName)
+      if comparison != .orderedSame { return comparison == .orderedAscending }
+      return first.source.id.uuidString < second.source.id.uuidString
+    }
+    return PlannerQuerySnapshot(
+      session: session, generation: UUID(), rows: sorted.map { .source($0.source) },
+      matchingCount: Int64(sorted.count), rowPresentation: nil,
+      progress: [], unresolvedReferences: [])
+  }
+
+  private func itineraryCatalogSnapshot(
+    session: PlannerDatasetSession, query: PlannerCatalogQuery, context: ModelContext
+  ) throws -> PlannerQuerySnapshot {
+    var descriptor = FetchDescriptor<PlannerSchemaV13.Itinerary>()
+    descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.title, \.archived]
+    let locale = Locale(identifier: "en_US_POSIX")
+    let terms = query.text.split(whereSeparator: \.isWhitespace).map(String.init)
+    let matches = try context.fetch(descriptor).filter { itinerary in
+      switch query.archive {
+      case .active: if itinerary.archived { return false }
+      case .archived: if !itinerary.archived { return false }
+      case .all: break
+      }
+      return terms.allSatisfy {
+        itinerary.title.range(
+          of: $0, options: [.caseInsensitive, .diacriticInsensitive], locale: locale) != nil
+      }
+    }
+    let values = try matches.map { itinerary in
+      guard let identifier = itinerary.id, itinerary.lifetimeId != nil,
+        !itinerary.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+      else {
+        throw PlannerFailure(
+          "readUnavailable", "A catalog Itinerary has unresolved identity or title.")
+      }
+      return (
+        source: PlannerEntityReference(kind: .itinerary, id: identifier),
+        comparisonName: itinerary.title.folding(
+          options: [.caseInsensitive, .diacriticInsensitive], locale: locale)
+      )
+    }
+    guard Set(values.map { $0.source.id }).count == values.count else {
+      throw PlannerFailure(
+        "readUnavailable", "Catalog Itinerary identities are duplicated and unresolved.")
     }
     let comparator = String.Comparator(
       options: [.caseInsensitive, .diacriticInsensitive], locale: locale)
@@ -1098,6 +1149,9 @@ public actor Planner {
           hasLocation: false, hasLinks: false, ownedLocation: nil, previewLink: nil,
           scheduleSummary: .none)
       }
+      if source.kind == .itinerary {
+        return try itineraryCatalogRow(identity: identity, sourceId: source.id, context: context)
+      }
       guard let presentation = snapshot.rowPresentation else {
         throw PlannerFailure("readUnavailable", "The Item query has no presentation context.")
       }
@@ -1148,6 +1202,49 @@ public actor Planner {
     return PlannerRowWindow(
       generation: generation, offset: offset, matchingCount: snapshot.matchingCount,
       rowPresentation: snapshot.rowPresentation, rows: rows)
+  }
+
+  private func itineraryCatalogRow(
+    identity: PlannerRowIdentity, sourceId: UUID, context: ModelContext
+  ) throws -> PlannerRowRead {
+    var descriptor = FetchDescriptor<PlannerSchemaV13.Itinerary>(
+      predicate: #Predicate { $0.id == sourceId })
+    descriptor.fetchLimit = 2
+    descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.title, \.archived, \.locationData]
+    let records = try context.fetch(descriptor)
+    guard records.count == 1, let itinerary = records.first, let lifetimeId = itinerary.lifetimeId
+    else {
+      throw PlannerFailure("readUnavailable", "A snapshot Itinerary is missing or unresolved.")
+    }
+    let content = PlannerItineraryContentInput(
+      title: itinerary.title,
+      location: try itinerary.locationData.map {
+        try JSONDecoder().decode(PlannerOwnedLocation.self, from: $0)
+      })
+    try content.validate()
+    let owned = FetchDescriptor<PlannerSchemaV13.OwnedLink>(
+      predicate: #Predicate {
+        $0.ownerKind == "itinerary" && $0.ownerId == sourceId && $0.ownerLifetimeId == lifetimeId
+      })
+    var selected = FetchDescriptor<PlannerSchemaV13.OwnedLink>(
+      predicate: #Predicate {
+        $0.ownerKind == "itinerary" && $0.ownerId == sourceId && $0.ownerLifetimeId == lifetimeId
+          && $0.kind != "appleMaps" && $0.kind != "googleMaps"
+      }, sortBy: [SortDescriptor(\.rank), SortDescriptor(\.id)])
+    selected.fetchLimit = 1
+    selected.propertiesToFetch = [
+      \.id, \.lifetimeId, \.ownerKind, \.ownerId, \.ownerLifetimeId, \.rank,
+      \.originalUrl, \.label, \.kind,
+    ]
+    let preview = try context.fetch(selected).first?.value(
+      ownerId: sourceId, ownerLifetimeId: lifetimeId, ownerKind: "itinerary"
+    ).read
+    return PlannerRowRead(
+      identity: identity, sourceLifetimeId: lifetimeId, title: content.title,
+      subtitle: nil, estimate: nil, globalDone: nil, localDone: nil, effectiveDone: nil,
+      archived: itinerary.archived, hasLocation: content.location != nil,
+      hasLinks: try context.fetchCount(owned) > 0,
+      ownedLocation: content.location, previewLink: preview, scheduleSummary: .none)
   }
 
   private func rowScheduleSummary(
