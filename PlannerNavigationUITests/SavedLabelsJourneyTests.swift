@@ -2,6 +2,215 @@ import XCTest
 
 @MainActor
 final class SavedLabelsJourneyTests: XCTestCase {
+  func testCategoryDeletionReviewsItemAndItineraryUsesAndPreservesOwnersAfterCancelAndRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openLabels(application)
+    createLabel("Category", name: "Culture", application: application)
+    let category = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@ AND label == %@", "saved.category.", "Culture")
+    ).firstMatch
+    let categoryIdentifier = category.identifier
+    createLabel("Tag", name: "Rain", application: application)
+    application.plannerElement("saved.categories.done").activateForPlannerJourney()
+    createLabeledItem("Museum", categories: ["Culture"], tags: ["Rain"], application: application)
+    openItems(application)
+    let item = application.savedPlannerItemRows("Museum").firstMatch
+    XCTAssertTrue(item.waitForExistence(timeout: 10))
+    let itemIdentifier = item.identifier
+    openItineraries(application)
+    application.plannerElement("saved.itinerary.new").activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Weekend route")
+    selectLabels(
+      "Categories", names: ["Culture"], identifierPrefix: "saved.itinerary",
+      application: application)
+    selectLabels(
+      "Tags", names: ["Rain"], identifierPrefix: "saved.itinerary", application: application)
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    addItineraryEntry("Museum", application: application)
+    let appearance = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.appearance.")
+    ).firstMatch
+    XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+    let appearanceIdentifier = appearance.identifier
+    let completionIdentifier = appearanceIdentifier.replacingOccurrences(
+      of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")
+    application.plannerElement(completionIdentifier).activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["1 of 1 item done"].waitForExistence(timeout: 10))
+    openLabels(application)
+    application.plannerElement(categoryIdentifier).activateForPlannerJourney()
+    let deletion = application.plannerElement("saved.category.delete")
+    XCTAssertTrue(deletion.waitForExistence(timeout: 5))
+    deletion.activateForPlannerJourney()
+    let impact = application.staticTexts["1 Item · 1 Itinerary"]
+    XCTAssertTrue(impact.waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Culture"].firstMatch.exists)
+    recordLabelsScreenshot(application, name: "Category Delete reviews Item and Itinerary uses")
+    application.plannerElement("saved.category.delete.cancel").activateForPlannerJourney()
+    XCTAssertTrue(deletion.waitForExistence(timeout: 5))
+    XCTAssertTrue(application.textFields["saved.category.name"].waitForPlannerValue("Culture"))
+    application.plannerElement("saved.category.cancel").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement(categoryIdentifier).waitForExistence(timeout: 5))
+    application.plannerElement("saved.categories.done").activateForPlannerJourney()
+    openItineraries(application)
+    let restoredAfterCancellation = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.", "Weekend route")
+    ).firstMatch
+    XCTAssertTrue(restoredAfterCancellation.waitForExistence(timeout: 10))
+    restoredAfterCancellation.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.plannerElement(appearanceIdentifier).waitForPlannerValue(
+        "Categories: Culture, Tags: Rain"))
+    XCTAssertTrue(application.staticTexts["1 of 1 item done"].exists)
+    openLabels(application)
+    application.plannerElement(categoryIdentifier).activateForPlannerJourney()
+    deletion.activateForPlannerJourney()
+    XCTAssertTrue(impact.waitForExistence(timeout: 10))
+    application.plannerElement("saved.category.delete.confirm").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement(categoryIdentifier).waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.textFields["saved.category.name"].waitForNonExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["Rain"].firstMatch.exists)
+    recordLabelsScreenshot(application, name: "Confirmed Category deletion retains the other label")
+    application.plannerElement("saved.categories.done").activateForPlannerJourney()
+    openItems(application)
+    XCTAssertTrue(application.plannerElement(itemIdentifier).waitForExistence(timeout: 10))
+    XCTAssertTrue(application.plannerElement(itemIdentifier).waitForPlannerValue("Tags: Rain"))
+    application.plannerElement(itemIdentifier).activateForPlannerJourney()
+    XCTAssertFalse(application.staticTexts["Culture"].exists)
+    XCTAssertTrue(application.staticTexts["Rain"].firstMatch.exists)
+    let globalCompletion = application.descendants(matching: .any).matching(
+      identifier: "saved.item.completion"
+    ).firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItineraries(application)
+    let itinerary = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.", "Weekend route")
+    ).firstMatch
+    XCTAssertTrue(itinerary.waitForExistence(timeout: 10))
+    itinerary.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.plannerElement(appearanceIdentifier).waitForPlannerValue("Tags: Rain"))
+    XCTAssertTrue(application.plannerElement(completionIdentifier).waitForPlannerValue("Completed"))
+    XCTAssertTrue(application.staticTexts["1 of 1 item done"].exists)
+    XCTAssertTrue(application.staticTexts["Rain"].firstMatch.exists)
+    XCTAssertFalse(application.staticTexts["Culture"].exists)
+    recordLabelsScreenshot(
+      application, name: "Category deletion preserves completed route after relaunch")
+    openLabels(application)
+    XCTAssertFalse(application.plannerElement(categoryIdentifier).exists)
+    XCTAssertTrue(application.staticTexts["Rain"].firstMatch.exists)
+  }
+
+  func testItineraryOnlyTagDeletionRequiresConfirmationAndRetainsTheOtherSameNameIdentity() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openLabels(application)
+    createLabel("Tag", name: "Rain", application: application)
+    let tagRows = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@ AND label == %@", "saved.tag.", "Rain"))
+    let deletedTagIdentifier = tagRows.firstMatch.identifier
+    createLabel("Tag", name: "Rain", application: application)
+    XCTAssertTrue(application.textFields["saved.tag.name"].waitForNonExistence(timeout: 5))
+    XCTAssertEqual(tagRows.count, 2)
+    let survivingTagIdentifier = tagRows.matching(
+      NSPredicate(format: "identifier != %@", deletedTagIdentifier)
+    ).firstMatch.identifier
+    XCTAssertNotEqual(deletedTagIdentifier, survivingTagIdentifier)
+    createLabel("Category", name: "Culture", application: application)
+    application.plannerElement("saved.categories.done").activateForPlannerJourney()
+    openItineraries(application)
+    application.plannerElement("saved.itinerary.new").activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Rain route")
+    let notes = application.textFields["saved.itinerary.notes"]
+    notes.activateForPlannerJourney()
+    notes.typeText("Keep the rainy route notes")
+    selectLabels(
+      "Categories", names: ["Culture"], identifierPrefix: "saved.itinerary",
+      application: application)
+    application.plannerElement("saved.itinerary.tags").activateForPlannerJourney()
+    let selectedTagIdentifier = deletedTagIdentifier.replacingOccurrences(
+      of: "saved.tag.", with: "saved.item.label.tag.")
+    let selectedTag = application.descendants(matching: .any).matching(
+      identifier: selectedTagIdentifier
+    ).firstMatch
+    XCTAssertTrue(selectedTag.waitForExistence(timeout: 5))
+    XCTAssertTrue(selectedTag.waitForPlannerBooleanState(false))
+    #if os(macOS)
+      selectedTag.click()
+    #else
+      selectedTag.switches.firstMatch.tap()
+    #endif
+    XCTAssertTrue(selectedTag.waitForPlannerBooleanState(true))
+    application.plannerElement("saved.item.labels.done").activateForPlannerJourney()
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Rain"].firstMatch.exists)
+    openItineraries(application)
+    let itinerary = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.", "Rain route")
+    ).firstMatch
+    XCTAssertTrue(itinerary.waitForExistence(timeout: 10))
+    let itineraryIdentifier = itinerary.identifier
+    itinerary.activateForPlannerJourney()
+    openLabels(application)
+    application.plannerElement(deletedTagIdentifier).activateForPlannerJourney()
+    application.plannerElement("saved.tag.delete").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["1 Itinerary"].waitForExistence(timeout: 10))
+    recordLabelsScreenshot(application, name: "Tag Delete reviews an Itinerary-only association")
+    application.plannerElement("saved.tag.delete.cancel").activateForPlannerJourney()
+    XCTAssertTrue(application.textFields["saved.tag.name"].waitForPlannerValue("Rain"))
+    application.plannerElement("saved.tag.cancel").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement(deletedTagIdentifier).waitForExistence(timeout: 5))
+    XCTAssertTrue(application.plannerElement(survivingTagIdentifier).exists)
+    application.plannerElement("saved.categories.done").activateForPlannerJourney()
+    openItineraries(application)
+    application.plannerElement(itineraryIdentifier).activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Rain"].firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Keep the rainy route notes"].exists)
+    openLabels(application)
+    application.plannerElement(deletedTagIdentifier).activateForPlannerJourney()
+    application.plannerElement("saved.tag.delete").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["1 Itinerary"].waitForExistence(timeout: 10))
+    application.plannerElement("saved.tag.delete.confirm").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement(deletedTagIdentifier).waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.plannerElement(survivingTagIdentifier).exists)
+    XCTAssertEqual(application.plannerElement(survivingTagIdentifier).label, "Rain")
+    recordLabelsScreenshot(application, name: "Tag deletion retains the distinct same-name Tag")
+    application.plannerElement("saved.categories.done").activateForPlannerJourney()
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItineraries(application)
+    XCTAssertTrue(application.plannerElement(itineraryIdentifier).waitForExistence(timeout: 10))
+    application.plannerElement(itineraryIdentifier).activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Keep the rainy route notes"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Culture"].firstMatch.exists)
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    XCTAssertFalse(application.staticTexts["Rain"].exists)
+    recordLabelsScreenshot(
+      application, name: "Tag deletion preserves Itinerary notes and other labels")
+    openLabels(application)
+    XCTAssertFalse(application.plannerElement(deletedTagIdentifier).exists)
+    XCTAssertTrue(application.plannerElement(survivingTagIdentifier).waitForExistence(timeout: 10))
+    XCTAssertEqual(application.plannerElement(survivingTagIdentifier).label, "Rain")
+  }
+
   func testRepeatedItineraryAppearancesKeepLiveLabelsAndIndependentCompletionAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()

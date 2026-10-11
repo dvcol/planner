@@ -202,6 +202,10 @@ The [native Item Schedule edit qualification](prototypes/navigation-local-qualif
 
 The [native all-day edit qualification](prototypes/navigation-local-qualification.md#native-all-day-schedule-editing) verifies saved civil-date initialization, cancellation and a changed inclusive end under the same Schedule identity after relaunch. Only tests/evidence change. The journey stays within the initially displayed month; absent-end initialization, form conversions, stale drafts and travel remain open.
 
+## Native associated-label deletion
+
+The [native label Delete slice](prototypes/native-label-deletion.md) adds explicit review/confirmation to existing Category and Tag editors. It shows separate Item/Itinerary use counts, preserves owners and unrelated labels, and confirms an Itinerary-only Tag use under Q35. Cancel applies no deletion. Three journeys pass on each simulator, including existing bulk completion through the shared adapter, with twelve individually inspected captures and strict affected-file lint. Mac app/test bundles compile with zero native UI runtime functions. Core/HTTP bytes and their preceding qualification remain unchanged. Native controlled stale/recovery-failure presentation, broad graph/device stress, native Mac runtime, physical sync/account/Share and whole-app polish remain open.
+
 ## Open calendar and itinerary estimate choices
 
 The human asked for time estimates in itinerary rows and a Day/Week/Month calendar. At `b83d000`, itinerary catalog rows show only their title/icon, while saved details retain their Schedule records. Planner's own calendar is already in release scope, but the saved app has no Calendar destination or planning grid. Apple Calendar export remains outside this map. An estimate must never fill an absent Schedule end or change a booked instant.

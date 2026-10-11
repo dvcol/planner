@@ -28,7 +28,7 @@ struct SavedPlannerItinerary: Identifiable {
   var id: UUID { source.id }
 }
 
-enum SavedBulkCompletionResult {
+enum SavedReviewedChangeResult {
   case applied
   case reviewChanged(PlannerReview)
   case failed
@@ -557,8 +557,21 @@ final class SavedPlannerStore {
     }
   }
 
-  func applyBulkCompletion(_ review: PlannerReview, operationIdentifier: UUID) async
-    -> SavedBulkCompletionResult
+  func prepareLabelDeletion(_ label: SavedLabelSource) async -> PlannerReview? {
+    guard let planner, let session, canCreate else { return nil }
+    alertMessage = nil
+    switch await planner.prepareReview(
+      session: session, command: .deleteSource(source: label.source))
+    {
+    case .reviewed(let review): return review
+    case .failed(let reason):
+      alertMessage = reason.message
+      return nil
+    }
+  }
+
+  func applyReviewedChange(_ review: PlannerReview, operationIdentifier: UUID) async
+    -> SavedReviewedChangeResult
   {
     guard let planner, let session, canCreate else { return .failed }
     isSaving = true
