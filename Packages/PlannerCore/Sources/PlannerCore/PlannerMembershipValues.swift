@@ -140,6 +140,7 @@ public struct PlannerAppearanceRead: Sendable {
   public let source: PlannerEntityReference
   public let sourceLifetimeId: UUID
   public let content: PlannerItemContent
+  public let labels: [PlannerLabelRead]
   public let globalDone: Bool
   public let localDone: Bool
   public let effectiveDone: Bool

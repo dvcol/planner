@@ -525,6 +525,7 @@ public actor Planner {
       return PlannerAppearanceRead(
         appearance: appearance, source: source.reference, sourceLifetimeId: source.lifetimeId,
         content: source.input.readContent(links: source.links.map(\.read)),
+        labels: source.labels,
         globalDone: source.globalDone, localDone: binding.localDone,
         effectiveDone: source.globalDone || binding.localDone, archived: source.archived,
         fieldHashes: source.input.fieldHashes(
@@ -2622,6 +2623,7 @@ public actor Planner {
     return .init(
       appearance: appearance, source: source.reference, sourceLifetimeId: source.lifetimeId,
       content: source.input.readContent(links: source.links.map(\.read)),
+      labels: source.labels,
       globalDone: source.globalDone,
       localDone: localDone, effectiveDone: source.globalDone || localDone,
       archived: source.archived,
@@ -3849,6 +3851,7 @@ public actor Planner {
     return .init(
       appearance: appearance, source: source.reference, sourceLifetimeId: source.lifetimeId,
       content: source.input.readContent(links: source.links.map(\.read)),
+      labels: source.labels,
       globalDone: source.globalDone,
       localDone: localDone, effectiveDone: source.globalDone || localDone,
       archived: source.archived,
