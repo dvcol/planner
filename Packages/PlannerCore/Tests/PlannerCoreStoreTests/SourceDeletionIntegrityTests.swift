@@ -4,7 +4,7 @@ import PlannerCore
 import Testing
 
 struct SourceDeletionIntegrityTests {
-  @Test(arguments: [PlannerEntityKind.category, .tag, .item])
+  @Test(arguments: [PlannerEntityKind.category, .tag, .item, .list])
   func liveSourceClosureAndUnsupportedFamilyRejectTheEntireRecoverySnapshot(
     _ sourceKind: PlannerEntityKind
   ) async throws {
@@ -19,6 +19,7 @@ struct SourceDeletionIntegrityTests {
         storageMode: .localOnly))
     func createSource(_ name: String) -> PlannerCommand {
       if sourceKind == .item { return .createItem(content: .init(title: name)) }
+      if sourceKind == .list { return .createList(content: .init(name: name)) }
       if sourceKind == .category { return .createCategory(content: .init(name: name)) }
       return .createTag(content: .init(name: name))
     }
@@ -53,6 +54,13 @@ struct SourceDeletionIntegrityTests {
     let sourceLifetimeId: UUID
     switch beforeSource {
     case .item(let before): sourceLifetimeId = before.sourceLifetimeId
+    case .list(let before):
+      guard
+        case .list(let source)? = original.decodedBackup.backup.sources.first(where: {
+          $0.kind == .list && $0.id == before.source.id
+        })
+      else { throw CancellationError() }
+      sourceLifetimeId = source.lifetimeId
     case .category(let before): sourceLifetimeId = before.sourceLifetimeId
     case .tag(let before): sourceLifetimeId = before.sourceLifetimeId
     default: throw CancellationError()
@@ -105,6 +113,8 @@ struct SourceDeletionIntegrityTests {
     else { throw CancellationError() }
     switch (beforeSource, afterSource) {
     case (.item(let before), .item(let after)):
+      #expect(after.fieldHashes == before.fieldHashes && after.updatedAt == before.updatedAt)
+    case (.list(let before), .list(let after)):
       #expect(after.fieldHashes == before.fieldHashes && after.updatedAt == before.updatedAt)
     case (.category(let before), .category(let after)):
       #expect(after.fieldHashes == before.fieldHashes && after.updatedAt == before.updatedAt)

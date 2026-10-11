@@ -5,7 +5,7 @@ import Testing
 @testable import Planner
 
 struct SourceDeletionRoutingTests {
-  @Test(arguments: [PlannerEntityKind.category, .tag, .item])
+  @Test(arguments: [PlannerEntityKind.category, .tag, .item, .list])
   func statelessHTTPCannotReviewOrApplyNativeSourceDeletionEvenWithAnIssuedToken(
     _ sourceKind: PlannerEntityKind
   ) async throws {
@@ -20,6 +20,8 @@ struct SourceDeletionRoutingTests {
     let createSource: PlannerCommand
     if sourceKind == .item {
       createSource = .createItem(content: .init(title: "Food"))
+    } else if sourceKind == .list {
+      createSource = .createList(content: .init(name: "Food"))
     } else if sourceKind == .category {
       createSource = .createCategory(content: .init(name: "Food"))
     } else {
@@ -103,6 +105,8 @@ struct SourceDeletionRoutingTests {
       switch retained {
       case .item(let source):
         #expect(source.content.title == "Food" && source.references.isEmpty)
+      case .list(let source):
+        #expect(source.content.name == "Food" && source.references.isEmpty)
       case .category(let source):
         #expect(source.content.name == "Food" && source.references.isEmpty)
       case .tag(let source): #expect(source.content.name == "Food" && source.references.isEmpty)
