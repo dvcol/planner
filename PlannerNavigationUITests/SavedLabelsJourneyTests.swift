@@ -2,6 +2,78 @@ import XCTest
 
 @MainActor
 final class SavedLabelsJourneyTests: XCTestCase {
+  func testSettingsManageLabelsSharesSavedIdentityWithTheToolbarAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openSettings(application)
+    recordLabelsScreenshot(application, name: "Native Settings entry for Manage Labels")
+    application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Manage Labels"].firstMatch.waitForExistence(timeout: 5))
+    newTag(application)
+    let name = application.textFields["saved.tag.name"]
+    XCTAssertTrue(name.waitForExistence(timeout: 5))
+    name.activateForPlannerJourney()
+    name.typeText("Canceled Tag")
+    application.plannerElement("saved.tag.cancel").activateForPlannerJourney()
+    XCTAssertFalse(application.staticTexts["Canceled Tag"].exists)
+    createLabel("Tag", name: "Rain", application: application)
+    let tag = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@ AND label == %@", "saved.tag.", "Rain")
+    ).firstMatch
+    XCTAssertTrue(tag.waitForExistence(timeout: 10))
+    let sourceIdentifier = tag.identifier
+    application.plannerElement("saved.categories.done").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement("saved.settings.labels").waitForExistence(timeout: 5))
+    closeSettings(application)
+    openLabels(application)
+    XCTAssertEqual(tag.identifier, sourceIdentifier)
+    tag.activateForPlannerJourney()
+    XCTAssertTrue(name.waitForExistence(timeout: 5))
+    replaceText(name, with: "Wet weather", application: application)
+    application.plannerElement("saved.tag.save").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement(sourceIdentifier).waitForExistence(timeout: 10))
+    XCTAssertEqual(application.plannerElement(sourceIdentifier).label, "Wet weather")
+    application.plannerElement("saved.categories.done").activateForPlannerJourney()
+    openSettings(application)
+    application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement(sourceIdentifier).waitForExistence(timeout: 10))
+    XCTAssertEqual(application.plannerElement(sourceIdentifier).label, "Wet weather")
+    recordLabelsScreenshot(application, name: "Settings and toolbar use the same saved Tag")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSettings(application)
+    application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement(sourceIdentifier).waitForExistence(timeout: 10))
+    XCTAssertEqual(application.plannerElement(sourceIdentifier).label, "Wet weather")
+    XCTAssertFalse(application.staticTexts["Canceled Tag"].exists)
+    recordLabelsScreenshot(application, name: "Manage Labels through Settings after relaunch")
+  }
+
+  private func openSettings(_ application: XCUIApplication) {
+    #if os(macOS)
+      application.typeKey(",", modifierFlags: .command)
+    #else
+      let settings = application.plannerElement("saved.settings.open")
+      if !settings.waitForExistence(timeout: 2) {
+        let sidebar = application.plannerElement("Show Sidebar")
+        if sidebar.exists { sidebar.activateForPlannerJourney() }
+      }
+      XCTAssertTrue(settings.waitForExistence(timeout: 10))
+      settings.activateForPlannerJourney()
+    #endif
+    XCTAssertTrue(application.plannerElement("saved.settings.labels").waitForExistence(timeout: 10))
+  }
+
+  private func closeSettings(_ application: XCUIApplication) {
+    #if os(macOS)
+      application.typeKey("w", modifierFlags: .command)
+    #else
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+    #endif
+  }
+
   func testItineraryLabelSelectionStagesChangesAndPreservesLiveNamesAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()

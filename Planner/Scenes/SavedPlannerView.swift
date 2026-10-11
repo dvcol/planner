@@ -37,6 +37,7 @@ struct SavedPlannerView: View {
   @State private var isOpeningList = false
   @State private var showNewList = false
   @State private var showLabels = false
+  @State private var showSettings = false
   @State private var listCatalog: [SavedPlannerList]?
   @State private var listCatalogArchive = SavedItemFilters.Archive.active
   @State private var isOpeningListCatalog = false
@@ -119,6 +120,9 @@ struct SavedPlannerView: View {
     .sheet(isPresented: $showLabels) {
       SavedLabelsView(store: store)
     }
+    #if os(iOS)
+      .sheet(isPresented: $showSettings) { SavedPlannerSettingsView(store: store) }
+    #endif
     .sheet(isPresented: $showNewList) {
       SavedNewListForm(store: store) { source in
         selectedSection = .lists
@@ -155,6 +159,7 @@ struct SavedPlannerView: View {
         get: {
           store.alertMessage != nil && itemEditDraft == nil && bulkCompletionDraft == nil
             && !showLabels
+            && !showSettings
             && (selectedSection != .itineraries || showNewList || showNewItem)
         },
         set: { if !$0 { store.alertMessage = nil } })
@@ -663,6 +668,13 @@ struct SavedPlannerView: View {
             .disabled(!store.isReady)
             .accessibilityIdentifier("saved.categories.manage")
         }
+        #if os(iOS)
+          ToolbarItem(placement: categoryToolbarPlacement) {
+            Button("Settings", systemImage: "gearshape") { showSettings = true }
+              .disabled(!store.isReady)
+              .accessibilityIdentifier("saved.settings.open")
+          }
+        #endif
         ToolbarItem {
           SavedListArchiveFilterMenu(archive: $listCatalogArchive)
         }
