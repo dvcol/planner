@@ -1,0 +1,52 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006030-001A586C3EA3001C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 1,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "Planner · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1791734656.355,
+  "passedTests" : 1,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1791734641.87,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Expectation failed: Set(row.keys) == [\n            \"identity\", \"title\", \"subtitle\", \"estimate\", \"globalDone\", \"localDone\", \"effectiveDone\",\n            \"archived\", \"hasLocation\", \"hasLinks\", \"ownedLocation\", \"previewLink\",\n            \"scheduleSummary\",\n          ]\nSet(row.keys) → [\"previewLink\", \"effectiveDone\", \"hasLocation\", \"scheduleSummary\", \"estimate\", \"subtitle\", \"title\", \"globalDone\", \"localDone\", \"labels\", \"ownedLocation\", \"archived\", \"hasLinks\", \"identity\"]\n[\n            \"identity\", \"title\", \"subtitle\", \"estimate\", \"globalDone\", \"localDone\", \"effectiveDone\",\n            \"archived\", \"hasLocation\", \"hasLinks\", \"ownedLocation\", \"previewLink\",\n            \"scheduleSummary\",\n          ] → [\"archived\", \"identity\", \"previewLink\", \"localDone\", \"effectiveDone\", \"globalDone\", \"hasLocation\", \"ownedLocation\", \"subtitle\", \"title\", \"hasLinks\", \"estimate\", \"scheduleSummary\"]",
+      "targetName" : "PlannerMCPTests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "ListCatalogRoutingTests/catalogDiscoveryOverHTTPRetainsDuplicateIdentitiesAndCompactOriginalNames()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ListCatalogRoutingTests/catalogDiscoveryOverHTTPRetainsDuplicateIdentitiesAndCompactOriginalNames()",
+      "testName" : "catalogDiscoveryOverHTTPRetainsDuplicateIdentitiesAndCompactOriginalNames()"
+    }
+  ],
+  "title" : "Test - Planner",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 2
+}
