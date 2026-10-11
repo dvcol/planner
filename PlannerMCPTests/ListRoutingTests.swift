@@ -612,7 +612,8 @@ struct ListRoutingTests {
       let sourceProperties = try #require(
         (archiveProperties["source"] as? [String: Any])?["properties"] as? [String: Any])
       #expect(
-        (sourceProperties["kind"] as? [String: Any])?["enum"] as? [String] == ["item", "list"])
+        (sourceProperties["kind"] as? [String: Any])?["enum"] as? [String]
+          == ["item", "list", "itinerary"])
       let archiveArguments: [String: Any] = [
         "formatVersion": 1, "operationId": UUID().uuidString,
         "command": [

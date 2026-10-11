@@ -197,6 +197,11 @@ public actor Planner {
               archive: archive, receipts: receipts, envelope: envelope)
           }
         case .setArchive(let source, let archived):
+          if source.kind == .itinerary {
+            return try executeItineraryArchive(
+              operation, source: source, archived: archived, identity: identity,
+              context: context, archive: archive, receipts: receipts, envelope: envelope)
+          }
           if source.kind == .list {
             return try executeListChange(
               operation, sourceId: source.id, change: .archive(archived), identity: identity,
@@ -4712,6 +4717,103 @@ public actor Planner {
         memberships: try membershipSnapshots(context),
         deletionMarkers: markers,
         receipts: receipts + [receipt])
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
+  }
+
+  private func executeItineraryArchive(
+    _ operation: PlannerOperation, source: PlannerEntityReference, archived: Bool,
+    identity: PlannerStoreIdentity, context: ModelContext, archive: PlannerRecoveryArchive,
+    receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let stored = try receipt.evidence()
+      let digest = sourceStatePayloadDigest(
+        source: source, change: .archive(archived), identity: identity, bindings: stored.bindings)
+      guard receipt.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch",
+          "This operation identity already describes a different action.")
+      }
+      return appliedResult(
+        operationId: operation.operationId, evidence: try RecoveryReceipt(receipt, checkpoint: nil),
+        envelope: envelope)
+    }
+    let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    let itineraries = try context.fetch(FetchDescriptor<PlannerSchemaV13.Itinerary>())
+    let matches = itineraries.filter { $0.id == source.id }
+    guard matches.count == 1, let itinerary = matches.first else {
+      throw PlannerFailure("missingReference", "The selected Itinerary is missing or unresolved.")
+    }
+    let before = try itinerary.value()
+    let bindings = [
+      PlannerBoundIdentity(kind: "itinerary", id: before.id, lifetimeId: before.lifetimeId)
+    ]
+    let digest = sourceStatePayloadDigest(
+      source: source, change: .archive(archived), identity: identity, bindings: bindings)
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes a different action.")
+      }
+      return PlannerOperationResult(
+        operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    var updatedAt = before.updatedAt
+    if archived != before.archived { updatedAt = Date() }
+    let after = ItinerarySnapshot(
+      id: before.id, lifetimeId: before.lifetimeId, createdAt: before.createdAt,
+      updatedAt: updatedAt, input: before.input, archived: archived, links: before.links,
+      labelAssociations: before.labelAssociations, labels: before.labels, entries: before.entries)
+    let snapshots = try itineraries.map { record in
+      if record.id == source.id { return after }
+      return try record.value()
+    }
+    let result = PlannerAppliedResult(generated: [], affected: [source])
+    let proposal = RecoveryPreparedProposal(
+      proposalId: UUID(), originalOperationId: operation.operationId,
+      datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
+      proposedBackup: PlannerDataSnapshot(
+        itineraries: snapshots,
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
+        items: try context.fetch(FetchDescriptor<PlannerSchemaV13.Item>()).map { try $0.value() },
+        lists: try listSnapshots(context), memberships: try membershipSnapshots(context),
+        deletionMarkers: try deletionMarkers(context)),
+      payloadDigest: digest, evidence: "preparedUnverified")
+    try archive.prepare(proposal)
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result, bindings: bindings)
+    itinerary.archived = archived
+    itinerary.updatedAt = updatedAt
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The complete Itinerary archive action was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(
+        itineraries: snapshots,
+        labelAssociations: try labelAssociationSnapshots(context), tags: try tagSnapshots(context),
+        categories: try categorySnapshots(context),
+        items: try context.fetch(FetchDescriptor<PlannerSchemaV13.Item>()).map { try $0.value() },
+        lists: try listSnapshots(context), memberships: try membershipSnapshots(context),
+        deletionMarkers: try deletionMarkers(context), receipts: receipts + [receipt])
       return PlannerOperationResult(
         operationId: operation.operationId,
         outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
