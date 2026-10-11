@@ -4,9 +4,12 @@ import SwiftUI
 struct SavedItemSchedulesSection: View {
   @Environment(SavedPlannerStore.self) private var store
   let item: PlannerItemSourceRead
+  let canChange: Bool
   @State private var schedules: [PlannerScheduleSourceRead] = []
   @State private var isLoading = true
   @State private var loadingFailure: String?
+  @State private var scheduleToRemove: PlannerScheduleSourceRead?
+  @State private var removalOperationIdentifier = UUID()
 
   private var scheduleIdentifiers: [UUID] {
     item.references.compactMap { reference in
@@ -34,12 +37,40 @@ struct SavedItemSchedulesSection: View {
           } else {
             ForEach(schedules, id: \.source.id) { schedule in
               SavedItemScheduleRow(schedule: schedule)
+                .contextMenu {
+                  Button("Remove Schedule", systemImage: "calendar.badge.minus", role: .destructive)
+                  {
+                    removalOperationIdentifier = UUID()
+                    scheduleToRemove = schedule
+                  }
+                  .disabled(!canChange)
+                }
             }
           }
         }
       }
     }
     .task(id: loadRevision) { await loadSchedules() }
+    .confirmationDialog(
+      "Remove this schedule?",
+      isPresented: Binding(
+        get: { scheduleToRemove != nil }, set: { if !$0 { scheduleToRemove = nil } }),
+      titleVisibility: .visible
+    ) {
+      if let schedule = scheduleToRemove {
+        Button("Remove Schedule", role: .destructive) {
+          let operationIdentifier = removalOperationIdentifier
+          Task {
+            await store.removeSchedule(schedule.source.id, operationIdentifier: operationIdentifier)
+          }
+        }
+        .disabled(!canChange)
+        .accessibilityIdentifier("saved.schedule.remove.confirm")
+      }
+      Button("Cancel", role: .cancel) { scheduleToRemove = nil }
+    } message: {
+      Text("1 schedule will be removed. The Item and its other schedules stay available.")
+    }
   }
 
   private func loadSchedules() async {
@@ -50,11 +81,12 @@ struct SavedItemSchedulesSection: View {
     var loadedSchedules: [PlannerScheduleSourceRead] = []
     var failure: String?
     for identifier in identifiers {
-      guard let schedule = await store.readSchedule(identifier) else {
-        failure = store.alertMessage ?? "Planner could not read this Item's schedules."
-        break
+      switch await store.readSchedule(identifier) {
+      case .source(.schedule(let schedule))?: loadedSchedules.append(schedule)
+      case .failed(let reason)?: failure = reason.message
+      default: failure = "Planner could not open this Schedule."
       }
-      loadedSchedules.append(schedule)
+      if failure != nil { break }
     }
     guard !Task.isCancelled, revision == loadRevision else { return }
     schedules = failure == nil ? loadedSchedules : []

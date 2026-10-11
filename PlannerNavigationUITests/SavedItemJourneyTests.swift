@@ -2,6 +2,103 @@ import XCTest
 
 @MainActor
 final class SavedItemJourneyTests: XCTestCase {
+  func testConfirmedScheduleRemovalKeepsOtherAppointmentsAndSourceItemAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    let title = application.textFields["saved.item.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Garden appointments")
+    let notes = application.textFields["saved.item.notes"]
+    notes.activateForPlannerJourney()
+    notes.typeText("Keep the meeting notes")
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Keep the meeting notes"].waitForExistence(timeout: 10))
+    let startOnlySchedules = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.item.schedule.", "Start only"))
+    let timedSchedules = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.item.schedule.", "Timed"))
+    for includesEnd in [false, true] {
+      application.plannerElement("saved.item.actions").activateForPlannerJourney()
+      application.plannerElement("Schedule Item").activateForPlannerJourney()
+      let includeEnd = application.descendants(matching: .any)
+        .matching(identifier: "saved.schedule.hasEnd").firstMatch
+      XCTAssertTrue(includeEnd.waitForPlannerBooleanState(false))
+      if includesEnd { activateCompletion(includeEnd) }
+      application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+      let savedSchedule = includesEnd ? timedSchedules.firstMatch : startOnlySchedules.firstMatch
+      XCTAssertTrue(savedSchedule.waitForExistence(timeout: 10))
+    }
+    let retainedIdentifier = startOnlySchedules.firstMatch.identifier
+    openScheduleMenu(timedSchedules.firstMatch)
+    let removeAction = application.plannerElement("Remove Schedule")
+    XCTAssertTrue(removeAction.waitForExistence(timeout: 5))
+    removeAction.activateForPlannerJourney()
+    let confirm = application.buttons.matching(identifier: "saved.schedule.remove.confirm")
+      .firstMatch
+    XCTAssertTrue(confirm.waitForExistence(timeout: 5))
+    XCTAssertTrue(
+      application.staticTexts[
+        "1 schedule will be removed. The Item and its other schedules stay available."
+      ].exists)
+    recordScreenshot(application, name: "Native schedule removal confirmation")
+    application.staticTexts["Garden appointments"].firstMatch.activateForPlannerJourney()
+    XCTAssertTrue(confirm.waitForNonExistence(timeout: 5))
+    XCTAssertEqual(timedSchedules.count, 1)
+    XCTAssertEqual(startOnlySchedules.count, 1)
+    openScheduleMenu(timedSchedules.firstMatch)
+    removeAction.activateForPlannerJourney()
+    XCTAssertTrue(confirm.waitForExistence(timeout: 5))
+    confirm.activateForPlannerJourney()
+    XCTAssertTrue(timedSchedules.firstMatch.waitForNonExistence(timeout: 10))
+    XCTAssertEqual(startOnlySchedules.count, 1)
+    XCTAssertEqual(startOnlySchedules.firstMatch.identifier, retainedIdentifier)
+    XCTAssertTrue(application.staticTexts["Keep the meeting notes"].exists)
+    XCTAssertFalse(application.alerts["Planner"].waitForExistence(timeout: 2))
+    recordScreenshot(application, name: "Native schedule removal preserves another appointment")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    let retainedItem = application.savedPlannerItemRows("Garden appointments").firstMatch
+    XCTAssertTrue(retainedItem.waitForExistence(timeout: 10))
+    retainedItem.activateForPlannerJourney()
+    XCTAssertTrue(startOnlySchedules.firstMatch.waitForExistence(timeout: 10))
+    XCTAssertEqual(startOnlySchedules.firstMatch.identifier, retainedIdentifier)
+    XCTAssertEqual(timedSchedules.count, 0)
+    openScheduleMenu(startOnlySchedules.firstMatch)
+    removeAction.activateForPlannerJourney()
+    XCTAssertTrue(confirm.waitForExistence(timeout: 5))
+    confirm.activateForPlannerJourney()
+    XCTAssertTrue(startOnlySchedules.firstMatch.waitForNonExistence(timeout: 10))
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    XCTAssertTrue(retainedItem.waitForExistence(timeout: 10))
+    retainedItem.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Keep the meeting notes"].waitForExistence(timeout: 10))
+    XCTAssertEqual(startOnlySchedules.count, 0)
+    XCTAssertEqual(timedSchedules.count, 0)
+    let completion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+    XCTAssertFalse(application.alerts["Planner"].waitForExistence(timeout: 2))
+    recordScreenshot(application, name: "Native Item remains after removing its last schedule")
+  }
+
+  private func openScheduleMenu(_ schedule: XCUIElement) {
+    #if os(macOS)
+      schedule.rightClick()
+    #else
+      schedule.press(forDuration: 1.2)
+    #endif
+  }
+
   func testOptionalScheduleEndCanBeClearedCanceledAndSavedAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()

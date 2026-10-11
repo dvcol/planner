@@ -190,6 +190,8 @@ The [native start-only scheduling qualification](prototypes/navigation-local-qua
 
 The [native optional-end qualification](prototypes/navigation-local-qualification.md#native-optional-item-schedule-end) extends the same draft with a native Toggle and End DatePicker. Clearing the Toggle keeps the end absent. The cancel/save/relaunch journey and prior start-only compatibility check qualify the default valid endpoints; edited endpoint values, invalid-end UI and DST choices retain their native gates.
 
+The [native schedule-removal qualification](prototypes/navigation-local-qualification.md#native-confirmed-item-schedule-removal) adds a context menu and system confirmation for one direct appointment. Cancellation retains both appointments; confirmed removal preserves the other exact identity and the source Item after relaunch. Removing the last appointment preserves Item notes and completion. Capture review exposed a stale read setting a false global alert after successful removal. The corrected reader leaves failure presentation to its owning section; regression checks require no Planner alert. Earlier failed, canceled and superseded results remain recorded. Broader failure, external-change, Undo and Mac-runtime gates remain open.
+
 ## Definition of ready and done
 
 - [x] Contract public interfaces accepted, prerequisite resolutions reviewed, local toolchain inventory refreshed and fixture inputs/expected transitions specified.
