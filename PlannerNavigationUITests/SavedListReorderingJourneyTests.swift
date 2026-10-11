@@ -35,8 +35,7 @@ final class SavedListReorderingJourneyTests: XCTestCase {
     hotelCompletion.activateForPlannerJourney()
     XCTAssertTrue(hotelCompletion.waitForPlannerValue("Completed"))
     let filters = application.plannerElement("saved.list.filters")
-    filters.activateForPlannerJourney()
-    application.plannerElement("Todo").activateForPlannerJourney()
+    application.chooseSavedPlannerStateFilter("Todo", control: filters)
     XCTAssertTrue(hotel.waitForNonExistence(timeout: 10))
     XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
     XCTAssertTrue(application.staticTexts["Showing 2 of 3 items"].exists)
@@ -53,8 +52,7 @@ final class SavedListReorderingJourneyTests: XCTestCase {
     XCTAssertEqual(museum.identifier, museumIdentifier)
     XCTAssertEqual(cafe.identifier, cafeIdentifier)
     recordScreenshot(application, name: "Filtered Manual drag keeps full List progress")
-    filters.activateForPlannerJourney()
-    application.plannerElement("All completion states").activateForPlannerJourney()
+    application.chooseSavedPlannerStateFilter("All completion states", control: filters)
     XCTAssertTrue(hotel.waitForExistence(timeout: 10))
     XCTAssertTrue(waitForOrder(hotel, before: cafe))
     XCTAssertTrue(waitForOrder(cafe, before: museum))
@@ -190,7 +188,17 @@ final class SavedListReorderingJourneyTests: XCTestCase {
   }
 
   private func addItem(_ title: String, application: XCUIApplication) {
-    application.plannerElement("saved.list.add").activateForPlannerJourney()
+    let add = application.plannerElement("saved.list.add")
+    if add.exists {
+      add.activateForPlannerJourney()
+    } else {
+      let overflow = application.buttons["OverflowBarButtonItem"].firstMatch
+      XCTAssertTrue(overflow.waitForExistence(timeout: 5), application.debugDescription)
+      overflow.activateForPlannerJourney()
+      let overflowAdd = application.plannerElement("Add existing Item")
+      XCTAssertTrue(overflowAdd.waitForExistence(timeout: 5), application.debugDescription)
+      overflowAdd.activateForPlannerJourney()
+    }
     let candidate = application.staticTexts[title].firstMatch
     XCTAssertTrue(candidate.waitForExistence(timeout: 5))
     candidate.activateForPlannerJourney()

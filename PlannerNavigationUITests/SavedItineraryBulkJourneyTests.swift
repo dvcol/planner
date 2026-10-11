@@ -209,8 +209,8 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
 
   private func openItem(_ title: String, application: XCUIApplication) {
     openSection("Items", application: application)
-    reveal("saved.items.filters", application: application).activateForPlannerJourney()
-    application.plannerElement("All archive states").activateForPlannerJourney()
+    application.chooseSavedPlannerStateFilter(
+      "All archive states", control: reveal("saved.items.filters", application: application))
     let row = application.savedPlannerItemRows(title).firstMatch
     revealNavigation(to: row, application: application)
     XCTAssertTrue(row.waitForExistence(timeout: 10), application.debugDescription)

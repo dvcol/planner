@@ -26,42 +26,166 @@ struct SavedItemFilters: Equatable {
     }
   }
 
+  enum LabelMatch: String {
+    case any, all
+
+    var queryValue: PlannerItemQuery.IdentityGroup.Match {
+      self == .any ? .any : .all
+    }
+  }
+
   var completion: Completion = .all
   var archive: Archive = .all
+  var categoryIdentifiers: Set<UUID> = []
+  var tagIdentifiers: Set<UUID> = []
+  var categoryMatch: LabelMatch = .any
+  var tagMatch: LabelMatch = .any
+
+  var categoryQuery: PlannerItemQuery.IdentityGroup? {
+    guard !categoryIdentifiers.isEmpty else { return nil }
+    return .init(ids: categoryIdentifiers, match: categoryMatch.queryValue)
+  }
+
+  var tagQuery: PlannerItemQuery.IdentityGroup? {
+    guard !tagIdentifiers.isEmpty else { return nil }
+    return .init(ids: tagIdentifiers, match: tagMatch.queryValue)
+  }
 
   var summary: String {
-    let restrictions = [completion.rawValue, archive.rawValue]
+    var restrictions = [completion.rawValue, archive.rawValue]
       .filter { $0 != "all" }.map { $0.capitalized }
+    if !categoryIdentifiers.isEmpty {
+      if categoryIdentifiers.count == 1 {
+        restrictions.append("1 Category")
+      } else if categoryMatch == .all {
+        restrictions.append("All \(categoryIdentifiers.count) Categories")
+      } else {
+        restrictions.append("\(categoryIdentifiers.count) Categories")
+      }
+    }
+    if !tagIdentifiers.isEmpty {
+      if tagIdentifiers.count == 1 {
+        restrictions.append("1 Tag")
+      } else if tagMatch == .all {
+        restrictions.append("All \(tagIdentifiers.count) Tags")
+      } else {
+        restrictions.append("\(tagIdentifiers.count) Tags")
+      }
+    }
     return restrictions.isEmpty ? "All" : restrictions.joined(separator: " · ")
   }
 }
 
-struct SavedItemFilterMenu: View {
+struct SavedItemFilterControl: View {
+  @Environment(SavedPlannerStore.self) private var store
   @Binding var filters: SavedItemFilters
   let accessibilityIdentifier: String
+  @State private var showFilters = false
 
   var body: some View {
-    Menu {
-      Picker("Completion", selection: $filters.completion) {
-        Text("Todo").tag(SavedItemFilters.Completion.todo)
-        Text("Done").tag(SavedItemFilters.Completion.done)
-        Text("All completion states").tag(SavedItemFilters.Completion.all)
-      }
-      .pickerStyle(.inline)
-      Divider()
-      Picker("Archive", selection: $filters.archive) {
-        Text("Active").tag(SavedItemFilters.Archive.active)
-        Text("Archived").tag(SavedItemFilters.Archive.archived)
-        Text("All archive states").tag(SavedItemFilters.Archive.all)
-      }
-      .pickerStyle(.inline)
+    Button {
+      showFilters = true
     } label: {
-      Text(filters.summary)
+      Label(filters.summary, systemImage: "line.3.horizontal.decrease")
+        .labelStyle(.titleAndIcon)
         .fixedSize(horizontal: true, vertical: false)
     }
     .accessibilityLabel(filters.summary)
     .accessibilityIdentifier(accessibilityIdentifier)
     .help("Filters: \(filters.summary)")
+    .popover(isPresented: $showFilters) {
+      SavedItemFilterForm(store: store, filters: $filters)
+        #if os(iOS)
+          .presentationCompactAdaptation(.sheet)
+          .presentationDetents([.large])
+        #endif
+    }
+  }
+}
+
+private struct SavedItemFilterForm: View {
+  @Environment(\.dismiss) private var dismiss
+  let store: SavedPlannerStore
+  @Binding var filters: SavedItemFilters
+
+  var body: some View {
+    NavigationStack {
+      Form {
+        Section("State") {
+          Picker("Completion", selection: $filters.completion) {
+            Text("Todo").tag(SavedItemFilters.Completion.todo)
+            Text("Done").tag(SavedItemFilters.Completion.done)
+            Text("All completion states").tag(SavedItemFilters.Completion.all)
+          }
+          .pickerStyle(.menu)
+          .accessibilityIdentifier("saved.filters.completion")
+          Picker("Archive", selection: $filters.archive) {
+            Text("Active").tag(SavedItemFilters.Archive.active)
+            Text("Archived").tag(SavedItemFilters.Archive.archived)
+            Text("All archive states").tag(SavedItemFilters.Archive.all)
+          }
+          .pickerStyle(.menu)
+          .accessibilityIdentifier("saved.filters.archive")
+        }
+        Section("Categories") {
+          NavigationLink {
+            SavedItemLabelPicker(
+              store: store, kind: .category, selection: $filters.categoryIdentifiers)
+          } label: {
+            LabeledContent("Categories", value: selectionSummary(filters.categoryIdentifiers))
+          }
+          .accessibilityIdentifier("saved.filters.categories")
+          if !filters.categoryIdentifiers.isEmpty {
+            matchPicker(.category, selection: $filters.categoryMatch)
+            Button("Clear Categories") { filters.categoryIdentifiers = [] }
+          }
+        }
+        Section("Tags") {
+          NavigationLink {
+            SavedItemLabelPicker(store: store, kind: .tag, selection: $filters.tagIdentifiers)
+          } label: {
+            LabeledContent("Tags", value: selectionSummary(filters.tagIdentifiers))
+          }
+          .accessibilityIdentifier("saved.filters.tags")
+          if !filters.tagIdentifiers.isEmpty {
+            matchPicker(.tag, selection: $filters.tagMatch)
+            Button("Clear Tags") { filters.tagIdentifiers = [] }
+          }
+        }
+      }
+      .formStyle(.grouped)
+      .navigationTitle("Filters")
+      #if os(iOS)
+        .navigationBarTitleDisplayMode(.inline)
+      #endif
+      .toolbar {
+        ToolbarItem(placement: .cancellationAction) {
+          Button("Clear Filters") { filters = .init() }
+            .disabled(filters == SavedItemFilters())
+            .accessibilityIdentifier("saved.filters.clear")
+        }
+        ToolbarItem(placement: .confirmationAction) {
+          Button("Done") { dismiss() }
+            .accessibilityIdentifier("saved.filters.done")
+        }
+      }
+    }
+    .frame(minWidth: 320, idealWidth: 360, minHeight: 420)
+  }
+
+  private func matchPicker(
+    _ kind: SavedLabelKind, selection: Binding<SavedItemFilters.LabelMatch>
+  ) -> some View {
+    Picker("Match", selection: selection) {
+      Text("Any selected").tag(SavedItemFilters.LabelMatch.any)
+      Text("All selected").tag(SavedItemFilters.LabelMatch.all)
+    }
+    .pickerStyle(.menu)
+    .accessibilityIdentifier("saved.filters.\(kind.rawValue).match")
+  }
+
+  private func selectionSummary(_ identifiers: Set<UUID>) -> String {
+    identifiers.isEmpty ? "Any" : "\(identifiers.count) selected"
   }
 }
 

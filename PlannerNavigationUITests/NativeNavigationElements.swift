@@ -33,6 +33,37 @@ extension XCUIApplication {
     ).firstMatch
   }
 
+  func chooseSavedPlannerStateFilter(_ title: String, control: XCUIElement) {
+    let pickerIdentifier: String
+    switch title {
+    case "Todo", "Done", "All completion states":
+      pickerIdentifier = "saved.filters.completion"
+    case "Active", "Archived", "All archive states":
+      pickerIdentifier = "saved.filters.archive"
+    default:
+      XCTFail("Unknown Planner state filter: \(title)")
+      return
+    }
+    control.activateForPlannerJourney()
+    let picker = plannerElement(pickerIdentifier)
+    XCTAssertTrue(picker.waitForExistence(timeout: 5))
+    picker.activateForPlannerJourney()
+    #if os(macOS)
+      let choices = descendants(matching: .any)
+    #else
+      let choices = buttons
+    #endif
+    let option = choices.matching(
+      NSPredicate(
+        format: "(label == %@ OR identifier == %@) AND identifier != %@",
+        title, title, "saved.filters.done")
+    ).firstMatch
+    XCTAssertTrue(option.waitForExistence(timeout: 5))
+    XCTAssertTrue(option.waitForPlannerHittability())
+    option.activateForPlannerJourney()
+    plannerElement("saved.filters.done").activateForPlannerJourney()
+  }
+
   /// Native Mac rows and menus expose different accessibility roles from mobile navigation buttons.
   func plannerElement(_ identifier: String) -> XCUIElement {
     #if os(macOS)
