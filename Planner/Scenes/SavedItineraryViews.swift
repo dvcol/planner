@@ -75,14 +75,18 @@ private struct SavedItineraryEditDraft: Identifiable {
 struct SavedItineraryDetail: View {
   let store: SavedPlannerStore
   let identifier: UUID
-  @State private var itinerary: PlannerItinerarySourceRead?
+  @Binding var selection: SavedItineraryRowSelection?
+  @State private var contents: SavedItineraryContents?
   @State private var loadingFailure: String?
   @State private var editDraft: SavedItineraryEditDraft?
+  @State private var showAddEntry = false
+  @State private var collapsedEntries: Set<UUID> = []
 
   var body: some View {
     Group {
-      if let itinerary {
-        Form {
+      if let contents {
+        let itinerary = contents.itinerary
+        List(selection: $selection) {
           Section {
             if itinerary.progress.state == .empty {
               Text("No items").foregroundStyle(.secondary)
@@ -95,14 +99,65 @@ struct SavedItineraryDetail: View {
             } else {
               Text("Progress unavailable").foregroundStyle(.secondary)
             }
+            let directCount = contents.entries.filter { $0.source.kind == .item }.count
+            let listCount = contents.entries.filter { $0.source.kind == .list }.count
+            Text(
+              "\(directCount) direct \(directCount == 1 ? "item" : "items") · \(listCount) \(listCount == 1 ? "list" : "lists")"
+            )
+            .font(.caption).foregroundStyle(.secondary)
           }
           if let notes = itinerary.content.notes, !notes.isEmpty {
             Section("Notes") { Text(notes).textSelection(.enabled) }
           }
+          Section("Entries") {
+            ForEach(contents.entries) { entry in
+              if entry.source.kind == .list {
+                DisclosureGroup(
+                  isExpanded: Binding(
+                    get: { !collapsedEntries.contains(entry.id) },
+                    set: { expanded in
+                      if expanded {
+                        collapsedEntries.remove(entry.id)
+                      } else {
+                        collapsedEntries.insert(entry.id)
+                      }
+                    })
+                ) {
+                  if entry.items.isEmpty {
+                    Text("No items").foregroundStyle(.secondary)
+                  } else {
+                    ForEach(entry.items) { item in itineraryRow(item) }
+                  }
+                } label: {
+                  VStack(alignment: .leading, spacing: 6) {
+                    Label(entry.title, systemImage: "list.bullet.rectangle")
+                      .font(.headline)
+                    if !entry.items.isEmpty {
+                      let done = entry.items.filter { $0.row.effectiveDone == true }.count
+                      ProgressView(value: Double(done), total: Double(entry.items.count)) {
+                        Text(
+                          "\(done) of \(entry.items.count) \(entry.items.count == 1 ? "item" : "items") done"
+                        )
+                        .font(.caption).foregroundStyle(.secondary)
+                      }
+                    }
+                  }
+                  .padding(.vertical, 8)
+                }
+              } else {
+                ForEach(entry.items) { item in itineraryRow(item) }
+              }
+            }
+          }
         }
-        .formStyle(.grouped)
         .navigationTitle(itinerary.content.title)
+        .navigationSplitViewColumnWidth(min: 260, ideal: 400, max: 600)
         .toolbar {
+          ToolbarItem(placement: .primaryAction) {
+            Button("Add entry", systemImage: "plus") { showAddEntry = true }
+              .disabled(!store.canCreate)
+              .accessibilityIdentifier("saved.itinerary.entry.new")
+          }
           ToolbarItem(placement: .primaryAction) {
             Button("Edit Itinerary", systemImage: "pencil") {
               editDraft = .init(itinerary: itinerary)
@@ -127,17 +182,40 @@ struct SavedItineraryDetail: View {
     .sheet(item: $editDraft) { draft in
       SavedItineraryForm(store: store, itinerary: draft.itinerary) { _ in }
     }
+    .sheet(isPresented: $showAddEntry) {
+      SavedAddItineraryEntryForm(store: store, itineraryId: identifier)
+    }
+    .alert(
+      "Planner",
+      isPresented: Binding(
+        get: { store.alertMessage != nil && editDraft == nil && !showAddEntry },
+        set: { if !$0 { store.alertMessage = nil } })
+    ) {
+      Button("OK") { store.alertMessage = nil }
+    } message: {
+      Text(store.alertMessage ?? "")
+    }
+  }
+
+  private func itineraryRow(_ item: SavedItineraryItem) -> some View {
+    SavedItineraryItemRow(item: item, canChange: store.canCreate) {
+      Task {
+        _ = await store.setAppearanceCompletion(
+          item.id.appearance(itineraryId: identifier), done: item.row.effectiveDone != true)
+      }
+    }
+    .tag(item.id)
   }
 
   private func loadItinerary() async {
     loadingFailure = nil
     let revision = store.changeRevision
-    let loaded = await store.readItinerary(identifier)
+    let loaded = await store.readItineraryContents(identifier)
     guard !Task.isCancelled, store.changeRevision == revision else { return }
     if let loaded {
-      itinerary = loaded
+      contents = loaded
     } else {
-      itinerary = nil
+      contents = nil
       loadingFailure = store.alertMessage ?? "Planner could not open this Itinerary."
       store.alertMessage = nil
     }
