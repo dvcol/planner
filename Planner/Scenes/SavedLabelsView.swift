@@ -15,6 +15,13 @@ enum SavedLabelSource {
   case category(PlannerCategorySourceRead)
   case tag(PlannerTagSourceRead)
 
+  var source: PlannerEntityReference {
+    switch self {
+    case .category(let category): category.source
+    case .tag(let tag): tag.source
+    }
+  }
+
   var name: String {
     switch self {
     case .category(let category): category.content.name
@@ -164,6 +171,9 @@ private struct SavedLabelForm: View {
   let original: SavedLabelSource?
   @State private var name: String
   @State private var operationIdentifier = UUID()
+  @State private var deletionDraft: SavedLabelDeletionDraft?
+  @State private var isReviewingDeletion = false
+  @State private var deletionCompleted = false
 
   init(store: SavedPlannerStore, kind: SavedLabelKind, original: SavedLabelSource? = nil) {
     self.store = store
@@ -176,8 +186,17 @@ private struct SavedLabelForm: View {
     Form {
       TextField("Name", text: $name)
         .accessibilityIdentifier("saved.\(kind.rawValue).name")
+      if let original {
+        Section {
+          Button("Delete \(kind.title)", systemImage: "trash", role: .destructive) {
+            Task { await reviewDeletion(original) }
+          }
+          .disabled(!store.canCreate)
+          .accessibilityIdentifier("saved.\(kind.rawValue).delete")
+        }
+      }
     }
-    .disabled(store.isSaving)
+    .disabled(store.isSaving || isReviewingDeletion)
     .formStyle(.grouped)
     .navigationTitle(original == nil ? "New \(kind.title)" : "Edit \(kind.title)")
     #if os(iOS)
@@ -186,14 +205,15 @@ private struct SavedLabelForm: View {
     .toolbar {
       ToolbarItem(placement: .cancellationAction) {
         Button("Cancel") { dismiss() }
-          .disabled(store.isSaving)
+          .disabled(store.isSaving || isReviewingDeletion)
           .keyboardShortcut(.cancelAction)
           .accessibilityIdentifier("saved.\(kind.rawValue).cancel")
       }
       ToolbarItem(placement: .confirmationAction) {
         Button("Save") { Task { await save() } }
           .disabled(
-            !store.canCreate || name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            !store.canCreate || isReviewingDeletion
+              || name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
               || name == original?.name
           )
           .keyboardShortcut(.defaultAction)
@@ -201,13 +221,20 @@ private struct SavedLabelForm: View {
       }
     }
     .overlay {
-      if store.isSaving { ProgressView("Saving \(kind.title)") }
+      if isReviewingDeletion {
+        ProgressView("Reviewing deletion")
+      } else if store.isSaving {
+        ProgressView("Saving \(kind.title)")
+      }
     }
-    .interactiveDismissDisabled(store.isSaving)
+    .interactiveDismissDisabled(store.isSaving || isReviewingDeletion)
+    .sheet(item: $deletionDraft, onDismiss: finishDeletion) { draft in
+      SavedLabelDeletionForm(store: store, draft: draft) { deletionCompleted = true }
+    }
     .alert(
       "Planner",
       isPresented: Binding(
-        get: { store.alertMessage != nil },
+        get: { store.alertMessage != nil && deletionDraft == nil },
         set: { if !$0 { store.alertMessage = nil } })
     ) {
       Button("OK") { store.alertMessage = nil }
@@ -229,5 +256,18 @@ private struct SavedLabelForm: View {
         await store.createLabel(kind, name: name, operationIdentifier: operationIdentifier) != nil
     }
     if saved && store.alertMessage == nil { dismiss() }
+  }
+
+  private func reviewDeletion(_ label: SavedLabelSource) async {
+    guard !isReviewingDeletion else { return }
+    isReviewingDeletion = true
+    defer { isReviewingDeletion = false }
+    if let review = await store.prepareLabelDeletion(label) {
+      deletionDraft = .init(kind: kind, label: label, review: review)
+    }
+  }
+
+  private func finishDeletion() {
+    if deletionCompleted { dismiss() }
   }
 }

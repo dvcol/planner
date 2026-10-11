@@ -85,7 +85,7 @@ struct SavedBulkCompletionForm: View {
         ToolbarItem(placement: .confirmationAction) {
           Button("Confirm") {
             Task {
-              switch await store.applyBulkCompletion(
+              switch await store.applyReviewedChange(
                 review, operationIdentifier: operationIdentifier)
               {
               case .applied:
