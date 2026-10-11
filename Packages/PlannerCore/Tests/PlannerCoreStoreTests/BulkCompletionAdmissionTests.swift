@@ -1,8 +1,89 @@
 import Foundation
 import PlannerCore
+import SwiftData
 import Testing
 
 struct BulkCompletionAdmissionTests {
+  @Test(arguments: ["list", "itinerary", "itineraryListEntry"])
+  func postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_ scopeName: String)
+    async throws
+  {
+    let fixture = try await BulkCompletionFixture.create()
+    defer { try? FileManager.default.removeItem(at: fixture.directory) }
+    let scope: PlannerBulkScope
+    let listDone: Int64
+    let itineraryDone: Int64
+    switch scopeName {
+    case "list":
+      scope = .list(listId: fixture.list.id)
+      listDone = 2
+      itineraryDone = 0
+    case "itinerary":
+      scope = .itinerary(itineraryId: fixture.itinerary.id)
+      listDone = 0
+      itineraryDone = 3
+    default:
+      scope = .itineraryListEntry(
+        itineraryId: fixture.itinerary.id, listEntryId: fixture.listEntryId)
+      listDone = 0
+      itineraryDone = 2
+    }
+    let command = PlannerCommand.setBulkCompletion(scope: scope, done: true)
+    let review = try await fixture.review(command)
+    let beforeRecovery = try await fixture.recovery()
+    let obstruction = NativeSaveRecoveryObstruction(configuration: fixture.configuration)
+    let observer = NotificationCenter.default.addObserver(
+      forName: ModelContext.didSave, object: nil, queue: nil
+    ) { notification in obstruction.observe(notification) }
+    defer {
+      NotificationCenter.default.removeObserver(observer)
+      try? obstruction.restore()
+    }
+    let operationIdentifier = UUID()
+    let result = await fixture.planner.execute(
+      .init(
+        operationId: operationIdentifier, session: fixture.session, command: command,
+        reviewToken: review.reviewToken))
+    #expect(obstruction.didObstruct, "The scoped native save notification must trigger the fault.")
+    #expect(obstruction.failure == nil)
+    guard case .applied(_, .incomplete(let reason)) = result.outcome else {
+      throw CancellationError()
+    }
+    #expect(reason.code == "recoveryIncomplete")
+    try obstruction.restore()
+    try await fixture.expectProgress(
+      listDone: listDone, listTotal: 2, itineraryDone: itineraryDone, itineraryTotal: 3)
+    #expect(try await fixture.recovery() == beforeRecovery)
+    guard
+      case .appliedRecoveryIncomplete = await fixture.planner.operationStatus(
+        session: fixture.session, operationId: operationIdentifier),
+      case .rejected(let blocked) = await fixture.planner.execute(
+        .init(
+          operationId: UUID(), session: fixture.session,
+          command: .createItem(content: .init(title: "Must stay unapplied")))
+      )
+      .outcome
+    else { throw CancellationError() }
+    #expect(blocked.code == "mutationBlocked")
+    try await fixture.expectProgress(
+      listDone: listDone, listTotal: 2, itineraryDone: itineraryDone, itineraryTotal: 3)
+    let reopened = Planner(configuration: fixture.configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap() else {
+      throw CancellationError()
+    }
+    for (queryScope, done, total) in [
+      (PlannerItemQuery.Scope.list(fixture.list.id), listDone, Int64(2)),
+      (.itinerary(fixture.itinerary.id), itineraryDone, Int64(3)),
+    ] {
+      guard
+        case .snapshot(let snapshot) = await reopened.query(
+          .init(session: reopenedSession, request: .items(.init(scope: queryScope))))
+      else { throw CancellationError() }
+      #expect(
+        snapshot.progress.first?.doneCount == done && snapshot.progress.first?.totalCount == total)
+    }
+  }
+
   @Test func canceledMissingChangedAndForeignReviewsNeverMutateThePlanner() async throws {
     let fixture = try await BulkCompletionFixture.create()
     defer { try? FileManager.default.removeItem(at: fixture.directory) }
@@ -153,6 +234,7 @@ private struct BulkCompletionFixture {
   let list: PlannerEntityReference
   let itinerary: PlannerEntityReference
   let directEntryId: UUID
+  let listEntryId: UUID
 
   static func create() async throws -> Self {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
@@ -187,11 +269,15 @@ private struct BulkCompletionFixture {
         .addItineraryEntry(itineraryId: itinerary.id, source: hotel, placement: .last)
       ).generatedReferences.first
     else { throw CancellationError() }
-    _ = try await save(
-      .addItineraryEntry(itineraryId: itinerary.id, source: list, placement: .last))
+    guard
+      case .itineraryEntry(let listEntryId, _, _)? = try await save(
+        .addItineraryEntry(itineraryId: itinerary.id, source: list, placement: .last)
+      ).generatedReferences.first
+    else { throw CancellationError() }
     return .init(
       directory: directory, configuration: configuration, planner: planner,
-      session: session, list: list, itinerary: itinerary, directEntryId: directEntryId)
+      session: session, list: list, itinerary: itinerary, directEntryId: directEntryId,
+      listEntryId: listEntryId)
   }
 
   func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
@@ -238,5 +324,48 @@ private struct BulkCompletionFixture {
       #expect(
         snapshot.progress.first?.doneCount == done && snapshot.progress.first?.totalCount == total)
     }
+  }
+}
+
+private final class NativeSaveRecoveryObstruction: @unchecked Sendable {
+  private let lock = NSLock()
+  private let storeURL: URL
+  private let recoveryURL: URL
+  private let retainedURL: URL
+  private var obstructed = false
+  private var obstructionFailure: String?
+
+  init(configuration: PlannerStorageConfiguration) {
+    storeURL = configuration.storeURL.standardizedFileURL
+    recoveryURL = configuration.recoveryDirectoryURL
+    retainedURL = recoveryURL.deletingLastPathComponent()
+      .appendingPathComponent("retained-after-native-save")
+  }
+
+  var didObstruct: Bool { lock.withLock { obstructed } }
+  var failure: String? { lock.withLock { obstructionFailure } }
+
+  func observe(_ notification: Notification) {
+    guard let context = notification.object as? ModelContext,
+      context.container.configurations.contains(where: { $0.url.standardizedFileURL == storeURL })
+    else { return }
+    lock.withLock {
+      guard !obstructed else { return }
+      obstructed = true
+      do {
+        try FileManager.default.moveItem(at: recoveryURL, to: retainedURL)
+        try Data("Obstruct recovery after native save.".utf8).write(to: recoveryURL)
+      } catch {
+        obstructionFailure = String(describing: error)
+      }
+    }
+  }
+
+  func restore() throws {
+    guard FileManager.default.fileExists(atPath: retainedURL.path) else { return }
+    if FileManager.default.fileExists(atPath: recoveryURL.path) {
+      try FileManager.default.removeItem(at: recoveryURL)
+    }
+    try FileManager.default.moveItem(at: retainedURL, to: recoveryURL)
   }
 }
