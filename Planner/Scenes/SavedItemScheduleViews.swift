@@ -5,6 +5,7 @@ struct SavedItemSchedulesSection: View {
   @Environment(SavedPlannerStore.self) private var store
   let item: PlannerItemSourceRead
   let canChange: Bool
+  let editSchedule: (PlannerScheduleSourceRead) -> Void
   @State private var schedules: [PlannerScheduleSourceRead] = []
   @State private var isLoading = true
   @State private var loadingFailure: String?
@@ -38,6 +39,10 @@ struct SavedItemSchedulesSection: View {
             ForEach(schedules, id: \.source.id) { schedule in
               SavedItemScheduleRow(schedule: schedule)
                 .contextMenu {
+                  Button("Edit Schedule", systemImage: "pencil") {
+                    editSchedule(schedule)
+                  }
+                  .disabled(!canChange)
                   Button("Remove Schedule", systemImage: "calendar.badge.minus", role: .destructive)
                   {
                     removalOperationIdentifier = UUID()
@@ -155,10 +160,12 @@ private struct SavedItemScheduleRow: View {
   }
 }
 
-struct SavedNewItemScheduleForm: View {
+struct SavedItemScheduleForm: View {
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
   let item: PlannerItemSourceRead
+  let schedule: PlannerScheduleSourceRead?
+  private let initialDatesAvailable: Bool
   @State private var startInstant: Date
   @State private var endInstant: Date
   @State private var isAllDay = false
@@ -166,12 +173,41 @@ struct SavedNewItemScheduleForm: View {
   @State private var planningTimeZone = TimeZone.current.identifier
   @State private var operationIdentifier = UUID()
 
-  init(store: SavedPlannerStore, item: PlannerItemSourceRead) {
+  init(
+    store: SavedPlannerStore, item: PlannerItemSourceRead,
+    schedule: PlannerScheduleSourceRead? = nil
+  ) {
     self.store = store
     self.item = item
+    self.schedule = schedule
     let initialStart = Calendar.current.dateInterval(of: .minute, for: Date())?.start ?? Date()
-    _startInstant = State(initialValue: initialStart)
-    _endInstant = State(initialValue: initialStart.addingTimeInterval(3600))
+    switch schedule?.content.form {
+    case .timed(let start, let end, let planningTimeZone):
+      _startInstant = State(initialValue: start)
+      _endInstant = State(initialValue: end ?? start.addingTimeInterval(3600))
+      _includesEnd = State(initialValue: end != nil)
+      _planningTimeZone = State(initialValue: planningTimeZone)
+      initialDatesAvailable = true
+    case .allDay(let start, let end):
+      var calendar = Calendar(identifier: .gregorian)
+      calendar.timeZone = .gmt
+      let startDate = calendar.date(
+        from: DateComponents(year: start.year, month: start.month, day: start.day, hour: 12))
+      let finalDate = end ?? start
+      let endDate = calendar.date(
+        from: DateComponents(
+          year: finalDate.year, month: finalDate.month, day: finalDate.day, hour: 12))
+      _startInstant = State(initialValue: startDate ?? initialStart)
+      _endInstant = State(initialValue: endDate ?? initialStart)
+      _isAllDay = State(initialValue: true)
+      _includesEnd = State(initialValue: end != nil)
+      _planningTimeZone = State(initialValue: TimeZone.gmt.identifier)
+      initialDatesAvailable = startDate != nil && endDate != nil
+    case nil:
+      _startInstant = State(initialValue: initialStart)
+      _endInstant = State(initialValue: initialStart.addingTimeInterval(3600))
+      initialDatesAvailable = true
+    }
   }
 
   private var planningCalendar: Calendar {
@@ -181,6 +217,7 @@ struct SavedNewItemScheduleForm: View {
   }
 
   private var isValid: Bool {
+    guard initialDatesAvailable else { return false }
     guard includesEnd else { return true }
     guard isAllDay else { return endInstant > startInstant }
     return planningCalendar.startOfDay(for: endInstant)
@@ -226,7 +263,9 @@ struct SavedNewItemScheduleForm: View {
           }
           if !isAllDay { LabeledContent("Time zone", value: planningTimeZone) }
         } footer: {
-          if !isValid {
+          if !initialDatesAvailable {
+            Text("This schedule's dates could not be opened.")
+          } else if !isValid {
             Text(isAllDay ? "End date cannot precede Start." : "End must be later than Start.")
           } else if isAllDay {
             Text(includesEnd ? "Includes both selected dates." : "Covers the selected day.")
@@ -242,7 +281,7 @@ struct SavedNewItemScheduleForm: View {
         if allDay { endInstant = startInstant }
       }
       .disabled(store.isSaving)
-      .navigationTitle("Schedule Item")
+      .navigationTitle(schedule == nil ? "Schedule Item" : "Edit Schedule")
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {
           Button("Cancel") { dismiss() }
@@ -253,9 +292,15 @@ struct SavedNewItemScheduleForm: View {
         ToolbarItem(placement: .confirmationAction) {
           Button("Save") {
             Task {
-              let saved = await store.createItemSchedule(
-                itemIdentifier: item.source.id, form: scheduleForm,
-                operationIdentifier: operationIdentifier)
+              let saved: Bool
+              if let schedule {
+                saved = await store.editSchedule(
+                  schedule, form: scheduleForm, operationIdentifier: operationIdentifier)
+              } else {
+                saved = await store.createItemSchedule(
+                  itemIdentifier: item.source.id, form: scheduleForm,
+                  operationIdentifier: operationIdentifier)
+              }
               if saved && store.alertMessage == nil { dismiss() }
             }
           }

@@ -248,6 +248,16 @@ final class SavedPlannerStore {
       .removeSchedule(scheduleId: identifier), operationId: operationIdentifier)
   }
 
+  func editSchedule(
+    _ schedule: PlannerScheduleSourceRead, form: PlannerScheduleForm,
+    operationIdentifier: UUID
+  ) async -> Bool {
+    await executeChange(
+      .editSchedule(
+        scheduleId: schedule.source.id, changes: .init(form: form),
+        expectedFieldHashes: schedule.fieldHashes), operationId: operationIdentifier) != nil
+  }
+
   func readItineraryContents(_ identifier: UUID) async -> SavedItineraryContents? {
     guard let planner, let session else { return nil }
     guard
