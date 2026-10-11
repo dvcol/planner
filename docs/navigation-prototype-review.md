@@ -200,6 +200,8 @@ The [edited all-day range qualification](prototypes/navigation-local-qualificati
 
 The [native Item Schedule edit qualification](prototypes/navigation-local-qualification.md#native-item-schedule-editing) reuses the native scheduling Form for a captured saved assignment and sends its form hash through Core's guarded edit command. Cancel preserves the assignment; clearing a timed end keeps its identity and source content after relaunch. Native all-day edit initialization, form conversions, stale drafts and other picker edits retain their runtime gates.
 
+The [native all-day edit qualification](prototypes/navigation-local-qualification.md#native-all-day-schedule-editing) verifies saved civil-date initialization, cancellation and a changed inclusive end under the same Schedule identity after relaunch. Only tests/evidence change. The journey stays within the initially displayed month; absent-end initialization, form conversions, stale drafts and travel remain open.
+
 ## Definition of ready and done
 
 - [x] Contract public interfaces accepted, prerequisite resolutions reviewed, local toolchain inventory refreshed and fixture inputs/expected transitions specified.
