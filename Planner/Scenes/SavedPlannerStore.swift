@@ -226,6 +226,29 @@ final class SavedPlannerStore {
     }
   }
 
+  func readSchedule(_ identifier: UUID) async -> PlannerScheduleSourceRead? {
+    guard let planner, let session else { return nil }
+    switch await planner.read(
+      session: session, request: .source(.init(kind: .schedule, id: identifier)))
+    {
+    case .source(.schedule(let schedule)): return schedule
+    case .failed(let reason): alertMessage = reason.message
+    default: alertMessage = "Planner could not open this Schedule."
+    }
+    return nil
+  }
+
+  func createStartOnlyItemSchedule(
+    itemIdentifier: UUID, startInstant: Date, planningTimeZone: String,
+    operationIdentifier: UUID
+  ) async -> Bool {
+    await executeChange(
+      .createSchedule(
+        source: .init(kind: .item, id: itemIdentifier),
+        form: .timed(start: startInstant, end: nil, planningTimeZone: planningTimeZone)),
+      operationId: operationIdentifier) != nil
+  }
+
   func readItineraryContents(_ identifier: UUID) async -> SavedItineraryContents? {
     guard let planner, let session else { return nil }
     guard
