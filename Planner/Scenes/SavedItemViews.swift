@@ -105,7 +105,7 @@ struct SavedItemDetail: View {
       if let notes = item.content.notes, !notes.isEmpty {
         Section("Notes") { Text(notes).textSelection(.enabled) }
       }
-      SavedItemSchedulesSection(item: item)
+      SavedItemSchedulesSection(item: item, canChange: canChange)
       ItemLabelsSection(labels: item.labels)
       ItemLocationSection(
         title: item.content.title, location: item.content.location, previewSource: previewSource)

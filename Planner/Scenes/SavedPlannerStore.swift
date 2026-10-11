@@ -226,16 +226,10 @@ final class SavedPlannerStore {
     }
   }
 
-  func readSchedule(_ identifier: UUID) async -> PlannerScheduleSourceRead? {
+  func readSchedule(_ identifier: UUID) async -> PlannerReadResult? {
     guard let planner, let session else { return nil }
-    switch await planner.read(
+    return await planner.read(
       session: session, request: .source(.init(kind: .schedule, id: identifier)))
-    {
-    case .source(.schedule(let schedule)): return schedule
-    case .failed(let reason): alertMessage = reason.message
-    default: alertMessage = "Planner could not open this Schedule."
-    }
-    return nil
   }
 
   func createItemSchedule(
@@ -247,6 +241,11 @@ final class SavedPlannerStore {
         source: .init(kind: .item, id: itemIdentifier),
         form: .timed(start: startInstant, end: endInstant, planningTimeZone: planningTimeZone)),
       operationId: operationIdentifier) != nil
+  }
+
+  func removeSchedule(_ identifier: UUID, operationIdentifier: UUID) async {
+    _ = await executeChange(
+      .removeSchedule(scheduleId: identifier), operationId: operationIdentifier)
   }
 
   func readItineraryContents(_ identifier: UUID) async -> SavedItineraryContents? {
