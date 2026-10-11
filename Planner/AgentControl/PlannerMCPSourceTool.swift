@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_read",
       description:
-        "Read an Item, List, Category, Tag or Schedule source, an exact List item appearance, or a generation-bound row window from the local Planner prototype.",
+        "Read an Item, List, Itinerary, Category, Tag or Schedule source, an exact List/direct/expanded itinerary appearance, or a generation-bound row window from the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("request")]),
@@ -20,21 +20,7 @@
                 "required": .array([.string("kind"), .string("appearance")]),
                 "properties": .object([
                   "kind": .object(["type": .string("string"), "const": .string("appearance")]),
-                  "appearance": .object([
-                    "type": .string("object"), "additionalProperties": .bool(false),
-                    "required": .array([
-                      .string("kind"), .string("listId"), .string("membershipId"),
-                    ]),
-                    "properties": .object([
-                      "kind": .object([
-                        "type": .string("string"), "const": .string("listMembership"),
-                      ]),
-                      "listId": .object(["type": .string("string"), "format": .string("uuid")]),
-                      "membershipId": .object([
-                        "type": .string("string"), "format": .string("uuid"),
-                      ]),
-                    ]),
-                  ]),
+                  "appearance": PlannerMCPAppearance.schema,
                 ]),
               ]),
               .object([
@@ -145,6 +131,8 @@
           structuredContent: Optional.some(structured), isError: false)
       } catch let reason as AdmissionFailure {
         return failure(code: reason.code, message: reason.message, path: reason.path)
+      } catch let reason as PlannerMCPAppearance.Failure {
+        return failure(code: reason.code, message: reason.message, path: reason.path)
       } catch {
         return failure(code: "unavailable", message: "The Planner read could not be completed.")
       }
@@ -179,19 +167,8 @@
       switch fields["kind"] {
       case .string("appearance"):
         let request = try object(value, keys: ["kind", "appearance"], path: "/request")
-        let appearance = try object(
-          request["appearance"], keys: ["kind", "listId", "membershipId"],
-          path: "/request/appearance")
-        guard appearance["kind"] == .string("listMembership") else {
-          throw AdmissionFailure(
-            code: "invalidInput", path: "/request/appearance/kind",
-            message: "Expected a List membership appearance.")
-        }
         return .appearance(
-          .listMembership(
-            listId: try identifier(appearance["listId"], path: "/request/appearance/listId"),
-            membershipId: try identifier(
-              appearance["membershipId"], path: "/request/appearance/membershipId")))
+          try PlannerMCPAppearance.decode(request["appearance"], path: "/request/appearance"))
       case .string("source"):
         let request = try object(value, keys: ["kind", "source"], path: "/request")
         let source = try object(request["source"], keys: ["kind", "id"], path: "/request/source")
