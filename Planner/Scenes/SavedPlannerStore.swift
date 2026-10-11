@@ -238,14 +238,14 @@ final class SavedPlannerStore {
     return nil
   }
 
-  func createStartOnlyItemSchedule(
-    itemIdentifier: UUID, startInstant: Date, planningTimeZone: String,
+  func createItemSchedule(
+    itemIdentifier: UUID, startInstant: Date, endInstant: Date?, planningTimeZone: String,
     operationIdentifier: UUID
   ) async -> Bool {
     await executeChange(
       .createSchedule(
         source: .init(kind: .item, id: itemIdentifier),
-        form: .timed(start: startInstant, end: nil, planningTimeZone: planningTimeZone)),
+        form: .timed(start: startInstant, end: endInstant, planningTimeZone: planningTimeZone)),
       operationId: operationIdentifier) != nil
   }
 

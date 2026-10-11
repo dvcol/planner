@@ -188,6 +188,8 @@ The [native Itinerary removal qualification](prototypes/navigation-local-qualifi
 
 The [native start-only scheduling qualification](prototypes/navigation-local-qualification.md#native-start-only-item-scheduling) adds Schedule Item and saved direct schedule summaries through native DatePicker/Form and the existing durable Core command. Cancellation creates nothing; save/relaunch preserves one schedule identity, date description, notes and global Todo. This is the first scheduling slice. End/all-day creation, zone selection, editing/removal, Itinerary schedules, calendar navigation, controlled failures and Mac runtime retain their gates.
 
+The [native optional-end qualification](prototypes/navigation-local-qualification.md#native-optional-item-schedule-end) extends the same draft with a native Toggle and End DatePicker. Clearing the Toggle keeps the end absent. The cancel/save/relaunch journey and prior start-only compatibility check qualify the default valid endpoints; edited endpoint values, invalid-end UI and DST choices retain their native gates.
+
 ## Definition of ready and done
 
 - [x] Contract public interfaces accepted, prerequisite resolutions reviewed, local toolchain inventory refreshed and fixture inputs/expected transitions specified.
