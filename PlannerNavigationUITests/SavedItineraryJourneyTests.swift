@@ -69,6 +69,146 @@ final class SavedItineraryJourneyTests: XCTestCase {
     recordScreenshot(application, name: "Native Itinerary appointment survives relaunch")
   }
 
+  func testItineraryScheduleConversionAndConfirmedRemovalRetainOwnerAndOtherAssignment() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openItineraries(application)
+    application.plannerElement("saved.itinerary.new").activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Weekend appointments")
+    let notes = application.textFields["saved.itinerary.notes"]
+    notes.activateForPlannerJourney()
+    notes.typeText("Keep the route")
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Keep the route"].waitForExistence(timeout: 10))
+    let scheduleRows = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.schedule."))
+    let timedRows = scheduleRows.matching(NSPredicate(format: "label == %@", "Timed"))
+    let startOnlyRows = scheduleRows.matching(NSPredicate(format: "label == %@", "Start only"))
+    let includeEnd = application.descendants(matching: .any)
+      .matching(identifier: "saved.schedule.hasEnd").firstMatch
+    let allDay = application.descendants(matching: .any)
+      .matching(identifier: "saved.schedule.allDay").firstMatch
+    for includesEnd in [false, true] {
+      application.plannerElement("saved.itinerary.actions").activateForPlannerJourney()
+      application.plannerElement("Schedule Itinerary").activateForPlannerJourney()
+      XCTAssertTrue(includeEnd.waitForPlannerBooleanState(false))
+      if includesEnd { activateScheduleToggle(includeEnd) }
+      application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+      let row = includesEnd ? timedRows.firstMatch : startOnlyRows.firstMatch
+      XCTAssertTrue(row.waitForExistence(timeout: 10))
+    }
+    XCTAssertEqual(scheduleRows.count, 2)
+    let retainedIdentity = startOnlyRows.firstMatch.identifier
+    let retainedDescription = startOnlyRows.firstMatch.value as? String
+    let convertedIdentity = timedRows.firstMatch.identifier
+    let originalDescription = timedRows.firstMatch.value as? String
+    let converted = application.descendants(matching: .any)
+      .matching(identifier: convertedIdentity).firstMatch
+    openScheduleMenu(converted)
+    let editAction = application.plannerElement("Edit Schedule")
+    XCTAssertTrue(editAction.waitForExistence(timeout: 5))
+    editAction.activateForPlannerJourney()
+    XCTAssertTrue(allDay.waitForPlannerBooleanState(false))
+    XCTAssertTrue(includeEnd.waitForPlannerBooleanState(true))
+    activateScheduleToggle(allDay)
+    XCTAssertTrue(allDay.waitForPlannerBooleanState(true))
+    application.plannerElement("saved.schedule.cancel").activateForPlannerJourney()
+    XCTAssertTrue(converted.waitForExistence(timeout: 5))
+    XCTAssertEqual(converted.label, "Timed")
+    XCTAssertEqual(converted.value as? String, originalDescription)
+    openScheduleMenu(converted)
+    editAction.activateForPlannerJourney()
+    XCTAssertTrue(allDay.waitForPlannerBooleanState(false))
+    activateScheduleToggle(allDay)
+    application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+    let allDayRows = scheduleRows.matching(NSPredicate(format: "label == %@", "All day"))
+    XCTAssertTrue(allDayRows.firstMatch.waitForExistence(timeout: 10))
+    XCTAssertEqual(allDayRows.firstMatch.identifier, convertedIdentity)
+    XCTAssertEqual(scheduleRows.count, 2)
+    let convertedDescription = converted.value as? String
+    XCTAssertFalse(convertedDescription?.isEmpty ?? true)
+    XCTAssertNotEqual(convertedDescription, originalDescription)
+    openScheduleMenu(converted)
+    editAction.activateForPlannerJourney()
+    XCTAssertTrue(allDay.waitForPlannerBooleanState(true))
+    XCTAssertTrue(includeEnd.waitForPlannerBooleanState(true))
+    recordScreenshot(application, name: "Native Itinerary edit reloads its converted all-day form")
+    application.plannerElement("saved.schedule.cancel").activateForPlannerJourney()
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItineraries(application)
+    let itinerary = itineraryRow(application, title: "Weekend appointments")
+    XCTAssertTrue(itinerary.waitForExistence(timeout: 10))
+    itinerary.activateForPlannerJourney()
+    XCTAssertTrue(converted.waitForExistence(timeout: 10))
+    XCTAssertEqual(converted.label, "All day")
+    XCTAssertEqual(converted.value as? String, convertedDescription)
+    XCTAssertEqual(startOnlyRows.firstMatch.identifier, retainedIdentity)
+    XCTAssertEqual(startOnlyRows.firstMatch.value as? String, retainedDescription)
+    openScheduleMenu(converted)
+    let removeAction = application.plannerElement("Remove Schedule")
+    XCTAssertTrue(removeAction.waitForExistence(timeout: 5))
+    removeAction.activateForPlannerJourney()
+    let confirm = application.buttons["saved.schedule.remove.confirm"].firstMatch
+    XCTAssertTrue(confirm.waitForExistence(timeout: 5))
+    XCTAssertTrue(
+      application.staticTexts[
+        "1 schedule will be removed. The Itinerary and its other schedules stay available."
+      ].exists)
+    recordScreenshot(application, name: "Native Itinerary schedule removal explains its scope")
+    application.staticTexts["Weekend appointments"].firstMatch.activateForPlannerJourney()
+    XCTAssertTrue(confirm.waitForNonExistence(timeout: 5))
+    XCTAssertEqual(scheduleRows.count, 2)
+    XCTAssertEqual(converted.value as? String, convertedDescription)
+    openScheduleMenu(converted)
+    removeAction.activateForPlannerJourney()
+    XCTAssertTrue(confirm.waitForExistence(timeout: 5))
+    confirm.activateForPlannerJourney()
+    XCTAssertTrue(converted.waitForNonExistence(timeout: 10))
+    XCTAssertEqual(scheduleRows.count, 1)
+    XCTAssertEqual(startOnlyRows.firstMatch.identifier, retainedIdentity)
+    XCTAssertTrue(application.staticTexts["Keep the route"].exists)
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    recordScreenshot(application, name: "Native Itinerary removal retains its other appointment")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItineraries(application)
+    XCTAssertTrue(itinerary.waitForExistence(timeout: 10))
+    itinerary.activateForPlannerJourney()
+    XCTAssertTrue(startOnlyRows.firstMatch.waitForExistence(timeout: 10))
+    XCTAssertEqual(startOnlyRows.firstMatch.identifier, retainedIdentity)
+    XCTAssertEqual(startOnlyRows.firstMatch.value as? String, retainedDescription)
+    XCTAssertEqual(scheduleRows.count, 1)
+    XCTAssertFalse(converted.exists)
+    XCTAssertTrue(application.staticTexts["Keep the route"].exists)
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    XCTAssertFalse(application.alerts["Planner"].exists)
+    recordScreenshot(application, name: "Native Itinerary schedule removal survives relaunch")
+  }
+
+  private func openScheduleMenu(_ schedule: XCUIElement) {
+    #if os(macOS)
+      schedule.rightClick()
+    #else
+      schedule.press(forDuration: 1.2)
+    #endif
+  }
+
+  private func activateScheduleToggle(_ element: XCUIElement) {
+    #if os(macOS)
+      element.click()
+    #else
+      let visibleSwitch = element.switches.firstMatch
+      XCTAssertTrue(visibleSwitch.exists)
+      visibleSwitch.tap()
+    #endif
+  }
+
   func testItineraryDraftsCancelAndGuardedTitleNotesPersistAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()
