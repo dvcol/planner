@@ -75,9 +75,17 @@
       let schedule: Value
       switch row.scheduleSummary {
       case .none: schedule = .object(["kind": .string("none")])
-      case .directItem(let reference, let owner, let form, let additionalCount):
+      case .inScheduledPlan: schedule = .object(["kind": .string("inScheduledPlan")])
+      case .directItem(let reference, let owner, let form, let additionalCount),
+        .itinerarySpan(let reference, let owner, let form, let additionalCount):
+        let kind: String
+        if case .itinerarySpan = row.scheduleSummary {
+          kind = "itinerarySpan"
+        } else {
+          kind = "directItem"
+        }
         schedule = .object([
-          "kind": .string("directItem"),
+          "kind": .string(kind),
           "schedule": .object([
             "kind": .string(reference.kind.rawValue), "id": .string(reference.id.uuidString),
           ]),

@@ -2,6 +2,95 @@ import XCTest
 
 @MainActor
 final class SavedItineraryEntriesJourneyTests: XCTestCase {
+  func testSavedRowsShowCurrentPlanDatesAndInheritedPlanningAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem("Hotel", notes: "Meet in the lobby", application: application)
+    openItemCatalog(application)
+    let globalRow = application.savedPlannerItemRows("Hotel").firstMatch
+    XCTAssertTrue(globalRow.waitForExistence(timeout: 10))
+    let sourceRowIdentity = globalRow.identifier
+    XCTAssertFalse((globalRow.value as? String ?? "").contains("Scheduled:"))
+    openSection("Itineraries", application: application)
+    reveal(application, identifier: "saved.itinerary.new").activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Weekend route")
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    application.plannerElement("saved.itinerary.entry.new").activateForPlannerJourney()
+    chooseEntry("Hotel", application: application)
+    application.plannerElement("saved.itinerary.entry.add").activateForPlannerJourney()
+    let contextualRow = itineraryRows(application).firstMatch
+    XCTAssertTrue(contextualRow.waitForExistence(timeout: 10))
+    let appearanceIdentity = contextualRow.identifier
+    XCTAssertFalse((contextualRow.value as? String ?? "").contains("Scheduled:"))
+    application.plannerElement("saved.itinerary.actions").activateForPlannerJourney()
+    application.plannerElement("Schedule Itinerary").activateForPlannerJourney()
+    let allDay = application.descendants(matching: .any)
+      .matching(identifier: "saved.schedule.allDay").firstMatch
+    XCTAssertTrue(allDay.waitForPlannerBooleanState(false))
+    #if os(macOS)
+      allDay.click()
+    #else
+      let visibleSwitch = allDay.switches.firstMatch
+      XCTAssertTrue(visibleSwitch.exists)
+      visibleSwitch.tap()
+    #endif
+    XCTAssertTrue(allDay.waitForPlannerBooleanState(true))
+    application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+    let schedule = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.schedule.")
+    ).firstMatch
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    XCTAssertTrue((contextualRow.value as? String ?? "").contains("Scheduled: Plan ·"))
+    XCTAssertTrue((contextualRow.value as? String ?? "").contains("All day"))
+    let contextualMetadata = contextualRow.value as? String
+    XCTAssertEqual(contextualRow.identifier, appearanceIdentity)
+    XCTAssertTrue(application.staticTexts["0 of 1 item done"].exists)
+    recordScreenshot(application, name: "Native itinerary row shows its actual plan date")
+    openItemCatalog(application)
+    XCTAssertTrue(globalRow.waitForExistence(timeout: 10))
+    XCTAssertEqual(globalRow.identifier, sourceRowIdentity)
+    XCTAssertTrue((globalRow.value as? String ?? "").contains("In scheduled plan"))
+    XCTAssertFalse((globalRow.value as? String ?? "").contains("All day"))
+    recordScreenshot(application, name: "Native global Item row shows inherited planning")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItemCatalog(application)
+    XCTAssertTrue(globalRow.waitForExistence(timeout: 10))
+    XCTAssertEqual(globalRow.identifier, sourceRowIdentity)
+    XCTAssertTrue((globalRow.value as? String ?? "").contains("In scheduled plan"))
+    recordScreenshot(application, name: "Native inherited planning survives relaunch")
+    openSection("Itineraries", application: application)
+    let itinerary = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.", "Weekend route")
+    ).firstMatch
+    if !itinerary.waitForExistence(timeout: 2) {
+      let sidebar = application.plannerElement("Show Sidebar")
+      XCTAssertTrue(sidebar.waitForExistence(timeout: 5))
+      sidebar.activateForPlannerJourney()
+    }
+    XCTAssertTrue(itinerary.waitForExistence(timeout: 10))
+    itinerary.activateForPlannerJourney()
+    XCTAssertTrue(contextualRow.waitForExistence(timeout: 10))
+    XCTAssertEqual(contextualRow.identifier, appearanceIdentity)
+    XCTAssertEqual(contextualRow.value as? String, contextualMetadata)
+    XCTAssertTrue(application.staticTexts["0 of 1 item done"].exists)
+    recordScreenshot(application, name: "Native contextual plan row survives relaunch")
+  }
+
+  private func openItemCatalog(_ application: XCUIApplication) {
+    openSection("Items", application: application)
+    let back = application.navigationBars.buttons["Items"].firstMatch
+    if back.exists { back.activateForPlannerJourney() }
+    XCTAssertTrue(application.plannerElement("saved.item.new").waitForExistence(timeout: 10))
+  }
+
   func testOrderedItemAndListEntriesKeepIndependentChecksAndDetailsAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()

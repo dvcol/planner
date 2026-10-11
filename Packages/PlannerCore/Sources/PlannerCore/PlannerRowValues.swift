@@ -12,7 +12,11 @@ public struct PlannerRowPresentationContext: Sendable, Equatable {
 
 public enum PlannerRowScheduleSummary: Sendable, Equatable {
   case none
+  case inScheduledPlan
   case directItem(
+    schedule: PlannerEntityReference, owner: PlannerEntityReference,
+    form: PlannerScheduleForm, additionalCount: Int64)
+  case itinerarySpan(
     schedule: PlannerEntityReference, owner: PlannerEntityReference,
     form: PlannerScheduleForm, additionalCount: Int64)
 }
