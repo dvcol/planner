@@ -1,0 +1,76 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[8 / 11] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,52 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ItemEditTests started.
+◇ Suite RecoverySourceIdentityRejectionTests started.
+◇ Suite RecoveryProposalSelectionTests started.
+◇ Suite ItemCreationTests started.
+◇ Test staleNotesEditPreservesFridayBookingAndReportsCurrentField() started.
+◇ Test recoveryRejectsSameKindDuplicatesAndCrossKindReferenceSubstitution() started.
+◇ Suite BulkCompletionAdmissionTests started.
+◇ Suite RecoveryFailureTests started.
+◇ Suite RecoverySourceIdentityTests started.
+◇ Test notesEditPreservesOtherFieldsAndSurvivesReopenWithRecovery() started.
+◇ Test oneStaleFieldRejectsEntireTitleAndNotesPatch() started.
+◇ Test changedPayloadReplayRejectsWithoutReplacingOriginalItemOrEvidence() started.
+◇ Test replayingCreationAfterReopenRetainsOneItemAndOriginalCheckpoint() started.
+◇ Test invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test inspectingRetainedProposalFromSeparateEmptyDatasetNeverImportsOrAcknowledgesIt() started.
+◇ Test unrelatedTitleEditDoesNotInvalidatePriorNotesHash() started.
+◇ Test savedItemSurvivesReopenWithIndependentAcknowledgedRecovery() started.
+◇ Test selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData() started.
+◇ Test invalidCreationLeavesCurrentItemAndRecoveryCheckpointUnchanged() started.
+◇ Test preparedProposalRemainsSelectableWhenTheCommittedStoreIsMissing() started.
+◇ Test emptyReviewsRemainNoItemsAndBlockedRecoveryLeavesAllTargetsUnchanged() started.
+◇ Test inaccessibleRecoveryRejectsCreationBeforeCommitAndRetainsAcknowledgedData() started.
+◇ Test canceledMissingChangedAndForeignReviewsNeverMutateThePlanner() started.
+◇ Test replayingNotesEditReturnsOriginalEvidenceWithoutReapplyingOldValue() started.
+◇ Test recoveryResolvesEqualUUIDsBySourceKindAndRetainsTypedAssociations() started.
+◇ Test postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:) started.
+◇ Test case passing 1 argument scenario → "missingProposal" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "missingNamespace" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "wrongOwner" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "wrongDataset" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "wrongEvidence" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "malformed" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "duplicateIdentity" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "unresolvedReference" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "acknowledged" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scopeName → "list" to postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:) started.
+◇ Test case passing 1 argument scopeName → "itinerary" to postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:) started.
+◇ Test case passing 1 argument scopeName → "itineraryListEntry" to postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:) started.
+✔ Test changedPayloadReplayRejectsWithoutReplacingOriginalItemOrEvidence() passed after 0.331 seconds.
+✔ Test replayingCreationAfterReopenRetainsOneItemAndOriginalCheckpoint() passed after 0.331 seconds.
+✔ Test savedItemSurvivesReopenWithIndependentAcknowledgedRecovery() passed after 0.331 seconds.
+✔ Test oneStaleFieldRejectsEntireTitleAndNotesPatch() passed after 0.331 seconds.
+✔ Test notesEditPreservesOtherFieldsAndSurvivesReopenWithRecovery() passed after 0.331 seconds.
+✔ Test selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData() passed after 0.331 seconds.
+✔ Test staleNotesEditPreservesFridayBookingAndReportsCurrentField() passed after 0.331 seconds.
+✔ Test unrelatedTitleEditDoesNotInvalidatePriorNotesHash() passed after 0.331 seconds.
+✔ Test invalidCreationLeavesCurrentItemAndRecoveryCheckpointUnchanged() passed after 0.331 seconds.
+✔ Test recoveryRejectsSameKindDuplicatesAndCrossKindReferenceSubstitution() passed after 0.332 seconds.
+✔ Test inspectingRetainedProposalFromSeparateEmptyDatasetNeverImportsOrAcknowledgesIt() passed after 0.331 seconds.
+✔ Test preparedProposalRemainsSelectableWhenTheCommittedStoreIsMissing() passed after 0.331 seconds.
+✔ Suite ItemCreationTests passed after 0.332 seconds.
+✔ Suite RecoverySourceIdentityRejectionTests passed after 0.332 seconds.
+✔ Test inaccessibleRecoveryRejectsCreationBeforeCommitAndRetainsAcknowledgedData() passed after 0.344 seconds.
+✔ Suite RecoveryFailureTests passed after 0.345 seconds.
+✔ Test invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) with 9 test cases passed after 0.363 seconds.
+✔ Suite RecoveryProposalSelectionTests passed after 0.364 seconds.
+✔ Test replayingNotesEditReturnsOriginalEvidenceWithoutReapplyingOldValue() passed after 0.372 seconds.
+✔ Suite ItemEditTests passed after 0.373 seconds.
+✔ Test recoveryResolvesEqualUUIDsBySourceKindAndRetainsTypedAssociations() passed after 0.428 seconds.
+✔ Suite RecoverySourceIdentityTests passed after 0.428 seconds.
+✔ Test postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:) with 3 test cases passed after 0.575 seconds.
+✔ Test emptyReviewsRemainNoItemsAndBlockedRecoveryLeavesAllTargetsUnchanged() passed after 0.597 seconds.
+✔ Test canceledMissingChangedAndForeignReviewsNeverMutateThePlanner() passed after 0.631 seconds.
+✔ Suite BulkCompletionAdmissionTests passed after 0.632 seconds.
+✔ Test run with 19 tests in 7 suites passed after 0.632 seconds.

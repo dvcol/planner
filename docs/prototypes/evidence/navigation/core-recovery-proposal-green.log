@@ -1,0 +1,20 @@
+Building for debugging...
+[1 / 1]
+[2 / 15] PlannerCore
+[5 / 18] PlannerCore
+[9 / 23] PlannerCore
+[11 / 23] PlannerCore
+[14 / 22] PlannerCoreTests-product
+[17 / 23] PlannerCoreTests-product
+[22 / 25] PlannerCoreTests-product
+[22 / 25] PlannerCoreStoreTests-product
+[26 / 28] PlannerCoreStoreTests-product
+Build complete! (10,51 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite RecoveryProposalSelectionTests started.
+◇ Test selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData() started.
+✔ Test selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData() passed after 0.079 seconds.
+✔ Suite RecoveryProposalSelectionTests passed after 0.080 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.080 seconds.

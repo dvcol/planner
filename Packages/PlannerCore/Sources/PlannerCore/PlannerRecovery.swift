@@ -577,4 +577,23 @@ struct PlannerRecoveryArchive {
       portableData: bytes, decodedBackup: decoded
     )
   }
+
+  func selection(proposalId: UUID) throws -> PlannerRecoverySelection {
+    let matches = try proposals().filter { $0.proposalId == proposalId }
+    guard let proposal = matches.first else {
+      throw PlannerFailure("missingReference", "The selected prepared proposal is unavailable.")
+    }
+    guard matches.count == 1 else {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", "Prepared proposal identities are duplicated.")
+    }
+    let decoded = try proposal.proposedBackup.validated()
+    let bytes = try JSONEncoder().encode(proposal.proposedBackup)
+    return PlannerRecoverySelection(
+      selectionId: UUID(), namespaceId: identity.namespaceId, datasetId: identity.datasetId,
+      ownershipBinding: identity.ownershipBinding, evidence: .preparedUnverified,
+      checkpointGeneration: nil, proposalId: proposal.proposalId,
+      originalOperationId: proposal.originalOperationId,
+      portableData: bytes, decodedBackup: decoded)
+  }
 }

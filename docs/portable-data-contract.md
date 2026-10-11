@@ -127,6 +127,10 @@ The prototype must prove consistent ownership/cutoff during native account impor
 
 Contract completion is publication and accepted declarations. Prototype completion requires actual execution; source tables and golden files never substitute for those gates.
 
+## Implemented local prepared proposal selection
+
+The approved native proposal read now returns a Core-issued selection with unverified evidence, null checkpoint, retained proposal/original-operation IDs and validated data-only bytes plus decoded backup. It reuses the archive's ownership/evidence/graph validation and refuses unknown, acknowledged or duplicated proposal identities. Inspection applies no current-dataset changes. [Executed local qualification](prototypes/core-recovery-proposal-selection.md) covers real post-save recovery obstruction, facade reopen, malformed/ownership/binding inputs, actual loss of the disposable store and separate empty-dataset inspection. The controlled acknowledged-envelope case qualifies filtering rather than checkpoint retry. Native restore/import/export forms, unsupported lineage, coherent account cutoff and physical mirroring retain their gates.
+
 ## Implemented local Schedule deletion metadata
 
 Native schema 4 currently persists minimal Schedule source-deletion markers. The public portable backup exposes typed markers, while the normalized version-1 record uses the exact deletionMarkers shape above. The current source target binds Schedule kind, public ID and authorized lifetime; closedFamilyId is null. Duplicate marker IDs and a closure still live under that same Schedule lifetime reject snapshot validation. Other target/restoration-family variants remain unimplemented.
