@@ -1860,9 +1860,9 @@ public actor Planner {
       case .acknowledgedSnapshot(let namespaceId, let generation):
         return .selected(
           try requireArchive(archives, namespaceId: namespaceId).selection(generation: generation))
-      case .proposal:
-        throw PlannerFailure(
-          "unavailable", "Selecting prepared proposals is not implemented by this first fixture.")
+      case .proposal(let namespaceId, let proposalId):
+        return .selected(
+          try requireArchive(archives, namespaceId: namespaceId).selection(proposalId: proposalId))
       }
     } catch { return .failed(failure(error, code: "readUnavailable")) }
   }
