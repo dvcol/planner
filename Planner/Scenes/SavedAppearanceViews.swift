@@ -76,6 +76,7 @@ struct SavedAppearanceDetail: View {
       if let notes = item.content.notes, !notes.isEmpty {
         Section("Notes") { Text(notes).textSelection(.enabled) }
       }
+      ItemLabelsSection(labels: item.labels)
       ItemLocationSection(
         title: item.content.title, location: item.content.location, previewSource: previewSource)
       ItemLinksSection(

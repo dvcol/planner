@@ -51,6 +51,8 @@ struct SavedEditItemForm: View {
   @State private var locationName: String
   @State private var locationAddress: String
   @State private var links: [SavedItemLinkDraft]
+  @State private var categoryIdentifiers: Set<UUID>
+  @State private var tagIdentifiers: Set<UUID>
   @FocusState private var focusedLinkIdentifier: UUID?
   @State private var operationIdentifier = UUID()
 
@@ -63,6 +65,8 @@ struct SavedEditItemForm: View {
     _locationName = State(initialValue: item.content.location?.displayName ?? "")
     _locationAddress = State(initialValue: item.content.location?.formattedAddress ?? "")
     _links = State(initialValue: item.content.links.map(SavedItemLinkDraft.init))
+    _categoryIdentifiers = State(initialValue: item.content.categoryIds)
+    _tagIdentifiers = State(initialValue: item.content.tagIds)
   }
 
   private var hasChanges: Bool {
@@ -70,6 +74,7 @@ struct SavedEditItemForm: View {
       || notes != (item.content.notes ?? "")
       || links.map(\.input) != item.content.links.map(\.editInput)
       || location != item.content.location
+      || categoryIdentifiers != item.content.categoryIds || tagIdentifiers != item.content.tagIds
   }
 
   private var location: PlannerOwnedLocation? {
@@ -93,6 +98,20 @@ struct SavedEditItemForm: View {
             .accessibilityIdentifier("saved.item.edit.notes")
         } footer: {
           Text("Changes appear wherever this Item is used.")
+        }
+        Section("Labels") {
+          NavigationLink {
+            SavedItemLabelPicker(store: store, kind: .category, selection: $categoryIdentifiers)
+          } label: {
+            LabeledContent("Categories", value: selectionSummary(categoryIdentifiers))
+          }
+          .accessibilityIdentifier("saved.item.edit.categories")
+          NavigationLink {
+            SavedItemLabelPicker(store: store, kind: .tag, selection: $tagIdentifiers)
+          } label: {
+            LabeledContent("Tags", value: selectionSummary(tagIdentifiers))
+          }
+          .accessibilityIdentifier("saved.item.edit.tags")
         }
         if item.content.location?.coordinate == nil {
           Section("Location") {
@@ -164,10 +183,11 @@ struct SavedEditItemForm: View {
         }
         ToolbarItem(placement: .confirmationAction) {
           Button("Save") {
-            Task { [title, subtitle, notes, links, location] in
+            Task { [title, subtitle, notes, links, location, categoryIdentifiers, tagIdentifiers] in
               if await store.editItem(
                 item, title: title, subtitle: subtitle, notes: notes, links: links.map(\.input),
-                location: location,
+                location: location, categoryIdentifiers: categoryIdentifiers,
+                tagIdentifiers: tagIdentifiers,
                 operationIdentifier: operationIdentifier)
               {
                 dismiss()
@@ -207,5 +227,9 @@ struct SavedEditItemForm: View {
       links.indices.contains(index + offset)
     else { return }
     links.swapAt(index, index + offset)
+  }
+
+  private func selectionSummary(_ identifiers: Set<UUID>) -> String {
+    identifiers.isEmpty ? "None" : "\(identifiers.count) selected"
   }
 }
