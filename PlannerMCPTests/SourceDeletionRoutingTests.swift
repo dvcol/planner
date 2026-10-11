@@ -4,10 +4,10 @@ import Testing
 
 @testable import Planner
 
-struct LabelDeletionRoutingTests {
-  @Test(arguments: [PlannerEntityKind.category, .tag])
-  func statelessHTTPCannotReviewOrApplyNativeLabelDeletionEvenWithAnIssuedToken(
-    _ labelKind: PlannerEntityKind
+struct SourceDeletionRoutingTests {
+  @Test(arguments: [PlannerEntityKind.category, .tag, .item])
+  func statelessHTTPCannotReviewOrApplyNativeSourceDeletionEvenWithAnIssuedToken(
+    _ sourceKind: PlannerEntityKind
   ) async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
@@ -17,21 +17,23 @@ struct LabelDeletionRoutingTests {
         controlURL: directory.appendingPathComponent("control/writer"),
         recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
         processRole: .mainApplication, storageMode: .localOnly))
-    let createLabel: PlannerCommand
-    if labelKind == .category {
-      createLabel = .createCategory(content: .init(name: "Food"))
+    let createSource: PlannerCommand
+    if sourceKind == .item {
+      createSource = .createItem(content: .init(title: "Food"))
+    } else if sourceKind == .category {
+      createSource = .createCategory(content: .init(name: "Food"))
     } else {
-      createLabel = .createTag(content: .init(name: "Food"))
+      createSource = .createTag(content: .init(name: "Food"))
     }
     guard case .ready(let session) = await planner.bootstrap(),
       case .applied(let created, .complete) = await planner.execute(
         .init(
           operationId: UUID(), session: session,
-          command: createLabel)
+          command: createSource)
       ).outcome,
-      let label = created.generated.first,
+      let source = created.generated.first,
       case .reviewed(let review) = await planner.prepareReview(
-        session: session, command: .deleteSource(source: label)),
+        session: session, command: .deleteSource(source: source)),
       case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
       let namespace = namespaces.first,
       let checkpoint = namespace.acknowledgedSnapshot?.checkpointGeneration,
@@ -48,7 +50,8 @@ struct LabelDeletionRoutingTests {
     defer { httpSession.invalidateAndCancel() }
     do {
       let command: [String: Any] = [
-        "type": "deleteSource", "source": ["kind": labelKind.rawValue, "id": label.id.uuidString],
+        "type": "deleteSource",
+        "source": ["kind": sourceKind.rawValue, "id": source.id.uuidString],
       ]
       let operationId = UUID()
       for (name, arguments, state) in [
@@ -90,7 +93,7 @@ struct LabelDeletionRoutingTests {
       }
       guard
         case .source(let retained) = await planner.read(
-          session: session, request: .source(label)),
+          session: session, request: .source(source)),
         case .noReliableEvidence = await planner.operationStatus(
           session: session, operationId: operationId),
         case .selected(let after) = await planner.inspectRecovery(
@@ -98,6 +101,8 @@ struct LabelDeletionRoutingTests {
             namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
       else { throw CancellationError() }
       switch retained {
+      case .item(let source):
+        #expect(source.content.title == "Food" && source.references.isEmpty)
       case .category(let source):
         #expect(source.content.name == "Food" && source.references.isEmpty)
       case .tag(let source): #expect(source.content.name == "Food" && source.references.isEmpty)
