@@ -557,11 +557,11 @@ final class SavedPlannerStore {
     }
   }
 
-  func prepareLabelDeletion(_ label: SavedLabelSource) async -> PlannerReview? {
+  func prepareSourceDeletion(_ source: PlannerEntityReference) async -> PlannerReview? {
     guard let planner, let session, canCreate else { return nil }
     alertMessage = nil
     switch await planner.prepareReview(
-      session: session, command: .deleteSource(source: label.source))
+      session: session, command: .deleteSource(source: source))
     {
     case .reviewed(let review): return review
     case .failed(let reason):

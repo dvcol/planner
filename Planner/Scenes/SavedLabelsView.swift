@@ -171,7 +171,7 @@ private struct SavedLabelForm: View {
   let original: SavedLabelSource?
   @State private var name: String
   @State private var operationIdentifier = UUID()
-  @State private var deletionDraft: SavedLabelDeletionDraft?
+  @State private var deletionDraft: SavedSourceDeletionDraft?
   @State private var isReviewingDeletion = false
   @State private var deletionCompleted = false
 
@@ -229,7 +229,7 @@ private struct SavedLabelForm: View {
     }
     .interactiveDismissDisabled(store.isSaving || isReviewingDeletion)
     .sheet(item: $deletionDraft, onDismiss: finishDeletion) { draft in
-      SavedLabelDeletionForm(store: store, draft: draft) { deletionCompleted = true }
+      SavedSourceDeletionForm(store: store, draft: draft) { _ in deletionCompleted = true }
     }
     .alert(
       "Planner",
@@ -262,8 +262,8 @@ private struct SavedLabelForm: View {
     guard !isReviewingDeletion else { return }
     isReviewingDeletion = true
     defer { isReviewingDeletion = false }
-    if let review = await store.prepareLabelDeletion(label) {
-      deletionDraft = .init(kind: kind, label: label, review: review)
+    if let review = await store.prepareSourceDeletion(label.source) {
+      deletionDraft = .init(source: label.source, name: label.name, review: review)
     }
   }
 

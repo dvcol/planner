@@ -62,6 +62,9 @@ struct SavedPlannerView: View {
   @State private var membershipMoveDraft: SavedMembershipMoveDraft?
   @State private var listAdditionDraft: SavedListAdditionDraft?
   @State private var itemEditDraft: SavedItemEditDraft?
+  @State private var itemDeletionDraft: SavedSourceDeletionDraft?
+  @State private var isPreparingItemDeletion = false
+  @State private var itemDeletionMessage: String?
   @State private var isOpeningAppearance = false
   @State private var columnVisibility: NavigationSplitViewVisibility = .all
   #if os(iOS)
@@ -108,14 +111,19 @@ struct SavedPlannerView: View {
       .onChange(of: selectedListId) { listEditMode = .inactive }
     #endif
     .task(id: selectedItemId) { await loadSelectedItem() }
+    .onChange(of: selectedItemId) {
+      if selectedItemId != nil { itemDeletionMessage = nil }
+    }
     .onChange(of: selectedItineraryIdentifier) { selectedItineraryRow = nil }
     .task(id: selectedAppearanceIdentity) { await loadSelectedAppearance() }
     .task(id: store.changeRevision) {
       await loadListCatalog()
       await loadSelectedList()
       await loadCatalogItems()
-      await loadSelectedItem()
-      await loadSelectedAppearance()
+      if itemDeletionDraft == nil { await loadSelectedItem() }
+      if itemDeletionDraft == nil || itemDeletionDraft?.source.id != selectedAppearance?.source.id {
+        await loadSelectedAppearance()
+      }
     }
     .sheet(isPresented: $showLabels) {
       SavedLabelsView(store: store)
@@ -150,6 +158,11 @@ struct SavedPlannerView: View {
     .sheet(item: $itemEditDraft) { draft in
       SavedEditItemForm(store: store, item: draft.item)
     }
+    .sheet(item: $itemDeletionDraft, onDismiss: refreshAfterDeletionReview) { draft in
+      SavedSourceDeletionForm(store: store, draft: draft) { review in
+        clearDeletedItemSelection(draft, review: review)
+      }
+    }
     .sheet(item: $bulkCompletionDraft) { draft in
       SavedBulkCompletionForm(store: store, draft: draft)
     }
@@ -157,7 +170,8 @@ struct SavedPlannerView: View {
       "Planner",
       isPresented: Binding(
         get: {
-          store.alertMessage != nil && itemEditDraft == nil && bulkCompletionDraft == nil
+          store.alertMessage != nil && itemEditDraft == nil && itemDeletionDraft == nil
+            && bulkCompletionDraft == nil
             && !showLabels
             && !showSettings
             && (selectedSection != .itineraries || showNewList || showNewItem)
@@ -387,18 +401,24 @@ struct SavedPlannerView: View {
   private var itemDetail: some View {
     if let selectedItem {
       SavedItemDetail(
-        item: selectedItem, canChange: store.canCreate, isSaving: store.isSaving,
+        item: selectedItem, canChange: store.canCreate && !isPreparingItemDeletion,
+        isSaving: store.isSaving,
         addToList: {
           listAdditionDraft = SavedListAdditionDraft(
             itemIdentifier: selectedItem.source.id, itemTitle: selectedItem.content.title)
         },
         editItem: { itemEditDraft = SavedItemEditDraft(item: selectedItem) },
+        deleteItem: { Task { await prepareItemDeletion(selectedItem) } },
         setCompletion: { done in
           Task { _ = await store.setItemCompletion(selectedItem.source.id, done: done) }
         },
         setArchive: { archived in
           Task { _ = await store.setItemArchived(selectedItem.source.id, archived: archived) }
-        })
+        }
+      )
+      .overlay {
+        if isPreparingItemDeletion { ProgressView("Reviewing deletion") }
+      }
     } else if isOpeningItem {
       ProgressView("Opening Item")
     } else if selectedItemId != nil {
@@ -407,8 +427,63 @@ struct SavedPlannerView: View {
       } actions: {
         Button("Try Again") { Task { await loadSelectedItem() } }
       }
+    } else if let itemDeletionMessage {
+      ContentUnavailableView(
+        "Item deleted", systemImage: "trash", description: Text(itemDeletionMessage))
     } else {
       ContentUnavailableView("Choose an Item", systemImage: "square.stack")
+    }
+  }
+
+  private func prepareItemDeletion(_ item: PlannerItemSourceRead) async {
+    guard !isPreparingItemDeletion else { return }
+    isPreparingItemDeletion = true
+    defer { isPreparingItemDeletion = false }
+    if let review = await store.prepareSourceDeletion(item.source) {
+      itemDeletionDraft = .init(source: item.source, name: item.content.title, review: review)
+    }
+  }
+
+  private func clearDeletedItemSelection(_ draft: SavedSourceDeletionDraft, review: PlannerReview) {
+    if selectedItemId == draft.source.id {
+      selectedItemId = nil
+      selectedItem = nil
+      isOpeningItem = false
+      itemDeletionMessage = "\(draft.name) and its references were removed."
+    }
+    let removedMembershipIdentifiers = Set(
+      review.impact.referenceRemovals.compactMap { reference -> UUID? in
+        if case .membership(let identifier, _, _) = reference { return identifier }
+        return nil
+      })
+    var membershipSelectionRemoved = false
+    if case .listMembership(_, let identifier) = selectedAppearanceIdentity {
+      membershipSelectionRemoved = removedMembershipIdentifiers.contains(identifier)
+    }
+    if membershipSelectionRemoved || selectedAppearance?.source == draft.source {
+      selectedAppearanceIdentity = nil
+      selectedAppearance = nil
+      isOpeningAppearance = false
+      appearanceChangeTitle = "Item deleted"
+      appearanceChangeMessage = itemDeletionMessage
+    }
+    guard let selectedItineraryRow else { return }
+    let selectedWasRemoved = review.impact.referenceRemovals.contains { reference in
+      switch (selectedItineraryRow, reference) {
+      case (.direct(let entryId), .itineraryEntry(let removedId, _, _)):
+        return entryId == removedId
+      case (.expanded(_, let membershipId), .membership(let removedId, _, _)):
+        return membershipId == removedId
+      default: return false
+      }
+    }
+    if selectedWasRemoved { self.selectedItineraryRow = nil }
+  }
+
+  private func refreshAfterDeletionReview() {
+    Task {
+      await loadSelectedItem()
+      await loadSelectedAppearance()
     }
   }
 
