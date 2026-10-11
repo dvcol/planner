@@ -1,0 +1,129 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "00006030-001A586C3EA3001C",
+      "deviceName" : "My Mac",
+      "modelName" : "MacBook Pro",
+      "osBuildNumber" : "26A434",
+      "osVersion" : "27.0.1",
+      "platform" : "macOS"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0,27s",
+                  "durationInSeconds" : 0.2655830383300781,
+                  "name" : "malformedStaleAndRevokedBulkRequestsLeaveDataAndRecoveryUnchanged()",
+                  "nodeIdentifier" : "BulkCompletionAdmissionRoutingTests/malformedStaleAndRevokedBulkRequestsLeaveDataAndRecoveryUnchanged()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/BulkCompletionAdmissionRoutingTests/malformedStaleAndRevokedBulkRequestsLeaveDataAndRecoveryUnchanged()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "BulkCompletionAdmissionRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/BulkCompletionAdmissionRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,6s",
+                  "durationInSeconds" : 0.6008739471435547,
+                  "name" : "statelessHTTPReviewsAndAppliesExactLocalScopesWithoutChangingGlobalFlags()",
+                  "nodeIdentifier" : "BulkCompletionRoutingTests/statelessHTTPReviewsAndAppliesExactLocalScopesWithoutChangingGlobalFlags()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/BulkCompletionRoutingTests/statelessHTTPReviewsAndAppliesExactLocalScopesWithoutChangingGlobalFlags()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "BulkCompletionRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/BulkCompletionRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,062s",
+                      "durationInSeconds" : 0.0616459846496582,
+                      "name" : ".category",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SourceDeletionRoutingTests/statelessHTTPCannotReviewOrApplyNativeSourceDeletionEvenWithAnIssuedToken(_:)?args=de46a45ced4697015845d3f118403fe727f9bb926139ef920a5832f8e96b7274",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,046s",
+                      "durationInSeconds" : 0.04568123817443848,
+                      "name" : ".item",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SourceDeletionRoutingTests/statelessHTTPCannotReviewOrApplyNativeSourceDeletionEvenWithAnIssuedToken(_:)?args=24c84f68bc1fbc6d2a514cdb8b3f50cc30128665382cd823b7f85e6027dce5a1",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,048s",
+                      "durationInSeconds" : 0.047688961029052734,
+                      "name" : ".itinerary",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SourceDeletionRoutingTests/statelessHTTPCannotReviewOrApplyNativeSourceDeletionEvenWithAnIssuedToken(_:)?args=f62673c4d162b6505590121c0b22b475cec35615b9f49ae9d2c98d00af6522e8",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,044s",
+                      "durationInSeconds" : 0.04426217079162598,
+                      "name" : ".list",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SourceDeletionRoutingTests/statelessHTTPCannotReviewOrApplyNativeSourceDeletionEvenWithAnIssuedToken(_:)?args=dcb452a982945e5e2957930d83d36af5ceee19805ec0c3b30529ae8f44f6e49e",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,05s",
+                      "durationInSeconds" : 0.050254106521606445,
+                      "name" : ".tag",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SourceDeletionRoutingTests/statelessHTTPCannotReviewOrApplyNativeSourceDeletionEvenWithAnIssuedToken(_:)?args=d4d85bff85965272eced0d89cb90819f8ee7ccaf58ada8d4ce0060c186e3f430",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,05s",
+                  "durationInSeconds" : 0.04990649223327637,
+                  "name" : "statelessHTTPCannotReviewOrApplyNativeSourceDeletionEvenWithAnIssuedToken(_:)",
+                  "nodeIdentifier" : "SourceDeletionRoutingTests/statelessHTTPCannotReviewOrApplyNativeSourceDeletionEvenWithAnIssuedToken(_:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SourceDeletionRoutingTests/statelessHTTPCannotReviewOrApplyNativeSourceDeletionEvenWithAnIssuedToken(_:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SourceDeletionRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SourceDeletionRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "PlannerMCPTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "Planner",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}
