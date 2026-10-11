@@ -2,7 +2,7 @@ import PlannerCore
 import SwiftUI
 
 struct SavedBulkCompletionDraft: Identifiable {
-  let listName: String
+  let containerName: String
   let review: PlannerReview
   var id: UUID { review.reviewId }
 }
@@ -28,17 +28,35 @@ struct SavedBulkCompletionForm: View {
 
   private var actionTitle: String { marksDone ? "Mark all Done" : "Mark all Undone" }
 
+  private var contextDescription: String {
+    guard case .setBulkCompletion(let scope, _) = review.command else { return "this plan" }
+    switch scope {
+    case .list: return "this List"
+    case .itinerary: return "this Itinerary"
+    case .itineraryListEntry: return "this List entry in the Itinerary"
+    }
+  }
+
+  private var identifierPrefix: String {
+    guard case .setBulkCompletion(let scope, _) = review.command else { return "saved.bulk" }
+    switch scope {
+    case .list: return "saved.list.bulk"
+    case .itinerary: return "saved.itinerary.bulk"
+    case .itineraryListEntry: return "saved.itinerary.list.bulk"
+    }
+  }
+
   var body: some View {
     NavigationStack {
       Form {
         Section {
           let unit = review.targetCount == 1 ? "item" : "items"
-          Text("\(review.targetCount) \(unit) in \(draft.listName)").font(.headline)
+          Text("\(review.targetCount) \(unit) in \(draft.containerName)").font(.headline)
           Text("Includes archived items and items hidden by filters.")
             .foregroundStyle(.secondary)
         }
         Section {
-          Text("Only completion in this List changes.")
+          Text("Only completion in \(contextDescription) changes.")
           if !marksDone { Text("Items completed globally will still appear done.") }
         }
         if reviewChanged {
@@ -62,7 +80,7 @@ struct SavedBulkCompletionForm: View {
           Button("Cancel") { dismiss() }
             .disabled(store.isSaving)
             .keyboardShortcut(.cancelAction)
-            .accessibilityIdentifier("saved.list.bulk.cancel")
+            .accessibilityIdentifier("\(identifierPrefix).cancel")
         }
         ToolbarItem(placement: .confirmationAction) {
           Button("Confirm") {
@@ -70,7 +88,8 @@ struct SavedBulkCompletionForm: View {
               switch await store.applyBulkCompletion(
                 review, operationIdentifier: operationIdentifier)
               {
-              case .applied: dismiss()
+              case .applied:
+                if store.alertMessage == nil { dismiss() }
               case .reviewChanged(let refreshed):
                 review = refreshed
                 reviewChanged = true
@@ -80,7 +99,7 @@ struct SavedBulkCompletionForm: View {
           }
           .disabled(!store.canCreate)
           .keyboardShortcut(.defaultAction)
-          .accessibilityIdentifier("saved.list.bulk.confirm")
+          .accessibilityIdentifier("\(identifierPrefix).confirm")
         }
       }
       .overlay {

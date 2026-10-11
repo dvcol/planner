@@ -81,6 +81,8 @@ struct SavedItineraryDetail: View {
   @State private var editDraft: SavedItineraryEditDraft?
   @State private var showAddEntry = false
   @State private var collapsedEntries: Set<UUID> = []
+  @State private var bulkCompletionDraft: SavedBulkCompletionDraft?
+  @State private var isPreparingBulkCompletion = false
 
   var body: some View {
     Group {
@@ -143,6 +145,21 @@ struct SavedItineraryDetail: View {
                     }
                   }
                   .padding(.vertical, 8)
+                  .contextMenu {
+                    Group {
+                      Button("Mark all Done") {
+                        prepareBulkCompletion(
+                          .itineraryListEntry(itineraryId: identifier, listEntryId: entry.id),
+                          containerName: entry.title, done: true)
+                      }
+                      Button("Mark all Undone") {
+                        prepareBulkCompletion(
+                          .itineraryListEntry(itineraryId: identifier, listEntryId: entry.id),
+                          containerName: entry.title, done: false)
+                      }
+                    }
+                    .disabled(!store.canCreate || isPreparingBulkCompletion || entry.items.isEmpty)
+                  }
                 }
               } else {
                 ForEach(entry.items) { item in itineraryRow(item) }
@@ -152,6 +169,11 @@ struct SavedItineraryDetail: View {
         }
         .navigationTitle(itinerary.content.title)
         .navigationSplitViewColumnWidth(min: 260, ideal: 400, max: 600)
+        .overlay(alignment: .topTrailing) {
+          if isPreparingBulkCompletion {
+            ProgressView("Preparing review").controlSize(.small).padding()
+          }
+        }
         .toolbar {
           ToolbarItem(placement: .primaryAction) {
             Button("Add entry", systemImage: "plus") { showAddEntry = true }
@@ -164,6 +186,27 @@ struct SavedItineraryDetail: View {
             }
             .disabled(!store.canCreate)
             .accessibilityIdentifier("saved.itinerary.edit")
+          }
+          ToolbarItem(placement: .primaryAction) {
+            Menu {
+              Button("Mark all Done") {
+                prepareBulkCompletion(
+                  .itinerary(itineraryId: identifier), containerName: itinerary.content.title,
+                  done: true)
+              }
+              Button("Mark all Undone") {
+                prepareBulkCompletion(
+                  .itinerary(itineraryId: identifier), containerName: itinerary.content.title,
+                  done: false)
+              }
+            } label: {
+              Label("Itinerary actions", systemImage: "ellipsis")
+            }
+            .disabled(
+              !store.canCreate || isPreparingBulkCompletion || itinerary.progress.totalCount == 0
+            )
+            .help("Itinerary actions")
+            .accessibilityIdentifier("saved.itinerary.actions")
           }
         }
       } else if let loadingFailure {
@@ -185,10 +228,16 @@ struct SavedItineraryDetail: View {
     .sheet(isPresented: $showAddEntry) {
       SavedAddItineraryEntryForm(store: store, itineraryId: identifier)
     }
+    .sheet(item: $bulkCompletionDraft) { draft in
+      SavedBulkCompletionForm(store: store, draft: draft)
+    }
     .alert(
       "Planner",
       isPresented: Binding(
-        get: { store.alertMessage != nil && editDraft == nil && !showAddEntry },
+        get: {
+          store.alertMessage != nil && editDraft == nil && !showAddEntry
+            && bulkCompletionDraft == nil
+        },
         set: { if !$0 { store.alertMessage = nil } })
     ) {
       Button("OK") { store.alertMessage = nil }
@@ -205,6 +254,20 @@ struct SavedItineraryDetail: View {
       }
     }
     .tag(item.id)
+  }
+
+  private func prepareBulkCompletion(
+    _ scope: PlannerBulkScope, containerName: String, done: Bool
+  ) {
+    guard !isPreparingBulkCompletion else { return }
+    isPreparingBulkCompletion = true
+    Task {
+      defer { isPreparingBulkCompletion = false }
+      guard
+        let review = await store.prepareBulkCompletion(scope: scope, done: done)
+      else { return }
+      bulkCompletionDraft = .init(containerName: containerName, review: review)
+    }
   }
 
   private func loadItinerary() async {

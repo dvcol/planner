@@ -115,3 +115,15 @@ Each executable slice uses one failing behavior test and minimum implementation 
 - [x] Human decisions and exact public declarations/fixtures are recorded in this packet for publication in Navigation prototype and committed source.
 - [ ] Implemented slices have focused red/green, affected compilation/lint, real-store/provider-I/O and native UI evidence on the required destinations.
 - [ ] Human reviews the actual row/detail interactions; remaining physical, accessibility, sync/Share and full navigation gates remain explicit before resolving the prototype.
+
+## Accepted native labels and filter round
+
+On 2026-10-11 the human explicitly selected A for the restated Q53, Q54 and Q55. These decisions close the presentation questions and supply readiness for their implementation slices. They do not claim implemented controls or label-row reads.
+
+Q53 A selects one native Manage Labels destination with Categories and Tags sections. Relevant toolbar menus and Settings provide access; it adds no main tab. The starting app has basic Category management. The intended end includes both shared label kinds and the already accepted confirmation before deleting an associated label. Alternatives were a top-level Labels navigation destination or separate Category/Tag management destinations. They add navigation entries or separate related management work.
+
+Q54 A selects one adaptive Filters control. A native Form in a phone sheet or larger-device popover presents cumulative completion, archive, Categories, Tags, duration and other supported criteria. Its label is All when unrestricted and a concise active-filter summary otherwise; Clear resets the criteria. The starting native menus cover only completion/archive, while Core supports additional groups. Alternatives were separate toolbar menus or a persistent larger-device panel, increasing toolbar overflow or consuming content/detail space. Full progress remains independent of filtered visibility. Unsupported criteria must retain their owning implementation gates.
+
+Q55 A selects compact native secondary row text for Category and a small number of Tags, with +N for remaining Tags. Details display the complete labels and accessibility exposes every name. Shared renames update every use. The starting rows lack label-name previews. Alternatives were wrapping every label or displaying labels only in details/filters, increasing row height or removing scan context. Stable identities and live shared names remain authoritative; labels are not copied into Items.
+
+Required /tdd follows the approved public Core and native UI seams. Cover shared rename propagation and duplicate-name identities, cumulative criteria plus Clear/archive inclusion, unchanged full progress, compact overflow with complete accessible names, and stale row-window behavior after label changes. Qualify affected native destinations and compilation. Deletion impact, physical synchronization, long-list responsiveness and whole-app polish keep their existing gates.
