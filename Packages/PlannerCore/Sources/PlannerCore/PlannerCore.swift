@@ -4062,11 +4062,12 @@ public actor Planner {
     guard let token = operation.reviewToken else {
       throw PlannerFailure(
         "staleReview", "Review the full contextual target set before applying.",
-        propertyPath: "/reviewToken")
+        propertyPath: "/reviewToken", details: .staleReview)
     }
     guard let review = reviews[token.reviewId], review.session == operation.session else {
       throw PlannerFailure(
-        "staleReview", "This review does not belong to the current dataset session.")
+        "staleReview", "This review does not belong to the current dataset session.",
+        details: .staleReview)
     }
     let resolution = try resolveBulkCompletion(scope, context: context)
     let bindings = resolution.bindings
@@ -4074,7 +4075,8 @@ public actor Planner {
       scope: scope, done: done, identity: identity, bindings: bindings)
     guard digest == review.payloadDigest else {
       throw PlannerFailure(
-        "staleReview", "The command or full target set changed; review it again.")
+        "staleReview", "The command or full target set changed; review it again.",
+        details: .staleReview)
     }
     if let proposal = try archive.proposals().first(where: {
       $0.originalOperationId == operation.operationId

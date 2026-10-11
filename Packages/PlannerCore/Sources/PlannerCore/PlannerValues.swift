@@ -57,6 +57,7 @@ public enum PlannerItemFieldValue: Sendable, Equatable {
 }
 
 public enum PlannerFailureDetails: Sendable, Equatable {
+  case staleReview
   case staleSnapshot(requestedGeneration: UUID, currentGeneration: UUID?)
   case staleEdit(
     conflictingFields: [PlannerItemField], currentValues: [PlannerItemField: PlannerItemFieldValue],
@@ -262,6 +263,15 @@ public struct PlannerItemChanges: Sendable {
 
 public struct PlannerReviewToken: Sendable {
   let reviewId: UUID
+
+  public var opaqueValue: String { reviewId.uuidString }
+
+  public init?(opaqueValue: String) {
+    guard let reviewId = UUID(uuidString: opaqueValue) else { return nil }
+    self.reviewId = reviewId
+  }
+
+  init(reviewId: UUID) { self.reviewId = reviewId }
 }
 
 public struct PlannerOperation: Sendable {
