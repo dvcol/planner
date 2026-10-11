@@ -1,0 +1,60 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "modelName" : "iPad Air 11-inch (M4)",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 2,
+      "passedTests" : 1,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "PlannerNavigation · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 2,
+  "finishTime" : 1791703560.004,
+  "passedTests" : 1,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1791702964.731,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Failed to tap \"All selected\" Button: No matches found for Elements matching predicate '\"All selected\" IN identifiers' from input {(\n    Button, identifier: 'list.bullet', label: 'Lists', Selected,\n    Button, identifier: 'square.stack', label: 'Items',\n    Button, identifier: 'tray', label: 'Inbox',\n    Button, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries',\n    Button, identifier: 'list.bullet', label: 'Lists', Selected,\n    Button, identifier: 'square.stack', label: 'Items',\n    Button, identifier: 'tray', label: 'Inbox',\n    Button, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries',\n    Button, identifier: 'saved.filters.clear', label: 'Clear Filters',\n    Button, identifier: 'saved.filters.done', label: 'Done',\n    Button, label: 'Show Sidebar',\n    Button, identifier: 'saved.list.edit', label: 'Edit',\n    Button, identifier: 'OverflowBarButtonItem', label: 'More',\n    Button, identifier: 'saved.appearance.actions', label: 'Item actions',\n    Button, identifier: 'saved.filters.tags', label: 'Tags, 2 selected',\n    Button, identifier: 'saved.filters.tag.match', label: 'Match, Any selected',\n    Button, label: 'Clear Tags',\n    Button, identifier: 'saved.filters.lists', label: 'In Lists, Any',\n    Button, identifier: 'saved.categories.manage', label: 'Manage Labels',\n    Button, identifier: 'saved.appearance.completion.FB25772E-7CC3-44F5-85BA-BE7EB9BBD203', label: 'Mark Dry museum done in this List', value: To do,\n    Button, identifier: 'saved.appearance.FB25772E-7CC3-44F5-85BA-BE7EB9BBD203', label: 'Dry museum', value: Categories: Cultur...,\n    Button, identifier: 'saved.appearance.completion.58680DAD-E74E-4633-863D-EE2A7EF76E90', label: 'Mark Rain museum undone in this List', value: Completed, Selected,\n    Button, identifier: 'saved.appearance.58680DAD-E74E-4633-863D-EE2A7EF76E90', label: 'Rain museum', value: Categories: Cultur..., Selected,\n    Button, identifier: 'saved.appearance.completion.35925150-D525-44CA-8CD9-3B23777DF256', label: 'Mark Cafe done in this List', value: To do,\n    Button, identifier: 'saved.appearance.35925150-D525-44CA-8CD9-3B23777DF256', label: 'Cafe', value: Tags: Rain\n)}\nPossibly caused by runtime issues:\nAutomation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 75;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeTraits\" = 146297323520;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 75;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeTraits\" = 146297323528;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Other from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 0;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeTraits\" = 8858370056;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Other from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 0;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeTraits\" = 8858370048;\n}\nSee test report attachments for more detail.",
+      "targetName" : "PlannerNavigationUITests",
+      "testIdentifier" : 3,
+      "testIdentifierString" : "SavedLabelsJourneyTests/testCumulativeLabelFiltersNarrowListRowsAndClearWithoutChangingFullProgress()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedLabelsJourneyTests/testCumulativeLabelFiltersNarrowListRowsAndClearWithoutChangingFullProgress",
+      "testName" : "testCumulativeLabelFiltersNarrowListRowsAndClearWithoutChangingFullProgress()"
+    },
+    {
+      "failureText" : "XCTAssertTrue failed",
+      "targetName" : "PlannerNavigationUITests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "SavedAppearanceJourneyTests/testListMembershipFiltersUseAnyAllAndKeepContextualCompletionAfterRelaunch()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testListMembershipFiltersUseAnyAllAndKeepContextualCompletionAfterRelaunch",
+      "testName" : "testListMembershipFiltersUseAnyAllAndKeepContextualCompletionAfterRelaunch()"
+    }
+  ],
+  "title" : "Test - PlannerNavigation",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 3
+}

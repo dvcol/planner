@@ -236,13 +236,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
     XCTAssertEqual(filters.label, "2 Tags")
     filters.activateForPlannerJourney()
     let matchPicker = application.plannerElement("saved.filters.tag.match")
-    if !matchPicker.isHittable {
-      let form = application.collectionViews.containing(.button, identifier: "saved.filters.tags")
-        .firstMatch
-      XCTAssertTrue(form.waitForExistence(timeout: 5))
-      form.swipeUp()
-    }
-    XCTAssertTrue(matchPicker.waitForPlannerHittability())
+    application.revealSavedPlannerFilter("saved.filters.tag.match")
     matchPicker.activateForPlannerJourney()
     application.plannerElement("All selected").activateForPlannerJourney()
     recordLabelsScreenshot(application, name: "Native adaptive Filters with All selected Tags")
@@ -368,15 +362,9 @@ final class SavedLabelsJourneyTests: XCTestCase {
     application: XCUIApplication
   ) {
     let picker = application.plannerElement("\(identifierPrefix).\(kind.lowercased())")
-    #if os(iOS)
-      if identifierPrefix == "saved.filters", !picker.isHittable {
-        let form = application.collectionViews.containing(
-          .button, identifier: "saved.filters.categories"
-        ).firstMatch
-        XCTAssertTrue(form.waitForExistence(timeout: 5))
-        form.swipeUp()
-      }
-    #endif
+    if identifierPrefix == "saved.filters" {
+      application.revealSavedPlannerFilter("\(identifierPrefix).\(kind.lowercased())")
+    }
     XCTAssertTrue(picker.waitForExistence(timeout: 5))
     picker.activateForPlannerJourney()
     for name in names {

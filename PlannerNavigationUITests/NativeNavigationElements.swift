@@ -1,3 +1,4 @@
+import CoreGraphics
 import XCTest
 
 extension XCUIApplication {
@@ -62,6 +63,36 @@ extension XCUIApplication {
     XCTAssertTrue(option.waitForPlannerHittability())
     option.activateForPlannerJourney()
     plannerElement("saved.filters.done").activateForPlannerJourney()
+  }
+
+  /// Keep filter controls below the native navigation bar before tapping them.
+  func revealSavedPlannerFilter(_ identifier: String) {
+    let control = descendants(matching: .any).matching(identifier: identifier).firstMatch
+    #if os(iOS)
+      let form = descendants(matching: .any).matching(identifier: "saved.filters.form").firstMatch
+      XCTAssertTrue(form.waitForExistence(timeout: 5))
+      let navigationBar = navigationBars["Filters"]
+      XCTAssertTrue(navigationBar.waitForExistence(timeout: 5))
+      for _ in 0..<8 {
+        let visibleTop = navigationBar.frame.maxY + 4
+        let visibleBottom = form.frame.maxY - 4
+        if control.exists, control.isHittable,
+          control.frame.minY >= visibleTop, control.frame.maxY <= visibleBottom
+        {
+          return
+        }
+        let needsDownwardScroll = control.exists && control.frame.midY < visibleTop
+        let start = form.coordinate(
+          withNormalizedOffset: CGVector(dx: 0.5, dy: needsDownwardScroll ? 0.4 : 0.8))
+        let end = form.coordinate(
+          withNormalizedOffset: CGVector(dx: 0.5, dy: 0.6))
+        start.press(forDuration: 0.05, thenDragTo: end)
+      }
+      XCTFail("The filter control did not reach the visible Form: \(identifier)")
+    #else
+      XCTAssertTrue(control.waitForExistence(timeout: 5))
+      XCTAssertTrue(control.waitForPlannerHittability())
+    #endif
   }
 
   /// Native Mac rows and menus expose different accessibility roles from mobile navigation buttons.
