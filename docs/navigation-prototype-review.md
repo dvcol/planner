@@ -202,6 +202,18 @@ The [native Item Schedule edit qualification](prototypes/navigation-local-qualif
 
 The [native all-day edit qualification](prototypes/navigation-local-qualification.md#native-all-day-schedule-editing) verifies saved civil-date initialization, cancellation and a changed inclusive end under the same Schedule identity after relaunch. Only tests/evidence change. The journey stays within the initially displayed month; absent-end initialization, form conversions, stale drafts and travel remain open.
 
+## Open calendar and itinerary estimate choices
+
+The human asked for time estimates in itinerary rows and a Day/Week/Month calendar. At `b83d000`, itinerary catalog rows show only their title/icon, while saved details retain their Schedule records. Planner's own calendar is already in release scope, but the saved app has no Calendar destination or planning grid. Apple Calendar export remains outside this map. An estimate must never fill an absent Schedule end or change a booked instant.
+
+The question tool presents these decisions without recording a selected answer:
+
+- Q59 chooses a manually entered overall itinerary estimate, a child-derived total, or a calculated total with manual override. The original brief requests an itinerary estimate, but the later complete content contract and current Core input/read omit it. A manual value can include travel/breaks; a derived value needs separate rules for repeated appearances, unknown estimates and child states. The recommendation is an optional manual estimate alongside separately labeled Schedule metadata.
+- Q60 chooses Day/Week/Month views, Day/Month first, or Month with a selected-day agenda. The recommendation is all three modes with phone/tablet/Mac layouts adapted to their space. The mode set was not already settled by the accepted scheduling model.
+- Q61 chooses a main Calendar destination, a mode inside Itineraries, or toolbar navigation. The recommendation is native TabView/desktop sidebar access because Calendar includes direct Item and whole-Itinerary assignments.
+
+Calendar/estimate implementation readiness requires the relevant answers and a reviewed public data/query contract for any new fields. Required tests must use the approved Core, HTTP and native UI boundaries, retain exact source/Schedule identities, distinguish estimates from booked spans, preserve all-day civil dates and fixed timed instants, and cover each selected mode's overflow/accessibility. These are future requirements, not runtime evidence. Q57's zero-match List groups and Q58's native loading fixture also remain pending; no recommendation is treated as an answer.
+
 ## Definition of ready and done
 
 - [x] Contract public interfaces accepted, prerequisite resolutions reviewed, local toolchain inventory refreshed and fixture inputs/expected transitions specified.
