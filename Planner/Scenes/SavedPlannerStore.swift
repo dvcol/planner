@@ -15,7 +15,7 @@ struct SavedPlannerItem: Identifiable {
   let row: PlannerRowRead
 }
 
-struct SavedPlannerCategory: Identifiable {
+struct SavedPlannerLabel: Identifiable {
   let source: PlannerEntityReference
   let name: String
   var id: UUID { source.id }
@@ -143,10 +143,11 @@ final class SavedPlannerStore {
     return nil
   }
 
-  func readCategories() async -> [SavedPlannerCategory]? {
+  func readLabels(_ kind: SavedLabelKind) async -> [SavedPlannerLabel]? {
     guard let planner, let session else { return nil }
     switch await planner.query(
-      PlannerQuery(session: session, request: .catalog(.init(sourceKind: .category, archive: .all)))
+      PlannerQuery(
+        session: session, request: .catalog(.init(sourceKind: kind.sourceKind, archive: .all)))
     )
     {
     case .failed(let reason): alertMessage = reason.message
@@ -157,26 +158,27 @@ final class SavedPlannerStore {
       {
       case .rows(let window):
         return window.rows.compactMap { row in
-          guard case .source(let source) = row.identity, source.kind == .category else {
+          guard case .source(let source) = row.identity, source.kind == kind.sourceKind else {
             return nil
           }
-          return SavedPlannerCategory(source: source, name: row.title)
+          return SavedPlannerLabel(source: source, name: row.title)
         }
       case .failed(let reason): alertMessage = reason.message
-      default: alertMessage = "Planner could not read its Categories."
+      default: alertMessage = "Planner could not read its \(kind.pluralTitle)."
       }
     }
     return nil
   }
 
-  func readCategory(_ identifier: UUID) async -> PlannerCategorySourceRead? {
+  func readLabel(_ selection: SavedLabelSelection) async -> SavedLabelSource? {
     guard let planner, let session else { return nil }
     switch await planner.read(
-      session: session, request: .source(.init(kind: .category, id: identifier)))
+      session: session, request: .source(.init(kind: selection.kind.sourceKind, id: selection.id)))
     {
-    case .source(.category(let category)): return category
+    case .source(.category(let category)): return .category(category)
+    case .source(.tag(let tag)): return .tag(tag)
     case .failed(let reason): alertMessage = reason.message
-    default: alertMessage = "Planner could not open this Category."
+    default: alertMessage = "Planner could not open this \(selection.kind.title)."
     }
     return nil
   }
@@ -546,10 +548,16 @@ final class SavedPlannerStore {
     }
   }
 
-  func createCategory(name: String, operationIdentifier: UUID) async -> PlannerEntityReference? {
-    let result = await executeChange(
-      .createCategory(content: .init(name: name)), operationId: operationIdentifier)
-    return result?.generated.first { $0.kind == .category }
+  func createLabel(_ kind: SavedLabelKind, name: String, operationIdentifier: UUID) async
+    -> PlannerEntityReference?
+  {
+    let command: PlannerCommand
+    switch kind {
+    case .category: command = .createCategory(content: .init(name: name))
+    case .tag: command = .createTag(content: .init(name: name))
+    }
+    let result = await executeChange(command, operationId: operationIdentifier)
+    return result?.generated.first { $0.kind == kind.sourceKind }
   }
 
   func createItinerary(
@@ -579,13 +587,21 @@ final class SavedPlannerStore {
         expectedFieldHashes: itinerary.fieldHashes), operationId: operationIdentifier) != nil
   }
 
-  func renameCategory(
-    _ category: PlannerCategorySourceRead, name: String, operationIdentifier: UUID
+  func renameLabel(
+    _ label: SavedLabelSource, name: String, operationIdentifier: UUID
   ) async -> Bool {
-    await executeChange(
-      .editCategory(
+    let command: PlannerCommand
+    switch label {
+    case .category(let category):
+      command = .editCategory(
         sourceId: category.source.id, changes: .init(name: .set(name)),
-        expectedFieldHashes: category.fieldHashes), operationId: operationIdentifier) != nil
+        expectedFieldHashes: category.fieldHashes)
+    case .tag(let tag):
+      command = .editTag(
+        sourceId: tag.source.id, changes: .init(name: .set(name)),
+        expectedFieldHashes: tag.fieldHashes)
+    }
+    return await executeChange(command, operationId: operationIdentifier) != nil
   }
 
   func createList(name: String, operationId: UUID) async -> PlannerEntityReference? {

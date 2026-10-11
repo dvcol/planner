@@ -135,3 +135,9 @@ Q55's first implementation slice adds the existing PlannerLabelRead metadata to 
 The existing generation binding also covers label reads. A shared rename invalidates an issued window; a fresh window resolves the new name without changing the Item's own timestamp or field hashes. Public Core tests cover duplicate-name identities, contextual references, independent owner labels, another writer and reopen. The HTTP serializer reuses the existing source LabelValue and emits the same metadata in rows. This adds no persisted model, backup field or schema version.
 
 Native compact display, complete accessible labels, selection editors, Manage Labels and adaptive Filters retain their implementation gates. See the [local qualification](prototypes/navigation-local-qualification.md#live-shared-labels-in-row-windows) for completed checks and their limits.
+
+## Shared native label management
+
+Q53's first native slice replaces the Category-only management screen with one Manage Labels destination. The existing library toolbar opens native Categories and Tags sections. A system New Label menu chooses the kind; native staged forms create or rename either kind through the existing guarded Core commands. Cancel leaves saved data unchanged, Save requires valid changed input, and the form stays open when persistence/recovery reports a failure. Rename retains the source identity. This adds no main navigation tab.
+
+The Category journey retains its behavioral assertions and changes only its creation helper for the new native menu. The Tag tracer covers canceled creation/rename, guarded save, stable row identity and relaunch. See [local qualification](prototypes/navigation-local-qualification.md#shared-native-label-management) for platform results and captures. Associated-label deletion/impact review and Settings access remain open; compact row display, selection editing and adaptive Filters retain Q54/Q55's separate gates.

@@ -9,7 +9,7 @@ final class SavedCategoryJourneyTests: XCTestCase {
     application.launchSavedPlannerJourney()
     openCategories(application)
     XCTAssertTrue(application.staticTexts["No Categories yet"].waitForExistence(timeout: 5))
-    application.plannerElement("saved.category.new").activateForPlannerJourney()
+    newCategory(application)
     let name = application.textFields["saved.category.name"]
     XCTAssertTrue(name.waitForExistence(timeout: 5))
     name.activateForPlannerJourney()
@@ -18,7 +18,7 @@ final class SavedCategoryJourneyTests: XCTestCase {
     XCTAssertFalse(application.staticTexts["Canceled category"].exists)
     XCTAssertTrue(application.staticTexts["No Categories yet"].exists)
 
-    application.plannerElement("saved.category.new").activateForPlannerJourney()
+    newCategory(application)
     XCTAssertTrue(name.waitForExistence(timeout: 5))
     name.activateForPlannerJourney()
     name.typeText("Food")
@@ -51,6 +51,13 @@ final class SavedCategoryJourneyTests: XCTestCase {
     XCTAssertFalse(application.staticTexts["Canceled category"].exists)
     XCTAssertFalse(application.staticTexts["Canceled rename"].exists)
     recordScreenshot(application, name: "Native Category after relaunch")
+  }
+
+  private func newCategory(_ application: XCUIApplication) {
+    application.plannerElement("saved.labels.new").activateForPlannerJourney()
+    let category = application.plannerElement("New Category")
+    XCTAssertTrue(category.waitForExistence(timeout: 5))
+    category.activateForPlannerJourney()
   }
 
   private func openCategories(_ application: XCUIApplication) {
