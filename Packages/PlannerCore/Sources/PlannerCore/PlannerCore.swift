@@ -718,6 +718,7 @@ public actor Planner {
             !itemQuery.hasAddress, !itemQuery.hasLinks
           {
             descriptor.propertiesToFetch = [\.id, \.title, \.globalDone, \.archived]
+            if itemQuery.scheduled != .all { descriptor.propertiesToFetch.append(\.lifetimeId) }
             if itemQuery.sort.mode == .created {
               descriptor.propertiesToFetch.append(\.createdAt)
             } else if itemQuery.sort.mode == .lastUpdated {
@@ -745,6 +746,8 @@ public actor Planner {
             }
             guard try matchesItemLabels(item, query: itemQuery) else { return false }
             guard try matchesItemPresence(item, query: itemQuery) else { return false }
+            guard try matchesItemScheduling(item, scheduled: itemQuery.scheduled, context: context)
+            else { return false }
             guard try matchesItemDuration(item, duration: itemQuery.duration) else { return false }
             return try matchesItemText(item, terms: textTerms, locale: locale)
           }
@@ -1195,6 +1198,9 @@ public actor Planner {
       }
       if !(try matchesItemLabels(item, query: query)) { continue }
       if !(try matchesItemPresence(item, query: query)) { continue }
+      if !(try matchesItemScheduling(item, scheduled: query.scheduled, context: context)) {
+        continue
+      }
       if !(try matchesItemDuration(item, duration: query.duration)) { continue }
       if !(try matchesItemText(item, terms: textTerms, locale: locale)) { continue }
       var durationMinutes: Int64?
@@ -1640,6 +1646,29 @@ public actor Planner {
       return true
     }
     return false
+  }
+
+  private func matchesItemScheduling(
+    _ item: PlannerSchemaV14.Item, scheduled: PlannerItemQuery.Scheduling, context: ModelContext
+  ) throws -> Bool {
+    guard scheduled != .all else { return true }
+    guard let itemId = item.id, let lifetimeId = item.lifetimeId else {
+      throw PlannerFailure("readUnavailable", "A schedule-filtered Item has unresolved identity.")
+    }
+    var assignments = FetchDescriptor<PlannerSchemaV14.Schedule>(
+      predicate: #Predicate {
+        $0.sourceKind == "item" && $0.sourceId == itemId && $0.sourceLifetimeId == lifetimeId
+      })
+    assignments.fetchLimit = 1
+    let hasSchedule: Bool
+    if let assignment = try context.fetch(assignments).first {
+      _ = try assignment.value(ownerId: itemId, ownerLifetimeId: lifetimeId)
+      hasSchedule = true
+    } else {
+      hasSchedule = try hasInheritedSchedule(
+        itemId: itemId, lifetimeId: lifetimeId, context: context)
+    }
+    return hasSchedule == (scheduled == .scheduled)
   }
 
   private func latestHistoryToken(in context: ModelContext) throws -> DefaultHistoryToken? {

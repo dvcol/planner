@@ -449,6 +449,7 @@ public struct PlannerItemQuery: Sendable {
   }
   public enum Completion: Sendable { case todo, done, all }
   public enum Archive: Sendable { case active, archived, all }
+  public enum Scheduling: String, Sendable { case scheduled, unscheduled, all }
   public struct IdentityGroup: Sendable {
     public enum Match: String, Sendable { case any, all }
     public let ids: Set<UUID>
@@ -501,6 +502,7 @@ public struct PlannerItemQuery: Sendable {
   public let duration: Duration?
   public let hasAddress: Bool
   public let hasLinks: Bool
+  public let scheduled: Scheduling
   public let sort: Sort
   public let rowPresentation: PlannerRowPresentationContext?
 
@@ -509,7 +511,7 @@ public struct PlannerItemQuery: Sendable {
     archive: Archive = .active, categories: IdentityGroup? = nil, tags: IdentityGroup? = nil,
     lists: IdentityGroup? = nil,
     duration: Duration? = nil,
-    hasAddress: Bool = false, hasLinks: Bool = false,
+    hasAddress: Bool = false, hasLinks: Bool = false, scheduled: Scheduling = .all,
     sort: Sort = Sort(), rowPresentation: PlannerRowPresentationContext? = nil
   ) {
     self.scope = scope
@@ -522,6 +524,7 @@ public struct PlannerItemQuery: Sendable {
     self.duration = duration
     self.hasAddress = hasAddress
     self.hasLinks = hasLinks
+    self.scheduled = scheduled
     self.sort = sort
     self.rowPresentation = rowPresentation
   }

@@ -15,6 +15,14 @@
         "lists": identityGroupSchema,
         "hasAddress": .object(["type": .string("boolean"), "default": .bool(false)]),
         "hasLinks": .object(["type": .string("boolean"), "default": .bool(false)]),
+        "scheduled": .object([
+          "type": .string("string"),
+          "enum": .array([.string("scheduled"), .string("unscheduled"), .string("all")]),
+          "default": .string("all"),
+          "description": .string(
+            "Any retained direct or reachable itinerary assignment, including past dates; independent of completion/archive."
+          ),
+        ]),
         "duration": .object([
           "oneOf": .array([
             .object(["type": .string("null")]),
@@ -239,13 +247,13 @@
         value, allowed: Set(query.keys), required: ["kind", "scope"], path: "/query")
       if let unsupported = Set(query.keys).subtracting([
         "kind", "scope", "text", "completion", "archive", "categories", "tags", "lists", "duration",
-        "hasAddress", "hasLinks", "sort", "rowPresentation",
+        "scheduled", "hasAddress", "hasLinks", "sort", "rowPresentation",
       ])
       .sorted().first {
         throw AdmissionFailure(
           code: "unavailable", path: "/query/" + unsupported,
           message:
-            "This query slice supports scope, text, completion, archive, Category/Tag/List groups, duration, address/link presence, sort and row presentation."
+            "This query slice supports scope, text, completion, archive, Category/Tag/List groups, duration, scheduling, address/link presence, sort and row presentation."
         )
       }
       let nativeScope = try scope(query["scope"])
@@ -278,6 +286,16 @@
           message: "Expected active, archived or all.")
       }
       let presentation = try rowPresentation(query["rowPresentation"])
+      let scheduled: PlannerItemQuery.Scheduling
+      switch query["scheduled"] {
+      case nil, .string("all"): scheduled = .all
+      case .string("scheduled"): scheduled = .scheduled
+      case .string("unscheduled"): scheduled = .unscheduled
+      default:
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/scheduled",
+          message: "Expected scheduled, unscheduled or all.")
+      }
       return .items(
         PlannerItemQuery(
           scope: nativeScope, text: text, completion: completion, archive: archive,
@@ -287,6 +305,7 @@
           duration: try duration(query["duration"]),
           hasAddress: try presenceRequirement(query["hasAddress"], path: "/query/hasAddress"),
           hasLinks: try presenceRequirement(query["hasLinks"], path: "/query/hasLinks"),
+          scheduled: scheduled,
           sort: sort, rowPresentation: presentation))
     }
 
