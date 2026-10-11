@@ -59,7 +59,7 @@
           ListTools.Result(tools: [
             PlannerMCPSourceTool.definition, PlannerMCPExecutionTool.definition,
             PlannerMCPQueryTool.definition,
-            PlannerMCPOperationStatusTool.definition,
+            PlannerMCPOperationStatusTool.definition, PlannerMCPReviewTool.definition,
           ])
         }
         await server.withMethodHandler(CallTool.self) { [weak self] parameters in
@@ -96,6 +96,10 @@
       }
       if parameters.name == "planner_execute" {
         return await PlannerMCPExecutionTool.call(
+          parameters, planner: dataset.planner, session: dataset.session)
+      }
+      if parameters.name == "planner_prepare_review" {
+        return await PlannerMCPReviewTool.call(
           parameters, planner: dataset.planner, session: dataset.session)
       }
       if parameters.name == "planner_query" {

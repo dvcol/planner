@@ -3,10 +3,16 @@
   import PlannerCore
 
   enum PlannerMCPFailureValue {
+    static let staleReviewDetails = Value.object([
+      "kind": .string("staleReview"), "requiresNewReview": .bool(true), "currentImpact": .null,
+    ])
+
     static func encode(_ reason: PlannerFailure) -> Value {
       let details: Value
       switch reason.details {
       case nil: details = .null
+      case .staleReview:
+        details = staleReviewDetails
       case .staleSnapshot(let requestedGeneration, let currentGeneration):
         details = .object([
           "kind": .string("staleSnapshot"),

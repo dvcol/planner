@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create and edit Items, Lists, Itineraries, Categories and Tags; organize live List references and repeated itinerary entries. Entry removal preserves sources; reordering retains local completion. Set global Item completion or exact List/direct/expanded appearance completion. Global Done overrides display; global Reopen reveals retained local flags. Archive Items, Lists or Itineraries without archiving their referenced sources. Edit direct Schedules through the local Planner prototype.",
+        "Create/edit Items, Lists, Itineraries and labels; organize live references and repeated entries. Set global Item or exact appearance completion. Bulk completion requires a Core-issued full-context review token, includes hidden/archived appearances and retains global flags. Global Done overrides display; global Reopen reveals retained local flags. Entry removal/archive preserves source data. Edit direct Schedules through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -25,7 +25,7 @@
               itineraryEntrySchema("reorderItineraryEntry"),
               editSchema,
               itineraryEditSchema, listEditSchema, categoryEditSchema, tagEditSchema, archiveSchema,
-              completionSchema,
+              completionSchema, PlannerMCPBulkCompletion.schema,
               scheduleCreationSchema,
               scheduleEditSchema, scheduleZoneSchema, scheduleRemovalSchema,
             ])
@@ -650,7 +650,8 @@
             "forbiddenOperation", "/command/type",
             "Permanent deletion, import and recovery administration are native Planner actions.")
         }
-        if let token = arguments["reviewToken"], token != .null {
+        if commandType != "setBulkCompletion", let token = arguments["reviewToken"], token != .null
+        {
           throw AdmissionFailure(
             "staleReview", "/reviewToken", "No review token is issued for this ordinary data slice."
           )
@@ -675,6 +676,8 @@
         case "editItem": command = try editCommand(arguments["command"])
         case "setArchive": command = try archiveCommand(arguments["command"])
         case "setCompletion": command = try completionCommand(arguments["command"])
+        case "setBulkCompletion":
+          command = try PlannerMCPBulkCompletion.command(arguments["command"])
         case "createSchedule": command = try scheduleCreationCommand(arguments["command"])
         case "editSchedule": command = try scheduleEditCommand(arguments["command"])
         case "changeScheduleZone": command = try scheduleZoneCommand(arguments["command"])
@@ -683,13 +686,28 @@
           throw AdmissionFailure(
             "unavailable", "/command/type", "This command is not yet implemented by the prototype.")
         }
+        var reviewToken: PlannerReviewToken?
+        if let token = arguments["reviewToken"], token != .null {
+          guard case .string(let encoded) = token else {
+            throw AdmissionFailure(
+              "invalidInput", "/reviewToken", "Expected an opaque review token.")
+          }
+          guard let parsed = PlannerReviewToken(opaqueValue: encoded) else {
+            throw AdmissionFailure("staleReview", "/reviewToken", "This review token is unknown.")
+          }
+          reviewToken = parsed
+        }
         let outcome = await planner.execute(
-          PlannerOperation(operationId: identity, session: session, command: command))
+          PlannerOperation(
+            operationId: identity, session: session, command: command, reviewToken: reviewToken))
         return try encoded(outcome)
       } catch let failure as AdmissionFailure {
         return rejection(
           operationIdentifier, code: failure.code, path: failure.path, message: failure.message)
       } catch let failure as PlannerMCPAppearance.Failure {
+        return rejection(
+          operationIdentifier, code: failure.code, path: failure.path, message: failure.message)
+      } catch let failure as PlannerMCPBulkCompletion.Failure {
         return rejection(
           operationIdentifier, code: failure.code, path: failure.path, message: failure.message)
       } catch {
@@ -1650,9 +1668,15 @@
     }
 
     private static func failureValue(_ code: String, _ path: String?, _ message: String) -> Value {
-      .object([
+      let details: Value
+      if code == "staleReview" {
+        details = PlannerMCPFailureValue.staleReviewDetails
+      } else {
+        details = .null
+      }
+      return .object([
         "code": .string(code), "propertyPath": path.map(Value.string) ?? .null,
-        "message": .string(message), "details": .null,
+        "message": .string(message), "details": details,
       ])
     }
 
