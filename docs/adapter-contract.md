@@ -275,3 +275,9 @@ The [HTTP qualification](prototypes/mcp-http-qualification.md#itinerary-entries-
 The local prototype now admits container-only Itinerary Archive/Unarchive through the existing setArchive command. tools/list advertises Item, List and Itinerary identities; strict wire validation and durable Core authority remain unchanged. Itinerary references, source archive/completion and local appearance flags are preserved. Receipt replay reports the original result without overwriting later content or Unarchive.
 
 The [archive qualification](prototypes/mcp-http-qualification.md#itinerary-archive-over-http) records actual HTTP discovery/admission, public Core and native recovery execution. Itinerary queries, schedules and native screens remain separate upcoming slices; other map gates are unchanged.
+
+## Implemented Itinerary catalog admission
+
+The local prototype now discovers named Itinerary sources through the existing catalog query and generation-bound row windows. Container discovery advertises List/Itinerary; labels retain their separate archive-all variant. Active/Archived/All, insensitive title terms and UUID ties preserve distinct source identities. Itinerary rows carry owned location and the selected non-Maps link, without copying full content or provider data; non-Item schedule summaries remain none.
+
+The [catalog qualification](prototypes/mcp-http-qualification.md#itinerary-catalogs-over-http) records actual HTTP discovery, compact serialization, invalid admission and unchanged recovery. Itinerary Item queries, schedules and native screens remain open. The accepted Manual-query restriction remains standalone Lists pending Q56.

@@ -59,7 +59,6 @@ struct ListCatalogRoutingTests {
         ["kind": "catalog", "sourceKind": "list", "archive": "done"], "invalidInput",
         "/query/archive"
       ),
-      (["kind": "catalog", "sourceKind": "itinerary"], "unavailable", "/query/sourceKind"),
       (
         ["kind": "catalog", "sourceKind": "category", "archive": "active"], "invalidInput",
         "/query/archive"
@@ -121,7 +120,7 @@ struct ListCatalogRoutingTests {
         #expect(namespaces.first?.acknowledgedSnapshot?.checkpointGeneration == 1)
         #expect(namespaces.first?.preparedProposals.isEmpty == true)
       }
-      #expect(cases.count == 29)
+      #expect(cases.count == 28)
       await listener.stop()
     } catch {
       await listener.stop()
@@ -290,7 +289,9 @@ struct ListCatalogRoutingTests {
       #expect(Set(try #require(catalog["required"] as? [String])) == ["kind", "sourceKind"])
       let properties = try #require(catalog["properties"] as? [String: Any])
       #expect(Set(properties.keys) == ["kind", "sourceKind", "text", "archive"])
-      #expect((properties["sourceKind"] as? [String: Any])?["const"] as? String == "list")
+      #expect(
+        (properties["sourceKind"] as? [String: Any])?["enum"] as? [String]
+          == ["list", "itinerary"])
       guard
         case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces)
       else {
