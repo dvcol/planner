@@ -40,6 +40,8 @@ struct SavedItemFilters: Equatable {
   var tagIdentifiers: Set<UUID> = []
   var categoryMatch: LabelMatch = .any
   var tagMatch: LabelMatch = .any
+  var hasAddress = false
+  var hasLinks = false
 
   var categoryQuery: PlannerItemQuery.IdentityGroup? {
     guard !categoryIdentifiers.isEmpty else { return nil }
@@ -72,6 +74,8 @@ struct SavedItemFilters: Equatable {
         restrictions.append("\(tagIdentifiers.count) Tags")
       }
     }
+    if hasAddress { restrictions.append("Address") }
+    if hasLinks { restrictions.append("Links") }
     return restrictions.isEmpty ? "All" : restrictions.joined(separator: " · ")
   }
 }
@@ -151,6 +155,12 @@ private struct SavedItemFilterForm: View {
             matchPicker(.tag, selection: $filters.tagMatch)
             Button("Clear Tags") { filters.tagIdentifiers = [] }
           }
+        }
+        Section("Content") {
+          Toggle("Has an address", isOn: $filters.hasAddress)
+            .accessibilityIdentifier("saved.filters.hasAddress")
+          Toggle("Has links", isOn: $filters.hasLinks)
+            .accessibilityIdentifier("saved.filters.hasLinks")
         }
       }
       .formStyle(.grouped)

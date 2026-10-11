@@ -368,6 +368,15 @@ final class SavedLabelsJourneyTests: XCTestCase {
     application: XCUIApplication
   ) {
     let picker = application.plannerElement("\(identifierPrefix).\(kind.lowercased())")
+    #if os(iOS)
+      if identifierPrefix == "saved.filters", !picker.isHittable {
+        let form = application.collectionViews.containing(
+          .button, identifier: "saved.filters.categories"
+        ).firstMatch
+        XCTAssertTrue(form.waitForExistence(timeout: 5))
+        form.swipeUp()
+      }
+    #endif
     XCTAssertTrue(picker.waitForExistence(timeout: 5))
     picker.activateForPlannerJourney()
     for name in names {

@@ -329,7 +329,7 @@ struct SavedPlannerView: View {
     let loaded = await store.readItems(
       scope: scope.queryValue, text: searchText, completion: filters.completion.queryValue,
       archive: filters.archive.queryValue, categories: filters.categoryQuery,
-      tags: filters.tagQuery,
+      tags: filters.tagQuery, hasAddress: filters.hasAddress, hasLinks: filters.hasLinks,
       sort: sort.queryValue)
     guard !Task.isCancelled, catalogScope == scope, catalogFilters.wrappedValue == filters,
       catalogSearchText.wrappedValue == searchText,
@@ -446,7 +446,7 @@ struct SavedPlannerView: View {
       loadedItems = await store.readListItems(
         identifier, text: searchText, completion: filters.completion.queryValue,
         archive: filters.archive.queryValue, categories: filters.categoryQuery,
-        tags: filters.tagQuery,
+        tags: filters.tagQuery, hasAddress: filters.hasAddress, hasLinks: filters.hasLinks,
         sort: sort.queryValue)
     } else {
       loadedItems = nil

@@ -4,6 +4,174 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testAddressAndLinkFiltersNarrowCumulativelyWithoutChangingSavedContentOrListProgress() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application, title: "Plain")
+    openCatalogSection("Items", application: application)
+    let catalogFilters = application.plannerElement("saved.items.filters")
+    catalogFilters.activateForPlannerJourney()
+    revealPresenceFilter("saved.filters.hasAddress", application: application)
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+
+    createItem(application, title: "Guide")
+    editPresenceContent(address: nil, addLink: true, application: application)
+    createItem(application, title: "Located")
+    editPresenceContent(
+      address: "1 Apple Park Way, Cupertino, CA", addLink: false, application: application)
+    createItem(application, title: "Located guide")
+    editPresenceContent(
+      address: "1 Apple Park Way, Cupertino, CA", addLink: true, application: application)
+    openCatalogSection("Items", application: application)
+    let plain = application.savedPlannerItemRows("Plain").firstMatch
+    let guide = application.savedPlannerItemRows("Guide").firstMatch
+    let located = application.savedPlannerItemRows("Located").firstMatch
+    let locatedGuide = application.savedPlannerItemRows("Located guide").firstMatch
+    XCTAssertTrue(locatedGuide.waitForExistence(timeout: 10))
+    let sourceIdentifier = locatedGuide.identifier
+    catalogFilters.activateForPlannerJourney()
+    setPresenceFilter("saved.filters.hasLinks", to: true, application: application)
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(plain.waitForNonExistence(timeout: 10))
+    XCTAssertFalse(located.exists)
+    XCTAssertTrue(guide.exists)
+    XCTAssertTrue(locatedGuide.exists)
+    XCTAssertEqual(catalogFilters.label, "Active · Links")
+    catalogFilters.activateForPlannerJourney()
+    setPresenceFilter("saved.filters.hasAddress", to: true, application: application)
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(guide.waitForNonExistence(timeout: 10))
+    XCTAssertFalse(plain.exists)
+    XCTAssertFalse(located.exists)
+    XCTAssertTrue(locatedGuide.exists)
+    XCTAssertEqual(locatedGuide.identifier, sourceIdentifier)
+    XCTAssertEqual(catalogFilters.label, "Active · Address · Links")
+    recordScreenshot(
+      application, name: "Cumulative address and link filters narrow the Item catalog")
+    catalogFilters.activateForPlannerJourney()
+    setPresenceFilter("saved.filters.hasLinks", to: false, application: application)
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(located.waitForExistence(timeout: 10))
+    XCTAssertTrue(locatedGuide.exists)
+    XCTAssertFalse(guide.exists)
+    XCTAssertFalse(plain.exists)
+    XCTAssertEqual(catalogFilters.label, "Active · Address")
+    catalogFilters.activateForPlannerJourney()
+    application.plannerElement("saved.filters.clear").activateForPlannerJourney()
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(plain.waitForExistence(timeout: 10))
+    XCTAssertTrue(guide.exists)
+    XCTAssertTrue(located.exists)
+    XCTAssertTrue(locatedGuide.exists)
+    XCTAssertEqual(catalogFilters.label, "All")
+
+    createList("Weekend", application: application)
+    for title in ["Plain", "Guide", "Located", "Located guide"] {
+      addItem(application, title: title)
+    }
+    let appearance = application.savedPlannerItemRows("Located guide").firstMatch
+    let appearanceIdentifier = appearance.identifier
+    let completion = application.plannerElement(
+      appearanceIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion."))
+    completion.activateForPlannerJourney()
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    let listFilters = application.plannerElement("saved.list.filters")
+    listFilters.activateForPlannerJourney()
+    setPresenceFilter("saved.filters.hasAddress", to: true, application: application)
+    setPresenceFilter("saved.filters.hasLinks", to: true, application: application)
+    recordScreenshot(application, name: "Native content filter controls in the adaptive Form")
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Plain").firstMatch.waitForNonExistence(timeout: 10))
+    XCTAssertFalse(application.savedPlannerItemRows("Guide").firstMatch.exists)
+    XCTAssertFalse(application.savedPlannerItemRows("Located").firstMatch.exists)
+    XCTAssertEqual(appearance.identifier, appearanceIdentifier)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    XCTAssertTrue(application.staticTexts["Showing 1 of 4 items"].exists)
+    assertProgress(0.25, application: application)
+    recordScreenshot(application, name: "Content filters retain the full List progress")
+    listFilters.activateForPlannerJourney()
+    application.plannerElement("saved.filters.clear").activateForPlannerJourney()
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Plain").firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(application.savedPlannerItemRows("Guide").firstMatch.exists)
+    XCTAssertTrue(application.savedPlannerItemRows("Located").firstMatch.exists)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(0.25, application: application)
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Weekend", itemTitle: "Located guide", application: application)
+    XCTAssertEqual(appearance.identifier, appearanceIdentifier)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    assertProgress(0.25, application: application)
+    viewGlobalItem(application, itemTitle: "Located guide")
+    XCTAssertTrue(
+      application.staticTexts["1 Apple Park Way, Cupertino, CA"].waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      savedBookmarkRows(application).matching(NSPredicate(format: "label == %@", "Guide"))
+        .firstMatch.exists)
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    recordScreenshot(
+      application, name: "Content and independent completion survive filtered relaunch")
+  }
+
+  private func revealPresenceFilter(_ identifier: String, application: XCUIApplication) {
+    let control = application.descendants(matching: .any).matching(identifier: identifier)
+      .firstMatch
+    if control.isHittable { return }
+    #if os(iOS)
+      let form = application.collectionViews.containing(
+        .button, identifier: "saved.filters.archive"
+      )
+      .firstMatch
+      XCTAssertTrue(form.waitForExistence(timeout: 5))
+      if !control.isHittable { form.swipeUp() }
+    #endif
+    XCTAssertTrue(control.waitForExistence(timeout: 5), application.debugDescription)
+    XCTAssertTrue(control.waitForPlannerHittability())
+  }
+
+  private func setPresenceFilter(
+    _ identifier: String, to expected: Bool, application: XCUIApplication
+  ) {
+    revealPresenceFilter(identifier, application: application)
+    let control = application.descendants(matching: .any).matching(identifier: identifier)
+      .firstMatch
+    XCTAssertEqual(control.plannerBooleanState, !expected)
+    #if os(macOS)
+      control.click()
+    #else
+      let nativeSwitch = control.switches.firstMatch
+      XCTAssertTrue(nativeSwitch.exists)
+      nativeSwitch.tap()
+    #endif
+    XCTAssertTrue(control.waitForPlannerBooleanState(expected))
+  }
+
+  private func editPresenceContent(
+    address: String?, addLink: Bool, application: XCUIApplication
+  ) {
+    openItemEditor(application)
+    if let address {
+      let field = application.textFields["saved.item.edit.location.address"]
+      revealEditorElement(field, application: application)
+      replaceText(field, with: address, application: application)
+    }
+    if addLink {
+      _ = addBookmark(
+        "https://maps.apple.com/?q=Cupertino", label: "Guide", application: application)
+    }
+    let save = application.plannerElement("saved.item.edit.save")
+    save.activateForPlannerJourney()
+    XCTAssertTrue(save.waitForNonExistence(timeout: 10))
+  }
+
   func testNativeBulkReviewIncludesHiddenArchivedItemsAndRetainsGlobalCompletion() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
