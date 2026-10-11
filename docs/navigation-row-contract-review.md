@@ -179,3 +179,11 @@ The native Itinerary create/edit Form now stages Category/Tag identity selection
 The real native tracer qualifies canceled creation/editing, saved Category/Tag selection, unchanged-save prevention, shared renames, source identity and relaunch. Clearing the Tag retains the Category and the empty route's No items state. Three unique functions pass per simulator, including existing Item-label and reviewed Itinerary-bulk journeys, in one frozen source epoch. Mac compilation runs zero runtime functions. Exact attempts and inspected captures are retained in the [local qualification](prototypes/navigation-local-qualification.md#native-itinerary-label-selection).
 
 Nonempty contextual Item-label journeys, duplicate-name native selection, controlled native failures, Itinerary filtering/richer content, duration, label deletion/Settings, paging, Mac runtime, signed-device work and whole-app polish remain open. No schema or portable-backup version changes.
+
+## Native Settings access for shared labels
+
+Q53's Settings entry now opens the existing Manage Labels destination. Mac uses the native Settings scene and standard app-menu access; mobile uses a grouped Settings sheet from Lists. Both entry points read and write the same shared labels. This adds no main tab, copied labels or backup preference.
+
+The real native tracer qualifies canceled creation, save, return to Settings, a rename through the toolbar, identical source identity when reopening Settings and relaunch. The original staged Manage Labels journey also passes. Two unique functions pass per simulator in one frozen source epoch. Four changed Swift files pass strict lint and Mac compilation executes zero runtime functions. Exact red/green attempts and inspected captures are retained in the [local qualification](prototypes/navigation-local-qualification.md#native-settings-access-for-shared-labels).
+
+Mac Settings runtime/menu/keyboard behavior and controlled opening/save/multiwindow failures remain unqualified. Associated-label deletion and the existing Itinerary, duration, paging, physical-device and whole-app polish gates remain open. No schema or portable-backup version changes.

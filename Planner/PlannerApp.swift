@@ -48,6 +48,9 @@ struct PlannerApp: App {
       }
     #endif
     #if os(macOS)
+      Settings {
+        SavedPlannerSettingsView(store: savedPlanner)
+      }
       Window("Navigation comparison", id: "navigation-prototype") {
         NavigationPrototypeView()
       }
