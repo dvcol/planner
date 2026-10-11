@@ -2,6 +2,73 @@ import XCTest
 
 @MainActor
 final class SavedItemJourneyTests: XCTestCase {
+  func testAllDayItemSchedulesKeepCivilDateAndRowPreviewAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    let title = application.textFields["saved.item.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("All-day gallery")
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
+    let scheduleRows = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule."))
+    for cancelsDraft in [true, false] {
+      application.plannerElement("saved.item.actions").activateForPlannerJourney()
+      application.plannerElement("Schedule Item").activateForPlannerJourney()
+      let allDay = application.descendants(matching: .any)
+        .matching(identifier: "saved.schedule.allDay").firstMatch
+      XCTAssertTrue(allDay.waitForPlannerBooleanState(false))
+      activateCompletion(allDay)
+      XCTAssertTrue(allDay.waitForPlannerBooleanState(true))
+      let includeEnd = application.descendants(matching: .any)
+        .matching(identifier: "saved.schedule.hasEnd").firstMatch
+      XCTAssertTrue(includeEnd.waitForPlannerBooleanState(false))
+      activateCompletion(includeEnd)
+      XCTAssertTrue(includeEnd.waitForPlannerBooleanState(true))
+      XCTAssertTrue(application.staticTexts["Includes both selected dates."].exists)
+      if cancelsDraft {
+        application.plannerElement("saved.schedule.cancel").activateForPlannerJourney()
+        XCTAssertEqual(scheduleRows.count, 0)
+      } else {
+        recordScreenshot(application, name: "Native all-day Item schedule draft")
+        application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+      }
+    }
+    let schedule = scheduleRows.firstMatch
+    XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+    XCTAssertEqual(scheduleRows.count, 1)
+    XCTAssertEqual(schedule.label, "All day")
+    let identity = schedule.identifier
+    let description = schedule.value as? String
+    XCTAssertFalse(description?.isEmpty ?? true)
+    XCTAssertFalse(description?.contains(":") ?? true)
+    recordScreenshot(application, name: "Native saved all-day Item schedule")
+    returnToItemCatalog(application)
+    let row = application.savedPlannerItemRows("All-day gallery").firstMatch
+    XCTAssertTrue(row.waitForExistence(timeout: 10))
+    XCTAssertTrue((row.value as? String ?? "").contains("All day"))
+    let rowIdentity = row.identifier
+    let rowMetadata = row.value as? String
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    returnToItemCatalog(application)
+    XCTAssertTrue(row.waitForExistence(timeout: 10))
+    XCTAssertEqual(row.identifier, rowIdentity)
+    XCTAssertEqual(row.value as? String, rowMetadata)
+    row.activateForPlannerJourney()
+    let restored = application.descendants(matching: .any).matching(identifier: identity).firstMatch
+    XCTAssertTrue(restored.waitForExistence(timeout: 10))
+    XCTAssertEqual(restored.label, "All day")
+    XCTAssertEqual(restored.value as? String, description)
+    XCTAssertEqual(scheduleRows.count, 1)
+    recordScreenshot(application, name: "Native all-day Item schedule after relaunch")
+  }
+
   func testItemRowsPreviewSavedAppointmentsAndAdditionalCountAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()

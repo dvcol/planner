@@ -161,6 +161,7 @@ struct SavedNewItemScheduleForm: View {
   let item: PlannerItemSourceRead
   @State private var startInstant: Date
   @State private var endInstant: Date
+  @State private var isAllDay = false
   @State private var includesEnd = false
   @State private var planningTimeZone = TimeZone.current.identifier
   @State private var operationIdentifier = UUID()
@@ -173,36 +174,73 @@ struct SavedNewItemScheduleForm: View {
     _endInstant = State(initialValue: initialStart.addingTimeInterval(3600))
   }
 
-  private var isValid: Bool { !includesEnd || endInstant > startInstant }
+  private var planningCalendar: Calendar {
+    var calendar = Calendar(identifier: .gregorian)
+    calendar.timeZone = TimeZone(identifier: planningTimeZone) ?? .current
+    return calendar
+  }
+
+  private var isValid: Bool {
+    guard includesEnd else { return true }
+    guard isAllDay else { return endInstant > startInstant }
+    return planningCalendar.startOfDay(for: endInstant)
+      >= planningCalendar.startOfDay(for: startInstant)
+  }
+
+  private var scheduleForm: PlannerScheduleForm {
+    if isAllDay {
+      return .allDay(
+        start: civilDate(for: startInstant), end: includesEnd ? civilDate(for: endInstant) : nil)
+    }
+    return .timed(
+      start: startInstant, end: includesEnd ? endInstant : nil, planningTimeZone: planningTimeZone)
+  }
+
+  private func civilDate(for instant: Date) -> PlannerCivilDate {
+    .init(
+      year: planningCalendar.component(.year, from: instant),
+      month: planningCalendar.component(.month, from: instant),
+      day: planningCalendar.component(.day, from: instant))
+  }
 
   var body: some View {
     NavigationStack {
       Form {
         Section {
           Text(item.content.title).font(.headline)
+          Toggle("All day", isOn: $isAllDay)
+            .accessibilityIdentifier("saved.schedule.allDay")
           DatePicker(
-            "Start", selection: $startInstant, displayedComponents: [.date, .hourAndMinute]
+            "Start", selection: $startInstant,
+            displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute]
           )
           .accessibilityIdentifier("saved.schedule.start")
-          Toggle("Include end time", isOn: $includesEnd)
+          Toggle(isAllDay ? "Include end date" : "Include end time", isOn: $includesEnd)
             .accessibilityIdentifier("saved.schedule.hasEnd")
           if includesEnd {
             DatePicker(
-              "End", selection: $endInstant, displayedComponents: [.date, .hourAndMinute]
+              "End", selection: $endInstant,
+              displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute]
             )
             .accessibilityIdentifier("saved.schedule.end")
           }
-          LabeledContent("Time zone", value: planningTimeZone)
+          if !isAllDay { LabeledContent("Time zone", value: planningTimeZone) }
         } footer: {
           if !isValid {
-            Text("End must be later than Start.")
+            Text(isAllDay ? "End date cannot precede Start." : "End must be later than Start.")
+          } else if isAllDay {
+            Text(includesEnd ? "Includes both selected dates." : "Covers the selected day.")
           } else if !includesEnd {
             Text("This schedule has no end time.")
           }
         }
       }
       .formStyle(.grouped)
+      .environment(\.calendar, planningCalendar)
       .environment(\.timeZone, TimeZone(identifier: planningTimeZone) ?? .current)
+      .onChange(of: isAllDay) { _, allDay in
+        if allDay { endInstant = startInstant }
+      }
       .disabled(store.isSaving)
       .navigationTitle("Schedule Item")
       .toolbar {
@@ -216,9 +254,8 @@ struct SavedNewItemScheduleForm: View {
           Button("Save") {
             Task {
               let saved = await store.createItemSchedule(
-                itemIdentifier: item.source.id, startInstant: startInstant,
-                endInstant: includesEnd ? endInstant : nil,
-                planningTimeZone: planningTimeZone, operationIdentifier: operationIdentifier)
+                itemIdentifier: item.source.id, form: scheduleForm,
+                operationIdentifier: operationIdentifier)
               if saved && store.alertMessage == nil { dismiss() }
             }
           }
