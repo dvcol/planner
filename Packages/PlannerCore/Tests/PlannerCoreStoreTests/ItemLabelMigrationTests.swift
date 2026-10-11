@@ -119,7 +119,7 @@ struct ItemLabelMigrationTests {
     #expect(read.content.tagIds == [tag.id])
     #expect(read.labels.count == 2)
     #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 9)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 13)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 14)
     #expect(historicalAfter.portableData == historical.portableData)
     let beforeData = try #require(
       JSONSerialization.jsonObject(with: historical.portableData)

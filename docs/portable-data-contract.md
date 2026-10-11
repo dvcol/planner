@@ -139,6 +139,12 @@ The local schema-5 Core slice now retains the declared all-day form with exact i
 
 [Actual local evidence](prototypes/evidence/navigation/core-all-day-schedule.json) covers save/reopen, literal canonical hash bytes, invalid-date rejection, complete form conversion, travel/day-boundary summaries and a genuine schema-4 store migration retaining deletion metadata and historical independent recovery. This does not qualify import/export administration, native mirrored convergence, actual Share embedding or physical-device behavior.
 
+## Implemented Itinerary Schedule ownership
+
+The local schema-14 slice implements the already declared Item/Itinerary Schedule owner union in portable format 1. Each assignment retains its own ID/lifetime and the owner's kind/ID/lifetime. Itinerary-owned assignments are separate from child Item assignments and are retained by every Itinerary snapshot writer. Decoder validation resolves the exact owner kind and lifetime; an invalid binding rejects recovery together.
+
+[Executed local qualification](prototypes/core-local-qualification.md#itinerary-owned-schedules-and-schema-14-migration) covers create/read/replay, guarded form/zone edits, removal, source preservation and genuine schema-13 migration with unchanged historical recovery. Import/restore administration, inherited scheduling queries, calendar UI and native mirrored convergence retain their separate gates.
+
 ## Implemented typed Item and empty List sources
 
 The initial schema-6 local slice retains Item/List records in the same declared portable sources array. Native decoded sources use an immutable typed union, with items/lists projections for kind-specific content. Lists preserve their ID/lifetime, timestamps, name/notes/color/icon, archive state and content origins. Their inapplicable globalDone is null; empty completion remains derived and absent from stored source state. Lists add no Item copies, memberships or parent Done override.
