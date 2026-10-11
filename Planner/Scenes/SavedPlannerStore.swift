@@ -305,6 +305,12 @@ final class SavedPlannerStore {
       operationId: UUID()) != nil
   }
 
+  func removeItineraryEntry(_ entryIdentifier: UUID, itineraryIdentifier: UUID) async -> Bool {
+    await executeChange(
+      .removeItineraryEntry(itineraryId: itineraryIdentifier, entryId: entryIdentifier),
+      operationId: UUID()) != nil
+  }
+
   func readItems(
     scope: PlannerItemQuery.Scope = .global, text: String = "",
     completion: PlannerItemQuery.Completion, archive: PlannerItemQuery.Archive,

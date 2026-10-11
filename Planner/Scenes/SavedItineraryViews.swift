@@ -83,6 +83,7 @@ struct SavedItineraryDetail: View {
   @State private var collapsedEntries: Set<UUID> = []
   @State private var bulkCompletionDraft: SavedBulkCompletionDraft?
   @State private var isPreparingBulkCompletion = false
+  @State private var removedSelectionMessage: String?
   #if os(iOS)
     @State private var entryEditMode: EditMode = .inactive
   #endif
@@ -151,7 +152,7 @@ struct SavedItineraryDetail: View {
                     }
                     .padding(.vertical, 8)
                     .contextMenu {
-                      entryReorderingActions(entry, in: contents.entries)
+                      entryActions(entry, in: contents.entries)
                       Divider()
                       Group {
                         Button("Mark all Done") {
@@ -171,7 +172,7 @@ struct SavedItineraryDetail: View {
                   }
                 } else if let item = entry.items.first {
                   itineraryRow(item)
-                    .contextMenu { entryReorderingActions(entry, in: contents.entries) }
+                    .contextMenu { entryActions(entry, in: contents.entries) }
                 }
               }
               .accessibilityElement(children: .contain)
@@ -265,15 +266,31 @@ struct SavedItineraryDetail: View {
       "Planner",
       isPresented: Binding(
         get: {
-          store.alertMessage != nil && editDraft == nil && !showAddEntry
+          (store.alertMessage != nil || removedSelectionMessage != nil)
+            && editDraft == nil && !showAddEntry
             && bulkCompletionDraft == nil
         },
-        set: { if !$0 { store.alertMessage = nil } })
+        set: {
+          if !$0 {
+            store.alertMessage = nil
+            removedSelectionMessage = nil
+          }
+        })
     ) {
-      Button("OK") { store.alertMessage = nil }
+      Button("OK") {
+        store.alertMessage = nil
+        removedSelectionMessage = nil
+      }
     } message: {
-      Text(store.alertMessage ?? "")
+      Text(alertDescription)
     }
+  }
+
+  private var alertDescription: String {
+    let description = removedSelectionMessage ?? store.alertMessage ?? ""
+    guard removedSelectionMessage != nil && store.recoveryBlocked else { return description }
+    return description
+      + "\n\nThe change was saved, but its recovery copy is incomplete. Further changes are paused."
   }
 
   private func itineraryRow(_ item: SavedItineraryItem) -> some View {
@@ -286,7 +303,7 @@ struct SavedItineraryDetail: View {
     .tag(item.id)
   }
 
-  private func entryReorderingActions(
+  private func entryActions(
     _ entry: SavedItineraryEntryRows, in entries: [SavedItineraryEntryRows]
   ) -> some View {
     Group {
@@ -304,8 +321,32 @@ struct SavedItineraryDetail: View {
         }
       }
       .disabled(entries.last?.id == entry.id)
+      Divider()
+      Button("Remove from Itinerary", role: .destructive) { removeEntry(entry) }
     }
     .disabled(!store.canCreate || isPreparingBulkCompletion)
+  }
+
+  private func removeEntry(_ entry: SavedItineraryEntryRows) {
+    Task {
+      guard await store.removeItineraryEntry(entry.id, itineraryIdentifier: identifier),
+        let selection
+      else { return }
+      let selectedEntryIdentifier: UUID
+      switch selection {
+      case .direct(let entryIdentifier): selectedEntryIdentifier = entryIdentifier
+      case .expanded(let entryIdentifier, _): selectedEntryIdentifier = entryIdentifier
+      }
+      guard selectedEntryIdentifier == entry.id else { return }
+      self.selection = nil
+      if entry.source.kind == .list {
+        removedSelectionMessage =
+          "The selected entry was removed. The List and its Items remain available outside this Itinerary."
+      } else {
+        removedSelectionMessage =
+          "The selected entry was removed. The Item remains available in Items."
+      }
+    }
   }
 
   private var canReorderEntries: Bool {

@@ -2,6 +2,101 @@ import XCTest
 
 @MainActor
 final class SavedItineraryBulkJourneyTests: XCTestCase {
+  func testRemovingRepeatedEntriesRetainsSourcesAndOtherLocalStatesAfterReaddition() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem("Museum", application: application)
+    createList(application)
+    let membershipIdentifier = application.savedPlannerItemRows("Museum").firstMatch.identifier
+    let membershipCompletion = application.plannerElement(
+      membershipIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion."))
+    membershipCompletion.activateForPlannerJourney()
+    assertProgress("1 of 1 item done", application: application)
+    createItinerary(application)
+    for source in ["Museum", "Food stops", "Museum", "Food stops"] {
+      addEntry(source, application: application)
+    }
+    let rows = itineraryRows(application)
+    XCTAssertEqual(rows.count, 4)
+    let originalIdentifiers = rows.allElementsBoundByIndex.map(\.identifier)
+    assertChecks(["To do", "To do", "To do", "To do"], application: application)
+    for index in [0, 1, 3] {
+      application.plannerElement(
+        originalIdentifiers[index].replacingOccurrences(
+          of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")
+      ).activateForPlannerJourney()
+    }
+    assertProgress("3 of 4 items done", application: application)
+    rows.element(boundBy: 1).activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Completed"].waitForExistence(timeout: 10))
+    let back = application.plannerElement("BackButton")
+    let detailsAlongsideRoute = !back.exists
+    if back.exists { back.activateForPlannerJourney() }
+    let firstListHeader = application.staticTexts["Food stops"].firstMatch
+    openEntryMenu(firstListHeader)
+    let removal = application.plannerElement("Remove from Itinerary")
+    XCTAssertTrue(removal.waitForExistence(timeout: 5))
+    removal.activateForPlannerJourney()
+    if detailsAlongsideRoute {
+      XCTAssertTrue(
+        application.staticTexts[
+          "The selected entry was removed. The List and its Items remain available outside this Itinerary."
+        ].waitForExistence(timeout: 10))
+      application.plannerElement("OK").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Choose an Item"].waitForExistence(timeout: 10))
+    }
+    XCTAssertTrue(
+      waitForItineraryOrder(
+        [originalIdentifiers[0], originalIdentifiers[2], originalIdentifiers[3]],
+        application: application))
+    assertChecks(["Completed", "To do", "Completed"], application: application)
+    assertProgress("2 of 3 items done", application: application)
+    recordScreenshot(application, name: "Native List entry removal keeps other route occurrences")
+    openEntryMenu(application.plannerElement(originalIdentifiers[0]))
+    XCTAssertTrue(removal.waitForExistence(timeout: 5))
+    removal.activateForPlannerJourney()
+    XCTAssertTrue(
+      waitForItineraryOrder(
+        [originalIdentifiers[2], originalIdentifiers[3]], application: application))
+    assertChecks(["To do", "Completed"], application: application)
+    assertProgress("1 of 2 items done", application: application)
+    for source in ["Food stops", "Museum"] { addEntry(source, application: application) }
+    XCTAssertEqual(rows.count, 4)
+    let finalIdentifiers = rows.allElementsBoundByIndex.map(\.identifier)
+    XCTAssertEqual(Array(finalIdentifiers.prefix(2)), Array(originalIdentifiers.suffix(2)))
+    XCTAssertFalse(originalIdentifiers.contains(finalIdentifiers[2]))
+    XCTAssertFalse(originalIdentifiers.contains(finalIdentifiers[3]))
+    assertChecks(["To do", "Completed", "To do", "To do"], application: application)
+    assertProgress("1 of 4 items done", application: application)
+    recordScreenshot(application, name: "Native ordinary entry readdition starts fresh local Todo")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItinerary(application)
+    XCTAssertTrue(waitForItineraryOrder(finalIdentifiers, application: application))
+    assertChecks(["To do", "Completed", "To do", "To do"], application: application)
+    assertProgress("1 of 4 items done", application: application)
+    recordScreenshot(application, name: "Native removed and readded entries after relaunch")
+    openItem("Museum", application: application)
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    openSection("Lists", application: application)
+    let list = application.savedPlannerListRow("Food stops")
+    revealNavigation(to: list, application: application)
+    XCTAssertTrue(list.waitForExistence(timeout: 10))
+    reveal(list.identifier, application: application).activateForPlannerJourney()
+    let filters = application.plannerElement("saved.list.filters")
+    application.chooseSavedPlannerStateFilter("All completion states", control: filters)
+    let retainedMembership = application.savedPlannerItemRows("Museum").firstMatch
+    XCTAssertTrue(retainedMembership.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedMembership.identifier, membershipIdentifier)
+    XCTAssertTrue(membershipCompletion.waitForPlannerValue("Completed"))
+    assertProgress("1 of 1 item done", application: application)
+  }
+
   func testNativeEntryDragPreservesListChildrenAndRepeatedCompletionAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()

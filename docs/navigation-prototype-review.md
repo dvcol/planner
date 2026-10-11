@@ -184,6 +184,8 @@ Saved website cards render with native SwiftUI `Link`, `GroupBox` and `Image`. T
 
 The [native Itinerary drag qualification](prototypes/navigation-local-qualification.md#native-itinerary-entry-drag-handles) adds system List drag handles for route entries and expanded List groups. Four UI journeys pass on each simulator in one frozen source epoch, preserving identities, independent completion, full progress, child details and relaunch. Mobile moving is restricted to active Edit mode; the final menu journeys have no animation-idle warnings. Mac compiles with zero runtime functions. Entry removal, Itinerary filters, native failures, platform review, signed-device checks and whole-app polish retain their gates.
 
+The [native Itinerary removal qualification](prototypes/navigation-local-qualification.md#native-itinerary-entry-removal) adds removal from direct Item and List-entry menus. Two affected UI journeys pass per simulator, preserving sources, surviving local states and ordinary re-add/relaunch identity behavior. iPad clears the selected removed appearance with feedback. Failed navigation and canceled compatibility evidence remain recorded. A recovery-warning reporting follow-up compiles after those runtime checks; its controlled native failure branch and Mac runtime remain unqualified. The remaining map gates stay open.
+
 ## Definition of ready and done
 
 - [x] Contract public interfaces accepted, prerequisite resolutions reviewed, local toolchain inventory refreshed and fixture inputs/expected transitions specified.
