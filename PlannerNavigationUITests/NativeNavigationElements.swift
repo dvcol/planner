@@ -41,6 +41,8 @@ extension XCUIApplication {
       pickerIdentifier = "saved.filters.completion"
     case "Active", "Archived", "All archive states":
       pickerIdentifier = "saved.filters.archive"
+    case "Scheduled", "Unscheduled", "All scheduling states":
+      pickerIdentifier = "saved.filters.scheduled"
     default:
       XCTFail("Unknown Planner state filter: \(title)")
       return

@@ -335,7 +335,7 @@ struct SavedPlannerView: View {
       scope: scope.queryValue, text: searchText, completion: filters.completion.queryValue,
       archive: filters.archive.queryValue, categories: filters.categoryQuery,
       tags: filters.tagQuery, lists: filters.listQuery,
-      hasAddress: filters.hasAddress, hasLinks: filters.hasLinks,
+      hasAddress: filters.hasAddress, hasLinks: filters.hasLinks, scheduled: filters.scheduled,
       sort: sort.queryValue)
     guard !Task.isCancelled, catalogScope == scope, catalogFilters.wrappedValue == filters,
       catalogSearchText.wrappedValue == searchText,
@@ -453,7 +453,7 @@ struct SavedPlannerView: View {
         identifier, text: searchText, completion: filters.completion.queryValue,
         archive: filters.archive.queryValue, categories: filters.categoryQuery,
         tags: filters.tagQuery, lists: filters.listQuery,
-        hasAddress: filters.hasAddress, hasLinks: filters.hasLinks,
+        hasAddress: filters.hasAddress, hasLinks: filters.hasLinks, scheduled: filters.scheduled,
         sort: sort.queryValue)
     } else {
       loadedItems = nil
