@@ -3,10 +3,10 @@ import Foundation
 import PlannerCore
 import Testing
 
-struct LabelDeletionIntegrityTests {
-  @Test(arguments: [PlannerEntityKind.category, .tag])
-  func liveLabelClosureAndUnsupportedFamilyRejectTheEntireRecoverySnapshot(
-    _ labelKind: PlannerEntityKind
+struct SourceDeletionIntegrityTests {
+  @Test(arguments: [PlannerEntityKind.category, .tag, .item])
+  func liveSourceClosureAndUnsupportedFamilyRejectTheEntireRecoverySnapshot(
+    _ sourceKind: PlannerEntityKind
   ) async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
@@ -17,21 +17,22 @@ struct LabelDeletionIntegrityTests {
         controlURL: directory.appendingPathComponent("control/writer"),
         recoveryDirectoryURL: recoveryDirectory, processRole: .mainApplication,
         storageMode: .localOnly))
-    func createLabel(_ name: String) -> PlannerCommand {
-      if labelKind == .category { return .createCategory(content: .init(name: name)) }
+    func createSource(_ name: String) -> PlannerCommand {
+      if sourceKind == .item { return .createItem(content: .init(title: name)) }
+      if sourceKind == .category { return .createCategory(content: .init(name: name)) }
       return .createTag(content: .init(name: name))
     }
     guard case .ready(let session) = await planner.bootstrap(),
       case .applied(let deletedResult, .complete) = await planner.execute(
         .init(
           operationId: UUID(), session: session,
-          command: createLabel("Remove"))
+          command: createSource("Remove"))
       ).outcome,
       let deleted = deletedResult.generated.first,
       case .applied(let retainedResult, .complete) = await planner.execute(
         .init(
           operationId: UUID(), session: session,
-          command: createLabel("Keep"))
+          command: createSource("Keep"))
       ).outcome,
       let retained = retainedResult.generated.first,
       case .source(let beforeSource) = await planner.read(
@@ -51,6 +52,7 @@ struct LabelDeletionIntegrityTests {
     else { throw CancellationError() }
     let sourceLifetimeId: UUID
     switch beforeSource {
+    case .item(let before): sourceLifetimeId = before.sourceLifetimeId
     case .category(let before): sourceLifetimeId = before.sourceLifetimeId
     case .tag(let before): sourceLifetimeId = before.sourceLifetimeId
     default: throw CancellationError()
@@ -68,7 +70,7 @@ struct LabelDeletionIntegrityTests {
     live["target"] = [
       "kind": "source",
       "source": [
-        "kind": labelKind.rawValue, "id": retained.id.uuidString,
+        "kind": sourceKind.rawValue, "id": retained.id.uuidString,
         "lifetimeId": sourceLifetimeId.uuidString,
       ],
     ]
@@ -88,7 +90,7 @@ struct LabelDeletionIntegrityTests {
             namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
       else {
         Issue.record(
-          "Reject recovery containing a live label closure or unsupported deletion metadata.")
+          "Reject recovery containing a live source closure or unsupported deletion metadata.")
         continue
       }
       #expect(failure.code == "recoveryIntegrityFailure")
@@ -102,6 +104,8 @@ struct LabelDeletionIntegrityTests {
           namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
     else { throw CancellationError() }
     switch (beforeSource, afterSource) {
+    case (.item(let before), .item(let after)):
+      #expect(after.fieldHashes == before.fieldHashes && after.updatedAt == before.updatedAt)
     case (.category(let before), .category(let after)):
       #expect(after.fieldHashes == before.fieldHashes && after.updatedAt == before.updatedAt)
     case (.tag(let before), .tag(let after)):

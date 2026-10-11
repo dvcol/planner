@@ -69,7 +69,8 @@ struct PortableDeletionMarker: Codable {
   }
 
   func validated(
-    schedules: [PortableScheduleRecord], categories: [PlannerPortableCategory],
+    items: [PortableItemRecord], schedules: [PortableScheduleRecord],
+    categories: [PlannerPortableCategory],
     tags: [PlannerPortableTag],
     memberships: [PortableMembershipRecord],
     labelAssociations: [PortableLabelAssociationRecord], entries: [PortableItineraryEntryRecord]
@@ -92,6 +93,9 @@ struct PortableDeletionMarker: Codable {
       let kind: PlannerEntityKind
       let isLive: Bool
       switch source.kind {
+      case "item":
+        kind = .item
+        isLive = items.contains { $0.id == source.id && $0.lifetimeId == source.lifetimeId }
       case "schedule":
         kind = .schedule
         isLive = schedules.contains { $0.id == source.id && $0.lifetimeId == source.lifetimeId }
