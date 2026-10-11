@@ -296,6 +296,15 @@ final class SavedPlannerStore {
       operationId: operationIdentifier) != nil
   }
 
+  func reorderItineraryEntry(
+    _ entryIdentifier: UUID, itineraryIdentifier: UUID, placement: PlannerPlacement
+  ) async -> Bool {
+    await executeChange(
+      .reorderItineraryEntry(
+        itineraryId: itineraryIdentifier, entryId: entryIdentifier, placement: placement),
+      operationId: UUID()) != nil
+  }
+
   func readItems(
     scope: PlannerItemQuery.Scope = .global, text: String = "",
     completion: PlannerItemQuery.Completion, archive: PlannerItemQuery.Archive,

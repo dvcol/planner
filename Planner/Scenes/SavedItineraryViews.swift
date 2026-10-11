@@ -147,6 +147,8 @@ struct SavedItineraryDetail: View {
                   }
                   .padding(.vertical, 8)
                   .contextMenu {
+                    entryReorderingActions(entry, in: contents.entries)
+                    Divider()
                     Group {
                       Button("Mark all Done") {
                         prepareBulkCompletion(
@@ -163,7 +165,10 @@ struct SavedItineraryDetail: View {
                   }
                 }
               } else {
-                ForEach(entry.items) { item in itineraryRow(item) }
+                ForEach(entry.items) { item in
+                  itineraryRow(item)
+                    .contextMenu { entryReorderingActions(entry, in: contents.entries) }
+                }
               }
             }
           }
@@ -255,6 +260,28 @@ struct SavedItineraryDetail: View {
       }
     }
     .tag(item.id)
+  }
+
+  private func entryReorderingActions(
+    _ entry: SavedItineraryEntryRows, in entries: [SavedItineraryEntryRows]
+  ) -> some View {
+    Group {
+      Button("Move to Beginning") {
+        Task {
+          _ = await store.reorderItineraryEntry(
+            entry.id, itineraryIdentifier: identifier, placement: .first)
+        }
+      }
+      .disabled(entries.first?.id == entry.id)
+      Button("Move to End") {
+        Task {
+          _ = await store.reorderItineraryEntry(
+            entry.id, itineraryIdentifier: identifier, placement: .last)
+        }
+      }
+      .disabled(entries.last?.id == entry.id)
+    }
+    .disabled(!store.canCreate || isPreparingBulkCompletion)
   }
 
   private func prepareBulkCompletion(
