@@ -39,6 +39,8 @@ struct SavedPlannerView: View {
   @State private var isOpeningListCatalog = false
   @State private var showNewItem = false
   @State private var showAddItem = false
+  @State private var bulkCompletionDraft: SavedBulkCompletionDraft?
+  @State private var isPreparingBulkCompletion = false
   @State private var selectedItemId: UUID?
   @State private var selectedItem: PlannerItemSourceRead?
   @State private var isOpeningItem = false
@@ -140,10 +142,16 @@ struct SavedPlannerView: View {
     .sheet(item: $itemEditDraft) { draft in
       SavedEditItemForm(store: store, item: draft.item)
     }
+    .sheet(item: $bulkCompletionDraft) { draft in
+      SavedBulkCompletionForm(store: store, draft: draft)
+    }
     .alert(
       "Planner",
       isPresented: Binding(
-        get: { store.alertMessage != nil && itemEditDraft == nil && !showCategories },
+        get: {
+          store.alertMessage != nil && itemEditDraft == nil && bulkCompletionDraft == nil
+            && !showCategories
+        },
         set: { if !$0 { store.alertMessage = nil } })
     ) {
       Button("OK") { store.alertMessage = nil }
@@ -696,6 +704,9 @@ struct SavedPlannerView: View {
         .searchPresentationToolbarBehavior(.avoidHidingContent)
         .overlay(alignment: .topTrailing) {
           if isOpeningList { ProgressView("Updating List").controlSize(.small).padding() }
+          if isPreparingBulkCompletion {
+            ProgressView("Preparing review").controlSize(.small).padding()
+          }
         }
         .toolbar {
           ToolbarItem {
@@ -718,6 +729,19 @@ struct SavedPlannerView: View {
             Button("Add existing Item", systemImage: "plus") { showAddItem = true }
               .disabled(!store.canCreate)
               .accessibilityIdentifier("saved.list.add")
+          }
+          ToolbarItem(placement: .primaryAction) {
+            Menu {
+              Button("Mark all Done") { prepareListBulkCompletion(selectedList, done: true) }
+              Button("Mark all Undone") { prepareListBulkCompletion(selectedList, done: false) }
+            } label: {
+              Label("List actions", systemImage: "ellipsis")
+            }
+            .disabled(
+              !store.canCreate || isPreparingBulkCompletion || selectedList.progress.totalCount == 0
+            )
+            .help("List actions")
+            .accessibilityIdentifier("saved.list.actions")
           }
         }
       } else if isOpeningList {
@@ -753,6 +777,20 @@ struct SavedPlannerView: View {
       #if os(iOS)
         if identifier != nil { columnVisibility = .doubleColumn }
       #endif
+    }
+  }
+
+  private func prepareListBulkCompletion(_ list: PlannerListSourceRead, done: Bool) {
+    guard !isPreparingBulkCompletion else { return }
+    isPreparingBulkCompletion = true
+    Task {
+      defer { isPreparingBulkCompletion = false }
+      guard
+        let review = await store.prepareBulkCompletion(
+          scope: .list(listId: list.source.id), done: done),
+        selectedListId == list.source.id
+      else { return }
+      bulkCompletionDraft = .init(listName: list.content.name, review: review)
     }
   }
 
