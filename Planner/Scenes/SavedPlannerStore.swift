@@ -300,6 +300,7 @@ final class SavedPlannerStore {
     scope: PlannerItemQuery.Scope = .global, text: String = "",
     completion: PlannerItemQuery.Completion, archive: PlannerItemQuery.Archive,
     categories: PlannerItemQuery.IdentityGroup? = nil, tags: PlannerItemQuery.IdentityGroup? = nil,
+    hasAddress: Bool = false, hasLinks: Bool = false,
     sort: PlannerItemQuery.Sort = .init(mode: .title)
   ) async -> [SavedPlannerItem]? {
     guard let planner, let session else { return nil }
@@ -309,7 +310,8 @@ final class SavedPlannerStore {
         request: .items(
           .init(
             scope: scope, text: text, completion: completion, archive: archive,
-            categories: categories, tags: tags, sort: sort))
+            categories: categories, tags: tags, hasAddress: hasAddress, hasLinks: hasLinks,
+            sort: sort))
       ))
     {
     case .failed(let reason): alertMessage = reason.message
@@ -653,6 +655,7 @@ final class SavedPlannerStore {
     _ identifier: UUID, text: String = "", completion: PlannerItemQuery.Completion,
     archive: PlannerItemQuery.Archive,
     categories: PlannerItemQuery.IdentityGroup? = nil, tags: PlannerItemQuery.IdentityGroup? = nil,
+    hasAddress: Bool = false, hasLinks: Bool = false,
     sort: PlannerItemQuery.Sort = .init(mode: .manual)
   ) async -> [SavedPlannerItem]? {
     guard let planner, let session else { return nil }
@@ -662,7 +665,8 @@ final class SavedPlannerStore {
         request: .items(
           .init(
             scope: .list(identifier), text: text, completion: completion, archive: archive,
-            categories: categories, tags: tags, sort: sort))))
+            categories: categories, tags: tags, hasAddress: hasAddress, hasLinks: hasLinks,
+            sort: sort))))
     {
     case .failed(let reason): alertMessage = reason.message
     case .snapshot(let snapshot):
