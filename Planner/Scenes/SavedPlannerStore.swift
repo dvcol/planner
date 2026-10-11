@@ -21,6 +21,12 @@ struct SavedPlannerCategory: Identifiable {
   var id: UUID { source.id }
 }
 
+enum SavedBulkCompletionResult {
+  case applied
+  case reviewChanged(PlannerReview)
+  case failed
+}
+
 @MainActor @Observable
 final class SavedPlannerStore {
   private let planner: PlannerCore.Planner?
@@ -353,6 +359,41 @@ final class SavedPlannerStore {
       .setCompletion(scope: .appearance(appearance), done: done), operationId: UUID()) != nil
   }
 
+  func prepareBulkCompletion(scope: PlannerBulkScope, done: Bool) async -> PlannerReview? {
+    guard let planner, let session, canCreate else { return nil }
+    switch await planner.prepareReview(
+      session: session, command: .setBulkCompletion(scope: scope, done: done))
+    {
+    case .reviewed(let review): return review
+    case .failed(let reason):
+      alertMessage = reason.message
+      return nil
+    }
+  }
+
+  func applyBulkCompletion(_ review: PlannerReview, operationIdentifier: UUID) async
+    -> SavedBulkCompletionResult
+  {
+    guard let planner, let session, canCreate else { return .failed }
+    isSaving = true
+    alertMessage = nil
+    defer { isSaving = false }
+    let result = await planner.execute(
+      PlannerOperation(
+        operationId: operationIdentifier, session: session, command: review.command,
+        reviewToken: review.reviewToken))
+    if case .rejected(let reason) = result.outcome, reason.code == "staleReview" {
+      switch await planner.prepareReview(session: session, command: review.command) {
+      case .reviewed(let refreshed): return .reviewChanged(refreshed)
+      case .failed(let failure):
+        alertMessage = failure.message
+        return .failed
+      }
+    }
+    guard handleChangeResult(result) != nil else { return .failed }
+    return .applied
+  }
+
   func reorderMembership(_ membershipId: UUID, listId: UUID, placement: PlannerPlacement) async
     -> Bool
   {
@@ -369,6 +410,10 @@ final class SavedPlannerStore {
     defer { isSaving = false }
     let result = await planner.execute(
       PlannerOperation(operationId: operationId, session: session, command: command))
+    return handleChangeResult(result)
+  }
+
+  private func handleChangeResult(_ result: PlannerOperationResult) -> PlannerAppliedResult? {
     switch result.outcome {
     case .rejected(let reason):
       alertMessage = reason.message

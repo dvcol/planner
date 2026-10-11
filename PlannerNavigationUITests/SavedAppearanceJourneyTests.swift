@@ -4,6 +4,100 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testNativeBulkReviewIncludesHiddenArchivedItemsAndRetainsGlobalCompletion() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    createItem(application, title: "Hotel")
+    createList("Tokyo Food", application: application)
+    addItem(application)
+    addItem(application, title: "Hotel")
+    let museum = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    let museumIdentifier = museum.identifier
+    let hotel = application.savedPlannerItemRows("Hotel").firstMatch
+    let hotelIdentifier = hotel.identifier
+    viewGlobalItem(application)
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Archive Item").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
+    openList("Tokyo Food", itemTitle: "Hotel", application: application)
+    let filters = application.plannerElement("saved.list.filters")
+    filters.activateForPlannerJourney()
+    application.plannerElement("Active").activateForPlannerJourney()
+    XCTAssertTrue(museum.waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Showing 1 of 2 items"].exists)
+    assertProgress(0, application: application)
+
+    recordScreenshot(application, name: "Native List toolbar before bulk review")
+    openBulkReview(done: true, application: application)
+    XCTAssertTrue(application.staticTexts["2 items in Tokyo Food"].waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      application.staticTexts["Includes archived items and items hidden by filters."].exists)
+    recordScreenshot(application, name: "Native bulk review includes hidden archived Items")
+    application.plannerElement("saved.list.bulk.cancel").activateForPlannerJourney()
+    assertProgress(0, application: application)
+    openBulkReview(done: true, application: application)
+    application.plannerElement("saved.list.bulk.confirm").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["2 of 2 items done"].waitForExistence(timeout: 10))
+    assertProgress(1, application: application)
+    recordScreenshot(application, name: "Bulk Done retains full progress while one Item is hidden")
+
+    viewGlobalItem(application, itemTitle: "Hotel")
+    let globalCompletion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    activateGlobalCompletion(globalCompletion)
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+    openList("Tokyo Food", itemTitle: "Hotel", application: application)
+    openBulkReview(done: false, application: application)
+    XCTAssertTrue(application.staticTexts["2 items in Tokyo Food"].waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      application.staticTexts["Items completed globally will still appear done."].exists)
+    application.plannerElement("saved.list.bulk.confirm").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["1 of 2 items done"].waitForExistence(timeout: 10))
+    assertProgress(0.5, application: application)
+    viewGlobalItem(application, itemTitle: "Hotel")
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+    activateGlobalCompletion(globalCompletion)
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    openList("Tokyo Food", itemTitle: "Hotel", application: application)
+    assertProgress(0, application: application)
+    filters.activateForPlannerJourney()
+    application.plannerElement("All archive states").activateForPlannerJourney()
+    XCTAssertTrue(museum.waitForExistence(timeout: 10))
+    XCTAssertEqual(museum.identifier, museumIdentifier)
+    XCTAssertEqual(hotel.identifier, hotelIdentifier)
+    viewGlobalItem(application)
+    XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Tokyo Food", application: application)
+    assertProgress(0, application: application)
+    XCTAssertEqual(museum.identifier, museumIdentifier)
+    XCTAssertEqual(hotel.identifier, hotelIdentifier)
+    recordScreenshot(application, name: "Bulk state and source identities survive native relaunch")
+  }
+
+  private func openBulkReview(done: Bool, application: XCUIApplication) {
+    let actions = application.plannerElement("saved.list.actions")
+    if actions.exists {
+      actions.activateForPlannerJourney()
+    } else {
+      let overflow = application.buttons["OverflowBarButtonItem"]
+      XCTAssertTrue(overflow.waitForExistence(timeout: 5), application.debugDescription)
+      overflow.activateForPlannerJourney()
+      let nestedActions = application.plannerElement("List actions")
+      XCTAssertTrue(nestedActions.waitForExistence(timeout: 5), application.debugDescription)
+      nestedActions.activateForPlannerJourney()
+    }
+    let command = application.plannerElement(done ? "Mark all Done" : "Mark all Undone")
+    XCTAssertTrue(command.waitForExistence(timeout: 5), application.debugDescription)
+    command.activateForPlannerJourney()
+  }
+
   func testOwnedAddressCreatesANativePreviewAndRemainsLiveInACompletedList() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -2092,7 +2186,17 @@ final class SavedAppearanceJourneyTests: XCTestCase {
   }
 
   private func addItem(_ application: XCUIApplication, title: String = "Nezu Museum") {
-    application.plannerElement("saved.list.add").activateForPlannerJourney()
+    let add = application.plannerElement("saved.list.add")
+    if add.exists {
+      add.activateForPlannerJourney()
+    } else {
+      let overflow = application.buttons["OverflowBarButtonItem"].firstMatch
+      XCTAssertTrue(overflow.waitForExistence(timeout: 5), application.debugDescription)
+      overflow.activateForPlannerJourney()
+      let overflowAdd = application.plannerElement("Add existing Item")
+      XCTAssertTrue(overflowAdd.waitForExistence(timeout: 5), application.debugDescription)
+      overflowAdd.activateForPlannerJourney()
+    }
     let candidate = application.staticTexts[title].firstMatch
     XCTAssertTrue(candidate.waitForExistence(timeout: 5))
     candidate.activateForPlannerJourney()
