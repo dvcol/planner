@@ -368,7 +368,7 @@ public struct PlannerProviderReference: Sendable, Codable, Equatable {
   public let value: String
 }
 
-public enum PlannerReferenceRead: Sendable, Equatable {
+public enum PlannerReferenceRead: Sendable, Hashable {
   case expandedCompletion(itineraryId: UUID, listEntryId: UUID, membershipId: UUID)
   case itineraryEntry(id: UUID, itinerary: PlannerEntityReference, source: PlannerEntityReference)
   case membership(id: UUID, list: PlannerEntityReference, item: PlannerEntityReference)

@@ -1,0 +1,105 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[8 / 11] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,67 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportOverwriteDeletionReviewTests started.
+◇ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) started.
+◇ Test overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:) started.
+◇ Test overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+◇ Test case passing 1 argument targetCase → .schedule to overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .repeatedItem to overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .membership to overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .item to overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .itemAndSchedule to overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .labelAssociation to overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .itineraryEntry to overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .ownedLink to overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .repeatedSchedule to overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .expandedCompletion to overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:) started.
+◇ Test case passing 1 argument sourceKind → .list to overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+◇ Test case passing 1 argument targetCase → .representedSchedule to overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) started.
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .itemAndSchedule at NativeImportOverwriteDeletionReviewTests.swift:451:7: Expectation failed: details.incomingDeletions.allSatisfy { $0.after == nil }
+↳ details.incomingDeletions.allSatisfy { $0.after == nil } → <not evaluated>
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .itemAndSchedule at NativeImportOverwriteDeletionReviewTests.swift:453:7: Expectation failed: review.impact.sourceDeletes.count == 2
+↳ review.impact.sourceDeletes.count == 2 → false
+↳   review.impact.sourceDeletes.count → 3
+◇ Test case passing 1 argument targetCase → .expandedTodo to overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:) started.
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .itemAndSchedule at NativeImportOverwriteDeletionReviewTests.swift:454:7: Expectation failed: review.impact.referenceRemovals.count == 4
+↳ review.impact.referenceRemovals.count == 4 → false
+↳   review.impact.referenceRemovals.count → 5
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .itemAndSchedule at NativeImportOverwriteDeletionReviewTests.swift:456:7: Expectation failed: review.impact.referenceRemovals == nativeDelete.impact.referenceRemovals
+↳ review.impact.referenceRemovals == nativeDelete.impact.referenceRemovals → false
+↳   review.impact.referenceRemovals → [PlannerCore.PlannerReferenceRead.ownedLink(id: 12C4EF43-E939-4B15-AED5-96B44A40110C, owner: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 5DFA5981-A3C0-4395-815B-03E797EDCF8C)), PlannerCore.PlannerReferenceRead.schedule(id: 002CCBD4-34E4-4140-9569-43150FE7EF06, source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 5DFA5981-A3C0-4395-815B-03E797EDCF8C)), PlannerCore.PlannerReferenceRead.membership(id: 677DE5A0-A114-4EC5-8E75-5B95777D0EFE, list: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.list, id: 6374ADA1-1CF1-4BEF-8D4B-C62CCA6C11B2), item: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 5DFA5981-A3C0-4395-815B-03E797EDCF8C)), PlannerCore.PlannerReferenceRead.itineraryEntry(id: 75CB9E54-4946-4858-8F9F-126575A8DEE0, itinerary: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.itinerary, id: DEC03897-B755-491A-AF6A-5A2BD661922F), source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 5DFA5981-A3C0-4395-815B-03E797EDCF8C)), PlannerCore.PlannerReferenceRead.schedule(id: 002CCBD4-34E4-4140-9569-43150FE7EF06, source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 5DFA5981-A3C0-4395-815B-03E797EDCF8C))]
+↳   nativeDelete.impact.referenceRemovals → [PlannerCore.PlannerReferenceRead.ownedLink(id: 12C4EF43-E939-4B15-AED5-96B44A40110C, owner: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 5DFA5981-A3C0-4395-815B-03E797EDCF8C)), PlannerCore.PlannerReferenceRead.schedule(id: 002CCBD4-34E4-4140-9569-43150FE7EF06, source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 5DFA5981-A3C0-4395-815B-03E797EDCF8C)), PlannerCore.PlannerReferenceRead.membership(id: 677DE5A0-A114-4EC5-8E75-5B95777D0EFE, list: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.list, id: 6374ADA1-1CF1-4BEF-8D4B-C62CCA6C11B2), item: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 5DFA5981-A3C0-4395-815B-03E797EDCF8C)), PlannerCore.PlannerReferenceRead.itineraryEntry(id: 75CB9E54-4946-4858-8F9F-126575A8DEE0, itinerary: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.itinerary, id: DEC03897-B755-491A-AF6A-5A2BD661922F), source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 5DFA5981-A3C0-4395-815B-03E797EDCF8C))]
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .itemAndSchedule at NativeImportOverwriteDeletionReviewTests.swift:457:7: Expectation failed: details.referenceChanges.count == 4
+↳ details.referenceChanges.count == 4 → false
+↳   details.referenceChanges.count → 5
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .repeatedItem at NativeImportOverwriteDeletionReviewTests.swift:440:5: Expectation failed: details.incomingDeletions.count == (targetCase == .itemAndSchedule ? 2 : 1)
+↳ details.incomingDeletions.count == (targetCase == .itemAndSchedule ? 2 : 1) → false
+↳   details.incomingDeletions.count → 2
+↳   (targetCase == .itemAndSchedule ? 2 : 1) → 1
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .repeatedItem at NativeImportOverwriteDeletionReviewTests.swift:446:5: Expectation failed: details.incomingDeletions.first?.propertyPaths == expectedPaths
+↳ details.incomingDeletions.first?.propertyPaths == expectedPaths → false
+↳   details.incomingDeletions.first?.propertyPaths → ["/deletionMarkers/0"]
+↳     some → ["/deletionMarkers/0"]
+↳   expectedPaths → ["/deletionMarkers/0", "/deletionMarkers/1"]
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .repeatedItem at NativeImportOverwriteDeletionReviewTests.swift:453:7: Expectation failed: review.impact.sourceDeletes.count == 2
+↳ review.impact.sourceDeletes.count == 2 → false
+↳   review.impact.sourceDeletes.count → 4
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .repeatedItem at NativeImportOverwriteDeletionReviewTests.swift:454:7: Expectation failed: review.impact.referenceRemovals.count == 4
+↳ review.impact.referenceRemovals.count == 4 → false
+↳   review.impact.referenceRemovals.count → 8
+◇ Test case passing 1 argument sourceKind → .itinerary to overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .repeatedItem at NativeImportOverwriteDeletionReviewTests.swift:456:7: Expectation failed: review.impact.referenceRemovals == nativeDelete.impact.referenceRemovals
+↳ review.impact.referenceRemovals == nativeDelete.impact.referenceRemovals → false
+↳   review.impact.referenceRemovals → [PlannerCore.PlannerReferenceRead.ownedLink(id: 7CF43C30-3B77-490A-A7BB-BB40CE3679D1, owner: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 801AEC6E-5658-4399-8A70-376375CC047F)), PlannerCore.PlannerReferenceRead.schedule(id: 519F2EC1-1F2F-42D2-815F-156C62B4F321, source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 801AEC6E-5658-4399-8A70-376375CC047F)), PlannerCore.PlannerReferenceRead.membership(id: 454721D2-F63E-4E9B-911D-D01DDEB95F60, list: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.list, id: B5DA9AF8-6016-4C0F-B201-ED3FA23DCECB), item: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 801AEC6E-5658-4399-8A70-376375CC047F)), PlannerCore.PlannerReferenceRead.itineraryEntry(id: 4B631C09-59DA-4221-89C0-9A890C09CA16, itinerary: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.itinerary, id: 9BE3E513-A5C0-42A2-9015-4FD4AA901A3B), source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 801AEC6E-5658-4399-8A70-376375CC047F)), PlannerCore.PlannerReferenceRead.ownedLink(id: 7CF43C30-3B77-490A-A7BB-BB40CE3679D1, owner: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 801AEC6E-5658-4399-8A70-376375CC047F)), PlannerCore.PlannerReferenceRead.schedule(id: 519F2EC1-1F2F-42D2-815F-156C62B4F321, source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 801AEC6E-5658-4399-8A70-376375CC047F)), PlannerCore.PlannerReferenceRead.membership(id: 454721D2-F63E-4E9B-911D-D01DDEB95F60, list: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.list, id: B5DA9AF8-6016-4C0F-B201-ED3FA23DCECB), item: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 801AEC6E-5658-4399-8A70-376375CC047F)), PlannerCore.PlannerReferenceRead.itineraryEntry(id: 4B631C09-59DA-4221-89C0-9A890C09CA16, itinerary: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.itinerary, id: 9BE3E513-A5C0-42A2-9015-4FD4AA901A3B), source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 801AEC6E-5658-4399-8A70-376375CC047F))]
+↳   nativeDelete.impact.referenceRemovals → [PlannerCore.PlannerReferenceRead.ownedLink(id: 7CF43C30-3B77-490A-A7BB-BB40CE3679D1, owner: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 801AEC6E-5658-4399-8A70-376375CC047F)), PlannerCore.PlannerReferenceRead.schedule(id: 519F2EC1-1F2F-42D2-815F-156C62B4F321, source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 801AEC6E-5658-4399-8A70-376375CC047F)), PlannerCore.PlannerReferenceRead.membership(id: 454721D2-F63E-4E9B-911D-D01DDEB95F60, list: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.list, id: B5DA9AF8-6016-4C0F-B201-ED3FA23DCECB), item: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 801AEC6E-5658-4399-8A70-376375CC047F)), PlannerCore.PlannerReferenceRead.itineraryEntry(id: 4B631C09-59DA-4221-89C0-9A890C09CA16, itinerary: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.itinerary, id: 9BE3E513-A5C0-42A2-9015-4FD4AA901A3B), source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 801AEC6E-5658-4399-8A70-376375CC047F))]
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .repeatedItem at NativeImportOverwriteDeletionReviewTests.swift:457:7: Expectation failed: details.referenceChanges.count == 4
+↳ details.referenceChanges.count == 4 → false
+↳   details.referenceChanges.count → 8
+◇ Test case passing 1 argument sourceKind → .category to overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .repeatedSchedule at NativeImportOverwriteDeletionReviewTests.swift:440:5: Expectation failed: details.incomingDeletions.count == (targetCase == .itemAndSchedule ? 2 : 1)
+↳ details.incomingDeletions.count == (targetCase == .itemAndSchedule ? 2 : 1) → false
+↳   details.incomingDeletions.count → 2
+↳   (targetCase == .itemAndSchedule ? 2 : 1) → 1
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .repeatedSchedule at NativeImportOverwriteDeletionReviewTests.swift:446:5: Expectation failed: details.incomingDeletions.first?.propertyPaths == expectedPaths
+↳ details.incomingDeletions.first?.propertyPaths == expectedPaths → false
+↳   details.incomingDeletions.first?.propertyPaths → ["/deletionMarkers/0"]
+↳     some → ["/deletionMarkers/0"]
+↳   expectedPaths → ["/deletionMarkers/0", "/deletionMarkers/1"]
+◇ Test case passing 1 argument sourceKind → .tag to overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .repeatedSchedule at NativeImportOverwriteDeletionReviewTests.swift:463:7: Expectation failed: review.impact.sourceDeletes == [schedule]
+↳ review.impact.sourceDeletes == [schedule] → false
+↳   review.impact.sourceDeletes → [PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.schedule, id: 6DE662DA-1D0D-408B-BE4E-A5D527C50BA3), PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.schedule, id: 6DE662DA-1D0D-408B-BE4E-A5D527C50BA3)]
+↳   [schedule] → [PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.schedule, id: 6DE662DA-1D0D-408B-BE4E-A5D527C50BA3)]
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .repeatedSchedule at NativeImportOverwriteDeletionReviewTests.swift:464:7: Expectation failed: review.impact.referenceRemovals == [.schedule(id: schedule.id, source: item)]
+↳ review.impact.referenceRemovals == [.schedule(id: schedule.id, source: item)] → false
+↳   review.impact.referenceRemovals → [PlannerCore.PlannerReferenceRead.schedule(id: 6DE662DA-1D0D-408B-BE4E-A5D527C50BA3, source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: B9B715EA-6A7A-4733-B3B4-B59F15A0DF13)), PlannerCore.PlannerReferenceRead.schedule(id: 6DE662DA-1D0D-408B-BE4E-A5D527C50BA3, source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: B9B715EA-6A7A-4733-B3B4-B59F15A0DF13))]
+↳   [.schedule(id: schedule.id, source: item)] → [PlannerCore.PlannerReferenceRead.schedule(id: 6DE662DA-1D0D-408B-BE4E-A5D527C50BA3, source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: B9B715EA-6A7A-4733-B3B4-B59F15A0DF13))]
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .repeatedSchedule at NativeImportOverwriteDeletionReviewTests.swift:465:7: Expectation failed: details.referenceChanges.filter { $0.change == .remove }.count == 1
+↳ details.referenceChanges.filter { $0.change == .remove }.count == 1 → false
+↳   details.referenceChanges.filter { $0.change == .remove }.count → 2
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .representedSchedule at NativeImportOverwriteDeletionReviewTests.swift:464:7: Expectation failed: review.impact.referenceRemovals == [.schedule(id: schedule.id, source: item)]
+↳ review.impact.referenceRemovals == [.schedule(id: schedule.id, source: item)] → false
+↳   review.impact.referenceRemovals → [PlannerCore.PlannerReferenceRead.schedule(id: 9D7AFBA2-764B-4202-B26F-802743A2B7F6, source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 354F73C7-2855-450F-A0ED-616DAF03C58E)), PlannerCore.PlannerReferenceRead.schedule(id: 9D7AFBA2-764B-4202-B26F-802743A2B7F6, source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 354F73C7-2855-450F-A0ED-616DAF03C58E))]
+↳   [.schedule(id: schedule.id, source: item)] → [PlannerCore.PlannerReferenceRead.schedule(id: 9D7AFBA2-764B-4202-B26F-802743A2B7F6, source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 354F73C7-2855-450F-A0ED-616DAF03C58E))]
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .representedSchedule at NativeImportOverwriteDeletionReviewTests.swift:465:7: Expectation failed: details.referenceChanges.filter { $0.change == .remove }.count == 1
+↳ details.referenceChanges.filter { $0.change == .remove }.count == 1 → false
+↳   details.referenceChanges.filter { $0.change == .remove }.count → 2
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) recorded an issue with 1 argument targetCase → .representedSchedule at NativeImportOverwriteDeletionReviewTests.swift:468:9: Expectation failed: details.referenceChanges.count == 2
+↳ details.referenceChanges.count == 2 → false
+↳   details.referenceChanges.count → 3
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) with 6 test cases failed after 0.455 seconds with 19 issues.
+✔ Test overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:) with 6 test cases passed after 0.467 seconds.
+✔ Test overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) with 4 test cases passed after 0.592 seconds.
+✘ Suite NativeImportOverwriteDeletionReviewTests failed after 0.593 seconds with 19 issues.
+✘ Test run with 3 tests in 1 suite failed after 0.593 seconds with 19 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

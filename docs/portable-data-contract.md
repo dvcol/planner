@@ -72,6 +72,8 @@ The [deleted-data Skip extension](prototypes/core-native-import-review.md#delete
 
 The [incoming deletion-conflict extension](prototypes/core-native-import-review.md#incoming-deletion-conflicts-under-skip) now preserves live owners under Skip for source, Schedule, association and expanded-context targets. Repeated marker paths consolidate in the owner conflict, while absent-target closure metadata and independent sources remain separately reviewed. This does not implement Overwrite deletion or native synchronization's deletion precedence.
 
+The [Overwrite deletion-impact extension](prototypes/core-native-import-review.md#incoming-deletion-impact-under-overwrite) now reviews live source/Schedule/reference/context closures, preserves shared sources and surviving owners, and consolidates repeated/overlapping impacts. Owner after summaries combine the selected replacement and deletion. This remains a read-only preview in a current dataset without deletion metadata; restoration, complete graph reconciliation, application and physical convergence remain open.
+
 ## Native import, Delete and recovery forms
 
 `decodeImport(Data)` returns `decoded(PlannerDecodedBackup)` or `invalid(Failure)`. PlannerDecodedBackup has immutable `backup: PortableBackup`, `externalBindings: [BoundSource]` and `originPaths: [BindingPath]`; BindingPath has `binding: BoundSource` and `propertyPath: String`. No dataset is selected by decoding. Native duplicate-property handling is resolved exactly once here. `PlannerCommand.applyImport` contains that value and `mode: skip|overwrite`. Default is skip; changing the mode requires a refreshed review of the new payload/impact. Unresolvable dataset dependencies fail during the bound review and prevent execute.

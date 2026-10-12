@@ -1,0 +1,28 @@
+Building for debugging...
+[Using on-disk description]
+[1 / 3] PlannerCore-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,02 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportOverwriteDeletionReviewTests started.
+◇ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetKind:) started.
+◇ Test overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+◇ Test case passing 1 argument targetKind → .schedule to overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetKind:) started.
+◇ Test case passing 1 argument sourceKind → .list to overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+◇ Test case passing 1 argument sourceKind → .tag to overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+◇ Test case passing 1 argument sourceKind → .itinerary to overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+◇ Test case passing 1 argument sourceKind → .category to overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+◇ Test case passing 1 argument targetKind → .item to overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetKind:) started.
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetKind:) recorded an issue with 1 argument targetKind → .schedule at NativeImportOverwriteDeletionReviewTests.swift:233:19: Issue recorded
+↳ Review the complete selected deletion closure before Overwrite: .failed(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: Optional("/deletionMarkers/0"), message: "Incoming deletion of live data needs its reviewed impact.", details: nil))
+✘ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetKind:) with 2 test cases failed after 0.220 seconds with 1 issue.
+✔ Test overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) with 4 test cases passed after 0.362 seconds.
+✘ Suite NativeImportOverwriteDeletionReviewTests failed after 0.363 seconds with 1 issue.
+✘ Test run with 2 tests in 1 suite failed after 0.363 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

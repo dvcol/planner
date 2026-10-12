@@ -237,11 +237,19 @@ struct PlannerImportProjection {
 struct PlannerImportReviewResolution {
   let details: PlannerImportReview
   let targets: [PlannerReviewTarget]
+  let sourceDeletes: [PlannerEntityReference]
   let globalFlagsChanged: Bool
 }
 
+struct PlannerImportDeletionImpact {
+  let markerIndex: Int
+  let sourceDeletes: [PlannerEntityReference]
+  let referenceRemovals: [PlannerReferenceRead]
+}
+
 func plannerResolveImportReview(
-  incoming: PlannerDecodedBackup, current: PlannerDecodedBackup, mode: PlannerImportMode
+  incoming: PlannerDecodedBackup, current: PlannerDecodedBackup, mode: PlannerImportMode,
+  deletionImpacts: [PlannerImportDeletionImpact]
 ) throws -> PlannerImportReviewResolution {
   let currentSources = Dictionary(
     uniqueKeysWithValues: current.backup.sources.map {
@@ -286,14 +294,6 @@ func plannerResolveImportReview(
       propertyPath: externalOwner.propertyPath)
   }
   let currentProjection = try PlannerImportProjection(backup: current.backup)
-  if mode == .overwrite {
-    for (index, marker) in incoming.backup.deletionMarkers.enumerated() {
-      guard currentProjection.liveOwner(for: marker.target) != nil else { continue }
-      throw PlannerFailure(
-        "unavailable", "Incoming deletion of live data needs its reviewed impact.",
-        propertyPath: "/deletionMarkers/\(index)")
-    }
-  }
   let deletedSources = Set(
     current.backup.deletionMarkers.compactMap { marker -> PlannerEntityReference? in
       guard case .source(let source, _) = marker.target, currentProjection.sources[source] == nil
@@ -430,6 +430,13 @@ func plannerResolveImportReview(
     }
   }
   var deletions: [PlannerDeletionImportEntry] = []
+  var sourceDeletes: [PlannerEntityReference] = []
+  var selectedSourceDeletes: Set<PlannerEntityReference> = []
+  var deletionPositions: [Data: Int] = [:]
+  let impactsByIndex = Dictionary(
+    uniqueKeysWithValues: deletionImpacts.map { ($0.markerIndex, $0) })
+  let allSourceDeletes = Set(deletionImpacts.flatMap(\.sourceDeletes))
+  let allReferenceRemovals = Set(deletionImpacts.flatMap(\.referenceRemovals))
   var skippedConflictPositions = Dictionary(
     uniqueKeysWithValues: skippedConflicts.enumerated().map {
       ($0.element.owner, $0.offset)
@@ -438,6 +445,59 @@ func plannerResolveImportReview(
   for (index, marker) in incoming.backup.deletionMarkers.enumerated() {
     if let existing = currentProjection.liveOwner(for: marker.target) {
       let path = "/deletionMarkers/\(index)"
+      if mode == .overwrite {
+        guard let impact = impactsByIndex[index] else {
+          throw PlannerFailure(
+            "unavailable", "Incoming deletion of live data needs its reviewed impact.",
+            propertyPath: path)
+        }
+        let ownedReferences =
+          currentProjection.ownedReferences[existing.importBinding.reference] ?? []
+        let removedReferences = ownedReferences.filter {
+          allReferenceRemovals.contains($0.reference)
+        }
+        let replacementFields =
+          replacements.first {
+            $0.owner == existing.importBinding
+          }?.after?.changedFieldNames ?? []
+        let changedFields = Set(removedReferences.map(\.group) + replacementFields).sorted()
+        let after: PlannerImportOwnerSummary?
+        if allSourceDeletes.contains(existing.importBinding.reference) {
+          after = nil
+        } else {
+          let proposedSource = projection.sources[existing.importBinding.reference] ?? existing
+          let proposedReferences: [PlannerImportOwnerReference]
+          if projection.sources[existing.importBinding.reference] != nil {
+            proposedReferences = projection.ownedReferences[existing.importBinding.reference] ?? []
+          } else {
+            proposedReferences = ownedReferences
+          }
+          after = .init(
+            identity: existing.importBinding, title: proposedSource.importTitle,
+            associationIds: proposedReferences.filter {
+              !allReferenceRemovals.contains($0.reference)
+            }.compactMap(\.identifier).sorted { $0.uuidString < $1.uuidString },
+            changedFieldNames: changedFields)
+        }
+        let targetKey = marker.target.importCanonicalValue.encoded()
+        if let position = deletionPositions[targetKey] {
+          let previous = deletions[position]
+          deletions[position] = .init(
+            target: previous.target, owner: previous.owner,
+            propertyPaths: previous.propertyPaths + [path], before: previous.before, after: after)
+        } else {
+          deletionPositions[targetKey] = deletions.count
+          deletions.append(
+            .init(
+              target: marker.target, owner: existing.importBinding, propertyPaths: [path],
+              before: currentProjection.summary(existing, changedFields: changedFields),
+              after: after)
+          )
+        }
+        sourceDeletes += impact.sourceDeletes.filter { selectedSourceDeletes.insert($0).inserted }
+        changes += impact.referenceRemovals.map { .init(change: .remove, reference: $0) }
+        continue
+      }
       if let position = skippedConflictPositions[existing.importBinding] {
         let conflict = skippedConflicts[position]
         skippedConflicts[position] = .init(
@@ -470,9 +530,21 @@ func plannerResolveImportReview(
         target: marker.target, owner: owner, propertyPaths: ["/deletionMarkers/\(index)"],
         before: nil, after: nil))
   }
+  var uniqueChanges: [PlannerImportReferenceChange] = []
+  var changePositions: [PlannerReferenceRead: Int] = [:]
+  for change in changes {
+    if let position = changePositions[change.reference] {
+      if change.change == .remove { uniqueChanges[position] = change }
+      continue
+    }
+    changePositions[change.reference] = uniqueChanges.count
+    uniqueChanges.append(change)
+  }
   let targetSources = Set(
     incoming.backup.sources.map { $0.importBinding.reference }
       + skippedConflicts.map { $0.owner.reference }
+      + deletions.compactMap { $0.before?.identity.reference }
+      + sourceDeletes
   ).sorted {
     if $0.kind != $1.kind { return $0.kind.rawValue < $1.kind.rawValue }
     return $0.id.uuidString < $1.id.uuidString
@@ -482,7 +554,8 @@ func plannerResolveImportReview(
       imports: imports, unchanged: unchanged, skippedConflicts: skippedConflicts,
       skippedDependents: skippedDependents,
       replacements: replacements, restorations: [], incomingDeletions: deletions,
-      referenceChanges: changes),
+      referenceChanges: uniqueChanges),
     targets: targetSources.map { .source($0) }
-      + changes.map { .reference($0.reference) }, globalFlagsChanged: globalFlagsChanged)
+      + uniqueChanges.map { .reference($0.reference) }, sourceDeletes: sourceDeletes,
+    globalFlagsChanged: globalFlagsChanged)
 }

@@ -1,0 +1,33 @@
+Building for debugging...
+[Computing dependencies]
+[1 / 1]
+[1 / 6] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,15 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportOverwriteDeletionReviewTests started.
+◇ Test overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+◇ Test overwriteIncomingItemClosureReviewsTheSameCompleteImpactAsNativeDelete() started.
+◇ Test case passing 1 argument sourceKind → .category to overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+◇ Test case passing 1 argument sourceKind → .list to overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+◇ Test case passing 1 argument sourceKind → .tag to overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+◇ Test case passing 1 argument sourceKind → .itinerary to overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+✔ Test overwriteIncomingItemClosureReviewsTheSameCompleteImpactAsNativeDelete() passed after 0.172 seconds.
+✘ Test overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) recorded an issue with 1 argument sourceKind → .list at NativeImportOverwriteDeletionReviewTests.swift:108:19: Issue recorded
+↳ Review the complete named-source deletion closure: .failed(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: Optional("/deletionMarkers/0"), message: "Incoming deletion of live data needs its reviewed impact.", details: nil))
+✘ Test overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) recorded an issue with 1 argument sourceKind → .tag at NativeImportOverwriteDeletionReviewTests.swift:108:19: Issue recorded
+↳ Review the complete named-source deletion closure: .failed(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: Optional("/deletionMarkers/0"), message: "Incoming deletion of live data needs its reviewed impact.", details: nil))
+✘ Test overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) recorded an issue with 1 argument sourceKind → .itinerary at NativeImportOverwriteDeletionReviewTests.swift:108:19: Issue recorded
+↳ Review the complete named-source deletion closure: .failed(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: Optional("/deletionMarkers/0"), message: "Incoming deletion of live data needs its reviewed impact.", details: nil))
+✘ Test overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) recorded an issue with 1 argument sourceKind → .category at NativeImportOverwriteDeletionReviewTests.swift:108:19: Issue recorded
+↳ Review the complete named-source deletion closure: .failed(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: Optional("/deletionMarkers/0"), message: "Incoming deletion of live data needs its reviewed impact.", details: nil))
+✘ Test overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) with 4 test cases failed after 0.301 seconds with 4 issues.
+✘ Suite NativeImportOverwriteDeletionReviewTests failed after 0.301 seconds with 4 issues.
+✘ Test run with 2 tests in 1 suite failed after 0.301 seconds with 4 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)
