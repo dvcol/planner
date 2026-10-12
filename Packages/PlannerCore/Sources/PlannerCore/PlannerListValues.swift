@@ -96,6 +96,7 @@ public struct PlannerListSourceRead: Sendable {
   public let fieldHashes: [PlannerListField: PlannerFieldHash]
   public let state: PlannerSourceState
   public let progress: PlannerContainerProgress
+  public let estimates: PlannerContainerEstimates
   public let references: [PlannerReferenceRead]
 }
 
@@ -223,6 +224,7 @@ struct ListSnapshot {
     }
     var doneCount: Int64 = 0
     var archivedCount: Int64 = 0
+    var estimateChildren: [ContainerEstimateChild] = []
     for membership in children {
       let matches = items.filter {
         $0.id == membership.item.id && $0.lifetimeId == membership.item.lifetimeId
@@ -230,6 +232,10 @@ struct ListSnapshot {
       guard matches.count == 1, let item = matches.first else {
         throw PlannerFailure("readUnavailable", "A List child source is unresolved.")
       }
+      estimateChildren.append(
+        .init(
+          estimate: item.input.estimate,
+          finished: item.globalDone || membership.localDone || item.archived))
       if item.globalDone || membership.localDone {
         doneCount += 1
       } else if item.archived {
@@ -252,6 +258,7 @@ struct ListSnapshot {
       progress: PlannerContainerProgress(
         container: reference, state: progressState, doneCount: doneCount, totalCount: totalCount,
         archivedCount: archivedCount),
+      estimates: automaticContainerEstimates(children: estimateChildren, archived: archived),
       references: children.map(\.reference)
         + entries.filter {
           $0.source.kind == "list" && $0.source.id == id && $0.source.lifetimeId == lifetimeId

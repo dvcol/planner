@@ -5,6 +5,71 @@ import Testing
 @testable import Planner
 
 struct ListRoutingTests {
+  @Test func containerEstimateReadsOverHTTPKeepExactMinutesAndMissingValueBounds() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(configuration: storageConfiguration(directory))
+    guard case .ready(let datasetSession) = await planner.bootstrap() else {
+      throw CancellationError()
+    }
+    func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
+      guard
+        case .applied(let result, .complete) = await planner.execute(
+          .init(operationId: UUID(), session: datasetSession, command: command)
+        ).outcome
+      else { throw CancellationError() }
+      return result
+    }
+    let museum = try #require(
+      try await save(
+        .createItem(
+          content: .init(title: "Museum", estimate: .init(minutes: 120, displayUnit: .hour)))
+      ).generated.first)
+    let lunch = try #require(
+      try await save(.createItem(content: .init(title: "Lunch"))).generated.first)
+    let list = try #require(
+      try await save(.createList(content: .init(name: "Morning"))).generated.first)
+    for item in [museum, lunch] {
+      _ = try await save(.addMembership(itemId: item.id, listId: list.id, placement: .last))
+    }
+    _ = try await save(.setCompletion(scope: .globalItem(itemId: lunch.id), done: true))
+    let listener = PlannerMCPLoopbackListener(
+      requestHandler: PlannerMCPRequestHandler(
+        credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+        planner: planner, datasetSession: datasetSession))
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    do {
+      let read = try value(
+        try await httpSession.data(
+          for: request(
+            endpoint: endpoint, name: "planner_read",
+            arguments: [
+              "formatVersion": 1,
+              "request": ["kind": "source", "source": ["kind": "list", "id": list.id.uuidString]],
+            ])))
+      let source = try #require(read["value"] as? [String: Any])
+      let estimates = try #require(source["estimates"] as? [String: Any])
+      let expectedBound: [String: Any] = [
+        "kind": "lowerBound", "minutes": "120", "missingEstimateCount": "1",
+      ]
+      for field in ["calculatedEstimate", "fullEstimate"] {
+        #expect(
+          NSDictionary(dictionary: try #require(estimates[field] as? [String: Any]))
+            .isEqual(to: expectedBound))
+      }
+      #expect(
+        NSDictionary(dictionary: try #require(estimates["remainingEstimate"] as? [String: Any]))
+          .isEqual(to: ["kind": "exact", "minutes": "120"]))
+      #expect(estimates["completedExceedsTotal"] as? Bool == false)
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   @Test func listCreationAndDetailReadRetainOwnedMetadataAndEmptyDerivedProgress() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
@@ -54,7 +119,7 @@ struct ListRoutingTests {
       #expect(
         Set(sourceValue.keys) == [
           "source", "content", "createdAt", "updatedAt", "fieldHashes", "state", "labels",
-          "references", "progress",
+          "references", "progress", "estimates",
         ])
       #expect(
         NSDictionary(dictionary: try #require(sourceValue["content"] as? [String: Any])).isEqual(

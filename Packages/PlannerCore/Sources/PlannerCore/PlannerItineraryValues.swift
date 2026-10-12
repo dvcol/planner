@@ -51,6 +51,7 @@ public struct PlannerItinerarySourceRead: Sendable {
   public let fieldHashes: [PlannerItineraryField: PlannerFieldHash]
   public let state: PlannerSourceState
   public let progress: PlannerContainerProgress
+  public let estimates: PlannerContainerEstimates
   public let references: [PlannerReferenceRead]
 }
 
@@ -130,12 +131,13 @@ struct ItinerarySnapshot {
   func read(
     datasetId: UUID, memberships: [MembershipSnapshot], items: [ItemSnapshot], lists: [ListSnapshot]
   ) throws -> PlannerItinerarySourceRead {
-    try PlannerItinerarySourceRead(
+    let summary = try progressAndEstimates(memberships: memberships, items: items, lists: lists)
+    return try PlannerItinerarySourceRead(
       source: reference, sourceLifetimeId: lifetimeId,
       content: input.readContent(links: links.map(\.read)), labels: labels,
       createdAt: createdAt, updatedAt: updatedAt, fieldHashes: fieldHashes(datasetId: datasetId),
       state: PlannerSourceState(globalDone: nil, archived: archived),
-      progress: progress(memberships: memberships, items: items, lists: lists),
+      progress: summary.progress, estimates: summary.estimates,
       references: labelAssociations.map(\.reference) + entries.map(\.reference)
         + entries.flatMap(\.expandedCompletions).map(\.reference)
         + schedules.sorted { $0.id.uuidString < $1.id.uuidString }.map {

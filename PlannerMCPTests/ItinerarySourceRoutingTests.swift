@@ -110,6 +110,13 @@ struct ItinerarySourceRoutingTests {
       #expect(progress["state"] as? String == "empty")
       #expect(progress["doneCount"] as? String == "0")
       #expect(progress["totalCount"] as? String == "0")
+      let estimates = try #require(original["estimates"] as? [String: Any])
+      for field in ["calculatedEstimate", "fullEstimate", "remainingEstimate"] {
+        #expect(
+          NSDictionary(dictionary: try #require(estimates[field] as? [String: Any]))
+            .isEqual(to: ["kind": "exact", "minutes": "0"]))
+      }
+      #expect(estimates["completedExceedsTotal"] as? Bool == false)
       #expect((created["recovery"] as? [String: Any])?["checkpointGeneration"] as? String == "3")
       let categoryRead = try await read("category", identifier: category)
       let categoryHashes = try #require(categoryRead["fieldHashes"] as? [String: String])
