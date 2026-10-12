@@ -16,7 +16,7 @@ Q65 excludes archived children from remaining time. Q68 counts archived children
 
 Q71 uses a List's effective overall estimate once per List appearance in an itinerary. Its children are not added again. Deduct finished child estimates while the branch is partial; once all its itinerary appearances are finished, account for its whole effective List budget. Standalone List completion never substitutes for completion inside an itinerary.
 
-Q72 about an archived container's own progress is pending. No recommendation is treated as an answer. Missing estimates remain visibly uncertain; a manual total does not manufacture a shared Item estimate. Checked arithmetic must report an unavailable/uncertain aggregate rather than overflow or invent a duration.
+Q72 B is accepted. An archived container keeps its own child-based progress while showing zero remaining time. Its archived branch still counts as finished in a parent itinerary. Archive changes neither child Done flags nor the full estimate. Missing estimates remain visibly uncertain; a manual total does not manufacture a shared Item estimate. Checked arithmetic must report an unavailable/uncertain aggregate rather than overflow or invent a duration.
 
 ## Concrete before and after fixtures
 
@@ -31,12 +31,13 @@ Q72 about an archived container's own progress is pending. No recommendation is 
 | Set itinerary manual total to 300, with the List branch finished and Hotel Todo. | Remaining 60, including the unallocated manual difference. Finish Hotel: remaining and unallocated remaining difference become 0; manual total stays 300. |
 | Two Hotel appearances each estimate 30 minutes; complete only one locally. | Both contribute to full estimate; only that appearance contributes to completed time. Global Done finishes both; global Reopen restores their retained local distinction. |
 | Archive the referenced List while its Items remain active. | Its itinerary branch is finished with no remaining budget. A separate direct appearance of an active Todo Item remains unfinished. Unarchive restores the branch's retained flags. |
+| Archive a List with two active Todo children. | Its own progress stays 0 of 2 finished and remaining is 0; its archived branch is finished inside an itinerary. Unarchive restores child-based remaining without changing Done flags. |
 | Manual total 120; completed child estimates 180; another child remains Todo. | Estimated remaining is 0 with a warning. The plan remains unfinished; no negative duration or silent manual reset. |
 | Museum estimate 120; Lunch has no estimate. | Show a known 120-minute subtotal and one missing estimate. The picker may set a manual overall estimate without changing Lunch's shared content. |
 
 ## Definition of ready
 
-- Resolve Q72 and confirm the resulting shared understanding.
+- Q72 B is settled in the [decision register](open-decisions.md); retain the distinct own-progress and parent-branch behavior.
 - Review concrete public input/read/query contracts for manual estimate fields, derived summaries and calendar windows before new-field /tdd work. Existing Core read/query/execute, actual HTTP and native UI boundaries remain the agreed test seams.
 - Declare persistence and portable-format evolution. Manual estimates are owned data; derived totals and device presentation preferences are not additional saved authorities.
 - Specify controlled calendar fixtures for overlaps, start-only entries, multi-day all-day spans, travel and daylight-saving boundaries. Signed physical sync/account/Share gates retain their separate prerequisites.
