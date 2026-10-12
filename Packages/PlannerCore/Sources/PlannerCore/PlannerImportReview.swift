@@ -33,6 +33,9 @@ struct PlannerImportProjection {
   let sources: [PlannerEntityReference: PlannerPortableSource]
   let ownedReferences: [PlannerEntityReference: [PlannerImportOwnerReference]]
   let references: [PlannerImportOwnerReference]
+  let referenceOwners: [PlannerPortableBoundIdentity: PlannerEntityReference]
+  let entriesById: [UUID: PlannerPortableItineraryEntry]
+  let membershipsById: [UUID: PlannerPortableMembership]
   let histories: [PlannerEntityReference: [PlannerImportOwnerHistory]]
 
   init(backup: PlannerPortableBackup) throws {
@@ -69,6 +72,8 @@ struct PlannerImportProjection {
     }
     let entries = Dictionary(uniqueKeysWithValues: backup.itineraryEntries.map { ($0.id, $0) })
     let memberships = Dictionary(uniqueKeysWithValues: backup.memberships.map { ($0.id, $0) })
+    entriesById = entries
+    membershipsById = memberships
     for (index, expanded) in backup.expandedCompletions.enumerated() {
       guard let entry = entries[expanded.context.listEntryId],
         let membership = memberships[expanded.context.membershipId]
@@ -127,6 +132,11 @@ struct PlannerImportProjection {
     }
     self.references = references
     ownedReferences = Dictionary(grouping: references, by: \.owner)
+    referenceOwners = Dictionary(
+      uniqueKeysWithValues: references.compactMap { reference in
+        guard let identity = reference.identity else { return nil }
+        return (identity, reference.owner)
+      })
     func owner(for completionContext: PlannerPortableCompletionContext) -> PlannerEntityReference? {
       switch completionContext {
       case .listMembership(let membershipId, _): return memberships[membershipId]?.list
@@ -191,6 +201,26 @@ struct PlannerImportProjection {
     return fields
   }
 
+  func liveOwner(for target: PlannerPortableDeletionTarget) -> PlannerPortableSource? {
+    if case .expandedCompletion(let context) = target,
+      let entry = entriesById[context.listEntryId], entry.lifetimeId == context.listEntryLifetimeId,
+      let membership = membershipsById[context.membershipId],
+      membership.lifetimeId == context.membershipLifetimeId,
+      entry.source == membership.list, entry.sourceLifetimeId == membership.listLifetimeId
+    {
+      return sources[entry.itinerary]
+    }
+    if case .source(let reference, let lifetimeId) = target, let source = sources[reference],
+      source.importBinding.lifetimeId == lifetimeId
+    {
+      return source
+    }
+    guard let identity = target.importIdentity, let owner = referenceOwners[identity] else {
+      return nil
+    }
+    return sources[owner]
+  }
+
   func summary(_ source: PlannerPortableSource, changedFields: [String])
     -> PlannerImportOwnerSummary
   {
@@ -248,14 +278,6 @@ func plannerResolveImportReview(
       "unavailable", "Restoration-family import review is not implemented yet.",
       propertyPath: "/restorationFamilies")
   }
-  for (index, marker) in incoming.backup.deletionMarkers.enumerated() {
-    guard case .source(let source, let lifetime) = marker.target,
-      currentSources[source]?.lifetimeId == lifetime
-    else { continue }
-    throw PlannerFailure(
-      "unavailable", "Incoming deletion of live data needs its reviewed impact.",
-      propertyPath: "/deletionMarkers/\(index)")
-  }
   let projection = try PlannerImportProjection(backup: incoming.backup)
   if let externalOwner = projection.references.first(where: { projection.sources[$0.owner] == nil })
   {
@@ -264,6 +286,14 @@ func plannerResolveImportReview(
       propertyPath: externalOwner.propertyPath)
   }
   let currentProjection = try PlannerImportProjection(backup: current.backup)
+  if mode == .overwrite {
+    for (index, marker) in incoming.backup.deletionMarkers.enumerated() {
+      guard currentProjection.liveOwner(for: marker.target) != nil else { continue }
+      throw PlannerFailure(
+        "unavailable", "Incoming deletion of live data needs its reviewed impact.",
+        propertyPath: "/deletionMarkers/\(index)")
+    }
+  }
   let deletedSources = Set(
     current.backup.deletionMarkers.compactMap { marker -> PlannerEntityReference? in
       guard case .source(let source, _) = marker.target, currentProjection.sources[source] == nil
@@ -399,16 +429,53 @@ func plannerResolveImportReview(
         reference: incoming.reference)
     }
   }
-  let deletions = incoming.backup.deletionMarkers.enumerated().map { index, marker in
+  var deletions: [PlannerDeletionImportEntry] = []
+  var skippedConflictPositions = Dictionary(
+    uniqueKeysWithValues: skippedConflicts.enumerated().map {
+      ($0.element.owner, $0.offset)
+    })
+  var retainedOwners = Set((unchanged + skippedConflicts).map { $0.owner.reference })
+  for (index, marker) in incoming.backup.deletionMarkers.enumerated() {
+    if let existing = currentProjection.liveOwner(for: marker.target) {
+      let path = "/deletionMarkers/\(index)"
+      if let position = skippedConflictPositions[existing.importBinding] {
+        let conflict = skippedConflicts[position]
+        skippedConflicts[position] = .init(
+          owner: conflict.owner, reasonCode: conflict.reasonCode,
+          dependencies: conflict.dependencies, propertyPaths: conflict.propertyPaths + [path],
+          before: conflict.before, after: conflict.after)
+      } else {
+        let summary = currentProjection.summary(existing, changedFields: [])
+        skippedConflictPositions[existing.importBinding] = skippedConflicts.count
+        skippedConflicts.append(
+          .init(
+            owner: existing.importBinding, reasonCode: "matchingRecordConflict",
+            dependencies: [], propertyPaths: [path], before: summary, after: summary))
+      }
+      if retainedOwners.insert(existing.importBinding.reference).inserted {
+        changes += (currentProjection.ownedReferences[existing.importBinding.reference] ?? []).map {
+          .init(change: .retain, reference: $0.reference)
+        }
+      }
+      continue
+    }
     let owner: PlannerBoundSource?
     if case .source(let source, let lifetime) = marker.target {
       owner = .init(kind: source.kind, id: source.id, lifetimeId: lifetime)
     } else {
       owner = nil
     }
-    return PlannerDeletionImportEntry(
-      target: marker.target, owner: owner, propertyPaths: ["/deletionMarkers/\(index)"],
-      before: nil, after: nil)
+    deletions.append(
+      PlannerDeletionImportEntry(
+        target: marker.target, owner: owner, propertyPaths: ["/deletionMarkers/\(index)"],
+        before: nil, after: nil))
+  }
+  let targetSources = Set(
+    incoming.backup.sources.map { $0.importBinding.reference }
+      + skippedConflicts.map { $0.owner.reference }
+  ).sorted {
+    if $0.kind != $1.kind { return $0.kind.rawValue < $1.kind.rawValue }
+    return $0.id.uuidString < $1.id.uuidString
   }
   return .init(
     details: .init(
@@ -416,6 +483,6 @@ func plannerResolveImportReview(
       skippedDependents: skippedDependents,
       replacements: replacements, restorations: [], incomingDeletions: deletions,
       referenceChanges: changes),
-    targets: incoming.backup.sources.map { .source($0.importBinding.reference) }
+    targets: targetSources.map { .source($0) }
       + changes.map { .reference($0.reference) }, globalFlagsChanged: globalFlagsChanged)
 }

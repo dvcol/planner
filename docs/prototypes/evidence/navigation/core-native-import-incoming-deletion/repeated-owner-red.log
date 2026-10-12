@@ -1,0 +1,33 @@
+Building for debugging...
+[1 / 1]
+[1 / 6] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,03 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportIncomingDeletionReviewTests started.
+◇ Test skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .schedule to skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .item to skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .repeatedItem to skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) started.
+✘ Test skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) recorded an issue with 1 argument targetCase → .repeatedItem at NativeImportIncomingDeletionReviewTests.swift:307:5: Expectation failed: details.skippedConflicts.count == 1 && details.skippedConflicts.first?.owner.id == item.id
+↳ details.skippedConflicts.count == 1 && details.skippedConflicts.first?.owner.id == item.id → false
+↳   details.skippedConflicts.count == 1 → false
+↳   details.skippedConflicts.first?.owner.id == item.id → <not evaluated>
+✘ Test skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) recorded an issue with 1 argument targetCase → .repeatedItem at NativeImportIncomingDeletionReviewTests.swift:313:5: Expectation failed: conflict.reasonCode == "matchingRecordConflict" && conflict.propertyPaths == expectedPaths
+↳ conflict.reasonCode == "matchingRecordConflict" && conflict.propertyPaths == expectedPaths → false
+↳   conflict.reasonCode == "matchingRecordConflict" → true
+↳   conflict.propertyPaths == expectedPaths → false
+✘ Test skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) recorded an issue with 1 argument targetCase → .repeatedItem at NativeImportIncomingDeletionReviewTests.swift:327:5: Expectation failed: details.referenceChanges.count == 2 && details.referenceChanges.allSatisfy { $0.change == .retain }
+↳ details.referenceChanges.count == 2 && details.referenceChanges.allSatisfy { $0.change == .retain } → false
+↳   details.referenceChanges.count == 2 → false
+↳   details.referenceChanges.allSatisfy { $0.change == .retain } → <not evaluated>
+✘ Test skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) with 3 test cases failed after 0.107 seconds with 3 issues.
+✘ Suite NativeImportIncomingDeletionReviewTests failed after 0.107 seconds with 3 issues.
+✘ Test run with 1 test in 1 suite failed after 0.107 seconds with 3 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

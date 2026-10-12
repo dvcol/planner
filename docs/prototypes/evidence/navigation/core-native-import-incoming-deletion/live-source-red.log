@@ -1,0 +1,22 @@
+Building for debugging...
+[Pre-planning 1 / 154]
+[Planning deferred tasks]
+[1 / 1]
+[5 / 15] PlannerCoreTests-product
+[9 / 20] PlannerCoreStoreTests-product
+[11 / 22] PlannerCoreStoreTests-product
+[17 / 21] PlannerCoreStoreTests-product
+[19 / 21] PlannerCoreStoreTests-product
+Build complete! (3,73 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportIncomingDeletionReviewTests started.
+◇ Test skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata() started.
+✘ Test skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata() recorded an issue at NativeImportIncomingDeletionReviewTests.swift:81:19: Issue recorded
+↳ Skip the incoming closure of live X and review independent data: .failed(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: Optional("/deletionMarkers/0"), message: "Incoming deletion of live data needs its reviewed impact.", details: nil))
+✘ Test skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata() failed after 0.091 seconds with 1 issue.
+✘ Suite NativeImportIncomingDeletionReviewTests failed after 0.091 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.092 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

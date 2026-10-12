@@ -1,0 +1,38 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,06 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportIncomingDeletionReviewTests started.
+◇ Test skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .membership to skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .expandedCompletion to skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .ownedLink to skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .itineraryEntry to skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .labelAssociation to skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) started.
+✘ Test skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) recorded an issue with 1 argument targetCase → .expandedCompletion at NativeImportIncomingDeletionReviewTests.swift:125:5: Expectation failed: details.skippedConflicts.count == 1 && details.skippedConflicts.first?.owner.id == expectedOwner.id
+↳ details.skippedConflicts.count == 1 && details.skippedConflicts.first?.owner.id == expectedOwner.id → false
+↳   details.skippedConflicts.count == 1 → false
+↳   details.skippedConflicts.first?.owner.id == expectedOwner.id → <not evaluated>
+✘ Test skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) recorded an issue with 1 argument targetCase → .expandedCompletion at NativeImportIncomingDeletionReviewTests.swift:128:5: Expectation failed: details.skippedConflicts.first?.before?.title == expectedTitle && details.skippedConflicts.first?.after?.title == expectedTitle
+↳ details.skippedConflicts.first?.before?.title == expectedTitle && details.skippedConflicts.first?.after?.title == expectedTitle → false
+↳   details.skippedConflicts.first?.before?.title == expectedTitle → false
+↳   details.skippedConflicts.first?.after?.title == expectedTitle → <not evaluated>
+✘ Test skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) recorded an issue with 1 argument targetCase → .expandedCompletion at NativeImportIncomingDeletionReviewTests.swift:131:5: Expectation failed: details.incomingDeletions.isEmpty && details.referenceChanges.allSatisfy { $0.change == .retain }
+↳ details.incomingDeletions.isEmpty && details.referenceChanges.allSatisfy { $0.change == .retain } → false
+↳   details.incomingDeletions.isEmpty → false
+↳   details.referenceChanges.allSatisfy { $0.change == .retain } → <not evaluated>
+✘ Test skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) recorded an issue with 1 argument targetCase → .expandedCompletion at NativeImportIncomingDeletionReviewTests.swift:134:5: Expectation failed: !details.referenceChanges.isEmpty && review.impact.referenceRemovals.isEmpty
+↳ !details.referenceChanges.isEmpty && review.impact.referenceRemovals.isEmpty → false
+↳   !details.referenceChanges.isEmpty → false
+↳   review.impact.referenceRemovals.isEmpty → <not evaluated>
+✘ Test skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) with 5 test cases failed after 0.223 seconds with 4 issues.
+✘ Suite NativeImportIncomingDeletionReviewTests failed after 0.223 seconds with 4 issues.
+✘ Test run with 1 test in 1 suite failed after 0.223 seconds with 4 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

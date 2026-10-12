@@ -1,0 +1,28 @@
+Building for debugging...
+[1 / 3] PlannerCore_PlannerCoreStoreTests
+[1 / 8] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,07 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportIncomingDeletionReviewTests started.
+◇ Test skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .schedule to skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .item to skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) started.
+✘ Test skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) recorded an issue with 1 argument targetCase → .schedule at NativeImportIncomingDeletionReviewTests.swift:166:5: Expectation failed: details.skippedConflicts.count == 1 && details.skippedConflicts.first?.owner.id == item.id
+↳ details.skippedConflicts.count == 1 && details.skippedConflicts.first?.owner.id == item.id → false
+↳   details.skippedConflicts.count == 1 → false
+↳   details.skippedConflicts.first?.owner.id == item.id → <not evaluated>
+✘ Test skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) recorded an issue with 1 argument targetCase → .schedule at NativeImportIncomingDeletionReviewTests.swift:168:24: Expectation failed: details.skippedConflicts.first
+↳ details.skippedConflicts.first → nil
+↳   details.skippedConflicts → []
+↳   first → nil
+✘ Test skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) with 2 test cases failed after 0.101 seconds with 2 issues.
+✘ Suite NativeImportIncomingDeletionReviewTests failed after 0.101 seconds with 2 issues.
+✘ Test run with 1 test in 1 suite failed after 0.101 seconds with 2 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)
