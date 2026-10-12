@@ -1,0 +1,45 @@
+{
+  "beforeCommit": "2a35f93",
+  "coreCommit": "492b558",
+  "mode": "localOnly",
+  "storageSchemaVersion": 14,
+  "portableFormatVersion": 1,
+  "qualification": {
+    "phone": {
+      "functions": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "bundle": "/private/tmp/PlannerArchivedProgressNativePhoneFinal.xcresult"
+    },
+    "tablet": {
+      "functions": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "bundle": "/private/tmp/PlannerArchivedProgressNativeTabletFinal.xcresult"
+    },
+    "macBuild": {
+      "result": "TEST BUILD SUCCEEDED",
+      "log": "/private/tmp/PlannerArchivedProgressNativeMacListFinal.log",
+      "nativeUIFunctions": 0
+    },
+    "strictSwiftFiles": 2
+  },
+  "functionalRed": {
+    "bundle": "/private/tmp/PlannerArchivedProgressNativeRed.xcresult",
+    "failure": "Missing 1 of 2 items finished caption",
+    "epoch": "red-source-epoch.json"
+  },
+  "excludedAttempts": [
+    "Initial green phone/tablet runs reached relaunch but retained an outdated zero-progress assertion; corrected to 0.5 with explicit finished/archive captions."
+  ],
+  "remainingGates": [
+    "Native itinerary and repeated-branch progress/header matching",
+    "Full/remaining estimates",
+    "Calendar",
+    "Mac UI runtime",
+    "Signed physical sync/account/Share",
+    "Whole-app polish"
+  ]
+}
