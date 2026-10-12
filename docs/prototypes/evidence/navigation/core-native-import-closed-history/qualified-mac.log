@@ -1,0 +1,274 @@
+Building for debugging...
+[1 / 1]
+Build complete! (0,46 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportConflictReviewTests started.
+◇ Suite NativeImportLineageTests started.
+◇ Suite NativeImportHistoryCollisionTests started.
+◇ Suite NativeImportOverwriteDeletionReviewTests started.
+◇ Suite TagMigrationTests started.
+◇ Suite NativeImportMergeTests started.
+◇ Suite NativeImportClosedHistoryTests started.
+◇ Suite NativeImportIncomingDeletionReviewTests started.
+◇ Suite MembershipMigrationTests started.
+◇ Suite ImportLineageEncodingTests started.
+◇ Suite RecoveryCheckpointRetryTests started.
+◇ Suite ExpandedCompletionMigrationTests started.
+◇ Suite NativeImportReviewTests started.
+◇ Suite NativeImportBindingReviewTests started.
+◇ Suite NativeImportLineageMigrationTests started.
+◇ Suite NativeImportOmittedOwnerReviewTests started.
+◇ Suite ManualContainerEstimateMigrationTests started.
+◇ Suite CategoryMigrationTests started.
+◇ Suite ItemLinkMigrationTests started.
+◇ Suite ItineraryScheduleMigrationTests started.
+◇ Suite ItineraryEntryMigrationTests started.
+◇ Test globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) started.
+◇ Test reviewKeepsOrReplacesWholeOwnersAndImportsIndependentData(mode:) started.
+◇ Test nativeRepeatedPropertyResolutionIsRetainedByTheImmutableDecodedBackup() started.
+◇ Suite RecoveryCheckpointRetryAdmissionTests started.
+◇ Test incomingCompletionHistoryBelongsToItsWholeOwnerReview() started.
+◇ Suite NativeImportApplyTests started.
+◇ Test skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) started.
+◇ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) started.
+◇ Test overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+◇ Test overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:) started.
+◇ Suite ItemLabelMigrationTests started.
+◇ Test genuineV8MigrationPreservesCategoryAndMembershipStateAndHistoricalRecovery() started.
+◇ Suite ItineraryMigrationTests started.
+◇ Test changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:) started.
+◇ Test restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test aClosedMembershipCannotRedirectItsHistoryToAnotherItem() started.
+◇ Test removedContextsRetainReviewableRestorableHistory(kind:) started.
+◇ Test explicitReopenSuppressesALateDoneSeedWithoutChangingSharedItemState() started.
+◇ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test genuineV6MigrationRetainsSourcesReceiptsAndRecoveryBeforeShareAddsMembership() started.
+◇ Test skipRetainsLiveNamedSourcesAgainstIncomingDeletion(sourceCase:) started.
+◇ Suite RecoveryProposalSelectionTests started.
+◇ Test knownAppliedCompletionRetryRepairsRecoveryWithoutReapplyingAndUnblocksLaterEdits() started.
+◇ Test retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test explicitCompletionHistoryEncodesTheIndependentPortableFixture() started.
+◇ Test identicalExportReviewsWholeOwnersAsUnchangedIncludingLocalMembershipState() started.
+◇ Test omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test genuineV15MigrationPreservesGraphBudgetsRecoveryAndCreationReplay() started.
+◇ Test genuineV12MigrationRetainsRepeatedEntriesAndDirectFlagsBeforeExpandedCompletion() started.
+◇ Test omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) started.
+◇ Test omittedContainerKeepsMembershipsRouteAndCompletionHistory(mode:ownerKind:) started.
+◇ Test genuineV7MigrationPreservesMembershipStateAndHistoricalRecovery() started.
+◇ Test genuineV11MigrationRetainsEditedSourcesAndRecoveryBeforeAddingAnEntry() started.
+◇ Test mainAppMigratesV2BookmarksThenShareSavesScheduleWithoutChangingOldHistory() started.
+◇ Test genuineV13MigrationRetainsGraphAndSchedulesBeforeSchedulingItinerary() started.
+◇ Test mainMigratesGenuineV4RetainingDeletionHistoryBeforeShareSavesAllDay() started.
+◇ Test mainAppMigratesV3ThenShareRemovesScheduleWithoutLosingItemOrHistoricalReceipt() started.
+◇ Test genuineV5MigrationPreservesBothScheduleFormsBeforeShareCreatesAnEmptyList() started.
+◇ Test case passing 1 argument mode → .skip to globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) started.
+◇ Test completeBackupReviewDescribesEveryOwnerAndReferenceWithoutApplyingData() started.
+◇ Test initialContributionRetainsItsContextAndExplicitNullChange(kind:) started.
+◇ Test case passing 1 argument mode → .skip to reviewKeepsOrReplacesWholeOwnersAndImportsIndependentData(mode:) started.
+◇ Test declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:) started.
+◇ Test skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) started.
+◇ Test case passing 1 argument mode → .overwrite to globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) started.
+◇ Test case passing 1 argument mode → .overwrite to reviewKeepsOrReplacesWholeOwnersAndImportsIndependentData(mode:) started.
+◇ Test case passing 1 argument targetCase → .item to overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) started.
+◇ Test overwriteSourceFieldsPreservesReferencesAndHistoryAcrossSetAndClear() started.
+◇ Test case passing 1 argument targetCase → .schedule to overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) started.
+◇ Test mainAppMigratesV1WithoutChangingItemIdentityStateOrAcknowledgedHistory() started.
+◇ Test case passing 1 argument collision → "alias" to skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) started.
+◇ Test genuineV14MigrationKeepsGraphHashesRecoveryAndLegacyCreationReplay() started.
+◇ Test skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .repeatedItem to overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .repeatedSchedule to overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .itemAndSchedule to overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) started.
+◇ Test case passing 1 argument collision → "change" to skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) started.
+◇ Test case passing 1 argument targetCase → .representedSchedule to overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) started.
+◇ Test case passing 1 argument sourceKind → .list to overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+◇ Test case passing 1 argument sourceKind → .itinerary to overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+◇ Test case passing 1 argument sourceKind → .category to overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+◇ Test case passing 1 argument sourceKind → .tag to overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) started.
+◇ Test case passing 1 argument targetCase → .membership to overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .itineraryEntry to overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .ownedLink to overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .labelAssociation to overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .expandedCompletion to overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .expandedTodo to overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:) started.
+◇ Test case passing 1 argument scenario → "referenceRemoval" to changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:) started.
+◇ Test case passing 1 argument scenario → "aliasIdentity" to changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:) started.
+◇ Test case passing 1 argument scenario → "changeIdentity" to changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:) started.
+◇ Test case passing 1 argument scenario → "valid" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "obsoleteReference" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "wrongCandidate" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "missingClosure" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "missingFamily" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "cycle" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "closedCandidate" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument kind → "listMembership" to removedContextsRetainReviewableRestorableHistory(kind:) started.
+◇ Test case passing 1 argument kind → "directItineraryItem" to removedContextsRetainReviewableRestorableHistory(kind:) started.
+◇ Test case passing 1 argument kind → "expandedListItem" to removedContextsRetainReviewableRestorableHistory(kind:) started.
+◇ Test case passing 1 argument sourceCase → .list to skipRetainsLiveNamedSourcesAgainstIncomingDeletion(sourceCase:) started.
+◇ Test case passing 1 argument sourceCase → .itinerary to skipRetainsLiveNamedSourcesAgainstIncomingDeletion(sourceCase:) started.
+◇ Test case passing 1 argument sourceCase → .category to skipRetainsLiveNamedSourcesAgainstIncomingDeletion(sourceCase:) started.
+◇ Test case passing 1 argument sourceCase → .tag to skipRetainsLiveNamedSourcesAgainstIncomingDeletion(sourceCase:) started.
+◇ Test case passing 1 argument group → "memberships" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument group → "itineraryEntries" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument group → "expandedCompletions" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument group → "ownedLinks" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument group → "schedules" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument group → "contextAliases" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument group → "completionChanges" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 2 arguments mode → .skip, incomingRecordsChanged → false to omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → false, interleaveSourceIdentifiers → false to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments mode → .skip, incomingRecordsChanged → true to omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → false, interleaveSourceIdentifiers → true to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments mode → .overwrite, incomingRecordsChanged → false to omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → true, interleaveSourceIdentifiers → false to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments mode → .overwrite, incomingRecordsChanged → true to omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → true, interleaveSourceIdentifiers → true to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments mode → .skip, ownerKind → .list to omittedContainerKeepsMembershipsRouteAndCompletionHistory(mode:ownerKind:) started.
+◇ Test case passing 2 arguments mode → .skip, ownerKind → .itinerary to omittedContainerKeepsMembershipsRouteAndCompletionHistory(mode:ownerKind:) started.
+◇ Test case passing 2 arguments mode → .overwrite, ownerKind → .list to omittedContainerKeepsMembershipsRouteAndCompletionHistory(mode:ownerKind:) started.
+◇ Test case passing 2 arguments mode → .overwrite, ownerKind → .itinerary to omittedContainerKeepsMembershipsRouteAndCompletionHistory(mode:ownerKind:) started.
+◇ Test case passing 2 arguments mode → .skip, deletedKind → .item to omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) started.
+◇ Test case passing 2 arguments mode → .skip, deletedKind → .schedule to omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) started.
+◇ Test case passing 2 arguments mode → .overwrite, deletedKind → .item to omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) started.
+◇ Test case passing 2 arguments mode → .overwrite, deletedKind → .schedule to omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) started.
+◇ Test bulkCheckpointRetryPreservesEverySupportedGraphGroupAndPriorDeletionMarker() started.
+◇ Test continuedFileFailureRetainsAppliedEvidenceAndMutationBlockUntilRetrySucceeds() started.
+◇ Test concurrentFacadeRetriesPublishOneCheckpointAndPreserveOriginalAppliedResult() started.
+◇ Test unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test unsupportedNativeValuesRejectWithoutSavingAPartialImport(_:) started.
+◇ Test case passing 1 argument kind → "listMembership" to initialContributionRetainsItsContextAndExplicitNullChange(kind:) started.
+◇ Test case passing 1 argument kind → "directItineraryItem" to initialContributionRetainsItsContextAndExplicitNullChange(kind:) started.
+◇ Test case passing 1 argument kind → "expandedListItem" to initialContributionRetainsItsContextAndExplicitNullChange(kind:) started.
+◇ Test failedRecoveryPreparationLeavesGraphAndReceiptUnapplied() started.
+◇ Test reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test case passing 1 argument bindingCase → .live to declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:) started.
+◇ Test case passing 1 argument bindingCase → .missing to declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:) started.
+◇ Test case passing 1 argument bindingCase → .wrongLifetime to declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:) started.
+◇ Test case passing 1 argument targetCase → .item to skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .schedule to skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .repeatedItem to skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .representedSchedule to skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .membership to skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .itineraryEntry to skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .ownedLink to skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .labelAssociation to skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .expandedCompletion to skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) started.
+◇ Test case passing 1 argument targetCase → .expandedTodo to skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) started.
+✔ Test nativeRepeatedPropertyResolutionIsRetainedByTheImmutableDecodedBackup() passed after 3.123 seconds.
+✔ Test globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) with 2 test cases passed after 3.123 seconds.
+✔ Test incomingCompletionHistoryBelongsToItsWholeOwnerReview() passed after 3.123 seconds.
+✔ Test reviewKeepsOrReplacesWholeOwnersAndImportsIndependentData(mode:) with 2 test cases passed after 3.123 seconds.
+✔ Test overwriteIncomingItemOrScheduleClosureReviewsOnlyTheSelectedRemoval(targetCase:) with 6 test cases passed after 3.123 seconds.
+✔ Test skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) with 2 test cases passed after 3.123 seconds.
+◇ Test genuineV9MigrationRetainsGraphAndAllowsShareToCreateLabelledItem() started.
+✔ Test overwriteRemovesOnlyTheLiveReferenceAndItsDependentContexts(targetCase:) with 6 test cases passed after 3.123 seconds.
+◇ Test genuineV10MigrationPreservesOwnedGraphBeforeItineraryCreation() started.
+✔ Test aClosedMembershipCannotRedirectItsHistoryToAnotherItem() passed after 3.123 seconds.
+✔ Test restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) with 7 test cases passed after 3.123 seconds.
+✔ Test overwriteIncomingNamedSourceClosurePreservesSharedSources(sourceKind:) with 4 test cases passed after 3.123 seconds.
+✔ Test explicitReopenSuppressesALateDoneSeedWithoutChangingSharedItemState() passed after 3.124 seconds.
+◇ Test inspectingRetainedProposalFromSeparateEmptyDatasetNeverImportsOrAcknowledgesIt() started.
+◇ Test preparedProposalRemainsSelectableWhenTheCommittedStoreIsMissing() started.
+◇ Test invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test completePortableLineageSurvivesPreparedFileInspectionWithoutApplyingData(includeRestorationFamily:) started.
+✔ Test changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:) with 3 test cases passed after 3.124 seconds.
+◇ Test selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData() started.
+◇ Test malformedPortableLineageIsRejectedBeforeRecoverySelection(_:) started.
+✔ Test skipRetainsLiveNamedSourcesAgainstIncomingDeletion(sourceCase:) with 4 test cases passed after 3.123 seconds.
+✔ Test explicitCompletionHistoryEncodesTheIndependentPortableFixture() passed after 3.123 seconds.
+✔ Test knownAppliedCompletionRetryRepairsRecoveryWithoutReapplyingAndUnblocksLaterEdits() passed after 3.123 seconds.
+✔ Test retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) with 7 test cases passed after 3.123 seconds.
+✔ Test removedContextsRetainReviewableRestorableHistory(kind:) with 3 test cases passed after 3.124 seconds.
+✔ Test genuineV6MigrationRetainsSourcesReceiptsAndRecoveryBeforeShareAddsMembership() passed after 3.124 seconds.
+✔ Test genuineV8MigrationPreservesCategoryAndMembershipStateAndHistoricalRecovery() passed after 3.124 seconds.
+✔ Test identicalExportReviewsWholeOwnersAsUnchangedIncludingLocalMembershipState() passed after 3.124 seconds.
+✔ Test omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) with 4 test cases passed after 3.124 seconds.
+✔ Test genuineV15MigrationPreservesGraphBudgetsRecoveryAndCreationReplay() passed after 3.124 seconds.
+✔ Test omittedContainerKeepsMembershipsRouteAndCompletionHistory(mode:ownerKind:) with 4 test cases passed after 3.124 seconds.
+✔ Test genuineV12MigrationRetainsRepeatedEntriesAndDirectFlagsBeforeExpandedCompletion() passed after 3.124 seconds.
+✔ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) with 4 test cases passed after 3.124 seconds.
+✔ Test mainAppMigratesV2BookmarksThenShareSavesScheduleWithoutChangingOldHistory() passed after 3.124 seconds.
+✔ Test genuineV11MigrationRetainsEditedSourcesAndRecoveryBeforeAddingAnEntry() passed after 3.124 seconds.
+✔ Test genuineV7MigrationPreservesMembershipStateAndHistoricalRecovery() passed after 3.124 seconds.
+◇ Test case passing 1 argument scenario → "unknown" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "preparedOnly" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "foreignSession" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "separateDataset" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+✔ Test completeBackupReviewDescribesEveryOwnerAndReferenceWithoutApplyingData() passed after 3.309 seconds.
+◇ Test case passing 1 argument scenario → "origin" to unsupportedNativeValuesRejectWithoutSavingAPartialImport(_:) started.
+◇ Test case passing 1 argument scenario → "providerReference" to unsupportedNativeValuesRejectWithoutSavingAPartialImport(_:) started.
+✔ Test initialContributionRetainsItsContextAndExplicitNullChange(kind:) with 3 test cases passed after 3.396 seconds.
+◇ Test case passing 1 argument retryRecovery → false to reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test case passing 1 argument retryRecovery → true to reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test case passing 1 argument scenario → "notes" to ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test case passing 1 argument scenario → "localCompletion" to ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+✔ Test omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) with 4 test cases passed after 3.640 seconds.
+✔ Test declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:) with 3 test cases passed after 3.640 seconds.
+✔ Test skipRetainsLiveOwnerAndItsReferencesWhileReviewingIndependentClosureMetadata(targetCase:) with 4 test cases passed after 3.640 seconds.
+✔ Test mainMigratesGenuineV4RetainingDeletionHistoryBeforeShareSavesAllDay() passed after 3.640 seconds.
+✔ Test mainAppMigratesV3ThenShareRemovesScheduleWithoutLosingItemOrHistoricalReceipt() passed after 3.640 seconds.
+✔ Test genuineV13MigrationRetainsGraphAndSchedulesBeforeSchedulingItinerary() passed after 3.640 seconds.
+◇ Test case passing 1 argument scenario → "missingProposal" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "missingNamespace" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "wrongOwner" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "wrongDataset" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "wrongEvidence" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "malformed" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "duplicateIdentity" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "unresolvedReference" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "acknowledged" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument includeRestorationFamily → false to completePortableLineageSurvivesPreparedFileInspectionWithoutApplyingData(includeRestorationFamily:) started.
+◇ Test case passing 1 argument includeRestorationFamily → true to completePortableLineageSurvivesPreparedFileInspectionWithoutApplyingData(includeRestorationFamily:) started.
+◇ Test case passing 1 argument scenario → "emptyRestorationCandidates" to malformedPortableLineageIsRejectedBeforeRecoverySelection(_:) started.
+◇ Test case passing 1 argument scenario → "duplicateObservedChanges" to malformedPortableLineageIsRejectedBeforeRecoverySelection(_:) started.
+✔ Test genuineV5MigrationPreservesBothScheduleFormsBeforeShareCreatesAnEmptyList() passed after 4.082 seconds.
+✔ Test skipRetainsTheRealOwnerOfLiveReferenceDeletionTargets(targetCase:) with 6 test cases passed after 4.080 seconds.
+✔ Test mainAppMigratesV1WithoutChangingItemIdentityStateOrAcknowledgedHistory() passed after 4.082 seconds.
+✔ Test continuedFileFailureRetainsAppliedEvidenceAndMutationBlockUntilRetrySucceeds() passed after 1.450 seconds.
+✔ Test unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) with 4 test cases passed after 1.469 seconds.
+✔ Test unsupportedNativeValuesRejectWithoutSavingAPartialImport(_:) with 2 test cases passed after 1.370 seconds.
+✔ Suite NativeImportLineageTests passed after 4.102 seconds.
+✔ Suite NativeImportConflictReviewTests passed after 4.102 seconds.
+✔ Suite NativeImportOverwriteDeletionReviewTests passed after 4.102 seconds.
+✔ Suite NativeImportHistoryCollisionTests passed after 4.102 seconds.
+✔ Test failedRecoveryPreparationLeavesGraphAndReceiptUnapplied() passed after 1.363 seconds.
+✔ Test preparedProposalRemainsSelectableWhenTheCommittedStoreIsMissing() passed after 0.978 seconds.
+✔ Test reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) with 2 test cases passed after 1.363 seconds.
+✔ Test inspectingRetainedProposalFromSeparateEmptyDatasetNeverImportsOrAcknowledgesIt() passed after 0.978 seconds.
+✔ Test genuineV14MigrationKeepsGraphHashesRecoveryAndLegacyCreationReplay() passed after 4.101 seconds.
+✔ Test ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) with 2 test cases passed after 1.363 seconds.
+✔ Test invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) with 9 test cases passed after 0.978 seconds.
+✔ Suite ImportLineageEncodingTests passed after 4.102 seconds.
+✔ Suite RecoveryCheckpointRetryTests passed after 4.102 seconds.
+✔ Suite NativeImportClosedHistoryTests passed after 4.102 seconds.
+✔ Suite MembershipMigrationTests passed after 4.102 seconds.
+✔ Suite TagMigrationTests passed after 4.102 seconds.
+✔ Suite NativeImportReviewTests passed after 4.102 seconds.
+✔ Suite NativeImportOmittedOwnerReviewTests passed after 4.102 seconds.
+✔ Suite NativeImportLineageMigrationTests passed after 4.103 seconds.
+✔ Suite ExpandedCompletionMigrationTests passed after 4.103 seconds.
+✔ Suite ItineraryEntryMigrationTests passed after 4.103 seconds.
+✔ Suite CategoryMigrationTests passed after 4.103 seconds.
+✔ Suite NativeImportBindingReviewTests passed after 4.103 seconds.
+✔ Suite ItineraryScheduleMigrationTests passed after 4.103 seconds.
+✔ Suite ItemLinkMigrationTests passed after 4.103 seconds.
+✔ Suite NativeImportIncomingDeletionReviewTests passed after 4.103 seconds.
+✔ Suite NativeImportApplyTests passed after 4.103 seconds.
+✔ Suite ManualContainerEstimateMigrationTests passed after 4.103 seconds.
+✔ Test concurrentFacadeRetriesPublishOneCheckpointAndPreserveOriginalAppliedResult() passed after 1.475 seconds.
+✔ Test genuineV10MigrationPreservesOwnedGraphBeforeItineraryCreation() passed after 1.021 seconds.
+✔ Suite ItineraryMigrationTests passed after 4.145 seconds.
+✔ Test completePortableLineageSurvivesPreparedFileInspectionWithoutApplyingData(includeRestorationFamily:) with 2 test cases passed after 1.037 seconds.
+✔ Test malformedPortableLineageIsRejectedBeforeRecoverySelection(_:) with 2 test cases passed after 1.040 seconds.
+✔ Test selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData() passed after 1.045 seconds.
+✔ Suite RecoveryProposalSelectionTests passed after 4.170 seconds.
+✔ Test overwriteSourceFieldsPreservesReferencesAndHistoryAcrossSetAndClear() passed after 4.222 seconds.
+✔ Suite NativeImportMergeTests passed after 4.223 seconds.
+✔ Test genuineV9MigrationRetainsGraphAndAllowsShareToCreateLabelledItem() passed after 1.106 seconds.
+✔ Suite ItemLabelMigrationTests passed after 4.231 seconds.
+✔ Test bulkCheckpointRetryPreservesEverySupportedGraphGroupAndPriorDeletionMarker() passed after 1.872 seconds.
+✔ Suite RecoveryCheckpointRetryAdmissionTests passed after 4.504 seconds.
+✔ Test run with 57 tests in 26 suites passed after 4.505 seconds.

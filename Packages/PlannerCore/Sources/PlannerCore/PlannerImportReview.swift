@@ -149,8 +149,10 @@ struct PlannerImportProjection {
         return (identity, reference.owner)
       })
     var histories: [PlannerImportOwnerHistory] = []
+    let graph = PlannerImportGraph(backup: backup)
     let aliases = Dictionary(uniqueKeysWithValues: backup.contextAliases.map { ($0.aliasId, $0) })
     for (index, alias) in backup.contextAliases.enumerated() {
+      if graph.isClosed(alias.canonicalContext) { continue }
       guard
         let owner = plannerImportCompletionOwner(
           alias.canonicalContext, memberships: memberships, entries: entries)
@@ -162,14 +164,10 @@ struct PlannerImportProjection {
       histories.append(
         .init(
           owner: owner, group: "contextAliases", propertyPath: "/contextAliases/\(index)",
-          value: .record([
-            "aliasId": .identity(alias.aliasId), "context": alias.context.importCanonicalValue,
-            "canonicalContext": alias.canonicalContext.importCanonicalValue,
-            "initialDone": .boolean(alias.initialDone),
-            "currentChangeId": .optional(alias.currentChangeId.map(PlannerCanonicalValue.identity)),
-          ])))
+          value: alias.importCanonicalValue))
     }
     for (index, change) in backup.completionChanges.enumerated() {
+      if let alias = aliases[change.aliasId], graph.isClosed(alias.canonicalContext) { continue }
       guard let alias = aliases[change.aliasId],
         let owner = plannerImportCompletionOwner(
           alias.canonicalContext, memberships: memberships, entries: entries)
@@ -181,12 +179,7 @@ struct PlannerImportProjection {
       histories.append(
         .init(
           owner: owner, group: "completionChanges", propertyPath: "/completionChanges/\(index)",
-          value: .record([
-            "id": .identity(change.id), "aliasId": .identity(change.aliasId),
-            "context": change.context.importCanonicalValue, "done": .boolean(change.done),
-            "observedChangeIds": .identitySet(
-              change.observedChangeIds.map(PlannerCanonicalValue.identity)),
-          ])))
+          value: change.importCanonicalValue))
     }
     self.histories = Dictionary(grouping: histories, by: \.owner)
   }
@@ -489,6 +482,9 @@ func plannerResolveImportReview(
     })
   var retainedOwners = Set((unchanged + skippedConflicts).map { $0.owner.reference })
   for (index, marker) in incoming.backup.deletionMarkers.enumerated() {
+    let propertyPaths =
+      ["/deletionMarkers/\(index)"]
+      + incoming.backup.closedHistoryPaths(for: marker.target)
     if let existing = currentProjection.liveOwner(for: marker.target) {
       let path = "/deletionMarkers/\(index)"
       if mode == .overwrite {
@@ -530,12 +526,13 @@ func plannerResolveImportReview(
           let previous = deletions[position]
           deletions[position] = .init(
             target: previous.target, owner: previous.owner,
-            propertyPaths: previous.propertyPaths + [path], before: previous.before, after: after)
+            propertyPaths: previous.propertyPaths + propertyPaths, before: previous.before,
+            after: after)
         } else {
           deletionPositions[targetKey] = deletions.count
           deletions.append(
             .init(
-              target: marker.target, owner: existing.importBinding, propertyPaths: [path],
+              target: marker.target, owner: existing.importBinding, propertyPaths: propertyPaths,
               before: currentProjection.summary(existing, changedFields: changedFields),
               after: after)
           )
@@ -548,7 +545,8 @@ func plannerResolveImportReview(
         let conflict = skippedConflicts[position]
         skippedConflicts[position] = .init(
           owner: conflict.owner, reasonCode: conflict.reasonCode,
-          dependencies: conflict.dependencies, propertyPaths: conflict.propertyPaths + [path],
+          dependencies: conflict.dependencies,
+          propertyPaths: conflict.propertyPaths + propertyPaths,
           before: conflict.before, after: conflict.after)
       } else {
         let summary = currentProjection.summary(existing, changedFields: [])
@@ -556,7 +554,7 @@ func plannerResolveImportReview(
         skippedConflicts.append(
           .init(
             owner: existing.importBinding, reasonCode: "matchingRecordConflict",
-            dependencies: [], propertyPaths: [path], before: summary, after: summary))
+            dependencies: [], propertyPaths: propertyPaths, before: summary, after: summary))
       }
       if retainedOwners.insert(existing.importBinding.reference).inserted {
         changes += (currentProjection.ownedReferences[existing.importBinding.reference] ?? []).map {
@@ -573,7 +571,7 @@ func plannerResolveImportReview(
     }
     deletions.append(
       PlannerDeletionImportEntry(
-        target: marker.target, owner: owner, propertyPaths: ["/deletionMarkers/\(index)"],
+        target: marker.target, owner: owner, propertyPaths: propertyPaths,
         before: nil, after: nil))
   }
   var uniqueChanges: [PlannerImportReferenceChange] = []

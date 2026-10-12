@@ -2107,7 +2107,7 @@ public actor Planner {
     let resolution = try plannerResolveImportReview(
       incoming: backup, current: current, mode: mode, deletionImpacts: deletionImpacts)
     let merge = try PlannerImportMerge(
-      incoming: backup.backup, current: current.backup, resolution: resolution)
+      incoming: backup.backup, current: current.backup, resolution: resolution, mode: mode)
     try plannerInsertImportedGraph(
       merge.recordsToWrite, replacing: merge.sourceReplacements, context: context)
     let restored = try importReviewSnapshot(context)

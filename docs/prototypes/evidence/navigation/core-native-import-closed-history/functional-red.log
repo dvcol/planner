@@ -1,0 +1,25 @@
+Building for debugging...
+[1 / 1]
+[1 / 8] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[9 / 13] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (2,92 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportClosedHistoryTests started.
+◇ Test removedContextsRetainReviewableRestorableHistory(kind:) started.
+◇ Test case passing 1 argument kind → "expandedListItem" to removedContextsRetainReviewableRestorableHistory(kind:) started.
+◇ Test case passing 1 argument kind → "directItineraryItem" to removedContextsRetainReviewableRestorableHistory(kind:) started.
+◇ Test case passing 1 argument kind → "listMembership" to removedContextsRetainReviewableRestorableHistory(kind:) started.
+✘ Test removedContextsRetainReviewableRestorableHistory(kind:) recorded an issue with 1 argument kind → "directItineraryItem" at NativeImportClosedHistoryTests.swift:82:19: Issue recorded
+↳ Review valid closed completion history: .failed(PlannerCore.PlannerFailure(code: "missingReference", propertyPath: Optional("/contextAliases/0/canonicalContext"), message: "Completion history needs its current context owner.", details: nil))
+✘ Test removedContextsRetainReviewableRestorableHistory(kind:) recorded an issue with 1 argument kind → "listMembership" at NativeImportClosedHistoryTests.swift:82:19: Issue recorded
+↳ Review valid closed completion history: .failed(PlannerCore.PlannerFailure(code: "missingReference", propertyPath: Optional("/contextAliases/0/canonicalContext"), message: "Completion history needs its current context owner.", details: nil))
+✘ Test removedContextsRetainReviewableRestorableHistory(kind:) with 3 test cases failed after 0.201 seconds with 2 issues.
+✘ Suite NativeImportClosedHistoryTests failed after 0.202 seconds with 2 issues.
+✘ Test run with 1 test in 1 suite failed after 0.202 seconds with 2 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

@@ -1,0 +1,37 @@
+Building for debugging...
+[Planning 32 / 154]
+[Planning deferred tasks]
+[1 / 2] PlannerCore_PlannerCoreStoreTests
+[6 / 19] PlannerCore_PlannerCoreStoreTests
+[8 / 19] PlannerCoreStoreTests-product
+[10 / 21] PlannerCoreStoreTests-product
+[16 / 20] PlannerCoreStoreTests-product
+[18 / 20] PlannerCoreStoreTests-product
+Build complete! (3,04 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportClosedHistoryTests started.
+◇ Test removedContextsRetainReviewableRestorableHistory(kind:) started.
+◇ Test case passing 1 argument kind → "listMembership" to removedContextsRetainReviewableRestorableHistory(kind:) started.
+◇ Test case passing 1 argument kind → "expandedListItem" to removedContextsRetainReviewableRestorableHistory(kind:) started.
+◇ Test case passing 1 argument kind → "directItineraryItem" to removedContextsRetainReviewableRestorableHistory(kind:) started.
+✘ Test removedContextsRetainReviewableRestorableHistory(kind:) recorded an issue with 1 argument kind → "directItineraryItem" at NativeImportClosedHistoryTests.swift:82:19: Issue recorded
+↳ Review valid closed completion history: .failed(PlannerCore.PlannerFailure(code: "missingReference", propertyPath: Optional("/contextAliases/0/canonicalContext"), message: "Completion history needs its current context owner.", details: nil))
+✘ Test removedContextsRetainReviewableRestorableHistory(kind:) recorded an issue with 1 argument kind → "listMembership" at NativeImportClosedHistoryTests.swift:82:19: Issue recorded
+↳ Review valid closed completion history: .failed(PlannerCore.PlannerFailure(code: "missingReference", propertyPath: Optional("/contextAliases/0/canonicalContext"), message: "Completion history needs its current context owner.", details: nil))
+✘ Test removedContextsRetainReviewableRestorableHistory(kind:) recorded an issue with 1 argument kind → "expandedListItem" at NativeImportClosedHistoryTests.swift:120:5: Expectation failed: recovered.portableData == closedData
+↳ recovered.portableData == closedData → false
+↳   recovered.portableData → 8728 bytes
+↳     count → 8728
+↳     pointer → 0x0000007198098000
+↳       pointerValue → 487882063872
+↳   closedData → 12413 bytes
+↳     count → 12413
+↳     pointer → 0x0000007198103800
+↳       pointerValue → 487882504192
+✘ Test removedContextsRetainReviewableRestorableHistory(kind:) with 3 test cases failed after 0.214 seconds with 3 issues.
+✘ Suite NativeImportClosedHistoryTests failed after 0.214 seconds with 3 issues.
+✘ Test run with 1 test in 1 suite failed after 0.214 seconds with 3 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

@@ -1,0 +1,26 @@
+Building for debugging...
+[Pre-planning 1 / 154]
+[Planning deferred tasks]
+[1 / 3] PlannerCore_PlannerCoreStoreTests
+[9 / 19] PlannerCoreStoreTests-product
+[9 / 20] PlannerCoreStoreTests-product
+[11 / 22] PlannerCoreStoreTests-product
+[17 / 21] PlannerCoreStoreTests-product
+[19 / 21] PlannerCoreStoreTests-product
+Build complete! (3,07 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportHistoryCollisionTests started.
+◇ Test skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) started.
+◇ Test case passing 1 argument collision → "alias" to skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) started.
+◇ Test case passing 1 argument collision → "change" to skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) started.
+✘ Test skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) recorded an issue with 1 argument collision → "alias" at NativeImportHistoryCollisionTests.swift:74:19: Issue recorded
+↳ Reject closed alias binding collision before importing its closure: PlannerOperationResult(operationId: 56FCF03C-BB91-42F1-83D9-674C143E5433, outcome: PlannerCore.PlannerOperationResult.Outcome.applied(result: PlannerCore.PlannerAppliedResult(generatedIdentities: [], affectedIdentities: []), recovery: PlannerCore.PlannerRecoveryResult.complete(checkpointGeneration: 3)))
+✘ Test skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) recorded an issue with 1 argument collision → "change" at NativeImportHistoryCollisionTests.swift:74:19: Issue recorded
+↳ Reject closed change binding collision before importing its closure: PlannerOperationResult(operationId: DD8DFB71-4134-4F07-83CF-FE2CAECBDA89, outcome: PlannerCore.PlannerOperationResult.Outcome.applied(result: PlannerCore.PlannerAppliedResult(generatedIdentities: [], affectedIdentities: []), recovery: PlannerCore.PlannerRecoveryResult.complete(checkpointGeneration: 3)))
+✘ Test skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) with 2 test cases failed after 0.160 seconds with 2 issues.
+✘ Suite NativeImportHistoryCollisionTests failed after 0.160 seconds with 2 issues.
+✘ Test run with 1 test in 1 suite failed after 0.160 seconds with 2 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

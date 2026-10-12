@@ -247,7 +247,65 @@ extension PlannerPortableDeletionTarget {
   }
 }
 
+extension PlannerPortableCompletionContext {
+  var importContextIdentities: [PlannerPortableBoundIdentity] {
+    switch self {
+    case .listMembership(let identifier, let lifetime):
+      [.init(kind: .membership, id: identifier, lifetimeId: lifetime)]
+    case .directItineraryItem(let identifier, let lifetime):
+      [.init(kind: .itineraryEntry, id: identifier, lifetimeId: lifetime)]
+    case .expandedListItem(let context):
+      [
+        .init(
+          kind: .itineraryEntry, id: context.listEntryId, lifetimeId: context.listEntryLifetimeId),
+        .init(
+          kind: .membership, id: context.membershipId, lifetimeId: context.membershipLifetimeId),
+      ]
+    }
+  }
+}
+
+extension PlannerPortableDeletionTarget {
+  func closes(_ context: PlannerPortableCompletionContext) -> Bool {
+    if case .expandedCompletion(let expanded) = self, context == .expandedListItem(expanded) {
+      return true
+    }
+    return importIdentity.map(context.importContextIdentities.contains) ?? false
+  }
+}
+
+extension PlannerPortableContextAlias {
+  var importCanonicalValue: PlannerCanonicalValue {
+    .record([
+      "aliasId": .identity(aliasId), "context": context.importCanonicalValue,
+      "canonicalContext": canonicalContext.importCanonicalValue,
+      "initialDone": .boolean(initialDone),
+      "currentChangeId": .optional(currentChangeId.map(PlannerCanonicalValue.identity)),
+    ])
+  }
+}
+
+extension PlannerPortableCompletionChange {
+  var importCanonicalValue: PlannerCanonicalValue {
+    .record([
+      "id": .identity(id), "aliasId": .identity(aliasId),
+      "context": context.importCanonicalValue, "done": .boolean(done),
+      "observedChangeIds": .identitySet(observedChangeIds.map(PlannerCanonicalValue.identity)),
+    ])
+  }
+}
+
 extension PlannerPortableBackup {
+  func closedHistoryPaths(for target: PlannerPortableDeletionTarget) -> [String] {
+    let aliases = contextAliases.enumerated().filter { target.closes($0.element.canonicalContext) }
+    let aliasIdentifiers = Set(aliases.map { $0.element.aliasId })
+    return aliases.map { "/contextAliases/\($0.offset)" }
+      + completionChanges.enumerated().filter { aliasIdentifiers.contains($0.element.aliasId) }.map
+    {
+      "/completionChanges/\($0.offset)"
+    }
+  }
+
   var importCanonicalValue: PlannerCanonicalValue {
     .record([
       "format": .string("planner-data"), "formatVersion": .integer(2),
@@ -266,24 +324,8 @@ extension PlannerPortableBackup {
             "closedFamilyId": .optional($0.closedFamilyId.map(PlannerCanonicalValue.identity)),
           ])
         }),
-      "contextAliases": .ordered(
-        contextAliases.map {
-          .record([
-            "aliasId": .identity($0.aliasId), "context": $0.context.importCanonicalValue,
-            "canonicalContext": $0.canonicalContext.importCanonicalValue,
-            "initialDone": .boolean($0.initialDone),
-            "currentChangeId": .optional($0.currentChangeId.map(PlannerCanonicalValue.identity)),
-          ])
-        }),
-      "completionChanges": .ordered(
-        completionChanges.map {
-          .record([
-            "id": .identity($0.id), "aliasId": .identity($0.aliasId),
-            "context": $0.context.importCanonicalValue, "done": .boolean($0.done),
-            "observedChangeIds": .identitySet(
-              $0.observedChangeIds.map(PlannerCanonicalValue.identity)),
-          ])
-        }),
+      "contextAliases": .ordered(contextAliases.map(\.importCanonicalValue)),
+      "completionChanges": .ordered(completionChanges.map(\.importCanonicalValue)),
       "restorationFamilies": .ordered(
         restorationFamilies.map {
           .record([

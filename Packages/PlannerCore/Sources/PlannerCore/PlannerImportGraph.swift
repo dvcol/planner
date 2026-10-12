@@ -110,6 +110,11 @@ struct PlannerImportGraph {
     closedIdentities.contains(identity)
   }
 
+  func isClosed(_ context: PlannerPortableCompletionContext) -> Bool {
+    if backup.deletionMarkers.contains(where: { $0.target.closes(context) }) { return true }
+    return context.importContextIdentities.contains(where: isClosed)
+  }
+
   private func validateRestorations() throws {
     try unique(backup.restorationFamilies.map(\.predecessor), "/restorationFamilies", "predecessor")
     var candidateFamilies: [PlannerPortableBoundIdentity: Int] = [:]
@@ -236,11 +241,11 @@ struct PlannerImportGraph {
   private func contextState(
     _ context: PlannerPortableCompletionContext, path: String, allowClosed: Bool = false
   ) throws -> Bool? {
+    if allowClosed && isClosed(context) { return nil }
     switch context {
     case .listMembership(let identifier, let lifetime):
       let binding = PlannerPortableBoundIdentity(
         kind: .membership, id: identifier, lifetimeId: lifetime)
-      if allowClosed && isClosed(binding) { return nil }
       guard let membership = backup.memberships.first(where: { $0.id == identifier }),
         resolves(
           binding,
@@ -253,7 +258,6 @@ struct PlannerImportGraph {
     case .directItineraryItem(let identifier, let lifetime):
       let binding = PlannerPortableBoundIdentity(
         kind: .itineraryEntry, id: identifier, lifetimeId: lifetime)
-      if allowClosed && isClosed(binding) { return nil }
       guard let entry = backup.itineraryEntries.first(where: { $0.id == identifier }),
         entry.source.kind == .item,
         resolves(
@@ -264,16 +268,10 @@ struct PlannerImportGraph {
       }
       return entry.localDone
     case .expandedListItem(let context):
-      if allowClosed
-        && backup.deletionMarkers.contains(where: { $0.target == .expandedCompletion(context) })
-      {
-        return nil
-      }
       let entryBinding = PlannerPortableBoundIdentity(
         kind: .itineraryEntry, id: context.listEntryId, lifetimeId: context.listEntryLifetimeId)
       let membershipBinding = PlannerPortableBoundIdentity(
         kind: .membership, id: context.membershipId, lifetimeId: context.membershipLifetimeId)
-      if allowClosed && (isClosed(entryBinding) || isClosed(membershipBinding)) { return nil }
       guard let entry = backup.itineraryEntries.first(where: { $0.id == context.listEntryId }),
         entry.source.kind == .list,
         resolves(

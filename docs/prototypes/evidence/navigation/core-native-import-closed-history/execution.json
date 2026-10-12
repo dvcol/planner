@@ -1,0 +1,88 @@
+{
+  "status": "Qualified closed completion history after native reference removal; full import remains open",
+  "beforeCommit": "56617e0",
+  "commands": {
+    "core": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter 'NativeImportMergeTests|NativeImportHistoryCollisionTests|NativeImportClosedHistoryTests|NativeImportIncomingDeletionReviewTests|NativeImportOverwriteDeletionReviewTests|NativeImportApplyTests|NativeImportLineageMigrationTests|ImportLineageEncodingTests|NativeImportLineageTests|RecoveryProposalSelectionTests|RecoveryCheckpointRetryTests|RecoveryCheckpointRetryAdmissionTests|ManualContainerEstimateMigrationTests|ExpandedCompletionMigrationTests|ItineraryEntryMigrationTests|ItemLabelMigrationTests|MembershipMigrationTests|CategoryMigrationTests|TagMigrationTests|ItineraryMigrationTests|ItineraryScheduleMigrationTests|ItemLinkMigrationTests|NativeImportReviewTests|NativeImportConflictReviewTests|NativeImportOmittedOwnerReviewTests|NativeImportBindingReviewTests'",
+    "phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerCore -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerCoreStoreTests/NativeImportMergeTests -only-testing:PlannerCoreStoreTests/NativeImportHistoryCollisionTests -only-testing:PlannerCoreStoreTests/NativeImportClosedHistoryTests -only-testing:PlannerCoreStoreTests/NativeImportIncomingDeletionReviewTests -only-testing:PlannerCoreStoreTests/NativeImportOverwriteDeletionReviewTests -only-testing:PlannerCoreStoreTests/NativeImportApplyTests -only-testing:PlannerCoreStoreTests/NativeImportLineageMigrationTests -only-testing:PlannerCoreStoreTests/ImportLineageEncodingTests -only-testing:PlannerCoreStoreTests/NativeImportLineageTests -only-testing:PlannerCoreStoreTests/RecoveryProposalSelectionTests -only-testing:PlannerCoreStoreTests/RecoveryCheckpointRetryTests -only-testing:PlannerCoreStoreTests/RecoveryCheckpointRetryAdmissionTests -only-testing:PlannerCoreStoreTests/ManualContainerEstimateMigrationTests -only-testing:PlannerCoreStoreTests/ExpandedCompletionMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryEntryMigrationTests -only-testing:PlannerCoreStoreTests/ItemLabelMigrationTests -only-testing:PlannerCoreStoreTests/MembershipMigrationTests -only-testing:PlannerCoreStoreTests/CategoryMigrationTests -only-testing:PlannerCoreStoreTests/TagMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryScheduleMigrationTests -only-testing:PlannerCoreStoreTests/ItemLinkMigrationTests -only-testing:PlannerCoreStoreTests/NativeImportReviewTests -only-testing:PlannerCoreStoreTests/NativeImportConflictReviewTests -only-testing:PlannerCoreStoreTests/NativeImportOmittedOwnerReviewTests -only-testing:PlannerCoreStoreTests/NativeImportBindingReviewTests -resultBundlePath /private/tmp/PlannerNativeImportClosedHistoryReviewedPhone.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "http": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerMCPTests/CommandRoutingTests -only-testing:PlannerMCPTests/OperationStatusRoutingTests -only-testing:PlannerMCPTests/BulkCompletionAdmissionRoutingTests -only-testing:PlannerMCPTests/ManualContainerEstimateRoutingTests -resultBundlePath /private/tmp/PlannerNativeImportClosedHistoryReviewedHTTPMac.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "macBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO build-for-testing"
+  },
+  "storageSchemaVersion": 16,
+  "portableFormatVersion": 2,
+  "qualification": {
+    "macCore": {
+      "functions": 57,
+      "suites": 26,
+      "invocations": 132,
+      "failures": 0,
+      "skips": 0
+    },
+    "iOSCore": {
+      "functions": 57,
+      "suites": 26,
+      "invocations": 132,
+      "failures": 0,
+      "skips": 0
+    },
+    "macHTTP": {
+      "functions": 16,
+      "suites": 4,
+      "invocations": 22,
+      "failures": 0,
+      "skips": 0
+    },
+    "strictSwiftFiles": 7,
+    "macAppAndNavigationTestHost": "TEST BUILD SUCCEEDED",
+    "nativeUIFunctions": 0
+  },
+  "review": {
+    "standards": "No confirmed findings.",
+    "spec": "Skip binding collisions reproduced and fixed; recheck found no remaining confirmed defect."
+  },
+  "proofLimits": [
+    "Three completion-context shapes qualify removal, review, fresh matching-ID Skip/Overwrite, empty restoration, full export, acknowledged recovery and reopen.",
+    "Reference additions/removals during Overwrite, deleted-ID restoration, origin/provider persistence, summaries and native import forms remain open.",
+    "No direct context.save failure proof, native UI runtime, physical sync/account/Share, large-data responsiveness or Calendar qualification."
+  ],
+  "originalArtifacts": {
+    "phoneResult": "/private/tmp/PlannerNativeImportClosedHistoryReviewedPhone.xcresult",
+    "httpResult": "/private/tmp/PlannerNativeImportClosedHistoryReviewedHTTPMac.xcresult"
+  },
+  "sourceEpoch": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "4e864a510f166f9091c5afab0c57fdeee81e4e92b5b4619c0c4f29a15c373463",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportGraph.swift": "101d6f89cf041ed1a6a4a5c5b224ee6de40e89af0f4ca9c5bdc940ec6ae2c83a",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportEncoding.swift": "73f6b640bf7a13e91b06e70bd771b5218e85ca843c930f4905649010175c725f",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportReview.swift": "889ccbcaf583614dce2495fa73785512dd0ad0414531c827ed76b6ff757bd37f",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMerge.swift": "312b2976fc0d89b6ef215e3674b6dbceac761425651e11195da14d5ddb176887",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportClosedHistoryTests.swift": "4a1b5d705ef3b62bf614081f8bca0c4c29566f54a027d31a117ca833c62ab683",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportHistoryCollisionTests.swift": "9bb64d4798341d49a81a891b9e371cd70639bdf42388b1d7d048c8d9da724adb"
+  },
+  "functionalRedSourceEpoch": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportGraph.swift": "0a015582841b8a3481d465c160708a2c8765079996c540368daa456bd1e24bc6",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportReview.swift": "74518636e47a97fcae2f16149b9871a17c417d62f26e21601f68bf65e7aeb604",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMerge.swift": "663002e97c9da969dd4e0156c2bb0f2407d3180b851c59232de0f5762665b411",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportClosedHistoryTests.swift": "a5e5ae36f6b0362325f3dacbbde3d756e60aa8d3fa367b46d66aa5dacd536829"
+  },
+  "bindingCollisionRedSourceEpoch": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMerge.swift": "51a63ad058647d42cf71e83f5541a43c7528b99ad0cab7aa2a3cc846f891f267",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportHistoryCollisionTests.swift": "9bb64d4798341d49a81a891b9e371cd70639bdf42388b1d7d048c8d9da724adb"
+  },
+  "retainedFiles": [
+    "binding-collision-green.log",
+    "binding-collision-red.log",
+    "first-green.log",
+    "functional-red.log",
+    "http-summary.json",
+    "http-tests.json",
+    "initial-red-with-formatting-oracle.log",
+    "markdown-lint.log",
+    "mode-checks.log",
+    "phone-summary.json",
+    "phone-tests.json",
+    "qualified-http.log.gz",
+    "qualified-mac-build.log.gz",
+    "qualified-mac.log",
+    "qualified-phone.log.gz",
+    "strict-swift-lint.log"
+  ]
+}
