@@ -1,0 +1,26 @@
+Building for debugging...
+[2 / 18] PlannerCore
+[4 / 20] PlannerCore
+[9 / 22] PlannerCore
+[12 / 18] PlannerCoreTests-product
+[14 / 19] PlannerCoreStoreTests-product
+[16 / 21] PlannerCoreStoreTests-product
+[22 / 26] PlannerCoreStoreTests-product
+[24 / 26] PlannerCoreStoreTests-product
+Build complete! (7,08 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportConflictReviewTests started.
+◇ Test globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) started.
+◇ Test case passing 1 argument mode → .overwrite to globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) started.
+◇ Test case passing 1 argument mode → .skip to globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) started.
+✘ Test globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) recorded an issue with 1 argument mode → .skip at NativeImportConflictReviewTests.swift:34:5: Expectation failed: review.globalFlagsChanged == (mode == .overwrite)
+↳ review.globalFlagsChanged == (mode == .overwrite) → false
+↳   review.globalFlagsChanged → true
+↳   (mode == .overwrite) → false
+✘ Test globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) with 2 test cases failed after 0.078 seconds with 1 issue.
+✘ Suite NativeImportConflictReviewTests failed after 0.078 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.078 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

@@ -92,7 +92,7 @@ public enum PlannerEntityKind: String, Sendable, Codable {
   case item, list, itinerary, category, tag, schedule
 }
 
-public struct PlannerEntityReference: Sendable, Codable, Equatable {
+public struct PlannerEntityReference: Sendable, Codable, Hashable {
   public let kind: PlannerEntityKind
   public let id: UUID
 
@@ -186,6 +186,7 @@ public struct PlannerItemContentInput: Sendable, Equatable {
 }
 
 public enum PlannerCommand: Sendable {
+  case applyImport(backup: PlannerDecodedBackup, mode: PlannerImportMode = .skip)
   case deleteSource(source: PlannerEntityReference)
   case createItem(content: PlannerItemContentInput)
   case createList(content: PlannerListContentInput)

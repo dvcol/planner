@@ -152,6 +152,20 @@ public actor Planner {
         let impact: PlannerReviewImpact
         let digest: String
         switch command {
+        case .applyImport(let backup, let mode):
+          let current = try importReviewSnapshot(context)
+          let resolution = try plannerResolveImportReview(
+            incoming: backup, current: current, mode: mode)
+          targets = resolution.targets
+          impact = .init(
+            kind: .importData, targetCount: Int64(targets.count),
+            globalFlagsChanged: resolution.globalFlagsChanged,
+            sourceDeletes: [],
+            referenceRemovals: resolution.details.referenceChanges.filter { $0.change == .remove }
+              .map(\.reference),
+            importDetails: resolution.details)
+          digest = plannerImportDigest(
+            incoming: backup, current: current, mode: mode, identity: identity)
         case .setBulkCompletion(let scope, let done):
           let resolution = try resolveBulkCompletion(scope, context: context)
           targets = resolution.targets.map { .appearance($0.appearance) }
@@ -226,6 +240,10 @@ public actor Planner {
         let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
         let envelope = try archive.latest()
         switch operation.command {
+        case .applyImport:
+          throw PlannerFailure(
+            "unavailable", "Reviewed import application is not implemented yet.",
+            propertyPath: "/command/type")
         case .deleteSource(let source):
           if source.kind == .itinerary {
             return try executeItineraryDeletion(
@@ -1990,6 +2008,18 @@ public actor Planner {
         return .exported(try encoder.encode(snapshot))
       }
     } catch { return .failed(failure(error, code: "readUnavailable")) }
+  }
+
+  private func importReviewSnapshot(_ context: ModelContext) throws -> PlannerDecodedBackup {
+    let snapshot = PlannerDataSnapshot(
+      itineraries: try itinerarySnapshots(context),
+      labelAssociations: try labelAssociationSnapshots(context),
+      tags: try tagSnapshots(context), categories: try categorySnapshots(context),
+      items: try context.fetch(FetchDescriptor<PlannerSchemaV14.Item>()).map { try $0.value() },
+      lists: try listSnapshots(context), memberships: try membershipSnapshots(context),
+      deletionMarkers: try deletionMarkers(context))
+    try requireCompleteExportGraph(snapshot, context: context)
+    return try snapshot.validated()
   }
 
   private func requireCompleteExportGraph(_ snapshot: PlannerDataSnapshot, context: ModelContext)

@@ -1,0 +1,319 @@
+import Foundation
+
+extension PlannerBoundSource {
+  var importCanonicalValue: PlannerCanonicalValue {
+    .record([
+      "kind": .string(kind.rawValue), "id": .identity(id), "lifetimeId": .identity(lifetimeId),
+    ])
+  }
+}
+
+extension PlannerPortableSource {
+  var importBinding: PlannerBoundSource {
+    let lifetime: UUID
+    switch self {
+    case .item(let source): lifetime = source.lifetimeId
+    case .list(let source): lifetime = source.lifetimeId
+    case .itinerary(let source): lifetime = source.lifetimeId
+    case .category(let source): lifetime = source.lifetimeId
+    case .tag(let source): lifetime = source.lifetimeId
+    }
+    return .init(kind: kind, id: id, lifetimeId: lifetime)
+  }
+
+  var importTitle: String {
+    switch self {
+    case .item(let source): source.content.title
+    case .list(let source): source.content.name
+    case .itinerary(let source): source.content.title
+    case .category(let source): source.content.name
+    case .tag(let source): source.content.name
+    }
+  }
+
+  var importFields: [String: PlannerCanonicalValue] {
+    let createdAt: Date
+    let updatedAt: Date
+    let origins: [String: String]
+    var fields: [String: PlannerCanonicalValue]
+    switch self {
+    case .item(let source):
+      createdAt = source.createdAt
+      updatedAt = source.updatedAt
+      origins = source.contentOrigins
+      fields = [
+        "title": .string(source.content.title),
+        "subtitle": .optional(source.content.subtitle.map(PlannerCanonicalValue.string)),
+        "notes": .optional(source.content.notes.map(PlannerCanonicalValue.string)),
+        "location": .optional(source.content.location.map(\.canonicalValue)),
+        "estimate": .optional(source.content.estimate.map(\.canonicalValue)),
+        "globalDone": .boolean(source.globalDone), "archived": .boolean(source.archived),
+      ]
+    case .list(let source):
+      createdAt = source.createdAt
+      updatedAt = source.updatedAt
+      origins = source.contentOrigins
+      fields = [
+        "name": .string(source.content.name),
+        "notes": .optional(source.content.notes.map(PlannerCanonicalValue.string)),
+        "color": .optional(source.content.color.map(\.canonicalValue)),
+        "iconName": .optional(source.content.iconName.map(PlannerCanonicalValue.string)),
+        "globalDone": .optional(nil), "archived": .boolean(source.archived),
+      ]
+    case .itinerary(let source):
+      createdAt = source.createdAt
+      updatedAt = source.updatedAt
+      origins = source.contentOrigins
+      fields = [
+        "title": .string(source.content.title),
+        "notes": .optional(source.content.notes.map(PlannerCanonicalValue.string)),
+        "color": .optional(source.content.color.map(\.canonicalValue)),
+        "iconName": .optional(source.content.iconName.map(PlannerCanonicalValue.string)),
+        "location": .optional(source.content.location.map(\.canonicalValue)),
+        "globalDone": .optional(nil), "archived": .boolean(source.archived),
+      ]
+    case .category(let source):
+      createdAt = source.createdAt
+      updatedAt = source.updatedAt
+      origins = source.contentOrigins
+      fields = [
+        "name": .string(source.content.name),
+        "color": .optional(source.content.color.map(\.canonicalValue)),
+        "iconName": .optional(source.content.iconName.map(PlannerCanonicalValue.string)),
+        "globalDone": .optional(nil), "archived": .optional(nil),
+      ]
+    case .tag(let source):
+      createdAt = source.createdAt
+      updatedAt = source.updatedAt
+      origins = source.contentOrigins
+      fields = [
+        "name": .string(source.content.name),
+        "color": .optional(source.content.color.map(\.canonicalValue)),
+        "iconName": .optional(source.content.iconName.map(PlannerCanonicalValue.string)),
+        "globalDone": .optional(nil), "archived": .optional(nil),
+      ]
+    }
+    fields["createdAt"] = .date(createdAt)
+    fields["updatedAt"] = .date(updatedAt)
+    fields["contentOrigins"] = .record(origins.mapValues(PlannerCanonicalValue.string))
+    return fields
+  }
+
+  var importCanonicalValue: PlannerCanonicalValue {
+    .record([
+      "identity": importBinding.importCanonicalValue, "fields": .record(importFields),
+    ])
+  }
+}
+
+extension PlannerPortableMembership {
+  var importCanonicalValue: PlannerCanonicalValue {
+    .record([
+      "id": .identity(id), "lifetimeId": .identity(lifetimeId),
+      "list": PlannerBoundSource(kind: list.kind, id: list.id, lifetimeId: listLifetimeId)
+        .importCanonicalValue,
+      "item": PlannerBoundSource(kind: item.kind, id: item.id, lifetimeId: itemLifetimeId)
+        .importCanonicalValue,
+      "rank": .integer(rank), "localDone": .boolean(localDone),
+    ])
+  }
+}
+
+extension PlannerPortableItineraryEntry {
+  var importCanonicalValue: PlannerCanonicalValue {
+    .record([
+      "id": .identity(id), "lifetimeId": .identity(lifetimeId),
+      "itinerary": PlannerBoundSource(
+        kind: itinerary.kind, id: itinerary.id, lifetimeId: itineraryLifetimeId
+      ).importCanonicalValue,
+      "source": PlannerBoundSource(
+        kind: source.kind, id: source.id, lifetimeId: sourceLifetimeId
+      ).importCanonicalValue,
+      "rank": .integer(rank), "localDone": .optional(localDone.map(PlannerCanonicalValue.boolean)),
+    ])
+  }
+}
+
+extension PlannerExpandedContext {
+  var importCanonicalValue: PlannerCanonicalValue {
+    .record([
+      "listEntryId": .identity(listEntryId), "listEntryLifetimeId": .identity(listEntryLifetimeId),
+      "membershipId": .identity(membershipId),
+      "membershipLifetimeId": .identity(membershipLifetimeId),
+    ])
+  }
+}
+
+extension PlannerPortableExpandedCompletion {
+  var importCanonicalValue: PlannerCanonicalValue {
+    .record(["context": context.importCanonicalValue, "localDone": .boolean(localDone)])
+  }
+}
+
+extension PlannerPortableLabelAssociation {
+  var importCanonicalValue: PlannerCanonicalValue {
+    .record([
+      "id": .identity(id), "lifetimeId": .identity(lifetimeId),
+      "owner": PlannerBoundSource(kind: owner.kind, id: owner.id, lifetimeId: ownerLifetimeId)
+        .importCanonicalValue,
+      "label": PlannerBoundSource(kind: label.kind, id: label.id, lifetimeId: labelLifetimeId)
+        .importCanonicalValue,
+    ])
+  }
+}
+
+extension PlannerPortableOwnedLink {
+  var importCanonicalValue: PlannerCanonicalValue {
+    .record([
+      "id": .identity(id), "lifetimeId": .identity(lifetimeId), "owner": owner.importCanonicalValue,
+      "rank": .integer(rank), "originalUrl": .string(originalUrl),
+      "label": .optional(label.map(PlannerCanonicalValue.string)), "kind": .string(kind.rawValue),
+      "providerReference": .optional(
+        providerReference.map {
+          .record(["kind": .string($0.kind.rawValue), "value": .string($0.value)])
+        }),
+    ])
+  }
+}
+
+extension PlannerPortableSchedule {
+  var importCanonicalValue: PlannerCanonicalValue {
+    .record([
+      "id": .identity(id), "lifetimeId": .identity(lifetimeId),
+      "source": PlannerBoundSource(kind: source.kind, id: source.id, lifetimeId: sourceLifetimeId)
+        .importCanonicalValue,
+      "form": form.canonicalValue,
+    ])
+  }
+}
+
+extension PlannerPortableBoundIdentity {
+  var importCanonicalValue: PlannerCanonicalValue {
+    .record([
+      "kind": .string(kind.rawValue), "id": .identity(id), "lifetimeId": .identity(lifetimeId),
+    ])
+  }
+}
+
+extension PlannerPortableCompletionContext {
+  var importCanonicalValue: PlannerCanonicalValue {
+    switch self {
+    case .listMembership(let identifier, let lifetime):
+      return .record([
+        "kind": .string("listMembership"), "membershipId": .identity(identifier),
+        "membershipLifetimeId": .identity(lifetime),
+      ])
+    case .directItineraryItem(let identifier, let lifetime):
+      return .record([
+        "kind": .string("directItineraryItem"), "entryId": .identity(identifier),
+        "entryLifetimeId": .identity(lifetime),
+      ])
+    case .expandedListItem(let context):
+      return .record(["kind": .string("expandedListItem"), "context": context.importCanonicalValue])
+    }
+  }
+}
+
+extension PlannerPortableDeletionTarget {
+  var importCanonicalValue: PlannerCanonicalValue {
+    switch self {
+    case .source(let source, let lifetime):
+      return .record([
+        "kind": .string("source"),
+        "source": PlannerBoundSource(kind: source.kind, id: source.id, lifetimeId: lifetime)
+          .importCanonicalValue,
+      ])
+    case .expandedCompletion(let context):
+      return .record([
+        "kind": .string("expandedCompletion"), "context": context.importCanonicalValue,
+      ])
+    case .membership(let identifier, let lifetime):
+      return association("membership", identifier: identifier, lifetime: lifetime)
+    case .itineraryEntry(let identifier, let lifetime):
+      return association("itineraryEntry", identifier: identifier, lifetime: lifetime)
+    case .labelAssociation(let identifier, let lifetime):
+      return association("labelAssociation", identifier: identifier, lifetime: lifetime)
+    case .ownedLink(let identifier, let lifetime):
+      return association("ownedLink", identifier: identifier, lifetime: lifetime)
+    }
+  }
+
+  private func association(_ kind: String, identifier: UUID, lifetime: UUID)
+    -> PlannerCanonicalValue
+  {
+    .record(["kind": .string(kind), "id": .identity(identifier), "lifetimeId": .identity(lifetime)])
+  }
+}
+
+extension PlannerPortableBackup {
+  var importCanonicalValue: PlannerCanonicalValue {
+    .record([
+      "format": .string("planner-data"), "formatVersion": .integer(1),
+      "sources": .ordered(sources.map(\.importCanonicalValue)),
+      "memberships": .ordered(memberships.map(\.importCanonicalValue)),
+      "itineraryEntries": .ordered(itineraryEntries.map(\.importCanonicalValue)),
+      "expandedCompletions": .ordered(expandedCompletions.map(\.importCanonicalValue)),
+      "labelAssociations": .ordered(labelAssociations.map(\.importCanonicalValue)),
+      "ownedLinks": .ordered(ownedLinks.map(\.importCanonicalValue)),
+      "schedules": .ordered(schedules.map(\.importCanonicalValue)),
+      "deletionMarkers": .ordered(
+        deletionMarkers.map {
+          .record([
+            "deletionId": .identity($0.deletionId), "operationId": .identity($0.operationId),
+            "target": $0.target.importCanonicalValue,
+            "closedFamilyId": .optional($0.closedFamilyId.map(PlannerCanonicalValue.identity)),
+          ])
+        }),
+      "contextAliases": .ordered(
+        contextAliases.map {
+          .record([
+            "aliasId": .identity($0.aliasId), "context": $0.context.importCanonicalValue,
+            "canonicalContext": $0.canonicalContext.importCanonicalValue,
+            "initialDone": .boolean($0.initialDone),
+            "currentChangeId": .optional($0.currentChangeId.map(PlannerCanonicalValue.identity)),
+          ])
+        }),
+      "completionChanges": .ordered(
+        completionChanges.map {
+          .record([
+            "id": .identity($0.id), "aliasId": .identity($0.aliasId),
+            "context": $0.context.importCanonicalValue, "done": .boolean($0.done),
+            "observedChangeIds": .identitySet(
+              $0.observedChangeIds.map(PlannerCanonicalValue.identity)),
+          ])
+        }),
+      "restorationFamilies": .ordered(
+        restorationFamilies.map {
+          .record([
+            "familyId": .identity($0.familyId), "predecessor": $0.predecessor.importCanonicalValue,
+            "candidates": .ordered(
+              $0.candidates.map {
+                .record([
+                  "lifetimeId": .identity($0.lifetimeId), "operationId": .identity($0.operationId),
+                ])
+              }),
+          ])
+        }),
+    ])
+  }
+}
+
+func plannerImportDigest(
+  incoming: PlannerDecodedBackup, current: PlannerDecodedBackup, mode: PlannerImportMode,
+  identity: PlannerStoreIdentity
+) -> String {
+  let bindings = incoming.backup.sources.map(\.importBinding) + incoming.externalBindings
+  let value = PlannerCanonicalValue.record([
+    "command": .record([
+      "type": .string("applyImport"), "backup": incoming.backup.importCanonicalValue,
+      "mode": .string(mode.rawValue),
+    ]),
+    "datasetId": .identity(identity.datasetId),
+    "ownershipBinding": .string(identity.ownershipBinding),
+    "resolvedBindings": .identitySet(Set(bindings).map(\.importCanonicalValue)),
+    "reviewedCurrentData": current.backup.importCanonicalValue,
+  ])
+  return plannerDigest(
+    Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded(),
+    prefix: "sha256-payload-v1:")
+}

@@ -1,0 +1,33 @@
+Building for debugging...
+[1 / 10] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,22 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportConflictReviewTests started.
+◇ Test incomingCompletionHistoryBelongsToItsWholeOwnerReview() started.
+✘ Test incomingCompletionHistoryBelongsToItsWholeOwnerReview() recorded an issue at NativeImportConflictReviewTests.swift:51:5: Expectation failed: details.unchanged.count == 1 && details.unchanged.first?.owner.id == item.id
+↳ details.unchanged.count == 1 && details.unchanged.first?.owner.id == item.id → false
+↳   details.unchanged.count == 1 → false
+↳   details.unchanged.first?.owner.id == item.id → <not evaluated>
+✘ Test incomingCompletionHistoryBelongsToItsWholeOwnerReview() recorded an issue at NativeImportConflictReviewTests.swift:52:5: Expectation failed: details.skippedConflicts.count == 1 && details.skippedConflicts.first?.owner.id == list.id
+↳ details.skippedConflicts.count == 1 && details.skippedConflicts.first?.owner.id == list.id → false
+↳   details.skippedConflicts.count == 1 → false
+↳   details.skippedConflicts.first?.owner.id == list.id → <not evaluated>
+✘ Test incomingCompletionHistoryBelongsToItsWholeOwnerReview() recorded an issue at NativeImportConflictReviewTests.swift:54:5: Expectation failed: details.skippedConflicts.first?.before?.changedFieldNames == ["contextAliases"]
+↳ details.skippedConflicts.first?.before?.changedFieldNames == ["contextAliases"] → false
+↳   details.skippedConflicts.first?.before?.changedFieldNames → nil
+↳     some → ["contextAliases"]
+✘ Test incomingCompletionHistoryBelongsToItsWholeOwnerReview() recorded an issue at NativeImportConflictReviewTests.swift:55:5: Expectation failed: details.skippedConflicts.first?.propertyPaths.contains("/contextAliases/0") == true
+↳ details.skippedConflicts.first?.propertyPaths.contains("/contextAliases/0") == true → false
+↳   details.skippedConflicts.first?.propertyPaths.contains("/contextAliases/0") → nil
+↳     some → true
+✘ Test incomingCompletionHistoryBelongsToItsWholeOwnerReview() failed after 0.093 seconds with 4 issues.
+✘ Suite NativeImportConflictReviewTests failed after 0.093 seconds with 4 issues.
+✘ Test run with 1 test in 1 suite failed after 0.093 seconds with 4 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

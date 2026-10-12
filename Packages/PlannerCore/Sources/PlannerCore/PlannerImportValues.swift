@@ -5,6 +5,51 @@ public enum PlannerImportDecodingResult: Sendable {
   case invalid(PlannerFailure)
 }
 
+public enum PlannerImportMode: String, Sendable {
+  case skip, overwrite
+}
+
+public struct PlannerImportOwnerSummary: Sendable {
+  public let identity: PlannerBoundSource
+  public let title: String?
+  public let associationIds: [UUID]
+  public let changedFieldNames: [String]
+}
+
+public struct PlannerImportEntry: Sendable {
+  public let owner: PlannerBoundSource
+  public let reasonCode: String?
+  public let dependencies: [PlannerBoundSource]
+  public let propertyPaths: [String]
+  public let before: PlannerImportOwnerSummary?
+  public let after: PlannerImportOwnerSummary?
+}
+
+public struct PlannerDeletionImportEntry: Sendable {
+  public let target: PlannerPortableDeletionTarget
+  public let owner: PlannerBoundSource?
+  public let propertyPaths: [String]
+  public let before: PlannerImportOwnerSummary?
+  public let after: PlannerImportOwnerSummary?
+}
+
+public struct PlannerImportReferenceChange: Sendable {
+  public enum Change: String, Sendable { case add, remove, retain, restore }
+  public let change: Change
+  public let reference: PlannerReferenceRead
+}
+
+public struct PlannerImportReview: Sendable {
+  public let imports: [PlannerImportEntry]
+  public let unchanged: [PlannerImportEntry]
+  public let skippedConflicts: [PlannerImportEntry]
+  public let skippedDependents: [PlannerImportEntry]
+  public let replacements: [PlannerImportEntry]
+  public let restorations: [PlannerImportEntry]
+  public let incomingDeletions: [PlannerDeletionImportEntry]
+  public let referenceChanges: [PlannerImportReferenceChange]
+}
+
 public struct PlannerBoundSource: Sendable, Hashable {
   public let kind: PlannerEntityKind
   public let id: UUID

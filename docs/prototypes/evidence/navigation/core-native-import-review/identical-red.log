@@ -1,0 +1,19 @@
+Building for debugging...
+[1 / 9] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,04 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportReviewTests started.
+◇ Test identicalExportReviewsWholeOwnersAsUnchangedIncludingLocalMembershipState() started.
+✘ Test identicalExportReviewsWholeOwnersAsUnchangedIncludingLocalMembershipState() recorded an issue at NativeImportReviewTests.swift:50:19: Issue recorded
+↳ Review identical exported owners without changing them: .failed(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: Optional("/command/type"), message: "Import conflict review is not implemented yet.", details: nil))
+✘ Test identicalExportReviewsWholeOwnersAsUnchangedIncludingLocalMembershipState() failed after 0.117 seconds with 1 issue.
+✘ Suite NativeImportReviewTests failed after 0.118 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.118 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)
