@@ -17,3 +17,7 @@ Earlier prompts reused Q48/Q49 and changed Q51's option lettering. This register
 | Q74, native duration controls | A | Unit/count controls with exact smaller-unit remainders, such as two hours plus five minutes. Preserve one-minute precision and use native controls without raw numeric text input. |
 
 Required /tdd coverage belongs to each affected feature's definition of done. These answers unlock that work; they do not close import application/restoration, native preview/loading, aggregate/calendar, physical sync/account/Share or whole-app polish gates.
+
+## Next frontier
+
+Q75 is open for [native itinerary filters](prototypes/native-itinerary-filters.md): when evaluating a List header's own match, do active Item-only criteria make that match false, or apply only to its children? The earlier nine answers remain settled. Matching List headers may have zero matching children; they do not automatically reveal children that fail the filters.
