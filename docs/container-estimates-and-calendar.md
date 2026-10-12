@@ -34,10 +34,13 @@ Q72 B is accepted. An archived container keeps its own child-based progress whil
 | Archive a List with two active Todo children. | Its own progress stays 0 of 2 finished and remaining is 0; its archived branch is finished inside an itinerary. Unarchive restores child-based remaining without changing Done flags. |
 | Manual total 120; completed child estimates 180; another child remains Todo. | Estimated remaining is 0 with a warning. The plan remains unfinished; no negative duration or silent manual reset. |
 | Museum estimate 120; Lunch has no estimate. | Show a known 120-minute subtotal and one missing estimate. The picker may set a manual overall estimate without changing Lunch's shared content. |
+| Manual total 240; Lunch is finished with no estimate; Museum is unfinished with estimate 120. | Q76 remains open: show an upper bound of 240 after deducting only known finished estimates, or show unknown remaining. Both show the missing-finished-estimate warning and retain the full manual 240. |
+| Supply Lunch's missing estimate as 60, leaving Museum unfinished. | Remaining becomes 180 under total minus completed; no missing-finished-estimate warning remains. Finish Museum too: remaining becomes 0 and the manual total stays 240. |
 
 ## Definition of ready
 
 - Q72 B is settled in the [decision register](open-decisions.md); retain the distinct own-progress and parent-branch behavior.
+- Resolve Q76 for a missing estimate on an already-finished child while a manual budget remains partial. Apply the same rule when that budget comes from a referenced List under Q71; no child estimate is manufactured.
 - Review concrete public input/read/query contracts for manual estimate fields, derived summaries and calendar windows before new-field /tdd work. Existing Core read/query/execute, actual HTTP and native UI boundaries remain the agreed test seams.
 - Declare persistence and portable-format evolution. Manual estimates are owned data; derived totals and device presentation preferences are not additional saved authorities.
 - Specify controlled calendar fixtures for overlaps, start-only entries, multi-day all-day spans, travel and daylight-saving boundaries. Signed physical sync/account/Share gates retain their separate prerequisites.
@@ -46,6 +49,7 @@ Q72 B is accepted. An archived container keeps its own child-based progress whil
 
 - Unit and actual-store read/reopen tests prove every numeric fixture above, global/local precedence, per-appearance state, archive/unarchive and ordinary removal/re-add. Queries and filters do not silently change the full plan's totals or saved order.
 - Tests cover missing estimates, explicit clearing, manual reset, live child/List estimate changes, partial and fully finished branches, empty containers and checked sums. No child flags or other contexts are changed by a derived calculation.
+- The Q76 fixtures must cover local Done, global Done and archive retirement of the unknown-duration child, a partial manual List branch inside an itinerary, supplying the missing estimate, and the all-finished zero rule. Qualify the accepted numeric/unknown display and native warning at the established Core and UI boundaries.
 - Native phone/tablet/Mac journeys show compact full/remaining metadata, useful warnings and native pickers. Accessibility exposes complete labels; zero remaining must not imply completion when unfinished children remain.
 - Calendar Day/Week/Month tests preserve source/Schedule identities, fixed timed instants, original planning zones, inclusive all-day civil dates and unspecified ends. Overlap/overflow, selection and adaptive layouts receive runtime proof at the native UI seam.
 - Manual data survives versioned backup/import and supported migrations. Source/content edits remain live; unrelated fields, reference identities, local flags and device preferences survive unchanged.
