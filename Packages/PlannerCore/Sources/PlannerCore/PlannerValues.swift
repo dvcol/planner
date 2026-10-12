@@ -401,12 +401,14 @@ public struct PlannerSourceState: Sendable {
 }
 
 public enum PlannerReadRequest: Sendable {
+  case status
   case source(PlannerEntityReference)
   case appearance(PlannerAppearance)
   case rows(generation: UUID, offset: Int64, limit: Int64)
 }
 
 public enum PlannerReadResult: Sendable {
+  case status(PlannerNativeStatusRead)
   case source(PlannerSourceRead)
   case appearance(PlannerAppearanceRead)
   case rows(PlannerRowWindow)

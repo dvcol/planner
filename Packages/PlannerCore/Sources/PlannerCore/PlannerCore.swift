@@ -499,19 +499,28 @@ public actor Planner {
     do {
       return try coordinated {
         let identity = try validateSession(session)
-        let container = try openContainer()
-        let context = ModelContext(container)
-        context.autosaveEnabled = false
         switch request {
+        case .status:
+          return .status(
+            PlannerNativeStatusRead(
+              recovery: readRecoveryObservation(identity), account: .unknown,
+              cloud: PlannerCloudObservation(
+                state: .unknown, storeIdentity: nil, eventId: nil, observedAt: nil, reason: nil)))
         case .appearance(let appearance):
+          let context = ModelContext(try openContainer())
+          context.autosaveEnabled = false
           return .appearance(
             try readAppearance(appearance, datasetId: identity.datasetId, context: context))
         case .rows(let generation, let offset, let limit):
+          let context = ModelContext(try openContainer())
+          context.autosaveEnabled = false
           return .rows(
             try readRows(
               session: session, context: context, generation: generation, offset: offset,
               limit: limit))
         case .source(let source):
+          let context = ModelContext(try openContainer())
+          context.autosaveEnabled = false
           if source.kind == .itinerary {
             let identifier = source.id
             var descriptor = FetchDescriptor<PlannerSchemaV14.Itinerary>(
@@ -583,6 +592,49 @@ public actor Planner {
         }
       }
     } catch { return .failed(failure(error, code: "readUnavailable")) }
+  }
+
+  private func readRecoveryObservation(_ identity: PlannerStoreIdentity)
+    -> PlannerRecoveryObservation
+  {
+    do {
+      guard FileManager.default.fileExists(atPath: configuration.storeURL.path) else {
+        throw PlannerFailure("readUnavailable", "The committed dataset store is unavailable.")
+      }
+      let context = ModelContext(try openContainer())
+      context.autosaveEnabled = false
+      let envelope = try recoveryArchive(identity).latest()
+      let acknowledged = Dictionary(
+        uniqueKeysWithValues: (envelope?.receipts ?? []).map { ($0.operationId, $0) })
+      let committed = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>()).map {
+        try RecoveryReceipt($0, checkpoint: nil)
+      }
+      guard Set(committed.map(\.operationId)).count == committed.count,
+        committed.allSatisfy({
+          $0.datasetId == identity.datasetId && $0.ownershipBinding == identity.ownershipBinding
+        })
+      else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "Committed recovery evidence is inconsistent.")
+      }
+      var incomplete: [UUID] = []
+      for receipt in committed {
+        guard let recovered = acknowledged[receipt.operationId] else {
+          incomplete.append(receipt.operationId)
+          continue
+        }
+        guard recovered.payloadDigest == receipt.payloadDigest, recovered.result == receipt.result
+        else {
+          throw PlannerFailure(
+            "recoveryIntegrityFailure", "Acknowledged operation evidence does not match its commit."
+          )
+        }
+      }
+      return .known(
+        checkpointGeneration: (envelope?.checkpointGeneration).flatMap(Int64.init),
+        incompleteOperationIds: incomplete.sorted { $0.uuidString < $1.uuidString },
+        mutationBlocked: !incomplete.isEmpty)
+    } catch { return .unavailable(failure(error, code: "readUnavailable")) }
   }
 
   private func readAppearance(
