@@ -6,6 +6,7 @@ extension PlannerRowRead {
   func metadataDescription(presentation: PlannerRowPresentationContext?) -> String {
     var descriptions = [String]()
     if let subtitle, !subtitle.isEmpty { descriptions.append(subtitle) }
+    if let estimate { descriptions.append("Estimate: \(estimate.nativeEstimateDescription)") }
     if let locationCaption { descriptions.append(locationCaption) }
     if let address = ownedLocation?.formattedAddress, address != locationCaption {
       descriptions.append(address)
@@ -158,6 +159,12 @@ struct SavedItemRowContent: View {
       if let subtitle = row.subtitle, !subtitle.isEmpty {
         Text(subtitle)
           .font(.subheadline)
+          .foregroundStyle(.secondary)
+          .lineLimit(1)
+      }
+      if let estimate = row.estimate {
+        Label(estimate.nativeEstimateDescription, systemImage: "clock")
+          .font(.caption)
           .foregroundStyle(.secondary)
           .lineLimit(1)
       }

@@ -13,6 +13,7 @@ struct SavedEditItemForm: View {
   @State private var title: String
   @State private var subtitle: String
   @State private var notes: String
+  @State private var estimate: PlannerEstimate?
   @State private var locationName: String
   @State private var locationAddress: String
   @State private var links: [SavedOwnedLinkDraft]
@@ -26,6 +27,7 @@ struct SavedEditItemForm: View {
     _title = State(initialValue: item.content.title)
     _subtitle = State(initialValue: item.content.subtitle ?? "")
     _notes = State(initialValue: item.content.notes ?? "")
+    _estimate = State(initialValue: item.content.estimate)
     _locationName = State(initialValue: item.content.location?.displayName ?? "")
     _locationAddress = State(initialValue: item.content.location?.formattedAddress ?? "")
     _links = State(initialValue: item.content.links.map(SavedOwnedLinkDraft.init))
@@ -36,6 +38,7 @@ struct SavedEditItemForm: View {
   private var hasChanges: Bool {
     title != item.content.title || subtitle != (item.content.subtitle ?? "")
       || notes != (item.content.notes ?? "")
+      || estimate != item.content.estimate
       || links.map(\.input) != item.content.links.map(\.editInput)
       || location != item.content.location
       || categoryIdentifiers != item.content.categoryIds || tagIdentifiers != item.content.tagIds
@@ -63,6 +66,8 @@ struct SavedEditItemForm: View {
         } footer: {
           Text("Changes appear wherever this Item is used.")
         }
+        SavedActivityEstimateEditor(
+          estimate: $estimate, accessibilityIdentifierPrefix: "saved.item.edit.estimate")
         Section("Labels") {
           NavigationLink {
             SavedItemLabelPicker(store: store, kind: .category, selection: $categoryIdentifiers)
@@ -105,9 +110,14 @@ struct SavedEditItemForm: View {
         }
         ToolbarItem(placement: .confirmationAction) {
           Button("Save") {
-            Task { [title, subtitle, notes, links, location, categoryIdentifiers, tagIdentifiers] in
+            Task {
+              [
+                title, subtitle, notes, estimate, links, location, categoryIdentifiers,
+                tagIdentifiers
+              ] in
               if await store.editItem(
-                item, title: title, subtitle: subtitle, notes: notes, links: links.map(\.input),
+                item, title: title, subtitle: subtitle, notes: notes, estimate: estimate,
+                links: links.map(\.input),
                 location: location, categoryIdentifiers: categoryIdentifiers,
                 tagIdentifiers: tagIdentifiers,
                 operationIdentifier: operationIdentifier)
