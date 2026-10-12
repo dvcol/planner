@@ -31,14 +31,17 @@ An item appearance's local completion within a list or itinerary, independently 
 **Effective completion**:
 The completion shown for an item within a list or itinerary. It is done when the item is globally done or locally done in that context.
 
+**Finished appearance**:
+An item appearance that is effectively done or retired by archive. An archived item finishes its appearances; an archived list finishes its branch inside an itinerary without changing the shared items' Done settings.
+
 **Progress**:
-The number of effectively done item appearances out of all item appearances in a list or itinerary. Repeated appearances count separately; a referenced list contributes its child items, not an extra container count. A nonempty container is completed only when every child appearance is effectively done. An empty container has no completion percentage and is not completed.
+Finished item appearances out of all item appearances in a list or itinerary, distinguishing Done from Archived. Repeated appearances count separately; a referenced list contributes its child items, not an extra container count. A nonempty container completes when every child appearance is finished. An archived container keeps its own child-based progress. An empty container has no completion percentage and is not completed.
 
 **Todo**:
 An unfinished item or contextual item reference. A list or itinerary is unfinished when its contextual children do not make it completed.
 
 **Done**:
-A completed item or contextual item reference. A nonempty list or itinerary is completed when all its contextual child items are effectively done.
+A completed item or contextual item reference. A nonempty list or itinerary is completed when all its child appearances are finished, including appearances retired by archive. Archiving does not rewrite Done settings.
 
 **Archive state**:
 Whether an item, list or itinerary is active or archived, independently of its completion state.

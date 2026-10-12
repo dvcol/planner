@@ -2,6 +2,107 @@ import XCTest
 
 @MainActor
 final class SavedContainerEstimateJourneyTests: XCTestCase {
+  func testRepeatedListPreviewsKeepIndependentItineraryBudgetsThroughHeaderFilteringAndRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem("Museum", includeEstimate: true, application: application)
+    openSection("Lists", application: application)
+    reveal("saved.list.new", application: application).activateForPlannerJourney()
+    let name = application.textFields["saved.list.name"]
+    XCTAssertTrue(name.waitForExistence(timeout: 5))
+    name.activateForPlannerJourney()
+    name.typeText("Morning")
+    let enabled = application.descendants(matching: .any).matching(
+      identifier: "saved.list.estimate.enabled"
+    ).firstMatch
+    XCTAssertTrue(enabled.waitForExistence(timeout: 5))
+    toggle(enabled)
+    let quantity = application.descendants(matching: .any).matching(
+      identifier: "saved.list.estimate.quantity"
+    ).firstMatch
+    XCTAssertTrue(quantity.waitForPlannerValue("1"))
+    for _ in 0..<3 { increment(quantity) }
+    application.plannerElement("saved.list.save").activateForPlannerJourney()
+    toolbarAction("saved.list.add", application: application).activateForPlannerJourney()
+    let candidate = application.staticTexts["Museum"].firstMatch
+    XCTAssertTrue(candidate.waitForExistence(timeout: 5))
+    candidate.activateForPlannerJourney()
+    application.plannerElement("saved.membership.add").activateForPlannerJourney()
+    let completeStandalone = application.buttons["Mark Museum done in this List"].firstMatch
+    XCTAssertTrue(completeStandalone.waitForExistence(timeout: 5))
+    completeStandalone.activateForPlannerJourney()
+    XCTAssertTrue(estimate("remaining", application: application).waitForPlannerValue("0 minutes"))
+    openSection("Itineraries", application: application)
+    reveal("saved.itinerary.new", application: application).activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Repeated morning")
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    for _ in 0..<2 {
+      toolbarAction("saved.itinerary.entry.new", application: application)
+        .activateForPlannerJourney()
+      let choice = application.descendants(matching: .any).matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.entry.choice.list.",
+          "Morning")
+      ).firstMatch
+      XCTAssertTrue(choice.waitForExistence(timeout: 5))
+      choice.activateForPlannerJourney()
+      application.plannerElement("saved.itinerary.entry.add").activateForPlannerJourney()
+    }
+    let remainingPreviews = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND identifier ENDSWITH %@",
+        "saved.itinerary.entry.estimate.", ".remaining"))
+    XCTAssertTrue(remainingPreviews.firstMatch.waitForExistence(timeout: 10))
+    XCTAssertEqual(remainingPreviews.count, 2)
+    let first = remainingPreviews.element(boundBy: 0)
+    let second = remainingPreviews.element(boundBy: 1)
+    XCTAssertTrue(first.waitForPlannerValue("240 minutes"))
+    XCTAssertTrue(second.waitForPlannerValue("240 minutes"))
+    let identities = remainingPreviews.allElementsBoundByIndex.map(\.identifier)
+    let appearance = application.buttons.matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.appearance.", "Museum")
+    ).firstMatch
+    XCTAssertTrue(appearance.waitForExistence(timeout: 5))
+    let completionIdentifier = appearance.identifier.replacingOccurrences(
+      of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")
+    application.plannerElement(completionIdentifier).activateForPlannerJourney()
+    XCTAssertTrue(first.waitForPlannerValue("0 minutes"))
+    XCTAssertTrue(second.waitForPlannerValue("240 minutes"))
+    recordScreenshot(
+      application, name: "Repeated List previews keep separate completion and budgets")
+    let search = application.searchFields.firstMatch
+    if !search.exists { application.swipeDown() }
+    XCTAssertTrue(search.waitForExistence(timeout: 5))
+    search.activateForPlannerJourney()
+    search.typeText("Morning")
+    XCTAssertTrue(
+      application.staticTexts["No matching items"].firstMatch.waitForExistence(timeout: 10))
+    XCTAssertTrue(first.waitForPlannerValue("0 minutes"))
+    XCTAssertTrue(second.waitForPlannerValue("240 minutes"))
+    recordScreenshot(
+      application, name: "List header filtering preserves contextual estimate previews")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Itineraries", application: application)
+    let retained = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.",
+        "Repeated morning")
+    ).firstMatch
+    revealSidebarIfNeeded(application, element: retained)
+    XCTAssertTrue(retained.waitForExistence(timeout: 10))
+    retained.activateForPlannerJourney()
+    XCTAssertTrue(first.waitForPlannerValue("0 minutes"))
+    XCTAssertTrue(second.waitForPlannerValue("240 minutes"))
+    XCTAssertEqual(remainingPreviews.allElementsBoundByIndex.map(\.identifier), identities)
+  }
+
   func testMissingFinishedEstimateShowsUpperBoundThenResolvesAndFinishesWithoutClearingManualTotal()
   {
     continueAfterFailure = false
@@ -309,6 +410,7 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     case "saved.list.add": title = "Add existing Item"
     case "saved.item.actions": title = "Item actions"
     case "saved.itinerary.edit": title = "Edit Itinerary"
+    case "saved.itinerary.entry.new": title = "Add entry"
     default: title = identifier
     }
     let action = application.buttons.matching(

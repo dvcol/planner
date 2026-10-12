@@ -37,10 +37,8 @@ struct ContainerEstimateContribution {
 }
 
 func listEstimateContribution(
-  children: [ContainerEstimateChild], archived: Bool, manualEstimate: PlannerEstimate?
+  children: [ContainerEstimateChild], archived: Bool, summary: PlannerContainerEstimates
 ) -> ContainerEstimateContribution {
-  let summary = containerEstimates(
-    children: children, archived: archived, manualEstimate: manualEstimate)
   let isFinished = archived || (!children.isEmpty && children.allSatisfy(\.finished))
   let finishedEstimate: PlannerDurationTotal
   if isFinished {
