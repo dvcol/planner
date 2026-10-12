@@ -1,0 +1,81 @@
+{
+  "baseCommit": "8fd2612",
+  "initialSourceHashes": {
+    "PlannerFixtures/PlannerFixtureApp.swift": "014a85c1c0931ef4e0bc082784bcb3c04476057ca955ad57e8adb002ad0c75c0",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "d1a015e8e3825c0a1ac16ecf501fc816f08e276878f6159ffc4249d696f23ac4",
+    "PlannerFixtureUITests/AddressCandidateJourneyTests.swift": "557b532c34a5db9fd82d3572dc81244e163855b766df118789717b52943ce9f6",
+    "Planner/Scenes/ItemAddressPreview.swift": "7dc96f6f5ea4b567f0d450739f063447dbac4b9b286c96ad5027f5f8cd5b1e6e",
+    "Planner/Scenes/ItemLocationSection.swift": "5712c5ac9ff059a73dd6abe162a58fc56532f1049926d8b75dcb105e415f21b9",
+    "Planner/Scenes/SavedEditItemForm.swift": "19cace300840fa84a1c24b3e63ff872e555c07aaf2d3402f4fefd7eeb9b3a86f",
+    "Planner.xcodeproj/project.pbxproj": "4bced3d822b15a78ffeb25fece1ff83c4f6b557417745c2c7ffdbc13830e5771"
+  },
+  "finalSourceHashes": {
+    "PlannerFixtures/PlannerFixtureApp.swift": "014a85c1c0931ef4e0bc082784bcb3c04476057ca955ad57e8adb002ad0c75c0",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "d1a015e8e3825c0a1ac16ecf501fc816f08e276878f6159ffc4249d696f23ac4",
+    "PlannerFixtureUITests/AddressCandidateJourneyTests.swift": "09d06fe3d695224f0679fd6b7c877d1c3e64dd58963b94e12c99afa74a2f1572",
+    "Planner/Scenes/ItemAddressPreview.swift": "7dc96f6f5ea4b567f0d450739f063447dbac4b9b286c96ad5027f5f8cd5b1e6e",
+    "Planner/Scenes/ItemLocationSection.swift": "5712c5ac9ff059a73dd6abe162a58fc56532f1049926d8b75dcb105e415f21b9",
+    "Planner/Scenes/SavedEditItemForm.swift": "19cace300840fa84a1c24b3e63ff872e555c07aaf2d3402f4fefd7eeb9b3a86f",
+    "Planner.xcodeproj/project.pbxproj": "4bced3d822b15a78ffeb25fece1ff83c4f6b557417745c2c7ffdbc13830e5771"
+  },
+  "commands": {
+    "red": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/AddressCandidateJourneyTests/testAddressFailureRecoversOneTemporaryPinAndPreservesOwnedLocationAfterRelaunch\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledAddressRetryRed.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "redLog": "/private/tmp/PlannerControlledAddressRetryRed.log",
+    "phoneInitial": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/AddressCandidateJourneyTests/testAddressFailureRecoversOneTemporaryPinAndPreservesOwnedLocationAfterRelaunch\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledAddressRetryPhoneGreen.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "phoneInitialLog": "/private/tmp/PlannerControlledAddressRetryPhoneGreen.log",
+    "tabletInitial": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/AddressCandidateJourneyTests/testAddressFailureRecoversOneTemporaryPinAndPreservesOwnedLocationAfterRelaunch\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledAddressRetryTabletGreen.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "tabletInitialLog": "/private/tmp/PlannerControlledAddressRetryTabletGreen.log",
+    "phoneFinal": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/AddressCandidateJourneyTests/testAddressFailureRecoversOneTemporaryPinAndPreservesOwnedLocationAfterRelaunch\" \"-only-testing:PlannerFixtureUITests/AddressCandidateJourneyTests/testAmbiguousCandidatesStayTemporaryAndRequireExplicitSelection\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledAddressRetryPhoneFinal.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "phoneFinalLog": "/private/tmp/PlannerControlledAddressRetryPhoneFinal.log",
+    "macFinal": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData CODE_SIGNING_ALLOWED=NO build-for-testing",
+    "macFinalLog": "/private/tmp/PlannerControlledAddressRetryMacFinalBuild.log",
+    "tabletFinal": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/AddressCandidateJourneyTests/testAddressFailureRecoversOneTemporaryPinAndPreservesOwnedLocationAfterRelaunch\" \"-only-testing:PlannerFixtureUITests/AddressCandidateJourneyTests/testAmbiguousCandidatesStayTemporaryAndRequireExplicitSelection\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledAddressRetryTabletFinal.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "tabletFinalLog": "/private/tmp/PlannerControlledAddressRetryTabletFinal.log"
+  },
+  "qualification": {
+    "red": "Executed missing Address preview unavailable after reaching the owned source; 0 passed/1 failed/0 skipped.",
+    "phoneInitial": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "result": "/private/tmp/PlannerControlledAddressRetryPhoneGreen.xcresult"
+    },
+    "tabletInitial": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "result": "/private/tmp/PlannerControlledAddressRetryTabletGreen.xcresult"
+    },
+    "phoneFinal": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "result": "/private/tmp/PlannerControlledAddressRetryPhoneFinal.xcresult"
+    },
+    "tabletFinal": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "result": "/private/tmp/PlannerControlledAddressRetryTabletFinal.xcresult"
+    },
+    "macFinal": "TEST BUILD SUCCEEDED; zero native Mac UI functions",
+    "macUIFunctions": 0,
+    "strictSwiftFiles": 3,
+    "markdownFiles": 1,
+    "captures": "Inspected all final phone/tablet failure, recovered pin and owned editor captures; original images retained."
+  },
+  "review": {
+    "standards": "Editor invariant duplication extracted in review; read-only recheck finds no remaining findings.",
+    "spec": "No scope/behavior or extraction defects; both final affected journeys now pass on both simulators."
+  },
+  "sourceEpoch": "Initial recovery-only1/0/0 on phone/tablet. Review extracts the shared editor invariant; final recovery+ambiguity2/0/0 on each simulator with matching final source hashes. Production app/cache/Core unchanged. Mac final compile passes; zero Mac runtime UI functions.",
+  "remainingGates": [
+    "Delayed native address/link results",
+    "Native loading/scale Q58",
+    "Import application/recovery",
+    "Calendar",
+    "Broad native Mac runtime",
+    "Signed physical sync/account/Share",
+    "Whole-app polish"
+  ]
+}

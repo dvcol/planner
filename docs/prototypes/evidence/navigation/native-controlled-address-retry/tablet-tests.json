@@ -1,0 +1,62 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName" : "iPad Air 11-inch (M4)",
+      "modelName" : "iPad Air 11-inch (M4)",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "45s",
+                  "durationInSeconds" : 45.33372402191162,
+                  "name" : "testAddressFailureRecoversOneTemporaryPinAndPreservesOwnedLocationAfterRelaunch()",
+                  "nodeIdentifier" : "AddressCandidateJourneyTests/testAddressFailureRecoversOneTemporaryPinAndPreservesOwnedLocationAfterRelaunch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/AddressCandidateJourneyTests/testAddressFailureRecoversOneTemporaryPinAndPreservesOwnedLocationAfterRelaunch",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "1m 6s",
+                  "durationInSeconds" : 66.79607200622559,
+                  "name" : "testAmbiguousCandidatesStayTemporaryAndRequireExplicitSelection()",
+                  "nodeIdentifier" : "AddressCandidateJourneyTests/testAmbiguousCandidatesStayTemporaryAndRequireExplicitSelection()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/AddressCandidateJourneyTests/testAmbiguousCandidatesStayTemporaryAndRequireExplicitSelection",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "AddressCandidateJourneyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/AddressCandidateJourneyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "PlannerFixtureUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "PlannerFixtures",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}
