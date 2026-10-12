@@ -7,7 +7,7 @@ struct PlannerImportMerge {
 
   init(
     incoming: PlannerPortableBackup, current: PlannerPortableBackup,
-    resolution: PlannerImportReviewResolution
+    resolution: PlannerImportReviewResolution, mode: PlannerImportMode
   ) throws {
     guard resolution.details.restorations.isEmpty,
       resolution.details.incomingDeletions.allSatisfy({ $0.before == nil })
@@ -50,13 +50,16 @@ struct PlannerImportMerge {
       }
     }
     let selectedRecordOwners = selectedOwners.union(replacedOwners)
-    let aliases = incoming.contextAliases.filter {
-      plannerImportCompletionOwner(
-        $0.canonicalContext, memberships: incomingProjection.membershipsById,
-        entries: incomingProjection.entriesById
-      ).map(selectedRecordOwners.contains) ?? false
+    let incomingGraph = PlannerImportGraph(backup: incoming)
+    let currentGraph = PlannerImportGraph(backup: current)
+    let liveAliases = incoming.contextAliases.filter {
+      guard !incomingGraph.isClosed($0.canonicalContext) else { return false }
+      return
+        plannerImportCompletionOwner(
+          $0.canonicalContext, memberships: incomingProjection.membershipsById,
+          entries: incomingProjection.entriesById
+        ).map(selectedRecordOwners.contains) ?? false
     }
-    let selectedAliasIdentifiers = Set(aliases.map(\.aliasId))
     let knownMarkers = Dictionary(
       uniqueKeysWithValues: current.deletionMarkers.map { ($0.deletionId, $0) })
     var markers: [PlannerPortableDeletionMarker] = []
@@ -73,6 +76,44 @@ struct PlannerImportMerge {
         continue
       }
       if currentProjection.liveOwner(for: marker.target) == nil { markers.append(marker) }
+    }
+    let currentAliases = Dictionary(
+      uniqueKeysWithValues: current.contextAliases.map { ($0.aliasId, $0) })
+    let currentChanges = Dictionary(
+      uniqueKeysWithValues: current.completionChanges.map { ($0.id, $0) })
+    let closedAliases = incoming.contextAliases.filter { alias in
+      guard incomingGraph.isClosed(alias.canonicalContext) else { return false }
+      return currentGraph.isClosed(alias.canonicalContext)
+        || markers.contains(where: { $0.target.closes(alias.canonicalContext) })
+    }
+    let selectedAliases = liveAliases + closedAliases
+    let selectedClosedAliasIdentifiers = Set(closedAliases.map(\.aliasId))
+    for alias in selectedAliases {
+      guard let existing = currentAliases[alias.aliasId] else { continue }
+      guard existing.context == alias.context, existing.canonicalContext == alias.canonicalContext
+      else {
+        throw PlannerFailure(
+          "unavailable", "Rebinding completion history needs restoration review.")
+      }
+    }
+    let aliases = selectedAliases.filter {
+      mode != .skip || !selectedClosedAliasIdentifiers.contains($0.aliasId)
+        || currentAliases[$0.aliasId] == nil
+    }
+    let selectedAliasIdentifiers = Set(selectedAliases.map(\.aliasId))
+    let selectedChanges = incoming.completionChanges.filter {
+      selectedAliasIdentifiers.contains($0.aliasId)
+    }
+    for change in selectedChanges {
+      guard let existing = currentChanges[change.id] else { continue }
+      guard existing.aliasId == change.aliasId, existing.context == change.context else {
+        throw PlannerFailure(
+          "unavailable", "Rebinding a completion change needs restoration review.")
+      }
+    }
+    let changes = selectedChanges.filter {
+      mode != .skip || !selectedClosedAliasIdentifiers.contains($0.aliasId)
+        || currentChanges[$0.id] == nil
     }
     recordsToWrite = .init(
       sources: incoming.sources.filter { selectedOwners.contains($0.importBinding.reference) },
@@ -92,9 +133,7 @@ struct PlannerImportMerge {
       deletionMarkers: markers,
       ownedLinks: incoming.ownedLinks.filter { selectedRecordOwners.contains($0.owner.reference) },
       contextAliases: aliases,
-      completionChanges: incoming.completionChanges.filter {
-        selectedAliasIdentifiers.contains($0.aliasId)
-      },
+      completionChanges: changes,
       restorationFamilies: [])
     let retainedSources = current.sources.filter {
       !replacedOwners.contains($0.importBinding.reference)
@@ -105,11 +144,14 @@ struct PlannerImportMerge {
     let sourceKinds: [PlannerEntityKind] = [.item, .list, .itinerary, .category, .tag]
     let replacedAliasIdentifiers = Set(
       current.contextAliases.filter {
-        plannerImportCompletionOwner(
+        guard !currentGraph.isClosed($0.canonicalContext) else { return false }
+        return plannerImportCompletionOwner(
           $0.canonicalContext, memberships: currentProjection.membershipsById,
           entries: currentProjection.entriesById
         ).map(replacedOwners.contains) ?? false
       }.map(\.aliasId))
+    let writtenAliasIdentifiers = Set(aliases.map(\.aliasId))
+    let writtenChangeIdentifiers = Set(changes.map(\.id))
     projected = .init(
       sources: sourceKinds.flatMap { kind in sources.filter { $0.kind == kind } },
       labelAssociations: (current.labelAssociations.filter { !replacedOwners.contains($0.owner) }
@@ -144,12 +186,13 @@ struct PlannerImportMerge {
         },
       contextAliases: (current.contextAliases.filter {
         !replacedAliasIdentifiers.contains($0.aliasId)
+          && !writtenAliasIdentifiers.contains($0.aliasId)
       }
         + recordsToWrite.contextAliases).sorted {
           $0.aliasId.uuidString < $1.aliasId.uuidString
         },
       completionChanges: (current.completionChanges.filter {
-        !replacedAliasIdentifiers.contains($0.aliasId)
+        !replacedAliasIdentifiers.contains($0.aliasId) && !writtenChangeIdentifiers.contains($0.id)
       } + recordsToWrite.completionChanges).sorted {
         $0.id.uuidString < $1.id.uuidString
       },
