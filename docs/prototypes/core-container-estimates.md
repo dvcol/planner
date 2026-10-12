@@ -6,6 +6,26 @@ At `492b558`, Items have positive minute/display-unit estimates, and container p
 
 ## Public read and input contract
 
+The native read values are:
+
+```swift
+public enum PlannerDurationTotal: Sendable, Equatable {
+  case exact(minutes: Int64)
+  case lowerBound(minutes: Int64, missingEstimateCount: Int64)
+  case upperBound(minutes: Int64, missingFinishedEstimateCount: Int64)
+  case unavailable
+}
+
+public struct PlannerContainerEstimates: Sendable, Equatable {
+  public let calculatedEstimate: PlannerDurationTotal
+  public let fullEstimate: PlannerDurationTotal
+  public let remainingEstimate: PlannerDurationTotal
+  public let completedExceedsTotal: Bool
+}
+```
+
+`PlannerListSourceRead.estimates` and `PlannerItinerarySourceRead.estimates` return that summary. An itinerary's calculated estimate includes each referenced List's effective budget under Q71. Empty automatic plans return exact zero duration while their separate progress remains empty, without a completion percentage.
+
 - List and Itinerary source reads gain an `estimates` summary. It carries the calculated full total, effective full total, remaining total and a completed-exceeds-total warning. These values describe the entire plan, independently of search, display filters or paging.
 - A duration total is typed as exact minutes, a known lower bound with missing-estimate count, an upper bound with missing-finished-estimate count, or unavailable after checked arithmetic fails. All numeric wire values use exact decimal strings. Provider caches and device preferences are absent.
 - Container content gains optional `manualEstimate: PlannerEstimate` through existing create/edit commands and a typed guarded field change. Nil selects calculation. A set value retains its display unit until explicitly cleared; child edits never clear it. Item estimates remain shared content, not per-appearance copies.
