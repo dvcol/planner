@@ -1,3 +1,4 @@
+import MapKit
 import PlannerCore
 import SwiftUI
 
@@ -16,6 +17,7 @@ struct SavedEditItemForm: View {
   @State private var estimate: PlannerEstimate?
   @State private var locationName: String
   @State private var locationAddress: String
+  @State private var keepsSavedPin: Bool
   @State private var links: [SavedOwnedLinkDraft]
   @State private var categoryIdentifiers: Set<UUID>
   @State private var tagIdentifiers: Set<UUID>
@@ -30,6 +32,7 @@ struct SavedEditItemForm: View {
     _estimate = State(initialValue: item.content.estimate)
     _locationName = State(initialValue: item.content.location?.displayName ?? "")
     _locationAddress = State(initialValue: item.content.location?.formattedAddress ?? "")
+    _keepsSavedPin = State(initialValue: item.content.location?.coordinate != nil)
     _links = State(initialValue: item.content.links.map(SavedOwnedLinkDraft.init))
     _categoryIdentifiers = State(initialValue: item.content.categoryIds)
     _tagIdentifiers = State(initialValue: item.content.tagIds)
@@ -45,11 +48,17 @@ struct SavedEditItemForm: View {
   }
 
   private var location: PlannerOwnedLocation? {
-    if item.content.location?.coordinate != nil { return item.content.location }
-    if locationName.isEmpty && locationAddress.isEmpty { return nil }
+    let coordinate = keepsSavedPin ? item.content.location?.coordinate : nil
+    let name = locationText(locationName, original: item.content.location?.displayName)
+    let address = locationText(locationAddress, original: item.content.location?.formattedAddress)
+    if coordinate == nil && name == nil && address == nil { return nil }
     return PlannerOwnedLocation(
-      displayName: locationName.isEmpty ? nil : locationName,
-      formattedAddress: locationAddress.isEmpty ? nil : locationAddress, coordinate: nil)
+      displayName: name, formattedAddress: address, coordinate: coordinate)
+  }
+
+  private func locationText(_ text: String, original: String?) -> String? {
+    if text == (original ?? "") { return original }
+    return text.isEmpty ? nil : text
   }
 
   var body: some View {
@@ -82,15 +91,36 @@ struct SavedEditItemForm: View {
           }
           .accessibilityIdentifier("saved.item.edit.tags")
         }
-        if item.content.location?.coordinate == nil {
-          Section("Location") {
-            TextField("Place name", text: $locationName)
-              .accessibilityIdentifier("saved.item.edit.location.name")
-            TextField("Address", text: $locationAddress)
-              .accessibilityIdentifier("saved.item.edit.location.address")
+        Section {
+          TextField("Place name", text: $locationName)
+            .accessibilityIdentifier("saved.item.edit.location.name")
+          TextField("Address", text: $locationAddress)
+            .accessibilityIdentifier("saved.item.edit.location.address")
+          if item.content.location?.coordinate != nil {
+            Picker("Saved pin", selection: $keepsSavedPin) {
+              Text("Keep saved pin").tag(true)
+              Text("Remove saved pin").tag(false)
+            }
+            .pickerStyle(.menu)
+            .accessibilityIdentifier("saved.item.edit.location.pin")
           }
-        } else {
-          ItemLocationSection(title: title, location: item.content.location)
+          if let coordinate = location?.coordinate {
+            ItemLocationMap(
+              title: title,
+              coordinate: .init(latitude: coordinate.latitude, longitude: coordinate.longitude),
+              accessibilityIdentifier: "saved.item.edit.location.map")
+          }
+        } header: {
+          Text("Location")
+        } footer: {
+          if item.content.location?.coordinate != nil {
+            if keepsSavedPin {
+              Text(
+                "Place name and address changes keep this pin until you choose Remove saved pin.")
+            } else {
+              Text("Removing the pin keeps the place name and address. Save applies the change.")
+            }
+          }
         }
         SavedOwnedLinksEditor(
           links: $links, accessibilityIdentifierPrefix: "saved.item.edit.link")

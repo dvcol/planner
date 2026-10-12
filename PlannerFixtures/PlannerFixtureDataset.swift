@@ -3,10 +3,27 @@ import PlannerCore
 
 @MainActor
 enum PlannerFixtureDataset {
-  static func makeOverflowStore() async throws -> SavedPlannerStore {
+  private enum Scenario: String {
+    case catalogOverflow = "catalog-overflow"
+    case pinnedAddress = "pinned-address"
+    case pinnedEmptyName = "pinned-empty-name"
+  }
+
+  static func makeStore() async throws -> SavedPlannerStore {
+    let arguments = ProcessInfo.processInfo.arguments
+    let scenarioName = try argument("--fixture", in: arguments) ?? Scenario.catalogOverflow.rawValue
+    guard let scenario = Scenario(rawValue: scenarioName) else { throw CancellationError() }
+    let identifier: UUID
+    if let value = try argument("--fixture-dataset", in: arguments) {
+      guard let parsed = UUID(uuidString: value) else { throw CancellationError() }
+      identifier = parsed
+    } else {
+      identifier = UUID()
+    }
     let directory = FileManager.default.temporaryDirectory
       .appendingPathComponent("PlannerFixtures", isDirectory: true)
-      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+      .appendingPathComponent(scenario.rawValue, isDirectory: true)
+      .appendingPathComponent(identifier.uuidString, isDirectory: true)
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -14,6 +31,13 @@ enum PlannerFixtureDataset {
       processRole: .mainApplication, storageMode: .localOnly)
     let planner = PlannerCore.Planner(configuration: configuration)
     guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    guard
+      case .snapshot(let snapshot) = await planner.query(
+        .init(session: session, request: .items(.init(archive: .all)))),
+      case .rows(let window) = await planner.read(
+        session: session, request: .rows(generation: snapshot.generation, offset: 0, limit: 1))
+    else { throw CancellationError() }
+    if !window.rows.isEmpty { return SavedPlannerStore(configuration: configuration) }
     func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
       guard
         case .applied(let result, .complete) = await planner.execute(
@@ -21,6 +45,17 @@ enum PlannerFixtureDataset {
         ).outcome
       else { throw CancellationError() }
       return result
+    }
+    if scenario == .pinnedAddress || scenario == .pinnedEmptyName {
+      let displayName = scenario == .pinnedEmptyName ? "" : "Museum entrance"
+      _ = try await save(
+        .createItem(
+          content: .init(
+            title: "Museum", notes: "Original notes",
+            location: .init(
+              displayName: displayName, formattedAddress: "Original address",
+              coordinate: .init(latitude: 35.662, longitude: 139.717)))))
+      return SavedPlannerStore(configuration: configuration)
     }
     guard
       let list = try await save(
@@ -40,5 +75,11 @@ enum PlannerFixtureDataset {
       _ = try await save(.addMembership(itemId: item.id, listId: list.id, placement: .last))
     }
     return SavedPlannerStore(configuration: configuration)
+  }
+
+  private static func argument(_ name: String, in arguments: [String]) throws -> String? {
+    guard let index = arguments.firstIndex(of: name) else { return nil }
+    guard arguments.indices.contains(index + 1) else { throw CancellationError() }
+    return arguments[index + 1]
   }
 }
