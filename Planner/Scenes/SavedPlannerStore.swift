@@ -109,6 +109,14 @@ final class SavedPlannerStore {
     if let loaded = await readLists(archive: .active) { lists = loaded }
   }
 
+  func exportBackup() async throws -> Data {
+    guard let planner, let session else { throw CocoaError(.fileReadUnknown) }
+    switch await planner.exportData(session: session) {
+    case .exported(let data): return data
+    case .failed(let reason): throw reason
+    }
+  }
+
   func readLists(archive: PlannerItemQuery.Archive) async -> [SavedPlannerList]? {
     guard let planner, let session else { return nil }
     switch await planner.query(
