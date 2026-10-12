@@ -105,6 +105,7 @@ extension PlannerSchemaV15.Item {
     return PlannerRowRead(
       identity: identity, sourceLifetimeId: lifetimeId,
       title: content.title, subtitle: content.subtitle, estimate: content.estimate,
+      manualEstimate: nil, containerEstimates: nil,
       globalDone: globalDone, localDone: localDone,
       effectiveDone: globalDone || localDone == true, archived: archived,
       hasLocation: content.location != nil, hasLinks: hasLinks,

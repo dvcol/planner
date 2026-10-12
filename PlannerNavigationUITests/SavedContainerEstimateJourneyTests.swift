@@ -34,6 +34,13 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     XCTAssertTrue(completeStandalone.waitForExistence(timeout: 5))
     completeStandalone.activateForPlannerJourney()
     XCTAssertTrue(estimate("remaining", application: application).waitForPlannerValue("0 minutes"))
+    let listCatalogRow = revealCatalogRow(
+      prefix: "saved.list.", title: "Morning", application: application)
+    XCTAssertTrue(
+      listCatalogRow.waitForPlannerValue(
+        "Active. Estimate, Manual, 240 minutes. Remaining, 0 minutes."))
+    recordScreenshot(
+      application, name: "List catalog shows manual full and completed remaining time")
     openSection("Itineraries", application: application)
     reveal("saved.itinerary.new", application: application).activateForPlannerJourney()
     let title = application.textFields["saved.itinerary.title"]
@@ -76,6 +83,14 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     XCTAssertTrue(second.waitForPlannerValue("240 minutes"))
     recordScreenshot(
       application, name: "Repeated List previews keep separate completion and budgets")
+    let itineraryCatalogRow = revealCatalogRow(
+      prefix: "saved.itinerary.row.", title: "Repeated morning", application: application)
+    XCTAssertTrue(
+      itineraryCatalogRow.waitForPlannerValue(
+        "Estimate, 480 minutes. Remaining, 240 minutes."))
+    recordScreenshot(
+      application, name: "Itinerary catalog shows full and contextual remaining time")
+    itineraryCatalogRow.activateForPlannerJourney()
     let search = application.searchFields.firstMatch
     if !search.exists { application.swipeDown() }
     XCTAssertTrue(search.waitForExistence(timeout: 5))
@@ -101,6 +116,11 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     XCTAssertTrue(first.waitForPlannerValue("0 minutes"))
     XCTAssertTrue(second.waitForPlannerValue("240 minutes"))
     XCTAssertEqual(remainingPreviews.allElementsBoundByIndex.map(\.identifier), identities)
+    let retainedItineraryRow = revealCatalogRow(
+      prefix: "saved.itinerary.row.", title: "Repeated morning", application: application)
+    XCTAssertTrue(
+      retainedItineraryRow.waitForPlannerValue(
+        "Estimate, 480 minutes. Remaining, 240 minutes."))
   }
 
   func testMissingFinishedEstimateShowsUpperBoundThenResolvesAndFinishesWithoutClearingManualTotal()
@@ -171,6 +191,13 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     XCTAssertTrue(warning.label.contains("1 finished estimate missing"))
     recordScreenshot(
       application, name: "Native remaining upper bound explains the missing finished estimate")
+    let listCatalogRow = revealCatalogRow(
+      prefix: "saved.list.", title: "Morning", application: application)
+    XCTAssertTrue(
+      listCatalogRow.waitForPlannerValue(
+        "Active. Estimate, Manual, 240 minutes. Remaining, Up to 240 minutes; 1 finished estimate missing. Calculated, At least 120 minutes; 1 estimate missing."
+      ))
+    recordScreenshot(application, name: "List catalog warns that remaining time is an upper bound")
     openSection("Items", application: application)
     let lunch = application.savedPlannerItemRows("Lunch").firstMatch
     if lunch.exists { lunch.activateForPlannerJourney() }
@@ -183,12 +210,9 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     toggle(itemEstimate)
     application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
     openSection("Lists", application: application)
-    if !full.waitForExistence(timeout: 2) {
-      let list = application.savedPlannerListRow("Morning")
-      revealSidebarIfNeeded(application, element: list)
-      XCTAssertTrue(list.waitForExistence(timeout: 5))
-      list.activateForPlannerJourney()
-    }
+    let editedList = revealCatalogRow(
+      prefix: "saved.list.", title: "Morning", application: application)
+    editedList.activateForPlannerJourney()
     XCTAssertTrue(remaining.waitForPlannerValue("180 minutes"))
     XCTAssertFalse(warning.exists)
     XCTAssertTrue(full.waitForPlannerValue("240 minutes"))
@@ -465,6 +489,31 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     ).firstMatch
     XCTAssertTrue(button.waitForExistence(timeout: 5))
     button.activateForPlannerJourney()
+  }
+
+  private func revealCatalogRow(
+    prefix: String, title: String, application: XCUIApplication
+  ) -> XCUIElement {
+    let row = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@ AND label == %@", prefix, title)
+    ).firstMatch
+    for _ in 0..<3 {
+      if row.exists && row.isHittable { return row }
+      if let back = application.buttons.matching(identifier: "BackButton").allElementsBoundByIndex
+        .first(where: \.isHittable)
+      {
+        back.activateForPlannerJourney()
+      } else if let sidebar = application.buttons.matching(identifier: "Show Sidebar")
+        .allElementsBoundByIndex.first(where: \.isHittable)
+      {
+        sidebar.activateForPlannerJourney()
+      } else {
+        break
+      }
+    }
+    XCTAssertTrue(row.waitForExistence(timeout: 10))
+    XCTAssertTrue(row.isHittable)
+    return row
   }
 
   private func reveal(_ identifier: String, application: XCUIApplication) -> XCUIElement {

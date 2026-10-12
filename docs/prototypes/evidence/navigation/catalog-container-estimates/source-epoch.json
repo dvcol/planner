@@ -1,0 +1,21 @@
+{
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "a77e61ade9a68f17ed40132137a046d188fad50ed6e582594b0552eebf102d70",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerItineraryEntryValues.swift": "23f139e9ed6d459119c9d2a5fc84bc544a8fb51d8cbffc680665c1da3a78cbc7",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerItineraryValues.swift": "a46e9317db1c4e695f64c6d584b0a7420f1eefbbab20b5f81ef64093082b12d6",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift": "7fc56a0e224034ade5f33cff18746e1650af74a5e27b36099e9fdaf3d365c724",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerRowValues.swift": "5dc87af4b15e5561b540a5bf486efe2c3ffad9c748426f734fded89b0b80e14b",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "accf962eb4db6b7c091f165b9608a631fa2a8b9b8efd61a089f2fa82c104b9ee",
+  "Planner/AgentControl/PlannerMCPRowValue.swift": "d35d95707abf3962a6db7ef125e935366327542d9f82740ea98eb10633a112c8",
+  "Planner/AgentControl/PlannerMCPSourceTool.swift": "7d03f81979bae58de36e8cf1d369f609c9231ed6d7214ac04d13d7d57d1b3c55",
+  "Planner/Scenes/SavedContainerEstimates.swift": "a31abbdeaa8f0cdc09eb0ccad1956707339b796886c3d78d5639977b4d4208a1",
+  "Planner/Scenes/SavedItineraryViews.swift": "09d047e0514d59428662a2e603582f898341fe0babf3f2b8a8370ce80a1ccee2",
+  "Planner/Scenes/SavedPlannerStore.swift": "18aa0c8871276e5b8816e95ca56a09b0044392d7af1a7374dfba48b0186b9270",
+  "Planner/Scenes/SavedPlannerView.swift": "3facb87c3700ecaf511884b1df9358e047d703a105c0cb830cb6926b14d8e850",
+  "PlannerMCPTests/ManualContainerEstimateRoutingTests.swift": "0de9a6f0a4b9a54dfa55c8b978ddf86c7eed5907a1517e3871c06333fcbfdba2",
+  "PlannerMCPTests/RowRoutingTests.swift": "c471330ffe973d30a22d7e9e5153db1c816e98d516ed2c62ee42a9c0b1611807",
+  "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "3ec4b81df4338a2913a7fdf133d51b279ae0250beea250908e27937c2b3df1ef",
+  "PlannerNavigationUITests/SavedContainerEstimateJourneyTests.swift": "af8608641d3bb636f05a374ea86386f6c3e11eddc7b35c8057004b384a79ea4e",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerContainerEstimateSnapshots.swift": "062249be39ee221d3cef1ea53298fe3a3a2111a2f1540a6b1a46766978420506",
+  "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CatalogContainerEstimateTests.swift": "0e7ffcfb6a0d37f756f8eb61bb96b714e92bee41f97f3f82ab86d9fb1a08c39b",
+  "Planner/Scenes/SavedContainerEstimatePreview.swift": "f6c1dc2acd92ab02f27290d52b2f70db03f00cfd46688037f94dd91a016d2a9a"
+}

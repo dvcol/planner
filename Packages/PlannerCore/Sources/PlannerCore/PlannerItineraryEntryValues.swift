@@ -19,9 +19,10 @@ struct ItineraryEntrySnapshot: PlannerRankedAssociation {
   }
 }
 
-extension ItinerarySnapshot {
+extension ContainerEstimateItinerarySnapshot {
   func progressAndEstimates(
-    memberships: [MembershipSnapshot], items: [ItemSnapshot], lists: [ListSnapshot]
+    memberships: [MembershipSnapshot], items: [ContainerEstimateItemSnapshot],
+    lists: [ContainerEstimateListSnapshot]
   )
     throws
     -> (
@@ -39,7 +40,7 @@ extension ItinerarySnapshot {
         let item = try resolvedItem(entry.source, in: items)
         estimateContributions.append(
           ContainerEstimateChild(
-            estimate: item.input.estimate,
+            estimate: item.estimate,
             finished: item.globalDone || entry.localDone == true || item.archived
           ).contribution)
         totalCount += 1
@@ -73,7 +74,7 @@ extension ItinerarySnapshot {
           }?.localDone ?? false
         listEstimateChildren.append(
           .init(
-            estimate: item.input.estimate,
+            estimate: item.estimate,
             finished: item.globalDone || localDone || item.archived || list.archived))
         if item.globalDone || localDone {
           doneCount += 1
@@ -94,10 +95,10 @@ extension ItinerarySnapshot {
       }
       let branchEstimates = containerEstimates(
         children: listEstimateChildren, archived: list.archived,
-        manualEstimate: list.content.manualEstimate)
+        manualEstimate: list.manualEstimate)
       listEntrySummaries.append(
         .init(
-          entryId: entry.id, source: list.reference, manualEstimate: list.content.manualEstimate,
+          entryId: entry.id, source: list.reference, manualEstimate: list.manualEstimate,
           progress: .init(
             container: list.reference, state: branchState,
             doneCount: branchDoneCount, totalCount: branchTotalCount,
@@ -122,13 +123,15 @@ extension ItinerarySnapshot {
         archivedCount: archivedCount),
       estimates: containerEstimates(
         contributions: estimateContributions, archived: archived,
-        manualEstimate: input.manualEstimate, allFinished: state == .complete),
+        manualEstimate: manualEstimate, allFinished: state == .complete),
       listEntrySummaries: listEntrySummaries
     )
   }
 
-  private func resolvedItem(_ binding: PlannerBoundIdentity, in items: [ItemSnapshot]) throws
-    -> ItemSnapshot
+  private func resolvedItem(
+    _ binding: PlannerBoundIdentity, in items: [ContainerEstimateItemSnapshot]
+  ) throws
+    -> ContainerEstimateItemSnapshot
   {
     let matches = items.filter { $0.id == binding.id && $0.lifetimeId == binding.lifetimeId }
     guard matches.count == 1, let item = matches.first else {

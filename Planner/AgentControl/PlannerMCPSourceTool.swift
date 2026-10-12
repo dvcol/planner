@@ -414,7 +414,7 @@
       ])
     }
 
-    private static func estimatesValue(_ estimates: PlannerContainerEstimates) -> Value {
+    static func estimatesValue(_ estimates: PlannerContainerEstimates) -> Value {
       .object([
         "calculatedEstimate": durationTotalValue(estimates.calculatedEstimate),
         "fullEstimate": durationTotalValue(estimates.fullEstimate),

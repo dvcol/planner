@@ -243,7 +243,7 @@ struct ListSnapshot {
   }
 
   func read(
-    datasetId: UUID, memberships: [MembershipSnapshot], items: [ItemSnapshot],
+    datasetId: UUID, memberships: [MembershipSnapshot], items: [ContainerEstimateItemSnapshot],
     entries: [ItineraryEntrySnapshot] = []
   ) throws
     -> PlannerListSourceRead
@@ -252,44 +252,14 @@ struct ListSnapshot {
       if $0.rank != $1.rank { return $0.rank < $1.rank }
       return $0.id.uuidString < $1.id.uuidString
     }
-    var doneCount: Int64 = 0
-    var archivedCount: Int64 = 0
-    var estimateChildren: [ContainerEstimateChild] = []
-    for membership in children {
-      let matches = items.filter {
-        $0.id == membership.item.id && $0.lifetimeId == membership.item.lifetimeId
-      }
-      guard matches.count == 1, let item = matches.first else {
-        throw PlannerFailure("readUnavailable", "A List child source is unresolved.")
-      }
-      estimateChildren.append(
-        .init(
-          estimate: item.input.estimate,
-          finished: item.globalDone || membership.localDone || item.archived))
-      if item.globalDone || membership.localDone {
-        doneCount += 1
-      } else if item.archived {
-        archivedCount += 1
-      }
-    }
-    let totalCount = Int64(children.count)
-    let progressState: PlannerContainerProgressState
-    if children.isEmpty {
-      progressState = .empty
-    } else if doneCount + archivedCount == totalCount {
-      progressState = .complete
-    } else {
-      progressState = .partial
-    }
+    let summary = try ContainerEstimateListSnapshot(
+      id: id, lifetimeId: lifetimeId, manualEstimate: content.manualEstimate, archived: archived
+    ).progressAndEstimates(memberships: memberships, items: items)
     return PlannerListSourceRead(
       source: reference, content: content, createdAt: createdAt, updatedAt: updatedAt,
       fieldHashes: fieldHashes(datasetId: datasetId),
       state: PlannerSourceState(globalDone: nil, archived: archived),
-      progress: PlannerContainerProgress(
-        container: reference, state: progressState, doneCount: doneCount, totalCount: totalCount,
-        archivedCount: archivedCount),
-      estimates: containerEstimates(
-        children: estimateChildren, archived: archived, manualEstimate: content.manualEstimate),
+      progress: summary.progress, estimates: summary.estimates,
       references: children.map(\.reference)
         + entries.filter {
           $0.source.kind == "list" && $0.source.id == id && $0.source.lifetimeId == lifetimeId

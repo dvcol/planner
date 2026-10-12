@@ -796,16 +796,24 @@ struct SavedPlannerView: View {
         Section("Lists") {
           ForEach(listCatalog ?? []) { list in
             NavigationLink(value: SavedPlannerSidebarSelection.list(list.id)) {
-              HStack {
-                Label(list.name, systemImage: "list.bullet.rectangle")
-                if list.archived {
-                  Image(systemName: "archivebox").foregroundStyle(.secondary)
-                    .accessibilityHidden(true)
+              VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                  Label(list.name, systemImage: "list.bullet.rectangle")
+                  if list.archived {
+                    Image(systemName: "archivebox").foregroundStyle(.secondary)
+                      .accessibilityHidden(true)
+                  }
                 }
+                SavedContainerEstimatePreview(
+                  estimates: list.estimates, manualEstimate: list.manualEstimate)
               }
             }
             .accessibilityLabel(list.name)
-            .accessibilityValue(list.archived ? "Archived" : "Active")
+            .accessibilityValue(
+              (list.archived ? "Archived. " : "Active. ")
+                + list.estimates.nativeEstimatePreviewAccessibilityDescription(
+                  manualEstimate: list.manualEstimate)
+            )
             .accessibilityIdentifier("saved.list.\(list.id.uuidString)")
             .contextMenu {
               Button(list.archived ? "Unarchive List" : "Archive List", systemImage: "archivebox") {

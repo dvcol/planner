@@ -27,6 +27,8 @@ public struct PlannerRowRead: Sendable {
   public let title: String
   public let subtitle: String?
   public let estimate: PlannerEstimate?
+  public let manualEstimate: PlannerEstimate?
+  public let containerEstimates: PlannerContainerEstimates?
   public let globalDone: Bool?
   public let localDone: Bool?
   public let effectiveDone: Bool?

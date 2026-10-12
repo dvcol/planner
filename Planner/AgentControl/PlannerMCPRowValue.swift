@@ -104,6 +104,14 @@
             "displayUnit": .string(estimate.displayUnit.rawValue),
           ])
         } ?? .null,
+        "manualEstimate": row.manualEstimate.map { estimate in
+          .object([
+            "minutes": .string(String(estimate.minutes)),
+            "displayUnit": .string(estimate.displayUnit.rawValue),
+          ])
+        } ?? .null,
+        "containerEstimates": row.containerEstimates.map(PlannerMCPSourceTool.estimatesValue)
+          ?? .null,
         "globalDone": row.globalDone.map(Value.bool) ?? .null,
         "localDone": row.localDone.map(Value.bool) ?? .null,
         "effectiveDone": row.effectiveDone.map(Value.bool) ?? .null,

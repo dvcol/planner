@@ -1,0 +1,260 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "00006030-001A586C3EA3001C",
+      "deviceName" : "My Mac",
+      "modelName" : "MacBook Pro",
+      "osBuildNumber" : "26A434",
+      "osVersion" : "27.0.1",
+      "platform" : "macOS"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0,19s",
+                  "durationInSeconds" : 0.18982505798339844,
+                  "name" : "invalidScheduleRemovalsPreserveRowsAndLastRemovalReturnsNoScheduleOverHTTP()",
+                  "nodeIdentifier" : "RowRoutingTests/invalidScheduleRemovalsPreserveRowsAndLastRemovalReturnsNoScheduleOverHTTP()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/invalidScheduleRemovalsPreserveRowsAndLastRemovalReturnsNoScheduleOverHTTP()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,13s",
+                  "durationInSeconds" : 0.13050198554992676,
+                  "name" : "selectedScheduleRemovalOverHTTPKeepsSourceOtherAssignmentAndOriginalReplay()",
+                  "nodeIdentifier" : "RowRoutingTests/selectedScheduleRemovalOverHTTPKeepsSourceOtherAssignmentAndOriginalReplay()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/selectedScheduleRemovalOverHTTPKeepsSourceOtherAssignmentAndOriginalReplay()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,18s",
+                  "durationInSeconds" : 0.17957305908203125,
+                  "name" : "malformedZoneRequestsPreserveRowsAndStartOnlyZoneChangeCreatesNoEnd()",
+                  "nodeIdentifier" : "RowRoutingTests/malformedZoneRequestsPreserveRowsAndStartOnlyZoneChangeCreatesNoEnd()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/malformedZoneRequestsPreserveRowsAndStartOnlyZoneChangeCreatesNoEnd()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,1s",
+                  "durationInSeconds" : 0.1009070873260498,
+                  "name" : "scheduleZoneOverHTTPPreservesInstantsAndRetainsLaterZoneOnReplay()",
+                  "nodeIdentifier" : "RowRoutingTests/scheduleZoneOverHTTPPreservesInstantsAndRetainsLaterZoneOnReplay()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/scheduleZoneOverHTTPPreservesInstantsAndRetainsLaterZoneOnReplay()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,18s",
+                  "durationInSeconds" : 0.17933011054992676,
+                  "name" : "malformedScheduleEditsKeepTheSavedFormAndIssuedRowsUnchanged()",
+                  "nodeIdentifier" : "RowRoutingTests/malformedScheduleEditsKeepTheSavedFormAndIssuedRowsUnchanged()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/malformedScheduleEditsKeepTheSavedFormAndIssuedRowsUnchanged()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,099s",
+                  "durationInSeconds" : 0.0992879867553711,
+                  "name" : "guardedScheduleEditsOverHTTPRejectStaleFormsAndReplayWithoutReplacingLaterData()",
+                  "nodeIdentifier" : "RowRoutingTests/guardedScheduleEditsOverHTTPRejectStaleFormsAndReplayWithoutReplacingLaterData()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/guardedScheduleEditsOverHTTPRejectStaleFormsAndReplayWithoutReplacingLaterData()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,039s",
+                  "durationInSeconds" : 0.03919100761413574,
+                  "name" : "scheduleSourceOverHTTPReturnsOriginalFormAndOnlyItsGuardedHash()",
+                  "nodeIdentifier" : "RowRoutingTests/scheduleSourceOverHTTPReturnsOriginalFormAndOnlyItsGuardedHash()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/scheduleSourceOverHTTPReturnsOriginalFormAndOnlyItsGuardedHash()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,039s",
+                  "durationInSeconds" : 0.03930401802062988,
+                  "name" : "scheduledSourceOverHTTPEnumeratesBookmarksAndScheduleWithoutLosingContent()",
+                  "nodeIdentifier" : "RowRoutingTests/scheduledSourceOverHTTPEnumeratesBookmarksAndScheduleWithoutLosingContent()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/scheduledSourceOverHTTPEnumeratesBookmarksAndScheduleWithoutLosingContent()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Expectation failed: reason[\"code\"] as? String == code\nreason[\"code\"] as? String → \"missingReference\"\ncode → \"unavailable\"",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/tmp/planner-catalog-baseline.zz8xXi/PlannerMCPTests/RowRoutingTests.swift",
+                        "lineNumber" : 1452
+                      }
+                    },
+                    {
+                      "name" : "Expectation failed: reason[\"propertyPath\"] as? String == path\nreason[\"propertyPath\"] as? String → \"/command/source\"\npath → \"/command/source/kind\"",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/tmp/planner-catalog-baseline.zz8xXi/PlannerMCPTests/RowRoutingTests.swift",
+                        "lineNumber" : 1453
+                      }
+                    }
+                  ],
+                  "duration" : "0,18s",
+                  "durationInSeconds" : 0.17967700958251953,
+                  "name" : "malformedTimedAppointmentsRejectWithoutChangingSourceWindowOrRecovery()",
+                  "nodeIdentifier" : "RowRoutingTests/malformedTimedAppointmentsRejectWithoutChangingSourceWindowOrRecovery()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/malformedTimedAppointmentsRejectWithoutChangingSourceWindowOrRecovery()",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "duration" : "0,11s",
+                  "durationInSeconds" : 0.10730886459350586,
+                  "name" : "directTimedAppointmentsOverHTTPKeepInstantsAndGenerationBoundDateSelection()",
+                  "nodeIdentifier" : "RowRoutingTests/directTimedAppointmentsOverHTTPKeepInstantsAndGenerationBoundDateSelection()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/directTimedAppointmentsOverHTTPKeepInstantsAndGenerationBoundDateSelection()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,12s",
+                  "durationInSeconds" : 0.12391304969787598,
+                  "name" : "malformedBookmarkEditsRetainBothOwnersAndTheIssuedRowWindow()",
+                  "nodeIdentifier" : "RowRoutingTests/malformedBookmarkEditsRetainBothOwnersAndTheIssuedRowWindow()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/malformedBookmarkEditsRetainBothOwnersAndTheIssuedRowWindow()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,099s",
+                  "durationInSeconds" : 0.09864211082458496,
+                  "name" : "ownedBookmarkReplacementOverHTTPRejectsStalePatchAndKeepsLaterEmptyValueOnReplay()",
+                  "nodeIdentifier" : "RowRoutingTests/ownedBookmarkReplacementOverHTTPRejectsStalePatchAndKeepsLaterEmptyValueOnReplay()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/ownedBookmarkReplacementOverHTTPRejectsStalePatchAndKeepsLaterEmptyValueOnReplay()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,21s",
+                  "durationInSeconds" : 0.20697808265686035,
+                  "name" : "malformedLocationsRejectWholeCreationsAndEditsWithoutChangingSavedData()",
+                  "nodeIdentifier" : "RowRoutingTests/malformedLocationsRejectWholeCreationsAndEditsWithoutChangingSavedData()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/malformedLocationsRejectWholeCreationsAndEditsWithoutChangingSavedData()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,089s",
+                  "durationInSeconds" : 0.08854269981384277,
+                  "name" : "ownedLocationOverHTTPRejectsStaleCompoundEditAndRetainsClearOnReplay()",
+                  "nodeIdentifier" : "RowRoutingTests/ownedLocationOverHTTPRejectsStaleCompoundEditAndRetainsClearOnReplay()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/ownedLocationOverHTTPRejectsStaleCompoundEditAndRetainsClearOnReplay()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,12s",
+                  "durationInSeconds" : 0.11979889869689941,
+                  "name" : "malformedOwnedLinksRejectTogetherWithoutChangingTheSavedSourceOrWindow()",
+                  "nodeIdentifier" : "RowRoutingTests/malformedOwnedLinksRejectTogetherWithoutChangingTheSavedSourceOrWindow()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/malformedOwnedLinksRejectTogetherWithoutChangingTheSavedSourceOrWindow()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,069s",
+                  "durationInSeconds" : 0.06867313385009766,
+                  "name" : "ownedLinksOverHTTPRetainFullDetailsAndOneRowPreviewAfterReplay()",
+                  "nodeIdentifier" : "RowRoutingTests/ownedLinksOverHTTPRetainFullDetailsAndOneRowPreviewAfterReplay()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/ownedLinksOverHTTPRetainFullDetailsAndOneRowPreviewAfterReplay()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,093s",
+                  "durationInSeconds" : 0.09336304664611816,
+                  "name" : "invalidCompletionScopesNeverFallBackToGlobalOrRecordAppliedEvidence()",
+                  "nodeIdentifier" : "RowRoutingTests/invalidCompletionScopesNeverFallBackToGlobalOrRecordAppliedEvidence()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/invalidCompletionScopesNeverFallBackToGlobalOrRecordAppliedEvidence()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,082s",
+                  "durationInSeconds" : 0.0821378231048584,
+                  "name" : "completionOverHTTPUpdatesRowsAndOldReplayPreservesReopenedState()",
+                  "nodeIdentifier" : "RowRoutingTests/completionOverHTTPUpdatesRowsAndOldReplayPreservesReopenedState()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/completionOverHTTPUpdatesRowsAndOldReplayPreservesReopenedState()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,038s",
+                  "durationInSeconds" : 0.037667036056518555,
+                  "name" : "rowWindowRepeatsFixedContextAndOwnedMetadataOverHTTP()",
+                  "nodeIdentifier" : "RowRoutingTests/rowWindowRepeatsFixedContextAndOwnedMetadataOverHTTP()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/rowWindowRepeatsFixedContextAndOwnedMetadataOverHTTP()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,055s",
+                  "durationInSeconds" : 0.0546412467956543,
+                  "name" : "anotherWriterMakesHTTPWindowStaleWithoutReturningEmptySuccess()",
+                  "nodeIdentifier" : "RowRoutingTests/anotherWriterMakesHTTPWindowStaleWithoutReturningEmptySuccess()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/anotherWriterMakesHTTPWindowStaleWithoutReturningEmptySuccess()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,043s",
+                  "durationInSeconds" : 0.0431370735168457,
+                  "name" : "malformedRowRequestsLeaveTheValidDefaultGenerationReadable()",
+                  "nodeIdentifier" : "RowRoutingTests/malformedRowRequestsLeaveTheValidDefaultGenerationReadable()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/malformedRowRequestsLeaveTheValidDefaultGenerationReadable()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,3s",
+                  "durationInSeconds" : 0.2960929870605469,
+                  "name" : "rowLabelsStayLiveAndKeepDistinctSourceBindingsOverHTTP()",
+                  "nodeIdentifier" : "RowRoutingTests/rowLabelsStayLiveAndKeepDistinctSourceBindingsOverHTTP()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests/rowLabelsStayLiveAndKeepDistinctSourceBindingsOverHTTP()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "RowRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/RowRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "PlannerMCPTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "Planner",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

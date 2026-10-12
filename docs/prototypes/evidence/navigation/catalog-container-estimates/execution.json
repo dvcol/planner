@@ -1,0 +1,108 @@
+{
+  "beforeCommit": "2c18cab",
+  "mode": "localOnly",
+  "storageSchemaVersion": 15,
+  "portableFormatVersion": 2,
+  "qualification": {
+    "core": {
+      "log": "/private/tmp/PlannerCatalogContainerEstimatesCoreQualified.log",
+      "functions": 25,
+      "suites": 10,
+      "caseExecutions": 28,
+      "failures": 0
+    },
+    "http": {
+      "bundle": "/private/tmp/PlannerCatalogContainerEstimatesHTTPQualified.xcresult",
+      "functions": 24,
+      "suites": 2,
+      "caseExecutions": 25,
+      "failures": 0,
+      "skips": 0
+    },
+    "phoneEarlier": {
+      "bundle": "/private/tmp/PlannerNativeCatalogEstimatesPhoneGreen.xcresult",
+      "functions": 3,
+      "failures": 0,
+      "skips": 0,
+      "correctedUncertaintyBundle": "/private/tmp/PlannerNativeCatalogEstimatesPhoneFinal.xcresult"
+    },
+    "tabletEarlier": {
+      "mixedBundle": "/private/tmp/PlannerNativeCatalogEstimatesTabletGreen.xcresult",
+      "mixedResult": "Failed",
+      "passedFunctions": 1,
+      "failedFunctions": 2,
+      "correctedBundle": "/private/tmp/PlannerNativeCatalogEstimatesTabletFinal.xcresult",
+      "correctedFunctions": 2,
+      "correctedFailures": 0,
+      "correctedSkips": 0
+    },
+    "strictSwiftFiles": 19,
+    "sourceEpochNote": "The final layout changes only SavedContainerEstimatePreview so Manual flows in the caption. The corrected test always reopens its visible List after editing an Item. Final layout bundle counts are recorded separately. Archive runs used manual nil, whose caption text is unchanged.",
+    "phoneLayout": {
+      "bundle": "/private/tmp/PlannerNativeCatalogEstimatesPhoneLayout.xcresult",
+      "functions": 2,
+      "failures": 0,
+      "skips": 0
+    },
+    "macBuild": {
+      "log": "/private/tmp/PlannerNativeCatalogEstimatesMacLayoutBuild.log",
+      "result": "TEST BUILD SUCCEEDED",
+      "nativeUIFunctions": 0
+    },
+    "tabletAnimationObservation": {
+      "log": "/private/tmp/PlannerNativeCatalogEstimatesTabletLayout.log",
+      "capture": "tablet-animation-wait.png",
+      "limit": "A live simulator capture shows static itinerary content without a loading spinner while XCTest reports animation-completion waits. The capture does not establish the cause or responsiveness.",
+      "observedTimeouts": 23
+    },
+    "tabletLayout": {
+      "bundle": "/private/tmp/PlannerNativeCatalogEstimatesTabletLayout.xcresult",
+      "functions": 2,
+      "failures": 0,
+      "skips": 0,
+      "testSeconds": 1647.045
+    }
+  },
+  "redEvidence": {
+    "list": "/private/tmp/PlannerCatalogListEstimatesRed.log: absent public row fields caused compilation failure, not an executed runtime red.",
+    "itinerary": "/private/tmp/PlannerCatalogItineraryEstimatesRuntimeRed.log: executed missing manual/totals failures.",
+    "http": "/private/tmp/PlannerCatalogContainerEstimatesHTTPRed.xcresult: executed missing manualEstimate/containerEstimates wire fields.",
+    "native": "/private/tmp/PlannerNativeCatalogEstimatesRed.xcresult: executed absent native catalog caption/value.",
+    "excludedAttempts": [
+      "Initial Itinerary test used an incorrect globalItem argument label and Schedule form property.",
+      "Tablet mixed bundle tapped a retained offscreen control in one function. Another displayed SwiftDataError 1 while the host disk was full. Both failures remain recorded; the corrected rerun passes but does not establish the SwiftData error cause.",
+      "The first Markdown lint command could not find its shared temporary config; a task-specific equivalent config was created."
+    ]
+  },
+  "baselineRegression": {
+    "commit": "2c18cab",
+    "bundle": "/private/tmp/PlannerCatalogBaselineRowRouting.xcresult",
+    "result": "Failed",
+    "passedFunctions": 21,
+    "failedFunctions": 1,
+    "function": "RowRoutingTests/malformedTimedAppointmentsRejectWithoutChangingSourceWindowOrRecovery()",
+    "reason": "The old test expected unavailable at /command/source/kind for an unknown Itinerary. The same missingReference at /command/source failure occurs on unchanged baseline. The fixture now matches supported Itinerary scheduling; no schedule production behavior changed.",
+    "cleanup": "Only the generated baseline DerivedData directory was removed to free space. Git source, baseline result bundle and logs were retained."
+  },
+  "remainingGates": [
+    "Native calculated-overflow catalog warning regression and fix",
+    "Further native context/scale fixtures",
+    "Calendar",
+    "Complete administration/restoration",
+    "Native Mac UI runtime",
+    "Signed physical iCloud/account/Share",
+    "Whole-app polish"
+  ],
+  "commands": {
+    "http": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests/ManualContainerEstimateRoutingTests\" \"-only-testing:PlannerMCPTests/RowRoutingTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerMCPDerivedData -resultBundlePath /private/tmp/PlannerCatalogContainerEstimatesHTTPQualified.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "baseline": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project /private/tmp/planner-catalog-baseline.zz8xXi/Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests/RowRoutingTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerCatalogBaselineMCPDerivedData -resultBundlePath /private/tmp/PlannerCatalogBaselineRowRouting.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "phoneLayout": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedContainerEstimateJourneyTests/testRepeatedListPreviewsKeepIndependentItineraryBudgetsThroughHeaderFilteringAndRelaunch\" \"-only-testing:PlannerNavigationUITests/SavedContainerEstimateJourneyTests/testMissingFinishedEstimateShowsUpperBoundThenResolvesAndFinishesWithoutClearingManualTotal\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerNativeCatalogEstimatesPhoneLayout.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "tabletLayout": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedContainerEstimateJourneyTests/testRepeatedListPreviewsKeepIndependentItineraryBudgetsThroughHeaderFilteringAndRelaunch\" \"-only-testing:PlannerNavigationUITests/SavedContainerEstimateJourneyTests/testMissingFinishedEstimateShowsUpperBoundThenResolvesAndFinishesWithoutClearingManualTotal\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -resultBundlePath /private/tmp/PlannerNativeCatalogEstimatesTabletLayout.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "macBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData CODE_SIGNING_ALLOWED=NO build-for-testing",
+    "core": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --jobs 1 --filter 'CatalogContainerEstimateTests|ItineraryListSummaryTests|ManualContainerBudgetTests|ContainerEstimateTests|ListCatalogTests|ItineraryCatalogTests|ItemRowReadTests|RowLabelReadTests|InheritedScheduleRowTests'"
+  },
+  "review": {
+    "standards": "No documented-rule findings.",
+    "spec": "Manual catalog budgets conceal a calculated unavailable value after overflow. Native fixture regression and warning fix are next; the catalog checkpoint does not qualify this edge case."
+  }
+}

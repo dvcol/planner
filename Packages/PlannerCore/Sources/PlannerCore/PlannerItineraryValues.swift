@@ -146,9 +146,13 @@ struct ItinerarySnapshot {
   var reference: PlannerEntityReference { .init(kind: .itinerary, id: id) }
 
   func read(
-    datasetId: UUID, memberships: [MembershipSnapshot], items: [ItemSnapshot], lists: [ListSnapshot]
+    datasetId: UUID, memberships: [MembershipSnapshot], items: [ContainerEstimateItemSnapshot],
+    lists: [ContainerEstimateListSnapshot]
   ) throws -> PlannerItinerarySourceRead {
-    let summary = try progressAndEstimates(memberships: memberships, items: items, lists: lists)
+    let summary = try ContainerEstimateItinerarySnapshot(
+      reference: reference, manualEstimate: input.manualEstimate, archived: archived,
+      entries: entries
+    ).progressAndEstimates(memberships: memberships, items: items, lists: lists)
     return try PlannerItinerarySourceRead(
       source: reference, sourceLifetimeId: lifetimeId,
       content: input.readContent(links: links.map(\.read)), labels: labels,

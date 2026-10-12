@@ -7,6 +7,8 @@ struct SavedPlannerList: Identifiable {
   let source: PlannerEntityReference
   let name: String
   let archived: Bool
+  let manualEstimate: PlannerEstimate?
+  let estimates: PlannerContainerEstimates
   var id: UUID { source.id }
 }
 
@@ -25,6 +27,8 @@ struct SavedPlannerLabel: Identifiable {
 struct SavedPlannerItinerary: Identifiable {
   let source: PlannerEntityReference
   let title: String
+  let manualEstimate: PlannerEstimate?
+  let estimates: PlannerContainerEstimates
   var id: UUID { source.id }
 }
 
@@ -132,10 +136,20 @@ final class SavedPlannerStore {
         request: .rows(generation: snapshot.generation, offset: 0, limit: Int64.max))
       {
       case .rows(let window):
-        return window.rows.compactMap { row in
-          guard case .source(let source) = row.identity, source.kind == .list else { return nil }
-          return SavedPlannerList(source: source, name: row.title, archived: row.archived == true)
+        var lists: [SavedPlannerList] = []
+        for row in window.rows {
+          guard case .source(let source) = row.identity, source.kind == .list,
+            let estimates = row.containerEstimates
+          else {
+            alertMessage = "Planner could not read its List estimates."
+            return nil
+          }
+          lists.append(
+            .init(
+              source: source, name: row.title, archived: row.archived == true,
+              manualEstimate: row.manualEstimate, estimates: estimates))
         }
+        return lists
       case .failed(let reason): alertMessage = reason.message
       default: alertMessage = "Planner could not read its Lists."
       }
@@ -206,12 +220,20 @@ final class SavedPlannerStore {
         request: .rows(generation: snapshot.generation, offset: 0, limit: Int64.max))
       {
       case .rows(let window):
-        return window.rows.compactMap { row in
-          guard case .source(let source) = row.identity, source.kind == .itinerary else {
+        var itineraries: [SavedPlannerItinerary] = []
+        for row in window.rows {
+          guard case .source(let source) = row.identity, source.kind == .itinerary,
+            let estimates = row.containerEstimates
+          else {
+            alertMessage = "Planner could not read its Itinerary estimates."
             return nil
           }
-          return SavedPlannerItinerary(source: source, title: row.title)
+          itineraries.append(
+            .init(
+              source: source, title: row.title,
+              manualEstimate: row.manualEstimate, estimates: estimates))
         }
+        return itineraries
       case .failed(let reason): alertMessage = reason.message
       default: alertMessage = "Planner could not read its Itineraries."
       }

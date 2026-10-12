@@ -821,7 +821,14 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     let archivedTokyo = application.savedPlannerListRow("Tokyo")
     XCTAssertTrue(archivedTokyo.waitForExistence(timeout: 10))
     XCTAssertEqual(archivedTokyo.identifier, tokyoIdentifier)
-    XCTAssertTrue(archivedTokyo.waitForPlannerValue("Archived"))
+    XCTAssertEqual(
+      XCTWaiter.wait(
+        for: [
+          XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value BEGINSWITH %@", "Archived."),
+            object: archivedTokyo)
+        ],
+        timeout: 5), .completed)
     XCTAssertFalse(application.savedPlannerListRow("Wishlist").exists)
     openList("Tokyo", itemTitle: "Zulu", application: application)
     XCTAssertTrue(application.staticTexts["Archived List"].waitForExistence(timeout: 10))

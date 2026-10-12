@@ -555,9 +555,7 @@ public actor Planner {
               .itinerary(
                 try record.value().read(
                   datasetId: identity.datasetId, memberships: membershipSnapshots(context),
-                  items: context.fetch(FetchDescriptor<PlannerSchemaV15.Item>()).map {
-                    try $0.value()
-                  }, lists: listSnapshots(context))))
+                  items: itemEstimateSnapshots(context), lists: listEstimateSnapshots(context))))
           }
           if source.kind == .category {
             return .source(
@@ -585,9 +583,8 @@ public actor Planner {
               .list(
                 try record.value().read(
                   datasetId: identity.datasetId, memberships: membershipSnapshots(context),
-                  items: context.fetch(FetchDescriptor<PlannerSchemaV15.Item>()).map {
-                    try $0.value()
-                  }, entries: itineraryEntrySnapshots(context))))
+                  items: itemEstimateSnapshots(context), entries: itineraryEntrySnapshots(context)))
+            )
           }
           if source.kind == .schedule {
             return .source(
@@ -1456,6 +1453,42 @@ public actor Planner {
       ], unresolvedReferences: [])
   }
 
+  private struct CatalogEstimateGraph {
+    let memberships: [MembershipSnapshot]
+    let items: [ContainerEstimateItemSnapshot]
+    let lists: [ContainerEstimateListSnapshot]
+    let entries: [ItineraryEntrySnapshot]
+  }
+
+  private func catalogEstimateGraph(
+    identities: [PlannerRowIdentity], context: ModelContext
+  ) throws -> CatalogEstimateGraph {
+    let sources = identities.compactMap { identity -> PlannerEntityReference? in
+      guard case .source(let source) = identity else { return nil }
+      return source
+    }
+    let itineraryIdentifiers = sources.filter { $0.kind == .itinerary }.map(\.id)
+    var listIdentifiers = sources.filter { $0.kind == .list }.map(\.id)
+    guard !itineraryIdentifiers.isEmpty || !listIdentifiers.isEmpty else {
+      return .init(memberships: [], items: [], lists: [], entries: [])
+    }
+    let entries: [ItineraryEntrySnapshot]
+    if itineraryIdentifiers.isEmpty {
+      entries = []
+    } else {
+      entries = try itineraryEntrySnapshots(context, itineraryIdentifiers: itineraryIdentifiers)
+    }
+    listIdentifiers += entries.filter { $0.source.kind == "list" }.map { $0.source.id }
+    let memberships = try membershipSnapshots(context, listIdentifiers: listIdentifiers)
+    let itemIdentifiers =
+      memberships.map { $0.item.id }
+      + entries.filter { $0.source.kind == "item" }.map { $0.source.id }
+    return .init(
+      memberships: memberships,
+      items: try itemEstimateSnapshots(context, itemIdentifiers: itemIdentifiers),
+      lists: try listEstimateSnapshots(context, listIdentifiers: listIdentifiers), entries: entries)
+  }
+
   private func readRows(
     session: PlannerDatasetSession, context: ModelContext, generation: UUID, offset: Int64,
     limit: Int64
@@ -1478,6 +1511,7 @@ public actor Planner {
       let count = min(limit, snapshot.matchingCount - offset)
       identities = Array(snapshot.rows.dropFirst(Int(offset)).prefix(Int(count)))
     }
+    let estimateGraph = try catalogEstimateGraph(identities: identities, context: context)
     let rows = try identities.map { identity in
       let source: PlannerEntityReference
       let localDone: Bool?
@@ -1515,7 +1549,8 @@ public actor Planner {
         let category = try categorySnapshot(source.id, context: context)
         return PlannerRowRead(
           identity: identity, sourceLifetimeId: category.lifetimeId,
-          title: category.content.name, subtitle: nil, estimate: nil,
+          title: category.content.name, subtitle: nil, estimate: nil, manualEstimate: nil,
+          containerEstimates: nil,
           globalDone: nil, localDone: nil, effectiveDone: nil, archived: nil,
           hasLocation: false, hasLinks: false, ownedLocation: nil, previewLink: nil,
           labels: [], scheduleSummary: .none)
@@ -1524,7 +1559,8 @@ public actor Planner {
         let tag = try tagSnapshot(source.id, context: context)
         return PlannerRowRead(
           identity: identity, sourceLifetimeId: tag.lifetimeId,
-          title: tag.content.name, subtitle: nil, estimate: nil,
+          title: tag.content.name, subtitle: nil, estimate: nil, manualEstimate: nil,
+          containerEstimates: nil,
           globalDone: nil, localDone: nil, effectiveDone: nil, archived: nil,
           hasLocation: false, hasLinks: false, ownedLocation: nil, previewLink: nil,
           labels: [], scheduleSummary: .none)
@@ -1534,22 +1570,29 @@ public actor Planner {
         var descriptor = FetchDescriptor<PlannerSchemaV15.List>(
           predicate: #Predicate { $0.id == sourceIdentifier })
         descriptor.fetchLimit = 2
-        descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.name, \.archived]
+        descriptor.propertiesToFetch = [
+          \.id, \.lifetimeId, \.name, \.archived, \.manualEstimateData,
+        ]
         let records = try context.fetch(descriptor)
         guard records.count == 1, let list = records.first, let lifetimeId = list.lifetimeId,
           !list.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         else {
           throw PlannerFailure("readUnavailable", "A snapshot List is missing or unresolved.")
         }
+        let estimateSource = try list.estimateSnapshot()
+        let summary = try estimateSource.progressAndEstimates(
+          memberships: estimateGraph.memberships, items: estimateGraph.items)
         return PlannerRowRead(
           identity: identity, sourceLifetimeId: lifetimeId,
           title: list.name, subtitle: nil, estimate: nil,
+          manualEstimate: estimateSource.manualEstimate, containerEstimates: summary.estimates,
           globalDone: nil, localDone: nil, effectiveDone: nil, archived: list.archived,
           hasLocation: false, hasLinks: false, ownedLocation: nil, previewLink: nil,
           labels: [], scheduleSummary: .none)
       }
       if source.kind == .itinerary {
-        return try itineraryCatalogRow(identity: identity, sourceId: source.id, context: context)
+        return try itineraryCatalogRow(
+          identity: identity, sourceId: source.id, estimateGraph: estimateGraph, context: context)
       }
       if source.kind == .schedule {
         return try scheduleCatalogRow(identity: identity, sourceId: source.id, context: context)
@@ -1651,12 +1694,15 @@ public actor Planner {
   }
 
   private func itineraryCatalogRow(
-    identity: PlannerRowIdentity, sourceId: UUID, context: ModelContext
+    identity: PlannerRowIdentity, sourceId: UUID, estimateGraph: CatalogEstimateGraph,
+    context: ModelContext
   ) throws -> PlannerRowRead {
     var descriptor = FetchDescriptor<PlannerSchemaV15.Itinerary>(
       predicate: #Predicate { $0.id == sourceId })
     descriptor.fetchLimit = 2
-    descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.title, \.archived, \.locationData]
+    descriptor.propertiesToFetch = [
+      \.id, \.lifetimeId, \.title, \.archived, \.locationData, \.manualEstimateData,
+    ]
     let records = try context.fetch(descriptor)
     guard records.count == 1, let itinerary = records.first, let lifetimeId = itinerary.lifetimeId
     else {
@@ -1685,9 +1731,15 @@ public actor Planner {
     let preview = try context.fetch(selected).first?.value(
       ownerId: sourceId, ownerLifetimeId: lifetimeId, ownerKind: "itinerary"
     ).read
+    let estimateSource = try itinerary.estimateSnapshot(entries: estimateGraph.entries)
+    let summary = try estimateSource.progressAndEstimates(
+      memberships: estimateGraph.memberships, items: estimateGraph.items, lists: estimateGraph.lists
+    )
     return PlannerRowRead(
       identity: identity, sourceLifetimeId: lifetimeId, title: content.title,
-      subtitle: nil, estimate: nil, globalDone: nil, localDone: nil, effectiveDone: nil,
+      subtitle: nil, estimate: nil, manualEstimate: estimateSource.manualEstimate,
+      containerEstimates: summary.estimates, globalDone: nil,
+      localDone: nil, effectiveDone: nil,
       archived: itinerary.archived, hasLocation: content.location != nil,
       hasLinks: try context.fetchCount(owned) > 0,
       ownedLocation: content.location, previewLink: preview,
@@ -1717,7 +1769,7 @@ public actor Planner {
     }
     return PlannerRowRead(
       identity: identity, sourceLifetimeId: resolved.snapshot.lifetimeId,
-      title: title, subtitle: nil, estimate: nil,
+      title: title, subtitle: nil, estimate: nil, manualEstimate: nil, containerEstimates: nil,
       globalDone: nil, localDone: nil, effectiveDone: nil, archived: nil,
       hasLocation: false, hasLinks: false, ownedLocation: nil, previewLink: nil,
       labels: [], scheduleSummary: .none)
@@ -3196,8 +3248,47 @@ public actor Planner {
     try context.fetch(FetchDescriptor<PlannerSchemaV15.List>()).map { try $0.value() }
   }
 
-  private func membershipSnapshots(_ context: ModelContext) throws -> [MembershipSnapshot] {
-    let snapshots = try context.fetch(FetchDescriptor<PlannerSchemaV15.Membership>()).map {
+  private func itemEstimateSnapshots(
+    _ context: ModelContext, itemIdentifiers: [UUID]? = nil
+  ) throws -> [ContainerEstimateItemSnapshot] {
+    var descriptor = FetchDescriptor<PlannerSchemaV15.Item>()
+    if let itemIdentifiers {
+      let optionalIdentifiers = itemIdentifiers.map(Optional.some)
+      descriptor.predicate = #Predicate { optionalIdentifiers.contains($0.id) }
+    }
+    descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.estimateData, \.globalDone, \.archived]
+    let snapshots = try context.fetch(descriptor).map { try $0.estimateSnapshot() }
+    guard Set(snapshots.map(\.id)).count == snapshots.count else {
+      throw PlannerFailure("readUnavailable", "Estimate Items have duplicate identities.")
+    }
+    return snapshots
+  }
+
+  private func listEstimateSnapshots(
+    _ context: ModelContext, listIdentifiers: [UUID]? = nil
+  ) throws -> [ContainerEstimateListSnapshot] {
+    var descriptor = FetchDescriptor<PlannerSchemaV15.List>()
+    if let listIdentifiers {
+      let optionalIdentifiers = listIdentifiers.map(Optional.some)
+      descriptor.predicate = #Predicate { optionalIdentifiers.contains($0.id) }
+    }
+    descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.manualEstimateData, \.archived]
+    let snapshots = try context.fetch(descriptor).map { try $0.estimateSnapshot() }
+    guard Set(snapshots.map(\.id)).count == snapshots.count else {
+      throw PlannerFailure("readUnavailable", "Estimate Lists have duplicate identities.")
+    }
+    return snapshots
+  }
+
+  private func membershipSnapshots(
+    _ context: ModelContext, listIdentifiers: [UUID]? = nil
+  ) throws -> [MembershipSnapshot] {
+    var descriptor = FetchDescriptor<PlannerSchemaV15.Membership>()
+    if let listIdentifiers {
+      let optionalIdentifiers = listIdentifiers.map(Optional.some)
+      descriptor.predicate = #Predicate { optionalIdentifiers.contains($0.listId) }
+    }
+    let snapshots = try context.fetch(descriptor).map {
       try $0.value()
     }
     guard Set(snapshots.map(\.id)).count == snapshots.count,
@@ -3209,8 +3300,15 @@ public actor Planner {
     return snapshots
   }
 
-  private func itineraryEntrySnapshots(_ context: ModelContext) throws -> [ItineraryEntrySnapshot] {
-    let entries = try context.fetch(FetchDescriptor<PlannerSchemaV15.ItineraryEntry>()).map {
+  private func itineraryEntrySnapshots(
+    _ context: ModelContext, itineraryIdentifiers: [UUID]? = nil
+  ) throws -> [ItineraryEntrySnapshot] {
+    var descriptor = FetchDescriptor<PlannerSchemaV15.ItineraryEntry>()
+    if let itineraryIdentifiers {
+      let optionalIdentifiers = itineraryIdentifiers.map(Optional.some)
+      descriptor.predicate = #Predicate { optionalIdentifiers.contains($0.itineraryId) }
+    }
+    let entries = try context.fetch(descriptor).map {
       try $0.value()
     }
     guard Set(entries.map(\.id)).count == entries.count else {
