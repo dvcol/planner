@@ -36,7 +36,13 @@ struct PlannerFixtureApp: App {
 
 struct FixturePreviewProvider: PlannerLinkPreviewProvider, PlannerAddressPreviewProvider {
   func linkPreview(for originalURL: String) async throws -> PlannerLinkPreviewContent {
-    .init(title: "Fixture link", imageData: nil)
+    guard originalURL == "https://fixtures.invalid/image" else {
+      return .init(title: "Fixture link", imageData: nil)
+    }
+    guard let imageURL = Bundle.main.url(forResource: "website-image", withExtension: "png") else {
+      throw CocoaError(.fileNoSuchFile)
+    }
+    return .init(title: "Fixture image preview", imageData: try Data(contentsOf: imageURL))
   }
 
   func addressPreview(for address: String) async throws -> [PlannerAddressCandidate] { [] }

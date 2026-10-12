@@ -7,6 +7,7 @@ enum PlannerFixtureDataset {
     case catalogOverflow = "catalog-overflow"
     case pinnedAddress = "pinned-address"
     case pinnedEmptyName = "pinned-empty-name"
+    case linkImage = "link-image"
   }
 
   static func makeStore() async throws -> SavedPlannerStore {
@@ -45,6 +46,15 @@ enum PlannerFixtureDataset {
         ).outcome
       else { throw CancellationError() }
       return result
+    }
+    if scenario == .linkImage {
+      _ = try await save(
+        .createItem(
+          content: .init(
+            title: "Museum", notes: "Original notes",
+            links: [.init(originalUrl: "https://fixtures.invalid/image", label: "Museum guide")]
+          )))
+      return SavedPlannerStore(configuration: configuration)
     }
     if scenario == .pinnedAddress || scenario == .pinnedEmptyName {
       let displayName = scenario == .pinnedEmptyName ? "" : "Museum entrance"
