@@ -38,6 +38,8 @@ struct PlannerFixtureApp: App {
 final class FixturePreviewProvider: PlannerLinkPreviewProvider, PlannerAddressPreviewProvider {
   private var hasFailedRetryLink = false
   private var hasFailedRetryAddress = false
+  private var pendingAddressPreviewContinuation:
+    CheckedContinuation<[PlannerAddressCandidate], any Error>?
   func linkPreview(for originalURL: String) async throws -> PlannerLinkPreviewContent {
     if originalURL == "https://fixtures.invalid/retry", !hasFailedRetryLink {
       hasFailedRetryLink = true
@@ -53,6 +55,34 @@ final class FixturePreviewProvider: PlannerLinkPreviewProvider, PlannerAddressPr
   }
 
   func addressPreview(for address: String) async throws -> [PlannerAddressCandidate] {
+    if address == "Fixture delayed address" {
+      return try await withCheckedThrowingContinuation { continuation in
+        guard pendingAddressPreviewContinuation == nil else {
+          continuation.resume(throwing: CancellationError())
+          return
+        }
+        pendingAddressPreviewContinuation = continuation
+      }
+    }
+    if address == "Fixture current address" {
+      let candidateName: String
+      if let continuation = pendingAddressPreviewContinuation {
+        pendingAddressPreviewContinuation = nil
+        continuation.resume(returning: [
+          .init(
+            id: "outdated", name: "Outdated entrance", address: "4 Fixture Way",
+            latitude: 35.662, longitude: 139.717)
+        ])
+        candidateName = "Current entrance"
+      } else {
+        candidateName = "Reopened entrance"
+      }
+      return [
+        .init(
+          id: "current", name: candidateName, address: "5 Fixture Way",
+          latitude: 35.655, longitude: 139.717)
+      ]
+    }
     if address == "Fixture retry address" {
       guard hasFailedRetryAddress else {
         hasFailedRetryAddress = true

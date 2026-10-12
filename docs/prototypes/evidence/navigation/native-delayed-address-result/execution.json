@@ -1,0 +1,56 @@
+{
+  "baseCommit": "bbb9a49",
+  "sourceHashes": {
+    "PlannerFixtures/PlannerFixtureApp.swift": "ebc9f850765d44637978189068d59afb2ee05e0f787cb574d4f8b013d8fe4363",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "ac1ad084f6e6053a7fd484e7d07b351047869a2b50236d93756c6d5293ae5fc8",
+    "PlannerFixtureUITests/AddressCandidateJourneyTests.swift": "147df94bc5a7f8e319523cd68c4ede8e0d0b86fb013f0231e7c036aa6280c64f",
+    "Planner/Scenes/ItemAddressPreview.swift": "7dc96f6f5ea4b567f0d450739f063447dbac4b9b286c96ad5027f5f8cd5b1e6e",
+    "Planner/Scenes/ItemLocationSection.swift": "5712c5ac9ff059a73dd6abe162a58fc56532f1049926d8b75dcb105e415f21b9",
+    "Planner/Scenes/SavedEditItemForm.swift": "19cace300840fa84a1c24b3e63ff872e555c07aaf2d3402f4fefd7eeb9b3a86f",
+    "Planner.xcodeproj/project.pbxproj": "4bced3d822b15a78ffeb25fece1ff83c4f6b557417745c2c7ffdbc13830e5771"
+  },
+  "commands": {
+    "red": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/AddressCandidateJourneyTests/testDelayedAddressResultCannotReplaceTheEditedAddressPreview\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerDelayedAddressRed.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "redLog": "/private/tmp/PlannerDelayedAddressRed.log",
+    "phone": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/AddressCandidateJourneyTests/testDelayedAddressResultCannotReplaceTheEditedAddressPreview\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerDelayedAddressPhoneGreen.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "phoneLog": "/private/tmp/PlannerDelayedAddressPhoneGreen.log",
+    "tablet": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/AddressCandidateJourneyTests/testDelayedAddressResultCannotReplaceTheEditedAddressPreview\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerDelayedAddressTabletGreen.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "tabletLog": "/private/tmp/PlannerDelayedAddressTabletGreen.log",
+    "macBuild": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData CODE_SIGNING_ALLOWED=NO build-for-testing",
+    "macBuildLog": "/private/tmp/PlannerDelayedAddressMacBuild.log"
+  },
+  "qualification": {
+    "red": "Executed absent Finding address after owned source checks; 0 passed/1 failed/0 skipped.",
+    "phone": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "result": "/private/tmp/PlannerDelayedAddressPhoneGreen.xcresult"
+    },
+    "tablet": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "result": "/private/tmp/PlannerDelayedAddressTabletGreen.xcresult"
+    },
+    "macBuild": "TEST BUILD SUCCEEDED",
+    "macUIFunctions": 0,
+    "strictSwiftFiles": 3,
+    "markdownFiles": 1,
+    "captures": "Inspected all final phone/tablet pending, current-pin and owned-editor captures; original images retained."
+  },
+  "review": {
+    "standards": "No actionable findings.",
+    "spec": "No scope or behavior defects. Current entrance proves pending old continuation was actually resumed after the saved edit; native pin/source/editor/reopen assertions match."
+  },
+  "sourceEpoch": "Phone/tablet/Mac use the same fixture/test source epoch. Production app/cache/Core unchanged. Continuation gate uses no timed delay or production hook.",
+  "remainingGates": [
+    "Delayed native link callback",
+    "Native loading/scale Q58",
+    "Import application/recovery",
+    "Calendar",
+    "Broad native Mac runtime",
+    "Signed physical sync/account/Share",
+    "Whole-app polish"
+  ]
+}

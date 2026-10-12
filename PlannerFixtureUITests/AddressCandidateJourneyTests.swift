@@ -130,6 +130,74 @@ final class AddressCandidateJourneyTests: XCTestCase {
     assertOwnedLocation("Fixture retry address", application: application)
   }
 
+  func testDelayedAddressResultCannotReplaceTheEditedAddressPreview() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = [
+      "--fixture", "address-delay", "--fixture-dataset", UUID().uuidString,
+    ]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    let row = application.savedPlannerItemRows("Delayed place").firstMatch
+    XCTAssertTrue(row.waitForExistence(timeout: 20))
+    let identifier = row.identifier
+    row.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Saved location"].waitForExistence(timeout: 5))
+    assertOwnedLocation("Fixture delayed address", application: application)
+    let loading = application.descendants(matching: .any).matching(
+      NSPredicate(format: "label == %@", "Finding address")
+    ).firstMatch
+    XCTAssertTrue(loading.waitForExistence(timeout: 5))
+    let map = previewMap(application)
+    XCTAssertFalse(map.exists)
+    capture(application, name: "Controlled address lookup stays pending before editing")
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Edit Item").activateForPlannerJourney()
+    let address = application.textFields["saved.item.edit.location.address"]
+    reveal(address, application: application)
+    let originalValue = address.value as? String ?? ""
+    address.activateForPlannerJourney()
+    address.typeText(
+      String(repeating: XCUIKeyboardKey.delete.rawValue, count: originalValue.count)
+        + "Fixture current address")
+    XCTAssertTrue(address.waitForPlannerValue("Fixture current address"))
+    application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Fixture current address"].waitForExistence(timeout: 5))
+    XCTAssertTrue(map.waitForExistence(timeout: 10))
+    let currentPin = map.descendants(matching: .any).matching(
+      NSPredicate(format: "label CONTAINS %@", "Current entrance")
+    ).firstMatch
+    XCTAssertTrue(currentPin.waitForExistence(timeout: 10))
+    let outdatedPin = map.descendants(matching: .any).matching(
+      NSPredicate(format: "label CONTAINS %@", "Outdated entrance")
+    ).firstMatch
+    XCTAssertFalse(outdatedPin.exists)
+    XCTAssertTrue(loading.waitForNonExistence(timeout: 5))
+    XCTAssertFalse(application.staticTexts["Fixture delayed address"].exists)
+    reveal(map, application: application)
+    capture(application, name: "Current address pin survives the released outdated result")
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Edit Item").activateForPlannerJourney()
+    assertUnchangedLocationEditor("Fixture current address", application: application)
+    capture(application, name: "Only the explicit address edit is saved")
+    application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
+    XCTAssertTrue(currentPin.waitForExistence(timeout: 5))
+    XCTAssertFalse(outdatedPin.exists)
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    XCTAssertTrue(row.waitForExistence(timeout: 20))
+    XCTAssertEqual(row.identifier, identifier)
+    row.activateForPlannerJourney()
+    XCTAssertTrue(map.waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      map.descendants(matching: .any).matching(
+        NSPredicate(format: "label CONTAINS %@", "Reopened entrance")
+      ).firstMatch.waitForExistence(timeout: 10))
+    XCTAssertFalse(outdatedPin.exists)
+    assertOwnedLocation("Fixture current address", application: application)
+  }
+
   private func assertUnchangedLocationEditor(
     _ expectedAddress: String, application: XCUIApplication
   ) {
