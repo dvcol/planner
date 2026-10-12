@@ -1,0 +1,38 @@
+{
+  "beforeCommit": "3b43d43",
+  "mode": "localOnly",
+  "storageSchemaVersion": 14,
+  "portableFormatVersion": 1,
+  "core": {
+    "log": "core-final.log",
+    "functions": 10,
+    "suites": 8,
+    "failures": 0,
+    "scope": "Archived progress plus affected query, completion, archive and bulk suites."
+  },
+  "http": {
+    "bundle": "/private/tmp/PlannerArchivedProgressHTTPFinal.xcresult",
+    "functions": 9,
+    "suites": 2,
+    "failures": 0,
+    "skips": 0,
+    "scope": "Actual loopback HTTP, exact count strings, empty container keys and contextual appearance admission."
+  },
+  "sourceEpoch": "source-epoch.json",
+  "strictSwiftFiles": 7,
+  "functionalReds": [
+    "Archived child source remains partial.",
+    "Filtered query progress omits archived retirement.",
+    "Repeated archived List branches omit retirement.",
+    "HTTP responses omit archivedCount and finishedCount."
+  ],
+  "additionalCorrection": "An existing exact appearance key assertion omitted the contracted labels field; it now includes labels and asserts this fixture has none. The final affected suite passes.",
+  "remainingGates": [
+    "Native progress presentation and header matching",
+    "Native phone/tablet/Mac runtime",
+    "Manual and aggregate estimates/remaining",
+    "Calendar",
+    "Signed physical sync/account/Share",
+    "Whole-app polish"
+  ]
+}

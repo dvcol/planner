@@ -1,0 +1,48 @@
+Building for debugging...
+[1 / 1]
+[1 / 13] PlannerCore
+[2 / 8] PlannerCoreStoreTests-product
+[4 / 10] PlannerCoreStoreTests-product
+[9 / 11] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (4,68 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ItineraryEntryCompletionTests started.
+◇ Suite ItemListQueryTests started.
+◇ Suite BulkCompletionTests started.
+◇ Suite ItineraryItemFilterTests started.
+◇ Test listIdentityGroupsNarrowLiveMembershipsAndPreserveContextualProgress() started.
+◇ Test directCompletionIsIndependentAndGlobalReopenRevealsRetainedLocalState() started.
+◇ Suite ItineraryItemQueryTests started.
+◇ Suite ItineraryArchiveTests started.
+◇ Test itineraryFiltersNarrowAppearancesCumulativelyAndSortsKeepUnknownDurationsLast() started.
+◇ Suite ArchivedContainerProgressTests started.
+◇ Test itineraryQueriesRetainIndependentAppearancesFullProgressAndLiveMemberships() started.
+◇ Suite ListArchiveTests started.
+◇ Test reviewedBulkChangesEveryScopedAppearanceAndRetainsGlobalAndOtherContextStates() started.
+◇ Test archivedRepeatedListBranchesFinishOnlyTheirItineraryAppearances() started.
+◇ Test itineraryArchiveAndUnarchivePreserveLiveContentReferencesAndEveryCompletionScope() started.
+◇ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() started.
+◇ Test missingListAndObstructedRecoveryLeaveArchiveUnapplied() started.
+◇ Test archiveRetainsListContentAndOldReplayCannotUndoLaterUnarchive() started.
+✔ Test missingListAndObstructedRecoveryLeaveArchiveUnapplied() passed after 0.123 seconds.
+✔ Test archiveRetainsListContentAndOldReplayCannotUndoLaterUnarchive() passed after 0.270 seconds.
+✔ Suite ListArchiveTests passed after 0.270 seconds.
+✔ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() passed after 0.367 seconds.
+✔ Test directCompletionIsIndependentAndGlobalReopenRevealsRetainedLocalState() passed after 0.448 seconds.
+✔ Suite ItineraryEntryCompletionTests passed after 0.448 seconds.
+✔ Test archivedRepeatedListBranchesFinishOnlyTheirItineraryAppearances() passed after 0.467 seconds.
+✔ Suite ArchivedContainerProgressTests passed after 0.467 seconds.
+✔ Test listIdentityGroupsNarrowLiveMembershipsAndPreserveContextualProgress() passed after 0.525 seconds.
+✔ Suite ItemListQueryTests passed after 0.525 seconds.
+✔ Test itineraryArchiveAndUnarchivePreserveLiveContentReferencesAndEveryCompletionScope() passed after 0.576 seconds.
+✔ Suite ItineraryArchiveTests passed after 0.576 seconds.
+✔ Test itineraryFiltersNarrowAppearancesCumulativelyAndSortsKeepUnknownDurationsLast() passed after 0.634 seconds.
+✔ Suite ItineraryItemFilterTests passed after 0.634 seconds.
+✔ Test itineraryQueriesRetainIndependentAppearancesFullProgressAndLiveMemberships() passed after 0.653 seconds.
+✔ Suite ItineraryItemQueryTests passed after 0.653 seconds.
+✔ Test reviewedBulkChangesEveryScopedAppearanceAndRetainsGlobalAndOtherContextStates() passed after 0.676 seconds.
+✔ Suite BulkCompletionTests passed after 0.677 seconds.
+✔ Test run with 10 tests in 8 suites passed after 0.677 seconds.

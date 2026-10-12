@@ -1238,7 +1238,7 @@ public actor Planner {
     let appearances = children.map {
       ContextualQueryAppearance(
         item: $0.item, appearance: .listMembership(listId: listId, membershipId: $0.id),
-        localDone: $0.localDone)
+        localDone: $0.localDone, branchArchived: false)
     }
     return try contextualItemQuerySnapshot(
       session: session, container: .init(kind: .list, id: listId), appearances: appearances,
@@ -1274,11 +1274,19 @@ public actor Planner {
           .init(
             item: entry.source,
             appearance: .directItineraryItem(itineraryId: itineraryId, entryId: entry.id),
-            localDone: entry.localDone == true))
+            localDone: entry.localDone == true, branchArchived: false))
         continue
       }
       let listId = entry.source.id
       let listLifetimeId = entry.source.lifetimeId
+      var lists = FetchDescriptor<PlannerSchemaV14.List>(
+        predicate: #Predicate { $0.id == listId && $0.lifetimeId == listLifetimeId })
+      lists.fetchLimit = 2
+      lists.propertiesToFetch = [\.id, \.lifetimeId, \.archived]
+      let matchingLists = try context.fetch(lists)
+      guard matchingLists.count == 1, let list = matchingLists.first else {
+        throw PlannerFailure("readUnavailable", "An itinerary List entry is unresolved.")
+      }
       let memberships = FetchDescriptor<PlannerSchemaV14.Membership>(
         predicate: #Predicate { $0.listId == listId && $0.listLifetimeId == listLifetimeId },
         sortBy: [SortDescriptor(\.rank), SortDescriptor(\.id)])
@@ -1299,7 +1307,7 @@ public actor Planner {
             item: membership.item,
             appearance: .expandedListItem(
               itineraryId: itineraryId, listEntryId: entry.id, membershipId: membership.id),
-            localDone: localDone))
+            localDone: localDone, branchArchived: list.archived))
       }
     }
     return try contextualItemQuerySnapshot(
@@ -1313,6 +1321,7 @@ public actor Planner {
     let item: PlannerBoundIdentity
     let appearance: PlannerAppearance
     let localDone: Bool
+    let branchArchived: Bool
   }
 
   private func contextualItemQuerySnapshot(
@@ -1339,6 +1348,7 @@ public actor Planner {
     }
     let sources = Dictionary(grouping: try context.fetch(items), by: \.id)
     var doneCount: Int64 = 0
+    var archivedCount: Int64 = 0
     let locale = Locale(identifier: "en_US_POSIX")
     var matching:
       [(
@@ -1355,7 +1365,11 @@ public actor Planner {
         throw PlannerFailure("readUnavailable", "A contextual child Item is unresolved.")
       }
       let effectiveDone = item.globalDone || appearance.localDone
-      if effectiveDone { doneCount += 1 }
+      if effectiveDone {
+        doneCount += 1
+      } else if item.archived || appearance.branchArchived {
+        archivedCount += 1
+      }
       switch query.completion {
       case .todo: if effectiveDone { continue }
       case .done: if !effectiveDone { continue }
@@ -1427,7 +1441,7 @@ public actor Planner {
     let state: PlannerContainerProgressState
     if totalCount == 0 {
       state = .empty
-    } else if doneCount == totalCount {
+    } else if doneCount + archivedCount == totalCount {
       state = .complete
     } else {
       state = .partial
@@ -1438,7 +1452,7 @@ public actor Planner {
       progress: [
         PlannerContainerProgress(
           container: container, state: state,
-          doneCount: doneCount, totalCount: totalCount)
+          doneCount: doneCount, totalCount: totalCount, archivedCount: archivedCount)
       ], unresolvedReferences: [])
   }
 

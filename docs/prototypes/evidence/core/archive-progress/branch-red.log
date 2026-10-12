@@ -1,0 +1,53 @@
+Building for debugging...
+[1 / 1]
+[2 / 8] PlannerCoreStoreTests-product
+[3 / 10] PlannerCoreStoreTests-product
+[4 / 10] PlannerCoreStoreTests-product
+[9 / 12] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (4,71 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ArchivedContainerProgressTests started.
+◇ Test archivedRepeatedListBranchesFinishOnlyTheirItineraryAppearances() started.
+◇ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() started.
+✔ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() passed after 0.200 seconds.
+✘ Test archivedRepeatedListBranchesFinishOnlyTheirItineraryAppearances() recorded an issue at ArchivedContainerProgressTests.swift:161:5: Expectation failed: partial.progress.archivedCount == 4
+↳ partial.progress.archivedCount == 4 → false
+↳   partial.progress.archivedCount → 0
+↳     some → 0
+↳     some → 4
+✘ Test archivedRepeatedListBranchesFinishOnlyTheirItineraryAppearances() recorded an issue at ArchivedContainerProgressTests.swift:162:5: Expectation failed: partial.progress.finishedCount == 4
+↳ partial.progress.finishedCount == 4 → false
+↳   partial.progress.finishedCount → 0
+↳     some → 0
+↳     some → 4
+✘ Test archivedRepeatedListBranchesFinishOnlyTheirItineraryAppearances() recorded an issue at ArchivedContainerProgressTests.swift:164:5: Expectation failed: query.progress.first?.archivedCount == 4
+↳ query.progress.first?.archivedCount == 4 → false
+↳   query.progress.first?.archivedCount → 0
+↳     some → 0
+↳     some → 4
+✘ Test archivedRepeatedListBranchesFinishOnlyTheirItineraryAppearances() recorded an issue at ArchivedContainerProgressTests.swift:165:5: Expectation failed: query.progress.first?.finishedCount == 4
+↳ query.progress.first?.finishedCount == 4 → false
+↳   query.progress.first?.finishedCount → 0
+↳     some → 0
+↳     some → 4
+✘ Test archivedRepeatedListBranchesFinishOnlyTheirItineraryAppearances() recorded an issue at ArchivedContainerProgressTests.swift:180:5: Expectation failed: finished.progress.state == .complete
+↳ finished.progress.state == .complete → false
+↳   finished.progress.state → .partial
+✘ Test archivedRepeatedListBranchesFinishOnlyTheirItineraryAppearances() recorded an issue at ArchivedContainerProgressTests.swift:182:5: Expectation failed: finished.progress.archivedCount == 4
+↳ finished.progress.archivedCount == 4 → false
+↳   finished.progress.archivedCount → 0
+↳     some → 0
+↳     some → 4
+✘ Test archivedRepeatedListBranchesFinishOnlyTheirItineraryAppearances() recorded an issue at ArchivedContainerProgressTests.swift:183:5: Expectation failed: finished.progress.finishedCount == 5
+↳ finished.progress.finishedCount == 5 → false
+↳   finished.progress.finishedCount → 1
+↳     some → 1
+↳     some → 5
+✘ Test archivedRepeatedListBranchesFinishOnlyTheirItineraryAppearances() failed after 0.322 seconds with 7 issues.
+✘ Suite ArchivedContainerProgressTests failed after 0.322 seconds with 7 issues.
+✘ Test run with 2 tests in 1 suite failed after 0.322 seconds with 7 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

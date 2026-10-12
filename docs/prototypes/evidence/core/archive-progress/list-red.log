@@ -1,0 +1,23 @@
+Building for debugging...
+[Pre-planning 1 / 154]
+[Planning deferred tasks]
+[1 / 1]
+[2 / 22] PlannerCoreStoreTests-product
+[9 / 19] PlannerCoreTests-product
+[11 / 22] PlannerCoreStoreTests-product
+[15 / 21] PlannerCoreStoreTests-product
+[19 / 21] PlannerCoreStoreTests-product
+Build complete! (4,82 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ArchivedContainerProgressTests started.
+◇ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() started.
+✘ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() recorded an issue at ArchivedContainerProgressTests.swift:56:5: Expectation failed: finished.progress.state == .complete
+↳ finished.progress.state == .complete → false
+↳   finished.progress.state → .partial
+✘ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() failed after 0.206 seconds with 1 issue.
+✘ Suite ArchivedContainerProgressTests failed after 0.207 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.207 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

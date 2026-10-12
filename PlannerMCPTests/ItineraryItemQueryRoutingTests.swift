@@ -133,6 +133,9 @@ struct ItineraryItemQueryRoutingTests {
       #expect(appearance["membershipId"] as? String == membershipId.uuidString)
       let progress = try #require((todo["progress"] as? [[String: Any]])?.first)
       #expect(progress["totalCount"] as? String == "3" && progress["doneCount"] as? String == "1")
+      #expect(progress["archivedCount"] as? String == "1")
+      #expect(progress["finishedCount"] as? String == "2")
+      #expect(progress["state"] as? String == "partial")
       let generation = try #require(todo["generation"] as? String)
       let window = try await call(
         "planner_read",

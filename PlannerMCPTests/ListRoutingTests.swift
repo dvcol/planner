@@ -65,9 +65,14 @@ struct ListRoutingTests {
       #expect((sourceValue["labels"] as? [Any])?.isEmpty == true)
       #expect((sourceValue["references"] as? [Any])?.isEmpty == true)
       let progress = try #require(sourceValue["progress"] as? [String: Any])
-      #expect(Set(progress.keys) == ["container", "state", "doneCount", "totalCount"])
+      #expect(
+        Set(progress.keys) == [
+          "container", "state", "doneCount", "archivedCount", "finishedCount", "totalCount",
+        ])
       #expect(progress["state"] as? String == "empty")
       #expect(progress["doneCount"] as? String == "0")
+      #expect(progress["archivedCount"] as? String == "0")
+      #expect(progress["finishedCount"] as? String == "0")
       #expect(progress["totalCount"] as? String == "0")
       #expect((progress["container"] as? [String: Any])?["id"] as? String == listIdentifier)
       let reopened = PlannerCore.Planner(configuration: configuration)
@@ -843,8 +848,9 @@ struct ListRoutingTests {
       #expect(
         Set(originalValue.keys) == [
           "appearance", "source", "content", "globalDone", "localDone", "effectiveDone", "archived",
-          "fieldHashes",
+          "fieldHashes", "labels",
         ])
+      #expect((originalValue["labels"] as? [Any])?.isEmpty == true)
       #expect(
         NSDictionary(dictionary: try #require(originalValue["appearance"] as? [String: Any]))
           .isEqual(to: appearance))

@@ -1,0 +1,47 @@
+Building for debugging...
+[1 / 8] PlannerCoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[8 / 13] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (4,01 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ArchivedContainerProgressTests started.
+◇ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() started.
+✘ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() recorded an issue at ArchivedContainerProgressTests.swift:75:7: Expectation failed: snapshot.progress.first?.state == .complete
+↳ snapshot.progress.first?.state == .complete → false
+↳   snapshot.progress.first?.state → .partial
+↳     some → .partial
+↳     some → .complete
+✘ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() recorded an issue at ArchivedContainerProgressTests.swift:77:7: Expectation failed: snapshot.progress.first?.archivedCount == 1
+↳ snapshot.progress.first?.archivedCount == 1 → false
+↳   snapshot.progress.first?.archivedCount → 0
+↳     some → 0
+↳     some → 1
+✘ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() recorded an issue at ArchivedContainerProgressTests.swift:78:7: Expectation failed: snapshot.progress.first?.finishedCount == 2
+↳ snapshot.progress.first?.finishedCount == 2 → false
+↳   snapshot.progress.first?.finishedCount → 1
+↳     some → 1
+↳     some → 2
+✘ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() recorded an issue at ArchivedContainerProgressTests.swift:75:7: Expectation failed: snapshot.progress.first?.state == .complete
+↳ snapshot.progress.first?.state == .complete → false
+↳   snapshot.progress.first?.state → .partial
+↳     some → .partial
+↳     some → .complete
+✘ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() recorded an issue at ArchivedContainerProgressTests.swift:77:7: Expectation failed: snapshot.progress.first?.archivedCount == 1
+↳ snapshot.progress.first?.archivedCount == 1 → false
+↳   snapshot.progress.first?.archivedCount → 0
+↳     some → 0
+↳     some → 1
+✘ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() recorded an issue at ArchivedContainerProgressTests.swift:78:7: Expectation failed: snapshot.progress.first?.finishedCount == 2
+↳ snapshot.progress.first?.finishedCount == 2 → false
+↳   snapshot.progress.first?.finishedCount → 1
+↳     some → 1
+↳     some → 2
+✘ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() failed after 0.186 seconds with 6 issues.
+✘ Suite ArchivedContainerProgressTests failed after 0.187 seconds with 6 issues.
+✘ Test run with 1 test in 1 suite failed after 0.187 seconds with 6 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)
