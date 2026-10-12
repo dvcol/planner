@@ -47,6 +47,17 @@ struct SavedItineraryEntryRows: Identifiable {
   let title: String
   let items: [SavedItineraryItem]
   let matchesHeader: Bool
+  let isArchived: Bool
+
+  var doneCount: Int64 {
+    Int64(items.filter { $0.row.effectiveDone == true }.count)
+  }
+
+  var archivedCount: Int64 {
+    Int64(
+      items.filter { $0.row.effectiveDone != true && (isArchived || $0.row.archived == true) }.count
+    )
+  }
 }
 
 struct SavedItineraryContents {
