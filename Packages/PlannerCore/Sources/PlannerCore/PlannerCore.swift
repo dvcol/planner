@@ -1969,6 +1969,64 @@ public actor Planner {
     }
   }
 
+  public func exportData(session: PlannerDatasetSession) -> PlannerExportResult {
+    do {
+      return try coordinated {
+        _ = try validateSession(session)
+        let context = ModelContext(try openContainer())
+        context.autosaveEnabled = false
+        let snapshot = PlannerDataSnapshot(
+          itineraries: try itinerarySnapshots(context),
+          labelAssociations: try labelAssociationSnapshots(context),
+          tags: try tagSnapshots(context),
+          categories: try categorySnapshots(context),
+          items: try context.fetch(FetchDescriptor<PlannerSchemaV14.Item>()).map { try $0.value() },
+          lists: try listSnapshots(context), memberships: try membershipSnapshots(context),
+          deletionMarkers: try deletionMarkers(context))
+        try requireCompleteExportGraph(snapshot, context: context)
+        _ = try snapshot.validated()
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        return .exported(try encoder.encode(snapshot))
+      }
+    } catch { return .failed(failure(error, code: "readUnavailable")) }
+  }
+
+  private func requireCompleteExportGraph(_ snapshot: PlannerDataSnapshot, context: ModelContext)
+    throws
+  {
+    try requireExportedIdentities(
+      stored: context.fetch(FetchDescriptor<PlannerSchemaV14.OwnedLink>()).map(\.id),
+      exported: snapshot.ownedLinks.map(\.id), kind: "bookmark")
+    try requireExportedIdentities(
+      stored: context.fetch(FetchDescriptor<PlannerSchemaV14.Schedule>()).map(\.id),
+      exported: snapshot.schedules.map(\.id), kind: "Schedule")
+    try requireExportedIdentities(
+      stored: context.fetch(FetchDescriptor<PlannerSchemaV14.ItineraryEntry>()).map(\.id),
+      exported: snapshot.itineraryEntries.map(\.id), kind: "Itinerary entry")
+    let contexts = try context.fetch(FetchDescriptor<PlannerSchemaV14.ExpandedCompletion>()).map {
+      try $0.value().context
+    }
+    guard contexts.count == snapshot.expandedCompletions.count,
+      Set(contexts) == Set(snapshot.expandedCompletions.map(\.context))
+    else {
+      throw PlannerFailure(
+        "readUnavailable", "The complete expanded completion graph is unresolved.")
+    }
+  }
+
+  private func requireExportedIdentities(stored: [UUID?], exported: [UUID], kind: String) throws {
+    let storedIdentities = try stored.map { identifier in
+      guard let identifier else {
+        throw PlannerFailure("readUnavailable", "A stored \(kind) has unresolved identity.")
+      }
+      return identifier
+    }
+    guard storedIdentities.count == exported.count, Set(storedIdentities) == Set(exported) else {
+      throw PlannerFailure("readUnavailable", "The complete \(kind) graph is unresolved.")
+    }
+  }
+
   public func inspectRecovery(request: PlannerRecoveryRequest) -> PlannerRecoveryInspection {
     do {
       let archives = try discoveredArchives()

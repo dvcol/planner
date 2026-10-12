@@ -272,12 +272,26 @@ struct RecoveryCheckpointRetryAdmissionTests {
       let proposal = namespace.preparedProposals.first,
       case .selected(let proposed) = await fixture.planner.inspectRecovery(
         request: .proposal(namespaceId: namespace.namespaceId, proposalId: proposal.proposalId)),
+      case .exported(let pendingExport) = await fixture.planner.exportData(session: fixture.session),
       case .applied(let result, .complete(let checkpoint)) = await fixture.planner.retryRecovery(
         session: fixture.session, operationId: pending.operationId
       ).outcome
     else { throw CancellationError() }
     #expect(result == pending.result)
+    #expect(
+      try normalizedPortableSnapshot(pendingExport)
+        .isEqual(normalizedPortableSnapshot(proposed.portableData)))
+    let exportedObject = try #require(
+      JSONSerialization.jsonObject(with: pendingExport) as? [String: Any])
+    #expect((exportedObject["ownedLinks"] as? [[String: Any]])?.count == 2)
     let recovered = try await fixture.acknowledgement()
+    guard
+      case .exported(let repairedExport) = await fixture.planner.exportData(
+        session: fixture.session)
+    else { throw CancellationError() }
+    #expect(
+      try normalizedPortableSnapshot(repairedExport)
+        .isEqual(normalizedPortableSnapshot(recovered.portableData)))
     #expect(recovered.checkpointGeneration == checkpoint)
     #expect(
       try normalizedPortableSnapshot(recovered.portableData)
