@@ -1,0 +1,21 @@
+Building for debugging...
+[1 / 14] PlannerCore
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (2,67 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportApplyTests started.
+◇ Test ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test case passing 1 argument scenario → "localCompletion" to ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test case passing 1 argument scenario → "notes" to ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+✘ Test ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) recorded an issue with 1 argument scenario → "localCompletion" at NativeImportApplyTests.swift:43:19: Issue recorded
+↳ The ordinary localCompletion edit must commit with complete recovery: PlannerOperationResult(operationId: BDE9BBFD-D215-415D-8179-909C7BA19C50, outcome: PlannerCore.PlannerOperationResult.Outcome.applied(result: PlannerCore.PlannerAppliedResult(generatedIdentities: [], affectedIdentities: [PlannerCore.PlannerAppliedIdentity.reference(PlannerCore.PlannerReferenceRead.membership(id: 00000000-0000-4000-8000-000000000401, list: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.list, id: 00000000-0000-4000-8000-000000000201), item: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 00000000-0000-4000-8000-000000000101))), PlannerCore.PlannerAppliedIdentity.source(PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.list, id: 00000000-0000-4000-8000-000000000201))]), recovery: PlannerCore.PlannerRecoveryResult.incomplete(PlannerCore.PlannerFailure(code: "recoveryIntegrityFailure", propertyPath: Optional("/contextAliases/0/canonicalContext"), message: "Saved local completion disagrees with its declared canonical history.", details: nil))))
+✘ Test ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) with 2 test cases failed after 0.129 seconds with 1 issue.
+✘ Suite NativeImportApplyTests failed after 0.129 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.129 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

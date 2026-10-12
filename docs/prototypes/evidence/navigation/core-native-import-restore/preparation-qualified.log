@@ -1,0 +1,15 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (2,77 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportApplyTests started.
+◇ Test failedRecoveryPreparationLeavesGraphAndReceiptUnapplied() started.
+✔ Test failedRecoveryPreparationLeavesGraphAndReceiptUnapplied() passed after 0.058 seconds.
+✔ Suite NativeImportApplyTests passed after 0.058 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.058 seconds.

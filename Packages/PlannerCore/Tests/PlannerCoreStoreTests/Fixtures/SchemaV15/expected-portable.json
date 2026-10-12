@@ -1,0 +1,134 @@
+{
+  "completionChanges" : [
+
+  ],
+  "contextAliases" : [
+
+  ],
+  "deletionMarkers" : [
+
+  ],
+  "expandedCompletions" : [
+
+  ],
+  "format" : "planner-data",
+  "formatVersion" : 2,
+  "itineraryEntries" : [
+    {
+      "id" : "0BDC4F75-1C1C-4844-AC08-4FD823C9BA73",
+      "itinerary" : {
+        "id" : "AFF5E2BE-908E-45AF-A376-0091DA02E1B2",
+        "kind" : "itinerary",
+        "lifetimeId" : "DDF826E0-AFCE-4802-9080-B2F06B38E0DD"
+      },
+      "lifetimeId" : "0BDC4F75-1C1C-4844-AC08-4FD823C9BA73",
+      "localDone" : null,
+      "rank" : "0",
+      "source" : {
+        "id" : "2A70288F-1CD6-499B-83AF-F4BD9DD04B77",
+        "kind" : "list",
+        "lifetimeId" : "667DB9DF-E6A3-487B-A92C-C965A68C24DD"
+      }
+    }
+  ],
+  "labelAssociations" : [
+
+  ],
+  "memberships" : [
+    {
+      "id" : "E000CD84-A24D-49C6-AA5C-DC264DF4AC9D",
+      "item" : {
+        "id" : "D4C8AFCB-AC4B-4CE3-866A-E6F97A1A81BA",
+        "kind" : "item",
+        "lifetimeId" : "3FD5A9A6-75C6-40D2-BA70-618C13E64170"
+      },
+      "lifetimeId" : "E000CD84-A24D-49C6-AA5C-DC264DF4AC9D",
+      "list" : {
+        "id" : "2A70288F-1CD6-499B-83AF-F4BD9DD04B77",
+        "kind" : "list",
+        "lifetimeId" : "667DB9DF-E6A3-487B-A92C-C965A68C24DD"
+      },
+      "localDone" : true,
+      "rank" : "0"
+    }
+  ],
+  "ownedLinks" : [
+
+  ],
+  "restorationFamilies" : [
+
+  ],
+  "schedules" : [
+
+  ],
+  "sources" : [
+    {
+      "archived" : false,
+      "content" : {
+        "color" : null,
+        "iconName" : null,
+        "manualEstimate" : {
+          "displayUnit" : "hour",
+          "minutes" : "240"
+        },
+        "name" : "V15 Day",
+        "notes" : null
+      },
+      "contentOrigins" : {
+        "name" : "independent"
+      },
+      "createdAt" : 813531033.128822,
+      "globalDone" : null,
+      "id" : "2A70288F-1CD6-499B-83AF-F4BD9DD04B77",
+      "kind" : "list",
+      "lifetimeId" : "667DB9DF-E6A3-487B-A92C-C965A68C24DD",
+      "updatedAt" : 813531033.156853
+    },
+    {
+      "archived" : false,
+      "content" : {
+        "color" : null,
+        "iconName" : null,
+        "location" : null,
+        "manualEstimate" : {
+          "displayUnit" : "hour",
+          "minutes" : "300"
+        },
+        "notes" : null,
+        "title" : "V15 Weekend"
+      },
+      "contentOrigins" : {
+        "title" : "independent"
+      },
+      "createdAt" : 813531033.170003,
+      "globalDone" : null,
+      "id" : "AFF5E2BE-908E-45AF-A376-0091DA02E1B2",
+      "kind" : "itinerary",
+      "lifetimeId" : "DDF826E0-AFCE-4802-9080-B2F06B38E0DD",
+      "updatedAt" : 813531033.185721
+    },
+    {
+      "archived" : false,
+      "content" : {
+        "estimate" : {
+          "displayUnit" : "hour",
+          "minutes" : "120"
+        },
+        "location" : null,
+        "notes" : "Saved on version 15",
+        "subtitle" : null,
+        "title" : "V15 Museum"
+      },
+      "contentOrigins" : {
+        "notes" : "independent",
+        "title" : "independent"
+      },
+      "createdAt" : 813531033.108556,
+      "globalDone" : false,
+      "id" : "D4C8AFCB-AC4B-4CE3-866A-E6F97A1A81BA",
+      "kind" : "item",
+      "lifetimeId" : "3FD5A9A6-75C6-40D2-BA70-618C13E64170",
+      "updatedAt" : 813531033.108556
+    }
+  ]
+}

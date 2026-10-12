@@ -1,0 +1,10 @@
+// swift-tools-version: 6.4
+import PackageDescription
+
+let package = Package(
+  name: "FixtureMaker", platforms: [.macOS("27.0")],
+  dependencies: [.package(path: "source/Packages/PlannerCore")],
+  targets: [
+    .executableTarget(
+      name: "FixtureMaker", dependencies: [.product(name: "PlannerCore", package: "PlannerCore")])
+  ])

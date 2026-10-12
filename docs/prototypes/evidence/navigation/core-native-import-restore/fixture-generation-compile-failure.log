@@ -1,0 +1,63 @@
+Building for debugging...
+[Planning deferred tasks]
+[23 / 38]
+[24 / 39] PlannerCore
+[33 / 88]
+[36 / 88]
+[42 / 88]
+[44 / 88]
+[48 / 88]
+[50 / 88]
+[53 / 88]
+[57 / 88]
+[59 / 88]
+[60 / 88]
+[73 / 88] PlannerCore
+/private/tmp/PlannerSchemaV15FixtureMaker/source/Packages/PlannerCore/Sources/PlannerCore/PlannerItineraryValues.swift:156:12: warning: no calls to throwing functions occur within 'try' expression [#UnnecessaryEffectMarker]
+154 |       entries: entries
+155 |     ).progressAndEstimates(memberships: memberships, items: items, lists: lists)
+156 |     return try PlannerItinerarySourceRead(
+    |            `- warning: no calls to throwing functions occur within 'try' expression [#UnnecessaryEffectMarker]
+157 |       source: reference, sourceLifetimeId: lifetimeId,
+158 |       content: input.readContent(links: links.map(\.read)), labels: labels,
+
+[#UnnecessaryEffectMarker]: <https://docs.swift.org/compiler/documentation/diagnostics/unnecessary-effect-marker>
+[82 / 89] FixtureMaker-product
+error: SwiftCompile normal arm64 /private/tmp/PlannerSchemaV15FixtureMaker/Sources/FixtureMaker/FixtureMaker.swift failed with a nonzero exit code. Command line:     cd /private/tmp
+    builtin-SwiftPerFileCompile FixtureMaker.swift
+/private/tmp/PlannerSchemaV15FixtureMaker/Sources/FixtureMaker/FixtureMaker.swift:16:51: error: type 'PlannerEstimateUnit' has no member 'hours'
+14 |     let itemContent = PlannerItemContentInput(
+15 |       title: "V15 Museum", notes: "Saved on version 15",
+16 |       estimate: .init(minutes: 120, displayUnit: .hours))
+   |                                                   `- error: type 'PlannerEstimateUnit' has no member 'hours'
+17 |     guard case .ready(let session) = await planner.bootstrap(),
+18 |       case .applied(let itemResult, .complete) = await planner.execute(
+
+/private/tmp/PlannerSchemaV15FixtureMaker/Sources/FixtureMaker/FixtureMaker.swift:24:114: error: type 'PlannerEstimateUnit' has no member 'hours'
+22 |         .init(
+23 |           operationId: UUID(), session: session,
+24 |           command: .createList(content: .init(name: "V15 Day", manualEstimate: .init(minutes: 240, displayUnit: .hours))))).outcome,
+   |                                                                                                                  `- error: type 'PlannerEstimateUnit' has no member 'hours'
+25 |       let list = listResult.generated.first,
+26 |       case .applied(let membershipResult, .complete) = await planner.execute(
+
+/private/tmp/PlannerSchemaV15FixtureMaker/Sources/FixtureMaker/FixtureMaker.swift:33:167: error: type 'PlannerEstimateUnit' has no member 'hours'
+31 |         .init(operationId: UUID(), session: session, command: .setCompletion(scope: .appearance(.listMembership(listId: list.id, membershipId: membershipIdentifier)), done: true))).outcome,
+32 |       case .applied(let itineraryResult, .complete) = await planner.execute(
+33 |         .init(operationId: UUID(), session: session, command: .createItinerary(content: .init(title: "V15 Weekend", manualEstimate: .init(minutes: 300, displayUnit: .hours))))).outcome,
+   |                                                                                                                                                                       `- error: type 'PlannerEstimateUnit' has no member 'hours'
+34 |       let itinerary = itineraryResult.generated.first,
+35 |       case .applied(_, .complete) = await planner.execute(
+
+/private/tmp/PlannerSchemaV15FixtureMaker/Sources/FixtureMaker/FixtureMaker.swift:18:50: warning: no 'async' operations occur within 'await' expression [#UnnecessaryEffectMarker]
+16 |       estimate: .init(minutes: 120, displayUnit: .hours))
+17 |     guard case .ready(let session) = await planner.bootstrap(),
+18 |       case .applied(let itemResult, .complete) = await planner.execute(
+   |                                                  `- warning: no 'async' operations occur within 'await' expression [#UnnecessaryEffectMarker]
+19 |         .init(operationId: creationIdentifier, session: session, command: .createItem(content: itemContent))).outcome,
+20 |       let item = itemResult.generated.first,
+
+[#UnnecessaryEffectMarker]: <https://docs.swift.org/compiler/documentation/diagnostics/unnecessary-effect-marker>
+Failed frontend command:
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend -frontend -c -primary-file /private/tmp/PlannerSchemaV15FixtureMaker/Sources/FixtureMaker/FixtureMaker.swift -emit-dependencies-path /private/tmp/PlannerSchemaV15FixtureMakerBuild/out/Intermediates.noindex/FixtureMaker.build/Debug/FixtureMaker-p.build/Objects-normal/arm64/FixtureMaker.d -emit-const-values-path /private/tmp/PlannerSchemaV15FixtureMakerBuild/out/Intermediates.noindex/FixtureMaker.build/Debug/FixtureMaker-p.build/Objects-normal/arm64/FixtureMaker.swiftconstvalues -emit-reference-dependencies-path /private/tmp/PlannerSchemaV15FixtureMakerBuild/out/Intermediates.noindex/FixtureMaker.build/Debug/FixtureMaker-p.build/Objects-normal/arm64/FixtureMaker.swiftdeps -serialize-diagnostics-path /private/tmp/PlannerSchemaV15FixtureMakerBuild/out/Intermediates.noindex/FixtureMaker.build/Debug/FixtureMaker-p.build/Objects-normal/arm64/FixtureMaker.dia -target arm64-apple-macos27.0 -disable-cross-import-overlay-search -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libFoundationMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#FoundationMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libObservationMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#ObservationMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libSwiftDataMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#SwiftDataMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libSwiftMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#SwiftMacros -disable-implicit-swift-modules -Xcc -fno-implicit-modules -Xcc -fno-implicit-module-maps -explicit-swift-module-map-file /private/tmp/PlannerSchemaV15FixtureMakerBuild/out/Intermediates.noindex/FixtureMaker.build/Debug/FixtureMaker-p.build/Objects-normal/arm64/FixtureMaker-dependencies-1.json -Xllvm -aarch64-use-tbi -enable-objc-interop -stack-check -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -I /private/tmp/PlannerSchemaV15FixtureMakerBuild/out/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /private/tmp/PlannerSchemaV15FixtureMakerBuild/out/Products/Debug/PackageFrameworks -F /private/tmp/PlannerSchemaV15FixtureMakerBuild/out/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -module-cache-path /private/tmp/PlannerSchemaV15FixtureMakerBuild/out/Intermediates.noindex/SwiftExplicitPrecompiledModules -no-color-diagnostics -Xcc -fno-color-diagnostics -enable-testing -g -debug-info-format\=dwarf -dwarf-version\=5 -swift-version 6 -Onone -D SWIFT_PACKAGE -D DEBUG -D Xcode -serialize-debugging-options -enable-experimental-feature DebugDescriptionMacro -empty-abi-descriptor -validate-clang-modules-once -clang-build-session-file /private/tmp/PlannerSchemaV15FixtureMakerBuild/out/ModuleCache.noindex/Session.modulevalidation -Xcc -working-directory -Xcc /private/tmp -enable-anonymous-context-mangled-names -file-compilation-dir /private/tmp -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -Xcc -ivfsstatcache -Xcc /private/tmp/PlannerSchemaV15FixtureMakerBuild/out/SDKStatCaches.noindex/macosx27.0-26A425-a0facfad118c1a7a18f0aad9463f65497231f6df4def33e022ae2eb8f782df1a.sdkstatcache -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -Xcc -I/private/tmp/PlannerSchemaV15FixtureMakerBuild/out/Products/Debug/include -Xcc -I/private/tmp/PlannerSchemaV15FixtureMakerBuild/out/Intermediates.noindex/FixtureMaker.build/Debug/FixtureMaker-p.build/DerivedSources-normal/arm64 -Xcc -I/private/tmp/PlannerSchemaV15FixtureMakerBuild/out/Intermediates.noindex/FixtureMaker.build/Debug/FixtureMaker-p.build/DerivedSources/arm64 -Xcc -I/private/tmp/PlannerSchemaV15FixtureMakerBuild/out/Intermediates.noindex/FixtureMaker.build/Debug/FixtureMaker-p.build/DerivedSources -Xcc -DSWIFT_PACKAGE -Xcc -DDEBUG\=1 -no-auto-bridging-header-chaining -module-name FixtureMaker -package-name plannerschemav15fixturemaker -const-gather-protocols-file /private/tmp/PlannerSchemaV15FixtureMakerBuild/out/Intermediates.noindex/FixtureMaker.build/Debug/FixtureMaker-p.build/Objects-normal/arm64/FixtureMaker_const_extract_protocols.json -disable-clang-spi -clang-target arm64-apple-macos27.0 -target-sdk-version 27.0 -target-sdk-name macosx27.0 -in-process-plugin-server-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/libSwiftInProcPluginServer.dylib -parse-as-library -o /private/tmp/PlannerSchemaV15FixtureMakerBuild/out/Intermediates.noindex/FixtureMaker.build/Debug/FixtureMaker-p.build/Objects-normal/arm64/FixtureMaker.o -debug-module-path /private/tmp/PlannerSchemaV15FixtureMakerBuild/out/Intermediates.noindex/FixtureMaker.build/Debug/FixtureMaker-p.build/Objects-normal/arm64/FixtureMaker.swiftmodule -index-unit-output-path /FixtureMaker.build/Debug/FixtureMaker-p.build/Objects-normal/arm64/FixtureMaker.o -index-store-path /private/tmp/PlannerSchemaV15FixtureMakerBuild/out -index-system-modules
+error: Build failed

@@ -1,0 +1,17 @@
+Building for debugging...
+[3 / 10] FixtureMaker-product
+[15 / 24] PlannerCore
+[16 / 24] FixtureMaker-product
+[18 / 24] PlannerCore
+/private/tmp/PlannerSchemaV15FixtureMaker/source/Packages/PlannerCore/Sources/PlannerCore/PlannerItineraryValues.swift:156:12: warning: no calls to throwing functions occur within 'try' expression [#UnnecessaryEffectMarker]
+154 |       entries: entries
+155 |     ).progressAndEstimates(memberships: memberships, items: items, lists: lists)
+156 |     return try PlannerItinerarySourceRead(
+    |            `- warning: no calls to throwing functions occur within 'try' expression [#UnnecessaryEffectMarker]
+157 |       source: reference, sourceLifetimeId: lifetimeId,
+158 |       content: input.readContent(links: links.map(\.read)), labels: labels,
+
+[#UnnecessaryEffectMarker]: <https://docs.swift.org/compiler/documentation/diagnostics/unnecessary-effect-marker>
+[19 / 24] PlannerCore
+[22 / 24] FixtureMaker-product
+Build complete! (9,47 sec)

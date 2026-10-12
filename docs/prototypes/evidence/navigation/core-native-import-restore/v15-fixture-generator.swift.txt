@@ -1,0 +1,47 @@
+import Foundation
+import PlannerCore
+
+@main struct FixtureMaker {
+  static func main() async throws {
+    let directory = URL(fileURLWithPath: CommandLine.arguments[1], isDirectory: true)
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    let creationIdentifier = UUID()
+    let itemContent = PlannerItemContentInput(
+      title: "V15 Museum", notes: "Saved on version 15",
+      estimate: .init(minutes: 120, displayUnit: .hour))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .applied(let itemResult, .complete) = await planner.execute(
+        .init(operationId: creationIdentifier, session: session, command: .createItem(content: itemContent))).outcome,
+      let item = itemResult.generated.first,
+      case .applied(let listResult, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .createList(content: .init(name: "V15 Day", manualEstimate: .init(minutes: 240, displayUnit: .hour))))).outcome,
+      let list = listResult.generated.first,
+      case .applied(let membershipResult, .complete) = await planner.execute(
+        .init(operationId: UUID(), session: session, command: .addMembership(itemId: item.id, listId: list.id, placement: .last))).outcome,
+      let membership = membershipResult.generatedReferences.first,
+      case .membership(let membershipIdentifier, _, _) = membership,
+      case .applied(_, .complete) = await planner.execute(
+        .init(operationId: UUID(), session: session, command: .setCompletion(scope: .appearance(.listMembership(listId: list.id, membershipId: membershipIdentifier)), done: true))).outcome,
+      case .applied(let itineraryResult, .complete) = await planner.execute(
+        .init(operationId: UUID(), session: session, command: .createItinerary(content: .init(title: "V15 Weekend", manualEstimate: .init(minutes: 300, displayUnit: .hour))))).outcome,
+      let itinerary = itineraryResult.generated.first,
+      case .applied(_, .complete) = await planner.execute(
+        .init(operationId: UUID(), session: session, command: .addItineraryEntry(itineraryId: itinerary.id, source: list, placement: .last))).outcome,
+      case .exported(let exported) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    try exported.write(to: directory.appendingPathComponent("expected-portable.json"))
+    let manifest = [
+      "creationOperationId": creationIdentifier.uuidString, "itemId": item.id.uuidString,
+      "listId": list.id.uuidString, "itineraryId": itinerary.id.uuidString,
+      "generatorCommit": "d5a47a5", "storageSchemaVersion": "15",
+    ]
+    try JSONEncoder().encode(manifest).write(to: directory.appendingPathComponent("manifest.json"))
+  }
+}

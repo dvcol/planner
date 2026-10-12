@@ -1,0 +1,2570 @@
+Building for debugging...
+[1 / 10] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (2,81 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportApplyTests started.
+◇ Test failedPrecommitImportLeavesGraphAndReceiptUnapplied(_:) started.
+◇ Test case passing 1 argument scenario → "localSave" to failedPrecommitImportLeavesGraphAndReceiptUnapplied(_:) started.
+◇ Test case passing 1 argument scenario → "preparation" to failedPrecommitImportLeavesGraphAndReceiptUnapplied(_:) started.
+CoreData: error: failed to resolve optimistic locking failure: optimistic locking failure with {
+    NSExceptionOmitCallstacks = 1;
+    conflictList =     (
+    );
+}
+CoreData: error: failed to resolve optimistic locking failure.  Old save request was: <NSSaveChangesRequest: 0x74948756c0> { inserts ((
+    "0x898db497860eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p1>",
+    "0x898db497866eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p2>",
+    "0x898db497860eeec0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Category/p1>",
+    "0x898db497866eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p2>",
+    "0x898db497860eee10 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Tag/p1>",
+    "0x898db497860eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p1>",
+    "0x898db497860eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p1>",
+    "0x898db497860eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p1>",
+    "0x898db497860eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p1>",
+    "0x898db497866eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p2>",
+    "0x898db497866eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p2>",
+    "0x898db497860eee80 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Itinerary/p1>",
+    "0x898db497860eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p1>",
+    "0x898db497866eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p2>",
+    "0x898db497866eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p2>",
+    "0x898db497866eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p2>",
+    "0x898db497860eee70 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Receipt/p1>",
+    "0x898db497864eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p3>",
+    "0x898db49786aeeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p4>",
+    "0x898db497864eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p3>",
+    "0x898db497866eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p2>",
+    "0x898db497860eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p1>",
+    "0x898db497860eeed0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/DeletionMarker/p1>",
+    "0x898db497866eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p2>",
+    "0x898db497860eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p1>",
+    "0x898db497860eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p1>"
+)), updates (), deletes () locks () }
+CoreData: error: failed to resolve optimistic locking failure.  Next attempt will be: <NSSaveChangesRequest: 0x74948756c0> { inserts ((
+    "0x898db497860eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p1>",
+    "0x898db497866eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p2>",
+    "0x898db497860eeec0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Category/p1>",
+    "0x898db497866eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p2>",
+    "0x898db497860eee10 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Tag/p1>",
+    "0x898db497860eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p1>",
+    "0x898db497860eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p1>",
+    "0x898db497860eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p1>",
+    "0x898db497860eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p1>",
+    "0x898db497866eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p2>",
+    "0x898db497866eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p2>",
+    "0x898db497860eee80 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Itinerary/p1>",
+    "0x898db497860eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p1>",
+    "0x898db497866eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p2>",
+    "0x898db497866eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p2>",
+    "0x898db497866eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p2>",
+    "0x898db497860eee70 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Receipt/p1>",
+    "0x898db497864eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p3>",
+    "0x898db49786aeeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p4>",
+    "0x898db497864eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p3>",
+    "0x898db497866eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p2>",
+    "0x898db497860eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p1>",
+    "0x898db497860eeed0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/DeletionMarker/p1>",
+    "0x898db497866eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p2>",
+    "0x898db497860eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p1>",
+    "0x898db497860eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p1>"
+)), updates (), deletes () locks () }
+CoreData: error: BEGIN EXCLUSIVE
+CoreData: error: INSERT INTO ZSCHEDULE(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZCIVILENDDATA, ZCIVILSTARTDATA, ZEND, ZFORMKIND, ZID, ZLIFETIMEID, ZPLANNINGTIMEZONE, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID, ZSTART) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)13
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = <NSData len=33>
+CoreData: error: SQLite bind[6] = <NSData len=32>
+CoreData: error: SQLite bind[7] = nil
+CoreData: error: SQLite bind[8] = "allDay"
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000702
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000872
+CoreData: error: SQLite bind[11] = ""
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[15] = nil
+CoreData: error: INSERT INTO ZITINERARYENTRY(Z_PK, Z_ENT, Z_OPT, ZITEM, ZITINERARY, ZLIST, ZID, ZITINERARYID, ZITINERARYLIFETIMEID, ZLIFETIMEID, ZLOCALDONE, ZRANK, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)6
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000451
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000451
+CoreData: error: SQLite bind[10] = 0
+CoreData: error: SQLite bind[11] = 1024
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZCATEGORY(Z_PK, Z_ENT, Z_OPT, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZNAME, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)1
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[8] = "Food"
+CoreData: error: SQLite bind[9] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[11] = 1
+CoreData: error: SQLite bind[12] = 1024
+CoreData: error: INSERT INTO ZTAG(Z_PK, Z_ENT, Z_OPT, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZNAME, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)14
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[8] = "rainy-day"
+CoreData: error: SQLite bind[9] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZITINERARYENTRY(Z_PK, Z_ENT, Z_OPT, ZITEM, ZITINERARY, ZLIST, ZID, ZITINERARYID, ZITINERARYLIFETIMEID, ZLIFETIMEID, ZLOCALDONE, ZRANK, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)6
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = 2048
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[13] = "list"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000821
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000102
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000812
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[11] = 0
+CoreData: error: SQLite bind[12] = 2048
+CoreData: error: INSERT INTO ZEXPANDEDCOMPLETION(Z_PK, Z_ENT, Z_OPT, ZLISTENTRY, ZMEMBERSHIP, ZLISTENTRYID, ZLISTENTRYLIFETIMEID, ZLOCALDONE, ZMEMBERSHIPID, ZMEMBERSHIPLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)3
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 0
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000401
+CoreData: error: INSERT INTO ZLINEAGERECORD(Z_PK, Z_ENT, Z_OPT, ZRECORDDATA, ZRECORDIDENTIFIER, ZRECORDKIND) VALUES(?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)8
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = <NSData len=281>
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000881
+CoreData: error: SQLite bind[5] = "completionChange"
+CoreData: error: INSERT INTO ZLINEAGERECORD(Z_PK, Z_ENT, Z_OPT, ZRECORDDATA, ZRECORDIDENTIFIER, ZRECORDKIND) VALUES(?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)8
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = <NSData len=440>
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[5] = "contextAlias"
+CoreData: error: INSERT INTO ZITEM(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCREATEDAT, ZESTIMATEDATA, ZGLOBALDONE, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZNOTES, ZSUBTITLE, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)4
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = <NSData len=36>
+CoreData: error: SQLite bind[6] = 0
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[9] = <NSData len=113>
+CoreData: error: SQLite bind[10] = "Original notes"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Nezu Museum"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZITINERARY(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZMANUALESTIMATEDATA, ZNOTES, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)5
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Tokyo Weekend"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZLIST(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZMANUALESTIMATEDATA, ZNAME, ZNOTES, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)9
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = "Tokyo Food"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZSCHEDULE(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZCIVILENDDATA, ZCIVILSTARTDATA, ZEND, ZFORMKIND, ZID, ZLIFETIMEID, ZPLANNINGTIMEZONE, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID, ZSTART) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)13
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = (timestamp)813204000.000000
+CoreData: error: SQLite bind[8] = "timed"
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000701
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000871
+CoreData: error: SQLite bind[11] = "Asia/Tokyo"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[15] = (timestamp)813200400.000000
+CoreData: error: INSERT INTO ZEXPANDEDCOMPLETION(Z_PK, Z_ENT, Z_OPT, ZLISTENTRY, ZMEMBERSHIP, ZLISTENTRYID, ZLISTENTRYLIFETIMEID, ZLOCALDONE, ZMEMBERSHIPID, ZMEMBERSHIPLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)3
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 0
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000402
+CoreData: error: INSERT INTO ZLIST(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZMANUALESTIMATEDATA, ZNAME, ZNOTES, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)9
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000202
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000822
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = "Wishlist"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZRECEIPT(Z_PK, Z_ENT, Z_OPT, ZDATASETID, ZOPERATIONID, ZOWNERSHIPBINDING, ZPAYLOADDIGEST, ZRESULTDATA) VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)12
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 500AA612-AB21-4204-8E7F-F429B00D4042
+CoreData: error: SQLite bind[4] = 2AB09F3E-17C3-40B7-9D53-742F887B16C0
+CoreData: error: SQLite bind[5] = "local:760AD7BD-9355-4806-8CB7-8B5A1DB55C38"
+CoreData: error: SQLite bind[6] = "sha256-payload-v1:2e264fc64ae82c3d9aa67c5c0993d9314bed2f3a898f982abe0620ef15b05f52"
+CoreData: error: SQLite bind[7] = <NSData len=1700>
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)3
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000403
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000403
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000202
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000822
+CoreData: error: SQLite bind[11] = 0
+CoreData: error: SQLite bind[12] = 1024
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)4
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = (int64)1
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000652
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[9] = "tag"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000652
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)3
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000551
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[9] = "category"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000551
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = (int64)1
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000651
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[9] = "tag"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000651
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000552
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[9] = "category"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000552
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: INSERT INTO ZDELETIONMARKER(Z_PK, Z_ENT, Z_OPT, ZCLOSEDFAMILYID, ZDELETIONID, ZOPERATIONID, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)2
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000891
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000991
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000199
+CoreData: error: SQLite bind[7] = "item"
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000819
+CoreData: error: INSERT INTO ZOWNEDLINK(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZID, ZKIND, ZLABEL, ZLIFETIMEID, ZORIGINALURL, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)11
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000752
+CoreData: error: SQLite bind[6] = "website"
+CoreData: error: SQLite bind[7] = "Menu"
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000752
+CoreData: error: SQLite bind[9] = "https://example.com/menu"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[11] = "item"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[13] = 2048
+CoreData: error: INSERT INTO ZOWNEDLINK(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZID, ZKIND, ZLABEL, ZLIFETIMEID, ZORIGINALURL, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)11
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000751
+CoreData: error: SQLite bind[6] = "googleMaps"
+CoreData: error: SQLite bind[7] = nil
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000751
+CoreData: error: SQLite bind[9] = "https://www.google.com/maps/search/?api=1&query=Nezu+Museum"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[11] = "item"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[13] = 1024
+CoreData: error: INSERT INTO ZITEM(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCREATEDAT, ZESTIMATEDATA, ZGLOBALDONE, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZNOTES, ZSUBTITLE, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)4
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 1
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 0
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000102
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000812
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Ramen lunch"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: ROLLBACK
+CoreData: error: failed to resolve optimistic locking failure: optimistic locking failure with {
+    NSExceptionOmitCallstacks = 1;
+    conflictList =     (
+    );
+}
+CoreData: error: failed to resolve optimistic locking failure.  Old save request was: <NSSaveChangesRequest: 0x74948756c0> { inserts ((
+    "0x898db497860eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p1>",
+    "0x898db497866eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p2>",
+    "0x898db497860eeec0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Category/p1>",
+    "0x898db497866eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p2>",
+    "0x898db497860eee10 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Tag/p1>",
+    "0x898db497860eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p1>",
+    "0x898db497860eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p1>",
+    "0x898db497860eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p1>",
+    "0x898db497860eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p1>",
+    "0x898db497866eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p2>",
+    "0x898db497866eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p2>",
+    "0x898db497860eee80 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Itinerary/p1>",
+    "0x898db497860eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p1>",
+    "0x898db497866eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p2>",
+    "0x898db497866eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p2>",
+    "0x898db497866eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p2>",
+    "0x898db497860eee70 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Receipt/p1>",
+    "0x898db497864eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p3>",
+    "0x898db49786aeeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p4>",
+    "0x898db497864eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p3>",
+    "0x898db497866eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p2>",
+    "0x898db497860eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p1>",
+    "0x898db497860eeed0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/DeletionMarker/p1>",
+    "0x898db497866eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p2>",
+    "0x898db497860eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p1>",
+    "0x898db497860eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p1>"
+)), updates (), deletes () locks () }
+CoreData: error: failed to resolve optimistic locking failure.  Next attempt will be: <NSSaveChangesRequest: 0x74948756c0> { inserts ((
+    "0x898db497860eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p1>",
+    "0x898db497866eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p2>",
+    "0x898db497860eeec0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Category/p1>",
+    "0x898db497866eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p2>",
+    "0x898db497860eee10 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Tag/p1>",
+    "0x898db497860eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p1>",
+    "0x898db497860eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p1>",
+    "0x898db497860eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p1>",
+    "0x898db497860eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p1>",
+    "0x898db497866eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p2>",
+    "0x898db497866eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p2>",
+    "0x898db497860eee80 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Itinerary/p1>",
+    "0x898db497860eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p1>",
+    "0x898db497866eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p2>",
+    "0x898db497866eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p2>",
+    "0x898db497866eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p2>",
+    "0x898db497860eee70 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Receipt/p1>",
+    "0x898db497864eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p3>",
+    "0x898db49786aeeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p4>",
+    "0x898db497864eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p3>",
+    "0x898db497866eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p2>",
+    "0x898db497860eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p1>",
+    "0x898db497860eeed0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/DeletionMarker/p1>",
+    "0x898db497866eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p2>",
+    "0x898db497860eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p1>",
+    "0x898db497860eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p1>"
+)), updates (), deletes () locks () }
+CoreData: error: BEGIN EXCLUSIVE
+CoreData: error: INSERT INTO ZSCHEDULE(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZCIVILENDDATA, ZCIVILSTARTDATA, ZEND, ZFORMKIND, ZID, ZLIFETIMEID, ZPLANNINGTIMEZONE, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID, ZSTART) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)13
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = <NSData len=33>
+CoreData: error: SQLite bind[6] = <NSData len=32>
+CoreData: error: SQLite bind[7] = nil
+CoreData: error: SQLite bind[8] = "allDay"
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000702
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000872
+CoreData: error: SQLite bind[11] = ""
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[15] = nil
+CoreData: error: INSERT INTO ZITINERARYENTRY(Z_PK, Z_ENT, Z_OPT, ZITEM, ZITINERARY, ZLIST, ZID, ZITINERARYID, ZITINERARYLIFETIMEID, ZLIFETIMEID, ZLOCALDONE, ZRANK, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)6
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000451
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000451
+CoreData: error: SQLite bind[10] = 0
+CoreData: error: SQLite bind[11] = 1024
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZCATEGORY(Z_PK, Z_ENT, Z_OPT, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZNAME, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)1
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[8] = "Food"
+CoreData: error: SQLite bind[9] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[11] = 1
+CoreData: error: SQLite bind[12] = 1024
+CoreData: error: INSERT INTO ZTAG(Z_PK, Z_ENT, Z_OPT, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZNAME, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)14
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[8] = "rainy-day"
+CoreData: error: SQLite bind[9] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZITINERARYENTRY(Z_PK, Z_ENT, Z_OPT, ZITEM, ZITINERARY, ZLIST, ZID, ZITINERARYID, ZITINERARYLIFETIMEID, ZLIFETIMEID, ZLOCALDONE, ZRANK, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)6
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = 2048
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[13] = "list"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000821
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000102
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000812
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[11] = 0
+CoreData: error: SQLite bind[12] = 2048
+CoreData: error: INSERT INTO ZEXPANDEDCOMPLETION(Z_PK, Z_ENT, Z_OPT, ZLISTENTRY, ZMEMBERSHIP, ZLISTENTRYID, ZLISTENTRYLIFETIMEID, ZLOCALDONE, ZMEMBERSHIPID, ZMEMBERSHIPLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)3
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 0
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000401
+CoreData: error: INSERT INTO ZLINEAGERECORD(Z_PK, Z_ENT, Z_OPT, ZRECORDDATA, ZRECORDIDENTIFIER, ZRECORDKIND) VALUES(?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)8
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = <NSData len=281>
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000881
+CoreData: error: SQLite bind[5] = "completionChange"
+CoreData: error: INSERT INTO ZLINEAGERECORD(Z_PK, Z_ENT, Z_OPT, ZRECORDDATA, ZRECORDIDENTIFIER, ZRECORDKIND) VALUES(?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)8
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = <NSData len=440>
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[5] = "contextAlias"
+CoreData: error: INSERT INTO ZITEM(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCREATEDAT, ZESTIMATEDATA, ZGLOBALDONE, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZNOTES, ZSUBTITLE, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)4
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = <NSData len=36>
+CoreData: error: SQLite bind[6] = 0
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[9] = <NSData len=113>
+CoreData: error: SQLite bind[10] = "Original notes"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Nezu Museum"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZITINERARY(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZMANUALESTIMATEDATA, ZNOTES, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)5
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Tokyo Weekend"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZLIST(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZMANUALESTIMATEDATA, ZNAME, ZNOTES, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)9
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = "Tokyo Food"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZSCHEDULE(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZCIVILENDDATA, ZCIVILSTARTDATA, ZEND, ZFORMKIND, ZID, ZLIFETIMEID, ZPLANNINGTIMEZONE, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID, ZSTART) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)13
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = (timestamp)813204000.000000
+CoreData: error: SQLite bind[8] = "timed"
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000701
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000871
+CoreData: error: SQLite bind[11] = "Asia/Tokyo"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[15] = (timestamp)813200400.000000
+CoreData: error: INSERT INTO ZEXPANDEDCOMPLETION(Z_PK, Z_ENT, Z_OPT, ZLISTENTRY, ZMEMBERSHIP, ZLISTENTRYID, ZLISTENTRYLIFETIMEID, ZLOCALDONE, ZMEMBERSHIPID, ZMEMBERSHIPLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)3
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 0
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000402
+CoreData: error: INSERT INTO ZLIST(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZMANUALESTIMATEDATA, ZNAME, ZNOTES, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)9
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000202
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000822
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = "Wishlist"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZRECEIPT(Z_PK, Z_ENT, Z_OPT, ZDATASETID, ZOPERATIONID, ZOWNERSHIPBINDING, ZPAYLOADDIGEST, ZRESULTDATA) VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)12
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 500AA612-AB21-4204-8E7F-F429B00D4042
+CoreData: error: SQLite bind[4] = 2AB09F3E-17C3-40B7-9D53-742F887B16C0
+CoreData: error: SQLite bind[5] = "local:760AD7BD-9355-4806-8CB7-8B5A1DB55C38"
+CoreData: error: SQLite bind[6] = "sha256-payload-v1:2e264fc64ae82c3d9aa67c5c0993d9314bed2f3a898f982abe0620ef15b05f52"
+CoreData: error: SQLite bind[7] = <NSData len=1700>
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)3
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000403
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000403
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000202
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000822
+CoreData: error: SQLite bind[11] = 0
+CoreData: error: SQLite bind[12] = 1024
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)4
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = (int64)1
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000652
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[9] = "tag"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000652
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)3
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000551
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[9] = "category"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000551
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = (int64)1
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000651
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[9] = "tag"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000651
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000552
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[9] = "category"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000552
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: INSERT INTO ZDELETIONMARKER(Z_PK, Z_ENT, Z_OPT, ZCLOSEDFAMILYID, ZDELETIONID, ZOPERATIONID, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)2
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000891
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000991
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000199
+CoreData: error: SQLite bind[7] = "item"
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000819
+CoreData: error: INSERT INTO ZOWNEDLINK(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZID, ZKIND, ZLABEL, ZLIFETIMEID, ZORIGINALURL, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)11
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000752
+CoreData: error: SQLite bind[6] = "website"
+CoreData: error: SQLite bind[7] = "Menu"
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000752
+CoreData: error: SQLite bind[9] = "https://example.com/menu"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[11] = "item"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[13] = 2048
+CoreData: error: INSERT INTO ZOWNEDLINK(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZID, ZKIND, ZLABEL, ZLIFETIMEID, ZORIGINALURL, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)11
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000751
+CoreData: error: SQLite bind[6] = "googleMaps"
+CoreData: error: SQLite bind[7] = nil
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000751
+CoreData: error: SQLite bind[9] = "https://www.google.com/maps/search/?api=1&query=Nezu+Museum"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[11] = "item"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[13] = 1024
+CoreData: error: INSERT INTO ZITEM(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCREATEDAT, ZESTIMATEDATA, ZGLOBALDONE, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZNOTES, ZSUBTITLE, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)4
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 1
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 0
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000102
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000812
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Ramen lunch"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: ROLLBACK
+CoreData: error: failed to resolve optimistic locking failure: optimistic locking failure with {
+    NSExceptionOmitCallstacks = 1;
+    conflictList =     (
+    );
+}
+CoreData: error: failed to resolve optimistic locking failure.  Old save request was: <NSSaveChangesRequest: 0x74948756c0> { inserts ((
+    "0x898db497860eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p1>",
+    "0x898db497866eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p2>",
+    "0x898db497860eeec0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Category/p1>",
+    "0x898db497866eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p2>",
+    "0x898db497860eee10 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Tag/p1>",
+    "0x898db497860eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p1>",
+    "0x898db497860eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p1>",
+    "0x898db497860eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p1>",
+    "0x898db497860eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p1>",
+    "0x898db497866eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p2>",
+    "0x898db497866eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p2>",
+    "0x898db497860eee80 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Itinerary/p1>",
+    "0x898db497860eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p1>",
+    "0x898db497866eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p2>",
+    "0x898db497866eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p2>",
+    "0x898db497866eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p2>",
+    "0x898db497860eee70 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Receipt/p1>",
+    "0x898db497864eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p3>",
+    "0x898db49786aeeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p4>",
+    "0x898db497864eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p3>",
+    "0x898db497866eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p2>",
+    "0x898db497860eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p1>",
+    "0x898db497860eeed0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/DeletionMarker/p1>",
+    "0x898db497866eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p2>",
+    "0x898db497860eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p1>",
+    "0x898db497860eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p1>"
+)), updates (), deletes () locks () }
+CoreData: error: failed to resolve optimistic locking failure.  Next attempt will be: <NSSaveChangesRequest: 0x74948756c0> { inserts ((
+    "0x898db497860eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p1>",
+    "0x898db497866eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p2>",
+    "0x898db497860eeec0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Category/p1>",
+    "0x898db497866eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p2>",
+    "0x898db497860eee10 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Tag/p1>",
+    "0x898db497860eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p1>",
+    "0x898db497860eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p1>",
+    "0x898db497860eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p1>",
+    "0x898db497860eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p1>",
+    "0x898db497866eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p2>",
+    "0x898db497866eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p2>",
+    "0x898db497860eee80 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Itinerary/p1>",
+    "0x898db497860eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p1>",
+    "0x898db497866eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p2>",
+    "0x898db497866eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p2>",
+    "0x898db497866eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p2>",
+    "0x898db497860eee70 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Receipt/p1>",
+    "0x898db497864eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p3>",
+    "0x898db49786aeeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p4>",
+    "0x898db497864eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p3>",
+    "0x898db497866eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p2>",
+    "0x898db497860eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p1>",
+    "0x898db497860eeed0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/DeletionMarker/p1>",
+    "0x898db497866eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p2>",
+    "0x898db497860eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p1>",
+    "0x898db497860eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p1>"
+)), updates (), deletes () locks () }
+CoreData: error: BEGIN EXCLUSIVE
+CoreData: error: INSERT INTO ZSCHEDULE(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZCIVILENDDATA, ZCIVILSTARTDATA, ZEND, ZFORMKIND, ZID, ZLIFETIMEID, ZPLANNINGTIMEZONE, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID, ZSTART) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)13
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = <NSData len=33>
+CoreData: error: SQLite bind[6] = <NSData len=32>
+CoreData: error: SQLite bind[7] = nil
+CoreData: error: SQLite bind[8] = "allDay"
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000702
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000872
+CoreData: error: SQLite bind[11] = ""
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[15] = nil
+CoreData: error: INSERT INTO ZITINERARYENTRY(Z_PK, Z_ENT, Z_OPT, ZITEM, ZITINERARY, ZLIST, ZID, ZITINERARYID, ZITINERARYLIFETIMEID, ZLIFETIMEID, ZLOCALDONE, ZRANK, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)6
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000451
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000451
+CoreData: error: SQLite bind[10] = 0
+CoreData: error: SQLite bind[11] = 1024
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZCATEGORY(Z_PK, Z_ENT, Z_OPT, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZNAME, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)1
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[8] = "Food"
+CoreData: error: SQLite bind[9] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[11] = 1
+CoreData: error: SQLite bind[12] = 1024
+CoreData: error: INSERT INTO ZTAG(Z_PK, Z_ENT, Z_OPT, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZNAME, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)14
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[8] = "rainy-day"
+CoreData: error: SQLite bind[9] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZITINERARYENTRY(Z_PK, Z_ENT, Z_OPT, ZITEM, ZITINERARY, ZLIST, ZID, ZITINERARYID, ZITINERARYLIFETIMEID, ZLIFETIMEID, ZLOCALDONE, ZRANK, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)6
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = 2048
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[13] = "list"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000821
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000102
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000812
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[11] = 0
+CoreData: error: SQLite bind[12] = 2048
+CoreData: error: INSERT INTO ZEXPANDEDCOMPLETION(Z_PK, Z_ENT, Z_OPT, ZLISTENTRY, ZMEMBERSHIP, ZLISTENTRYID, ZLISTENTRYLIFETIMEID, ZLOCALDONE, ZMEMBERSHIPID, ZMEMBERSHIPLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)3
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 0
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000401
+CoreData: error: INSERT INTO ZLINEAGERECORD(Z_PK, Z_ENT, Z_OPT, ZRECORDDATA, ZRECORDIDENTIFIER, ZRECORDKIND) VALUES(?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)8
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = <NSData len=281>
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000881
+CoreData: error: SQLite bind[5] = "completionChange"
+CoreData: error: INSERT INTO ZLINEAGERECORD(Z_PK, Z_ENT, Z_OPT, ZRECORDDATA, ZRECORDIDENTIFIER, ZRECORDKIND) VALUES(?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)8
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = <NSData len=440>
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[5] = "contextAlias"
+CoreData: error: INSERT INTO ZITEM(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCREATEDAT, ZESTIMATEDATA, ZGLOBALDONE, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZNOTES, ZSUBTITLE, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)4
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = <NSData len=36>
+CoreData: error: SQLite bind[6] = 0
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[9] = <NSData len=113>
+CoreData: error: SQLite bind[10] = "Original notes"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Nezu Museum"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZITINERARY(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZMANUALESTIMATEDATA, ZNOTES, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)5
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Tokyo Weekend"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZLIST(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZMANUALESTIMATEDATA, ZNAME, ZNOTES, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)9
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = "Tokyo Food"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZSCHEDULE(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZCIVILENDDATA, ZCIVILSTARTDATA, ZEND, ZFORMKIND, ZID, ZLIFETIMEID, ZPLANNINGTIMEZONE, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID, ZSTART) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)13
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = (timestamp)813204000.000000
+CoreData: error: SQLite bind[8] = "timed"
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000701
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000871
+CoreData: error: SQLite bind[11] = "Asia/Tokyo"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[15] = (timestamp)813200400.000000
+CoreData: error: INSERT INTO ZEXPANDEDCOMPLETION(Z_PK, Z_ENT, Z_OPT, ZLISTENTRY, ZMEMBERSHIP, ZLISTENTRYID, ZLISTENTRYLIFETIMEID, ZLOCALDONE, ZMEMBERSHIPID, ZMEMBERSHIPLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)3
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 0
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000402
+CoreData: error: INSERT INTO ZLIST(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZMANUALESTIMATEDATA, ZNAME, ZNOTES, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)9
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000202
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000822
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = "Wishlist"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZRECEIPT(Z_PK, Z_ENT, Z_OPT, ZDATASETID, ZOPERATIONID, ZOWNERSHIPBINDING, ZPAYLOADDIGEST, ZRESULTDATA) VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)12
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 500AA612-AB21-4204-8E7F-F429B00D4042
+CoreData: error: SQLite bind[4] = 2AB09F3E-17C3-40B7-9D53-742F887B16C0
+CoreData: error: SQLite bind[5] = "local:760AD7BD-9355-4806-8CB7-8B5A1DB55C38"
+CoreData: error: SQLite bind[6] = "sha256-payload-v1:2e264fc64ae82c3d9aa67c5c0993d9314bed2f3a898f982abe0620ef15b05f52"
+CoreData: error: SQLite bind[7] = <NSData len=1700>
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)3
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000403
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000403
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000202
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000822
+CoreData: error: SQLite bind[11] = 0
+CoreData: error: SQLite bind[12] = 1024
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)4
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = (int64)1
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000652
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[9] = "tag"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000652
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)3
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000551
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[9] = "category"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000551
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = (int64)1
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000651
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[9] = "tag"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000651
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000552
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[9] = "category"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000552
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: INSERT INTO ZDELETIONMARKER(Z_PK, Z_ENT, Z_OPT, ZCLOSEDFAMILYID, ZDELETIONID, ZOPERATIONID, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)2
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000891
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000991
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000199
+CoreData: error: SQLite bind[7] = "item"
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000819
+CoreData: error: INSERT INTO ZOWNEDLINK(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZID, ZKIND, ZLABEL, ZLIFETIMEID, ZORIGINALURL, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)11
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000752
+CoreData: error: SQLite bind[6] = "website"
+CoreData: error: SQLite bind[7] = "Menu"
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000752
+CoreData: error: SQLite bind[9] = "https://example.com/menu"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[11] = "item"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[13] = 2048
+CoreData: error: INSERT INTO ZOWNEDLINK(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZID, ZKIND, ZLABEL, ZLIFETIMEID, ZORIGINALURL, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)11
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000751
+CoreData: error: SQLite bind[6] = "googleMaps"
+CoreData: error: SQLite bind[7] = nil
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000751
+CoreData: error: SQLite bind[9] = "https://www.google.com/maps/search/?api=1&query=Nezu+Museum"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[11] = "item"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[13] = 1024
+CoreData: error: INSERT INTO ZITEM(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCREATEDAT, ZESTIMATEDATA, ZGLOBALDONE, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZNOTES, ZSUBTITLE, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)4
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 1
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 0
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000102
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000812
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Ramen lunch"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: ROLLBACK
+CoreData: error: failed to resolve optimistic locking failure: optimistic locking failure with {
+    NSExceptionOmitCallstacks = 1;
+    conflictList =     (
+    );
+}
+CoreData: error: failed to resolve optimistic locking failure.  Old save request was: <NSSaveChangesRequest: 0x74948756c0> { inserts ((
+    "0x898db497860eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p1>",
+    "0x898db497866eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p2>",
+    "0x898db497860eeec0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Category/p1>",
+    "0x898db497866eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p2>",
+    "0x898db497860eee10 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Tag/p1>",
+    "0x898db497860eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p1>",
+    "0x898db497860eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p1>",
+    "0x898db497860eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p1>",
+    "0x898db497860eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p1>",
+    "0x898db497866eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p2>",
+    "0x898db497866eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p2>",
+    "0x898db497860eee80 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Itinerary/p1>",
+    "0x898db497860eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p1>",
+    "0x898db497866eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p2>",
+    "0x898db497866eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p2>",
+    "0x898db497866eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p2>",
+    "0x898db497860eee70 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Receipt/p1>",
+    "0x898db497864eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p3>",
+    "0x898db49786aeeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p4>",
+    "0x898db497864eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p3>",
+    "0x898db497866eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p2>",
+    "0x898db497860eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p1>",
+    "0x898db497860eeed0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/DeletionMarker/p1>",
+    "0x898db497866eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p2>",
+    "0x898db497860eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p1>",
+    "0x898db497860eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p1>"
+)), updates (), deletes () locks () }
+CoreData: error: failed to resolve optimistic locking failure.  Next attempt will be: <NSSaveChangesRequest: 0x74948756c0> { inserts ((
+    "0x898db497860eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p1>",
+    "0x898db497866eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p2>",
+    "0x898db497860eeec0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Category/p1>",
+    "0x898db497866eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p2>",
+    "0x898db497860eee10 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Tag/p1>",
+    "0x898db497860eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p1>",
+    "0x898db497860eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p1>",
+    "0x898db497860eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p1>",
+    "0x898db497860eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p1>",
+    "0x898db497866eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p2>",
+    "0x898db497866eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p2>",
+    "0x898db497860eee80 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Itinerary/p1>",
+    "0x898db497860eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p1>",
+    "0x898db497866eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p2>",
+    "0x898db497866eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p2>",
+    "0x898db497866eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p2>",
+    "0x898db497860eee70 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Receipt/p1>",
+    "0x898db497864eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p3>",
+    "0x898db49786aeeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p4>",
+    "0x898db497864eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p3>",
+    "0x898db497866eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p2>",
+    "0x898db497860eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p1>",
+    "0x898db497860eeed0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/DeletionMarker/p1>",
+    "0x898db497866eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p2>",
+    "0x898db497860eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p1>",
+    "0x898db497860eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p1>"
+)), updates (), deletes () locks () }
+CoreData: error: BEGIN EXCLUSIVE
+CoreData: error: INSERT INTO ZSCHEDULE(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZCIVILENDDATA, ZCIVILSTARTDATA, ZEND, ZFORMKIND, ZID, ZLIFETIMEID, ZPLANNINGTIMEZONE, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID, ZSTART) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)13
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = <NSData len=33>
+CoreData: error: SQLite bind[6] = <NSData len=32>
+CoreData: error: SQLite bind[7] = nil
+CoreData: error: SQLite bind[8] = "allDay"
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000702
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000872
+CoreData: error: SQLite bind[11] = ""
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[15] = nil
+CoreData: error: INSERT INTO ZITINERARYENTRY(Z_PK, Z_ENT, Z_OPT, ZITEM, ZITINERARY, ZLIST, ZID, ZITINERARYID, ZITINERARYLIFETIMEID, ZLIFETIMEID, ZLOCALDONE, ZRANK, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)6
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000451
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000451
+CoreData: error: SQLite bind[10] = 0
+CoreData: error: SQLite bind[11] = 1024
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZCATEGORY(Z_PK, Z_ENT, Z_OPT, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZNAME, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)1
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[8] = "Food"
+CoreData: error: SQLite bind[9] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[11] = 1
+CoreData: error: SQLite bind[12] = 1024
+CoreData: error: INSERT INTO ZTAG(Z_PK, Z_ENT, Z_OPT, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZNAME, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)14
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[8] = "rainy-day"
+CoreData: error: SQLite bind[9] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZITINERARYENTRY(Z_PK, Z_ENT, Z_OPT, ZITEM, ZITINERARY, ZLIST, ZID, ZITINERARYID, ZITINERARYLIFETIMEID, ZLIFETIMEID, ZLOCALDONE, ZRANK, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)6
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = 2048
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[13] = "list"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000821
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000102
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000812
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[11] = 0
+CoreData: error: SQLite bind[12] = 2048
+CoreData: error: INSERT INTO ZEXPANDEDCOMPLETION(Z_PK, Z_ENT, Z_OPT, ZLISTENTRY, ZMEMBERSHIP, ZLISTENTRYID, ZLISTENTRYLIFETIMEID, ZLOCALDONE, ZMEMBERSHIPID, ZMEMBERSHIPLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)3
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 0
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000401
+CoreData: error: INSERT INTO ZLINEAGERECORD(Z_PK, Z_ENT, Z_OPT, ZRECORDDATA, ZRECORDIDENTIFIER, ZRECORDKIND) VALUES(?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)8
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = <NSData len=281>
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000881
+CoreData: error: SQLite bind[5] = "completionChange"
+CoreData: error: INSERT INTO ZLINEAGERECORD(Z_PK, Z_ENT, Z_OPT, ZRECORDDATA, ZRECORDIDENTIFIER, ZRECORDKIND) VALUES(?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)8
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = <NSData len=440>
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[5] = "contextAlias"
+CoreData: error: INSERT INTO ZITEM(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCREATEDAT, ZESTIMATEDATA, ZGLOBALDONE, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZNOTES, ZSUBTITLE, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)4
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = <NSData len=36>
+CoreData: error: SQLite bind[6] = 0
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[9] = <NSData len=113>
+CoreData: error: SQLite bind[10] = "Original notes"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Nezu Museum"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZITINERARY(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZMANUALESTIMATEDATA, ZNOTES, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)5
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Tokyo Weekend"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZLIST(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZMANUALESTIMATEDATA, ZNAME, ZNOTES, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)9
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = "Tokyo Food"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZSCHEDULE(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZCIVILENDDATA, ZCIVILSTARTDATA, ZEND, ZFORMKIND, ZID, ZLIFETIMEID, ZPLANNINGTIMEZONE, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID, ZSTART) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)13
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = (timestamp)813204000.000000
+CoreData: error: SQLite bind[8] = "timed"
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000701
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000871
+CoreData: error: SQLite bind[11] = "Asia/Tokyo"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[15] = (timestamp)813200400.000000
+CoreData: error: INSERT INTO ZEXPANDEDCOMPLETION(Z_PK, Z_ENT, Z_OPT, ZLISTENTRY, ZMEMBERSHIP, ZLISTENTRYID, ZLISTENTRYLIFETIMEID, ZLOCALDONE, ZMEMBERSHIPID, ZMEMBERSHIPLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)3
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 0
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000402
+CoreData: error: INSERT INTO ZLIST(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZMANUALESTIMATEDATA, ZNAME, ZNOTES, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)9
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000202
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000822
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = "Wishlist"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZRECEIPT(Z_PK, Z_ENT, Z_OPT, ZDATASETID, ZOPERATIONID, ZOWNERSHIPBINDING, ZPAYLOADDIGEST, ZRESULTDATA) VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)12
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 500AA612-AB21-4204-8E7F-F429B00D4042
+CoreData: error: SQLite bind[4] = 2AB09F3E-17C3-40B7-9D53-742F887B16C0
+CoreData: error: SQLite bind[5] = "local:760AD7BD-9355-4806-8CB7-8B5A1DB55C38"
+CoreData: error: SQLite bind[6] = "sha256-payload-v1:2e264fc64ae82c3d9aa67c5c0993d9314bed2f3a898f982abe0620ef15b05f52"
+CoreData: error: SQLite bind[7] = <NSData len=1700>
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)3
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000403
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000403
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000202
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000822
+CoreData: error: SQLite bind[11] = 0
+CoreData: error: SQLite bind[12] = 1024
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)4
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = (int64)1
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000652
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[9] = "tag"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000652
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)3
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000551
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[9] = "category"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000551
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = (int64)1
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000651
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[9] = "tag"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000651
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000552
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[9] = "category"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000552
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: INSERT INTO ZDELETIONMARKER(Z_PK, Z_ENT, Z_OPT, ZCLOSEDFAMILYID, ZDELETIONID, ZOPERATIONID, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)2
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000891
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000991
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000199
+CoreData: error: SQLite bind[7] = "item"
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000819
+CoreData: error: INSERT INTO ZOWNEDLINK(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZID, ZKIND, ZLABEL, ZLIFETIMEID, ZORIGINALURL, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)11
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000752
+CoreData: error: SQLite bind[6] = "website"
+CoreData: error: SQLite bind[7] = "Menu"
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000752
+CoreData: error: SQLite bind[9] = "https://example.com/menu"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[11] = "item"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[13] = 2048
+CoreData: error: INSERT INTO ZOWNEDLINK(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZID, ZKIND, ZLABEL, ZLIFETIMEID, ZORIGINALURL, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)11
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000751
+CoreData: error: SQLite bind[6] = "googleMaps"
+CoreData: error: SQLite bind[7] = nil
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000751
+CoreData: error: SQLite bind[9] = "https://www.google.com/maps/search/?api=1&query=Nezu+Museum"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[11] = "item"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[13] = 1024
+CoreData: error: INSERT INTO ZITEM(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCREATEDAT, ZESTIMATEDATA, ZGLOBALDONE, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZNOTES, ZSUBTITLE, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)4
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 1
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 0
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000102
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000812
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Ramen lunch"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: ROLLBACK
+CoreData: error: failed to resolve optimistic locking failure: optimistic locking failure with {
+    NSExceptionOmitCallstacks = 1;
+    conflictList =     (
+    );
+}
+CoreData: error: failed to resolve optimistic locking failure.  Old save request was: <NSSaveChangesRequest: 0x74948756c0> { inserts ((
+    "0x898db497860eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p1>",
+    "0x898db497866eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p2>",
+    "0x898db497860eeec0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Category/p1>",
+    "0x898db497866eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p2>",
+    "0x898db497860eee10 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Tag/p1>",
+    "0x898db497860eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p1>",
+    "0x898db497860eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p1>",
+    "0x898db497860eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p1>",
+    "0x898db497860eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p1>",
+    "0x898db497866eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p2>",
+    "0x898db497866eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p2>",
+    "0x898db497860eee80 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Itinerary/p1>",
+    "0x898db497860eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p1>",
+    "0x898db497866eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p2>",
+    "0x898db497866eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p2>",
+    "0x898db497866eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p2>",
+    "0x898db497860eee70 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Receipt/p1>",
+    "0x898db497864eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p3>",
+    "0x898db49786aeeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p4>",
+    "0x898db497864eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p3>",
+    "0x898db497866eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p2>",
+    "0x898db497860eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p1>",
+    "0x898db497860eeed0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/DeletionMarker/p1>",
+    "0x898db497866eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p2>",
+    "0x898db497860eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p1>",
+    "0x898db497860eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p1>"
+)), updates (), deletes () locks () }
+CoreData: error: failed to resolve optimistic locking failure.  Next attempt will be: <NSSaveChangesRequest: 0x74948756c0> { inserts ((
+    "0x898db497860eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p1>",
+    "0x898db497866eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p2>",
+    "0x898db497860eeec0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Category/p1>",
+    "0x898db497866eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p2>",
+    "0x898db497860eee10 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Tag/p1>",
+    "0x898db497860eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p1>",
+    "0x898db497860eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p1>",
+    "0x898db497860eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p1>",
+    "0x898db497860eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p1>",
+    "0x898db497866eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p2>",
+    "0x898db497866eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p2>",
+    "0x898db497860eee80 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Itinerary/p1>",
+    "0x898db497860eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p1>",
+    "0x898db497866eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p2>",
+    "0x898db497866eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p2>",
+    "0x898db497866eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p2>",
+    "0x898db497860eee70 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Receipt/p1>",
+    "0x898db497864eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p3>",
+    "0x898db49786aeeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p4>",
+    "0x898db497864eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p3>",
+    "0x898db497866eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p2>",
+    "0x898db497860eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p1>",
+    "0x898db497860eeed0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/DeletionMarker/p1>",
+    "0x898db497866eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p2>",
+    "0x898db497860eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p1>",
+    "0x898db497860eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p1>"
+)), updates (), deletes () locks () }
+CoreData: error: BEGIN EXCLUSIVE
+CoreData: error: INSERT INTO ZSCHEDULE(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZCIVILENDDATA, ZCIVILSTARTDATA, ZEND, ZFORMKIND, ZID, ZLIFETIMEID, ZPLANNINGTIMEZONE, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID, ZSTART) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)13
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = <NSData len=33>
+CoreData: error: SQLite bind[6] = <NSData len=32>
+CoreData: error: SQLite bind[7] = nil
+CoreData: error: SQLite bind[8] = "allDay"
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000702
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000872
+CoreData: error: SQLite bind[11] = ""
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[15] = nil
+CoreData: error: INSERT INTO ZITINERARYENTRY(Z_PK, Z_ENT, Z_OPT, ZITEM, ZITINERARY, ZLIST, ZID, ZITINERARYID, ZITINERARYLIFETIMEID, ZLIFETIMEID, ZLOCALDONE, ZRANK, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)6
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000451
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000451
+CoreData: error: SQLite bind[10] = 0
+CoreData: error: SQLite bind[11] = 1024
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZCATEGORY(Z_PK, Z_ENT, Z_OPT, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZNAME, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)1
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[8] = "Food"
+CoreData: error: SQLite bind[9] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[11] = 1
+CoreData: error: SQLite bind[12] = 1024
+CoreData: error: INSERT INTO ZTAG(Z_PK, Z_ENT, Z_OPT, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZNAME, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)14
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[8] = "rainy-day"
+CoreData: error: SQLite bind[9] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZITINERARYENTRY(Z_PK, Z_ENT, Z_OPT, ZITEM, ZITINERARY, ZLIST, ZID, ZITINERARYID, ZITINERARYLIFETIMEID, ZLIFETIMEID, ZLOCALDONE, ZRANK, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)6
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = 2048
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[13] = "list"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000821
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000102
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000812
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[11] = 0
+CoreData: error: SQLite bind[12] = 2048
+CoreData: error: INSERT INTO ZEXPANDEDCOMPLETION(Z_PK, Z_ENT, Z_OPT, ZLISTENTRY, ZMEMBERSHIP, ZLISTENTRYID, ZLISTENTRYLIFETIMEID, ZLOCALDONE, ZMEMBERSHIPID, ZMEMBERSHIPLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)3
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 0
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000401
+CoreData: error: INSERT INTO ZLINEAGERECORD(Z_PK, Z_ENT, Z_OPT, ZRECORDDATA, ZRECORDIDENTIFIER, ZRECORDKIND) VALUES(?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)8
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = <NSData len=281>
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000881
+CoreData: error: SQLite bind[5] = "completionChange"
+CoreData: error: INSERT INTO ZLINEAGERECORD(Z_PK, Z_ENT, Z_OPT, ZRECORDDATA, ZRECORDIDENTIFIER, ZRECORDKIND) VALUES(?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)8
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = <NSData len=440>
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[5] = "contextAlias"
+CoreData: error: INSERT INTO ZITEM(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCREATEDAT, ZESTIMATEDATA, ZGLOBALDONE, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZNOTES, ZSUBTITLE, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)4
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = <NSData len=36>
+CoreData: error: SQLite bind[6] = 0
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[9] = <NSData len=113>
+CoreData: error: SQLite bind[10] = "Original notes"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Nezu Museum"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZITINERARY(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZMANUALESTIMATEDATA, ZNOTES, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)5
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Tokyo Weekend"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZLIST(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZMANUALESTIMATEDATA, ZNAME, ZNOTES, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)9
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = "Tokyo Food"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZSCHEDULE(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZCIVILENDDATA, ZCIVILSTARTDATA, ZEND, ZFORMKIND, ZID, ZLIFETIMEID, ZPLANNINGTIMEZONE, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID, ZSTART) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)13
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = (timestamp)813204000.000000
+CoreData: error: SQLite bind[8] = "timed"
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000701
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000871
+CoreData: error: SQLite bind[11] = "Asia/Tokyo"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[15] = (timestamp)813200400.000000
+CoreData: error: INSERT INTO ZEXPANDEDCOMPLETION(Z_PK, Z_ENT, Z_OPT, ZLISTENTRY, ZMEMBERSHIP, ZLISTENTRYID, ZLISTENTRYLIFETIMEID, ZLOCALDONE, ZMEMBERSHIPID, ZMEMBERSHIPLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)3
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 0
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000402
+CoreData: error: INSERT INTO ZLIST(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZMANUALESTIMATEDATA, ZNAME, ZNOTES, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)9
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000202
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000822
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = "Wishlist"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZRECEIPT(Z_PK, Z_ENT, Z_OPT, ZDATASETID, ZOPERATIONID, ZOWNERSHIPBINDING, ZPAYLOADDIGEST, ZRESULTDATA) VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)12
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 500AA612-AB21-4204-8E7F-F429B00D4042
+CoreData: error: SQLite bind[4] = 2AB09F3E-17C3-40B7-9D53-742F887B16C0
+CoreData: error: SQLite bind[5] = "local:760AD7BD-9355-4806-8CB7-8B5A1DB55C38"
+CoreData: error: SQLite bind[6] = "sha256-payload-v1:2e264fc64ae82c3d9aa67c5c0993d9314bed2f3a898f982abe0620ef15b05f52"
+CoreData: error: SQLite bind[7] = <NSData len=1700>
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)3
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000403
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000403
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000202
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000822
+CoreData: error: SQLite bind[11] = 0
+CoreData: error: SQLite bind[12] = 1024
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)4
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = (int64)1
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000652
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[9] = "tag"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000652
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)3
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000551
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[9] = "category"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000551
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = (int64)1
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000651
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[9] = "tag"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000651
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000552
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[9] = "category"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000552
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: INSERT INTO ZDELETIONMARKER(Z_PK, Z_ENT, Z_OPT, ZCLOSEDFAMILYID, ZDELETIONID, ZOPERATIONID, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)2
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000891
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000991
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000199
+CoreData: error: SQLite bind[7] = "item"
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000819
+CoreData: error: INSERT INTO ZOWNEDLINK(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZID, ZKIND, ZLABEL, ZLIFETIMEID, ZORIGINALURL, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)11
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000752
+CoreData: error: SQLite bind[6] = "website"
+CoreData: error: SQLite bind[7] = "Menu"
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000752
+CoreData: error: SQLite bind[9] = "https://example.com/menu"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[11] = "item"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[13] = 2048
+CoreData: error: INSERT INTO ZOWNEDLINK(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZID, ZKIND, ZLABEL, ZLIFETIMEID, ZORIGINALURL, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)11
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000751
+CoreData: error: SQLite bind[6] = "googleMaps"
+CoreData: error: SQLite bind[7] = nil
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000751
+CoreData: error: SQLite bind[9] = "https://www.google.com/maps/search/?api=1&query=Nezu+Museum"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[11] = "item"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[13] = 1024
+CoreData: error: INSERT INTO ZITEM(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCREATEDAT, ZESTIMATEDATA, ZGLOBALDONE, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZNOTES, ZSUBTITLE, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)4
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 1
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 0
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000102
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000812
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Ramen lunch"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: ROLLBACK
+CoreData: error: failed to resolve optimistic locking failure: optimistic locking failure with {
+    NSExceptionOmitCallstacks = 1;
+    conflictList =     (
+    );
+}
+CoreData: error: failed to resolve optimistic locking failure.  Old save request was: <NSSaveChangesRequest: 0x74948756c0> { inserts ((
+    "0x898db497860eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p1>",
+    "0x898db497866eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p2>",
+    "0x898db497860eeec0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Category/p1>",
+    "0x898db497866eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p2>",
+    "0x898db497860eee10 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Tag/p1>",
+    "0x898db497860eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p1>",
+    "0x898db497860eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p1>",
+    "0x898db497860eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p1>",
+    "0x898db497860eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p1>",
+    "0x898db497866eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p2>",
+    "0x898db497866eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p2>",
+    "0x898db497860eee80 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Itinerary/p1>",
+    "0x898db497860eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p1>",
+    "0x898db497866eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p2>",
+    "0x898db497866eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p2>",
+    "0x898db497866eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p2>",
+    "0x898db497860eee70 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Receipt/p1>",
+    "0x898db497864eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p3>",
+    "0x898db49786aeeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p4>",
+    "0x898db497864eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p3>",
+    "0x898db497866eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p2>",
+    "0x898db497860eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p1>",
+    "0x898db497860eeed0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/DeletionMarker/p1>",
+    "0x898db497866eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p2>",
+    "0x898db497860eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p1>",
+    "0x898db497860eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p1>"
+)), updates (), deletes () locks () }
+CoreData: error: failed to resolve optimistic locking failure.  Next attempt will be: <NSSaveChangesRequest: 0x74948756c0> { inserts ((
+    "0x898db497860eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p1>",
+    "0x898db497866eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p2>",
+    "0x898db497860eeec0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Category/p1>",
+    "0x898db497866eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p2>",
+    "0x898db497860eee10 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Tag/p1>",
+    "0x898db497860eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p1>",
+    "0x898db497860eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p1>",
+    "0x898db497860eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p1>",
+    "0x898db497860eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p1>",
+    "0x898db497866eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p2>",
+    "0x898db497866eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p2>",
+    "0x898db497860eee80 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Itinerary/p1>",
+    "0x898db497860eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p1>",
+    "0x898db497866eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p2>",
+    "0x898db497866eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p2>",
+    "0x898db497866eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p2>",
+    "0x898db497860eee70 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Receipt/p1>",
+    "0x898db497864eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p3>",
+    "0x898db49786aeeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p4>",
+    "0x898db497864eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p3>",
+    "0x898db497866eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p2>",
+    "0x898db497860eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p1>",
+    "0x898db497860eeed0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/DeletionMarker/p1>",
+    "0x898db497866eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p2>",
+    "0x898db497860eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p1>",
+    "0x898db497860eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p1>"
+)), updates (), deletes () locks () }
+CoreData: error: BEGIN EXCLUSIVE
+CoreData: error: INSERT INTO ZSCHEDULE(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZCIVILENDDATA, ZCIVILSTARTDATA, ZEND, ZFORMKIND, ZID, ZLIFETIMEID, ZPLANNINGTIMEZONE, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID, ZSTART) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)13
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = <NSData len=33>
+CoreData: error: SQLite bind[6] = <NSData len=32>
+CoreData: error: SQLite bind[7] = nil
+CoreData: error: SQLite bind[8] = "allDay"
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000702
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000872
+CoreData: error: SQLite bind[11] = ""
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[15] = nil
+CoreData: error: INSERT INTO ZITINERARYENTRY(Z_PK, Z_ENT, Z_OPT, ZITEM, ZITINERARY, ZLIST, ZID, ZITINERARYID, ZITINERARYLIFETIMEID, ZLIFETIMEID, ZLOCALDONE, ZRANK, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)6
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000451
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000451
+CoreData: error: SQLite bind[10] = 0
+CoreData: error: SQLite bind[11] = 1024
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZCATEGORY(Z_PK, Z_ENT, Z_OPT, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZNAME, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)1
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[8] = "Food"
+CoreData: error: SQLite bind[9] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[11] = 1
+CoreData: error: SQLite bind[12] = 1024
+CoreData: error: INSERT INTO ZTAG(Z_PK, Z_ENT, Z_OPT, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZNAME, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)14
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[8] = "rainy-day"
+CoreData: error: SQLite bind[9] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZITINERARYENTRY(Z_PK, Z_ENT, Z_OPT, ZITEM, ZITINERARY, ZLIST, ZID, ZITINERARYID, ZITINERARYLIFETIMEID, ZLIFETIMEID, ZLOCALDONE, ZRANK, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)6
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = 2048
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[13] = "list"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000821
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000102
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000812
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[11] = 0
+CoreData: error: SQLite bind[12] = 2048
+CoreData: error: INSERT INTO ZEXPANDEDCOMPLETION(Z_PK, Z_ENT, Z_OPT, ZLISTENTRY, ZMEMBERSHIP, ZLISTENTRYID, ZLISTENTRYLIFETIMEID, ZLOCALDONE, ZMEMBERSHIPID, ZMEMBERSHIPLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)3
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 0
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000401
+CoreData: error: INSERT INTO ZLINEAGERECORD(Z_PK, Z_ENT, Z_OPT, ZRECORDDATA, ZRECORDIDENTIFIER, ZRECORDKIND) VALUES(?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)8
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = <NSData len=281>
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000881
+CoreData: error: SQLite bind[5] = "completionChange"
+CoreData: error: INSERT INTO ZLINEAGERECORD(Z_PK, Z_ENT, Z_OPT, ZRECORDDATA, ZRECORDIDENTIFIER, ZRECORDKIND) VALUES(?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)8
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = <NSData len=440>
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000401
+CoreData: error: SQLite bind[5] = "contextAlias"
+CoreData: error: INSERT INTO ZITEM(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCREATEDAT, ZESTIMATEDATA, ZGLOBALDONE, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZNOTES, ZSUBTITLE, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)4
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = <NSData len=36>
+CoreData: error: SQLite bind[6] = 0
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[9] = <NSData len=113>
+CoreData: error: SQLite bind[10] = "Original notes"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Nezu Museum"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZITINERARY(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZMANUALESTIMATEDATA, ZNOTES, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)5
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000831
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Tokyo Weekend"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZLIST(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZMANUALESTIMATEDATA, ZNAME, ZNOTES, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)9
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000201
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000821
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = "Tokyo Food"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZSCHEDULE(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZCIVILENDDATA, ZCIVILSTARTDATA, ZEND, ZFORMKIND, ZID, ZLIFETIMEID, ZPLANNINGTIMEZONE, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID, ZSTART) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)13
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = (timestamp)813204000.000000
+CoreData: error: SQLite bind[8] = "timed"
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000701
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000871
+CoreData: error: SQLite bind[11] = "Asia/Tokyo"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[15] = (timestamp)813200400.000000
+CoreData: error: INSERT INTO ZEXPANDEDCOMPLETION(Z_PK, Z_ENT, Z_OPT, ZLISTENTRY, ZMEMBERSHIP, ZLISTENTRYID, ZLISTENTRYLIFETIMEID, ZLOCALDONE, ZMEMBERSHIPID, ZMEMBERSHIPLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)3
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)1
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000452
+CoreData: error: SQLite bind[7] = 0
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000402
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000402
+CoreData: error: INSERT INTO ZLIST(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCOLORDATA, ZCREATEDAT, ZICONNAME, ZID, ZLIFETIMEID, ZMANUALESTIMATEDATA, ZNAME, ZNOTES, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)9
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 0
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (timestamp)10.250000
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000202
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000822
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = "Wishlist"
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = (timestamp)20.125000
+CoreData: error: INSERT INTO ZRECEIPT(Z_PK, Z_ENT, Z_OPT, ZDATASETID, ZOPERATIONID, ZOWNERSHIPBINDING, ZPAYLOADDIGEST, ZRESULTDATA) VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)12
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 500AA612-AB21-4204-8E7F-F429B00D4042
+CoreData: error: SQLite bind[4] = 2AB09F3E-17C3-40B7-9D53-742F887B16C0
+CoreData: error: SQLite bind[5] = "local:760AD7BD-9355-4806-8CB7-8B5A1DB55C38"
+CoreData: error: SQLite bind[6] = "sha256-payload-v1:2e264fc64ae82c3d9aa67c5c0993d9314bed2f3a898f982abe0620ef15b05f52"
+CoreData: error: SQLite bind[7] = <NSData len=1700>
+CoreData: error: INSERT INTO ZMEMBERSHIP(Z_PK, Z_ENT, Z_OPT, ZITEM, ZLIST, ZID, ZITEMID, ZITEMLIFETIMEID, ZLIFETIMEID, ZLISTID, ZLISTLIFETIMEID, ZLOCALDONE, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)3
+CoreData: error: SQLite bind[1] = (int64)10
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000403
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000403
+CoreData: error: SQLite bind[9] = 00000000-0000-4000-8000-000000000202
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000822
+CoreData: error: SQLite bind[11] = 0
+CoreData: error: SQLite bind[12] = 1024
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)4
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = (int64)1
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000652
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[9] = "tag"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000652
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)3
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000551
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[9] = "category"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000551
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = (int64)2
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = (int64)1
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000651
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000601
+CoreData: error: SQLite bind[9] = "tag"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000861
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000651
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[13] = "item"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000811
+CoreData: error: INSERT INTO ZLABELASSOCIATION(Z_PK, Z_ENT, Z_OPT, ZCATEGORY, ZITEMOWNER, ZITINERARYOWNER, ZTAG, ZID, ZLABELID, ZLABELKIND, ZLABELLIFETIMEID, ZLIFETIMEID, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)7
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)1
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = (int64)1
+CoreData: error: SQLite bind[6] = nil
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000552
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000501
+CoreData: error: SQLite bind[9] = "category"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000851
+CoreData: error: SQLite bind[11] = 00000000-0000-4000-8000-000000000552
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000301
+CoreData: error: SQLite bind[13] = "itinerary"
+CoreData: error: SQLite bind[14] = 00000000-0000-4000-8000-000000000831
+CoreData: error: INSERT INTO ZDELETIONMARKER(Z_PK, Z_ENT, Z_OPT, ZCLOSEDFAMILYID, ZDELETIONID, ZOPERATIONID, ZSOURCEID, ZSOURCEKIND, ZSOURCELIFETIMEID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)2
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = nil
+CoreData: error: SQLite bind[4] = 00000000-0000-4000-8000-000000000891
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000991
+CoreData: error: SQLite bind[6] = 00000000-0000-4000-8000-000000000199
+CoreData: error: SQLite bind[7] = "item"
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000819
+CoreData: error: INSERT INTO ZOWNEDLINK(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZID, ZKIND, ZLABEL, ZLIFETIMEID, ZORIGINALURL, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)2
+CoreData: error: SQLite bind[1] = (int64)11
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000752
+CoreData: error: SQLite bind[6] = "website"
+CoreData: error: SQLite bind[7] = "Menu"
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000752
+CoreData: error: SQLite bind[9] = "https://example.com/menu"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[11] = "item"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[13] = 2048
+CoreData: error: INSERT INTO ZOWNEDLINK(Z_PK, Z_ENT, Z_OPT, ZITEMOWNER, ZITINERARYOWNER, ZID, ZKIND, ZLABEL, ZLIFETIMEID, ZORIGINALURL, ZOWNERID, ZOWNERKIND, ZOWNERLIFETIMEID, ZRANK) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)11
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = (int64)2
+CoreData: error: SQLite bind[4] = nil
+CoreData: error: SQLite bind[5] = 00000000-0000-4000-8000-000000000751
+CoreData: error: SQLite bind[6] = "googleMaps"
+CoreData: error: SQLite bind[7] = nil
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000751
+CoreData: error: SQLite bind[9] = "https://www.google.com/maps/search/?api=1&query=Nezu+Museum"
+CoreData: error: SQLite bind[10] = 00000000-0000-4000-8000-000000000101
+CoreData: error: SQLite bind[11] = "item"
+CoreData: error: SQLite bind[12] = 00000000-0000-4000-8000-000000000811
+CoreData: error: SQLite bind[13] = 1024
+CoreData: error: INSERT INTO ZITEM(Z_PK, Z_ENT, Z_OPT, ZARCHIVED, ZCREATEDAT, ZESTIMATEDATA, ZGLOBALDONE, ZID, ZLIFETIMEID, ZLOCATIONDATA, ZNOTES, ZSUBTITLE, ZTITLE, ZUPDATEDAT) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+CoreData: error: SQLite bind[0] = (int64)1
+CoreData: error: SQLite bind[1] = (int64)4
+CoreData: error: SQLite bind[2] = (int64)1
+CoreData: error: SQLite bind[3] = 1
+CoreData: error: SQLite bind[4] = (timestamp)10.250000
+CoreData: error: SQLite bind[5] = nil
+CoreData: error: SQLite bind[6] = 0
+CoreData: error: SQLite bind[7] = 00000000-0000-4000-8000-000000000102
+CoreData: error: SQLite bind[8] = 00000000-0000-4000-8000-000000000812
+CoreData: error: SQLite bind[9] = nil
+CoreData: error: SQLite bind[10] = nil
+CoreData: error: SQLite bind[11] = nil
+CoreData: error: SQLite bind[12] = "Ramen lunch"
+CoreData: error: SQLite bind[13] = (timestamp)20.125000
+CoreData: error: ROLLBACK
+CoreData: error: failed to resolve optimistic locking failure: optimistic locking failure with {
+    NSExceptionOmitCallstacks = 1;
+    conflictList =     (
+    );
+}
+CoreData: error: failed to resolve optimistic locking failure.  Old save request was: <NSSaveChangesRequest: 0x74948756c0> { inserts ((
+    "0x898db497860eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p1>",
+    "0x898db497866eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p2>",
+    "0x898db497860eeec0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Category/p1>",
+    "0x898db497866eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p2>",
+    "0x898db497860eee10 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Tag/p1>",
+    "0x898db497860eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p1>",
+    "0x898db497860eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p1>",
+    "0x898db497860eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p1>",
+    "0x898db497860eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p1>",
+    "0x898db497866eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p2>",
+    "0x898db497866eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p2>",
+    "0x898db497860eee80 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Itinerary/p1>",
+    "0x898db497860eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p1>",
+    "0x898db497866eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p2>",
+    "0x898db497866eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p2>",
+    "0x898db497866eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p2>",
+    "0x898db497860eee70 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Receipt/p1>",
+    "0x898db497864eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p3>",
+    "0x898db49786aeeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p4>",
+    "0x898db497864eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p3>",
+    "0x898db497866eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p2>",
+    "0x898db497860eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p1>",
+    "0x898db497860eeed0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/DeletionMarker/p1>",
+    "0x898db497866eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p2>",
+    "0x898db497860eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B0977error: Process '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/libexec/swift/pm/swiftpm-testing-helper --test-bundle-path /private/tmp/PlannerCoreFixturePackageBuild/out/Products/Debug/PlannerCoreStoreTests.xctest/Contents/MacOS/PlannerCoreStoreTests --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter NativeImportApplyTests/failedPrecommitImportLeavesGraphAndReceiptUnapplied /private/tmp/PlannerCoreFixturePackageBuild/out/Products/Debug/PlannerCoreStoreTests.xctest/Contents/MacOS/PlannerCoreStoreTests --testing-library swift-testing' exited with unexpected signal code 5
+7600/OwnedLink/p1>",
+    "0x898db497860eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p1>"
+)), updates (), deletes () locks () }
+CoreData: error: failed to resolve optimistic locking failure.  Next attempt will be: <NSSaveChangesRequest: 0x74948756c0> { inserts ((
+    "0x898db497860eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p1>",
+    "0x898db497866eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p2>",
+    "0x898db497860eeec0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Category/p1>",
+    "0x898db497866eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p2>",
+    "0x898db497860eee10 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Tag/p1>",
+    "0x898db497860eee90 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ItineraryEntry/p1>",
+    "0x898db497860eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p1>",
+    "0x898db497860eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p1>",
+    "0x898db497860eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p1>",
+    "0x898db497866eeeb0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LineageRecord/p2>",
+    "0x898db497866eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p2>",
+    "0x898db497860eee80 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Itinerary/p1>",
+    "0x898db497860eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p1>",
+    "0x898db497866eee00 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Schedule/p2>",
+    "0x898db497866eeee0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/ExpandedCompletion/p2>",
+    "0x898db497866eee40 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/List/p2>",
+    "0x898db497860eee70 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Receipt/p1>",
+    "0x898db497864eee50 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Membership/p3>",
+    "0x898db49786aeeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p4>",
+    "0x898db497864eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p3>",
+    "0x898db497866eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p2>",
+    "0x898db497860eeea0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/LabelAssociation/p1>",
+    "0x898db497860eeed0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/DeletionMarker/p1>",
+    "0x898db497866eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p2>",
+    "0x898db497860eee60 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/OwnedLink/p1>",
+    "0x898db497860eeef0 <x-coredata://CBE45309-2E1F-4B9F-8380-639B09777600/Item/p1>"
+)), updates (), deletes () locks () }
+CoreData: error: fatal: Unable to recover from optimistic locking failure.
+
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

@@ -1,0 +1,124 @@
+{
+  "status": "Qualified complete independent-fixture restore into an empty native dataset, ordinary history edits, replay and recovery retry; full import remains open",
+  "beforeCommit": "d5a47a5",
+  "storageSchemaVersion": 16,
+  "portableFormatVersion": 2,
+  "qualification": {
+    "macCore": {
+      "functions": 45,
+      "suites": 21,
+      "invocations": 82,
+      "failures": 0,
+      "skips": 0
+    },
+    "iOSCore": {
+      "functions": 45,
+      "suites": 21,
+      "invocations": 82,
+      "failures": 0,
+      "skips": 0
+    },
+    "macHTTP": {
+      "functions": 16,
+      "suites": 4,
+      "invocations": 22,
+      "failures": 0,
+      "skips": 0
+    },
+    "strictSwiftFiles": 19,
+    "macAppAndNavigationTestHost": "TEST BUILD SUCCEEDED",
+    "nativeUIFunctions": 0
+  },
+  "commands": {
+    "core": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter 'NativeImportApplyTests|NativeImportLineageMigrationTests|ImportLineageEncodingTests|NativeImportLineageTests|RecoveryProposalSelectionTests|RecoveryCheckpointRetryTests|RecoveryCheckpointRetryAdmissionTests|ManualContainerEstimateMigrationTests|ExpandedCompletionMigrationTests|ItineraryEntryMigrationTests|ItemLabelMigrationTests|MembershipMigrationTests|CategoryMigrationTests|TagMigrationTests|ItineraryMigrationTests|ItineraryScheduleMigrationTests|ItemLinkMigrationTests|NativeImportReviewTests|NativeImportConflictReviewTests|NativeImportOmittedOwnerReviewTests|NativeImportBindingReviewTests'",
+    "phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerCore -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerCoreStoreTests/NativeImportApplyTests -only-testing:PlannerCoreStoreTests/NativeImportLineageMigrationTests -only-testing:PlannerCoreStoreTests/ImportLineageEncodingTests -only-testing:PlannerCoreStoreTests/NativeImportLineageTests -only-testing:PlannerCoreStoreTests/RecoveryProposalSelectionTests -only-testing:PlannerCoreStoreTests/RecoveryCheckpointRetryTests -only-testing:PlannerCoreStoreTests/RecoveryCheckpointRetryAdmissionTests -only-testing:PlannerCoreStoreTests/ManualContainerEstimateMigrationTests -only-testing:PlannerCoreStoreTests/ExpandedCompletionMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryEntryMigrationTests -only-testing:PlannerCoreStoreTests/ItemLabelMigrationTests -only-testing:PlannerCoreStoreTests/MembershipMigrationTests -only-testing:PlannerCoreStoreTests/CategoryMigrationTests -only-testing:PlannerCoreStoreTests/TagMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryScheduleMigrationTests -only-testing:PlannerCoreStoreTests/ItemLinkMigrationTests -only-testing:PlannerCoreStoreTests/NativeImportReviewTests -only-testing:PlannerCoreStoreTests/NativeImportConflictReviewTests -only-testing:PlannerCoreStoreTests/NativeImportOmittedOwnerReviewTests -only-testing:PlannerCoreStoreTests/NativeImportBindingReviewTests -resultBundlePath /private/tmp/PlannerNativeImportRestorePhone.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "macBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO build-for-testing",
+    "httpInvalidPlatform": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerMCPTests/CommandRoutingTests -only-testing:PlannerMCPTests/OperationStatusRoutingTests -only-testing:PlannerMCPTests/BulkCompletionAdmissionRoutingTests -only-testing:PlannerMCPTests/ManualContainerEstimateRoutingTests -resultBundlePath /private/tmp/PlannerNativeImportRestoreHTTP.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "http": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerMCPTests/CommandRoutingTests -only-testing:PlannerMCPTests/OperationStatusRoutingTests -only-testing:PlannerMCPTests/BulkCompletionAdmissionRoutingTests -only-testing:PlannerMCPTests/ManualContainerEstimateRoutingTests -resultBundlePath /private/tmp/PlannerNativeImportRestoreHTTPMac.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  "sourceEpoch": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1d762970d9fa36ce492dbf412b039717ac4aed7e15595b32ede8cc34d5081037",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportGraph.swift": "0a015582841b8a3481d465c160708a2c8765079996c540368daa456bd1e24bc6",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "7644e42bdfb44371059190f50664ba948c635ee50bcdc6c630dd8ed8aa71c3f0",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerStore.swift": "e2d94d42ebe3237008efbdc514e81a0a3c0b56a56f9373dedd9e7bcc7bd9779c",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CategoryMigrationTests.swift": "ac9d5395ee15d7bbd8ca8254f4d60f2f47797e5b7497998725483b3ab31bd342",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ExpandedCompletionMigrationTests.swift": "ebd66d969b4b6de40306ebc99c6dbfec3edacc2e3e54dfa75dfbc84962f4f643",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLabelMigrationTests.swift": "25f04745ba3368954252c3762950697610b6d26a41f43eaceb761b128bfc0349",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemLinkMigrationTests.swift": "ff832881dea1fb52376909b11081eb31a877092cecbb2b1ec7a2885116b48389",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItineraryEntryMigrationTests.swift": "80fa1640c7927e1559bec64b5a7dd81fa9a3f9f9152494d005b4a759e3ac4ae0",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItineraryMigrationTests.swift": "0d028ec247be7966bb8b03bd291fe1d19c029c3728a19e9e22ec6cc705a4c30b",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItineraryScheduleMigrationTests.swift": "11d5a53030f3e2b6ecf2cb836a73ff1c1f7fce7aa5c73462014861aa06c11577",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ManualContainerEstimateMigrationTests.swift": "0d500b350f26f2cab803b7869254a797d4124e4124bbaa53cbf12206183c1f08",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipMigrationTests.swift": "fc3be1c3876df98ff4ca4d3e3e04350cfddbc5c7b4fa56f630188c96447914d1",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/TagMigrationTests.swift": "c9e8608215f4bd649090b32fa65d0031a4737555ce7150ad8f4553ce55a83daf",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCompletionHistory.swift": "f28437441dd7d3e4e5ad29e3d73c0f3b58eea6bf48e76be6010f1e278081e7a2",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerNativeImportStorage.swift": "2bd241267a3a442c6f896f62f2ff2586e14465dc24b615f4428130435d842d00",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerSchemaV16.swift": "884652075929af492a3a452f57c63aa810e6b41f36d841fba08c9f0597eb985c",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportApplyTests.swift": "00db54f93428316e42523c4c7dd66d81c875b766efa415f6c45f6a8f2a8a1695",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportLineageMigrationTests.swift": "36f14c63f24581c9848f9467e095a89e26cf6d3dbdfd2200e4f072e2a17810c8"
+  },
+  "initialRestoreRedSourceEpoch": {
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportApplyTests.swift": "c70aa92150529a2ed38e0b7874258542270b8fe21e71b700b794d245ee648ed4",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "a77e61ade9a68f17ed40132137a046d188fad50ed6e582594b0552eebf102d70"
+  },
+  "fixture": {
+    "generatorCommit": "d5a47a5",
+    "command": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift run --package-path /private/tmp/PlannerSchemaV15FixtureMaker --scratch-path /private/tmp/PlannerSchemaV15FixtureMakerBuild FixtureMaker /private/tmp/PlannerGeneratedSchemaV15Fixture",
+    "sha256": {
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/control/writer": "d8de8071b3654cdb80dd4306b714a9e8bc6b96a1e98f41ee626d78359436e1d6",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/expected-portable.json": "95eae3a312f7677fb0f5662ca8b19936f55b8c8a6393e32ee8e619c192c74c9d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/manifest.json": "2ec4a16bb4382bad634e591aa33f7ec4b12ae139a52b207a4493be49478052e0",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/recovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/checkpoint-1.json": "2d19872fa6f22d16621c1036a06615777e52057e107f8d821903d45ee6acea3f",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/recovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/checkpoint-2.json": "c9b044a6f71eb92084c5ac2d988ffa354d662b4904a43e177f02b50d73dfc96b",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/recovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/checkpoint-3.json": "fa4b26ffdae3b7b916c4294443dc0af5056f1bf88f74ea297aa547bf1b487a04",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/recovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/checkpoint-4.json": "e32694b4a57c40b942b6275a9e5b13c746aa1780e19a3d74cb4ce92dce8a7517",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/recovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/checkpoint-5.json": "843ed8a51700e2c0e2cca3e7d86123cc4f83c2466ddaa03de8ac0e8cf80a3d31",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/recovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/checkpoint-6.json": "93fa39f38c2ceb44bd576d20f25d7639efbccb0a752fdca5b7a87c7a831e9f46",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/recovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/identity.json": "d8de8071b3654cdb80dd4306b714a9e8bc6b96a1e98f41ee626d78359436e1d6",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/recovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/proposal-14C8ED1A-F8AD-4E5F-AA77-71A90E19D100.json": "08d97aab112e6c5cdd007b5dfa82a37cfca7734c9c5f11c9104d3859908c45af",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/recovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/proposal-1FE42BEA-50E9-410F-87FC-4933F434D9C7.json": "2efc6c176314e05efaac523657c78cb2306634a712424d532ec4d6a7529bf649",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/recovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/proposal-4F2C5AE7-E2C3-4D0C-A8F7-D219796D6E10.json": "85c513bda46564697a1b199cc8a20a326edb27a51e6d7c07b1d7928af3aaaa89",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/recovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/proposal-5CEA9C8D-8C12-4DBE-A9B9-25A1891C5502.json": "4469716b03a0e5c0ec1d06708859b6b7cb5f9b3a21a2d68f4e3370e7e631bd60",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/recovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/proposal-AEDFF6F5-426C-42CC-A285-DD40963A261F.json": "97bd1dcf9f50a24ccb4f2b9f00b5e2e4cde64e55517a27f7af876922e6e2670d",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/recovery/2AAC45DD-604A-4141-BF1D-27070CBF7090/proposal-DA6A7E73-7D90-4145-912E-66684FF8D5BB.json": "a08d9024dce3e05af14f521cdf7d93b78eab8342513255300199a210cb76b5ef",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/store/Planner.sqlite": "608b6dbc40c4f0d4f57c27b3bfc1831fc1cbec77b6ae4d9622945970dedb740b",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/store/Planner.sqlite-shm": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb",
+      "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV15/store/Planner.sqlite-wal": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "originalArtifacts": {
+    "phoneResult": "/private/tmp/PlannerNativeImportRestorePhone.xcresult",
+    "phoneLog": "/private/tmp/PlannerNativeImportRestorePhone.log",
+    "httpResult": "/private/tmp/PlannerNativeImportRestoreHTTPMac.xcresult",
+    "httpLog": "/private/tmp/PlannerNativeImportRestoreHTTPMac.log",
+    "macBuildLog": "/private/tmp/PlannerNativeImportRestoreMacBuild.log",
+    "swiftLint": "/private/tmp/PlannerNativeImportStrictLint.log"
+  },
+  "retainedFiles": [
+    "restore-functional-red.log",
+    "restore-compile-failure.log",
+    "ordinary-edit-red.log.gz",
+    "completion-compile-failure.log",
+    "completion-red.log",
+    "recovery-retry-red.log.gz",
+    "sqlite-trigger-unqualified.log",
+    "sqlite-lock-unqualified.log",
+    "preparation-qualified.log",
+    "fixture-generation-compile-failure.log",
+    "fixture-generation-qualified.log",
+    "qualified-mac.log",
+    "phone-summary.json",
+    "phone-tests.json",
+    "http-invalid-platform.log",
+    "http-summary.json",
+    "http-tests.json"
+  ],
+  "proofLimits": [
+    "Only the independent complete fixture and supported values are applied; nonempty merge, recorded summary, origin/provider persistence, extra deletion targets, restoration execution and native forms remain open.",
+    "SQLite trigger injection ended in SDK fatal retry, signal 5; write-lock injection stalled and its specific test helper was terminated. Neither reaches rollback assertions or provides qualified local-save failure proof. Both experimental setups were removed from the final candidate.",
+    "True local context.save failure rollback remains open; one save and rollback implementation are not themselves proof.",
+    "Initial test/generator compilation errors and the invalid iOS destination for macOS-only HTTP tests have zero runtime evidence.",
+    "Only the original restore red and final Swift source epochs were captured. Later functional red source hashes were not captured and are not reconstructed.",
+    "No new native UI runtime, broad Mac UI runtime, physical cloud/account/Share, large-data responsiveness or Calendar qualification."
+  ]
+}
