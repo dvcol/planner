@@ -58,6 +58,7 @@ extension PlannerPortableSource {
         "notes": .optional(source.content.notes.map(PlannerCanonicalValue.string)),
         "color": .optional(source.content.color.map(\.canonicalValue)),
         "iconName": .optional(source.content.iconName.map(PlannerCanonicalValue.string)),
+        "manualEstimate": .optional(source.content.manualEstimate.map(\.canonicalValue)),
         "globalDone": .optional(nil), "archived": .boolean(source.archived),
       ]
     case .itinerary(let source):
@@ -70,6 +71,7 @@ extension PlannerPortableSource {
         "color": .optional(source.content.color.map(\.canonicalValue)),
         "iconName": .optional(source.content.iconName.map(PlannerCanonicalValue.string)),
         "location": .optional(source.content.location.map(\.canonicalValue)),
+        "manualEstimate": .optional(source.content.manualEstimate.map(\.canonicalValue)),
         "globalDone": .optional(nil), "archived": .boolean(source.archived),
       ]
     case .category(let source):
@@ -248,7 +250,7 @@ extension PlannerPortableDeletionTarget {
 extension PlannerPortableBackup {
   var importCanonicalValue: PlannerCanonicalValue {
     .record([
-      "format": .string("planner-data"), "formatVersion": .integer(1),
+      "format": .string("planner-data"), "formatVersion": .integer(2),
       "sources": .ordered(sources.map(\.importCanonicalValue)),
       "memberships": .ordered(memberships.map(\.importCanonicalValue)),
       "itineraryEntries": .ordered(itineraryEntries.map(\.importCanonicalValue)),

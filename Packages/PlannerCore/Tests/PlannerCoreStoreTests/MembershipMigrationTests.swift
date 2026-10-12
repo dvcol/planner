@@ -68,7 +68,10 @@ struct MembershipMigrationTests {
       #expect(read.createdAt.timeIntervalSinceReferenceDate == metadata.createdAt)
       #expect(read.updatedAt.timeIntervalSinceReferenceDate == metadata.updatedAt)
       #expect(
-        Dictionary(uniqueKeysWithValues: read.fieldHashes.map { ($0.key.rawValue, $0.value.value) })
+        Dictionary(
+          uniqueKeysWithValues: read.fieldHashes.filter { $0.key != .manualEstimate }.map {
+            ($0.key.rawValue, $0.value.value)
+          })
           == metadata.fieldHashes)
       #expect(read.progress.state == .empty)
       originalLists.append(read)
@@ -141,7 +144,7 @@ struct MembershipMigrationTests {
     #expect(
       after.decodedBackup.backup.deletionMarkers == before.decodedBackup.backup.deletionMarkers)
     #expect(historical.portableData == before.portableData)
-    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 14)
+    #expect(updatedNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 15)
     #expect(updatedNamespaces.first?.preparedProposals.isEmpty == true)
     for original in originalLists where original.source != list {
       guard

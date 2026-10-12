@@ -59,7 +59,10 @@ struct ItineraryScheduleMigrationTests {
     #expect(before.createdAt.timeIntervalSinceReferenceDate == manifest.itineraryCreatedAt)
     #expect(before.updatedAt.timeIntervalSinceReferenceDate == manifest.itineraryUpdatedAt)
     #expect(
-      Dictionary(uniqueKeysWithValues: before.fieldHashes.map { ($0.key.rawValue, $0.value.value) })
+      Dictionary(
+        uniqueKeysWithValues: before.fieldHashes.filter { $0.key != .manualEstimate }.map {
+          ($0.key.rawValue, $0.value.value)
+        })
         == manifest.itineraryHashes)
     #expect(
       Dictionary(
@@ -118,7 +121,7 @@ struct ItineraryScheduleMigrationTests {
     #expect(after.progress.totalCount == 4)
     #expect(after.progress.doneCount == 2)
     #expect(after.references.contains(.schedule(id: schedule.id, source: itinerary)))
-    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 14)
+    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 15)
     #expect(historicalAfter.portableData == historical.portableData)
     #expect(current.decodedBackup.backup.schedules.count == 3)
     #expect(

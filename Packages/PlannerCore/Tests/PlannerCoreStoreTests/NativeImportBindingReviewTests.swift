@@ -40,6 +40,7 @@ struct NativeImportBindingReviewTests {
         "createdAt": 10.25, "updatedAt": 20.125,
         "content": [
           "name": "New plan", "notes": NSNull(), "color": NSNull(), "iconName": NSNull(),
+          "manualEstimate": NSNull(),
         ],
         "globalDone": NSNull(), "archived": false, "contentOrigins": ["name": "independent"],
       ]

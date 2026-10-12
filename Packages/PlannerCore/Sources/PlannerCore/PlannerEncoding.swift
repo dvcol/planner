@@ -190,6 +190,14 @@ extension PlannerOwnedLocation {
 }
 
 extension PlannerEstimate {
+  func validate(propertyPath: String) throws {
+    guard minutes > 0 else {
+      throw PlannerFailure(
+        "invalidInput", "An estimate must contain positive whole minutes.",
+        propertyPath: propertyPath + "/minutes")
+    }
+  }
+
   var canonicalValue: PlannerCanonicalValue {
     .record(["minutes": .integer(minutes), "displayUnit": .string(displayUnit.rawValue)])
   }
@@ -379,6 +387,7 @@ extension ListSnapshot {
       .notes: .optional(content.notes.map(PlannerCanonicalValue.string)),
       .color: .optional(content.color.map(\.canonicalValue)),
       .iconName: .optional(content.iconName.map(PlannerCanonicalValue.string)),
+      .manualEstimate: .optional(content.manualEstimate.map(\.canonicalValue)),
     ]
     return Dictionary(
       uniqueKeysWithValues: values.map { field, value in
@@ -486,6 +495,11 @@ extension PlannerListChanges {
     switch iconName {
     case .set(let value): values["iconName"] = .optional(.string(value))
     case .clear: values["iconName"] = .optional(nil)
+    case .unchanged: break
+    }
+    switch manualEstimate {
+    case .set(let value): values["manualEstimate"] = .optional(value.canonicalValue)
+    case .clear: values["manualEstimate"] = .optional(nil)
     case .unchanged: break
     }
     var usedHashes: [String: PlannerCanonicalValue] = [:]
@@ -601,6 +615,7 @@ extension ItinerarySnapshot {
       labelAssociations.filter { $0.label.kind == "category" }.map(\.selectionValue))
     values["tagIds"] = .identitySet(
       labelAssociations.filter { $0.label.kind == "tag" }.map(\.selectionValue))
+    values["manualEstimate"] = .optional(input.manualEstimate.map(\.canonicalValue))
     return Dictionary(
       uniqueKeysWithValues: PlannerItineraryField.allCases.compactMap { field in
         guard let value = values[field.rawValue] else { return nil }

@@ -293,6 +293,7 @@ struct PlannerImportNode {
 
 struct PlannerPortableImportDecoder {
   let root: PlannerImportNode
+  private var formatVersion: Int = 1
   private var bindingPaths: [PlannerBindingPath] = []
 
   init(root: PlannerImportNode) { self.root = root }
@@ -306,7 +307,8 @@ struct PlannerPortableImportDecoder {
     guard try fields.child("format").string() == "planner-data" else {
       throw try fields.child("format").failure("Expected a Planner data backup.")
     }
-    guard try fields.child("formatVersion").integer() == 1 else {
+    formatVersion = try fields.child("formatVersion").integer()
+    guard (1...2).contains(formatVersion) else {
       throw PlannerFailure(
         "unsupportedVersion", "Unsupported portable backup version.",
         propertyPath: "/formatVersion")
@@ -387,7 +389,10 @@ struct PlannerPortableImportDecoder {
           contentOrigins: origins))
     case "list":
       try fields.child("globalDone").requireNull()
-      let content = try content.record(["name", "notes", "color", "iconName"])
+      var names = ["name", "notes", "color", "iconName"]
+      if formatVersion == 2 { names.append("manualEstimate") }
+      let content = try content.record(names)
+      let manualEstimate = try containerManualEstimate(content)
       return try .list(
         .init(
           id: identifier, lifetimeId: lifetime, createdAt: created, updatedAt: updated,
@@ -395,13 +400,16 @@ struct PlannerPortableImportDecoder {
             name: content.child("name").string(requiredText: true),
             notes: content.child("notes").optionalString(),
             color: content.child("color").color(),
-            iconName: content.child("iconName").optionalString()),
+            iconName: content.child("iconName").optionalString(), manualEstimate: manualEstimate),
           archived: fields.child("archived").boolean(),
           contentOrigins: origins(
             fields.child("contentOrigins"), content: content, textFields: ["name", "notes"])))
     case "itinerary":
       try fields.child("globalDone").requireNull()
-      let content = try content.record(["title", "notes", "color", "iconName", "location"])
+      var names = ["title", "notes", "color", "iconName", "location"]
+      if formatVersion == 2 { names.append("manualEstimate") }
+      let content = try content.record(names)
+      let manualEstimate = try containerManualEstimate(content)
       return try .itinerary(
         .init(
           id: identifier, lifetimeId: lifetime, createdAt: created, updatedAt: updated,
@@ -410,7 +418,8 @@ struct PlannerPortableImportDecoder {
             notes: content.child("notes").optionalString(),
             color: content.child("color").color(),
             iconName: content.child("iconName").optionalString(),
-            location: content.child("location").location(), links: [], categoryIds: [], tagIds: []),
+            location: content.child("location").location(), links: [], categoryIds: [], tagIds: [],
+            manualEstimate: manualEstimate),
           archived: fields.child("archived").boolean(),
           contentOrigins: origins(
             fields.child("contentOrigins"), content: content,
@@ -650,6 +659,11 @@ struct PlannerPortableImportDecoder {
     return external
   }
 
+  private func containerManualEstimate(_ content: PlannerImportNode) throws -> PlannerEstimate? {
+    guard formatVersion == 2 else { return nil }
+    return try content.child("manualEstimate").estimate()
+  }
+
   private func projectingContent(_ backup: PlannerPortableBackup) -> PlannerPortableBackup {
     let sources = backup.sources.map { source -> PlannerPortableSource in
       let links = backup.ownedLinks.filter {
@@ -686,7 +700,8 @@ struct PlannerPortableImportDecoder {
             content: .init(
               title: content.title, notes: content.notes, color: content.color,
               iconName: content.iconName, location: content.location,
-              links: links, categoryIds: categories, tagIds: tags), archived: itinerary.archived,
+              links: links, categoryIds: categories, tagIds: tags,
+              manualEstimate: content.manualEstimate), archived: itinerary.archived,
             contentOrigins: itinerary.contentOrigins))
       default: return source
       }

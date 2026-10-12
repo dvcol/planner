@@ -56,7 +56,10 @@ struct ItineraryEntryMigrationTests {
     #expect(before.createdAt.timeIntervalSinceReferenceDate == manifest.itineraryCreatedAt)
     #expect(before.updatedAt.timeIntervalSinceReferenceDate == manifest.itineraryUpdatedAt)
     #expect(
-      Dictionary(uniqueKeysWithValues: before.fieldHashes.map { ($0.key.rawValue, $0.value.value) })
+      Dictionary(
+        uniqueKeysWithValues: before.fieldHashes.filter { $0.key != .manualEstimate }.map {
+          ($0.key.rawValue, $0.value.value)
+        })
         == manifest.itineraryHashes)
     #expect(before.progress.state == .empty)
     #expect(itemRead.state.globalDone == true)
@@ -83,7 +86,7 @@ struct ItineraryEntryMigrationTests {
           namespaceId: manifest.namespaceId, checkpointGeneration: checkpoint))
     else { throw CancellationError() }
     #expect(checkpoint == 12)
-    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 14)
+    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 15)
     #expect(current.content == before.content)
     #expect(current.fieldHashes == before.fieldHashes)
     #expect(current.progress.doneCount == 1)
