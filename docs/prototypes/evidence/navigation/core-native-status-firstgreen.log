@@ -1,0 +1,28 @@
+Building for debugging...
+[2 / 16] PlannerCore
+[4 / 18] PlannerCore
+[7 / 21] PlannerCore
+[9 / 21] PlannerCore
+[12 / 20] PlannerCoreTests-product
+[15 / 21] PlannerCoreTests-product
+[28 / 34] PlannerCoreTests-product
+[29 / 34] PlannerCoreStoreTests-product
+[31 / 34] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift:192:25: warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+190 |     let timedForm = PlannerScheduleForm.timed(
+191 |       start: try #require(ISO8601DateFormatter().date(from: "2026-10-11T01:00:00Z")),
+192 |       end: try #require(ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")),
+    |                         `- warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+193 |       planningTimeZone: "Asia/Tokyo")
+194 |     guard
+[33 / 37] PlannerCoreStoreTests-product
+[35 / 37] PlannerCoreStoreTests-product
+Build complete! (34,53 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeStatusReadTests started.
+◇ Test emptyAndAcknowledgedStatusReadUsesObservedRecoveryWithoutInventingCloudActivity() started.
+✔ Test emptyAndAcknowledgedStatusReadUsesObservedRecoveryWithoutInventingCloudActivity() passed after 0.097 seconds.
+✔ Suite NativeStatusReadTests passed after 0.097 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.097 seconds.

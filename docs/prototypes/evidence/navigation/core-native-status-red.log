@@ -1,0 +1,38 @@
+Building for debugging...
+[Pre-planning 1 / 154]
+[Planning deferred tasks]
+[1 / 1]
+[9 / 33] PlannerCore_PlannerCoreStoreTests
+[9 / 37] PlannerCore
+[13 / 41] PlannerCore
+[17 / 39] PlannerCore
+[19 / 39] PlannerCore
+[24 / 38] PlannerCoreTests-product
+[27 / 37] PlannerCoreTests-product
+[29 / 38] PlannerCoreTests-product
+[41 / 50] PlannerCoreStoreTests-product
+[41 / 50] PlannerCoreTests-product
+[41 / 52] PlannerCoreStoreTests-product
+[45 / 51] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift:192:25: warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+190 |     let timedForm = PlannerScheduleForm.timed(
+191 |       start: try #require(ISO8601DateFormatter().date(from: "2026-10-11T01:00:00Z")),
+192 |       end: try #require(ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")),
+    |                         `- warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+193 |       planningTimeZone: "Asia/Tokyo")
+194 |     guard
+[47 / 51] PlannerCoreStoreTests-product
+[49 / 51] PlannerCoreStoreTests-product
+Build complete! (35,36 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeStatusReadTests started.
+◇ Test emptyAndAcknowledgedStatusReadUsesObservedRecoveryWithoutInventingCloudActivity() started.
+✘ Test emptyAndAcknowledgedStatusReadUsesObservedRecoveryWithoutInventingCloudActivity() recorded an issue at NativeStatusReadTests.swift:23:19: Issue recorded
+↳ The native status request must expose observed local evidence: .failed(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Native status is not implemented.", details: nil))
+✘ Test emptyAndAcknowledgedStatusReadUsesObservedRecoveryWithoutInventingCloudActivity() failed after 0.030 seconds with 1 issue.
+✘ Suite NativeStatusReadTests failed after 0.030 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.030 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

@@ -89,6 +89,9 @@
         let result = await planner.read(session: session, request: request)
         let structured: Value
         switch result {
+        case .status:
+          return failure(
+            code: "forbiddenOperation", message: "Dataset status is a native Planner observation.")
         case .source(.itinerary(let read)):
           structured = .object([
             "formatVersion": .int(1), "kind": .string("source"), "value": itineraryValue(read),
