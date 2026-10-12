@@ -154,13 +154,15 @@ public actor Planner {
         switch command {
         case .applyImport(let backup, let mode):
           let current = try importReviewSnapshot(context)
+          let deletionImpacts = try importDeletionImpacts(
+            incoming: backup, current: current, mode: mode, context: context)
           let resolution = try plannerResolveImportReview(
-            incoming: backup, current: current, mode: mode)
+            incoming: backup, current: current, mode: mode, deletionImpacts: deletionImpacts)
           targets = resolution.targets
           impact = .init(
             kind: .importData, targetCount: Int64(targets.count),
             globalFlagsChanged: resolution.globalFlagsChanged,
-            sourceDeletes: [],
+            sourceDeletes: resolution.sourceDeletes,
             referenceRemovals: resolution.details.referenceChanges.filter { $0.change == .remove }
               .map(\.reference),
             importDetails: resolution.details)
@@ -2008,6 +2010,93 @@ public actor Planner {
         return .exported(try encoder.encode(snapshot))
       }
     } catch { return .failed(failure(error, code: "readUnavailable")) }
+  }
+
+  private func importDeletionImpacts(
+    incoming: PlannerDecodedBackup, current: PlannerDecodedBackup, mode: PlannerImportMode,
+    context: ModelContext
+  ) throws -> [PlannerImportDeletionImpact] {
+    guard mode == .overwrite else { return [] }
+    let projection = try PlannerImportProjection(backup: current.backup)
+    var impacts: [PlannerImportDeletionImpact] = []
+    for (index, marker) in incoming.backup.deletionMarkers.enumerated() {
+      guard let owner = projection.liveOwner(for: marker.target) else { continue }
+      if case .expandedCompletion(let completionContext) = marker.target {
+        impacts.append(
+          .init(
+            markerIndex: index, sourceDeletes: [],
+            referenceRemovals: [
+              .expandedCompletion(
+                itineraryId: owner.id, listEntryId: completionContext.listEntryId,
+                membershipId: completionContext.membershipId)
+            ]))
+        continue
+      }
+      guard case .source(let source, _) = marker.target else {
+        guard
+          let reference = projection.references.first(where: {
+            $0.identity == marker.target.importIdentity
+          })
+        else { continue }
+        var removals = [reference.reference]
+        switch marker.target {
+        case .membership(let identifier, _):
+          removals += projection.references.compactMap {
+            guard case .expandedCompletion(_, _, let membershipId) = $0.reference,
+              membershipId == identifier
+            else { return nil }
+            return $0.reference
+          }
+        case .itineraryEntry(let identifier, _):
+          removals += projection.references.compactMap {
+            guard case .expandedCompletion(_, let listEntryId, _) = $0.reference,
+              listEntryId == identifier
+            else { return nil }
+            return $0.reference
+          }
+        default: break
+        }
+        impacts.append(
+          .init(markerIndex: index, sourceDeletes: [], referenceRemovals: removals))
+        continue
+      }
+      switch source.kind {
+      case .item:
+        let resolution = try resolveItemDeletion(source, context: context)
+        impacts.append(
+          .init(
+            markerIndex: index, sourceDeletes: resolution.sourceDeletes,
+            referenceRemovals: resolution.removals))
+      case .list:
+        let resolution = try resolveListDeletion(source, context: context)
+        impacts.append(
+          .init(
+            markerIndex: index, sourceDeletes: [source], referenceRemovals: resolution.removals))
+      case .itinerary:
+        let resolution = try resolveItineraryDeletion(source, context: context)
+        impacts.append(
+          .init(
+            markerIndex: index, sourceDeletes: resolution.sourceDeletes,
+            referenceRemovals: resolution.removals))
+      case .category, .tag:
+        let resolution = try resolveLabelDeletion(source, context: context)
+        impacts.append(
+          .init(
+            markerIndex: index, sourceDeletes: [source],
+            referenceRemovals: resolution.associations.map(\.reference)))
+      case .schedule:
+        guard
+          let reference = projection.references.first(where: {
+            $0.identity == marker.target.importIdentity
+          })
+        else { continue }
+        impacts.append(
+          .init(
+            markerIndex: index, sourceDeletes: [source],
+            referenceRemovals: [reference.reference]))
+      }
+    }
+    return impacts
   }
 
   private func importReviewSnapshot(_ context: ModelContext) throws -> PlannerDecodedBackup {
