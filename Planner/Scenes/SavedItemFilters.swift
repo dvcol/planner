@@ -46,6 +46,11 @@ struct SavedItemFilters: Equatable {
   var hasAddress = false
   var hasLinks = false
 
+  var hasItemOnlyRestrictions: Bool {
+    !categoryIdentifiers.isEmpty || !tagIdentifiers.isEmpty || !listIdentifiers.isEmpty
+      || hasAddress || hasLinks || scheduled != .all
+  }
+
   var categoryQuery: PlannerItemQuery.IdentityGroup? {
     guard !categoryIdentifiers.isEmpty else { return nil }
     return .init(ids: categoryIdentifiers, match: categoryMatch.queryValue)
