@@ -34,8 +34,14 @@ struct PlannerFixtureApp: App {
   }
 }
 
-struct FixturePreviewProvider: PlannerLinkPreviewProvider, PlannerAddressPreviewProvider {
+@MainActor
+final class FixturePreviewProvider: PlannerLinkPreviewProvider, PlannerAddressPreviewProvider {
+  private var hasFailedRetryLink = false
   func linkPreview(for originalURL: String) async throws -> PlannerLinkPreviewContent {
+    if originalURL == "https://fixtures.invalid/retry", !hasFailedRetryLink {
+      hasFailedRetryLink = true
+      throw URLError(.cannotConnectToHost)
+    }
     guard originalURL == "https://fixtures.invalid/image" else {
       return .init(title: "Fixture link", imageData: nil)
     }

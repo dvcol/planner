@@ -1,0 +1,71 @@
+{
+  "baseCommit": "0052eda",
+  "sourceHashes": {
+    "PlannerFixtures/PlannerFixtureApp.swift": "8031a275c1762660700898fe61db5327a3d84ddf3043b8b99a77fd871d749f24",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "b6003ccebd0a45b2b68254f63020df549d68e02d1838b2311c4d68c9c979a16a",
+    "PlannerFixtureUITests/LinkOutcomePreviewJourneyTests.swift": "d00fe77154a398a3eabbe849bf059e4bb3e5dfd745e3bdf9266535c2402af7f6",
+    "PlannerFixtureUITests/LinkImagePreviewJourneyTests.swift": "29fc37e3359502fa054960af9dccdf984731c031cd20ddf4d2816780faa0534d",
+    "PlannerNavigationUITests/NativeNavigationElements.swift": "53659f78aa021f34bd5bd868e2da82eaa010993799d64f945c75959d7c3915e5",
+    "Planner.xcodeproj/project.pbxproj": "4bced3d822b15a78ffeb25fece1ff83c4f6b557417745c2c7ffdbc13830e5771"
+  },
+  "commands": {
+    "red": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/LinkOutcomePreviewJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledLinkOutcomesRed.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "redLog": "/private/tmp/PlannerControlledLinkOutcomesRed.log",
+    "phoneInitial": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/LinkOutcomePreviewJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledLinkOutcomesPhoneGreen.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "phoneInitialLog": "/private/tmp/PlannerControlledLinkOutcomesPhoneGreen.log",
+    "phoneFinal": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/LinkOutcomePreviewJourneyTests\" \"-only-testing:PlannerFixtureUITests/LinkImagePreviewJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledLinkOutcomesPhoneFinal.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "phoneFinalLog": "/private/tmp/PlannerControlledLinkOutcomesPhoneFinal.log",
+    "tablet": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/LinkOutcomePreviewJourneyTests\" \"-only-testing:PlannerFixtureUITests/LinkImagePreviewJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledLinkOutcomesTabletGreen.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "tabletLog": "/private/tmp/PlannerControlledLinkOutcomesTabletGreen.log",
+    "macBuild": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData CODE_SIGNING_ALLOWED=NO build-for-testing",
+    "macBuildLog": "/private/tmp/PlannerControlledLinkOutcomesMacBuild.log"
+  },
+  "qualification": {
+    "red": "Executed absent Preview unavailable failure after no-image/owned data assertions passed, one failed function.",
+    "phoneInitial": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "result": "/private/tmp/PlannerControlledLinkOutcomesPhoneGreen.xcresult"
+    },
+    "tablet": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "functions": [
+        "LinkImagePreviewJourneyTests/testControlledImagePaintsRowThumbnailAndOwnedLinkCard",
+        "LinkOutcomePreviewJourneyTests/testNoImageAndRetryKeepOwnedLinksAndCompletionAfterRelaunch"
+      ],
+      "result": "/private/tmp/PlannerControlledLinkOutcomesTabletGreen.xcresult"
+    },
+    "macBuild": "TEST BUILD SUCCEEDED",
+    "macUIFunctions": 0,
+    "captures": "Inspected phone/tablet failure and recovered states. Phone recovered card lower text needs scrolling in this position; whole-app polish remains open.",
+    "strictSwiftFiles": 3,
+    "markdownFiles": 1,
+    "phoneFinal": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "functions": [
+        "LinkImagePreviewJourneyTests/testControlledImagePaintsRowThumbnailAndOwnedLinkCard",
+        "LinkOutcomePreviewJourneyTests/testNoImageAndRetryKeepOwnedLinksAndCompletionAfterRelaunch"
+      ],
+      "result": "/private/tmp/PlannerControlledLinkOutcomesPhoneFinal.xcresult"
+    }
+  },
+  "review": {
+    "standards": "No actionable standards/smell findings.",
+    "spec": "No scope or behavior defects; broader Q52 remains partial."
+  },
+  "remainingGates": [
+    "Controlled native address zero/one/multiple/error and delayed results",
+    "Native loading/scale Q58",
+    "Import application/recovery",
+    "Calendar",
+    "Broad native Mac runtime",
+    "Signed physical sync/account/Share",
+    "Whole-app polish"
+  ],
+  "sourceEpoch": "Both controlled functions pass together on phone/tablet with unchanged final fixture provider/test sources. Mac fixture/test host compiles; zero Mac UI runtime functions. Initial single-function phone pass is recorded separately."
+}
