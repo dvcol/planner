@@ -19,24 +19,24 @@
             productRefGroup = 000000000000000000000104;
             projectDirPath = "";
             projectRoot = "";
-            targets = (000000000000000000000201, 000000000000000000000202, 000000000000000000000203, 000000000000000000000204, 000000000000000000000205);
+            targets = (000000000000000000000201, 000000000000000000000202, 000000000000000000000203, 000000000000000000000204, 000000000000000000000205, 000000000000000000000206, 000000000000000000000207);
         };
         000000000000000000000101 = {
             isa = PBXGroup;
-            children = (000000000000000000000102, 000000000000000000000103, 000000000000000000000105, 000000000000000000000106, 000000000000000000000107, 000000000000000000000108, 000000000000000000000109, 000000000000000000000123, 000000000000000000000104);
+            children = (000000000000000000000102, 000000000000000000000103, 000000000000000000000105, 000000000000000000000106, 000000000000000000000107, 000000000000000000000108, 000000000000000000000109, 000000000000000000000123, 000000000000000000000128, 000000000000000000000129, 000000000000000000000104);
             sourceTree = "<group>";
         };
         000000000000000000000102 = { isa = PBXFileSystemSynchronizedRootGroup; path = Planner; sourceTree = "<group>"; };
         000000000000000000000103 = { isa = PBXFileSystemSynchronizedRootGroup; path = PlannerMCPTests; sourceTree = "<group>"; };
         000000000000000000000104 = {
             isa = PBXGroup;
-            children = (000000000000000000000111, 000000000000000000000112, 000000000000000000000119, 000000000000000000000120, 000000000000000000000121);
+            children = (000000000000000000000111, 000000000000000000000112, 000000000000000000000119, 000000000000000000000120, 000000000000000000000121, 000000000000000000000126, 000000000000000000000127);
             name = Products;
             sourceTree = "<group>";
         };
         000000000000000000000105 = {
             isa = PBXGroup;
-            children = (000000000000000000000113, 000000000000000000000114, 000000000000000000000115, 000000000000000000000116, 000000000000000000000117, 000000000000000000000118, 000000000000000000000122);
+            children = (000000000000000000000113, 000000000000000000000114, 000000000000000000000115, 000000000000000000000116, 000000000000000000000117, 000000000000000000000118, 000000000000000000000122, 000000000000000000000124, 000000000000000000000125);
             path = Configuration;
             sourceTree = "<group>";
         };
@@ -179,6 +179,58 @@
         000000000000000000000562 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000122; buildSettings = {}; name = Release; };
         000000000000000000000123 = { isa = PBXFileReference; lastKnownFileType = text.json; path = docs/fixtures/portable-backup-v1.json; sourceTree = SOURCE_ROOT; };
         000000000000000000000416 = { isa = PBXBuildFile; fileRef = 000000000000000000000123; };
+        000000000000000000000124 = { isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PlannerFixtures.xcconfig; sourceTree = "<group>"; };
+        000000000000000000000125 = { isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PlannerFixtureUITests.xcconfig; sourceTree = "<group>"; };
+        000000000000000000000126 = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlannerFixtures.app; sourceTree = BUILT_PRODUCTS_DIR; };
+        000000000000000000000127 = { isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlannerFixtureUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+        000000000000000000000128 = { isa = PBXFileSystemSynchronizedRootGroup; path = PlannerFixtures; sourceTree = "<group>"; };
+        000000000000000000000129 = { isa = PBXFileSystemSynchronizedRootGroup; path = PlannerFixtureUITests; sourceTree = "<group>"; };
+        000000000000000000000206 = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 000000000000000000000507;
+            buildPhases = (000000000000000000000281, 000000000000000000000282, 000000000000000000000283);
+            buildRules = ();
+            dependencies = ();
+            fileSystemSynchronizedGroups = (000000000000000000000102, 000000000000000000000128);
+            name = PlannerFixtures;
+            packageProductDependencies = (000000000000000000000311, 000000000000000000000312, 000000000000000000000313, 000000000000000000000314, 000000000000000000000315, 000000000000000000000316);
+            productName = PlannerFixtures;
+            productReference = 000000000000000000000126;
+            productType = "com.apple.product-type.application";
+        };
+        000000000000000000000207 = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 000000000000000000000508;
+            buildPhases = (000000000000000000000291, 000000000000000000000292, 000000000000000000000293);
+            buildRules = ();
+            dependencies = (000000000000000000000274);
+            fileSystemSynchronizedGroups = (000000000000000000000129);
+            name = PlannerFixtureUITests;
+            packageProductDependencies = ();
+            productName = PlannerFixtureUITests;
+            productReference = 000000000000000000000127;
+            productType = "com.apple.product-type.bundle.ui-testing";
+        };
+        000000000000000000000281 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000282 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000461, 000000000000000000000462, 000000000000000000000463, 000000000000000000000464, 000000000000000000000465, 000000000000000000000466); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000283 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000291 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000292 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000293 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000274 = { isa = PBXTargetDependency; target = 000000000000000000000206; targetProxy = 000000000000000000000275; };
+        000000000000000000000275 = { isa = PBXContainerItemProxy; containerPortal = 000000000000000000000001; proxyType = 1; remoteGlobalIDString = 000000000000000000000206; remoteInfo = PlannerFixtures; };
+        000000000000000000000507 = { isa = XCConfigurationList; buildConfigurations = (000000000000000000000571, 000000000000000000000572); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+        000000000000000000000508 = { isa = XCConfigurationList; buildConfigurations = (000000000000000000000581, 000000000000000000000582); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+        000000000000000000000571 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000124; buildSettings = {}; name = Debug; };
+        000000000000000000000572 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000124; buildSettings = {}; name = Release; };
+        000000000000000000000581 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000125; buildSettings = {}; name = Debug; };
+        000000000000000000000582 = { isa = XCBuildConfiguration; baseConfigurationReference = 000000000000000000000125; buildSettings = {}; name = Release; };
+        000000000000000000000461 = { isa = PBXBuildFile; productRef = 000000000000000000000311; };
+        000000000000000000000462 = { isa = PBXBuildFile; platformFilter = macos; productRef = 000000000000000000000312; };
+        000000000000000000000463 = { isa = PBXBuildFile; platformFilter = macos; productRef = 000000000000000000000313; };
+        000000000000000000000464 = { isa = PBXBuildFile; platformFilter = macos; productRef = 000000000000000000000314; };
+        000000000000000000000465 = { isa = PBXBuildFile; platformFilter = macos; productRef = 000000000000000000000315; };
+        000000000000000000000466 = { isa = PBXBuildFile; productRef = 000000000000000000000316; };
     };
     rootObject = 000000000000000000000001;
 }

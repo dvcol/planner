@@ -1,7 +1,9 @@
 import PlannerPreviews
 import SwiftUI
 
-@main
+#if !PLANNER_FIXTURES
+  @main
+#endif
 struct PlannerApp: App {
   @State private var savedPlanner = SavedPlannerStore()
   @State private var previews = PlannerPreviews(provider: AppleLinkPreviewProvider())

@@ -59,6 +59,10 @@ final class SavedPlannerStore {
     return SHA256.hash(data: Data(identity.utf8)).map { String(format: "%02x", $0) }.joined()
   }
 
+  init(configuration: PlannerStorageConfiguration) {
+    planner = PlannerCore.Planner(configuration: configuration)
+  }
+
   init() {
     let arguments = ProcessInfo.processInfo.arguments
     let directory: URL

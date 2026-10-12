@@ -38,6 +38,7 @@ extension PlannerContainerEstimates {
   var hasNativeEstimateWarning: Bool {
     if completedExceedsTotal { return true }
     if case .lowerBound = calculatedEstimate { return true }
+    if case .unavailable = calculatedEstimate { return true }
     if case .upperBound = remainingEstimate { return true }
     if case .unavailable = fullEstimate { return true }
     if case .unavailable = remainingEstimate { return true }
@@ -50,6 +51,10 @@ extension PlannerContainerEstimates {
       "Estimate\(manual), \(fullEstimate.nativeContainerDurationAccessibilityDescription). "
       + "Remaining, \(remainingEstimate.nativeContainerDurationAccessibilityDescription)."
     if manualEstimate != nil, case .lowerBound = calculatedEstimate {
+      description +=
+        " Calculated, \(calculatedEstimate.nativeContainerDurationAccessibilityDescription)."
+    }
+    if manualEstimate != nil, case .unavailable = calculatedEstimate {
       description +=
         " Calculated, \(calculatedEstimate.nativeContainerDurationAccessibilityDescription)."
     }
