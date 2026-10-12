@@ -1,0 +1,25 @@
+Building for debugging...
+[1 / 1]
+[2 / 18] PlannerCore
+[4 / 20] PlannerCore
+[5 / 21] PlannerCore
+[9 / 24] PlannerCore
+[11 / 24] PlannerCore
+[14 / 22] PlannerCoreTests-product
+[17 / 23] PlannerCoreTests-product
+[21 / 26] PlannerCoreStoreTests-product
+[27 / 31] PlannerCoreStoreTests-product
+[29 / 31] PlannerCoreStoreTests-product
+Build complete! (10,91 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite RecoveryProposalSelectionTests started.
+◇ Test completePortableLineageSurvivesPreparedFileInspectionWithoutApplyingData() started.
+✘ Test completePortableLineageSurvivesPreparedFileInspectionWithoutApplyingData() recorded an issue at RecoveryProposalSelectionTests.swift:24:19: Issue recorded
+↳ Inspect every valid lineage record from the prepared file: .failed(PlannerCore.PlannerFailure(code: "readUnavailable", propertyPath: nil, message: "The data couldn’t be read because it isn’t in the correct format.", details: nil))
+✘ Test completePortableLineageSurvivesPreparedFileInspectionWithoutApplyingData() failed after 0.069 seconds with 1 issue.
+✘ Suite RecoveryProposalSelectionTests failed after 0.069 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.070 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

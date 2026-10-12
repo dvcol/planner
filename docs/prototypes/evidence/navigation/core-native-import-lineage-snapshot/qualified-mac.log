@@ -1,0 +1,95 @@
+Building for debugging...
+[1 / 1]
+[2 / 18] PlannerCore
+[4 / 20] PlannerCore
+[9 / 22] PlannerCore
+[12 / 18] PlannerCoreTests-product
+[14 / 19] PlannerCoreStoreTests-product
+[16 / 21] PlannerCoreStoreTests-product
+[20 / 23] PlannerCoreStoreTests-product
+[22 / 26] PlannerCoreStoreTests-product
+[24 / 26] PlannerCoreStoreTests-product
+Build complete! (6,46 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite RecoveryCheckpointRetryAdmissionTests started.
+◇ Suite NativeImportLineageTests started.
+◇ Suite RecoverySourceIdentityTests started.
+◇ Suite RecoverySourceIdentityRejectionTests started.
+◇ Test unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Suite RecoveryCheckpointRetryTests started.
+◇ Test bulkCheckpointRetryPreservesEverySupportedGraphGroupAndPriorDeletionMarker() started.
+◇ Test continuedFileFailureRetainsAppliedEvidenceAndMutationBlockUntilRetrySucceeds() started.
+◇ Suite RecoveryProposalSelectionTests started.
+◇ Test concurrentFacadeRetriesPublishOneCheckpointAndPreserveOriginalAppliedResult() started.
+◇ Test case passing 1 argument scenario → "unknown" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "preparedOnly" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "separateDataset" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "foreignSession" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test aClosedMembershipCannotRedirectItsHistoryToAnotherItem() started.
+◇ Test nativeRepeatedPropertyResolutionIsRetainedByTheImmutableDecodedBackup() started.
+◇ Test recoveryRejectsSameKindDuplicatesAndCrossKindReferenceSubstitution() started.
+◇ Test restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test explicitReopenSuppressesALateDoneSeedWithoutChangingSharedItemState() started.
+◇ Suite ImportLineageEncodingTests started.
+◇ Test recoveryResolvesEqualUUIDsBySourceKindAndRetainsTypedAssociations() started.
+◇ Test knownAppliedCompletionRetryRepairsRecoveryWithoutReapplyingAndUnblocksLaterEdits() started.
+◇ Test selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData() started.
+◇ Test malformedPortableLineageIsRejectedBeforeRecoverySelection(_:) started.
+◇ Test invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test completePortableLineageSurvivesPreparedFileInspectionWithoutApplyingData(includeRestorationFamily:) started.
+◇ Test preparedProposalRemainsSelectableWhenTheCommittedStoreIsMissing() started.
+◇ Test inspectingRetainedProposalFromSeparateEmptyDatasetNeverImportsOrAcknowledgesIt() started.
+◇ Test case passing 1 argument scenario → "valid" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "obsoleteReference" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "wrongCandidate" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "missingClosure" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "missingFamily" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "cycle" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "closedCandidate" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "emptyRestorationCandidates" to malformedPortableLineageIsRejectedBeforeRecoverySelection(_:) started.
+◇ Test case passing 1 argument scenario → "duplicateObservedChanges" to malformedPortableLineageIsRejectedBeforeRecoverySelection(_:) started.
+◇ Test case passing 1 argument scenario → "missingProposal" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "missingNamespace" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "wrongOwner" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument includeRestorationFamily → false to completePortableLineageSurvivesPreparedFileInspectionWithoutApplyingData(includeRestorationFamily:) started.
+◇ Test case passing 1 argument scenario → "wrongDataset" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument includeRestorationFamily → true to completePortableLineageSurvivesPreparedFileInspectionWithoutApplyingData(includeRestorationFamily:) started.
+◇ Test case passing 1 argument scenario → "wrongEvidence" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "malformed" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "duplicateIdentity" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "unresolvedReference" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "acknowledged" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+✔ Test aClosedMembershipCannotRedirectItsHistoryToAnotherItem() passed after 0.243 seconds.
+✔ Test explicitReopenSuppressesALateDoneSeedWithoutChangingSharedItemState() passed after 0.243 seconds.
+✔ Test nativeRepeatedPropertyResolutionIsRetainedByTheImmutableDecodedBackup() passed after 0.243 seconds.
+✔ Test restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) with 7 test cases passed after 0.243 seconds.
+◇ Test explicitCompletionHistoryEncodesTheIndependentPortableFixture() started.
+◇ Test initialContributionRetainsItsContextAndExplicitNullChange(kind:) started.
+✔ Test unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) with 4 test cases passed after 0.251 seconds.
+✔ Test selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData() passed after 0.250 seconds.
+✔ Test continuedFileFailureRetainsAppliedEvidenceAndMutationBlockUntilRetrySucceeds() passed after 0.251 seconds.
+✔ Test recoveryRejectsSameKindDuplicatesAndCrossKindReferenceSubstitution() passed after 0.250 seconds.
+✔ Test malformedPortableLineageIsRejectedBeforeRecoverySelection(_:) with 2 test cases passed after 0.250 seconds.
+✔ Test knownAppliedCompletionRetryRepairsRecoveryWithoutReapplyingAndUnblocksLaterEdits() passed after 0.250 seconds.
+✔ Test recoveryResolvesEqualUUIDsBySourceKindAndRetainsTypedAssociations() passed after 0.250 seconds.
+✔ Test completePortableLineageSurvivesPreparedFileInspectionWithoutApplyingData(includeRestorationFamily:) with 2 test cases passed after 0.250 seconds.
+◇ Test case passing 1 argument kind → "listMembership" to initialContributionRetainsItsContextAndExplicitNullChange(kind:) started.
+◇ Test case passing 1 argument kind → "directItineraryItem" to initialContributionRetainsItsContextAndExplicitNullChange(kind:) started.
+◇ Test case passing 1 argument kind → "expandedListItem" to initialContributionRetainsItsContextAndExplicitNullChange(kind:) started.
+✔ Suite NativeImportLineageTests passed after 0.261 seconds.
+✔ Test explicitCompletionHistoryEncodesTheIndependentPortableFixture() passed after 0.021 seconds.
+✔ Suite RecoverySourceIdentityRejectionTests passed after 0.266 seconds.
+✔ Suite RecoveryCheckpointRetryTests passed after 0.266 seconds.
+✔ Suite RecoverySourceIdentityTests passed after 0.266 seconds.
+✔ Test initialContributionRetainsItsContextAndExplicitNullChange(kind:) with 3 test cases passed after 0.022 seconds.
+✔ Suite ImportLineageEncodingTests passed after 0.266 seconds.
+✔ Test concurrentFacadeRetriesPublishOneCheckpointAndPreserveOriginalAppliedResult() passed after 0.266 seconds.
+✔ Test preparedProposalRemainsSelectableWhenTheCommittedStoreIsMissing() passed after 0.284 seconds.
+✔ Test invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) with 9 test cases passed after 0.293 seconds.
+✔ Test inspectingRetainedProposalFromSeparateEmptyDatasetNeverImportsOrAcknowledgesIt() passed after 0.314 seconds.
+✔ Suite RecoveryProposalSelectionTests passed after 0.315 seconds.
+✔ Test bulkCheckpointRetryPreservesEverySupportedGraphGroupAndPriorDeletionMarker() passed after 0.661 seconds.
+✔ Suite RecoveryCheckpointRetryAdmissionTests passed after 0.662 seconds.
+✔ Test run with 19 tests in 7 suites passed after 0.662 seconds.

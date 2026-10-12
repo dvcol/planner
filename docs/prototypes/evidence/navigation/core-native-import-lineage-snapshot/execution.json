@@ -1,0 +1,70 @@
+{
+  "status": "Qualified lineage preservation and malformed graph rejection in recovery inspection; import execution and native lineage persistence remain open",
+  "beforeCommit": "cefa0ff",
+  "storageSchemaVersion": 15,
+  "portableFormatVersion": 2,
+  "qualification": {
+    "macCore": {
+      "functions": 19,
+      "suites": 7,
+      "invocations": 40,
+      "failures": 0,
+      "skips": 0
+    },
+    "iOSCore": {
+      "functions": 19,
+      "suites": 7,
+      "invocations": 40,
+      "failures": 0,
+      "skips": 0
+    },
+    "strictSwiftFiles": 6,
+    "macAppAndNavigationTestHost": "TEST BUILD SUCCEEDED",
+    "nativeUIFunctions": 0
+  },
+  "commands": {
+    "inspectionRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter RecoveryProposalSelectionTests/completePortableLineageSurvivesPreparedFileInspectionWithoutApplyingData",
+    "malformedRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter RecoveryProposalSelectionTests/malformedPortableLineageIsRejectedBeforeRecoverySelection",
+    "diagnosticRed": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter RecoveryProposalSelectionTests/malformedPortableLineageIsRejectedBeforeRecoverySelection",
+    "qualifiedMac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter 'ImportLineageEncodingTests|NativeImportLineageTests|RecoveryProposalSelectionTests|RecoveryCheckpointRetryTests|RecoveryCheckpointRetryAdmissionTests|RecoverySourceIdentityTests|RecoverySourceIdentityRejectionTests'",
+    "qualifiedPhone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerCore -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerCoreStoreTests/ImportLineageEncodingTests -only-testing:PlannerCoreStoreTests/NativeImportLineageTests -only-testing:PlannerCoreStoreTests/RecoveryProposalSelectionTests -only-testing:PlannerCoreStoreTests/RecoveryCheckpointRetryTests -only-testing:PlannerCoreStoreTests/RecoveryCheckpointRetryAdmissionTests -only-testing:PlannerCoreStoreTests/RecoverySourceIdentityTests -only-testing:PlannerCoreStoreTests/RecoverySourceIdentityRejectionTests -resultBundlePath /private/tmp/PlannerRecoveryLineageQualifiedPhone.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "macBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO build-for-testing"
+  },
+  "sourceEpoch": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportValues.swift": "d7dcdc4412483cf6396f5a2a12e7d7e2c35ecb6e6a44bc83f8ec6dfc2b223f29",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportLineageEncoding.swift": "6e28218bcfb63120ad38053da86326e026d278ae6370a2cb9d168506847ba3c4",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportGraph.swift": "c7efc838d6866e6a390b93fd8c9aefaeac80ba19d362106a7905d0fc3a40beaf",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "74ce7897f46703aed85b45d951b823cbc0d873d71146b43a5363dc8c2fb4e3a1",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ImportLineageEncodingTests.swift": "c4b95a28a7186dd022648b213fd98b835e25dbe6920e0b2a6fe9b6c28f42ba72",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoveryProposalSelectionTests.swift": "88f5bb4326996939fd372fad239f0d6ee6a3df2a0a1f034f8309893ab3628171"
+  },
+  "malformedRedSourceEpoch": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportGraph.swift": "bcfa91fea64034d2e918c29af11757a4b826b0d33dd99301cd0be19d42fbc5ec",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "f2c7bacda51e10f80dc46b5e6f9278c38575b181f124a72065d8f55d607bc7ef",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoveryProposalSelectionTests.swift": "a64d8b115433911b99ae98adaa0d03b8b10c887dbd6900321d654c09dd27d1d7"
+  },
+  "retainedFiles": [
+    "inspection-red.log",
+    "malformed-lineage-compile-failure.log",
+    "malformed-lineage-red.log",
+    "diagnostic-red.log",
+    "qualified-mac.log",
+    "phone-summary.json",
+    "phone-tests.json"
+  ],
+  "originalArtifacts": {
+    "phoneResult": "/private/tmp/PlannerRecoveryLineageQualifiedPhone.xcresult",
+    "phoneLog": "/private/tmp/PlannerRecoveryLineageQualifiedPhone.log",
+    "macBuildLog": "/private/tmp/PlannerRecoveryLineageMacBuild.log",
+    "swiftLint": "/private/tmp/PlannerRecoveryLineageStrictLint.log",
+    "markdownLint": "/private/tmp/PlannerRecoveryLineageMarkdownLint.log"
+  },
+  "proofLimits": [
+    "Prepared-file fixture injection is a controlled recovery-reader test; it does not acknowledge or apply an import.",
+    "The valid restoration family has a closed predecessor and a retained candidate; native family storage and restored live records remain open.",
+    "Initial malformed-test compilation failure has zero runtime evidence.",
+    "Original inspection red used the cefa0ff snapshot reader. Its test source hash was not captured at that earlier epoch.",
+    "Intermediate green and native runs precede the exact diagnostic and final restoration case; final qualification uses the recorded final source epoch.",
+    "No new UI runtime or physical-device proof. No claim of full import execution, operation replay, origin/provider persistence, or every possible malformed portable grammar case."
+  ]
+}

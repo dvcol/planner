@@ -1,0 +1,25 @@
+Building for debugging...
+[1 / 10] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[7 / 10] PlannerCoreStoreTests-product
+[9 / 13] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (6,00 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite RecoveryProposalSelectionTests started.
+◇ Test malformedPortableLineageIsRejectedBeforeRecoverySelection(_:) started.
+◇ Test case passing 1 argument scenario → "duplicateObservedChanges" to malformedPortableLineageIsRejectedBeforeRecoverySelection(_:) started.
+◇ Test case passing 1 argument scenario → "emptyRestorationCandidates" to malformedPortableLineageIsRejectedBeforeRecoverySelection(_:) started.
+✘ Test malformedPortableLineageIsRejectedBeforeRecoverySelection(_:) recorded an issue with 1 argument scenario → "duplicateObservedChanges" at RecoveryProposalSelectionTests.swift:59:5: Expectation failed: recoveryFailure.propertyPath == expectedPath
+↳ recoveryFailure.propertyPath == expectedPath → false
+↳   recoveryFailure.propertyPath → "/completionChanges/1/observedChangeIds/1/id"
+↳     some → "/completionChanges/1/observedChangeIds/1/id"
+↳   expectedPath → "/completionChanges/1/observedChangeIds"
+✘ Test malformedPortableLineageIsRejectedBeforeRecoverySelection(_:) with 2 test cases failed after 0.149 seconds with 1 issue.
+✘ Suite RecoveryProposalSelectionTests failed after 0.149 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.149 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)
