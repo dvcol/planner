@@ -1,0 +1,83 @@
+{
+  "status": "Qualified source-field Overwrite with unchanged owned references and completion history; full import remains open",
+  "beforeCommit": "27ea048",
+  "storageSchemaVersion": 16,
+  "portableFormatVersion": 2,
+  "commands": {
+    "core": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter 'NativeImportMergeTests|NativeImportApplyTests|NativeImportLineageMigrationTests|ImportLineageEncodingTests|NativeImportLineageTests|RecoveryProposalSelectionTests|RecoveryCheckpointRetryTests|RecoveryCheckpointRetryAdmissionTests|ManualContainerEstimateMigrationTests|ExpandedCompletionMigrationTests|ItineraryEntryMigrationTests|ItemLabelMigrationTests|MembershipMigrationTests|CategoryMigrationTests|TagMigrationTests|ItineraryMigrationTests|ItineraryScheduleMigrationTests|ItemLinkMigrationTests|NativeImportReviewTests|NativeImportConflictReviewTests|NativeImportOmittedOwnerReviewTests|NativeImportBindingReviewTests'",
+    "phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerCore -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerCoreStoreTests/NativeImportMergeTests -only-testing:PlannerCoreStoreTests/NativeImportApplyTests -only-testing:PlannerCoreStoreTests/NativeImportLineageMigrationTests -only-testing:PlannerCoreStoreTests/ImportLineageEncodingTests -only-testing:PlannerCoreStoreTests/NativeImportLineageTests -only-testing:PlannerCoreStoreTests/RecoveryProposalSelectionTests -only-testing:PlannerCoreStoreTests/RecoveryCheckpointRetryTests -only-testing:PlannerCoreStoreTests/RecoveryCheckpointRetryAdmissionTests -only-testing:PlannerCoreStoreTests/ManualContainerEstimateMigrationTests -only-testing:PlannerCoreStoreTests/ExpandedCompletionMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryEntryMigrationTests -only-testing:PlannerCoreStoreTests/ItemLabelMigrationTests -only-testing:PlannerCoreStoreTests/MembershipMigrationTests -only-testing:PlannerCoreStoreTests/CategoryMigrationTests -only-testing:PlannerCoreStoreTests/TagMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryScheduleMigrationTests -only-testing:PlannerCoreStoreTests/ItemLinkMigrationTests -only-testing:PlannerCoreStoreTests/NativeImportReviewTests -only-testing:PlannerCoreStoreTests/NativeImportConflictReviewTests -only-testing:PlannerCoreStoreTests/NativeImportOmittedOwnerReviewTests -only-testing:PlannerCoreStoreTests/NativeImportBindingReviewTests -resultBundlePath /private/tmp/PlannerNativeImportSourceOverwritePhone.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "http": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerMCPTests/CommandRoutingTests -only-testing:PlannerMCPTests/OperationStatusRoutingTests -only-testing:PlannerMCPTests/BulkCompletionAdmissionRoutingTests -only-testing:PlannerMCPTests/ManualContainerEstimateRoutingTests -resultBundlePath /private/tmp/PlannerNativeImportSourceOverwriteHTTPMac.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "macBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO build-for-testing"
+  },
+  "qualification": {
+    "macCore": {
+      "functions": 48,
+      "suites": 22,
+      "failures": 0,
+      "skips": 0,
+      "invocations": 95
+    },
+    "iOSCore": {
+      "functions": 48,
+      "suites": 22,
+      "failures": 0,
+      "skips": 0,
+      "invocations": 95
+    },
+    "macHTTP": {
+      "functions": 16,
+      "suites": 4,
+      "failures": 0,
+      "skips": 0,
+      "invocations": 22
+    },
+    "strictSwiftFiles": 4,
+    "macAppAndNavigationTestHost": "TEST BUILD SUCCEEDED",
+    "nativeUIFunctions": 0
+  },
+  "review": {
+    "standards": "No confirmed findings.",
+    "spec": "No confirmed defects in source-field Overwrite; broader import reconciliation remains open."
+  },
+  "proofLimits": [
+    "Source-field replacement executes only while all owned references and history are unchanged; unsupported changes reject together before writing.",
+    "Public tests prove stable public identities/lifetimes and complete retained graph/history. Reuse of native models was checked in code review; no separate persisted SwiftData identity test ran.",
+    "Owned-data replacement, live deletion/restoration, origin/provider persistence, import summaries, native forms and direct context.save failure proof remain open.",
+    "Two invalid fixture attempts failed decoding and do not qualify as implementation red. The admitted execution-gate red and final source epochs are retained.",
+    "No new UI runtime, physical sync/account/Share, large-data responsiveness or Calendar qualification."
+  ],
+  "sourceEpoch": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "2f2682ca7f73752c4ab43026abf8e5b9b0a3d26676a3f942960ac8d992e15546",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMerge.swift": "da7322b4d364cea1e3cc3394247d8f2023acbd798c309b4a11176abf96024579",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerNativeImportStorage.swift": "f1aa1723c361e2710eed28e8588e3820d7c8afb4fb4852b42e15e0266315ee2b",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportMergeTests.swift": "df9bf28e00d8b638be879952d33cf3c71aef8fbcef118faae57718a87d668d1c"
+  },
+  "admittedRedSourceEpoch": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "d23ce32fe72da1b76711f06b13b3bda694f1dfeba928b069bcf1593328a9e188",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMerge.swift": "301bd0f0ee717d5b6309428b4dd7a537e11bb9fbe7997be0dcf663aeb71af181",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerNativeImportStorage.swift": "fe8f245f5fb53a806640acbbdac2c7aa7d7563fc43caab3064c8ee2057c152fc",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportMergeTests.swift": "18c51ae74191c793751ef5c0a60fa5e2f69ffc3f7d63ad9ba313802efeef4974"
+  },
+  "originalArtifacts": {
+    "phoneResult": "/private/tmp/PlannerNativeImportSourceOverwritePhone.xcresult",
+    "httpResult": "/private/tmp/PlannerNativeImportSourceOverwriteHTTPMac.xcresult"
+  },
+  "retainedFiles": [
+    "admitted-functional-red.log",
+    "first-green.log",
+    "fixture-origins-extra.log",
+    "fixture-origins-missing.log",
+    "http-summary.json",
+    "http-tests.json",
+    "markdown-lint.log",
+    "owned-data-gates.log",
+    "phone-summary.json",
+    "phone-tests.json",
+    "qualified-http.log.gz",
+    "qualified-mac-build.log.gz",
+    "qualified-mac.log",
+    "qualified-phone.log.gz",
+    "strict-swift-lint.log",
+    "swift-lint-repair.log"
+  ]
+}

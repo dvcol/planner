@@ -3,6 +3,207 @@ import PlannerCore
 import Testing
 
 struct NativeImportMergeTests {
+  @Test(arguments: [
+    "memberships", "itineraryEntries", "expandedCompletions", "labelAssociations", "ownedLinks",
+    "schedules", "contextAliases", "completionChanges",
+  ])
+  func changedOwnedDataRejectsBeforeAnySourceFieldsAreWritten(group: String) async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let seed) = planner.decodeImport(try nativeImportFixtureData()),
+      case .reviewed(let seedReview) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: seed)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: seedReview.command,
+          reviewToken: seedReview.reviewToken)
+      ).outcome,
+      case .exported(let before) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    var incoming = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
+    var sources = try #require(incoming["sources"] as? [[String: Any]])
+    var content = try #require(sources[0]["content"] as? [String: Any])
+    content["title"] = "Must not partially overwrite"
+    sources[0]["content"] = content
+    incoming["sources"] = sources
+    var records = try #require(incoming[group] as? [[String: Any]])
+    switch group {
+    case "memberships", "itineraryEntries": records[0]["rank"] = "4096"
+    case "expandedCompletions": records[0]["localDone"] = true
+    case "labelAssociations": records.removeLast()
+    case "ownedLinks": records[0]["label"] = "Incoming label"
+    case "schedules":
+      var form = try #require(records[0]["form"] as? [String: Any])
+      form["end"] = 813207600.0
+      records[0]["form"] = form
+    case "contextAliases": records[0]["initialDone"] = true
+    default:
+      records[0]["done"] = false
+      var memberships = try #require(incoming["memberships"] as? [[String: Any]])
+      memberships[0]["localDone"] = false
+      incoming["memberships"] = memberships
+    }
+    incoming[group] = records
+    let decoded = planner.decodeImport(try JSONSerialization.data(withJSONObject: incoming))
+    guard case .decoded(let backup) = decoded else {
+      Issue.record("Decode changed owned data in \(group): \(decoded)")
+      return
+    }
+    guard
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: backup, mode: .overwrite))
+    else { throw CancellationError() }
+    let operationIdentifier = UUID()
+    let response = await planner.execute(
+      .init(
+        operationId: operationIdentifier, session: session, command: review.command,
+        reviewToken: review.reviewToken))
+    guard case .rejected(let failure) = response.outcome,
+      case .exported(let after) = await planner.exportData(session: session),
+      case .noReliableEvidence = await planner.operationStatus(
+        session: session, operationId: operationIdentifier)
+    else {
+      Issue.record("Changed owned data must reject without an import receipt: \(response)")
+      return
+    }
+    #expect(failure.code == "unavailable")
+    #expect(after == before)
+    let reopened = Planner(configuration: configuration)
+    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+      case .exported(let reopenedData) = await reopened.exportData(session: reopenedSession)
+    else { throw CancellationError() }
+    #expect(reopenedData == before)
+  }
+
+  @Test func overwriteSourceFieldsPreservesReferencesAndHistoryAcrossSetAndClear() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let seed) = planner.decodeImport(try nativeImportFixtureData()),
+      case .reviewed(let seedReview) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: seed)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: seedReview.command,
+          reviewToken: seedReview.reviewToken)
+      ).outcome,
+      case .exported(let baselineData) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    let baseline = try #require(JSONSerialization.jsonObject(with: baselineData) as? [String: Any])
+    for clearOptionalFields in [false, true] {
+      var incoming = baseline
+      let sources = try #require(baseline["sources"] as? [[String: Any]])
+      incoming["sources"] = try sources.map { original in
+        var source = original
+        let kind = try #require(source["kind"] as? String)
+        var content = try #require(source["content"] as? [String: Any])
+        let nameField = content["title"] == nil ? "name" : "title"
+        content[nameField] = "Incoming \(kind) \(clearOptionalFields ? "cleared" : "set")"
+        let optionalContent: [String: Any] = [
+          "notes": "Incoming notes", "subtitle": "Incoming subtitle", "iconName": "star",
+          "estimate": ["minutes": "75", "displayUnit": "minute"],
+          "manualEstimate": ["minutes": "75", "displayUnit": "minute"],
+          "color": ["red": 0.125, "green": 0.5, "blue": 0.75, "alpha": 1.0],
+          "location": [
+            "displayName": "Incoming place", "formattedAddress": "Tokyo",
+            "coordinate": ["latitude": 35.0, "longitude": 139.0],
+          ],
+        ]
+        for (field, value) in optionalContent where content[field] != nil {
+          content[field] = clearOptionalFields ? NSNull() : value
+        }
+        var origins = try #require(source["contentOrigins"] as? [String: String])
+        for field in ["title", "name", "subtitle", "notes", "location"] where content[field] != nil
+        {
+          if content[field] is NSNull {
+            origins.removeValue(forKey: field)
+            continue
+          }
+          origins[field] = "independent"
+        }
+        source["content"] = content
+        source["contentOrigins"] = origins
+        source["createdAt"] = 60.0
+        source["updatedAt"] = clearOptionalFields ? 80.0 : 70.0
+        if kind == "item" { source["globalDone"] = !clearOptionalFields }
+        if ["item", "list", "itinerary"].contains(kind) {
+          source["archived"] = !clearOptionalFields
+        }
+        return source
+      }
+      let decoded = planner.decodeImport(try JSONSerialization.data(withJSONObject: incoming))
+      guard case .decoded(let backup) = decoded else {
+        Issue.record("Decode source-field replacement: \(decoded)")
+        return
+      }
+      guard
+        case .reviewed(let review) = await planner.prepareReview(
+          session: session, command: .applyImport(backup: backup, mode: .overwrite))
+      else { throw CancellationError() }
+      let operationIdentifier = UUID()
+      let response = await planner.execute(
+        .init(
+          operationId: operationIdentifier, session: session, command: review.command,
+          reviewToken: review.reviewToken))
+      guard case .applied(let result, .complete(let checkpoint)) = response.outcome else {
+        Issue.record("Overwrite source fields without replacing references/history: \(response)")
+        return
+      }
+      #expect(result.generated.isEmpty)
+      let expectedAffected = try sources.map { source in
+        PlannerEntityReference(
+          kind: try #require(
+            (source["kind"] as? String).flatMap(PlannerEntityKind.init(rawValue:))),
+          id: try #require((source["id"] as? String).flatMap(UUID.init(uuidString:))))
+      }
+      #expect(Set(result.affected) == Set(expectedAffected))
+      guard case .exported(let exported) = await planner.exportData(session: session),
+        case .listedNamespaces(let namespaces) = await planner.inspectRecovery(request: .namespaces),
+        let namespace = namespaces.first,
+        case .selected(let recovered) = await planner.inspectRecovery(
+          request: .acknowledgedSnapshot(
+            namespaceId: namespace.namespaceId, checkpointGeneration: checkpoint))
+      else { throw CancellationError() }
+      let actual = try #require(JSONSerialization.jsonObject(with: exported) as? [String: Any])
+      let recovery = try #require(
+        JSONSerialization.jsonObject(with: recovered.portableData) as? [String: Any])
+      #expect(importMergeGraphMatches(actual, incoming))
+      #expect(importMergeGraphMatches(recovery, incoming))
+      let reopened = Planner(configuration: configuration)
+      guard case .ready(let reopenedSession) = await reopened.bootstrap(),
+        case .exported(let reopenedData) = await reopened.exportData(session: reopenedSession),
+        case .applied(let replayed, .complete(let replayCheckpoint)) = await reopened.execute(
+          .init(
+            operationId: operationIdentifier, session: reopenedSession, command: review.command)
+        ).outcome,
+        case .reviewed(let repeatReview) = await reopened.prepareReview(
+          session: reopenedSession, command: .applyImport(backup: backup, mode: .overwrite)),
+        case .applied(let repeated, .complete) = await reopened.execute(
+          .init(
+            operationId: UUID(), session: reopenedSession, command: repeatReview.command,
+            reviewToken: repeatReview.reviewToken)
+        ).outcome,
+        case .exported(let repeatedData) = await reopened.exportData(session: reopenedSession)
+      else { throw CancellationError() }
+      #expect(reopenedData == exported)
+      #expect(replayed == result && replayCheckpoint == checkpoint)
+      #expect(repeated.generated.isEmpty && repeatedData == exported)
+    }
+  }
+
   @Test(arguments: [false, true], [false, true])
   func skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(
     omitConflictedOwners: Bool, interleaveSourceIdentifiers: Bool

@@ -1,0 +1,4 @@
+Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift:2144:19: error: [AddLines] add 1 line break
+Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift:2144:29: error: [AddLines] add 1 line break
+Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift:2145:1: error: [Indentation] indent by 2 spaces
+Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift:2146:1: error: [Indentation] indent by 2 spaces

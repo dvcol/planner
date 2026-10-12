@@ -2,22 +2,45 @@ import Foundation
 
 struct PlannerImportMerge {
   let additions: PlannerPortableBackup
+  let sourceReplacements: [PlannerPortableSource]
   let projected: PlannerPortableBackup
 
   init(
     incoming: PlannerPortableBackup, current: PlannerPortableBackup,
     resolution: PlannerImportReviewResolution
   ) throws {
-    guard resolution.details.replacements.isEmpty, resolution.details.restorations.isEmpty,
+    guard resolution.details.restorations.isEmpty,
       resolution.details.incomingDeletions.allSatisfy({ $0.before == nil })
     else {
       throw PlannerFailure(
         "unavailable",
-        "Replacing or deleting current import owners still needs native reconciliation.")
+        "Deleting or restoring current import owners still needs native reconciliation.")
     }
     let selectedOwners = Set(resolution.details.imports.map { $0.owner.reference })
     let incomingProjection = try PlannerImportProjection(backup: incoming)
     let currentProjection = try PlannerImportProjection(backup: current)
+    let replacedOwners = Set(resolution.details.replacements.map { $0.owner.reference })
+    sourceReplacements = incoming.sources.filter {
+      replacedOwners.contains($0.importBinding.reference)
+    }
+    for source in sourceReplacements {
+      guard let existing = currentProjection.sources[source.importBinding.reference] else {
+        throw PlannerFailure("missingReference", "The replaced source cannot resolve.")
+      }
+      let incomingFields = incomingProjection.fields(for: source)
+      let currentFields = currentProjection.fields(for: existing)
+      let ownedFields = [
+        "memberships", "itineraryEntries", "expandedCompletions", "labelAssociations", "ownedLinks",
+        "schedules", "contextAliases", "completionChanges",
+      ]
+      guard
+        ownedFields.allSatisfy({ incomingFields[$0]?.encoded() == currentFields[$0]?.encoded() })
+      else {
+        throw PlannerFailure(
+          "unavailable",
+          "Replacing owned references or completion history still needs reconciliation.")
+      }
+    }
     let aliases = incoming.contextAliases.filter {
       plannerImportCompletionOwner(
         $0.canonicalContext, memberships: incomingProjection.membershipsById,
@@ -60,7 +83,10 @@ struct PlannerImportMerge {
         selectedAliasIdentifiers.contains($0.aliasId)
       },
       restorationFamilies: [])
-    let sources = (current.sources + additions.sources).sorted {
+    let retainedSources = current.sources.filter {
+      !replacedOwners.contains($0.importBinding.reference)
+    }
+    let sources = (retainedSources + sourceReplacements + additions.sources).sorted {
       $0.id.uuidString < $1.id.uuidString
     }
     let sourceKinds: [PlannerEntityKind] = [.item, .list, .itinerary, .category, .tag]

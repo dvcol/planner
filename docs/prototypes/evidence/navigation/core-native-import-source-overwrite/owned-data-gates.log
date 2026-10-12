@@ -1,0 +1,31 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (2,62 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportMergeTests started.
+◇ Test overwriteSourceFieldsPreservesReferencesAndHistoryAcrossSetAndClear() started.
+◇ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → false, interleaveSourceIdentifiers → false to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → false, interleaveSourceIdentifiers → true to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test changedOwnedDataRejectsBeforeAnySourceFieldsAreWritten(group:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → true, interleaveSourceIdentifiers → false to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → true, interleaveSourceIdentifiers → true to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 1 argument group → "memberships" to changedOwnedDataRejectsBeforeAnySourceFieldsAreWritten(group:) started.
+◇ Test case passing 1 argument group → "itineraryEntries" to changedOwnedDataRejectsBeforeAnySourceFieldsAreWritten(group:) started.
+◇ Test case passing 1 argument group → "expandedCompletions" to changedOwnedDataRejectsBeforeAnySourceFieldsAreWritten(group:) started.
+◇ Test case passing 1 argument group → "labelAssociations" to changedOwnedDataRejectsBeforeAnySourceFieldsAreWritten(group:) started.
+◇ Test case passing 1 argument group → "schedules" to changedOwnedDataRejectsBeforeAnySourceFieldsAreWritten(group:) started.
+◇ Test case passing 1 argument group → "ownedLinks" to changedOwnedDataRejectsBeforeAnySourceFieldsAreWritten(group:) started.
+◇ Test case passing 1 argument group → "contextAliases" to changedOwnedDataRejectsBeforeAnySourceFieldsAreWritten(group:) started.
+◇ Test case passing 1 argument group → "completionChanges" to changedOwnedDataRejectsBeforeAnySourceFieldsAreWritten(group:) started.
+✔ Test changedOwnedDataRejectsBeforeAnySourceFieldsAreWritten(group:) with 8 test cases passed after 0.451 seconds.
+✔ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) with 4 test cases passed after 0.480 seconds.
+✔ Test overwriteSourceFieldsPreservesReferencesAndHistoryAcrossSetAndClear() passed after 0.553 seconds.
+✔ Suite NativeImportMergeTests passed after 0.553 seconds.
+✔ Test run with 3 tests in 1 suite passed after 0.553 seconds.
