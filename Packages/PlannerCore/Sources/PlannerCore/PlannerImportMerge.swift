@@ -34,19 +34,19 @@ struct PlannerImportMerge {
         plannerImportHistoryBinding)
       let currentHistory = try (currentProjection.histories[owner] ?? []).map(
         plannerImportHistoryBinding)
+      let incomingHistoryBindings = Set(incomingHistory.map { $0.encoded() })
       guard
-        incomingReferences.count == currentReferences.count,
-        incomingReferences.allSatisfy({ incoming in
-          currentReferences.contains {
-            $0.identity == incoming.identity && $0.reference == incoming.reference
+        currentReferences.allSatisfy({ current in
+          incomingReferences.contains {
+            $0.identity == current.identity && $0.reference == current.reference
           }
         }),
-        PlannerCanonicalValue.identitySet(incomingHistory).encoded()
-          == PlannerCanonicalValue.identitySet(currentHistory).encoded()
+        currentHistory.allSatisfy({ incomingHistoryBindings.contains($0.encoded()) })
       else {
         throw PlannerFailure(
           "unavailable",
-          "Changing reference or history identities still needs closure reconciliation.")
+          "Removing or rebinding reference or history identities still needs closure reconciliation."
+        )
       }
     }
     let selectedRecordOwners = selectedOwners.union(replacedOwners)
