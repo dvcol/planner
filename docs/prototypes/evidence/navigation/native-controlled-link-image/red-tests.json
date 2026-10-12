@@ -1,0 +1,63 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName" : "iPhone 18 Pro",
+      "modelName" : "iPhone 18 Pro",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed - Attributes: Application, 0x10a5d17c0, pid: 57155, label: 'Planner fixtures'\nElement subtree:\n →Application, 0x10a5d17c0, pid: 57155, label: 'Planner fixtures'\n    Window (Main), 0x10a5d1900, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x10a5d1a40, {{0.0, 0.0}, {402.0, 874.0}}\n      Other, 0x10a5d1b80, {{0.0, 0.0}, {402.0, 874.0}}\n        Other, 0x10a5d1cc0, {{0.0, 0.0}, {402.0, 874.0}}\n          Other, 0x10a5d1e00, {{0.0, 0.0}, {402.0, 874.0}}\n            Other, 0x10a5d1f40, {{0.0, 0.0}, {402.0, 874.0}}\n              Other, 0x10a5d2080, {{0.0, 0.0}, {402.0, 874.0}}\n                Other, 0x10a5d21c0, {{0.0, 0.0}, {402.0, 874.0}}\n                  Other, 0x10a5d2300, {{0.0, 0.0}, {402.0, 874.0}}\n                    Other, 0x10a5d2440, {{0.0, 0.0}, {402.0, 874.0}}\n                      Other, 0x10a5d2580, {{0.0, 0.0}, {402.0, 874.0}}\n                        Other, 0x10a5d26c0, {{0.0, 0.0}, {402.0, 874.0}}\n                          Other, 0x10a5d2800, {{0.0, 0.0}, {402.0, 874.0}}\n                            Other, 0x10a5d2940, {{0.0, 0.0}, {402.0, 874.0}}\n                              Other, 0x10a5d2a80, {{0.0, 0.0}, {402.0, 874.0}}\n                                Other, 0x10a5d2bc0, {{0.0, 0.0}, {402.0, 874.0}}\n                                  Other, 0x10a5d2d00, {{0.0, 0.0}, {402.0, 874.0}}\n                                    NavigationBar, 0x10a5d2e40, {{0.0, 62.0}, {402.0, 106.0}}, identifier: 'Items'\n                                      Button, 0x10a5d2f80, {{226.7, 66.0}, {41.3, 36.0}}, identifier: 'saved.items.filters', label: 'Active'\n                                      Button, 0x10a5d30c0, {{284.0, 66.0}, {44.7, 36.0}}, identifier: 'saved.items.sort', label: 'Sort: Title · Ascending'\n                                      Button, 0x10a5d3200, {{344.7, 66.0}, {37.3, 36.0}}, identifier: 'saved.item.new', label: 'New Item'\n                                      StaticText, 0x10a5d3340, {{16.0, 119.7}, {88.7, 40.7}}, label: 'Items'\n                                    Other, 0x10a5d3480, {{0.0, 0.0}, {402.0, 874.0}}\n                                      Other, 0x10a5d35c0, {{0.0, 0.0}, {402.0, 874.0}}\n                                        Other, 0x10a5d3700, {{0.0, 0.0}, {402.0, 874.0}}\n                                          Other, 0x10a5d3840, {{0.0, 0.0}, {402.0, 874.0}}\n                                            CollectionView, 0x10a5d3980, {{0.0, 0.0}, {402.0, 874.0}}\n                                              Other, 0x10a5d3ac0, {{-16.0, -1580.0}, {434.0, 3584.7}}\n                                              Other, 0x10a5d3c00, {{0.0, 0.0}, {402.0, 874.0}}\n                                                Other, 0x10a5d3d40, {{0.0, 0.0}, {402.0, 156.0}}\n                                                Other, 0x10a5d3e80, {{0.0, 741.0}, {402.0, 133.0}}\n                                              Other, 0x10a644000, {{0.0, 0.0}, {402.0, 874.0}}\n                                              Cell, 0x10a644140, {{16.0, 168.0}, {370.0, 68.7}}\n                                                Other, 0x10a644280, {{16.0, 168.0}, {370.0, 68.7}}\n                                                  Other, 0x10a6443c0, {{16.0, 168.0}, {370.0, 68.7}}\n                                                Other, 0x10a644500, {{16.0, 168.0}, {370.0, 68.7}}\n                                                  Other, 0x10a644640, {{16.0, 168.0}, {370.0, 68.7}}\n                                                    Other, 0x10a644780, {{16.0, 168.0}, {370.0, 68.7}}\n                                                      Button, 0x10a6448c0, {{16.0, 168.0}, {370.0, 68.7}}, identifier: 'saved.item.B2488DD5-7387-44FF-A2FC-7CCA4E71DB09', label: 'Museum', value: Museum guide\n                                                        Image, 0x10a644a00, {{33.3, 184.3}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'\n                                                        StaticText, 0x10a644b40, {{59.7, 183.0}, {65.7, 20.3}}, label: 'Museum'\n                                                        Image, 0x10a644c80, {{360.7, 196.3}, {7.0, 12.0}}, identifier: 'chevron.forward'\n                                                        StaticText, 0x10a644dc0, {{63.3, 206.0}, {119.3, 17.0}}, label: 'Museum guide'\n                                                        Image, 0x10a644f00, {{63.3, 206.0}, {17.0, 17.0}}, identifier: 'link', label: 'Link'\n                                              Other, 0x10a645040, {{369.0, 116.0}, {30.0, 675.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %\n                                                Other, 0x10a645180, {{396.0, 781.0}, {3.0, 7.0}}\n                                              Other, 0x10a6452c0, {{369.0, 116.0}, {30.0, 675.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %\n                                                Other, 0x10a645400, {{396.0, 781.0}, {3.0, 7.0}}\n                                    Toolbar, 0x10a645540, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'Toolbar', label: 'Toolbar'\n                                      Other, 0x10a645680, {{0.0, 0.0}, {402.0, 874.0}}\n                                Toolbar, 0x10a6457c0, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'Toolbar', label: 'Toolbar'\n                                  Other, 0x10a645900, {{0.0, 0.0}, {402.0, 874.0}}\n                            Other, 0x10a645a40, {{0.0, 0.0}, {402.0, 874.0}}\n                              Other, 0x10a645b80, {{0.0, 0.0}, {402.0, 874.0}}\n                Other, 0x10a645cc0, {{0.0, 0.0}, {402.0, 874.0}}\n                  Other, 0x10a645e00, {{0.0, 791.0}, {402.0, 83.0}}\n                    Other, 0x10a645f40, {{0.0, 0.0}, {402.0, 874.0}}\n                      TabBar, 0x10a646080, {{0.0, 791.0}, {402.0, 83.0}}, label: 'Tab Bar'\n                        Other, 0x10a6461c0, {{21.0, 791.0}, {360.0, 62.0}}\n                          Other, 0x10a646300, {{21.0, 791.0}, {95.0, 54.0}}\n                          Other, 0x10a646440, {{21.0, 791.0}, {360.0, 62.0}}\n                            Button, 0x10a646580, {{25.0, 795.0}, {95.0, 54.0}}, identifier: 'list.bullet', label: 'Lists'\n                              Image, 0x10a6466c0, {{58.0, 804.3}, {29.3, 21.0}}, identifier: 'list.bullet', label: 'List'\n                            Button, 0x10a646800, {{110.7, 795.0}, {95.0, 54.0}}, identifier: 'square.stack', label: 'Items', Selected\n                              Image, 0x10a646940, {{145.3, 799.7}, {26.0, 32.3}}, identifier: 'square.stack.fill', label: 'Stack of squares, filled'\n                            Button, 0x10a646a80, {{196.3, 795.0}, {95.0, 54.0}}, identifier: 'tray', label: 'Inbox'\n                              Image, 0x10a646bc0, {{227.3, 803.0}, {33.0, 23.7}}, identifier: 'tray.fill', label: 'inbox'\n                            Button, 0x10a646d00, {{282.0, 795.0}, {95.0, 54.0}}, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries'\n                              Image, 0x10a646e40, {{316.3, 800.3}, {26.3, 29.0}}, identifier: 'point.topleft.down.to.point.bottomright.curvepath.fill', label: 'Downward point at the top-left corner of to point at the bottom-right corner of curvepath, filled'\n                          Other, 0x10a646f80, {{21.0, 791.0}, {360.0, 62.0}}\n                          Other, 0x10a6470c0, {{110.7, 795.0}, {95.0, 54.0}}\n                            Other, 0x10a647200, {{110.7, 795.0}, {95.0, 54.0}}\n                              Other, 0x10a647340, {{110.7, 795.0}, {95.0, 54.0}}\n                              Other, 0x10a647480, {{110.7, 795.0}, {95.0, 54.0}}\n                                Other, 0x10a6475c0, {{110.7, 795.0}, {95.0, 54.0}}\n                                  Other, 0x10a647700, {{110.7, 795.0}, {95.0, 54.0}}\n                                    Other, 0x10a647840, {{110.7, 795.0}, {95.0, 54.0}}\n                                  Other, 0x10a647980, {{110.7, 795.0}, {95.0, 54.0}}\n                                Other, 0x10a647ac0, {{110.7, 795.0}, {95.0, 54.0}}\n                    Other, 0x10a647c00, {{0.0, 791.0}, {402.0, 83.0}}\n                      Other, 0x10a647d40, {{0.0, 791.0}, {402.0, 83.0}}\n                        Other, 0x10a647e80, {{0.0, 791.0}, {402.0, 83.0}}\n                          Other, 0x10a648000, {{0.0, 791.0}, {402.0, 83.0}}\n                            Other, 0x10a648140, {{0.0, 791.0}, {402.0, 83.0}}\n                              Other, 0x10a648280, {{0.0, 791.0}, {402.0, 83.0}}\n                          Other, 0x10a6483c0, {{0.0, 791.0}, {402.0, 83.0}}\n                            Other, 0x10a648500, {{0.0, 791.0}, {402.0, 83.0}}\nPath to element:\n →Application, 0x10a5d17c0, pid: 57155, label: 'Planner fixtures'\nQuery chain:\n →Find: Target Application 'org.example.PlannerFixtures'\n  Output: {\n    Application, 0x10a648640, pid: 57155, label: 'Planner fixtures'\n  }\n",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/dinh-van.colomban/Workspace/private/planner/PlannerFixtureUITests/LinkImagePreviewJourneyTests.swift",
+                        "lineNumber" : 17
+                      }
+                    }
+                  ],
+                  "duration" : "17s",
+                  "durationInSeconds" : 17.079432010650635,
+                  "name" : "testControlledImagePaintsRowThumbnailAndOwnedLinkCard()",
+                  "nodeIdentifier" : "LinkImagePreviewJourneyTests/testControlledImagePaintsRowThumbnailAndOwnedLinkCard()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LinkImagePreviewJourneyTests/testControlledImagePaintsRowThumbnailAndOwnedLinkCard",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                }
+              ],
+              "name" : "LinkImagePreviewJourneyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LinkImagePreviewJourneyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "PlannerFixtureUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "PlannerFixtures",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

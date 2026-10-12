@@ -1,5 +1,4 @@
 import CoreGraphics
-import ImageIO
 import XCTest
 
 @MainActor
@@ -2323,37 +2322,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
 
   private func waitForRenderedPreviewImage(_ card: XCUIElement, application: XCUIApplication) {
     let rendered = NSPredicate { _, _ in
-      guard card.exists else { return false }
-      let cardFrame = card.frame
-      let windowFrame = application.windows.firstMatch.frame
-      guard !cardFrame.isEmpty, !windowFrame.isEmpty else { return false }
-      let snapshot = application.screenshot().pngRepresentation
-      guard let source = CGImageSourceCreateWithData(snapshot as CFData, nil),
-        let image = CGImageSourceCreateImageAtIndex(source, 0, nil)
-      else { return false }
-      let scale = CGFloat(image.width) / windowFrame.width
-      let imageFrame = CGRect(
-        x: cardFrame.minX * scale, y: cardFrame.minY * scale,
-        width: cardFrame.width * scale, height: cardFrame.height * scale / 2)
-      guard let top = image.cropping(to: imageFrame) else { return false }
-      var pixels = [UInt8](repeating: 0, count: 32 * 32 * 4)
-      let drewImage = pixels.withUnsafeMutableBytes { buffer in
-        guard
-          let context = CGContext(
-            data: buffer.baseAddress, width: 32, height: 32, bitsPerComponent: 8,
-            bytesPerRow: 32 * 4, space: CGColorSpaceCreateDeviceRGB(),
-            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
-              | CGBitmapInfo.byteOrder32Big.rawValue)
-        else { return false }
-        context.draw(top, in: CGRect(x: 0, y: 0, width: 32, height: 32))
-        return true
-      }
-      guard drewImage else { return false }
-      let coloredPixels = stride(from: 0, to: pixels.count, by: 4).filter { offset in
-        let channels = [Int(pixels[offset]), Int(pixels[offset + 1]), Int(pixels[offset + 2])]
-        return (channels.max() ?? 0) - (channels.min() ?? 0) > 40
-      }.count
-      return coloredPixels > 256
+      application.hasPaintedPlannerPreview(card)
     }
     XCTAssertEqual(
       XCTWaiter.wait(

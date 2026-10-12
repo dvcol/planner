@@ -1,0 +1,76 @@
+{
+  "baseCommit": "73792b3",
+  "qualification": {
+    "red": "Executed missing-thumbnail failure, 1 function failed.",
+    "phone": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "result": "/private/tmp/PlannerControlledLinkImagePhoneFinal.xcresult"
+    },
+    "tablet": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "result": "/private/tmp/PlannerControlledLinkImageTabletFinal.xcresult"
+    },
+    "macBuild": "TEST BUILD SUCCEEDED",
+    "macUIFunctions": 0,
+    "captures": "Inspected original phone/tablet owned-link card captures. Tablet capture also shows the row thumbnail. Runtime pixel assertions qualify both frames on each device.",
+    "applePhone": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "result": "/private/tmp/PlannerControlledLinkImageApplePhone.xcresult"
+    },
+    "appleTablet": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "result": "/private/tmp/PlannerControlledLinkImageAppleTablet.xcresult"
+    },
+    "navigationMacBuild": "TEST BUILD SUCCEEDED; zero native Mac runtime functions"
+  },
+  "review": {
+    "standards": "No remaining findings after shared screenshot predicate extraction.",
+    "spec": "No scope or extraction defects. Q52 remains partial."
+  },
+  "commands": {
+    "red": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/LinkImagePreviewJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledLinkImageRed.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "redLog": "/private/tmp/PlannerControlledLinkImageRed.log",
+    "phone": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/LinkImagePreviewJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledLinkImagePhoneFinal.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "phoneLog": "/private/tmp/PlannerControlledLinkImagePhoneFinal.log",
+    "tablet": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/LinkImagePreviewJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledLinkImageTabletFinal.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "tabletLog": "/private/tmp/PlannerControlledLinkImageTabletFinal.log",
+    "macBuild": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData CODE_SIGNING_ALLOWED=NO build-for-testing",
+    "macBuildLog": "/private/tmp/PlannerControlledLinkImageMacFinalBuild.log",
+    "applePhone": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeWebsitePreviewsKeepOwnedLinksAndRemainLiveInAList\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledLinkImageApplePhone.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "applePhoneLog": "/private/tmp/PlannerControlledLinkImageApplePhone.log",
+    "appleTablet": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeWebsitePreviewsKeepOwnedLinksAndRemainLiveInAList\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledLinkImageAppleTablet.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "appleTabletLog": "/private/tmp/PlannerControlledLinkImageAppleTablet.log",
+    "appleServer": "python3 Scripts/preview-fixture-server.py, localhost port 44555",
+    "navigationMacBuild": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData CODE_SIGNING_ALLOWED=NO build-for-testing",
+    "navigationMacBuildLog": "/private/tmp/PlannerControlledLinkImageNavigationMacBuild.log"
+  },
+  "sourceHashes": {
+    "PlannerFixtures/PlannerFixtureApp.swift": "8134981727626f6d11393d66d0e62e7cfaed4b7e397c97b19e05f0596f92fed6",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "e0f6a725b9e105ac8b4efab2511698fcd1e206fcce89d68179dddad77d83f8b7",
+    "PlannerFixtures/PreviewFixtures/website-image.png": "0d76d81b78ceb04bef88498dd818162578377243fc6554a2788b57a579fc6591",
+    "PlannerFixtureUITests/LinkImagePreviewJourneyTests.swift": "29fc37e3359502fa054960af9dccdf984731c031cd20ddf4d2816780faa0534d",
+    "PlannerNavigationUITests/NativeNavigationElements.swift": "53659f78aa021f34bd5bd868e2da82eaa010993799d64f945c75959d7c3915e5",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "6302f33b7e92f8ede5d3bd5aa6b14b85f5a5876899d7e824e8fce1c949dc4087",
+    "Planner.xcodeproj/project.pbxproj": "4bced3d822b15a78ffeb25fece1ff83c4f6b557417745c2c7ffdbc13830e5771",
+    "Scripts/preview-fixture-server.py": "4cb6d5057db93f8fcafdec6dcc77b0d53140885a56bb5928ef54e512f0a62ea5"
+  },
+  "remainingGates": [
+    "Controlled no-image/failure/retry",
+    "Native address zero/one/multiple/error and delayed-result fixtures",
+    "Q58 native loading/scale",
+    "Import application/recovery",
+    "Calendar",
+    "Broad Mac UI runtime",
+    "Signed physical sync/account/Share",
+    "Whole-app polish"
+  ],
+  "sourceEpoch": "Final controlled and existing Apple-service journeys each pass one function per simulator with unchanged shared screenshot predicate sources. Mac fixture/test host compiles; zero Mac runtime UI functions."
+}
