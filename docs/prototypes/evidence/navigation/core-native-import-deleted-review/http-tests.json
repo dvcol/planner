@@ -1,0 +1,236 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "00006030-001A586C3EA3001C",
+      "deviceName" : "My Mac",
+      "modelName" : "MacBook Pro",
+      "osBuildNumber" : "26A434",
+      "osVersion" : "27.0.1",
+      "platform" : "macOS"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0,26s",
+                  "durationInSeconds" : 0.25562620162963867,
+                  "name" : "malformedStaleAndRevokedBulkRequestsLeaveDataAndRecoveryUnchanged()",
+                  "nodeIdentifier" : "BulkCompletionAdmissionRoutingTests/malformedStaleAndRevokedBulkRequestsLeaveDataAndRecoveryUnchanged()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/BulkCompletionAdmissionRoutingTests/malformedStaleAndRevokedBulkRequestsLeaveDataAndRecoveryUnchanged()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "BulkCompletionAdmissionRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/BulkCompletionAdmissionRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,69s",
+                  "durationInSeconds" : 0.6942839622497559,
+                  "name" : "statelessHTTPReviewsAndAppliesExactLocalScopesWithoutChangingGlobalFlags()",
+                  "nodeIdentifier" : "BulkCompletionRoutingTests/statelessHTTPReviewsAndAppliesExactLocalScopesWithoutChangingGlobalFlags()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/BulkCompletionRoutingTests/statelessHTTPReviewsAndAppliesExactLocalScopesWithoutChangingGlobalFlags()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "BulkCompletionRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/BulkCompletionRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,17s",
+                  "durationInSeconds" : 0.17368125915527344,
+                  "name" : "categoryFieldGuardsOverHTTPKeepConflictsAtomicAndReplayOriginalReceipts()",
+                  "nodeIdentifier" : "CommandRoutingTests/categoryFieldGuardsOverHTTPKeepConflictsAtomicAndReplayOriginalReceipts()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/categoryFieldGuardsOverHTTPKeepConflictsAtomicAndReplayOriginalReceipts()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,18s",
+                  "durationInSeconds" : 0.1833040714263916,
+                  "name" : "tagFieldGuardsOverHTTPKeepConflictsAtomicAndReplayOriginalReceipts()",
+                  "nodeIdentifier" : "CommandRoutingTests/tagFieldGuardsOverHTTPKeepConflictsAtomicAndReplayOriginalReceipts()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/tagFieldGuardsOverHTTPKeepConflictsAtomicAndReplayOriginalReceipts()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,25s",
+                  "durationInSeconds" : 0.25475001335144043,
+                  "name" : "categoryEditAdvertisementAndInvalidPatchesPreserveSavedDataOverHTTP()",
+                  "nodeIdentifier" : "CommandRoutingTests/categoryEditAdvertisementAndInvalidPatchesPreserveSavedDataOverHTTP()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/categoryEditAdvertisementAndInvalidPatchesPreserveSavedDataOverHTTP()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,23s",
+                  "durationInSeconds" : 0.22791004180908203,
+                  "name" : "tagEditAdvertisementAndInvalidPatchesPreserveSavedDataOverHTTP()",
+                  "nodeIdentifier" : "CommandRoutingTests/tagEditAdvertisementAndInvalidPatchesPreserveSavedDataOverHTTP()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/tagEditAdvertisementAndInvalidPatchesPreserveSavedDataOverHTTP()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,12s",
+                  "durationInSeconds" : 0.12144303321838379,
+                  "name" : "categoryWireAdvertisementAndValidationKeepRejectedDataUnapplied()",
+                  "nodeIdentifier" : "CommandRoutingTests/categoryWireAdvertisementAndValidationKeepRejectedDataUnapplied()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/categoryWireAdvertisementAndValidationKeepRejectedDataUnapplied()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,16s",
+                  "durationInSeconds" : 0.16171813011169434,
+                  "name" : "tagWireAdvertisementAndValidationKeepRejectedDataUnapplied()",
+                  "nodeIdentifier" : "CommandRoutingTests/tagWireAdvertisementAndValidationKeepRejectedDataUnapplied()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/tagWireAdvertisementAndValidationKeepRejectedDataUnapplied()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,078s",
+                  "durationInSeconds" : 0.07840275764465332,
+                  "name" : "tagCreationOverHTTPReplaysAndReadsTheSameDurableSource()",
+                  "nodeIdentifier" : "CommandRoutingTests/tagCreationOverHTTPReplaysAndReadsTheSameDurableSource()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/tagCreationOverHTTPReplaysAndReadsTheSameDurableSource()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,23s",
+                  "durationInSeconds" : 0.228165864944458,
+                  "name" : "categoryCreationOverHTTPReplaysAndReadsTheSameDurableSource()",
+                  "nodeIdentifier" : "CommandRoutingTests/categoryCreationOverHTTPReplaysAndReadsTheSameDurableSource()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/categoryCreationOverHTTPReplaysAndReadsTheSameDurableSource()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,36s",
+                  "durationInSeconds" : 0.36238980293273926,
+                  "name" : "subtitleEditOverHTTPPreservesNotesAndRejectsStaleChangesBeforeClearing()",
+                  "nodeIdentifier" : "CommandRoutingTests/subtitleEditOverHTTPPreservesNotesAndRejectsStaleChangesBeforeClearing()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/subtitleEditOverHTTPPreservesNotesAndRejectsStaleChangesBeforeClearing()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,12s",
+                  "durationInSeconds" : 0.11524415016174316,
+                  "name" : "notesEditOverHTTPRejectsStaleHashAndRetainsFridayBooking()",
+                  "nodeIdentifier" : "CommandRoutingTests/notesEditOverHTTPRejectsStaleHashAndRetainsFridayBooking()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/notesEditOverHTTPRejectsStaleHashAndRetainsFridayBooking()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,067s",
+                      "durationInSeconds" : 0.06678223609924316,
+                      "name" : "\"applyImport\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/nativeAdministrationIsForbiddenWithoutChangingHotel(_:)?args=3e4b3b3514671164698fea189c28d99bccd3b20d28f41420999e1bd9be98fce5",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,051s",
+                      "durationInSeconds" : 0.05085182189941406,
+                      "name" : "\"decodeImport\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/nativeAdministrationIsForbiddenWithoutChangingHotel(_:)?args=ef89a719622e3dbe2b9fc7ff14f3583baf7fe353f02274b5803580c13cb545cc",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,086s",
+                      "durationInSeconds" : 0.08608603477478027,
+                      "name" : "\"deleteSource\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/nativeAdministrationIsForbiddenWithoutChangingHotel(_:)?args=81577625f4d22b3b8eaf0c683a266504b9a79b8da0b5933287391c7469e78cb1",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,05s",
+                      "durationInSeconds" : 0.04962301254272461,
+                      "name" : "\"exportData\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/nativeAdministrationIsForbiddenWithoutChangingHotel(_:)?args=438c6d37c4df0d3dc76fe10c7564560f74dcdd22802223aa3651b6a007a6d678",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,067s",
+                      "durationInSeconds" : 0.06706595420837402,
+                      "name" : "\"restoreRecovery\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/nativeAdministrationIsForbiddenWithoutChangingHotel(_:)?args=1ebc9c5daeac203617f164f1e2c74999bfbaf506d918fe73e9d61f1e4ab7933d",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,056s",
+                      "durationInSeconds" : 0.0564730167388916,
+                      "name" : "\"retryRecovery\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/nativeAdministrationIsForbiddenWithoutChangingHotel(_:)?args=d007c0865d8dd1fe70ed8666414e397b271a0f90d51d86ae124f1fbc2a510d84",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,063s",
+                  "durationInSeconds" : 0.06281367937723796,
+                  "name" : "nativeAdministrationIsForbiddenWithoutChangingHotel(_:)",
+                  "nodeIdentifier" : "CommandRoutingTests/nativeAdministrationIsForbiddenWithoutChangingHotel(_:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/nativeAdministrationIsForbiddenWithoutChangingHotel(_:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,074s",
+                  "durationInSeconds" : 0.07415103912353516,
+                  "name" : "createOverHTTPPersistsHotelAndReplaysWithoutAnotherItem()",
+                  "nodeIdentifier" : "CommandRoutingTests/createOverHTTPPersistsHotelAndReplaysWithoutAnotherItem()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests/createOverHTTPPersistsHotelAndReplaysWithoutAnotherItem()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "CommandRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CommandRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "PlannerMCPTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "Planner",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

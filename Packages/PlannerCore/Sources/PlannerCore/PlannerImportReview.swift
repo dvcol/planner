@@ -2,12 +2,23 @@ import Foundation
 
 struct PlannerImportOwnerReference {
   let owner: PlannerEntityReference
-  let identifier: UUID?
+  let identity: PlannerPortableBoundIdentity?
   let group: String
   let propertyPath: String
   let dependencies: [PlannerBoundSource]
   let reference: PlannerReferenceRead
   let value: PlannerCanonicalValue
+  var identifier: UUID? { identity?.id }
+}
+
+struct PlannerImportClosedIdentity: Hashable {
+  let kind: PlannerPortableIdentityKind
+  let id: UUID
+
+  init(_ identity: PlannerPortableBoundIdentity) {
+    kind = identity.kind
+    id = identity.id
+  }
 }
 
 struct PlannerImportOwnerHistory {
@@ -32,7 +43,9 @@ struct PlannerImportProjection {
     for (index, membership) in backup.memberships.enumerated() {
       references.append(
         .init(
-          owner: membership.list, identifier: membership.id, group: "memberships",
+          owner: membership.list,
+          identity: .init(kind: .membership, id: membership.id, lifetimeId: membership.lifetimeId),
+          group: "memberships",
           propertyPath: "/memberships/\(index)",
           dependencies: [
             .init(kind: .item, id: membership.item.id, lifetimeId: membership.itemLifetimeId)
@@ -43,7 +56,9 @@ struct PlannerImportProjection {
     for (index, entry) in backup.itineraryEntries.enumerated() {
       references.append(
         .init(
-          owner: entry.itinerary, identifier: entry.id, group: "itineraryEntries",
+          owner: entry.itinerary,
+          identity: .init(kind: .itineraryEntry, id: entry.id, lifetimeId: entry.lifetimeId),
+          group: "itineraryEntries",
           propertyPath: "/itineraryEntries/\(index)",
           dependencies: [
             .init(kind: entry.source.kind, id: entry.source.id, lifetimeId: entry.sourceLifetimeId)
@@ -64,7 +79,7 @@ struct PlannerImportProjection {
       }
       references.append(
         .init(
-          owner: entry.itinerary, identifier: nil, group: "expandedCompletions",
+          owner: entry.itinerary, identity: nil, group: "expandedCompletions",
           propertyPath: "/expandedCompletions/\(index)",
           dependencies: [
             .init(kind: .item, id: membership.item.id, lifetimeId: membership.itemLifetimeId)
@@ -76,7 +91,10 @@ struct PlannerImportProjection {
     for (index, association) in backup.labelAssociations.enumerated() {
       references.append(
         .init(
-          owner: association.owner, identifier: association.id, group: "labelAssociations",
+          owner: association.owner,
+          identity: .init(
+            kind: .labelAssociation, id: association.id, lifetimeId: association.lifetimeId),
+          group: "labelAssociations",
           propertyPath: "/labelAssociations/\(index)",
           dependencies: [
             .init(
@@ -90,7 +108,9 @@ struct PlannerImportProjection {
     for (index, link) in backup.ownedLinks.enumerated() {
       references.append(
         .init(
-          owner: link.owner.reference, identifier: link.id, group: "ownedLinks",
+          owner: link.owner.reference,
+          identity: .init(kind: .ownedLink, id: link.id, lifetimeId: link.lifetimeId),
+          group: "ownedLinks",
           propertyPath: "/ownedLinks/\(index)", dependencies: [],
           reference: .ownedLink(id: link.id, owner: link.owner.reference),
           value: link.importCanonicalValue))
@@ -98,7 +118,9 @@ struct PlannerImportProjection {
     for (index, schedule) in backup.schedules.enumerated() {
       references.append(
         .init(
-          owner: schedule.source, identifier: schedule.id, group: "schedules",
+          owner: schedule.source,
+          identity: .init(kind: .schedule, id: schedule.id, lifetimeId: schedule.lifetimeId),
+          group: "schedules",
           propertyPath: "/schedules/\(index)", dependencies: [],
           reference: .schedule(id: schedule.id, source: schedule.source),
           value: schedule.importCanonicalValue))
@@ -195,19 +217,27 @@ func plannerResolveImportReview(
     uniqueKeysWithValues: current.backup.sources.map {
       ($0.importBinding.reference, $0.importBinding)
     })
+  let closedSourceBindings = Set(
+    current.backup.deletionMarkers.compactMap { marker -> PlannerBoundSource? in
+      guard case .source(let source, let lifetimeId) = marker.target else { return nil }
+      return .init(kind: source.kind, id: source.id, lifetimeId: lifetimeId)
+    })
   for path in incoming.originPaths {
-    guard let actual = currentSources[path.binding.reference] else {
-      throw PlannerFailure(
-        "missingReference", "The imported reference is absent from this dataset.",
-        propertyPath: path.propertyPath + "/id")
+    if let actual = currentSources[path.binding.reference] {
+      guard actual.lifetimeId == path.binding.lifetimeId else {
+        throw PlannerFailure(
+          "missingReference", "The imported reference names another source lifetime.",
+          propertyPath: path.propertyPath + "/lifetimeId")
+      }
+      continue
     }
-    guard actual.lifetimeId == path.binding.lifetimeId else {
-      throw PlannerFailure(
-        "missingReference", "The imported reference names another source lifetime.",
-        propertyPath: path.propertyPath + "/lifetimeId")
-    }
+    if closedSourceBindings.contains(path.binding) { continue }
+    let knownIdentity = closedSourceBindings.contains { $0.reference == path.binding.reference }
+    throw PlannerFailure(
+      "missingReference", "The imported reference cannot resolve in this dataset.",
+      propertyPath: path.propertyPath + (knownIdentity ? "/lifetimeId" : "/id"))
   }
-  guard current.backup.deletionMarkers.isEmpty else {
+  guard mode == .skip || current.backup.deletionMarkers.isEmpty else {
     throw PlannerFailure(
       "unavailable", "Deleted identity import review is not implemented yet.",
       propertyPath: "/command/type"
@@ -234,9 +264,55 @@ func plannerResolveImportReview(
       propertyPath: externalOwner.propertyPath)
   }
   let currentProjection = try PlannerImportProjection(backup: current.backup)
+  let deletedSources = Set(
+    current.backup.deletionMarkers.compactMap { marker -> PlannerEntityReference? in
+      guard case .source(let source, _) = marker.target, currentProjection.sources[source] == nil
+      else { return nil }
+      return source
+    })
+  let closedIdentities = Set(
+    current.backup.deletionMarkers.compactMap(\.target.importIdentity).map(
+      PlannerImportClosedIdentity.init))
+  let closedContexts = Set(
+    current.backup.deletionMarkers.compactMap { marker -> PlannerExpandedContext? in
+      guard case .expandedCompletion(let completionContext) = marker.target else { return nil }
+      return completionContext
+    })
+  let closedContextOwners = Set(
+    incoming.backup.expandedCompletions.filter { closedContexts.contains($0.context) }.compactMap {
+      expanded in
+      incoming.backup.itineraryEntries.first(where: { $0.id == expanded.context.listEntryId })?
+        .itinerary
+    })
+  var unavailableSources = deletedSources
+  var didDiscoverUnavailableSource = true
+  while didDiscoverUnavailableSource {
+    didDiscoverUnavailableSource = false
+    for source in incoming.backup.sources {
+      let sourceReference = source.importBinding.reference
+      guard currentProjection.sources[sourceReference] == nil,
+        !unavailableSources.contains(sourceReference)
+      else { continue }
+      let references = projection.ownedReferences[sourceReference] ?? []
+      let dependencies = references.flatMap(\.dependencies)
+      let ownsClosedRecord = references.contains { reference in
+        guard let identity = reference.identity else { return false }
+        return closedIdentities.contains(PlannerImportClosedIdentity(identity))
+      }
+      guard
+        ownsClosedRecord || closedContextOwners.contains(sourceReference)
+          || dependencies.contains(where: { unavailableSources.contains($0.reference) })
+      else {
+        continue
+      }
+      unavailableSources.insert(sourceReference)
+      didDiscoverUnavailableSource = true
+    }
+  }
   var imports: [PlannerImportEntry] = []
   var unchanged: [PlannerImportEntry] = []
   var skippedConflicts: [PlannerImportEntry] = []
+  var skippedDependents: [PlannerImportEntry] = []
   var replacements: [PlannerImportEntry] = []
   var changes: [PlannerImportReferenceChange] = []
   var globalFlagsChanged = false
@@ -252,6 +328,20 @@ func plannerResolveImportReview(
     }
     let after = projection.summary(
       source, changedFields: projection.fields(for: source).keys.sorted())
+    if deletedSources.contains(source.importBinding.reference) {
+      skippedConflicts.append(
+        .init(
+          owner: source.importBinding, reasonCode: "deletedSource",
+          dependencies: dependencies, propertyPaths: propertyPaths, before: nil, after: nil))
+      continue
+    }
+    if unavailableSources.contains(source.importBinding.reference) {
+      skippedDependents.append(
+        .init(
+          owner: source.importBinding, reasonCode: "deletedDependency",
+          dependencies: dependencies, propertyPaths: propertyPaths, before: nil, after: nil))
+      continue
+    }
     guard let existing = currentProjection.sources[source.importBinding.reference] else {
       imports.append(
         PlannerImportEntry(
@@ -323,7 +413,7 @@ func plannerResolveImportReview(
   return .init(
     details: .init(
       imports: imports, unchanged: unchanged, skippedConflicts: skippedConflicts,
-      skippedDependents: [],
+      skippedDependents: skippedDependents,
       replacements: replacements, restorations: [], incomingDeletions: deletions,
       referenceChanges: changes),
     targets: incoming.backup.sources.map { .source($0.importBinding.reference) }

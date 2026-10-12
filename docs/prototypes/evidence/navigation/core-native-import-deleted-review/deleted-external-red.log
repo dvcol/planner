@@ -1,0 +1,21 @@
+Building for debugging...
+[1 / 2] PlannerCore
+[2 / 8] PlannerCoreStoreTests-product
+[4 / 10] PlannerCoreStoreTests-product
+[10 / 12] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,93 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportDeletedReviewTests started.
+◇ Test skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:) started.
+◇ Test case passing 1 argument sourceCase → .external to skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:) started.
+◇ Test case passing 1 argument sourceCase → .declared to skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:) started.
+✘ Test skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:) recorded an issue with 1 argument sourceCase → .external at NativeImportDeletedReviewTests.swift:195:19: Issue recorded
+↳ Keep X deleted, skip complete B and C, and review independent Z: .failed(PlannerCore.PlannerFailure(code: "missingReference", propertyPath: Optional("/memberships/0/item/id"), message: "The imported reference is absent from this dataset.", details: nil))
+✘ Test skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:) with 2 test cases failed after 0.175 seconds with 1 issue.
+✘ Suite NativeImportDeletedReviewTests failed after 0.175 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.175 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

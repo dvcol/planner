@@ -1,0 +1,33 @@
+Building for debugging...
+[1 / 3] PlannerCore
+[2 / 8] PlannerCoreStoreTests-product
+[4 / 10] PlannerCoreStoreTests-product
+[10 / 12] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (4,69 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportDeletedReviewTests started.
+◇ Test deletedScheduleCannotReturnThroughANewOwnerInSkipMode() started.
+✘ Test deletedScheduleCannotReturnThroughANewOwnerInSkipMode() recorded an issue at NativeImportDeletedReviewTests.swift:68:5: Expectation failed: details.imports.count == 1 && details.imports.first?.after?.title == "Independent List"
+↳ details.imports.count == 1 && details.imports.first?.after?.title == "Independent List" → false
+↳   details.imports.count == 1 → false
+↳   details.imports.first?.after?.title == "Independent List" → <not evaluated>
+✘ Test deletedScheduleCannotReturnThroughANewOwnerInSkipMode() recorded an issue at NativeImportDeletedReviewTests.swift:70:5: Expectation failed: details.skippedDependents.count == 1 && details.skippedDependents.first?.reasonCode == "deletedDependency"
+↳ details.skippedDependents.count == 1 && details.skippedDependents.first?.reasonCode == "deletedDependency" → false
+↳   details.skippedDependents.count == 1 → false
+↳   details.skippedDependents.first?.reasonCode == "deletedDependency" → <not evaluated>
+✘ Test deletedScheduleCannotReturnThroughANewOwnerInSkipMode() recorded an issue at NativeImportDeletedReviewTests.swift:73:5: Expectation failed: details.skippedDependents.first?.propertyPaths.contains("/schedules/0") == true
+↳ details.skippedDependents.first?.propertyPaths.contains("/schedules/0") == true → false
+↳   details.skippedDependents.first?.propertyPaths.contains("/schedules/0") → nil
+↳     some → true
+✘ Test deletedScheduleCannotReturnThroughANewOwnerInSkipMode() recorded an issue at NativeImportDeletedReviewTests.swift:74:5: Expectation failed: details.referenceChanges.isEmpty
+↳ details.referenceChanges.isEmpty → false
+↳   details.referenceChanges → [PlannerCore.PlannerImportReferenceChange(change: PlannerCore.PlannerImportReferenceChange.Change.add, reference: PlannerCore.PlannerReferenceRead.schedule(id: 67035663-E685-45E9-8276-F9FE7EDCF691, source: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 00000000-0000-4000-8000-000000000103)))]
+↳   isEmpty → false
+✘ Test deletedScheduleCannotReturnThroughANewOwnerInSkipMode() failed after 0.170 seconds with 4 issues.
+✘ Suite NativeImportDeletedReviewTests failed after 0.171 seconds with 4 issues.
+✘ Test run with 1 test in 1 suite failed after 0.172 seconds with 4 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

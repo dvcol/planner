@@ -1,0 +1,60 @@
+Building for debugging...
+[Computing dependencies]
+[1 / 1]
+[1 / 3] PlannerCore_PlannerCoreStoreTests
+[1 / 10] PlannerCoreStoreTests-product
+[1 / 16] PlannerCoreStoreTests-product
+[2 / 8] PlannerCoreStoreTests-product
+[4 / 10] PlannerCoreStoreTests-product
+[10 / 12] PlannerCoreStoreTests-product
+[11 / 12] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (5,53 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ScheduleRemovalTests started.
+◇ Suite NativeImportReviewTests started.
+◇ Suite NativeImportBindingReviewTests started.
+◇ Test laterOrdinaryWritesRetainDeletionHistoryAndRemovingLastAssignmentShowsNoSchedule() started.
+◇ Test identicalExportReviewsWholeOwnersAsUnchangedIncludingLocalMembershipState() started.
+◇ Suite NativeImportConflictReviewTests started.
+◇ Suite ItemDeletionTests started.
+◇ Test completeBackupReviewDescribesEveryOwnerAndReferenceWithoutApplyingData() started.
+◇ Suite NativeImportDeletedReviewTests started.
+◇ Test selectedScheduleRemovalKeepsSourceOtherAssignmentAndMinimalRecoveryMarker() started.
+◇ Test reviewedItemDeletionRemovesItsCompleteClosureAndPreservesTheRemainingPlan() started.
+◇ Test reviewKeepsOrReplacesWholeOwnersAndImportsIndependentData(mode:) started.
+◇ Test declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:) started.
+◇ Test incomingCompletionHistoryBelongsToItsWholeOwnerReview() started.
+◇ Test globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) started.
+◇ Test skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:) started.
+◇ Test case passing 1 argument bindingCase → .live to declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:) started.
+◇ Test case passing 1 argument mode → .skip to reviewKeepsOrReplacesWholeOwnersAndImportsIndependentData(mode:) started.
+◇ Test case passing 1 argument mode → .overwrite to reviewKeepsOrReplacesWholeOwnersAndImportsIndependentData(mode:) started.
+◇ Test case passing 1 argument bindingCase → .missing to declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:) started.
+◇ Test deletedScheduleCannotReturnThroughANewOwnerInSkipMode() started.
+◇ Test case passing 1 argument mode → .skip to globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) started.
+◇ Test case passing 1 argument bindingCase → .wrongLifetime to declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:) started.
+◇ Test case passing 1 argument mode → .overwrite to globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) started.
+◇ Test case passing 1 argument sourceCase → .declared to skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:) started.
+◇ Test case passing 1 argument sourceCase → .external to skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:) started.
+◇ Test case passing 1 argument sourceCase → .externalWrongLifetime to skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:) started.
+✔ Test completeBackupReviewDescribesEveryOwnerAndReferenceWithoutApplyingData() passed after 0.305 seconds.
+✔ Test declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:) with 3 test cases passed after 0.305 seconds.
+✔ Test globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) with 2 test cases passed after 0.305 seconds.
+✔ Test incomingCompletionHistoryBelongsToItsWholeOwnerReview() passed after 0.305 seconds.
+✔ Suite NativeImportBindingReviewTests passed after 0.305 seconds.
+✔ Test identicalExportReviewsWholeOwnersAsUnchangedIncludingLocalMembershipState() passed after 0.331 seconds.
+✔ Suite NativeImportReviewTests passed after 0.331 seconds.
+✔ Test reviewKeepsOrReplacesWholeOwnersAndImportsIndependentData(mode:) with 2 test cases passed after 0.360 seconds.
+✔ Suite NativeImportConflictReviewTests passed after 0.360 seconds.
+✔ Test skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:) with 3 test cases passed after 0.412 seconds.
+✔ Test deletedScheduleCannotReturnThroughANewOwnerInSkipMode() passed after 0.422 seconds.
+✔ Suite NativeImportDeletedReviewTests passed after 0.422 seconds.
+✔ Test selectedScheduleRemovalKeepsSourceOtherAssignmentAndMinimalRecoveryMarker() passed after 0.459 seconds.
+✔ Test laterOrdinaryWritesRetainDeletionHistoryAndRemovingLastAssignmentShowsNoSchedule() passed after 0.550 seconds.
+✔ Suite ScheduleRemovalTests passed after 0.550 seconds.
+✔ Test reviewedItemDeletionRemovesItsCompleteClosureAndPreservesTheRemainingPlan() passed after 1.336 seconds.
+✔ Suite ItemDeletionTests passed after 1.336 seconds.
+✔ Test run with 11 tests in 6 suites passed after 1.337 seconds.
