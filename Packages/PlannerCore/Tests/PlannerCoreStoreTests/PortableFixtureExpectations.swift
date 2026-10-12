@@ -4,10 +4,16 @@ import Testing
 /// Compare current grammar with legacy fixture values while testing historical bytes separately.
 func canonicalPortableFixtureExpectations(_ data: Data) throws -> [String: Any] {
   var object = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+  object["formatVersion"] = 2
   let sources = try #require(object["sources"] as? [[String: Any]])
   object["sources"] = try sources.map { source in
     var source = source
     var content = try #require(source["content"] as? [String: Any])
+    if ["list", "itinerary"].contains(source["kind"] as? String ?? ""),
+      content["manualEstimate"] == nil
+    {
+      content["manualEstimate"] = NSNull()
+    }
     if var estimate = content["estimate"] as? [String: Any],
       let minutes = estimate["minutes"] as? Int64
     {

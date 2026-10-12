@@ -19,25 +19,31 @@ public struct PlannerListContentInput: Sendable, Equatable, Codable {
   public let notes: String?
   public let color: PlannerColor?
   public let iconName: String?
+  public let manualEstimate: PlannerEstimate?
 
   public init(
-    name: String, notes: String? = nil, color: PlannerColor? = nil, iconName: String? = nil
+    name: String, notes: String? = nil, color: PlannerColor? = nil, iconName: String? = nil,
+    manualEstimate: PlannerEstimate? = nil
   ) {
     self.name = name
     self.notes = notes
     self.color = color
     self.iconName = iconName
+    self.manualEstimate = manualEstimate
   }
 }
 
 public typealias PlannerListContent = PlannerListContentInput
 
-public enum PlannerListField: String, Sendable, CaseIterable { case name, notes, color, iconName }
+public enum PlannerListField: String, Sendable, CaseIterable {
+  case name, notes, color, iconName, manualEstimate
+}
 
 public enum PlannerListFieldValue: Sendable, Equatable {
   case string(String)
   case optionalString(String?)
   case optionalColor(PlannerColor?)
+  case optionalEstimate(PlannerEstimate?)
 }
 
 public struct PlannerListChanges: Sendable {
@@ -45,17 +51,20 @@ public struct PlannerListChanges: Sendable {
   public let notes: PlannerFieldChange<String>
   public let color: PlannerFieldChange<PlannerColor>
   public let iconName: PlannerFieldChange<String>
+  public let manualEstimate: PlannerFieldChange<PlannerEstimate>
 
   public init(
     name: PlannerFieldChange<String> = .unchanged,
     notes: PlannerFieldChange<String> = .unchanged,
     color: PlannerFieldChange<PlannerColor> = .unchanged,
-    iconName: PlannerFieldChange<String> = .unchanged
+    iconName: PlannerFieldChange<String> = .unchanged,
+    manualEstimate: PlannerFieldChange<PlannerEstimate> = .unchanged
   ) {
     self.name = name
     self.notes = notes
     self.color = color
     self.iconName = iconName
+    self.manualEstimate = manualEstimate
   }
 }
 
@@ -125,17 +134,21 @@ extension PlannerListContentInput {
         "invalidInput", "A List name is required.", propertyPath: "/command/content/name")
     }
     try color?.validate(propertyPath: "/command/content/color")
+    try manualEstimate?.validate(propertyPath: "/command/content/manualEstimate")
   }
 
   var canonicalContent: PlannerCanonicalValue {
-    .record([
+    var fields: [String: PlannerCanonicalValue] = [
       "name": .string(name), "notes": .optional(notes.map(PlannerCanonicalValue.string)),
       "color": .optional(color.map(\.canonicalValue)),
       "iconName": .optional(iconName.map(PlannerCanonicalValue.string)),
-    ])
+    ]
+    /** Preserve creation replay for content written before this optional field existed. */
+    if let manualEstimate { fields["manualEstimate"] = manualEstimate.canonicalValue }
+    return .record(fields)
   }
 
-  private enum CodingKeys: String, CodingKey { case name, notes, color, iconName }
+  private enum CodingKeys: String, CodingKey { case name, notes, color, iconName, manualEstimate }
 
   public func encode(to encoder: any Encoder) throws {
     var fields = encoder.container(keyedBy: CodingKeys.self)
@@ -143,6 +156,17 @@ extension PlannerListContentInput {
     try fields.encode(notes, forKey: .notes)
     try fields.encode(color, forKey: .color)
     try fields.encode(iconName, forKey: .iconName)
+    try fields.encode(manualEstimate.map(PortableEstimateRecord.init), forKey: .manualEstimate)
+  }
+
+  public init(from decoder: any Decoder) throws {
+    let fields = try decoder.container(keyedBy: CodingKeys.self)
+    name = try fields.decode(String.self, forKey: .name)
+    notes = try fields.decodeIfPresent(String.self, forKey: .notes)
+    color = try fields.decodeIfPresent(PlannerColor.self, forKey: .color)
+    iconName = try fields.decodeIfPresent(String.self, forKey: .iconName)
+    manualEstimate = try fields.decodeIfPresent(
+      PortableEstimateRecord.self, forKey: .manualEstimate)?.value
   }
 }
 
@@ -160,11 +184,15 @@ extension PlannerListChanges {
     case .unchanged: break
     }
     if case .set(let value) = color { try value.validate(propertyPath: "/command/changes/color") }
+    if case .set(let value) = manualEstimate {
+      try value.validate(propertyPath: "/command/changes/manualEstimate")
+    }
     var fields: [PlannerListField] = []
     if !name.isUnchanged { fields.append(.name) }
     if !notes.isUnchanged { fields.append(.notes) }
     if !color.isUnchanged { fields.append(.color) }
     if !iconName.isUnchanged { fields.append(.iconName) }
+    if !manualEstimate.isUnchanged { fields.append(.manualEstimate) }
     guard !fields.isEmpty else {
       throw PlannerFailure(
         "invalidInput", "A List edit must contain at least one changed field.",
@@ -179,7 +207,8 @@ extension PlannerListChanges {
     return PlannerListContent(
       name: updatedName, notes: optionalValue(notes, retaining: content.notes),
       color: optionalValue(color, retaining: content.color),
-      iconName: optionalValue(iconName, retaining: content.iconName))
+      iconName: optionalValue(iconName, retaining: content.iconName),
+      manualEstimate: optionalValue(manualEstimate, retaining: content.manualEstimate))
   }
 
   private func optionalValue<Value>(
@@ -209,6 +238,7 @@ struct ListSnapshot {
     case .notes: .optionalString(content.notes)
     case .color: .optionalColor(content.color)
     case .iconName: .optionalString(content.iconName)
+    case .manualEstimate: .optionalEstimate(content.manualEstimate)
     }
   }
 

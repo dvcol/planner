@@ -136,6 +136,7 @@
       "notes": .object(["type": .array([.string("string"), .string("null")])]),
       "color": colorSchema,
       "iconName": .object(["type": .array([.string("string"), .string("null")])]),
+      "manualEstimate": estimateSchema,
     ]
 
     private static let categoryContentProperties = listContentProperties.filter {
@@ -161,6 +162,7 @@
             "iconName": .object(["type": .array([.string("string"), .string("null")])]),
             "location": locationSchema, "links": linksSchema,
             "categoryIds": labelSelectionSchema, "tagIds": labelSelectionSchema,
+            "manualEstimate": estimateSchema,
           ]),
         ]),
       ]),
@@ -328,6 +330,7 @@
             "iconName": .object(["type": .array([.string("string"), .string("null")])]),
             "location": locationSchema, "links": linksSchema,
             "categoryIds": labelSelectionSchema, "tagIds": labelSelectionSchema,
+            "manualEstimate": estimateSchema,
           ]),
         ]),
         "expectedFieldHashes": .object([
@@ -782,6 +785,12 @@
       case .set(let value): location = value
       case .clear, .unchanged: location = nil
       }
+      let manualEstimate: PlannerEstimate?
+      switch try estimateChange(content["manualEstimate"], path: "/command/content/manualEstimate")
+      {
+      case .set(let value): manualEstimate = value
+      case .clear, .unchanged: manualEstimate = nil
+      }
       return .createItinerary(
         content: .init(
           title: title,
@@ -793,7 +802,8 @@
           links: try linksInput(content["links"], path: "/command/content/links"),
           categoryIds: try labelSelection(
             content["categoryIds"], path: "/command/content/categoryIds"),
-          tagIds: try labelSelection(content["tagIds"], path: "/command/content/tagIds")))
+          tagIds: try labelSelection(content["tagIds"], path: "/command/content/tagIds"),
+          manualEstimate: manualEstimate))
     }
 
     private static func listCreationCommand(_ value: Value?) throws -> PlannerCommand {
@@ -811,13 +821,20 @@
       case .set(let value): color = value
       case .clear, .unchanged: color = nil
       }
+      let manualEstimate: PlannerEstimate?
+      switch try estimateChange(content["manualEstimate"], path: "/command/content/manualEstimate")
+      {
+      case .set(let value): manualEstimate = value
+      case .clear, .unchanged: manualEstimate = nil
+      }
       return .createList(
         content: PlannerListContentInput(
           name: name,
           notes: try nullableText(content["notes"] ?? .null, path: "/command/content/notes"),
           color: color,
           iconName: try nullableText(
-            content["iconName"] ?? .null, path: "/command/content/iconName")))
+            content["iconName"] ?? .null, path: "/command/content/iconName"),
+          manualEstimate: manualEstimate))
     }
 
     private static func itineraryEntryCommand(_ value: Value?, commandType: String) throws
@@ -1013,7 +1030,9 @@
           name: try textChange(changes["name"], path: "/command/changes/name"),
           notes: try textChange(changes["notes"], path: "/command/changes/notes"),
           color: try colorChange(changes["color"], path: "/command/changes/color"),
-          iconName: try textChange(changes["iconName"], path: "/command/changes/iconName")),
+          iconName: try textChange(changes["iconName"], path: "/command/changes/iconName"),
+          manualEstimate: try estimateChange(
+            changes["manualEstimate"], path: "/command/changes/manualEstimate")),
         expectedFieldHashes: hashes)
     }
 
@@ -1492,7 +1511,9 @@
           links: linkChanges,
           categoryIds: try labelSelectionChange(
             changes["categoryIds"], path: "/command/changes/categoryIds"),
-          tagIds: try labelSelectionChange(changes["tagIds"], path: "/command/changes/tagIds")),
+          tagIds: try labelSelectionChange(changes["tagIds"], path: "/command/changes/tagIds"),
+          manualEstimate: try estimateChange(
+            changes["manualEstimate"], path: "/command/changes/manualEstimate")),
         expectedFieldHashes: hashes)
     }
 

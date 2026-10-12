@@ -1,0 +1,60 @@
+{
+  "beforeCommit": "a47caea2c65d5f8c417c627231a62d79cb277564",
+  "mode": "localOnly",
+  "storageSchemaVersion": 15,
+  "portableFormatVersion": 2,
+  "legacyPortableFormatVersion": 1,
+  "qualification": {
+    "core": {
+      "functions": 60,
+      "suites": 30,
+      "caseExecutions": 139,
+      "failures": 0,
+      "log": "core-qualified.log"
+    },
+    "http": {
+      "functions": 15,
+      "suites": 6,
+      "caseExecutions": 23,
+      "failures": 0,
+      "skips": 0,
+      "bundle": "/private/tmp/PlannerManualContainerFieldsHTTPQualified.xcresult"
+    },
+    "strictSwiftFiles": 34,
+    "macBuild": "App and MCP test host compile in the actual HTTP run; zero native UI functions",
+    "mobileBuild": {
+      "result": "TEST BUILD SUCCEEDED",
+      "log": "/private/tmp/PlannerManualContainerFieldsMobileBuild.log",
+      "nativeUIFunctions": 0
+    }
+  },
+  "fixture": {
+    "producerCommit": "a47caea2c65d5f8c417c627231a62d79cb277564",
+    "schema": 14,
+    "checkpoint": 19,
+    "path": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV14",
+    "legacyReplay": [
+      "createList",
+      "createItinerary"
+    ],
+    "historicalBytes": "unchanged"
+  },
+  "redEvidence": {
+    "initialDeclarations": "Missing manual create/read/edit declarations prevented the first new public test from compiling; not runtime evidence.",
+    "recovery": "The first runtime save applied but reported incomplete recovery because RecoveryEnvelope accepted schemas only through 14. Add schema 15 to the supported list.",
+    "http": "Executed both container cases; creation discarded manual values and edits could not save them. Adapter parsing/schema/read/stale-value encoding now support the field.",
+    "regressions": "Version-2 synthetic List/Itinerary records needed explicit null manual fields; legacy hashes retain their prior values while the new optional hash is added. Historical bytes remain asserted unchanged.",
+    "excludedAttempts": "New tests also required the invalid decode-result case, split Testing macro, state-property comparison and exact /minutes error path corrections. Failed/compile attempts are excluded from passing evidence."
+  },
+  "remainingGates": [
+    "Manual full/remaining calculations and nested budgets",
+    "Q76 upper-bound calculations and native warnings",
+    "Native pickers/captions",
+    "Calendar",
+    "Complete import apply/restoration",
+    "Native Mac UI runtime",
+    "Native scale",
+    "Signed physical iCloud/account/Share",
+    "Whole-app polish"
+  ]
+}

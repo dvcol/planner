@@ -85,6 +85,7 @@ struct ItinerarySourceRoutingTests {
       #expect(
         Set(content.keys) == [
           "title", "notes", "color", "iconName", "location", "links", "categoryIds", "tagIds",
+          "manualEstimate",
         ])
       #expect(Set(hashes.keys) == Set(content.keys))
       #expect(content["title"] as? String == "  Tokyo café weekend  ")

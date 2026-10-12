@@ -320,6 +320,7 @@
           "color": read.content.color.map(colorValue) ?? .null,
           "iconName": read.content.iconName.map(Value.string) ?? .null,
           "location": read.content.location.map(locationValue) ?? .null,
+          "manualEstimate": read.content.manualEstimate.map(estimateValue) ?? .null,
           "links": .array(read.content.links.map(PlannerMCPRowValue.link)),
           "categoryIds": .array(
             read.content.categoryIds.sorted { $0.uuidString < $1.uuidString }.map {
@@ -358,6 +359,7 @@
           "notes": read.content.notes.map(Value.string) ?? .null,
           "color": read.content.color.map(colorValue) ?? .null,
           "iconName": read.content.iconName.map(Value.string) ?? .null,
+          "manualEstimate": read.content.manualEstimate.map(estimateValue) ?? .null,
         ]),
         "createdAt": .double(read.createdAt.timeIntervalSinceReferenceDate),
         "updatedAt": .double(read.updatedAt.timeIntervalSinceReferenceDate),
@@ -373,6 +375,13 @@
         "labels": .array([]), "references": .array(read.references.map(referenceValue)),
         "progress": progressValue(read.progress),
         "estimates": estimatesValue(read.estimates),
+      ])
+    }
+
+    static func estimateValue(_ estimate: PlannerEstimate) -> Value {
+      .object([
+        "minutes": .string(String(estimate.minutes)),
+        "displayUnit": .string(estimate.displayUnit.rawValue),
       ])
     }
 

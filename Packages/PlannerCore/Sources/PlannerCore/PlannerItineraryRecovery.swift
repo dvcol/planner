@@ -16,6 +16,7 @@ struct PortableItineraryContent: Codable {
   let color: PlannerColor?
   let iconName: String?
   let location: PlannerOwnedLocation?
+  let manualEstimate: PlannerEstimate?
 
   init(_ input: PlannerItineraryContentInput) {
     title = input.title
@@ -23,13 +24,29 @@ struct PortableItineraryContent: Codable {
     color = input.color
     iconName = input.iconName
     location = input.location
+    manualEstimate = input.manualEstimate
   }
 
   var input: PlannerItineraryContentInput {
-    .init(title: title, notes: notes, color: color, iconName: iconName, location: location)
+    .init(
+      title: title, notes: notes, color: color, iconName: iconName, location: location,
+      manualEstimate: manualEstimate)
   }
 
-  enum CodingKeys: String, CodingKey { case title, notes, color, iconName, location }
+  enum CodingKeys: String, CodingKey {
+    case title, notes, color, iconName, location, manualEstimate
+  }
+
+  init(from decoder: any Decoder) throws {
+    let fields = try decoder.container(keyedBy: CodingKeys.self)
+    title = try fields.decode(String.self, forKey: .title)
+    notes = try fields.decodeIfPresent(String.self, forKey: .notes)
+    color = try fields.decodeIfPresent(PlannerColor.self, forKey: .color)
+    iconName = try fields.decodeIfPresent(String.self, forKey: .iconName)
+    location = try fields.decodeIfPresent(PlannerOwnedLocation.self, forKey: .location)
+    manualEstimate = try fields.decodeIfPresent(
+      PortableEstimateRecord.self, forKey: .manualEstimate)?.value
+  }
 
   func encode(to encoder: any Encoder) throws {
     var fields = encoder.container(keyedBy: CodingKeys.self)
@@ -38,6 +55,7 @@ struct PortableItineraryContent: Codable {
     try fields.encode(color, forKey: .color)
     try fields.encode(iconName, forKey: .iconName)
     try fields.encode(location, forKey: .location)
+    try fields.encode(manualEstimate.map(PortableEstimateRecord.init), forKey: .manualEstimate)
   }
 }
 

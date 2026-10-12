@@ -9,11 +9,12 @@ public struct PlannerItineraryContentInput: Sendable, Equatable {
   public let links: [PlannerLinkInput]
   public let categoryIds: Set<UUID>
   public let tagIds: Set<UUID>
+  public let manualEstimate: PlannerEstimate?
 
   public init(
     title: String, notes: String? = nil, color: PlannerColor? = nil, iconName: String? = nil,
     location: PlannerOwnedLocation? = nil, links: [PlannerLinkInput] = [],
-    categoryIds: Set<UUID> = [], tagIds: Set<UUID> = []
+    categoryIds: Set<UUID> = [], tagIds: Set<UUID> = [], manualEstimate: PlannerEstimate? = nil
   ) {
     self.title = title
     self.notes = notes
@@ -23,6 +24,7 @@ public struct PlannerItineraryContentInput: Sendable, Equatable {
     self.links = links
     self.categoryIds = categoryIds
     self.tagIds = tagIds
+    self.manualEstimate = manualEstimate
   }
 }
 
@@ -35,10 +37,11 @@ public struct PlannerItineraryContent: Sendable, Equatable {
   public let links: [PlannerOwnedLinkRead]
   public let categoryIds: Set<UUID>
   public let tagIds: Set<UUID>
+  public let manualEstimate: PlannerEstimate?
 }
 
 public enum PlannerItineraryField: String, Sendable, CaseIterable {
-  case title, notes, color, iconName, location, links, categoryIds, tagIds
+  case title, notes, color, iconName, location, links, categoryIds, tagIds, manualEstimate
 }
 
 public struct PlannerItinerarySourceRead: Sendable {
@@ -63,6 +66,7 @@ extension PlannerItineraryContentInput {
         propertyPath: "/command/content/title")
     }
     try color?.validate(propertyPath: "/command/content/color")
+    try manualEstimate?.validate(propertyPath: "/command/content/manualEstimate")
     if let coordinate = location?.coordinate {
       guard coordinate.latitude.isFinite, coordinate.longitude.isFinite,
         (-90...90).contains(coordinate.latitude), (-180...180).contains(coordinate.longitude)
@@ -86,11 +90,12 @@ extension PlannerItineraryContentInput {
   func readContent(links: [PlannerOwnedLinkRead]) -> PlannerItineraryContent {
     PlannerItineraryContent(
       title: title, notes: notes, color: color, iconName: iconName,
-      location: location, links: links, categoryIds: categoryIds, tagIds: tagIds)
+      location: location, links: links, categoryIds: categoryIds, tagIds: tagIds,
+      manualEstimate: manualEstimate)
   }
 
   var canonicalContent: PlannerCanonicalValue {
-    .record([
+    var fields: [String: PlannerCanonicalValue] = [
       "title": .string(title), "notes": .optional(notes.map(PlannerCanonicalValue.string)),
       "color": .optional(color.map(\.canonicalValue)),
       "iconName": .optional(iconName.map(PlannerCanonicalValue.string)),
@@ -98,7 +103,10 @@ extension PlannerItineraryContentInput {
       "links": .ordered(links.map(\.canonicalValue)),
       "categoryIds": .identitySet(categoryIds.map(PlannerCanonicalValue.identity)),
       "tagIds": .identitySet(tagIds.map(PlannerCanonicalValue.identity)),
-    ])
+    ]
+    /** Preserve creation replay for content written before this optional field existed. */
+    if let manualEstimate { fields["manualEstimate"] = manualEstimate.canonicalValue }
+    return .record(fields)
   }
 
   func payloadDigest(identity: PlannerStoreIdentity, bindings: [PlannerBoundIdentity]) -> String {

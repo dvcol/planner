@@ -7,6 +7,7 @@ public enum PlannerItineraryFieldValue: Sendable, Equatable {
   case optionalLocation(PlannerOwnedLocation?)
   case links([PlannerOwnedLinkRead])
   case identitySet(Set<UUID>)
+  case optionalEstimate(PlannerEstimate?)
 }
 
 public struct PlannerItineraryChanges: Sendable {
@@ -18,6 +19,7 @@ public struct PlannerItineraryChanges: Sendable {
   public let links: PlannerFieldChange<[PlannerLinkInput]>
   public let categoryIds: PlannerFieldChange<Set<UUID>>
   public let tagIds: PlannerFieldChange<Set<UUID>>
+  public let manualEstimate: PlannerFieldChange<PlannerEstimate>
 
   public init(
     title: PlannerFieldChange<String> = .unchanged,
@@ -27,7 +29,8 @@ public struct PlannerItineraryChanges: Sendable {
     location: PlannerFieldChange<PlannerOwnedLocation> = .unchanged,
     links: PlannerFieldChange<[PlannerLinkInput]> = .unchanged,
     categoryIds: PlannerFieldChange<Set<UUID>> = .unchanged,
-    tagIds: PlannerFieldChange<Set<UUID>> = .unchanged
+    tagIds: PlannerFieldChange<Set<UUID>> = .unchanged,
+    manualEstimate: PlannerFieldChange<PlannerEstimate> = .unchanged
   ) {
     self.title = title
     self.notes = notes
@@ -37,6 +40,7 @@ public struct PlannerItineraryChanges: Sendable {
     self.links = links
     self.categoryIds = categoryIds
     self.tagIds = tagIds
+    self.manualEstimate = manualEstimate
   }
 }
 
@@ -56,6 +60,9 @@ extension PlannerItineraryChanges {
     case .unchanged: break
     }
     if case .set(let value) = color { try value.validate(propertyPath: "/command/changes/color") }
+    if case .set(let value) = manualEstimate {
+      try value.validate(propertyPath: "/command/changes/manualEstimate")
+    }
     if case .set(let value) = location, let coordinate = value.coordinate {
       guard coordinate.latitude.isFinite, coordinate.longitude.isFinite,
         (-90...90).contains(coordinate.latitude), (-180...180).contains(coordinate.longitude)
@@ -99,6 +106,7 @@ extension PlannerItineraryChanges {
     if !links.isUnchanged { fields.append(.links) }
     if !categoryIds.isUnchanged { fields.append(.categoryIds) }
     if !tagIds.isUnchanged { fields.append(.tagIds) }
+    if !manualEstimate.isUnchanged { fields.append(.manualEstimate) }
     guard !fields.isEmpty else {
       throw PlannerFailure(
         "invalidInput", "An Itinerary edit must contain at least one changed field.",
@@ -119,7 +127,8 @@ extension PlannerItineraryChanges {
       color: optionalValue(color, retaining: input.color),
       iconName: optionalValue(iconName, retaining: input.iconName),
       location: optionalValue(location, retaining: input.location), categoryIds: updatedCategories,
-      tagIds: updatedTags)
+      tagIds: updatedTags,
+      manualEstimate: optionalValue(manualEstimate, retaining: input.manualEstimate))
   }
 
   private func optionalValue<Value: Sendable>(
@@ -154,6 +163,11 @@ extension PlannerItineraryChanges {
     switch location {
     case .set(let value): values["location"] = .optional(value.canonicalValue)
     case .clear: values["location"] = .optional(nil)
+    case .unchanged: break
+    }
+    switch manualEstimate {
+    case .set(let value): values["manualEstimate"] = .optional(value.canonicalValue)
+    case .clear: values["manualEstimate"] = .optional(nil)
     case .unchanged: break
     }
     if case .set(let inputs) = links { values["links"] = .ordered(inputs.map(\.canonicalValue)) }
@@ -197,6 +211,7 @@ extension ItinerarySnapshot {
     case .links: .links(links.map(\.read))
     case .categoryIds: .identitySet(input.categoryIds)
     case .tagIds: .identitySet(input.tagIds)
+    case .manualEstimate: .optionalEstimate(input.manualEstimate)
     }
   }
 }

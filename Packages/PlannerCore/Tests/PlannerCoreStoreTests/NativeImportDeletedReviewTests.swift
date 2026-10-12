@@ -123,6 +123,7 @@ struct NativeImportDeletedReviewTests {
       "lifetimeId": "00000000-0000-4000-8000-000000000827", "createdAt": 10.25, "updatedAt": 20.125,
       "content": [
         "name": "Independent List", "notes": NSNull(), "color": NSNull(), "iconName": NSNull(),
+        "manualEstimate": NSNull(),
       ],
       "globalDone": NSNull(), "archived": false, "contentOrigins": ["name": "independent"],
     ])
@@ -223,6 +224,7 @@ struct NativeImportDeletedReviewTests {
         "updatedAt": 20.125,
         "content": [
           "name": "Dependent List", "notes": NSNull(), "color": NSNull(), "iconName": NSNull(),
+          "manualEstimate": NSNull(),
         ],
         "globalDone": NSNull(), "archived": false, "contentOrigins": ["name": "independent"],
       ],
@@ -233,6 +235,7 @@ struct NativeImportDeletedReviewTests {
         "content": [
           "title": "Dependent itinerary", "notes": NSNull(), "color": NSNull(),
           "iconName": NSNull(), "location": NSNull(),
+          "manualEstimate": NSNull(),
         ],
         "globalDone": NSNull(), "archived": false, "contentOrigins": ["title": "independent"],
       ],

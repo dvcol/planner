@@ -123,7 +123,7 @@ struct ListRoutingTests {
         ])
       #expect(
         NSDictionary(dictionary: try #require(sourceValue["content"] as? [String: Any])).isEqual(
-          to: originalContent))
+          to: originalContent.merging(["manualEstimate": NSNull()]) { _, newValue in newValue }))
       let sourceState = try #require(sourceValue["state"] as? [String: Any])
       #expect(sourceState["globalDone"] is NSNull)
       #expect(sourceState["archived"] as? Bool == false)
@@ -166,7 +166,7 @@ struct ListRoutingTests {
       #expect(
         sourceValue["updatedAt"] as? Double == nativeRead.updatedAt.timeIntervalSinceReferenceDate)
       let hashes = try #require(sourceValue["fieldHashes"] as? [String: String])
-      #expect(Set(hashes.keys) == ["name", "notes", "color", "iconName"])
+      #expect(Set(hashes.keys) == ["name", "notes", "color", "iconName", "manualEstimate"])
       #expect(
         hashes
           == Dictionary(

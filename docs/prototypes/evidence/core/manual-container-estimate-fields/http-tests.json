@@ -1,0 +1,313 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "00006030-001A586C3EA3001C",
+      "deviceName" : "My Mac",
+      "modelName" : "MacBook Pro",
+      "osBuildNumber" : "26A434",
+      "osVersion" : "27.0.1",
+      "platform" : "macOS"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0,23s",
+                  "durationInSeconds" : 0.2264409065246582,
+                  "name" : "guardedEstimateEditOverHTTPPreservesExactMinutesAndStartOnlySchedule()",
+                  "nodeIdentifier" : "EstimateRoutingTests/guardedEstimateEditOverHTTPPreservesExactMinutesAndStartOnlySchedule()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/EstimateRoutingTests/guardedEstimateEditOverHTTPPreservesExactMinutesAndStartOnlySchedule()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,42s",
+                  "durationInSeconds" : 0.4184448719024658,
+                  "name" : "invalidEstimateEditsOverHTTPRejectWholePatchWithoutSavingEvidence()",
+                  "nodeIdentifier" : "EstimateRoutingTests/invalidEstimateEditsOverHTTPRejectWholePatchWithoutSavingEvidence()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/EstimateRoutingTests/invalidEstimateEditsOverHTTPRejectWholePatchWithoutSavingEvidence()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,061s",
+                      "durationInSeconds" : 0.061042070388793945,
+                      "name" : "PlannerEstimate(minutes: 1, displayUnit: PlannerCore.PlannerEstimateUnit.minute)",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/EstimateRoutingTests/estimateBoundsAndEveryDisplayUnitPersistExactlyOverHTTP(estimate:)?args=9654009c95acaa028daf31333f1296880248e3e10bb36d216a52d599a24cf898",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,06s",
+                      "durationInSeconds" : 0.05997204780578613,
+                      "name" : "PlannerEstimate(minutes: 120, displayUnit: PlannerCore.PlannerEstimateUnit.hour)",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/EstimateRoutingTests/estimateBoundsAndEveryDisplayUnitPersistExactlyOverHTTP(estimate:)?args=aab61cfc1b0a06589f3bcd9454e73a339848fef23c92878a7a99f5aade79de3c",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,081s",
+                      "durationInSeconds" : 0.08060002326965332,
+                      "name" : "PlannerEstimate(minutes: 2880, displayUnit: PlannerCore.PlannerEstimateUnit.day)",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/EstimateRoutingTests/estimateBoundsAndEveryDisplayUnitPersistExactlyOverHTTP(estimate:)?args=f0c9985a4d50b9ddd0b87b5513afa6865b3255488baa8d67c316009ef424a52a",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,087s",
+                      "durationInSeconds" : 0.08732914924621582,
+                      "name" : "PlannerEstimate(minutes: 10080, displayUnit: PlannerCore.PlannerEstimateUnit.week)",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/EstimateRoutingTests/estimateBoundsAndEveryDisplayUnitPersistExactlyOverHTTP(estimate:)?args=575f5d044ded8ebee8a31d739e22e4d2f84040dc7f81fa690f040b6418a32afc",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,091s",
+                      "durationInSeconds" : 0.09053707122802734,
+                      "name" : "PlannerEstimate(minutes: 86400, displayUnit: PlannerCore.PlannerEstimateUnit.month)",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/EstimateRoutingTests/estimateBoundsAndEveryDisplayUnitPersistExactlyOverHTTP(estimate:)?args=654ab046c9d5fac19274202572ad991aed1c84e600a39b1667749f6bef262679",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,082s",
+                      "durationInSeconds" : 0.08227324485778809,
+                      "name" : "PlannerEstimate(minutes: 525600, displayUnit: PlannerCore.PlannerEstimateUnit.year)",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/EstimateRoutingTests/estimateBoundsAndEveryDisplayUnitPersistExactlyOverHTTP(estimate:)?args=1a15c7804983bee167b448a2d4f55ad97ead8da9f1f17ccf3fefb4e186f05e3f",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,075s",
+                      "durationInSeconds" : 0.0750730037689209,
+                      "name" : "PlannerEstimate(minutes: 9223372036854775807, displayUnit: PlannerCore.PlannerEstimateUnit.year)",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/EstimateRoutingTests/estimateBoundsAndEveryDisplayUnitPersistExactlyOverHTTP(estimate:)?args=5f2ee3c73d5ac1c9ac7b53da22bbfb13396755cfbe32a7d563501f340504c56f",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,077s",
+                  "durationInSeconds" : 0.0766895157950265,
+                  "name" : "estimateBoundsAndEveryDisplayUnitPersistExactlyOverHTTP(estimate:)",
+                  "nodeIdentifier" : "EstimateRoutingTests/estimateBoundsAndEveryDisplayUnitPersistExactlyOverHTTP(estimate:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/EstimateRoutingTests/estimateBoundsAndEveryDisplayUnitPersistExactlyOverHTTP(estimate:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "EstimateRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/EstimateRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,39s",
+                  "durationInSeconds" : 0.38782215118408203,
+                  "name" : "guardedItineraryEditsOverHTTPRetainLaterContentAndTypedConflicts()",
+                  "nodeIdentifier" : "ItineraryEditRoutingTests/guardedItineraryEditsOverHTTPRetainLaterContentAndTypedConflicts()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ItineraryEditRoutingTests/guardedItineraryEditsOverHTTPRetainLaterContentAndTypedConflicts()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "ItineraryEditRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ItineraryEditRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,18s",
+                  "durationInSeconds" : 0.17533087730407715,
+                  "name" : "completeItinerarySourcesOverHTTPStayLiveAcrossReplayAnotherWriterAndReopen()",
+                  "nodeIdentifier" : "ItinerarySourceRoutingTests/completeItinerarySourcesOverHTTPStayLiveAcrossReplayAnotherWriterAndReopen()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ItinerarySourceRoutingTests/completeItinerarySourcesOverHTTPStayLiveAcrossReplayAnotherWriterAndReopen()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "ItinerarySourceRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ItinerarySourceRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,12s",
+                  "durationInSeconds" : 0.12121224403381348,
+                  "name" : "containerEstimateReadsOverHTTPKeepExactMinutesAndMissingValueBounds()",
+                  "nodeIdentifier" : "ListRoutingTests/containerEstimateReadsOverHTTPKeepExactMinutesAndMissingValueBounds()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ListRoutingTests/containerEstimateReadsOverHTTPKeepExactMinutesAndMissingValueBounds()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,076s",
+                  "durationInSeconds" : 0.07639098167419434,
+                  "name" : "listCreationAndDetailReadRetainOwnedMetadataAndEmptyDerivedProgress()",
+                  "nodeIdentifier" : "ListRoutingTests/listCreationAndDetailReadRetainOwnedMetadataAndEmptyDerivedProgress()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ListRoutingTests/listCreationAndDetailReadRetainOwnedMetadataAndEmptyDerivedProgress()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,22s",
+                  "durationInSeconds" : 0.22089004516601562,
+                  "name" : "listFieldGuardsRejectConflictsAndRetainLaterDataOnReplay()",
+                  "nodeIdentifier" : "ListRoutingTests/listFieldGuardsRejectConflictsAndRetainLaterDataOnReplay()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ListRoutingTests/listFieldGuardsRejectConflictsAndRetainLaterDataOnReplay()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,61s",
+                  "durationInSeconds" : 0.609907865524292,
+                  "name" : "invalidListAdmissionRetainsSourceRowsAndAcknowledgedRecovery()",
+                  "nodeIdentifier" : "ListRoutingTests/invalidListAdmissionRetainsSourceRowsAndAcknowledgedRecovery()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ListRoutingTests/invalidListAdmissionRetainsSourceRowsAndAcknowledgedRecovery()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,17s",
+                  "durationInSeconds" : 0.16842913627624512,
+                  "name" : "advertisedListArchiveRoutesWithoutChangingContentOrReapplyingOldState()",
+                  "nodeIdentifier" : "ListRoutingTests/advertisedListArchiveRoutesWithoutChangingContentOrReapplyingOldState()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ListRoutingTests/advertisedListArchiveRoutesWithoutChangingContentOrReapplyingOldState()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,1s",
+                  "durationInSeconds" : 0.1010439395904541,
+                  "name" : "membershipReferencesAndMixedReceiptsAreCompleteThroughActualHTTPReads()",
+                  "nodeIdentifier" : "ListRoutingTests/membershipReferencesAndMixedReceiptsAreCompleteThroughActualHTTPReads()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ListRoutingTests/membershipReferencesAndMixedReceiptsAreCompleteThroughActualHTTPReads()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,17s",
+                  "durationInSeconds" : 0.1722702980041504,
+                  "name" : "exactAppearanceReadRetainsLiveItemContentAndIndependentStatesOverHTTP()",
+                  "nodeIdentifier" : "ListRoutingTests/exactAppearanceReadRetainsLiveItemContentAndIndependentStatesOverHTTP()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ListRoutingTests/exactAppearanceReadRetainsLiveItemContentAndIndependentStatesOverHTTP()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,22s",
+                  "durationInSeconds" : 0.2228541374206543,
+                  "name" : "malformedAppearanceReadsNeverFallbackOrChangeSavedData()",
+                  "nodeIdentifier" : "ListRoutingTests/malformedAppearanceReadsNeverFallbackOrChangeSavedData()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ListRoutingTests/malformedAppearanceReadsNeverFallbackOrChangeSavedData()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "ListRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ListRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,14s",
+                      "durationInSeconds" : 0.142319917678833,
+                      "name" : ".itinerary",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ManualContainerEstimateRoutingTests/manualEstimatesCreateEditClearAndReportStaleValuesOverHTTP(kind:)?args=f62673c4d162b6505590121c0b22b475cec35615b9f49ae9d2c98d00af6522e8",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,14s",
+                      "durationInSeconds" : 0.14122986793518066,
+                      "name" : ".list",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ManualContainerEstimateRoutingTests/manualEstimatesCreateEditClearAndReportStaleValuesOverHTTP(kind:)?args=dcb452a982945e5e2957930d83d36af5ceee19805ec0c3b30529ae8f44f6e49e",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,14s",
+                  "durationInSeconds" : 0.14177489280700684,
+                  "name" : "manualEstimatesCreateEditClearAndReportStaleValuesOverHTTP(kind:)",
+                  "nodeIdentifier" : "ManualContainerEstimateRoutingTests/manualEstimatesCreateEditClearAndReportStaleValuesOverHTTP(kind:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ManualContainerEstimateRoutingTests/manualEstimatesCreateEditClearAndReportStaleValuesOverHTTP(kind:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "ManualContainerEstimateRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ManualContainerEstimateRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,062s",
+                      "durationInSeconds" : 0.06189393997192383,
+                      "name" : ".identicalIntegers",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SourceRoutingTests/concurrentSourceReadsReturnTheirOwnHotelAndMuseum(_:)?args=2e6964656e746963616c496e746567657273",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,06s",
+                      "durationInSeconds" : 0.06012606620788574,
+                      "name" : ".integerAndString",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SourceRoutingTests/concurrentSourceReadsReturnTheirOwnHotelAndMuseum(_:)?args=2e696e7465676572416e64537472696e67",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,061s",
+                  "durationInSeconds" : 0.061010003089904785,
+                  "name" : "concurrentSourceReadsReturnTheirOwnHotelAndMuseum(_:)",
+                  "nodeIdentifier" : "SourceRoutingTests/concurrentSourceReadsReturnTheirOwnHotelAndMuseum(_:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SourceRoutingTests/concurrentSourceReadsReturnTheirOwnHotelAndMuseum(_:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SourceRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/SourceRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "PlannerMCPTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "Planner",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

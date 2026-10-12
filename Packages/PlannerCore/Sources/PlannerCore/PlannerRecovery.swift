@@ -41,7 +41,7 @@ struct PortableItemContent: Codable {
   }
 }
 
-private struct PortableEstimateRecord: Codable {
+struct PortableEstimateRecord: Codable {
   let minutes: String
   let displayUnit: PlannerEstimateUnit
 
@@ -164,7 +164,7 @@ struct PlannerDataSnapshot: Codable {
       $0.deletionId.uuidString < $1.deletionId.uuidString
     }
     format = "planner-data"
-    formatVersion = 1
+    formatVersion = 2
     sources =
       (items.map { PortableSourceRecord.item(PortableItemRecord($0)) }
       + lists.map { PortableSourceRecord.list(PortableListRecord($0)) }
@@ -239,7 +239,7 @@ struct PlannerDataSnapshot: Codable {
   }
 
   func validated() throws -> PlannerDecodedBackup {
-    guard format == "planner-data", formatVersion == 1 else {
+    guard format == "planner-data", (1...2).contains(formatVersion) else {
       throw PlannerFailure("recoveryIntegrityFailure", "Unsupported portable recovery format.")
     }
     guard Set(sources.map { $0.kind.rawValue + ":" + $0.id.uuidString }).count == sources.count
@@ -354,7 +354,7 @@ struct PlannerDataSnapshot: Codable {
         tagIds: Set(
           labels.filter {
             $0.owner.kind == .itinerary && $0.owner.id == itinerary.id && $0.label.kind == .tag
-          }.map { $0.label.id }))
+          }.map { $0.label.id }), manualEstimate: itinerary.content.manualEstimate)
       return PlannerPortableItinerary(
         id: itinerary.id, lifetimeId: itinerary.lifetimeId,
         createdAt: itinerary.createdAt, updatedAt: itinerary.updatedAt,
@@ -457,7 +457,7 @@ struct RecoveryEnvelope: Codable {
 
   func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
     guard format == "planner-recovery", formatVersion == 1,
-      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"].contains(
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"].contains(
         storageSchemaVersion),
       namespaceId == identity.namespaceId, datasetId == identity.datasetId,
       ownershipBinding == identity.ownershipBinding, !ownershipBinding.isEmpty,
