@@ -1,0 +1,77 @@
+{
+  "baseCommit": "a759deb",
+  "sourceHashes": {
+    "PlannerNavigationUITests/SavedLoadingJourneyTests.swift": "8cc32657fd52d33680ae574dbe2d451b2fdda0cc805bed5784f0a2415918c7c8",
+    "PlannerNavigationUITests/NativeNavigationElements.swift": "53659f78aa021f34bd5bd868e2da82eaa010993799d64f945c75959d7c3915e5",
+    "Planner/Scenes/SavedPlannerView.swift": "3facb87c3700ecaf511884b1df9358e047d703a105c0cb830cb6926b14d8e850",
+    "Planner/Scenes/SavedPlannerStore.swift": "aec6d07934fd663dce47c161be66c944d0b0051f013319b502a4fd62eea974a8",
+    "Planner/Scenes/SavedItemViews.swift": "917834142e959c4385cd8bdf76a3c167ab78d6853fa5e27419df5208c96942b5",
+    "Planner/Scenes/SavedAddItemForm.swift": "41ffacb4686a14c2fa0011d3820195eecf1ce4396deaf0e2eed3fae971007bd8",
+    "Planner.xcodeproj/project.pbxproj": "4bced3d822b15a78ffeb25fece1ff83c4f6b557417745c2c7ffdbc13830e5771"
+  },
+  "commands": {
+    "list-transition-failure": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedLoadingJourneyTests/testFortyNativeItemsAndFourListsTraverseRefreshAndReopen\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerNativeLoadingPhoneInitial.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "list-transition-failureLog": "/private/tmp/PlannerNativeLoadingPhoneInitial.log",
+    "search-reveal-failure": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedLoadingJourneyTests/testFortyNativeItemsAndFourListsTraverseRefreshAndReopen\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerNativeLoadingPhoneReady.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "search-reveal-failureLog": "/private/tmp/PlannerNativeLoadingPhoneReady.log",
+    "phone": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedLoadingJourneyTests/testFortyNativeItemsAndFourListsTraverseRefreshAndReopen\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerNativeLoadingPhoneSearch.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "phoneLog": "/private/tmp/PlannerNativeLoadingPhoneSearch.log",
+    "tablet": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test-without-building -xctestrun /private/tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/PlannerNavigation_iphonesimulator27.0-arm64.xctestrun -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedLoadingJourneyTests/testFortyNativeItemsAndFourListsTraverseRefreshAndReopen\" -resultBundlePath /private/tmp/PlannerNativeLoadingTabletSearch.xcresult",
+    "tabletLog": "/private/tmp/PlannerNativeLoadingTabletSearch.log",
+    "macBuild": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData CODE_SIGNING_ALLOWED=NO build-for-testing",
+    "macBuildLog": "/private/tmp/PlannerNativeLoadingMacSearchBuild.log"
+  },
+  "qualification": {
+    "counts": {
+      "list-transition-failure": {
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "search-reveal-failure": {
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "phone": {
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "tablet": {
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      }
+    },
+    "macBuild": "TEST BUILD SUCCEEDED",
+    "macUIFunctions": 0,
+    "nativeCreationPerDevice": {
+      "items": 40,
+      "lists": 4,
+      "memberships": 4
+    },
+    "identityEvidence": "Each final retained text contains exactly forty expected ordered titles and forty unique source identities; native assertions also compare reverse and reopened maps.",
+    "captures": "Inspected all six original final traversal, selected-detail and reopened captures. Tablet shows empty filtered results with valid detail and restored row completion.",
+    "strictSwiftFiles": 1,
+    "markdownFiles": 1
+  },
+  "failedRuns": {
+    "list-transition": "Traversal passed both directions. Immediate exists probe missed the asynchronously loading Add control, then absent overflow tap failed. Final native snapshot already contains saved.list.add and No items. Fixed by awaiting loaded List detail/control.",
+    "search-reveal": "Traversal and four memberships passed. Native search field remained collapsed after returning to catalog; failed snapshot contains rows but no Search Items. Fixed by pulling down the scoped native catalog."
+  },
+  "review": {
+    "standards": "No actionable findings.",
+    "spec": "No actionable findings; matches native Q58 boundary without paging/latency/smoothness claims."
+  },
+  "sourceEpoch": "Final phone, tablet and Mac compile use identical corrected test source. Tablet reuses the phone-built xctestrun with test-without-building on a separate simulator/dataset. Their runtimes overlap; these are functional results, not benchmarks. Two earlier failed epochs precede the named test-interaction corrections. Production source is unchanged.",
+  "remainingGates": [
+    "5,000 Items/200 Lists; bounded loading/memory;300 ms physical results; scrolling responsiveness",
+    "Import application/recovery",
+    "Filtered drag/group/duration",
+    "Calendar",
+    "Broad native Mac runtime",
+    "Signed physical sync/account/Share",
+    "Whole-app polish"
+  ]
+}
