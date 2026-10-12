@@ -1,0 +1,154 @@
+Building for debugging...
+[Planning deferred tasks]
+[1 / 10] PlannerCoreStoreTests-product
+[9 / 20] PlannerCoreStoreTests-product
+[11 / 22] PlannerCoreStoreTests-product
+[17 / 21] PlannerCoreStoreTests-product
+[19 / 21] PlannerCoreStoreTests-product
+Build complete! (2,98 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite MissingStoreOperationTests started.
+◇ Suite RecoveryCheckpointRetryTests started.
+◇ Suite BulkCompletionAdmissionTests started.
+◇ Suite RecoverySourceIdentityTests started.
+◇ Suite RecoveryFailureTests started.
+◇ Suite RecoverySourceIdentityRejectionTests started.
+◇ Suite MembershipMigrationTests started.
+◇ Suite ItemEditTests started.
+◇ Suite MissingStoreAdmissionTests started.
+◇ Suite ItineraryScheduleMigrationTests started.
+◇ Suite RecoveryProposalSelectionTests started.
+◇ Suite ItemCreationTests started.
+◇ Suite NativeStatusAdmissionTests started.
+◇ Suite ItemLinkMigrationTests started.
+◇ Test postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:) started.
+◇ Suite NativeStatusReadTests started.
+◇ Suite RecoveryCheckpointRetryAdmissionTests started.
+◇ Test freshShareRequiresExplicitMainSetupWhileAcknowledgedEvidenceSurvivesStoreLoss() started.
+◇ Test canceledMissingChangedAndForeignReviewsNeverMutateThePlanner() started.
+◇ Test unrelatedTitleEditDoesNotInvalidatePriorNotesHash() started.
+◇ Test ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test emptyReviewsRemainNoItemsAndBlockedRecoveryLeavesAllTargetsUnchanged() started.
+◇ Test knownAppliedCompletionRetryRepairsRecoveryWithoutReapplyingAndUnblocksLaterEdits() started.
+◇ Test inaccessibleRecoveryRejectsCreationBeforeCommitAndRetainsAcknowledgedData() started.
+◇ Test recoveryResolvesEqualUUIDsBySourceKindAndRetainsTypedAssociations() started.
+◇ Test staleNotesEditPreservesFridayBookingAndReportsCurrentField() started.
+◇ Test genuineV13MigrationRetainsGraphAndSchedulesBeforeSchedulingItinerary() started.
+◇ Test authorizedCreationCannotRecreateAMissingInitializedStoreOrReplaceRecovery() started.
+◇ Test replayingNotesEditReturnsOriginalEvidenceWithoutReapplyingOldValue() started.
+◇ Test recoveryRejectsSameKindDuplicatesAndCrossKindReferenceSubstitution() started.
+◇ Test genuineV6MigrationRetainsSourcesReceiptsAndRecoveryBeforeShareAddsMembership() started.
+◇ Test preparedProposalRemainsSelectableWhenTheCommittedStoreIsMissing() started.
+◇ Test selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData() started.
+◇ Test notesEditPreservesOtherFieldsAndSurvivesReopenWithRecovery() started.
+◇ Test case passing 1 argument scopeName → "list" to postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:) started.
+◇ Test oneStaleFieldRejectsEntireTitleAndNotesPatch() started.
+◇ Test case passing 1 argument scopeName → "itinerary" to postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:) started.
+◇ Test case passing 1 argument scopeName → "itineraryListEntry" to postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:) started.
+◇ Test invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test inspectingRetainedProposalFromSeparateEmptyDatasetNeverImportsOrAcknowledgesIt() started.
+◇ Test changedPayloadReplayRejectsWithoutReplacingOriginalItemOrEvidence() started.
+◇ Test savedItemSurvivesReopenWithIndependentAcknowledgedRecovery() started.
+◇ Test replayingCreationAfterReopenRetainsOneItemAndOriginalCheckpoint() started.
+◇ Test invalidCreationLeavesCurrentItemAndRecoveryCheckpointUnchanged() started.
+◇ Test case passing 1 argument action → "source" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument action → "appearance" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument action → "rows" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument action → "query" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument action → "review" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument action → "replay" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument action → "shareRead" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test preparedProposalDoesNotBecomeKnownAppliedPendingStatusOrChangeCurrentContent() started.
+◇ Test case passing 1 argument action → "shareBootstrap" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument action → "mainBootstrap" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test appliedIncompleteStatusRetainsPriorCheckpointAndClearsOnlyAfterRecoveryRepair() started.
+◇ Test case passing 1 argument action → "unknownStatus" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test mainAppMigratesV2BookmarksThenShareSavesScheduleWithoutChangingOldHistory() started.
+◇ Test case passing 1 argument action → "unknownRetry" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test genuineV5MigrationPreservesBothScheduleFormsBeforeShareCreatesAnEmptyList() started.
+◇ Test mainMigratesGenuineV4RetainingDeletionHistoryBeforeShareSavesAllDay() started.
+◇ Test mainAppMigratesV1WithoutChangingItemIdentityStateOrAcknowledgedHistory() started.
+◇ Test mainAppMigratesV3ThenShareRemovesScheduleWithoutLosingItemOrHistoricalReceipt() started.
+◇ Test emptyAndAcknowledgedStatusReadUsesObservedRecoveryWithoutInventingCloudActivity() started.
+◇ Test unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test concurrentFacadeRetriesPublishOneCheckpointAndPreserveOriginalAppliedResult() started.
+◇ Test bulkCheckpointRetryPreservesEverySupportedGraphGroupAndPriorDeletionMarker() started.
+◇ Test continuedFileFailureRetainsAppliedEvidenceAndMutationBlockUntilRetrySucceeds() started.
+◇ Test case passing 1 argument scenario → "missingProposal" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "missingNamespace" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "wrongOwner" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "wrongDataset" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "wrongEvidence" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "malformed" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "duplicateIdentity" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "unresolvedReference" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "acknowledged" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+✔ Test freshShareRequiresExplicitMainSetupWhileAcknowledgedEvidenceSurvivesStoreLoss() passed after 0.878 seconds.
+✔ Test unrelatedTitleEditDoesNotInvalidatePriorNotesHash() passed after 0.879 seconds.
+✔ Test ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) with 11 test cases passed after 0.879 seconds.
+◇ Test case passing 1 argument scenario → "unreadableRecovery" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "malformedRecovery" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "wrongOwnership" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "mismatchedReceipt" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "missingStore" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "foreignSession" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "separateDataset" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+✔ Test recoveryResolvesEqualUUIDsBySourceKindAndRetainsTypedAssociations() passed after 1.010 seconds.
+✔ Test knownAppliedCompletionRetryRepairsRecoveryWithoutReapplyingAndUnblocksLaterEdits() passed after 1.010 seconds.
+✔ Test postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:) with 3 test cases passed after 1.013 seconds.
+✔ Test inaccessibleRecoveryRejectsCreationBeforeCommitAndRetainsAcknowledgedData() passed after 1.035 seconds.
+◇ Test case passing 1 argument scenario → "unknown" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "preparedOnly" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "foreignSession" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "separateDataset" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+✔ Test staleNotesEditPreservesFridayBookingAndReportsCurrentField() passed after 1.307 seconds.
+✔ Test authorizedCreationCannotRecreateAMissingInitializedStoreOrReplaceRecovery() passed after 1.307 seconds.
+✔ Test preparedProposalRemainsSelectableWhenTheCommittedStoreIsMissing() passed after 1.307 seconds.
+✔ Test emptyReviewsRemainNoItemsAndBlockedRecoveryLeavesAllTargetsUnchanged() passed after 1.307 seconds.
+✔ Test recoveryRejectsSameKindDuplicatesAndCrossKindReferenceSubstitution() passed after 1.307 seconds.
+✔ Test selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData() passed after 1.307 seconds.
+✔ Test replayingNotesEditReturnsOriginalEvidenceWithoutReapplyingOldValue() passed after 1.307 seconds.
+✔ Test notesEditPreservesOtherFieldsAndSurvivesReopenWithRecovery() passed after 1.307 seconds.
+✔ Test canceledMissingChangedAndForeignReviewsNeverMutateThePlanner() passed after 1.307 seconds.
+✔ Test changedPayloadReplayRejectsWithoutReplacingOriginalItemOrEvidence() passed after 1.307 seconds.
+✔ Test invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) with 9 test cases passed after 1.307 seconds.
+✔ Test oneStaleFieldRejectsEntireTitleAndNotesPatch() passed after 1.307 seconds.
+✔ Test savedItemSurvivesReopenWithIndependentAcknowledgedRecovery() passed after 1.307 seconds.
+✔ Test inspectingRetainedProposalFromSeparateEmptyDatasetNeverImportsOrAcknowledgesIt() passed after 1.307 seconds.
+✔ Test replayingCreationAfterReopenRetainsOneItemAndOriginalCheckpoint() passed after 1.307 seconds.
+✔ Test invalidCreationLeavesCurrentItemAndRecoveryCheckpointUnchanged() passed after 1.307 seconds.
+✔ Test unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) with 7 test cases passed after 0.967 seconds.
+✔ Test preparedProposalDoesNotBecomeKnownAppliedPendingStatusOrChangeCurrentContent() passed after 1.028 seconds.
+✔ Test emptyAndAcknowledgedStatusReadUsesObservedRecoveryWithoutInventingCloudActivity() passed after 0.749 seconds.
+✔ Test appliedIncompleteStatusRetainsPriorCheckpointAndClearsOnlyAfterRecoveryRepair() passed after 0.850 seconds.
+✔ Suite MissingStoreOperationTests passed after 1.320 seconds.
+✔ Suite ItemEditTests passed after 1.320 seconds.
+✔ Suite RecoverySourceIdentityTests passed after 1.321 seconds.
+✔ Suite RecoveryCheckpointRetryTests passed after 1.321 seconds.
+✔ Suite BulkCompletionAdmissionTests passed after 1.321 seconds.
+✔ Suite RecoveryFailureTests passed after 1.321 seconds.
+✔ Suite MissingStoreAdmissionTests passed after 1.326 seconds.
+✔ Suite RecoveryProposalSelectionTests passed after 1.326 seconds.
+✔ Suite RecoverySourceIdentityRejectionTests passed after 1.326 seconds.
+✔ Suite ItemCreationTests passed after 1.326 seconds.
+✔ Suite NativeStatusAdmissionTests passed after 1.326 seconds.
+✔ Suite NativeStatusReadTests passed after 1.326 seconds.
+✔ Test concurrentFacadeRetriesPublishOneCheckpointAndPreserveOriginalAppliedResult() passed after 0.767 seconds.
+✔ Test unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) with 4 test cases passed after 0.797 seconds.
+✔ Test continuedFileFailureRetainsAppliedEvidenceAndMutationBlockUntilRetrySucceeds() passed after 0.825 seconds.
+✔ Test mainAppMigratesV1WithoutChangingItemIdentityStateOrAcknowledgedHistory() passed after 1.161 seconds.
+✔ Test mainAppMigratesV2BookmarksThenShareSavesScheduleWithoutChangingOldHistory() passed after 1.216 seconds.
+✔ Test mainAppMigratesV3ThenShareRemovesScheduleWithoutLosingItemOrHistoricalReceipt() passed after 1.182 seconds.
+✔ Test mainMigratesGenuineV4RetainingDeletionHistoryBeforeShareSavesAllDay() passed after 1.201 seconds.
+✔ Test genuineV5MigrationPreservesBothScheduleFormsBeforeShareCreatesAnEmptyList() passed after 1.203 seconds.
+✔ Suite ItemLinkMigrationTests passed after 1.758 seconds.
+✔ Test genuineV6MigrationRetainsSourcesReceiptsAndRecoveryBeforeShareAddsMembership() passed after 1.796 seconds.
+✔ Suite MembershipMigrationTests passed after 1.796 seconds.
+✔ Test genuineV13MigrationRetainsGraphAndSchedulesBeforeSchedulingItinerary() passed after 1.826 seconds.
+✔ Suite ItineraryScheduleMigrationTests passed after 1.827 seconds.
+✔ Test bulkCheckpointRetryPreservesEverySupportedGraphGroupAndPriorDeletionMarker() passed after 1.410 seconds.
+✔ Suite RecoveryCheckpointRetryAdmissionTests passed after 1.974 seconds.
+✔ Test run with 38 tests in 16 suites passed after 1.974 seconds.

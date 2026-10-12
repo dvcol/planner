@@ -91,7 +91,7 @@ public actor Planner {
             at: configuration.storeURL.deletingLastPathComponent(),
             withIntermediateDirectories: true
           )
-          let container = try openContainer()
+          let container = try openContainer(initializing: true)
           let context = ModelContext(container)
           context.autosaveEnabled = false
           try context.save()
@@ -6899,7 +6899,11 @@ public actor Planner {
     return identity
   }
 
-  private func openContainer() throws -> ModelContainer {
+  private func openContainer(initializing: Bool = false) throws -> ModelContainer {
+    guard initializing || FileManager.default.fileExists(atPath: configuration.storeURL.path) else {
+      throw PlannerFailure(
+        "unavailable", "The initialized dataset's store is missing; recovery remains separate.")
+    }
     let schema = Schema(versionedSchema: PlannerSchemaV14.self)
     let modelConfiguration = ModelConfiguration(
       schema: schema, url: configuration.storeURL, cloudKitDatabase: .none)

@@ -1,0 +1,22 @@
+Building for debugging...
+[Pre-planning 1 / 154]
+[Planning deferred tasks]
+[1 / 1]
+[5 / 14] PlannerCoreTests-product
+[9 / 20] PlannerCoreStoreTests-product
+[11 / 22] PlannerCoreStoreTests-product
+[17 / 21] PlannerCoreStoreTests-product
+[19 / 21] PlannerCoreStoreTests-product
+Build complete! (3,54 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite MissingStoreAdmissionTests started.
+◇ Test authorizedCreationCannotRecreateAMissingInitializedStoreOrReplaceRecovery() started.
+✘ Test authorizedCreationCannotRecreateAMissingInitializedStoreOrReplaceRecovery() recorded an issue at MissingStoreAdmissionTests.swift:44:19: Issue recorded
+↳ A live session must not initialize replacement storage: PlannerOperationResult(operationId: A3CDE2D2-73F6-40F0-8ECB-3C3561583772, outcome: PlannerCore.PlannerOperationResult.Outcome.applied(result: PlannerCore.PlannerAppliedResult(generatedIdentities: [PlannerCore.PlannerAppliedIdentity.source(PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 7B0D48B1-1064-4C7E-8F35-7DF33824B398))], affectedIdentities: [PlannerCore.PlannerAppliedIdentity.source(PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 7B0D48B1-1064-4C7E-8F35-7DF33824B398))]), recovery: PlannerCore.PlannerRecoveryResult.complete(checkpointGeneration: 2)))
+✘ Test authorizedCreationCannotRecreateAMissingInitializedStoreOrReplaceRecovery() failed after 0.065 seconds with 1 issue.
+✘ Suite MissingStoreAdmissionTests failed after 0.066 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.066 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)
