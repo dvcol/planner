@@ -347,6 +347,8 @@ struct SavedListArchiveFilterMenu: View {
 
 struct SavedListProgress: View {
   let progress: PlannerContainerProgress
+  let estimates: PlannerContainerEstimates
+  let manualEstimate: PlannerEstimate?
   let matchingCount: Int
   var isArchived = false
 
@@ -355,6 +357,9 @@ struct SavedListProgress: View {
       if isArchived {
         Label("Archived List", systemImage: "archivebox").foregroundStyle(.secondary)
       }
+      SavedContainerEstimates(
+        estimates: estimates, manualEstimate: manualEstimate,
+        accessibilityIdentifierPrefix: "saved.list.estimate")
       if let done = progress.doneCount, let archived = progress.archivedCount,
         let total = progress.totalCount, total > 0
       {

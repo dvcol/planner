@@ -36,6 +36,7 @@ struct SavedPlannerView: View {
   @State private var listSearchText = ""
   @State private var isOpeningList = false
   @State private var showNewList = false
+  @State private var listEditDraft: SavedListEditDraft?
   @State private var showLabels = false
   @State private var showSettings = false
   @State private var listCatalog: [SavedPlannerList]?
@@ -141,10 +142,13 @@ struct SavedPlannerView: View {
       .sheet(isPresented: $showSettings) { SavedPlannerSettingsView(store: store) }
     #endif
     .sheet(isPresented: $showNewList) {
-      SavedNewListForm(store: store) { source in
+      SavedListForm(store: store) { source in
         selectedSection = .lists
         selectedListId = source.id
       }
+    }
+    .sheet(item: $listEditDraft) { draft in
+      SavedListForm(store: store, list: draft.list) { _ in }
     }
     .sheet(isPresented: $showNewItem) {
       SavedNewItemForm(store: store) { source in selectedItemId = source.id }
@@ -878,7 +882,8 @@ struct SavedPlannerView: View {
             if listItems.isEmpty {
               VStack(spacing: 0) {
                 SavedListProgress(
-                  progress: selectedList.progress, matchingCount: 0,
+                  progress: selectedList.progress, estimates: selectedList.estimates,
+                  manualEstimate: selectedList.content.manualEstimate, matchingCount: 0,
                   isArchived: selectedList.state.archived == true
                 ).padding()
                 ContentUnavailableView(
@@ -948,7 +953,9 @@ struct SavedPlannerView: View {
                     }
                   } header: {
                     SavedListProgress(
-                      progress: selectedList.progress, matchingCount: listItems.count,
+                      progress: selectedList.progress, estimates: selectedList.estimates,
+                      manualEstimate: selectedList.content.manualEstimate,
+                      matchingCount: listItems.count,
                       isArchived: selectedList.state.archived == true
                     ).textCase(nil)
                   }
@@ -1000,6 +1007,11 @@ struct SavedPlannerView: View {
           }
           ToolbarItem(placement: .primaryAction) {
             Menu {
+              Button("Edit estimate", systemImage: "clock") {
+                listEditDraft = .init(list: selectedList)
+              }
+              .accessibilityIdentifier("saved.list.estimate.edit")
+              Divider()
               Group {
                 Button("Mark all Done") { prepareListBulkCompletion(selectedList, done: true) }
                 Button("Mark all Undone") { prepareListBulkCompletion(selectedList, done: false) }
@@ -1101,21 +1113,51 @@ struct SavedPlannerView: View {
   #endif
 }
 
-private struct SavedNewListForm: View {
+private struct SavedListEditDraft: Identifiable {
+  let list: PlannerListSourceRead
+  var id: UUID { list.source.id }
+}
+
+private struct SavedListForm: View {
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
+  let list: PlannerListSourceRead?
   let didCreate: (PlannerEntityReference) -> Void
-  @State private var name = ""
+  @State private var name: String
+  @State private var manualEstimate: PlannerEstimate?
   @State private var operationId = UUID()
+
+  init(
+    store: SavedPlannerStore, list: PlannerListSourceRead? = nil,
+    didCreate: @escaping (PlannerEntityReference) -> Void
+  ) {
+    self.store = store
+    self.list = list
+    self.didCreate = didCreate
+    _name = State(initialValue: list?.content.name ?? "")
+    _manualEstimate = State(initialValue: list?.content.manualEstimate)
+  }
+
+  private var canSave: Bool {
+    guard store.canCreate, !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+      return false
+    }
+    guard let list else { return true }
+    return name != list.content.name || manualEstimate != list.content.manualEstimate
+  }
 
   var body: some View {
     NavigationStack {
       Form {
         TextField("Name", text: $name)
           .accessibilityIdentifier("saved.list.name")
+        SavedActivityEstimateEditor(
+          estimate: $manualEstimate,
+          accessibilityIdentifierPrefix: "saved.list.estimate", isContainerEstimate: true)
       }
+      .disabled(store.isSaving)
       .formStyle(.grouped)
-      .navigationTitle("New List")
+      .navigationTitle(list == nil ? "New List" : "Edit List")
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {
           Button("Cancel") { dismiss() }
@@ -1126,15 +1168,21 @@ private struct SavedNewListForm: View {
         ToolbarItem(placement: .confirmationAction) {
           Button("Save") {
             Task {
-              if let source = await store.createList(name: name, operationId: operationId) {
-                didCreate(source)
-                dismiss()
+              let source: PlannerEntityReference?
+              if let list {
+                let saved = await store.editList(
+                  list, name: name, manualEstimate: manualEstimate, operationId: operationId)
+                source = saved ? list.source : nil
+              } else {
+                source = await store.createList(
+                  name: name, manualEstimate: manualEstimate, operationId: operationId)
               }
+              guard let source, store.alertMessage == nil else { return }
+              didCreate(source)
+              dismiss()
             }
           }
-          .disabled(
-            !store.canCreate || name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-          )
+          .disabled(!canSave)
           .keyboardShortcut(.defaultAction)
           .accessibilityIdentifier("saved.list.save")
         }
@@ -1144,8 +1192,17 @@ private struct SavedNewListForm: View {
       }
     }
     .interactiveDismissDisabled(store.isSaving)
+    .alert(
+      "Planner",
+      isPresented: Binding(
+        get: { store.alertMessage != nil }, set: { if !$0 { store.alertMessage = nil } })
+    ) {
+      Button("OK") { store.alertMessage = nil }
+    } message: {
+      Text(store.alertMessage ?? "")
+    }
     #if os(macOS)
-      .frame(minWidth: 360, minHeight: 180)
+      .frame(minWidth: 400, minHeight: 280)
     #endif
   }
 }

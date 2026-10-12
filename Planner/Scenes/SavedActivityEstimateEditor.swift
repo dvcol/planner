@@ -4,18 +4,23 @@ import SwiftUI
 struct SavedActivityEstimateEditor: View {
   @Binding var estimate: PlannerEstimate?
   let accessibilityIdentifierPrefix: String
+  let isContainerEstimate: Bool
   @State private var selectedUnit: PlannerEstimateUnit
 
-  init(estimate: Binding<PlannerEstimate?>, accessibilityIdentifierPrefix: String) {
+  init(
+    estimate: Binding<PlannerEstimate?>, accessibilityIdentifierPrefix: String,
+    isContainerEstimate: Bool = false
+  ) {
     _estimate = estimate
     self.accessibilityIdentifierPrefix = accessibilityIdentifierPrefix
+    self.isContainerEstimate = isContainerEstimate
     _selectedUnit = State(initialValue: estimate.wrappedValue?.displayUnit ?? .hour)
   }
 
   var body: some View {
-    Section("Activity estimate") {
+    Section(isContainerEstimate ? "Overall estimate" : "Activity estimate") {
       Toggle(
-        "Include estimate",
+        isContainerEstimate ? "Use manual estimate" : "Include estimate",
         isOn: Binding(
           get: { estimate != nil },
           set: { enabled in
@@ -46,7 +51,8 @@ struct SavedActivityEstimateEditor: View {
         Text("Changing the display unit keeps the same duration.")
           .font(.footnote).foregroundStyle(.secondary)
       } else {
-        Text("No estimate").foregroundStyle(.secondary)
+        Text(isContainerEstimate ? "Calculated from items" : "No estimate")
+          .foregroundStyle(.secondary)
       }
     }
   }
