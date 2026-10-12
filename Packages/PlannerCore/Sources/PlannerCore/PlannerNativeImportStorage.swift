@@ -130,7 +130,10 @@ struct PlannerNativeLineage {
   }
 }
 
-func plannerInsertImportedGraph(_ backup: PlannerPortableBackup, context: ModelContext) throws {
+func plannerInsertImportedGraph(
+  _ backup: PlannerPortableBackup, replacing sourceReplacements: [PlannerPortableSource],
+  context: ModelContext
+) throws {
   var items = try plannerImportRecords(PlannerSchemaV15.Item.self, identity: \.id, context: context)
   var lists = try plannerImportRecords(PlannerSchemaV15.List.self, identity: \.id, context: context)
   var itineraries = try plannerImportRecords(
@@ -138,60 +141,89 @@ func plannerInsertImportedGraph(_ backup: PlannerPortableBackup, context: ModelC
   var categories = try plannerImportRecords(
     PlannerSchemaV15.Category.self, identity: \.id, context: context)
   var tags = try plannerImportRecords(PlannerSchemaV15.Tag.self, identity: \.id, context: context)
-  for source in backup.sources {
+  for source in backup.sources + sourceReplacements {
     switch source {
     case .item(let value):
       let content = value.content
-      let item = try PlannerSchemaV15.Item(
-        input: .init(
-          title: content.title, subtitle: content.subtitle, notes: content.notes,
-          location: content.location, estimate: content.estimate))
+      let item =
+        try items[value.id]
+        ?? PlannerSchemaV15.Item(
+          input: .init(
+            title: content.title, subtitle: content.subtitle, notes: content.notes,
+            location: content.location, estimate: content.estimate))
+      item.title = content.title
+      item.subtitle = content.subtitle
+      item.notes = content.notes
+      item.locationData = try content.location.map { try JSONEncoder().encode($0) }
+      item.estimateData = try content.estimate.map { try JSONEncoder().encode($0) }
       item.id = value.id
       item.lifetimeId = value.lifetimeId
       item.createdAt = value.createdAt
       item.updatedAt = value.updatedAt
       item.globalDone = value.globalDone
       item.archived = value.archived
-      context.insert(item)
+      if items[value.id] == nil { context.insert(item) }
       items[value.id] = item
     case .list(let value):
-      let list = try PlannerSchemaV15.List(content: value.content)
+      let content = value.content
+      let list = try lists[value.id] ?? PlannerSchemaV15.List(content: content)
+      list.name = content.name
+      list.notes = content.notes
+      list.colorData = try content.color.map { try JSONEncoder().encode($0) }
+      list.iconName = content.iconName
+      list.manualEstimateData = try content.manualEstimate.map { try JSONEncoder().encode($0) }
       list.id = value.id
       list.lifetimeId = value.lifetimeId
       list.createdAt = value.createdAt
       list.updatedAt = value.updatedAt
       list.archived = value.archived
-      context.insert(list)
+      if lists[value.id] == nil { context.insert(list) }
       lists[value.id] = list
     case .itinerary(let value):
       let content = value.content
-      let itinerary = try PlannerSchemaV15.Itinerary(
-        input: .init(
-          title: content.title, notes: content.notes, color: content.color,
-          iconName: content.iconName, location: content.location,
-          manualEstimate: content.manualEstimate))
+      let itinerary =
+        try itineraries[value.id]
+        ?? PlannerSchemaV15.Itinerary(
+          input: .init(
+            title: content.title, notes: content.notes, color: content.color,
+            iconName: content.iconName, location: content.location,
+            manualEstimate: content.manualEstimate))
+      itinerary.title = content.title
+      itinerary.notes = content.notes
+      itinerary.colorData = try content.color.map { try JSONEncoder().encode($0) }
+      itinerary.iconName = content.iconName
+      itinerary.locationData = try content.location.map { try JSONEncoder().encode($0) }
+      itinerary.manualEstimateData = try content.manualEstimate.map { try JSONEncoder().encode($0) }
       itinerary.id = value.id
       itinerary.lifetimeId = value.lifetimeId
       itinerary.createdAt = value.createdAt
       itinerary.updatedAt = value.updatedAt
       itinerary.archived = value.archived
-      context.insert(itinerary)
+      if itineraries[value.id] == nil { context.insert(itinerary) }
       itineraries[value.id] = itinerary
     case .category(let value):
-      let category = try PlannerSchemaV15.Category(content: value.content)
+      let content = value.content
+      let category = try categories[value.id] ?? PlannerSchemaV15.Category(content: content)
+      category.name = content.name
+      category.colorData = try content.color.map { try JSONEncoder().encode($0) }
+      category.iconName = content.iconName
       category.id = value.id
       category.lifetimeId = value.lifetimeId
       category.createdAt = value.createdAt
       category.updatedAt = value.updatedAt
-      context.insert(category)
+      if categories[value.id] == nil { context.insert(category) }
       categories[value.id] = category
     case .tag(let value):
-      let tag = try PlannerSchemaV15.Tag(content: value.content)
+      let content = value.content
+      let tag = try tags[value.id] ?? PlannerSchemaV15.Tag(content: content)
+      tag.name = content.name
+      tag.colorData = try content.color.map { try JSONEncoder().encode($0) }
+      tag.iconName = content.iconName
       tag.id = value.id
       tag.lifetimeId = value.lifetimeId
       tag.createdAt = value.createdAt
       tag.updatedAt = value.updatedAt
-      context.insert(tag)
+      if tags[value.id] == nil { context.insert(tag) }
       tags[value.id] = tag
     }
   }
