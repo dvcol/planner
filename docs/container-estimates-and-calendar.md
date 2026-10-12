@@ -41,7 +41,7 @@ Q72 B is accepted. An archived container keeps its own child-based progress whil
 
 - Q72 B is settled in the [decision register](open-decisions.md); retain the distinct own-progress and parent-branch behavior.
 - Q76 A is settled. A partial manual budget deducts known finished estimates and displays an upper bound when finished estimates are missing. Apply the same rule to a referenced List's budget under Q71; no child estimate is manufactured.
-- Review concrete public input/read/query contracts for manual estimate fields, derived summaries and calendar windows before new-field /tdd work. Existing Core read/query/execute, actual HTTP and native UI boundaries remain the agreed test seams.
+- The [Core estimate contract](prototypes/core-container-estimates.md) defines manual inputs, typed derived totals and persistence/portable evolution before new-field /tdd work. Calendar windows retain their separate contract step. Existing Core read/query/execute, actual HTTP and native UI boundaries remain the agreed test seams.
 - Declare persistence and portable-format evolution. Manual estimates are owned data; derived totals and device presentation preferences are not additional saved authorities.
 - Specify controlled calendar fixtures for overlaps, start-only entries, multi-day all-day spans, travel and daylight-saving boundaries. Signed physical sync/account/Share gates retain their separate prerequisites.
 
