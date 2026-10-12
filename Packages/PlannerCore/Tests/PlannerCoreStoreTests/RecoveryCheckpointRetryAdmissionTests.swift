@@ -297,6 +297,17 @@ struct RecoveryCheckpointRetryAdmissionTests {
       try normalizedPortableSnapshot(recovered.portableData)
         .isEqual(normalizedPortableSnapshot(proposed.portableData)))
     let backup = recovered.decodedBackup.backup
+    #expect(backup.ownedLinks.count == 2)
+    let importResponse = fixture.planner.decodeImport(repairedExport)
+    guard case .decoded(let imported) = importResponse else {
+      Issue.record(
+        "Decode the actual exported graph without changing its recovered state: \(importResponse)")
+      return
+    }
+    #expect(imported.backup.sources.count == 6 && imported.backup.ownedLinks.count == 2)
+    #expect(
+      imported.backup.memberships.count == 2 && imported.backup.memberships.allSatisfy(\.localDone))
+    #expect(imported.externalBindings.isEmpty && imported.originPaths.isEmpty)
     #expect(backup.sources.count == 6 && backup.items.count == 2)
     #expect(backup.memberships.count == 2 && backup.memberships.allSatisfy(\.localDone))
     #expect(backup.itineraryEntries.sorted { $0.rank < $1.rank }.map(\.id) == entries)

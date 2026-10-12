@@ -1,0 +1,231 @@
+Building for debugging...
+[Computing dependencies]
+[1 / 3] PlannerCore_PlannerCoreStoreTests
+[1 / 9] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[5 / 10] PlannerCoreStoreTests-product
+[7 / 12] PlannerCoreStoreTests-product
+[13 / 17] PlannerCoreStoreTests-product
+[15 / 17] PlannerCoreStoreTests-product
+Build complete! (5,59 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportAdmissionTests started.
+◇ Suite NativeStatusAdmissionTests started.
+◇ Suite ItineraryMigrationTests started.
+◇ Suite NativeStatusReadTests started.
+◇ Suite CategoryMigrationTests started.
+◇ Suite MissingStoreAdmissionTests started.
+◇ Suite ExpandedCompletionMigrationTests started.
+◇ Suite ItemLabelMigrationTests started.
+◇ Suite ItineraryScheduleMigrationTests started.
+◇ Suite NativeImportDecodingTests started.
+◇ Suite NativeImportScaleTests started.
+◇ Suite NativeImportMarkerTests started.
+◇ Suite NativeImportLineageTests started.
+◇ Suite NativeExportAdmissionTests started.
+◇ Suite MissingStoreOperationTests started.
+◇ Suite NativeExportTests started.
+◇ Suite MembershipMigrationTests started.
+◇ Suite RecoveryCheckpointRetryAdmissionTests started.
+◇ Suite ItineraryEntryMigrationTests started.
+◇ Suite RecoveryProposalSelectionTests started.
+◇ Suite TagMigrationTests started.
+◇ Suite RecoveryCheckpointRetryTests started.
+◇ Suite ItemLinkMigrationTests started.
+◇ Test absentSourceBindingsRemainExplicitWithoutShorteningOwnersOrChoosingADataset() started.
+◇ Test invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test preparedProposalDoesNotBecomeKnownAppliedPendingStatusOrChangeCurrentContent() started.
+◇ Test appliedIncompleteStatusRetainsPriorCheckpointAndClearsOnlyAfterRecoveryRepair() started.
+◇ Test genuineV10MigrationPreservesOwnedGraphBeforeItineraryCreation() started.
+◇ Test genuineV7MigrationPreservesMembershipStateAndHistoricalRecovery() started.
+◇ Test authorizedCreationCannotRecreateAMissingInitializedStoreOrReplaceRecovery() started.
+◇ Test genuineV12MigrationRetainsRepeatedEntriesAndDirectFlagsBeforeExpandedCompletion() started.
+◇ Test genuineV9MigrationRetainsGraphAndAllowsShareToCreateLabelledItem() started.
+◇ Test bytesOnlyDecodePreservesTheIndependentCompletePortableGraphAndLineage() started.
+◇ Test genuineV13MigrationRetainsGraphAndSchedulesBeforeSchedulingItinerary() started.
+◇ Test actualMembershipRemovalExportsItsDeclaredClosureWithoutChangingRetainedData() started.
+◇ Test emptyAndAcknowledgedStatusReadUsesObservedRecoveryWithoutInventingCloudActivity() started.
+◇ Test aClosedMembershipCannotRedirectItsHistoryToAnotherItem() started.
+◇ Test explicitReopenSuppressesALateDoneSeedWithoutChangingSharedItemState() started.
+◇ Test restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test nativeRepeatedPropertyResolutionIsRetainedByTheImmutableDecodedBackup() started.
+◇ Test largePortableListRetainsAllSourcesAndMembershipBindings() started.
+◇ Test invalidScopeOrUnavailableStoreFailsWholeExportAndRetainsIndependentData(_:) started.
+◇ Test freshShareRequiresExplicitMainSetupWhileAcknowledgedEvidenceSurvivesStoreLoss() started.
+◇ Test nativeExportIncludesArchivedOwnedDataAndPreservesAcknowledgementWithoutAppState() started.
+◇ Test activeExportIncludesAppliedChangesWhileIndependentRecoveryIsUnreadable() started.
+◇ Test ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test genuineV6MigrationRetainsSourcesReceiptsAndRecoveryBeforeShareAddsMembership() started.
+◇ Test unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test concurrentFacadeRetriesPublishOneCheckpointAndPreserveOriginalAppliedResult() started.
+◇ Test genuineV11MigrationRetainsEditedSourcesAndRecoveryBeforeAddingAnEntry() started.
+◇ Test preparedProposalRemainsSelectableWhenTheCommittedStoreIsMissing() started.
+◇ Test bulkCheckpointRetryPreservesEverySupportedGraphGroupAndPriorDeletionMarker() started.
+◇ Test selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData() started.
+◇ Test inspectingRetainedProposalFromSeparateEmptyDatasetNeverImportsOrAcknowledgesIt() started.
+◇ Test genuineV8MigrationPreservesCategoryAndMembershipStateAndHistoricalRecovery() started.
+◇ Test knownAppliedCompletionRetryRepairsRecoveryWithoutReapplyingAndUnblocksLaterEdits() started.
+◇ Test mainMigratesGenuineV4RetainingDeletionHistoryBeforeShareSavesAllDay() started.
+◇ Test mainAppMigratesV3ThenShareRemovesScheduleWithoutLosingItemOrHistoricalReceipt() started.
+◇ Test mainAppMigratesV2BookmarksThenShareSavesScheduleWithoutChangingOldHistory() started.
+◇ Test continuedFileFailureRetainsAppliedEvidenceAndMutationBlockUntilRetrySucceeds() started.
+◇ Test invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test mainAppMigratesV1WithoutChangingItemIdentityStateOrAcknowledgedHistory() started.
+◇ Test genuineV5MigrationPreservesBothScheduleFormsBeforeShareCreatesAnEmptyList() started.
+◇ Test case passing 1 argument testCase → .overflowDate to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .malformed to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .unknownProperty to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .missingGroup to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument testCase → .escapedProperty to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .unknownContent to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .unsupportedVersion to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .duplicateSource to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .duplicateMembership to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .duplicatePair to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .duplicateChange to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .noncanonicalRank to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .numericRank to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .numericBool to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .missingNull to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .emptyTitle to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .coordinate to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .estimate to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .wrongKind to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .wrongLifetime to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .missingChange to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .observedMissingChange to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .completionCycle to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .wrongCanonicalContext to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .inconsistentCompletion to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .invalidZone to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .invalidCivilDate to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .liveDeletion to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .wrongClassification to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .contextualPlace to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument scenario → "valid" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "obsoleteReference" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "wrongCandidate" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "missingClosure" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "foreignSession" to invalidScopeOrUnavailableStoreFailsWholeExportAndRetainsIndependentData(_:) started.
+◇ Test case passing 1 argument scenario → "missingFamily" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "missingStore" to invalidScopeOrUnavailableStoreFailsWholeExportAndRetainsIndependentData(_:) started.
+◇ Test case passing 1 argument scenario → "cycle" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "unreadableStore" to invalidScopeOrUnavailableStoreFailsWholeExportAndRetainsIndependentData(_:) started.
+◇ Test case passing 1 argument scenario → "closedCandidate" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "unknown" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+CoreData: error: addPersistentStoreWithType:configuration:URL:options:error: returned error NSCocoaErrorDomain (259)
+CoreData: error: userInfo:
+CoreData: error: 	NSFilePath : /var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/44D71009-4BB5-4110-8EDC-29D5B219971D/store/Planner.sqlite
+CoreData: error: 	NSSQLiteErrorDomain : 26
+CoreData: error: storeType: SQLite
+CoreData: error: configuration: default
+CoreData: error: URL: file:///var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/44D71009-4BB5-4110-8EDC-29D5B219971D/store/Planner.sqlite
+CoreData: annotation: options:
+CoreData: annotation: 	NSMigratePersistentStoresAutomaticallyOption : 1
+CoreData: annotation: 	NSPersistentStoreStagedMigrationManagerOptionKey : <SwiftData.DefaultMigrationManager: 0x774ef9da40>
+CoreData: annotation: 	NSInferMappingModelAutomaticallyOption : 1
+CoreData: annotation: 	NSPersistentStoreRemoteChangeNotificationOptionKey : 1
+CoreData: annotation: 	NSPersistentHistoryTrackingKey : 1
+CoreData: error: <NSPersistentStoreCoordinator: 0x774df80b40>: Attempting recovery from error encountered during addPersistentStore: 0x77500efde0 Error Domain=NSCocoaErrorDomain Code=259 "The file “Planner.sqlite” couldn’t be opened because it isn’t in the correct format." UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/44D71009-4BB5-4110-8EDC-29D5B219971D/store/Planner.sqlite, NSSQLiteErrorDomain=26}
+CoreData: error: Store failed to load.  <NSPersistentStoreDescription: 0x77500edc50> (type: SQLite, url: file:///var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/44D71009-4BB5-4110-8EDC-29D5B219971D/store/Planner.sqlite) with error = Error Domain=NSCocoaErrorDomain Code=259 "The file “Planner.sqlite” couldn’t be opened because it isn’t in the correct format." UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/44D71009-4BB5-4110-8EDC-29D5B219971D/store/Planner.sqlite, NSSQLiteErrorDomain=26} with userInfo {
+    NSFilePath = "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/44D71009-4BB5-4110-8EDC-29D5B219971D/store/Planner.sqlite";
+    NSSQLiteErrorDomain = 26;
+}
+◇ Test case passing 1 argument scenario → "preparedOnly" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "foreignSession" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "separateDataset" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument action → "source" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument action → "appearance" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument action → "rows" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument action → "query" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument action → "review" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument action → "replay" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument action → "shareRead" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument action → "shareBootstrap" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument action → "mainBootstrap" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument scenario → "missingProposal" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument action → "unknownStatus" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument scenario → "missingNamespace" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "wrongOwner" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument action → "unknownRetry" to ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) started.
+◇ Test case passing 1 argument scenario → "wrongDataset" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "wrongEvidence" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "malformed" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "duplicateIdentity" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "unresolvedReference" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "acknowledged" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "unreadableRecovery" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "malformedRecovery" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "wrongOwnership" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "mismatchedReceipt" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "missingStore" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "foreignSession" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "separateDataset" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+✔ Test absentSourceBindingsRemainExplicitWithoutShorteningOwnersOrChoosingADataset() passed after 2.697 seconds.
+✔ Test invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) with 30 test cases passed after 2.698 seconds.
+✔ Test bytesOnlyDecodePreservesTheIndependentCompletePortableGraphAndLineage() passed after 2.697 seconds.
+✔ Test aClosedMembershipCannotRedirectItsHistoryToAnotherItem() passed after 2.697 seconds.
+✔ Test explicitReopenSuppressesALateDoneSeedWithoutChangingSharedItemState() passed after 2.697 seconds.
+✔ Test nativeRepeatedPropertyResolutionIsRetainedByTheImmutableDecodedBackup() passed after 2.697 seconds.
+✔ Test preparedProposalDoesNotBecomeKnownAppliedPendingStatusOrChangeCurrentContent() passed after 2.698 seconds.
+✔ Test restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) with 7 test cases passed after 2.698 seconds.
+✔ Test authorizedCreationCannotRecreateAMissingInitializedStoreOrReplaceRecovery() passed after 2.698 seconds.
+✔ Test appliedIncompleteStatusRetainsPriorCheckpointAndClearsOnlyAfterRecoveryRepair() passed after 2.698 seconds.
+✔ Test emptyAndAcknowledgedStatusReadUsesObservedRecoveryWithoutInventingCloudActivity() passed after 2.698 seconds.
+✔ Test freshShareRequiresExplicitMainSetupWhileAcknowledgedEvidenceSurvivesStoreLoss() passed after 2.698 seconds.
+✔ Test invalidScopeOrUnavailableStoreFailsWholeExportAndRetainsIndependentData(_:) with 3 test cases passed after 2.698 seconds.
+✔ Test actualMembershipRemovalExportsItsDeclaredClosureWithoutChangingRetainedData() passed after 2.698 seconds.
+✔ Test activeExportIncludesAppliedChangesWhileIndependentRecoveryIsUnreadable() passed after 2.698 seconds.
+✔ Test unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) with 4 test cases passed after 2.724 seconds.
+✔ Test nativeExportIncludesArchivedOwnedDataAndPreservesAcknowledgementWithoutAppState() passed after 2.724 seconds.
+✔ Test genuineV12MigrationRetainsRepeatedEntriesAndDirectFlagsBeforeExpandedCompletion() passed after 2.724 seconds.
+✔ Test preparedProposalRemainsSelectableWhenTheCommittedStoreIsMissing() passed after 2.724 seconds.
+✔ Test genuineV10MigrationPreservesOwnedGraphBeforeItineraryCreation() passed after 2.724 seconds.
+✔ Test ordinaryOperationsRefuseMissingStorageAndResumeOnlyAfterOriginalStoreReturns(_:) with 11 test cases passed after 2.724 seconds.
+✔ Test genuineV6MigrationRetainsSourcesReceiptsAndRecoveryBeforeShareAddsMembership() passed after 2.724 seconds.
+✔ Test genuineV11MigrationRetainsEditedSourcesAndRecoveryBeforeAddingAnEntry() passed after 2.724 seconds.
+✔ Test selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData() passed after 2.724 seconds.
+✔ Test genuineV7MigrationPreservesMembershipStateAndHistoricalRecovery() passed after 2.724 seconds.
+✔ Test genuineV9MigrationRetainsGraphAndAllowsShareToCreateLabelledItem() passed after 2.724 seconds.
+✔ Test genuineV13MigrationRetainsGraphAndSchedulesBeforeSchedulingItinerary() passed after 2.724 seconds.
+✔ Test inspectingRetainedProposalFromSeparateEmptyDatasetNeverImportsOrAcknowledgesIt() passed after 2.724 seconds.
+✔ Test knownAppliedCompletionRetryRepairsRecoveryWithoutReapplyingAndUnblocksLaterEdits() passed after 2.724 seconds.
+✔ Test invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) with 9 test cases passed after 2.724 seconds.
+✔ Test continuedFileFailureRetainsAppliedEvidenceAndMutationBlockUntilRetrySucceeds() passed after 2.724 seconds.
+✔ Test mainMigratesGenuineV4RetainingDeletionHistoryBeforeShareSavesAllDay() passed after 2.724 seconds.
+✔ Test mainAppMigratesV3ThenShareRemovesScheduleWithoutLosingItemOrHistoricalReceipt() passed after 2.724 seconds.
+✔ Test genuineV8MigrationPreservesCategoryAndMembershipStateAndHistoricalRecovery() passed after 2.724 seconds.
+✔ Test mainAppMigratesV2BookmarksThenShareSavesScheduleWithoutChangingOldHistory() passed after 2.724 seconds.
+✔ Suite NativeImportAdmissionTests passed after 2.725 seconds.
+✔ Suite NativeImportDecodingTests passed after 2.725 seconds.
+✔ Suite NativeImportLineageTests passed after 2.725 seconds.
+✔ Suite MissingStoreAdmissionTests passed after 2.725 seconds.
+✔ Suite NativeStatusReadTests passed after 2.725 seconds.
+✔ Suite MissingStoreOperationTests passed after 2.725 seconds.
+✔ Suite NativeExportAdmissionTests passed after 2.725 seconds.
+✔ Suite NativeImportMarkerTests passed after 2.725 seconds.
+✔ Suite NativeExportTests passed after 2.725 seconds.
+✔ Suite ExpandedCompletionMigrationTests passed after 2.725 seconds.
+✔ Suite RecoveryProposalSelectionTests passed after 2.725 seconds.
+✔ Suite ItineraryMigrationTests passed after 2.725 seconds.
+✔ Suite MembershipMigrationTests passed after 2.725 seconds.
+✔ Suite ItineraryEntryMigrationTests passed after 2.725 seconds.
+✔ Suite CategoryMigrationTests passed after 2.725 seconds.
+✔ Suite ItemLabelMigrationTests passed after 2.725 seconds.
+✔ Suite ItineraryScheduleMigrationTests passed after 2.725 seconds.
+✔ Suite RecoveryCheckpointRetryTests passed after 2.725 seconds.
+✔ Suite TagMigrationTests passed after 2.725 seconds.
+✔ Test concurrentFacadeRetriesPublishOneCheckpointAndPreserveOriginalAppliedResult() passed after 2.728 seconds.
+✔ Test unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) with 7 test cases passed after 2.930 seconds.
+✔ Suite NativeStatusAdmissionTests passed after 2.932 seconds.
+✔ Test mainAppMigratesV1WithoutChangingItemIdentityStateOrAcknowledgedHistory() passed after 2.995 seconds.
+✔ Test genuineV5MigrationPreservesBothScheduleFormsBeforeShareCreatesAnEmptyList() passed after 3.071 seconds.
+✔ Suite ItemLinkMigrationTests passed after 3.072 seconds.
+✔ Test bulkCheckpointRetryPreservesEverySupportedGraphGroupAndPriorDeletionMarker() passed after 3.636 seconds.
+✔ Suite RecoveryCheckpointRetryAdmissionTests passed after 3.637 seconds.
+✔ Test largePortableListRetainsAllSourcesAndMembershipBindings() passed after 4.325 seconds.
+✔ Suite NativeImportScaleTests passed after 4.325 seconds.
+✔ Test run with 41 tests in 23 suites passed after 4.325 seconds.

@@ -1,0 +1,699 @@
+Building for debugging...
+[1 / 3] PlannerCore_PlannerCoreStoreTests
+[2 / 16] PlannerCore
+[4 / 18] PlannerCore
+[9 / 21] PlannerCore
+[12 / 14] PlannerCoreTests-product
+[15 / 16] PlannerCoreTests-product
+[16 / 18] PlannerCoreStoreTests-product
+Build complete! (5,51 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportAdmissionTests started.
+◇ Suite NativeExportTests started.
+◇ Suite ExpandedCompletionMigrationTests started.
+◇ Suite ItineraryScheduleMigrationTests started.
+◇ Suite RecoveryCheckpointRetryTests started.
+◇ Suite NativeStatusAdmissionTests started.
+◇ Suite TagMigrationTests started.
+◇ Suite CategoryMigrationTests started.
+◇ Suite NativeExportAdmissionTests started.
+◇ Suite ItineraryMigrationTests started.
+◇ Suite ItemLabelMigrationTests started.
+◇ Suite ItemLinkMigrationTests started.
+◇ Suite NativeImportMarkerTests started.
+◇ Suite NativeImportLineageTests started.
+◇ Suite MembershipMigrationTests started.
+◇ Suite ItineraryEntryMigrationTests started.
+◇ Suite RecoveryProposalSelectionTests started.
+◇ Suite NativeImportDecodingTests started.
+◇ Test nativeExportIncludesArchivedOwnedDataAndPreservesAcknowledgementWithoutAppState() started.
+◇ Test invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Suite MissingStoreAdmissionTests started.
+◇ Test genuineV12MigrationRetainsRepeatedEntriesAndDirectFlagsBeforeExpandedCompletion() started.
+◇ Test absentSourceBindingsRemainExplicitWithoutShorteningOwnersOrChoosingADataset() started.
+◇ Test unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test genuineV13MigrationRetainsGraphAndSchedulesBeforeSchedulingItinerary() started.
+◇ Test appliedIncompleteStatusRetainsPriorCheckpointAndClearsOnlyAfterRecoveryRepair() started.
+◇ Test knownAppliedCompletionRetryRepairsRecoveryWithoutReapplyingAndUnblocksLaterEdits() started.
+◇ Test genuineV8MigrationPreservesCategoryAndMembershipStateAndHistoricalRecovery() started.
+◇ Test genuineV9MigrationRetainsGraphAndAllowsShareToCreateLabelledItem() started.
+◇ Test genuineV10MigrationPreservesOwnedGraphBeforeItineraryCreation() started.
+◇ Test activeExportIncludesAppliedChangesWhileIndependentRecoveryIsUnreadable() started.
+◇ Test genuineV7MigrationPreservesMembershipStateAndHistoricalRecovery() started.
+◇ Test actualMembershipRemovalExportsItsDeclaredClosureWithoutChangingRetainedData() started.
+◇ Test mainMigratesGenuineV4RetainingDeletionHistoryBeforeShareSavesAllDay() started.
+◇ Test explicitReopenSuppressesALateDoneSeedWithoutChangingSharedItemState() started.
+◇ Test mainAppMigratesV2BookmarksThenShareSavesScheduleWithoutChangingOldHistory() started.
+◇ Test restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test preparedProposalDoesNotBecomeKnownAppliedPendingStatusOrChangeCurrentContent() started.
+◇ Test mainAppMigratesV3ThenShareRemovesScheduleWithoutLosingItemOrHistoricalReceipt() started.
+◇ Test nativeRepeatedPropertyResolutionIsRetainedByTheImmutableDecodedBackup() started.
+◇ Test invalidScopeOrUnavailableStoreFailsWholeExportAndRetainsIndependentData(_:) started.
+◇ Test selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData() started.
+◇ Test mainAppMigratesV1WithoutChangingItemIdentityStateOrAcknowledgedHistory() started.
+◇ Test genuineV11MigrationRetainsEditedSourcesAndRecoveryBeforeAddingAnEntry() started.
+◇ Test genuineV5MigrationPreservesBothScheduleFormsBeforeShareCreatesAnEmptyList() started.
+◇ Test preparedProposalRemainsSelectableWhenTheCommittedStoreIsMissing() started.
+◇ Test invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test inspectingRetainedProposalFromSeparateEmptyDatasetNeverImportsOrAcknowledgesIt() started.
+◇ Test case passing 1 argument testCase → .missingGroup to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .unknownContent to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .escapedProperty to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .malformed to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Suite RecoveryCheckpointRetryAdmissionTests started.
+◇ Test case passing 1 argument testCase → .overflowDate to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .unknownProperty to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .unsupportedVersion to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test genuineV6MigrationRetainsSourcesReceiptsAndRecoveryBeforeShareAddsMembership() started.
+◇ Test case passing 1 argument testCase → .duplicateSource to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test bytesOnlyDecodePreservesTheIndependentCompletePortableGraphAndLineage() started.
+◇ Test case passing 1 argument scenario → "unreadableRecovery" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "malformedRecovery" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument testCase → .duplicateMembership to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument scenario → "wrongOwnership" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument testCase → .duplicatePair to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument scenario → "mismatchedReceipt" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument testCase → .duplicateChange to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument scenario → "missingStore" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "foreignSession" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument testCase → .noncanonicalRank to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument scenario → "separateDataset" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument testCase → .numericRank to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .numericBool to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .missingNull to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .emptyTitle to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument scenario → "valid" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument testCase → .coordinate to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .estimate to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument scenario → "obsoleteReference" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument testCase → .wrongKind to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument scenario → "foreignSession" to invalidScopeOrUnavailableStoreFailsWholeExportAndRetainsIndependentData(_:) started.
+◇ Test case passing 1 argument testCase → .wrongLifetime to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument scenario → "wrongCandidate" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "missingStore" to invalidScopeOrUnavailableStoreFailsWholeExportAndRetainsIndependentData(_:) started.
+◇ Test case passing 1 argument testCase → .missingChange to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument scenario → "missingClosure" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument scenario → "cycle" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument testCase → .observedMissingChange to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument scenario → "unreadableStore" to invalidScopeOrUnavailableStoreFailsWholeExportAndRetainsIndependentData(_:) started.
+◇ Test case passing 1 argument scenario → "closedCandidate" to restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) started.
+◇ Test case passing 1 argument testCase → .completionCycle to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .wrongCanonicalContext to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .inconsistentCompletion to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .invalidZone to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .invalidCivilDate to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test authorizedCreationCannotRecreateAMissingInitializedStoreOrReplaceRecovery() started.
+◇ Test case passing 1 argument testCase → .liveDeletion to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .wrongClassification to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .contextualPlace to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument scenario → "missingProposal" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "missingNamespace" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "wrongOwner" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "wrongDataset" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+CoreData: error: addPersistentStoreWithType:configuration:URL:options:error: returned error NSCocoaErrorDomain (259)
+CoreData: error: userInfo:
+CoreData: error: 	NSFilePath : /var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/D61D7164-89F4-42E6-912B-7505F479D215/store/Planner.sqlite
+CoreData: error: 	NSSQLiteErrorDomain : 26
+CoreData: error: storeType: SQLite
+CoreData: error: configuration: default
+CoreData: error: URL: file:///var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/D61D7164-89F4-42E6-912B-7505F479D215/store/Planner.sqlite
+CoreData: annotation: options:
+CoreData: annotation: 	NSMigratePersistentStoresAutomaticallyOption : 1
+CoreData: annotation: 	NSPersistentStoreStagedMigrationManagerOptionKey : <SwiftData.DefaultMigrationManager: 0x7a52971e00>
+CoreData: annotation: 	NSInferMappingModelAutomaticallyOption : 1
+CoreData: annotation: 	NSPersistentStoreRemoteChangeNotificationOptionKey : 1
+CoreData: annotation: 	NSPersistentHistoryTrackingKey : 1
+CoreData: error: <NSPersistentStoreCoordinator: 0x7a52d9f700>: Attempting recovery from error encountered during addPersistentStore: 0x7a54416e20 Error Domain=NSCocoaErrorDomain Code=259 "The file “Planner.sqlite” couldn’t be opened because it isn’t in the correct format." UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/D61D7164-89F4-42E6-912B-7505F479D215/store/Planner.sqlite, NSSQLiteErrorDomain=26}
+CoreData: error: Store failed to load.  <NSPersistentStoreDescription: 0x7a54416bb0> (type: SQLite, url: file:///var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/D61D7164-89F4-42E6-912B-7505F479D215/store/Planner.sqlite) with error = Error Domain=NSCocoaErrorDomain Code=259 "The file “Planner.sqlite” couldn’t be opened because it isn’t in the correct format." UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/D61D7164-89F4-42E6-912B-7505F479D215/store/Planner.sqlite, NSSQLiteErrorDomain=26} with userInfo {
+    NSFilePath = "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/D61D7164-89F4-42E6-912B-7505F479D215/store/Planner.sqlite";
+    NSSQLiteErrorDomain = 26;
+}
+✘ Test genuineV7MigrationPreservesMembershipStateAndHistoricalRecovery() recorded an issue at CategoryMigrationTests.swift:99:7: Expectation failed: NSArray(array: try #require(beforeData[collection] as? [Any])).isEqual(
+          to: try #require(afterData[collection] as? [Any]))
+↳ NSArray(array: try #require(beforeData[collection] as? [Any])).isEqual(
+            to: try #require(afterData[collection] as? [Any])) → <not evaluated>
+✘ Test genuineV7MigrationPreservesMembershipStateAndHistoricalRecovery() recorded an issue at CategoryMigrationTests.swift:107:5: Expectation failed: NSArray(array: beforeSources).isEqual(to: retainedSources)
+↳ NSArray(array: beforeSources).isEqual(to: retainedSources) → false
+↳   NSArray(array: beforeSources) → (
+            {
+            archived = 1;
+            content =         {
+                color =             {
+                    alpha = 1;
+                    blue = "0.75";
+                    green = "0.5";
+                    red = "0.125";
+                };
+                iconName = "fork.knife";
+                name = " Tokyo Food ";
+                notes = " Friday booking ";
+            };
+            contentOrigins =         {
+                name = independent;
+                notes = independent;
+            };
+            createdAt = "813349122.892158";
+            globalDone = "<null>";
+            id = "17FBFF7D-5CBE-4079-968D-7096B0C79B88";
+            kind = list;
+            lifetimeId = "9761313D-4979-4EFB-A830-ECA4C231EC53";
+            updatedAt = "813349122.987994";
+        },
+            {
+            archived = 1;
+            content =         {
+                estimate =             {
+                    displayUnit = hour;
+                    minutes = 120;
+                };
+                location =             {
+                    coordinate =                 {
+                        latitude = 35;
+                        longitude = 139;
+                    };
+                    displayName = "Meeting point";
+                    formattedAddress = "Meeting point A";
+                };
+                notes = "Original notes";
+                subtitle = "<null>";
+                title = Hotel;
+            };
+            contentOrigins =         {
+                location = independent;
+                notes = independent;
+                title = independent;
+            };
+            createdAt = "813349122.779897";
+            globalDone = 0;
+            id = "7368BE6F-E654-4FE8-AB49-4882D7A5C9E9";
+            kind = item;
+            lifetimeId = "14AD9085-3CCA-4233-BE00-3B17CBA67F38";
+            updatedAt = "813349123.055425";
+        },
+            {
+            archived = 0;
+            content =         {
+                color =             {
+                    alpha = 1;
+                    blue = 1;
+                    green = 0;
+                    red = 0;
+                };
+                iconName = "";
+                name = Wishlist;
+                notes = "<null>";
+            };
+            contentOrigins =         {
+                name = independent;
+            };
+            createdAt = "813349122.946663";
+            globalDone = "<null>";
+            id = "D9FA8794-F37D-4126-8126-9DC38BE81705";
+            kind = list;
+            lifetimeId = "5B5FA1D9-CB17-4AE5-A889-34C6EAA0A222";
+            updatedAt = "813349123.030655";
+        }
+    )
+↳   retainedSources → [["updatedAt": 813349122.987994, "content": {
+        color =     {
+            alpha = 1;
+            blue = "0.75";
+            green = "0.5";
+            red = "0.125";
+        };
+        iconName = "fork.knife";
+        name = " Tokyo Food ";
+        notes = " Friday booking ";
+    }, "contentOrigins": {
+        name = independent;
+        notes = independent;
+    }, "id": 17FBFF7D-5CBE-4079-968D-7096B0C79B88, "lifetimeId": 9761313D-4979-4EFB-A830-ECA4C231EC53, "kind": list, "globalDone": <null>, "archived": 1, "createdAt": 813349122.892158], ["globalDone": 0, "archived": 1, "id": 7368BE6F-E654-4FE8-AB49-4882D7A5C9E9, "content": {
+        estimate =     {
+            displayUnit = hour;
+            minutes = 120;
+        };
+        location =     {
+            coordinate =         {
+                latitude = 35;
+                longitude = 139;
+            };
+            displayName = "Meeting point";
+            formattedAddress = "Meeting point A";
+        };
+        notes = "Original notes";
+        subtitle = "<null>";
+        title = Hotel;
+    }, "contentOrigins": {
+        location = independent;
+        notes = independent;
+        title = independent;
+    }, "kind": item, "createdAt": 813349122.779897, "lifetimeId": 14AD9085-3CCA-4233-BE00-3B17CBA67F38, "updatedAt": 813349123.055425], ["updatedAt": 813349123.030655, "contentOrigins": {
+        name = independent;
+    }, "kind": list, "archived": 0, "content": {
+        color =     {
+            alpha = 1;
+            blue = 1;
+            green = 0;
+            red = 0;
+        };
+        iconName = "";
+        name = Wishlist;
+        notes = "<null>";
+    }, "createdAt": 813349122.946663, "id": D9FA8794-F37D-4126-8126-9DC38BE81705, "lifetimeId": 5B5FA1D9-CB17-4AE5-A889-34C6EAA0A222, "globalDone": <null>]]
+◇ Test case passing 1 argument scenario → "wrongEvidence" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+✘ Test genuineV9MigrationRetainsGraphAndAllowsShareToCreateLabelledItem() recorded an issue at ItemLabelMigrationTests.swift:131:7: Expectation failed: NSArray(array: try #require(beforeData[collection] as? [Any])).isEqual(
+          to: try #require(afterData[collection] as? [Any]))
+↳ NSArray(array: try #require(beforeData[collection] as? [Any])).isEqual(
+            to: try #require(afterData[collection] as? [Any])) → <not evaluated>
+✘ Test genuineV9MigrationRetainsGraphAndAllowsShareToCreateLabelledItem() recorded an issue at ItemLabelMigrationTests.swift:139:5: Expectation failed: NSArray(array: beforeSources).isEqual(to: retainedSources)
+↳ NSArray(array: beforeSources).isEqual(to: retainedSources) → false
+↳   NSArray(array: beforeSources) → (
+            {
+            archived = 1;
+            content =         {
+                color =             {
+                    alpha = 1;
+                    blue = "0.75";
+                    green = "0.5";
+                    red = "0.125";
+                };
+                iconName = "fork.knife";
+                name = " Tokyo Food ";
+                notes = " Friday booking ";
+            };
+            contentOrigins =         {
+                name = independent;
+                notes = independent;
+            };
+            createdAt = "813349122.892158";
+            globalDone = "<null>";
+            id = "17FBFF7D-5CBE-4079-968D-7096B0C79B88";
+            kind = list;
+            lifetimeId = "9761313D-4979-4EFB-A830-ECA4C231EC53";
+            updatedAt = "813349122.987994";
+        },
+            {
+            archived = 1;
+            content =         {
+                estimate =             {
+                    displayUnit = hour;
+                    minutes = 120;
+                };
+                location =             {
+                    coordinate =                 {
+                        latitude = 35;
+                        longitude = 139;
+                    };
+                    displayName = "Meeting point";
+                    formattedAddress = "Meeting point A";
+                };
+                notes = "Original notes";
+                subtitle = "<null>";
+                title = Hotel;
+            };
+            contentOrigins =         {
+                location = independent;
+                notes = independent;
+                title = independent;
+            };
+            createdAt = "813349122.779897";
+            globalDone = 0;
+            id = "7368BE6F-E654-4FE8-AB49-4882D7A5C9E9";
+            kind = item;
+            lifetimeId = "14AD9085-3CCA-4233-BE00-3B17CBA67F38";
+            updatedAt = "813349123.055425";
+        },
+            {
+            archived = "<null>";
+            content =         {
+                color =             {
+                    alpha = 1;
+                    blue = 1;
+                    green = "0.5";
+                    red = 0;
+                };
+                iconName = "fork.knife";
+                name = Food;
+            };
+            contentOrigins =         {
+                name = independent;
+            };
+            createdAt = "813353780.935419";
+            globalDone = "<null>";
+            id = "A3DC524C-E0C6-43D3-86C7-4BB24F108E5A";
+            kind = category;
+            lifetimeId = "FD2AA465-71F4-44AB-8273-27E0AB797617";
+            updatedAt = "813353780.935419";
+        },
+            {
+            archived = "<null>";
+            content =         {
+                color =             {
+                    alpha = 1;
+                    blue = 1;
+                    green = "0.5";
+                    red = 0;
+                };
+                iconName = "cloud.rain";
+                name = "Rainy day";
+            };
+            contentOrigins =         {
+                name = independent;
+            };
+            createdAt = "813356503.984255";
+            globalDone = "<null>";
+            id = "AADAD114-7A4F-4FEC-9C2A-4E31AC189F60";
+            kind = tag;
+            lifetimeId = "23AE8D93-0CBE-4A83-A7EE-DD8335E98F40";
+            updatedAt = "813356503.984255";
+        },
+            {
+            archived = 0;
+            content =         {
+                color =             {
+                    alpha = 1;
+                    blue = 1;
+                    green = 0;
+                    red = 0;
+                };
+                iconName = "";
+                name = Wishlist;
+                notes = "<null>";
+            };
+            contentOrigins =         {
+                name = independent;
+            };
+            createdAt = "813349122.946663";
+            globalDone = "<null>";
+            id = "D9FA8794-F37D-4126-8126-9DC38BE81705";
+            kind = list;
+            lifetimeId = "5B5FA1D9-CB17-4AE5-A889-34C6EAA0A222";
+            updatedAt = "813349123.030655";
+        }
+    )
+↳   retainedSources → [["globalDone": <null>, "archived": 1, "id": 17FBFF7D-5CBE-4079-968D-7096B0C79B88, "content": {
+        color =     {
+            alpha = 1;
+            blue = "0.75";
+            green = "0.5";
+            red = "0.125";
+        };
+        iconName = "fork.knife";
+        name = " Tokyo Food ";
+        notes = " Friday booking ";
+    }, "contentOrigins": {
+        name = independent;
+        notes = independent;
+    }, "createdAt": 813349122.892158, "kind": list, "lifetimeId": 9761313D-4979-4EFB-A830-ECA4C231EC53, "updatedAt": 813349122.987994], ["updatedAt": 813349123.055425, "content": {
+        estimate =     {
+            displayUnit = hour;
+            minutes = 120;
+        };
+        location =     {
+            coordinate =         {
+                latitude = 35;
+                longitude = 139;
+            };
+            displayName = "Meeting point";
+            formattedAddress = "Meeting point A";
+        };
+        notes = "Original notes";
+        subtitle = "<null>";
+        title = Hotel;
+    }, "contentOrigins": {
+        location = independent;
+        notes = independent;
+        title = independent;
+    }, "id": 7368BE6F-E654-4FE8-AB49-4882D7A5C9E9, "lifetimeId": 14AD9085-3CCA-4233-BE00-3B17CBA67F38, "kind": item, "globalDone": 0, "archived": 1, "createdAt": 813349122.779897], ["globalDone": <null>, "id": A3DC524C-E0C6-43D3-86C7-4BB24F108E5A, "lifetimeId": FD2AA465-71F4-44AB-8273-27E0AB797617, "content": {
+        color =     {
+            alpha = 1;
+            blue = 1;
+            green = "0.5";
+            red = 0;
+        };
+        iconName = "fork.knife";
+        name = Food;
+    }, "updatedAt": 813353780.935419, "createdAt": 813353780.935419, "contentOrigins": {
+        name = independent;
+    }, "archived": <null>, "kind": category], ["createdAt": 813356503.984255, "contentOrigins": {
+        name = independent;
+    }, "globalDone": <null>, "updatedAt": 813356503.984255, "id": AADAD114-7A4F-4FEC-9C2A-4E31AC189F60, "archived": <null>, "content": {
+        color =     {
+            alpha = 1;
+            blue = 1;
+            green = "0.5";
+            red = 0;
+        };
+        iconName = "cloud.rain";
+        name = "Rainy day";
+    }, "lifetimeId": 23AE8D93-0CBE-4A83-A7EE-DD8335E98F40, "kind": tag], ["kind": list, "globalDone": <null>, "contentOrigins": {
+        name = independent;
+    }, "lifetimeId": 5B5FA1D9-CB17-4AE5-A889-34C6EAA0A222, "createdAt": 813349122.946663, "archived": 0, "content": {
+        color =     {
+            alpha = 1;
+            blue = 1;
+            green = 0;
+            red = 0;
+        };
+        iconName = "";
+        name = Wishlist;
+        notes = "<null>";
+    }, "id": D9FA8794-F37D-4126-8126-9DC38BE81705, "updatedAt": 813349123.030655]]
+✘ Test genuineV8MigrationPreservesCategoryAndMembershipStateAndHistoricalRecovery() recorded an issue at TagMigrationTests.swift:128:7: Expectation failed: NSArray(array: try #require(beforeData[collection] as? [Any])).isEqual(
+          to: try #require(afterData[collection] as? [Any]))
+↳ NSArray(array: try #require(beforeData[collection] as? [Any])).isEqual(
+            to: try #require(afterData[collection] as? [Any])) → <not evaluated>
+◇ Test case passing 1 argument scenario → "malformed" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+✘ Test genuineV8MigrationPreservesCategoryAndMembershipStateAndHistoricalRecovery() recorded an issue at TagMigrationTests.swift:136:5: Expectation failed: NSArray(array: beforeSources).isEqual(to: retainedSources)
+↳ NSArray(array: beforeSources).isEqual(to: retainedSources) → false
+↳   NSArray(array: beforeSources) → (
+            {
+            archived = 1;
+            content =         {
+                color =             {
+                    alpha = 1;
+                    blue = "0.75";
+                    green = "0.5";
+                    red = "0.125";
+                };
+                iconName = "fork.knife";
+                name = " Tokyo Food ";
+                notes = " Friday booking ";
+            };
+            contentOrigins =         {
+                name = independent;
+                notes = independent;
+            };
+            createdAt = "813349122.892158";
+            globalDone = "<null>";
+            id = "17FBFF7D-5CBE-4079-968D-7096B0C79B88";
+            kind = list;
+            lifetimeId = "9761313D-4979-4EFB-A830-ECA4C231EC53";
+            updatedAt = "813349122.987994";
+        },
+            {
+            archived = 1;
+            content =         {
+                estimate =             {
+                    displayUnit = hour;
+                    minutes = 120;
+                };
+                location =             {
+                    coordinate =                 {
+                        latitude = 35;
+                        longitude = 139;
+                    };
+                    displayName = "Meeting point";
+                    formattedAddress = "Meeting point A";
+                };
+                notes = "Original notes";
+                subtitle = "<null>";
+                title = Hotel;
+            };
+            contentOrigins =         {
+                location = independent;
+                notes = independent;
+                title = independent;
+            };
+            createdAt = "813349122.779897";
+            globalDone = 0;
+            id = "7368BE6F-E654-4FE8-AB49-4882D7A5C9E9";
+            kind = item;
+            lifetimeId = "14AD9085-3CCA-4233-BE00-3B17CBA67F38";
+            updatedAt = "813349123.055425";
+        },
+            {
+            archived = "<null>";
+            content =         {
+                color =             {
+                    alpha = 1;
+                    blue = 1;
+                    green = "0.5";
+                    red = 0;
+                };
+                iconName = "fork.knife";
+                name = Food;
+            };
+            contentOrigins =         {
+                name = independent;
+            };
+            createdAt = "813353780.935419";
+            globalDone = "<null>";
+            id = "A3DC524C-E0C6-43D3-86C7-4BB24F108E5A";
+            kind = category;
+            lifetimeId = "FD2AA465-71F4-44AB-8273-27E0AB797617";
+            updatedAt = "813353780.935419";
+        },
+            {
+            archived = 0;
+            content =         {
+                color =             {
+                    alpha = 1;
+                    blue = 1;
+                    green = 0;
+                    red = 0;
+                };
+                iconName = "";
+                name = Wishlist;
+                notes = "<null>";
+            };
+            contentOrigins =         {
+                name = independent;
+            };
+            createdAt = "813349122.946663";
+            globalDone = "<null>";
+            id = "D9FA8794-F37D-4126-8126-9DC38BE81705";
+            kind = list;
+            lifetimeId = "5B5FA1D9-CB17-4AE5-A889-34C6EAA0A222";
+            updatedAt = "813349123.030655";
+        }
+    )
+↳   retainedSources → [["contentOrigins": {
+        name = independent;
+        notes = independent;
+    }, "updatedAt": 813349122.987994, "createdAt": 813349122.892158, "archived": 1, "lifetimeId": 9761313D-4979-4EFB-A830-ECA4C231EC53, "globalDone": <null>, "kind": list, "id": 17FBFF7D-5CBE-4079-968D-7096B0C79B88, "content": {
+        color =     {
+            alpha = 1;
+            blue = "0.75";
+            green = "0.5";
+            red = "0.125";
+        };
+        iconName = "fork.knife";
+        name = " Tokyo Food ";
+        notes = " Friday booking ";
+    }], ["id": 7368BE6F-E654-4FE8-AB49-4882D7A5C9E9, "globalDone": 0, "kind": item, "updatedAt": 813349123.055425, "archived": 1, "content": {
+        estimate =     {
+            displayUnit = hour;
+            minutes = 120;
+        };
+        location =     {
+            coordinate =         {
+                latitude = 35;
+                longitude = 139;
+            };
+            displayName = "Meeting point";
+            formattedAddress = "Meeting point A";
+        };
+        notes = "Original notes";
+        subtitle = "<null>";
+        title = Hotel;
+    }, "lifetimeId": 14AD9085-3CCA-4233-BE00-3B17CBA67F38, "createdAt": 813349122.779897, "contentOrigins": {
+        location = independent;
+        notes = independent;
+        title = independent;
+    }], ["updatedAt": 813353780.935419, "lifetimeId": FD2AA465-71F4-44AB-8273-27E0AB797617, "id": A3DC524C-E0C6-43D3-86C7-4BB24F108E5A, "content": {
+        color =     {
+            alpha = 1;
+            blue = 1;
+            green = "0.5";
+            red = 0;
+        };
+        iconName = "fork.knife";
+        name = Food;
+    }, "kind": category, "contentOrigins": {
+        name = independent;
+    }, "createdAt": 813353780.935419, "globalDone": <null>, "archived": <null>], ["updatedAt": 813349123.030655, "lifetimeId": 5B5FA1D9-CB17-4AE5-A889-34C6EAA0A222, "archived": 0, "contentOrigins": {
+        name = independent;
+    }, "createdAt": 813349122.946663, "id": D9FA8794-F37D-4126-8126-9DC38BE81705, "kind": list, "content": {
+        color =     {
+            alpha = 1;
+            blue = 1;
+            green = 0;
+            red = 0;
+        };
+        iconName = "";
+        name = Wishlist;
+        notes = "<null>";
+    }, "globalDone": <null>]]
+◇ Test case passing 1 argument scenario → "duplicateIdentity" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "unresolvedReference" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+◇ Test case passing 1 argument scenario → "acknowledged" to invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) started.
+✔ Test invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) with 30 test cases passed after 1.317 seconds.
+✔ Test absentSourceBindingsRemainExplicitWithoutShorteningOwnersOrChoosingADataset() passed after 1.317 seconds.
+✔ Test unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) with 7 test cases passed after 1.318 seconds.
+✔ Test nativeExportIncludesArchivedOwnedDataAndPreservesAcknowledgementWithoutAppState() passed after 1.318 seconds.
+✔ Test appliedIncompleteStatusRetainsPriorCheckpointAndClearsOnlyAfterRecoveryRepair() passed after 1.318 seconds.
+✔ Test knownAppliedCompletionRetryRepairsRecoveryWithoutReapplyingAndUnblocksLaterEdits() passed after 1.318 seconds.
+✔ Test explicitReopenSuppressesALateDoneSeedWithoutChangingSharedItemState() passed after 1.318 seconds.
+✔ Test actualMembershipRemovalExportsItsDeclaredClosureWithoutChangingRetainedData() passed after 1.318 seconds.
+✔ Test activeExportIncludesAppliedChangesWhileIndependentRecoveryIsUnreadable() passed after 1.318 seconds.
+✔ Test restorationHistoryPreservesAuthorizedCandidateBindingsAndRejectsObsoleteLifetimes(_:) with 6 test cases passed after 1.318 seconds.
+✔ Test nativeRepeatedPropertyResolutionIsRetainedByTheImmutableDecodedBackup() passed after 1.318 seconds.
+✔ Test preparedProposalDoesNotBecomeKnownAppliedPendingStatusOrChangeCurrentContent() passed after 1.318 seconds.
+✔ Test invalidScopeOrUnavailableStoreFailsWholeExportAndRetainsIndependentData(_:) with 3 test cases passed after 1.318 seconds.
+✔ Test selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData() passed after 1.318 seconds.
+✔ Test mainAppMigratesV2BookmarksThenShareSavesScheduleWithoutChangingOldHistory() passed after 1.318 seconds.
+✔ Test mainAppMigratesV1WithoutChangingItemIdentityStateOrAcknowledgedHistory() passed after 1.318 seconds.
+✔ Test mainAppMigratesV3ThenShareRemovesScheduleWithoutLosingItemOrHistoricalReceipt() passed after 1.318 seconds.
+✔ Test genuineV10MigrationPreservesOwnedGraphBeforeItineraryCreation() passed after 1.318 seconds.
+✔ Test mainMigratesGenuineV4RetainingDeletionHistoryBeforeShareSavesAllDay() passed after 1.322 seconds.
+✔ Test genuineV12MigrationRetainsRepeatedEntriesAndDirectFlagsBeforeExpandedCompletion() passed after 1.322 seconds.
+✔ Test genuineV11MigrationRetainsEditedSourcesAndRecoveryBeforeAddingAnEntry() passed after 1.322 seconds.
+✘ Test genuineV9MigrationRetainsGraphAndAllowsShareToCreateLabelledItem() failed after 1.322 seconds with 2 issues.
+✘ Test genuineV8MigrationPreservesCategoryAndMembershipStateAndHistoricalRecovery() failed after 1.322 seconds with 2 issues.
+◇ Test continuedFileFailureRetainsAppliedEvidenceAndMutationBlockUntilRetrySucceeds() started.
+◇ Test bulkCheckpointRetryPreservesEverySupportedGraphGroupAndPriorDeletionMarker() started.
+◇ Test concurrentFacadeRetriesPublishOneCheckpointAndPreserveOriginalAppliedResult() started.
+◇ Test unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+✔ Test preparedProposalRemainsSelectableWhenTheCommittedStoreIsMissing() passed after 1.322 seconds.
+✘ Test genuineV7MigrationPreservesMembershipStateAndHistoricalRecovery() failed after 1.322 seconds with 2 issues.
+✔ Test genuineV13MigrationRetainsGraphAndSchedulesBeforeSchedulingItinerary() passed after 1.323 seconds.
+✔ Test bytesOnlyDecodePreservesTheIndependentCompletePortableGraphAndLineage() passed after 1.299 seconds.
+◇ Test case passing 1 argument scenario → "unknown" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "preparedOnly" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "foreignSession" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+◇ Test case passing 1 argument scenario → "separateDataset" to unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) started.
+✔ Suite NativeImportAdmissionTests passed after 1.431 seconds.
+✔ Suite NativeExportTests passed after 1.431 seconds.
+✔ Suite NativeStatusAdmissionTests passed after 1.431 seconds.
+✔ Suite RecoveryCheckpointRetryTests passed after 1.431 seconds.
+✔ Suite NativeImportLineageTests passed after 1.431 seconds.
+✔ Suite NativeImportMarkerTests passed after 1.431 seconds.
+✔ Suite NativeExportAdmissionTests passed after 1.431 seconds.
+✔ Suite ItineraryMigrationTests passed after 1.431 seconds.
+✔ Suite ExpandedCompletionMigrationTests passed after 1.432 seconds.
+✔ Suite ItineraryEntryMigrationTests passed after 1.431 seconds.
+✘ Suite ItemLabelMigrationTests failed after 1.431 seconds with 2 issues.
+✘ Suite TagMigrationTests failed after 1.432 seconds with 2 issues.
+✔ Test invalidOrAcknowledgedProposalSelectionRetainsCurrentContentAndRecovery(_:) with 9 test cases passed after 1.431 seconds.
+✔ Test authorizedCreationCannotRecreateAMissingInitializedStoreOrReplaceRecovery() passed after 0.324 seconds.
+✘ Suite CategoryMigrationTests failed after 1.432 seconds with 2 issues.
+✔ Suite ItineraryScheduleMigrationTests passed after 1.432 seconds.
+✔ Suite NativeImportDecodingTests passed after 1.432 seconds.
+✔ Suite MissingStoreAdmissionTests passed after 1.432 seconds.
+✔ Test inspectingRetainedProposalFromSeparateEmptyDatasetNeverImportsOrAcknowledgesIt() passed after 1.436 seconds.
+✔ Suite RecoveryProposalSelectionTests passed after 1.436 seconds.
+✔ Test genuineV5MigrationPreservesBothScheduleFormsBeforeShareCreatesAnEmptyList() passed after 1.467 seconds.
+✔ Suite ItemLinkMigrationTests passed after 1.468 seconds.
+✔ Test continuedFileFailureRetainsAppliedEvidenceAndMutationBlockUntilRetrySucceeds() passed after 0.152 seconds.
+✔ Test concurrentFacadeRetriesPublishOneCheckpointAndPreserveOriginalAppliedResult() passed after 0.156 seconds.
+✔ Test unknownUnverifiedOrUnauthorizedRetryCannotAcknowledgeOrChangeData(_:) with 4 test cases passed after 0.197 seconds.
+✔ Test genuineV6MigrationRetainsSourcesReceiptsAndRecoveryBeforeShareAddsMembership() passed after 1.571 seconds.
+✔ Suite MembershipMigrationTests passed after 1.572 seconds.
+✔ Test bulkCheckpointRetryPreservesEverySupportedGraphGroupAndPriorDeletionMarker() passed after 0.597 seconds.
+✔ Suite RecoveryCheckpointRetryAdmissionTests passed after 1.920 seconds.
+✘ Test run with 36 tests in 20 suites failed after 1.921 seconds with 6 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

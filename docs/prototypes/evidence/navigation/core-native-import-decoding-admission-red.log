@@ -1,0 +1,76 @@
+Building for debugging...
+[Planning 1 / 154]
+[Planning deferred tasks]
+[1 / 7] PlannerCoreTests-product
+[6 / 19] PlannerCoreStoreTests-product
+[8 / 19] PlannerCoreStoreTests-product
+[10 / 21] PlannerCoreStoreTests-product
+[16 / 20] PlannerCoreStoreTests-product
+[18 / 20] PlannerCoreStoreTests-product
+Build complete! (3,37 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportAdmissionTests started.
+◇ Test absentSourceBindingsRemainExplicitWithoutShorteningOwnersOrChoosingADataset() started.
+◇ Test invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .overflowDate to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .malformed to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .missingGroup to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .escapedProperty to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .unknownProperty to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .unknownContent to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .duplicateSource to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .unsupportedVersion to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .duplicateMembership to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .duplicatePair to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+✘ Test invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) recorded an issue with 1 argument testCase → .overflowDate at NativeImportAdmissionTests.swift:168:5: Expectation failed: failure.propertyPath == testCase.path
+↳ failure.propertyPath == testCase.path → false
+↳   failure.propertyPath → ""
+↳     some → ""
+↳   testCase.path → "/sources/0/createdAt"
+◇ Test case passing 1 argument testCase → .duplicateChange to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+✘ Test absentSourceBindingsRemainExplicitWithoutShorteningOwnersOrChoosingADataset() recorded an issue at NativeImportAdmissionTests.swift:198:5: Expectation failed: Set(decoded.originPaths.map(\.propertyPath)) == [
+        "/memberships/0/item", "/memberships/2/item", "/itineraryEntries/0/source",
+        "/schedules/0/source",
+        "/labelAssociations/0/owner", "/labelAssociations/1/owner", "/ownedLinks/0/owner",
+        "/ownedLinks/1/owner",
+      ]
+↳ Set(decoded.originPaths.map(\.propertyPath)) == [
+          "/memberships/0/item", "/memberships/2/item", "/itineraryEntries/0/source",
+          "/schedules/0/source",
+          "/labelAssociations/0/owner", "/labelAssociations/1/owner", "/ownedLinks/0/owner",
+          "/ownedLinks/1/owner",
+        ] → false
+↳   Set(decoded.originPaths.map(\.propertyPath)) → ["/memberships/2/item", "/itineraryEntries/0/source", "/labelAssociations/2/owner", "/labelAssociations/0/owner", "/ownedLinks/1/owner", "/ownedLinks/0/owner", "/schedules/0/source", "/memberships/0/item"]
+↳   [
+            "/memberships/0/item", "/memberships/2/item", "/itineraryEntries/0/source",
+            "/schedules/0/source",
+            "/labelAssociations/0/owner", "/labelAssociations/1/owner", "/ownedLinks/0/owner",
+            "/ownedLinks/1/owner",
+          ] → ["/itineraryEntries/0/source", "/schedules/0/source", "/memberships/0/item", "/memberships/2/item", "/ownedLinks/1/owner", "/labelAssociations/1/owner", "/labelAssociations/0/owner", "/ownedLinks/0/owner"]
+◇ Test case passing 1 argument testCase → .noncanonicalRank to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .numericRank to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .numericBool to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .missingNull to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .emptyTitle to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .coordinate to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .estimate to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .wrongKind to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .wrongLifetime to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .missingChange to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .observedMissingChange to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .completionCycle to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .wrongCanonicalContext to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .inconsistentCompletion to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .invalidZone to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .invalidCivilDate to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .liveDeletion to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .wrongClassification to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+◇ Test case passing 1 argument testCase → .contextualPlace to invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) started.
+✘ Test absentSourceBindingsRemainExplicitWithoutShorteningOwnersOrChoosingADataset() failed after 0.047 seconds with 1 issue.
+✘ Test invalidPortableInputRejectsTheWholeDecodeAtItsExactProperty(testCase:) with 30 test cases failed after 0.058 seconds with 1 issue.
+✘ Suite NativeImportAdmissionTests failed after 0.058 seconds with 2 issues.
+✘ Test run with 2 tests in 1 suite failed after 0.058 seconds with 2 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

@@ -17,6 +17,15 @@ struct PortableItemContent: Codable {
     estimate = input.estimate
   }
 
+  init(from decoder: any Decoder) throws {
+    let fields = try decoder.container(keyedBy: CodingKeys.self)
+    title = try fields.decode(String.self, forKey: .title)
+    subtitle = try fields.decodeIfPresent(String.self, forKey: .subtitle)
+    notes = try fields.decodeIfPresent(String.self, forKey: .notes)
+    location = try fields.decodeIfPresent(PlannerOwnedLocation.self, forKey: .location)
+    estimate = try fields.decodeIfPresent(PortableEstimateRecord.self, forKey: .estimate)?.value
+  }
+
   var input: PlannerItemContentInput {
     PlannerItemContentInput(
       title: title, subtitle: subtitle, notes: notes, location: location, estimate: estimate)
@@ -28,8 +37,36 @@ struct PortableItemContent: Codable {
     try container.encode(subtitle, forKey: .subtitle)
     try container.encode(notes, forKey: .notes)
     try container.encode(location, forKey: .location)
-    try container.encode(estimate, forKey: .estimate)
+    try container.encode(estimate.map(PortableEstimateRecord.init), forKey: .estimate)
   }
+}
+
+private struct PortableEstimateRecord: Codable {
+  let minutes: String
+  let displayUnit: PlannerEstimateUnit
+
+  private enum CodingKeys: String, CodingKey { case minutes, displayUnit }
+
+  init(_ estimate: PlannerEstimate) {
+    minutes = String(estimate.minutes)
+    displayUnit = estimate.displayUnit
+  }
+
+  init(from decoder: any Decoder) throws {
+    let fields = try decoder.container(keyedBy: CodingKeys.self)
+    if let text = try? fields.decode(String.self, forKey: .minutes) {
+      guard let integer = Int64(text), String(integer) == text else {
+        throw PlannerFailure("recoveryIntegrityFailure", "Invalid portable estimate minutes.")
+      }
+      minutes = text
+    } else {
+      /// Existing internal prototype recovery snapshots encoded native integer minutes.
+      minutes = String(try fields.decode(Int64.self, forKey: .minutes))
+    }
+    displayUnit = try fields.decode(PlannerEstimateUnit.self, forKey: .displayUnit)
+  }
+
+  var value: PlannerEstimate { .init(minutes: Int64(minutes)!, displayUnit: displayUnit) }
 }
 
 struct PortableItemRecord: Codable {
@@ -262,10 +299,16 @@ struct PlannerDataSnapshot: Codable {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "The snapshot contains duplicate label associations or pairs.")
     }
-    let linksByOwner = try Dictionary(
-      grouping: ownedLinks.map {
-        try $0.validated(sources: itemRecords, itineraries: itineraryRecords)
-      }, by: { $0.owner.kind.rawValue + ":" + $0.owner.id.uuidString })
+    let portableLinks = try ownedLinks.map { record in
+      let link = try record.validated(sources: itemRecords, itineraries: itineraryRecords)
+      return PlannerPortableOwnedLink(
+        id: record.id, lifetimeId: record.lifetimeId,
+        owner: .init(kind: link.owner.kind, id: link.owner.id, lifetimeId: record.owner.lifetimeId),
+        rank: link.rank, originalUrl: link.read.originalUrl, label: link.read.label,
+        kind: link.read.kind, providerReference: link.read.providerReference)
+    }
+    let linksByOwner = Dictionary(
+      grouping: portableLinks, by: { $0.owner.kind.rawValue + ":" + $0.owner.id.uuidString })
     let items = try itemRecords.map { source in
       let item = try source.validated()
       let links = (linksByOwner["item:" + item.id.uuidString] ?? []).sorted { left, right in
@@ -353,7 +396,7 @@ struct PlannerDataSnapshot: Codable {
             memberships: memberships,
             labelAssociations: labelAssociations,
             entries: itineraryEntries)
-        }))
+        }, ownedLinks: portableLinks))
   }
 }
 

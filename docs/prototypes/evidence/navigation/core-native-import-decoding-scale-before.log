@@ -1,0 +1,17 @@
+Building for debugging...
+[Pre-planning 1 / 154]
+[Planning deferred tasks]
+[1 / 7] PlannerCore
+[9 / 20] PlannerCoreStoreTests-product
+[11 / 22] PlannerCoreStoreTests-product
+[17 / 21] PlannerCoreStoreTests-product
+[19 / 21] PlannerCoreStoreTests-product
+Build complete! (2,83 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportScaleTests started.
+◇ Test largePortableListRetainsAllSourcesAndMembershipBindings() started.
+✔ Test largePortableListRetainsAllSourcesAndMembershipBindings() passed after 34.802 seconds.
+✔ Suite NativeImportScaleTests passed after 34.802 seconds.
+✔ Test run with 1 test in 1 suite passed after 34.802 seconds.

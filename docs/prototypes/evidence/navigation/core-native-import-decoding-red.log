@@ -1,0 +1,38 @@
+Building for debugging...
+[Planning deferred tasks]
+[1 / 1]
+[8 / 35] PlannerCore
+[10 / 35] PlannerCore_PlannerCoreStoreTests
+[11 / 39] PlannerCore
+[15 / 43] PlannerCore
+[16 / 44] PlannerCore
+[17 / 45] PlannerCore
+[21 / 43] PlannerCore
+[23 / 43] PlannerCore
+[29 / 43] PlannerCoreTests-product
+[32 / 42] PlannerCoreStoreTests-product
+[33 / 43] PlannerCoreTests-product
+[46 / 57] PlannerCoreStoreTests-product
+[50 / 56] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift:192:25: warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+190 |     let timedForm = PlannerScheduleForm.timed(
+191 |       start: try #require(ISO8601DateFormatter().date(from: "2026-10-11T01:00:00Z")),
+192 |       end: try #require(ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")),
+    |                         `- warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+193 |       planningTimeZone: "Asia/Tokyo")
+194 |     guard
+[52 / 56] PlannerCoreStoreTests-product
+[54 / 56] PlannerCoreStoreTests-product
+Build complete! (33,41 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportDecodingTests started.
+◇ Test bytesOnlyDecodePreservesTheIndependentCompletePortableGraphAndLineage() started.
+✘ Test bytesOnlyDecodePreservesTheIndependentCompletePortableGraphAndLineage() recorded an issue at NativeImportDecodingTests.swift:25:19: Issue recorded
+↳ Decode the complete independent version-1 fixture: .invalid(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Native portable import decoding is not implemented.", details: nil))
+✘ Test bytesOnlyDecodePreservesTheIndependentCompletePortableGraphAndLineage() failed after 0.007 seconds with 1 issue.
+✘ Suite NativeImportDecodingTests failed after 0.008 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.008 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

@@ -1408,7 +1408,7 @@ struct CommandRoutingTests {
   }
 
   @Test(arguments: [
-    "deleteSource", "applyImport", "restoreRecovery", "retryRecovery", "exportData",
+    "deleteSource", "applyImport", "restoreRecovery", "retryRecovery", "exportData", "decodeImport",
   ])
   func nativeAdministrationIsForbiddenWithoutChangingHotel(_ commandType: String) async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
@@ -1457,7 +1457,7 @@ struct CommandRoutingTests {
       #expect(structured["operationId"] as? String == operationIdentifier.uuidString)
       let reason = try #require(structured["reason"] as? [String: Any])
       let expectedCode: String
-      if ["retryRecovery", "exportData"].contains(commandType) {
+      if ["retryRecovery", "exportData", "decodeImport"].contains(commandType) {
         expectedCode = "unavailable"
       } else {
         expectedCode = "forbiddenOperation"

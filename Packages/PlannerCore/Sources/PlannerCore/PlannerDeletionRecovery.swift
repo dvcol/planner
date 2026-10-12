@@ -14,7 +14,14 @@ enum PortableDeletionTarget: Codable {
     case "source":
       self = .source(try fields.decode(PlannerBoundIdentity.self, forKey: .source))
     case "membership":
-      self = .membership(try fields.decode(PlannerBoundIdentity.self, forKey: .membership))
+      if fields.contains(.membership) {
+        self = .membership(try fields.decode(PlannerBoundIdentity.self, forKey: .membership))
+      } else {
+        self = .membership(
+          .init(
+            kind: "membership", id: try fields.decode(UUID.self, forKey: .id),
+            lifetimeId: try fields.decode(UUID.self, forKey: .lifetimeId)))
+      }
     case "itineraryEntry":
       self = .itineraryEntry(
         id: try fields.decode(UUID.self, forKey: .id),
@@ -37,7 +44,8 @@ enum PortableDeletionTarget: Codable {
       try fields.encode(source, forKey: .source)
     case .membership(let membership):
       try fields.encode("membership", forKey: .kind)
-      try fields.encode(membership, forKey: .membership)
+      try fields.encode(membership.id, forKey: .id)
+      try fields.encode(membership.lifetimeId, forKey: .lifetimeId)
     case .itineraryEntry(let identifier, let lifetimeId):
       try fields.encode("itineraryEntry", forKey: .kind)
       try fields.encode(identifier, forKey: .id)
