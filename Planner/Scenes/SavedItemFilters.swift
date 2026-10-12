@@ -355,16 +355,43 @@ struct SavedListProgress: View {
       if isArchived {
         Label("Archived List", systemImage: "archivebox").foregroundStyle(.secondary)
       }
-      if let done = progress.doneCount, let total = progress.totalCount, total > 0 {
+      if let done = progress.doneCount, let archived = progress.archivedCount,
+        let total = progress.totalCount, total > 0
+      {
         let unit = total == 1 ? "item" : "items"
-        ProgressView(value: Double(done), total: Double(total)) {
-          Text("\(done) of \(total) \(unit) done")
-        }
-        .accessibilityIdentifier("saved.list.progress")
+        SavedCompletionProgress(
+          doneCount: done, archivedCount: archived, totalCount: total,
+          accessibilityIdentifier: "saved.list.progress")
         if Int64(matchingCount) < total {
           Text("Showing \(matchingCount) of \(total) \(unit)")
             .font(.caption).foregroundStyle(.secondary)
         }
+      }
+    }
+  }
+}
+
+struct SavedCompletionProgress: View {
+  let doneCount: Int64
+  let archivedCount: Int64
+  let totalCount: Int64
+  let accessibilityIdentifier: String
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 6) {
+      let unit = totalCount == 1 ? "item" : "items"
+      let finishedCount = doneCount + archivedCount
+      ProgressView(value: Double(finishedCount), total: Double(totalCount)) {
+        if archivedCount > 0 {
+          Text("\(finishedCount) of \(totalCount) \(unit) finished")
+        } else {
+          Text("\(doneCount) of \(totalCount) \(unit) done")
+        }
+      }
+      .accessibilityIdentifier(accessibilityIdentifier)
+      if archivedCount > 0 {
+        Text("\(doneCount) done · \(archivedCount) archived")
+          .font(.caption).foregroundStyle(.secondary)
       }
     }
   }
