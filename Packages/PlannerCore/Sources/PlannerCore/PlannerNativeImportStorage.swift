@@ -65,31 +65,15 @@ struct PlannerNativeLineage {
     }
     let records = try context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>())
     for alias in aliases {
-      try stage(
+      try plannerStageLineageRecord(
         alias, identifier: alias.aliasId, kind: "contextAlias", records: records, context: context)
     }
     for change in changes {
-      try stage(
+      try plannerStageLineageRecord(
         change, identifier: change.id, kind: "completionChange", records: records, context: context)
     }
     return .init(
       contextAliases: aliases, completionChanges: changes, restorationFamilies: restorationFamilies)
-  }
-
-  private func stage<Value: Encodable>(
-    _ value: Value, identifier: UUID, kind: String,
-    records: [PlannerSchemaV16.LineageRecord], context: ModelContext
-  ) throws {
-    let encoder = JSONEncoder()
-    encoder.outputFormatting = [.sortedKeys]
-    let data = try encoder.encode(value)
-    if let record = records.first(where: {
-      $0.recordIdentifier == identifier && $0.recordKind == kind
-    }) {
-      if record.recordData != data { record.recordData = data }
-      return
-    }
-    context.insert(PlannerSchemaV16.LineageRecord(identifier: identifier, kind: kind, data: data))
   }
 
   init(context: ModelContext) throws {
@@ -233,6 +217,11 @@ func plannerInsertImportedGraph(
     guard let list = lists[value.list.id], let item = items[value.item.id] else {
       throw PlannerFailure("missingReference", "Imported membership bindings cannot resolve.")
     }
+    if let membership = memberships[value.id] {
+      membership.rank = value.rank
+      membership.localDone = value.localDone
+      continue
+    }
     let membership = PlannerSchemaV15.Membership(
       snapshot: .init(
         id: value.id, lifetimeId: value.lifetimeId,
@@ -248,6 +237,11 @@ func plannerInsertImportedGraph(
     guard let itinerary = itineraries[value.itinerary.id] else {
       throw PlannerFailure("missingReference", "Imported itinerary bindings cannot resolve.")
     }
+    if let entry = entries[value.id] {
+      entry.rank = value.rank
+      entry.localDone = value.localDone
+      continue
+    }
     let entry = PlannerSchemaV15.ItineraryEntry(
       snapshot: .init(
         id: value.id, lifetimeId: value.lifetimeId,
@@ -262,17 +256,29 @@ func plannerInsertImportedGraph(
     context.insert(entry)
     entries[value.id] = entry
   }
+  let expandedCompletions = try Dictionary(
+    uniqueKeysWithValues: context.fetch(FetchDescriptor<PlannerSchemaV15.ExpandedCompletion>()).map
+    {
+      (try $0.value().context, $0)
+    })
   for value in backup.expandedCompletions {
     guard let entry = entries[value.context.listEntryId],
       let membership = memberships[value.context.membershipId]
     else {
       throw PlannerFailure("missingReference", "Imported expanded completion cannot resolve.")
     }
+    if let expanded = expandedCompletions[value.context] {
+      expanded.localDone = value.localDone
+      continue
+    }
     context.insert(
       PlannerSchemaV15.ExpandedCompletion(
         listEntry: entry, membership: membership, localDone: value.localDone))
   }
+  let associations = try plannerImportRecords(
+    PlannerSchemaV15.LabelAssociation.self, identity: \.id, context: context)
   for value in backup.labelAssociations {
+    if associations[value.id] != nil { continue }
     let category = value.label.kind == .category ? categories[value.label.id] : nil
     let tag = value.label.kind == .tag ? tags[value.label.id] : nil
     let association: PlannerSchemaV15.LabelAssociation
@@ -297,7 +303,16 @@ func plannerInsertImportedGraph(
     association.lifetimeId = value.lifetimeId
     context.insert(association)
   }
+  let links = try plannerImportRecords(
+    PlannerSchemaV15.OwnedLink.self, identity: \.id, context: context)
   for value in backup.ownedLinks {
+    if let link = links[value.id] {
+      link.rank = value.rank
+      link.originalUrl = value.originalUrl
+      link.label = value.label
+      link.kind = value.kind.rawValue
+      continue
+    }
     let link: PlannerSchemaV15.OwnedLink
     if value.owner.kind == .item, let item = items[value.owner.id] {
       link = PlannerSchemaV15.OwnedLink(
@@ -315,7 +330,13 @@ func plannerInsertImportedGraph(
     }
     context.insert(link)
   }
+  let schedules = try plannerImportRecords(
+    PlannerSchemaV15.Schedule.self, identity: \.id, context: context)
   for value in backup.schedules {
+    if let schedule = schedules[value.id] {
+      try schedule.replace(with: value.form)
+      continue
+    }
     let snapshot = ScheduleSnapshot(id: value.id, lifetimeId: value.lifetimeId, form: value.form)
     let schedule: PlannerSchemaV15.Schedule
     if value.source.kind == .item, let item = items[value.source.id] {
@@ -347,22 +368,38 @@ func plannerInsertImportedGraph(
           deletionId: value.deletionId, operationId: value.operationId, target: target,
           closedFamilyId: value.closedFamilyId)))
   }
+  let lineageRecords = try context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>())
   for alias in backup.contextAliases {
-    context.insert(
-      PlannerSchemaV16.LineageRecord(
-        identifier: alias.aliasId, kind: "contextAlias", data: try JSONEncoder().encode(alias)))
+    try plannerStageLineageRecord(
+      alias, identifier: alias.aliasId, kind: "contextAlias", records: lineageRecords,
+      context: context)
   }
   for change in backup.completionChanges {
-    context.insert(
-      PlannerSchemaV16.LineageRecord(
-        identifier: change.id, kind: "completionChange", data: try JSONEncoder().encode(change)))
+    try plannerStageLineageRecord(
+      change, identifier: change.id, kind: "completionChange", records: lineageRecords,
+      context: context)
   }
   for family in backup.restorationFamilies {
-    context.insert(
-      PlannerSchemaV16.LineageRecord(
-        identifier: family.familyId, kind: "restorationFamily",
-        data: try JSONEncoder().encode(family)))
+    try plannerStageLineageRecord(
+      family, identifier: family.familyId, kind: "restorationFamily", records: lineageRecords,
+      context: context)
   }
+}
+
+private func plannerStageLineageRecord<Value: Encodable>(
+  _ value: Value, identifier: UUID, kind: String,
+  records: [PlannerSchemaV16.LineageRecord], context: ModelContext
+) throws {
+  let encoder = JSONEncoder()
+  encoder.outputFormatting = [.sortedKeys]
+  let data = try encoder.encode(value)
+  if let record = records.first(where: {
+    $0.recordIdentifier == identifier && $0.recordKind == kind
+  }) {
+    if record.recordData != data { record.recordData = data }
+    return
+  }
+  context.insert(PlannerSchemaV16.LineageRecord(identifier: identifier, kind: kind, data: data))
 }
 
 private func plannerImportRecords<Record: PersistentModel>(

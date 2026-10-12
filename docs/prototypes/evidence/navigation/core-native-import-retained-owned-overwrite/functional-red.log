@@ -1,0 +1,39 @@
+Building for debugging...
+[1 / 1]
+[1 / 6] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (2,85 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportMergeTests started.
+◇ Test retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument group → "expandedCompletions" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument group → "itineraryEntries" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument group → "memberships" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument group → "ownedLinks" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument group → "schedules" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument group → "completionChanges" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument group → "contextAliases" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+✘ Test retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) recorded an issue with 1 argument group → "itineraryEntries" at NativeImportMergeTests.swift:68:19: Issue recorded
+↳ Overwrite retained owned records and source fields together: PlannerOperationResult(operationId: 3B17D7C4-01A3-41B6-97DD-51B26F8D8A15, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Replacing owned references or completion history still needs reconciliation.", details: nil)))
+✘ Test retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) recorded an issue with 1 argument group → "contextAliases" at NativeImportMergeTests.swift:68:19: Issue recorded
+↳ Overwrite retained owned records and source fields together: PlannerOperationResult(operationId: 1CEDAC9D-E725-4C84-9BF8-E71A1D0F71B9, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Replacing owned references or completion history still needs reconciliation.", details: nil)))
+✘ Test retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) recorded an issue with 1 argument group → "expandedCompletions" at NativeImportMergeTests.swift:68:19: Issue recorded
+↳ Overwrite retained owned records and source fields together: PlannerOperationResult(operationId: 5F136F85-02B6-4F53-ABC6-4140B11D4F6B, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Replacing owned references or completion history still needs reconciliation.", details: nil)))
+✘ Test retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) recorded an issue with 1 argument group → "schedules" at NativeImportMergeTests.swift:68:19: Issue recorded
+↳ Overwrite retained owned records and source fields together: PlannerOperationResult(operationId: B24A8859-59E8-4549-9F76-BFD86E546A5A, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Replacing owned references or completion history still needs reconciliation.", details: nil)))
+✘ Test retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) recorded an issue with 1 argument group → "memberships" at NativeImportMergeTests.swift:68:19: Issue recorded
+↳ Overwrite retained owned records and source fields together: PlannerOperationResult(operationId: 69D607C9-CB33-4402-88B7-F346045050F3, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Replacing owned references or completion history still needs reconciliation.", details: nil)))
+✘ Test retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) recorded an issue with 1 argument group → "completionChanges" at NativeImportMergeTests.swift:68:19: Issue recorded
+↳ Overwrite retained owned records and source fields together: PlannerOperationResult(operationId: 22D06B51-CFEF-4FFC-929E-725EF568A627, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Replacing owned references or completion history still needs reconciliation.", details: nil)))
+✘ Test retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) recorded an issue with 1 argument group → "ownedLinks" at NativeImportMergeTests.swift:68:19: Issue recorded
+↳ Overwrite retained owned records and source fields together: PlannerOperationResult(operationId: 0B4C0EC3-F544-4A02-9C3D-1F22C5883244, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Replacing owned references or completion history still needs reconciliation.", details: nil)))
+✘ Test retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) with 7 test cases failed after 0.161 seconds with 7 issues.
+✘ Suite NativeImportMergeTests failed after 0.161 seconds with 7 issues.
+✘ Test run with 1 test in 1 suite failed after 0.161 seconds with 7 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

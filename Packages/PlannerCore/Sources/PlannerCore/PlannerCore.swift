@@ -2109,7 +2109,7 @@ public actor Planner {
     let merge = try PlannerImportMerge(
       incoming: backup.backup, current: current.backup, resolution: resolution)
     try plannerInsertImportedGraph(
-      merge.additions, replacing: merge.sourceReplacements, context: context)
+      merge.recordsToWrite, replacing: merge.sourceReplacements, context: context)
     let restored = try importReviewSnapshot(context)
     guard
       restored.backup.importCanonicalValue.encoded()
@@ -2138,7 +2138,7 @@ public actor Planner {
         proposalId: UUID(), originalOperationId: operation.operationId,
         datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
         proposedBackup: proposalSnapshot, payloadDigest: digest, evidence: "preparedUnverified"))
-    let generated = merge.additions.sources.map {
+    let generated = merge.recordsToWrite.sources.map {
       PlannerAppliedIdentity.source($0.importBinding.reference)
     }
     let affected =
