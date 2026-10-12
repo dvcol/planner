@@ -1,0 +1,72 @@
+{
+  "baseCommit": "f23bc43",
+  "sourceHashes": {
+    "PlannerFixtures/PlannerFixtureApp.swift": "be9091526ccee924a970280f19eba4c437457424449a3a2b26b833efcb361032",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "d6aeebc37eea8ec862849a67e36f46e153f779c890645905decc9da10b72074c",
+    "PlannerFixtureUITests/DelayedLinkPreviewJourneyTests.swift": "c5d03af6af80dec01eec7d77e4f6dcbf4dec00726836c6cad1b7d93dd2547d20",
+    "PlannerNavigationUITests/NativeNavigationElements.swift": "53659f78aa021f34bd5bd868e2da82eaa010993799d64f945c75959d7c3915e5",
+    "PlannerFixtures/PreviewFixtures/website-image.png": "0d76d81b78ceb04bef88498dd818162578377243fc6554a2788b57a579fc6591",
+    "Planner/Scenes/ItemLinkPreviewCard.swift": "5642f7ea644af29c6bc907e1dba457f1cbc3dfeba21b971c07ab4d8d1b7b1995",
+    "Planner/Scenes/ItemLinksSection.swift": "a6ecc9c5335ebafbd6f9af82feb76343ea21907558ea3f6efccff5cf476ee6fa",
+    "Planner/Scenes/SavedEditItemForm.swift": "19cace300840fa84a1c24b3e63ff872e555c07aaf2d3402f4fefd7eeb9b3a86f",
+    "Planner/Scenes/SavedOwnedLinksEditor.swift": "d8ee1ebafdea6737f1dbe9474cb1b6c374f3fa0293f74272098f4d259d4a7488",
+    "Planner.xcodeproj/project.pbxproj": "4bced3d822b15a78ffeb25fece1ff83c4f6b557417745c2c7ffdbc13830e5771"
+  },
+  "commands": {
+    "red": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/DelayedLinkPreviewJourneyTests/testDelayedLinkResultCannotReplaceTheEditedURLPreview\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerDelayedLinkRed.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "redLog": "/private/tmp/PlannerDelayedLinkRed.log",
+    "url-edit-failure": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/DelayedLinkPreviewJourneyTests/testDelayedLinkResultCannotReplaceTheEditedURLPreview\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerDelayedLinkPhoneGreen.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "url-edit-failureLog": "/private/tmp/PlannerDelayedLinkPhoneGreen.log",
+    "phone": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/DelayedLinkPreviewJourneyTests/testDelayedLinkResultCannotReplaceTheEditedURLPreview\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerDelayedLinkPhoneFinal.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "phoneLog": "/private/tmp/PlannerDelayedLinkPhoneFinal.log",
+    "tablet": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/DelayedLinkPreviewJourneyTests/testDelayedLinkResultCannotReplaceTheEditedURLPreview\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerDelayedLinkTabletFinal.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "tabletLog": "/private/tmp/PlannerDelayedLinkTabletFinal.log",
+    "macBuild": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData CODE_SIGNING_ALLOWED=NO build-for-testing",
+    "macBuildLog": "/private/tmp/PlannerDelayedLinkMacBuild.log"
+  },
+  "qualification": {
+    "counts": {
+      "red": {
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "url-edit-failure": {
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "phone": {
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "tablet": {
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      }
+    },
+    "macBuild": "TEST BUILD SUCCEEDED",
+    "macUIFunctions": 0,
+    "captures": "Inspected six original final phone/tablet pending, current image, reopened no-image captures. Tablet current capture also shows refreshed row thumbnail. Phone floating tab bar overlaps lower card text; polish remains open.",
+    "strictSwiftFiles": 3,
+    "markdownFiles": 1
+  },
+  "red": "Owned bookmark/source checks passed, then absent Loading preview failed at test line 29.",
+  "failedAttempt": "First green attempt reached editing but insertion occurred within the URL: https://fixtures.invalid/current/delayed. Native Select All replacement corrected the test gesture; original bundle/log/attachments remain.",
+  "review": {
+    "standards": "No actionable findings.",
+    "spec": "No actionable findings; current image requires actual old-callback release. Native Save/identity/pixels/relaunch match."
+  },
+  "sourceEpoch": "Final phone/tablet/Mac use identical fixture/test sources. Production app/Core/cache unchanged. Initial red precedes provider gate; URL-edit attempt precedes Select All test correction.",
+  "remainingGates": [
+    "Native loading/scale Q58",
+    "Import application/recovery",
+    "Filtered drag/group/duration",
+    "Calendar",
+    "Broad native Mac runtime",
+    "Signed physical sync/account/Share",
+    "Whole-app polish"
+  ]
+}

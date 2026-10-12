@@ -38,20 +38,45 @@ struct PlannerFixtureApp: App {
 final class FixturePreviewProvider: PlannerLinkPreviewProvider, PlannerAddressPreviewProvider {
   private var hasFailedRetryLink = false
   private var hasFailedRetryAddress = false
+  private var pendingLinkPreviewContinuation:
+    CheckedContinuation<PlannerLinkPreviewContent, any Error>?
   private var pendingAddressPreviewContinuation:
     CheckedContinuation<[PlannerAddressCandidate], any Error>?
   func linkPreview(for originalURL: String) async throws -> PlannerLinkPreviewContent {
+    if originalURL == "https://fixtures.invalid/delayed" {
+      return try await withCheckedThrowingContinuation { continuation in
+        guard pendingLinkPreviewContinuation == nil else {
+          continuation.resume(throwing: CancellationError())
+          return
+        }
+        pendingLinkPreviewContinuation = continuation
+      }
+    }
+    let imageTitle: String
+    if originalURL == "https://fixtures.invalid/current" {
+      guard let continuation = pendingLinkPreviewContinuation else {
+        return .init(title: "Reopened website", imageData: nil)
+      }
+      pendingLinkPreviewContinuation = nil
+      continuation.resume(returning: .init(title: "Outdated website", imageData: nil))
+      imageTitle = "Current website"
+    } else {
+      imageTitle = "Fixture image preview"
+    }
     if originalURL == "https://fixtures.invalid/retry", !hasFailedRetryLink {
       hasFailedRetryLink = true
       throw URLError(.cannotConnectToHost)
     }
-    guard originalURL == "https://fixtures.invalid/image" else {
+    guard
+      originalURL == "https://fixtures.invalid/image"
+        || originalURL == "https://fixtures.invalid/current"
+    else {
       return .init(title: "Fixture link", imageData: nil)
     }
     guard let imageURL = Bundle.main.url(forResource: "website-image", withExtension: "png") else {
       throw CocoaError(.fileNoSuchFile)
     }
-    return .init(title: "Fixture image preview", imageData: try Data(contentsOf: imageURL))
+    return .init(title: imageTitle, imageData: try Data(contentsOf: imageURL))
   }
 
   func addressPreview(for address: String) async throws -> [PlannerAddressCandidate] {
