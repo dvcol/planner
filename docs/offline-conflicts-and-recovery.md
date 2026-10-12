@@ -1,5 +1,9 @@
 # Offline conflicts and recovery
 
+## 12 October derived archive behavior
+
+[Container estimates and calendar](container-estimates-and-calendar.md) records the subsequent Q65-Q71 amendment: archived children and referenced List branches retire from remaining time and count as finished in derived container progress. Archiving still preserves global/local Done flags, content, identities and references; container-only Archive/Delete, no Trash, recovery and deletion precedence remain intact. Unarchive restores retained completion behavior. Q72 about archived containers' own progress is pending. This changes derived presentation/calculation, not the required persistence or physical recovery guarantees.
+
 Accepted decision record for [Offline conflicts and recovery](https://github.com/dvcol/planner/issues/10). The human answered R1-R21 on 2026-10-08. R14 replaces the earlier Trash choice with Archive plus confirmed Delete. Implementation and native presentation questions have explicit downstream owners below. This record contains no application code, approved Swift interfaces or executed persistence/CloudKit tests.
 
 ## Context and starting state
