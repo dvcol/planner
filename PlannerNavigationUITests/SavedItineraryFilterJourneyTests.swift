@@ -88,7 +88,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
     XCTAssertTrue(entries[1].waitForExistence(timeout: 5), application.debugDescription)
     XCTAssertTrue(entries[2].exists)
     XCTAssertTrue(application.staticTexts["Matching 0 of 3 items"].exists)
-    XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
+    assertFullProgress(application)
     recordScreenshot(
       application, name: "Matching List headers and selected appearance after search")
     XCTAssertTrue(application.staticTexts["No matching items"].firstMatch.exists)
@@ -115,7 +115,8 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
       XCTAssertTrue(entries[1].waitForNonExistence(timeout: 10))
       XCTAssertFalse(entries[2].exists)
       XCTAssertTrue(application.staticTexts["No matching entries"].exists)
-      XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
+      XCTAssertEqual(
+        application.progressIndicators["saved.itinerary.progress"].label, "1 of 3 items done")
       recordScreenshot(
         application, name: "Item-only restrictions cannot retain a matching List header")
       filters.activateForPlannerJourney()
@@ -153,7 +154,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
     XCTAssertTrue(entries[1].exists)
     XCTAssertTrue(entries[2].exists)
     XCTAssertTrue(application.staticTexts["Matching 2 of 3 items"].exists)
-    XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
+    assertFullProgress(application)
     recordScreenshot(
       application, name: "Matching children retain both independent List appearances")
     filters.activateForPlannerJourney()
@@ -163,7 +164,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
       "tags", names: ["Rain", "Indoor"], prefix: "saved.filters", application: application)
     application.plannerElement("saved.filters.done").activateForPlannerJourney()
     XCTAssertEqual(rows.count, 2)
-    XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
+    assertFullProgress(application)
     filters.activateForPlannerJourney()
     application.revealSavedPlannerFilter("saved.filters.tag.match")
     application.plannerElement("saved.filters.tag.match").activateForPlannerJourney()
@@ -172,7 +173,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
     XCTAssertTrue(rows.firstMatch.waitForNonExistence(timeout: 10))
     XCTAssertFalse(entries[1].exists)
     XCTAssertFalse(entries[2].exists)
-    XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
+    assertFullProgress(application)
     if keepsDetail {
       XCTAssertTrue(application.staticTexts["Culture"].exists)
       XCTAssertTrue(application.staticTexts["Rain"].exists)
@@ -187,7 +188,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
     XCTAssertTrue(rows.firstMatch.waitForNonExistence(timeout: 10))
     for entry in entries { XCTAssertFalse(entry.exists) }
     XCTAssertTrue(application.staticTexts["No matching entries"].exists)
-    XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
+    assertFullProgress(application)
     replaceText(search, with: "", application: application)
     XCTAssertTrue(rows.firstMatch.waitForExistence(timeout: 10))
     XCTAssertEqual(rows.allElementsBoundByIndex.map(\.identifier), originalIdentifiers)
@@ -209,7 +210,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
     XCTAssertEqual(rows.allElementsBoundByIndex.map(\.identifier), originalIdentifiers)
     XCTAssertTrue(firstCompletion.waitForPlannerValue("Completed"))
     XCTAssertTrue(secondCompletion.waitForPlannerValue("To do"))
-    XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
+    assertFullProgress(application)
   }
 
   private func createLabels(_ application: XCUIApplication) {
@@ -232,6 +233,18 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
       XCTAssertTrue(application.staticTexts[name].firstMatch.waitForExistence(timeout: 10))
     }
     application.plannerElement("saved.categories.done").activateForPlannerJourney()
+  }
+
+  private func assertFullProgress(
+    _ application: XCUIApplication, file: StaticString = #filePath, line: UInt = #line
+  ) {
+    let progress = application.progressIndicators["saved.itinerary.progress"]
+    for _ in 0..<4 {
+      if progress.exists { break }
+      application.swipeDown()
+    }
+    XCTAssertTrue(progress.waitForExistence(timeout: 5), file: file, line: line)
+    XCTAssertEqual(progress.label, "1 of 3 items done", file: file, line: line)
   }
 
   private func selectLabels(

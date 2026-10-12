@@ -136,6 +136,31 @@ extension XCUIApplication {
   }
 
   func openPlannerSection(_ title: String) {
+    #if os(iOS)
+      let identifier: String?
+      switch title {
+      case "Lists": identifier = "list.bullet"
+      case "Items": identifier = "square.stack"
+      case "Inbox": identifier = "tray"
+      case "Itineraries": identifier = "point.topleft.down.to.point.bottomright.curvepath"
+      default: identifier = nil
+      }
+      if let identifier,
+        let tab = buttons.matching(identifier: identifier).allElementsBoundByIndex.first(
+          where: \.isHittable)
+      {
+        tab.tap()
+        XCTAssertEqual(
+          XCTWaiter.wait(
+            for: [
+              XCTNSPredicateExpectation(
+                predicate: NSPredicate(format: "selected == true"), object: tab)
+            ], timeout: 5), .completed)
+        let sidebar = buttons["Show Sidebar"]
+        if sidebar.exists { sidebar.tap() }
+        return
+      }
+    #endif
     #if os(macOS)
       let section = plannerElement("nav.\(title.lowercased())")
     #else

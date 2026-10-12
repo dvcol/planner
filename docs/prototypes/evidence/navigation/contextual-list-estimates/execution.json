@@ -1,0 +1,85 @@
+{
+  "beforeCommit": "ec2d939",
+  "mode": "localOnly",
+  "storageSchemaVersion": 15,
+  "portableFormatVersion": 2,
+  "qualification": {
+    "core": {
+      "log": "/private/tmp/PlannerItineraryListSummariesCoreQualified.log",
+      "functions": 17,
+      "suites": 9,
+      "caseExecutions": 20,
+      "failures": 0
+    },
+    "http": {
+      "bundle": "/private/tmp/PlannerItineraryListSummariesHTTPGreen.xcresult",
+      "functions": 3,
+      "suites": 2,
+      "caseExecutions": 4,
+      "failures": 0,
+      "skips": 0
+    },
+    "phone": {
+      "bundle": "/private/tmp/PlannerNativeListBranchEstimatesPhoneDrawerFinal.xcresult",
+      "functions": 1,
+      "failures": 0,
+      "skips": 0
+    },
+    "tablet": {
+      "bundle": "/private/tmp/PlannerNativeListBranchEstimatesTabletFinal.xcresult",
+      "functions": 1,
+      "failures": 0,
+      "skips": 0
+    },
+    "macBuild": {
+      "log": "/private/tmp/PlannerContextualListEstimatesMacFinalBuild.log",
+      "result": "TEST BUILD SUCCEEDED",
+      "nativeUIFunctions": 0
+    },
+    "strictSwiftFiles": 12,
+    "sourceEpochNote": "Production source is unchanged across final phone/tablet runs except removal of a blank line from SavedItineraryContentViews. The corrected filter run uses the final shared native tab helper and bounded scrolling. Changes between these bundles affect tests only.",
+    "phoneFilterRegression": {
+      "bundle": "/private/tmp/PlannerListBranchFilterRegressionPhoneTabs.xcresult",
+      "functions": 1,
+      "failures": 0,
+      "skips": 0,
+      "durationSeconds": 320.821
+    }
+  },
+  "redEvidence": {
+    "core": "/private/tmp/PlannerItineraryListSummariesRed.log: compile failure at absent public listEntrySummaries declaration; no executed runtime red.",
+    "http": "/private/tmp/PlannerItineraryListSummariesHTTPRed.xcresult: executed failure at missing listEntrySummaries wire field.",
+    "native": "/private/tmp/PlannerNativeListBranchEstimatesRed.xcresult: executed failure at absent nested estimate preview.",
+    "excludedAttempts": [
+      "Phone Green and PhoneFinal bundles failed to reveal the collapsed search drawer after the numeric assertions passed. They are not qualified whole journeys.",
+      "The existing filter regression reached matching children and failed at a zero-sized ProgressView child StaticText. Exported UI hierarchy exposes the correct root ProgressIndicator label. The test now asserts that actual component; its first failed bundle is excluded.",
+      "PhoneFinal filter regression queried a ProgressIndicator while its native List cell was scrolled offscreen. Bounded scrolling now reveals that header before inspection.",
+      "PhoneScrolled filter attempt failed before fixture creation at the old destination-title lookup. Shared native test navigation now chooses a visible tab by its system identifier and verifies selected state."
+    ]
+  },
+  "commands": {
+    "phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedContainerEstimateJourneyTests/testRepeatedListPreviewsKeepIndependentItineraryBudgetsThroughHeaderFilteringAndRelaunch\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerNativeListBranchEstimatesPhoneDrawerFinal.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "tablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedContainerEstimateJourneyTests/testRepeatedListPreviewsKeepIndependentItineraryBudgetsThroughHeaderFilteringAndRelaunch\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentTabletDerivedData -resultBundlePath /private/tmp/PlannerNativeListBranchEstimatesTabletFinal.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "phoneFilterRegression": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedItineraryFilterJourneyTests/testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerListBranchFilterRegressionPhoneTabs.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "http": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO \"-only-testing:PlannerMCPTests/ManualContainerEstimateRoutingTests\" \"-only-testing:PlannerMCPTests/ItinerarySourceRoutingTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerMCPDerivedData -resultBundlePath /private/tmp/PlannerItineraryListSummariesHTTPGreen.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "macBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData CODE_SIGNING_ALLOWED=NO build-for-testing",
+    "core": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --jobs 1 --filter 'ItineraryListSummaryTests|ManualContainerBudgetTests|ContainerEstimateTests|ItineraryArchiveTests|ItineraryEditTests|ItineraryScheduleTests|ItineraryItemFilterTests|ItineraryManualQueryTests'"
+  },
+  "captures": [
+    "phone-independent.png",
+    "phone-filtered.png",
+    "tablet-independent.png",
+    "tablet-filtered.png"
+  ],
+  "captureLimitation": "The filtered phone keyboard covers branch rows. Numeric assertions verify their values; the tablet capture shows the first filtered branch.",
+  "remainingGates": [
+    "Catalog duration previews",
+    "Further native uncertainty/archive fixtures",
+    "Calendar",
+    "Complete administration/restoration",
+    "Native scale",
+    "Native Mac UI runtime",
+    "Signed physical iCloud/account/Share",
+    "Whole-app polish"
+  ]
+}

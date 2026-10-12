@@ -346,6 +346,21 @@
         "references": .array(read.references.map(referenceValue)),
         "progress": progressValue(read.progress),
         "estimates": estimatesValue(read.estimates),
+        "listEntrySummaries": .array(read.listEntrySummaries.map(listEntrySummaryValue)),
+      ])
+    }
+
+    private static func listEntrySummaryValue(_ summary: PlannerItineraryListEntrySummary) -> Value
+    {
+      .object([
+        "entryId": .string(summary.entryId.uuidString),
+        "source": .object([
+          "kind": .string(summary.source.kind.rawValue),
+          "id": .string(summary.source.id.uuidString),
+        ]),
+        "manualEstimate": summary.manualEstimate.map(estimateValue) ?? .null,
+        "progress": progressValue(summary.progress),
+        "estimates": estimatesValue(summary.estimates),
       ])
     }
 

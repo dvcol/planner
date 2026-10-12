@@ -183,10 +183,19 @@ struct SavedItineraryDetail: View {
                         Label("Archived List", systemImage: "archivebox")
                           .font(.caption).foregroundStyle(.secondary)
                       }
-                      if !entry.items.isEmpty {
+                      if let summary = entry.listSummary {
+                        SavedContainerEstimates(
+                          estimates: summary.estimates,
+                          manualEstimate: summary.manualEstimate,
+                          accessibilityIdentifierPrefix:
+                            "saved.itinerary.entry.estimate.\(entry.id.uuidString)")
+                      }
+                      if let summary = entry.listSummary, let done = summary.progress.doneCount,
+                        let archived = summary.progress.archivedCount,
+                        let total = summary.progress.totalCount, total > 0
+                      {
                         SavedCompletionProgress(
-                          doneCount: entry.doneCount, archivedCount: entry.archivedCount,
-                          totalCount: Int64(entry.items.count),
+                          doneCount: done, archivedCount: archived, totalCount: total,
                           accessibilityIdentifier: "saved.itinerary.entry.progress.\(entry.id)"
                         )
                         .font(.caption).foregroundStyle(.secondary)

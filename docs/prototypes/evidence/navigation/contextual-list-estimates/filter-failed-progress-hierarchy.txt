@@ -1,0 +1,2 @@
+ProgressIndicator, 0x108436080, {{0.0, 222.0}, {402.0, 58.3}}, identifier: 'saved.itinerary.progress', label: '1 of 3 items done', value: 33 % <AX element pid: 66271, elementOrHash.elementID: 4715657760.1598>
+StaticText, 0x108437700, {{0.0, 0.0}, {0.0, 0.0}}, label: '1 of 3 items done' <AX element pid: 66271, elementOrHash.elementID: 4715644480.1602>

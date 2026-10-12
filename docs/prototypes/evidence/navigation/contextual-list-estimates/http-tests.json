@@ -1,0 +1,97 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "00006030-001A586C3EA3001C",
+      "deviceName" : "My Mac",
+      "modelName" : "MacBook Pro",
+      "osBuildNumber" : "26A434",
+      "osVersion" : "27.0.1",
+      "platform" : "macOS"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0,17s",
+                  "durationInSeconds" : 0.16776704788208008,
+                  "name" : "completeItinerarySourcesOverHTTPStayLiveAcrossReplayAnotherWriterAndReopen()",
+                  "nodeIdentifier" : "ItinerarySourceRoutingTests/completeItinerarySourcesOverHTTPStayLiveAcrossReplayAnotherWriterAndReopen()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ItinerarySourceRoutingTests/completeItinerarySourcesOverHTTPStayLiveAcrossReplayAnotherWriterAndReopen()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "ItinerarySourceRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ItinerarySourceRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,36s",
+                  "durationInSeconds" : 0.3616316318511963,
+                  "name" : "manualAndNestedBudgetReadsOverHTTPExposeUpperBoundsAndFinishedZero()",
+                  "nodeIdentifier" : "ManualContainerEstimateRoutingTests/manualAndNestedBudgetReadsOverHTTPExposeUpperBoundsAndFinishedZero()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ManualContainerEstimateRoutingTests/manualAndNestedBudgetReadsOverHTTPExposeUpperBoundsAndFinishedZero()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,16s",
+                      "durationInSeconds" : 0.15606188774108887,
+                      "name" : ".itinerary",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ManualContainerEstimateRoutingTests/manualEstimatesCreateEditClearAndReportStaleValuesOverHTTP(kind:)?args=f62673c4d162b6505590121c0b22b475cec35615b9f49ae9d2c98d00af6522e8",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,11s",
+                      "durationInSeconds" : 0.11434078216552734,
+                      "name" : ".list",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ManualContainerEstimateRoutingTests/manualEstimatesCreateEditClearAndReportStaleValuesOverHTTP(kind:)?args=dcb452a982945e5e2957930d83d36af5ceee19805ec0c3b30529ae8f44f6e49e",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,14s",
+                  "durationInSeconds" : 0.1352013349533081,
+                  "name" : "manualEstimatesCreateEditClearAndReportStaleValuesOverHTTP(kind:)",
+                  "nodeIdentifier" : "ManualContainerEstimateRoutingTests/manualEstimatesCreateEditClearAndReportStaleValuesOverHTTP(kind:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ManualContainerEstimateRoutingTests/manualEstimatesCreateEditClearAndReportStaleValuesOverHTTP(kind:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "ManualContainerEstimateRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ManualContainerEstimateRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "PlannerMCPTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "Planner",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

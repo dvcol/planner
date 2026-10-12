@@ -44,6 +44,14 @@ public enum PlannerItineraryField: String, Sendable, CaseIterable {
   case title, notes, color, iconName, location, links, categoryIds, tagIds, manualEstimate
 }
 
+public struct PlannerItineraryListEntrySummary: Sendable {
+  public let entryId: UUID
+  public let source: PlannerEntityReference
+  public let manualEstimate: PlannerEstimate?
+  public let progress: PlannerContainerProgress
+  public let estimates: PlannerContainerEstimates
+}
+
 public struct PlannerItinerarySourceRead: Sendable {
   public let source: PlannerEntityReference
   public let sourceLifetimeId: UUID
@@ -55,6 +63,7 @@ public struct PlannerItinerarySourceRead: Sendable {
   public let state: PlannerSourceState
   public let progress: PlannerContainerProgress
   public let estimates: PlannerContainerEstimates
+  public let listEntrySummaries: [PlannerItineraryListEntrySummary]
   public let references: [PlannerReferenceRead]
 }
 
@@ -146,6 +155,7 @@ struct ItinerarySnapshot {
       createdAt: createdAt, updatedAt: updatedAt, fieldHashes: fieldHashes(datasetId: datasetId),
       state: PlannerSourceState(globalDone: nil, archived: archived),
       progress: summary.progress, estimates: summary.estimates,
+      listEntrySummaries: summary.listEntrySummaries,
       references: labelAssociations.map(\.reference) + entries.map(\.reference)
         + entries.flatMap(\.expandedCompletions).map(\.reference)
         + schedules.sorted { $0.id.uuidString < $1.id.uuidString }.map {

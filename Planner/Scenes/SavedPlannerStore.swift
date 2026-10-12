@@ -353,6 +353,17 @@ final class SavedPlannerStore {
       itemsByEntry[entryId, default: []].append(
         .init(id: selection, row: row, rowPresentation: window.rowPresentation))
     }
+    let listSummaries = Dictionary(
+      uniqueKeysWithValues: itinerary.listEntrySummaries.map { ($0.entryId, $0) })
+    let listReferences = itinerary.references.compactMap { reference -> UUID? in
+      guard case .itineraryEntry(let entryId, _, let source) = reference, source.kind == .list
+      else { return nil }
+      return entryId
+    }
+    guard Set(listReferences) == Set(listSummaries.keys) else {
+      alertMessage = "Planner could not resolve this Itinerary's List estimates."
+      return nil
+    }
     let entries = itinerary.references.compactMap { reference -> SavedItineraryEntryRows? in
       guard case .itineraryEntry(let entryId, _, let source) = reference else { return nil }
       let items = itemsByEntry[entryId] ?? []
@@ -363,11 +374,7 @@ final class SavedPlannerStore {
       } else {
         title = items.first?.row.title ?? "Item"
       }
-      let complete =
-        !items.isEmpty
-        && items.allSatisfy {
-          $0.row.effectiveDone == true || $0.row.archived == true || isArchived
-        }
+      let complete = listSummaries[entryId]?.progress.state == .complete
       let matchesCompletion =
         switch filters.completion {
         case .all: true
@@ -377,7 +384,7 @@ final class SavedPlannerStore {
       return .init(
         id: entryId, source: source, title: title, items: items,
         matchesHeader: source.kind == .list && matchingListIdentifiers.contains(source.id)
-          && matchesCompletion, isArchived: isArchived)
+          && matchesCompletion, isArchived: isArchived, listSummary: listSummaries[entryId])
     }
     return .init(
       itinerary: itinerary, entries: entries, matchingItemIdentifiers: matchingItemIdentifiers)

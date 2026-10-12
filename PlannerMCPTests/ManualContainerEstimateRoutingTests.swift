@@ -74,7 +74,7 @@ struct ManualContainerEstimateRoutingTests {
     let endpoint = try await listener.start(port: 0)
     let httpSession = URLSession(configuration: .ephemeral)
     defer { httpSession.invalidateAndCancel() }
-    func estimates(_ source: PlannerEntityReference) async throws -> [String: Any] {
+    func sourceValue(_ source: PlannerEntityReference) async throws -> [String: Any] {
       let request = try toolRequest(
         endpoint: endpoint, name: "planner_read",
         arguments: [
@@ -84,7 +84,11 @@ struct ManualContainerEstimateRoutingTests {
           ],
         ])
       let response = try operationValue(try await httpSession.data(for: request), isError: false)
-      return try #require((response["value"] as? [String: Any])?["estimates"] as? [String: Any])
+      return try #require(response["value"] as? [String: Any])
+    }
+    func estimates(_ source: PlannerEntityReference) async throws -> [String: Any] {
+      let read = try await sourceValue(source)
+      return try #require(read["estimates"] as? [String: Any])
     }
     do {
       let standalone = try await estimates(list)
@@ -95,6 +99,22 @@ struct ManualContainerEstimateRoutingTests {
           "kind": "upperBound", "minutes": "240", "missingFinishedEstimateCount": "1",
         ])
       let nested = try await estimates(itinerary)
+      let itineraryRead = try await sourceValue(itinerary)
+      let branchSummaries = try #require(itineraryRead["listEntrySummaries"] as? [[String: Any]])
+      #expect(branchSummaries.count == 1)
+      let summary = try #require(branchSummaries.first)
+      #expect(summary["entryId"] as? String == listEntry.uuidString)
+      #expect(summary["source"] as? [String: String] == ["kind": "list", "id": list.id.uuidString])
+      #expect(
+        summary["manualEstimate"] as? [String: String] == ["minutes": "240", "displayUnit": "hour"])
+      let branchEstimates = try #require(summary["estimates"] as? [String: Any])
+      #expect(
+        branchEstimates["remainingEstimate"] as? [String: String] == [
+          "kind": "upperBound", "minutes": "240", "missingFinishedEstimateCount": "1",
+        ])
+      let branchProgress = try #require(summary["progress"] as? [String: Any])
+      #expect(branchProgress["doneCount"] as? String == "0")
+      #expect(branchProgress["archivedCount"] as? String == "1")
       #expect(
         nested["calculatedEstimate"] as? [String: String] == ["kind": "exact", "minutes": "270"])
       #expect(nested["fullEstimate"] as? [String: String] == ["kind": "exact", "minutes": "300"])

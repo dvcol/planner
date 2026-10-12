@@ -24,12 +24,16 @@ extension ItinerarySnapshot {
     memberships: [MembershipSnapshot], items: [ItemSnapshot], lists: [ListSnapshot]
   )
     throws
-    -> (progress: PlannerContainerProgress, estimates: PlannerContainerEstimates)
+    -> (
+      progress: PlannerContainerProgress, estimates: PlannerContainerEstimates,
+      listEntrySummaries: [PlannerItineraryListEntrySummary]
+    )
   {
     var totalCount: Int64 = 0
     var doneCount: Int64 = 0
     var archivedCount: Int64 = 0
     var estimateContributions: [ContainerEstimateContribution] = []
+    var listEntrySummaries: [PlannerItineraryListEntrySummary] = []
     for entry in entries {
       if entry.source.kind == "item" {
         let item = try resolvedItem(entry.source, in: items)
@@ -54,6 +58,8 @@ extension ItinerarySnapshot {
         throw PlannerFailure("readUnavailable", "An itinerary List entry is unresolved.")
       }
       var listEstimateChildren: [ContainerEstimateChild] = []
+      var branchDoneCount: Int64 = 0
+      var branchArchivedCount: Int64 = 0
       for membership in memberships
       where membership.list.id == entry.source.id
         && membership.list.lifetimeId == entry.source.lifetimeId
@@ -71,14 +77,36 @@ extension ItinerarySnapshot {
             finished: item.globalDone || localDone || item.archived || list.archived))
         if item.globalDone || localDone {
           doneCount += 1
+          branchDoneCount += 1
         } else if item.archived || list.archived {
           archivedCount += 1
+          branchArchivedCount += 1
         }
       }
+      let branchTotalCount = Int64(listEstimateChildren.count)
+      let branchState: PlannerContainerProgressState
+      if branchTotalCount == 0 {
+        branchState = .empty
+      } else if branchDoneCount + branchArchivedCount == branchTotalCount {
+        branchState = .complete
+      } else {
+        branchState = .partial
+      }
+      let branchEstimates = containerEstimates(
+        children: listEstimateChildren, archived: list.archived,
+        manualEstimate: list.content.manualEstimate)
+      listEntrySummaries.append(
+        .init(
+          entryId: entry.id, source: list.reference, manualEstimate: list.content.manualEstimate,
+          progress: .init(
+            container: list.reference, state: branchState,
+            doneCount: branchDoneCount, totalCount: branchTotalCount,
+            archivedCount: branchArchivedCount),
+          estimates: branchEstimates))
       estimateContributions.append(
         listEstimateContribution(
           children: listEstimateChildren, archived: list.archived,
-          manualEstimate: list.content.manualEstimate))
+          summary: branchEstimates))
     }
     let state: PlannerContainerProgressState
     if totalCount == 0 {
@@ -94,7 +122,8 @@ extension ItinerarySnapshot {
         archivedCount: archivedCount),
       estimates: containerEstimates(
         contributions: estimateContributions, archived: archived,
-        manualEstimate: input.manualEstimate, allFinished: state == .complete)
+        manualEstimate: input.manualEstimate, allFinished: state == .complete),
+      listEntrySummaries: listEntrySummaries
     )
   }
 
