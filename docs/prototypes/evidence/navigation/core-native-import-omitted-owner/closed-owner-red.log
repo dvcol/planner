@@ -1,0 +1,34 @@
+Building for debugging...
+[Using on-disk description]
+[1 / 2] PlannerCore
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (5,11 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportOmittedOwnerReviewTests started.
+◇ Test omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) started.
+◇ Test case passing 2 arguments mode → .skip, incomingRecordsChanged → false to omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test case passing 2 arguments mode → .skip, incomingRecordsChanged → true to omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test case passing 2 arguments mode → .overwrite, incomingRecordsChanged → false to omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test case passing 2 arguments mode → .overwrite, incomingRecordsChanged → true to omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test case passing 2 arguments mode → .skip, deletedKind → .item to omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) started.
+◇ Test case passing 2 arguments mode → .skip, deletedKind → .schedule to omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) started.
+◇ Test case passing 2 arguments mode → .overwrite, deletedKind → .schedule to omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) started.
+◇ Test case passing 2 arguments mode → .overwrite, deletedKind → .item to omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) started.
+✘ Test omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) recorded an issue with 2 arguments mode → .overwrite, deletedKind → .schedule at NativeImportOmittedOwnerReviewTests.swift:77:19: Issue recorded
+↳ Skip omitted-owner records without restoring closed identities: .failed(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: Optional("/schedules/0"), message: "Deleted reference restoration needs its reviewed lineage and impact.", details: nil))
+✘ Test omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) recorded an issue with 2 arguments mode → .overwrite, deletedKind → .item at NativeImportOmittedOwnerReviewTests.swift:77:19: Issue recorded
+↳ Skip omitted-owner records without restoring closed identities: .failed(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: Optional("/schedules/0"), message: "Deleted reference restoration needs its reviewed lineage and impact.", details: nil))
+✘ Test omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) recorded an issue with 2 arguments mode → .skip, deletedKind → .item at NativeImportOmittedOwnerReviewTests.swift:77:19: Issue recorded
+↳ Skip omitted-owner records without restoring closed identities: .failed(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: Optional("/ownedLinks/0"), message: "Omitted deleted-owner review is not implemented yet.", details: nil))
+✘ Test omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) with 4 test cases failed after 0.195 seconds with 3 issues.
+✔ Test omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) with 4 test cases passed after 0.228 seconds.
+✘ Suite NativeImportOmittedOwnerReviewTests failed after 0.228 seconds with 3 issues.
+✘ Test run with 2 tests in 1 suite failed after 0.229 seconds with 3 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

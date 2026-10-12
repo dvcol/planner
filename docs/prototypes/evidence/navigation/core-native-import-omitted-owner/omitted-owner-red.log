@@ -1,0 +1,33 @@
+Building for debugging...
+[Constructing description]
+[Planning deferred tasks]
+[1 / 1]
+[5 / 19] PlannerCore
+[9 / 19] PlannerCoreTests-product
+[9 / 20] PlannerCoreStoreTests-product
+[11 / 22] PlannerCoreStoreTests-product
+[17 / 21] PlannerCoreStoreTests-product
+[19 / 21] PlannerCoreStoreTests-product
+Build complete! (5,75 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportOmittedOwnerReviewTests started.
+◇ Test omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test case passing 2 arguments mode → .overwrite, incomingRecordsChanged → true to omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test case passing 2 arguments mode → .skip, incomingRecordsChanged → false to omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test case passing 2 arguments mode → .skip, incomingRecordsChanged → true to omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test case passing 2 arguments mode → .overwrite, incomingRecordsChanged → false to omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+✘ Test omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) recorded an issue with 2 arguments mode → .overwrite, incomingRecordsChanged → false at NativeImportOmittedOwnerReviewTests.swift:80:19: Issue recorded
+↳ Q73 preserves the omitted owner while reviewing independent data: .failed(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: Optional("/ownedLinks/0"), message: "Import policy for owned records with an omitted source is pending.", details: nil))
+✘ Test omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) recorded an issue with 2 arguments mode → .overwrite, incomingRecordsChanged → true at NativeImportOmittedOwnerReviewTests.swift:80:19: Issue recorded
+↳ Q73 preserves the omitted owner while reviewing independent data: .failed(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: Optional("/ownedLinks/0"), message: "Import policy for owned records with an omitted source is pending.", details: nil))
+✘ Test omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) recorded an issue with 2 arguments mode → .skip, incomingRecordsChanged → true at NativeImportOmittedOwnerReviewTests.swift:80:19: Issue recorded
+↳ Q73 preserves the omitted owner while reviewing independent data: .failed(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: Optional("/ownedLinks/0"), message: "Import policy for owned records with an omitted source is pending.", details: nil))
+✘ Test omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) recorded an issue with 2 arguments mode → .skip, incomingRecordsChanged → false at NativeImportOmittedOwnerReviewTests.swift:80:19: Issue recorded
+↳ Q73 preserves the omitted owner while reviewing independent data: .failed(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: Optional("/ownedLinks/0"), message: "Import policy for owned records with an omitted source is pending.", details: nil))
+✘ Test omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) with 4 test cases failed after 0.251 seconds with 4 issues.
+✘ Suite NativeImportOmittedOwnerReviewTests failed after 0.251 seconds with 4 issues.
+✘ Test run with 1 test in 1 suite failed after 0.251 seconds with 4 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)
