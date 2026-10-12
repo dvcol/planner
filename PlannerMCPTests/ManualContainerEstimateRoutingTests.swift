@@ -5,6 +5,135 @@ import Testing
 @testable import Planner
 
 struct ManualContainerEstimateRoutingTests {
+  @Test func manualAndNestedBudgetReadsOverHTTPExposeUpperBoundsAndFinishedZero() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = PlannerCore.Planner(
+      configuration: .init(
+        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+        controlURL: directory.appendingPathComponent("control/writer"),
+        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+        processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let datasetSession) = await planner.bootstrap() else {
+      throw CancellationError()
+    }
+    func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
+      guard
+        case .applied(let result, .complete) = await planner.execute(
+          .init(operationId: UUID(), session: datasetSession, command: command)
+        ).outcome
+      else { throw CancellationError() }
+      return result
+    }
+    let museum = try #require(
+      try await save(
+        .createItem(
+          content: .init(title: "Museum", estimate: .init(minutes: 120, displayUnit: .hour)))
+      ).generated.first)
+    let lunch = try #require(
+      try await save(.createItem(content: .init(title: "Lunch"))).generated.first)
+    let hotel = try #require(
+      try await save(
+        .createItem(
+          content: .init(title: "Hotel", estimate: .init(minutes: 30, displayUnit: .minute)))
+      ).generated.first)
+    let list = try #require(
+      try await save(
+        .createList(
+          content: .init(name: "Morning", manualEstimate: .init(minutes: 240, displayUnit: .hour)))
+      ).generated.first)
+    var membershipIdentifiers: [UUID] = []
+    for item in [museum, lunch] {
+      guard
+        case .membership(let identifier, _, _) = try #require(
+          try await save(.addMembership(itemId: item.id, listId: list.id, placement: .last))
+            .generatedReferences.first)
+      else { throw CancellationError() }
+      membershipIdentifiers.append(identifier)
+    }
+    _ = try await save(.setArchive(source: lunch, archived: true))
+    let itinerary = try #require(
+      try await save(
+        .createItinerary(
+          content: .init(title: "Day", manualEstimate: .init(minutes: 300, displayUnit: .hour)))
+      ).generated.first)
+    guard
+      case .itineraryEntry(let listEntry, _, _) = try #require(
+        try await save(
+          .addItineraryEntry(itineraryId: itinerary.id, source: list, placement: .last)
+        ).generatedReferences.first),
+      case .itineraryEntry(let hotelEntry, _, _) = try #require(
+        try await save(
+          .addItineraryEntry(itineraryId: itinerary.id, source: hotel, placement: .last)
+        ).generatedReferences.first)
+    else { throw CancellationError() }
+    let listener = PlannerMCPLoopbackListener(
+      requestHandler: PlannerMCPRequestHandler(
+        credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", accessWindowIdentifier: UUID(),
+        planner: planner, datasetSession: datasetSession))
+    let endpoint = try await listener.start(port: 0)
+    let httpSession = URLSession(configuration: .ephemeral)
+    defer { httpSession.invalidateAndCancel() }
+    func estimates(_ source: PlannerEntityReference) async throws -> [String: Any] {
+      let request = try toolRequest(
+        endpoint: endpoint, name: "planner_read",
+        arguments: [
+          "formatVersion": 1,
+          "request": [
+            "kind": "source", "source": ["kind": source.kind.rawValue, "id": source.id.uuidString],
+          ],
+        ])
+      let response = try operationValue(try await httpSession.data(for: request), isError: false)
+      return try #require((response["value"] as? [String: Any])?["estimates"] as? [String: Any])
+    }
+    do {
+      let standalone = try await estimates(list)
+      #expect(
+        standalone["fullEstimate"] as? [String: String] == ["kind": "exact", "minutes": "240"])
+      #expect(
+        standalone["remainingEstimate"] as? [String: String] == [
+          "kind": "upperBound", "minutes": "240", "missingFinishedEstimateCount": "1",
+        ])
+      let nested = try await estimates(itinerary)
+      #expect(
+        nested["calculatedEstimate"] as? [String: String] == ["kind": "exact", "minutes": "270"])
+      #expect(nested["fullEstimate"] as? [String: String] == ["kind": "exact", "minutes": "300"])
+      #expect(
+        nested["remainingEstimate"] as? [String: String] == [
+          "kind": "upperBound", "minutes": "300", "missingFinishedEstimateCount": "1",
+        ])
+      _ = try await save(
+        .setCompletion(
+          scope: .appearance(
+            .expandedListItem(
+              itineraryId: itinerary.id, listEntryId: listEntry,
+              membershipId: membershipIdentifiers[0])), done: true))
+      let finishedBranch = try await estimates(itinerary)
+      #expect(
+        finishedBranch["remainingEstimate"] as? [String: String] == [
+          "kind": "exact", "minutes": "60",
+        ])
+      _ = try await save(
+        .setCompletion(
+          scope: .appearance(.directItineraryItem(itineraryId: itinerary.id, entryId: hotelEntry)),
+          done: true))
+      let finished = try await estimates(itinerary)
+      #expect(finished["fullEstimate"] as? [String: String] == ["kind": "exact", "minutes": "300"])
+      #expect(
+        finished["remainingEstimate"] as? [String: String] == ["kind": "exact", "minutes": "0"])
+      #expect(finished["completedExceedsTotal"] as? Bool == false)
+      let unchangedStandalone = try await estimates(list)
+      #expect(
+        unchangedStandalone["remainingEstimate"] as? [String: String] == [
+          "kind": "upperBound", "minutes": "240", "missingFinishedEstimateCount": "1",
+        ])
+      await listener.stop()
+    } catch {
+      await listener.stop()
+      throw error
+    }
+  }
+
   @Test(arguments: [PlannerEntityKind.list, .itinerary])
   func manualEstimatesCreateEditClearAndReportStaleValuesOverHTTP(kind: PlannerEntityKind)
     async throws
