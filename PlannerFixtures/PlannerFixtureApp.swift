@@ -37,6 +37,7 @@ struct PlannerFixtureApp: App {
 @MainActor
 final class FixturePreviewProvider: PlannerLinkPreviewProvider, PlannerAddressPreviewProvider {
   private var hasFailedRetryLink = false
+  private var hasFailedRetryAddress = false
   func linkPreview(for originalURL: String) async throws -> PlannerLinkPreviewContent {
     if originalURL == "https://fixtures.invalid/retry", !hasFailedRetryLink {
       hasFailedRetryLink = true
@@ -52,6 +53,17 @@ final class FixturePreviewProvider: PlannerLinkPreviewProvider, PlannerAddressPr
   }
 
   func addressPreview(for address: String) async throws -> [PlannerAddressCandidate] {
+    if address == "Fixture retry address" {
+      guard hasFailedRetryAddress else {
+        hasFailedRetryAddress = true
+        throw URLError(.cannotFindHost)
+      }
+      return [
+        .init(
+          id: "recovered", name: "Recovered entrance", address: "3 Fixture Way",
+          latitude: 35.662, longitude: 139.717)
+      ]
+    }
     guard address == "Fixture multiple matches" else { return [] }
     return [
       .init(

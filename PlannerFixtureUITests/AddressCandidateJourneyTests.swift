@@ -65,15 +65,7 @@ final class AddressCandidateJourneyTests: XCTestCase {
     capture(application, name: "Explicit South candidate replaces the temporary map pin")
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
     application.plannerElement("Edit Item").activateForPlannerJourney()
-    let address = application.textFields["saved.item.edit.location.address"]
-    reveal(address, application: application)
-    XCTAssertTrue(address.waitForPlannerValue("Fixture multiple matches"))
-    XCTAssertTrue(
-      application.textFields["saved.item.edit.location.name"].waitForPlannerValue("Saved location"))
-    XCTAssertFalse(
-      application.descendants(matching: .any).matching(identifier: "saved.item.edit.location.pin")
-        .firstMatch.exists)
-    XCTAssertFalse(application.plannerElement("saved.item.edit.save").isEnabled)
+    assertUnchangedLocationEditor("Fixture multiple matches", application: application)
     capture(application, name: "Preview selection does not save candidate coordinates or text")
     application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
     application.terminate()
@@ -85,6 +77,71 @@ final class AddressCandidateJourneyTests: XCTestCase {
     XCTAssertTrue(picker.waitForExistence(timeout: 5))
     XCTAssertFalse(map.exists)
     assertOwnedLocation("Fixture multiple matches", application: application)
+  }
+
+  func testAddressFailureRecoversOneTemporaryPinAndPreservesOwnedLocationAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = [
+      "--fixture", "address-retry", "--fixture-dataset", UUID().uuidString,
+    ]
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    let row = application.savedPlannerItemRows("Retry place").firstMatch
+    XCTAssertTrue(row.waitForExistence(timeout: 20))
+    let identifier = row.identifier
+    row.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Saved location"].waitForExistence(timeout: 5))
+    assertOwnedLocation("Fixture retry address", application: application)
+    let failure = application.staticTexts["Address preview unavailable"]
+    XCTAssertTrue(failure.waitForExistence(timeout: 5))
+    let map = previewMap(application)
+    XCTAssertFalse(map.exists)
+    XCTAssertFalse(candidatePicker(application).exists)
+    let retry = application.plannerElement("Retry")
+    reveal(retry, application: application)
+    XCTAssertTrue(retry.isEnabled)
+    capture(application, name: "Controlled address failure keeps its owned location")
+    retry.activateForPlannerJourney()
+    XCTAssertTrue(failure.waitForNonExistence(timeout: 5))
+    XCTAssertTrue(map.waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      map.descendants(matching: .any).matching(
+        NSPredicate(format: "label CONTAINS %@", "Recovered entrance")
+      ).firstMatch.waitForExistence(timeout: 10))
+    XCTAssertFalse(candidatePicker(application).exists)
+    XCTAssertFalse(retry.exists)
+    reveal(map, application: application)
+    capture(application, name: "Controlled address Retry renders its sole temporary pin")
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Edit Item").activateForPlannerJourney()
+    assertUnchangedLocationEditor("Fixture retry address", application: application)
+    capture(application, name: "Recovered candidate leaves the owned editor unchanged")
+    application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Items")
+    XCTAssertTrue(row.waitForExistence(timeout: 20))
+    XCTAssertEqual(row.identifier, identifier)
+    row.activateForPlannerJourney()
+    XCTAssertTrue(failure.waitForExistence(timeout: 5))
+    XCTAssertFalse(map.exists)
+    XCTAssertFalse(candidatePicker(application).exists)
+    assertOwnedLocation("Fixture retry address", application: application)
+  }
+
+  private func assertUnchangedLocationEditor(
+    _ expectedAddress: String, application: XCUIApplication
+  ) {
+    let addressField = application.textFields["saved.item.edit.location.address"]
+    reveal(addressField, application: application)
+    XCTAssertTrue(addressField.waitForPlannerValue(expectedAddress))
+    XCTAssertTrue(
+      application.textFields["saved.item.edit.location.name"].waitForPlannerValue("Saved location"))
+    XCTAssertFalse(
+      application.descendants(matching: .any).matching(identifier: "saved.item.edit.location.pin")
+        .firstMatch.exists)
+    XCTAssertFalse(application.plannerElement("saved.item.edit.save").isEnabled)
   }
 
   private func launchFixture() -> XCUIApplication {

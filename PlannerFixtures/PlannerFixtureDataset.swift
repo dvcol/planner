@@ -10,6 +10,7 @@ enum PlannerFixtureDataset {
     case linkImage = "link-image"
     case linkOutcomes = "link-outcomes"
     case addressCandidates = "address-candidates"
+    case addressRetry = "address-retry"
   }
 
   static func makeStore() async throws -> SavedPlannerStore {
@@ -67,6 +68,16 @@ enum PlannerFixtureDataset {
               .init(originalUrl: "https://fixtures.invalid/plain", label: "Plain website"),
               .init(originalUrl: "https://fixtures.invalid/retry", label: "Recoverable website"),
             ])))
+      return SavedPlannerStore(configuration: configuration)
+    }
+    if scenario == .addressRetry {
+      _ = try await save(
+        .createItem(
+          content: .init(
+            title: "Retry place", notes: "Original notes",
+            location: .init(
+              displayName: "Saved location", formattedAddress: "Fixture retry address",
+              coordinate: nil))))
       return SavedPlannerStore(configuration: configuration)
     }
     if scenario == .addressCandidates {
