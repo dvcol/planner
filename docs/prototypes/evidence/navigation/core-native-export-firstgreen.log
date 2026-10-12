@@ -1,0 +1,29 @@
+Building for debugging...
+[1 / 1]
+[2 / 16] PlannerCore
+[4 / 18] PlannerCore
+[8 / 22] PlannerCore
+[10 / 22] PlannerCore
+[13 / 21] PlannerCoreTests-product
+[16 / 22] PlannerCoreTests-product
+[30 / 35] PlannerCoreStoreTests-product
+[31 / 35] PlannerCoreStoreTests-product
+[32 / 35] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift:192:25: warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+190 |     let timedForm = PlannerScheduleForm.timed(
+191 |       start: try #require(ISO8601DateFormatter().date(from: "2026-10-11T01:00:00Z")),
+192 |       end: try #require(ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")),
+    |                         `- warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+193 |       planningTimeZone: "Asia/Tokyo")
+194 |     guard
+[34 / 38] PlannerCoreStoreTests-product
+[36 / 38] PlannerCoreStoreTests-product
+Build complete! (32,51 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeExportTests started.
+◇ Test nativeExportIncludesArchivedOwnedDataAndPreservesAcknowledgementWithoutAppState() started.
+✔ Test nativeExportIncludesArchivedOwnedDataAndPreservesAcknowledgementWithoutAppState() passed after 0.114 seconds.
+✔ Suite NativeExportTests passed after 0.114 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.114 seconds.
