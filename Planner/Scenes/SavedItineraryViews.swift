@@ -121,6 +121,10 @@ struct SavedItineraryDetail: View {
             } else {
               Text("Progress unavailable").foregroundStyle(.secondary)
             }
+            SavedContainerEstimates(
+              estimates: itinerary.estimates,
+              manualEstimate: itinerary.content.manualEstimate,
+              accessibilityIdentifierPrefix: "saved.itinerary.estimate")
             let directCount = contents.entries.filter { $0.source.kind == .item }.count
             let listCount = contents.entries.filter { $0.source.kind == .list }.count
             Text(
@@ -502,6 +506,7 @@ private struct SavedItineraryForm: View {
   let didSave: (PlannerEntityReference) -> Void
   @State private var title: String
   @State private var notes: String
+  @State private var manualEstimate: PlannerEstimate?
   @State private var links: [SavedOwnedLinkDraft]
   @State private var categoryIdentifiers: Set<UUID>
   @State private var tagIdentifiers: Set<UUID>
@@ -516,6 +521,7 @@ private struct SavedItineraryForm: View {
     self.didSave = didSave
     _title = State(initialValue: itinerary?.content.title ?? "")
     _notes = State(initialValue: itinerary?.content.notes ?? "")
+    _manualEstimate = State(initialValue: itinerary?.content.manualEstimate)
     _links = State(initialValue: itinerary?.content.links.map(SavedOwnedLinkDraft.init) ?? [])
     _categoryIdentifiers = State(initialValue: itinerary?.content.categoryIds ?? [])
     _tagIdentifiers = State(initialValue: itinerary?.content.tagIds ?? [])
@@ -530,6 +536,7 @@ private struct SavedItineraryForm: View {
       || links.map(\.input) != itinerary.content.links.map(\.editInput)
       || categoryIdentifiers != itinerary.content.categoryIds
       || tagIdentifiers != itinerary.content.tagIds
+      || manualEstimate != itinerary.content.manualEstimate
   }
 
   var body: some View {
@@ -540,6 +547,9 @@ private struct SavedItineraryForm: View {
         TextField("Notes", text: $notes, axis: .vertical)
           .lineLimit(3...8)
           .accessibilityIdentifier("saved.itinerary.notes")
+        SavedActivityEstimateEditor(
+          estimate: $manualEstimate,
+          accessibilityIdentifierPrefix: "saved.itinerary.estimate", isContainerEstimate: true)
         Section("Labels") {
           NavigationLink {
             SavedItemLabelPicker(store: store, kind: .category, selection: $categoryIdentifiers)
@@ -602,13 +612,15 @@ private struct SavedItineraryForm: View {
       let saved = await store.editItinerary(
         itinerary, title: title, notes: notes, links: links.map(\.input),
         categoryIdentifiers: categoryIdentifiers,
-        tagIdentifiers: tagIdentifiers, operationIdentifier: operationIdentifier)
+        tagIdentifiers: tagIdentifiers, manualEstimate: manualEstimate,
+        operationIdentifier: operationIdentifier)
       source = saved ? itinerary.source : nil
     } else {
       source = await store.createItinerary(
         title: title, notes: notes, links: links.map(\.input),
         categoryIdentifiers: categoryIdentifiers,
-        tagIdentifiers: tagIdentifiers, operationIdentifier: operationIdentifier)
+        tagIdentifiers: tagIdentifiers, manualEstimate: manualEstimate,
+        operationIdentifier: operationIdentifier)
     }
     guard let source, store.alertMessage == nil else { return }
     didSave(source)

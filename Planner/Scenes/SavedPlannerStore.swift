@@ -720,7 +720,7 @@ final class SavedPlannerStore {
 
   func createItinerary(
     title: String, notes: String, links: [PlannerLinkInput],
-    categoryIdentifiers: Set<UUID>, tagIdentifiers: Set<UUID>,
+    categoryIdentifiers: Set<UUID>, tagIdentifiers: Set<UUID>, manualEstimate: PlannerEstimate?,
     operationIdentifier: UUID
   ) async -> PlannerEntityReference? {
     let result = await executeChange(
@@ -728,7 +728,7 @@ final class SavedPlannerStore {
         content: .init(
           title: title, notes: notes.isEmpty ? nil : notes,
           links: links,
-          categoryIds: categoryIdentifiers, tagIds: tagIdentifiers)),
+          categoryIds: categoryIdentifiers, tagIds: tagIdentifiers, manualEstimate: manualEstimate)),
       operationId: operationIdentifier)
     return result?.generated.first { $0.kind == .itinerary }
   }
@@ -736,7 +736,7 @@ final class SavedPlannerStore {
   func editItinerary(
     _ itinerary: PlannerItinerarySourceRead, title: String, notes: String,
     links: [PlannerLinkInput],
-    categoryIdentifiers: Set<UUID>, tagIdentifiers: Set<UUID>,
+    categoryIdentifiers: Set<UUID>, tagIdentifiers: Set<UUID>, manualEstimate: PlannerEstimate?,
     operationIdentifier: UUID
   ) async -> Bool {
     let titleChange: PlannerFieldChange<String> =
@@ -765,12 +765,20 @@ final class SavedPlannerStore {
     } else {
       linksChange = .set(links)
     }
+    let estimateChange: PlannerFieldChange<PlannerEstimate>
+    if manualEstimate == itinerary.content.manualEstimate {
+      estimateChange = .unchanged
+    } else if let manualEstimate {
+      estimateChange = .set(manualEstimate)
+    } else {
+      estimateChange = .clear
+    }
     return await executeChange(
       .editItinerary(
         sourceId: itinerary.source.id,
         changes: .init(
           title: titleChange, notes: notesChange, links: linksChange,
-          categoryIds: categoryChange, tagIds: tagChange),
+          categoryIds: categoryChange, tagIds: tagChange, manualEstimate: estimateChange),
         expectedFieldHashes: itinerary.fieldHashes), operationId: operationIdentifier) != nil
   }
 
@@ -791,13 +799,16 @@ final class SavedPlannerStore {
     return await executeChange(command, operationId: operationIdentifier) != nil
   }
 
-  func createList(name: String, operationId: UUID) async -> PlannerEntityReference? {
+  func createList(name: String, manualEstimate: PlannerEstimate?, operationId: UUID) async
+    -> PlannerEntityReference?
+  {
     guard let planner, let session, canCreate else { return nil }
     isSaving = true
     defer { isSaving = false }
     let result = await planner.execute(
       PlannerOperation(
-        operationId: operationId, session: session, command: .createList(content: .init(name: name))
+        operationId: operationId, session: session,
+        command: .createList(content: .init(name: name, manualEstimate: manualEstimate))
       ))
     switch result.outcome {
     case .rejected(let reason):
@@ -817,6 +828,25 @@ final class SavedPlannerStore {
       await refreshLists()
       return applied.generated.first { $0.kind == .list }
     }
+  }
+
+  func editList(
+    _ list: PlannerListSourceRead, name: String, manualEstimate: PlannerEstimate?, operationId: UUID
+  ) async -> Bool {
+    let nameChange: PlannerFieldChange<String> = name == list.content.name ? .unchanged : .set(name)
+    let estimateChange: PlannerFieldChange<PlannerEstimate>
+    if manualEstimate == list.content.manualEstimate {
+      estimateChange = .unchanged
+    } else if let manualEstimate {
+      estimateChange = .set(manualEstimate)
+    } else {
+      estimateChange = .clear
+    }
+    return await executeChange(
+      .editList(
+        sourceId: list.source.id,
+        changes: .init(name: nameChange, manualEstimate: estimateChange),
+        expectedFieldHashes: list.fieldHashes), operationId: operationId) != nil
   }
 
   func readListItems(

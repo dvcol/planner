@@ -1,0 +1,63 @@
+{
+  "beforeCommit": "1947215",
+  "mode": "localOnly",
+  "storageSchemaVersion": 15,
+  "portableFormatVersion": 2,
+  "qualification": {
+    "phone": {
+      "bundle": "/private/tmp/PlannerNativeContainerEstimatesPhoneFinal.xcresult",
+      "functions": 6,
+      "failures": 0,
+      "skips": 0
+    },
+    "tablet": {
+      "qualifiedFunctions": 6,
+      "mixedBundle": "/private/tmp/PlannerNativeContainerEstimatesTabletFinal.xcresult",
+      "mixedBundleResult": "Failed",
+      "passedFunctionsInMixedBundle": 5,
+      "excludedFailedFunction": "SavedContainerEstimateJourneyTests/testItineraryManualEstimateSavesCancelsAndResetsWithoutChangingNotes()",
+      "correctedFunctionBundle": "/private/tmp/PlannerNativeContainerEstimatesTabletItineraryFinal.xcresult",
+      "correctedFunctions": 1,
+      "correctedFailures": 0,
+      "sourceEpochNote": "Seven production Swift files are identical across both bundles. Only Itinerary test navigation changed to reveal its native catalog before creation and selection."
+    },
+    "strictSwiftFiles": 8,
+    "macBuild": {
+      "result": "TEST BUILD SUCCEEDED",
+      "log": "/private/tmp/PlannerNativeContainerEstimatesMacCurrentBuild.log",
+      "nativeUIFunctions": 0
+    },
+    "coreAndMCP": "Unchanged from 1947215; prior qualified evidence retained."
+  },
+  "redEvidence": {
+    "list": "The initial executed phone journey failed at the absent native manual-estimate control.",
+    "itinerary": "The initial executed phone journey failed at the absent Itinerary manual-estimate control.",
+    "warning": "The real-store native journey reached the upper bound and failed because singular accessible wording used plural estimates. Its next execution found the warning symbol and text were separate accessibility elements. Corrected wording and a single accessible warning message pass.",
+    "excludedAttempts": [
+      "The initial warning setup queried a native Toggle as a Button.",
+      "Tablet toolbar overflow required selecting its actual menu labels.",
+      "A broad intermediate signature edit touched Item editing and failed compilation; removed before qualification.",
+      "The tablet test read retained inactive List elements while still on Items. A recording verified the wrong tab, so navigation now chooses the visible native tab and verifies selected state.",
+      "The final mixed tablet run omitted revealing the Itinerary catalog; only the corrected Itinerary journey was rerun."
+    ]
+  },
+  "captures": [
+    "phone-exact-remainder.png",
+    "phone-upper-bound.png",
+    "phone-exceeded-budget.png",
+    "phone-finished-zero.png",
+    "tablet-upper-bound.png",
+    "tablet-manual-itinerary.png",
+    "tablet-reset-itinerary.png"
+  ],
+  "remainingGates": [
+    "Catalog and nested List duration metadata",
+    "Further native uncertainty/archive/selection fixtures",
+    "Calendar",
+    "Complete native administration/restoration",
+    "Native scale",
+    "Native Mac UI runtime",
+    "Signed physical iCloud/account/Share",
+    "Whole-app polish"
+  ]
+}
