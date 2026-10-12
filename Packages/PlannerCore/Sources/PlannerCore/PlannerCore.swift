@@ -2106,18 +2106,13 @@ public actor Planner {
       incoming: backup, current: current, mode: mode, context: context)
     let resolution = try plannerResolveImportReview(
       incoming: backup, current: current, mode: mode, deletionImpacts: deletionImpacts)
-    guard current.backup.sources.isEmpty, current.backup.deletionMarkers.isEmpty,
-      current.backup.contextAliases.isEmpty, current.backup.completionChanges.isEmpty,
-      current.backup.restorationFamilies.isEmpty
-    else {
-      throw PlannerFailure(
-        "unavailable",
-        "Import into an existing dataset still needs the reviewed merge implementation.")
-    }
-    try plannerInsertImportedGraph(backup.backup, context: context)
+    let merge = try PlannerImportMerge(
+      incoming: backup.backup, current: current.backup, resolution: resolution)
+    try plannerInsertImportedGraph(merge.additions, context: context)
     let restored = try importReviewSnapshot(context)
     guard
-      restored.backup.importCanonicalValue.encoded() == backup.backup.importCanonicalValue.encoded()
+      restored.backup.importCanonicalValue.encoded()
+        == merge.projected.importCanonicalValue.encoded()
     else {
       context.rollback()
       throw PlannerFailure(
@@ -2142,7 +2137,7 @@ public actor Planner {
         proposalId: UUID(), originalOperationId: operation.operationId,
         datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
         proposedBackup: proposalSnapshot, payloadDigest: digest, evidence: "preparedUnverified"))
-    let generated = backup.backup.sources.map {
+    let generated = merge.additions.sources.map {
       PlannerAppliedIdentity.source($0.importBinding.reference)
     }
     let result = PlannerAppliedResult(generatedIdentities: generated, affectedIdentities: generated)

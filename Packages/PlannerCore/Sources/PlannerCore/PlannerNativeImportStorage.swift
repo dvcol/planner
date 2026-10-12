@@ -131,11 +131,13 @@ struct PlannerNativeLineage {
 }
 
 func plannerInsertImportedGraph(_ backup: PlannerPortableBackup, context: ModelContext) throws {
-  var items: [UUID: PlannerSchemaV15.Item] = [:]
-  var lists: [UUID: PlannerSchemaV15.List] = [:]
-  var itineraries: [UUID: PlannerSchemaV15.Itinerary] = [:]
-  var categories: [UUID: PlannerSchemaV15.Category] = [:]
-  var tags: [UUID: PlannerSchemaV15.Tag] = [:]
+  var items = try plannerImportRecords(PlannerSchemaV15.Item.self, identity: \.id, context: context)
+  var lists = try plannerImportRecords(PlannerSchemaV15.List.self, identity: \.id, context: context)
+  var itineraries = try plannerImportRecords(
+    PlannerSchemaV15.Itinerary.self, identity: \.id, context: context)
+  var categories = try plannerImportRecords(
+    PlannerSchemaV15.Category.self, identity: \.id, context: context)
+  var tags = try plannerImportRecords(PlannerSchemaV15.Tag.self, identity: \.id, context: context)
   for source in backup.sources {
     switch source {
     case .item(let value):
@@ -193,7 +195,8 @@ func plannerInsertImportedGraph(_ backup: PlannerPortableBackup, context: ModelC
       tags[value.id] = tag
     }
   }
-  var memberships: [UUID: PlannerSchemaV15.Membership] = [:]
+  var memberships = try plannerImportRecords(
+    PlannerSchemaV15.Membership.self, identity: \.id, context: context)
   for value in backup.memberships {
     guard let list = lists[value.list.id], let item = items[value.item.id] else {
       throw PlannerFailure("missingReference", "Imported membership bindings cannot resolve.")
@@ -207,7 +210,8 @@ func plannerInsertImportedGraph(_ backup: PlannerPortableBackup, context: ModelC
     context.insert(membership)
     memberships[value.id] = membership
   }
-  var entries: [UUID: PlannerSchemaV15.ItineraryEntry] = [:]
+  var entries = try plannerImportRecords(
+    PlannerSchemaV15.ItineraryEntry.self, identity: \.id, context: context)
   for value in backup.itineraryEntries {
     guard let itinerary = itineraries[value.itinerary.id] else {
       throw PlannerFailure("missingReference", "Imported itinerary bindings cannot resolve.")
@@ -327,4 +331,18 @@ func plannerInsertImportedGraph(_ backup: PlannerPortableBackup, context: ModelC
         identifier: family.familyId, kind: "restorationFamily",
         data: try JSONEncoder().encode(family)))
   }
+}
+
+private func plannerImportRecords<Record: PersistentModel>(
+  _ recordType: Record.Type, identity: KeyPath<Record, UUID?>, context: ModelContext
+) throws -> [UUID: Record] {
+  var records: [UUID: Record] = [:]
+  for record in try context.fetch(FetchDescriptor<Record>()) {
+    guard let identifier = record[keyPath: identity], records[identifier] == nil else {
+      throw PlannerFailure(
+        "readUnavailable", "Existing import bindings have unresolved or duplicate identity.")
+    }
+    records[identifier] = record
+  }
+  return records
 }
