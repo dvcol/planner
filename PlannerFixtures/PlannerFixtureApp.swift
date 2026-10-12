@@ -26,7 +26,7 @@ struct PlannerFixtureApp: App {
       }
       .task {
         guard store == nil, failure == nil else { return }
-        do { store = try await PlannerFixtureDataset.makeOverflowStore() } catch {
+        do { store = try await PlannerFixtureDataset.makeStore() } catch {
           failure = error.localizedDescription
         }
       }

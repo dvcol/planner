@@ -23,7 +23,7 @@
         };
         000000000000000000000101 = {
             isa = PBXGroup;
-            children = (000000000000000000000102, 000000000000000000000103, 000000000000000000000105, 000000000000000000000106, 000000000000000000000107, 000000000000000000000108, 000000000000000000000109, 000000000000000000000123, 000000000000000000000128, 000000000000000000000129, 000000000000000000000104);
+            children = (000000000000000000000102, 000000000000000000000103, 000000000000000000000105, 000000000000000000000106, 000000000000000000000107, 000000000000000000000108, 000000000000000000000109, 000000000000000000000123, 000000000000000000000128, 000000000000000000000129, 000000000000000000000130, 000000000000000000000104);
             sourceTree = "<group>";
         };
         000000000000000000000102 = { isa = PBXFileSystemSynchronizedRootGroup; path = Planner; sourceTree = "<group>"; };
@@ -214,7 +214,7 @@
         000000000000000000000281 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000282 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000461, 000000000000000000000462, 000000000000000000000463, 000000000000000000000464, 000000000000000000000465, 000000000000000000000466); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000283 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
-        000000000000000000000291 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+        000000000000000000000291 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000467); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000292 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000293 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
         000000000000000000000274 = { isa = PBXTargetDependency; target = 000000000000000000000206; targetProxy = 000000000000000000000275; };
@@ -231,6 +231,8 @@
         000000000000000000000464 = { isa = PBXBuildFile; platformFilter = macos; productRef = 000000000000000000000314; };
         000000000000000000000465 = { isa = PBXBuildFile; platformFilter = macos; productRef = 000000000000000000000315; };
         000000000000000000000466 = { isa = PBXBuildFile; productRef = 000000000000000000000316; };
+        000000000000000000000130 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlannerNavigationUITests/NativeNavigationElements.swift; sourceTree = SOURCE_ROOT; };
+        000000000000000000000467 = { isa = PBXBuildFile; fileRef = 000000000000000000000130; };
     };
     rootObject = 000000000000000000000001;
 }

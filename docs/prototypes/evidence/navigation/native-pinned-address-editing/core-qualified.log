@@ -1,0 +1,14 @@
+Building for debugging...
+[1 / 1]
+[1 / 17] PlannerCoreTests-product
+Build complete! (0,65 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ItemLocationEditTests started.
+◇ Test locationEditKeepsUnrelatedFieldsAndInvalidatesTheOldRowAfterReopen() started.
+◇ Test staleOrInvalidLocationsRejectWholePatchesAndOldReplayCannotUndoClear() started.
+✔ Test locationEditKeepsUnrelatedFieldsAndInvalidatesTheOldRowAfterReopen() passed after 0.159 seconds.
+✔ Test staleOrInvalidLocationsRejectWholePatchesAndOldReplayCannotUndoClear() passed after 0.162 seconds.
+✔ Suite ItemLocationEditTests passed after 0.162 seconds.
+✔ Test run with 2 tests in 1 suite passed after 0.162 seconds.

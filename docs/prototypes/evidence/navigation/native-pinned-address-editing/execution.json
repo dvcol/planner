@@ -1,0 +1,81 @@
+{
+  "beforeCommit": "0bf7e1b",
+  "mode": "localOnly",
+  "storageSchemaVersion": 15,
+  "portableFormatVersion": 2,
+  "qualification": {
+    "core": {
+      "functions": 2,
+      "suites": 1,
+      "failures": 0,
+      "log": "core-qualified.log"
+    },
+    "phone": {
+      "bundle": "/private/tmp/PlannerPinnedAddressPhoneFinal.xcresult",
+      "functions": 3,
+      "failures": 0,
+      "skips": 0,
+      "controllerBundle": "/private/tmp/PlannerPinnedAddressPhoneControllerQualified.xcresult",
+      "controllerFunctions": 1,
+      "controllerFailures": 0
+    },
+    "tablet": {
+      "mixedBundle": "/private/tmp/PlannerPinnedAddressTabletFinal.xcresult",
+      "mixedResult": "Failed",
+      "passedFunctions": 2,
+      "failedFunctions": 1,
+      "correctedBundle": "/private/tmp/PlannerPinnedAddressTabletQualified.xcresult",
+      "correctedFunctions": 1,
+      "correctedFailures": 0,
+      "correctedSkips": 0
+    },
+    "ordinaryMacBuild": {
+      "log": "/private/tmp/PlannerPinnedAddressOrdinaryMacBuild.log",
+      "result": "BUILD SUCCEEDED"
+    },
+    "fixtureMacBuild": {
+      "log": "/private/tmp/PlannerPinnedAddressFinalMacBuild.log",
+      "result": "TEST BUILD SUCCEEDED"
+    },
+    "nativeMacQualifiedFunctions": 0,
+    "strictChangedSwiftFiles": 4,
+    "captures": "Staged pin removal and edited address inspected on phone/tablet.",
+    "markdownFiles": 1
+  },
+  "redEvidence": {
+    "pin": "/private/tmp/PlannerPinnedAddressControlRed.xcresult: executed missing pin control.",
+    "emptyName": "/private/tmp/PlannerPinnedAddressUntouchedEmptyRed.xcresult: opening unchanged pinned location enabled Save."
+  },
+  "exclusions": [
+    "Initial fixture used unsupported Item discovery in a generic catalog. Corrected to the public Items query; excluded from feature red evidence.",
+    "Phone green could not open an offscreen pin picker. Controller reveals full controls before actions.",
+    "A mixed phone bundle passed pin and overflow but failed exact notes replacement after native caret insertion. The test now intentionally inserts a literal phrase and verifies saved notes include it.",
+    "Mixed tablet bundle passed empty-name and overflow; pin picker was outside rendered form. A further attempt revealed it but stopped at a hidden place-name field. Production code stayed unchanged across these navigation corrections.",
+    "Mac test-host linker could not overwrite its generated test binary. Regenerating only the runner artifact allows compilation; underlying overwrite cause remains unestablished."
+  ],
+  "review": {
+    "standards": "No actionable findings.",
+    "spec": "Found untouched empty strings being changed to nil. Executed native regression, fixed preservation of original optional fields and received a read-only recheck confirming the fix."
+  },
+  "remainingGates": [
+    "Q52 image/error/address ambiguity/delayed native journeys",
+    "Native loading/scale Q58",
+    "Calendar",
+    "Import application/restoration",
+    "Broad native Mac runtime",
+    "Signed physical sync/account/Share",
+    "Whole-app polish"
+  ],
+  "commands": {
+    "phone": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/PinnedAddressEditJourneyTests\" \"-only-testing:PlannerFixtureUITests/CatalogEstimateOverflowJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerPinnedAddressPhoneFinal.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "tablet": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/PinnedAddressEditJourneyTests/testPinnedAddressKeepsOrRemovesPinOnlyAfterSaveAndSurvivesRelaunch\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerPinnedAddressTabletQualified.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "ordinaryMac": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerMCPDerivedData CODE_SIGNING_ALLOWED=NO build",
+    "fixtureMac": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData CODE_SIGNING_ALLOWED=NO build-for-testing",
+    "pinRed": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/PinnedAddressEditJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerPinnedAddressControlRed.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "emptyRed": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/PinnedAddressEditJourneyTests/testOpeningPinnedItemWithEmptyNameKeepsSaveDisabledUntilNotesChange\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerPinnedAddressUntouchedEmptyRed.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "core": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --jobs 1 --filter ItemLocationEditTests",
+    "phoneController": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/PinnedAddressEditJourneyTests/testPinnedAddressKeepsOrRemovesPinOnlyAfterSaveAndSurvivesRelaunch\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerPinnedAddressPhoneControllerQualified.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "fixtureMacFinal": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData CODE_SIGNING_ALLOWED=NO build-for-testing"
+  },
+  "sourceEpochNote": "Production remains unchanged after optional-empty preservation. Final native controller adds only bounded scrolling/element discovery for pin/name. Empty-name and overflow bodies are unchanged from their passing phone/tablet runs. Final controller pin journey passes separately on both devices."
+}
