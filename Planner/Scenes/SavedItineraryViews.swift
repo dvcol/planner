@@ -13,9 +13,17 @@ struct SavedItineraryCatalog: View {
     List(selection: $selection) {
       ForEach(itineraries ?? []) { itinerary in
         NavigationLink(value: itinerary.id) {
-          Label(itinerary.title, systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+          VStack(alignment: .leading, spacing: 4) {
+            Label(itinerary.title, systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+            SavedContainerEstimatePreview(
+              estimates: itinerary.estimates, manualEstimate: itinerary.manualEstimate)
+          }
         }
         .accessibilityLabel(itinerary.title)
+        .accessibilityValue(
+          itinerary.estimates.nativeEstimatePreviewAccessibilityDescription(
+            manualEstimate: itinerary.manualEstimate)
+        )
         .accessibilityIdentifier("saved.itinerary.row.\(itinerary.id.uuidString)")
       }
     }

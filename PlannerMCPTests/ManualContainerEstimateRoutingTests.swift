@@ -90,7 +90,50 @@ struct ManualContainerEstimateRoutingTests {
       let read = try await sourceValue(source)
       return try #require(read["estimates"] as? [String: Any])
     }
+    func rows(_ query: [String: Any]) async throws -> [[String: Any]] {
+      let snapshot = try operationValue(
+        try await httpSession.data(
+          for: toolRequest(
+            endpoint: endpoint, name: "planner_query",
+            arguments: ["formatVersion": 1, "query": query])), isError: false)
+      let generation = try #require(snapshot["generation"] as? String)
+      let window = try operationValue(
+        try await httpSession.data(
+          for: toolRequest(
+            endpoint: endpoint, name: "planner_read",
+            arguments: [
+              "formatVersion": 1,
+              "request": [
+                "kind": "rows", "generation": generation, "offset": "0", "limit": "10",
+              ],
+            ])), isError: false)
+      return try #require(window["rows"] as? [[String: Any]])
+    }
     do {
+      for (source, minutes) in [(list, "240"), (itinerary, "300")] {
+        let catalogRows = try await rows([
+          "kind": "catalog", "sourceKind": source.kind.rawValue, "archive": "all",
+        ])
+        #expect(catalogRows.count == 1)
+        let row = try #require(catalogRows.first)
+        #expect(row["estimate"] is NSNull)
+        #expect(
+          row["manualEstimate"] as? [String: String] == ["minutes": minutes, "displayUnit": "hour"])
+        let totals = try #require(row["containerEstimates"] as? [String: Any])
+        #expect(
+          totals["fullEstimate"] as? [String: String] == ["kind": "exact", "minutes": minutes])
+        #expect(
+          totals["remainingEstimate"] as? [String: String] == [
+            "kind": "upperBound", "minutes": minutes, "missingFinishedEstimateCount": "1",
+          ])
+      }
+      let itemRows = try await rows([
+        "kind": "items", "scope": ["kind": "global"], "archive": "all",
+      ])
+      #expect(itemRows.count == 3)
+      #expect(
+        itemRows.allSatisfy { $0["manualEstimate"] is NSNull && $0["containerEstimates"] is NSNull }
+      )
       let standalone = try await estimates(list)
       #expect(
         standalone["fullEstimate"] as? [String: String] == ["kind": "exact", "minutes": "240"])

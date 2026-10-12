@@ -1427,7 +1427,7 @@ struct RowRoutingTests {
             "type": "createSchedule", "source": ["kind": "itinerary", "id": UUID().uuidString],
             "form": form,
           ],
-          "unavailable", "/command/source/kind"
+          "missingReference", "/command/source"
         ),
         (
           [
