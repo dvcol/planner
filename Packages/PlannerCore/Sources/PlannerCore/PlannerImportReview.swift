@@ -275,12 +275,6 @@ func plannerResolveImportReview(
       "missingReference", "The imported reference cannot resolve in this dataset.",
       propertyPath: path.propertyPath + (knownIdentity ? "/lifetimeId" : "/id"))
   }
-  guard mode == .skip || current.backup.deletionMarkers.isEmpty else {
-    throw PlannerFailure(
-      "unavailable", "Deleted identity import review is not implemented yet.",
-      propertyPath: "/command/type"
-    )
-  }
   guard incoming.backup.restorationFamilies.isEmpty else {
     throw PlannerFailure(
       "unavailable", "Restoration-family import review is not implemented yet.",
@@ -303,6 +297,16 @@ func plannerResolveImportReview(
   let closedIdentities = Set(
     current.backup.deletionMarkers.compactMap(\.target.importIdentity).map(
       PlannerImportClosedIdentity.init))
+  if mode == .overwrite,
+    let closedReference = projection.references.first(where: { reference in
+      guard let identity = reference.identity else { return false }
+      return closedIdentities.contains(PlannerImportClosedIdentity(identity))
+    })
+  {
+    throw PlannerFailure(
+      "unavailable", "Deleted reference restoration needs its reviewed lineage and impact.",
+      propertyPath: closedReference.propertyPath)
+  }
   let closedContexts = Set(
     current.backup.deletionMarkers.compactMap { marker -> PlannerExpandedContext? in
       guard case .expandedCompletion(let completionContext) = marker.target else { return nil }
@@ -359,6 +363,11 @@ func plannerResolveImportReview(
     let after = projection.summary(
       source, changedFields: projection.fields(for: source).keys.sorted())
     if deletedSources.contains(source.importBinding.reference) {
+      guard mode == .skip else {
+        throw PlannerFailure(
+          "unavailable", "Deleted source restoration needs its reviewed lineage and impact.",
+          propertyPath: "/sources/\(index)")
+      }
       skippedConflicts.append(
         .init(
           owner: source.importBinding, reasonCode: "deletedSource",
