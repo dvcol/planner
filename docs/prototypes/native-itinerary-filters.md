@@ -10,14 +10,14 @@ Lists own a name, notes and presentation metadata; they have archive state and d
 
 - Reuse the native adaptive Filters control and searchable navigation. Criteria narrow cumulatively; Clear removes restrictions. Selection remains attached to a valid appearance when a filter hides its row.
 - Show only matching children inside each visible group. A matching List can remain visible with zero matching children; explain that state rather than revealing filtered-out Items.
+- Q75 A requires every selected criterion when matching a List header. Active Item-only restrictions make its own match false. A child matching all criteria can still retain the group. Lists gain no Category/Tag/address/link/Schedule fields.
 - Preserve saved route order, repeated List-entry identities and independent appearance completion. Every intentional appearance remains distinct.
 - Full progress and bulk-action targets remain independent of filters. Show matching-versus-full child counts so hidden and archived appearances do not cause unexplained denominators.
 - Use Core queries for Item and catalog text matching; do not add a second native text-search algorithm or infer List labels from its children.
 
 ## Definition of ready
 
-- Q57 is settled. Q75 remains the sole header-applicability decision: should an active Item-only criterion make the List's own match false, or be ignored for its header while still filtering children?
-- Resolve that choice before implementing header matching. It does not reopen the rule that matching headers may have zero matching children.
+- Q57 and Q75 A are settled. Header matching applies every criterion; an unavailable Item-only field cannot satisfy an active restriction. Matching headers may still have zero matching children.
 - Retain the accepted archive-progress distinction: an archived List branch is finished inside the parent, while the container's own progress remains child-based. Full implementation of those derived reads is a prerequisite for qualifying completion-filter behavior.
 - Use the existing public read/query and actual native UI seams, captured history validation and durable command acknowledgements. No new test-only production injection is needed for these data-only filter cases.
 

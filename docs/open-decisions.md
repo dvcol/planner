@@ -18,6 +18,6 @@ Earlier prompts reused Q48/Q49 and changed Q51's option lettering. This register
 
 Required /tdd coverage belongs to each affected feature's definition of done. These answers unlock that work; they do not close import application/restoration, native preview/loading, aggregate/calendar, physical sync/account/Share or whole-app polish gates.
 
-## Next frontier
+## Q75, List-header filter applicability
 
-Q75 is open for [native itinerary filters](prototypes/native-itinerary-filters.md): when evaluating a List header's own match, do active Item-only criteria make that match false, or apply only to its children? The earlier nine answers remain settled. Matching List headers may have zero matching children; they do not automatically reveal children that fail the filters.
+The human accepted A on 12 October 2026. Every selected criterion applies when evaluating the List header's own match. An active Item-only restriction makes that header match false because Lists do not own those fields; a matching child can still keep the group visible. For example, searching Tokyo Food with a Rainy day Tag restriction hides that group when no child matches both criteria. The [native itinerary filter slice](prototypes/native-itinerary-filters.md) retains the required tests. Matching headers may have zero matching children; they never reveal children that fail the filters. No question in this recorded frontier remains unanswered.
