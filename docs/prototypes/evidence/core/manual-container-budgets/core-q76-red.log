@@ -1,0 +1,143 @@
+Building for debugging...
+[Pre-planning 1 / 154]
+[Planning deferred tasks]
+[1 / 1]
+[5 / 22] PlannerCore_PlannerCoreStoreTests
+[8 / 19] PlannerCoreStoreTests-product
+[11 / 22] PlannerCoreStoreTests-product
+[16 / 21] PlannerCoreStoreTests-product
+[19 / 21] PlannerCoreStoreTests-product
+Build complete! (5,27 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ManualContainerBudgetTests started.
+◇ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) started.
+◇ Test case passing 1 argument method → .local to missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) started.
+◇ Test case passing 1 argument method → .global to missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) started.
+◇ Test case passing 1 argument method → .archive to missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) started.
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .archive at ManualContainerBudgetTests.swift:50:5: Expectation failed: partial.estimates.fullEstimate == .exact(minutes: 240)
+↳ partial.estimates.fullEstimate == .exact(minutes: 240) → false
+↳   partial.estimates.fullEstimate → .lowerBound(minutes: 120, missingEstimateCount: 1)
+↳     lowerBound → (minutes: 120, missingEstimateCount: 1)
+↳       minutes → 120
+↳       missingEstimateCount → 1
+↳     exact → (minutes: 240)
+↳       minutes → 240
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .local at ManualContainerBudgetTests.swift:50:5: Expectation failed: partial.estimates.fullEstimate == .exact(minutes: 240)
+↳ partial.estimates.fullEstimate == .exact(minutes: 240) → false
+↳   partial.estimates.fullEstimate → .lowerBound(minutes: 120, missingEstimateCount: 1)
+↳     lowerBound → (minutes: 120, missingEstimateCount: 1)
+↳       minutes → 120
+↳       missingEstimateCount → 1
+↳     exact → (minutes: 240)
+↳       minutes → 240
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .global at ManualContainerBudgetTests.swift:50:5: Expectation failed: partial.estimates.fullEstimate == .exact(minutes: 240)
+↳ partial.estimates.fullEstimate == .exact(minutes: 240) → false
+↳   partial.estimates.fullEstimate → .lowerBound(minutes: 120, missingEstimateCount: 1)
+↳     lowerBound → (minutes: 120, missingEstimateCount: 1)
+↳       minutes → 120
+↳       missingEstimateCount → 1
+↳     exact → (minutes: 240)
+↳       minutes → 240
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .archive at ManualContainerBudgetTests.swift:51:5: Expectation failed: partial.estimates.remainingEstimate == .upperBound(minutes: 240, missingFinishedEstimateCount: 1)
+↳ partial.estimates.remainingEstimate == .upperBound(minutes: 240, missingFinishedEstimateCount: 1) → false
+↳   partial.estimates.remainingEstimate → .exact(minutes: 120)
+↳     exact → (minutes: 120)
+↳       minutes → 120
+↳     upperBound → (minutes: 240, missingFinishedEstimateCount: 1)
+↳       minutes → 240
+↳       missingFinishedEstimateCount → 1
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .global at ManualContainerBudgetTests.swift:51:5: Expectation failed: partial.estimates.remainingEstimate == .upperBound(minutes: 240, missingFinishedEstimateCount: 1)
+↳ partial.estimates.remainingEstimate == .upperBound(minutes: 240, missingFinishedEstimateCount: 1) → false
+↳   partial.estimates.remainingEstimate → .exact(minutes: 120)
+↳     exact → (minutes: 120)
+↳       minutes → 120
+↳     upperBound → (minutes: 240, missingFinishedEstimateCount: 1)
+↳       minutes → 240
+↳       missingFinishedEstimateCount → 1
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .local at ManualContainerBudgetTests.swift:51:5: Expectation failed: partial.estimates.remainingEstimate == .upperBound(minutes: 240, missingFinishedEstimateCount: 1)
+↳ partial.estimates.remainingEstimate == .upperBound(minutes: 240, missingFinishedEstimateCount: 1) → false
+↳   partial.estimates.remainingEstimate → .exact(minutes: 120)
+↳     exact → (minutes: 120)
+↳       minutes → 120
+↳     upperBound → (minutes: 240, missingFinishedEstimateCount: 1)
+↳       minutes → 240
+↳       missingFinishedEstimateCount → 1
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .local at ManualContainerBudgetTests.swift:59:5: Expectation failed: resolved.estimates.remainingEstimate == .exact(minutes: 180)
+↳ resolved.estimates.remainingEstimate == .exact(minutes: 180) → false
+↳   resolved.estimates.remainingEstimate → .exact(minutes: 120)
+↳     exact → (minutes: 120)
+↳       minutes → 120
+↳     exact → (minutes: 180)
+↳       minutes → 180
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .global at ManualContainerBudgetTests.swift:59:5: Expectation failed: resolved.estimates.remainingEstimate == .exact(minutes: 180)
+↳ resolved.estimates.remainingEstimate == .exact(minutes: 180) → false
+↳   resolved.estimates.remainingEstimate → .exact(minutes: 120)
+↳     exact → (minutes: 120)
+↳       minutes → 120
+↳     exact → (minutes: 180)
+↳       minutes → 180
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .archive at ManualContainerBudgetTests.swift:59:5: Expectation failed: resolved.estimates.remainingEstimate == .exact(minutes: 180)
+↳ resolved.estimates.remainingEstimate == .exact(minutes: 180) → false
+↳   resolved.estimates.remainingEstimate → .exact(minutes: 120)
+↳     exact → (minutes: 120)
+↳       minutes → 120
+↳     exact → (minutes: 180)
+↳       minutes → 180
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .local at ManualContainerBudgetTests.swift:69:5: Expectation failed: finished.estimates.fullEstimate == .exact(minutes: 240)
+↳ finished.estimates.fullEstimate == .exact(minutes: 240) → false
+↳   finished.estimates.fullEstimate → .exact(minutes: 180)
+↳     exact → (minutes: 180)
+↳       minutes → 180
+↳     exact → (minutes: 240)
+↳       minutes → 240
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .global at ManualContainerBudgetTests.swift:69:5: Expectation failed: finished.estimates.fullEstimate == .exact(minutes: 240)
+↳ finished.estimates.fullEstimate == .exact(minutes: 240) → false
+↳   finished.estimates.fullEstimate → .exact(minutes: 180)
+↳     exact → (minutes: 180)
+↳       minutes → 180
+↳     exact → (minutes: 240)
+↳       minutes → 240
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .archive at ManualContainerBudgetTests.swift:69:5: Expectation failed: finished.estimates.fullEstimate == .exact(minutes: 240)
+↳ finished.estimates.fullEstimate == .exact(minutes: 240) → false
+↳   finished.estimates.fullEstimate → .exact(minutes: 180)
+↳     exact → (minutes: 180)
+↳       minutes → 180
+↳     exact → (minutes: 240)
+↳       minutes → 240
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .global at ManualContainerBudgetTests.swift:78:5: Expectation failed: exceeded.estimates.remainingEstimate == .exact(minutes: 0)
+↳ exceeded.estimates.remainingEstimate == .exact(minutes: 0) → false
+↳   exceeded.estimates.remainingEstimate → .exact(minutes: 120)
+↳     exact → (minutes: 120)
+↳       minutes → 120
+↳     exact → (minutes: 0)
+↳       minutes → 0
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .global at ManualContainerBudgetTests.swift:79:5: Expectation failed: exceeded.estimates.completedExceedsTotal == true
+↳ exceeded.estimates.completedExceedsTotal == true → false
+↳   exceeded.estimates.completedExceedsTotal → false
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .local at ManualContainerBudgetTests.swift:78:5: Expectation failed: exceeded.estimates.remainingEstimate == .exact(minutes: 0)
+↳ exceeded.estimates.remainingEstimate == .exact(minutes: 0) → false
+↳   exceeded.estimates.remainingEstimate → .exact(minutes: 120)
+↳     exact → (minutes: 120)
+↳       minutes → 120
+↳     exact → (minutes: 0)
+↳       minutes → 0
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .local at ManualContainerBudgetTests.swift:79:5: Expectation failed: exceeded.estimates.completedExceedsTotal == true
+↳ exceeded.estimates.completedExceedsTotal == true → false
+↳   exceeded.estimates.completedExceedsTotal → false
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .archive at ManualContainerBudgetTests.swift:78:5: Expectation failed: exceeded.estimates.remainingEstimate == .exact(minutes: 0)
+↳ exceeded.estimates.remainingEstimate == .exact(minutes: 0) → false
+↳   exceeded.estimates.remainingEstimate → .exact(minutes: 120)
+↳     exact → (minutes: 120)
+↳       minutes → 120
+↳     exact → (minutes: 0)
+↳       minutes → 0
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) recorded an issue with 1 argument method → .archive at ManualContainerBudgetTests.swift:79:5: Expectation failed: exceeded.estimates.completedExceedsTotal == true
+↳ exceeded.estimates.completedExceedsTotal == true → false
+↳   exceeded.estimates.completedExceedsTotal → false
+✘ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) with 3 test cases failed after 0.328 seconds with 18 issues.
+✘ Suite ManualContainerBudgetTests failed after 0.328 seconds with 18 issues.
+✘ Test run with 1 test in 1 suite failed after 0.329 seconds with 18 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

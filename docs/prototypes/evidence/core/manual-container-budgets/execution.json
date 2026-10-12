@@ -1,0 +1,55 @@
+{
+  "beforeCommit": "a5b9d2e",
+  "mode": "localOnly",
+  "storageSchemaVersion": 15,
+  "portableFormatVersion": 2,
+  "qualification": {
+    "core": {
+      "functions": 14,
+      "suites": 6,
+      "caseExecutions": 17,
+      "failures": 0,
+      "log": "core-qualified.log"
+    },
+    "http": {
+      "functions": 11,
+      "suites": 3,
+      "caseExecutions": 12,
+      "failures": 0,
+      "skips": 0,
+      "bundle": "/private/tmp/PlannerManualContainerBudgetsHTTP.xcresult"
+    },
+    "strictSwiftFiles": 5,
+    "macBuild": "App and MCP test host compile in the actual HTTP run; zero native UI functions",
+    "mobileBuild": {
+      "result": "TEST BUILD SUCCEEDED",
+      "log": "/private/tmp/PlannerManualContainerBudgetsMobileBuild.log",
+      "nativeUIFunctions": 0
+    }
+  },
+  "redEvidence": {
+    "q76": "Three real-store cases failed because manual full/remaining totals were ignored. Cases finish the unknown child locally, globally or by archive.",
+    "branches": "The itinerary test failed because live manual List budgets were not used once per branch. One additional references assertion had used a baseline before explicit contextual completion created its retained context; the archive comparison now uses the immediate pre-archive baseline.",
+    "http": "New summary cases verify the existing upper-bound encoder over real HTTP; no new adapter encoder implementation was required."
+  },
+  "behaviors": [
+    "Manual total minus known finished contribution",
+    "Missing finished estimate gives upper bound",
+    "All-finished zero preserves manual value",
+    "Explicit reset restores calculation",
+    "Too-small manual total clamps zero and warns",
+    "One effective budget per repeated List appearance",
+    "Independent itinerary completion and branch archive retirement",
+    "Empty container retains No items and its manual budget; empty branch does not block completed parent",
+    "Checked overflow and incompatible combined bounds report unavailable"
+  ],
+  "remainingGates": [
+    "Native full/remaining captions, warnings and pickers",
+    "Calendar",
+    "Complete import apply/restoration",
+    "Native Mac UI runtime",
+    "Native scale",
+    "Signed physical iCloud/account/Share",
+    "Whole-app polish"
+  ]
+}

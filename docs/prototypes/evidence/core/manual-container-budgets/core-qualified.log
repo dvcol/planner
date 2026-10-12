@@ -1,0 +1,65 @@
+Building for debugging...
+[Using on-disk description]
+[1 / 4] PlannerCore
+[2 / 18] PlannerCore
+[3 / 21] PlannerCore
+[4 / 21] PlannerCore
+[6 / 21] PlannerCore
+[10 / 23] PlannerCore
+[13 / 19] PlannerCoreStoreTests-product
+[13 / 19] PlannerCoreTests-product
+[15 / 22] PlannerCoreTests-product
+[17 / 22] PlannerCoreStoreTests-product
+[21 / 23] PlannerCoreStoreTests-product
+[22 / 26] PlannerCoreStoreTests-product
+[24 / 26] PlannerCoreStoreTests-product
+Build complete! (13,84 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ManualContainerEstimateMigrationTests started.
+◇ Suite ItineraryScheduleTests started.
+◇ Suite ItineraryArchiveTests started.
+◇ Suite ManualContainerBudgetTests started.
+◇ Suite ManualContainerEstimateTests started.
+◇ Suite ContainerEstimateTests started.
+◇ Test genuineV14MigrationKeepsGraphHashesRecoveryAndLegacyCreationReplay() started.
+◇ Test itineraryAssignmentCanBeEditedAndRemovedWithoutChangingItsChildren() started.
+◇ Test emptyItineraryScheduleRetainsOwnershipAndRecoveryAfterReopen() started.
+◇ Test itineraryZoneChangePreservesInstantsAndRejectsStaleOrInvalidReplacement() started.
+◇ Test itineraryArchiveAndUnarchivePreserveLiveContentReferencesAndEveryCompletionScope() started.
+◇ Test emptyListBudgetDoesNotBlockFinishedItineraryAndOverflowNeverWraps() started.
+◇ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) started.
+◇ Test itineraryUsesEachLiveListBudgetOnceWithIndependentFinishedContributions() started.
+◇ Test manualContainerFieldsPersistExactValuesAndGuardEditsAcrossReopen() started.
+◇ Test manualEstimateClearReplayAndInvalidEditsPreserveUnrelatedContent(kind:) started.
+◇ Test automaticListTotalsRetainFullPlanAndFollowCompletionAndArchiveAfterReopen() started.
+◇ Test emptyAndOverflowingAutomaticTotalsPreserveValidProgressAndSourceEstimates() started.
+◇ Test itineraryAutomaticTotalsCountEachAppearanceAndKeepCompletionContextIndependent() started.
+◇ Test missingFinishedEstimatesDoNotInventTimeInAutomaticRemaining() started.
+◇ Test case passing 1 argument method → .local to missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) started.
+◇ Test case passing 1 argument method → .global to missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) started.
+◇ Test case passing 1 argument method → .archive to missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) started.
+◇ Test case passing 1 argument kind → .list to manualEstimateClearReplayAndInvalidEditsPreserveUnrelatedContent(kind:) started.
+◇ Test case passing 1 argument kind → .itinerary to manualEstimateClearReplayAndInvalidEditsPreserveUnrelatedContent(kind:) started.
+✔ Test emptyItineraryScheduleRetainsOwnershipAndRecoveryAfterReopen() passed after 0.860 seconds.
+✔ Test manualContainerFieldsPersistExactValuesAndGuardEditsAcrossReopen() passed after 0.860 seconds.
+✔ Test itineraryZoneChangePreservesInstantsAndRejectsStaleOrInvalidReplacement() passed after 0.861 seconds.
+✔ Test manualEstimateClearReplayAndInvalidEditsPreserveUnrelatedContent(kind:) with 2 test cases passed after 0.860 seconds.
+✔ Test itineraryAssignmentCanBeEditedAndRemovedWithoutChangingItsChildren() passed after 0.861 seconds.
+✔ Suite ItineraryScheduleTests passed after 0.861 seconds.
+✔ Suite ManualContainerEstimateTests passed after 0.861 seconds.
+✔ Test missingFinishedEstimateUsesUpperBoundUntilResolvedAndAllFinishedMeansZero(method:) with 3 test cases passed after 0.909 seconds.
+✔ Test emptyAndOverflowingAutomaticTotalsPreserveValidProgressAndSourceEstimates() passed after 0.910 seconds.
+✔ Test automaticListTotalsRetainFullPlanAndFollowCompletionAndArchiveAfterReopen() passed after 0.962 seconds.
+✔ Test emptyListBudgetDoesNotBlockFinishedItineraryAndOverflowNeverWraps() passed after 1.002 seconds.
+✔ Test missingFinishedEstimatesDoNotInventTimeInAutomaticRemaining() passed after 1.089 seconds.
+✔ Test itineraryArchiveAndUnarchivePreserveLiveContentReferencesAndEveryCompletionScope() passed after 1.638 seconds.
+✔ Suite ItineraryArchiveTests passed after 1.639 seconds.
+✔ Test genuineV14MigrationKeepsGraphHashesRecoveryAndLegacyCreationReplay() passed after 1.679 seconds.
+✔ Suite ManualContainerEstimateMigrationTests passed after 1.680 seconds.
+✔ Test itineraryAutomaticTotalsCountEachAppearanceAndKeepCompletionContextIndependent() passed after 1.791 seconds.
+✔ Suite ContainerEstimateTests passed after 1.792 seconds.
+✔ Test itineraryUsesEachLiveListBudgetOnceWithIndependentFinishedContributions() passed after 1.909 seconds.
+✔ Suite ManualContainerBudgetTests passed after 1.910 seconds.
+✔ Test run with 14 tests in 6 suites passed after 1.910 seconds.

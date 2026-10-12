@@ -288,7 +288,8 @@ struct ListSnapshot {
       progress: PlannerContainerProgress(
         container: reference, state: progressState, doneCount: doneCount, totalCount: totalCount,
         archivedCount: archivedCount),
-      estimates: automaticContainerEstimates(children: estimateChildren, archived: archived),
+      estimates: containerEstimates(
+        children: estimateChildren, archived: archived, manualEstimate: content.manualEstimate),
       references: children.map(\.reference)
         + entries.filter {
           $0.source.kind == "list" && $0.source.id == id && $0.source.lifetimeId == lifetimeId

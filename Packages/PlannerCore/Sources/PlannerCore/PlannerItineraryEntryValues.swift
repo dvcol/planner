@@ -29,14 +29,15 @@ extension ItinerarySnapshot {
     var totalCount: Int64 = 0
     var doneCount: Int64 = 0
     var archivedCount: Int64 = 0
-    var estimateChildren: [ContainerEstimateChild] = []
+    var estimateContributions: [ContainerEstimateContribution] = []
     for entry in entries {
       if entry.source.kind == "item" {
         let item = try resolvedItem(entry.source, in: items)
-        estimateChildren.append(
-          .init(
+        estimateContributions.append(
+          ContainerEstimateChild(
             estimate: item.input.estimate,
-            finished: item.globalDone || entry.localDone == true || item.archived))
+            finished: item.globalDone || entry.localDone == true || item.archived
+          ).contribution)
         totalCount += 1
         if item.globalDone || entry.localDone == true {
           doneCount += 1
@@ -52,6 +53,7 @@ extension ItinerarySnapshot {
       else {
         throw PlannerFailure("readUnavailable", "An itinerary List entry is unresolved.")
       }
+      var listEstimateChildren: [ContainerEstimateChild] = []
       for membership in memberships
       where membership.list.id == entry.source.id
         && membership.list.lifetimeId == entry.source.lifetimeId
@@ -63,7 +65,7 @@ extension ItinerarySnapshot {
             $0.context.membershipId == membership.id
               && $0.context.membershipLifetimeId == membership.lifetimeId
           }?.localDone ?? false
-        estimateChildren.append(
+        listEstimateChildren.append(
           .init(
             estimate: item.input.estimate,
             finished: item.globalDone || localDone || item.archived || list.archived))
@@ -73,6 +75,10 @@ extension ItinerarySnapshot {
           archivedCount += 1
         }
       }
+      estimateContributions.append(
+        listEstimateContribution(
+          children: listEstimateChildren, archived: list.archived,
+          manualEstimate: list.content.manualEstimate))
     }
     let state: PlannerContainerProgressState
     if totalCount == 0 {
@@ -86,7 +92,9 @@ extension ItinerarySnapshot {
       progress: .init(
         container: reference, state: state, doneCount: doneCount, totalCount: totalCount,
         archivedCount: archivedCount),
-      estimates: automaticContainerEstimates(children: estimateChildren, archived: archived)
+      estimates: containerEstimates(
+        contributions: estimateContributions, archived: archived,
+        manualEstimate: input.manualEstimate, allFinished: state == .complete)
     )
   }
 

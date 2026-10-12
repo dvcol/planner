@@ -1,0 +1,7 @@
+{
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerContainerEstimateValues.swift": "ae54291595f4d5c39583c68b7b6f49b2d4416e0cc7db68441e1750ce551cebf5",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerItineraryEntryValues.swift": "3a6163078407f4443b52838059b741b822cc597937896debaf91aa434a1adc5c",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerListValues.swift": "766af384da95b5f770cea3161cd2ccbe60f2df7f726c7ef85dadb30c7e7078c0",
+  "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ManualContainerBudgetTests.swift": "ab10f0ce1ccc1c38f4b72e0f6f9257d7368b4e5e95fb86cfdd05b023a12e2a03",
+  "PlannerMCPTests/ManualContainerEstimateRoutingTests.swift": "d35bd39c882ca3017dc31b3ab80950e0bde6f26f3dd5a8e1875d1235ca8a4cde"
+}
