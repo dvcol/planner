@@ -3,8 +3,82 @@ import PlannerCore
 import Testing
 
 struct NativeImportDeletedReviewTests {
+  @Test func unrelatedDeletionDoesNotBlockLiveOwnerOverwriteReview() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = Planner(
+      configuration: .init(
+        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+        controlURL: directory.appendingPathComponent("control/writer"),
+        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+        processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    func save(_ command: PlannerCommand, reviewToken: PlannerReviewToken? = nil) async throws
+      -> PlannerAppliedResult
+    {
+      guard
+        case .applied(let result, .complete) = await planner.execute(
+          .init(operationId: UUID(), session: session, command: command, reviewToken: reviewToken)
+        ).outcome
+      else { throw CancellationError() }
+      return result
+    }
+    let deleted = try #require(
+      try await save(.createItem(content: .init(title: "Deleted museum"))).generated.first)
+    let tag = try #require(
+      try await save(.createTag(content: .init(name: "Current Tag"))).generated.first)
+    guard
+      case .reviewed(let deletion) = await planner.prepareReview(
+        session: session, command: .deleteSource(source: deleted))
+    else { throw CancellationError() }
+    _ = try await save(deletion.command, reviewToken: deletion.reviewToken)
+    guard case .exported(let before) = await planner.exportData(session: session),
+      case .listedNamespaces(let beforeNamespaces) = await planner.inspectRecovery(
+        request: .namespaces), let beforeNamespace = beforeNamespaces.first,
+      let beforeCheckpoint = beforeNamespace.acknowledgedSnapshot?.checkpointGeneration
+    else { throw CancellationError() }
+    var object = try #require(JSONSerialization.jsonObject(with: before) as? [String: Any])
+    var sources = try #require(object["sources"] as? [[String: Any]])
+    let position = try #require(sources.firstIndex { $0["id"] as? String == tag.id.uuidString })
+    var content = try #require(sources[position]["content"] as? [String: Any])
+    content["name"] = "Incoming Tag"
+    sources[position]["content"] = content
+    object["sources"] = sources
+    guard
+      case .decoded(let incoming) = planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: object))
+    else { throw CancellationError() }
+    let response = await planner.prepareReview(
+      session: session, command: .applyImport(backup: incoming, mode: .overwrite))
+    guard case .reviewed(let review) = response else {
+      Issue.record(
+        "Unrelated current closure must not block a live-owner Overwrite review: \(response)")
+      return
+    }
+    let details = try #require(review.impact.importDetails)
+    #expect(details.replacements.count == 1 && details.replacements.first?.owner.id == tag.id)
+    #expect(details.replacements.first?.before?.title == "Current Tag")
+    #expect(details.replacements.first?.after?.title == "Incoming Tag")
+    #expect(details.restorations.isEmpty && details.skippedConflicts.isEmpty)
+    #expect(
+      details.incomingDeletions.count == 1
+        && details.incomingDeletions.first?.owner?.id == deleted.id)
+    #expect(review.impact.sourceDeletes.isEmpty && review.impact.referenceRemovals.isEmpty)
+    guard case .exported(let after) = await planner.exportData(session: session),
+      case .listedNamespaces(let afterNamespaces) = await planner.inspectRecovery(
+        request: .namespaces),
+      let afterNamespace = afterNamespaces.first
+    else { throw CancellationError() }
+    #expect(before == after)
+    #expect(beforeNamespace.namespaceId == afterNamespace.namespaceId)
+    #expect(beforeCheckpoint == afterNamespace.acknowledgedSnapshot?.checkpointGeneration)
+  }
+
   enum DeletedSourceCase: CaseIterable { case declared, external, externalWrongLifetime }
-  @Test func deletedScheduleCannotReturnThroughANewOwnerInSkipMode() async throws {
+  @Test(arguments: [PlannerImportMode.skip, .overwrite])
+  func closedScheduleSkipsItsNewOwnerOrRequiresExplicitRestoration(mode: PlannerImportMode)
+    async throws
+  {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
     let planner = Planner(
@@ -61,10 +135,27 @@ struct NativeImportDeletedReviewTests {
     object["schedules"] = schedules
     guard
       case .decoded(let decoded) = planner.decodeImport(
-        try JSONSerialization.data(withJSONObject: object)),
-      case .reviewed(let review) = await planner.prepareReview(
-        session: session, command: .applyImport(backup: decoded))
+        try JSONSerialization.data(withJSONObject: object))
     else { throw CancellationError() }
+    let response = await planner.prepareReview(
+      session: session, command: .applyImport(backup: decoded, mode: mode))
+    if mode == .overwrite {
+      guard case .failed(let failure) = response else {
+        Issue.record(
+          "A closed owned Schedule needs restoration impact before Overwrite: \(response)")
+        return
+      }
+      #expect(failure.code == "unavailable" && failure.propertyPath == "/schedules/0")
+      guard case .exported(let after) = await planner.exportData(session: session) else {
+        throw CancellationError()
+      }
+      #expect(before == after)
+      return
+    }
+    guard case .reviewed(let review) = response else {
+      Issue.record("Skip must review the complete blocked owner: \(response)")
+      return
+    }
     let details = try #require(review.impact.importDetails)
     #expect(details.imports.count == 1 && details.imports.first?.after?.title == "Independent List")
     #expect(details.unchanged.count == 1 && details.unchanged.first?.owner.id == item.id)
@@ -238,6 +329,24 @@ struct NativeImportDeletedReviewTests {
         && details.restorations.isEmpty)
     #expect(
       details.unchanged.isEmpty && details.incomingDeletions.isEmpty && !review.globalFlagsChanged)
+    let overwrite = await planner.prepareReview(
+      session: session, command: .applyImport(backup: decoded, mode: .overwrite))
+    if sourceCase == .declared {
+      guard case .failed(let failure) = overwrite else {
+        Issue.record("A declared deleted source needs its own restoration review")
+        return
+      }
+      #expect(failure.code == "unavailable" && failure.propertyPath == "/sources/0")
+    } else {
+      guard case .reviewed(let overwriteReview) = overwrite else {
+        Issue.record(
+          "External deleted dependencies must not block the independent Overwrite review")
+        return
+      }
+      let overwriteDetails = try #require(overwriteReview.impact.importDetails)
+      #expect(overwriteDetails.imports.count == 1 && overwriteDetails.skippedDependents.count == 2)
+      #expect(overwriteDetails.restorations.isEmpty && overwriteDetails.referenceChanges.isEmpty)
+    }
     guard case .exported(let after) = await planner.exportData(session: session),
       case .status(let status) = await planner.read(session: session, request: .status),
       case .known(let afterCheckpoint, let incomplete, let blocked) = status.recovery
