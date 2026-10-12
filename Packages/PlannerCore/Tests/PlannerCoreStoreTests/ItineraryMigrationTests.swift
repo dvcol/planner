@@ -105,7 +105,7 @@ struct ItineraryMigrationTests {
     #expect(itineraryRead.content.title == "Tokyo")
     #expect(Set(itineraryRead.labels.map(\.name)) == ["Food", "Rain"])
     #expect(itineraryRead.progress.state == .empty)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 15)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 16)
     #expect(historicalAfter.portableData == historical.portableData)
     #expect(
       recovery.decodedBackup.backup.sources.filter { $0.kind == .itinerary }.map(\.id) == [

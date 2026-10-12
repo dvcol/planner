@@ -73,11 +73,11 @@ public actor Planner {
         var identity: PlannerStoreIdentity
         if FileManager.default.fileExists(atPath: configuration.controlURL.path) {
           identity = try loadIdentity()
-          guard (1...15).contains(identity.schemaVersion) else {
+          guard (1...16).contains(identity.schemaVersion) else {
             throw PlannerFailure(
               "unsupportedVersion", "The dataset uses an unsupported storage schema.")
           }
-          if identity.schemaVersion < 15, configuration.processRole == .shareExtension {
+          if identity.schemaVersion < 16, configuration.processRole == .shareExtension {
             return .mainAppMigrationRequired
           }
           guard FileManager.default.fileExists(atPath: configuration.storeURL.path) else {
@@ -96,15 +96,15 @@ public actor Planner {
           context.autosaveEnabled = false
           try context.save()
           identity = PlannerStoreIdentity(
-            schemaVersion: 15, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
+            schemaVersion: 16, datasetId: UUID(), epochId: UUID(), namespaceId: UUID(),
             ownershipBinding: "local:" + UUID().uuidString
           )
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
         }
         _ = try openContainer()
-        if identity.schemaVersion < 15 {
+        if identity.schemaVersion < 16 {
           identity = PlannerStoreIdentity(
-            schemaVersion: 15, datasetId: identity.datasetId, epochId: identity.epochId,
+            schemaVersion: 16, datasetId: identity.datasetId, epochId: identity.epochId,
             namespaceId: identity.namespaceId, ownershipBinding: identity.ownershipBinding)
           try plannerWriteDurably(JSONEncoder().encode(identity), to: configuration.controlURL)
         }
@@ -238,14 +238,14 @@ public actor Planner {
         let container = try openContainer()
         let context = ModelContext(container)
         context.autosaveEnabled = false
-        let archive = recoveryArchive(identity)
+        let archive = recoveryArchive(identity, context: context)
         let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
         let envelope = try archive.latest()
         switch operation.command {
-        case .applyImport:
-          throw PlannerFailure(
-            "unavailable", "Reviewed import application is not implemented yet.",
-            propertyPath: "/command/type")
+        case .applyImport(let backup, let mode):
+          return try executeImport(
+            operation, backup: backup, mode: mode, identity: identity, context: context,
+            archive: archive, receipts: receipts, envelope: envelope)
         case .deleteSource(let source):
           if source.kind == .itinerary {
             return try executeItineraryDeletion(
@@ -2029,6 +2029,7 @@ public actor Planner {
         }
         knownAppliedReceipt = evidence
         _ = try latestRead.get()
+        let lineage = try PlannerNativeLineage(context: context)
         let generation = try archive.publish(
           itineraries: try itinerarySnapshots(context),
           labelAssociations: try labelAssociationSnapshots(context),
@@ -2036,7 +2037,9 @@ public actor Planner {
           categories: try categorySnapshots(context),
           items: try context.fetch(FetchDescriptor<PlannerSchemaV15.Item>()).map { try $0.value() },
           lists: try listSnapshots(context), memberships: try membershipSnapshots(context),
-          deletionMarkers: try deletionMarkers(context), receipts: receipts)
+          deletionMarkers: try deletionMarkers(context),
+          contextAliases: lineage.contextAliases, completionChanges: lineage.completionChanges,
+          restorationFamilies: lineage.restorationFamilies, receipts: receipts)
         return PlannerOperationResult(
           operationId: operationId,
           outcome: .applied(
@@ -2055,12 +2058,130 @@ public actor Planner {
     }
   }
 
+  private func executeImport(
+    _ operation: PlannerOperation, backup: PlannerDecodedBackup, mode: PlannerImportMode,
+    identity: PlannerStoreIdentity, context: ModelContext, archive: PlannerRecoveryArchive,
+    receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    let empty = PlannerDecodedBackup(
+      backup: .init(
+        sources: [], labelAssociations: [], memberships: [], itineraryEntries: [],
+        expandedCompletions: [], deletionMarkers: []))
+    let digest = plannerImportDigest(
+      incoming: backup, current: empty, mode: mode, identity: identity)
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      guard receipt.payloadDigest == digest else {
+        throw PlannerFailure("operationPayloadMismatch", "This operation describes another import.")
+      }
+      return appliedResult(
+        operationId: operation.operationId,
+        evidence: try RecoveryReceipt(receipt, checkpoint: nil), envelope: envelope)
+    }
+    let completedIdentifiers = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { completedIdentifiers.contains($0) } ?? false })
+    else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    let current = try importReviewSnapshot(context)
+    guard let token = operation.reviewToken, let review = reviews[token.reviewId],
+      review.session == operation.session,
+      review.payloadDigest
+        == plannerImportDigest(incoming: backup, current: current, mode: mode, identity: identity)
+    else {
+      throw PlannerFailure(
+        "staleReview", "The import or current dataset changed; review it again.",
+        propertyPath: "/reviewToken", details: .staleReview)
+    }
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another import.")
+      }
+      return .init(operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    let deletionImpacts = try importDeletionImpacts(
+      incoming: backup, current: current, mode: mode, context: context)
+    let resolution = try plannerResolveImportReview(
+      incoming: backup, current: current, mode: mode, deletionImpacts: deletionImpacts)
+    guard current.backup.sources.isEmpty, current.backup.deletionMarkers.isEmpty,
+      current.backup.contextAliases.isEmpty, current.backup.completionChanges.isEmpty,
+      current.backup.restorationFamilies.isEmpty
+    else {
+      throw PlannerFailure(
+        "unavailable",
+        "Import into an existing dataset still needs the reviewed merge implementation.")
+    }
+    try plannerInsertImportedGraph(backup.backup, context: context)
+    let restored = try importReviewSnapshot(context)
+    guard
+      restored.backup.importCanonicalValue.encoded() == backup.backup.importCanonicalValue.encoded()
+    else {
+      context.rollback()
+      throw PlannerFailure(
+        "unavailable", "The native store cannot yet preserve every imported field.")
+    }
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV15.Item>()).map { try $0.value() }
+    let lists = try listSnapshots(context)
+    let itineraries = try itinerarySnapshots(context)
+    let labels = try labelAssociationSnapshots(context)
+    let tags = try tagSnapshots(context)
+    let categories = try categorySnapshots(context)
+    let memberships = try membershipSnapshots(context)
+    let markers = try deletionMarkers(context)
+    let lineage = try PlannerNativeLineage(context: context)
+    let proposalSnapshot = PlannerDataSnapshot(
+      itineraries: itineraries, labelAssociations: labels, tags: tags, categories: categories,
+      items: items, lists: lists, memberships: memberships, deletionMarkers: markers,
+      contextAliases: lineage.contextAliases, completionChanges: lineage.completionChanges,
+      restorationFamilies: lineage.restorationFamilies)
+    try archive.prepare(
+      .init(
+        proposalId: UUID(), originalOperationId: operation.operationId,
+        datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
+        proposedBackup: proposalSnapshot, payloadDigest: digest, evidence: "preparedUnverified"))
+    let generated = backup.backup.sources.map {
+      PlannerAppliedIdentity.source($0.importBinding.reference)
+    }
+    let result = PlannerAppliedResult(generatedIdentities: generated, affectedIdentities: generated)
+    let bindings = backup.backup.sources.map {
+      PlannerBoundIdentity(
+        kind: $0.kind.rawValue, id: $0.id, lifetimeId: $0.importBinding.lifetimeId)
+    }
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result, bindings: bindings)
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      throw PlannerFailure(
+        "persistenceFailure", "The import was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(
+        itineraries: itineraries, labelAssociations: labels, tags: tags, categories: categories,
+        items: items, lists: lists, memberships: memberships, deletionMarkers: markers,
+        contextAliases: lineage.contextAliases, completionChanges: lineage.completionChanges,
+        restorationFamilies: lineage.restorationFamilies, receipts: receipts + [receipt])
+      return .init(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return .init(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
+  }
+
   public func exportData(session: PlannerDatasetSession) -> PlannerExportResult {
     do {
       return try coordinated {
         _ = try validateSession(session)
         let context = ModelContext(try openContainer())
         context.autosaveEnabled = false
+        let lineage = try PlannerNativeLineage(context: context)
         let snapshot = PlannerDataSnapshot(
           itineraries: try itinerarySnapshots(context),
           labelAssociations: try labelAssociationSnapshots(context),
@@ -2068,7 +2189,10 @@ public actor Planner {
           categories: try categorySnapshots(context),
           items: try context.fetch(FetchDescriptor<PlannerSchemaV15.Item>()).map { try $0.value() },
           lists: try listSnapshots(context), memberships: try membershipSnapshots(context),
-          deletionMarkers: try deletionMarkers(context))
+          deletionMarkers: try deletionMarkers(context),
+          contextAliases: lineage.contextAliases,
+          completionChanges: lineage.completionChanges,
+          restorationFamilies: lineage.restorationFamilies)
         try requireCompleteExportGraph(snapshot, context: context)
         _ = try snapshot.validated()
         let encoder = JSONEncoder()
@@ -2166,13 +2290,17 @@ public actor Planner {
   }
 
   private func importReviewSnapshot(_ context: ModelContext) throws -> PlannerDecodedBackup {
+    let lineage = try PlannerNativeLineage(context: context)
     let snapshot = PlannerDataSnapshot(
       itineraries: try itinerarySnapshots(context),
       labelAssociations: try labelAssociationSnapshots(context),
       tags: try tagSnapshots(context), categories: try categorySnapshots(context),
       items: try context.fetch(FetchDescriptor<PlannerSchemaV15.Item>()).map { try $0.value() },
       lists: try listSnapshots(context), memberships: try membershipSnapshots(context),
-      deletionMarkers: try deletionMarkers(context))
+      deletionMarkers: try deletionMarkers(context),
+      contextAliases: lineage.contextAliases,
+      completionChanges: lineage.completionChanges,
+      restorationFamilies: lineage.restorationFamilies)
     try requireCompleteExportGraph(snapshot, context: context)
     return try snapshot.validated()
   }
@@ -7189,7 +7317,7 @@ public actor Planner {
     let identity = try loadIdentity()
     guard sessions[session.sessionId] == session, session.datasetId == identity.datasetId,
       session.ownershipBinding == identity.ownershipBinding, session.epochId == identity.epochId,
-      identity.schemaVersion == 15
+      identity.schemaVersion == 16
     else {
       throw PlannerFailure("staleDatasetSession", "The dataset session is no longer authorized.")
     }
@@ -7201,15 +7329,18 @@ public actor Planner {
       throw PlannerFailure(
         "unavailable", "The initialized dataset's store is missing; recovery remains separate.")
     }
-    let schema = Schema(versionedSchema: PlannerSchemaV15.self)
+    let schema = Schema(versionedSchema: PlannerSchemaV16.self)
     let modelConfiguration = ModelConfiguration(
       schema: schema, url: configuration.storeURL, cloudKitDatabase: .none)
     return try ModelContainer(
       for: schema, migrationPlan: PlannerMigrationPlan.self, configurations: [modelConfiguration])
   }
 
-  private func recoveryArchive(_ identity: PlannerStoreIdentity) -> PlannerRecoveryArchive {
-    PlannerRecoveryArchive(rootURL: configuration.recoveryDirectoryURL, identity: identity)
+  private func recoveryArchive(
+    _ identity: PlannerStoreIdentity, context: ModelContext? = nil
+  ) -> PlannerRecoveryArchive {
+    PlannerRecoveryArchive(
+      rootURL: configuration.recoveryDirectoryURL, identity: identity, nativeContext: context)
   }
 
   private func discoveredArchives() throws -> [PlannerRecoveryArchive] {
@@ -7222,7 +7353,7 @@ public actor Planner {
         PlannerStoreIdentity.self,
         from: Data(contentsOf: directory.appendingPathComponent("identity.json")))
       guard directory.lastPathComponent == identity.namespaceId.uuidString,
-        (1...15).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
+        (1...16).contains(identity.schemaVersion), !identity.ownershipBinding.isEmpty
       else {
         throw PlannerFailure(
           "ownershipUnverified", "A recovery namespace has invalid ownership metadata.")

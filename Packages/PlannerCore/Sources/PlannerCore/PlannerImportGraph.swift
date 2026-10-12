@@ -406,14 +406,7 @@ struct PlannerImportGraph {
     }
     let groups = Dictionary(grouping: backup.contextAliases, by: \.canonicalContext)
     for (context, contributions) in groups {
-      let selected = contributions.compactMap(\.currentChangeId).compactMap { changes[$0] }
-      let maximal = selected.filter { candidate in
-        !selected.contains { other in
-          observedChanges(other.id, changes: changes).contains(candidate.id)
-        }
-      }
-      let winner = maximal.min { $0.id.uuidString < $1.id.uuidString }
-      let expected = winner?.done ?? contributions.contains(where: \.initialDone)
+      let expected = plannerCompletionHistoryValue(contributions: contributions, changes: changes)
       if let actual = try contextState(context, path: "/contextAliases", allowClosed: true),
         actual != expected
       {
@@ -425,17 +418,6 @@ struct PlannerImportGraph {
     }
   }
 
-  private func observedChanges(_ identifier: UUID, changes: [UUID: PlannerPortableCompletionChange])
-    -> Set<UUID>
-  {
-    var pending = changes[identifier]?.observedChangeIds ?? []
-    var seen: Set<UUID> = []
-    while let next = pending.popLast() {
-      guard seen.insert(next).inserted else { continue }
-      pending.append(contentsOf: changes[next]?.observedChangeIds ?? [])
-    }
-    return seen
-  }
 }
 
 extension PlannerPortableSource {

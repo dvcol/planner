@@ -1,4 +1,5 @@
 import Foundation
+import SwiftData
 
 struct PortableItemContent: Codable {
   let title: String
@@ -137,6 +138,22 @@ struct PlannerDataSnapshot: Codable {
   let contextAliases: [PlannerPortableContextAlias]
   let completionChanges: [PlannerPortableCompletionChange]
   let restorationFamilies: [PlannerPortableRestorationFamily]
+
+  init(snapshot: PlannerDataSnapshot, lineage: PlannerNativeLineage) {
+    format = snapshot.format
+    formatVersion = snapshot.formatVersion
+    sources = snapshot.sources
+    memberships = snapshot.memberships
+    itineraryEntries = snapshot.itineraryEntries
+    expandedCompletions = snapshot.expandedCompletions
+    labelAssociations = snapshot.labelAssociations
+    ownedLinks = snapshot.ownedLinks
+    schedules = snapshot.schedules
+    deletionMarkers = snapshot.deletionMarkers
+    contextAliases = lineage.contextAliases
+    completionChanges = lineage.completionChanges
+    restorationFamilies = lineage.restorationFamilies
+  }
 
   enum CodingKeys: String, CodingKey, CaseIterable {
     case format, formatVersion, sources, memberships, itineraryEntries, expandedCompletions
@@ -467,8 +484,9 @@ struct RecoveryEnvelope: Codable {
 
   func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
     guard format == "planner-recovery", formatVersion == 1,
-      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"].contains(
-        storageSchemaVersion),
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"]
+        .contains(
+          storageSchemaVersion),
       namespaceId == identity.namespaceId, datasetId == identity.datasetId,
       ownershipBinding == identity.ownershipBinding, !ownershipBinding.isEmpty,
       let generation = Int64(checkpointGeneration), generation > 0,
@@ -504,12 +522,25 @@ struct RecoveryEnvelope: Codable {
 struct PlannerRecoveryArchive {
   let rootURL: URL
   let identity: PlannerStoreIdentity
+  let nativeContext: ModelContext?
 
   var namespaceURL: URL { rootURL.appendingPathComponent(identity.namespaceId.uuidString) }
 
   func prepare(_ proposal: RecoveryPreparedProposal) throws {
+    var retained = proposal
+    if let nativeContext {
+      let lineage = try PlannerNativeLineage(context: nativeContext)
+        .reconciling(proposal.proposedBackup, context: nativeContext)
+      retained = .init(
+        proposalId: proposal.proposalId, originalOperationId: proposal.originalOperationId,
+        datasetId: proposal.datasetId, ownershipBinding: proposal.ownershipBinding,
+        proposedBackup: .init(
+          snapshot: proposal.proposedBackup, lineage: lineage),
+        payloadDigest: proposal.payloadDigest, evidence: proposal.evidence)
+    }
+    _ = try retained.proposedBackup.validated()
     try plannerWriteDurably(
-      JSONEncoder().encode(proposal),
+      JSONEncoder().encode(retained),
       to: namespaceURL.appendingPathComponent("proposal-\(proposal.proposalId.uuidString).json")
     )
   }
@@ -559,6 +590,9 @@ struct PlannerRecoveryArchive {
     categories: [CategorySnapshot],
     items: [ItemSnapshot], lists: [ListSnapshot], memberships: [MembershipSnapshot],
     deletionMarkers: [PortableDeletionMarker],
+    contextAliases: [PlannerPortableContextAlias] = [],
+    completionChanges: [PlannerPortableCompletionChange] = [],
+    restorationFamilies: [PlannerPortableRestorationFamily] = [],
     receipts: [PlannerSchemaV1.Receipt]
   ) throws -> Int64 {
     let previous = try latest()
@@ -567,12 +601,15 @@ struct PlannerRecoveryArchive {
     guard !overflow else {
       throw PlannerFailure("recoveryIncomplete", "Recovery checkpoint capacity was exceeded.")
     }
+    let lineage = try nativeContext.map { try PlannerNativeLineage(context: $0) }
     let bytes = try JSONEncoder().encode(
       PlannerDataSnapshot(
         itineraries: itineraries, labelAssociations: labelAssociations, tags: tags,
         categories: categories,
         items: items, lists: lists, memberships: memberships,
-        deletionMarkers: deletionMarkers))
+        deletionMarkers: deletionMarkers, contextAliases: lineage?.contextAliases ?? contextAliases,
+        completionChanges: lineage?.completionChanges ?? completionChanges,
+        restorationFamilies: lineage?.restorationFamilies ?? restorationFamilies))
     let priorCheckpoints = Dictionary(
       uniqueKeysWithValues: (previous?.receipts ?? []).map {
         ($0.operationId, $0.checkpointGeneration.flatMap(Int64.init))
