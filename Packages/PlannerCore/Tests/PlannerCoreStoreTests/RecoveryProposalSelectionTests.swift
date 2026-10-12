@@ -5,6 +5,133 @@ import SwiftData
 import Testing
 
 struct RecoveryProposalSelectionTests {
+  @Test(arguments: ["emptyRestorationCandidates", "duplicateObservedChanges"])
+  func malformedPortableLineageIsRejectedBeforeRecoverySelection(_ scenario: String) async throws {
+    let fixture = try await PreparedNotesProposalFixture.create()
+    defer { try? FileManager.default.removeItem(at: fixture.directory) }
+    let proposalURL = fixture.configuration.recoveryDirectoryURL
+      .appendingPathComponent(fixture.namespace.namespaceId.uuidString)
+      .appendingPathComponent("proposal-\(fixture.proposal.proposalId.uuidString).json")
+    var proposal = try #require(
+      JSONSerialization.jsonObject(with: Data(contentsOf: proposalURL)) as? [String: Any])
+    var backup = try canonicalPortableFixtureExpectations(nativeImportFixtureData())
+    let expectedPath: String
+    switch scenario {
+    case "emptyRestorationCandidates":
+      let markers = try #require(backup["deletionMarkers"] as? [[String: Any]])
+      let target = try #require(markers.first?["target"] as? [String: Any])
+      let predecessor = try #require(target["source"] as? [String: Any])
+      backup["restorationFamilies"] = [
+        ["familyId": UUID().uuidString, "predecessor": predecessor, "candidates": []]
+      ]
+      expectedPath = "/restorationFamilies/0/candidates"
+    case "duplicateObservedChanges":
+      var aliases = try #require(backup["contextAliases"] as? [[String: Any]])
+      var changes = try #require(backup["completionChanges"] as? [[String: Any]])
+      let predecessorIdentifier = try #require(changes.first?["id"] as? String)
+      var change = try #require(changes.first)
+      let changeIdentifier = UUID().uuidString
+      change["id"] = changeIdentifier
+      change["observedChangeIds"] = [predecessorIdentifier, predecessorIdentifier]
+      changes.append(change)
+      aliases[0]["currentChangeId"] = changeIdentifier
+      backup["contextAliases"] = aliases
+      backup["completionChanges"] = changes
+      expectedPath = "/completionChanges/1/observedChangeIds"
+    default: throw CancellationError()
+    }
+    let portableData = try JSONSerialization.data(withJSONObject: backup)
+    guard case .invalid(let importFailure) = fixture.planner.decodeImport(portableData) else {
+      Issue.record("Public import must reject \(scenario).")
+      return
+    }
+    #expect(importFailure.propertyPath == expectedPath)
+    proposal["proposedBackup"] = backup
+    try JSONSerialization.data(withJSONObject: proposal).write(to: proposalURL, options: .atomic)
+    let response = await fixture.planner.inspectRecovery(
+      request: .proposal(
+        namespaceId: fixture.namespace.namespaceId, proposalId: fixture.proposal.proposalId))
+    guard case .failed(let recoveryFailure) = response else {
+      Issue.record("Recovery must reject \(scenario) before returning a selection.")
+      return
+    }
+    #expect(recoveryFailure.code == "recoveryIntegrityFailure")
+    #expect(recoveryFailure.propertyPath == expectedPath)
+    guard
+      case .source(.item(let current)) = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source)),
+      case .appliedRecoveryIncomplete(let result, _) = await fixture.planner.operationStatus(
+        session: fixture.session, operationId: fixture.proposal.originalOperationId)
+    else { throw CancellationError() }
+    #expect(current.source == fixture.current.source)
+    #expect(current.sourceLifetimeId == fixture.current.sourceLifetimeId)
+    #expect(current.content.notes == fixture.current.content.notes)
+    #expect(current.fieldHashes == fixture.current.fieldHashes)
+    #expect(current.updatedAt == fixture.current.updatedAt)
+    #expect(result.affected.contains(fixture.source))
+  }
+
+  @Test(arguments: [false, true])
+  func completePortableLineageSurvivesPreparedFileInspectionWithoutApplyingData(
+    includeRestorationFamily: Bool
+  ) async throws {
+    let fixture = try await PreparedNotesProposalFixture.create()
+    defer { try? FileManager.default.removeItem(at: fixture.directory) }
+    let proposalURL = fixture.configuration.recoveryDirectoryURL
+      .appendingPathComponent(fixture.namespace.namespaceId.uuidString)
+      .appendingPathComponent("proposal-\(fixture.proposal.proposalId.uuidString).json")
+    var proposal = try #require(
+      JSONSerialization.jsonObject(with: Data(contentsOf: proposalURL)) as? [String: Any])
+    var expected = try canonicalPortableFixtureExpectations(nativeImportFixtureData())
+    if includeRestorationFamily {
+      let markers = try #require(expected["deletionMarkers"] as? [[String: Any]])
+      let target = try #require(markers.first?["target"] as? [String: Any])
+      let predecessor = try #require(target["source"] as? [String: Any])
+      expected["restorationFamilies"] = [
+        [
+          "familyId": "00000000-0000-4000-8000-000000000890", "predecessor": predecessor,
+          "candidates": [
+            [
+              "lifetimeId": "00000000-0000-4000-8000-000000000820",
+              "operationId": "00000000-0000-4000-8000-000000000994",
+            ]
+          ],
+        ]
+      ]
+    }
+    guard
+      case .decoded = fixture.planner.decodeImport(
+        try JSONSerialization.data(withJSONObject: expected))
+    else { throw CancellationError() }
+    proposal["proposedBackup"] = expected
+    try JSONSerialization.data(withJSONObject: proposal).write(to: proposalURL, options: .atomic)
+    let response = await fixture.planner.inspectRecovery(
+      request: .proposal(
+        namespaceId: fixture.namespace.namespaceId, proposalId: fixture.proposal.proposalId))
+    guard case .selected(let selection) = response else {
+      Issue.record("Inspect every valid lineage record from the prepared file: \(response)")
+      return
+    }
+    #expect(selection.evidence == .preparedUnverified)
+    #expect(selection.decodedBackup.backup.contextAliases.count == 1)
+    #expect(selection.decodedBackup.backup.completionChanges.count == 1)
+    #expect(
+      selection.decodedBackup.backup.restorationFamilies.count == (includeRestorationFamily ? 1 : 0)
+    )
+    let actual = try #require(
+      JSONSerialization.jsonObject(with: selection.portableData) as? [String: Any])
+    #expect(NSDictionary(dictionary: actual).isEqual(to: expected))
+    guard
+      case .source(.item(let current)) = await fixture.planner.read(
+        session: fixture.session, request: .source(fixture.source)),
+      case .appliedRecoveryIncomplete(let result, _) = await fixture.planner.operationStatus(
+        session: fixture.session, operationId: fixture.proposal.originalOperationId)
+    else { throw CancellationError() }
+    #expect(current.content.notes == "Monday booking")
+    #expect(current.source.id == fixture.source.id)
+    #expect(result.affected.contains(fixture.source))
+  }
+
   @Test
   func selectingPreparedNotesProposalAfterReopenPreservesUnverifiedEvidenceAndAcknowledgedData()
     async throws

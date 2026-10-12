@@ -63,12 +63,12 @@ public struct PlannerBindingPath: Sendable, Equatable {
   public let propertyPath: String
 }
 
-public enum PlannerPortableIdentityKind: String, Sendable {
+public enum PlannerPortableIdentityKind: String, Sendable, Codable {
   case item, list, itinerary, category, tag, schedule
   case membership, itineraryEntry, labelAssociation, ownedLink
 }
 
-public struct PlannerPortableBoundIdentity: Sendable, Hashable {
+public struct PlannerPortableBoundIdentity: Sendable, Hashable, Codable {
   public let kind: PlannerPortableIdentityKind
   public let id: UUID
   public let lifetimeId: UUID
@@ -80,7 +80,7 @@ public enum PlannerPortableCompletionContext: Sendable, Hashable {
   case expandedListItem(PlannerExpandedContext)
 }
 
-public struct PlannerPortableContextAlias: Sendable {
+public struct PlannerPortableContextAlias: Sendable, Codable {
   public let aliasId: UUID
   public let context: PlannerPortableCompletionContext
   public let canonicalContext: PlannerPortableCompletionContext
@@ -88,7 +88,7 @@ public struct PlannerPortableContextAlias: Sendable {
   public let currentChangeId: UUID?
 }
 
-public struct PlannerPortableCompletionChange: Sendable {
+public struct PlannerPortableCompletionChange: Sendable, Codable {
   public let id: UUID
   public let aliasId: UUID
   public let context: PlannerPortableCompletionContext
@@ -96,12 +96,12 @@ public struct PlannerPortableCompletionChange: Sendable {
   public let observedChangeIds: [UUID]
 }
 
-public struct PlannerPortableRestorationCandidate: Sendable {
+public struct PlannerPortableRestorationCandidate: Sendable, Codable {
   public let lifetimeId: UUID
   public let operationId: UUID
 }
 
-public struct PlannerPortableRestorationFamily: Sendable {
+public struct PlannerPortableRestorationFamily: Sendable, Codable {
   public let familyId: UUID
   public let predecessor: PlannerPortableBoundIdentity
   public let candidates: [PlannerPortableRestorationCandidate]

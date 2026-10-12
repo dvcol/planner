@@ -122,7 +122,7 @@ struct PortableItemRecord: Codable {
   }
 }
 
-/// This slice supports Items, Lists, Categories, Tags, label associations, memberships, owned links, direct timed/all-day Schedules and minimal deletion metadata. Other graph groups must be empty.
+/// Portable recovery snapshot retaining completion history and restoration lineage.
 struct PlannerDataSnapshot: Codable {
   let format: String
   let formatVersion: Int
@@ -134,6 +134,9 @@ struct PlannerDataSnapshot: Codable {
   let ownedLinks: [PortableOwnedLink]
   let schedules: [PortableScheduleRecord]
   let deletionMarkers: [PortableDeletionMarker]
+  let contextAliases: [PlannerPortableContextAlias]
+  let completionChanges: [PlannerPortableCompletionChange]
+  let restorationFamilies: [PlannerPortableRestorationFamily]
 
   enum CodingKeys: String, CodingKey, CaseIterable {
     case format, formatVersion, sources, memberships, itineraryEntries, expandedCompletions
@@ -147,8 +150,16 @@ struct PlannerDataSnapshot: Codable {
     tags: [TagSnapshot],
     categories: [CategorySnapshot],
     items: [ItemSnapshot], lists: [ListSnapshot], memberships: [MembershipSnapshot],
-    deletionMarkers: [PortableDeletionMarker]
+    deletionMarkers: [PortableDeletionMarker],
+    contextAliases: [PlannerPortableContextAlias] = [],
+    completionChanges: [PlannerPortableCompletionChange] = [],
+    restorationFamilies: [PlannerPortableRestorationFamily] = []
   ) {
+    self.contextAliases = contextAliases.sorted { $0.aliasId.uuidString < $1.aliasId.uuidString }
+    self.completionChanges = completionChanges.sorted { $0.id.uuidString < $1.id.uuidString }
+    self.restorationFamilies = restorationFamilies.sorted {
+      $0.familyId.uuidString < $1.familyId.uuidString
+    }
     self.itineraryEntries = itineraries.flatMap(\.entries).map(PortableItineraryEntryRecord.init)
       .sorted { $0.id.uuidString < $1.id.uuidString }
     self.expandedCompletions = itineraries.flatMap(\.entries).flatMap(\.expandedCompletions).map(
@@ -204,17 +215,12 @@ struct PlannerDataSnapshot: Codable {
     ownedLinks = try container.decode([PortableOwnedLink].self, forKey: .ownedLinks)
     schedules = try container.decode([PortableScheduleRecord].self, forKey: .schedules)
     deletionMarkers = try container.decode([PortableDeletionMarker].self, forKey: .deletionMarkers)
-    for key in CodingKeys.allCases
-    where key != .format && key != .formatVersion && key != .sources && key != .ownedLinks
-      && key != .schedules && key != .deletionMarkers && key != .memberships
-      && key != .labelAssociations && key != .itineraryEntries && key != .expandedCompletions
-    {
-      guard try container.decode([String].self, forKey: key).isEmpty else {
-        throw PlannerFailure(
-          "recoveryIntegrityFailure",
-          "This snapshot slice cannot validate nonempty \(key.rawValue).")
-      }
-    }
+    contextAliases = try container.decode(
+      [PlannerPortableContextAlias].self, forKey: .contextAliases)
+    completionChanges = try container.decode(
+      [PlannerPortableCompletionChange].self, forKey: .completionChanges)
+    restorationFamilies = try container.decode(
+      [PlannerPortableRestorationFamily].self, forKey: .restorationFamilies)
   }
 
   func encode(to encoder: any Encoder) throws {
@@ -229,13 +235,9 @@ struct PlannerDataSnapshot: Codable {
     try container.encode(ownedLinks, forKey: .ownedLinks)
     try container.encode(schedules, forKey: .schedules)
     try container.encode(deletionMarkers, forKey: .deletionMarkers)
-    for key in CodingKeys.allCases
-    where key != .format && key != .formatVersion && key != .sources && key != .ownedLinks
-      && key != .schedules && key != .deletionMarkers && key != .memberships
-      && key != .labelAssociations && key != .itineraryEntries && key != .expandedCompletions
-    {
-      try container.encode([String](), forKey: key)
-    }
+    try container.encode(contextAliases, forKey: .contextAliases)
+    try container.encode(completionChanges, forKey: .completionChanges)
+    try container.encode(restorationFamilies, forKey: .restorationFamilies)
   }
 
   func validated() throws -> PlannerDecodedBackup {
@@ -369,7 +371,7 @@ struct PlannerDataSnapshot: Codable {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "The snapshot contains duplicate deletion markers.")
     }
-    return PlannerDecodedBackup(
+    let decoded = PlannerDecodedBackup(
       backup: PlannerPortableBackup(
         sources: items.map(PlannerPortableSource.item) + lists.map(PlannerPortableSource.list)
           + itineraries.map(PlannerPortableSource.itinerary)
@@ -396,7 +398,15 @@ struct PlannerDataSnapshot: Codable {
             memberships: memberships,
             labelAssociations: labelAssociations,
             entries: itineraryEntries)
-        }, ownedLinks: portableLinks))
+        }, ownedLinks: portableLinks, contextAliases: contextAliases,
+        completionChanges: completionChanges, restorationFamilies: restorationFamilies))
+    do { try PlannerImportGraph(backup: decoded.backup).validate() } catch let failure
+      as PlannerFailure
+    {
+      throw PlannerFailure(
+        "recoveryIntegrityFailure", failure.message, propertyPath: failure.propertyPath)
+    }
+    return decoded
   }
 }
 

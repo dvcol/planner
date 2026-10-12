@@ -115,6 +115,10 @@ struct PlannerImportGraph {
     var candidateFamilies: [PlannerPortableBoundIdentity: Int] = [:]
     for (index, family) in backup.restorationFamilies.enumerated() {
       let path = "/restorationFamilies/\(index)"
+      guard !family.candidates.isEmpty else {
+        throw failure(
+          "A restoration family needs at least one candidate.", path + "/candidates")
+      }
       try unique(family.candidates.map(\.lifetimeId), path + "/candidates", "lifetimeId")
       guard isClosed(family.predecessor) else {
         throw failure(
@@ -368,6 +372,10 @@ struct PlannerImportGraph {
     }
     for (index, change) in backup.completionChanges.enumerated() {
       let path = "/completionChanges/\(index)"
+      guard Set(change.observedChangeIds).count == change.observedChangeIds.count else {
+        throw failure(
+          "Observed completion changes must be distinct.", path + "/observedChangeIds")
+      }
       guard let alias = aliases[change.aliasId], alias.context == change.context else {
         throw failure(
           "A completion change must resolve to its declared alias context.", path + "/aliasId")
