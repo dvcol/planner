@@ -575,6 +575,15 @@ func plannerResolveImportReview(
         before: nil, after: nil))
   }
   var uniqueChanges: [PlannerImportReferenceChange] = []
+  let removalClosure = PlannerImportReferenceRemoval(current: current.backup, changes: changes)
+  changes += currentProjection.references.filter {
+    removalClosure.references.contains($0.reference)
+  }.map { .init(change: .remove, reference: $0.reference) }
+  for schedule in current.backup.schedules
+  where removalClosure.references.contains(.schedule(id: schedule.id, source: schedule.source)) {
+    let source = PlannerEntityReference(kind: .schedule, id: schedule.id)
+    if selectedSourceDeletes.insert(source).inserted { sourceDeletes.append(source) }
+  }
   var changePositions: [PlannerReferenceRead: Int] = [:]
   for change in changes {
     if let position = changePositions[change.reference] {
@@ -588,6 +597,9 @@ func plannerResolveImportReview(
     incoming.backup.sources.map { $0.importBinding.reference }
       + skippedConflicts.map { $0.owner.reference }
       + deletions.compactMap { $0.before?.identity.reference }
+      + currentProjection.references.filter {
+        removalClosure.references.contains($0.reference)
+      }.map(\.owner)
       + sourceDeletes
   ).sorted {
     if $0.kind != $1.kind { return $0.kind.rawValue < $1.kind.rawValue }

@@ -1,0 +1,19 @@
+Building for debugging...
+[1 / 4] PlannerCore
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (2,98 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportOwnedRemovalTests started.
+◇ Test explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag() started.
+✘ Test explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag() recorded an issue at NativeImportOwnedRemovalTests.swift:51:19: Issue recorded
+↳ Apply a reviewed Todo closure with retained history and no flag: PlannerOperationResult(operationId: CE745AB0-BB21-42F8-A7B0-1D242C7D0817, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Rebinding reference or history identities still needs closure reconciliation.", details: nil)))
+✘ Test explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag() failed after 0.101 seconds with 1 issue.
+✘ Suite NativeImportOwnedRemovalTests failed after 0.101 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.101 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

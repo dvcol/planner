@@ -5,17 +5,20 @@ struct PlannerNativeLineage {
   let contextAliases: [PlannerPortableContextAlias]
   let completionChanges: [PlannerPortableCompletionChange]
   let restorationFamilies: [PlannerPortableRestorationFamily]
+  let deletionMarkers: [PortableDeletionMarker]
 
   private init(
     contextAliases: [PlannerPortableContextAlias],
     completionChanges: [PlannerPortableCompletionChange],
-    restorationFamilies: [PlannerPortableRestorationFamily]
+    restorationFamilies: [PlannerPortableRestorationFamily],
+    deletionMarkers: [PortableDeletionMarker]
   ) {
     self.contextAliases = contextAliases.sorted { $0.aliasId.uuidString < $1.aliasId.uuidString }
     self.completionChanges = completionChanges.sorted { $0.id.uuidString < $1.id.uuidString }
     self.restorationFamilies = restorationFamilies.sorted {
       $0.familyId.uuidString < $1.familyId.uuidString
     }
+    self.deletionMarkers = deletionMarkers
   }
 
   func reconciling(_ snapshot: PlannerDataSnapshot, context: ModelContext) throws
@@ -73,13 +76,15 @@ struct PlannerNativeLineage {
         change, identifier: change.id, kind: "completionChange", records: records, context: context)
     }
     return .init(
-      contextAliases: aliases, completionChanges: changes, restorationFamilies: restorationFamilies)
+      contextAliases: aliases, completionChanges: changes, restorationFamilies: restorationFamilies,
+      deletionMarkers: deletionMarkers)
   }
 
   init(context: ModelContext) throws {
     var aliases: [PlannerPortableContextAlias] = []
     var changes: [PlannerPortableCompletionChange] = []
     var families: [PlannerPortableRestorationFamily] = []
+    var markers: [PortableDeletionMarker] = []
     for record in try context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>()) {
       guard let identifier = record.recordIdentifier, let data = record.recordData else {
         throw PlannerFailure("readUnavailable", "Stored lineage has unresolved identity or data.")
@@ -97,20 +102,64 @@ struct PlannerNativeLineage {
         let family = try JSONDecoder().decode(PlannerPortableRestorationFamily.self, from: data)
         guard family.familyId == identifier else { throw Self.invalidIdentity() }
         families.append(family)
+      case "deletionMarker":
+        let marker = try JSONDecoder().decode(PortableDeletionMarker.self, from: data)
+        guard marker.deletionId == identifier else { throw Self.invalidIdentity() }
+        markers.append(marker)
       default: throw Self.invalidIdentity()
       }
     }
     guard Set(aliases.map(\.aliasId)).count == aliases.count,
       Set(changes.map(\.id)).count == changes.count,
-      Set(families.map(\.familyId)).count == families.count
+      Set(families.map(\.familyId)).count == families.count,
+      Set(markers.map(\.deletionId)).count == markers.count
     else { throw Self.invalidIdentity() }
     contextAliases = aliases.sorted { $0.aliasId.uuidString < $1.aliasId.uuidString }
     completionChanges = changes.sorted { $0.id.uuidString < $1.id.uuidString }
     restorationFamilies = families.sorted { $0.familyId.uuidString < $1.familyId.uuidString }
+    deletionMarkers = markers.sorted { $0.deletionId.uuidString < $1.deletionId.uuidString }
   }
 
   private static func invalidIdentity() -> PlannerFailure {
     .init("readUnavailable", "Stored lineage has inconsistent identity or kind.")
+  }
+}
+
+func plannerRemoveImportedReferences(notIn backup: PlannerPortableBackup, context: ModelContext)
+  throws
+{
+  let expandedContexts = Set(backup.expandedCompletions.map(\.context))
+  for expanded in try context.fetch(FetchDescriptor<PlannerSchemaV15.ExpandedCompletion>()) {
+    if !expandedContexts.contains(try expanded.value().context) { context.delete(expanded) }
+  }
+  try plannerRemoveImportedRecords(
+    PlannerSchemaV15.Membership.self, identity: \.id,
+    retaining: Set(backup.memberships.map(\.id)), context: context)
+  try plannerRemoveImportedRecords(
+    PlannerSchemaV15.ItineraryEntry.self, identity: \.id,
+    retaining: Set(backup.itineraryEntries.map(\.id)),
+    context: context)
+  try plannerRemoveImportedRecords(
+    PlannerSchemaV15.LabelAssociation.self, identity: \.id,
+    retaining: Set(backup.labelAssociations.map(\.id)),
+    context: context)
+  try plannerRemoveImportedRecords(
+    PlannerSchemaV15.OwnedLink.self, identity: \.id,
+    retaining: Set(backup.ownedLinks.map(\.id)), context: context)
+  try plannerRemoveImportedRecords(
+    PlannerSchemaV15.Schedule.self, identity: \.id,
+    retaining: Set(backup.schedules.map(\.id)), context: context)
+  context.processPendingChanges()
+}
+
+private func plannerRemoveImportedRecords<Record: PersistentModel>(
+  _ recordType: Record.Type, identity: KeyPath<Record, UUID?>,
+  retaining identifiers: Set<UUID>, context: ModelContext
+) throws {
+  for (identifier, record) in try plannerImportRecords(
+    recordType, identity: identity, context: context)
+  {
+    if !identifiers.contains(identifier) { context.delete(record) }
   }
 }
 
@@ -348,6 +397,7 @@ func plannerInsertImportedGraph(
     }
     context.insert(schedule)
   }
+  let lineageRecords = try context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>())
   for value in backup.deletionMarkers {
     let target: PortableDeletionTarget
     switch value.target {
@@ -359,16 +409,22 @@ func plannerInsertImportedGraph(
       target = .itineraryEntry(id: identifier, lifetimeId: lifetimeId)
     case .labelAssociation(let identifier, let lifetimeId):
       target = .labelAssociation(id: identifier, lifetimeId: lifetimeId)
-    default:
-      throw PlannerFailure("unavailable", "This deletion target still needs native storage.")
+    case .ownedLink(let identifier, let lifetimeId):
+      target = .ownedLink(id: identifier, lifetimeId: lifetimeId)
+    case .expandedCompletion(let expandedContext):
+      target = .expandedCompletion(expandedContext)
     }
-    context.insert(
-      PlannerSchemaV4.DeletionMarker(
-        .init(
-          deletionId: value.deletionId, operationId: value.operationId, target: target,
-          closedFamilyId: value.closedFamilyId)))
+    let marker = PortableDeletionMarker(
+      deletionId: value.deletionId, operationId: value.operationId, target: target,
+      closedFamilyId: value.closedFamilyId)
+    if case .expandedCompletion = target {
+      try plannerStageLineageRecord(
+        marker, identifier: value.deletionId, kind: "deletionMarker",
+        records: lineageRecords, context: context)
+    } else {
+      try context.insert(PlannerSchemaV4.DeletionMarker(marker))
+    }
   }
-  let lineageRecords = try context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>())
   for alias in backup.contextAliases {
     try plannerStageLineageRecord(
       alias, identifier: alias.aliasId, kind: "contextAlias", records: lineageRecords,

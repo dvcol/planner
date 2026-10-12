@@ -3,7 +3,7 @@ import PlannerCore
 import Testing
 
 struct NativeImportMergeTests {
-  @Test(arguments: ["referenceRemoval", "aliasIdentity", "changeIdentity"])
+  @Test(arguments: ["referenceLifetime", "aliasIdentity", "changeIdentity"])
   func changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario: String) async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
@@ -30,9 +30,9 @@ struct NativeImportMergeTests {
     content["title"] = "Must not partially overwrite"
     sources[0]["content"] = content
     incoming["sources"] = sources
-    if scenario == "referenceRemoval" {
+    if scenario == "referenceLifetime" {
       var associations = try #require(incoming["labelAssociations"] as? [[String: Any]])
-      associations.removeLast()
+      associations[0]["lifetimeId"] = "00000000-0000-4000-8000-000000000915"
       incoming["labelAssociations"] = associations
     } else {
       var aliases = try #require(incoming["contextAliases"] as? [[String: Any]])

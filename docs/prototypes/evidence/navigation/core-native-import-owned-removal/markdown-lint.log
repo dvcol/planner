@@ -1,0 +1,5 @@
+markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)
+Finding: docs/portable-data-contract.md docs/prototypes/core-native-import-owned-removal.md
+Linting: 2 files
+Summary: 0 issues in 0 files
+Done in 301ms using pnpm v12.10.1

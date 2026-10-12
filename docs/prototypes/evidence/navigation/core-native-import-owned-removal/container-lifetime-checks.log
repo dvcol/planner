@@ -1,0 +1,120 @@
+Building for debugging...
+[1 / 1]
+[2 / 13] PlannerCoreStoreTests-product
+[14 / 25] PlannerCoreStoreTests-product
+[15 / 25] PlannerCoreStoreTests-product
+[18 / 24] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift:192:25: warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+190 |     let timedForm = PlannerScheduleForm.timed(
+191 |       start: try #require(ISO8601DateFormatter().date(from: "2026-10-11T01:00:00Z")),
+192 |       end: try #require(ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")),
+    |                         `- warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+193 |       planningTimeZone: "Asia/Tokyo")
+194 |     guard
+[20 / 24] PlannerCoreStoreTests-product
+[22 / 24] PlannerCoreStoreTests-product
+Build complete! (21,67 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite DatasetPresentationScopeTests started.
+◇ Suite NativeStatusAdmissionTests started.
+◇ Suite ItemEditTests started.
+◇ Suite NativeExportAdmissionTests started.
+◇ Suite NativeContainerLifetimeTests started.
+◇ Suite ItemListQueryTests started.
+◇ Test unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test presentationOwnershipSurvivesReopenAndRemainsSeparateFromAnotherDataset() started.
+◇ Suite ItemTextQueryTests started.
+◇ Suite MissingStoreAdmissionTests started.
+◇ Test preparedProposalDoesNotBecomeKnownAppliedPendingStatusOrChangeCurrentContent() started.
+◇ Test oneStaleFieldRejectsEntireTitleAndNotesPatch() started.
+◇ Test appliedIncompleteStatusRetainsPriorCheckpointAndClearsOnlyAfterRecoveryRepair() started.
+◇ Test unrelatedTitleEditDoesNotInvalidatePriorNotesHash() started.
+◇ Test activeExportIncludesAppliedChangesWhileIndependentRecoveryIsUnreadable() started.
+◇ Test notesEditPreservesOtherFieldsAndSurvivesReopenWithRecovery() started.
+◇ Test case passing 1 argument scenario → "unreadableRecovery" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "wrongOwnership" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "malformedRecovery" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test case passing 1 argument scenario → "mismatchedReceipt" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test staleNotesEditPreservesFridayBookingAndReportsCurrentField() started.
+◇ Test case passing 1 argument scenario → "missingStore" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test replayingNotesEditReturnsOriginalEvidenceWithoutReapplyingOldValue() started.
+◇ Test invalidScopeOrUnavailableStoreFailsWholeExportAndRetainsIndependentData(_:) started.
+◇ Test retainedContainersReadAnotherFacadesEditsThroughFreshContexts() started.
+◇ Test case passing 1 argument scenario → "separateDataset" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test listIdentityGroupsNarrowLiveMembershipsAndPreserveContextualProgress() started.
+◇ Test case passing 1 argument scenario → "foreignSession" to unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) started.
+◇ Test allSearchWordsMatchAcrossSavedFieldsWithoutChangingContentAfterReopen() started.
+◇ Test listSearchNarrowsEffectiveStateWithoutChangingProgressOrManualOrder() started.
+◇ Test literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test anotherWriterChangesSearchResultsAndInvalidatesTheIssuedWindow() started.
+◇ Test authorizedCreationCannotRecreateAMissingInitializedStoreOrReplaceRecovery() started.
+◇ Test case passing 1 argument scenario → "foreignSession" to invalidScopeOrUnavailableStoreFailsWholeExportAndRetainsIndependentData(_:) started.
+◇ Test case passing 1 argument scenario → "missingStore" to invalidScopeOrUnavailableStoreFailsWholeExportAndRetainsIndependentData(_:) started.
+◇ Test case passing 1 argument scenario → "unreadableStore" to invalidScopeOrUnavailableStoreFailsWholeExportAndRetainsIndependentData(_:) started.
+CoreData: error: addPersistentStoreWithType:configuration:URL:options:error: returned error NSCocoaErrorDomain (259)
+CoreData: error: userInfo:
+CoreData: error: 	NSFilePath : /var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/A76E0AD7-BDB3-4DFC-BDA4-21542BE2F7A0/store/Planner.sqlite
+CoreData: error: 	NSSQLiteErrorDomain : 26
+CoreData: error: storeType: SQLite
+CoreData: error: configuration: default
+CoreData: error: URL: file:///var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/A76E0AD7-BDB3-4DFC-BDA4-21542BE2F7A0/store/Planner.sqlite
+CoreData: annotation: options:
+CoreData: annotation: 	NSMigratePersistentStoresAutomaticallyOption : 1
+CoreData: annotation: 	NSPersistentStoreStagedMigrationManagerOptionKey : <SwiftData.DefaultMigrationManager: 0x7700f0ea80>
+CoreData: annotation: 	NSInferMappingModelAutomaticallyOption : 1
+CoreData: annotation: 	NSPersistentStoreRemoteChangeNotificationOptionKey : 1
+CoreData: annotation: 	NSPersistentHistoryTrackingKey : 1
+CoreData: error: <NSPersistentStoreCoordinator: 0x7700cba800>: Attempting recovery from error encountered during addPersistentStore: 0x770131a3d0 Error Domain=NSCocoaErrorDomain Code=259 "The file “Planner.sqlite” couldn’t be opened because it isn’t in the correct format." UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/A76E0AD7-BDB3-4DFC-BDA4-21542BE2F7A0/store/Planner.sqlite, NSSQLiteErrorDomain=26}
+CoreData: error: Store failed to load.  <NSPersistentStoreDescription: 0x770131a580> (type: SQLite, url: file:///var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/A76E0AD7-BDB3-4DFC-BDA4-21542BE2F7A0/store/Planner.sqlite) with error = Error Domain=NSCocoaErrorDomain Code=259 "The file “Planner.sqlite” couldn’t be opened because it isn’t in the correct format." UserInfo={NSFilePath=/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/A76E0AD7-BDB3-4DFC-BDA4-21542BE2F7A0/store/Planner.sqlite, NSSQLiteErrorDomain=26} with userInfo {
+    NSFilePath = "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/A76E0AD7-BDB3-4DFC-BDA4-21542BE2F7A0/store/Planner.sqlite";
+    NSSQLiteErrorDomain = 26;
+}
+✔ Test presentationOwnershipSurvivesReopenAndRemainsSeparateFromAnotherDataset() passed after 0.184 seconds.
+◇ Test case passing 1 argument example → SearchExample(text: "cafe", expectedTitles: ["Café tasting"]) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "CAFÉ", expectedTitles: ["Café tasting"]) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "Café", expectedTitles: ["Café tasting"]) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "Lunch", expectedTitles: ["Ramen lunch"]) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "Afternoon", expectedTitles: ["Ramen lunch"]) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "VEGETARIAN", expectedTitles: ["Ramen lunch"]) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "Menu", expectedTitles: ["Ramen lunch"]) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "Ginza", expectedTitles: ["Ramen lunch"]) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "Meeting", expectedTitles: ["Ramen lunch"]) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "/ramen", expectedTitles: ["Ramen lunch"]) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "vegetarian\t\nmenu", expectedTitles: ["Ramen lunch"]) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "https://example.com/ramen", expectedTitles: ["Ramen lunch"]) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "example.COM /ramen", expectedTitles: ["Ramen lunch"]) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "lunchmenu", expectedTitles: []) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "rainy*", expectedTitles: []) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "cfae", expectedTitles: []) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "meal", expectedTitles: []) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: " \t\n ", expectedTitles: ["Café tasting", "Ramen lunch"]) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "", expectedTitles: ["Café tasting", "Ramen lunch"]) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+◇ Test case passing 1 argument example → SearchExample(text: "cafe menu", expectedTitles: []) to literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) started.
+✔ Test unavailableOrScopedStatusNeverClaimsSavedEmptyOrCrossDatasetEvidence(_:) with 7 test cases passed after 0.338 seconds.
+✔ Test preparedProposalDoesNotBecomeKnownAppliedPendingStatusOrChangeCurrentContent() passed after 0.341 seconds.
+✔ Test oneStaleFieldRejectsEntireTitleAndNotesPatch() passed after 0.341 seconds.
+✔ Test unrelatedTitleEditDoesNotInvalidatePriorNotesHash() passed after 0.342 seconds.
+✔ Test activeExportIncludesAppliedChangesWhileIndependentRecoveryIsUnreadable() passed after 0.342 seconds.
+✔ Test notesEditPreservesOtherFieldsAndSurvivesReopenWithRecovery() passed after 0.342 seconds.
+✔ Test invalidScopeOrUnavailableStoreFailsWholeExportAndRetainsIndependentData(_:) with 3 test cases passed after 0.342 seconds.
+✔ Test staleNotesEditPreservesFridayBookingAndReportsCurrentField() passed after 0.342 seconds.
+✔ Test appliedIncompleteStatusRetainsPriorCheckpointAndClearsOnlyAfterRecoveryRepair() passed after 0.342 seconds.
+✔ Test retainedContainersReadAnotherFacadesEditsThroughFreshContexts() passed after 0.342 seconds.
+✔ Test replayingNotesEditReturnsOriginalEvidenceWithoutReapplyingOldValue() passed after 0.342 seconds.
+✔ Test allSearchWordsMatchAcrossSavedFieldsWithoutChangingContentAfterReopen() passed after 0.342 seconds.
+✔ Suite DatasetPresentationScopeTests passed after 0.342 seconds.
+✔ Suite NativeStatusAdmissionTests passed after 0.342 seconds.
+✔ Suite ItemEditTests passed after 0.342 seconds.
+✔ Suite NativeExportAdmissionTests passed after 0.342 seconds.
+✔ Suite NativeContainerLifetimeTests passed after 0.342 seconds.
+✔ Test authorizedCreationCannotRecreateAMissingInitializedStoreOrReplaceRecovery() passed after 0.281 seconds.
+✔ Suite MissingStoreAdmissionTests passed after 0.390 seconds.
+✔ Test literalSearchUsesEverySavedFieldAndInsensitiveNativeMatching(example:) with 20 test cases passed after 0.300 seconds.
+✔ Test anotherWriterChangesSearchResultsAndInvalidatesTheIssuedWindow() passed after 0.304 seconds.
+✔ Test listSearchNarrowsEffectiveStateWithoutChangingProgressOrManualOrder() passed after 0.372 seconds.
+✔ Suite ItemTextQueryTests passed after 0.463 seconds.
+✔ Test listIdentityGroupsNarrowLiveMembershipsAndPreserveContextualProgress() passed after 0.577 seconds.
+✔ Suite ItemListQueryTests passed after 0.577 seconds.
+✔ Test run with 18 tests in 8 suites passed after 0.577 seconds.

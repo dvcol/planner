@@ -1,0 +1,73 @@
+Building for debugging...
+[1 / 1]
+[1 / 9]
+[2 / 20] PlannerCore
+[11 / 29] PlannerCore
+[18 / 37] PlannerCore
+[19 / 37] PlannerCore
+[23 / 37] PlannerCore
+[25 / 37] PlannerCore
+[30 / 38] PlannerCoreTests-product
+[33 / 39] PlannerCoreTests-product
+[35 / 40] PlannerCoreStoreTests-product
+[47 / 52] PlannerCoreStoreTests-product
+[48 / 52] PlannerCoreStoreTests-product
+[49 / 52] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift:192:25: warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+190 |     let timedForm = PlannerScheduleForm.timed(
+191 |       start: try #require(ISO8601DateFormatter().date(from: "2026-10-11T01:00:00Z")),
+192 |       end: try #require(ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")),
+    |                         `- warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+193 |       planningTimeZone: "Asia/Tokyo")
+194 |     guard
+[51 / 55] PlannerCoreStoreTests-product
+[53 / 55] PlannerCoreStoreTests-product
+Build complete! (20,24 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportOwnedRemovalTests started.
+◇ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) started.
+◇ Test case passing 2 arguments group → "membership", explicitClosure → false to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) started.
+◇ Test case passing 2 arguments group → "membership", explicitClosure → true to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) started.
+◇ Test case passing 2 arguments group → "directEntry", explicitClosure → false to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) started.
+◇ Test case passing 2 arguments group → "directEntry", explicitClosure → true to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) started.
+◇ Test case passing 2 arguments group → "listEntry", explicitClosure → true to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) started.
+◇ Test case passing 2 arguments group → "listEntry", explicitClosure → false to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) started.
+◇ Test case passing 2 arguments group → "expandedCompletion", explicitClosure → false to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) started.
+◇ Test case passing 2 arguments group → "expandedCompletion", explicitClosure → true to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) started.
+◇ Test case passing 2 arguments group → "labelAssociation", explicitClosure → false to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) started.
+◇ Test case passing 2 arguments group → "labelAssociation", explicitClosure → true to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) started.
+◇ Test case passing 2 arguments group → "ownedLink", explicitClosure → false to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) started.
+✘ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) recorded an issue with 2 arguments group → "expandedCompletion", explicitClosure → true at NativeImportOwnedRemovalTests.swift:75:21: Issue recorded
+↳ Apply .overwrite removing expandedCompletion: PlannerOperationResult(operationId: 6ACBF01C-EF69-4799-8BDF-4364D4252950, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "readUnavailable", propertyPath: nil, message: "The complete expanded completion graph is unresolved.", details: nil)))
+◇ Test case passing 2 arguments group → "ownedLink", explicitClosure → true to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) started.
+✘ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) recorded an issue with 2 arguments group → "directEntry", explicitClosure → true at NativeImportOwnedRemovalTests.swift:75:21: Issue recorded
+↳ Apply .overwrite removing directEntry: PlannerOperationResult(operationId: 684F62B7-96B5-40C3-99F7-F5CD4E32EF1A, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "readUnavailable", propertyPath: nil, message: "The complete Itinerary entry graph is unresolved.", details: nil)))
+◇ Test case passing 2 arguments group → "schedule", explicitClosure → false to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) started.
+✘ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) recorded an issue with 2 arguments group → "membership", explicitClosure → true at NativeImportOwnedRemovalTests.swift:75:21: Issue recorded
+↳ Apply .overwrite removing membership: PlannerOperationResult(operationId: 132DC313-2BA9-4CB4-8A22-D0C912656400, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "readUnavailable", propertyPath: nil, message: "The complete expanded completion graph is unresolved.", details: nil)))
+✘ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) recorded an issue with 2 arguments group → "directEntry", explicitClosure → false at NativeImportOwnedRemovalTests.swift:75:21: Issue recorded
+↳ Apply .overwrite removing directEntry: PlannerOperationResult(operationId: 0BC86D0F-37DC-41E7-981A-23AC3D21A43F, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "readUnavailable", propertyPath: nil, message: "The complete Itinerary entry graph is unresolved.", details: nil)))
+◇ Test case passing 2 arguments group → "schedule", explicitClosure → true to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) started.
+✘ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) recorded an issue with 2 arguments group → "membership", explicitClosure → false at NativeImportOwnedRemovalTests.swift:75:21: Issue recorded
+↳ Apply .overwrite removing membership: PlannerOperationResult(operationId: E616AB75-5DDC-4EF1-AD43-A78ED5685986, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "readUnavailable", propertyPath: nil, message: "The complete expanded completion graph is unresolved.", details: nil)))
+✘ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) recorded an issue with 2 arguments group → "listEntry", explicitClosure → false at NativeImportOwnedRemovalTests.swift:75:21: Issue recorded
+↳ Apply .overwrite removing listEntry: PlannerOperationResult(operationId: 33031DFB-60B9-4DD6-86F8-7CF583ED11FB, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "readUnavailable", propertyPath: nil, message: "The complete Itinerary entry graph is unresolved.", details: nil)))
+✘ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) recorded an issue with 2 arguments group → "ownedLink", explicitClosure → false at NativeImportOwnedRemovalTests.swift:75:21: Issue recorded
+↳ Apply .overwrite removing ownedLink: PlannerOperationResult(operationId: 3006902B-7D1D-45DA-BF0C-1E96088CE0C8, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "readUnavailable", propertyPath: nil, message: "The complete bookmark graph is unresolved.", details: nil)))
+✘ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) recorded an issue with 2 arguments group → "expandedCompletion", explicitClosure → false at NativeImportOwnedRemovalTests.swift:75:21: Issue recorded
+↳ Apply .overwrite removing expandedCompletion: PlannerOperationResult(operationId: 763E08A2-2E63-4660-9B66-B9D4CD008DED, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "readUnavailable", propertyPath: nil, message: "The complete expanded completion graph is unresolved.", details: nil)))
+✘ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) recorded an issue with 2 arguments group → "listEntry", explicitClosure → true at NativeImportOwnedRemovalTests.swift:75:21: Issue recorded
+↳ Apply .overwrite removing listEntry: PlannerOperationResult(operationId: C05E729A-3F7F-4151-81DC-4C77D8F24F31, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "readUnavailable", propertyPath: nil, message: "The complete Itinerary entry graph is unresolved.", details: nil)))
+✘ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) recorded an issue with 2 arguments group → "ownedLink", explicitClosure → true at NativeImportOwnedRemovalTests.swift:75:21: Issue recorded
+↳ Apply .overwrite removing ownedLink: PlannerOperationResult(operationId: 396A78E9-CD07-4EEA-ADAD-CC2D36369601, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "readUnavailable", propertyPath: nil, message: "The complete bookmark graph is unresolved.", details: nil)))
+✘ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) recorded an issue with 2 arguments group → "schedule", explicitClosure → false at NativeImportOwnedRemovalTests.swift:75:21: Issue recorded
+↳ Apply .overwrite removing schedule: PlannerOperationResult(operationId: DF7F8436-645C-4F97-A243-3555D1CBEB07, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "readUnavailable", propertyPath: nil, message: "The complete Schedule graph is unresolved.", details: nil)))
+✘ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) recorded an issue with 2 arguments group → "schedule", explicitClosure → true at NativeImportOwnedRemovalTests.swift:75:21: Issue recorded
+↳ Apply .overwrite removing schedule: PlannerOperationResult(operationId: 1639F2DA-EAC3-46EE-91FD-9E5DAEAC4859, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "readUnavailable", propertyPath: nil, message: "The complete Schedule graph is unresolved.", details: nil)))
+✘ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:explicitClosure:) with 14 test cases failed after 0.631 seconds with 12 issues.
+✘ Suite NativeImportOwnedRemovalTests failed after 0.632 seconds with 12 issues.
+✘ Test run with 1 test in 1 suite failed after 0.632 seconds with 12 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

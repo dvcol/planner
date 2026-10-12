@@ -1,0 +1,80 @@
+Building for debugging...
+[1 / 1]
+[2 / 16] PlannerCore
+[4 / 18] PlannerCore
+[9 / 21] PlannerCore
+[12 / 14] PlannerCoreTests-product
+[16 / 18] PlannerCoreStoreTests-product
+Build complete! (4,54 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportHistoryCollisionTests started.
+◇ Suite NativeImportMergeTests started.
+◇ Suite NativeImportOwnedRemovalTests started.
+◇ Test skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) started.
+◇ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:) started.
+◇ Test retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:) started.
+◇ Test explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag() started.
+◇ Test overwriteSourceFieldsPreservesReferencesAndHistoryAcrossSetAndClear() started.
+◇ Test case passing 1 argument scenario → "referenceLifetime" to changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:) started.
+◇ Test case passing 1 argument scenario → "aliasIdentity" to changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:) started.
+◇ Test case passing 1 argument collision → "alias" to skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) started.
+◇ Test case passing 1 argument collision → "change" to skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) started.
+◇ Test case passing 1 argument scenario → "changeIdentity" to changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:) started.
+◇ Test case passing 2 arguments group → "membership", options → (false, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → false, interleaveSourceIdentifiers → false to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → false, interleaveSourceIdentifiers → true to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 1 argument group → "memberships" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 2 arguments group → "membership", options → (false, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 1 argument group → "ownedLink" to laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:) started.
+◇ Test case passing 1 argument group → "itineraryEntries" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → true, interleaveSourceIdentifiers → false to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 1 argument group → "expandedCompletion" to laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:) started.
+◇ Test case passing 2 arguments group → "membership", options → (true, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 1 argument group → "expandedCompletions" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → true, interleaveSourceIdentifiers → true to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 1 argument group → "ownedLinks" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 2 arguments group → "membership", options → (true, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 1 argument group → "schedules" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument group → "contextAliases" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 2 arguments group → "directEntry", options → (false, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 1 argument group → "completionChanges" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 2 arguments group → "directEntry", options → (false, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "directEntry", options → (true, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "directEntry", options → (true, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "listEntry", options → (false, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "listEntry", options → (false, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "listEntry", options → (true, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "listEntry", options → (true, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "expandedCompletion", options → (false, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "expandedCompletion", options → (false, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "expandedCompletion", options → (true, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "expandedCompletion", options → (true, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "labelAssociation", options → (false, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "labelAssociation", options → (false, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "labelAssociation", options → (true, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "labelAssociation", options → (true, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "ownedLink", options → (false, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "ownedLink", options → (false, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "ownedLink", options → (true, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "ownedLink", options → (true, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "schedule", options → (false, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "schedule", options → (false, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "schedule", options → (true, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "schedule", options → (true, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+✔ Test changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:) with 3 test cases passed after 2.032 seconds.
+✔ Test skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) with 2 test cases passed after 2.032 seconds.
+✔ Test laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:) with 2 test cases passed after 2.032 seconds.
+✔ Test retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) with 7 test cases passed after 2.032 seconds.
+✔ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) with 4 test cases passed after 2.032 seconds.
+✔ Test explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag() passed after 2.032 seconds.
+✔ Test overwriteSourceFieldsPreservesReferencesAndHistoryAcrossSetAndClear() passed after 2.032 seconds.
+✔ Suite NativeImportMergeTests passed after 2.033 seconds.
+✔ Suite NativeImportHistoryCollisionTests passed after 2.033 seconds.
+✔ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) with 28 test cases passed after 2.377 seconds.
+✔ Suite NativeImportOwnedRemovalTests passed after 2.378 seconds.
+✔ Test run with 8 tests in 3 suites passed after 2.378 seconds.

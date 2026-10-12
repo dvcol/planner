@@ -1,0 +1,55 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[5 / 10] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,12 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportOwnedRemovalTests started.
+◇ Suite MembershipRemovalTests started.
+◇ Test laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:) started.
+◇ Test invalidRemovalAndRecoveryObstructionRetainTheAppearanceAndIssuedWindow() started.
+◇ Test explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag() started.
+◇ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test removingOneAppearanceRetainsSharedContentAndOrdinaryReAddStartsTodo() started.
+◇ Test case passing 1 argument group → "ownedLink" to laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:) started.
+◇ Test case passing 1 argument group → "expandedCompletion" to laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:) started.
+◇ Test case passing 2 arguments group → "membership", options → (false, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "membership", options → (true, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "membership", options → (true, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "directEntry", options → (false, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "membership", options → (false, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "directEntry", options → (false, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "directEntry", options → (true, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "directEntry", options → (true, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "listEntry", options → (false, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "listEntry", options → (false, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "listEntry", options → (true, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "listEntry", options → (true, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "expandedCompletion", options → (false, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "expandedCompletion", options → (false, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "expandedCompletion", options → (true, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "expandedCompletion", options → (true, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "labelAssociation", options → (false, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "labelAssociation", options → (false, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "labelAssociation", options → (true, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "labelAssociation", options → (true, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "ownedLink", options → (false, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "ownedLink", options → (false, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "ownedLink", options → (true, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "ownedLink", options → (true, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "schedule", options → (false, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "schedule", options → (false, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "schedule", options → (true, false) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+◇ Test case passing 2 arguments group → "schedule", options → (true, true) to overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) started.
+✔ Test explicitTodoClosurePreservesHistoryWithoutAStoredCompletionFlag() passed after 1.648 seconds.
+✔ Test invalidRemovalAndRecoveryObstructionRetainTheAppearanceAndIssuedWindow() passed after 1.648 seconds.
+✔ Test laterOrdinarySaveRetainsImportedClosureInIndependentRecovery(group:) with 2 test cases passed after 1.648 seconds.
+✔ Test removingOneAppearanceRetainsSharedContentAndOrdinaryReAddStartsTodo() passed after 1.648 seconds.
+✔ Suite MembershipRemovalTests passed after 1.648 seconds.
+✔ Test overwriteClosesRemovedReferencesAndRetainsTheirHistory(group:options:) with 28 test cases passed after 2.022 seconds.
+✔ Suite NativeImportOwnedRemovalTests passed after 2.023 seconds.
+✔ Test run with 5 tests in 2 suites passed after 2.023 seconds.

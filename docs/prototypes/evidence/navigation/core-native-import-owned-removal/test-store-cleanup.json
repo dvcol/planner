@@ -1,0 +1,30 @@
+[
+  {
+    "root": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests",
+    "caseDirectories": 31,
+    "files": 647,
+    "bytes": 35623573,
+    "processes": "All relevant test command handles exited before cleanup."
+  },
+  {
+    "root": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeContainerLifetimeTests",
+    "caseDirectories": 2,
+    "files": 22,
+    "bytes": 495270,
+    "processes": "All relevant test command handles exited before cleanup."
+  },
+  {
+    "root": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests",
+    "caseDirectories": 124,
+    "files": 1862,
+    "bytes": 98924313,
+    "processes": "All relevant test command handles exited before cleanup."
+  },
+  {
+    "root": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeContainerLifetimeTests",
+    "caseDirectories": 1,
+    "files": 11,
+    "bytes": 247623,
+    "processes": "All relevant test command handles exited before cleanup."
+  }
+]

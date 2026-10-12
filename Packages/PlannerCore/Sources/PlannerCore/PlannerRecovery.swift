@@ -414,7 +414,8 @@ struct PlannerDataSnapshot: Codable {
             tags: tags,
             memberships: memberships,
             labelAssociations: labelAssociations,
-            entries: itineraryEntries)
+            entries: itineraryEntries, ownedLinks: portableLinks,
+            expandedCompletions: expandedCompletions)
         }, ownedLinks: portableLinks, contextAliases: contextAliases,
         completionChanges: completionChanges, restorationFamilies: restorationFamilies))
     do { try PlannerImportGraph(backup: decoded.backup).validate() } catch let failure

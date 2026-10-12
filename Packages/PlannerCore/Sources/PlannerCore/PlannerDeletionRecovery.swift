@@ -5,8 +5,12 @@ enum PortableDeletionTarget: Codable {
   case membership(PlannerBoundIdentity)
   case itineraryEntry(id: UUID, lifetimeId: UUID)
   case labelAssociation(id: UUID, lifetimeId: UUID)
+  case ownedLink(id: UUID, lifetimeId: UUID)
+  case expandedCompletion(PlannerExpandedContext)
 
-  private enum CodingKeys: String, CodingKey { case kind, source, membership, id, lifetimeId }
+  private enum CodingKeys: String, CodingKey {
+    case kind, source, membership, id, lifetimeId, context
+  }
 
   init(from decoder: any Decoder) throws {
     let fields = try decoder.container(keyedBy: CodingKeys.self)
@@ -30,6 +34,12 @@ enum PortableDeletionTarget: Codable {
       self = .labelAssociation(
         id: try fields.decode(UUID.self, forKey: .id),
         lifetimeId: try fields.decode(UUID.self, forKey: .lifetimeId))
+    case "ownedLink":
+      self = .ownedLink(
+        id: try fields.decode(UUID.self, forKey: .id),
+        lifetimeId: try fields.decode(UUID.self, forKey: .lifetimeId))
+    case "expandedCompletion":
+      self = .expandedCompletion(try fields.decode(PlannerExpandedContext.self, forKey: .context))
     default:
       throw PlannerFailure(
         "recoveryIntegrityFailure", "The deletion target kind is unsupported.")
@@ -54,6 +64,13 @@ enum PortableDeletionTarget: Codable {
       try fields.encode("labelAssociation", forKey: .kind)
       try fields.encode(identifier, forKey: .id)
       try fields.encode(lifetimeId, forKey: .lifetimeId)
+    case .ownedLink(let identifier, let lifetimeId):
+      try fields.encode("ownedLink", forKey: .kind)
+      try fields.encode(identifier, forKey: .id)
+      try fields.encode(lifetimeId, forKey: .lifetimeId)
+    case .expandedCompletion(let context):
+      try fields.encode("expandedCompletion", forKey: .kind)
+      try fields.encode(context, forKey: .context)
     }
   }
 }
@@ -83,12 +100,34 @@ struct PortableDeletionMarker: Codable {
     categories: [PlannerPortableCategory],
     tags: [PlannerPortableTag],
     memberships: [PortableMembershipRecord],
-    labelAssociations: [PortableLabelAssociationRecord], entries: [PortableItineraryEntryRecord]
+    labelAssociations: [PortableLabelAssociationRecord], entries: [PortableItineraryEntryRecord],
+    ownedLinks: [PlannerPortableOwnedLink], expandedCompletions: [PortableExpandedCompletionRecord]
   )
     throws
     -> PlannerPortableDeletionMarker
   {
     switch target {
+    case .ownedLink(let identifier, let lifetimeId):
+      guard closedFamilyId == nil,
+        !ownedLinks.contains(where: { $0.id == identifier && $0.lifetimeId == lifetimeId })
+      else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure", "The removed bookmark is still live or unsupported.")
+      }
+      return .init(
+        deletionId: deletionId, operationId: operationId,
+        target: .ownedLink(id: identifier, lifetimeId: lifetimeId), closedFamilyId: nil)
+    case .expandedCompletion(let context):
+      guard closedFamilyId == nil,
+        !expandedCompletions.contains(where: { $0.context == context })
+      else {
+        throw PlannerFailure(
+          "recoveryIntegrityFailure",
+          "The removed expanded completion is still live or unsupported.")
+      }
+      return .init(
+        deletionId: deletionId, operationId: operationId,
+        target: .expandedCompletion(context), closedFamilyId: nil)
     case .itineraryEntry(let identifier, let lifetimeId):
       guard closedFamilyId == nil,
         !entries.contains(where: { $0.id == identifier && $0.lifetimeId == lifetimeId })
