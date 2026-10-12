@@ -29,4 +29,16 @@ Lists own a name, notes and presentation metadata; they have archive state and d
 - Verify full progress and reviewed bulk targets while some children are hidden; selection and toggling in one repeated appearance cannot alter another's local state.
 - Native iPhone/iPad journeys must exercise the actual Filters sheet/popover and search controls, inspect real captures, and survive relaunch. Mac compilation and runtime are reported separately. Keep large-list performance and whole-app polish as separate gates.
 
-This document defines the next slice; it does not claim implementation or runtime qualification.
+## Execution and remaining qualification
+
+The native implementation reuses searchable navigation and the existing adaptive Filters Form. Core's public Item query supplies matching appearances in Manual order. Its List catalog supplies header text/archive matches, and itinerary-local children determine the header's completion match. Item-only restrictions disable the header's own match. The original full snapshot remains the authority for progress, order and bulk targets; captured history validation rejects mixed-generation reads.
+
+The journey passes once on iPhone 18 Pro and once on iPad Air 11-inch simulators running iOS 27, with zero failures or skips. It covers matching headers with zero matching children, matching children with nonmatching headers, neither matching, repeated List identities, independent local completion, Any/All label combinations, address/link restrictions, Clear and relaunch. On the simultaneous iPad layout, valid selected details remain open after their row leaves the query. The phone uses its native detail navigation.
+
+Actual XCTest captures show [matching headers on phone](evidence/navigation/native-itinerary-filters/phone-matching-header.png), [retained iPad details](evidence/navigation/native-itinerary-filters/tablet-retained-detail.png) and [no matching entries with unchanged full progress](evidence/navigation/native-itinerary-filters/tablet-no-matches.png). Matching captions count the filtered result, including children inside collapsed groups. Filters preserve the user's disclosure state.
+
+The missing native search and Filters controls supplied the functional red results. Early selector, offscreen-popover and collapsed-group assumptions were corrected in the journey; those failed attempts are excluded from successful qualification. Five affected Swift files pass strict lint. The final Mac app/test target compiles, with zero Mac UI runtime executions. Five focused public Core query/catalog tests pass across three suites; Core storage and the portable format remain unchanged. The [execution record](evidence/navigation/native-itinerary-filters/execution.json) preserves simulator summaries and the matching app/UI-test source snapshot.
+
+Five existing itinerary compatibility journeys also pass on iPhone against the final native source: bulk completion, dragging, reordering, removal/re-add and repeated-entry bulk completion. This brings the slice to seven native executions with zero failures or skips. Those compatibility journeys use unrestricted views; they do not qualify bulk review or dragging with active filters.
+
+This qualifies the implemented search/filter subset. Archive-aware progress/completion semantics, empty List runtime coverage, bulk review and dragging with active filters, duration controls, large-list performance, Mac UI runtime, physical sync/account/Share and whole-app polish remain open. The full ticket Definition of done is not yet satisfied.

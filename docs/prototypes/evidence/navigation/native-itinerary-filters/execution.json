@@ -1,0 +1,77 @@
+{
+  "beforeCommit": "e16ec3a",
+  "storageSchemaVersion": 14,
+  "portableFormatVersion": 1,
+  "mode": "localOnly",
+  "nativeSourceEpoch": "native-source-epoch.json",
+  "qualification": {
+    "phone": {
+      "bundle": "/private/tmp/PlannerNativeItineraryFiltersPhoneFinalV4.xcresult",
+      "functions": 1,
+      "passed": 1,
+      "failures": 0,
+      "skips": 0
+    },
+    "tablet": {
+      "bundle": "/private/tmp/PlannerNativeItineraryFiltersTabletFinalV4.xcresult",
+      "functions": 1,
+      "passed": 1,
+      "failures": 0,
+      "skips": 0
+    },
+    "macBuild": {
+      "log": "/private/tmp/PlannerNativeItineraryFiltersMacFinalV4.log",
+      "result": "TEST BUILD SUCCEEDED",
+      "nativeUIFunctions": 0
+    },
+    "strictSwiftFiles": 5,
+    "coreCompatibility": {
+      "log": "/private/tmp/PlannerNativeItineraryFiltersCoreCompatibility.log",
+      "functions": 5,
+      "suites": 3,
+      "failed": 0,
+      "tests": [
+        "ItineraryItemFilterTests",
+        "ItineraryManualQueryTests",
+        "ListCatalogTests"
+      ],
+      "scope": "No Core source changes in this native slice."
+    },
+    "phoneCompatibility": {
+      "bundle": "/private/tmp/PlannerNativeItineraryFiltersCompatibilityFinalV4.xcresult",
+      "functions": 5,
+      "passed": 5,
+      "failures": 0,
+      "skips": 0,
+      "suite": "SavedItineraryBulkJourneyTests",
+      "scope": "Bulk completion, native drag, reorder, removal/re-add and repeated-entry bulk completion without active filters."
+    }
+  },
+  "functionalReds": [
+    {
+      "bundle": "/private/tmp/PlannerNativeItineraryFiltersPhoneBehaviorRed.xcresult",
+      "failure": "Missing native itinerary search control",
+      "epoch": "search-red-source-epoch.json"
+    },
+    {
+      "bundle": "/private/tmp/PlannerNativeItineraryFiltersPhonePresenceRed.xcresult",
+      "failure": "Missing native itinerary Filters control",
+      "epoch": "filters-red-source-epoch.json"
+    }
+  ],
+  "excludedAttempts": [
+    "Initial test compile typo; corrected query selector type.",
+    "Native MenuItem and empty DisclosureGroup accessibility selector corrections.",
+    "Final V1/V2/V3 attempts assumed a collapsed group was expanded or an offscreen popover control was hittable; test now expands that group explicitly and reveals controls using existing native helpers. Production does not expand groups on filter changes."
+  ],
+  "remainingGates": [
+    "Archive-aware derived progress and completion filters",
+    "Empty List header runtime coverage",
+    "Bulk confirmation and drag/reorder with active filters",
+    "Duration controls",
+    "Native Mac UI runtime",
+    "Large-list performance",
+    "Signed physical sync/account/Share",
+    "Whole-app polish"
+  ]
+}

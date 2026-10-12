@@ -117,10 +117,13 @@ final class SavedPlannerStore {
     }
   }
 
-  func readLists(archive: PlannerItemQuery.Archive) async -> [SavedPlannerList]? {
+  func readLists(archive: PlannerItemQuery.Archive, text: String = "") async -> [SavedPlannerList]?
+  {
     guard let planner, let session else { return nil }
     switch await planner.query(
-      PlannerQuery(session: session, request: .catalog(.init(sourceKind: .list, archive: archive))))
+      PlannerQuery(
+        session: session, request: .catalog(.init(sourceKind: .list, text: text, archive: archive)))
+    )
     {
     case .failed(let reason): alertMessage = reason.message
     case .snapshot(let snapshot):
@@ -266,7 +269,9 @@ final class SavedPlannerStore {
         expectedFieldHashes: schedule.fieldHashes), operationId: operationIdentifier) != nil
   }
 
-  func readItineraryContents(_ identifier: UUID) async -> SavedItineraryContents? {
+  func readItineraryContents(
+    _ identifier: UUID, text: String = "", filters: SavedItemFilters = .init()
+  ) async -> SavedItineraryContents? {
     guard let planner, let session else { return nil }
     guard
       case .snapshot(let snapshot) = await planner.query(
@@ -280,6 +285,40 @@ final class SavedPlannerStore {
       alertMessage = "Planner could not read this Itinerary's entries."
       return nil
     }
+    guard
+      case .snapshot(let matchingSnapshot) = await planner.query(
+        .init(
+          session: session,
+          request: .items(
+            .init(
+              scope: .itinerary(identifier), text: text,
+              completion: filters.completion.queryValue, archive: filters.archive.queryValue,
+              categories: filters.categoryQuery, tags: filters.tagQuery, lists: filters.listQuery,
+              hasAddress: filters.hasAddress, hasLinks: filters.hasLinks,
+              scheduled: filters.scheduled,
+              sort: .init(mode: .manual), rowPresentation: snapshot.rowPresentation)))),
+      case .rows(let matchingWindow) = await planner.read(
+        session: session,
+        request: .rows(generation: matchingSnapshot.generation, offset: 0, limit: Int64.max))
+    else {
+      alertMessage = "Planner could not filter this Itinerary's entries."
+      return nil
+    }
+    let matchingListIdentifiers: Set<UUID>
+    if filters.hasItemOnlyRestrictions {
+      matchingListIdentifiers = []
+    } else {
+      guard let matchingLists = await readLists(archive: filters.archive.queryValue, text: text)
+      else {
+        return nil
+      }
+      matchingListIdentifiers = Set(matchingLists.map(\.id))
+    }
+    let matchingItemIdentifiers = Set(
+      matchingWindow.rows.compactMap { row -> SavedItineraryRowSelection? in
+        guard case .appearance(_, let appearance) = row.identity else { return nil }
+        return SavedItineraryRowSelection(appearance, itineraryId: identifier)
+      })
     guard let itinerary = await readItinerary(identifier) else { return nil }
     var listNames: [UUID: String] = [:]
     for reference in itinerary.references {
@@ -323,10 +362,20 @@ final class SavedPlannerStore {
       } else {
         title = items.first?.row.title ?? "Item"
       }
+      let complete = !items.isEmpty && items.allSatisfy { $0.row.effectiveDone == true }
+      let matchesCompletion =
+        switch filters.completion {
+        case .all: true
+        case .todo: !complete
+        case .done: complete
+        }
       return .init(
-        id: entryId, source: source, title: title, items: items)
+        id: entryId, source: source, title: title, items: items,
+        matchesHeader: source.kind == .list && matchingListIdentifiers.contains(source.id)
+          && matchesCompletion)
     }
-    return .init(itinerary: itinerary, entries: entries)
+    return .init(
+      itinerary: itinerary, entries: entries, matchingItemIdentifiers: matchingItemIdentifiers)
   }
 
   func addItineraryEntry(

@@ -46,11 +46,19 @@ struct SavedItineraryEntryRows: Identifiable {
   let source: PlannerEntityReference
   let title: String
   let items: [SavedItineraryItem]
+  let matchesHeader: Bool
 }
 
 struct SavedItineraryContents {
   let itinerary: PlannerItinerarySourceRead
   let entries: [SavedItineraryEntryRows]
+  let matchingItemIdentifiers: Set<SavedItineraryRowSelection>
+
+  var visibleEntries: [SavedItineraryEntryRows] {
+    entries.filter { entry in
+      entry.matchesHeader || entry.items.contains { matchingItemIdentifiers.contains($0.id) }
+    }
+  }
 }
 
 struct SavedItineraryItemRow: View {

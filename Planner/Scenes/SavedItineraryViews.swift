@@ -72,6 +72,13 @@ private struct SavedItineraryEditDraft: Identifiable {
   var id: UUID { itinerary.source.id }
 }
 
+private struct SavedItineraryReadInputs: Equatable {
+  let identifier: UUID
+  let revision: UUID
+  let text: String
+  let filters: SavedItemFilters
+}
+
 struct SavedItineraryDetail: View {
   let store: SavedPlannerStore
   let identifier: UUID
@@ -89,6 +96,9 @@ struct SavedItineraryDetail: View {
   @State private var bulkCompletionDraft: SavedBulkCompletionDraft?
   @State private var isPreparingBulkCompletion = false
   @State private var removedSelectionMessage: String?
+  @State private var searchText = ""
+  @State private var filters = SavedItemFilters()
+  @State private var isLoading = false
   #if os(iOS)
     @State private var entryEditMode: EditMode = .inactive
   #endif
@@ -116,6 +126,12 @@ struct SavedItineraryDetail: View {
               "\(directCount) direct \(directCount == 1 ? "item" : "items") · \(listCount) \(listCount == 1 ? "list" : "lists")"
             )
             .font(.caption).foregroundStyle(.secondary)
+            if let total = itinerary.progress.totalCount,
+              Int64(contents.matchingItemIdentifiers.count) != total
+            {
+              Text("Matching \(contents.matchingItemIdentifiers.count) of \(total) items")
+                .font(.caption).foregroundStyle(.secondary)
+            }
           }
           if let notes = itinerary.content.notes, !notes.isEmpty {
             Section("Notes") { Text(notes).textSelection(.enabled) }
@@ -128,7 +144,13 @@ struct SavedItineraryDetail: View {
             source: itinerary.source, references: itinerary.references, canChange: store.canCreate
           ) { scheduleToEdit = $0 }
           Section("Entries") {
-            ForEach(contents.entries) { entry in
+            if contents.visibleEntries.isEmpty && !contents.entries.isEmpty {
+              Text("No matching entries").foregroundStyle(.secondary)
+            }
+            ForEach(contents.visibleEntries) { entry in
+              let matchingItems = entry.items.filter {
+                contents.matchingItemIdentifiers.contains($0.id)
+              }
               VStack(alignment: .leading) {
                 if entry.source.kind == .list {
                   DisclosureGroup(
@@ -142,10 +164,11 @@ struct SavedItineraryDetail: View {
                         }
                       })
                   ) {
-                    if entry.items.isEmpty {
-                      Text("No items").foregroundStyle(.secondary)
+                    if matchingItems.isEmpty {
+                      Text(entry.items.isEmpty ? "No items" : "No matching items")
+                        .foregroundStyle(.secondary)
                     } else {
-                      ForEach(entry.items) { item in itineraryRow(item) }
+                      ForEach(matchingItems) { item in itineraryRow(item) }
                     }
                   } label: {
                     VStack(alignment: .leading, spacing: 6) {
@@ -159,6 +182,10 @@ struct SavedItineraryDetail: View {
                           )
                           .font(.caption).foregroundStyle(.secondary)
                         }
+                      }
+                      if matchingItems.count != entry.items.count {
+                        Text("Matching \(matchingItems.count) of \(entry.items.count) items")
+                          .font(.caption).foregroundStyle(.secondary)
                       }
                     }
                     .padding(.vertical, 8)
@@ -181,7 +208,7 @@ struct SavedItineraryDetail: View {
                         !store.canCreate || isPreparingBulkCompletion || entry.items.isEmpty)
                     }
                   }
-                } else if let item = entry.items.first {
+                } else if let item = matchingItems.first {
                   itineraryRow(item)
                     .contextMenu { entryActions(entry, in: contents.entries) }
                 }
@@ -191,7 +218,7 @@ struct SavedItineraryDetail: View {
               .moveDisabled(!canReorderEntries)
             }
             .onMove { offsets, destination in
-              moveEntry(from: offsets, to: destination, in: contents.entries)
+              moveEntry(from: offsets, to: destination, in: contents.visibleEntries)
             }
           }
         }
@@ -199,13 +226,20 @@ struct SavedItineraryDetail: View {
           .environment(\.editMode, $entryEditMode)
         #endif
         .navigationTitle(itinerary.content.title)
+        .searchable(text: $searchText, prompt: "Search this Itinerary")
+        .searchPresentationToolbarBehavior(.avoidHidingContent)
         .navigationSplitViewColumnWidth(min: 260, ideal: 400, max: 600)
         .overlay(alignment: .topTrailing) {
-          if isPreparingBulkCompletion || isPreparingDeletion {
-            ProgressView("Preparing review").controlSize(.small).padding()
+          if isPreparingBulkCompletion || isPreparingDeletion || isLoading {
+            ProgressView(isLoading ? "Updating entries" : "Preparing review")
+              .controlSize(.small).padding()
           }
         }
         .toolbar {
+          ToolbarItem(placement: .primaryAction) {
+            SavedItemFilterControl(
+              filters: $filters, accessibilityIdentifier: "saved.itinerary.filters")
+          }
           #if os(iOS)
             ToolbarItem(placement: .primaryAction) {
               EditButton()
@@ -269,7 +303,7 @@ struct SavedItineraryDetail: View {
         ProgressView("Opening Itinerary")
       }
     }
-    .task(id: store.changeRevision) { await loadItinerary() }
+    .task(id: readInputs) { await loadItinerary() }
     .onChange(of: isReviewingDeletion) {
       if !isReviewingDeletion { Task { await loadItinerary() } }
     }
@@ -328,6 +362,11 @@ struct SavedItineraryDetail: View {
     guard removedSelectionMessage != nil && store.recoveryBlocked else { return description }
     return description
       + "\n\nThe change was saved, but its recovery copy is incomplete. Further changes are paused."
+  }
+
+  private var readInputs: SavedItineraryReadInputs {
+    .init(
+      identifier: identifier, revision: store.changeRevision, text: searchText, filters: filters)
   }
 
   private func itineraryRow(_ item: SavedItineraryItem) -> some View {
@@ -435,10 +474,13 @@ struct SavedItineraryDetail: View {
   private func loadItinerary() async {
     guard !isReviewingDeletion else { return }
     loadingFailure = nil
-    let revision = store.changeRevision
-    let loaded = await store.readItineraryContents(identifier)
+    isLoading = true
+    let inputs = readInputs
+    let loaded = await store.readItineraryContents(
+      inputs.identifier, text: inputs.text, filters: inputs.filters)
     /** Column transitions can cancel a completed read while retaining this detail's state. */
-    guard !isReviewingDeletion, store.changeRevision == revision else { return }
+    guard !isReviewingDeletion, readInputs == inputs else { return }
+    isLoading = false
     if let loaded {
       contents = loaded
     } else {
