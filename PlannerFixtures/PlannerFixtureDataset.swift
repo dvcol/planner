@@ -9,6 +9,7 @@ enum PlannerFixtureDataset {
     case pinnedEmptyName = "pinned-empty-name"
     case linkImage = "link-image"
     case linkOutcomes = "link-outcomes"
+    case linkDelay = "link-delay"
     case addressCandidates = "address-candidates"
     case addressRetry = "address-retry"
     case addressDelay = "address-delay"
@@ -50,6 +51,15 @@ enum PlannerFixtureDataset {
         ).outcome
       else { throw CancellationError() }
       return result
+    }
+    if scenario == .linkDelay {
+      _ = try await save(
+        .createItem(
+          content: .init(
+            title: "Delayed website", notes: "Original notes",
+            links: [.init(originalUrl: "https://fixtures.invalid/delayed", label: "Saved website")]
+          )))
+      return SavedPlannerStore(configuration: configuration)
     }
     if scenario == .linkImage {
       _ = try await save(
