@@ -122,6 +122,15 @@ public struct PlannerOwnedLocation: Sendable, Codable, Equatable {
     self.formattedAddress = formattedAddress
     self.coordinate = coordinate
   }
+
+  private enum CodingKeys: String, CodingKey { case displayName, formattedAddress, coordinate }
+
+  public func encode(to encoder: any Encoder) throws {
+    var fields = encoder.container(keyedBy: CodingKeys.self)
+    try fields.encode(displayName, forKey: .displayName)
+    try fields.encode(formattedAddress, forKey: .formattedAddress)
+    try fields.encode(coordinate, forKey: .coordinate)
+  }
 }
 
 public enum PlannerEstimateUnit: String, Sendable, Codable {
@@ -607,6 +616,17 @@ public enum PlannerRecoveryInspection: Sendable {
 
 public struct PlannerDecodedBackup: Sendable {
   public let backup: PlannerPortableBackup
+  public let externalBindings: [PlannerBoundSource]
+  public let originPaths: [PlannerBindingPath]
+
+  init(
+    backup: PlannerPortableBackup, externalBindings: [PlannerBoundSource] = [],
+    originPaths: [PlannerBindingPath] = []
+  ) {
+    self.backup = backup
+    self.externalBindings = externalBindings
+    self.originPaths = originPaths
+  }
 }
 
 public struct PlannerPortableBackup: Sendable {
@@ -631,6 +651,10 @@ public struct PlannerPortableBackup: Sendable {
   public let expandedCompletions: [PlannerPortableExpandedCompletion]
   public let schedules: [PlannerPortableSchedule]
   public let deletionMarkers: [PlannerPortableDeletionMarker]
+  public let ownedLinks: [PlannerPortableOwnedLink]
+  public let contextAliases: [PlannerPortableContextAlias]
+  public let completionChanges: [PlannerPortableCompletionChange]
+  public let restorationFamilies: [PlannerPortableRestorationFamily]
 
   init(
     sources: [PlannerPortableSource], labelAssociations: [PlannerPortableLabelAssociation],
@@ -638,7 +662,11 @@ public struct PlannerPortableBackup: Sendable {
     itineraryEntries: [PlannerPortableItineraryEntry],
     expandedCompletions: [PlannerPortableExpandedCompletion],
     schedules: [PlannerPortableSchedule] = [],
-    deletionMarkers: [PlannerPortableDeletionMarker]
+    deletionMarkers: [PlannerPortableDeletionMarker],
+    ownedLinks: [PlannerPortableOwnedLink] = [],
+    contextAliases: [PlannerPortableContextAlias] = [],
+    completionChanges: [PlannerPortableCompletionChange] = [],
+    restorationFamilies: [PlannerPortableRestorationFamily] = []
   ) {
     self.sources = sources
     self.labelAssociations = labelAssociations
@@ -647,6 +675,10 @@ public struct PlannerPortableBackup: Sendable {
     self.expandedCompletions = expandedCompletions
     self.schedules = schedules
     self.deletionMarkers = deletionMarkers
+    self.ownedLinks = ownedLinks
+    self.contextAliases = contextAliases
+    self.completionChanges = completionChanges
+    self.restorationFamilies = restorationFamilies
   }
 }
 

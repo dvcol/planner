@@ -121,9 +121,7 @@ struct ItemLabelMigrationTests {
     #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 9)
     #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 14)
     #expect(historicalAfter.portableData == historical.portableData)
-    let beforeData = try #require(
-      JSONSerialization.jsonObject(with: historical.portableData)
-        as? [String: Any])
+    let beforeData = try canonicalPortableFixtureExpectations(historical.portableData)
     let afterData = try #require(
       JSONSerialization.jsonObject(with: after.portableData)
         as? [String: Any])

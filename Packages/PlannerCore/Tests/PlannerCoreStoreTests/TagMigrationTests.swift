@@ -120,8 +120,7 @@ struct TagMigrationTests {
     #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 8)
     #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 14)
     #expect(historicalAfter.portableData == historical.portableData)
-    let beforeData = try #require(
-      JSONSerialization.jsonObject(with: historical.portableData) as? [String: Any])
+    let beforeData = try canonicalPortableFixtureExpectations(historical.portableData)
     let afterData = try #require(
       JSONSerialization.jsonObject(with: after.portableData) as? [String: Any])
     for collection in ["memberships", "ownedLinks", "schedules", "deletionMarkers"] {
