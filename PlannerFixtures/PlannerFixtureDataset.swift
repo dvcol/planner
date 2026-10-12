@@ -9,6 +9,7 @@ enum PlannerFixtureDataset {
     case pinnedEmptyName = "pinned-empty-name"
     case linkImage = "link-image"
     case linkOutcomes = "link-outcomes"
+    case addressCandidates = "address-candidates"
   }
 
   static func makeStore() async throws -> SavedPlannerStore {
@@ -66,6 +67,20 @@ enum PlannerFixtureDataset {
               .init(originalUrl: "https://fixtures.invalid/plain", label: "Plain website"),
               .init(originalUrl: "https://fixtures.invalid/retry", label: "Recoverable website"),
             ])))
+      return SavedPlannerStore(configuration: configuration)
+    }
+    if scenario == .addressCandidates {
+      for (title, address) in [
+        ("Unmatched place", "Fixture no matches"),
+        ("Ambiguous place", "Fixture multiple matches"),
+      ] {
+        _ = try await save(
+          .createItem(
+            content: .init(
+              title: title, notes: "Original notes",
+              location: .init(
+                displayName: "Saved location", formattedAddress: address, coordinate: nil))))
+      }
       return SavedPlannerStore(configuration: configuration)
     }
     if scenario == .pinnedAddress || scenario == .pinnedEmptyName {

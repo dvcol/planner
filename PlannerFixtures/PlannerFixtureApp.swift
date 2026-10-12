@@ -51,5 +51,15 @@ final class FixturePreviewProvider: PlannerLinkPreviewProvider, PlannerAddressPr
     return .init(title: "Fixture image preview", imageData: try Data(contentsOf: imageURL))
   }
 
-  func addressPreview(for address: String) async throws -> [PlannerAddressCandidate] { [] }
+  func addressPreview(for address: String) async throws -> [PlannerAddressCandidate] {
+    guard address == "Fixture multiple matches" else { return [] }
+    return [
+      .init(
+        id: "north", name: "North entrance", address: "1 Fixture Way",
+        latitude: 35.662, longitude: 139.717),
+      .init(
+        id: "south", name: "South entrance", address: "2 Fixture Way",
+        latitude: 35.655, longitude: 139.717),
+    ]
+  }
 }

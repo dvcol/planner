@@ -1,0 +1,86 @@
+{
+  "baseCommit": "f1a6efc",
+  "initialSourceHashes": {
+    "PlannerFixtures/PlannerFixtureApp.swift": "28ec34081c2a1fde2a25c015b8dc512a3d0c5c2a5ccc160c85f7a991587516fa",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "0201b83bbdf1a2cf1f654244ecabfc265db30a6805460e860e48a525871bbb17",
+    "PlannerFixtureUITests/AddressCandidateJourneyTests.swift": "2afa345ee17893164340dfd6aa044550c055e5e490ff4ca5f1ff4de34e856a9a",
+    "Planner/Scenes/ItemAddressPreview.swift": "7dc96f6f5ea4b567f0d450739f063447dbac4b9b286c96ad5027f5f8cd5b1e6e",
+    "Planner/Scenes/ItemLocationSection.swift": "5712c5ac9ff059a73dd6abe162a58fc56532f1049926d8b75dcb105e415f21b9",
+    "Planner/Scenes/SavedEditItemForm.swift": "19cace300840fa84a1c24b3e63ff872e555c07aaf2d3402f4fefd7eeb9b3a86f",
+    "Planner.xcodeproj/project.pbxproj": "4bced3d822b15a78ffeb25fece1ff83c4f6b557417745c2c7ffdbc13830e5771"
+  },
+  "finalSourceHashes": {
+    "PlannerFixtures/PlannerFixtureApp.swift": "28ec34081c2a1fde2a25c015b8dc512a3d0c5c2a5ccc160c85f7a991587516fa",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "0201b83bbdf1a2cf1f654244ecabfc265db30a6805460e860e48a525871bbb17",
+    "PlannerFixtureUITests/AddressCandidateJourneyTests.swift": "3b1e38194ae64573c1825fb6d9f277607285a3523c615003f332b8be953dcc59",
+    "Planner/Scenes/ItemAddressPreview.swift": "7dc96f6f5ea4b567f0d450739f063447dbac4b9b286c96ad5027f5f8cd5b1e6e",
+    "Planner/Scenes/ItemLocationSection.swift": "5712c5ac9ff059a73dd6abe162a58fc56532f1049926d8b75dcb105e415f21b9",
+    "Planner/Scenes/SavedEditItemForm.swift": "19cace300840fa84a1c24b3e63ff872e555c07aaf2d3402f4fefd7eeb9b3a86f",
+    "Planner.xcodeproj/project.pbxproj": "4bced3d822b15a78ffeb25fece1ff83c4f6b557417745c2c7ffdbc13830e5771"
+  },
+  "commands": {
+    "red": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/AddressCandidateJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledAddressCandidatesRed.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "redLog": "/private/tmp/PlannerControlledAddressCandidatesRed.log",
+    "phoneInitial": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/AddressCandidateJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledAddressCandidatesPhoneGreen.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "phoneInitialLog": "/private/tmp/PlannerControlledAddressCandidatesPhoneGreen.log",
+    "tabletInitial": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/AddressCandidateJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledAddressCandidatesTabletGreen.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "tabletInitialLog": "/private/tmp/PlannerControlledAddressCandidatesTabletGreen.log",
+    "phoneRepeat": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/AddressCandidateJourneyTests/testEmptyAddressRetryKeepsOwnedLocationAfterRelaunch\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledAddressCandidatesPhoneRepeat.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "phoneRepeatLog": "/private/tmp/PlannerControlledAddressCandidatesPhoneRepeat.log",
+    "tabletRepeat": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/AddressCandidateJourneyTests/testEmptyAddressRetryKeepsOwnedLocationAfterRelaunch\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerControlledAddressCandidatesTabletRepeat.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "tabletRepeatLog": "/private/tmp/PlannerControlledAddressCandidatesTabletRepeat.log",
+    "macFinal": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData CODE_SIGNING_ALLOWED=NO build-for-testing",
+    "macFinalLog": "/private/tmp/PlannerControlledAddressCandidatesMacFinalBuild.log"
+  },
+  "qualification": {
+    "red": {
+      "passed": 1,
+      "failed": 1,
+      "skipped": 0,
+      "reason": "Executed absent ambiguous picker; empty result passed."
+    },
+    "phoneInitial": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "result": "/private/tmp/PlannerControlledAddressCandidatesPhoneGreen.xcresult"
+    },
+    "tabletInitial": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "result": "/private/tmp/PlannerControlledAddressCandidatesTabletGreen.xcresult"
+    },
+    "phoneRepeat": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "result": "/private/tmp/PlannerControlledAddressCandidatesPhoneRepeat.xcresult"
+    },
+    "tabletRepeat": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "result": "/private/tmp/PlannerControlledAddressCandidatesTabletRepeat.xcresult"
+    },
+    "macFinal": "TEST BUILD SUCCEEDED",
+    "macUIFunctions": 0,
+    "captures": "Inspected phone North map/editor/empty and tablet South map/editor/empty. Both named native MapKit markers are asserted within the map accessibility subtree; all four original captures per device retained.",
+    "strictSwiftFiles": 3,
+    "markdownFiles": 1
+  },
+  "review": {
+    "standards": "No actionable findings.",
+    "spec": "No behavior/scope defect. Repeated-Retry coverage finding closed by two taps and passing corrected empty-journey reruns on both simulators; read-only recheck confirms the fix."
+  },
+  "sourceEpoch": "Initial suites pass two functions per simulator. Review changed only the empty journey to Retry twice. Ambiguous journey and all private helpers are byte-identical. Fixture, production UI/cache and project hashes remain identical. Repeat rechecks are separate, not presented as a full-suite rerun.",
+  "remainingGates": [
+    "Controlled sole/error/delayed address cases",
+    "Native loading/scale Q58",
+    "Import application/recovery",
+    "Calendar",
+    "Broad native Mac runtime",
+    "Signed physical sync/account/Share",
+    "Whole-app polish"
+  ]
+}
