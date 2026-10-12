@@ -76,5 +76,11 @@ struct MissingStoreAdmissionTests {
     #expect(
       restored.updatedAt == original.updatedAt && restored.fieldHashes == original.fieldHashes)
     #expect(query.matchingCount == 1 && query.rows == [.source(source)])
+    guard
+      case .source(.item(let sameFacadeRestored)) = await planner.read(
+        session: session, request: .source(source))
+    else { throw CancellationError() }
+    #expect(sameFacadeRestored.content.title == original.content.title)
+    #expect(sameFacadeRestored.fieldHashes == original.fieldHashes)
   }
 }

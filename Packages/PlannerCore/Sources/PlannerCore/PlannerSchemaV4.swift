@@ -15,7 +15,7 @@ enum PlannerSchemaV4: VersionedSchema {
     var sourceKind: String = ""
     var closedFamilyId: UUID? = nil
 
-    init(_ marker: PortableDeletionMarker) {
+    init(_ marker: PortableDeletionMarker) throws {
       deletionId = marker.deletionId
       operationId = marker.operationId
       closedFamilyId = marker.closedFamilyId
@@ -36,6 +36,12 @@ enum PlannerSchemaV4: VersionedSchema {
         sourceId = identifier
         sourceLifetimeId = lifetimeId
         sourceKind = "labelAssociation"
+      case .ownedLink(let identifier, let lifetimeId):
+        sourceId = identifier
+        sourceLifetimeId = lifetimeId
+        sourceKind = "ownedLink"
+      case .expandedCompletion:
+        throw PlannerFailure("invalidInput", "Composite closure metadata needs lineage storage.")
       }
     }
 
@@ -44,7 +50,7 @@ enum PlannerSchemaV4: VersionedSchema {
         [
           "item", "list", "itinerary", "schedule", "category", "tag", "membership",
           "labelAssociation",
-          "itineraryEntry",
+          "itineraryEntry", "ownedLink",
         ]
         .contains(
           sourceKind),
@@ -62,6 +68,8 @@ enum PlannerSchemaV4: VersionedSchema {
         target = .itineraryEntry(id: sourceId, lifetimeId: sourceLifetimeId)
       } else if sourceKind == "labelAssociation" {
         target = .labelAssociation(id: sourceId, lifetimeId: sourceLifetimeId)
+      } else if sourceKind == "ownedLink" {
+        target = .ownedLink(id: sourceId, lifetimeId: sourceLifetimeId)
       } else {
         target = .source(binding)
       }

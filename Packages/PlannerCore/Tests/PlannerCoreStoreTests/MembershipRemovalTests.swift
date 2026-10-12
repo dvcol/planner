@@ -119,10 +119,10 @@ struct MembershipRemovalTests {
     let encodedMarker = try #require((portable["deletionMarkers"] as? [[String: Any]])?.first)
     #expect(Set(encodedMarker.keys) == ["deletionId", "operationId", "target", "closedFamilyId"])
     let encodedTarget = try #require(encodedMarker["target"] as? [String: Any])
-    #expect(Set(encodedTarget.keys) == ["kind", "membership"])
+    #expect(Set(encodedTarget.keys) == ["kind", "id", "lifetimeId"])
     #expect(encodedTarget["kind"] as? String == "membership")
-    let encodedBinding = try #require(encodedTarget["membership"] as? [String: Any])
-    #expect(Set(encodedBinding.keys) == ["kind", "id", "lifetimeId"])
+    #expect(encodedTarget["id"] as? String == removedIdentifier.uuidString)
+    #expect(encodedTarget["lifetimeId"] as? String == removedIdentifier.uuidString)
     guard
       case .failed(let missing) = await reopened.read(
         session: reopenedSession,

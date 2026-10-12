@@ -3,6 +3,8 @@ import SwiftData
 
 public actor Planner {
   private let configuration: PlannerStorageConfiguration
+  private var nativeContainer:
+    (container: ModelContainer, fileNumber: UInt64, systemNumber: UInt64)?
   private var sessions: [UUID: PlannerDatasetSession] = [:]
   private struct QueryBinding {
     let snapshot: PlannerQuerySnapshot
@@ -2107,7 +2109,9 @@ public actor Planner {
     let resolution = try plannerResolveImportReview(
       incoming: backup, current: current, mode: mode, deletionImpacts: deletionImpacts)
     let merge = try PlannerImportMerge(
-      incoming: backup.backup, current: current.backup, resolution: resolution, mode: mode)
+      incoming: backup.backup, current: current.backup, resolution: resolution, mode: mode,
+      operationId: operation.operationId)
+    try plannerRemoveImportedReferences(notIn: merge.projected, context: context)
     try plannerInsertImportedGraph(
       merge.recordsToWrite, replacing: merge.sourceReplacements, context: context)
     let restored = try importReviewSnapshot(context)
@@ -3733,7 +3737,7 @@ public actor Planner {
       operation: operation, digest: digest, result: result, bindings: bindings)
     for completion in entry.expandedCompletions ?? [] { context.delete(completion) }
     context.delete(entry)
-    context.insert(PlannerSchemaV4.DeletionMarker(removalMarker))
+    try context.insert(PlannerSchemaV4.DeletionMarker(removalMarker))
     owner.updatedAt = updatedAt
     context.insert(receipt)
     do { try context.save() } catch {
@@ -4199,7 +4203,7 @@ public actor Planner {
       operation: operation, digest: digest, result: result, bindings: bindings)
     for completion in expandedRecords { context.delete(completion) }
     context.delete(record)
-    context.insert(PlannerSchemaV4.DeletionMarker(removalMarker))
+    try context.insert(PlannerSchemaV4.DeletionMarker(removalMarker))
     owner.updatedAt = updatedAt
     context.insert(receipt)
     do { try context.save() } catch {
@@ -4414,7 +4418,7 @@ public actor Planner {
     }
     owner.updatedAt = updatedAt
     if added != nil { destination.updatedAt = updatedAt }
-    context.insert(PlannerSchemaV4.DeletionMarker(removalMarker))
+    try context.insert(PlannerSchemaV4.DeletionMarker(removalMarker))
     context.insert(receipt)
     do { try context.save() } catch {
       context.rollback()
@@ -5149,7 +5153,7 @@ public actor Planner {
         payloadDigest: digest, evidence: "preparedUnverified"))
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: resolution.bindings)
-    for marker in newMarkers { context.insert(PlannerSchemaV4.DeletionMarker(marker)) }
+    for marker in newMarkers { try context.insert(PlannerSchemaV4.DeletionMarker(marker)) }
     for record in resolution.expandedRecords { context.delete(record) }
     for record in resolution.entryRecords { context.delete(record) }
     for record in resolution.associationRecords { context.delete(record) }
@@ -5381,7 +5385,7 @@ public actor Planner {
         payloadDigest: digest, evidence: "preparedUnverified"))
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: resolution.bindings)
-    for marker in newMarkers { context.insert(PlannerSchemaV4.DeletionMarker(marker)) }
+    for marker in newMarkers { try context.insert(PlannerSchemaV4.DeletionMarker(marker)) }
     for record in resolution.expandedRecords { context.delete(record) }
     for record in resolution.membershipRecords { context.delete(record) }
     for record in resolution.entryRecords {
@@ -5704,7 +5708,7 @@ public actor Planner {
         payloadDigest: digest, evidence: "preparedUnverified"))
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: resolution.bindings)
-    for marker in newMarkers { context.insert(PlannerSchemaV4.DeletionMarker(marker)) }
+    for marker in newMarkers { try context.insert(PlannerSchemaV4.DeletionMarker(marker)) }
     for record in resolution.expandedRecords { context.delete(record) }
     for record in resolution.membershipRecords { context.delete(record) }
     for record in resolution.entryRecords {
@@ -5937,7 +5941,7 @@ public actor Planner {
         payloadDigest: digest, evidence: "preparedUnverified"))
     let receipt = try PlannerSchemaV1.Receipt(
       operation: operation, digest: digest, result: result, bindings: resolution.bindings)
-    for marker in newMarkers { context.insert(PlannerSchemaV4.DeletionMarker(marker)) }
+    for marker in newMarkers { try context.insert(PlannerSchemaV4.DeletionMarker(marker)) }
     for association in resolution.records {
       association.itemOwner?.updatedAt = updatedAt
       association.itineraryOwner?.updatedAt = updatedAt
@@ -6288,6 +6292,7 @@ public actor Planner {
 
   private func deletionMarkers(_ context: ModelContext) throws -> [PortableDeletionMarker] {
     try context.fetch(FetchDescriptor<PlannerSchemaV4.DeletionMarker>()).map { try $0.value() }
+      + PlannerNativeLineage(context: context).deletionMarkers
   }
 
   private func executeScheduleChange(
@@ -6436,7 +6441,7 @@ public actor Planner {
     if let replacementForm {
       try record.replace(with: replacementForm)
     } else if let removalMarker {
-      context.insert(PlannerSchemaV4.DeletionMarker(removalMarker))
+      try context.insert(PlannerSchemaV4.DeletionMarker(removalMarker))
       context.delete(record)
     }
     context.insert(receipt)
@@ -6768,7 +6773,7 @@ public actor Planner {
         with: updatedAssociations, categories: selectedCategories, tags: selectedTags,
         context: context)
     }
-    for marker in removalMarkers { context.insert(PlannerSchemaV4.DeletionMarker(marker)) }
+    for marker in removalMarkers { try context.insert(PlannerSchemaV4.DeletionMarker(marker)) }
     itinerary.updatedAt = now
     context.insert(receipt)
     do { try context.save() } catch {
@@ -6999,7 +7004,7 @@ public actor Planner {
         with: updatedAssociations, categories: selectedCategories, tags: selectedTags,
         context: context)
     }
-    for marker in removalMarkers { context.insert(PlannerSchemaV4.DeletionMarker(marker)) }
+    for marker in removalMarkers { try context.insert(PlannerSchemaV4.DeletionMarker(marker)) }
     item.updatedAt = now
     context.insert(receipt)
     do { try context.save() } catch {
@@ -7327,14 +7332,37 @@ public actor Planner {
 
   private func openContainer(initializing: Bool = false) throws -> ModelContainer {
     guard initializing || FileManager.default.fileExists(atPath: configuration.storeURL.path) else {
+      nativeContainer = nil
       throw PlannerFailure(
         "unavailable", "The initialized dataset's store is missing; recovery remains separate.")
     }
+    if let nativeContainer, let identity = try nativeStoreFileIdentity(),
+      nativeContainer.fileNumber == identity.fileNumber,
+      nativeContainer.systemNumber == identity.systemNumber
+    {
+      return nativeContainer.container
+    }
+    nativeContainer = nil
     let schema = Schema(versionedSchema: PlannerSchemaV16.self)
     let modelConfiguration = ModelConfiguration(
       schema: schema, url: configuration.storeURL, cloudKitDatabase: .none)
-    return try ModelContainer(
+    let container = try ModelContainer(
       for: schema, migrationPlan: PlannerMigrationPlan.self, configurations: [modelConfiguration])
+    if let identity = try nativeStoreFileIdentity() {
+      nativeContainer = (container, identity.fileNumber, identity.systemNumber)
+    }
+    return container
+  }
+
+  private func nativeStoreFileIdentity() throws -> (fileNumber: UInt64, systemNumber: UInt64)? {
+    guard FileManager.default.fileExists(atPath: configuration.storeURL.path) else { return nil }
+    let attributes = try FileManager.default.attributesOfItem(atPath: configuration.storeURL.path)
+    guard let fileNumber = attributes[.systemFileNumber] as? NSNumber,
+      let systemNumber = attributes[.systemNumber] as? NSNumber
+    else {
+      throw PlannerFailure("readUnavailable", "The native store file identity is unresolved.")
+    }
+    return (fileNumber.uint64Value, systemNumber.uint64Value)
   }
 
   private func recoveryArchive(
