@@ -68,6 +68,24 @@ public struct PlannerContainerProgress: Sendable {
   public let state: PlannerContainerProgressState
   public let doneCount: Int64?
   public let totalCount: Int64?
+  public let archivedCount: Int64?
+
+  public var finishedCount: Int64? {
+    guard let doneCount, let archivedCount else { return nil }
+    let (count, overflow) = doneCount.addingReportingOverflow(archivedCount)
+    return overflow ? nil : count
+  }
+
+  init(
+    container: PlannerEntityReference, state: PlannerContainerProgressState,
+    doneCount: Int64?, totalCount: Int64?, archivedCount: Int64? = 0
+  ) {
+    self.container = container
+    self.state = state
+    self.doneCount = doneCount
+    self.totalCount = totalCount
+    self.archivedCount = doneCount == nil ? nil : archivedCount
+  }
 }
 
 public struct PlannerListSourceRead: Sendable {
@@ -203,20 +221,26 @@ struct ListSnapshot {
       if $0.rank != $1.rank { return $0.rank < $1.rank }
       return $0.id.uuidString < $1.id.uuidString
     }
-    let doneCount = try children.reduce(Int64(0)) { count, membership in
+    var doneCount: Int64 = 0
+    var archivedCount: Int64 = 0
+    for membership in children {
       let matches = items.filter {
         $0.id == membership.item.id && $0.lifetimeId == membership.item.lifetimeId
       }
       guard matches.count == 1, let item = matches.first else {
         throw PlannerFailure("readUnavailable", "A List child source is unresolved.")
       }
-      return count + (item.globalDone || membership.localDone ? 1 : 0)
+      if item.globalDone || membership.localDone {
+        doneCount += 1
+      } else if item.archived {
+        archivedCount += 1
+      }
     }
     let totalCount = Int64(children.count)
     let progressState: PlannerContainerProgressState
     if children.isEmpty {
       progressState = .empty
-    } else if doneCount == totalCount {
+    } else if doneCount + archivedCount == totalCount {
       progressState = .complete
     } else {
       progressState = .partial
@@ -226,7 +250,8 @@ struct ListSnapshot {
       fieldHashes: fieldHashes(datasetId: datasetId),
       state: PlannerSourceState(globalDone: nil, archived: archived),
       progress: PlannerContainerProgress(
-        container: reference, state: progressState, doneCount: doneCount, totalCount: totalCount),
+        container: reference, state: progressState, doneCount: doneCount, totalCount: totalCount,
+        archivedCount: archivedCount),
       references: children.map(\.reference)
         + entries.filter {
           $0.source.kind == "list" && $0.source.id == id && $0.source.lifetimeId == lifetimeId

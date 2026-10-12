@@ -26,16 +26,22 @@ extension ItinerarySnapshot {
   {
     var totalCount: Int64 = 0
     var doneCount: Int64 = 0
+    var archivedCount: Int64 = 0
     for entry in entries {
       if entry.source.kind == "item" {
         let item = try resolvedItem(entry.source, in: items)
         totalCount += 1
-        if item.globalDone || entry.localDone == true { doneCount += 1 }
+        if item.globalDone || entry.localDone == true {
+          doneCount += 1
+        } else if item.archived {
+          archivedCount += 1
+        }
         continue
       }
-      guard
-        lists.filter({ $0.id == entry.source.id && $0.lifetimeId == entry.source.lifetimeId }).count
-          == 1
+      let matchingLists = lists.filter {
+        $0.id == entry.source.id && $0.lifetimeId == entry.source.lifetimeId
+      }
+      guard matchingLists.count == 1, let list = matchingLists.first
       else {
         throw PlannerFailure("readUnavailable", "An itinerary List entry is unresolved.")
       }
@@ -50,18 +56,24 @@ extension ItinerarySnapshot {
             $0.context.membershipId == membership.id
               && $0.context.membershipLifetimeId == membership.lifetimeId
           }?.localDone ?? false
-        if item.globalDone || localDone { doneCount += 1 }
+        if item.globalDone || localDone {
+          doneCount += 1
+        } else if item.archived || list.archived {
+          archivedCount += 1
+        }
       }
     }
     let state: PlannerContainerProgressState
     if totalCount == 0 {
       state = .empty
-    } else if doneCount == totalCount {
+    } else if doneCount + archivedCount == totalCount {
       state = .complete
     } else {
       state = .partial
     }
-    return .init(container: reference, state: state, doneCount: doneCount, totalCount: totalCount)
+    return .init(
+      container: reference, state: state, doneCount: doneCount, totalCount: totalCount,
+      archivedCount: archivedCount)
   }
 
   private func resolvedItem(_ binding: PlannerBoundIdentity, in items: [ItemSnapshot]) throws

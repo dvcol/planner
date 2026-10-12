@@ -382,6 +382,8 @@
         ]),
         "state": .string(progress.state.rawValue),
         "doneCount": progress.doneCount.map { .string(String($0)) } ?? .null,
+        "archivedCount": progress.archivedCount.map { .string(String($0)) } ?? .null,
+        "finishedCount": progress.finishedCount.map { .string(String($0)) } ?? .null,
         "totalCount": progress.totalCount.map { .string(String($0)) } ?? .null,
       ])
     }
