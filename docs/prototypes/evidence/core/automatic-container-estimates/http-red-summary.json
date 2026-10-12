@@ -1,0 +1,60 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006030-001A586C3EA3001C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 2,
+      "passedTests" : 6,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "Planner · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 2,
+  "finishTime" : 1791803859.871,
+  "passedTests" : 6,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1791803844.324,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Expectation failed: source[\"estimates\"] as? [String: Any]\nsource[\"estimates\"] → nil\n[String: Any] → Optional<Any>",
+      "targetName" : "PlannerMCPTests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "ListRoutingTests/containerEstimateReadsOverHTTPKeepExactMinutesAndMissingValueBounds()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ListRoutingTests/containerEstimateReadsOverHTTPKeepExactMinutesAndMissingValueBounds()",
+      "testName" : "containerEstimateReadsOverHTTPKeepExactMinutesAndMissingValueBounds()"
+    },
+    {
+      "failureText" : "Expectation failed: Set(sourceValue.keys) == [\n          \"source\", \"content\", \"createdAt\", \"updatedAt\", \"fieldHashes\", \"state\", \"labels\",\n          \"references\", \"progress\", \"estimates\",\n        ]\nSet(sourceValue.keys) → [\"fieldHashes\", \"progress\", \"state\", \"updatedAt\", \"source\", \"references\", \"createdAt\", \"labels\", \"content\"]\n[\n          \"source\", \"content\", \"createdAt\", \"updatedAt\", \"fieldHashes\", \"state\", \"labels\",\n          \"references\", \"progress\", \"estimates\",\n        ] → [\"source\", \"estimates\", \"references\", \"createdAt\", \"labels\", \"updatedAt\", \"state\", \"content\", \"progress\", \"fieldHashes\"]",
+      "targetName" : "PlannerMCPTests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "ListRoutingTests/listCreationAndDetailReadRetainOwnedMetadataAndEmptyDerivedProgress()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ListRoutingTests/listCreationAndDetailReadRetainOwnedMetadataAndEmptyDerivedProgress()",
+      "testName" : "listCreationAndDetailReadRetainOwnedMetadataAndEmptyDerivedProgress()"
+    }
+  ],
+  "title" : "Test - Planner",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 8
+}

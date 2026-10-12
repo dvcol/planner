@@ -221,7 +221,7 @@
             })),
         "state": .object(["globalDone": .null, "archived": .null]),
         "labels": .array([]), "references": .array([]),
-        "progress": .null,
+        "progress": .null, "estimates": .null,
       ])
     }
 
@@ -283,7 +283,7 @@
             })),
         "state": .object(["globalDone": .null, "archived": .null]),
         "labels": .array([]), "references": .array(read.references.map(referenceValue)),
-        "progress": .null,
+        "progress": .null, "estimates": .null,
       ])
     }
 
@@ -305,7 +305,7 @@
             })),
         "state": .object(["globalDone": .null, "archived": .null]),
         "labels": .array([]), "references": .array(read.references.map(referenceValue)),
-        "progress": .null,
+        "progress": .null, "estimates": .null,
       ])
     }
 
@@ -344,6 +344,7 @@
         "labels": .array(read.labels.map(labelValue)),
         "references": .array(read.references.map(referenceValue)),
         "progress": progressValue(read.progress),
+        "estimates": estimatesValue(read.estimates),
       ])
     }
 
@@ -371,6 +372,7 @@
         ]),
         "labels": .array([]), "references": .array(read.references.map(referenceValue)),
         "progress": progressValue(read.progress),
+        "estimates": estimatesValue(read.estimates),
       ])
     }
 
@@ -386,6 +388,34 @@
         "finishedCount": progress.finishedCount.map { .string(String($0)) } ?? .null,
         "totalCount": progress.totalCount.map { .string(String($0)) } ?? .null,
       ])
+    }
+
+    private static func estimatesValue(_ estimates: PlannerContainerEstimates) -> Value {
+      .object([
+        "calculatedEstimate": durationTotalValue(estimates.calculatedEstimate),
+        "fullEstimate": durationTotalValue(estimates.fullEstimate),
+        "remainingEstimate": durationTotalValue(estimates.remainingEstimate),
+        "completedExceedsTotal": .bool(estimates.completedExceedsTotal),
+      ])
+    }
+
+    private static func durationTotalValue(_ total: PlannerDurationTotal) -> Value {
+      switch total {
+      case .exact(let minutes):
+        .object(["kind": .string("exact"), "minutes": .string(String(minutes))])
+      case .lowerBound(let minutes, let missingEstimateCount):
+        .object([
+          "kind": .string("lowerBound"), "minutes": .string(String(minutes)),
+          "missingEstimateCount": .string(String(missingEstimateCount)),
+        ])
+      case .upperBound(let minutes, let missingFinishedEstimateCount):
+        .object([
+          "kind": .string("upperBound"), "minutes": .string(String(minutes)),
+          "missingFinishedEstimateCount": .string(String(missingFinishedEstimateCount)),
+        ])
+      case .unavailable:
+        .object(["kind": .string("unavailable")])
+      }
     }
 
     static func colorValue(_ color: PlannerColor) -> Value {
@@ -475,7 +505,7 @@
         ]),
         "labels": .array(read.labels.map(labelValue)),
         "references": .array(read.references.map(referenceValue)),
-        "progress": .null,
+        "progress": .null, "estimates": .null,
       ])
     }
 

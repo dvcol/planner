@@ -49,4 +49,14 @@ public struct PlannerContainerEstimates: Sendable, Equatable {
 - Prove manual reset, live child/List edits, too-small manual totals, preserved exact display units, migrations, legacy replay and both import modes. No derived calculation rewrites source or appearance state.
 - Qualify exact HTTP summaries and native full/remaining captions, uncertainty warnings and inline unit/remainder controls. Inspect actual phone/tablet captures; report Mac compilation and runtime separately.
 
-This is the implementation contract for the next estimate slices. It does not claim runtime support or completion of the estimate/calendar ticket.
+## Automatic summary execution
+
+List and Itinerary source reads now calculate automatic full and remaining estimates at the existing public Core boundary. Each appearance contributes separately; global/local Done and archive retirement remove its remaining contribution. An archived container retains its full estimate and child-based progress while showing zero remaining. No stored estimate, Done flag, reference order, timestamp or backup authority is added by calculation.
+
+The known List fixture retains 180 minutes full and moves through 180, 60 and zero remaining. Missing estimates yield a known lower bound; finishing an unknown child never manufactures its duration. Empty automatic plans are exact zero with empty progress. Checked overflow makes the affected total unavailable while other valid totals and source data remain readable.
+
+The itinerary fixture counts a direct 120-minute Museum plus two 180-minute List branches as 480 minutes. Its local completion is independent from the standalone List; global Done/Reopen and branch archive/unarchive preserve that distinction. Editing the shared Museum to 150 changes full to 570 and remaining to 420, despite a narrowed query. The itinerary's hashes/timestamp and booked start-only Schedule remain unchanged.
+
+Sixteen Core functions pass across eight focused suites, with nineteen case executions. Ten actual HTTP functions pass across three suites, with eleven case executions. Wire reads retain exact decimal minutes, missing-estimate bounds, exact empty-itinerary totals and null summaries for Items. The actual HTTP red exposed the missing summary/key. Initial List/Itinerary failures were missing public declarations, not executed runtime tests. A zero-case HTTP selector attempt is excluded; the supported suite selector then executed the red. The [execution record](evidence/core/automatic-container-estimates/execution.json) preserves these boundaries and source hashes.
+
+Nine affected Swift files pass strict lint. Mac app/MCP host and iOS app/native test host compile. This slice executes no new native UI journeys. Storage schema 14 and portable format 1 remain unchanged. Manual fields and budgets, Q76 upper bounds, native captions/pickers, Calendar, scale, Mac UI runtime, physical sync/account/Share and whole-app polish remain open. The estimate/calendar ticket is not complete.

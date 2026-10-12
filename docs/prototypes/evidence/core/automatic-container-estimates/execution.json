@@ -1,0 +1,50 @@
+{
+  "beforeCommit": "9ab653f",
+  "mode": "localOnly",
+  "storageSchemaVersion": 14,
+  "portableFormatVersion": 1,
+  "sourceEpoch": "source-epoch.json",
+  "qualification": {
+    "core": {
+      "functions": 16,
+      "suites": 8,
+      "caseExecutions": 19,
+      "failures": 0,
+      "log": "core-final.log"
+    },
+    "http": {
+      "bundle": "/private/tmp/PlannerAutomaticContainerEstimatesHTTPFinal.xcresult",
+      "functions": 10,
+      "suites": 3,
+      "caseExecutions": 11,
+      "failures": 0,
+      "skips": 0
+    },
+    "strictSwiftFiles": 9,
+    "macBuild": {
+      "scope": "App and MCP test host compile as part of the actual HTTP run",
+      "nativeUIFunctions": 0
+    },
+    "mobileBuild": {
+      "result": "TEST BUILD SUCCEEDED",
+      "log": "/private/tmp/PlannerAutomaticContainerEstimatesMobileBuild.log",
+      "nativeUIFunctions": 0
+    }
+  },
+  "redEvidence": {
+    "declarations": "List/Itinerary public reads initially lacked estimates, so their new public tests could not compile. These are declaration failures, not runtime test executions.",
+    "http": "The actual List suite failed on the missing estimates object and source-read key.",
+    "excludedZeroTestRun": "The first function selector matched zero Swift Testing cases; /private/tmp/PlannerAutomaticContainerEstimatesHTTPRed.xcresult is excluded from runtime evidence. The supported suite selector then executed the red cases."
+  },
+  "additionalCorrection": "The itinerary reference preservation assertion now compares against the snapshot after explicit local completion created its reference; calculations did not change.",
+  "remainingGates": [
+    "Manual estimate fields/schema 15/portable 2 and legacy replay",
+    "Manual and nested budget remaining/Q76 upper bounds",
+    "Native full/remaining captions and warning controls",
+    "Calendar",
+    "Native Mac UI runtime",
+    "Scale",
+    "Signed physical sync/account/Share",
+    "Whole-app polish"
+  ]
+}

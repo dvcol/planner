@@ -1,0 +1,64 @@
+Building for debugging...
+[1 / 3] PlannerCore-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[9 / 13] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (5,58 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ItineraryItemFilterTests started.
+◇ Suite ItineraryItemQueryTests started.
+◇ Suite ContainerEstimateTests started.
+◇ Suite ListArchiveTests started.
+◇ Suite ItemEstimateEditTests started.
+◇ Suite BulkCompletionTests started.
+◇ Test itineraryQueriesRetainIndependentAppearancesFullProgressAndLiveMemberships() started.
+◇ Suite ArchivedContainerProgressTests started.
+◇ Suite ItineraryEntryCompletionTests started.
+◇ Test itineraryAutomaticTotalsCountEachAppearanceAndKeepCompletionContextIndependent() started.
+◇ Test missingFinishedEstimatesDoNotInventTimeInAutomaticRemaining() started.
+◇ Test staleEstimateRejectsWholePatchAndReplayRetainsTheOriginalRepresentation() started.
+◇ Test automaticListTotalsRetainFullPlanAndFollowCompletionAndArchiveAfterReopen() started.
+◇ Test nonPositiveEstimateRejectsWholePatchWithoutChangingSavedData(_:) started.
+◇ Test estimateEditAndClearPreserveContentAndStartOnlyScheduleAcrossRecoveryAndReopen() started.
+◇ Test itineraryFiltersNarrowAppearancesCumulativelyAndSortsKeepUnknownDurationsLast() started.
+◇ Test emptyAndOverflowingAutomaticTotalsPreserveValidProgressAndSourceEstimates() started.
+◇ Test archiveRetainsListContentAndOldReplayCannotUndoLaterUnarchive() started.
+◇ Test directCompletionIsIndependentAndGlobalReopenRevealsRetainedLocalState() started.
+◇ Test reviewedBulkChangesEveryScopedAppearanceAndRetainsGlobalAndOtherContextStates() started.
+◇ Test positiveEstimateBoundsPersistExactValuesThroughTitleEditAndReopen(_:) started.
+◇ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() started.
+◇ Test case passing 1 argument estimateMinutes → 0 to nonPositiveEstimateRejectsWholePatchWithoutChangingSavedData(_:) started.
+◇ Test missingListAndObstructedRecoveryLeaveArchiveUnapplied() started.
+◇ Test case passing 1 argument estimateMinutes → -1 to nonPositiveEstimateRejectsWholePatchWithoutChangingSavedData(_:) started.
+◇ Test case passing 1 argument estimateMinutes → -9223372036854775808 to nonPositiveEstimateRejectsWholePatchWithoutChangingSavedData(_:) started.
+◇ Test archivedRepeatedListBranchesFinishOnlyTheirItineraryAppearances() started.
+◇ Test case passing 1 argument expectedEstimate → PlannerEstimate(minutes: 1, displayUnit: PlannerCore.PlannerEstimateUnit.minute) to positiveEstimateBoundsPersistExactValuesThroughTitleEditAndReopen(_:) started.
+◇ Test case passing 1 argument expectedEstimate → PlannerEstimate(minutes: 9223372036854775807, displayUnit: PlannerCore.PlannerEstimateUnit.year) to positiveEstimateBoundsPersistExactValuesThroughTitleEditAndReopen(_:) started.
+✔ Test nonPositiveEstimateRejectsWholePatchWithoutChangingSavedData(_:) with 3 test cases passed after 0.448 seconds.
+✔ Test estimateEditAndClearPreserveContentAndStartOnlyScheduleAcrossRecoveryAndReopen() passed after 0.448 seconds.
+✔ Test missingFinishedEstimatesDoNotInventTimeInAutomaticRemaining() passed after 0.448 seconds.
+✔ Test emptyAndOverflowingAutomaticTotalsPreserveValidProgressAndSourceEstimates() passed after 0.448 seconds.
+✔ Test staleEstimateRejectsWholePatchAndReplayRetainsTheOriginalRepresentation() passed after 0.448 seconds.
+✔ Test automaticListTotalsRetainFullPlanAndFollowCompletionAndArchiveAfterReopen() passed after 0.448 seconds.
+✔ Test missingListAndObstructedRecoveryLeaveArchiveUnapplied() passed after 0.448 seconds.
+✔ Test archiveRetainsListContentAndOldReplayCannotUndoLaterUnarchive() passed after 0.506 seconds.
+✔ Suite ListArchiveTests passed after 0.506 seconds.
+✔ Test positiveEstimateBoundsPersistExactValuesThroughTitleEditAndReopen(_:) with 2 test cases passed after 0.617 seconds.
+✔ Suite ItemEstimateEditTests passed after 0.618 seconds.
+✔ Test archivedChildFinishesListWithoutChangingDoneFlagsAndUnarchiveRestoresProgress() passed after 0.771 seconds.
+✔ Test directCompletionIsIndependentAndGlobalReopenRevealsRetainedLocalState() passed after 0.776 seconds.
+✔ Suite ItineraryEntryCompletionTests passed after 0.777 seconds.
+✔ Test itineraryAutomaticTotalsCountEachAppearanceAndKeepCompletionContextIndependent() passed after 0.942 seconds.
+✔ Suite ContainerEstimateTests passed after 0.943 seconds.
+✔ Test archivedRepeatedListBranchesFinishOnlyTheirItineraryAppearances() passed after 0.948 seconds.
+✔ Suite ArchivedContainerProgressTests passed after 0.948 seconds.
+✔ Test itineraryQueriesRetainIndependentAppearancesFullProgressAndLiveMemberships() passed after 1.007 seconds.
+✔ Suite ItineraryItemQueryTests passed after 1.007 seconds.
+✔ Test itineraryFiltersNarrowAppearancesCumulativelyAndSortsKeepUnknownDurationsLast() passed after 1.026 seconds.
+✔ Suite ItineraryItemFilterTests passed after 1.027 seconds.
+✔ Test reviewedBulkChangesEveryScopedAppearanceAndRetainsGlobalAndOtherContextStates() passed after 1.101 seconds.
+✔ Suite BulkCompletionTests passed after 1.101 seconds.
+✔ Test run with 16 tests in 8 suites passed after 1.101 seconds.

@@ -20,16 +20,23 @@ struct ItineraryEntrySnapshot: PlannerRankedAssociation {
 }
 
 extension ItinerarySnapshot {
-  func progress(memberships: [MembershipSnapshot], items: [ItemSnapshot], lists: [ListSnapshot])
+  func progressAndEstimates(
+    memberships: [MembershipSnapshot], items: [ItemSnapshot], lists: [ListSnapshot]
+  )
     throws
-    -> PlannerContainerProgress
+    -> (progress: PlannerContainerProgress, estimates: PlannerContainerEstimates)
   {
     var totalCount: Int64 = 0
     var doneCount: Int64 = 0
     var archivedCount: Int64 = 0
+    var estimateChildren: [ContainerEstimateChild] = []
     for entry in entries {
       if entry.source.kind == "item" {
         let item = try resolvedItem(entry.source, in: items)
+        estimateChildren.append(
+          .init(
+            estimate: item.input.estimate,
+            finished: item.globalDone || entry.localDone == true || item.archived))
         totalCount += 1
         if item.globalDone || entry.localDone == true {
           doneCount += 1
@@ -56,6 +63,10 @@ extension ItinerarySnapshot {
             $0.context.membershipId == membership.id
               && $0.context.membershipLifetimeId == membership.lifetimeId
           }?.localDone ?? false
+        estimateChildren.append(
+          .init(
+            estimate: item.input.estimate,
+            finished: item.globalDone || localDone || item.archived || list.archived))
         if item.globalDone || localDone {
           doneCount += 1
         } else if item.archived || list.archived {
@@ -71,9 +82,12 @@ extension ItinerarySnapshot {
     } else {
       state = .partial
     }
-    return .init(
-      container: reference, state: state, doneCount: doneCount, totalCount: totalCount,
-      archivedCount: archivedCount)
+    return (
+      progress: .init(
+        container: reference, state: state, doneCount: doneCount, totalCount: totalCount,
+        archivedCount: archivedCount),
+      estimates: automaticContainerEstimates(children: estimateChildren, archived: archived)
+    )
   }
 
   private func resolvedItem(_ binding: PlannerBoundIdentity, in items: [ItemSnapshot]) throws

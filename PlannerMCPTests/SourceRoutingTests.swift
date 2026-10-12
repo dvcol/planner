@@ -152,6 +152,7 @@ struct SourceRoutingTests {
       JSONSerialization.jsonObject(with: Data(text.utf8)) as? [String: Any])
     #expect(NSDictionary(dictionary: textResult).isEqual(to: structured))
     let value = try #require(structured["value"] as? [String: Any])
+    #expect(value["estimates"] is NSNull)
     let source = try #require(value["source"] as? [String: Any])
     #expect(source["kind"] as? String == "item")
     #expect(source["id"] as? String == identity.uuidString)
