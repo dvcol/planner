@@ -1,0 +1,2 @@
+Packages/PlannerCore/Sources/PlannerCore/PlannerImportMerge.swift:48:102: error: [AddLines] add 1 line break
+Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportOwnedAdditionTests.swift:101:1: error: [LineLength] line is too long

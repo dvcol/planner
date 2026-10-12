@@ -1,0 +1,55 @@
+Building for debugging...
+[Planning deferred tasks]
+[1 / 2] PlannerCore_PlannerCoreStoreTests
+[6 / 19] PlannerCoreStoreTests-product
+[9 / 20] PlannerCoreStoreTests-product
+[11 / 22] PlannerCoreStoreTests-product
+[17 / 21] PlannerCoreStoreTests-product
+[19 / 21] PlannerCoreStoreTests-product
+Build complete! (3,04 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportOwnedAdditionTests started.
+◇ Test overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "listEntry" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "directEntry" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "membership" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "expandedCompletion" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "itemCategory" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "itineraryTag" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "itemLink" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "itineraryLink" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "itemSchedule" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "itinerarySchedule" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "contextAlias" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+✘ Test overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) recorded an issue with 1 argument group → "expandedCompletion" at NativeImportOwnedAdditionTests.swift:69:21: Issue recorded
+↳ Apply .overwrite with added expandedCompletion: PlannerOperationResult(operationId: 5097012D-6C85-4DD4-B578-50DF75E6C1B1, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Changing reference or history identities still needs closure reconciliation.", details: nil)))
+✘ Test overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) recorded an issue with 1 argument group → "itemCategory" at NativeImportOwnedAdditionTests.swift:69:21: Issue recorded
+↳ Apply .overwrite with added itemCategory: PlannerOperationResult(operationId: 76A59A8A-0458-4267-896A-182C2775768A, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Changing reference or history identities still needs closure reconciliation.", details: nil)))
+◇ Test case passing 1 argument group → "completionChange" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+✘ Test overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) recorded an issue with 1 argument group → "itinerarySchedule" at NativeImportOwnedAdditionTests.swift:69:21: Issue recorded
+↳ Apply .overwrite with added itinerarySchedule: PlannerOperationResult(operationId: 4CD01C01-D257-4ABE-97EE-1E4EE04FB2F6, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Changing reference or history identities still needs closure reconciliation.", details: nil)))
+✘ Test overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) recorded an issue with 1 argument group → "contextAlias" at NativeImportOwnedAdditionTests.swift:69:21: Issue recorded
+↳ Apply .overwrite with added contextAlias: PlannerOperationResult(operationId: FE107207-B7BF-4B83-B362-25074C681C44, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Changing reference or history identities still needs closure reconciliation.", details: nil)))
+✘ Test overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) recorded an issue with 1 argument group → "itineraryTag" at NativeImportOwnedAdditionTests.swift:69:21: Issue recorded
+↳ Apply .overwrite with added itineraryTag: PlannerOperationResult(operationId: B2199E29-8A16-437C-BDD1-35E1D3D948C2, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Changing reference or history identities still needs closure reconciliation.", details: nil)))
+✘ Test overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) recorded an issue with 1 argument group → "itemSchedule" at NativeImportOwnedAdditionTests.swift:69:21: Issue recorded
+↳ Apply .overwrite with added itemSchedule: PlannerOperationResult(operationId: ECF22716-93F7-4662-9F78-C3459FB7CEE7, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Changing reference or history identities still needs closure reconciliation.", details: nil)))
+✘ Test overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) recorded an issue with 1 argument group → "directEntry" at NativeImportOwnedAdditionTests.swift:69:21: Issue recorded
+↳ Apply .overwrite with added directEntry: PlannerOperationResult(operationId: 5883046A-0920-495E-BC4E-1D8A0A62C4AE, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Changing reference or history identities still needs closure reconciliation.", details: nil)))
+✘ Test overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) recorded an issue with 1 argument group → "membership" at NativeImportOwnedAdditionTests.swift:69:21: Issue recorded
+↳ Apply .overwrite with added membership: PlannerOperationResult(operationId: 6C5771C9-8A09-41B5-BFC3-41A0D71C5ED1, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Changing reference or history identities still needs closure reconciliation.", details: nil)))
+✘ Test overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) recorded an issue with 1 argument group → "itemLink" at NativeImportOwnedAdditionTests.swift:69:21: Issue recorded
+↳ Apply .overwrite with added itemLink: PlannerOperationResult(operationId: 58863ACA-55CD-4B01-AA19-A6408DC8A2FB, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Changing reference or history identities still needs closure reconciliation.", details: nil)))
+✘ Test overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) recorded an issue with 1 argument group → "itineraryLink" at NativeImportOwnedAdditionTests.swift:69:21: Issue recorded
+↳ Apply .overwrite with added itineraryLink: PlannerOperationResult(operationId: 337973C3-BFC4-48EE-B1EE-F372C02DABF2, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Changing reference or history identities still needs closure reconciliation.", details: nil)))
+✘ Test overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) recorded an issue with 1 argument group → "listEntry" at NativeImportOwnedAdditionTests.swift:69:21: Issue recorded
+↳ Apply .overwrite with added listEntry: PlannerOperationResult(operationId: 4645EF95-0693-4E83-BD38-91B3917784D3, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Changing reference or history identities still needs closure reconciliation.", details: nil)))
+✘ Test overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) recorded an issue with 1 argument group → "completionChange" at NativeImportOwnedAdditionTests.swift:69:21: Issue recorded
+↳ Apply .overwrite with added completionChange: PlannerOperationResult(operationId: D77ED95C-9769-46B1-95E0-08D4ADC8D10E, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Changing reference or history identities still needs closure reconciliation.", details: nil)))
+✘ Test overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) with 12 test cases failed after 0.556 seconds with 12 issues.
+✘ Suite NativeImportOwnedAdditionTests failed after 0.557 seconds with 12 issues.
+✘ Test run with 1 test in 1 suite failed after 0.557 seconds with 12 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

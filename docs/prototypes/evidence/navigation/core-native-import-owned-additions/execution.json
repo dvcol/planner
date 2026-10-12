@@ -1,0 +1,75 @@
+{
+  "status": "Qualified additions to existing owned records/history under Overwrite; full import remains open",
+  "beforeCommit": "7751e6f",
+  "commands": {
+    "core": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter 'NativeImportOwnedAdditionTests|NativeImportMergeTests|NativeImportHistoryCollisionTests|NativeImportClosedHistoryTests|NativeImportIncomingDeletionReviewTests|NativeImportOverwriteDeletionReviewTests|NativeImportApplyTests|NativeImportLineageMigrationTests|ImportLineageEncodingTests|NativeImportLineageTests|RecoveryProposalSelectionTests|RecoveryCheckpointRetryTests|RecoveryCheckpointRetryAdmissionTests|ManualContainerEstimateMigrationTests|ExpandedCompletionMigrationTests|ItineraryEntryMigrationTests|ItemLabelMigrationTests|MembershipMigrationTests|CategoryMigrationTests|TagMigrationTests|ItineraryMigrationTests|ItineraryScheduleMigrationTests|ItemLinkMigrationTests|NativeImportReviewTests|NativeImportConflictReviewTests|NativeImportOmittedOwnerReviewTests|NativeImportBindingReviewTests'",
+    "phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerCore -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerCoreStoreTests/NativeImportOwnedAdditionTests -only-testing:PlannerCoreStoreTests/NativeImportMergeTests -only-testing:PlannerCoreStoreTests/NativeImportHistoryCollisionTests -only-testing:PlannerCoreStoreTests/NativeImportClosedHistoryTests -only-testing:PlannerCoreStoreTests/NativeImportIncomingDeletionReviewTests -only-testing:PlannerCoreStoreTests/NativeImportOverwriteDeletionReviewTests -only-testing:PlannerCoreStoreTests/NativeImportApplyTests -only-testing:PlannerCoreStoreTests/NativeImportLineageMigrationTests -only-testing:PlannerCoreStoreTests/ImportLineageEncodingTests -only-testing:PlannerCoreStoreTests/NativeImportLineageTests -only-testing:PlannerCoreStoreTests/RecoveryProposalSelectionTests -only-testing:PlannerCoreStoreTests/RecoveryCheckpointRetryTests -only-testing:PlannerCoreStoreTests/RecoveryCheckpointRetryAdmissionTests -only-testing:PlannerCoreStoreTests/ManualContainerEstimateMigrationTests -only-testing:PlannerCoreStoreTests/ExpandedCompletionMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryEntryMigrationTests -only-testing:PlannerCoreStoreTests/ItemLabelMigrationTests -only-testing:PlannerCoreStoreTests/MembershipMigrationTests -only-testing:PlannerCoreStoreTests/CategoryMigrationTests -only-testing:PlannerCoreStoreTests/TagMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryScheduleMigrationTests -only-testing:PlannerCoreStoreTests/ItemLinkMigrationTests -only-testing:PlannerCoreStoreTests/NativeImportReviewTests -only-testing:PlannerCoreStoreTests/NativeImportConflictReviewTests -only-testing:PlannerCoreStoreTests/NativeImportOmittedOwnerReviewTests -only-testing:PlannerCoreStoreTests/NativeImportBindingReviewTests -resultBundlePath /private/tmp/PlannerNativeImportOwnedAdditionPhone.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "http": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerMCPTests/CommandRoutingTests -only-testing:PlannerMCPTests/OperationStatusRoutingTests -only-testing:PlannerMCPTests/BulkCompletionAdmissionRoutingTests -only-testing:PlannerMCPTests/ManualContainerEstimateRoutingTests -resultBundlePath /private/tmp/PlannerNativeImportOwnedAdditionHTTPMac.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "macBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO build-for-testing"
+  },
+  "storageSchemaVersion": 16,
+  "portableFormatVersion": 2,
+  "qualification": {
+    "iOSCore": {
+      "functions": 58,
+      "suites": 27,
+      "invocations": 156,
+      "failures": 0,
+      "skips": 0
+    },
+    "macHTTP": {
+      "functions": 16,
+      "suites": 4,
+      "invocations": 22,
+      "failures": 0,
+      "skips": 0
+    },
+    "macCore": {
+      "functions": 58,
+      "suites": 27,
+      "invocations": 156,
+      "failures": 0,
+      "skips": 0
+    },
+    "strictSwiftFiles": 2,
+    "macAppAndNavigationTestHost": "TEST BUILD SUCCEEDED",
+    "nativeUIFunctions": 0
+  },
+  "review": {
+    "standards": "No actionable findings.",
+    "spec": "No confirmed defects in additive Overwrite; cross-owner reference/history binding gates reviewed."
+  },
+  "proofLimits": [
+    "Twelve addition shapes with both represented and omitted unchanged owners qualify full native export/recovery/reopen/replay/reimport under Skip and Overwrite.",
+    "Removal/rebinding, deletion/restoration families, origin/provider persistence, summaries, native import forms and direct context.save failure remain open.",
+    "No new native UI runtime, physical sync/account/Share, Calendar or large-data performance qualification."
+  ],
+  "originalArtifacts": {
+    "phoneResult": "/private/tmp/PlannerNativeImportOwnedAdditionPhone.xcresult",
+    "httpResult": "/private/tmp/PlannerNativeImportOwnedAdditionHTTPMac.xcresult"
+  },
+  "sourceEpoch": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMerge.swift": "4e694e414ad40e6b9a201a98ad35a0d65885e91555600d7ce1c4b459b3e95086",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportOwnedAdditionTests.swift": "a945118ce296c09cca79d732ff1b20338403bc3f25ba216d7d187ff3e7640c74"
+  },
+  "functionalRedSourceEpoch": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMerge.swift": "312b2976fc0d89b6ef215e3674b6dbceac761425651e11195da14d5ddb176887",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportOwnedAdditionTests.swift": "73ba95ed09b165f4930ebaeb11c4c6c25afb92e1f3f472d8e320d22e2e6e3fef"
+  },
+  "retainedFiles": [
+    "first-green.log",
+    "functional-red.log",
+    "http-summary.json",
+    "http-tests.json",
+    "markdown-lint.log",
+    "omitted-owners.log",
+    "phone-summary.json",
+    "phone-tests.json",
+    "qualified-http.log.gz",
+    "qualified-mac-build.log.gz",
+    "qualified-mac.log.gz",
+    "qualified-phone.log.gz",
+    "strict-swift-lint.log",
+    "swift-lint-before-repair.log"
+  ]
+}

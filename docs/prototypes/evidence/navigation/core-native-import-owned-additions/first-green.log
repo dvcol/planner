@@ -1,0 +1,65 @@
+Building for debugging...
+[1 / 1]
+[2 / 16] PlannerCore
+[4 / 18] PlannerCore
+[9 / 21] PlannerCore
+[12 / 14] PlannerCoreTests-product
+[16 / 18] PlannerCoreStoreTests-product
+Build complete! (4,63 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportMergeTests started.
+◇ Suite NativeImportHistoryCollisionTests started.
+◇ Suite NativeImportClosedHistoryTests started.
+◇ Suite NativeImportOwnedAdditionTests started.
+◇ Test retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) started.
+◇ Test changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:) started.
+◇ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test removedContextsRetainReviewableRestorableHistory(kind:) started.
+◇ Test overwriteSourceFieldsPreservesReferencesAndHistoryAcrossSetAndClear() started.
+◇ Test case passing 1 argument collision → "alias" to skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) started.
+◇ Test case passing 1 argument group → "itineraryEntries" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument collision → "change" to skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) started.
+◇ Test case passing 1 argument group → "memberships" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument group → "expandedCompletions" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument scenario → "referenceRemoval" to changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:) started.
+◇ Test case passing 1 argument group → "ownedLinks" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument scenario → "aliasIdentity" to changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:) started.
+◇ Test case passing 1 argument group → "schedules" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument scenario → "changeIdentity" to changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → false, interleaveSourceIdentifiers → false to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → false, interleaveSourceIdentifiers → true to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 1 argument group → "contextAliases" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 1 argument group → "completionChanges" to retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → true, interleaveSourceIdentifiers → false to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 1 argument group → "membership" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "directEntry" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → true, interleaveSourceIdentifiers → true to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 1 argument group → "listEntry" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument kind → "listMembership" to removedContextsRetainReviewableRestorableHistory(kind:) started.
+◇ Test case passing 1 argument group → "expandedCompletion" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument kind → "directItineraryItem" to removedContextsRetainReviewableRestorableHistory(kind:) started.
+◇ Test case passing 1 argument group → "itemCategory" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument kind → "expandedListItem" to removedContextsRetainReviewableRestorableHistory(kind:) started.
+◇ Test case passing 1 argument group → "itineraryTag" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "itemLink" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "itineraryLink" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "itemSchedule" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "itinerarySchedule" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "contextAlias" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+◇ Test case passing 1 argument group → "completionChange" to overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) started.
+✔ Test changedOwnedIdentitiesRejectWithoutPartialSourceReplacement(scenario:) with 3 test cases passed after 0.961 seconds.
+✔ Test skipChecksClosedHistoryBindingsBeforePreservingMatchingValues(collision:) with 2 test cases passed after 0.961 seconds.
+✔ Test retainedOwnedDataOverwritesPreserveBindingsAndHistory(group:) with 7 test cases passed after 0.961 seconds.
+✔ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) with 4 test cases passed after 0.961 seconds.
+✔ Suite NativeImportHistoryCollisionTests passed after 0.961 seconds.
+✔ Test removedContextsRetainReviewableRestorableHistory(kind:) with 3 test cases passed after 1.021 seconds.
+✔ Suite NativeImportClosedHistoryTests passed after 1.022 seconds.
+✔ Test overwriteSourceFieldsPreservesReferencesAndHistoryAcrossSetAndClear() passed after 1.143 seconds.
+✔ Suite NativeImportMergeTests passed after 1.144 seconds.
+✔ Test overwriteAddsOwnedRecordsWhileSkipKeepsCurrentOwner(group:) with 12 test cases passed after 1.314 seconds.
+✔ Suite NativeImportOwnedAdditionTests passed after 1.314 seconds.
+✔ Test run with 7 tests in 4 suites passed after 1.314 seconds.
