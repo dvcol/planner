@@ -1,0 +1,80 @@
+{
+  "beforeCommit": "b4b7123",
+  "mode": "localOnly",
+  "seams": [
+    "public Core bootstrap/execute",
+    "native UI catalog"
+  ],
+  "qualification": {
+    "phone": {
+      "bundle": "/private/tmp/PlannerNativeCatalogOverflowPhoneQualified.xcresult",
+      "functions": 1,
+      "failures": 0,
+      "skips": 0
+    },
+    "tablet": {
+      "bundle": "/private/tmp/PlannerNativeCatalogOverflowTabletQualified.xcresult",
+      "functions": 1,
+      "failures": 0,
+      "skips": 0
+    },
+    "fixtureMacBuild": {
+      "log": "/private/tmp/PlannerNativeCatalogOverflowMacBuild.log",
+      "result": "TEST BUILD SUCCEEDED"
+    },
+    "ordinaryPhoneBuild": {
+      "log": "/private/tmp/PlannerNativeCatalogOverflowOrdinaryPhoneBuild.log",
+      "result": "TEST BUILD SUCCEEDED"
+    },
+    "ordinaryMacBuild": {
+      "log": "/private/tmp/PlannerNativeCatalogOverflowOrdinaryMacBuild.log",
+      "result": "BUILD SUCCEEDED"
+    },
+    "strictSwiftFiles": 6,
+    "projectAndScheme": "Parsed and exact fixture target references verified",
+    "captures": "Phone and tablet warning icons inspected; manual full and remaining stay four hours.",
+    "macRuntime": {
+      "qualifiedFunctions": 0,
+      "status": "Interrupted before test-start output",
+      "unsignedLog": "/private/tmp/PlannerNativeCatalogOverflowMacQualified.log",
+      "signedLog": "/private/tmp/PlannerNativeCatalogOverflowMacAdhocFresh.log",
+      "limit": "The regenerated locally signed runner builds, but XCTest produces no test-start output. Scoped diagnostics show test-manager setup without an established launch failure cause. This does not qualify native Mac UI."
+    },
+    "markdownFiles": 2
+  },
+  "redEvidence": {
+    "bundle": "/private/tmp/PlannerNativeCatalogOverflowRuntimeRed.xcresult",
+    "functions": 1,
+    "failures": 1,
+    "reason": "Rendered catalog omitted calculated-unavailable narration and the warning icon while retaining exact manual totals."
+  },
+  "exclusions": [
+    "Initial fixture build ran out of disk space before executing a test. It is not runtime red evidence. A later retry failed to start its shell redirection before cleanup.",
+    "Only completed tablet DerivedData was removed. Its external xcresult bundles, logs and committed captures remain.",
+    "Initial tablet green attempt failed to find the catalog because the adaptive sidebar was collapsed. Explicit Show Sidebar navigation fixes the test; production sources remained unchanged.",
+    "Unsigned Mac UI launcher produced no test-start output for over four minutes and was interrupted. Local ad hoc retry failed to overwrite its generated test binary. Regenerating that runner resolves linking and signing, but the fresh retry again produces no test-start output and was interrupted. The startup cause is not established; zero Mac UI functions are qualified."
+  ],
+  "review": {
+    "standards": "No actionable findings.",
+    "spec": "No confirmed correctness regression. Pending native qualification and broader Q52 cases retained."
+  },
+  "remainingGates": [
+    "Q52 image/error/address ambiguity/delayed native journeys",
+    "Pinned address editing Q51",
+    "Native loading and scale Q58",
+    "Calendar",
+    "Import application/restoration",
+    "Broad native Mac UI runtime",
+    "Signed physical sync/account/Share",
+    "Whole-app polish"
+  ],
+  "commands": {
+    "red": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/CatalogEstimateOverflowJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerNativeCatalogOverflowRuntimeRed.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "phone": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/CatalogEstimateOverflowJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerNativeCatalogOverflowPhoneQualified.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "tablet": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/CatalogEstimateOverflowJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -resultBundlePath /private/tmp/PlannerNativeCatalogOverflowTabletQualified.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "macAdhoc": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/CatalogEstimateOverflowJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -resultBundlePath /private/tmp/PlannerNativeCatalogOverflowMacAdhoc.xcresult CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= test",
+    "ordinaryPhone": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -parallel-testing-enabled NO -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData CODE_SIGNING_ALLOWED=NO build-for-testing",
+    "ordinaryMac": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerMCPDerivedData CODE_SIGNING_ALLOWED=NO build",
+    "macAdhocFresh": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination platform=macOS,arch=arm64 -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/CatalogEstimateOverflowJourneyTests\" -disableAutomaticPackageResolution -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -resultBundlePath /private/tmp/PlannerNativeCatalogOverflowMacAdhocFresh.xcresult CODE_SIGNING_ALLOWED=YES CODE_SIGN_IDENTITY=- CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM= test"
+  }
+}

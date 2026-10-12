@@ -43,3 +43,5 @@ The initial native captures show both metrics, manual status and upper bounds. T
 Mac app/UI host compilation and strict lint of nineteen changed Swift files pass. Native Mac runtime remains unqualified. The [execution evidence](evidence/navigation/catalog-container-estimates/) retains raw summaries, source hashes and captures as qualification completes.
 
 Parallel review found no documented coding-rule violations. Spec review found that a valid manual budget hides calculated overflow in the catalog warning and accessibility value. Core correctly returns an unavailable calculated total while retaining exact manual full/remaining values. The next native fixture regression must expose that state and qualify the warning fix; this checkpoint leaves that edge case open.
+
+The subsequent [native overflow fixture](native-estimate-overflow-fixture.md) adds the required catalog warning regression and fix. Its phone/tablet journeys expose unavailable calculation while preserving exact manual totals. The original checkpoint results above remain historical evidence.

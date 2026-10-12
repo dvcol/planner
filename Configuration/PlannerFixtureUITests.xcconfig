@@ -1,0 +1,4 @@
+#include "PlannerNavigationUITests.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = org.example.PlannerFixtures.$(PRODUCT_NAME:rfc1034identifier)
+TEST_TARGET_NAME = PlannerFixtures

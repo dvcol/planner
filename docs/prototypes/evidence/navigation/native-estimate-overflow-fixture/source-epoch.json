@@ -1,0 +1,12 @@
+{
+  "Planner/PlannerApp.swift": "567a12a8c58ae7ecb367f404ea4c51338e6503dc7dd6b085a0426372b446c9af",
+  "Planner/Scenes/SavedPlannerStore.swift": "aec6d07934fd663dce47c161be66c944d0b0051f013319b502a4fd62eea974a8",
+  "Planner/Scenes/SavedContainerEstimatePreview.swift": "4c4954fe354918477d2d1edcc4e3eb7a36436cfe9b16339a8158ed867c702a15",
+  "PlannerFixtures/PlannerFixtureApp.swift": "317d5ebd45cc65e560987493d4d8e5a38af9fa09619c62254325bda581e0781e",
+  "PlannerFixtures/PlannerFixtureDataset.swift": "ea4b0b2e821d8b44b84cd9aaae647bbf334e6d858cdfee9d9b84c3663400d066",
+  "PlannerFixtureUITests/CatalogEstimateOverflowJourneyTests.swift": "fcc930baa58cc36b2b251ac5e759617d8fb5c078e7ed76d0e9004bd811d8f408",
+  "Configuration/PlannerFixtures.xcconfig": "83445804500eca9b97306af8cb0170bdbc4390d2c7aa47030290c523c90f22da",
+  "Configuration/PlannerFixtureUITests.xcconfig": "2e8903a710e2e6181568a5f425ec78c32ea2a00732ff27ede1731fa6dc8d6738",
+  "Planner.xcodeproj/project.pbxproj": "344c199e1b3a5bb413e2d100edabf8d2c4b1c0dd9973348cec22562073e1901e",
+  "Planner.xcodeproj/xcshareddata/xcschemes/PlannerFixtures.xcscheme": "12ea4dca8d5324029ec388e5d023cf5a42b274a5681cef149110ca2a08e38a54"
+}
