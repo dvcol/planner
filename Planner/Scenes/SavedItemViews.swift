@@ -107,6 +107,7 @@ struct SavedItemDetail: View {
       if let notes = item.content.notes, !notes.isEmpty {
         Section("Notes") { Text(notes).textSelection(.enabled) }
       }
+      SavedItemEstimateSection(estimate: item.content.estimate)
       SavedSchedulesSection(source: item.source, references: item.references, canChange: canChange)
       {
         scheduleToEdit = $0
@@ -176,6 +177,7 @@ struct SavedNewItemForm: View {
   let didCreate: (PlannerEntityReference) -> Void
   @State private var title = ""
   @State private var notes = ""
+  @State private var estimate: PlannerEstimate?
   @State private var operationId = UUID()
 
   var body: some View {
@@ -186,6 +188,8 @@ struct SavedNewItemForm: View {
         TextField("Notes", text: $notes, axis: .vertical)
           .lineLimit(3...8)
           .accessibilityIdentifier("saved.item.notes")
+        SavedActivityEstimateEditor(
+          estimate: $estimate, accessibilityIdentifierPrefix: "saved.item.estimate")
       }
       .formStyle(.grouped)
       .navigationTitle("New Item")
@@ -200,7 +204,7 @@ struct SavedNewItemForm: View {
           Button("Save") {
             Task {
               if let source = await store.createItem(
-                title: title, notes: notes, operationId: operationId)
+                title: title, notes: notes, estimate: estimate, operationId: operationId)
               {
                 didCreate(source)
                 dismiss()

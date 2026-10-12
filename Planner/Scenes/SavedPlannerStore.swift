@@ -419,11 +419,13 @@ final class SavedPlannerStore {
     return nil
   }
 
-  func createItem(title: String, notes: String, operationId: UUID) async -> PlannerEntityReference?
+  func createItem(title: String, notes: String, estimate: PlannerEstimate?, operationId: UUID) async
+    -> PlannerEntityReference?
   {
     guard
       let applied = await executeChange(
-        .createItem(content: .init(title: title, notes: notes.isEmpty ? nil : notes)),
+        .createItem(
+          content: .init(title: title, notes: notes.isEmpty ? nil : notes, estimate: estimate)),
         operationId: operationId)
     else { return nil }
     await refreshItems()
@@ -432,6 +434,7 @@ final class SavedPlannerStore {
 
   func editItem(
     _ item: PlannerItemSourceRead, title: String, subtitle: String, notes: String,
+    estimate: PlannerEstimate?,
     links: [PlannerLinkInput],
     location: PlannerOwnedLocation?,
     categoryIdentifiers: Set<UUID>, tagIdentifiers: Set<UUID>,
@@ -465,6 +468,14 @@ final class SavedPlannerStore {
     } else {
       linksChange = .set(links)
     }
+    let estimateChange: PlannerFieldChange<PlannerEstimate>
+    if estimate == item.content.estimate {
+      estimateChange = .unchanged
+    } else if let estimate {
+      estimateChange = .set(estimate)
+    } else {
+      estimateChange = .clear
+    }
     let locationChange: PlannerFieldChange<PlannerOwnedLocation>
     if location == item.content.location {
       locationChange = .unchanged
@@ -490,7 +501,8 @@ final class SavedPlannerStore {
         sourceId: item.source.id,
         changes: .init(
           title: titleChange, subtitle: subtitleChange, notes: notesChange,
-          location: locationChange, links: linksChange, categoryIds: categoryChange,
+          location: locationChange, estimate: estimateChange, links: linksChange,
+          categoryIds: categoryChange,
           tagIds: tagChange),
         expectedFieldHashes: item.fieldHashes), operationId: operationIdentifier) != nil
   }
