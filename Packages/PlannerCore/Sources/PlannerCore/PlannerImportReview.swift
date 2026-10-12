@@ -281,12 +281,6 @@ func plannerResolveImportReview(
       propertyPath: "/restorationFamilies")
   }
   let projection = try PlannerImportProjection(backup: incoming.backup)
-  if let externalOwner = projection.references.first(where: { projection.sources[$0.owner] == nil })
-  {
-    throw PlannerFailure(
-      "unavailable", "Import policy for owned records with an omitted source is pending.",
-      propertyPath: externalOwner.propertyPath)
-  }
   let currentProjection = try PlannerImportProjection(backup: current.backup)
   let deletedSources = Set(
     current.backup.deletionMarkers.compactMap { marker -> PlannerEntityReference? in
@@ -299,7 +293,9 @@ func plannerResolveImportReview(
       PlannerImportClosedIdentity.init))
   if mode == .overwrite,
     let closedReference = projection.references.first(where: { reference in
-      guard let identity = reference.identity else { return false }
+      guard projection.sources[reference.owner] != nil, let identity = reference.identity else {
+        return false
+      }
       return closedIdentities.contains(PlannerImportClosedIdentity(identity))
     })
   {
@@ -436,6 +432,38 @@ func plannerResolveImportReview(
       .init(
         change: existingReferences.contains { $0.reference == incoming.reference } ? .retain : .add,
         reference: incoming.reference)
+    }
+  }
+  let omittedOwners = projection.ownedReferences.keys.filter { projection.sources[$0] == nil }
+    .sorted {
+      if $0.kind != $1.kind { return $0.kind.rawValue < $1.kind.rawValue }
+      return $0.id.uuidString < $1.id.uuidString
+    }
+  for owner in omittedOwners {
+    let references = projection.ownedReferences[owner] ?? []
+    let existing = currentProjection.sources[owner]
+    guard
+      let binding = existing?.importBinding
+        ?? incoming.externalBindings.first(where: { $0.reference == owner })
+    else {
+      throw PlannerFailure(
+        "missingReference", "The omitted source owner cannot resolve in this dataset.",
+        propertyPath: references.first?.propertyPath)
+    }
+    let summary = existing.map { currentProjection.summary($0, changedFields: []) }
+    let dependencies = Set(references.flatMap(\.dependencies)).sorted {
+      if $0.kind != $1.kind { return $0.kind.rawValue < $1.kind.rawValue }
+      if $0.id != $1.id { return $0.id.uuidString < $1.id.uuidString }
+      return $0.lifetimeId.uuidString < $1.lifetimeId.uuidString
+    }
+    skippedConflicts.append(
+      .init(
+        owner: binding, reasonCode: "omittedOwner", dependencies: dependencies,
+        propertyPaths: references.map(\.propertyPath)
+          + (projection.histories[owner] ?? []).map(\.propertyPath),
+        before: summary, after: summary))
+    changes += (currentProjection.ownedReferences[owner] ?? []).map {
+      .init(change: .retain, reference: $0.reference)
     }
   }
   var deletions: [PlannerDeletionImportEntry] = []
