@@ -2,6 +2,102 @@ import XCTest
 
 @MainActor
 final class SavedItineraryBulkJourneyTests: XCTestCase {
+  func testArchivedRepeatedListBranchesFinishProgressWithoutCompletingTheirItems() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem("Museum", application: application)
+    createList(application)
+    let membershipIdentifier = application.savedPlannerItemRows("Museum").firstMatch.identifier
+    let membershipCompletion = application.plannerElement(
+      membershipIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion."))
+    membershipCompletion.activateForPlannerJourney()
+    assertProgress("1 of 1 item done", application: application)
+    createItinerary(application)
+    for source in ["Museum", "Food stops", "Food stops"] {
+      addEntry(source, application: application)
+    }
+    let originalIdentifiers = itineraryRows(application).allElementsBoundByIndex.map(\.identifier)
+    XCTAssertEqual(originalIdentifiers.count, 3)
+    assertChecks(["To do", "To do", "To do"], application: application)
+    assertProgress("0 of 3 items done", application: application)
+    openSection("Lists", application: application)
+    let list = application.savedPlannerListRow("Food stops")
+    revealNavigation(to: list, application: application)
+    XCTAssertTrue(list.waitForExistence(timeout: 10))
+    openEntryMenu(list)
+    application.plannerElement("Archive List").activateForPlannerJourney()
+    openItinerary(application)
+    assertProgress("2 of 3 items finished", application: application)
+    XCTAssertTrue(application.staticTexts["0 done · 2 archived"].exists)
+    XCTAssertEqual(
+      itineraryRows(application).allElementsBoundByIndex.map(\.identifier), originalIdentifiers)
+    assertChecks(["To do", "To do", "To do"], application: application)
+    XCTAssertTrue(application.staticTexts["Archived List"].firstMatch.exists)
+    recordScreenshot(
+      application, name: "Archived repeated List branches finish progress with Todo checks")
+    let search = application.searchFields["Search this Itinerary"]
+    if !search.exists { application.swipeDown() }
+    XCTAssertTrue(search.waitForExistence(timeout: 5))
+    search.activateForPlannerJourney()
+    search.typeText("food stops")
+    let filters = reveal("saved.itinerary.filters", application: application)
+    application.chooseSavedPlannerStateFilter("Done", control: filters)
+    XCTAssertTrue(
+      application.staticTexts["No matching items"].firstMatch.waitForExistence(timeout: 10))
+    let headers = originalIdentifiers.map { identifier in
+      let entryIdentifier = identifier.components(separatedBy: ".")[3]
+      return application.descendants(matching: .any).matching(
+        identifier: "saved.itinerary.entry.\(entryIdentifier)"
+      ).firstMatch
+    }
+    XCTAssertTrue(headers[0].waitForNonExistence(timeout: 5))
+    XCTAssertTrue(headers[1].exists)
+    XCTAssertTrue(headers[2].exists)
+    XCTAssertTrue(application.staticTexts["Matching 0 of 3 items"].exists)
+    recordScreenshot(application, name: "Done header filtering retains both archived branches")
+    application.chooseSavedPlannerStateFilter("Todo", control: filters)
+    XCTAssertTrue(application.staticTexts["No matching entries"].waitForExistence(timeout: 10))
+    assertProgress("2 of 3 items finished", application: application)
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItinerary(application)
+    assertProgress("2 of 3 items finished", application: application)
+    assertChecks(["To do", "To do", "To do"], application: application)
+    XCTAssertEqual(
+      itineraryRows(application).allElementsBoundByIndex.map(\.identifier), originalIdentifiers)
+    recordScreenshot(
+      application, name: "Archived branches retain source identities and Todo checks after relaunch"
+    )
+    openItem("Museum", application: application)
+    let globalCompletion = application.descendants(matching: .any).matching(
+      identifier: "saved.item.completion"
+    ).firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    openSection("Lists", application: application)
+    let archiveFilter = reveal("saved.lists.archive", application: application)
+    archiveFilter.activateForPlannerJourney()
+    application.plannerElement("All Lists").activateForPlannerJourney()
+    revealNavigation(to: list, application: application)
+    XCTAssertTrue(list.waitForExistence(timeout: 10))
+    list.activateForPlannerJourney()
+    assertProgress("1 of 1 item done", application: application)
+    XCTAssertTrue(membershipCompletion.waitForPlannerValue("Completed"))
+    revealNavigation(to: list, application: application)
+    openEntryMenu(list)
+    application.plannerElement("Unarchive List").activateForPlannerJourney()
+    openItinerary(application)
+    assertProgress("0 of 3 items done", application: application)
+    assertChecks(["To do", "To do", "To do"], application: application)
+    XCTAssertEqual(
+      itineraryRows(application).allElementsBoundByIndex.map(\.identifier), originalIdentifiers)
+    recordScreenshot(
+      application,
+      name: "Unarchive restores unfinished itinerary branches without changing source List Done")
+  }
+
   func testRemovingRepeatedEntriesRetainsSourcesAndOtherLocalStatesAfterReaddition() {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -351,7 +447,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
       application.staticTexts["Includes archived items and items hidden by filters."].exists)
     recordScreenshot(application, name: "Native Itinerary bulk confirmation")
     application.plannerElement("saved.itinerary.bulk.cancel").activateForPlannerJourney()
-    assertProgress("2 of 3 items done", application: application)
+    assertProgress("3 of 3 items finished", application: application)
     openBulkReview(done: true, application: application)
     application.plannerElement("saved.itinerary.bulk.confirm").activateForPlannerJourney()
     assertProgress("3 of 3 items done", application: application)
@@ -359,9 +455,9 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
     XCTAssertTrue(
       application.staticTexts["Items completed globally will still appear done."].exists)
     application.plannerElement("saved.itinerary.bulk.confirm").activateForPlannerJourney()
-    assertProgress("2 of 3 items done", application: application)
+    assertProgress("3 of 3 items finished", application: application)
     XCTAssertEqual(itineraryRows(application).allElementsBoundByIndex.map(\.identifier), identities)
-    XCTAssertTrue(application.staticTexts["0 of 1 item done"].exists)
+    XCTAssertTrue(application.staticTexts["1 of 1 item finished"].exists)
 
     openItem("Hotel", application: application)
     XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
@@ -370,12 +466,12 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
     XCTAssertTrue(application.staticTexts["Archived"].exists)
     openSection("Lists", application: application)
     selectContainer(prefix: "saved.list.", title: "Food stops", application: application)
-    XCTAssertTrue(application.staticTexts["0 of 1 item done"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["1 of 1 item finished"].waitForExistence(timeout: 10))
 
     application.terminate()
     application.launchSavedPlannerJourney()
     openItinerary(application)
-    assertProgress("2 of 3 items done", application: application)
+    assertProgress("3 of 3 items finished", application: application)
     XCTAssertEqual(itineraryRows(application).allElementsBoundByIndex.map(\.identifier), identities)
     recordScreenshot(application, name: "Native Itinerary bulk completion after relaunch")
   }

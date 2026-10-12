@@ -112,11 +112,12 @@ struct SavedItineraryDetail: View {
             if itinerary.progress.state == .empty {
               Text("No items").foregroundStyle(.secondary)
             } else if let done = itinerary.progress.doneCount,
+              let archived = itinerary.progress.archivedCount,
               let total = itinerary.progress.totalCount, total > 0
             {
-              ProgressView(value: Double(done), total: Double(total)) {
-                Text("\(done) of \(total) \(total == 1 ? "item" : "items") done")
-              }
+              SavedCompletionProgress(
+                doneCount: done, archivedCount: archived, totalCount: total,
+                accessibilityIdentifier: "saved.itinerary.progress")
             } else {
               Text("Progress unavailable").foregroundStyle(.secondary)
             }
@@ -174,14 +175,17 @@ struct SavedItineraryDetail: View {
                     VStack(alignment: .leading, spacing: 6) {
                       Label(entry.title, systemImage: "list.bullet.rectangle")
                         .font(.headline)
-                      if !entry.items.isEmpty {
-                        let done = entry.items.filter { $0.row.effectiveDone == true }.count
-                        ProgressView(value: Double(done), total: Double(entry.items.count)) {
-                          Text(
-                            "\(done) of \(entry.items.count) \(entry.items.count == 1 ? "item" : "items") done"
-                          )
+                      if entry.isArchived {
+                        Label("Archived List", systemImage: "archivebox")
                           .font(.caption).foregroundStyle(.secondary)
-                        }
+                      }
+                      if !entry.items.isEmpty {
+                        SavedCompletionProgress(
+                          doneCount: entry.doneCount, archivedCount: entry.archivedCount,
+                          totalCount: Int64(entry.items.count),
+                          accessibilityIdentifier: "saved.itinerary.entry.progress.\(entry.id)"
+                        )
+                        .font(.caption).foregroundStyle(.secondary)
                       }
                       if matchingItems.count != entry.items.count {
                         Text("Matching \(matchingItems.count) of \(entry.items.count) items")

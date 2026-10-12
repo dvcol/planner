@@ -320,13 +320,13 @@ final class SavedPlannerStore {
         return SavedItineraryRowSelection(appearance, itineraryId: identifier)
       })
     guard let itinerary = await readItinerary(identifier) else { return nil }
-    var listNames: [UUID: String] = [:]
+    var listSources: [UUID: PlannerListSourceRead] = [:]
     for reference in itinerary.references {
       guard case .itineraryEntry(_, _, let source) = reference, source.kind == .list,
-        listNames[source.id] == nil
+        listSources[source.id] == nil
       else { continue }
       guard let list = await readList(source.id) else { return nil }
-      listNames[source.id] = list.content.name
+      listSources[source.id] = list
     }
     /** Reading the window last rejects source/header reads if their history has changed. */
     guard
@@ -357,12 +357,17 @@ final class SavedPlannerStore {
       guard case .itineraryEntry(let entryId, _, let source) = reference else { return nil }
       let items = itemsByEntry[entryId] ?? []
       let title: String
+      let isArchived = listSources[source.id]?.state.archived == true
       if source.kind == .list {
-        title = listNames[source.id] ?? "List"
+        title = listSources[source.id]?.content.name ?? "List"
       } else {
         title = items.first?.row.title ?? "Item"
       }
-      let complete = !items.isEmpty && items.allSatisfy { $0.row.effectiveDone == true }
+      let complete =
+        !items.isEmpty
+        && items.allSatisfy {
+          $0.row.effectiveDone == true || $0.row.archived == true || isArchived
+        }
       let matchesCompletion =
         switch filters.completion {
         case .all: true
@@ -372,7 +377,7 @@ final class SavedPlannerStore {
       return .init(
         id: entryId, source: source, title: title, items: items,
         matchesHeader: source.kind == .list && matchingListIdentifiers.contains(source.id)
-          && matchesCompletion)
+          && matchesCompletion, isArchived: isArchived)
     }
     return .init(
       itinerary: itinerary, entries: entries, matchingItemIdentifiers: matchingItemIdentifiers)

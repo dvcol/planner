@@ -1,0 +1,56 @@
+{
+  "beforeCommit": "2e452ff",
+  "coreCommit": "492b558",
+  "mode": "localOnly",
+  "storageSchemaVersion": 14,
+  "portableFormatVersion": 1,
+  "qualification": {
+    "phoneBranch": {
+      "bundle": "/private/tmp/PlannerArchivedProgressNativeBranchPhoneFinalV3.xcresult",
+      "functions": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    "tabletBranch": {
+      "bundle": "/private/tmp/PlannerArchivedProgressNativeBranchTabletFinalV3.xcresult",
+      "functions": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    "bulkCompatibility": {
+      "passedFunctions": 2,
+      "scope": "The named bulk function passed on phone/tablet in earlier mixed-result bundles. New-journey selector failures are excluded; those bundles are not described as entirely passing. App sources are unchanged; only the new journey selectors changed afterward.",
+      "test": "testItineraryBulkConfirmationPreservesGlobalAndStandaloneListCompletion()"
+    },
+    "macBuild": {
+      "result": "TEST BUILD SUCCEEDED",
+      "log": "/private/tmp/PlannerArchivedProgressNativeMacBranchFinalV3.log",
+      "nativeUIFunctions": 0
+    },
+    "strictSwiftFiles": 4
+  },
+  "sourceEpoch": "native-source-epoch.json",
+  "functionalRed": {
+    "bundle": "/private/tmp/PlannerArchivedProgressNativeBranchRed.xcresult",
+    "failure": "Missing finished route caption after List archive",
+    "sourceEpoch": "red-source-epoch.json"
+  },
+  "excludedAttempts": [
+    "A broad entry prefix also counted toolbar/progress controls.",
+    "The button-only helper missed generic empty-group accessibility elements.",
+    "The button-only helper missed the native global Toggle."
+  ],
+  "approvalTimeout": "One iPad V2 attempt never launched because automatic permission review timed out. Its permitted retry launched; there is no remaining approval block.",
+  "remainingGates": [
+    "Empty List runtime coverage",
+    "Filtered dragging",
+    "Full/remaining estimates and manual fields",
+    "Calendar",
+    "Native Mac UI runtime",
+    "Large-list performance",
+    "Signed physical sync/account/Share",
+    "Whole-app polish"
+  ]
+}

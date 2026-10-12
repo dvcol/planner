@@ -1,0 +1,13 @@
+{
+  "bundle": "/private/tmp/PlannerArchivedProgressNativeBranchPhoneFinal.xcresult",
+  "overallBundle": "Failed due to the excluded new-journey header selector",
+  "qualifiedTest": {
+    "duration": "3m 32s",
+    "durationInSeconds": 212.16322195529938,
+    "name": "testItineraryBulkConfirmationPreservesGlobalAndStandaloneListCompletion()",
+    "nodeIdentifier": "SavedItineraryBulkJourneyTests/testItineraryBulkConfirmationPreservesGlobalAndStandaloneListCompletion()",
+    "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItineraryBulkJourneyTests/testItineraryBulkConfirmationPreservesGlobalAndStandaloneListCompletion",
+    "nodeType": "Test Case",
+    "result": "Passed"
+  }
+}

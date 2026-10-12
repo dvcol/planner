@@ -18,7 +18,7 @@ Lists own a name, notes and presentation metadata; they have archive state and d
 ## Definition of ready
 
 - Q57 and Q75 A are settled. Header matching applies every criterion; an unavailable Item-only field cannot satisfy an active restriction. Matching headers may still have zero matching children.
-- Retain the accepted archive-progress distinction: an archived List branch is finished inside the parent, while the container's own progress remains child-based. Full implementation of those derived reads is a prerequisite for qualifying completion-filter behavior.
+- Retain the accepted archive-progress distinction: an archived List branch is finished inside the parent, while the container's own progress remains child-based. Core's derived reads and the [native branch/header qualification](native-itinerary-archive-progress.md) now cover that prerequisite.
 - Use the existing public read/query and actual native UI seams, captured history validation and durable command acknowledgements. No new test-only production injection is needed for these data-only filter cases.
 
 ## Definition of done and required /tdd
@@ -41,4 +41,4 @@ The missing native search and Filters controls supplied the functional red resul
 
 Five existing itinerary compatibility journeys also pass on iPhone against the final native source: bulk completion, dragging, reordering, removal/re-add and repeated-entry bulk completion. This brings the slice to seven native executions with zero failures or skips. Those compatibility journeys use unrestricted views; they do not qualify bulk review or dragging with active filters.
 
-This qualifies the implemented search/filter subset. Archive-aware progress/completion semantics, empty List runtime coverage, bulk review and dragging with active filters, duration controls, large-list performance, Mac UI runtime, physical sync/account/Share and whole-app polish remain open. The full ticket Definition of done is not yet satisfied.
+This qualifies the implemented search/filter subset. The later [archive-aware branch/header slice](native-itinerary-archive-progress.md) supplies fresh archive completion evidence. Empty List runtime coverage, bulk review and dragging with active filters, duration controls, large-list performance, Mac UI runtime, physical sync/account/Share and whole-app polish remain open. The full ticket Definition of done is not yet satisfied.
