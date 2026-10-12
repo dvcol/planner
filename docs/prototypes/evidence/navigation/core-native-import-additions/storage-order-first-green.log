@@ -1,0 +1,34 @@
+Building for debugging...
+[1 / 1]
+[2 / 17] PlannerCore
+[5 / 20] PlannerCore
+[8 / 23] PlannerCore
+[10 / 23] PlannerCore
+[13 / 15] PlannerCoreTests-product
+[15 / 16] PlannerCoreStoreTests-product
+[17 / 19] PlannerCoreStoreTests-product
+Build complete! (7,88 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportApplyTests started.
+◇ Suite NativeImportMergeTests started.
+◇ Test failedRecoveryPreparationLeavesGraphAndReceiptUnapplied() started.
+◇ Test ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources() started.
+◇ Test unsupportedNativeValuesRejectWithoutSavingAPartialImport(_:) started.
+◇ Test reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test case passing 1 argument scenario → "notes" to ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test case passing 1 argument scenario → "localCompletion" to ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test case passing 1 argument retryRecovery → false to reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test case passing 1 argument scenario → "origin" to unsupportedNativeValuesRejectWithoutSavingAPartialImport(_:) started.
+◇ Test case passing 1 argument retryRecovery → true to reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test case passing 1 argument scenario → "providerReference" to unsupportedNativeValuesRejectWithoutSavingAPartialImport(_:) started.
+✔ Test unsupportedNativeValuesRejectWithoutSavingAPartialImport(_:) with 2 test cases passed after 0.099 seconds.
+✔ Test failedRecoveryPreparationLeavesGraphAndReceiptUnapplied() passed after 0.100 seconds.
+✔ Test ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) with 2 test cases passed after 0.142 seconds.
+✔ Test reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) with 2 test cases passed after 0.143 seconds.
+✔ Suite NativeImportApplyTests passed after 0.143 seconds.
+✔ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources() passed after 0.265 seconds.
+✔ Suite NativeImportMergeTests passed after 0.265 seconds.
+✔ Test run with 5 tests in 2 suites passed after 0.265 seconds.

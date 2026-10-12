@@ -28,6 +28,17 @@ struct PlannerImportOwnerHistory {
   let value: PlannerCanonicalValue
 }
 
+func plannerImportCompletionOwner(
+  _ context: PlannerPortableCompletionContext,
+  memberships: [UUID: PlannerPortableMembership], entries: [UUID: PlannerPortableItineraryEntry]
+) -> PlannerEntityReference? {
+  switch context {
+  case .listMembership(let membershipIdentifier, _): return memberships[membershipIdentifier]?.list
+  case .directItineraryItem(let entryIdentifier, _): return entries[entryIdentifier]?.itinerary
+  case .expandedListItem(let expanded): return entries[expanded.listEntryId]?.itinerary
+  }
+}
+
 struct PlannerImportProjection {
   let backup: PlannerPortableBackup
   let sources: [PlannerEntityReference: PlannerPortableSource]
@@ -137,17 +148,13 @@ struct PlannerImportProjection {
         guard let identity = reference.identity else { return nil }
         return (identity, reference.owner)
       })
-    func owner(for completionContext: PlannerPortableCompletionContext) -> PlannerEntityReference? {
-      switch completionContext {
-      case .listMembership(let membershipId, _): return memberships[membershipId]?.list
-      case .directItineraryItem(let entryId, _): return entries[entryId]?.itinerary
-      case .expandedListItem(let expanded): return entries[expanded.listEntryId]?.itinerary
-      }
-    }
     var histories: [PlannerImportOwnerHistory] = []
     let aliases = Dictionary(uniqueKeysWithValues: backup.contextAliases.map { ($0.aliasId, $0) })
     for (index, alias) in backup.contextAliases.enumerated() {
-      guard let owner = owner(for: alias.canonicalContext) else {
+      guard
+        let owner = plannerImportCompletionOwner(
+          alias.canonicalContext, memberships: memberships, entries: entries)
+      else {
         throw PlannerFailure(
           "missingReference", "Completion history needs its current context owner.",
           propertyPath: "/contextAliases/\(index)/canonicalContext")
@@ -163,7 +170,9 @@ struct PlannerImportProjection {
           ])))
     }
     for (index, change) in backup.completionChanges.enumerated() {
-      guard let alias = aliases[change.aliasId], let owner = owner(for: alias.canonicalContext)
+      guard let alias = aliases[change.aliasId],
+        let owner = plannerImportCompletionOwner(
+          alias.canonicalContext, memberships: memberships, entries: entries)
       else {
         throw PlannerFailure(
           "missingReference", "A completion change needs its context owner.",

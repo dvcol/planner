@@ -1,0 +1,36 @@
+Building for debugging...
+[1 / 1]
+[2 / 17] PlannerCore
+[4 / 19] PlannerCore
+[12 / 14] PlannerCore-product
+[12 / 14] PlannerCoreTests-product
+[16 / 18] PlannerCoreStoreTests-product
+Build complete! (4,40 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportMergeTests started.
+◇ Suite NativeImportApplyTests started.
+◇ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources() started.
+◇ Test failedRecoveryPreparationLeavesGraphAndReceiptUnapplied() started.
+◇ Test unsupportedNativeValuesRejectWithoutSavingAPartialImport(_:) started.
+◇ Test ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test case passing 1 argument scenario → "origin" to unsupportedNativeValuesRejectWithoutSavingAPartialImport(_:) started.
+◇ Test case passing 1 argument scenario → "providerReference" to unsupportedNativeValuesRejectWithoutSavingAPartialImport(_:) started.
+◇ Test reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test case passing 1 argument scenario → "notes" to ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test case passing 1 argument scenario → "localCompletion" to ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test case passing 1 argument retryRecovery → false to reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test case passing 1 argument retryRecovery → true to reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+✔ Test failedRecoveryPreparationLeavesGraphAndReceiptUnapplied() passed after 0.112 seconds.
+✔ Test unsupportedNativeValuesRejectWithoutSavingAPartialImport(_:) with 2 test cases passed after 0.114 seconds.
+✘ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources() recorded an issue at NativeImportMergeTests.swift:105:19: Issue recorded
+↳ Apply independent new owners while retaining skipped whole owners: PlannerOperationResult(operationId: 8243AB34-6741-41F1-9957-3C56AF544566, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "The native store cannot yet preserve every imported field.", details: nil)))
+✘ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources() failed after 0.158 seconds with 1 issue.
+✘ Suite NativeImportMergeTests failed after 0.159 seconds with 1 issue.
+✔ Test ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) with 2 test cases passed after 0.164 seconds.
+✔ Test reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) with 2 test cases passed after 0.165 seconds.
+✔ Suite NativeImportApplyTests passed after 0.166 seconds.
+✘ Test run with 5 tests in 2 suites failed after 0.166 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

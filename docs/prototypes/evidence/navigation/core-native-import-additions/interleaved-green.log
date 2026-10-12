@@ -1,0 +1,96 @@
+Building for debugging...
+[1 / 1]
+[2 / 18] PlannerCore
+[5 / 21] PlannerCore
+[6 / 22] PlannerCore
+[10 / 25] PlannerCore
+[12 / 25] PlannerCore
+[15 / 23] PlannerCoreTests-product
+[18 / 24] PlannerCoreTests-product
+[20 / 25] PlannerCoreStoreTests-product
+[32 / 37] PlannerCoreStoreTests-product
+[33 / 37] PlannerCoreStoreTests-product
+[35 / 38] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift:192:25: warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+190 |     let timedForm = PlannerScheduleForm.timed(
+191 |       start: try #require(ISO8601DateFormatter().date(from: "2026-10-11T01:00:00Z")),
+192 |       end: try #require(ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")),
+    |                         `- warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+193 |       planningTimeZone: "Asia/Tokyo")
+194 |     guard
+[37 / 41] PlannerCoreStoreTests-product
+[39 / 41] PlannerCoreStoreTests-product
+Build complete! (19,34 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportMergeTests started.
+◇ Suite NativeImportReviewTests started.
+◇ Suite NativeImportBindingReviewTests started.
+◇ Suite NativeImportOmittedOwnerReviewTests started.
+◇ Suite NativeImportApplyTests started.
+◇ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test completeBackupReviewDescribesEveryOwnerAndReferenceWithoutApplyingData() started.
+◇ Test omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) started.
+◇ Test declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:) started.
+◇ Suite NativeImportConflictReviewTests started.
+◇ Test omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test omittedContainerKeepsMembershipsRouteAndCompletionHistory(mode:ownerKind:) started.
+◇ Test identicalExportReviewsWholeOwnersAsUnchangedIncludingLocalMembershipState() started.
+◇ Test ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test unsupportedNativeValuesRejectWithoutSavingAPartialImport(_:) started.
+◇ Test case passing 1 argument bindingCase → .missing to declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:) started.
+◇ Test case passing 1 argument bindingCase → .live to declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:) started.
+◇ Test reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test failedRecoveryPreparationLeavesGraphAndReceiptUnapplied() started.
+◇ Test case passing 1 argument bindingCase → .wrongLifetime to declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → true, interleaveSourceIdentifiers → false to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → false, interleaveSourceIdentifiers → true to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → false, interleaveSourceIdentifiers → false to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → true, interleaveSourceIdentifiers → true to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments mode → .skip, deletedKind → .item to omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) started.
+◇ Test case passing 2 arguments mode → .skip, deletedKind → .schedule to omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) started.
+◇ Test case passing 2 arguments mode → .overwrite, deletedKind → .item to omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) started.
+◇ Test case passing 2 arguments mode → .skip, incomingRecordsChanged → false to omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test case passing 2 arguments mode → .skip, ownerKind → .list to omittedContainerKeepsMembershipsRouteAndCompletionHistory(mode:ownerKind:) started.
+◇ Test case passing 2 arguments mode → .overwrite, deletedKind → .schedule to omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) started.
+◇ Test case passing 2 arguments mode → .skip, incomingRecordsChanged → true to omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test case passing 1 argument scenario → "notes" to ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test case passing 2 arguments mode → .skip, ownerKind → .itinerary to omittedContainerKeepsMembershipsRouteAndCompletionHistory(mode:ownerKind:) started.
+◇ Test case passing 2 arguments mode → .overwrite, incomingRecordsChanged → false to omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test case passing 1 argument scenario → "localCompletion" to ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test case passing 2 arguments mode → .overwrite, ownerKind → .list to omittedContainerKeepsMembershipsRouteAndCompletionHistory(mode:ownerKind:) started.
+◇ Test case passing 2 arguments mode → .overwrite, incomingRecordsChanged → true to omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) started.
+◇ Test case passing 1 argument scenario → "origin" to unsupportedNativeValuesRejectWithoutSavingAPartialImport(_:) started.
+◇ Test case passing 2 arguments mode → .overwrite, ownerKind → .itinerary to omittedContainerKeepsMembershipsRouteAndCompletionHistory(mode:ownerKind:) started.
+◇ Test case passing 1 argument scenario → "providerReference" to unsupportedNativeValuesRejectWithoutSavingAPartialImport(_:) started.
+◇ Test reviewKeepsOrReplacesWholeOwnersAndImportsIndependentData(mode:) started.
+◇ Test case passing 1 argument retryRecovery → false to reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test case passing 1 argument retryRecovery → true to reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test incomingCompletionHistoryBelongsToItsWholeOwnerReview() started.
+◇ Test globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) started.
+✔ Test declaredNewOwnerResolvesItsExternalItemOrRejectsTheWholeReview(bindingCase:) with 3 test cases passed after 0.409 seconds.
+✔ Test completeBackupReviewDescribesEveryOwnerAndReferenceWithoutApplyingData() passed after 0.409 seconds.
+✔ Test omittedOwnerNeverRestoresItsDeletedDataWhileIndependentSourcesRemainReviewable(mode:deletedKind:) with 4 test cases passed after 0.409 seconds.
+✔ Test identicalExportReviewsWholeOwnersAsUnchangedIncludingLocalMembershipState() passed after 0.409 seconds.
+✔ Test ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) with 2 test cases passed after 0.409 seconds.
+◇ Test case passing 1 argument mode → .skip to reviewKeepsOrReplacesWholeOwnersAndImportsIndependentData(mode:) started.
+◇ Test case passing 1 argument mode → .overwrite to reviewKeepsOrReplacesWholeOwnersAndImportsIndependentData(mode:) started.
+✔ Test unsupportedNativeValuesRejectWithoutSavingAPartialImport(_:) with 2 test cases passed after 0.438 seconds.
+◇ Test case passing 1 argument mode → .skip to globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) started.
+◇ Test case passing 1 argument mode → .overwrite to globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) started.
+✔ Test omittedOwnerKeepsItsWholeCurrentDataAndReportsIncomingOwnedRecordsAsSkipped(mode:incomingRecordsChanged:) with 4 test cases passed after 0.449 seconds.
+✔ Suite NativeImportBindingReviewTests passed after 0.449 seconds.
+✔ Suite NativeImportReviewTests passed after 0.449 seconds.
+✔ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) with 4 test cases passed after 0.452 seconds.
+✔ Suite NativeImportMergeTests passed after 0.452 seconds.
+✔ Test failedRecoveryPreparationLeavesGraphAndReceiptUnapplied() passed after 0.465 seconds.
+✔ Test globalCompletionImpactDescribesOnlyTheSelectedModeChanges(mode:) with 2 test cases passed after 0.084 seconds.
+✔ Test omittedContainerKeepsMembershipsRouteAndCompletionHistory(mode:ownerKind:) with 4 test cases passed after 0.496 seconds.
+✔ Suite NativeImportOmittedOwnerReviewTests passed after 0.497 seconds.
+✔ Test incomingCompletionHistoryBelongsToItsWholeOwnerReview() passed after 0.101 seconds.
+✔ Test reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) with 2 test cases passed after 0.514 seconds.
+✔ Suite NativeImportApplyTests passed after 0.514 seconds.
+✔ Test reviewKeepsOrReplacesWholeOwnersAndImportsIndependentData(mode:) with 2 test cases passed after 0.173 seconds.
+✔ Suite NativeImportConflictReviewTests passed after 0.534 seconds.
+✔ Test run with 14 tests in 6 suites passed after 0.534 seconds.

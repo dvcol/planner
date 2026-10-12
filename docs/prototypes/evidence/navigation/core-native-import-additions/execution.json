@@ -1,0 +1,98 @@
+{
+  "status": "Qualified additive native Skip imports into an existing planner; complete import remains open",
+  "beforeCommit": "54e0401",
+  "storageSchemaVersion": 16,
+  "portableFormatVersion": 2,
+  "commands": {
+    "core": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter 'NativeImportMergeTests|NativeImportApplyTests|NativeImportLineageMigrationTests|ImportLineageEncodingTests|NativeImportLineageTests|RecoveryProposalSelectionTests|RecoveryCheckpointRetryTests|RecoveryCheckpointRetryAdmissionTests|ManualContainerEstimateMigrationTests|ExpandedCompletionMigrationTests|ItineraryEntryMigrationTests|ItemLabelMigrationTests|MembershipMigrationTests|CategoryMigrationTests|TagMigrationTests|ItineraryMigrationTests|ItineraryScheduleMigrationTests|ItemLinkMigrationTests|NativeImportReviewTests|NativeImportConflictReviewTests|NativeImportOmittedOwnerReviewTests|NativeImportBindingReviewTests'",
+    "phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerCore -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerCoreStoreTests/NativeImportMergeTests -only-testing:PlannerCoreStoreTests/NativeImportApplyTests -only-testing:PlannerCoreStoreTests/NativeImportLineageMigrationTests -only-testing:PlannerCoreStoreTests/ImportLineageEncodingTests -only-testing:PlannerCoreStoreTests/NativeImportLineageTests -only-testing:PlannerCoreStoreTests/RecoveryProposalSelectionTests -only-testing:PlannerCoreStoreTests/RecoveryCheckpointRetryTests -only-testing:PlannerCoreStoreTests/RecoveryCheckpointRetryAdmissionTests -only-testing:PlannerCoreStoreTests/ManualContainerEstimateMigrationTests -only-testing:PlannerCoreStoreTests/ExpandedCompletionMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryEntryMigrationTests -only-testing:PlannerCoreStoreTests/ItemLabelMigrationTests -only-testing:PlannerCoreStoreTests/MembershipMigrationTests -only-testing:PlannerCoreStoreTests/CategoryMigrationTests -only-testing:PlannerCoreStoreTests/TagMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryScheduleMigrationTests -only-testing:PlannerCoreStoreTests/ItemLinkMigrationTests -only-testing:PlannerCoreStoreTests/NativeImportReviewTests -only-testing:PlannerCoreStoreTests/NativeImportConflictReviewTests -only-testing:PlannerCoreStoreTests/NativeImportOmittedOwnerReviewTests -only-testing:PlannerCoreStoreTests/NativeImportBindingReviewTests -resultBundlePath /private/tmp/PlannerNativeImportAdditionsReviewedPhone.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "macBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO build-for-testing",
+    "http": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerMCPTests/CommandRoutingTests -only-testing:PlannerMCPTests/OperationStatusRoutingTests -only-testing:PlannerMCPTests/BulkCompletionAdmissionRoutingTests -only-testing:PlannerMCPTests/ManualContainerEstimateRoutingTests -resultBundlePath /private/tmp/PlannerNativeImportAdditionsHTTPMac.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  "qualification": {
+    "macCore": {
+      "functions": 46,
+      "suites": 22,
+      "failures": 0,
+      "skips": 0,
+      "invocations": 86
+    },
+    "iOSCore": {
+      "functions": 46,
+      "suites": 22,
+      "failures": 0,
+      "skips": 0,
+      "invocations": 86
+    },
+    "macHTTP": {
+      "functions": 16,
+      "suites": 4,
+      "failures": 0,
+      "skips": 0,
+      "invocations": 22
+    },
+    "strictSwiftFiles": 5,
+    "macAppAndNavigationTestHost": "TEST BUILD SUCCEEDED",
+    "nativeUIFunctions": 0
+  },
+  "review": {
+    "standards": "No violations; repeated completion-owner lookup shared.",
+    "spec": "Source-kind ordering mismatch reproduced through public execution, fixed, and rechecked. No remaining confirmed defect."
+  },
+  "originalArtifacts": {
+    "phoneResult": "/private/tmp/PlannerNativeImportAdditionsReviewedPhone.xcresult",
+    "phoneLog": "/private/tmp/PlannerNativeImportAdditionsReviewedPhone.log",
+    "httpResult": "/private/tmp/PlannerNativeImportAdditionsHTTPMac.xcresult",
+    "httpLog": "/private/tmp/PlannerNativeImportAdditionsHTTPMac.log",
+    "macBuildLog": "/private/tmp/PlannerNativeImportAdditionsReviewedMacBuild.log",
+    "swiftLint": "/private/tmp/PlannerNativeImportAdditionsReviewSwiftLint.log"
+  },
+  "proofLimits": [
+    "Execution currently adds reviewed owners and their data, while preserving matching and omitted owners. Replacement, live deletion and restoration execution remain gated.",
+    "Origin/provider persistence, import summaries, native manual forms and direct context.save failure proof remain open.",
+    "The missing-null fixture, initial compilation error, sandboxed cache failures and initial interleaved CancellationError are retained separately; only admitted public execution failures qualify as functional red.",
+    "Original addition and interleaved regression red epochs were captured; other intermediate failing epochs were not reconstructed.",
+    "No new native UI runtime, physical sync/account/Share, large-data responsiveness or Calendar qualification."
+  ],
+  "sourceEpoch": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "d23ce32fe72da1b76711f06b13b3bda694f1dfeba928b069bcf1593328a9e188",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerNativeImportStorage.swift": "fe8f245f5fb53a806640acbbdac2c7aa7d7563fc43caab3064c8ee2057c152fc",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMerge.swift": "301bd0f0ee717d5b6309428b4dd7a537e11bb9fbe7997be0dcf663aeb71af181",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportReview.swift": "74518636e47a97fcae2f16149b9871a17c417d62f26e21601f68bf65e7aeb604",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportMergeTests.swift": "841567d2ea7ff4c2550b31f9b129aeecfa9fbce568a282cfcb20df125b88e2bc"
+  },
+  "additionRedSourceEpoch": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1d762970d9fa36ce492dbf412b039717ac4aed7e15595b32ede8cc34d5081037",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerNativeImportStorage.swift": "2bd241267a3a442c6f896f62f2ff2586e14465dc24b615f4428130435d842d00",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportMergeTests.swift": "0ad3bc267bb7a0bebba3d18d165047772596bc091636763823721539981fcde7"
+  },
+  "interleavedDiagnosticRedSourceEpoch": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "d23ce32fe72da1b76711f06b13b3bda694f1dfeba928b069bcf1593328a9e188",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMerge.swift": "a16fcbdc006a6402910b749a729ba2f630717b687d4d51bc6d2670fda0763b99",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportMergeTests.swift": "f8d57b9ea8b3b63003ac233be3d4e3c5a8e39c87a3ce1f66950d1f30cb53155e"
+  },
+  "retainedFiles": [
+    "addition-compile-failure.log",
+    "addition-functional-red.log",
+    "deletion-history-regression.log",
+    "fidelity-diagnostic.log",
+    "fixture-admission-diagnostic.log",
+    "fixture-admission-red.log",
+    "http-summary.json",
+    "http-tests.json",
+    "interleaved-cache-permission.log",
+    "interleaved-diagnostic-red.log",
+    "interleaved-green.log",
+    "interleaved-opaque-red.log",
+    "known-history-correction.log",
+    "omitted-owner-green.log",
+    "phone-summary.json",
+    "phone-tests.json",
+    "qualified-http.log.gz",
+    "qualified-mac-build.log.gz",
+    "qualified-mac.log",
+    "qualified-phone.log.gz",
+    "storage-order-first-green.log",
+    "strict-swift-lint.log"
+  ]
+}

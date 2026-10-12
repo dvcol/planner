@@ -1,0 +1,25 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[9 / 13] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (2,40 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportMergeTests started.
+◇ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → false, interleaveSourceIdentifiers → false to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → true, interleaveSourceIdentifiers → true to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → false, interleaveSourceIdentifiers → true to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+◇ Test case passing 2 arguments omitConflictedOwners → true, interleaveSourceIdentifiers → false to skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) started.
+✘ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) recorded an issue with 2 arguments omitConflictedOwners → true, interleaveSourceIdentifiers → true at NativeImportMergeTests.swift:40:19: Issue recorded
+↳ Restore valid independent fixture: PlannerOperationResult(operationId: 73BBB8F5-7B44-45D3-9FB7-301DEB498ADA, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "The native store cannot yet preserve every imported field.", details: nil)))
+✘ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) recorded an issue with 2 arguments omitConflictedOwners → false, interleaveSourceIdentifiers → true at NativeImportMergeTests.swift:40:19: Issue recorded
+↳ Restore valid independent fixture: PlannerOperationResult(operationId: 34C56BB2-8613-46ED-8007-B6A31CCD74AE, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "The native store cannot yet preserve every imported field.", details: nil)))
+✘ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources(omitConflictedOwners:interleaveSourceIdentifiers:) with 4 test cases failed after 0.244 seconds with 2 issues.
+✘ Suite NativeImportMergeTests failed after 0.244 seconds with 2 issues.
+✘ Test run with 1 test in 1 suite failed after 0.244 seconds with 2 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

@@ -1,0 +1,22 @@
+Building for debugging...
+[1 / 1]
+[2 / 17] PlannerCore
+[4 / 19] PlannerCore
+[7 / 22] PlannerCore
+[9 / 22] PlannerCore
+[12 / 14] PlannerCoreTests-product
+[14 / 15] PlannerCoreStoreTests-product
+[16 / 18] PlannerCoreStoreTests-product
+Build complete! (7,96 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportMergeTests started.
+◇ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources() started.
+✘ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources() recorded an issue at NativeImportMergeTests.swift:105:19: Issue recorded
+↳ Apply independent new owners while retaining skipped whole owners: PlannerOperationResult(operationId: 642C4D95-A2D3-4F7E-8110-76BEC8FC1403, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "The native store cannot yet preserve every imported field: [].", details: nil)))
+✘ Test skipPreservesWholeOwnersAndImportsNewReferencesToCurrentSources() failed after 0.119 seconds with 1 issue.
+✘ Suite NativeImportMergeTests failed after 0.120 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.120 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)
