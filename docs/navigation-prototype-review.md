@@ -174,6 +174,8 @@ Use the accepted public native UI seam to reproduce the missing map and unclear 
 
 ## Native preview test boundary
 
+The [current open decision register](open-decisions.md) retains the reprinted Q48/Q49/Q51/Q52/Q57/Q58/Q72/Q73 and renamed Q74. Fixed estimate-unit conversions and Q53–Q56/Q59–Q71 remain settled; historical pending statements below do not reopen them.
+
 Q50 A is accepted. Link images and address lookup use a small native preview module as the production cache/provider boundary. Its public tests control responses at the external I/O boundary; native integration separately exercises Apple's SDK and the Planner UI. Provider results remain temporary and excluded from owned content and backups.
 
 Starting state: saved coordinate maps work, Core exposes owned bookmarks and row preview selection, but saved native details have no automatic image/address providers. Live services cannot reliably reproduce errors, ambiguous addresses or delayed callbacks on demand. The goal is useful native previews with predictable failure and refresh behavior, preserving the original bookmark/address and completion state.
