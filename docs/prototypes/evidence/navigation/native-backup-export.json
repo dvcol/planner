@@ -1,0 +1,98 @@
+{
+  "startingCommit": "1270827",
+  "seams": [
+    "Native Settings/system file picker/relaunch",
+    "Public exported JSON file I/O"
+  ],
+  "implementation": "SwiftUI fileExporter with immutable Transferable JSON and a dated suggested filename; Core, MCP and App Intent registrations unchanged.",
+  "functionalRed": {
+    "summary": "PlannerBackupExportRedSummary.json",
+    "failure": "Missing saved.settings.export after successful native Tag creation",
+    "functions": 1,
+    "failures": 1
+  },
+  "testDriverCorrections": [
+    "iPhone Cancel overlay targets More; use native header drag instead.",
+    "iPad duplicate Cancel labels require firstMatch.",
+    "Native LabeledContent exposes filename in a combined accessibility label.",
+    "Native provider replacement confirmation is outside Planner accessibility; dated defaults qualify the ordinary export journey."
+  ],
+  "platforms": {
+    "Phone": {
+      "summary": "native-backup-export-phone-summary.json",
+      "functions": 2,
+      "invocations": 2,
+      "failures": 0,
+      "skips": 0,
+      "publicFile": {
+        "file": "native-backup-export-phone.backup.json",
+        "filename": "Planner Backup 2026-10-12T03-08-12Z.json",
+        "tagIdBeforeExport": "4089E8D2-C884-4D45-B289-3AB28EF32385",
+        "bytes": 833,
+        "sha256": "1969594ade136e8b054c3f85062d15ae9ae69baf4ef408e8306f50830a842bf6",
+        "checksPassed": [
+          "Complete literal format-1 root",
+          "Exact pre-export Tag identity and content",
+          "No extra records or app/session/account state",
+          "Finite preserved source timestamps"
+        ]
+      }
+    },
+    "Tablet": {
+      "summary": "native-backup-export-tablet-summary.json",
+      "functions": 2,
+      "invocations": 2,
+      "failures": 0,
+      "skips": 0,
+      "publicFile": {
+        "file": "native-backup-export-tablet.backup.json",
+        "filename": "Planner Backup 2026-10-12T03-08-26Z.json",
+        "tagIdBeforeExport": "43BE0604-1E0E-460D-9B11-5C26D278BA3E",
+        "bytes": 833,
+        "sha256": "1d2f0e3f4358a7ce40fe99e86f8b4ea2e79b486824c7ffdfe2324b0301223f07",
+        "checksPassed": [
+          "Complete literal format-1 root",
+          "Exact pre-export Tag identity and content",
+          "No extra records or app/session/account state",
+          "Finite preserved source timestamps"
+        ]
+      }
+    }
+  },
+  "mac": {
+    "compile": "build-for-testing succeeded",
+    "runtimeTests": 0
+  },
+  "limits": [
+    "Preparation/provider failure presentation",
+    "Custom destination/rename and replacement confirmation",
+    "Native Mac UI runtime and signed physical devices",
+    "Cloud upload/account transitions",
+    "Import/apply/restore and revised aggregate/archive/calendar behavior"
+  ],
+  "sourceHashes": {
+    "Planner/Scenes/SavedPlannerBackupFile.swift": "4476a0b9debc90353ef618770c25438bfb2ee617c935686d61ea3200d1e9da18",
+    "Planner/Scenes/SavedPlannerSettingsView.swift": "0e7199a6494947999e5214671761b56375d13323f9478d5a5ab40684e237a85f",
+    "Planner/Scenes/SavedPlannerStore.swift": "9916815ec788e9a5bfce8dcdcc782f8818916052a8304197cdabe113640f07f2",
+    "PlannerNavigationUITests/SavedBackupExportJourneyTests.swift": "73369cb322c699c6e9d05879f36e870263d8df5f82feb1210832d34378cc6cc6",
+    "Configuration/PlannerMacPrototype.entitlements": "a4cc26a66f7c45d3a1cbfb4ea8d9c2fd71dda3f14fcb8d155eedf9b867c24f0b"
+  },
+  "rawExecutionLogs": [
+    {
+      "path": "/private/tmp/PlannerBackupExportRed.log",
+      "sha256": "a12c2c22de01aee1ca65acff09b9379457fb3880525310bf0269b836e129ed27"
+    },
+    {
+      "path": "/private/tmp/PlannerBackupExportPhoneDated.log",
+      "sha256": "6ed87cdddfc06a1820e9d90f8e5dcde1b21ac13939639933fd2dec9229fb9403"
+    },
+    {
+      "path": "/private/tmp/PlannerBackupExportTabletDated.log",
+      "sha256": "6d4353dcf67fdc54e975379408d780399a3bcc96cdcbfab5556a70b496429fbe"
+    },
+    {
+      "path": "/private/tmp/PlannerBackupExportMacDatedCompile.log",
+      "sha256": "faedfac81cad60bc5d5fe2935285cf1fb889daf8c7d2aa4909b940fc25d16425"
+    }
+  ]
+}
