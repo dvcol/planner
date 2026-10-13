@@ -129,6 +129,8 @@ struct CategorySnapshot {
   let content: PlannerCategoryContent
   var associations: [LabelAssociationSnapshot] = []
 
+  var contentOrigins: [String: String]? = nil
+
   var reference: PlannerEntityReference { PlannerEntityReference(kind: .category, id: id) }
 
   func fieldValue(_ field: PlannerCategoryField) -> PlannerCategoryFieldValue {

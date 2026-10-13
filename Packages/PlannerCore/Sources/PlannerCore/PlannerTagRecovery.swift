@@ -25,7 +25,7 @@ struct PortableTagRecord: Codable {
     createdAt = tag.createdAt
     updatedAt = tag.updatedAt
     content = tag.content
-    contentOrigins = ["name": "independent"]
+    contentOrigins = tag.contentOrigins ?? tag.independentContentOrigins
   }
 
   private enum CodingKeys: String, CodingKey {
@@ -64,12 +64,13 @@ struct PortableTagRecord: Codable {
 
   func validated() throws -> PlannerPortableTag {
     guard kind == .tag, createdAt.timeIntervalSinceReferenceDate.isFinite,
-      updatedAt.timeIntervalSinceReferenceDate.isFinite, contentOrigins == ["name": "independent"]
+      updatedAt.timeIntervalSinceReferenceDate.isFinite
     else {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "The snapshot has invalid Tag identity, dates or origins.")
     }
     try content.validate()
+    try plannerValidateContentOrigins(contentOrigins, expected: ["name": "independent"])
     return PlannerPortableTag(
       id: id, lifetimeId: lifetimeId, createdAt: createdAt, updatedAt: updatedAt, content: content,
       contentOrigins: contentOrigins)

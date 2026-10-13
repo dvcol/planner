@@ -56,9 +56,7 @@ struct PortableListRecord: Codable {
     updatedAt = list.updatedAt
     content = list.content
     archived = list.archived
-    var origins = ["name": "independent"]
-    if content.notes != nil { origins["notes"] = "independent" }
-    contentOrigins = origins
+    contentOrigins = list.contentOrigins ?? list.independentContentOrigins
   }
 
   private enum CodingKeys: String, CodingKey {
@@ -106,10 +104,7 @@ struct PortableListRecord: Codable {
         id: id, lifetimeId: lifetimeId, createdAt: createdAt, updatedAt: updatedAt,
         content: content, archived: archived)
     ).contentOrigins
-    guard contentOrigins == expected else {
-      throw PlannerFailure(
-        "recoveryIntegrityFailure", "The snapshot has inconsistent List content origins.")
-    }
+    try plannerValidateContentOrigins(contentOrigins, expected: expected)
     return PlannerPortableList(
       id: id, lifetimeId: lifetimeId, createdAt: createdAt, updatedAt: updatedAt, content: content,
       archived: archived, contentOrigins: contentOrigins)

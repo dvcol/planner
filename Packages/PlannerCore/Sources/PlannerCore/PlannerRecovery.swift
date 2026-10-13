@@ -90,11 +90,7 @@ struct PortableItemRecord: Codable {
     content = PortableItemContent(item.input)
     globalDone = item.globalDone
     archived = item.archived
-    var origins = ["title": "independent"]
-    if item.input.subtitle != nil { origins["subtitle"] = "independent" }
-    if item.input.notes != nil { origins["notes"] = "independent" }
-    if item.input.location != nil { origins["location"] = "independent" }
-    contentOrigins = origins
+    contentOrigins = item.contentOrigins ?? item.independentContentOrigins
   }
 
   func validated() throws -> PlannerPortableItem {
@@ -111,10 +107,7 @@ struct PortableItemRecord: Codable {
         input: content.input, globalDone: globalDone, archived: archived
       )
     ).contentOrigins
-    guard contentOrigins == expected else {
-      throw PlannerFailure(
-        "recoveryIntegrityFailure", "The snapshot has inconsistent content origins.")
-    }
+    try plannerValidateContentOrigins(contentOrigins, expected: expected)
     return PlannerPortableItem(
       kind: kind, id: id, lifetimeId: lifetimeId, createdAt: createdAt, updatedAt: updatedAt,
       content: content.input.readContent(), globalDone: globalDone, archived: archived,
@@ -485,7 +478,7 @@ struct RecoveryEnvelope: Codable {
 
   func validated(identity: PlannerStoreIdentity) throws -> (Data, PlannerDecodedBackup, Int64) {
     guard format == "planner-recovery", formatVersion == 1,
-      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"]
+      ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17"]
         .contains(
           storageSchemaVersion),
       namespaceId == identity.namespaceId, datasetId == identity.datasetId,

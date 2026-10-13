@@ -230,6 +230,8 @@ struct ListSnapshot {
   let content: PlannerListContentInput
   let archived: Bool
 
+  var contentOrigins: [String: String]? = nil
+
   var reference: PlannerEntityReference { PlannerEntityReference(kind: .list, id: id) }
 
   func fieldValue(_ field: PlannerListField) -> PlannerListFieldValue {

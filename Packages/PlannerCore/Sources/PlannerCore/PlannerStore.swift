@@ -86,7 +86,7 @@ enum PlannerSchemaV1: VersionedSchema {
   }
 }
 
-extension PlannerSchemaV15.Item {
+extension PlannerSchemaV17.Item {
   func rowRead(
     identity: PlannerRowIdentity, localDone: Bool?, hasLinks: Bool,
     previewLink: PlannerOwnedLinkRead?, labels: [PlannerLabelRead],
@@ -136,6 +136,7 @@ enum PlannerMigrationPlan: SchemaMigrationPlan {
       PlannerSchemaV5.self, PlannerSchemaV6.self, PlannerSchemaV7.self, PlannerSchemaV8.self,
       PlannerSchemaV9.self, PlannerSchemaV10.self, PlannerSchemaV11.self, PlannerSchemaV12.self,
       PlannerSchemaV13.self, PlannerSchemaV14.self, PlannerSchemaV15.self, PlannerSchemaV16.self,
+      PlannerSchemaV17.self,
     ]
   }
   static var stages: [MigrationStage] {
@@ -155,6 +156,7 @@ enum PlannerMigrationPlan: SchemaMigrationPlan {
       .lightweight(fromVersion: PlannerSchemaV13.self, toVersion: PlannerSchemaV14.self),
       .lightweight(fromVersion: PlannerSchemaV14.self, toVersion: PlannerSchemaV15.self),
       .lightweight(fromVersion: PlannerSchemaV15.self, toVersion: PlannerSchemaV16.self),
+      .lightweight(fromVersion: PlannerSchemaV16.self, toVersion: PlannerSchemaV17.self),
     ]
   }
 }
@@ -171,6 +173,8 @@ struct ItemSnapshot {
   var schedules: [ScheduleSnapshot] = []
   var labelAssociations: [LabelAssociationSnapshot] = []
   var labels: [PlannerLabelRead] = []
+
+  var contentOrigins: [String: String]? = nil
 
   var reference: PlannerEntityReference { PlannerEntityReference(kind: .item, id: id) }
 

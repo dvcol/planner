@@ -25,7 +25,7 @@ struct PortableCategoryRecord: Codable {
     createdAt = category.createdAt
     updatedAt = category.updatedAt
     content = category.content
-    contentOrigins = ["name": "independent"]
+    contentOrigins = category.contentOrigins ?? category.independentContentOrigins
   }
 
   private enum CodingKeys: String, CodingKey {
@@ -64,12 +64,13 @@ struct PortableCategoryRecord: Codable {
 
   func validated() throws -> PlannerPortableCategory {
     guard kind == .category, createdAt.timeIntervalSinceReferenceDate.isFinite,
-      updatedAt.timeIntervalSinceReferenceDate.isFinite, contentOrigins == ["name": "independent"]
+      updatedAt.timeIntervalSinceReferenceDate.isFinite
     else {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "The snapshot has invalid Category identity, dates or origins.")
     }
     try content.validate()
+    try plannerValidateContentOrigins(contentOrigins, expected: ["name": "independent"])
     return PlannerPortableCategory(
       id: id, lifetimeId: lifetimeId, createdAt: createdAt, updatedAt: updatedAt, content: content,
       contentOrigins: contentOrigins)

@@ -77,10 +77,7 @@ struct PortableItineraryRecord: Codable {
     updatedAt = itinerary.updatedAt
     content = PortableItineraryContent(itinerary.input)
     archived = itinerary.archived
-    var origins = ["title": "independent"]
-    if content.notes != nil { origins["notes"] = "independent" }
-    if content.location != nil { origins["location"] = "independent" }
-    contentOrigins = origins
+    contentOrigins = itinerary.contentOrigins ?? itinerary.independentContentOrigins
   }
 
   private enum CodingKeys: String, CodingKey {
@@ -129,10 +126,7 @@ struct PortableItineraryRecord: Codable {
         id: id, lifetimeId: lifetimeId, createdAt: createdAt, updatedAt: updatedAt,
         input: content.input, archived: archived)
     ).contentOrigins
-    guard contentOrigins == expected else {
-      throw PlannerFailure(
-        "recoveryIntegrityFailure", "The snapshot has inconsistent Itinerary content origins.")
-    }
+    try plannerValidateContentOrigins(contentOrigins, expected: expected)
     return PlannerPortableItinerary(
       id: id, lifetimeId: lifetimeId, createdAt: createdAt,
       updatedAt: updatedAt, content: content.input.readContent(links: []), archived: archived,

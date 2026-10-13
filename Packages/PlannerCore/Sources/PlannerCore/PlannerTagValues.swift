@@ -129,6 +129,8 @@ struct TagSnapshot {
   let content: PlannerTagContent
   var associations: [LabelAssociationSnapshot] = []
 
+  var contentOrigins: [String: String]? = nil
+
   var reference: PlannerEntityReference { PlannerEntityReference(kind: .tag, id: id) }
 
   func fieldValue(_ field: PlannerTagField) -> PlannerTagFieldValue {
