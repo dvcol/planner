@@ -224,11 +224,9 @@ public actor Planner {
         requestId = identifier
         let reservedBytes = initial.retainedInputs.reduce(0) { total, input in
           guard !edit.retryInputIndexes.contains(input.inputIndex),
-            !edit.removeInputIndexes.contains(input.inputIndex), let value = input.input
+            !edit.removeInputIndexes.contains(input.inputIndex)
           else { return total }
-          switch value {
-          case .url(let text), .text(let text): return total + text.utf8.count
-          }
+          return total + input.decodedByteCount
         }
         let availableBytes = PlannerCaptureLimits.maximumDecodedBytes - reservedBytes
         let loading = Task {

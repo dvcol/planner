@@ -1,10 +1,302 @@
+import CoreLocation
 import Foundation
+import MapKit
 import PlannerCore
 import Testing
 import UniformTypeIdentifiers
 
 @Suite(.serialized)
 struct NativeCaptureLoadingTests {
+  @Test(arguments: [-1, 0, 1]) @MainActor
+  func nativeMapArchiveBudgetIsEightMiBBeforeSecureDecode(offset: Int) async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeCaptureLoadingTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let data = Data(repeating: 0, count: 8_388_608 + offset)
+    let provider = NSItemProvider()
+    provider.registerDataRepresentation(
+      forTypeIdentifier: MKMapItemTypeIdentifier, visibility: .all
+    ) { completion in
+      completion(data, nil)
+      return nil
+    }
+    let loaded = await PlannerNativeCaptureLoader.load(providers: [provider])
+    let planner = Planner(configuration: nativeCaptureLoadingConfiguration(directory))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .draft(let draft) = await planner.prepareCapture(
+        session: session, input: .loaded(loaded))
+    else { throw CancellationError() }
+    let issue = try #require(draft.inputIssues.first { $0.lane == .mapItem })
+    if offset <= 0 {
+      #expect(issue.state == .failed)
+    } else {
+      #expect(issue.state == .oversized)
+    }
+    #expect(issue.blocksSave && !draft.saveAllowed && draft.preview.candidate == nil)
+  }
+
+  #if os(macOS)
+    @Test @MainActor
+    func nativeMapArchiveSizeIsIndependentFromDecodedMetadataSize() async throws {
+      let directory = FileManager.default.temporaryDirectory
+        .appendingPathComponent("PlannerNativeCaptureLoadingTests", isDirectory: true)
+        .appendingPathComponent(UUID().uuidString, isDirectory: true)
+      defer { try? FileManager.default.removeItem(at: directory) }
+      let mapItem = MKMapItem(
+        location: CLLocation(latitude: 35.66, longitude: 139.7), address: nil)
+      mapItem.name = "Provider museum"
+      let archiver = NSKeyedArchiver(requiringSecureCoding: true)
+      archiver.encode(mapItem, forKey: NSKeyedArchiveRootObjectKey)
+      archiver.encode(Data(repeating: 0, count: 1_048_576), forKey: "unrelatedFixtureData")
+      archiver.finishEncoding()
+      let data = archiver.encodedData
+      #expect(data.count > 1_048_576 && data.count < 8_388_608)
+      let provider = NSItemProvider()
+      provider.registerDataRepresentation(
+        forTypeIdentifier: MKMapItemTypeIdentifier, visibility: .all
+      ) { completion in
+        completion(data, nil)
+        return nil
+      }
+      let loaded = await PlannerNativeCaptureLoader.load(providers: [provider])
+      let planner = Planner(configuration: nativeCaptureLoadingConfiguration(directory))
+      guard case .ready(let session) = await planner.bootstrap(),
+        case .draft(let draft) = await planner.prepareCapture(
+          session: session, input: .loaded(loaded))
+      else { throw CancellationError() }
+      #expect(draft.preview.candidate?.displayName == "Provider museum")
+      #expect(draft.preview.candidate?.coordinate == .init(latitude: 35.66, longitude: 139.7))
+      #expect(draft.inputIssues.allSatisfy { !$0.blocksSave })
+      #expect(draft.content.title.isEmpty && draft.content.location == nil && draft.links.isEmpty)
+    }
+  #endif
+
+  @Test(arguments: ["retry", "remove"]) @MainActor
+  func failedNativeMapInputRequiresExplicitRetryOrRemoval(action: String) async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeCaptureLoadingTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let mapItem = MKMapItem(
+      location: CLLocation(latitude: 35.66, longitude: 139.7),
+      address: MKAddress(fullAddress: "Provider address", shortAddress: nil))
+    mapItem.name = "Provider museum"
+    let data = try await nativeCaptureMapRepresentation(mapItem)
+    let tracker = NativeCaptureLoadTracker()
+    let provider = NSItemProvider()
+    provider.registerDataRepresentation(
+      forTypeIdentifier: MKMapItemTypeIdentifier, visibility: .all
+    ) { completion in
+      tracker.started()
+      if tracker.totalStarted == 1 {
+        completion(nil, CocoaError(.fileReadUnknown))
+      } else {
+        completion(data, nil)
+      }
+      tracker.finished()
+      return nil
+    }
+    let loaded = await PlannerNativeCaptureLoader.load(providers: [provider])
+    let planner = Planner(configuration: nativeCaptureLoadingConfiguration(directory))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .exported(let before) = await planner.exportData(session: session),
+      case .draft(let draft) = await planner.prepareCapture(
+        session: session, input: .loaded(loaded)),
+      case .draft(let edited) = await planner.updateCapture(
+        session: session, draftId: draft.draftId, generation: draft.generation,
+        edit: .init(changes: .init(title: .set("My museum"))))
+    else { throw CancellationError() }
+    #expect(draft.preview.candidate == nil)
+    #expect(
+      !edited.saveAllowed
+        && edited.inputIssues.contains {
+          $0.inputIndex == 0 && $0.lane == .mapItem && $0.state == .failed && $0.blocksSave
+        })
+    let edit: PlannerCaptureEdit
+    if action == "retry" {
+      edit = .init(retryInputIndexes: [0])
+    } else {
+      edit = .init(removeInputIndexes: [0])
+    }
+    guard
+      case .draft(let recovered) = await planner.updateCapture(
+        session: session, draftId: edited.draftId, generation: edited.generation, edit: edit),
+      case .exported(let after) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(recovered.saveAllowed && recovered.content.title == "My museum")
+    #expect(recovered.content.location == nil && recovered.links.isEmpty && before == after)
+    if action == "retry" {
+      #expect(
+        tracker.totalStarted == 2 && recovered.preview.candidate?.displayName == "Provider museum")
+      #expect(recovered.inputIssues.allSatisfy { !$0.blocksSave })
+    } else {
+      #expect(tracker.totalStarted == 1 && recovered.preview.candidate == nil)
+      #expect(recovered.inputIssues.isEmpty)
+    }
+  }
+
+  @Test @MainActor
+  func nativeCurrentLocationDoesNotBecomeAFixedPlace() async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeCaptureLoadingTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let data = try await nativeCaptureMapRepresentation(MKMapItem.forCurrentLocation())
+    let provider = NSItemProvider()
+    provider.registerDataRepresentation(
+      forTypeIdentifier: MKMapItemTypeIdentifier, visibility: .all
+    ) { completion in
+      completion(data, nil)
+      return nil
+    }
+    let loaded = await PlannerNativeCaptureLoader.load(providers: [provider])
+    let planner = Planner(configuration: nativeCaptureLoadingConfiguration(directory))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .draft(let draft) = await planner.prepareCapture(
+        session: session, input: .loaded(loaded))
+    else { throw CancellationError() }
+    let candidate = try #require(draft.preview.candidate)
+    #expect(candidate.coordinate == nil && candidate.providerReference == nil)
+    #expect(candidate.uncertaintyReasons.contains { $0.contains("changing current location") })
+    #expect(draft.content.location == nil && draft.links.isEmpty && !draft.saveAllowed)
+  }
+
+  @Test(arguments: [-1, 0, 1]) @MainActor
+  func nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset: Int) async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeCaptureLoadingTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let mapItem = MKMapItem(
+      location: CLLocation(latitude: 35.66, longitude: 139.7),
+      address: MKAddress(fullAddress: "Provider address", shortAddress: nil))
+    mapItem.name = "Provider museum"
+    let data = try await nativeCaptureMapRepresentation(mapItem)
+    let mapProvider = NSItemProvider()
+    mapProvider.registerDataRepresentation(
+      forTypeIdentifier: MKMapItemTypeIdentifier, visibility: .all
+    ) { completion in
+      completion(data, nil)
+      return nil
+    }
+    let text = String(repeating: "x", count: 1_048_576 - 31 + offset)
+    let textProvider = NSItemProvider()
+    textProvider.registerDataRepresentation(
+      forTypeIdentifier: UTType.utf8PlainText.identifier, visibility: .all
+    ) { completion in
+      completion(Data(text.utf8), nil)
+      return nil
+    }
+    let loaded = await PlannerNativeCaptureLoader.load(providers: [mapProvider, textProvider])
+    let planner = Planner(configuration: nativeCaptureLoadingConfiguration(directory))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .draft(let draft) = await planner.prepareCapture(
+        session: session, input: .loaded(loaded))
+    else { throw CancellationError() }
+    #expect(draft.preview.candidate?.displayName == "Provider museum")
+    if offset <= 0 {
+      #expect(draft.inputIssues.allSatisfy { !$0.blocksSave })
+    } else {
+      #expect(
+        draft.inputIssues.contains {
+          $0.inputIndex == 1 && $0.lane == .text && $0.state == .oversized && $0.blocksSave
+        })
+    }
+  }
+
+  @Test @MainActor
+  func ownCaptureEditsKeepNativeMapPreviewTemporaryThroughReviewedSave() async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeCaptureLoadingTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let mapItem = MKMapItem(
+      location: CLLocation(latitude: 35.66, longitude: 139.7),
+      address: MKAddress(fullAddress: "Provider address", shortAddress: nil))
+    mapItem.name = "Provider museum"
+    let data = try await nativeCaptureMapRepresentation(mapItem)
+    let provider = NSItemProvider()
+    provider.registerDataRepresentation(
+      forTypeIdentifier: MKMapItemTypeIdentifier, visibility: .all
+    ) { completion in
+      completion(data, nil)
+      return nil
+    }
+    let loaded = await PlannerNativeCaptureLoader.load(providers: [provider])
+    let planner = Planner(configuration: nativeCaptureLoadingConfiguration(directory))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .draft(let draft) = await planner.prepareCapture(
+        session: session, input: .loaded(loaded)),
+      case .draft(let edited) = await planner.updateCapture(
+        session: session, draftId: draft.draftId, generation: draft.generation,
+        edit: .init(changes: .init(title: .set("My museum"), notes: .set("My note"))))
+    else { throw CancellationError() }
+    #expect(edited.preview.candidate?.displayName == "Provider museum")
+    #expect(
+      edited.saveAllowed && edited.content.location == nil && edited.content.notes == "My note")
+    guard
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session,
+        command: .applyCapture(
+          draftId: edited.draftId, draftGeneration: edited.generation,
+          choice: .createNew, listIds: [])),
+      case .applied(let result, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: review.command,
+          reviewToken: review.reviewToken)
+      ).outcome,
+      let item = result.generated.first,
+      case .source(.item(let saved)) = await planner.read(session: session, request: .source(item)),
+      case .exported(let backup) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(saved.content.title == "My museum" && saved.content.notes == "My note")
+    #expect(saved.content.location == nil && saved.content.links.isEmpty)
+    let text = String(decoding: backup, as: UTF8.self)
+    #expect(!text.contains("Provider museum") && !text.contains("Provider address"))
+  }
+
+  @Test @MainActor
+  func nativeMapObjectProducesHeldPreviewWithoutOwnedContentOrInventedBookmark() async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeCaptureLoadingTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let mapItem = MKMapItem(
+      location: CLLocation(latitude: 35.66, longitude: 139.7),
+      address: MKAddress(fullAddress: "Provider address", shortAddress: "Provider short"))
+    mapItem.name = "Provider museum"
+    mapItem.url = URL(string: "https://example.com/business")
+    let data = try await nativeCaptureMapRepresentation(mapItem)
+    let provider = NSItemProvider()
+    provider.registerDataRepresentation(
+      forTypeIdentifier: MKMapItemTypeIdentifier, visibility: .all
+    ) { completion in
+      completion(data, nil)
+      return nil
+    }
+    let loaded = await PlannerNativeCaptureLoader.load(providers: [provider])
+    let planner = Planner(configuration: nativeCaptureLoadingConfiguration(directory))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .exported(let before) = await planner.exportData(session: session),
+      case .draft(let draft) = await planner.prepareCapture(
+        session: session, input: .loaded(loaded)),
+      case .exported(let after) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    let candidate = try #require(draft.preview.candidate)
+    #expect(draft.preview.state == .available && draft.preview.linkId == nil)
+    #expect(
+      candidate.displayName == "Provider museum" && candidate.formattedAddress == "Provider address"
+    )
+    #expect(candidate.coordinate?.latitude == 35.66 && candidate.coordinate?.longitude == 139.7)
+    #expect(candidate.provider == .appleMaps && candidate.providerReference == nil)
+    #expect(
+      draft.content.title.isEmpty && draft.content.notes == nil && draft.content.location == nil)
+    #expect(draft.links.isEmpty && !draft.saveAllowed && before == after)
+    #expect(
+      draft.inputIssues.contains { $0.lane == .mapItem && $0.state == .held && !$0.blocksSave })
+  }
+
   @Test(arguments: [127, 128, 129]) @MainActor
   func nativeRetryReservesAcceptedLinksBeforeAdmittingEarlierText(count: Int) async throws {
     let directory = FileManager.default.temporaryDirectory
@@ -882,4 +1174,24 @@ private func nativeCaptureLoadingConfiguration(_ directory: URL) -> PlannerStora
     controlURL: directory.appendingPathComponent("control/writer"),
     recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
     processRole: .mainApplication, storageMode: .localOnly)
+}
+
+@MainActor private func nativeCaptureMapRepresentation(_ mapItem: MKMapItem) async throws -> Data {
+  #if os(iOS)
+    return try await withCheckedThrowingContinuation { continuation in
+      _ = mapItem.loadData(withTypeIdentifier: MKMapItemTypeIdentifier) { data, error in
+        if let error {
+          continuation.resume(throwing: error)
+          return
+        }
+        guard let data else {
+          continuation.resume(throwing: CocoaError(.fileReadUnknown))
+          return
+        }
+        continuation.resume(returning: data)
+      }
+    }
+  #else
+    return try NSKeyedArchiver.archivedData(withRootObject: mapItem, requiringSecureCoding: true)
+  #endif
 }
