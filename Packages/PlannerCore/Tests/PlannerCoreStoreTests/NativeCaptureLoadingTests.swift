@@ -5,6 +5,366 @@ import UniformTypeIdentifiers
 
 @Suite(.serialized)
 struct NativeCaptureLoadingTests {
+  @Test(arguments: [127, 128, 129]) @MainActor
+  func nativeRetryReservesAcceptedLinksBeforeAdmittingEarlierText(count: Int) async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeCaptureLoadingTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let tracker = NativeCaptureLoadTracker()
+    let textProvider = NSItemProvider()
+    let received = (0..<count).map { "https://example.com/new/\($0)" }.joined(separator: "\n")
+    textProvider.registerDataRepresentation(
+      forTypeIdentifier: UTType.utf8PlainText.identifier, visibility: .all
+    ) { completion in
+      tracker.started()
+      if tracker.totalStarted == 1 {
+        completion(nil, CocoaError(.fileReadUnknown))
+      } else {
+        completion(Data(received.utf8), nil)
+      }
+      tracker.finished()
+      return nil
+    }
+    let urlProvider = NSItemProvider()
+    urlProvider.registerDataRepresentation(
+      forTypeIdentifier: UTType.url.identifier, visibility: .all
+    ) { completion in
+      completion(Data("https://example.com/original".utf8), nil)
+      return nil
+    }
+    let loaded = await PlannerNativeCaptureLoader.load(providers: [textProvider, urlProvider])
+    let planner = Planner(configuration: nativeCaptureLoadingConfiguration(directory))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .draft(let draft) = await planner.prepareCapture(
+        session: session, input: .loaded(loaded)),
+      case .draft(let retried) = await planner.updateCapture(
+        session: session, draftId: draft.draftId, generation: draft.generation,
+        edit: .init(retryInputIndexes: [0]))
+    else { throw CancellationError() }
+    #expect(retried.links.contains { $0.originalUrl == "https://example.com/original" })
+    if count == 127 {
+      #expect(retried.saveAllowed && retried.links.count == 128)
+      #expect(retried.links.first?.originalUrl == "https://example.com/new/0")
+    } else {
+      #expect(
+        !retried.saveAllowed && retried.links.map(\.originalUrl) == ["https://example.com/original"]
+      )
+      #expect(retried.inputIssues.contains { $0.inputIndex == 0 && $0.state == .oversized })
+    }
+  }
+
+  @Test(arguments: ["category", "tag", "foreignLink", "linkLimit", "cancelledCaller"]) @MainActor
+  func rejectedEditLeavesThePendingNativeRetryActive(scenario: String) async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeCaptureLoadingTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let tracker = NativeCaptureLoadTracker()
+    let pending = NativeCaptureControlledCompletion()
+    let progress = Progress(totalUnitCount: 1)
+    let provider = NSItemProvider()
+    provider.registerDataRepresentation(forTypeIdentifier: UTType.url.identifier, visibility: .all)
+    { completion in
+      tracker.started()
+      if tracker.totalStarted == 1 {
+        completion(Data("https://example.com/original".utf8), nil)
+        tracker.finished()
+        return nil
+      }
+      pending.retain(completion)
+      return progress
+    }
+    let loaded = await PlannerNativeCaptureLoader.load(providers: [provider])
+    let planner = Planner(configuration: nativeCaptureLoadingConfiguration(directory))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .draft(let draft) = await planner.prepareCapture(
+        session: session, input: .loaded(loaded))
+    else { throw CancellationError() }
+    let retry = Task {
+      await planner.updateCapture(
+        session: session, draftId: draft.draftId, generation: draft.generation,
+        edit: .init(retryInputIndexes: [0]))
+    }
+    let deadline = ContinuousClock().now.advanced(by: .seconds(2))
+    while !pending.started && ContinuousClock().now < deadline { await Task.yield() }
+    #expect(pending.started)
+    let changes: PlannerItemChanges
+    switch scenario {
+    case "category": changes = .init(categoryIds: .set([UUID()]))
+    case "tag": changes = .init(tagIds: .set([UUID()]))
+    case "cancelledCaller": changes = .init(title: .set("Cancelled title"))
+    case "foreignLink":
+      changes = .init(
+        links: .set([.init(linkId: UUID(), originalUrl: "https://example.com/foreign")]))
+    default:
+      changes = .init(
+        links: .set((0..<129).map { .init(originalUrl: "https://example.com/\($0)") }))
+    }
+    let secondEdit = Task {
+      await planner.updateCapture(
+        session: session, draftId: draft.draftId, generation: draft.generation,
+        edit: .init(changes: changes))
+    }
+    if scenario == "cancelledCaller" { secondEdit.cancel() }
+    guard case .rejected = await secondEdit.value,
+      case .draft(let unchanged) = await planner.readCapture(
+        session: session, draftId: draft.draftId)
+    else { throw CancellationError() }
+    #expect(!progress.isCancelled && unchanged.generation == draft.generation)
+    pending.deliver(Data("https://example.com/retried".utf8))
+    let outcome = await retry.value
+    guard case .draft(let retried) = outcome else {
+      Issue.record("A rejected edit must preserve the active Retry, observed \(outcome)")
+      return
+    }
+    #expect(
+      retried.saveAllowed && retried.links.map(\.originalUrl) == ["https://example.com/retried"])
+  }
+
+  @Test(arguments: [-1, 0, 1], [true, false]) @MainActor
+  func nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(
+    offset: Int, urlFirst: Bool
+  ) async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeCaptureLoadingTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let urlLoads = NativeCaptureLoadTracker()
+    let textLoads = NativeCaptureLoadTracker()
+    let original = "https://example.com/original"
+    let received = String(repeating: "x", count: 1_048_576 + offset - original.utf8.count)
+    let provider = NSItemProvider()
+    provider.registerDataRepresentation(forTypeIdentifier: UTType.url.identifier, visibility: .all)
+    { completion in
+      urlLoads.started()
+      completion(Data(original.utf8), nil)
+      urlLoads.finished()
+      return nil
+    }
+    let textProvider = NSItemProvider()
+    textProvider.registerDataRepresentation(
+      forTypeIdentifier: UTType.utf8PlainText.identifier, visibility: .all
+    ) { completion in
+      textLoads.started()
+      if textLoads.totalStarted == 1 {
+        completion(nil, CocoaError(.fileReadUnknown))
+      } else {
+        completion(Data(received.utf8), nil)
+      }
+      textLoads.finished()
+      return nil
+    }
+    var providers = [provider, textProvider]
+    var textIndex: Int64 = 1
+    if !urlFirst {
+      providers = [textProvider, provider]
+      textIndex = 0
+    }
+    let loaded = await PlannerNativeCaptureLoader.load(providers: providers)
+    let planner = Planner(configuration: nativeCaptureLoadingConfiguration(directory))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .draft(let draft) = await planner.prepareCapture(
+        session: session, input: .loaded(loaded)),
+      case .draft(let retried) = await planner.updateCapture(
+        session: session, draftId: draft.draftId, generation: draft.generation,
+        edit: .init(retryInputIndexes: [textIndex]))
+    else { throw CancellationError() }
+    #expect(urlLoads.totalStarted == 1 && textLoads.totalStarted == 2)
+    #expect(retried.links.map(\.originalUrl) == [original] && retried.content.notes == nil)
+    if offset <= 0 {
+      #expect(retried.saveAllowed && retried.inputIssues.contains { $0.state == .held })
+    } else {
+      #expect(!retried.saveAllowed && retried.inputIssues.contains { $0.state == .oversized })
+    }
+  }
+
+  @Test(arguments: ["edit", "remove", "apply", "cancelCaller"]) @MainActor
+  func obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario: String) async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeCaptureLoadingTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let tracker = NativeCaptureLoadTracker()
+    let pending = NativeCaptureControlledCompletion()
+    let progress = Progress(totalUnitCount: 1)
+    let provider = NSItemProvider()
+    provider.registerDataRepresentation(forTypeIdentifier: UTType.url.identifier, visibility: .all)
+    { completion in
+      tracker.started()
+      if tracker.totalStarted == 1 {
+        completion(Data("https://example.com/original".utf8), nil)
+        tracker.finished()
+        return nil
+      }
+      pending.retain(completion)
+      return progress
+    }
+    let loaded = await PlannerNativeCaptureLoader.load(providers: [provider])
+    let planner = Planner(configuration: nativeCaptureLoadingConfiguration(directory))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .draft(let draft) = await planner.prepareCapture(
+        session: session, input: .loaded(loaded))
+    else { throw CancellationError() }
+    let retry = Task {
+      await planner.updateCapture(
+        session: session, draftId: draft.draftId, generation: draft.generation,
+        edit: .init(retryInputIndexes: [0]))
+    }
+    let deadline = ContinuousClock().now.advanced(by: .seconds(2))
+    while !pending.started && ContinuousClock().now < deadline { await Task.yield() }
+    #expect(pending.started)
+    var savedItem: PlannerEntityReference?
+    switch scenario {
+    case "edit":
+      guard
+        case .draft = await planner.updateCapture(
+          session: session, draftId: draft.draftId, generation: draft.generation,
+          edit: .init(changes: .init(title: .set("Current title"))))
+      else { throw CancellationError() }
+    case "remove":
+      guard
+        case .draft = await planner.updateCapture(
+          session: session, draftId: draft.draftId, generation: draft.generation,
+          edit: .init(removeInputIndexes: [0]))
+      else { throw CancellationError() }
+    case "apply":
+      guard
+        case .reviewed(let review) = await planner.prepareReview(
+          session: session,
+          command: .applyCapture(
+            draftId: draft.draftId, draftGeneration: draft.generation,
+            choice: .createNew, listIds: [])),
+        case .applied(let result, .complete) = await planner.execute(
+          .init(
+            operationId: UUID(), session: session, command: review.command,
+            reviewToken: review.reviewToken)
+        ).outcome
+      else { throw CancellationError() }
+      savedItem = try #require(result.generated.first)
+    default: retry.cancel()
+    }
+    guard case .rejected(let failure) = await retry.value else { throw CancellationError() }
+    #expect(progress.isCancelled && failure.code == "captureDraftUnavailable")
+    pending.deliver(Data("https://example.com/obsolete".utf8))
+    if let savedItem {
+      guard
+        case .source(.item(let item)) = await planner.read(
+          session: session, request: .source(savedItem)),
+        case .rejected = await planner.readCapture(session: session, draftId: draft.draftId)
+      else { throw CancellationError() }
+      #expect(item.content.links.map(\.originalUrl) == ["https://example.com/original"])
+    } else {
+      guard
+        case .draft(let current) = await planner.readCapture(
+          session: session, draftId: draft.draftId)
+      else { throw CancellationError() }
+      if scenario == "remove" {
+        #expect(current.links.isEmpty && !current.saveAllowed)
+      } else {
+        #expect(current.links.map(\.originalUrl) == ["https://example.com/original"])
+        if scenario == "edit" {
+          #expect(current.content.title == "Current title")
+        } else {
+          #expect(current.generation == draft.generation)
+        }
+      }
+    }
+  }
+
+  @Test @MainActor
+  func cancellingDraftCancelsItsNativeRetryAndRejectsLateInput() async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeCaptureLoadingTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let tracker = NativeCaptureLoadTracker()
+    let pending = NativeCaptureControlledCompletion()
+    let progress = Progress(totalUnitCount: 1)
+    let provider = NSItemProvider()
+    provider.registerDataRepresentation(forTypeIdentifier: UTType.url.identifier, visibility: .all)
+    { completion in
+      tracker.started()
+      if tracker.totalStarted == 1 {
+        completion(nil, CocoaError(.fileReadUnknown))
+        tracker.finished()
+        return nil
+      }
+      pending.retain(completion)
+      return progress
+    }
+    let loaded = await PlannerNativeCaptureLoader.load(providers: [provider])
+    let planner = Planner(configuration: nativeCaptureLoadingConfiguration(directory))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .draft(let draft) = await planner.prepareCapture(
+        session: session, input: .loaded(loaded))
+    else { throw CancellationError() }
+    let retry = Task {
+      await planner.updateCapture(
+        session: session, draftId: draft.draftId, generation: draft.generation,
+        edit: .init(retryInputIndexes: [0]))
+    }
+    let deadline = ContinuousClock().now.advanced(by: .seconds(2))
+    while !pending.started && ContinuousClock().now < deadline { await Task.yield() }
+    #expect(pending.started)
+    guard
+      case .cancelled = await planner.cancelCapture(
+        session: session, draftId: draft.draftId, generation: draft.generation)
+    else { throw CancellationError() }
+    #expect(progress.isCancelled)
+    pending.deliver(Data("https://example.com/obsolete".utf8))
+    guard case .rejected(let failure) = await retry.value,
+      case .rejected = await planner.readCapture(session: session, draftId: draft.draftId)
+    else { throw CancellationError() }
+    #expect(failure.code == "captureDraftUnavailable")
+  }
+
+  @Test @MainActor
+  func explicitRetryReloadsFailedNativeInputAndPreservesOwnedEdits() async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeCaptureLoadingTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let tracker = NativeCaptureLoadTracker()
+    let provider = NSItemProvider()
+    provider.registerDataRepresentation(forTypeIdentifier: UTType.url.identifier, visibility: .all)
+    { completion in
+      tracker.started()
+      if tracker.totalStarted == 1 {
+        completion(nil, CocoaError(.fileReadUnknown))
+      } else {
+        completion(Data("https://example.com/retried".utf8), nil)
+      }
+      tracker.finished()
+      return nil
+    }
+    let loaded = await PlannerNativeCaptureLoader.load(providers: [provider])
+    let planner = Planner(configuration: nativeCaptureLoadingConfiguration(directory))
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .exported(let before) = await planner.exportData(session: session),
+      case .draft(let prepared) = await planner.prepareCapture(
+        session: session, input: .loaded(loaded)),
+      case .draft(let edited) = await planner.updateCapture(
+        session: session, draftId: prepared.draftId, generation: prepared.generation,
+        edit: .init(changes: .init(title: .set("My museum"))))
+    else { throw CancellationError() }
+    #expect(!prepared.saveAllowed && prepared.inputIssues.contains { $0.state == .failed })
+    let outcome = await planner.updateCapture(
+      session: session, draftId: edited.draftId, generation: edited.generation,
+      edit: .init(retryInputIndexes: [0]))
+    guard case .draft(let retried) = outcome else {
+      Issue.record("Explicit Retry must reload the native provider, observed \(outcome)")
+      return
+    }
+    #expect(tracker.totalStarted == 2)
+    #expect(retried.links.map(\.originalUrl) == ["https://example.com/retried"])
+    #expect(
+      retried.content.title == "My museum" && retried.saveAllowed && retried.inputIssues.isEmpty)
+    guard case .exported(let after) = await planner.exportData(session: session)
+    else { throw CancellationError() }
+    #expect(before == after)
+  }
+
   @Test @MainActor
   func mixedFileAndWebRepresentationsKeepTheUsableWebLinkWithoutLoadingFileContent()
     async throws
