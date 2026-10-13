@@ -1,0 +1,111 @@
+{
+  "baseCommit": "0a9fcde",
+  "scope": "Chronological native Calendar agenda presentation",
+  "qualified": {
+    "phone": {
+      "functions": 5,
+      "suites": 2,
+      "invocations": 5,
+      "failures": 0,
+      "skips": 0
+    },
+    "tablet": {
+      "functions": 5,
+      "suites": 2,
+      "invocations": 5,
+      "failures": 0,
+      "skips": 0
+    },
+    "mac": {
+      "appAndTestHostBuild": "passed",
+      "runtimeFunctions": 0
+    },
+    "strictSwiftLintFiles": 2,
+    "markdownLintDocuments": 3
+  },
+  "sourceHashesVerifiedAfterAllProcessesExited": true,
+  "lookupWorkExcludedFromQualification": true,
+  "reviews": {
+    "standards": "No confirmed findings in scoped source",
+    "spec": "No confirmed defects in scoped source"
+  },
+  "screenshots": [
+    {
+      "path": "phone-ordered.png",
+      "inspected": true,
+      "originalExport": "B56A64FB-A686-43CC-B8E6-AE3B033DCBA7.png"
+    },
+    {
+      "path": "tablet-ordered.png",
+      "inspected": true,
+      "originalExport": "10FAC3FC-026A-490D-A69B-A9553EEBBDCC.png"
+    }
+  ],
+  "limits": [
+    "Timed multi-event and mixed-form ordering requires its future native fixture; this new journey qualifies overlapping all-day dates",
+    "Day/Week, Month event overview and display-zone override await the reviewed Calendar layout/read contract",
+    "DST/travel, external refresh/deletion, paging/performance, accessibility/keyboard and Mac runtime remain open"
+  ],
+  "artifacts": [
+    {
+      "path": "PlannerCalendarOrderingPhoneRed.log.gz",
+      "sha256": "b4923fb08ce0f5ff34145380328b46759bed9f8f780be809634185e53fa30af2"
+    },
+    {
+      "path": "PlannerCalendarOrderingPhoneRedSummary.json",
+      "sha256": "840bd8959934fcd228a6df89098c6ec42e6d5d51c6d8a105972ebd8c20050d80"
+    },
+    {
+      "path": "PlannerCalendarOrderingQualifiedMacBuild.log.gz",
+      "sha256": "3841921dd5d779ebf1a4f6b2ce90ee313d411f76ddf59f8a02473b856f999779"
+    },
+    {
+      "path": "PlannerCalendarOrderingQualifiedMarkdownlint.log",
+      "sha256": "fda3c05e8dbcab06099935e841dc9219fe53afb023c8c05fa6fb89f81a0c3677"
+    },
+    {
+      "path": "PlannerCalendarOrderingQualifiedPhone.log.gz",
+      "sha256": "0819b0a9f568252ba91cb0566d4e011250e969fc45d7473e0a05ec14306e2072"
+    },
+    {
+      "path": "PlannerCalendarOrderingQualifiedPhoneSummary.json",
+      "sha256": "994e1fb44d2d5838c146bdca1128132f80a83fc0a5fb7691e25d1921c36c7402"
+    },
+    {
+      "path": "PlannerCalendarOrderingQualifiedPhoneTests.json",
+      "sha256": "c2bccd2f8cd5e810d40182a4496d6b70a00ac3cdb7dd38cbde868fd3280e72b1"
+    },
+    {
+      "path": "PlannerCalendarOrderingQualifiedStrictLint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "PlannerCalendarOrderingQualifiedTablet.log.gz",
+      "sha256": "586be9b6d62bbccdd49ccae7123281011ad087761e44bf78d5ebd63da519c30c"
+    },
+    {
+      "path": "PlannerCalendarOrderingQualifiedTabletSummary.json",
+      "sha256": "9e9b56c01c1db687033c2ac88ae7c2576e9aa8a114eba45637faaa664b046eca"
+    },
+    {
+      "path": "PlannerCalendarOrderingQualifiedTabletTests.json",
+      "sha256": "394b5c71e5ff2edc127fae2bd7e969fa248774c54a8a6fbb89c27bbc35cd3424"
+    },
+    {
+      "path": "commands.json",
+      "sha256": "cacf8b0bc25005d4f8f82515723fc0d08fb7f2bb9134c2458a0270234e5a2820"
+    },
+    {
+      "path": "phone-ordered.png",
+      "sha256": "ecf280053c4f26209ad2e61041fa2ebe343be44f607256f0d797743160b76bc6"
+    },
+    {
+      "path": "sources.json",
+      "sha256": "0baaadeb8462d7f07103eee6488945b1d8a45c141d823ef0c4f9ce17e92efbab"
+    },
+    {
+      "path": "tablet-ordered.png",
+      "sha256": "f2d5e5ab95bcd46476d4c92cdd0fa3086b738f0417d2f192bcdb39ba5d3d937f"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "modelName" : "iPhone 18 Pro",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "PlannerNavigation · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1791887278.715,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1791887170.794,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "XCTAssertEqual failed: (\"[\"saved.calendar.schedule.1AFC5CC5-6D80-48BE-8701-B48C7AAFF436\", \"saved.calendar.schedule.FB9E11C8-5358-4D15-9D8E-5B1FAB118F56\"]\") is not equal to (\"[\"saved.calendar.schedule.FB9E11C8-5358-4D15-9D8E-5B1FAB118F56\", \"saved.calendar.schedule.1AFC5CC5-6D80-48BE-8701-B48C7AAFF436\"]\")",
+      "targetName" : "PlannerNavigationUITests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "SavedCalendarOrderingJourneyTests/testOverlappingAllDayAssignmentsUseTheirDatesRatherThanIdentityOrder()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarOrderingJourneyTests/testOverlappingAllDayAssignmentsUseTheirDatesRatherThanIdentityOrder",
+      "testName" : "testOverlappingAllDayAssignmentsUseTheirDatesRatherThanIdentityOrder()"
+    }
+  ],
+  "title" : "Test - PlannerNavigation",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 1
+}

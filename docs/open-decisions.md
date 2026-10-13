@@ -25,3 +25,19 @@ The human accepted A on 12 October 2026. Every selected criterion applies when e
 ## Q76, missing finished estimates
 
 The human accepted A on 12 October 2026 for [container remaining estimates](container-estimates-and-calendar.md). A partial manual budget deducts only known finished estimates and shows the result as an upper bound, with a warning counting finished appearances whose estimates are missing. It never manufactures a child estimate. A manual total of 240 minutes with unknown finished Lunch and unfinished Museum shows up to 240 remaining; adding Lunch's 60-minute estimate gives 180. Every child finished gives 0, with the manual 240 retained. Apply the same rule to a partial manual List branch inside an itinerary. No recorded question remains unanswered. [Core and HTTP budget reads](prototypes/core-container-estimates.md) and [native root controls](prototypes/native-container-estimates.md) are qualified; the remaining native context fixtures and broader map gates stay open.
+
+## Q77, native Maps encoded payload budget
+
+The human accepted B. Each encoded native Maps payload may contain up to 8 MiB; the aggregate decoded text budget remains 1 MiB. The existing attachment count, concurrency and capture deadline still apply. [Native Maps loading](prototypes/core-native-map-capture.md) is committed and qualified at its recorded Core boundaries. Physical Share sender allocation and lifecycle tests remain required.
+
+## Q78, controlled Maps HTTP lookup tests
+
+This decision is pending. Live services cannot reliably reproduce redirect, deadline and obsolete-draft outcomes. A native probe showed that global URLProtocol registration did not intercept an ordinary ephemeral URLSession; explicit session configuration did. The options are a production HTTP transport boundary with controlled header results and separate native delegate qualification, isolated test-process runtime replacement of Foundation session configuration, or live-service-only tests with incomplete controlled coverage. A is recommended for stability. Planner's public capture API must not gain test-only dependency parameters. Maps HTTP implementation waits for the human's answer; independent approved Calendar work can continue.
+
+## Q79 through Q81, remaining Calendar layout and reads
+
+These independent decisions are pending. They do not reopen accepted Schedule semantics or Calendar mode scope.
+
+- Q79 asks whether Day/Week Calendar should use the main content width with native inspector details on larger devices, or keep its current narrow Calendar column beside permanently visible details. A recommends the wide Calendar and native inspector; phone details still push through native navigation.
+- Q80 asks whether Month should use the pre-made decorated UICalendarView and selected-day agenda on mobile plus a native SwiftUI event grid on Mac, or an adaptive SwiftUI event grid on every platform. A recommends the available pre-made mobile control; B gives mobile month cells more event text. The [component investigation](research/native-calendar-display-components.md) establishes the platform capabilities and limits.
+- Q81 asks whether to add a shared Core Calendar date query with generation-bound windows, Schedule forms and live owner identities/titles, or assemble each Calendar from the whole existing catalog and separate source reads. A recommends the shared query. The current catalog has no date bounds; its rows already supply owner titles, but Calendar still makes two source reads per Schedule. A facade extension alone would not prove batched storage or performance. The [Calendar contract readiness](container-estimates-and-calendar.md) requires a separate reviewed query contract.

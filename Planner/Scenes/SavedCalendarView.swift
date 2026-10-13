@@ -62,6 +62,22 @@ struct SavedCalendarView: View {
     }
   }
 
+  private func precedes(
+    _ first: SavedPlannerCalendarEntry, _ second: SavedPlannerCalendarEntry
+  ) -> Bool {
+    switch (first.schedule.content.form, second.schedule.content.form) {
+    case (.timed(let firstStart, _, _), .timed(let secondStart, _, _)):
+      if firstStart != secondStart { return firstStart < secondStart }
+    case (.allDay(let firstStart, _), .allDay(let secondStart, _)):
+      let firstDate = (firstStart.year, firstStart.month, firstStart.day)
+      let secondDate = (secondStart.year, secondStart.month, secondStart.day)
+      if firstDate != secondDate { return firstDate < secondDate }
+    case (.allDay, .timed): return true
+    case (.timed, .allDay): return false
+    }
+    return first.id.uuidString < second.id.uuidString
+  }
+
   var body: some View {
     ScrollView {
       VStack(alignment: .leading, spacing: 20) {
@@ -71,7 +87,7 @@ struct SavedCalendarView: View {
         if isLoading {
           ProgressView("Loading schedules")
         } else if let entries {
-          let matchingEntries = entries.filter(occursOnSelectedDay)
+          let matchingEntries = entries.filter(occursOnSelectedDay).sorted(by: precedes)
           if matchingEntries.isEmpty {
             ContentUnavailableView(
               "No scheduled entries", systemImage: "calendar",
