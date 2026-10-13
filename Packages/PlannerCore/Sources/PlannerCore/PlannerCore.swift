@@ -170,6 +170,8 @@ public actor Planner {
         switch input {
         case .direct(let inputs):
           preparation = try plannerPrepareDirectCapture(inputs, items: items)
+        case .loaded(let inputs):
+          preparation = try plannerPrepareCaptureInputs(inputs.inputs, items: items)
         }
         let draft = preparation.read
         captureDrafts[draft.draftId] = .init(

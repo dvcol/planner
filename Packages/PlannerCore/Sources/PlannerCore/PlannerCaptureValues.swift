@@ -7,6 +7,11 @@ public enum PlannerCaptureDirectInput: Sendable, Equatable {
 
 public enum PlannerCaptureInput: Sendable {
   case direct([PlannerCaptureDirectInput])
+  case loaded(PlannerLoadedCaptureInputs)
+}
+
+public struct PlannerLoadedCaptureInputs: Sendable {
+  let inputs: [PlannerCaptureRetainedInput]
 }
 
 public enum PlannerCaptureChoice: Sendable, Equatable {
@@ -116,10 +121,24 @@ struct PlannerCapturePreparation {
   let retainedInputs: [PlannerCaptureRetainedInput]
 }
 
-struct PlannerCaptureRetainedInput {
+enum PlannerCaptureInputSource: Sendable { case independent, provider }
+
+struct PlannerCaptureRetainedInput: Sendable {
   let inputIndex: Int64
   let input: PlannerCaptureDirectInput?
   let unavailableIssue: PlannerCaptureInputIssue?
+  let source: PlannerCaptureInputSource
+
+  init(
+    inputIndex: Int64, input: PlannerCaptureDirectInput?,
+    unavailableIssue: PlannerCaptureInputIssue?,
+    source: PlannerCaptureInputSource = .independent
+  ) {
+    self.inputIndex = inputIndex
+    self.input = input
+    self.unavailableIssue = unavailableIssue
+    self.source = source
+  }
 }
 
 enum PlannerCaptureLimits {
@@ -176,11 +195,13 @@ func plannerPrepareCaptureInputs(
           "This input exceeds the 1 MiB capture limit. Remove it or retry with less content.",
         blocksSave: true)
       inputIssues.append(issue)
-      retainedInputs.append(.init(inputIndex: index, input: nil, unavailableIssue: issue))
+      retainedInputs.append(
+        .init(inputIndex: index, input: nil, unavailableIssue: issue, source: retained.source))
       continue
     }
     decodedBytes += byteCount
-    retainedInputs.append(.init(inputIndex: index, input: input, unavailableIssue: nil))
+    retainedInputs.append(
+      .init(inputIndex: index, input: input, unavailableIssue: nil, source: retained.source))
     if lane == .url,
       (try? PlannerLinkInput(originalUrl: text).validatedKind(propertyPath: "/inputs/\(index)"))
         == nil
@@ -200,8 +221,15 @@ func plannerPrepareCaptureInputs(
     case .text(let text):
       let detected = try plannerCaptureTextLinks(text)
       inputOriginals = detected.originals
-      independentText = text
-      hasProse = detected.hasProse
+      if retained.source == .independent {
+        independentText = text
+        hasProse = detected.hasProse
+      } else if detected.hasProse {
+        inputIssues.append(
+          .init(
+            inputIndex: index, lane: .text, state: .held,
+            message: "Received description: \(text)", blocksSave: false))
+      }
     }
     guard
       Set(inputOriginals).union(originals).count <= PlannerCaptureLimits.maximumDistinctLinks
