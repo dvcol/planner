@@ -161,11 +161,47 @@ public actor Planner {
         }
         let draft = preparation.read
         captureDrafts[draft.draftId] = .init(
-          session: session, read: draft, contentOrigins: preparation.contentOrigins)
+          session: session, read: draft, contentOrigins: preparation.contentOrigins,
+          retainedInputs: preparation.retainedInputs, overrides: .init())
         return .draft(draft)
       }
     } catch {
       return .rejected(failure(error, code: "captureInputFailure"))
+    }
+  }
+
+  public func updateCapture(
+    session: PlannerDatasetSession, draftId: UUID, generation: UUID, edit: PlannerCaptureEdit
+  ) -> PlannerCaptureDraftResult {
+    do {
+      return try coordinated {
+        let draft = try preparedCapture(session: session, draftId: draftId)
+        guard draft.read.generation == generation else {
+          throw PlannerFailure(
+            "captureDraftUnavailable", "The capture draft changed; read it before continuing.")
+        }
+        let context = ModelContext(try openContainer())
+        context.autosaveEnabled = false
+        let items = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).map {
+          try $0.value()
+        }
+        let updated = try plannerEditCapture(draft, edit: edit, items: items)
+        _ = try selectedCategoryRecords(
+          updated.read.content.categoryIds, context: context, propertyPath: "/changes/categoryIds")
+        _ = try selectedTagRecords(
+          updated.read.content.tagIds, context: context, propertyPath: "/changes/tagIds")
+        captureDrafts[draftId] = updated
+        return .draft(updated.read)
+      }
+    } catch {
+      let reason = failure(error, code: "captureDraftUnavailable")
+      guard let path = reason.propertyPath, path.hasPrefix("/command/changes") else {
+        return .rejected(reason)
+      }
+      return .rejected(
+        .init(
+          reason.code, reason.message, propertyPath: String(path.dropFirst("/command".count)),
+          details: reason.details))
     }
   }
 

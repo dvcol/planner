@@ -9,6 +9,21 @@ public enum PlannerCaptureInput: Sendable {
   case direct([PlannerCaptureDirectInput])
 }
 
+public struct PlannerCaptureEdit: Sendable {
+  public let changes: PlannerItemChanges
+  public let removeInputIndexes: Set<Int64>
+  public let retryInputIndexes: Set<Int64>
+
+  public init(
+    changes: PlannerItemChanges = .init(), removeInputIndexes: Set<Int64> = [],
+    retryInputIndexes: Set<Int64> = []
+  ) {
+    self.changes = changes
+    self.removeInputIndexes = removeInputIndexes
+    self.retryInputIndexes = retryInputIndexes
+  }
+}
+
 public enum PlannerCaptureDraftResult: Sendable {
   case draft(PlannerCaptureDraftRead)
   case rejected(PlannerFailure)
@@ -79,14 +94,23 @@ struct PlannerPreparedCapture {
   let session: PlannerDatasetSession
   let read: PlannerCaptureDraftRead
   let contentOrigins: [String: String]
+  let retainedInputs: [PlannerCaptureRetainedInput]
+  let overrides: PlannerItemChanges
 }
 
 struct PlannerCapturePreparation {
   let read: PlannerCaptureDraftRead
   let contentOrigins: [String: String]
+  let retainedInputs: [PlannerCaptureRetainedInput]
 }
 
-private enum PlannerDirectCaptureLimits {
+struct PlannerCaptureRetainedInput {
+  let inputIndex: Int64
+  let input: PlannerCaptureDirectInput?
+  let unavailableIssue: PlannerCaptureInputIssue?
+}
+
+enum PlannerCaptureLimits {
   static let maximumDecodedBytes = 1_048_576
   static let maximumDistinctLinks = 128
 }
@@ -95,13 +119,33 @@ func plannerPrepareDirectCapture(_ inputs: [PlannerCaptureDirectInput], items: [
   throws
   -> PlannerCapturePreparation
 {
+  try plannerPrepareCaptureInputs(
+    inputs.enumerated().map {
+      .init(inputIndex: Int64($0.offset), input: $0.element, unavailableIssue: nil)
+    }, items: items)
+}
+
+func plannerPrepareCaptureInputs(
+  _ inputs: [PlannerCaptureRetainedInput], items: [ItemSnapshot]
+) throws -> PlannerCapturePreparation {
   var links: [PlannerCaptureDraftLink] = []
   var originals = Set<String>()
   var independentTexts: [String] = []
   var hasIndependentProse = false
   var inputIssues: [PlannerCaptureInputIssue] = []
   var decodedBytes = 0
-  for (index, input) in inputs.enumerated() {
+  var retainedInputs: [PlannerCaptureRetainedInput] = []
+  for retained in inputs {
+    let index = retained.inputIndex
+    guard let input = retained.input else {
+      guard let issue = retained.unavailableIssue else {
+        throw PlannerFailure(
+          "captureInputFailure", "The capture input has no retained value or issue.")
+      }
+      inputIssues.append(issue)
+      retainedInputs.append(retained)
+      continue
+    }
     let text: String
     let lane: PlannerCaptureInputIssue.Lane
     switch input {
@@ -113,16 +157,18 @@ func plannerPrepareDirectCapture(_ inputs: [PlannerCaptureDirectInput], items: [
       lane = .text
     }
     let byteCount = text.utf8.count
-    guard byteCount <= PlannerDirectCaptureLimits.maximumDecodedBytes - decodedBytes else {
-      inputIssues.append(
-        .init(
-          inputIndex: Int64(index), lane: lane, state: .oversized,
-          message:
-            "This input exceeds the 1 MiB capture limit. Remove it or retry with less content.",
-          blocksSave: true))
+    guard byteCount <= PlannerCaptureLimits.maximumDecodedBytes - decodedBytes else {
+      let issue = PlannerCaptureInputIssue(
+        inputIndex: index, lane: lane, state: .oversized,
+        message:
+          "This input exceeds the 1 MiB capture limit. Remove it or retry with less content.",
+        blocksSave: true)
+      inputIssues.append(issue)
+      retainedInputs.append(.init(inputIndex: index, input: nil, unavailableIssue: issue))
       continue
     }
     decodedBytes += byteCount
+    retainedInputs.append(.init(inputIndex: index, input: input, unavailableIssue: nil))
     if lane == .url,
       (try? PlannerLinkInput(originalUrl: text).validatedKind(propertyPath: "/inputs/\(index)"))
         == nil
@@ -146,7 +192,7 @@ func plannerPrepareDirectCapture(_ inputs: [PlannerCaptureDirectInput], items: [
       hasProse = detected.hasProse
     }
     guard
-      Set(inputOriginals).union(originals).count <= PlannerDirectCaptureLimits.maximumDistinctLinks
+      Set(inputOriginals).union(originals).count <= PlannerCaptureLimits.maximumDistinctLinks
     else {
       inputIssues.append(
         .init(
@@ -192,10 +238,10 @@ func plannerPrepareDirectCapture(_ inputs: [PlannerCaptureDirectInput], items: [
     saveAllowed: !title.isEmpty && !inputIssues.contains(where: \.blocksSave))
   var origins = ["title": titleOrigin]
   if textFields.notes != nil { origins["notes"] = "independent" }
-  return .init(read: draft, contentOrigins: origins)
+  return .init(read: draft, contentOrigins: origins, retainedInputs: retainedInputs)
 }
 
-private func plannerCaptureReuseCandidates(originals: Set<String>, items: [ItemSnapshot])
+func plannerCaptureReuseCandidates(originals: Set<String>, items: [ItemSnapshot])
   -> [PlannerCaptureReuseCandidate]
 {
   items.compactMap { item in
@@ -226,7 +272,7 @@ private func plannerCaptureTextLinks(_ text: String) throws
     originals.append(original)
     distinctOriginals.insert(original)
     ranges.append(result.range)
-    if distinctOriginals.count > PlannerDirectCaptureLimits.maximumDistinctLinks {
+    if distinctOriginals.count > PlannerCaptureLimits.maximumDistinctLinks {
       stop.pointee = true
     }
   }

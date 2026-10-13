@@ -1,0 +1,87 @@
+Building for debugging...
+[1 / 11] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,87 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CapturePreparationTests started.
+◇ Suite CaptureDraftEditTests started.
+◇ Test emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() started.
+◇ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() started.
+◇ Test captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test removingOversizedInputUnblocksDraftAndPreservesExplicitEdits() started.
+◇ Test linkEditsRetainDraftBindingsAndNewIdentitiesAcrossLaterOwnEdits() started.
+◇ Test removingInputPathsPreservesSurvivingLinkIdentitiesAndExplicitClear() started.
+◇ Test rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test independentUnicodeTextPreservesLinesAndDistinctOriginalLinkOrder() started.
+◇ Test linkOnlyTextLanesRemainInNotesWhenTheCaptureAlsoContainsProse() started.
+◇ Test ownEditsRotateGenerationPreserveOriginalLinksAndNeverWriteSavedData() started.
+◇ Test retryingRetainedDirectInputKeepsOwnEditsAndCurrentLinkIdentities() started.
+◇ Test case passing 1 argument example → .nonWebText to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .whitespace to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .linkOnly to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .mixedUnsupportedURL to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .empty to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument example → .invalidURLOnly to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument scenario → "blankTitle" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument scenario → "coordinate" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument scenario → "category" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "tag" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument scenario → "removeUnknown" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument scenario → "retryUnknown" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+✘ Test rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) recorded an issue with 1 argument scenario → "blankTitle" at CaptureDraftEditTests.swift:94:5: Expectation failed: failure.code == expectedCode && failure.propertyPath == expectedPath
+↳ failure.code == expectedCode && failure.propertyPath == expectedPath → false
+↳   failure.code == expectedCode → true
+↳   failure.propertyPath == expectedPath → false
+✘ Test rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) recorded an issue with 1 argument scenario → "coordinate" at CaptureDraftEditTests.swift:94:5: Expectation failed: failure.code == expectedCode && failure.propertyPath == expectedPath
+↳ failure.code == expectedCode && failure.propertyPath == expectedPath → false
+↳   failure.code == expectedCode → true
+↳   failure.propertyPath == expectedPath → false
+◇ Test case passing 1 argument scenario → "bothActions" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument scenario → "unavailableRetry" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "empty" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+✘ Test rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) recorded an issue with 1 argument scenario → "retryUnknown" at CaptureDraftEditTests.swift:94:5: Expectation failed: failure.code == expectedCode && failure.propertyPath == expectedPath
+↳ failure.code == expectedCode && failure.propertyPath == expectedPath → false
+↳   failure.code == expectedCode → false
+↳   failure.propertyPath == expectedPath → <not evaluated>
+✔ Test emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) with 6 test cases passed after 0.158 seconds.
+✔ Test removingOversizedInputUnblocksDraftAndPreservesExplicitEdits() passed after 0.158 seconds.
+✔ Test linkEditsRetainDraftBindingsAndNewIdentitiesAcrossLaterOwnEdits() passed after 0.158 seconds.
+✔ Test independentUnicodeTextPreservesLinesAndDistinctOriginalLinkOrder() passed after 0.158 seconds.
+✔ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() passed after 0.158 seconds.
+✔ Test removingInputPathsPreservesSurvivingLinkIdentitiesAndExplicitClear() passed after 0.158 seconds.
+✔ Test ownEditsRotateGenerationPreserveOriginalLinksAndNeverWriteSavedData() passed after 0.158 seconds.
+✘ Test rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) recorded an issue with 1 argument scenario → "bothActions" at CaptureDraftEditTests.swift:94:5: Expectation failed: failure.code == expectedCode && failure.propertyPath == expectedPath
+↳ failure.code == expectedCode && failure.propertyPath == expectedPath → false
+↳   failure.code == expectedCode → false
+↳   failure.propertyPath == expectedPath → <not evaluated>
+✔ Test linkOnlyTextLanesRemainInNotesWhenTheCaptureAlsoContainsProse() passed after 0.167 seconds.
+✘ Test rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) recorded an issue with 1 argument scenario → "unavailableRetry" at CaptureDraftEditTests.swift:94:5: Expectation failed: failure.code == expectedCode && failure.propertyPath == expectedPath
+↳ failure.code == expectedCode && failure.propertyPath == expectedPath → false
+↳   failure.code == expectedCode → false
+↳   failure.propertyPath == expectedPath → <not evaluated>
+✘ Test retryingRetainedDirectInputKeepsOwnEditsAndCurrentLinkIdentities() recorded an issue at CaptureDraftEditTests.swift:26:19: Issue recorded
+↳ A retained direct input must be re-evaluated without replacing own fields: .rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Capture input retry is not yet implemented.", details: nil))
+✘ Test retryingRetainedDirectInputKeepsOwnEditsAndCurrentLinkIdentities() failed after 0.179 seconds with 1 issue.
+✘ Test rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) with 9 test cases failed after 0.182 seconds with 5 issues.
+✘ Suite CaptureDraftEditTests failed after 0.182 seconds with 6 issues.
+✔ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() passed after 0.192 seconds.
+✔ Test captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) with 9 test cases passed after 1.917 seconds.
+✔ Suite CapturePreparationTests passed after 1.917 seconds.
+✘ Test run with 12 tests in 2 suites failed after 1.917 seconds with 6 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

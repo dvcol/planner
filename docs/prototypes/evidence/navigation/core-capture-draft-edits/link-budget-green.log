@@ -1,0 +1,84 @@
+Building for debugging...
+[1 / 1]
+[2 / 16] PlannerCore
+[5 / 19] PlannerCore
+[6 / 20] PlannerCore
+[10 / 24] PlannerCore
+[12 / 24] PlannerCore
+[15 / 23] PlannerCoreTests-product
+[18 / 24] PlannerCoreTests-product
+[20 / 25] PlannerCoreStoreTests-product
+[31 / 37] PlannerCoreStoreTests-product
+[32 / 37] PlannerCoreStoreTests-product
+[34 / 37] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift:192:25: warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+190 |     let timedForm = PlannerScheduleForm.timed(
+191 |       start: try #require(ISO8601DateFormatter().date(from: "2026-10-11T01:00:00Z")),
+192 |       end: try #require(ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")),
+    |                         `- warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+193 |       planningTimeZone: "Asia/Tokyo")
+194 |     guard
+[36 / 40] PlannerCoreStoreTests-product
+[38 / 40] PlannerCoreStoreTests-product
+Build complete! (22,09 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CapturePreparationTests started.
+◇ Suite CaptureDraftEditTests started.
+◇ Test linkOnlyTextLanesRemainInNotesWhenTheCaptureAlsoContainsProse() started.
+◇ Test emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() started.
+◇ Test independentUnicodeTextPreservesLinesAndDistinctOriginalLinkOrder() started.
+◇ Test captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test linkEditsRetainDraftBindingsAndNewIdentitiesAcrossLaterOwnEdits() started.
+◇ Test removingInputPathsPreservesSurvivingLinkIdentitiesAndExplicitClear() started.
+◇ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() started.
+◇ Test editedLinksRespectTheDistinctLinkBudgetWithoutPartialChanges(count:) started.
+◇ Test rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test ownEditsRotateGenerationPreserveOriginalLinksAndNeverWriteSavedData() started.
+◇ Test removingOversizedInputUnblocksDraftAndPreservesExplicitEdits() started.
+◇ Test retryingRetainedDirectInputKeepsOwnEditsAndCurrentLinkIdentities() started.
+◇ Test case passing 1 argument example → .empty to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .invalidURLOnly to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .nonWebText to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .whitespace to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .linkOnly to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .mixedUnsupportedURL to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument count → 127 to editedLinksRespectTheDistinctLinkBudgetWithoutPartialChanges(count:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument count → 128 to editedLinksRespectTheDistinctLinkBudgetWithoutPartialChanges(count:) started.
+◇ Test case passing 1 argument scenario → "blankTitle" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument count → 129 to editedLinksRespectTheDistinctLinkBudgetWithoutPartialChanges(count:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument scenario → "coordinate" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "category" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument scenario → "tag" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "removeUnknown" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument scenario → "retryUnknown" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "bothActions" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument scenario → "unavailableRetry" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "empty" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+✔ Test emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) with 6 test cases passed after 0.167 seconds.
+✔ Test linkOnlyTextLanesRemainInNotesWhenTheCaptureAlsoContainsProse() passed after 0.167 seconds.
+✔ Test independentUnicodeTextPreservesLinesAndDistinctOriginalLinkOrder() passed after 0.167 seconds.
+✔ Test linkEditsRetainDraftBindingsAndNewIdentitiesAcrossLaterOwnEdits() passed after 0.167 seconds.
+✔ Test removingInputPathsPreservesSurvivingLinkIdentitiesAndExplicitClear() passed after 0.167 seconds.
+✔ Test editedLinksRespectTheDistinctLinkBudgetWithoutPartialChanges(count:) with 3 test cases passed after 0.167 seconds.
+✔ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() passed after 0.167 seconds.
+✔ Test rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) with 9 test cases passed after 0.199 seconds.
+✔ Test retryingRetainedDirectInputKeepsOwnEditsAndCurrentLinkIdentities() passed after 0.204 seconds.
+✔ Test ownEditsRotateGenerationPreserveOriginalLinksAndNeverWriteSavedData() passed after 0.205 seconds.
+✔ Test removingOversizedInputUnblocksDraftAndPreservesExplicitEdits() passed after 0.212 seconds.
+✔ Suite CaptureDraftEditTests passed after 0.212 seconds.
+✔ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() passed after 0.234 seconds.
+✔ Test captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) with 9 test cases passed after 1.952 seconds.
+✔ Suite CapturePreparationTests passed after 1.953 seconds.
+✔ Test run with 13 tests in 2 suites passed after 1.953 seconds.
