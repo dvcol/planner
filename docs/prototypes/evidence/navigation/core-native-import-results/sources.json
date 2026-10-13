@@ -1,0 +1,10 @@
+{
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerAppliedValues.swift": "ff5b6916686a8d2d986e6d1b4e1beb3ff64588701a35150004cb2afa45784688",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "e31016fe4e16685f5f5ae24d21e69ea6db508cce1c798bd43286f54743c18ee8",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerImportAppliedSummary.swift": "48db9011d75b475e4a478d71092e9f1fc217ec2230be528053aa74d16430ef2c",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerImportResultEncoding.swift": "af97c76ad20d77c347e731923e209cf0d8ee8f1a8807bb929d6a66a69f3460ec",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerImportValues.swift": "edd0a6bcde00e3a1db1a54951f313dd699c9b2f5d21b86e0e2ebb6a12d9d617c",
+  "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportOwnedRemovalTests.swift": "2759c7ad80aa07d81c3bd2895814731c278a5c8b06ef6e3bf7c6dbc6608d8d53",
+  "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportResultTests.swift": "47563d0590a998fda554dbc45f2710e64723d80e3c1a65820e68f5e7b245a92a",
+  "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportSourceDeletionTests.swift": "71e61c59f69f514346f82368340fa98eb0428c41d80ca6e79587f26db0c881e3"
+}

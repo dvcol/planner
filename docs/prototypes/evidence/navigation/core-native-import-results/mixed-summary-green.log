@@ -1,0 +1,21 @@
+Building for debugging...
+[1 / 9] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (2,96 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportResultTests started.
+◇ Test mixedSummaryPreservesCategoriesAndOriginalResultAfterLaterEdits(modeName:) started.
+◇ Test restorationSummaryReportsSavedLifetimesAndReboundDependencies() started.
+◇ Test appliedSummarySurvivesReopenStatusReplayAndRecoveryRetry() started.
+◇ Test case passing 1 argument modeName → "skip" to mixedSummaryPreservesCategoriesAndOriginalResultAfterLaterEdits(modeName:) started.
+◇ Test case passing 1 argument modeName → "overwrite" to mixedSummaryPreservesCategoriesAndOriginalResultAfterLaterEdits(modeName:) started.
+✔ Test appliedSummarySurvivesReopenStatusReplayAndRecoveryRetry() passed after 0.108 seconds.
+✔ Test restorationSummaryReportsSavedLifetimesAndReboundDependencies() passed after 0.163 seconds.
+✔ Test mixedSummaryPreservesCategoriesAndOriginalResultAfterLaterEdits(modeName:) with 2 test cases passed after 0.178 seconds.
+✔ Suite NativeImportResultTests passed after 0.178 seconds.
+✔ Test run with 3 tests in 1 suite passed after 0.178 seconds.

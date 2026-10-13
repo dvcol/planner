@@ -2178,7 +2178,9 @@ public actor Planner {
       }.map {
         .reference($0.reference)
       }
-    let result = PlannerAppliedResult(generatedIdentities: generated, affectedIdentities: affected)
+    let result = PlannerAppliedResult(
+      generatedIdentities: generated, affectedIdentities: affected,
+      importSummary: try resolution.details.appliedSummary(in: restored.backup))
     let bindings = backup.backup.sources.map {
       PlannerBoundIdentity(
         kind: $0.kind.rawValue, id: $0.id, lifetimeId: $0.importBinding.lifetimeId)

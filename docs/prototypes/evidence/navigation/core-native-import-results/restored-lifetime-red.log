@@ -1,0 +1,31 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (2,60 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportResultTests started.
+◇ Test restorationSummaryReportsSavedLifetimesAndReboundDependencies() started.
+✘ Test restorationSummaryReportsSavedLifetimesAndReboundDependencies() recorded an issue at NativeImportResultTests.swift:48:5: Expectation failed: restored.owner.lifetimeId == saved.sourceLifetimeId
+↳ restored.owner.lifetimeId == saved.sourceLifetimeId → false
+↳   restored.owner.lifetimeId → 00000000-0000-4000-8000-000000000811
+↳   saved.sourceLifetimeId → 73A9A994-41F0-41BF-BA92-1ED25493AA7A
+✘ Test restorationSummaryReportsSavedLifetimesAndReboundDependencies() recorded an issue at NativeImportResultTests.swift:49:5: Expectation failed: restored.owner.lifetimeId != item.lifetimeId
+↳ restored.owner.lifetimeId != item.lifetimeId → false
+↳   restored.owner.lifetimeId → 00000000-0000-4000-8000-000000000811
+↳   item.lifetimeId → 00000000-0000-4000-8000-000000000811
+✘ Test restorationSummaryReportsSavedLifetimesAndReboundDependencies() recorded an issue at NativeImportResultTests.swift:53:5: Expectation failed: referringLists.allSatisfy { entry in
+      entry.dependencies.contains { $0.id == item.id && $0.lifetimeId == saved.sourceLifetimeId }
+    }
+↳ referringLists.allSatisfy { entry in
+        entry.dependencies.contains { $0.id == item.id && $0.lifetimeId == saved.sourceLifetimeId }
+      } → <not evaluated>
+✘ Test restorationSummaryReportsSavedLifetimesAndReboundDependencies() failed after 0.126 seconds with 3 issues.
+✘ Suite NativeImportResultTests failed after 0.126 seconds with 3 issues.
+✘ Test run with 1 test in 1 suite failed after 0.126 seconds with 3 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

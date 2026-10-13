@@ -1,0 +1,8 @@
+{
+  "afterAllTestProcessesExited": true,
+  "remainingDisposableFixtureRoots": [],
+  "initialCleanupExited": 1,
+  "initialRecordFailure": "FileNotFoundError: evidence folder did not exist after disposable fixtures were removed",
+  "removedDirectoryCount": null,
+  "note": "Removal completed before the record write failed; exact removal counts were not retained. This verification confirms the named disposable roots are absent."
+}

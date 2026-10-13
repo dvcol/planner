@@ -1,0 +1,142 @@
+{
+  "baseCommit": "99cc8d1",
+  "scope": "Native applied import summaries retained in operation receipts and recovery",
+  "redBeforeGreen": [
+    "missing-summary-red.log",
+    "restored-lifetime-red.log"
+  ],
+  "newTests": {
+    "functions": 4,
+    "invocations": 5
+  },
+  "qualification": {
+    "macCore": {
+      "functions": 123,
+      "suites": 55,
+      "invocations": 345,
+      "failures": 0,
+      "skips": 0
+    },
+    "phoneCore": {
+      "functions": 123,
+      "suites": 55,
+      "invocations": 345,
+      "failures": 0
+    },
+    "http": {
+      "functions": 16,
+      "suites": 4,
+      "invocations": 22,
+      "failures": 0
+    },
+    "strictSwiftLintFiles": 8,
+    "macAppAndTestHost": "TEST BUILD SUCCEEDED",
+    "nativeUIRuntimeFunctions": 0
+  },
+  "reviews": {
+    "standards": "No confirmed findings; read-only review",
+    "spec": "No confirmed findings; read-only review"
+  },
+  "sourceHashesVerifiedAfterAllTestProcessesExited": true,
+  "limits": [
+    "Incoming candidate/family consolidation",
+    "Broader rebinding",
+    "Origin/provider persistence",
+    "Complete generated/affected result coverage",
+    "Native import forms",
+    "Direct database-save failure proof",
+    "Physical CloudKit/account/Share",
+    "Calendar",
+    "Large-data and UI polish"
+  ],
+  "artifacts": [
+    {
+      "path": "missing-summary-red.log",
+      "sha256": "25654aec5fdb72682919e738b276e3f9b989884001d2b9f5337b898354ae436c"
+    },
+    {
+      "path": "coding-keys-compiler-diagnostic.log.gz",
+      "sha256": "288934f472b65830ad637b4f6f4b57ff4caade74f387293b84f65c4c972cbbc4"
+    },
+    {
+      "path": "summary-green.log",
+      "sha256": "4bea752b0700a3d8e5aa8205d7dafcd4d77538f26595d8cbf4d69aaf46482aff"
+    },
+    {
+      "path": "restored-lifetime-red.log",
+      "sha256": "9aacf31dc8b4d6f5b08232a8363c73f8a9ad485e34facf35c4a3ce085c5209a7"
+    },
+    {
+      "path": "restored-lifetime-green.log",
+      "sha256": "a99eefe94af9686001b66af8ac93d633d812eb2cd4f32835df79cf58765f0847"
+    },
+    {
+      "path": "mixed-summary-green.log",
+      "sha256": "f813a629007c8c4ca0dbaf502a6bec80d6ba06739e9711cefb08fd8e9682e328"
+    },
+    {
+      "path": "focused-core-green.log",
+      "sha256": "543c2712625dbb32be6ecc829014463e1be6dc62ccdd61442f33b327524e8254"
+    },
+    {
+      "path": "mac-core-green.log.gz",
+      "sha256": "83adbbcfdacc5895f5b731ff37d977b6b9aeb3b832dd97a48636bb35f50c5e2e"
+    },
+    {
+      "path": "phone-core-green.log.gz",
+      "sha256": "375382f4f7bce25e34a7229924d6f0954c9bff8f514beb2800be1757d39a5059"
+    },
+    {
+      "path": "http-green.log.gz",
+      "sha256": "9ded949df605e8956000e975d2a88fcdaad073715066e93549a8ca57dc54f270"
+    },
+    {
+      "path": "mac-build.log.gz",
+      "sha256": "f6c54d5711f6d8d6356404dae8b41a3404319c04fb150419d0741828009966da"
+    },
+    {
+      "path": "strict-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sources.json",
+      "sha256": "fca481793099ca3ceab0b2d513aacc311b4879540748eeb32e738abed67eacf2"
+    },
+    {
+      "path": "commands.json",
+      "sha256": "b6adc5e37656edff7728e39b40acbd07cb694bf285935be45e0c388383c94520"
+    },
+    {
+      "path": "phone-summary.json",
+      "sha256": "de5e1956c87e559a190036b2725e0c7a1c866169d7ea800a957b2bde5b541a69"
+    },
+    {
+      "path": "phone-tests.json.gz",
+      "sha256": "67ad53e3275cbc0bf2afa6474c78376f3a5e0fd1557ffb6cb3c0110b3990cd49"
+    },
+    {
+      "path": "phone-counts.json",
+      "sha256": "e4a146183ad0af9173831cba7321b85b65ef8373eafe6f09a68709237907f07c"
+    },
+    {
+      "path": "httpmac-summary.json",
+      "sha256": "d26e6bdc6da6ef7e4a759f66972ff76a7ae08fcd769a729ae39179e1a1ea7164"
+    },
+    {
+      "path": "httpmac-tests.json",
+      "sha256": "f953f5854d20149421c0e187cbdebc1226bec5e97e4b6784b8668c2ca2812e1a"
+    },
+    {
+      "path": "httpmac-counts.json",
+      "sha256": "ba5b1017bd820e0c3ac1419bbbd3679d6fb143df254dd8e12d467f7057dea69d"
+    },
+    {
+      "path": "test-store-cleanup.json",
+      "sha256": "add07cde2a58a679b1e24bde119287a5d21048bf063b47c360d58134e5c24138"
+    },
+    {
+      "path": "markdown-lint.log",
+      "sha256": "c218d163305d850d2bde52c62462c8db86f4fe1baee1ae39d8ba2ede2eb04348"
+    }
+  ]
+}

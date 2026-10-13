@@ -1,0 +1,33 @@
+Building for debugging...
+[Pre-planning 1 / 154]
+[Planning deferred tasks]
+[6 / 24] PlannerCore
+[9 / 27] PlannerCore
+[18 / 36] PlannerCore
+[22 / 36] PlannerCore
+[24 / 36] PlannerCore
+[29 / 37] PlannerCoreTests-product
+[32 / 38] PlannerCoreTests-product
+[34 / 39] PlannerCoreStoreTests-product
+[46 / 51] PlannerCoreStoreTests-product
+[48 / 51] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift:192:25: warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+190 |     let timedForm = PlannerScheduleForm.timed(
+191 |       start: try #require(ISO8601DateFormatter().date(from: "2026-10-11T01:00:00Z")),
+192 |       end: try #require(ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")),
+    |                         `- warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+193 |       planningTimeZone: "Asia/Tokyo")
+194 |     guard
+[50 / 54] PlannerCoreStoreTests-product
+[52 / 54] PlannerCoreStoreTests-product
+Build complete! (20,36 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportResultTests started.
+◇ Test restorationSummaryReportsSavedLifetimesAndReboundDependencies() started.
+◇ Test appliedSummarySurvivesReopenStatusReplayAndRecoveryRetry() started.
+✔ Test appliedSummarySurvivesReopenStatusReplayAndRecoveryRetry() passed after 0.090 seconds.
+✔ Test restorationSummaryReportsSavedLifetimesAndReboundDependencies() passed after 0.144 seconds.
+✔ Suite NativeImportResultTests passed after 0.144 seconds.
+✔ Test run with 2 tests in 1 suite passed after 0.144 seconds.
