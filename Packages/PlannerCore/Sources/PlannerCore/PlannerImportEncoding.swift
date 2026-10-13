@@ -344,19 +344,26 @@ extension PlannerPortableBackup {
 
 func plannerImportDigest(
   incoming: PlannerDecodedBackup, current: PlannerDecodedBackup, mode: PlannerImportMode,
-  identity: PlannerStoreIdentity
+  identity: PlannerStoreIdentity, restoreDeletedData: Bool = false
 ) -> String {
   let bindings = incoming.backup.sources.map(\.importBinding) + incoming.externalBindings
+  var command: [String: PlannerCanonicalValue] = [
+    "type": .string("applyImport"), "backup": incoming.backup.importCanonicalValue,
+    "mode": .string(mode.rawValue),
+  ]
+  if restoreDeletedData { command["restoreDeletedData"] = .boolean(true) }
   let value = PlannerCanonicalValue.record([
-    "command": .record([
-      "type": .string("applyImport"), "backup": incoming.backup.importCanonicalValue,
-      "mode": .string(mode.rawValue),
-    ]),
+    "command": .record(command),
     "datasetId": .identity(identity.datasetId),
     "ownershipBinding": .string(identity.ownershipBinding),
     "resolvedBindings": .identitySet(Set(bindings).map(\.importCanonicalValue)),
     "reviewedCurrentData": current.backup.importCanonicalValue,
   ])
+  if restoreDeletedData {
+    return plannerDigest(
+      Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 2]) + value.encoded(),
+      prefix: "sha256-payload-v2:")
+  }
   return plannerDigest(
     Data("PlannerOperationPayload".utf8) + Data([0, 0, 0, 0, 1]) + value.encoded(),
     prefix: "sha256-payload-v1:")

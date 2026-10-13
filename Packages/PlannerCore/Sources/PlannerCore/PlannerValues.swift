@@ -186,7 +186,8 @@ public struct PlannerItemContentInput: Sendable, Equatable {
 }
 
 public enum PlannerCommand: Sendable {
-  case applyImport(backup: PlannerDecodedBackup, mode: PlannerImportMode = .skip)
+  case applyImport(
+    backup: PlannerDecodedBackup, mode: PlannerImportMode = .skip, restoreDeletedData: Bool = false)
   case deleteSource(source: PlannerEntityReference)
   case createItem(content: PlannerItemContentInput)
   case createList(content: PlannerListContentInput)
