@@ -26,6 +26,7 @@ public enum PlannerAppliedIdentity: Sendable, Equatable, Codable {
 public struct PlannerAppliedResult: Sendable, Equatable, Codable {
   public let generatedIdentities: [PlannerAppliedIdentity]
   public let affectedIdentities: [PlannerAppliedIdentity]
+  public let importSummary: PlannerImportReview?
 
   public var generated: [PlannerEntityReference] {
     generatedIdentities.compactMap {
@@ -58,25 +59,31 @@ public struct PlannerAppliedResult: Sendable, Equatable, Codable {
   init(generated: [PlannerEntityReference], affected: [PlannerEntityReference]) {
     generatedIdentities = generated.map(PlannerAppliedIdentity.source)
     affectedIdentities = affected.map(PlannerAppliedIdentity.source)
+    importSummary = nil
   }
 
-  init(generatedIdentities: [PlannerAppliedIdentity], affectedIdentities: [PlannerAppliedIdentity])
-  {
+  init(
+    generatedIdentities: [PlannerAppliedIdentity], affectedIdentities: [PlannerAppliedIdentity],
+    importSummary: PlannerImportReview? = nil
+  ) {
     self.generatedIdentities = generatedIdentities
     self.affectedIdentities = affectedIdentities
+    self.importSummary = importSummary
   }
 
-  private enum CodingKeys: String, CodingKey { case generated, affected }
+  private enum CodingKeys: String, CodingKey { case generated, affected, importSummary }
 
   public init(from decoder: any Decoder) throws {
     let fields = try decoder.container(keyedBy: CodingKeys.self)
     generatedIdentities = try fields.decode([PlannerAppliedIdentity].self, forKey: .generated)
     affectedIdentities = try fields.decode([PlannerAppliedIdentity].self, forKey: .affected)
+    importSummary = try fields.decodeIfPresent(PlannerImportReview.self, forKey: .importSummary)
   }
 
   public func encode(to encoder: any Encoder) throws {
     var fields = encoder.container(keyedBy: CodingKeys.self)
     try fields.encode(generatedIdentities, forKey: .generated)
     try fields.encode(affectedIdentities, forKey: .affected)
+    try fields.encodeIfPresent(importSummary, forKey: .importSummary)
   }
 }

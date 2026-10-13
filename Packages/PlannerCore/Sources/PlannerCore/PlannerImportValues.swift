@@ -9,14 +9,14 @@ public enum PlannerImportMode: String, Sendable {
   case skip, overwrite
 }
 
-public struct PlannerImportOwnerSummary: Sendable {
+public struct PlannerImportOwnerSummary: Sendable, Equatable, Codable {
   public let identity: PlannerBoundSource
   public let title: String?
   public let associationIds: [UUID]
   public let changedFieldNames: [String]
 }
 
-public struct PlannerImportEntry: Sendable {
+public struct PlannerImportEntry: Sendable, Equatable, Codable {
   public let owner: PlannerBoundSource
   public let reasonCode: String?
   public let dependencies: [PlannerBoundSource]
@@ -25,7 +25,7 @@ public struct PlannerImportEntry: Sendable {
   public let after: PlannerImportOwnerSummary?
 }
 
-public struct PlannerDeletionImportEntry: Sendable {
+public struct PlannerDeletionImportEntry: Sendable, Equatable, Codable {
   public let target: PlannerPortableDeletionTarget
   public let owner: PlannerBoundSource?
   public let propertyPaths: [String]
@@ -33,13 +33,13 @@ public struct PlannerDeletionImportEntry: Sendable {
   public let after: PlannerImportOwnerSummary?
 }
 
-public struct PlannerImportReferenceChange: Sendable {
-  public enum Change: String, Sendable { case add, remove, retain, restore }
+public struct PlannerImportReferenceChange: Sendable, Equatable, Codable {
+  public enum Change: String, Sendable, Codable { case add, remove, retain, restore }
   public let change: Change
   public let reference: PlannerReferenceRead
 }
 
-public struct PlannerImportReview: Sendable {
+public struct PlannerImportReview: Sendable, Equatable, Codable {
   public let imports: [PlannerImportEntry]
   public let unchanged: [PlannerImportEntry]
   public let skippedConflicts: [PlannerImportEntry]
@@ -50,7 +50,7 @@ public struct PlannerImportReview: Sendable {
   public let referenceChanges: [PlannerImportReferenceChange]
 }
 
-public struct PlannerBoundSource: Sendable, Hashable {
+public struct PlannerBoundSource: Sendable, Hashable, Codable {
   public let kind: PlannerEntityKind
   public let id: UUID
   public let lifetimeId: UUID
@@ -121,5 +121,48 @@ public struct PlannerPortableOwnedLink: Sendable {
     .init(
       linkId: id, originalUrl: originalUrl, label: label, kind: kind,
       providerReference: providerReference)
+  }
+}
+
+extension PlannerImportOwnerSummary {
+  private enum CodingKeys: String, CodingKey {
+    case identity, title, associationIds, changedFieldNames
+  }
+
+  public func encode(to encoder: any Encoder) throws {
+    var fields = encoder.container(keyedBy: CodingKeys.self)
+    try fields.encode(identity, forKey: .identity)
+    try fields.encode(title, forKey: .title)
+    try fields.encode(associationIds, forKey: .associationIds)
+    try fields.encode(changedFieldNames, forKey: .changedFieldNames)
+  }
+}
+
+extension PlannerImportEntry {
+  private enum CodingKeys: String, CodingKey {
+    case owner, reasonCode, dependencies, propertyPaths, before, after
+  }
+
+  public func encode(to encoder: any Encoder) throws {
+    var fields = encoder.container(keyedBy: CodingKeys.self)
+    try fields.encode(owner, forKey: .owner)
+    try fields.encode(reasonCode, forKey: .reasonCode)
+    try fields.encode(dependencies, forKey: .dependencies)
+    try fields.encode(propertyPaths, forKey: .propertyPaths)
+    try fields.encode(before, forKey: .before)
+    try fields.encode(after, forKey: .after)
+  }
+}
+
+extension PlannerDeletionImportEntry {
+  private enum CodingKeys: String, CodingKey { case target, owner, propertyPaths, before, after }
+
+  public func encode(to encoder: any Encoder) throws {
+    var fields = encoder.container(keyedBy: CodingKeys.self)
+    try fields.encode(target, forKey: .target)
+    try fields.encode(owner, forKey: .owner)
+    try fields.encode(propertyPaths, forKey: .propertyPaths)
+    try fields.encode(before, forKey: .before)
+    try fields.encode(after, forKey: .after)
   }
 }

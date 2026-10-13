@@ -146,6 +146,8 @@ struct NativeImportOwnedRemovalTests {
         JSONSerialization.jsonObject(with: recovered.portableData) as? [String: Any])
       #expect(NSDictionary(dictionary: recovery).isEqual(to: actual))
       #expect(result.generated.isEmpty)
+      let appliedSummary = try #require(result.importSummary)
+      #expect(appliedSummary.incomingDeletions == review.impact.importDetails?.incomingDeletions)
       if mode == .skip {
         #expect(after == before)
       } else {
