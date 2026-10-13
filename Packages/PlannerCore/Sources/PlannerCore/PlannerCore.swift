@@ -16,6 +16,7 @@ public actor Planner {
     let payloadDigest: String
   }
   private var reviews: [UUID: ReviewBinding] = [:]
+  private var captureDrafts: [UUID: PlannerPreparedCapture] = [:]
   private enum ItemStateChange {
     case archive(Bool)
     case completion(Bool)
@@ -140,6 +141,75 @@ public actor Planner {
     } catch {
       return .unavailable(failure(error, code: "unavailable"))
     }
+  }
+
+  public func prepareCapture(session: PlannerDatasetSession, input: PlannerCaptureInput)
+    -> PlannerCaptureDraftResult
+  {
+    do {
+      return try coordinated {
+        _ = try validateSession(session)
+        let context = ModelContext(try openContainer())
+        context.autosaveEnabled = false
+        let items = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).map {
+          try $0.value()
+        }
+        let preparation: PlannerCapturePreparation
+        switch input {
+        case .direct(let inputs):
+          preparation = try plannerPrepareDirectCapture(inputs, items: items)
+        }
+        let draft = preparation.read
+        captureDrafts[draft.draftId] = .init(
+          session: session, read: draft, contentOrigins: preparation.contentOrigins)
+        return .draft(draft)
+      }
+    } catch {
+      return .rejected(failure(error, code: "captureInputFailure"))
+    }
+  }
+
+  public func readCapture(session: PlannerDatasetSession, draftId: UUID)
+    -> PlannerCaptureDraftResult
+  {
+    do {
+      return try coordinated {
+        .draft(try preparedCapture(session: session, draftId: draftId).read)
+      }
+    } catch {
+      return .rejected(failure(error, code: "captureDraftUnavailable"))
+    }
+  }
+
+  public func cancelCapture(session: PlannerDatasetSession, draftId: UUID, generation: UUID)
+    -> PlannerCaptureCancelResult
+  {
+    do {
+      return try coordinated {
+        let draft = try preparedCapture(session: session, draftId: draftId)
+        guard draft.read.generation == generation else {
+          throw PlannerFailure(
+            "captureDraftUnavailable", "The capture draft changed; read it before continuing.")
+        }
+        captureDrafts.removeValue(forKey: draftId)
+        return .cancelled
+      }
+    } catch {
+      return .rejected(failure(error, code: "captureDraftUnavailable"))
+    }
+  }
+
+  private func preparedCapture(session: PlannerDatasetSession, draftId: UUID) throws
+    -> PlannerPreparedCapture
+  {
+    _ = try validateSession(session)
+    guard let draft = captureDrafts[draftId], draft.session.datasetId == session.datasetId,
+      draft.session.ownershipBinding == session.ownershipBinding,
+      draft.session.epochId == session.epochId
+    else {
+      throw PlannerFailure("captureDraftUnavailable", "The capture draft is no longer available.")
+    }
+    return draft
   }
 
   public func prepareReview(session: PlannerDatasetSession, command: PlannerCommand)
