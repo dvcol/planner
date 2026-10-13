@@ -33,6 +33,6 @@ Mac passed 183 affected Core functions in 70 suites, covering 482 invocations. i
 
 ## Remaining map work
 
-Actual physical sender compatibility, genuine positive Apple identifier preservation/binding and extension peak allocation remain required. The encoded cap is checked after the provider returns bytes, so it does not prove a maximum allocation inside Apple loading or decoding.
+One [genuine Apple reference fixture](genuine-native-map-reference.md) is subsequently qualified on Mac. Original-link binding, an iPhone/iPad positive-ID payload, actual physical sender compatibility and extension peak allocation remain required. The encoded cap is checked after the provider returns bytes, so it does not prove a maximum allocation inside Apple loading or decoding.
 
 Bounded Maps lookup, capture transport/native review/Share/Intents flows, import reconciliation/forms, genuine save-failure/termination checks, Calendar, paging/performance, filtered drag/group/duration interactions, physical sync/account recovery and whole-app native UI polish remain open. This loading step does not close the parent prototype tickets.

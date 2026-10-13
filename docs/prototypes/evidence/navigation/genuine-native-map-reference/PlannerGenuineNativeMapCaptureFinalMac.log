@@ -1,0 +1,15 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[9 / 13] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (3,14 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite GenuineNativeMapCaptureTests started.
+◇ Test nativeApplePlaceReferenceRemainsTemporaryAfterOwnedCaptureSave() started.
+✔ Test nativeApplePlaceReferenceRemainsTemporaryAfterOwnedCaptureSave() passed after 0.074 seconds.
+✔ Suite GenuineNativeMapCaptureTests passed after 0.074 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.075 seconds.

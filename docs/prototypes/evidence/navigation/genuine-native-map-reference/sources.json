@@ -1,0 +1,6 @@
+{
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1ca538a5ea664fb8f718eae11adce89e827220852074a33a7bec9120d1766713",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerNativeCaptureLoader.swift": "9734ec9899706aee9835f21e9e5b01602a237df04fb687a163de7b4ed3e35c87",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerNativeMapCapture.swift": "69768a7b19e56234c538ae0861883429cf300a6941e5a54b7eff05bc9a798bb5",
+  "Packages/PlannerCore/Tests/PlannerCoreStoreTests/GenuineNativeMapCaptureTests.swift": "f5840f7bf7205fe1b6102d1d0530da98abedfc48450e632bfd1ac213869a905a"
+}

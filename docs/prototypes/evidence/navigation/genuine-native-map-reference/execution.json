@@ -1,0 +1,67 @@
+{
+  "baseCommit": "69f8836",
+  "scope": "Mac genuine native place identifier preservation and owned save/backup exclusion",
+  "qualified": {
+    "platform": "macOS",
+    "functions": 1,
+    "suites": 1,
+    "invocations": 1,
+    "failures": 0,
+    "skips": 0,
+    "strictSwiftLintFiles": 1,
+    "markdownLintDocuments": 2
+  },
+  "fixture": {
+    "archiveBytes": 23075,
+    "available": true,
+    "identifier": "ID40BC454B39E9696",
+    "name": "Nezu Museum",
+    "provider": "MKLocalSearch",
+    "roundTripIdentifier": "ID40BC454B39E9696",
+    "sha256": "51ec06597e9af8ecd833ae0273348b7519aff16a01c10d6d3d2c89edcc019674",
+    "storedInRepository": false
+  },
+  "productionChanged": false,
+  "sourceHashesVerifiedAfterTestProcessExited": true,
+  "lookupWorkExcludedFromQualification": true,
+  "reviews": {
+    "standards": "No remaining findings; missing-link check resolved after evidence collection",
+    "spec": "No actionable issues; provenance and proof scope verified"
+  },
+  "limits": [
+    "Constructed native provider on Mac, not physical Share sender",
+    "Original Maps URL binding remains open",
+    "iPhone/iPad positive-ID payload remains open",
+    "Extension allocation/lifecycle and iCloud convergence remain open"
+  ],
+  "artifacts": [
+    {
+      "path": "PlannerGenuineAppleMapProbe.log",
+      "sha256": "0c28a9c8231c00cee4d89738c693e6e9a15626a64920b6fd982351b510fcab25"
+    },
+    {
+      "path": "PlannerGenuineAppleMapProbe.swift",
+      "sha256": "3ea47c6c317e34e2cd034dec9ffc3f043a1b245d4987c1425082ef5343a9f0d3"
+    },
+    {
+      "path": "PlannerGenuineNativeMapCaptureFinalMac.log",
+      "sha256": "e2343a361411ef1fd531450095f1e51394a598bc467b33f7e4854b51c014f6f9"
+    },
+    {
+      "path": "PlannerGenuineNativeMapCaptureMarkdownlint.log",
+      "sha256": "79eb85e30ead9feea28fb2f046c1a2b0ece65e51ae58d67db0bfb7ec94fec209"
+    },
+    {
+      "path": "PlannerGenuineNativeMapCaptureStrictLint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "commands.json",
+      "sha256": "b5cbf8f0a5502e6bd03b7a63aeeb5e830d6b5401d2231b778e4fb82d290e3165"
+    },
+    {
+      "path": "sources.json",
+      "sha256": "fc8f4da6762df83a4a67854b9e95b8e93a474e3d6a8e5a3cc8d5b641923cda76"
+    }
+  ]
+}
