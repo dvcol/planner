@@ -1,6 +1,28 @@
 import PlannerCore
 import SwiftUI
 
+/// Formats civil dates independently of the device's time zone.
+func allDayScheduleDescription(start: PlannerCivilDate, end: PlannerCivilDate?) -> String {
+  var calendar = Calendar(identifier: .gregorian)
+  calendar.timeZone = .gmt
+  guard
+    let startDate = calendar.date(
+      from: DateComponents(year: start.year, month: start.month, day: start.day, hour: 12))
+  else { return "Date unavailable" }
+  let finalDate = end ?? start
+  guard
+    let endDate = calendar.date(
+      from: DateComponents(
+        year: finalDate.year, month: finalDate.month, day: finalDate.day, hour: 12))
+  else { return "Date unavailable" }
+  let dateIntervalFormatter = DateIntervalFormatter()
+  dateIntervalFormatter.calendar = calendar
+  dateIntervalFormatter.timeZone = .gmt
+  dateIntervalFormatter.dateStyle = .medium
+  dateIntervalFormatter.timeStyle = .none
+  return dateIntervalFormatter.string(from: startDate, to: endDate)
+}
+
 struct SavedSchedulesSection: View {
   @Environment(SavedPlannerStore.self) private var store
   let source: PlannerEntityReference
@@ -130,24 +152,7 @@ private struct SavedScheduleRow: View {
       }
       return dateDescription + " · " + planningTimeZone
     case .allDay(let start, let end):
-      var calendar = Calendar(identifier: .gregorian)
-      calendar.timeZone = .gmt
-      guard
-        let startDate = calendar.date(
-          from: DateComponents(year: start.year, month: start.month, day: start.day, hour: 12))
-      else { return "Date unavailable" }
-      let finalDate = end ?? start
-      guard
-        let endDate = calendar.date(
-          from: DateComponents(
-            year: finalDate.year, month: finalDate.month, day: finalDate.day, hour: 12))
-      else { return "Date unavailable" }
-      let dateIntervalFormatter = DateIntervalFormatter()
-      dateIntervalFormatter.calendar = calendar
-      dateIntervalFormatter.timeZone = .gmt
-      dateIntervalFormatter.dateStyle = .medium
-      dateIntervalFormatter.timeStyle = .none
-      return dateIntervalFormatter.string(from: startDate, to: endDate)
+      return allDayScheduleDescription(start: start, end: end)
     }
   }
 

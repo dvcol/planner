@@ -1,0 +1,115 @@
+{
+  "baseCommit": "ed19415",
+  "scope": "Native all-day Calendar date captions, preserving civil fields and Schedule identities",
+  "qualified": {
+    "phone": {
+      "functions": 5,
+      "suites": 2,
+      "invocations": 5,
+      "failures": 0,
+      "skips": 0
+    },
+    "tablet": {
+      "functions": 5,
+      "suites": 2,
+      "invocations": 5,
+      "failures": 0,
+      "skips": 0
+    },
+    "mac": {
+      "appAndTestHostBuild": "passed",
+      "runtimeFunctions": 0
+    },
+    "strictSwiftLintFiles": 3,
+    "markdownLintDocuments": 1
+  },
+  "sourceHashesVerifiedAfterAllProcessesExited": true,
+  "lookupWorkExcludedFromQualification": true,
+  "reviews": {
+    "standards": "No confirmed findings in scoped source",
+    "spec": "No confirmed defects in scoped source"
+  },
+  "screenshots": [
+    {
+      "path": "phone-all-day-dates.png",
+      "originalExport": "F5230B50-66EB-46FE-9670-53C03430C5FF.png",
+      "inspected": true,
+      "run": "focused green",
+      "sameQualifiedSourceRevision": true
+    },
+    {
+      "path": "tablet-all-day-dates.png",
+      "originalExport": "95096774-E682-449A-866C-3FF741B7ECDB.png",
+      "inspected": true,
+      "run": "focused green",
+      "sameQualifiedSourceRevision": true
+    }
+  ],
+  "limits": [
+    "Q79\u201381 Calendar layout/component/query choices remain pending",
+    "Day/Week, Month event overview and display-zone override remain open",
+    "Timed/mixed/tie, DST/travel, external refresh/deletion, paging/performance, accessibility/keyboard and Mac runtime remain open"
+  ],
+  "artifacts": [
+    {
+      "path": "PlannerCalendarSpanCaptionPhoneRed.log.gz",
+      "sha256": "3bda808ed09c86c66e88b79b66065d488f5fb930b8a08a924f65ff4f54bdb35d"
+    },
+    {
+      "path": "PlannerCalendarSpanCaptionPhoneRedSummary.json",
+      "sha256": "1cf07a1a4ce6f282ae52a07c86bbef033bdad7bccc0ea380bdd349a4360054cf"
+    },
+    {
+      "path": "PlannerCalendarSpanCaptionQualifiedMacBuild.log.gz",
+      "sha256": "3d2a71e146a050efe93a71e4f53332e7c4ab75625ad7f1144458a1bc9f45d92b"
+    },
+    {
+      "path": "PlannerCalendarSpanCaptionQualifiedMarkdownlint.log",
+      "sha256": "13fc45397eff4a52f83f270457d00af472924ca4d948472ecfc8aa8a62fb6cf6"
+    },
+    {
+      "path": "PlannerCalendarSpanCaptionQualifiedPhone.log.gz",
+      "sha256": "a53a0d388f1ed3bd6807c5939d190eada2384d358438476fa67dd5782c90bbc4"
+    },
+    {
+      "path": "PlannerCalendarSpanCaptionQualifiedPhoneSummary.json",
+      "sha256": "fed225e78f409183f23de67dd41d30cb867f61447e3df7dab9cbe1d4fb441854"
+    },
+    {
+      "path": "PlannerCalendarSpanCaptionQualifiedPhoneTests.json",
+      "sha256": "1801e9423982e8ad6774da90ed1bf3af443b4fbb8ba12d6cdf8b52895872f23c"
+    },
+    {
+      "path": "PlannerCalendarSpanCaptionQualifiedStrictLint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "PlannerCalendarSpanCaptionQualifiedTablet.log.gz",
+      "sha256": "6f45bd62ead3ae5e6941cc0ace660a8d773cf535508d3fb01d4ceb5121207070"
+    },
+    {
+      "path": "PlannerCalendarSpanCaptionQualifiedTabletSummary.json",
+      "sha256": "2f3e2a5e454ad2270c3f0352123877b9335fe3475c6bc7ae1fb329f4a13ff17f"
+    },
+    {
+      "path": "PlannerCalendarSpanCaptionQualifiedTabletTests.json",
+      "sha256": "f98e5283452b2f3d5c7f0d02fd7294bf6def962037fa733f83eb39b811799770"
+    },
+    {
+      "path": "commands.json",
+      "sha256": "162ee630ed166385bbf1a1f705adfb3d177146e8bdff48909fc7e71facec75a3"
+    },
+    {
+      "path": "phone-all-day-dates.png",
+      "sha256": "1773d08cce1b817e967b7e934437cfdc2c3840906ac136911c407786c6f00004"
+    },
+    {
+      "path": "sources.json",
+      "sha256": "485d63d8ee00c5c96bb2e83d5d8b269917ef23d2453a7a71997de22e145500c3"
+    },
+    {
+      "path": "tablet-all-day-dates.png",
+      "sha256": "6acda507e17ad9accadfbbc8fe79f9519a00276830afc698760627d3f33979d1"
+    }
+  ]
+}
