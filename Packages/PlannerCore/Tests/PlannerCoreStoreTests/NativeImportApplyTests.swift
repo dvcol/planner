@@ -57,49 +57,6 @@ struct NativeImportApplyTests {
     #expect(reopenedData == before)
   }
 
-  @Test func unsupportedNativeProviderReferenceRejectsWithoutSavingAPartialImport() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
-    let configuration = PlannerStorageConfiguration(
-      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
-      controlURL: directory.appendingPathComponent("control/writer"),
-      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
-      processRole: .mainApplication, storageMode: .localOnly)
-    let planner = Planner(configuration: configuration)
-    var portable = try #require(
-      JSONSerialization.jsonObject(with: nativeImportFixtureData()) as? [String: Any])
-    var links = try #require(portable["ownedLinks"] as? [[String: Any]])
-    links[0]["originalUrl"] = "https://maps.apple.com/?q=Nezu%20Museum"
-    links[0]["kind"] = "appleMaps"
-    links[0]["providerReference"] = ["kind": "applePlaceId", "value": "fixture-place"]
-    portable["ownedLinks"] = links
-    guard case .ready(let session) = await planner.bootstrap(),
-      case .exported(let before) = await planner.exportData(session: session),
-      case .decoded(let backup) = planner.decodeImport(
-        try JSONSerialization.data(withJSONObject: portable)),
-      case .reviewed(let review) = await planner.prepareReview(
-        session: session, command: .applyImport(backup: backup))
-    else { throw CancellationError() }
-    let operationIdentifier = UUID()
-    guard
-      case .rejected(let failure) = await planner.execute(
-        .init(
-          operationId: operationIdentifier, session: session, command: review.command,
-          reviewToken: review.reviewToken)
-      ).outcome,
-      case .exported(let after) = await planner.exportData(session: session),
-      case .noReliableEvidence = await planner.operationStatus(
-        session: session, operationId: operationIdentifier)
-    else { throw CancellationError() }
-    #expect(failure.code == "unavailable")
-    #expect(after == before)
-    let reopened = Planner(configuration: configuration)
-    guard case .ready(let reopenedSession) = await reopened.bootstrap(),
-      case .exported(let reopenedData) = await reopened.exportData(session: reopenedSession)
-    else { throw CancellationError() }
-    #expect(reopenedData == before)
-  }
-
   @Test(arguments: ["notes", "localCompletion"])
   func ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_ scenario: String)
     async throws

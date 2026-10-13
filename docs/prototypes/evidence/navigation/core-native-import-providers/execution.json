@@ -1,0 +1,149 @@
+{
+  "baseCommit": "0bbeb80",
+  "scope": "Native allowed Apple place-reference persistence and genuine schema-17 migration",
+  "storageSchemaVersion": 18,
+  "portableFormatVersion": 2,
+  "newTests": {
+    "functions": 2,
+    "invocations": 3
+  },
+  "qualified": {
+    "macCore": {
+      "functions": 139,
+      "suites": 66,
+      "invocations": 367,
+      "failures": 0,
+      "skips": 0
+    },
+    "phoneCore": {
+      "functions": 139,
+      "suites": 66,
+      "invocations": 367,
+      "failures": 0,
+      "skips": 0
+    },
+    "http": {
+      "functions": 16,
+      "suites": 4,
+      "invocations": 22,
+      "failures": 0,
+      "skips": 0
+    },
+    "strictSwiftLintFiles": 28,
+    "macAppAndTestHost": "TEST BUILD SUCCEEDED",
+    "nativeUIRuntimeFunctions": 0,
+    "markdownLintDocuments": 2
+  },
+  "reviews": {
+    "standards": "No confirmed findings; read-only",
+    "spec": "No confirmed defects or unrequested scope; read-only"
+  },
+  "redBeforeGreen": [
+    "provider-import-red.log",
+    "retained-edit-red.log"
+  ],
+  "sourceHashesVerifiedAfterAllTestProcessesExited": true,
+  "genuineSchema17Producer": "../../../../../Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV17/producer.json",
+  "limits": [
+    "Native capture admission",
+    "Live provider resolution",
+    "Incoming candidates/family reconciliation",
+    "Broader rebinding",
+    "Complete generated/affected results",
+    "Native forms",
+    "Direct database-save failure",
+    "Physical sync/account/Share",
+    "Calendar",
+    "Scale/paging and polish"
+  ],
+  "artifacts": [
+    {
+      "path": "commands.json",
+      "sha256": "cff8519b672a5ccb0370490891a98b0569b81e02d33ff4b3fa50ec2c5ca0a3ac"
+    },
+    {
+      "path": "http-counts.json",
+      "sha256": "6a898f6b8b3ee0579f4c03b2cbd1a801f9a653dcb9d0b696336d0660cb987df1"
+    },
+    {
+      "path": "http-green.log.gz",
+      "sha256": "e5fe237eb657c55f1a1c624ed84daaa199291847a593291a02ee579e578550cc"
+    },
+    {
+      "path": "http-summary.json",
+      "sha256": "f688da6ea5b18d67638484f90f4c0011e8ef5b93ec03360a1c43a0be7cff33d7"
+    },
+    {
+      "path": "http-tests.json",
+      "sha256": "3d800ec77036004220e8ad30320cea4888348d8f2be455e29c736ab967fa7dac"
+    },
+    {
+      "path": "initial-test-compile-diagnostic.log",
+      "sha256": "9ee40827e7023edf8d6433751b021c787c15c35329b0003319f4eb31e13b1c99"
+    },
+    {
+      "path": "mac-build.log.gz",
+      "sha256": "4ba7fbf3244c77aace436038074493f4655db5c44dea76bab2ee86026d3dd05f"
+    },
+    {
+      "path": "mac-core-green.log.gz",
+      "sha256": "51a44bd1cd40122ca5fbe06dd1693e71ad71040fdb9449e165752469cd692044"
+    },
+    {
+      "path": "mac-counts.json",
+      "sha256": "c93668adcc20395f675735a0f449558113d434a266ac1bfb3c5a315d5440d93a"
+    },
+    {
+      "path": "markdownlint.log",
+      "sha256": "caff895ab81d6a8e6cad3cec03359eba9343dfd32c7b372659c800f7d8047466"
+    },
+    {
+      "path": "phone-core-green.log.gz",
+      "sha256": "414a9861579eba9cc1ba04e533533f2e4f1bdb9c43318271bfffba2d8c18d6c9"
+    },
+    {
+      "path": "phone-counts.json",
+      "sha256": "c93668adcc20395f675735a0f449558113d434a266ac1bfb3c5a315d5440d93a"
+    },
+    {
+      "path": "phone-summary.json",
+      "sha256": "2f4f25c392458db3578f7a8230c031b0af627fa6a84c5bf72a4317cfd3489bae"
+    },
+    {
+      "path": "phone-tests.json.gz",
+      "sha256": "60d279b757d08ea1c1d53be5fbc2f3931a1d1a3310903daaa1cef621e03b2244"
+    },
+    {
+      "path": "provider-import-green.log",
+      "sha256": "8e38714f0c4e6c2fcd75d2998d989b1ba20b0c1077c6c1a16c200e987da464fa"
+    },
+    {
+      "path": "provider-import-red.log",
+      "sha256": "3b3038077e81cec776945fdf443aac587b27d66eaae995c8f1d03fa24533fab8"
+    },
+    {
+      "path": "retained-edit-migration-green.log",
+      "sha256": "fbf8a9f84a922193eb43f1c60a4256aa376d15c265aad8bfa04f7e1434adcffa"
+    },
+    {
+      "path": "retained-edit-red.log",
+      "sha256": "06c7536cec20459ea5abdf92b5b8bcea5ca210a4cc5fc24119cdf510554d0cd2"
+    },
+    {
+      "path": "schema-row-compile-diagnostic.log",
+      "sha256": "f7b33826fb0bc036adc88965627b34d7bbcba7309fb7775db59eed6c2dd0fc1a"
+    },
+    {
+      "path": "sources.json",
+      "sha256": "81355a9f976c552f9a0276e2061fd274c48d357b646ede70565393d309fd2921"
+    },
+    {
+      "path": "strict-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "test-store-cleanup.json",
+      "sha256": "42393a9c0dac7f24b830fb4295d95fe49eb9122532c387dcd6d7a95ae5a4dd4d"
+    }
+  ]
+}

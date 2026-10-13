@@ -86,7 +86,7 @@ struct ItineraryEntryMigrationTests {
           namespaceId: manifest.namespaceId, checkpointGeneration: checkpoint))
     else { throw CancellationError() }
     #expect(checkpoint == 12)
-    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 17)
+    #expect(namespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 18)
     #expect(current.content == before.content)
     #expect(current.fieldHashes == before.fieldHashes)
     #expect(current.progress.doneCount == 1)

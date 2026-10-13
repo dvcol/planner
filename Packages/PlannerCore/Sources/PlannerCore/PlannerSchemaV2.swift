@@ -146,9 +146,11 @@ struct OwnedLinkSnapshot: Codable {
   let originalUrl: String
   let label: String?
   let kind: PlannerLinkKind
+  var providerReference: PlannerProviderReference? = nil
 
   var read: PlannerOwnedLinkRead {
     PlannerOwnedLinkRead(
-      linkId: id, originalUrl: originalUrl, label: label, kind: kind, providerReference: nil)
+      linkId: id, originalUrl: originalUrl, label: label, kind: kind,
+      providerReference: providerReference)
   }
 }

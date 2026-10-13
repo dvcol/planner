@@ -1,0 +1,39 @@
+Building for debugging...
+[Planning 1 / 154]
+[Planning deferred tasks]
+[1 / 7] PlannerCoreTests-product
+[9 / 20] PlannerCoreStoreTests-product
+[12 / 23] PlannerCoreStoreTests-product
+[18 / 22] PlannerCoreStoreTests-product
+[20 / 22] PlannerCoreStoreTests-product
+Build complete! (3,22 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportProviderTests started.
+◇ Test applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:) started.
+◇ Test case passing 1 argument ownerKind → "itinerary" to applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:) started.
+◇ Test case passing 1 argument ownerKind → "item" to applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:) started.
+✘ Test applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:) recorded an issue with 1 argument ownerKind → "itinerary" at NativeImportProviderTests.swift:236:3: Expectation failed: NSDictionary(dictionary: try providerTestGraph(exported)).isEqual(
+      to: try providerTestGraph(recovered.portableData))
+↳ NSDictionary(dictionary: try providerTestGraph(exported)).isEqual(
+        to: try providerTestGraph(recovered.portableData)) → <not evaluated>
+✘ Test applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:) recorded an issue with 1 argument ownerKind → "item" at NativeImportProviderTests.swift:181:5: Expectation failed: retained.providerReference?.value == expectedReference
+↳ retained.providerReference?.value == expectedReference → false
+↳   retained.providerReference?.value → nil
+↳   expectedReference → "fixture-nezu-place"
+↳     some → "fixture-nezu-place"
+✘ Test applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:) recorded an issue with 1 argument ownerKind → "itinerary" at NativeImportProviderTests.swift:236:3: Expectation failed: NSDictionary(dictionary: try providerTestGraph(exported)).isEqual(
+      to: try providerTestGraph(recovered.portableData))
+↳ NSDictionary(dictionary: try providerTestGraph(exported)).isEqual(
+        to: try providerTestGraph(recovered.portableData)) → <not evaluated>
+✘ Test applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:) recorded an issue with 1 argument ownerKind → "itinerary" at NativeImportProviderTests.swift:181:5: Expectation failed: retained.providerReference?.value == expectedReference
+↳ retained.providerReference?.value == expectedReference → false
+↳   retained.providerReference?.value → "fixture-nezu-place"
+↳     some → "fixture-nezu-place"
+↳   expectedReference → nil
+✘ Test applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:) with 2 test cases failed after 0.608 seconds with 4 issues.
+✘ Suite NativeImportProviderTests failed after 0.608 seconds with 4 issues.
+✘ Test run with 1 test in 1 suite failed after 0.608 seconds with 4 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

@@ -230,10 +230,15 @@ extension PlannerItineraryChanges {
     return try inputs.enumerated().map { index, input in
       let previous = try retainedLink(input, index: index, in: itinerary)
       let identifier = previous?.id ?? UUID()
+      var providerReference: PlannerProviderReference?
+      if previous?.originalUrl == input.originalUrl {
+        providerReference = previous?.providerReference
+      }
       return OwnedLinkSnapshot(
         id: identifier, lifetimeId: previous?.lifetimeId ?? identifier, rank: Int64(index),
         originalUrl: input.originalUrl, label: input.label,
-        kind: try input.validatedKind(propertyPath: "/command/changes/links/\(index)"))
+        kind: try input.validatedKind(propertyPath: "/command/changes/links/\(index)"),
+        providerReference: providerReference)
     }
   }
 

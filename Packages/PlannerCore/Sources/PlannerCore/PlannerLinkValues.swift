@@ -1,5 +1,12 @@
 import Foundation
 
+extension PlannerProviderReference {
+  func isValid(for linkKind: PlannerLinkKind) -> Bool {
+    linkKind == .appleMaps && !value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+      && !["my-location", "parked-car"].contains(value.lowercased())
+  }
+}
+
 extension PlannerLinkInput {
   func validatedKind(propertyPath: String) throws -> PlannerLinkKind {
     guard let url = URL(string: originalUrl, encodingInvalidCharacters: false),
@@ -57,10 +64,15 @@ extension PlannerItemChanges {
     guard case .set(let inputs) = links else { return item.links }
     return try inputs.enumerated().map { index, input in
       let previous = try retainedLink(input, index: index, in: item)
+      var providerReference: PlannerProviderReference?
+      if previous?.originalUrl == input.originalUrl {
+        providerReference = previous?.providerReference
+      }
       return OwnedLinkSnapshot(
         id: previous?.id ?? UUID(), lifetimeId: previous?.lifetimeId ?? UUID(), rank: Int64(index),
         originalUrl: input.originalUrl, label: input.label,
-        kind: try input.validatedKind(propertyPath: "/command/changes/links/\(index)"))
+        kind: try input.validatedKind(propertyPath: "/command/changes/links/\(index)"),
+        providerReference: providerReference)
     }
   }
 

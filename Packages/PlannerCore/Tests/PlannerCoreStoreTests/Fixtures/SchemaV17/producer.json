@@ -1,0 +1,17 @@
+{
+  "sourceCommit": "0bbeb80",
+  "storageSchemaVersion": 17,
+  "seedOperationId": "F64DBDDC-8E99-4031-917A-197943783723",
+  "checkpointGeneration": 1,
+  "fileHashes": {
+    "control/writer": "ceb4c7cfd2aae3c6cc6c211ee11ab40487cb527916b13f1811b44b137a25de5f",
+    "expected-portable.json": "3e647dfebd7dcdf6fd8e81db9619a6cd35f375372c626c1841629b4a8563eded",
+    "recovery/EDDF5C59-E9BA-4329-BD39-186A9DCDCDD5/checkpoint-1.json": "fb9ec64e29fcf1bbe8ce404de8afe77672ba4a5ccf01eed58d0a0bc4569329a1",
+    "recovery/EDDF5C59-E9BA-4329-BD39-186A9DCDCDD5/identity.json": "ceb4c7cfd2aae3c6cc6c211ee11ab40487cb527916b13f1811b44b137a25de5f",
+    "recovery/EDDF5C59-E9BA-4329-BD39-186A9DCDCDD5/proposal-AB302CDE-D7C9-4085-97BB-9EA9F04EDCFD.json": "5daf467fe58d5d41ef98407a03b66d2b9163f56ab53738bb5b75ab0bb7693c2f",
+    "seed-import.json": "ba8ec8d8af708ac2c2f8ced1e77b4fb3aec96854d4d55276fd5891091fa40933",
+    "store/Planner.sqlite": "53f993fb350f612e09697ffaa8d1a764a6e2f72921113c0c608ea2eadf1ade0a",
+    "store/Planner.sqlite-shm": "de984704677295f32c91de66628cebec37c7ec0d929e954d84aacd0c5b319f68",
+    "store/Planner.sqlite-wal": "c44fd15f4eac58e4f90d2866a5fab912b7ef606d895fe4e49ce058fc610baee4"
+  }
+}

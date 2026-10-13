@@ -1,0 +1,24 @@
+Building for debugging...
+[1 / 1]
+[1 / 14] PlannerCoreStoreTests-product
+[2 / 13] PlannerCoreStoreTests-product
+[4 / 15] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,00 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportProviderTests started.
+◇ Test applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:) started.
+◇ Test case passing 1 argument ownerKind → "itinerary" to applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:) started.
+◇ Test case passing 1 argument ownerKind → "item" to applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:) started.
+✘ Test applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:) recorded an issue with 1 argument ownerKind → "itinerary" at NativeImportProviderTests.swift:87:19: Issue recorded
+↳ Native provider import must save its full graph: PlannerOperationResult(operationId: F40E911E-03F1-4D86-815E-D3D10A6256E7, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "The native store cannot yet preserve every imported field.", details: nil))); seed: /var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportProviderTests/AB78C1D0-2A68-4D16-BE27-51AEE93064AA
+✘ Test applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:) recorded an issue with 1 argument ownerKind → "item" at NativeImportProviderTests.swift:87:19: Issue recorded
+↳ Native provider import must save its full graph: PlannerOperationResult(operationId: 56B8E1B8-BD86-4863-B18A-3195BF1C3909, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "The native store cannot yet preserve every imported field.", details: nil))); seed: /var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportProviderTests/42B4C9E6-24FE-4D56-8905-EAC89E30E3B8
+✘ Test applePlaceReferencesSurviveNativeImportRecoveryAndReopen(ownerKind:) with 2 test cases failed after 0.107 seconds with 2 issues.
+✘ Suite NativeImportProviderTests failed after 0.107 seconds with 2 issues.
+✘ Test run with 1 test in 1 suite failed after 0.107 seconds with 2 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)
