@@ -2,7 +2,7 @@ import XCTest
 
 @MainActor
 final class SavedCalendarOrderingJourneyTests: XCTestCase {
-  func testOverlappingAllDayAssignmentsUseTheirDatesRatherThanIdentityOrder() {
+  func testOverlappingAllDayAssignmentsUseTheirDatesRatherThanIdentityOrder() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
@@ -47,6 +47,9 @@ final class SavedCalendarOrderingJourneyTests: XCTestCase {
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule."))
     XCTAssertEqual(schedules.count, 2)
     let identifiers = schedules.allElementsBoundByIndex.map(\.identifier).sorted()
+    let earlierSchedule = application.descendants(matching: .any)
+      .matching(identifier: identifiers[1]).firstMatch
+    let earlierDescription = try XCTUnwrap(earlierSchedule.value as? String)
     let laterSchedule = application.descendants(matching: .any)
       .matching(identifier: identifiers[0]).firstMatch
     #if os(macOS)
@@ -57,6 +60,13 @@ final class SavedCalendarOrderingJourneyTests: XCTestCase {
     application.plannerElement("Edit Schedule").activateForPlannerJourney()
     selectDay(10, pickerIdentifier: "saved.schedule.start", application: application)
     application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+    let changedCaption = XCTNSPredicateExpectation(
+      predicate: NSPredicate(
+        format: "exists == true AND value != nil AND value != %@", earlierDescription),
+      object: laterSchedule)
+    XCTAssertEqual(XCTWaiter.wait(for: [changedCaption], timeout: 10), .completed)
+    let laterDescription = try XCTUnwrap(laterSchedule.value as? String)
+    XCTAssertNotEqual(earlierDescription, laterDescription)
     #if os(macOS)
       application.plannerElement("saved.section.calendar").activateForPlannerJourney()
     #else
@@ -72,6 +82,9 @@ final class SavedCalendarOrderingJourneyTests: XCTestCase {
       $0.replacingOccurrences(of: "saved.item.schedule.", with: "saved.calendar.schedule.")
     }
     XCTAssertEqual(entries.allElementsBoundByIndex.map(\.identifier), expected)
+    XCTAssertEqual(
+      entries.allElementsBoundByIndex.map { $0.value as? String },
+      ["All day · " + earlierDescription, "All day · " + laterDescription])
     let attachment = XCTAttachment(screenshot: application.screenshot())
     attachment.name = "Overlapping all-day schedules retain chronological identity order"
     attachment.lifetime = .keepAlways

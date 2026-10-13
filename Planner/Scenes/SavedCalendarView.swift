@@ -47,7 +47,8 @@ struct SavedCalendarView: View {
 
   private func scheduleDescription(_ entry: SavedPlannerCalendarEntry) -> String {
     switch entry.schedule.content.form {
-    case .allDay: return "All day"
+    case .allDay(let start, let end):
+      return "All day · " + allDayScheduleDescription(start: start, end: end)
     case .timed(let start, let end, _):
       var format = Date.FormatStyle(date: .abbreviated, time: .shortened)
       format.timeZone = displayTimeZone
