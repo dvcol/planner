@@ -535,11 +535,12 @@ struct PlannerPortableImportDecoder {
           "Only an Apple Maps place can retain an Apple Place ID.")
       }
       let value = try referenceFields.child("value").string(requiredText: true)
-      guard !["my-location", "parked-car"].contains(value.lowercased()) else {
+      let providerReference = PlannerProviderReference(kind: .applePlaceId, value: value)
+      guard providerReference.isValid(for: kind) else {
         throw try referenceFields.child("value").failure(
           "A contextual location command is not a stable place identity.")
       }
-      reference = .init(kind: .applePlaceId, value: value)
+      reference = providerReference
     }
     return try .init(
       id: fields.child("id").identifier(), lifetimeId: fields.child("lifetimeId").identifier(),

@@ -70,7 +70,7 @@ struct NativeProvenanceMigrationTests {
           namespaceId: namespace.namespaceId,
           checkpointGeneration: checkpoint))
     else { throw CancellationError() }
-    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 17)
+    #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 18)
     let savedGraph = try #require(JSONSerialization.jsonObject(with: after) as? [String: Any])
     let recoveryGraph = try #require(
       JSONSerialization.jsonObject(

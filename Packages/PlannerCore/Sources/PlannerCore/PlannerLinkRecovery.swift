@@ -33,7 +33,7 @@ struct PortableOwnedLink: Codable {
     originalUrl = link.originalUrl
     label = link.label
     kind = link.kind
-    providerReference = nil
+    providerReference = link.providerReference
   }
 
   func validated(sources: [PortableItemRecord], itineraries: [PortableItineraryRecord]) throws
@@ -61,7 +61,7 @@ struct PortableOwnedLink: Codable {
     }
     guard
       let parsedRank = Int64(rank), String(parsedRank) == rank,
-      providerReference == nil
+      providerReference?.isValid(for: kind) != false
     else {
       throw PlannerFailure(
         "recoveryIntegrityFailure", "The owned link has invalid ownership or values.")
@@ -74,7 +74,8 @@ struct PortableOwnedLink: Codable {
     return ValidatedPortableLink(
       owner: PlannerEntityReference(kind: ownerKind, id: owner.id), id: id, rank: parsedRank,
       read: PlannerOwnedLinkRead(
-        linkId: id, originalUrl: originalUrl, label: label, kind: kind, providerReference: nil))
+        linkId: id, originalUrl: originalUrl, label: label, kind: kind,
+        providerReference: providerReference))
   }
 
   func encode(to encoder: any Encoder) throws {

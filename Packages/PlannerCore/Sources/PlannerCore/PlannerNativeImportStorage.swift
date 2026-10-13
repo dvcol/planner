@@ -131,40 +131,40 @@ func plannerRemoveUnretainedImportedRecords(
   throws
 {
   let expandedContexts = Set(backup.expandedCompletions.map(\.context))
-  for expanded in try context.fetch(FetchDescriptor<PlannerSchemaV17.ExpandedCompletion>()) {
+  for expanded in try context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()) {
     if !expandedContexts.contains(try expanded.value().context) { context.delete(expanded) }
   }
   try plannerRemoveImportedRecords(
-    PlannerSchemaV17.Membership.self, identity: \.id,
+    PlannerSchemaV18.Membership.self, identity: \.id,
     retaining: Set(backup.memberships.map(\.id)), context: context)
   try plannerRemoveImportedRecords(
-    PlannerSchemaV17.ItineraryEntry.self, identity: \.id,
+    PlannerSchemaV18.ItineraryEntry.self, identity: \.id,
     retaining: Set(backup.itineraryEntries.map(\.id)),
     context: context)
   try plannerRemoveImportedRecords(
-    PlannerSchemaV17.LabelAssociation.self, identity: \.id,
+    PlannerSchemaV18.LabelAssociation.self, identity: \.id,
     retaining: Set(backup.labelAssociations.map(\.id)),
     context: context)
   try plannerRemoveImportedRecords(
-    PlannerSchemaV17.OwnedLink.self, identity: \.id,
+    PlannerSchemaV18.OwnedLink.self, identity: \.id,
     retaining: Set(backup.ownedLinks.map(\.id)), context: context)
   try plannerRemoveImportedRecords(
-    PlannerSchemaV17.Schedule.self, identity: \.id,
+    PlannerSchemaV18.Schedule.self, identity: \.id,
     retaining: Set(backup.schedules.map(\.id)), context: context)
   try plannerRemoveImportedRecords(
-    PlannerSchemaV17.Item.self, identity: \.id,
+    PlannerSchemaV18.Item.self, identity: \.id,
     retaining: Set(backup.sources.filter { $0.kind == .item }.map(\.id)), context: context)
   try plannerRemoveImportedRecords(
-    PlannerSchemaV17.List.self, identity: \.id,
+    PlannerSchemaV18.List.self, identity: \.id,
     retaining: Set(backup.sources.filter { $0.kind == .list }.map(\.id)), context: context)
   try plannerRemoveImportedRecords(
-    PlannerSchemaV17.Itinerary.self, identity: \.id,
+    PlannerSchemaV18.Itinerary.self, identity: \.id,
     retaining: Set(backup.sources.filter { $0.kind == .itinerary }.map(\.id)), context: context)
   try plannerRemoveImportedRecords(
-    PlannerSchemaV17.Category.self, identity: \.id,
+    PlannerSchemaV18.Category.self, identity: \.id,
     retaining: Set(backup.sources.filter { $0.kind == .category }.map(\.id)), context: context)
   try plannerRemoveImportedRecords(
-    PlannerSchemaV17.Tag.self, identity: \.id,
+    PlannerSchemaV18.Tag.self, identity: \.id,
     retaining: Set(backup.sources.filter { $0.kind == .tag }.map(\.id)), context: context)
   context.processPendingChanges()
 }
@@ -184,20 +184,20 @@ func plannerInsertImportedGraph(
   _ backup: PlannerPortableBackup, replacing sourceReplacements: [PlannerPortableSource],
   context: ModelContext
 ) throws {
-  var items = try plannerImportRecords(PlannerSchemaV17.Item.self, identity: \.id, context: context)
-  var lists = try plannerImportRecords(PlannerSchemaV17.List.self, identity: \.id, context: context)
+  var items = try plannerImportRecords(PlannerSchemaV18.Item.self, identity: \.id, context: context)
+  var lists = try plannerImportRecords(PlannerSchemaV18.List.self, identity: \.id, context: context)
   var itineraries = try plannerImportRecords(
-    PlannerSchemaV17.Itinerary.self, identity: \.id, context: context)
+    PlannerSchemaV18.Itinerary.self, identity: \.id, context: context)
   var categories = try plannerImportRecords(
-    PlannerSchemaV17.Category.self, identity: \.id, context: context)
-  var tags = try plannerImportRecords(PlannerSchemaV17.Tag.self, identity: \.id, context: context)
+    PlannerSchemaV18.Category.self, identity: \.id, context: context)
+  var tags = try plannerImportRecords(PlannerSchemaV18.Tag.self, identity: \.id, context: context)
   for source in backup.sources + sourceReplacements {
     switch source {
     case .item(let value):
       let content = value.content
       let item =
         try items[value.id]
-        ?? PlannerSchemaV17.Item(
+        ?? PlannerSchemaV18.Item(
           input: .init(
             title: content.title, subtitle: content.subtitle, notes: content.notes,
             location: content.location, estimate: content.estimate))
@@ -217,7 +217,7 @@ func plannerInsertImportedGraph(
       items[value.id] = item
     case .list(let value):
       let content = value.content
-      let list = try lists[value.id] ?? PlannerSchemaV17.List(content: content)
+      let list = try lists[value.id] ?? PlannerSchemaV18.List(content: content)
       list.name = content.name
       list.notes = content.notes
       list.colorData = try content.color.map { try JSONEncoder().encode($0) }
@@ -235,7 +235,7 @@ func plannerInsertImportedGraph(
       let content = value.content
       let itinerary =
         try itineraries[value.id]
-        ?? PlannerSchemaV17.Itinerary(
+        ?? PlannerSchemaV18.Itinerary(
           input: .init(
             title: content.title, notes: content.notes, color: content.color,
             iconName: content.iconName, location: content.location,
@@ -256,7 +256,7 @@ func plannerInsertImportedGraph(
       itineraries[value.id] = itinerary
     case .category(let value):
       let content = value.content
-      let category = try categories[value.id] ?? PlannerSchemaV17.Category(content: content)
+      let category = try categories[value.id] ?? PlannerSchemaV18.Category(content: content)
       category.name = content.name
       category.colorData = try content.color.map { try JSONEncoder().encode($0) }
       category.iconName = content.iconName
@@ -269,7 +269,7 @@ func plannerInsertImportedGraph(
       categories[value.id] = category
     case .tag(let value):
       let content = value.content
-      let tag = try tags[value.id] ?? PlannerSchemaV17.Tag(content: content)
+      let tag = try tags[value.id] ?? PlannerSchemaV18.Tag(content: content)
       tag.name = content.name
       tag.colorData = try content.color.map { try JSONEncoder().encode($0) }
       tag.iconName = content.iconName
@@ -283,7 +283,7 @@ func plannerInsertImportedGraph(
     }
   }
   var memberships = try plannerImportRecords(
-    PlannerSchemaV17.Membership.self, identity: \.id, context: context)
+    PlannerSchemaV18.Membership.self, identity: \.id, context: context)
   for value in backup.memberships {
     guard let list = lists[value.list.id], let item = items[value.item.id] else {
       throw PlannerFailure("missingReference", "Imported membership bindings cannot resolve.")
@@ -293,7 +293,7 @@ func plannerInsertImportedGraph(
       membership.localDone = value.localDone
       continue
     }
-    let membership = PlannerSchemaV17.Membership(
+    let membership = PlannerSchemaV18.Membership(
       snapshot: .init(
         id: value.id, lifetimeId: value.lifetimeId,
         list: .init(kind: "list", id: value.list.id, lifetimeId: value.listLifetimeId),
@@ -303,7 +303,7 @@ func plannerInsertImportedGraph(
     memberships[value.id] = membership
   }
   var entries = try plannerImportRecords(
-    PlannerSchemaV17.ItineraryEntry.self, identity: \.id, context: context)
+    PlannerSchemaV18.ItineraryEntry.self, identity: \.id, context: context)
   for value in backup.itineraryEntries {
     guard let itinerary = itineraries[value.itinerary.id] else {
       throw PlannerFailure("missingReference", "Imported itinerary bindings cannot resolve.")
@@ -313,7 +313,7 @@ func plannerInsertImportedGraph(
       entry.localDone = value.localDone
       continue
     }
-    let entry = PlannerSchemaV17.ItineraryEntry(
+    let entry = PlannerSchemaV18.ItineraryEntry(
       snapshot: .init(
         id: value.id, lifetimeId: value.lifetimeId,
         itinerary: .init(
@@ -328,7 +328,7 @@ func plannerInsertImportedGraph(
     entries[value.id] = entry
   }
   let expandedCompletions = try Dictionary(
-    uniqueKeysWithValues: context.fetch(FetchDescriptor<PlannerSchemaV17.ExpandedCompletion>()).map
+    uniqueKeysWithValues: context.fetch(FetchDescriptor<PlannerSchemaV18.ExpandedCompletion>()).map
     {
       (try $0.value().context, $0)
     })
@@ -343,18 +343,18 @@ func plannerInsertImportedGraph(
       continue
     }
     context.insert(
-      PlannerSchemaV17.ExpandedCompletion(
+      PlannerSchemaV18.ExpandedCompletion(
         listEntry: entry, membership: membership, localDone: value.localDone))
   }
   let associations = try plannerImportRecords(
-    PlannerSchemaV17.LabelAssociation.self, identity: \.id, context: context)
+    PlannerSchemaV18.LabelAssociation.self, identity: \.id, context: context)
   for value in backup.labelAssociations {
     if associations[value.id] != nil { continue }
     let category = value.label.kind == .category ? categories[value.label.id] : nil
     let tag = value.label.kind == .tag ? tags[value.label.id] : nil
-    let association: PlannerSchemaV17.LabelAssociation
+    let association: PlannerSchemaV18.LabelAssociation
     if value.owner.kind == .item, let item = items[value.owner.id] {
-      association = PlannerSchemaV17.LabelAssociation(
+      association = PlannerSchemaV18.LabelAssociation(
         snapshot: .init(
           id: value.id, lifetimeId: value.lifetimeId,
           owner: .init(kind: "item", id: value.owner.id, lifetimeId: value.ownerLifetimeId),
@@ -364,9 +364,9 @@ func plannerInsertImportedGraph(
     } else if value.owner.kind == .itinerary, let itinerary = itineraries[value.owner.id],
       let category
     {
-      association = PlannerSchemaV17.LabelAssociation(itinerary: itinerary, category: category)
+      association = PlannerSchemaV18.LabelAssociation(itinerary: itinerary, category: category)
     } else if value.owner.kind == .itinerary, let itinerary = itineraries[value.owner.id], let tag {
-      association = PlannerSchemaV17.LabelAssociation(itinerary: itinerary, tag: tag)
+      association = PlannerSchemaV18.LabelAssociation(itinerary: itinerary, tag: tag)
     } else {
       throw PlannerFailure("missingReference", "Imported label bindings cannot resolve.")
     }
@@ -375,23 +375,25 @@ func plannerInsertImportedGraph(
     context.insert(association)
   }
   let links = try plannerImportRecords(
-    PlannerSchemaV17.OwnedLink.self, identity: \.id, context: context)
+    PlannerSchemaV18.OwnedLink.self, identity: \.id, context: context)
   for value in backup.ownedLinks {
     if let link = links[value.id] {
       link.rank = value.rank
       link.originalUrl = value.originalUrl
       link.label = value.label
       link.kind = value.kind.rawValue
+      link.providerReferenceValue = value.providerReference?.value
       continue
     }
-    let link: PlannerSchemaV17.OwnedLink
+    let link: PlannerSchemaV18.OwnedLink
     if value.owner.kind == .item, let item = items[value.owner.id] {
-      link = PlannerSchemaV17.OwnedLink(
+      link = PlannerSchemaV18.OwnedLink(
         snapshot: .init(
           id: value.id, lifetimeId: value.lifetimeId, rank: value.rank,
-          originalUrl: value.originalUrl, label: value.label, kind: value.kind), owner: item)
+          originalUrl: value.originalUrl, label: value.label, kind: value.kind,
+          providerReference: value.providerReference), owner: item)
     } else if value.owner.kind == .itinerary, let itinerary = itineraries[value.owner.id] {
-      link = try PlannerSchemaV17.OwnedLink(
+      link = try PlannerSchemaV18.OwnedLink(
         input: .init(originalUrl: value.originalUrl, label: value.label),
         rank: value.rank, owner: itinerary)
       link.id = value.id
@@ -399,21 +401,22 @@ func plannerInsertImportedGraph(
     } else {
       throw PlannerFailure("missingReference", "Imported bookmark owner cannot resolve.")
     }
+    link.providerReferenceValue = value.providerReference?.value
     context.insert(link)
   }
   let schedules = try plannerImportRecords(
-    PlannerSchemaV17.Schedule.self, identity: \.id, context: context)
+    PlannerSchemaV18.Schedule.self, identity: \.id, context: context)
   for value in backup.schedules {
     if let schedule = schedules[value.id] {
       try schedule.replace(with: value.form)
       continue
     }
     let snapshot = ScheduleSnapshot(id: value.id, lifetimeId: value.lifetimeId, form: value.form)
-    let schedule: PlannerSchemaV17.Schedule
+    let schedule: PlannerSchemaV18.Schedule
     if value.source.kind == .item, let item = items[value.source.id] {
-      schedule = try PlannerSchemaV17.Schedule(snapshot: snapshot, owner: item)
+      schedule = try PlannerSchemaV18.Schedule(snapshot: snapshot, owner: item)
     } else if value.source.kind == .itinerary, let itinerary = itineraries[value.source.id] {
-      schedule = try PlannerSchemaV17.Schedule(snapshot: snapshot, owner: itinerary)
+      schedule = try PlannerSchemaV18.Schedule(snapshot: snapshot, owner: itinerary)
     } else {
       throw PlannerFailure("missingReference", "Imported Schedule owner cannot resolve.")
     }

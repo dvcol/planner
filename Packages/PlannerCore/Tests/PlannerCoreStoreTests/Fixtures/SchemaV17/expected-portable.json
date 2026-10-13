@@ -1,0 +1,429 @@
+{
+  "completionChanges" : [
+    {
+      "aliasId" : "00000000-0000-4000-8000-000000000401",
+      "context" : {
+        "kind" : "listMembership",
+        "membershipId" : "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId" : "00000000-0000-4000-8000-000000000401"
+      },
+      "done" : true,
+      "id" : "00000000-0000-4000-8000-000000000881",
+      "observedChangeIds" : [
+
+      ]
+    }
+  ],
+  "contextAliases" : [
+    {
+      "aliasId" : "00000000-0000-4000-8000-000000000401",
+      "canonicalContext" : {
+        "kind" : "listMembership",
+        "membershipId" : "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId" : "00000000-0000-4000-8000-000000000401"
+      },
+      "context" : {
+        "kind" : "listMembership",
+        "membershipId" : "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId" : "00000000-0000-4000-8000-000000000401"
+      },
+      "currentChangeId" : "00000000-0000-4000-8000-000000000881",
+      "initialDone" : false
+    }
+  ],
+  "deletionMarkers" : [
+    {
+      "closedFamilyId" : null,
+      "deletionId" : "00000000-0000-4000-8000-000000000891",
+      "operationId" : "00000000-0000-4000-8000-000000000991",
+      "target" : {
+        "kind" : "source",
+        "source" : {
+          "id" : "00000000-0000-4000-8000-000000000199",
+          "kind" : "item",
+          "lifetimeId" : "00000000-0000-4000-8000-000000000819"
+        }
+      }
+    }
+  ],
+  "expandedCompletions" : [
+    {
+      "context" : {
+        "listEntryId" : "00000000-0000-4000-8000-000000000452",
+        "listEntryLifetimeId" : "00000000-0000-4000-8000-000000000452",
+        "membershipId" : "00000000-0000-4000-8000-000000000401",
+        "membershipLifetimeId" : "00000000-0000-4000-8000-000000000401"
+      },
+      "localDone" : false
+    },
+    {
+      "context" : {
+        "listEntryId" : "00000000-0000-4000-8000-000000000452",
+        "listEntryLifetimeId" : "00000000-0000-4000-8000-000000000452",
+        "membershipId" : "00000000-0000-4000-8000-000000000402",
+        "membershipLifetimeId" : "00000000-0000-4000-8000-000000000402"
+      },
+      "localDone" : false
+    }
+  ],
+  "format" : "planner-data",
+  "formatVersion" : 2,
+  "itineraryEntries" : [
+    {
+      "id" : "00000000-0000-4000-8000-000000000451",
+      "itinerary" : {
+        "id" : "00000000-0000-4000-8000-000000000301",
+        "kind" : "itinerary",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000831"
+      },
+      "lifetimeId" : "00000000-0000-4000-8000-000000000451",
+      "localDone" : false,
+      "rank" : "1024",
+      "source" : {
+        "id" : "00000000-0000-4000-8000-000000000101",
+        "kind" : "item",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000811"
+      }
+    },
+    {
+      "id" : "00000000-0000-4000-8000-000000000452",
+      "itinerary" : {
+        "id" : "00000000-0000-4000-8000-000000000301",
+        "kind" : "itinerary",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000831"
+      },
+      "lifetimeId" : "00000000-0000-4000-8000-000000000452",
+      "localDone" : null,
+      "rank" : "2048",
+      "source" : {
+        "id" : "00000000-0000-4000-8000-000000000201",
+        "kind" : "list",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000821"
+      }
+    }
+  ],
+  "labelAssociations" : [
+    {
+      "id" : "00000000-0000-4000-8000-000000000551",
+      "label" : {
+        "id" : "00000000-0000-4000-8000-000000000501",
+        "kind" : "category",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000851"
+      },
+      "lifetimeId" : "00000000-0000-4000-8000-000000000551",
+      "owner" : {
+        "id" : "00000000-0000-4000-8000-000000000101",
+        "kind" : "item",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000811"
+      }
+    },
+    {
+      "id" : "00000000-0000-4000-8000-000000000552",
+      "label" : {
+        "id" : "00000000-0000-4000-8000-000000000501",
+        "kind" : "category",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000851"
+      },
+      "lifetimeId" : "00000000-0000-4000-8000-000000000552",
+      "owner" : {
+        "id" : "00000000-0000-4000-8000-000000000301",
+        "kind" : "itinerary",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000831"
+      }
+    },
+    {
+      "id" : "00000000-0000-4000-8000-000000000651",
+      "label" : {
+        "id" : "00000000-0000-4000-8000-000000000601",
+        "kind" : "tag",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000861"
+      },
+      "lifetimeId" : "00000000-0000-4000-8000-000000000651",
+      "owner" : {
+        "id" : "00000000-0000-4000-8000-000000000101",
+        "kind" : "item",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000811"
+      }
+    },
+    {
+      "id" : "00000000-0000-4000-8000-000000000652",
+      "label" : {
+        "id" : "00000000-0000-4000-8000-000000000601",
+        "kind" : "tag",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000861"
+      },
+      "lifetimeId" : "00000000-0000-4000-8000-000000000652",
+      "owner" : {
+        "id" : "00000000-0000-4000-8000-000000000301",
+        "kind" : "itinerary",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000831"
+      }
+    }
+  ],
+  "memberships" : [
+    {
+      "id" : "00000000-0000-4000-8000-000000000401",
+      "item" : {
+        "id" : "00000000-0000-4000-8000-000000000101",
+        "kind" : "item",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000811"
+      },
+      "lifetimeId" : "00000000-0000-4000-8000-000000000401",
+      "list" : {
+        "id" : "00000000-0000-4000-8000-000000000201",
+        "kind" : "list",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000821"
+      },
+      "localDone" : true,
+      "rank" : "1024"
+    },
+    {
+      "id" : "00000000-0000-4000-8000-000000000402",
+      "item" : {
+        "id" : "00000000-0000-4000-8000-000000000102",
+        "kind" : "item",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000812"
+      },
+      "lifetimeId" : "00000000-0000-4000-8000-000000000402",
+      "list" : {
+        "id" : "00000000-0000-4000-8000-000000000201",
+        "kind" : "list",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000821"
+      },
+      "localDone" : false,
+      "rank" : "2048"
+    },
+    {
+      "id" : "00000000-0000-4000-8000-000000000403",
+      "item" : {
+        "id" : "00000000-0000-4000-8000-000000000101",
+        "kind" : "item",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000811"
+      },
+      "lifetimeId" : "00000000-0000-4000-8000-000000000403",
+      "list" : {
+        "id" : "00000000-0000-4000-8000-000000000202",
+        "kind" : "list",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000822"
+      },
+      "localDone" : false,
+      "rank" : "1024"
+    }
+  ],
+  "ownedLinks" : [
+    {
+      "id" : "00000000-0000-4000-8000-000000000751",
+      "kind" : "googleMaps",
+      "label" : null,
+      "lifetimeId" : "00000000-0000-4000-8000-000000000751",
+      "originalUrl" : "https:\/\/www.google.com\/maps\/search\/?api=1&query=Nezu+Museum",
+      "owner" : {
+        "id" : "00000000-0000-4000-8000-000000000101",
+        "kind" : "item",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000811"
+      },
+      "providerReference" : null,
+      "rank" : "1024"
+    },
+    {
+      "id" : "00000000-0000-4000-8000-000000000752",
+      "kind" : "website",
+      "label" : "Menu",
+      "lifetimeId" : "00000000-0000-4000-8000-000000000752",
+      "originalUrl" : "https:\/\/example.com\/menu",
+      "owner" : {
+        "id" : "00000000-0000-4000-8000-000000000101",
+        "kind" : "item",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000811"
+      },
+      "providerReference" : null,
+      "rank" : "2048"
+    }
+  ],
+  "restorationFamilies" : [
+
+  ],
+  "schedules" : [
+    {
+      "form" : {
+        "end" : 813204000,
+        "kind" : "timed",
+        "planningTimeZone" : "Asia\/Tokyo",
+        "start" : 813200400
+      },
+      "id" : "00000000-0000-4000-8000-000000000701",
+      "lifetimeId" : "00000000-0000-4000-8000-000000000871",
+      "source" : {
+        "id" : "00000000-0000-4000-8000-000000000101",
+        "kind" : "item",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000811"
+      }
+    },
+    {
+      "form" : {
+        "end" : {
+          "day" : 11,
+          "month" : 10,
+          "year" : 2026
+        },
+        "kind" : "allDay",
+        "start" : {
+          "day" : 9,
+          "month" : 10,
+          "year" : 2026
+        }
+      },
+      "id" : "00000000-0000-4000-8000-000000000702",
+      "lifetimeId" : "00000000-0000-4000-8000-000000000872",
+      "source" : {
+        "id" : "00000000-0000-4000-8000-000000000301",
+        "kind" : "itinerary",
+        "lifetimeId" : "00000000-0000-4000-8000-000000000831"
+      }
+    }
+  ],
+  "sources" : [
+    {
+      "archived" : false,
+      "content" : {
+        "estimate" : {
+          "displayUnit" : "hour",
+          "minutes" : "120"
+        },
+        "location" : {
+          "coordinate" : {
+            "latitude" : 35,
+            "longitude" : 139
+          },
+          "displayName" : "Meeting point",
+          "formattedAddress" : "Meeting point A"
+        },
+        "notes" : "Original notes",
+        "subtitle" : null,
+        "title" : "Nezu Museum"
+      },
+      "contentOrigins" : {
+        "location" : "appFallback",
+        "notes" : "appFallback",
+        "title" : "appFallback"
+      },
+      "createdAt" : 10.25,
+      "globalDone" : false,
+      "id" : "00000000-0000-4000-8000-000000000101",
+      "kind" : "item",
+      "lifetimeId" : "00000000-0000-4000-8000-000000000811",
+      "updatedAt" : 20.125
+    },
+    {
+      "archived" : true,
+      "content" : {
+        "estimate" : null,
+        "location" : null,
+        "notes" : null,
+        "subtitle" : null,
+        "title" : "Ramen lunch"
+      },
+      "contentOrigins" : {
+        "title" : "appFallback"
+      },
+      "createdAt" : 10.25,
+      "globalDone" : false,
+      "id" : "00000000-0000-4000-8000-000000000102",
+      "kind" : "item",
+      "lifetimeId" : "00000000-0000-4000-8000-000000000812",
+      "updatedAt" : 20.125
+    },
+    {
+      "archived" : false,
+      "content" : {
+        "color" : null,
+        "iconName" : null,
+        "manualEstimate" : null,
+        "name" : "Tokyo Food",
+        "notes" : null
+      },
+      "contentOrigins" : {
+        "name" : "appFallback"
+      },
+      "createdAt" : 10.25,
+      "globalDone" : null,
+      "id" : "00000000-0000-4000-8000-000000000201",
+      "kind" : "list",
+      "lifetimeId" : "00000000-0000-4000-8000-000000000821",
+      "updatedAt" : 20.125
+    },
+    {
+      "archived" : false,
+      "content" : {
+        "color" : null,
+        "iconName" : null,
+        "manualEstimate" : null,
+        "name" : "Wishlist",
+        "notes" : null
+      },
+      "contentOrigins" : {
+        "name" : "appFallback"
+      },
+      "createdAt" : 10.25,
+      "globalDone" : null,
+      "id" : "00000000-0000-4000-8000-000000000202",
+      "kind" : "list",
+      "lifetimeId" : "00000000-0000-4000-8000-000000000822",
+      "updatedAt" : 20.125
+    },
+    {
+      "archived" : false,
+      "content" : {
+        "color" : null,
+        "iconName" : null,
+        "location" : null,
+        "manualEstimate" : null,
+        "notes" : null,
+        "title" : "Tokyo Weekend"
+      },
+      "contentOrigins" : {
+        "title" : "appFallback"
+      },
+      "createdAt" : 10.25,
+      "globalDone" : null,
+      "id" : "00000000-0000-4000-8000-000000000301",
+      "kind" : "itinerary",
+      "lifetimeId" : "00000000-0000-4000-8000-000000000831",
+      "updatedAt" : 20.125
+    },
+    {
+      "archived" : null,
+      "content" : {
+        "color" : null,
+        "iconName" : null,
+        "name" : "Food"
+      },
+      "contentOrigins" : {
+        "name" : "appFallback"
+      },
+      "createdAt" : 10.25,
+      "globalDone" : null,
+      "id" : "00000000-0000-4000-8000-000000000501",
+      "kind" : "category",
+      "lifetimeId" : "00000000-0000-4000-8000-000000000851",
+      "updatedAt" : 20.125
+    },
+    {
+      "archived" : null,
+      "content" : {
+        "color" : null,
+        "iconName" : null,
+        "name" : "rainy-day"
+      },
+      "contentOrigins" : {
+        "name" : "appFallback"
+      },
+      "createdAt" : 10.25,
+      "globalDone" : null,
+      "id" : "00000000-0000-4000-8000-000000000601",
+      "kind" : "tag",
+      "lifetimeId" : "00000000-0000-4000-8000-000000000861",
+      "updatedAt" : 20.125
+    }
+  ]
+}

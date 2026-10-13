@@ -69,7 +69,7 @@ struct ContainerEstimateItinerarySnapshot {
   let entries: [ItineraryEntrySnapshot]
 }
 
-extension PlannerSchemaV17.Item {
+extension PlannerSchemaV18.Item {
   func estimateSnapshot() throws -> ContainerEstimateItemSnapshot {
     guard let id, let lifetimeId else {
       throw PlannerFailure("readUnavailable", "An estimate Item has unresolved identity.")
@@ -82,7 +82,7 @@ extension PlannerSchemaV17.Item {
   }
 }
 
-extension PlannerSchemaV17.List {
+extension PlannerSchemaV18.List {
   func estimateSnapshot() throws -> ContainerEstimateListSnapshot {
     guard let id, let lifetimeId else {
       throw PlannerFailure("readUnavailable", "An estimate List has unresolved identity.")
@@ -95,7 +95,7 @@ extension PlannerSchemaV17.List {
   }
 }
 
-extension PlannerSchemaV17.Itinerary {
+extension PlannerSchemaV18.Itinerary {
   func estimateSnapshot(entries: [ItineraryEntrySnapshot]) throws
     -> ContainerEstimateItinerarySnapshot
   {

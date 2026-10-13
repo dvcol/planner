@@ -2,11 +2,11 @@ import Foundation
 import SwiftData
 
 enum BulkCompletionTarget {
-  case membership(PlannerSchemaV17.Membership, MembershipSnapshot)
-  case direct(PlannerSchemaV17.ItineraryEntry, ItineraryEntrySnapshot)
+  case membership(PlannerSchemaV18.Membership, MembershipSnapshot)
+  case direct(PlannerSchemaV18.ItineraryEntry, ItineraryEntrySnapshot)
   case expanded(
-    PlannerSchemaV17.ItineraryEntry, ItineraryEntrySnapshot,
-    PlannerSchemaV17.Membership, MembershipSnapshot)
+    PlannerSchemaV18.ItineraryEntry, ItineraryEntrySnapshot,
+    PlannerSchemaV18.Membership, MembershipSnapshot)
 
   var appearance: PlannerAppearance {
     switch self {
@@ -74,7 +74,7 @@ enum BulkCompletionTarget {
         existing.localDone = done
       } else if done {
         context.insert(
-          PlannerSchemaV17.ExpandedCompletion(
+          PlannerSchemaV18.ExpandedCompletion(
             listEntry: record, membership: membershipRecord, localDone: done))
       }
     }
@@ -83,8 +83,8 @@ enum BulkCompletionTarget {
 
 struct BulkCompletionResolution {
   let owner: PlannerBoundIdentity
-  let list: PlannerSchemaV17.List?
-  let itinerary: PlannerSchemaV17.Itinerary?
+  let list: PlannerSchemaV18.List?
+  let itinerary: PlannerSchemaV18.Itinerary?
   let scopeBindings: [PlannerBoundIdentity]
   let targets: [BulkCompletionTarget]
 
@@ -152,7 +152,7 @@ func resolveBulkCompletion(_ scope: PlannerBulkScope, context: ModelContext) thr
   -> BulkCompletionResolution
 {
   if case .list(let listId) = scope {
-    var descriptor = FetchDescriptor<PlannerSchemaV17.List>(
+    var descriptor = FetchDescriptor<PlannerSchemaV18.List>(
       predicate: #Predicate { $0.id == listId })
     descriptor.fetchLimit = 2
     let records = try context.fetch(descriptor)
@@ -178,7 +178,7 @@ func resolveBulkCompletion(_ scope: PlannerBulkScope, context: ModelContext) thr
     listEntryId = entryId
   case .list: throw PlannerFailure("invalidInput", "Expected an itinerary scope.")
   }
-  var descriptor = FetchDescriptor<PlannerSchemaV17.Itinerary>(
+  var descriptor = FetchDescriptor<PlannerSchemaV18.Itinerary>(
     predicate: #Predicate { $0.id == itineraryId })
   descriptor.fetchLimit = 2
   let records = try context.fetch(descriptor)
@@ -190,7 +190,7 @@ func resolveBulkCompletion(_ scope: PlannerBulkScope, context: ModelContext) thr
   let owner = PlannerBoundIdentity(kind: "itinerary", id: value.id, lifetimeId: value.lifetimeId)
   let lifetimeId = value.lifetimeId
   let entries = try context.fetch(
-    FetchDescriptor<PlannerSchemaV17.ItineraryEntry>(
+    FetchDescriptor<PlannerSchemaV18.ItineraryEntry>(
       predicate: #Predicate {
         $0.itineraryId == itineraryId && $0.itineraryLifetimeId == lifetimeId
       },
@@ -231,12 +231,12 @@ func resolveBulkCompletion(_ scope: PlannerBulkScope, context: ModelContext) thr
 }
 
 private func bulkMemberships(_ list: PlannerBoundIdentity, context: ModelContext) throws
-  -> [PlannerSchemaV17.Membership]
+  -> [PlannerSchemaV18.Membership]
 {
   let listId = list.id
   let lifetimeId = list.lifetimeId
   let records = try context.fetch(
-    FetchDescriptor<PlannerSchemaV17.Membership>(
+    FetchDescriptor<PlannerSchemaV18.Membership>(
       predicate: #Predicate { $0.listId == listId && $0.listLifetimeId == lifetimeId },
       sortBy: [SortDescriptor(\.rank), SortDescriptor(\.id)]))
   let values = try records.map { try $0.value() }
