@@ -1,0 +1,878 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO "-only-testing:PlannerNavigationUITests/SavedCaptureJourneyTests" -resultBundlePath /private/tmp/PlannerCaptureFieldsPhoneRegression.xcresult CODE_SIGNING_ALLOWED=NO test
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  swift-log: https://github.com/apple/swift-log.git @ 1.16.1
+  PlannerPreviews: /Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerPreviews @ local
+  EventSource: https://github.com/mattt/eventsource.git @ 1.5.1
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.7.2
+  PlannerCore: /Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore @ local
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.1
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk @ 0.12.1
+  swift-system: https://github.com/apple/swift-system.git @ 1.8.1
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.104.0
+
+Writing result bundle at path:
+	/private/tmp/PlannerCaptureFieldsPhoneRegression.xcresult
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (43 targets)
+    Target 'PlannerNavigationUITests' in project 'Planner'
+        ➜ Explicit dependency on target 'Planner' in project 'Planner'
+    Target 'Planner' in project 'Planner'
+        ➜ Explicit dependency on target 'PlannerPreviews-product' in project 'PlannerPreviews'
+        ➜ Explicit dependency on target 'PlannerCore-product' in project 'PlannerCore'
+        ➜ Explicit dependency on target 'MCP-product' in project 'mcp-swift-sdk'
+        ➜ Explicit dependency on target 'NIOCore-product' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOPosix-product' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOHTTP1-product' in project 'swift-nio'
+    Target 'NIOHTTP1-product' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOHTTP1' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOEmbedded' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIO' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLLHTTP' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'NIOHTTP1' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOEmbedded' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIO' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLLHTTP' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'CNIOLLHTTP' in project 'swift-nio' (no dependencies)
+    Target 'NIO' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOEmbedded' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'NIOEmbedded' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'NIOPosix-product' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'swift-nio_NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'swift-nio_NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'CNIOPosix' in project 'swift-nio' (no dependencies)
+    Target 'swift-nio_NIOPosix' in project 'swift-nio' (no dependencies)
+    Target 'NIOCore-product' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'Atomics-product' in project 'swift-atomics'
+        ➜ Explicit dependency on target 'Atomics' in project 'swift-atomics'
+        ➜ Explicit dependency on target '_AtomicsShims' in project 'swift-atomics'
+    Target 'Atomics' in project 'swift-atomics'
+        ➜ Explicit dependency on target '_AtomicsShims' in project 'swift-atomics'
+    Target '_AtomicsShims' in project 'swift-atomics' (no dependencies)
+    Target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'DequeModule' in project 'swift-collections'
+        ➜ Explicit dependency on target 'InternalCollectionsUtilities' in project 'swift-collections'
+        ➜ Explicit dependency on target 'SpanPreview' in project 'swift-collections'
+    Target 'DequeModule' in project 'swift-collections'
+        ➜ Explicit dependency on target 'InternalCollectionsUtilities' in project 'swift-collections'
+        ➜ Explicit dependency on target 'SpanPreview' in project 'swift-collections'
+    Target 'SpanPreview' in project 'swift-collections'
+        ➜ Explicit dependency on target 'InternalCollectionsUtilities' in project 'swift-collections'
+    Target 'InternalCollectionsUtilities' in project 'swift-collections' (no dependencies)
+    Target '_NIODataStructures' in project 'swift-nio' (no dependencies)
+    Target 'CNIOWASI' in project 'swift-nio' (no dependencies)
+    Target 'CNIOWindows' in project 'swift-nio' (no dependencies)
+    Target 'CNIOLinux' in project 'swift-nio' (no dependencies)
+    Target 'CNIODarwin' in project 'swift-nio' (no dependencies)
+    Target 'CNIOFreeBSD' in project 'swift-nio' (no dependencies)
+    Target 'CNIOOpenBSD' in project 'swift-nio' (no dependencies)
+    Target '_NIOBase64' in project 'swift-nio' (no dependencies)
+    Target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+    Target 'CNIOAtomics' in project 'swift-nio' (no dependencies)
+    Target 'MCP-product' in project 'mcp-swift-sdk'
+        ➜ Explicit dependency on target 'MCP' in project 'mcp-swift-sdk'
+        ➜ Explicit dependency on target 'SystemPackage-product' in project 'swift-system'
+        ➜ Explicit dependency on target 'Logging-product' in project 'swift-log'
+        ➜ Explicit dependency on target 'EventSource-product' in project 'EventSource'
+    Target 'MCP' in project 'mcp-swift-sdk'
+        ➜ Explicit dependency on target 'SystemPackage-product' in project 'swift-system'
+        ➜ Explicit dependency on target 'Logging-product' in project 'swift-log'
+        ➜ Explicit dependency on target 'EventSource-product' in project 'EventSource'
+    Target 'EventSource-product' in project 'EventSource'
+        ➜ Explicit dependency on target 'EventSource' in project 'EventSource'
+    Target 'EventSource' in project 'EventSource' (no dependencies)
+    Target 'Logging-product' in project 'swift-log'
+        ➜ Explicit dependency on target 'Logging' in project 'swift-log'
+    Target 'Logging' in project 'swift-log' (no dependencies)
+    Target 'SystemPackage-product' in project 'swift-system'
+        ➜ Explicit dependency on target 'SystemPackage' in project 'swift-system'
+        ➜ Explicit dependency on target 'CSystem' in project 'swift-system'
+    Target 'SystemPackage' in project 'swift-system'
+        ➜ Explicit dependency on target 'CSystem' in project 'swift-system'
+    Target 'CSystem' in project 'swift-system' (no dependencies)
+    Target 'PlannerCore-product' in project 'PlannerCore'
+        ➜ Explicit dependency on target 'PlannerCore' in project 'PlannerCore'
+    Target 'PlannerCore' in project 'PlannerCore' (no dependencies)
+    Target 'PlannerPreviews-product' in project 'PlannerPreviews'
+        ➜ Explicit dependency on target 'PlannerPreviews' in project 'PlannerPreviews'
+    Target 'PlannerPreviews' in project 'PlannerPreviews' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ReadFileContents /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
+
+Build description signature: 9e5dacb48c6b3784668b421e77cf6f4d
+Build description path: /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/XCBuildData/9e5dacb48c6b3784668b421e77cf6f4d.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk /tmp/PlannerNavigationContentPhoneDerivedData/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache
+    cd /Users/dinh-van.colomban/Workspace/private/planner/Planner.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -o /tmp/PlannerNavigationContentPhoneDerivedData/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache
+
+ProcessInfoPlistFile /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/swift-nio_NIOPosix.bundle/Info.plist /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/swift-nio.build/Debug-iphonesimulator/swift-nio_NIOPosix-b.build/empty-swift-nio_NIOPosix.plist (in target 'swift-nio_NIOPosix' from project 'swift-nio')
+    cd /tmp/PlannerMCPSourcePackages/checkouts/swift-nio
+    builtin-infoPlistUtility /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/swift-nio.build/Debug-iphonesimulator/swift-nio_NIOPosix-b.build/empty-swift-nio_NIOPosix.plist -producttype com.apple.product-type.bundle -expandbuildsettings -format binary -platform iphonesimulator -o /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/swift-nio_NIOPosix.bundle/Info.plist
+
+ProcessInfoPlistFile /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Info.plist /Users/dinh-van.colomban/Workspace/private/planner/Configuration/Planner-Info.plist (in target 'Planner' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-infoPlistUtility /Users/dinh-van.colomban/Workspace/private/planner/Configuration/Planner-Info.plist -producttype com.apple.product-type.application -genpkginfo /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -scanforprivacyfile /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/swift-nio_NIOPosix.bundle -o /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Info.plist
+
+SwiftDriver PlannerNavigationUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'PlannerNavigationUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name PlannerNavigationUITests -Onone @/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios27.0-simulator -g -module-cache-path /tmp/PlannerNavigationContentPhoneDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/PlannerNavigationContentPhoneDerivedData/Index.noindex/DataStore -swift-version 6 -I /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -c -j11 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/PlannerNavigationContentPhoneDerivedData/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/PlannerNavigationContentPhoneDerivedData/ModuleCache.noindex -sdk-module-cache-path /tmp/PlannerNavigationContentPhoneDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/PlannerNavigationContentPhoneDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/PlannerNavigationUITests-generated-files.hmap -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/PlannerNavigationUITests-own-target-headers.hmap -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/PlannerNavigationUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/Planner-d1fe009a27a9e9002364fb384a69f78d-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/PlannerNavigationUITests-project-headers.hmap -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/DerivedSources/arm64 -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests-Swift.h -working-directory /Users/dinh-van.colomban/Workspace/private/planner -experimental-emit-module-separately -disable-cmo
+
+CopySwiftLibs /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/Planner.app (in target 'Planner' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib --scan-folder /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Frameworks --scan-folder /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/PlugIns --scan-folder /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/SystemExtensions --scan-folder /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/Planner.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+ProcessInfoPlistFile /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/Info.plist /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/empty-PlannerNavigationUITests.plist (in target 'PlannerNavigationUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-infoPlistUtility /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/empty-PlannerNavigationUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/ProductTypeInfoPlistAdditions.plist -o /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/Info.plist
+
+SwiftCompile normal arm64 Compiling\ SavedCaptureJourneyTests.swift /Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/SavedCaptureJourneyTests.swift (in target 'PlannerNavigationUITests' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/SavedCaptureJourneyTests.swift (in target 'PlannerNavigationUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedCaptureJourneyTests.swift
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ PlannerNavigationUITests (in target 'PlannerNavigationUITests' from project 'Planner')
+
+SwiftCompile normal arm64 (in target 'PlannerNavigationUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for PlannerNavigationUITests (in target 'PlannerNavigationUITests' from project 'Planner')
+
+SwiftDriver\ Compilation\ Requirements PlannerNavigationUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'PlannerNavigationUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name PlannerNavigationUITests -Onone @/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios27.0-simulator -g -module-cache-path /tmp/PlannerNavigationContentPhoneDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/PlannerNavigationContentPhoneDerivedData/Index.noindex/DataStore -swift-version 6 -I /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -c -j11 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/PlannerNavigationContentPhoneDerivedData/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/PlannerNavigationContentPhoneDerivedData/ModuleCache.noindex -sdk-module-cache-path /tmp/PlannerNavigationContentPhoneDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/PlannerNavigationContentPhoneDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/PlannerNavigationUITests-generated-files.hmap -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/PlannerNavigationUITests-own-target-headers.hmap -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/PlannerNavigationUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/Planner-d1fe009a27a9e9002364fb384a69f78d-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/PlannerNavigationUITests-project-headers.hmap -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/DerivedSources/arm64 -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests-Swift.h -working-directory /Users/dinh-van.colomban/Workspace/private/planner -experimental-emit-module-separately -disable-cmo
+
+Copy /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests.swiftsourceinfo (in target 'PlannerNavigationUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests.swiftsourceinfo /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo
+
+Copy /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests.swiftmodule/arm64-apple-ios-simulator.abi.json /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests.abi.json (in target 'PlannerNavigationUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests.abi.json /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests.swiftmodule/arm64-apple-ios-simulator.abi.json
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedCaptureJourneyTests.swift (in target 'PlannerNavigationUITests' from project 'Planner')
+
+SwiftDriver\ Compilation PlannerNavigationUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'PlannerNavigationUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name PlannerNavigationUITests -Onone @/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -target arm64-apple-ios27.0-simulator -g -module-cache-path /tmp/PlannerNavigationContentPhoneDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/PlannerNavigationContentPhoneDerivedData/Index.noindex/DataStore -swift-version 6 -I /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -c -j11 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/PlannerNavigationContentPhoneDerivedData/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache -output-file-map /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/PlannerNavigationContentPhoneDerivedData/ModuleCache.noindex -sdk-module-cache-path /tmp/PlannerNavigationContentPhoneDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/PlannerNavigationContentPhoneDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/PlannerNavigationUITests-generated-files.hmap -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/PlannerNavigationUITests-own-target-headers.hmap -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/PlannerNavigationUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/Planner-d1fe009a27a9e9002364fb384a69f78d-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/PlannerNavigationUITests-project-headers.hmap -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/DerivedSources/arm64 -Xcc -I/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests-Swift.h -working-directory /Users/dinh-van.colomban/Workspace/private/planner -experimental-emit-module-separately -disable-cmo
+
+Ld /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests normal (in target 'PlannerNavigationUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios27.0-simulator -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F/tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks -filelist /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests.LinkFileList -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests_lto.o -rdynamic -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests.swiftmodule -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -o /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests
+
+CopySwiftLibs /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest (in target 'PlannerNavigationUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests --scan-folder /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/Frameworks --scan-folder /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlugIns --scan-folder /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/SystemExtensions --scan-folder /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/Extensions --platform iphonesimulator --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+ExtractAppIntentsMetadata (in target 'PlannerNavigationUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name PlannerNavigationUITests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk --xcode-version 27A266a --platform-family iOS --deployment-target 27.0 --bundle-identifier org.example.PlannerMCPPrototype.PlannerNavigationUITests --output /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest --target-triple arm64-apple-ios27.0-simulator --binary-file /tmp/PlannerNavigationContentPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests --dependency-file /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests_dependency_info.dat --stringsdata-file /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests.SwiftFileList --metadata-file-list /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/PlannerNavigationUITests.DependencyMetadataFileList --static-metadata-file-list /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/PlannerNavigationUITests.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/Planner.build/Debug-iphonesimulator/PlannerNavigationUITests.build/Objects-normal/arm64/PlannerNavigationUITests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-13 22:28:26.112 appintentsmetadataprocessor[89635:38553044] Starting appintentsmetadataprocessor export
+2026-10-13 22:28:26.113 appintentsmetadataprocessor[89635:38553044] warning: Metadata extraction skipped, no AppIntents.framework dependency found
+
+PruneExplicitPrecompiledModules /tmp/PlannerNavigationContentPhoneDerivedData/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/PlannerNavigationContentPhoneDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+2026-10-13 22:28:27.340207+0900 PlannerNavigationUITests-Runner[89638:38553195] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-13 22:28:30.462.
+Test Suite 'PlannerNavigationUITests.xctest' started at 2026-10-13 22:28:30.463.
+Test Suite 'SavedCaptureJourneyTests' started at 2026-10-13 22:28:30.463.
+Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testExactLinkReusePreservesDoneArchivedContentAndRememberedListWithoutDuplicates]' started.
+    t =     0.00s Start Test at 2026-10-13 22:28:30.465
+    t =     0.03s Set Up
+    t =     0.03s Open org.example.PlannerMCPPrototype
+    t =     0.03s     Launch org.example.PlannerMCPPrototype
+2026-10-13 22:28:30.560 xcodebuild[89605:38552715] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 22:28:30.560 xcodebuild[89605:38552715] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[89638]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x107c80398) and /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x107d74310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     0.54s         Setting up automation session
+    t =     2.99s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     4.36s Waiting 3.0s for "saved.list.new" Button to exist
+    t =     5.42s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =     5.42s         Checking existence of `"saved.list.new" Button`
+    t =     5.58s Waiting 5.0s for "saved.list.new" Button to exist
+    t =     6.64s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =     6.64s         Checking existence of `"saved.list.new" Button`
+    t =     6.71s Tap "saved.list.new" Button
+    t =     6.71s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     6.71s     Find the "saved.list.new" Button
+    t =     6.75s     Check for interrupting elements affecting "saved.list.new" Button
+    t =     6.79s     Synthesize event
+    t =     7.11s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     7.60s Waiting 5.0s for "saved.list.name" TextField to exist
+    t =     8.64s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.name" TextField`
+    t =     8.64s         Checking existence of `"saved.list.name" TextField`
+    t =     8.73s Tap "saved.list.name" TextField
+    t =     8.73s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.74s     Find the "saved.list.name" TextField
+    t =     8.78s     Check for interrupting elements affecting "saved.list.name" TextField
+    t =     8.83s     Synthesize event
+    t =     9.12s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.25s Type 'Capture destination' into "saved.list.name" TextField
+    t =     9.25s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.62s     Find the "saved.list.name" TextField
+    t =     9.73s     Check for interrupting elements affecting "saved.list.name" TextField
+    t =     9.79s     Synthesize event
+    t =    10.32s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.34s Tap "saved.list.save" Button
+    t =    10.34s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.34s     Find the "saved.list.save" Button
+    t =    10.42s     Check for interrupting elements affecting "saved.list.save" Button
+    t =    10.49s     Synthesize event
+    t =    10.78s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.40s Waiting 10.0s for "No items" StaticText to exist
+    t =    12.46s     Checking `Expect predicate `existsNoRetry == 1` for object "No items" StaticText`
+    t =    12.46s         Checking existence of `"No items" StaticText`
+    t =    12.56s Tap "Items" Button
+    t =    12.56s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.56s     Find the "Items" Button
+    t =    12.58s     Check for interrupting elements affecting "square.stack" Button
+    t =    12.63s     Synthesize event
+    t =    12.92s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.70s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =    15.74s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =    15.74s         Checking existence of `"saved.capture.new" Button`
+    t =    15.83s Tap "saved.capture.new" Button
+    t =    15.83s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.83s     Find the "saved.capture.new" Button
+    t =    15.87s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =    15.91s     Synthesize event
+    t =    16.22s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    16.68s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    17.73s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    17.73s         Checking existence of `"saved.capture.input" TextField`
+    t =    17.82s Tap "saved.capture.input" TextField
+    t =    17.82s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.82s     Find the "saved.capture.input" TextField
+    t =    17.88s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    17.93s     Synthesize event
+    t =    18.22s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    18.51s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    18.51s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    18.52s     Find the "saved.capture.input" TextField
+    t =    18.60s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    18.68s     Synthesize event
+    t =    19.49s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    19.50s Tap "saved.capture.review" Button
+    t =    19.50s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    19.50s     Find the "saved.capture.review" Button
+    t =    19.59s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    19.66s     Synthesize event
+    t =    19.95s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    20.29s Waiting 10.0s for "saved.capture.title" TextField to exist
+    t =    21.34s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.title" TextField`
+    t =    21.34s         Checking existence of `"saved.capture.title" TextField`
+    t =    21.44s Tap "saved.capture.title" TextField
+    t =    21.44s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    21.45s     Find the "saved.capture.title" TextField
+    t =    21.52s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    21.60s     Synthesize event
+    t =    21.89s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.21s Find the "saved.capture.title" TextField
+    t =    22.30s Type 'Keep ori...' into "saved.capture.title" TextField
+    t =    22.30s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.30s     Find the "saved.capture.title" TextField
+    t =    22.39s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    22.46s     Synthesize event
+    t =    23.06s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    23.06s Tap "saved.capture.notes" TextField
+    t =    23.06s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    23.07s     Find the "saved.capture.notes" TextField
+    t =    23.16s     Check for interrupting elements affecting "saved.capture.notes" TextField
+    t =    23.23s     Synthesize event
+    t =    23.52s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    23.52s Type 'Owned original not...' into "saved.capture.notes" TextField
+    t =    23.52s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    23.53s     Find the "saved.capture.notes" TextField
+    t =    23.62s     Check for interrupting elements affecting "saved.capture.notes" TextField
+    t =    23.69s     Synthesize event
+    t =    24.23s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    24.24s Checking existence of `Any (First Match)`
+    t =    24.41s Swipe up Target Application 'org.example.PlannerMCPPrototype'
+    t =    24.41s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    24.41s     Find the Target Application 'org.example.PlannerMCPPrototype'
+    t =    24.48s     Check for interrupting elements affecting "Planner navigation prototype" Application
+    t =    24.55s     Synthesize event
+    t =    24.97s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    26.51s Checking existence of `Any (First Match)`
+    t =    26.64s Find the Any (First Match)
+    t =    26.75s Checking existence of `"saved.capture.list.059E07D3-6D4D-477C-9444-F68B8EE2CD8A" Switch`
+    t =    26.85s Find the "saved.capture.list.059E07D3-6D4D-477C-9444-F68B8EE2CD8A" Switch
+    t =    26.97s Checking existence of `"saved.capture.list.059E07D3-6D4D-477C-9444-F68B8EE2CD8A" Switch`
+    t =    27.07s Find the "saved.capture.list.059E07D3-6D4D-477C-9444-F68B8EE2CD8A" Switch
+    t =    28.23s Checking `Expect predicate `value == 0 OR value == "0"` for object "saved.capture.list.059E07D3-6D4D-477C-9444-F68B8EE2CD8A" Switch`
+    t =    28.23s     Find the "saved.capture.list.059E07D3-6D4D-477C-9444-F68B8EE2CD8A" Switch
+    t =    28.37s     Find the "saved.capture.list.059E07D3-6D4D-477C-9444-F68B8EE2CD8A" Switch
+    t =    28.47s Tap Switch (First Match)
+    t =    28.47s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    28.47s     Find the Switch (First Match)
+    t =    28.58s     Check for interrupting elements affecting "0" Switch
+    t =    28.67s     Synthesize event
+    t =    28.96s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    31.33s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.capture.list.059E07D3-6D4D-477C-9444-F68B8EE2CD8A" Switch`
+    t =    31.33s     Find the "saved.capture.list.059E07D3-6D4D-477C-9444-F68B8EE2CD8A" Switch
+    t =    31.47s     Find the "saved.capture.list.059E07D3-6D4D-477C-9444-F68B8EE2CD8A" Switch
+    t =    31.58s Find the Target Application 'org.example.PlannerMCPPrototype'
+    t =    31.76s Added attachment named 'Native capture review selects a live List destination'
+    t =    31.76s Tap "saved.capture.add" Button
+    t =    31.76s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    31.76s     Find the "saved.capture.add" Button
+    t =    31.85s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    31.93s     Synthesize event
+    t =    32.24s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    33.12s Waiting 10.0s for "Owned original notes" StaticText to exist
+    t =    34.18s     Checking `Expect predicate `existsNoRetry == 1` for object "Owned original notes" StaticText`
+    t =    34.18s         Checking existence of `"Owned original notes" StaticText`
+    t =    35.30s Checking `Expect predicate `value == 0 OR value == "0"` for object "saved.item.completion" Any`
+    t =    35.30s     Find the "saved.item.completion" Any
+    t =    35.44s     Find the "saved.item.completion" Switch
+    t =    35.58s Tap Switch (First Match)
+    t =    35.58s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    35.58s     Find the Switch (First Match)
+    t =    35.72s     Check for interrupting elements affecting "0" Switch
+    t =    35.78s     Synthesize event
+    t =    36.06s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    38.44s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.item.completion" Switch`
+    t =    38.44s     Find the "saved.item.completion" Switch
+    t =    38.61s     Find the "saved.item.completion" Switch
+    t =    38.75s Tap "saved.item.actions" Button
+    t =    38.75s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    38.75s     Find the "saved.item.actions" Button
+    t =    38.79s     Check for interrupting elements affecting "saved.item.actions" Button
+    t =    38.82s     Synthesize event
+    t =    39.12s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    40.00s Tap "Archive Item" Button
+    t =    40.00s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    40.01s     Find the "Archive Item" Button
+    t =    40.06s     Check for interrupting elements affecting "Archive Item" Button
+    t =    40.10s     Synthesize event
+    t =    40.39s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    41.45s Waiting 10.0s for "Archived" StaticText to exist
+    t =    42.49s     Checking `Expect predicate `existsNoRetry == 1` for object "Archived" StaticText`
+    t =    42.49s         Checking existence of `"Archived" StaticText`
+    t =    42.58s Find the Any (First Match)
+    t =    42.66s Terminate org.example.PlannerMCPPrototype:89664
+    t =    43.71s Open org.example.PlannerMCPPrototype
+    t =    43.71s     Launch org.example.PlannerMCPPrototype
+2026-10-13 22:29:14.177 xcodebuild[89605:38552715] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 22:29:14.177 xcodebuild[89605:38552715] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    43.93s         Setting up automation session
+    t =    46.09s         Wait for org.example.PlannerMCPPrototype to idle
+    t =    47.43s Tap "Items" Button
+    t =    47.43s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    47.44s     Find the "Items" Button
+    t =    47.49s     Check for interrupting elements affecting "Items" Button
+    t =    47.57s     Synthesize event
+    t =    47.88s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    49.73s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =    50.77s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =    50.77s         Checking existence of `"saved.capture.new" Button`
+    t =    50.87s Tap "saved.capture.new" Button
+    t =    50.87s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    50.87s     Find the "saved.capture.new" Button
+    t =    50.92s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =    50.96s     Synthesize event
+    t =    51.26s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    51.74s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    52.77s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    52.78s         Checking existence of `"saved.capture.input" TextField`
+    t =    52.87s Tap "saved.capture.input" TextField
+    t =    52.87s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    52.87s     Find the "saved.capture.input" TextField
+    t =    52.92s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    52.98s     Synthesize event
+    t =    53.27s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    53.40s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    53.40s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    53.77s     Find the "saved.capture.input" TextField
+    t =    53.89s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    53.95s     Synthesize event
+    t =    54.77s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    54.78s Tap "saved.capture.review" Button
+    t =    54.78s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    54.78s     Find the "saved.capture.review" Button
+    t =    54.87s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    54.94s     Synthesize event
+    t =    55.24s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    55.58s Waiting 10.0s for "saved.capture.choice" Button to exist
+    t =    56.64s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.choice" Button`
+    t =    56.64s         Checking existence of `"saved.capture.choice" Button`
+    t =    56.71s Find the "saved.capture.choice" Button
+    t =    56.77s Checking existence of `"saved.capture.title" TextField`
+    t =    57.86s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.capture.list.059E07D3-6D4D-477C-9444-F68B8EE2CD8A" Any`
+    t =    57.86s     Find the "saved.capture.list.059E07D3-6D4D-477C-9444-F68B8EE2CD8A" Any
+    t =    57.96s     Find the "saved.capture.list.059E07D3-6D4D-477C-9444-F68B8EE2CD8A" Switch
+    t =    58.03s Tap "saved.capture.add" Button
+    t =    58.03s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    58.03s     Find the "saved.capture.add" Button
+    t =    58.09s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    58.15s     Synthesize event
+    t =    58.44s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    59.08s Waiting 10.0s for "Owned original notes" StaticText to exist
+    t =    60.13s     Checking `Expect predicate `existsNoRetry == 1` for object "Owned original notes" StaticText`
+    t =    60.13s         Checking existence of `"Owned original notes" StaticText`
+    t =    61.23s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.item.completion" Switch`
+    t =    61.23s     Find the "saved.item.completion" Switch
+    t =    61.40s     Find the "saved.item.completion" Switch
+    t =    61.54s Checking existence of `"Archived" StaticText`
+    t =    61.61s Checking existence of `"saved.item.link.756E3458-0AD5-4312-A99D-892C88003A6B" Any`
+    t =    61.76s Get number of matches for: Elements matching predicate 'identifier BEGINSWITH "saved.item.link."'
+    t =    61.79s Terminate org.example.PlannerMCPPrototype:89865
+    t =    62.83s Open org.example.PlannerMCPPrototype
+    t =    62.83s     Launch org.example.PlannerMCPPrototype
+2026-10-13 22:29:33.297 xcodebuild[89605:38552715] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 22:29:33.297 xcodebuild[89605:38552715] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    63.04s         Setting up automation session
+    t =    65.41s         Wait for org.example.PlannerMCPPrototype to idle
+    t =    66.82s Tap "Items" Button
+    t =    66.82s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    66.82s     Find the "Items" Button
+    t =    66.89s     Check for interrupting elements affecting "Items" Button
+    t =    66.98s     Synthesize event
+    t =    67.29s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    69.15s Tap "saved.items.filters" Button
+    t =    69.15s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    69.15s     Find the "saved.items.filters" Button
+    t =    69.23s     Check for interrupting elements affecting "saved.items.filters" Button
+    t =    69.28s     Synthesize event
+    t =    69.59s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    70.68s Tap "Clear Filters" Button
+    t =    70.68s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    70.69s     Find the "Clear Filters" Button
+    t =    70.80s     Check for interrupting elements affecting "saved.filters.clear" Button
+    t =    70.86s     Synthesize event
+    t =    71.18s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    71.93s Tap "saved.filters.done" Button
+    t =    71.93s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    71.94s     Find the "saved.filters.done" Button
+    t =    72.00s     Check for interrupting elements affecting "saved.filters.done" Button
+    t =    72.06s     Synthesize event
+    t =    72.36s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    73.19s Waiting 10.0s for Button (First Match) to exist
+    t =    74.23s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    74.23s         Checking existence of `Button (First Match)`
+    t =    74.39s Get number of matches for: Elements matching predicate 'identifier MATCHES "saved\\.item\\.[0-9A-Fa-f-]{36}"'
+    t =    74.44s Tap Button (First Match)
+    t =    74.44s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    74.44s     Find the Button (First Match)
+    t =    74.51s     Check for interrupting elements affecting "saved.item.FEF1E95A-F5C8-4EC4-94B7-4253CAA6687C" Button
+    t =    74.57s     Synthesize event
+    t =    74.86s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    75.23s Waiting 5.0s for "saved.item.link.756E3458-0AD5-4312-A99D-892C88003A6B" Any to exist
+    t =    76.28s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.item.link.756E3458-0AD5-4312-A99D-892C88003A6B" Any`
+    t =    76.28s         Checking existence of `"saved.item.link.756E3458-0AD5-4312-A99D-892C88003A6B" Any`
+    t =    76.45s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testExactLinkReusePreservesDoneArchivedContentAndRememberedListWithoutDuplicates]' passed (76.814 seconds).
+Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem]' started.
+    t =     0.00s Start Test at 2026-10-13 22:29:47.281
+    t =     0.02s Set Up
+    t =     0.02s Open org.example.PlannerMCPPrototype
+    t =     0.02s     Launch org.example.PlannerMCPPrototype
+    t =     0.03s         Terminate org.example.PlannerMCPPrototype:89959
+2026-10-13 22:29:48.384 xcodebuild[89605:38552715] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 22:29:48.385 xcodebuild[89605:38552715] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.32s         Setting up automation session
+    t =     3.60s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.00s Tap "Items" Button
+    t =     5.00s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.00s     Find the "Items" Button
+    t =     5.07s     Check for interrupting elements affecting "Items" Button
+    t =     5.16s     Synthesize event
+    t =     5.48s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     7.32s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =     8.34s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =     8.34s         Checking existence of `"saved.capture.new" Button`
+    t =     8.43s Tap "saved.capture.new" Button
+    t =     8.43s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.43s     Find the "saved.capture.new" Button
+    t =     8.48s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =     8.52s     Synthesize event
+    t =     8.83s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.29s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    10.31s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    10.31s         Checking existence of `"saved.capture.input" TextField`
+    t =    10.40s Tap "saved.capture.input" TextField
+    t =    10.40s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.41s     Find the "saved.capture.input" TextField
+    t =    10.46s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    10.51s     Synthesize event
+    t =    10.80s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.90s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    10.90s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.27s     Find the "saved.capture.input" TextField
+    t =    11.40s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    11.47s     Synthesize event
+    t =    12.36s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.37s Tap "saved.capture.review" Button
+    t =    12.37s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.37s     Find the "saved.capture.review" Button
+    t =    12.46s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    12.53s     Synthesize event
+    t =    12.83s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.84s Waiting 10.0s for "saved.capture.title" TextField to exist
+    t =    13.89s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.title" TextField`
+    t =    13.89s         Checking existence of `"saved.capture.title" TextField`
+    t =    14.00s Find the "saved.capture.title" TextField
+    t =    14.07s Tap "saved.capture.title" TextField
+    t =    14.07s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.08s     Find the "saved.capture.title" TextField
+    t =    14.15s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    14.22s     Synthesize event
+    t =    14.51s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.84s Find the "saved.capture.title" TextField
+    t =    14.94s Type 'Cancelle...' into "saved.capture.title" TextField
+    t =    14.94s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.94s     Find the "saved.capture.title" TextField
+    t =    15.03s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    15.12s     Synthesize event
+    t =    15.78s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.79s Tap "saved.capture.cancel" Button
+    t =    15.79s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.79s     Find the "saved.capture.cancel" Button
+    t =    15.90s     Check for interrupting elements affecting "saved.capture.cancel" Button
+    t =    15.97s     Synthesize event
+    t =    16.27s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    16.76s Waiting 10.0s for "No matching items" StaticText to exist
+    t =    17.80s     Checking `Expect predicate `existsNoRetry == 1` for object "No matching items" StaticText`
+    t =    17.80s         Checking existence of `"No matching items" StaticText`
+    t =    17.84s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =    18.91s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =    18.91s         Checking existence of `"saved.capture.new" Button`
+    t =    18.98s Tap "saved.capture.new" Button
+    t =    18.98s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    18.98s     Find the "saved.capture.new" Button
+    t =    19.03s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =    19.08s     Synthesize event
+    t =    19.39s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    19.83s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    20.87s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    20.88s         Checking existence of `"saved.capture.input" TextField`
+    t =    20.95s Tap "saved.capture.input" TextField
+    t =    20.95s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    20.95s     Find the "saved.capture.input" TextField
+    t =    21.01s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    21.06s     Synthesize event
+    t =    21.35s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    21.65s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    21.65s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    21.65s     Find the "saved.capture.input" TextField
+    t =    21.73s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    21.79s     Synthesize event
+    t =    22.68s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.68s Tap "saved.capture.review" Button
+    t =    22.68s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.69s     Find the "saved.capture.review" Button
+    t =    22.76s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    22.84s     Synthesize event
+    t =    23.13s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    23.44s Waiting 10.0s for "saved.capture.title" TextField to exist
+    t =    24.46s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.title" TextField`
+    t =    24.46s         Checking existence of `"saved.capture.title" TextField`
+    t =    24.54s Tap "saved.capture.title" TextField
+    t =    24.54s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    24.54s     Find the "saved.capture.title" TextField
+    t =    24.61s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    24.68s     Synthesize event
+    t =    24.97s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    25.29s Find the "saved.capture.title" TextField
+    t =    25.40s Type 'Museum c...' into "saved.capture.title" TextField
+    t =    25.40s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    25.40s     Find the "saved.capture.title" TextField
+    t =    25.49s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    25.57s     Synthesize event
+    t =    26.18s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    26.19s Tap "saved.capture.notes" TextField
+    t =    26.19s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    26.19s     Find the "saved.capture.notes" TextField
+    t =    26.30s     Check for interrupting elements affecting "saved.capture.notes" TextField
+    t =    26.37s     Synthesize event
+    t =    26.66s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    26.67s Type 'Bring the museum p...' into "saved.capture.notes" TextField
+    t =    26.67s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    26.67s     Find the "saved.capture.notes" TextField
+    t =    26.76s     Check for interrupting elements affecting "saved.capture.notes" TextField
+    t =    26.84s     Synthesize event
+    t =    27.39s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    27.40s Tap "saved.capture.add" Button
+    t =    27.40s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    27.40s     Find the "saved.capture.add" Button
+    t =    27.50s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    27.60s     Synthesize event
+    t =    27.90s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    28.79s Waiting 10.0s for "Bring the museum pass" StaticText to exist
+    t =    29.84s     Checking `Expect predicate `existsNoRetry == 1` for object "Bring the museum pass" StaticText`
+    t =    29.84s         Checking existence of `"Bring the museum pass" StaticText`
+    t =    29.90s Waiting 5.0s for Any (First Match) to exist
+    t =    30.95s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    30.95s         Checking existence of `Any (First Match)`
+    t =    31.04s Find the Any (First Match)
+    t =    31.12s Find the "saved.item.link.B9ACAB71-08B2-40C8-90DE-03D43CE92CEB" Link
+    t =    31.19s Find the Target Application 'org.example.PlannerMCPPrototype'
+    t =    31.30s Added attachment named 'Reviewed native capture saves owned notes and original link'
+    t =    31.30s Terminate org.example.PlannerMCPPrototype:90040
+    t =    32.39s Open org.example.PlannerMCPPrototype
+    t =    32.39s     Launch org.example.PlannerMCPPrototype
+2026-10-13 22:30:19.672 xcodebuild[89605:38552715] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 22:30:19.672 xcodebuild[89605:38552715] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    32.60s         Setting up automation session
+    t =    34.97s         Wait for org.example.PlannerMCPPrototype to idle
+    t =    36.29s Tap "Inbox" Button
+    t =    36.29s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    36.29s     Find the "Inbox" Button
+    t =    36.37s     Check for interrupting elements affecting "Inbox" Button
+    t =    36.45s     Synthesize event
+    t =    36.78s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    38.66s Waiting 10.0s for Button (First Match) to exist
+    t =    39.68s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    39.68s         Checking existence of `Button (First Match)`
+    t =    39.79s Get number of matches for: Elements matching predicate '(identifier BEGINSWITH "saved.item." OR identifier BEGINSWITH "saved.appearance.") AND label == "Museum capture"'
+    t =    39.84s Get number of matches for: Elements matching predicate '(identifier BEGINSWITH "saved.item." OR identifier BEGINSWITH "saved.appearance.") AND label == "Cancelled capture"'
+    t =    39.88s Tap Button (First Match)
+    t =    39.88s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    39.88s     Find the Button (First Match)
+    t =    39.94s     Check for interrupting elements affecting "saved.item.1A2203C3-2D16-44CF-BDA3-7F86A3F06AC1" Button
+    t =    39.98s     Synthesize event
+    t =    40.28s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    40.63s Waiting 5.0s for "Bring the museum pass" StaticText to exist
+    t =    41.67s     Checking `Expect predicate `existsNoRetry == 1` for object "Bring the museum pass" StaticText`
+    t =    41.67s         Checking existence of `"Bring the museum pass" StaticText`
+    t =    41.73s Waiting 5.0s for "saved.item.link.B9ACAB71-08B2-40C8-90DE-03D43CE92CEB" Any to exist
+    t =    42.76s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.item.link.B9ACAB71-08B2-40C8-90DE-03D43CE92CEB" Any`
+    t =    42.76s         Checking existence of `"saved.item.link.B9ACAB71-08B2-40C8-90DE-03D43CE92CEB" Any`
+    t =    42.94s Find the "saved.item.link.B9ACAB71-08B2-40C8-90DE-03D43CE92CEB" Any
+    t =    43.09s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem]' passed (43.386 seconds).
+Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testUntouchedSavedLinkDraftCanBeAddedWithoutAnEmptyEdit]' started.
+    t =     0.00s Start Test at 2026-10-13 22:30:30.668
+    t =     0.04s Set Up
+    t =     0.04s Open org.example.PlannerMCPPrototype
+    t =     0.04s     Launch org.example.PlannerMCPPrototype
+    t =     0.04s         Terminate org.example.PlannerMCPPrototype:90170
+2026-10-13 22:30:31.791 xcodebuild[89605:38552715] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 22:30:31.791 xcodebuild[89605:38552715] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.34s         Setting up automation session
+    t =     3.53s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     4.88s Tap "Items" Button
+    t =     4.88s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     4.89s     Find the "Items" Button
+    t =     4.96s     Check for interrupting elements affecting "Items" Button
+    t =     5.05s     Synthesize event
+    t =     5.37s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     7.29s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =     8.32s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =     8.32s         Checking existence of `"saved.capture.new" Button`
+    t =     8.41s Tap "saved.capture.new" Button
+    t =     8.41s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.41s     Find the "saved.capture.new" Button
+    t =     8.46s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =     8.51s     Synthesize event
+    t =     8.82s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.29s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    10.32s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    10.32s         Checking existence of `"saved.capture.input" TextField`
+    t =    10.41s Tap "saved.capture.input" TextField
+    t =    10.41s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.41s     Find the "saved.capture.input" TextField
+    t =    10.47s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    10.52s     Synthesize event
+    t =    10.81s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.89s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    10.89s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.27s     Find the "saved.capture.input" TextField
+    t =    11.38s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    11.45s     Synthesize event
+    t =    12.37s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.38s Tap "saved.capture.review" Button
+    t =    12.38s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.39s     Find the "saved.capture.review" Button
+    t =    12.48s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    12.56s     Synthesize event
+    t =    12.85s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.25s Waiting 10.0s for "saved.capture.title" TextField to exist
+    t =    14.28s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.title" TextField`
+    t =    14.29s         Checking existence of `"saved.capture.title" TextField`
+    t =    14.38s Find the "saved.capture.title" TextField
+    t =    14.44s Tap "saved.capture.add" Button
+    t =    14.44s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.45s     Find the "saved.capture.add" Button
+    t =    14.52s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    14.59s     Synthesize event
+    t =    14.89s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.62s Waiting 10.0s for "saved.item.actions" Button to exist
+    t =    16.65s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.item.actions" Button`
+    t =    16.65s         Checking existence of `"saved.item.actions" Button`
+    t =    16.72s Waiting 5.0s for Any (First Match) to exist
+    t =    17.76s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    17.76s         Checking existence of `Any (First Match)`
+    t =    17.84s Find the Any (First Match)
+    t =    17.91s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testUntouchedSavedLinkDraftCanBeAddedWithoutAnEmptyEdit]' passed (18.140 seconds).
+Test Suite 'SavedCaptureJourneyTests' passed at 2026-10-13 22:30:48.807.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 138.340 (138.345) seconds
+Test Suite 'PlannerNavigationUITests.xctest' passed at 2026-10-13 22:30:48.808.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 138.340 (138.346) seconds
+Test Suite 'Selected tests' passed at 2026-10-13 22:30:48.809.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 138.340 (138.347) seconds
+2026-10-13 22:30:49.133 xcodebuild[89605:38552715] [MT] IDETestOperationsObserverDebug: 143.003 elapsed -- Testing started completed.
+2026-10-13 22:30:49.133 xcodebuild[89605:38552715] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-13 22:30:49.133 xcodebuild[89605:38552715] [MT] IDETestOperationsObserverDebug: 143.003 sec, +143.003 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/PlannerCaptureFieldsPhoneRegression.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

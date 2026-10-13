@@ -1,0 +1,60 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "modelName" : "iPad Air 11-inch (M4)",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 2,
+      "passedTests" : 7,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "PlannerNavigation · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 2,
+  "finishTime" : 1791898628.862,
+  "passedTests" : 7,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1791898175.883,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "XCTAssertTrue failed",
+      "targetName" : "PlannerNavigationUITests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "SavedCaptureFieldsJourneyTests/testCaptureSharedLabelsRemainStagedUntilAddAndPersistAfterRelaunch()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureFieldsJourneyTests/testCaptureSharedLabelsRemainStagedUntilAddAndPersistAfterRelaunch",
+      "testName" : "testCaptureSharedLabelsRemainStagedUntilAddAndPersistAfterRelaunch()"
+    },
+    {
+      "failureText" : "XCTAssertTrue failed",
+      "targetName" : "PlannerNavigationUITests",
+      "testIdentifier" : 4,
+      "testIdentifierString" : "SavedCaptureFieldsJourneyTests/testOwnedCaptureFieldsAndLinkLabelPersistAfterRelaunch()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureFieldsJourneyTests/testOwnedCaptureFieldsAndLinkLabelPersistAfterRelaunch",
+      "testName" : "testOwnedCaptureFieldsAndLinkLabelPersistAfterRelaunch()"
+    }
+  ],
+  "title" : "Test - PlannerNavigation",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 9
+}

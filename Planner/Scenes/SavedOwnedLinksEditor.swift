@@ -3,14 +3,22 @@ import SwiftUI
 
 struct SavedOwnedLinkDraft: Identifiable {
   let id: UUID
-  let savedLinkIdentifier: UUID?
+  let retainedLinkIdentifier: UUID?
   let originalLabel: String?
   var originalURL: String
   var label: String
 
   init(link: PlannerOwnedLinkRead) {
     id = link.linkId
-    savedLinkIdentifier = link.linkId
+    retainedLinkIdentifier = link.linkId
+    originalLabel = link.label
+    originalURL = link.originalUrl
+    label = link.label ?? ""
+  }
+
+  init(link: PlannerCaptureDraftLink) {
+    id = link.linkId
+    retainedLinkIdentifier = link.linkId
     originalLabel = link.label
     originalURL = link.originalUrl
     label = link.label ?? ""
@@ -18,7 +26,7 @@ struct SavedOwnedLinkDraft: Identifiable {
 
   init() {
     id = UUID()
-    savedLinkIdentifier = nil
+    retainedLinkIdentifier = nil
     originalLabel = nil
     originalURL = ""
     label = ""
@@ -32,7 +40,7 @@ struct SavedOwnedLinkDraft: Identifiable {
       savedLabel = label.isEmpty ? nil : label
     }
     return PlannerLinkInput(
-      linkId: savedLinkIdentifier, originalUrl: originalURL, label: savedLabel)
+      linkId: retainedLinkIdentifier, originalUrl: originalURL, label: savedLabel)
   }
 }
 

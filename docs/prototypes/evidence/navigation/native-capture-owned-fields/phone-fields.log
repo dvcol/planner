@@ -1,0 +1,954 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO "-only-testing:PlannerNavigationUITests/SavedCaptureFieldsJourneyTests" -resultBundlePath /private/tmp/PlannerCaptureFieldsPhoneFields.xcresult CODE_SIGNING_ALLOWED=NO test-without-building
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  swift-system: https://github.com/apple/swift-system.git @ 1.8.1
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.7.2
+  swift-log: https://github.com/apple/swift-log.git @ 1.16.1
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.104.0
+  PlannerPreviews: /Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerPreviews @ local
+  PlannerCore: /Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore @ local
+  EventSource: https://github.com/mattt/eventsource.git @ 1.5.1
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk @ 0.12.1
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.1
+
+Writing result bundle at path:
+	/private/tmp/PlannerCaptureFieldsPhoneFields.xcresult
+
+2026-10-13 22:39:17.492629+0900 PlannerNavigationUITests-Runner[92953:38582893] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-13 22:39:20.569.
+Test Suite 'PlannerNavigationUITests.xctest' started at 2026-10-13 22:39:20.570.
+Test Suite 'SavedCaptureFieldsJourneyTests' started at 2026-10-13 22:39:20.570.
+Test Case '-[PlannerNavigationUITests.SavedCaptureFieldsJourneyTests testCaptureSharedLabelsRemainStagedUntilAddAndPersistAfterRelaunch]' started.
+    t =     0.00s Start Test at 2026-10-13 22:39:20.572
+    t =     0.02s Set Up
+    t =     0.03s Open org.example.PlannerMCPPrototype
+    t =     0.03s     Launch org.example.PlannerMCPPrototype
+2026-10-13 22:39:20.663 xcodebuild[92950:38582626] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 22:39:20.663 xcodebuild[92950:38582626] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     0.53s         Setting up automation session
+objc[92953]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x109f64398) and /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10a478310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     3.22s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     4.66s Waiting 3.0s for "saved.categories.manage" Button to exist
+    t =     5.71s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.categories.manage" Button`
+    t =     5.71s         Checking existence of `"saved.categories.manage" Button`
+    t =     5.89s Find the "saved.categories.manage" Button
+    t =     6.01s Waiting 10.0s for "saved.categories.manage" Button to exist
+    t =     7.07s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.categories.manage" Button`
+    t =     7.07s         Checking existence of `"saved.categories.manage" Button`
+    t =     7.13s Tap "saved.categories.manage" Button
+    t =     7.13s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     7.14s     Find the "saved.categories.manage" Button
+    t =     7.21s     Check for interrupting elements affecting "saved.categories.manage" Button
+    t =     7.30s     Synthesize event
+    t =     7.63s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.14s Tap "saved.labels.new" Button
+    t =     8.14s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.14s     Find the "saved.labels.new" Button
+    t =     8.23s     Check for interrupting elements affecting "saved.labels.new" Button
+    t =     8.29s     Synthesize event
+    t =     8.60s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.54s Tap "New Category" Button
+    t =     9.54s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.55s     Find the "New Category" Button
+    t =     9.62s     Check for interrupting elements affecting "square.grid.2x2" Button
+    t =     9.69s     Synthesize event
+    t =     9.99s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.07s Waiting 5.0s for "saved.category.name" TextField to exist
+    t =    12.15s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.category.name" TextField`
+    t =    12.15s         Checking existence of `"saved.category.name" TextField`
+    t =    12.34s Tap "saved.category.name" TextField
+    t =    12.34s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.35s     Find the "saved.category.name" TextField
+    t =    12.43s     Check for interrupting elements affecting "saved.category.name" TextField
+    t =    12.55s     Synthesize event
+    t =    12.85s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.08s Type 'Culture' into "saved.category.name" TextField
+    t =    13.08s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.44s     Find the "saved.category.name" TextField
+    t =    13.56s     Check for interrupting elements affecting "saved.category.name" TextField
+    t =    13.68s     Synthesize event
+    t =    14.01s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.02s Tap "saved.category.save" Button
+    t =    14.02s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.02s     Find the "saved.category.save" Button
+    t =    14.18s     Check for interrupting elements affecting "saved.category.save" Button
+    t =    14.28s     Synthesize event
+    t =    14.58s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.29s Waiting 10.0s for "Culture" StaticText to exist
+    t =    16.35s     Checking `Expect predicate `existsNoRetry == 1` for object "Culture" StaticText`
+    t =    16.35s         Checking existence of `"Culture" StaticText`
+    t =    16.45s Tap "saved.labels.new" Button
+    t =    16.45s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    16.45s     Find the "saved.labels.new" Button
+    t =    16.56s     Check for interrupting elements affecting "saved.labels.new" Button
+    t =    16.63s     Synthesize event
+    t =    16.93s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.82s Tap "New Tag" Button
+    t =    17.82s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.84s     Find the "New Tag" Button
+    t =    17.97s     Check for interrupting elements affecting "tag" Button
+    t =    18.04s     Synthesize event
+    t =    18.34s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    19.39s Waiting 5.0s for "saved.tag.name" TextField to exist
+    t =    20.44s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.tag.name" TextField`
+    t =    20.45s         Checking existence of `"saved.tag.name" TextField`
+    t =    20.54s Tap "saved.tag.name" TextField
+    t =    20.54s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    20.55s     Find the "saved.tag.name" TextField
+    t =    20.70s     Check for interrupting elements affecting "saved.tag.name" TextField
+    t =    20.79s     Synthesize event
+    t =    21.09s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    21.41s Type 'Rain' into "saved.tag.name" TextField
+    t =    21.41s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    21.41s     Find the "saved.tag.name" TextField
+    t =    21.52s     Check for interrupting elements affecting "saved.tag.name" TextField
+    t =    21.72s     Synthesize event
+    t =    22.00s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.00s Tap "saved.tag.save" Button
+    t =    22.00s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.01s     Find the "saved.tag.save" Button
+    t =    22.10s     Check for interrupting elements affecting "saved.tag.save" Button
+    t =    22.22s     Synthesize event
+    t =    22.52s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    23.22s Waiting 10.0s for "Rain" StaticText to exist
+    t =    24.29s     Checking `Expect predicate `existsNoRetry == 1` for object "Rain" StaticText`
+    t =    24.29s         Checking existence of `"Rain" StaticText`
+    t =    24.82s Tap "saved.categories.done" Button
+    t =    24.82s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    24.82s     Find the "saved.categories.done" Button
+    t =    24.98s     Check for interrupting elements affecting "saved.categories.done" Button
+    t =    25.05s     Synthesize event
+    t =    25.36s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    25.74s Tap "Items" Button
+    t =    25.74s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    25.74s     Find the "Items" Button
+    t =    25.76s     Check for interrupting elements affecting "square.stack" Button
+    t =    25.81s     Synthesize event
+    t =    26.10s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    27.96s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =    29.02s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =    29.02s         Checking existence of `"saved.capture.new" Button`
+    t =    29.12s Tap "saved.capture.new" Button
+    t =    29.12s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    29.13s     Find the "saved.capture.new" Button
+    t =    29.21s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =    29.27s     Synthesize event
+    t =    29.59s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    30.12s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    31.15s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    31.15s         Checking existence of `"saved.capture.input" TextField`
+    t =    31.24s Tap "saved.capture.input" TextField
+    t =    31.24s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    31.25s     Find the "saved.capture.input" TextField
+    t =    31.32s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    31.40s     Synthesize event
+    t =    31.70s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    32.02s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    32.02s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    32.03s     Find the "saved.capture.input" TextField
+    t =    32.13s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    32.22s     Synthesize event
+    t =    32.99s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    33.00s Tap "saved.capture.review" Button
+    t =    33.00s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    33.00s     Find the "saved.capture.review" Button
+    t =    33.13s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    33.25s     Synthesize event
+    t =    33.56s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    33.95s Checking existence of `"saved.capture.categories" Button`
+    t =    34.06s Find the "saved.capture.categories" Button
+    t =    34.16s Checking existence of `Keyboard (First Match)`
+    t =    34.31s Find the Window (First Match)
+    t =    34.32s Find the "saved.capture.categories" Button
+    t =    34.48s Tap "saved.capture.categories" Button
+    t =    34.48s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    34.49s     Find the "saved.capture.categories" Button
+    t =    34.58s     Check for interrupting elements affecting "saved.capture.categories" Button
+    t =    34.68s     Synthesize event
+    t =    34.98s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    35.34s Waiting 5.0s for Any (First Match) to exist
+    t =    36.39s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    36.39s         Checking existence of `Any (First Match)`
+    t =    37.52s Checking `Expect predicate `value == 0 OR value == "0"` for object Any (First Match)`
+    t =    37.52s     Find the Any (First Match)
+    t =    37.65s     Find the "saved.item.label.category.FF992A7A-FB20-4E76-9D46-6E2EDCC23314" Switch
+    t =    37.76s Tap Switch (First Match)
+    t =    37.76s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    37.76s     Find the Switch (First Match)
+    t =    37.94s     Check for interrupting elements affecting "0" Switch
+    t =    38.05s     Synthesize event
+    t =    38.36s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    40.67s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.item.label.category.FF992A7A-FB20-4E76-9D46-6E2EDCC23314" Switch`
+    t =    40.67s     Find the "saved.item.label.category.FF992A7A-FB20-4E76-9D46-6E2EDCC23314" Switch
+    t =    40.81s     Find the "saved.item.label.category.FF992A7A-FB20-4E76-9D46-6E2EDCC23314" Switch
+    t =    40.93s Tap "saved.item.labels.done" Button
+    t =    40.93s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    40.93s     Find the "saved.item.labels.done" Button
+    t =    41.01s     Check for interrupting elements affecting "saved.item.labels.done" Button
+    t =    41.08s     Synthesize event
+    t =    41.37s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    41.70s Checking existence of `"saved.capture.tags" Button`
+    t =    41.83s Find the "saved.capture.tags" Button
+    t =    41.94s Checking existence of `Keyboard (First Match)`
+    t =    42.10s Find the Window (First Match)
+    t =    42.11s Find the "saved.capture.tags" Button
+    t =    42.21s Tap "saved.capture.tags" Button
+    t =    42.21s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    42.22s     Find the "saved.capture.tags" Button
+    t =    42.36s     Check for interrupting elements affecting "saved.capture.tags" Button
+    t =    42.45s     Synthesize event
+    t =    42.74s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    43.07s Waiting 5.0s for Any (First Match) to exist
+    t =    44.11s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    44.11s         Checking existence of `Any (First Match)`
+    t =    45.33s Checking `Expect predicate `value == 0 OR value == "0"` for object Any (First Match)`
+    t =    45.34s     Find the Any (First Match)
+    t =    45.42s     Find the "saved.item.label.tag.FEBBE88F-D72A-4436-BA46-3D0F01AFE4D3" Switch
+    t =    45.47s Tap Switch (First Match)
+    t =    45.47s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    45.48s     Find the Switch (First Match)
+    t =    45.54s     Check for interrupting elements affecting "0" Switch
+    t =    45.62s     Synthesize event
+    t =    45.92s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    48.28s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.item.label.tag.FEBBE88F-D72A-4436-BA46-3D0F01AFE4D3" Switch`
+    t =    48.28s     Find the "saved.item.label.tag.FEBBE88F-D72A-4436-BA46-3D0F01AFE4D3" Switch
+    t =    48.34s     Find the "saved.item.label.tag.FEBBE88F-D72A-4436-BA46-3D0F01AFE4D3" Switch
+    t =    48.41s Tap "saved.item.labels.done" Button
+    t =    48.41s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    48.41s     Find the "saved.item.labels.done" Button
+    t =    48.48s     Check for interrupting elements affecting "saved.item.labels.done" Button
+    t =    48.55s     Synthesize event
+    t =    48.85s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    49.21s Get all elements bound by index for: Descendants matching type CollectionView
+    t =    49.62s Swipe down CollectionView (Element at index 1)
+    t =    49.63s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    49.63s     Find the CollectionView (Element at index 1)
+    t =    49.92s     Check for interrupting elements affecting CollectionView
+    t =    50.08s     Synthesize event
+    t =    50.65s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    51.02s Checking existence of `"saved.capture.title" TextField`
+    t =    51.11s Find the "saved.capture.title" TextField
+    t =    51.22s Checking existence of `Keyboard (First Match)`
+    t =    51.36s Find the Window (First Match)
+    t =    51.37s Find the "saved.capture.title" TextField
+    t =    51.47s Tap "saved.capture.title" TextField
+    t =    51.47s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    51.47s     Find the "saved.capture.title" TextField
+    t =    51.56s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    51.65s     Synthesize event
+    t =    51.94s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    52.30s Find the "saved.capture.title" TextField
+    t =    52.41s Type 'Cancelle...' into "saved.capture.title" TextField
+    t =    52.41s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    52.41s     Find the "saved.capture.title" TextField
+    t =    52.53s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    52.62s     Synthesize event
+    t =    53.41s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    53.42s Tap "saved.capture.cancel" Button
+    t =    53.43s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    53.43s     Find the "saved.capture.cancel" Button
+    t =    53.56s     Check for interrupting elements affecting "saved.capture.cancel" Button
+    t =    53.65s     Synthesize event
+    t =    53.95s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    54.42s Waiting 10.0s for "No matching items" StaticText to exist
+    t =    55.45s     Checking `Expect predicate `existsNoRetry == 1` for object "No matching items" StaticText`
+    t =    55.45s         Checking existence of `"No matching items" StaticText`
+    t =    55.53s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =    56.55s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =    56.55s         Checking existence of `"saved.capture.new" Button`
+    t =    56.63s Tap "saved.capture.new" Button
+    t =    56.63s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    56.63s     Find the "saved.capture.new" Button
+    t =    56.68s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =    56.73s     Synthesize event
+    t =    57.04s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    57.46s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    58.52s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    58.52s         Checking existence of `"saved.capture.input" TextField`
+    t =    58.59s Tap "saved.capture.input" TextField
+    t =    58.59s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    58.60s     Find the "saved.capture.input" TextField
+    t =    58.65s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    58.72s     Synthesize event
+    t =    59.01s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    59.28s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    59.28s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    59.28s     Find the "saved.capture.input" TextField
+    t =    59.37s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    59.45s     Synthesize event
+    t =    60.22s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    60.23s Tap "saved.capture.review" Button
+    t =    60.23s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    60.23s     Find the "saved.capture.review" Button
+    t =    60.32s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    60.40s     Synthesize event
+    t =    60.72s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    61.10s Checking existence of `"saved.capture.categories" Button`
+    t =    61.20s Find the "saved.capture.categories" Button
+    t =    61.30s Checking existence of `Keyboard (First Match)`
+    t =    61.42s Find the Window (First Match)
+    t =    61.43s Find the "saved.capture.categories" Button
+    t =    61.52s Tap "saved.capture.categories" Button
+    t =    61.52s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    61.52s     Find the "saved.capture.categories" Button
+    t =    61.60s     Check for interrupting elements affecting "saved.capture.categories" Button
+    t =    61.67s     Synthesize event
+    t =    61.97s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    62.29s Waiting 5.0s for Any (First Match) to exist
+    t =    63.34s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    63.34s         Checking existence of `Any (First Match)`
+    t =    64.45s Checking `Expect predicate `value == 0 OR value == "0"` for object Any (First Match)`
+    t =    64.45s     Find the Any (First Match)
+    t =    64.52s     Find the "saved.item.label.category.FF992A7A-FB20-4E76-9D46-6E2EDCC23314" Switch
+    t =    64.57s Tap Switch (First Match)
+    t =    64.57s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    64.57s     Find the Switch (First Match)
+    t =    64.63s     Check for interrupting elements affecting "0" Switch
+    t =    64.70s     Synthesize event
+    t =    64.99s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    67.32s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.item.label.category.FF992A7A-FB20-4E76-9D46-6E2EDCC23314" Switch`
+    t =    67.32s     Find the "saved.item.label.category.FF992A7A-FB20-4E76-9D46-6E2EDCC23314" Switch
+    t =    67.39s     Find the "saved.item.label.category.FF992A7A-FB20-4E76-9D46-6E2EDCC23314" Switch
+    t =    67.45s Tap "saved.item.labels.done" Button
+    t =    67.45s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    67.46s     Find the "saved.item.labels.done" Button
+    t =    67.53s     Check for interrupting elements affecting "saved.item.labels.done" Button
+    t =    67.59s     Synthesize event
+    t =    67.89s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    68.23s Checking existence of `"saved.capture.tags" Button`
+    t =    68.34s Find the "saved.capture.tags" Button
+    t =    68.44s Checking existence of `Keyboard (First Match)`
+    t =    68.59s Find the Window (First Match)
+    t =    68.59s Find the "saved.capture.tags" Button
+    t =    68.69s Tap "saved.capture.tags" Button
+    t =    68.69s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    68.69s     Find the "saved.capture.tags" Button
+    t =    68.78s     Check for interrupting elements affecting "saved.capture.tags" Button
+    t =    68.85s     Synthesize event
+    t =    69.14s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    69.46s Waiting 5.0s for Any (First Match) to exist
+    t =    70.51s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    70.51s         Checking existence of `Any (First Match)`
+    t =    71.60s Checking `Expect predicate `value == 0 OR value == "0"` for object Any (First Match)`
+    t =    71.60s     Find the Any (First Match)
+    t =    71.68s     Find the "saved.item.label.tag.FEBBE88F-D72A-4436-BA46-3D0F01AFE4D3" Switch
+    t =    71.73s Tap Switch (First Match)
+    t =    71.73s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    71.74s     Find the Switch (First Match)
+    t =    71.79s     Check for interrupting elements affecting "0" Switch
+    t =    71.87s     Synthesize event
+    t =    72.15s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    74.50s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.item.label.tag.FEBBE88F-D72A-4436-BA46-3D0F01AFE4D3" Switch`
+    t =    74.50s     Find the "saved.item.label.tag.FEBBE88F-D72A-4436-BA46-3D0F01AFE4D3" Switch
+    t =    74.57s     Find the "saved.item.label.tag.FEBBE88F-D72A-4436-BA46-3D0F01AFE4D3" Switch
+    t =    74.61s Tap "saved.item.labels.done" Button
+    t =    74.62s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    74.62s     Find the "saved.item.labels.done" Button
+    t =    74.69s     Check for interrupting elements affecting "saved.item.labels.done" Button
+    t =    74.76s     Synthesize event
+    t =    75.05s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    75.37s Get all elements bound by index for: Descendants matching type CollectionView
+    t =    75.46s Swipe down CollectionView (Element at index 1)
+    t =    75.46s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    75.46s     Find the CollectionView (Element at index 1)
+    t =    75.53s     Check for interrupting elements affecting CollectionView
+    t =    75.61s     Synthesize event
+    t =    76.07s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    76.40s Checking existence of `"saved.capture.title" TextField`
+    t =    76.49s Find the "saved.capture.title" TextField
+    t =    76.57s Checking existence of `Keyboard (First Match)`
+    t =    76.70s Find the Window (First Match)
+    t =    76.70s Find the "saved.capture.title" TextField
+    t =    76.79s Tap "saved.capture.title" TextField
+    t =    76.79s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    76.79s     Find the "saved.capture.title" TextField
+    t =    76.87s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    76.95s     Synthesize event
+    t =    77.24s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    77.57s Find the "saved.capture.title" TextField
+    t =    77.67s Type 'Labeled ...' into "saved.capture.title" TextField
+    t =    77.67s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    77.67s     Find the "saved.capture.title" TextField
+    t =    77.77s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    77.86s     Synthesize event
+    t =    78.48s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    78.49s Tap "saved.capture.add" Button
+    t =    78.49s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    78.50s     Find the "saved.capture.add" Button
+    t =    78.60s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    78.68s     Synthesize event
+    t =    78.97s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    79.73s Waiting 10.0s for "Culture" StaticText to exist
+    t =    80.75s     Checking `Expect predicate `existsNoRetry == 1` for object "Culture" StaticText`
+    t =    80.75s         Checking existence of `"Culture" StaticText`
+    t =    80.86s Checking existence of `"Rain" StaticText`
+    t =    80.94s Find the Target Application 'org.example.PlannerMCPPrototype'
+    t =    81.05s Added attachment named 'Native capture saves selected shared Categories and Tags'
+    t =    81.05s Terminate org.example.PlannerMCPPrototype:92986
+    t =    82.09s Open org.example.PlannerMCPPrototype
+    t =    82.09s     Launch org.example.PlannerMCPPrototype
+2026-10-13 22:40:42.664 xcodebuild[92950:38582626] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 22:40:42.664 xcodebuild[92950:38582626] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    82.31s         Setting up automation session
+    t =    84.59s         Wait for org.example.PlannerMCPPrototype to idle
+    t =    85.92s Tap "Inbox" Button
+    t =    85.92s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    85.92s     Find the "Inbox" Button
+    t =    85.99s     Check for interrupting elements affecting "Inbox" Button
+    t =    86.07s     Synthesize event
+    t =    86.37s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    88.29s Waiting 10.0s for Button (First Match) to exist
+    t =    89.34s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    89.34s         Checking existence of `Button (First Match)`
+    t =    89.43s Get number of matches for: Elements matching predicate '(identifier BEGINSWITH "saved.item." OR identifier BEGINSWITH "saved.appearance.") AND label == "Labeled capture"'
+    t =    89.49s Get number of matches for: Elements matching predicate '(identifier BEGINSWITH "saved.item." OR identifier BEGINSWITH "saved.appearance.") AND label == "Cancelled labeled capture"'
+    t =    89.54s Tap Button (First Match)
+    t =    89.54s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    89.54s     Find the Button (First Match)
+    t =    89.62s     Check for interrupting elements affecting "saved.item.798B361C-A818-4428-9A9D-CCA4DFE1BEFD" Button
+    t =    89.66s     Synthesize event
+    t =    89.96s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    90.34s Waiting 5.0s for "Culture" StaticText to exist
+    t =    91.39s     Checking `Expect predicate `existsNoRetry == 1` for object "Culture" StaticText`
+    t =    91.39s         Checking existence of `"Culture" StaticText`
+    t =    91.50s Checking existence of `"Rain" StaticText`
+    t =    91.59s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedCaptureFieldsJourneyTests testCaptureSharedLabelsRemainStagedUntilAddAndPersistAfterRelaunch]' passed (92.016 seconds).
+Test Case '-[PlannerNavigationUITests.SavedCaptureFieldsJourneyTests testEditingOnlyReuseLinkRequiresExplicitReselectionWithoutCreatingAnItem]' started.
+    t =     0.00s Start Test at 2026-10-13 22:40:52.589
+    t =     0.03s Set Up
+    t =     0.03s Open org.example.PlannerMCPPrototype
+    t =     0.03s     Launch org.example.PlannerMCPPrototype
+    t =     0.03s         Terminate org.example.PlannerMCPPrototype:93770
+2026-10-13 22:40:53.695 xcodebuild[92950:38582626] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 22:40:53.695 xcodebuild[92950:38582626] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.32s         Setting up automation session
+    t =     3.69s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.05s Tap "Items" Button
+    t =     5.05s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.05s     Find the "Items" Button
+    t =     5.14s     Check for interrupting elements affecting "Items" Button
+    t =     5.23s     Synthesize event
+    t =     5.56s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     7.44s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =     8.47s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =     8.47s         Checking existence of `"saved.capture.new" Button`
+    t =     8.54s Tap "saved.capture.new" Button
+    t =     8.54s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.55s     Find the "saved.capture.new" Button
+    t =     8.59s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =     8.64s     Synthesize event
+    t =     8.95s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.40s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    10.42s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    10.42s         Checking existence of `"saved.capture.input" TextField`
+    t =    10.50s Tap "saved.capture.input" TextField
+    t =    10.50s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.50s     Find the "saved.capture.input" TextField
+    t =    10.56s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    10.61s     Synthesize event
+    t =    10.90s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.01s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    11.01s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.39s     Find the "saved.capture.input" TextField
+    t =    11.49s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    11.56s     Synthesize event
+    t =    12.33s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.33s Tap "saved.capture.review" Button
+    t =    12.33s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.34s     Find the "saved.capture.review" Button
+    t =    12.42s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    12.49s     Synthesize event
+    t =    12.78s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.19s Checking existence of `"saved.capture.title" TextField`
+    t =    13.28s Find the "saved.capture.title" TextField
+    t =    13.36s Checking existence of `Keyboard (First Match)`
+    t =    13.48s Find the Window (First Match)
+    t =    13.49s Find the "saved.capture.title" TextField
+    t =    13.56s Tap "saved.capture.title" TextField
+    t =    13.56s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.57s     Find the "saved.capture.title" TextField
+    t =    13.64s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    13.71s     Synthesize event
+    t =    13.99s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.34s Find the "saved.capture.title" TextField
+    t =    14.44s Type 'Keep ori...' into "saved.capture.title" TextField
+    t =    14.44s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.45s     Find the "saved.capture.title" TextField
+    t =    14.53s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    14.61s     Synthesize event
+    t =    15.20s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.21s Tap "saved.capture.add" Button
+    t =    15.21s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.21s     Find the "saved.capture.add" Button
+    t =    15.31s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    15.39s     Synthesize event
+    t =    15.68s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    16.51s Waiting 10.0s for "saved.item.actions" Button to exist
+    t =    17.53s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.item.actions" Button`
+    t =    17.53s         Checking existence of `"saved.item.actions" Button`
+    t =    17.59s Terminate org.example.PlannerMCPPrototype:93828
+    t =    18.65s Open org.example.PlannerMCPPrototype
+    t =    18.65s     Launch org.example.PlannerMCPPrototype
+2026-10-13 22:41:11.239 xcodebuild[92950:38582626] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 22:41:11.239 xcodebuild[92950:38582626] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    18.86s         Setting up automation session
+    t =    21.15s         Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.49s Tap "Items" Button
+    t =    22.49s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.49s     Find the "Items" Button
+    t =    22.56s     Check for interrupting elements affecting "Items" Button
+    t =    22.66s     Synthesize event
+    t =    22.98s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    24.89s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =    25.94s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =    25.94s         Checking existence of `"saved.capture.new" Button`
+    t =    26.04s Tap "saved.capture.new" Button
+    t =    26.04s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    26.04s     Find the "saved.capture.new" Button
+    t =    26.08s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =    26.12s     Synthesize event
+    t =    26.44s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    26.93s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    27.96s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    27.96s         Checking existence of `"saved.capture.input" TextField`
+    t =    28.04s Tap "saved.capture.input" TextField
+    t =    28.05s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    28.05s     Find the "saved.capture.input" TextField
+    t =    28.10s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    28.16s     Synthesize event
+    t =    28.45s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    28.55s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    28.55s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    28.91s     Find the "saved.capture.input" TextField
+    t =    29.01s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    29.07s     Synthesize event
+    t =    29.84s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    29.85s Tap "saved.capture.review" Button
+    t =    29.85s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    29.86s     Find the "saved.capture.review" Button
+    t =    29.94s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    30.00s     Synthesize event
+    t =    30.30s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    30.35s Waiting 10.0s for "saved.capture.choice" Button to exist
+    t =    31.42s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.choice" Button`
+    t =    31.42s         Checking existence of `"saved.capture.choice" Button`
+    t =    31.49s Find the "saved.capture.choice" Button
+    t =    31.55s Checking existence of `TextField (First Match)`
+    t =    31.61s Find the TextField (First Match)
+    t =    31.68s Checking existence of `Keyboard (First Match)`
+    t =    31.78s Find the Window (First Match)
+    t =    31.79s Find the "saved.capture.link.url.DE1C4402-7F5F-4119-88AB-8E371AAD33AE" TextField
+    t =    31.86s Tap "saved.capture.link.url.DE1C4402-7F5F-4119-88AB-8E371AAD33AE" TextField
+    t =    31.86s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    31.86s     Find the "saved.capture.link.url.DE1C4402-7F5F-4119-88AB-8E371AAD33AE" TextField
+    t =    31.93s     Check for interrupting elements affecting "saved.capture.link.url.DE1C4402-7F5F-4119-88AB-8E371AAD33AE" TextField
+    t =    31.99s     Synthesize event
+    t =    32.28s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    32.61s Find the "saved.capture.link.url.DE1C4402-7F5F-4119-88AB-8E371AAD33AE" TextField
+    t =    32.70s Type '...' into "saved.capture.link.url.DE1C4402-7F5F-4119-88AB-8E371AAD33AE" TextField
+    t =    32.70s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    32.71s     Find the "saved.capture.link.url.DE1C4402-7F5F-4119-88AB-8E371AAD33AE" TextField
+    t =    32.80s     Check for interrupting elements affecting "saved.capture.link.url.DE1C4402-7F5F-4119-88AB-8E371AAD33AE" TextField
+    t =    32.87s     Synthesize event
+    t =    34.10s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    34.11s Tap "saved.capture.add" Button
+    t =    34.11s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    34.11s     Find the "saved.capture.add" Button
+    t =    34.20s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    34.26s     Synthesize event
+    t =    34.55s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    36.30s Checking `Expect predicate `enabled == 0` for object "saved.capture.add" Button`
+    t =    36.30s     Find the "saved.capture.add" Button
+    t =    36.39s Find the "saved.capture.choice" Button
+    t =    36.45s Tap "saved.capture.cancel" Button
+    t =    36.45s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    36.45s     Find the "saved.capture.cancel" Button
+    t =    36.51s     Check for interrupting elements affecting "saved.capture.cancel" Button
+    t =    36.57s     Synthesize event
+    t =    36.87s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    37.28s Waiting 10.0s for Button (First Match) to exist
+    t =    38.30s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    38.30s         Checking existence of `Button (First Match)`
+    t =    38.38s Get number of matches for: Elements matching predicate '(identifier BEGINSWITH "saved.item." OR identifier BEGINSWITH "saved.appearance.") AND label == "Keep original"'
+    t =    38.42s Get number of matches for: Elements matching predicate '(identifier BEGINSWITH "saved.item." OR identifier BEGINSWITH "saved.appearance.") AND label == "Saved link"'
+    t =    38.46s Tap Button (First Match)
+    t =    38.46s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    38.46s     Find the Button (First Match)
+    t =    38.52s     Check for interrupting elements affecting "saved.item.506CDBD0-EF93-43FD-AA58-17343293E121" Button
+    t =    38.56s     Synthesize event
+    t =    38.85s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    39.19s Waiting 5.0s for Any (First Match) to exist
+    t =    40.25s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    40.25s         Checking existence of `Any (First Match)`
+    t =    40.34s Find the Any (First Match)
+    t =    40.41s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedCaptureFieldsJourneyTests testEditingOnlyReuseLinkRequiresExplicitReselectionWithoutCreatingAnItem]' passed (40.652 seconds).
+Test Case '-[PlannerNavigationUITests.SavedCaptureFieldsJourneyTests testOwnedCaptureFieldsAndLinkLabelPersistAfterRelaunch]' started.
+    t =     0.00s Start Test at 2026-10-13 22:41:33.242
+    t =     0.02s Set Up
+    t =     0.02s Open org.example.PlannerMCPPrototype
+    t =     0.03s     Launch org.example.PlannerMCPPrototype
+    t =     0.03s         Terminate org.example.PlannerMCPPrototype:93885
+2026-10-13 22:41:34.326 xcodebuild[92950:38582626] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 22:41:34.326 xcodebuild[92950:38582626] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.29s         Setting up automation session
+    t =     3.63s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     4.99s Tap "Items" Button
+    t =     4.99s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.00s     Find the "Items" Button
+    t =     5.06s     Check for interrupting elements affecting "Items" Button
+    t =     5.13s     Synthesize event
+    t =     5.43s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     7.29s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =     8.33s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =     8.33s         Checking existence of `"saved.capture.new" Button`
+    t =     8.43s Tap "saved.capture.new" Button
+    t =     8.43s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.43s     Find the "saved.capture.new" Button
+    t =     8.48s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =     8.52s     Synthesize event
+    t =     8.83s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.35s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    10.38s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    10.38s         Checking existence of `"saved.capture.input" TextField`
+    t =    10.45s Tap "saved.capture.input" TextField
+    t =    10.45s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.45s     Find the "saved.capture.input" TextField
+    t =    10.51s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    10.56s     Synthesize event
+    t =    10.86s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.96s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    10.96s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.34s     Find the "saved.capture.input" TextField
+    t =    11.43s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    11.50s     Synthesize event
+    t =    12.27s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.28s Tap "saved.capture.review" Button
+    t =    12.28s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.28s     Find the "saved.capture.review" Button
+    t =    12.37s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    12.44s     Synthesize event
+    t =    12.74s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.76s Waiting 10.0s for "saved.capture.subtitle" TextField to exist
+    t =    13.81s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.subtitle" TextField`
+    t =    13.81s         Checking existence of `"saved.capture.subtitle" TextField`
+    t =    13.92s Checking existence of `"saved.capture.subtitle" TextField`
+    t =    14.00s Find the "saved.capture.subtitle" TextField
+    t =    14.09s Checking existence of `Keyboard (First Match)`
+    t =    14.23s Find the Window (First Match)
+    t =    14.23s Find the "saved.capture.subtitle" TextField
+    t =    14.32s Waiting 5.0s for "saved.capture.subtitle" TextField to exist
+    t =    15.36s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.subtitle" TextField`
+    t =    15.36s         Checking existence of `"saved.capture.subtitle" TextField`
+    t =    15.46s Tap "saved.capture.subtitle" TextField
+    t =    15.46s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.46s     Find the "saved.capture.subtitle" TextField
+    t =    15.53s     Check for interrupting elements affecting "saved.capture.subtitle" TextField
+    t =    15.60s     Synthesize event
+    t =    15.88s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    16.20s Type 'Afternoon visit' into "saved.capture.subtitle" TextField
+    t =    16.20s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    16.21s     Find the "saved.capture.subtitle" TextField
+    t =    16.31s     Check for interrupting elements affecting "saved.capture.subtitle" TextField
+    t =    16.39s     Synthesize event
+    t =    16.85s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    16.86s Checking existence of `"saved.capture.title" TextField`
+    t =    16.96s Find the "saved.capture.title" TextField
+    t =    17.05s Checking existence of `Keyboard (First Match)`
+    t =    17.06s Find the Keyboard (First Match)
+    t =    17.08s Find the "saved.capture.title" TextField
+    t =    17.17s Tap "saved.capture.title" TextField
+    t =    17.17s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.18s     Find the "saved.capture.title" TextField
+    t =    17.26s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    17.34s     Synthesize event
+    t =    17.63s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.63s Find the "saved.capture.title" TextField
+    t =    17.71s Type 'Owned ca...' into "saved.capture.title" TextField
+    t =    17.71s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.72s     Find the "saved.capture.title" TextField
+    t =    17.80s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    17.87s     Synthesize event
+    t =    18.46s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    18.47s Checking existence of `"saved.capture.estimate.enabled" Any`
+    t =    18.72s Find the "saved.capture.estimate.enabled" Any
+    t =    18.98s Checking existence of `Keyboard (First Match)`
+    t =    19.00s Find the Keyboard (First Match)
+    t =    19.04s Find the "saved.capture.estimate.enabled" Switch
+    t =    20.37s Checking `Expect predicate `value == 0 OR value == "0"` for object "saved.capture.estimate.enabled" Switch`
+    t =    20.37s     Find the "saved.capture.estimate.enabled" Switch
+    t =    20.63s     Find the "saved.capture.estimate.enabled" Switch
+    t =    20.87s Tap Switch (First Match)
+    t =    20.87s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    20.88s     Find the Switch (First Match)
+    t =    21.20s     Check for interrupting elements affecting "0" Switch
+    t =    21.32s     Synthesize event
+    t =    21.62s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    23.96s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.capture.estimate.enabled" Switch`
+    t =    23.96s     Find the "saved.capture.estimate.enabled" Switch
+    t =    24.25s     Find the "saved.capture.estimate.enabled" Switch
+    t =    24.50s Checking existence of `"saved.capture.location.name" TextField`
+    t =    24.58s Find the "saved.capture.location.name" TextField
+    t =    24.68s Checking existence of `Keyboard (First Match)`
+    t =    24.70s Find the Keyboard (First Match)
+    t =    24.71s Find the "saved.capture.location.name" TextField
+    t =    24.80s Get all elements bound by index for: Descendants matching type CollectionView
+    t =    24.88s Swipe up CollectionView (Element at index 1)
+    t =    24.88s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    24.88s     Find the CollectionView (Element at index 1)
+    t =    24.97s     Check for interrupting elements affecting CollectionView
+    t =    25.06s     Synthesize event
+    t =    25.52s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    27.67s Checking existence of `"saved.capture.location.name" TextField`
+    t =    27.77s Find the "saved.capture.location.name" TextField
+    t =    27.86s Checking existence of `Keyboard (First Match)`
+    t =    27.87s Find the Keyboard (First Match)
+    t =    27.89s Find the "saved.capture.location.name" TextField
+    t =    27.97s Waiting 5.0s for "saved.capture.location.name" TextField to exist
+    t =    29.00s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.location.name" TextField`
+    t =    29.00s         Checking existence of `"saved.capture.location.name" TextField`
+    t =    29.11s Tap "saved.capture.location.name" TextField
+    t =    29.11s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    29.11s     Find the "saved.capture.location.name" TextField
+    t =    29.19s     Check for interrupting elements affecting "saved.capture.location.name" TextField
+    t =    29.27s     Synthesize event
+    t =    29.56s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    29.56s Type 'My meeting point' into "saved.capture.location.name" TextField
+    t =    29.56s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    29.57s     Find the "saved.capture.location.name" TextField
+    t =    29.65s     Check for interrupting elements affecting "saved.capture.location.name" TextField
+    t =    29.72s     Synthesize event
+    t =    30.20s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    30.20s Checking existence of `"saved.capture.location.address" TextField`
+    t =    30.29s Find the "saved.capture.location.address" TextField
+    t =    30.38s Checking existence of `Keyboard (First Match)`
+    t =    30.40s Find the Keyboard (First Match)
+    t =    30.41s Find the "saved.capture.location.address" TextField
+    t =    30.50s Waiting 5.0s for "saved.capture.location.address" TextField to exist
+    t =    31.54s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.location.address" TextField`
+    t =    31.54s         Checking existence of `"saved.capture.location.address" TextField`
+    t =    31.62s Tap "saved.capture.location.address" TextField
+    t =    31.62s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    31.63s     Find the "saved.capture.location.address" TextField
+    t =    31.71s     Check for interrupting elements affecting "saved.capture.location.address" TextField
+    t =    31.78s     Synthesize event
+    t =    32.07s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    32.07s Type 'Independently ente...' into "saved.capture.location.address" TextField
+    t =    32.07s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    32.07s     Find the "saved.capture.location.address" TextField
+    t =    32.16s     Check for interrupting elements affecting "saved.capture.location.address" TextField
+    t =    32.23s     Synthesize event
+    t =    32.92s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    32.93s Checking existence of `TextField (First Match)`
+    t =    33.05s Find the TextField (First Match)
+    t =    33.15s Checking existence of `Keyboard (First Match)`
+    t =    33.16s Find the Keyboard (First Match)
+    t =    33.17s Find the "saved.capture.link.label.FF341346-53C8-4F23-8EF7-24214E854C2B" TextField
+    t =    33.27s Waiting 5.0s for "saved.capture.link.label.FF341346-53C8-4F23-8EF7-24214E854C2B" TextField to exist
+    t =    34.31s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.link.label.FF341346-53C8-4F23-8EF7-24214E854C2B" TextField`
+    t =    34.31s         Checking existence of `"saved.capture.link.label.FF341346-53C8-4F23-8EF7-24214E854C2B" TextField`
+    t =    34.44s Tap "saved.capture.link.label.FF341346-53C8-4F23-8EF7-24214E854C2B" TextField
+    t =    34.44s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    34.44s     Find the "saved.capture.link.label.FF341346-53C8-4F23-8EF7-24214E854C2B" TextField
+    t =    34.55s     Check for interrupting elements affecting "saved.capture.link.label.FF341346-53C8-4F23-8EF7-24214E854C2B" TextField
+    t =    34.63s     Synthesize event
+    t =    34.92s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    34.92s Type 'My guide' into "saved.capture.link.label.FF341346-53C8-4F23-8EF7-24214E854C2B" TextField
+    t =    34.92s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    34.92s     Find the "saved.capture.link.label.FF341346-53C8-4F23-8EF7-24214E854C2B" TextField
+    t =    35.03s     Check for interrupting elements affecting "saved.capture.link.label.FF341346-53C8-4F23-8EF7-24214E854C2B" TextField
+    t =    35.09s     Synthesize event
+    t =    35.43s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    35.44s Tap "saved.capture.add" Button
+    t =    35.44s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    35.45s     Find the "saved.capture.add" Button
+    t =    35.54s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    35.61s     Synthesize event
+    t =    35.90s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    36.76s Waiting 10.0s for "Afternoon visit" StaticText to exist
+    t =    37.80s     Checking `Expect predicate `existsNoRetry == 1` for object "Afternoon visit" StaticText`
+    t =    37.80s         Checking existence of `"Afternoon visit" StaticText`
+    t =    37.88s Checking existence of `"My meeting point" StaticText`
+    t =    37.93s Checking existence of `"Independently entered address" StaticText`
+    t =    38.99s Checking `Expect predicate `value == "60 minutes"` for object "saved.item.estimate" Any`
+    t =    38.99s     Find the "saved.item.estimate" Any
+    t =    39.18s Waiting 5.0s for Any (First Match) to exist
+    t =    40.23s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    40.23s         Checking existence of `Any (First Match)`
+    t =    40.31s Find the Any (First Match)
+    t =    40.40s Find the "saved.item.link.0A64DECF-610A-4E02-8643-24F35CF342C1" Link
+    t =    40.49s Find the "saved.item.link.0A64DECF-610A-4E02-8643-24F35CF342C1" Link
+    t =    40.58s Find the Target Application 'org.example.PlannerMCPPrototype'
+    t =    40.69s Added attachment named 'Native capture owns subtitle estimate location and bookmark label'
+    t =    40.69s Terminate org.example.PlannerMCPPrototype:94009
+    t =    41.75s Open org.example.PlannerMCPPrototype
+    t =    41.75s     Launch org.example.PlannerMCPPrototype
+2026-10-13 22:42:14.993 xcodebuild[92950:38582626] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 22:42:14.993 xcodebuild[92950:38582626] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    41.97s         Setting up automation session
+    t =    44.14s         Wait for org.example.PlannerMCPPrototype to idle
+    t =    45.49s Tap "Inbox" Button
+    t =    45.49s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    45.49s     Find the "Inbox" Button
+    t =    45.55s     Check for interrupting elements affecting "Inbox" Button
+    t =    45.63s     Synthesize event
+    t =    45.94s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    47.85s Waiting 10.0s for Button (First Match) to exist
+    t =    48.88s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    48.88s         Checking existence of `Button (First Match)`
+    t =    49.01s Tap Button (First Match)
+    t =    49.01s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    49.02s     Find the Button (First Match)
+    t =    49.09s     Check for interrupting elements affecting "saved.item.10B6CB11-62E9-41C3-8E74-FDCCF0428D45" Button
+    t =    49.13s     Synthesize event
+    t =    49.43s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    49.79s Waiting 5.0s for "Afternoon visit" StaticText to exist
+    t =    50.82s     Checking `Expect predicate `existsNoRetry == 1` for object "Afternoon visit" StaticText`
+    t =    50.83s         Checking existence of `"Afternoon visit" StaticText`
+    t =    51.96s Checking `Expect predicate `value == "60 minutes"` for object "saved.item.estimate" Other`
+    t =    51.96s     Find the "saved.item.estimate" Other
+    t =    52.14s Waiting 5.0s for "saved.item.link.0A64DECF-610A-4E02-8643-24F35CF342C1" Any to exist
+    t =    53.16s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.item.link.0A64DECF-610A-4E02-8643-24F35CF342C1" Any`
+    t =    53.16s         Checking existence of `"saved.item.link.0A64DECF-610A-4E02-8643-24F35CF342C1" Any`
+    t =    53.34s Find the "saved.item.link.0A64DECF-610A-4E02-8643-24F35CF342C1" Any
+    t =    53.52s Find the "saved.item.link.0A64DECF-610A-4E02-8643-24F35CF342C1" Link
+    t =    53.68s Checking existence of `"My meeting point" StaticText`
+    t =    53.72s Checking existence of `"Independently entered address" StaticText`
+    t =    53.77s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedCaptureFieldsJourneyTests testOwnedCaptureFieldsAndLinkLabelPersistAfterRelaunch]' passed (54.035 seconds).
+Test Case '-[PlannerNavigationUITests.SavedCaptureFieldsJourneyTests testRemovingOnlyLinkDoesNotPromoteAutomaticTitleIntoOwnedText]' started.
+    t =     0.00s Start Test at 2026-10-13 22:42:27.278
+    t =     0.04s Set Up
+    t =     0.04s Open org.example.PlannerMCPPrototype
+    t =     0.04s     Launch org.example.PlannerMCPPrototype
+    t =     0.04s         Terminate org.example.PlannerMCPPrototype:94183
+2026-10-13 22:42:28.376 xcodebuild[92950:38582626] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 22:42:28.376 xcodebuild[92950:38582626] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.31s         Setting up automation session
+    t =     3.49s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     4.84s Tap "Items" Button
+    t =     4.84s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     4.85s     Find the "Items" Button
+    t =     4.91s     Check for interrupting elements affecting "Items" Button
+    t =     4.98s     Synthesize event
+    t =     5.28s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     7.14s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =     8.16s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =     8.16s         Checking existence of `"saved.capture.new" Button`
+    t =     8.23s Tap "saved.capture.new" Button
+    t =     8.23s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.24s     Find the "saved.capture.new" Button
+    t =     8.28s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =     8.33s     Synthesize event
+    t =     8.63s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.10s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    10.13s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    10.13s         Checking existence of `"saved.capture.input" TextField`
+    t =    10.22s Tap "saved.capture.input" TextField
+    t =    10.22s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.22s     Find the "saved.capture.input" TextField
+    t =    10.27s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    10.32s     Synthesize event
+    t =    10.61s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.72s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    10.72s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.10s     Find the "saved.capture.input" TextField
+    t =    11.22s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    11.29s     Synthesize event
+    t =    12.06s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.07s Tap "saved.capture.review" Button
+    t =    12.07s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.08s     Find the "saved.capture.review" Button
+    t =    12.17s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    12.23s     Synthesize event
+    t =    12.53s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.96s Checking `Expect predicate `value == "Saved link"` for object "saved.capture.title" TextField`
+    t =    13.96s     Find the "saved.capture.title" TextField
+    t =    14.07s Checking existence of `Any (First Match)`
+    t =    14.19s Get all elements bound by index for: Descendants matching type CollectionView
+    t =    14.26s Swipe up CollectionView (Element at index 1)
+    t =    14.26s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.26s     Find the CollectionView (Element at index 1)
+    t =    14.32s     Check for interrupting elements affecting CollectionView
+    t =    14.39s     Synthesize event
+    t =    14.84s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.44s Checking existence of `Any (First Match)`
+    t =    15.53s Find the Any (First Match)
+    t =    15.63s Checking existence of `Keyboard (First Match)`
+    t =    15.75s Find the Window (First Match)
+    t =    15.76s Find the "saved.capture.link.actions.BEF38F73-1FDA-4F48-A642-3BCB673EBA93" Button
+    t =    15.85s Tap "saved.capture.link.actions.BEF38F73-1FDA-4F48-A642-3BCB673EBA93" Button
+    t =    15.85s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.85s     Find the "saved.capture.link.actions.BEF38F73-1FDA-4F48-A642-3BCB673EBA93" Button
+    t =    15.94s     Check for interrupting elements affecting "saved.capture.link.actions.BEF38F73-1FDA-4F48-A642-3BCB673EBA93" Button
+    t =    16.02s     Synthesize event
+    t =    16.31s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.47s Tap "Remove Link" Button
+    t =    17.47s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.47s     Find the "Remove Link" Button
+    t =    17.57s     Check for interrupting elements affecting "minus.circle" Button
+    t =    17.64s     Synthesize event
+    t =    17.94s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    19.37s Tap "saved.capture.add" Button
+    t =    19.37s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    19.37s     Find the "saved.capture.add" Button
+    t =    19.46s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    19.53s     Synthesize event
+    t =    19.83s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    20.54s Checking existence of `"saved.capture.title" TextField`
+    t =    20.64s Get all elements bound by index for: Descendants matching type CollectionView
+    t =    20.71s Swipe down CollectionView (Element at index 1)
+    t =    20.71s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    20.71s     Find the CollectionView (Element at index 1)
+    t =    20.78s     Check for interrupting elements affecting CollectionView
+    t =    20.85s     Synthesize event
+    t =    21.32s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    21.84s Checking existence of `"saved.capture.title" TextField`
+    t =    21.94s Find the "saved.capture.title" TextField
+    t =    22.02s Checking existence of `"saved.capture.title" TextField`
+    t =    22.09s Find the "saved.capture.title" TextField
+    t =    22.17s Checking existence of `"saved.capture.title" TextField`
+    t =    22.24s Find the "saved.capture.title" TextField
+    t =    22.32s Waiting 5.0s for "saved.capture.title" TextField to exist
+    t =    23.36s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.title" TextField`
+    t =    23.36s         Checking existence of `"saved.capture.title" TextField`
+    t =    24.49s Checking `Expect predicate `value == "" OR value == "Title"` for object "saved.capture.title" TextField`
+    t =    24.49s     Find the "saved.capture.title" TextField
+    t =    24.60s     Find the "saved.capture.title" TextField
+    t =    24.68s Find the "saved.capture.add" Button
+    t =    24.75s Tap "saved.capture.cancel" Button
+    t =    24.75s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    24.75s     Find the "saved.capture.cancel" Button
+    t =    24.83s     Check for interrupting elements affecting "saved.capture.cancel" Button
+    t =    24.90s     Synthesize event
+    t =    25.19s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    25.63s Waiting 10.0s for "No matching items" StaticText to exist
+    t =    26.67s     Checking `Expect predicate `existsNoRetry == 1` for object "No matching items" StaticText`
+    t =    26.67s         Checking existence of `"No matching items" StaticText`
+    t =    26.72s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedCaptureFieldsJourneyTests testRemovingOnlyLinkDoesNotPromoteAutomaticTitleIntoOwnedText]' passed (26.987 seconds).
+Test Suite 'SavedCaptureFieldsJourneyTests' passed at 2026-10-13 22:42:54.265.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 213.690 (213.695) seconds
+Test Suite 'PlannerNavigationUITests.xctest' passed at 2026-10-13 22:42:54.265.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 213.690 (213.695) seconds
+Test Suite 'Selected tests' passed at 2026-10-13 22:42:54.265.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 213.690 (213.696) seconds
+2026-10-13 22:42:54.563 xcodebuild[92950:38582626] [MT] IDETestOperationsObserverDebug: 218.352 elapsed -- Testing started completed.
+2026-10-13 22:42:54.563 xcodebuild[92950:38582626] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-13 22:42:54.563 xcodebuild[92950:38582626] [MT] IDETestOperationsObserverDebug: 218.352 sec, +218.352 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/PlannerCaptureFieldsPhoneFields.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

@@ -48,6 +48,7 @@ final class SavedCaptureJourneyTests: XCTestCase {
     let destination = application.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.capture.list.")
     ).firstMatch
+    for _ in 0..<4 where !destination.exists || !destination.isHittable { application.swipeUp() }
     XCTAssertTrue(destination.waitForPlannerBooleanState(false))
     #if os(macOS)
       destination.activateForPlannerJourney()

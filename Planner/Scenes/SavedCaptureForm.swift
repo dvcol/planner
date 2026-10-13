@@ -8,7 +8,14 @@ struct SavedCaptureForm: View {
   @State private var input = ""
   @State private var draft: PlannerCaptureDraftRead?
   @State private var title = ""
+  @State private var subtitle = ""
   @State private var notes = ""
+  @State private var estimate: PlannerEstimate?
+  @State private var categoryIdentifiers: Set<UUID> = []
+  @State private var tagIdentifiers: Set<UUID> = []
+  @State private var locationName = ""
+  @State private var locationAddress = ""
+  @State private var links: [SavedOwnedLinkDraft] = []
   @State private var reuseIdentifier: UUID?
   @State private var destinations: [SavedPlannerList] = []
   @State private var selectedListIdentifiers: Set<UUID> = []
@@ -95,10 +102,15 @@ struct SavedCaptureForm: View {
 
   @ViewBuilder
   private func reviewSections(_ draft: PlannerCaptureDraftRead) -> some View {
-    if !draft.reuseCandidates.isEmpty {
+    if !draft.reuseCandidates.isEmpty || reuseIdentifier != nil {
       Section {
         Picker("Save as", selection: $reuseIdentifier) {
           Text("Create new Item").tag(nil as UUID?)
+          if let reuseIdentifier,
+            !draft.reuseCandidates.contains(where: { $0.itemId == reuseIdentifier })
+          {
+            Text("Selected Item no longer matches").tag(Optional(reuseIdentifier)).disabled(true)
+          }
           ForEach(draft.reuseCandidates, id: \.itemId) { candidate in
             Text("Use existing: \(candidate.title)").tag(Optional(candidate.itemId))
           }
@@ -112,18 +124,35 @@ struct SavedCaptureForm: View {
     if reuseIdentifier == nil {
       Section("Item") {
         TextField("Title", text: $title).accessibilityIdentifier("saved.capture.title")
+        TextField("Subtitle", text: $subtitle).accessibilityIdentifier("saved.capture.subtitle")
         TextField("Notes", text: $notes, axis: .vertical)
           .lineLimit(3...8)
           .accessibilityIdentifier("saved.capture.notes")
       }
-    }
-    if !draft.links.isEmpty {
-      Section("Links") {
-        ForEach(draft.links, id: \.linkId) { link in
-          Text(link.originalUrl).textSelection(.enabled)
+      SavedActivityEstimateEditor(
+        estimate: $estimate, accessibilityIdentifierPrefix: "saved.capture.estimate")
+      Section("Labels") {
+        NavigationLink {
+          SavedItemLabelPicker(store: store, kind: .category, selection: $categoryIdentifiers)
+        } label: {
+          LabeledContent("Categories", value: selectionSummary(categoryIdentifiers))
         }
+        .accessibilityIdentifier("saved.capture.categories")
+        NavigationLink {
+          SavedItemLabelPicker(store: store, kind: .tag, selection: $tagIdentifiers)
+        } label: {
+          LabeledContent("Tags", value: selectionSummary(tagIdentifiers))
+        }
+        .accessibilityIdentifier("saved.capture.tags")
+      }
+      Section("Location") {
+        TextField("Place name", text: $locationName).accessibilityIdentifier(
+          "saved.capture.location.name")
+        TextField("Address", text: $locationAddress).accessibilityIdentifier(
+          "saved.capture.location.address")
       }
     }
+    SavedOwnedLinksEditor(links: $links, accessibilityIdentifierPrefix: "saved.capture.link")
     if !destinations.isEmpty {
       Section {
         ForEach(destinations) { destination in
@@ -159,6 +188,7 @@ struct SavedCaptureForm: View {
             if let updated = await store.updateCapture(
               draft, edit: .init(removeInputIndexes: [issue.inputIndex]))
             {
+              if title == draft.content.title { title = updated.content.title }
               self.draft = updated
             }
           }
@@ -169,7 +199,35 @@ struct SavedCaptureForm: View {
 
   private var canSave: Bool {
     guard let draft, !draft.inputIssues.contains(where: \.blocksSave) else { return false }
-    return reuseIdentifier != nil || !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    if let reuseIdentifier {
+      return draft.reuseCandidates.contains { $0.itemId == reuseIdentifier }
+    }
+    return !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+  }
+
+  private func selectionSummary(_ identifiers: Set<UUID>) -> String {
+    identifiers.isEmpty ? "None" : "\(identifiers.count) selected"
+  }
+
+  private var location: PlannerOwnedLocation? {
+    let coordinate = draft?.content.location?.coordinate
+    let name = optionalText(locationName, original: draft?.content.location?.displayName)
+    let address = optionalText(locationAddress, original: draft?.content.location?.formattedAddress)
+    if name == nil && address == nil && coordinate == nil { return nil }
+    return .init(displayName: name, formattedAddress: address, coordinate: coordinate)
+  }
+
+  private func optionalText(_ text: String, original: String?) -> String? {
+    if text == (original ?? "") { return original }
+    return text.isEmpty ? nil : text
+  }
+
+  private func optionalChange<Value: Equatable>(_ value: Value?, original: Value?)
+    -> PlannerFieldChange<Value>
+  {
+    if value == original { return .unchanged }
+    if let value { return .set(value) }
+    return .clear
   }
 
   private var destinationPreferenceKey: String? {
@@ -183,7 +241,14 @@ struct SavedCaptureForm: View {
     guard let prepared = await store.prepareCapture(text: input) else { return }
     draft = prepared
     title = prepared.content.title
+    subtitle = prepared.content.subtitle ?? ""
     notes = prepared.content.notes ?? ""
+    estimate = prepared.content.estimate
+    categoryIdentifiers = prepared.content.categoryIds
+    tagIdentifiers = prepared.content.tagIds
+    locationName = prepared.content.location?.displayName ?? ""
+    locationAddress = prepared.content.location?.formattedAddress ?? ""
+    links = prepared.links.map(SavedOwnedLinkDraft.init)
     if prepared.reuseCandidates.count == 1 { reuseIdentifier = prepared.reuseCandidates[0].itemId }
     guard let loaded = await store.readLists(archive: .active) else { return }
     destinations = loaded
@@ -200,28 +265,45 @@ struct SavedCaptureForm: View {
     isWorking = true
     store.alertMessage = nil
     defer { isWorking = false }
-    if reuseIdentifier == nil,
-      title != draft.content.title || notes != (draft.content.notes ?? "")
-    {
-      let notesChange: PlannerFieldChange<String>
-      if notes == (draft.content.notes ?? "") {
-        notesChange = .unchanged
-      } else if notes.isEmpty {
-        notesChange = .clear
+    let previousLinks = draft.links.map {
+      PlannerLinkInput(linkId: $0.linkId, originalUrl: $0.originalUrl, label: $0.label)
+    }
+    let editedLinks = links.map(\.input)
+    let hasContentChanges =
+      reuseIdentifier == nil
+      && (title != draft.content.title || subtitle != (draft.content.subtitle ?? "")
+        || notes != (draft.content.notes ?? "") || estimate != draft.content.estimate
+        || location != draft.content.location || categoryIdentifiers != draft.content.categoryIds
+        || tagIdentifiers != draft.content.tagIds)
+    if hasContentChanges || editedLinks != previousLinks {
+      let changes: PlannerItemChanges
+      if reuseIdentifier == nil {
+        changes = .init(
+          title: title == draft.content.title ? .unchanged : .set(title),
+          subtitle: optionalChange(
+            optionalText(subtitle, original: draft.content.subtitle),
+            original: draft.content.subtitle),
+          notes: optionalChange(
+            optionalText(notes, original: draft.content.notes), original: draft.content.notes),
+          location: optionalChange(location, original: draft.content.location),
+          estimate: optionalChange(estimate, original: draft.content.estimate),
+          links: editedLinks == previousLinks ? .unchanged : .set(editedLinks),
+          categoryIds: optionalChange(categoryIdentifiers, original: draft.content.categoryIds),
+          tagIds: optionalChange(tagIdentifiers, original: draft.content.tagIds))
       } else {
-        notesChange = .set(notes)
+        changes = .init(links: .set(editedLinks))
       }
       guard
         let updated = await store.updateCapture(
           draft,
-          edit: .init(
-            changes: .init(
-              title: title == draft.content.title ? .unchanged : .set(title),
-              notes: notesChange)))
+          edit: .init(changes: changes))
       else { return }
+      if title == draft.content.title { title = updated.content.title }
       draft = updated
       self.draft = updated
+      links = updated.links.map(SavedOwnedLinkDraft.init)
     }
+    guard canSave else { return }
     let choice: PlannerCaptureChoice = reuseIdentifier.map { .reuse(itemId: $0) } ?? .createNew
     guard
       let prepared = await store.reviewCapture(

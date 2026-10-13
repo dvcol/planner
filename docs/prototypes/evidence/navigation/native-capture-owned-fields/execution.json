@@ -1,0 +1,136 @@
+{
+  "baseCommit": "8cfb5e583da5d82dad3be6f2757646019f687370",
+  "scope": "Native direct-input capture owned fields, staged shared labels, bookmark edits, automatic title refresh and invalidated reuse selection",
+  "qualified": {
+    "phone": {
+      "functions": 9,
+      "suites": 4,
+      "invocations": 9,
+      "failures": 0,
+      "skips": 0,
+      "selection": {
+        "initialRunPassingTests": [
+          "SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch()",
+          "SavedCaptureTextJourneyTests/testPlainTextReviewPreservesItsTitleAndNotesWithoutInventingLinks()"
+        ],
+        "fieldFollowup": "All four SavedCaptureFieldsJourneyTests passed with native Form/sidebar navigation; earlier field outcomes are excluded.",
+        "captureFollowup": "Phone includes all three green SavedCaptureJourneyTests from its followup; tablet includes their three initial green outcomes."
+      }
+    },
+    "tablet": {
+      "functions": 9,
+      "suites": 4,
+      "invocations": 9,
+      "failures": 0,
+      "skips": 0,
+      "selection": {
+        "initialRunPassingTests": [
+          "SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch()",
+          "SavedCaptureJourneyTests/testExactLinkReusePreservesDoneArchivedContentAndRememberedListWithoutDuplicates()",
+          "SavedCaptureJourneyTests/testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem()",
+          "SavedCaptureJourneyTests/testUntouchedSavedLinkDraftCanBeAddedWithoutAnEmptyEdit()",
+          "SavedCaptureTextJourneyTests/testPlainTextReviewPreservesItsTitleAndNotesWithoutInventingLinks()"
+        ],
+        "fieldFollowup": "All four SavedCaptureFieldsJourneyTests passed with native Form/sidebar navigation; earlier field outcomes are excluded.",
+        "captureFollowup": "Phone includes all three green SavedCaptureJourneyTests from its followup; tablet includes their three initial green outcomes."
+      }
+    },
+    "mac": {
+      "appAndTestHostBuild": "passed",
+      "runtimeFunctions": 0
+    },
+    "strictSwiftLintFiles": 4,
+    "markdownLintDocuments": 2
+  },
+  "sourceHashesVerifiedAfterAllBuildAndTestProcessesExited": true,
+  "lookupWorkExcludedFromQualification": true,
+  "sourceHashes": {
+    "Planner/Scenes/SavedCaptureForm.swift": "864f1bfccb67f10e0f2511ac4825a5ff0b01f919778a692e529f246dde656d0b",
+    "Planner/Scenes/SavedOwnedLinksEditor.swift": "cfd1b9a55ee634a2ef2f3b3dd171fcf73a9e46076d8d4c2785586bd548f5d1ae",
+    "PlannerNavigationUITests/SavedCaptureFieldsJourneyTests.swift": "2216d44d99c0354636ec7b92bb53ce3a529bdef60ac92fb7458440c172e624db",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1ca538a5ea664fb8f718eae11adce89e827220852074a33a7bec9120d1766713",
+    "PlannerNavigationUITests/SavedCaptureJourneyTests.swift": "c25a07e846b9db62040164c2361ffed270193c0250495e8836fede039e6d6b0c"
+  },
+  "screenshots": [
+    {
+      "path": "phone-labels.png",
+      "originalExport": "4AFD21C0-9D10-4BA2-9308-7CD9B4CF6927.png",
+      "inspected": true
+    },
+    {
+      "path": "phone-owned-fields.png",
+      "originalExport": "115C6BD2-D4A2-4206-88F0-F22D53D783C8.png",
+      "inspected": true
+    },
+    {
+      "path": "tablet-labels.png",
+      "originalExport": "8FFF0B57-4DCD-4D6D-823A-4C6854BD58A6.png",
+      "inspected": true
+    },
+    {
+      "path": "tablet-owned-fields.png",
+      "originalExport": "64428A7F-1CD0-4BE3-A4A9-871D7CA43A43.png",
+      "inspected": true
+    }
+  ],
+  "commands": {
+    "initialPhone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedCaptureFieldsJourneyTests -only-testing:PlannerNavigationUITests/SavedCaptureJourneyTests -only-testing:PlannerNavigationUITests/SavedCaptureTextJourneyTests -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch -resultBundlePath /private/tmp/PlannerCaptureFieldsFinalPhone.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "phoneCaptureFollowup": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedCaptureJourneyTests -resultBundlePath /private/tmp/PlannerCaptureFieldsPhoneRegression.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "initialTablet": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedCaptureFieldsJourneyTests -only-testing:PlannerNavigationUITests/SavedCaptureJourneyTests -only-testing:PlannerNavigationUITests/SavedCaptureTextJourneyTests -only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch -resultBundlePath /private/tmp/PlannerCaptureFieldsFinalTablet2.xcresult CODE_SIGNING_ALLOWED=NO test-without-building",
+    "tabletFieldFollowup": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedCaptureFieldsJourneyTests -resultBundlePath /private/tmp/PlannerCaptureFieldsTabletFields.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "phoneFieldFollowup": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedCaptureFieldsJourneyTests -resultBundlePath /private/tmp/PlannerCaptureFieldsPhoneFields.xcresult CODE_SIGNING_ALLOWED=NO test-without-building",
+    "mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO build-for-testing",
+    "swiftLint": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift-format lint --strict Planner/Scenes/SavedCaptureForm.swift Planner/Scenes/SavedOwnedLinksEditor.swift PlannerNavigationUITests/SavedCaptureFieldsJourneyTests.swift PlannerNavigationUITests/SavedCaptureJourneyTests.swift",
+    "markdownLint": "pnpm dlx markdownlint-cli2 --config /private/tmp/PlannerCatalogEstimatesMarkdownlint.jsonc docs/prototypes/native-capture-owned-fields.md docs/prototypes/native-text-link-capture.md"
+  },
+  "diagnostics": [
+    "The missing-fields baseline failed at the absent Subtitle control.",
+    "Initial owned-field attempts had a gesture that did not scroll the Form, then an incorrect duration accessibility identifier. Native swipe and the existing 60 minutes accessibility contract corrected those test issues.",
+    "The initial sole-link regression did not reveal the offscreen title. The corrected red run reached the title and failed on its stale value, then the same journey passed with the title refresh fix.",
+    "The first label journey overshot its picker with the keyboard open. The qualified journey selects labels before editing its title.",
+    "The expanded form made the existing reuse journey destination toggle require scrolling. The first full phone run passed six unaffected selected tests, plus two capture journeys, and failed that reuse journey at the hidden toggle. All three affected capture journeys were then rerun; only that complete green followup is used for their qualified outcomes. The outdated tablet run was intentionally interrupted before rerunning the corrected bundle.",
+    "The complete iPad run passed five unchanged regressions plus two field cases and failed two field cases at a collapsed sidebar and an unrendered lower field. The test helper now navigates through the sidebar, scrolls the native Form and reveals fields before waiting. All four affected field journeys were then rerun on both devices; only their complete green followups count toward qualification."
+  ],
+  "reviews": {
+    "standards": "No remaining confirmed findings; final source, artifacts and split-run qualification checked.",
+    "spec": "No remaining confirmed findings; partial scope, selected outcomes and open gates checked."
+  },
+  "remainingGates": [
+    "provider capture intake/lookup/preview/retry",
+    "new pin selection",
+    "full existing-candidate inspection",
+    "List-context capture",
+    "save-failure/termination presentation",
+    "Share and Intents",
+    "native Mac UI runtime",
+    "physical iCloud/account/Share qualification",
+    "whole-app native polish"
+  ],
+  "artifactHashes": {
+    "mac-build.log": "92e5eedf3f2e283bca918bfbdb2a58a734bcf63fa87fec402297fb0951b94f21",
+    "markdown-lint.log": "7b3a8792e4da8f5d2e456994aa66bc3fdb2f7281c3d7475af413b1838a8bc32e",
+    "missing-fields-red-summary.json": "5f8977abe88fa7124c33567dadf106cd8e0076a44c6cd70184fe78214497ea10",
+    "missing-fields-red.log": "58111c8f0fa558bcdfae2643e09de6b3a46dadab96590ee2e8025624fda7f630",
+    "phone-capture-regression-summary.json": "6eacc5d5c0113af652e9fe08c4b3ac74f9e45510b635ef4ce08255a36bf48f48",
+    "phone-capture-regression.log": "d703f36afaa34ca1a31733f175bffb82fef72e7a24743196a178027cfa1373cd",
+    "phone-fields-summary.json": "937b6d7650b72fbb23194b11d87c669cf641b3c437fc2b17c1f4b92c313c0efe",
+    "phone-fields.log": "ff2214ca5223fad5abac5065c517a56480dbdc22f84aaaec2f5eefe0c7db49b4",
+    "phone-labels.png": "710fdc3d90d8bc9f4a1a036d8a3747f61aafdb9eb8a725b806a0f25322915aa0",
+    "phone-owned-fields.png": "67ed8585bf2d6c5bac59b9987321e68eeacd2b82315214c1a1b105ead9c13d2a",
+    "phone-qualification.log": "d4fbae92dd78e7a597b262cf1142c5a0de7a5a588b6445dd1ad41dd46d7a9b78",
+    "phone-summary.json": "1f1868da124c20c33db00e831b9610d7b568bacbd8a4b33f012a6db67503fdb3",
+    "phone-tests.json": "23339c371010e303aa284483093447f90cac18d6f1ba6fe655b44b79154707c5",
+    "remove-link-green-summary.json": "2096f438a9b929f70fd0f41d8fe8e8f7355e69e70b406390ed387881b593ce10",
+    "remove-link-green.log": "0decb51bd03a8a2b3d06c0dba5811aa5e7e7a18ffc7baf22294bafe359f2abe4",
+    "remove-link-red-summary.json": "4a655e4aab663988dafe7405fe754cf94f3694e10006db3faa9817b781a8c087",
+    "remove-link-red.log": "5e68fc409dc22b481aff7f6a05cfcd98cc3dd069d57865f0417330bdea735b77",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tablet-fields-summary.json": "3891dca42978f441631d9fad1dd887585fd059f1a15f0a6d314e6e7e06b27a25",
+    "tablet-fields.log": "89908ca97ac4a2dc99102237a99b9c9f1dad275be49fdb44e9a3f93ad4fa3f67",
+    "tablet-labels.png": "fc98e0d9085345902fddf290b1d39713c226c7973d0cda29db7bf4029d562f16",
+    "tablet-owned-fields.png": "ba2ec6f953952da4a52bfe29fd31bbfa64fdfa28f536c0af54100270486d6cc5",
+    "tablet-qualification.log": "d5dae0900fc134b8f424aa09587c8ab41105f9ed1b067ceff3e0e2f4c741e38a",
+    "tablet-summary.json": "b9c6d5f52bd03190e01c22bd7ffa4185b4242534bc5a10839530ad19fec18fa9",
+    "tablet-tests.json": "3566731a2003e4a56cb898b5f67289ea08dbf529751e494a6cb7428a24d27b6f"
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "devices": [
+    {
+      "architecture": "arm64",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "modelName": "iPad Air 11-inch (M4)",
+      "osBuildNumber": "24A434",
+      "osVersion": "27.0",
+      "platform": "iOS Simulator"
+    }
+  ],
+  "testNodes": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "duration": "2m 52s",
+                  "durationInSeconds": 172.66425895690918,
+                  "name": "testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch()",
+                  "nodeIdentifier": "SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testNativeBookmarkValidationEditOrderAndRemovalPreserveItemStateAfterRelaunch",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "SavedAppearanceJourneyTests",
+              "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "name": "XCTAssertTrue failed",
+                      "nodeType": "Failure Message",
+                      "sourceLocation": {
+                        "filePath": "/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/SavedCaptureFieldsJourneyTests.swift",
+                        "lineNumber": 60
+                      }
+                    }
+                  ],
+                  "duration": "15s",
+                  "durationInSeconds": 15.361208081245422,
+                  "name": "testCaptureSharedLabelsRemainStagedUntilAddAndPersistAfterRelaunch()",
+                  "nodeIdentifier": "SavedCaptureFieldsJourneyTests/testCaptureSharedLabelsRemainStagedUntilAddAndPersistAfterRelaunch()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureFieldsJourneyTests/testCaptureSharedLabelsRemainStagedUntilAddAndPersistAfterRelaunch",
+                  "nodeType": "Test Case",
+                  "result": "Failed"
+                },
+                {
+                  "duration": "41s",
+                  "durationInSeconds": 41.41287302970886,
+                  "name": "testEditingOnlyReuseLinkRequiresExplicitReselectionWithoutCreatingAnItem()",
+                  "nodeIdentifier": "SavedCaptureFieldsJourneyTests/testEditingOnlyReuseLinkRequiresExplicitReselectionWithoutCreatingAnItem()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureFieldsJourneyTests/testEditingOnlyReuseLinkRequiresExplicitReselectionWithoutCreatingAnItem",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "children": [
+                    {
+                      "name": "XCTAssertTrue failed",
+                      "nodeType": "Failure Message",
+                      "sourceLocation": {
+                        "filePath": "/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/SavedCaptureFieldsJourneyTests.swift",
+                        "lineNumber": 271
+                      }
+                    }
+                  ],
+                  "duration": "30s",
+                  "durationInSeconds": 30.441091895103455,
+                  "name": "testOwnedCaptureFieldsAndLinkLabelPersistAfterRelaunch()",
+                  "nodeIdentifier": "SavedCaptureFieldsJourneyTests/testOwnedCaptureFieldsAndLinkLabelPersistAfterRelaunch()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureFieldsJourneyTests/testOwnedCaptureFieldsAndLinkLabelPersistAfterRelaunch",
+                  "nodeType": "Test Case",
+                  "result": "Failed"
+                },
+                {
+                  "duration": "27s",
+                  "durationInSeconds": 27.758843064308167,
+                  "name": "testRemovingOnlyLinkDoesNotPromoteAutomaticTitleIntoOwnedText()",
+                  "nodeIdentifier": "SavedCaptureFieldsJourneyTests/testRemovingOnlyLinkDoesNotPromoteAutomaticTitleIntoOwnedText()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureFieldsJourneyTests/testRemovingOnlyLinkDoesNotPromoteAutomaticTitleIntoOwnedText",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "SavedCaptureFieldsJourneyTests",
+              "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureFieldsJourneyTests",
+              "nodeType": "Test Suite",
+              "result": "Failed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "1m 20s",
+                  "durationInSeconds": 80.76292300224304,
+                  "name": "testExactLinkReusePreservesDoneArchivedContentAndRememberedListWithoutDuplicates()",
+                  "nodeIdentifier": "SavedCaptureJourneyTests/testExactLinkReusePreservesDoneArchivedContentAndRememberedListWithoutDuplicates()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureJourneyTests/testExactLinkReusePreservesDoneArchivedContentAndRememberedListWithoutDuplicates",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "44s",
+                  "durationInSeconds": 44.24755299091339,
+                  "name": "testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem()",
+                  "nodeIdentifier": "SavedCaptureJourneyTests/testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureJourneyTests/testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "18s",
+                  "durationInSeconds": 18.38556694984436,
+                  "name": "testUntouchedSavedLinkDraftCanBeAddedWithoutAnEmptyEdit()",
+                  "nodeIdentifier": "SavedCaptureJourneyTests/testUntouchedSavedLinkDraftCanBeAddedWithoutAnEmptyEdit()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureJourneyTests/testUntouchedSavedLinkDraftCanBeAddedWithoutAnEmptyEdit",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "SavedCaptureJourneyTests",
+              "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureJourneyTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "17s",
+                  "durationInSeconds": 17.078068017959595,
+                  "name": "testPlainTextReviewPreservesItsTitleAndNotesWithoutInventingLinks()",
+                  "nodeIdentifier": "SavedCaptureTextJourneyTests/testPlainTextReviewPreservesItsTitleAndNotesWithoutInventingLinks()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureTextJourneyTests/testPlainTextReviewPreservesItsTitleAndNotesWithoutInventingLinks",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "SavedCaptureTextJourneyTests",
+              "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureTextJourneyTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            }
+          ],
+          "name": "PlannerNavigationUITests",
+          "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests",
+          "nodeType": "UI test bundle",
+          "result": "Failed"
+        }
+      ],
+      "name": "PlannerNavigation",
+      "nodeType": "Test Plan",
+      "result": "Failed"
+    }
+  ],
+  "testPlanConfigurations": [
+    {
+      "configurationId": "1",
+      "configurationName": "Test Scheme Action"
+    }
+  ]
+}
