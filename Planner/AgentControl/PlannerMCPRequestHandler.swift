@@ -56,11 +56,12 @@
         name: "Planner MCP prototype", version: "0.0.1", capabilities: capabilities)
       if dataset != nil {
         await server.withMethodHandler(ListTools.self) { _ in
-          ListTools.Result(tools: [
-            PlannerMCPSourceTool.definition, PlannerMCPExecutionTool.definition,
-            PlannerMCPQueryTool.definition,
-            PlannerMCPOperationStatusTool.definition, PlannerMCPReviewTool.definition,
-          ])
+          ListTools.Result(
+            tools: [
+              PlannerMCPSourceTool.definition, PlannerMCPExecutionTool.definition,
+              PlannerMCPQueryTool.definition,
+              PlannerMCPOperationStatusTool.definition, PlannerMCPReviewTool.definition,
+            ] + PlannerMCPCaptureTool.definitions)
         }
         await server.withMethodHandler(CallTool.self) { [weak self] parameters in
           guard let self else {
@@ -108,6 +109,10 @@
       }
       if parameters.name == "planner_operation_status" {
         return await PlannerMCPOperationStatusTool.call(
+          parameters, planner: dataset.planner, session: dataset.session)
+      }
+      if PlannerMCPCaptureTool.definitions.contains(where: { $0.name == parameters.name }) {
+        return await PlannerMCPCaptureTool.call(
           parameters, planner: dataset.planner, session: dataset.session)
       }
       return await PlannerMCPSourceTool.call(

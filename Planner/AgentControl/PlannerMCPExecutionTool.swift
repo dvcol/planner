@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create/edit Items, Lists, Itineraries and labels; organize live references and repeated entries. Set global Item or exact appearance completion. Bulk completion requires a Core-issued full-context review token, includes hidden/archived appearances and retains global flags. Global Done overrides display; global Reopen reveals retained local flags. Entry removal/archive preserves source data. Edit direct Schedules through the local Planner prototype.",
+        "Create/edit Items, Lists, Itineraries and labels; organize live references and repeated entries. Set global Item or exact appearance completion. Bulk completion and capture require a Core-issued review token. Bulk includes hidden/archived appearances and retains global flags; capture applies the exact create/reuse proposal without overwriting reused content or state. Global Done overrides display; global Reopen reveals retained local flags. Entry removal/archive preserves source data. Edit direct Schedules through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -26,6 +26,7 @@
               editSchema,
               itineraryEditSchema, listEditSchema, categoryEditSchema, tagEditSchema, archiveSchema,
               completionSchema, PlannerMCPBulkCompletion.schema,
+              PlannerMCPCaptureTool.commandSchema,
               scheduleCreationSchema,
               scheduleEditSchema, scheduleZoneSchema, scheduleRemovalSchema,
             ])
@@ -433,6 +434,17 @@
       ]),
     ])
 
+    static let itemChangesProperties: [String: Value] = [
+      "title": .object(["type": .string("string")]),
+      "subtitle": .object(["type": .array([.string("string"), .string("null")])]),
+      "notes": .object(["type": .array([.string("string"), .string("null")])]),
+      "estimate": estimateSchema,
+      "location": locationSchema,
+      "links": linksSchema,
+      "categoryIds": labelSelectionSchema,
+      "tagIds": labelSelectionSchema,
+    ]
+
     private static let editSchema = Value.object([
       "type": .string("object"), "additionalProperties": .bool(false),
       "required": .array([
@@ -443,16 +455,7 @@
         "sourceId": .object(["type": .string("string"), "format": .string("uuid")]),
         "changes": .object([
           "type": .string("object"), "additionalProperties": .bool(false), "minProperties": .int(1),
-          "properties": .object([
-            "title": .object(["type": .string("string")]),
-            "subtitle": .object(["type": .array([.string("string"), .string("null")])]),
-            "notes": .object(["type": .array([.string("string"), .string("null")])]),
-            "estimate": estimateSchema,
-            "location": locationSchema,
-            "links": linksSchema,
-            "categoryIds": labelSelectionSchema,
-            "tagIds": labelSelectionSchema,
-          ]),
+          "properties": .object(itemChangesProperties),
         ]),
         "expectedFieldHashes": .object([
           "type": .string("object"), "additionalProperties": .bool(false),
@@ -653,7 +656,8 @@
             "forbiddenOperation", "/command/type",
             "Permanent deletion, import and recovery administration are native Planner actions.")
         }
-        if commandType != "setBulkCompletion", let token = arguments["reviewToken"], token != .null
+        if !["setBulkCompletion", "applyCapture"].contains(commandType),
+          let token = arguments["reviewToken"], token != .null
         {
           throw AdmissionFailure(
             "staleReview", "/reviewToken", "No review token is issued for this ordinary data slice."
@@ -681,6 +685,7 @@
         case "setCompletion": command = try completionCommand(arguments["command"])
         case "setBulkCompletion":
           command = try PlannerMCPBulkCompletion.command(arguments["command"])
+        case "applyCapture": command = try PlannerMCPCaptureTool.command(arguments["command"])
         case "createSchedule": command = try scheduleCreationCommand(arguments["command"])
         case "editSchedule": command = try scheduleEditCommand(arguments["command"])
         case "changeScheduleZone": command = try scheduleZoneCommand(arguments["command"])
@@ -1527,8 +1532,6 @@
         throw AdmissionFailure("invalidInput", "/command/sourceId", "Expected an Item UUID.")
       }
       let fieldNames = Set(PlannerItemField.allCases.map(\.rawValue))
-      let changes = try object(
-        command["changes"], allowed: fieldNames, required: [], path: "/command/changes")
       let hashValues = try object(
         command["expectedFieldHashes"], allowed: fieldNames, required: [],
         path: "/command/expectedFieldHashes")
@@ -1541,25 +1544,30 @@
         }
         hashes[field] = PlannerFieldHash(value: spelling)
       }
+      return .editItem(
+        sourceId: sourceIdentifier,
+        changes: try itemChanges(command["changes"], path: "/command/changes"),
+        expectedFieldHashes: hashes)
+    }
+
+    static func itemChanges(_ value: Value?, path: String) throws -> PlannerItemChanges {
+      let changes = try object(
+        value, allowed: Set(PlannerItemField.allCases.map(\.rawValue)), required: [], path: path)
       let linkChanges: PlannerFieldChange<[PlannerLinkInput]>
       if let value = changes["links"] {
-        linkChanges = .set(try linksInput(value, path: "/command/changes/links"))
+        linkChanges = .set(try linksInput(value, path: path + "/links"))
       } else {
         linkChanges = .unchanged
       }
-      return .editItem(
-        sourceId: sourceIdentifier,
-        changes: PlannerItemChanges(
-          title: try textChange(changes["title"], path: "/command/changes/title"),
-          subtitle: try textChange(changes["subtitle"], path: "/command/changes/subtitle"),
-          notes: try textChange(changes["notes"], path: "/command/changes/notes"),
-          location: try locationChange(changes["location"], path: "/command/changes/location"),
-          estimate: try estimateChange(changes["estimate"], path: "/command/changes/estimate"),
-          links: linkChanges,
-          categoryIds: try labelSelectionChange(
-            changes["categoryIds"], path: "/command/changes/categoryIds"),
-          tagIds: try labelSelectionChange(changes["tagIds"], path: "/command/changes/tagIds")),
-        expectedFieldHashes: hashes)
+      return PlannerItemChanges(
+        title: try textChange(changes["title"], path: path + "/title"),
+        subtitle: try textChange(changes["subtitle"], path: path + "/subtitle"),
+        notes: try textChange(changes["notes"], path: path + "/notes"),
+        location: try locationChange(changes["location"], path: path + "/location"),
+        estimate: try estimateChange(changes["estimate"], path: path + "/estimate"),
+        links: linkChanges,
+        categoryIds: try labelSelectionChange(changes["categoryIds"], path: path + "/categoryIds"),
+        tagIds: try labelSelectionChange(changes["tagIds"], path: path + "/tagIds"))
     }
 
     private static func estimateChange(
@@ -1720,7 +1728,7 @@
       return fields
     }
 
-    private struct AdmissionFailure: Error {
+    struct AdmissionFailure: Error {
       let code: String
       let path: String
       let message: String

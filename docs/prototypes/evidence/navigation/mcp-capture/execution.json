@@ -1,0 +1,139 @@
+{
+  "baseCommit": "be5134fa004789a0a8939a6a8a1e4ba21d27f27b",
+  "scope": "Authenticated stateless MCP direct capture preparation, edits, input actions, read/cancel, review/apply, exact reuse and replay",
+  "qualified": {
+    "capture": {
+      "functions": 5,
+      "suites": 1,
+      "invocations": 5
+    },
+    "affectedHTTP": {
+      "functions": 24,
+      "suites": 7,
+      "invocations": 31,
+      "failures": 0,
+      "skips": 0
+    },
+    "macAppAndTestHostBuild": "passed",
+    "macUIRuntimeFunctions": 0,
+    "strictSwiftLintFiles": 5,
+    "markdownLintDocuments": 1
+  },
+  "sourceHashesVerifiedAfterAllProcessesExited": true,
+  "lookupWorkExcludedFromQualification": true,
+  "sourceHashes": {
+    "Planner/AgentControl/PlannerMCPCaptureTool.swift": "659c145174745f3197c981735e99cca1b2fd09155d07a9d171b6e4313d4dacfa",
+    "Planner/AgentControl/PlannerMCPRequestHandler.swift": "d246a58cb832071c71b7d7d062e01f5a5012d98487b4c20cf87f30bd74329f46",
+    "Planner/AgentControl/PlannerMCPReviewTool.swift": "3f2c6c8ac11ce96fc4e5213287443074b3157755ee56376f1784b1f8a66f76a5",
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift": "57936219b0246e8135e8f9182840b7f61246fe4a1fdff4e29d1a8dfcdccb5c6b",
+    "PlannerMCPTests/CaptureRoutingTests.swift": "13b115d503ad973b762fd338acc50ea2d9e936d5875417f2efa105e90be6468e",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1ca538a5ea664fb8f718eae11adce89e827220852074a33a7bec9120d1766713"
+  },
+  "reviews": {
+    "standards": "No remaining confirmed findings",
+    "spec": "No remaining confirmed findings"
+  },
+  "diagnostics": {
+    "PrepareRed": "Missing capture route",
+    "ApplyRed": "Function filter selected zero functions; not qualification",
+    "ApplyRedSuite": "Two functions selected; update route missing",
+    "ApplyGreen": "Misplaced catch compile diagnostic",
+    "ApplyGreen2": "Shared decoder extraction compile diagnostic",
+    "ApplyGreen3": "List decoder extraction compile diagnostic",
+    "ApplyGreen4": "Established source value-envelope expectation corrected",
+    "AdmissionGreen": "Appearance envelope, coordinate path and cancellation code expectations corrected",
+    "AdmissionGreen2": "Coordinate path expectation still incorrect",
+    "DiscoveryGreen": "Same remaining coordinate-path expectation",
+    "Diagnostic": "Disk full before a build could start",
+    "DiagnosticAfterCacheCleanup": "Core reports /changes/location/coordinate; final expectation corrected"
+  },
+  "limits": [
+    "Maps lookup awaits Q78 and is absent from advertised tools",
+    "Four real clients and credential-reader UX remain unqualified",
+    "Native provider/Share, Intents, broader capture UI and interruption presentation remain open",
+    "Mac UI and physical sync/account/Share remain open",
+    "Calendar Q79\u2013Q81, scale/paging and whole-app polish remain open"
+  ],
+  "artifacts": [
+    {
+      "path": "PlannerMCPCaptureAdmissionGreen.log.gz",
+      "sha256": "7d720149028908bd6b426933f113643ba1e76ef44fde10c542a28c2042e11805"
+    },
+    {
+      "path": "PlannerMCPCaptureAdmissionGreen2.log.gz",
+      "sha256": "3175fe80d5d90738d9c72c83b36614298d61b38c54a9a085a56afadfbb7f7e56"
+    },
+    {
+      "path": "PlannerMCPCaptureApplyGreen.log.gz",
+      "sha256": "a828a1872f7810a9a0440aac021cd634fb9706d01d529df1e2e69158fde55f4d"
+    },
+    {
+      "path": "PlannerMCPCaptureApplyGreen2.log.gz",
+      "sha256": "ecc00d575e4f9fa45d9c5f52aa1f9da141baf4f6abc68c6ac2ea45f09039dd5b"
+    },
+    {
+      "path": "PlannerMCPCaptureApplyGreen3.log.gz",
+      "sha256": "c249869c9017a997554fd75ea86f31353cb68b12139899fca69331d0ddb768bc"
+    },
+    {
+      "path": "PlannerMCPCaptureApplyGreen4.log.gz",
+      "sha256": "2609b439faa0c4be0cc488c8313f76d8851e4cc10cbe945f3d9fe205392c85e6"
+    },
+    {
+      "path": "PlannerMCPCaptureApplyGreen5.log.gz",
+      "sha256": "2965f10354108bc5c68ec8e27638f833cd2aa5a7b4fd0eea9395b8a8ff1743a4"
+    },
+    {
+      "path": "PlannerMCPCaptureApplyRed.log.gz",
+      "sha256": "6273d9ccf930f0470fde9a2cfad58810df5bcd1ad327d5d8b7c0154da5cc73c0"
+    },
+    {
+      "path": "PlannerMCPCaptureApplyRedSuite.log.gz",
+      "sha256": "031e89992c370e81d2473720d2996b8c0ef739660e9ad9ba0271034b0bf735ae"
+    },
+    {
+      "path": "PlannerMCPCaptureDiagnostic.log.gz",
+      "sha256": "968db60bb414f89cb6223b1474d1820d5edef18d4a47354426413e9f257bbcc3"
+    },
+    {
+      "path": "PlannerMCPCaptureDiagnosticAfterCacheCleanup.log.gz",
+      "sha256": "64de8d7175378c62da0099b1607f31e2a89a301c28b0d5b1c0e957bd783e1c0c"
+    },
+    {
+      "path": "PlannerMCPCaptureDiscoveryGreen.log.gz",
+      "sha256": "415ba5ea9593f793a5df85837951d039920fd4d9afbb5cdd52fa625b76edcc8e"
+    },
+    {
+      "path": "PlannerMCPCaptureFinal.log.gz",
+      "sha256": "f1a4cd61d155b7ab33430d81a7220ffe8651da991844c14275651ea1b6ecf3db"
+    },
+    {
+      "path": "PlannerMCPCaptureFinalSummary.json",
+      "sha256": "440cfe7356b251b9976038c61022016ab85105d0e9afdf342c3aac3000598350"
+    },
+    {
+      "path": "PlannerMCPCaptureFinalTests.json",
+      "sha256": "4cc8e6618a143fdd76da14ef02be672105fd854e2c58dc3c2347959184c15bc9"
+    },
+    {
+      "path": "PlannerMCPCaptureMarkdownlintFinal.log",
+      "sha256": "a97cb326519f599fb1044a0f152f1fa2ecb5808dea93f9dc57b3211da94a02f1"
+    },
+    {
+      "path": "PlannerMCPCapturePrepareGreen.log.gz",
+      "sha256": "8b3767878c948acd60c3e0df7818a0be9140bb4ec482d1c6cb1713309f405cce"
+    },
+    {
+      "path": "PlannerMCPCapturePrepareRed.log.gz",
+      "sha256": "400ccc15e6603c50bafc8c399f26453cf0aee6c5fca6b7a05b207238c6e3394a"
+    },
+    {
+      "path": "PlannerMCPCaptureStrictLintFinal.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "commands.json",
+      "sha256": "cb58e35930e743b767d593c20a45ec01db7dec2036c6137fd8b9b69da6877e5a"
+    }
+  ]
+}
