@@ -2111,7 +2111,7 @@ public actor Planner {
     let merge = try PlannerImportMerge(
       incoming: backup.backup, current: current.backup, resolution: resolution, mode: mode,
       operationId: operation.operationId)
-    try plannerRemoveImportedReferences(notIn: merge.projected, context: context)
+    try plannerRemoveUnretainedImportedRecords(notIn: merge.projected, context: context)
     try plannerInsertImportedGraph(
       merge.recordsToWrite, replacing: merge.sourceReplacements, context: context)
     let restored = try importReviewSnapshot(context)
@@ -2149,6 +2149,10 @@ public actor Planner {
       generated
       + merge.sourceReplacements.map {
         PlannerAppliedIdentity.source($0.importBinding.reference)
+      }
+      + resolution.sourceDeletes.map { PlannerAppliedIdentity.source($0) }
+      + resolution.details.referenceChanges.filter { $0.change == .remove }.map {
+        .reference($0.reference)
       }
     let result = PlannerAppliedResult(generatedIdentities: generated, affectedIdentities: affected)
     let bindings = backup.backup.sources.map {

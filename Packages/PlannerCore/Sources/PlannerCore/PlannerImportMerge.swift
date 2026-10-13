@@ -9,12 +9,10 @@ struct PlannerImportMerge {
     incoming: PlannerPortableBackup, current: PlannerPortableBackup,
     resolution: PlannerImportReviewResolution, mode: PlannerImportMode, operationId: UUID
   ) throws {
-    guard resolution.details.restorations.isEmpty,
-      resolution.sourceDeletes.allSatisfy({ $0.kind == .schedule })
-    else {
+    guard resolution.details.restorations.isEmpty else {
       throw PlannerFailure(
         "unavailable",
-        "Deleting or restoring current import owners still needs native reconciliation.")
+        "Restoring current import owners still needs native reconciliation.")
     }
     let selectedOwners = Set(resolution.details.imports.map { $0.owner.reference })
     let incomingProjection = try PlannerImportProjection(backup: incoming)
@@ -25,7 +23,9 @@ struct PlannerImportMerge {
       current.contextAliases.filter {
         removals.closes($0.canonicalContext)
       }.map(\.aliasId))
+    let deletedSources = Set(resolution.sourceDeletes)
     let replacedOwners = Set(resolution.details.replacements.map { $0.owner.reference })
+      .subtracting(deletedSources)
     sourceReplacements = incoming.sources.filter {
       replacedOwners.contains($0.importBinding.reference)
     }
@@ -164,6 +164,7 @@ struct PlannerImportMerge {
       restorationFamilies: [])
     let retainedSources = current.sources.filter {
       !replacedOwners.contains($0.importBinding.reference)
+        && !deletedSources.contains($0.importBinding.reference)
     }
     let sources = (retainedSources + sourceReplacements + recordsToWrite.sources).sorted {
       $0.id.uuidString < $1.id.uuidString
