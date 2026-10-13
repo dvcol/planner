@@ -1,0 +1,19 @@
+Building for debugging...
+[2 / 8] PlannerCoreStoreTests-product
+[4 / 10] PlannerCoreStoreTests-product
+[8 / 12] PlannerCoreStoreTests-product
+[10 / 12] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,34 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportRestorationTests started.
+◇ Test foreignOwnedCandidateCannotBypassRestorationReconciliation() started.
+✘ Test foreignOwnedCandidateCannotBypassRestorationReconciliation() recorded an issue at NativeImportRestorationTests.swift:77:19: Issue recorded
+↳ Foreign owned candidate reconciliation must remain gated: PlannerOperationResult(operationId: 99DC87A3-8922-4907-B9D5-3E0E0EF69DD6, outcome: PlannerCore.PlannerOperationResult.Outcome.applied(result: PlannerCore.PlannerAppliedResult(generatedIdentities: [], affectedIdentities: [PlannerCore.PlannerAppliedIdentity.source(PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.list, id: 00000000-0000-4000-8000-000000000201)), PlannerCore.PlannerAppliedIdentity.source(PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.itinerary, id: 00000000-0000-4000-8000-000000000301)), PlannerCore.PlannerAppliedIdentity.reference(PlannerCore.PlannerReferenceRead.membership(id: 00000000-0000-4000-8000-000000000401, list: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.list, id: 00000000-0000-4000-8000-000000000201), item: PlannerCore.PlannerEntityReference(kind: PlannerCore.PlannerEntityKind.item, id: 00000000-0000-4000-8000-000000000101)))]), recovery: PlannerCore.PlannerRecoveryResult.complete(checkpointGeneration: 3)))
+✘ Test foreignOwnedCandidateCannotBypassRestorationReconciliation() failed after 0.147 seconds with 1 issue.
+✘ Suite NativeImportRestorationTests failed after 0.147 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.147 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

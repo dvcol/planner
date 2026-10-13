@@ -141,12 +141,23 @@ struct NativeImportDeletedReviewTests {
     let response = await planner.prepareReview(
       session: session, command: .applyImport(backup: decoded, mode: mode))
     if mode == .overwrite {
-      guard case .failed(let failure) = response else {
+      guard case .reviewed(let review) = response,
+        let details = review.impact.importDetails
+      else {
         Issue.record(
           "A closed owned Schedule needs restoration impact before Overwrite: \(response)")
         return
       }
-      #expect(failure.code == "unavailable" && failure.propertyPath == "/schedules/0")
+      #expect(details.referenceChanges.contains { $0.change == .restore })
+      let response = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: review.command,
+          reviewToken: review.reviewToken))
+      guard case .rejected(let failure) = response.outcome else {
+        Issue.record("Ordinary Overwrite must require separate restoration confirmation.")
+        return
+      }
+      #expect(failure.code == "unavailable")
       guard case .exported(let after) = await planner.exportData(session: session) else {
         throw CancellationError()
       }
@@ -335,11 +346,14 @@ struct NativeImportDeletedReviewTests {
     let overwrite = await planner.prepareReview(
       session: session, command: .applyImport(backup: decoded, mode: .overwrite))
     if sourceCase == .declared {
-      guard case .failed(let failure) = overwrite else {
+      guard case .reviewed(let overwriteReview) = overwrite,
+        let overwriteDetails = overwriteReview.impact.importDetails
+      else {
         Issue.record("A declared deleted source needs its own restoration review")
         return
       }
-      #expect(failure.code == "unavailable" && failure.propertyPath == "/sources/0")
+      #expect(overwriteDetails.restorations.count == 1)
+      #expect(overwriteDetails.skippedDependents.isEmpty)
     } else {
       guard case .reviewed(let overwriteReview) = overwrite else {
         Issue.record(

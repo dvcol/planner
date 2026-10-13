@@ -1,0 +1,24 @@
+Building for debugging...
+[1 / 1]
+[2 / 17] PlannerCore
+[4 / 19] PlannerCore
+[7 / 21] PlannerCore
+[12 / 14] PlannerCore-product
+[12 / 14] PlannerCoreTests-product
+[16 / 18] PlannerCoreStoreTests-product
+Build complete! (7,68 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportRestorationTests started.
+◇ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+◇ Test reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime() started.
+◇ Test case passing 1 argument kind → "itinerary" to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+◇ Test case passing 1 argument kind → "list" to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+◇ Test case passing 1 argument kind → "category" to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+◇ Test case passing 1 argument kind → "item" to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+◇ Test case passing 1 argument kind → "tag" to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+✔ Test reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime() passed after 0.111 seconds.
+✔ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) with 5 test cases passed after 0.342 seconds.
+✔ Suite NativeImportRestorationTests passed after 0.342 seconds.
+✔ Test run with 2 tests in 1 suite passed after 0.343 seconds.

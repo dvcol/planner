@@ -9,12 +9,11 @@ struct PlannerImportMerge {
     incoming: PlannerPortableBackup, current: PlannerPortableBackup,
     resolution: PlannerImportReviewResolution, mode: PlannerImportMode, operationId: UUID
   ) throws {
-    guard resolution.details.restorations.isEmpty else {
-      throw PlannerFailure(
-        "unavailable",
-        "Restoring current import owners still needs native reconciliation.")
-    }
-    let selectedOwners = Set(resolution.details.imports.map { $0.owner.reference })
+    let incoming = try PlannerImportRestoration(
+      incoming: incoming, current: current, resolution: resolution, operationId: operationId
+    ).incoming
+    let selectedOwners = Set(
+      (resolution.details.imports + resolution.details.restorations).map { $0.owner.reference })
     let incomingProjection = try PlannerImportProjection(backup: incoming)
     let currentProjection = try PlannerImportProjection(backup: current)
     let removals = PlannerImportReferenceRemoval(
@@ -81,7 +80,8 @@ struct PlannerImportMerge {
     let knownMarkers = Dictionary(
       uniqueKeysWithValues: current.deletionMarkers.map { ($0.deletionId, $0) })
     var markers: [PlannerPortableDeletionMarker] = []
-    for marker in incoming.deletionMarkers {
+    for incomingMarker in incoming.deletionMarkers {
+      let marker = incomingMarker.closingRestorationFamily(current.restorationFamilies)
       if let known = knownMarkers[marker.deletionId] {
         guard known.operationId == marker.operationId,
           known.closedFamilyId == marker.closedFamilyId,
@@ -102,7 +102,9 @@ struct PlannerImportMerge {
         continue
       }
       markers.append(
-        .init(deletionId: UUID(), operationId: operationId, target: target, closedFamilyId: nil))
+        PlannerPortableDeletionMarker(
+          deletionId: UUID(), operationId: operationId, target: target, closedFamilyId: nil
+        ).closingRestorationFamily(current.restorationFamilies))
     }
     let currentAliases = Dictionary(
       uniqueKeysWithValues: current.contextAliases.map { ($0.aliasId, $0) })
@@ -161,7 +163,9 @@ struct PlannerImportMerge {
       ownedLinks: incoming.ownedLinks.filter { selectedRecordOwners.contains($0.owner.reference) },
       contextAliases: aliases,
       completionChanges: changes,
-      restorationFamilies: [])
+      restorationFamilies: incoming.restorationFamilies.filter { family in
+        !current.restorationFamilies.contains { $0.familyId == family.familyId }
+      })
     let retainedSources = current.sources.filter {
       !replacedOwners.contains($0.importBinding.reference)
         && !deletedSources.contains($0.importBinding.reference)
@@ -245,7 +249,10 @@ struct PlannerImportMerge {
       } + recordsToWrite.completionChanges).sorted {
         $0.id.uuidString < $1.id.uuidString
       },
-      restorationFamilies: current.restorationFamilies)
+      restorationFamilies: (current.restorationFamilies + recordsToWrite.restorationFamilies).sorted
+      {
+        $0.familyId.uuidString < $1.familyId.uuidString
+      })
     try PlannerImportGraph(backup: projected).validate()
   }
 }

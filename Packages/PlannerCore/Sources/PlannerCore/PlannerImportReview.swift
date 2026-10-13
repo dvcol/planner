@@ -277,11 +277,6 @@ func plannerResolveImportReview(
       "missingReference", "The imported reference cannot resolve in this dataset.",
       propertyPath: path.propertyPath + (knownIdentity ? "/lifetimeId" : "/id"))
   }
-  guard incoming.backup.restorationFamilies.isEmpty else {
-    throw PlannerFailure(
-      "unavailable", "Restoration-family import review is not implemented yet.",
-      propertyPath: "/restorationFamilies")
-  }
   let projection = try PlannerImportProjection(backup: incoming.backup)
   let currentProjection = try PlannerImportProjection(backup: current.backup)
   let deletedSources = Set(
@@ -293,18 +288,6 @@ func plannerResolveImportReview(
   let closedIdentities = Set(
     current.backup.deletionMarkers.compactMap(\.target.importIdentity).map(
       PlannerImportClosedIdentity.init))
-  if mode == .overwrite,
-    let closedReference = projection.references.first(where: { reference in
-      guard projection.sources[reference.owner] != nil, let identity = reference.identity else {
-        return false
-      }
-      return closedIdentities.contains(PlannerImportClosedIdentity(identity))
-    })
-  {
-    throw PlannerFailure(
-      "unavailable", "Deleted reference restoration needs its reviewed lineage and impact.",
-      propertyPath: closedReference.propertyPath)
-  }
   let closedContexts = Set(
     current.backup.deletionMarkers.compactMap { marker -> PlannerExpandedContext? in
       guard case .expandedCompletion(let completionContext) = marker.target else { return nil }
@@ -317,6 +300,9 @@ func plannerResolveImportReview(
         .itinerary
     })
   var unavailableSources = deletedSources
+  if mode == .overwrite {
+    unavailableSources.subtract(projection.sources.keys)
+  }
   var didDiscoverUnavailableSource = true
   while didDiscoverUnavailableSource {
     didDiscoverUnavailableSource = false
@@ -332,7 +318,7 @@ func plannerResolveImportReview(
         return closedIdentities.contains(PlannerImportClosedIdentity(identity))
       }
       guard
-        ownsClosedRecord || closedContextOwners.contains(sourceReference)
+        (mode == .skip && (ownsClosedRecord || closedContextOwners.contains(sourceReference)))
           || dependencies.contains(where: { unavailableSources.contains($0.reference) })
       else {
         continue
@@ -346,6 +332,7 @@ func plannerResolveImportReview(
   var skippedConflicts: [PlannerImportEntry] = []
   var skippedDependents: [PlannerImportEntry] = []
   var replacements: [PlannerImportEntry] = []
+  var restorations: [PlannerImportEntry] = []
   var changes: [PlannerImportReferenceChange] = []
   var globalFlagsChanged = false
   for (index, source) in incoming.backup.sources.enumerated() {
@@ -361,10 +348,14 @@ func plannerResolveImportReview(
     let after = projection.summary(
       source, changedFields: projection.fields(for: source).keys.sorted())
     if deletedSources.contains(source.importBinding.reference) {
-      guard mode == .skip else {
-        throw PlannerFailure(
-          "unavailable", "Deleted source restoration needs its reviewed lineage and impact.",
-          propertyPath: "/sources/\(index)")
+      if mode == .overwrite {
+        restorations.append(
+          .init(
+            owner: source.importBinding, reasonCode: "deletedSource",
+            dependencies: dependencies, propertyPaths: propertyPaths, before: nil, after: after))
+        changes += references.map { .init(change: .restore, reference: $0.reference) }
+        if case .item(let item) = source, item.globalDone { globalFlagsChanged = true }
+        continue
       }
       skippedConflicts.append(
         .init(
@@ -385,7 +376,13 @@ func plannerResolveImportReview(
           owner: source.importBinding, reasonCode: nil, dependencies: dependencies,
           propertyPaths: propertyPaths, before: nil,
           after: after))
-      changes += references.map { .init(change: .add, reference: $0.reference) }
+      changes += references.map {
+        let isClosed =
+          $0.identity.map {
+            closedIdentities.contains(PlannerImportClosedIdentity($0))
+          } ?? false
+        return .init(change: isClosed ? .restore : .add, reference: $0.reference)
+      }
       if case .item(let item) = source, item.globalDone { globalFlagsChanged = true }
       continue
     }
@@ -431,7 +428,12 @@ func plannerResolveImportReview(
       !references.contains { $0.reference == existing.reference }
     }.map { .init(change: .remove, reference: $0.reference) }
     changes += references.map { incoming in
-      .init(
+      let isClosed =
+        incoming.identity.map {
+          closedIdentities.contains(PlannerImportClosedIdentity($0))
+        } ?? false
+      if isClosed { return .init(change: .restore, reference: incoming.reference) }
+      return .init(
         change: existingReferences.contains { $0.reference == incoming.reference } ? .retain : .add,
         reference: incoming.reference)
     }
@@ -609,7 +611,7 @@ func plannerResolveImportReview(
     details: .init(
       imports: imports, unchanged: unchanged, skippedConflicts: skippedConflicts,
       skippedDependents: skippedDependents,
-      replacements: replacements, restorations: [], incomingDeletions: deletions,
+      replacements: replacements, restorations: restorations, incomingDeletions: deletions,
       referenceChanges: uniqueChanges),
     targets: targetSources.map { .source($0) }
       + uniqueChanges.map { .reference($0.reference) }, sourceDeletes: sourceDeletes,

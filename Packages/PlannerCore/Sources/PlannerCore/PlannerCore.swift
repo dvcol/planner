@@ -154,7 +154,10 @@ public actor Planner {
         let impact: PlannerReviewImpact
         let digest: String
         switch command {
-        case .applyImport(let backup, let mode):
+        case .applyImport(let backup, let mode, let restoreDeletedData):
+          guard !restoreDeletedData || mode == .overwrite else {
+            throw PlannerFailure("invalidInput", "Restoration requires explicit Overwrite.")
+          }
           let current = try importReviewSnapshot(context)
           let deletionImpacts = try importDeletionImpacts(
             incoming: backup, current: current, mode: mode, context: context)
@@ -169,7 +172,8 @@ public actor Planner {
               .map(\.reference),
             importDetails: resolution.details)
           digest = plannerImportDigest(
-            incoming: backup, current: current, mode: mode, identity: identity)
+            incoming: backup, current: current, mode: mode, identity: identity,
+            restoreDeletedData: restoreDeletedData)
         case .setBulkCompletion(let scope, let done):
           let resolution = try resolveBulkCompletion(scope, context: context)
           targets = resolution.targets.map { .appearance($0.appearance) }
@@ -244,9 +248,10 @@ public actor Planner {
         let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
         let envelope = try archive.latest()
         switch operation.command {
-        case .applyImport(let backup, let mode):
+        case .applyImport(let backup, let mode, let restoreDeletedData):
           return try executeImport(
-            operation, backup: backup, mode: mode, identity: identity, context: context,
+            operation, backup: backup, mode: mode, restoreDeletedData: restoreDeletedData,
+            identity: identity, context: context,
             archive: archive, receipts: receipts, envelope: envelope)
         case .deleteSource(let source):
           if source.kind == .itinerary {
@@ -2062,6 +2067,7 @@ public actor Planner {
 
   private func executeImport(
     _ operation: PlannerOperation, backup: PlannerDecodedBackup, mode: PlannerImportMode,
+    restoreDeletedData: Bool,
     identity: PlannerStoreIdentity, context: ModelContext, archive: PlannerRecoveryArchive,
     receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
   ) throws -> PlannerOperationResult {
@@ -2070,7 +2076,8 @@ public actor Planner {
         sources: [], labelAssociations: [], memberships: [], itineraryEntries: [],
         expandedCompletions: [], deletionMarkers: []))
     let digest = plannerImportDigest(
-      incoming: backup, current: empty, mode: mode, identity: identity)
+      incoming: backup, current: empty, mode: mode, identity: identity,
+      restoreDeletedData: restoreDeletedData)
     if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
       guard receipt.payloadDigest == digest else {
         throw PlannerFailure("operationPayloadMismatch", "This operation describes another import.")
@@ -2089,7 +2096,9 @@ public actor Planner {
     guard let token = operation.reviewToken, let review = reviews[token.reviewId],
       review.session == operation.session,
       review.payloadDigest
-        == plannerImportDigest(incoming: backup, current: current, mode: mode, identity: identity)
+        == plannerImportDigest(
+          incoming: backup, current: current, mode: mode, identity: identity,
+          restoreDeletedData: restoreDeletedData)
     else {
       throw PlannerFailure(
         "staleReview", "The import or current dataset changed; review it again.",
@@ -2108,6 +2117,15 @@ public actor Planner {
       incoming: backup, current: current, mode: mode, context: context)
     let resolution = try plannerResolveImportReview(
       incoming: backup, current: current, mode: mode, deletionImpacts: deletionImpacts)
+    guard !restoreDeletedData || mode == .overwrite else {
+      throw PlannerFailure("invalidInput", "Restoration requires explicit Overwrite.")
+    }
+    let requiresRestoration =
+      !resolution.details.restorations.isEmpty
+      || resolution.details.referenceChanges.contains { $0.change == .restore }
+    guard !requiresRestoration || restoreDeletedData else {
+      throw PlannerFailure("unavailable", "Deleted data needs separate reviewed restoration.")
+    }
     let merge = try PlannerImportMerge(
       incoming: backup.backup, current: current.backup, resolution: resolution, mode: mode,
       operationId: operation.operationId)
@@ -2142,7 +2160,10 @@ public actor Planner {
         proposalId: UUID(), originalOperationId: operation.operationId,
         datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
         proposedBackup: proposalSnapshot, payloadDigest: digest, evidence: "preparedUnverified"))
-    let generated = merge.recordsToWrite.sources.map {
+    let restoredSources = Set(resolution.details.restorations.map { $0.owner.reference })
+    let generated = merge.recordsToWrite.sources.filter {
+      !restoredSources.contains($0.importBinding.reference)
+    }.map {
       PlannerAppliedIdentity.source($0.importBinding.reference)
     }
     let affected =
@@ -2151,7 +2172,10 @@ public actor Planner {
         PlannerAppliedIdentity.source($0.importBinding.reference)
       }
       + resolution.sourceDeletes.map { PlannerAppliedIdentity.source($0) }
-      + resolution.details.referenceChanges.filter { $0.change == .remove }.map {
+      + restoredSources.map { PlannerAppliedIdentity.source($0) }
+      + resolution.details.referenceChanges.filter {
+        $0.change == .remove || $0.change == .restore
+      }.map {
         .reference($0.reference)
       }
     let result = PlannerAppliedResult(generatedIdentities: generated, affectedIdentities: affected)
@@ -3721,9 +3745,10 @@ public actor Planner {
     let labels = try labelAssociationSnapshots(context)
     let tags = try tagSnapshots(context)
     let categories = try categorySnapshots(context)
-    let removalMarker = PortableDeletionMarker(
+    let pendingRemovalMarker = PortableDeletionMarker(
       deletionId: UUID(), operationId: operation.operationId,
       target: .itineraryEntry(id: before.id, lifetimeId: before.lifetimeId), closedFamilyId: nil)
+    let removalMarker = try closingRestorationFamilies([pendingRemovalMarker], context: context)[0]
     let markers = try deletionMarkers(context) + [removalMarker]
     let result = PlannerAppliedResult(
       generatedIdentities: [],
@@ -4174,9 +4199,10 @@ public actor Planner {
         createdAt: ownerSnapshot.createdAt, updatedAt: updatedAt,
         content: ownerSnapshot.content, archived: ownerSnapshot.archived)
     }
-    let removalMarker = PortableDeletionMarker(
+    let pendingRemovalMarker = PortableDeletionMarker(
       deletionId: UUID(), operationId: operation.operationId,
       target: .membership(membershipBinding), closedFamilyId: nil)
+    let removalMarker = try closingRestorationFamilies([pendingRemovalMarker], context: context)[0]
     let markers = try deletionMarkers(context) + [removalMarker]
     let expandedRecords = record.expandedCompletions ?? []
     let expandedSnapshots = try expandedRecords.map { try $0.value() }.sorted {
@@ -4376,9 +4402,10 @@ public actor Planner {
       return try list.value()
     }
     let itemSnapshots = try items.map { try $0.value() }
-    let removalMarker = PortableDeletionMarker(
+    let pendingRemovalMarker = PortableDeletionMarker(
       deletionId: UUID(), operationId: operation.operationId,
       target: .membership(membershipBinding), closedFamilyId: nil)
+    let removalMarker = try closingRestorationFamilies([pendingRemovalMarker], context: context)[0]
     let markers = try deletionMarkers(context) + [removalMarker]
     let expandedRecords = record.expandedCompletions ?? []
     let expandedSnapshots = try expandedRecords.map { try $0.value() }.sorted {
@@ -5120,7 +5147,7 @@ public actor Planner {
     }
     let categories = try categorySnapshots(context)
     let tags = try tagSnapshots(context)
-    let newMarkers =
+    let pendingNewMarkers =
       [
         PortableDeletionMarker(
           deletionId: UUID(), operationId: operation.operationId,
@@ -5142,6 +5169,7 @@ public actor Planner {
           deletionId: UUID(), operationId: operation.operationId,
           target: .labelAssociation(id: $0.id, lifetimeId: $0.lifetimeId), closedFamilyId: nil)
       }
+    let newMarkers = try closingRestorationFamilies(pendingNewMarkers, context: context)
     let markers = try deletionMarkers(context) + newMarkers
     let result = PlannerAppliedResult(
       generatedIdentities: [],
@@ -5355,7 +5383,7 @@ public actor Planner {
         labels: value.labels,
         entries: value.entries.filter { !removedEntryIdentifiers.contains($0.id) })
     }
-    let newMarkers =
+    let pendingNewMarkers =
       [
         PortableDeletionMarker(
           deletionId: UUID(), operationId: operation.operationId,
@@ -5372,6 +5400,7 @@ public actor Planner {
           deletionId: UUID(), operationId: operation.operationId,
           target: .itineraryEntry(id: $0.id, lifetimeId: $0.lifetimeId), closedFamilyId: nil)
       }
+    let newMarkers = try closingRestorationFamilies(pendingNewMarkers, context: context)
     let markers = try deletionMarkers(context) + newMarkers
     let result = PlannerAppliedResult(
       generatedIdentities: [],
@@ -5655,7 +5684,7 @@ public actor Planner {
         schedules: value.schedules,
         labelAssociations: value.labelAssociations, labels: value.labels, entries: entries)
     }
-    let newMarkers =
+    let pendingNewMarkers =
       [
         PortableDeletionMarker(
           deletionId: UUID(), operationId: operation.operationId,
@@ -5683,6 +5712,7 @@ public actor Planner {
           deletionId: UUID(), operationId: operation.operationId,
           target: .labelAssociation(id: $0.id, lifetimeId: $0.lifetimeId), closedFamilyId: nil)
       }
+    let newMarkers = try closingRestorationFamilies(pendingNewMarkers, context: context)
     let markers = try deletionMarkers(context) + newMarkers
     let affectedItineraryIds = Set(
       allItineraries.filter { itinerary in
@@ -5920,7 +5950,7 @@ public actor Planner {
       deletionId: UUID(), operationId: operation.operationId,
       target: .source(resolution.source),
       closedFamilyId: nil)
-    let newMarkers =
+    let pendingNewMarkers =
       [sourceMarker]
       + resolution.associations.map { association in
         PortableDeletionMarker(
@@ -5928,6 +5958,7 @@ public actor Planner {
           target: .labelAssociation(id: association.id, lifetimeId: association.lifetimeId),
           closedFamilyId: nil)
       }
+    let newMarkers = try closingRestorationFamilies(pendingNewMarkers, context: context)
     let markers = try deletionMarkers(context) + newMarkers
     let owners = resolution.associations.map(\.ownerReference)
     let result = PlannerAppliedResult(
@@ -6299,6 +6330,13 @@ public actor Planner {
       + PlannerNativeLineage(context: context).deletionMarkers
   }
 
+  private func closingRestorationFamilies(
+    _ markers: [PortableDeletionMarker], context: ModelContext
+  ) throws -> [PortableDeletionMarker] {
+    let families = try PlannerNativeLineage(context: context).restorationFamilies
+    return try markers.map { try $0.closingRestorationFamily(families) }
+  }
+
   private func executeScheduleChange(
     _ operation: PlannerOperation, scheduleId: UUID, change: ScheduleChange,
     hashes: [PlannerScheduleField: PlannerFieldHash], identity: PlannerStoreIdentity,
@@ -6390,16 +6428,19 @@ public actor Planner {
     let after = replacementForm.map {
       ScheduleSnapshot(id: before.id, lifetimeId: before.lifetimeId, form: $0)
     }
-    let removalMarker: PortableDeletionMarker?
+    let pendingRemovalMarker: PortableDeletionMarker?
     if replacementForm == nil {
-      removalMarker = PortableDeletionMarker(
+      pendingRemovalMarker = PortableDeletionMarker(
         deletionId: UUID(), operationId: operation.operationId,
         target: .source(
           PlannerBoundIdentity(kind: "schedule", id: before.id, lifetimeId: before.lifetimeId)),
         closedFamilyId: nil)
     } else {
-      removalMarker = nil
+      pendingRemovalMarker = nil
     }
+    let removalMarker = try closingRestorationFamilies(
+      [pendingRemovalMarker].compactMap { $0 }, context: context
+    ).first
     let markers = try deletionMarkers(context) + [removalMarker].compactMap { $0 }
     let snapshots = try context.fetch(FetchDescriptor<PlannerSchemaV15.Item>()).map { item in
       var snapshot = try item.value()
@@ -6715,12 +6756,13 @@ public actor Planner {
     let updatedIdentifiers = Set(updatedAssociations.map(\.id))
     let added = updatedAssociations.filter { !previousIdentifiers.contains($0.id) }
     let removed = before.labelAssociations.filter { !updatedIdentifiers.contains($0.id) }
-    let removalMarkers = removed.map { association in
+    let pendingRemovalMarkers = removed.map { association in
       PortableDeletionMarker(
         deletionId: UUID(), operationId: operation.operationId,
         target: .labelAssociation(id: association.id, lifetimeId: association.lifetimeId),
         closedFamilyId: nil)
     }
+    let removalMarkers = try closingRestorationFamilies(pendingRemovalMarkers, context: context)
     let markers = try deletionMarkers(context) + removalMarkers
     let associations =
       try labelAssociationSnapshots(context).filter {
@@ -6954,12 +6996,13 @@ public actor Planner {
     let updatedIdentifiers = Set(updatedAssociations.map(\.id))
     let added = updatedAssociations.filter { !previousIdentifiers.contains($0.id) }
     let removed = before.labelAssociations.filter { !updatedIdentifiers.contains($0.id) }
-    let removalMarkers = removed.map { association in
+    let pendingRemovalMarkers = removed.map { association in
       PortableDeletionMarker(
         deletionId: UUID(), operationId: operation.operationId,
         target: .labelAssociation(id: association.id, lifetimeId: association.lifetimeId),
         closedFamilyId: nil)
     }
+    let removalMarkers = try closingRestorationFamilies(pendingRemovalMarkers, context: context)
     let markers = try deletionMarkers(context) + removalMarkers
     let associations =
       try labelAssociationSnapshots(context).filter {

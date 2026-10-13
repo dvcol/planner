@@ -1,0 +1,34 @@
+Building for debugging...
+[1 / 1]
+[2 / 8] PlannerCoreStoreTests-product
+[4 / 10] PlannerCoreStoreTests-product
+[9 / 11] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (2,73 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportRestorationTests started.
+◇ Test reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime() started.
+◇ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+◇ Test case passing 1 argument kind → "item" to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+◇ Test case passing 1 argument kind → "itinerary" to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+◇ Test case passing 1 argument kind → "list" to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+◇ Test case passing 1 argument kind → "tag" to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+◇ Test case passing 1 argument kind → "category" to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+✔ Test reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime() passed after 0.093 seconds.
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) recorded an issue with 1 argument kind → "tag" at NativeImportRestorationTests.swift:159:19: Issue recorded
+↳ Later explicit restoration must start a new family for tag.
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) recorded an issue with 1 argument kind → "category" at NativeImportRestorationTests.swift:159:19: Issue recorded
+↳ Later explicit restoration must start a new family for category.
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) recorded an issue with 1 argument kind → "itinerary" at NativeImportRestorationTests.swift:159:19: Issue recorded
+↳ Later explicit restoration must start a new family for itinerary.
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) recorded an issue with 1 argument kind → "list" at NativeImportRestorationTests.swift:159:19: Issue recorded
+↳ Later explicit restoration must start a new family for list.
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) recorded an issue with 1 argument kind → "item" at NativeImportRestorationTests.swift:159:19: Issue recorded
+↳ Later explicit restoration must start a new family for item.
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) with 5 test cases failed after 0.397 seconds with 5 issues.
+✘ Suite NativeImportRestorationTests failed after 0.397 seconds with 5 issues.
+✘ Test run with 2 tests in 1 suite failed after 0.397 seconds with 5 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

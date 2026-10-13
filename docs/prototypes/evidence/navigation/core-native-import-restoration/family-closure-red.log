@@ -1,0 +1,54 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[9 / 13] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (2,54 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportRestorationTests started.
+◇ Test reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime() started.
+◇ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+◇ Test case passing 1 argument kind → "itinerary" to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+◇ Test case passing 1 argument kind → "item" to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+◇ Test case passing 1 argument kind → "category" to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+◇ Test case passing 1 argument kind → "tag" to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+◇ Test case passing 1 argument kind → "list" to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) started.
+✔ Test reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime() passed after 0.089 seconds.
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) recorded an issue with 1 argument kind → "category" at NativeImportRestorationTests.swift:136:5: Expectation failed: secondDeleted.backup.deletionMarkers.contains {
+      $0.closedFamilyId == sourceFamily.familyId
+    }
+↳ secondDeleted.backup.deletionMarkers.contains {
+        $0.closedFamilyId == sourceFamily.familyId
+      } → <not evaluated>
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) recorded an issue with 1 argument kind → "tag" at NativeImportRestorationTests.swift:136:5: Expectation failed: secondDeleted.backup.deletionMarkers.contains {
+      $0.closedFamilyId == sourceFamily.familyId
+    }
+↳ secondDeleted.backup.deletionMarkers.contains {
+        $0.closedFamilyId == sourceFamily.familyId
+      } → <not evaluated>
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) recorded an issue with 1 argument kind → "list" at NativeImportRestorationTests.swift:136:5: Expectation failed: secondDeleted.backup.deletionMarkers.contains {
+      $0.closedFamilyId == sourceFamily.familyId
+    }
+↳ secondDeleted.backup.deletionMarkers.contains {
+        $0.closedFamilyId == sourceFamily.familyId
+      } → <not evaluated>
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) recorded an issue with 1 argument kind → "itinerary" at NativeImportRestorationTests.swift:136:5: Expectation failed: secondDeleted.backup.deletionMarkers.contains {
+      $0.closedFamilyId == sourceFamily.familyId
+    }
+↳ secondDeleted.backup.deletionMarkers.contains {
+        $0.closedFamilyId == sourceFamily.familyId
+      } → <not evaluated>
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) recorded an issue with 1 argument kind → "item" at NativeImportRestorationTests.swift:136:5: Expectation failed: secondDeleted.backup.deletionMarkers.contains {
+      $0.closedFamilyId == sourceFamily.familyId
+    }
+↳ secondDeleted.backup.deletionMarkers.contains {
+        $0.closedFamilyId == sourceFamily.familyId
+      } → <not evaluated>
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:) with 5 test cases failed after 0.335 seconds with 5 issues.
+✘ Suite NativeImportRestorationTests failed after 0.335 seconds with 5 issues.
+✘ Test run with 2 tests in 1 suite failed after 0.335 seconds with 5 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

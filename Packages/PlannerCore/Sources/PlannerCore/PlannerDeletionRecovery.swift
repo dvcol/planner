@@ -81,6 +81,35 @@ struct PortableDeletionMarker: Codable {
   let target: PortableDeletionTarget
   let closedFamilyId: UUID?
 
+  func closingRestorationFamily(_ families: [PlannerPortableRestorationFamily]) throws
+    -> PortableDeletionMarker
+  {
+    let identity: PlannerPortableBoundIdentity
+    switch target {
+    case .source(let source), .membership(let source):
+      guard let kind = PlannerPortableIdentityKind(rawValue: source.kind) else {
+        throw PlannerFailure("readUnavailable", "The deletion identity kind cannot resolve.")
+      }
+      identity = .init(kind: kind, id: source.id, lifetimeId: source.lifetimeId)
+    case .itineraryEntry(let identifier, let lifetimeIdentifier):
+      identity = .init(kind: .itineraryEntry, id: identifier, lifetimeId: lifetimeIdentifier)
+    case .labelAssociation(let identifier, let lifetimeIdentifier):
+      identity = .init(kind: .labelAssociation, id: identifier, lifetimeId: lifetimeIdentifier)
+    case .ownedLink(let identifier, let lifetimeIdentifier):
+      identity = .init(kind: .ownedLink, id: identifier, lifetimeId: lifetimeIdentifier)
+    case .expandedCompletion: return self
+    }
+    guard
+      let family = families.first(where: {
+        $0.predecessor.kind == identity.kind && $0.predecessor.id == identity.id
+          && $0.candidates.contains { $0.lifetimeId == identity.lifetimeId }
+      })
+    else { return self }
+    return .init(
+      deletionId: deletionId, operationId: operationId, target: target,
+      closedFamilyId: family.familyId)
+  }
+
   private enum CodingKeys: String, CodingKey {
     case deletionId, operationId, target, closedFamilyId
   }
@@ -108,15 +137,14 @@ struct PortableDeletionMarker: Codable {
   {
     switch target {
     case .ownedLink(let identifier, let lifetimeId):
-      guard closedFamilyId == nil,
-        !ownedLinks.contains(where: { $0.id == identifier && $0.lifetimeId == lifetimeId })
+      guard !ownedLinks.contains(where: { $0.id == identifier && $0.lifetimeId == lifetimeId })
       else {
         throw PlannerFailure(
           "recoveryIntegrityFailure", "The removed bookmark is still live or unsupported.")
       }
       return .init(
         deletionId: deletionId, operationId: operationId,
-        target: .ownedLink(id: identifier, lifetimeId: lifetimeId), closedFamilyId: nil)
+        target: .ownedLink(id: identifier, lifetimeId: lifetimeId), closedFamilyId: closedFamilyId)
     case .expandedCompletion(let context):
       guard closedFamilyId == nil,
         !expandedCompletions.contains(where: { $0.context == context })
@@ -129,15 +157,15 @@ struct PortableDeletionMarker: Codable {
         deletionId: deletionId, operationId: operationId,
         target: .expandedCompletion(context), closedFamilyId: nil)
     case .itineraryEntry(let identifier, let lifetimeId):
-      guard closedFamilyId == nil,
-        !entries.contains(where: { $0.id == identifier && $0.lifetimeId == lifetimeId })
+      guard !entries.contains(where: { $0.id == identifier && $0.lifetimeId == lifetimeId })
       else {
         throw PlannerFailure(
           "recoveryIntegrityFailure", "The removed itinerary entry is still live or unsupported.")
       }
       return .init(
         deletionId: deletionId, operationId: operationId,
-        target: .itineraryEntry(id: identifier, lifetimeId: lifetimeId), closedFamilyId: nil)
+        target: .itineraryEntry(id: identifier, lifetimeId: lifetimeId),
+        closedFamilyId: closedFamilyId)
     case .source(let source):
       let kind: PlannerEntityKind
       let isLive: Bool
@@ -163,7 +191,7 @@ struct PortableDeletionMarker: Codable {
       default:
         throw PlannerFailure("recoveryIntegrityFailure", "The deletion source kind is unsupported.")
       }
-      guard closedFamilyId == nil, !isLive else {
+      guard !isLive else {
         throw PlannerFailure(
           "recoveryIntegrityFailure", "The deletion target is unsupported or still live.")
       }
@@ -173,7 +201,7 @@ struct PortableDeletionMarker: Codable {
           PlannerEntityReference(kind: kind, id: source.id), lifetimeId: source.lifetimeId),
         closedFamilyId: closedFamilyId)
     case .membership(let membership):
-      guard membership.kind == "membership", closedFamilyId == nil,
+      guard membership.kind == "membership",
         !memberships.contains(where: {
           $0.id == membership.id && $0.lifetimeId == membership.lifetimeId
         })
@@ -184,9 +212,9 @@ struct PortableDeletionMarker: Codable {
       return PlannerPortableDeletionMarker(
         deletionId: deletionId, operationId: operationId,
         target: .membership(id: membership.id, lifetimeId: membership.lifetimeId),
-        closedFamilyId: nil)
+        closedFamilyId: closedFamilyId)
     case .labelAssociation(let identifier, let lifetimeId):
-      guard closedFamilyId == nil,
+      guard
         !labelAssociations.contains(where: { $0.id == identifier && $0.lifetimeId == lifetimeId })
       else {
         throw PlannerFailure(
@@ -194,7 +222,8 @@ struct PortableDeletionMarker: Codable {
       }
       return PlannerPortableDeletionMarker(
         deletionId: deletionId, operationId: operationId,
-        target: .labelAssociation(id: identifier, lifetimeId: lifetimeId), closedFamilyId: nil)
+        target: .labelAssociation(id: identifier, lifetimeId: lifetimeId),
+        closedFamilyId: closedFamilyId)
     }
   }
 }

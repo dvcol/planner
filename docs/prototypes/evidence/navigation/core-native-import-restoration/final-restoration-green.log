@@ -1,0 +1,34 @@
+Building for debugging...
+[1 / 1]
+[2 / 18] PlannerCore
+[4 / 20] PlannerCore
+[9 / 22] PlannerCore
+[12 / 18] PlannerCoreTests-product
+[14 / 20] PlannerCoreStoreTests-product
+[16 / 22] PlannerCoreStoreTests-product
+[19 / 23] PlannerCoreStoreTests-product
+[21 / 23] PlannerCoreStoreTests-product
+[23 / 25] PlannerCoreStoreTests-product
+Build complete! (7,07 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportRestorationTests started.
+◇ Test foreignOwnedCandidateCannotBypassRestorationReconciliation() started.
+◇ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime() started.
+◇ Test case passing 2 arguments kind → "item", deleteThroughImport → false to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "list", deleteThroughImport → true to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "itinerary", deleteThroughImport → false to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "list", deleteThroughImport → false to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "item", deleteThroughImport → true to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "itinerary", deleteThroughImport → true to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "category", deleteThroughImport → false to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "category", deleteThroughImport → true to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "tag", deleteThroughImport → false to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "tag", deleteThroughImport → true to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+✔ Test foreignOwnedCandidateCannotBypassRestorationReconciliation() passed after 0.232 seconds.
+✔ Test reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime() passed after 0.232 seconds.
+✔ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) with 10 test cases passed after 0.819 seconds.
+✔ Suite NativeImportRestorationTests passed after 0.819 seconds.
+✔ Test run with 3 tests in 1 suite passed after 0.819 seconds.

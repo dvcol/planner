@@ -1,0 +1,42 @@
+Building for debugging...
+[1 / 2] PlannerCore-product
+[2 / 8] PlannerCoreStoreTests-product
+[4 / 10] PlannerCoreStoreTests-product
+[7 / 11] PlannerCoreStoreTests-product
+[9 / 11] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (3,68 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportRestorationTests started.
+◇ Test reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime() started.
+◇ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test foreignOwnedCandidateCannotBypassRestorationReconciliation() started.
+◇ Test case passing 2 arguments kind → "item", deleteThroughImport → false to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "item", deleteThroughImport → true to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "list", deleteThroughImport → false to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "list", deleteThroughImport → true to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "itinerary", deleteThroughImport → false to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "itinerary", deleteThroughImport → true to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "category", deleteThroughImport → false to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "category", deleteThroughImport → true to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "tag", deleteThroughImport → false to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+◇ Test case passing 2 arguments kind → "tag", deleteThroughImport → true to restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) started.
+✔ Test foreignOwnedCandidateCannotBypassRestorationReconciliation() passed after 0.226 seconds.
+✔ Test reviewedRestoreKeepsPublicIdentityAndClosesThePreviousLifetime() passed after 0.226 seconds.
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) recorded an issue with 2 arguments kind → "category", deleteThroughImport → true at NativeImportRestorationTests.swift:263:21: Issue recorded
+↳ Repeated family-closed deletion import must remain idempotent.
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) recorded an issue with 2 arguments kind → "list", deleteThroughImport → true at NativeImportRestorationTests.swift:263:21: Issue recorded
+↳ Repeated family-closed deletion import must remain idempotent.
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) recorded an issue with 2 arguments kind → "itinerary", deleteThroughImport → true at NativeImportRestorationTests.swift:263:21: Issue recorded
+↳ Repeated family-closed deletion import must remain idempotent.
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) recorded an issue with 2 arguments kind → "item", deleteThroughImport → true at NativeImportRestorationTests.swift:263:21: Issue recorded
+↳ Repeated family-closed deletion import must remain idempotent.
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) recorded an issue with 2 arguments kind → "tag", deleteThroughImport → true at NativeImportRestorationTests.swift:263:21: Issue recorded
+↳ Repeated family-closed deletion import must remain idempotent.
+✘ Test restoringSourceAndIncludedReferencesPreservesTheFullPlanningGraph(kind:deleteThroughImport:) with 10 test cases failed after 0.675 seconds with 5 issues.
+✘ Suite NativeImportRestorationTests failed after 0.675 seconds with 5 issues.
+✘ Test run with 3 tests in 1 suite failed after 0.675 seconds with 5 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

@@ -52,9 +52,7 @@ enum PlannerSchemaV4: VersionedSchema {
           "labelAssociation",
           "itineraryEntry", "ownedLink",
         ]
-        .contains(
-          sourceKind),
-        closedFamilyId == nil
+        .contains(sourceKind)
       else {
         throw PlannerFailure(
           "readUnavailable", "The deletion marker has unresolved or unsupported metadata.")
