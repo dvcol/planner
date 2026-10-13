@@ -1,0 +1,38 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[9 / 13] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (2,81 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CaptureApplyTests started.
+◇ Test reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:) started.
+◇ Test invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) started.
+◇ Test appliedCaptureCannotBeCancelledOrRetargetedByChangedReplay() started.
+◇ Test reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState() started.
+◇ Test case passing 1 argument scenario → "emptyDraft" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument usesExplicitTitle → false to reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:) started.
+◇ Test case passing 1 argument usesExplicitTitle → true to reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:) started.
+◇ Test case passing 1 argument scenario → "noToken" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "editedDraft" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument reusesItem → false to recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) started.
+◇ Test case passing 1 argument reusesItem → true to recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) started.
+◇ Test case passing 1 argument scenario → "canceled" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "archivedList" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "deletedList" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "changedLists" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "changedSourceLinks" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "archivedSource" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "deletedSource" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "changedMembership" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+✔ Test appliedCaptureCannotBeCancelledOrRetargetedByChangedReplay() passed after 0.167 seconds.
+✔ Test recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) with 2 test cases passed after 0.174 seconds.
+✔ Test reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:) with 2 test cases passed after 0.188 seconds.
+✔ Test invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) with 11 test cases passed after 0.250 seconds.
+✔ Test reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState() passed after 0.273 seconds.
+✔ Suite CaptureApplyTests passed after 0.273 seconds.
+✔ Test run with 5 tests in 1 suite passed after 0.273 seconds.

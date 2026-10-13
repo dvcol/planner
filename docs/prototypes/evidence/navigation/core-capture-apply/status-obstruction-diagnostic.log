@@ -1,0 +1,42 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,07 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CaptureApplyTests started.
+◇ Test invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) started.
+◇ Test appliedCaptureCannotBeCancelledOrRetargetedByChangedReplay() started.
+◇ Test reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:) started.
+◇ Test reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState() started.
+◇ Test case passing 1 argument scenario → "canceled" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "emptyDraft" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "archivedList" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "editedDraft" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "noToken" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "deletedList" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument reusesItem → false to recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) started.
+◇ Test case passing 1 argument scenario → "changedLists" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument reusesItem → true to recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) started.
+◇ Test case passing 1 argument usesExplicitTitle → false to reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:) started.
+◇ Test case passing 1 argument scenario → "changedSourceLinks" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+✘ Test recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) recorded an issue with 1 argument reusesItem → true at CaptureApplyTests.swift:91:4: Caught error: CancellationError()
+◇ Test case passing 1 argument usesExplicitTitle → true to reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:) started.
+✘ Test recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) recorded an issue with 1 argument reusesItem → false at CaptureApplyTests.swift:91:4: Caught error: CancellationError()
+◇ Test case passing 1 argument scenario → "archivedSource" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "deletedSource" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "changedMembership" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+✔ Test appliedCaptureCannotBeCancelledOrRetargetedByChangedReplay() passed after 0.154 seconds.
+✘ Test recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) with 2 test cases failed after 0.154 seconds with 2 issues.
+✔ Test reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:) with 2 test cases passed after 0.211 seconds.
+✔ Test invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) with 11 test cases passed after 0.228 seconds.
+✔ Test reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState() passed after 0.302 seconds.
+✘ Suite CaptureApplyTests failed after 0.302 seconds with 2 issues.
+✘ Test run with 5 tests in 1 suite failed after 0.302 seconds with 2 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

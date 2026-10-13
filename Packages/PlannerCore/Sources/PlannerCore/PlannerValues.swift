@@ -186,6 +186,8 @@ public struct PlannerItemContentInput: Sendable, Equatable {
 }
 
 public enum PlannerCommand: Sendable {
+  case applyCapture(
+    draftId: UUID, draftGeneration: UUID, choice: PlannerCaptureChoice, listIds: Set<UUID>)
   case applyImport(
     backup: PlannerDecodedBackup, mode: PlannerImportMode = .skip, restoreDeletedData: Bool = false)
   case deleteSource(source: PlannerEntityReference)

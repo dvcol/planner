@@ -9,6 +9,17 @@ public enum PlannerCaptureInput: Sendable {
   case direct([PlannerCaptureDirectInput])
 }
 
+public enum PlannerCaptureChoice: Sendable, Equatable {
+  case createNew
+  case reuse(itemId: UUID)
+}
+
+public struct PlannerCaptureReview: Sendable {
+  public let createContent: PlannerItemContentInput?
+  public let missingLinks: [PlannerCaptureDraftLink]
+  public let missingListIds: Set<UUID>
+}
+
 public struct PlannerCaptureEdit: Sendable {
   public let changes: PlannerItemChanges
   public let removeInputIndexes: Set<Int64>
@@ -31,6 +42,7 @@ public enum PlannerCaptureDraftResult: Sendable {
 
 public enum PlannerCaptureCancelResult: Sendable {
   case cancelled
+  case notCancellable(operationId: UUID)
   case rejected(PlannerFailure)
 }
 

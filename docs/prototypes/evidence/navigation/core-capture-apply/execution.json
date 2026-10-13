@@ -1,0 +1,174 @@
+{
+  "baseCommit": "fed1e7d",
+  "scope": "Public Core reviewed create/reuse capture, atomic memberships and durable receipt/recovery",
+  "storageSchemaVersion": 18,
+  "portableFormatVersion": 2,
+  "newTests": {
+    "functions": 6,
+    "invocations": 18
+  },
+  "qualified": {
+    "macCore": {
+      "functions": 159,
+      "suites": 69,
+      "invocations": 423,
+      "failures": 0,
+      "skips": 0
+    },
+    "phoneCore": {
+      "functions": 159,
+      "suites": 69,
+      "invocations": 423,
+      "failures": 0,
+      "skips": 0
+    },
+    "http": {
+      "functions": 16,
+      "suites": 4,
+      "invocations": 22,
+      "failures": 0,
+      "skips": 0
+    },
+    "strictSwiftLintFiles": 7,
+    "macAppAndTestHost": "TEST BUILD SUCCEEDED",
+    "nativeUIRuntimeFunctions": 0,
+    "markdownLintDocuments": 2
+  },
+  "reviews": {
+    "standards": "No remaining confirmed findings",
+    "spec": "Known failed-save prepared-proposal retry fix reviewed; no remaining confirmed findings"
+  },
+  "redBeforeGreen": [
+    "api-absent-red.log",
+    "reuse-red.log",
+    "reuse-order-red.log",
+    "cancel-red.log"
+  ],
+  "diagnostics": [
+    "First recovery-fault test queried status while recovery directory was obstructed; test now restores it before status/retry"
+  ],
+  "sourceHashesVerifiedAfterAllTestProcessesExited": true,
+  "unqualifiedConditionalPaths": [
+    "Genuine native database-save failure retry",
+    "Prepared-evidence cleanup failure"
+  ],
+  "limits": [
+    "Genuine save failure and termination checkpoints",
+    "Native loading/classification/provider references and provider budget proof",
+    "Maps lookup and obsolete callbacks",
+    "Capture transport advertisement/encoding",
+    "Native capture views, Share, Intents and MCP flows",
+    "Physical sender/extension execution",
+    "Other map gates remain open"
+  ],
+  "artifacts": [
+    {
+      "path": "admission-recovery-green.log",
+      "sha256": "02fca5ee1781fd010af25c67a8c93c32a4e94ee06919eda701c29a3f44c84d66"
+    },
+    {
+      "path": "api-absent-red.log",
+      "sha256": "2cedee409b83508e251a5d01bf4660d2d59e9ad692393fc669f01d7f8c865483"
+    },
+    {
+      "path": "cancel-green.log",
+      "sha256": "60227018a86980376e31c6aa71dd934e83618569b60a5c3c9a20618225d62e72"
+    },
+    {
+      "path": "cancel-red.log",
+      "sha256": "ade073e7d36425c8a18280d34a71960655925366dd8b184de4f19c1e20b21e9d"
+    },
+    {
+      "path": "commands.json",
+      "sha256": "70c24a9c1a96c311717abc834e1853b3731dc475d3b57e20d36383eaacb6b41b"
+    },
+    {
+      "path": "create-green.log",
+      "sha256": "a0239ce8a1a736ba1ac4932f377a71a934143236062f46f31463ae18ee291136"
+    },
+    {
+      "path": "http-counts.json",
+      "sha256": "6a898f6b8b3ee0579f4c03b2cbd1a801f9a653dcb9d0b696336d0660cb987df1"
+    },
+    {
+      "path": "http-green.log.gz",
+      "sha256": "d17990e89874bf4fc9eec6358003f9cfdba502efa9b6b7d14c7af88c1aaf390d"
+    },
+    {
+      "path": "http-summary.json",
+      "sha256": "2bb0244fa96103cf414aedf1bec7607a2314fad4bb362c9ce1225809e81dba6d"
+    },
+    {
+      "path": "http-tests.json",
+      "sha256": "1060aecfb50fa56dfeba57df7dfbd64f239c7824c58cc4a8a5d3960954e23882"
+    },
+    {
+      "path": "mac-build.log.gz",
+      "sha256": "3c17e71c7046edfefd9d4dbb3f894dfb0a7a7fef18b4f35face748d4f0e6f183"
+    },
+    {
+      "path": "mac-core-green.log.gz",
+      "sha256": "c260f7a6f85be236546c35ebc84c4877d8a7f7fa1f115531ed4d47bb288175a8"
+    },
+    {
+      "path": "mac-counts.json",
+      "sha256": "af1b48a8c8d1ff520fda7f2c0dcfe03673d34c8121c2cb7d480352f2f756bdd6"
+    },
+    {
+      "path": "markdownlint.log",
+      "sha256": "5cecccd1867a4236df7d379b7283e38a340cba554e1ce366c9747701837043dd"
+    },
+    {
+      "path": "owned-data-green.log",
+      "sha256": "c23dfa9ab013d83011762489efdf1931548359c9d88c8732fd849fb1b44b5554"
+    },
+    {
+      "path": "phone-core-green.log.gz",
+      "sha256": "2eef9115e8228ef2f8a09383544e97e262c4e4b62c06e495ba3919725dc8313c"
+    },
+    {
+      "path": "phone-counts.json",
+      "sha256": "af1b48a8c8d1ff520fda7f2c0dcfe03673d34c8121c2cb7d480352f2f756bdd6"
+    },
+    {
+      "path": "phone-summary.json",
+      "sha256": "5a2e3956316a6659b2040b5ead54d0d6061919cb0dcd7e2fedbf9c29d59beab3"
+    },
+    {
+      "path": "phone-tests.json.gz",
+      "sha256": "056cf49ed1716214fb54c8157c371ffc847ec1ea90eb13939299f6dcc0d15001"
+    },
+    {
+      "path": "reuse-green.log",
+      "sha256": "e983f3ff16a62a1e6174069b5bb399e6beb22c28e537a7658487047e0684f520"
+    },
+    {
+      "path": "reuse-order-green.log",
+      "sha256": "72dd2097e4dfd270b3b301571a9c9dfa2a651337a2be605664f7479a1489e254"
+    },
+    {
+      "path": "reuse-order-red.log",
+      "sha256": "3ebc1607213f57bb1225e31f318f922c684133bba257aee63b13b6f12648e3ac"
+    },
+    {
+      "path": "reuse-red.log",
+      "sha256": "0a9ff1e42703420bbaee44d3bf8d0428f9f565d2c54ca2e85e47f90930495577"
+    },
+    {
+      "path": "sources.json",
+      "sha256": "453510f013458aea12493c8d40ded3a972911962f3049f513b9003297982941a"
+    },
+    {
+      "path": "status-obstruction-diagnostic.log",
+      "sha256": "705856d76dee65759b149607042420513ab8d583f967d32ba8ea1b3d9d240d07"
+    },
+    {
+      "path": "strict-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "test-store-cleanup.json.gz",
+      "sha256": "0dce700fe60bb4a5dc7a132043ebda0208d9e98b307f2fec16e783389bda62ff"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[9 / 13] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (3,09 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CaptureApplyTests started.
+◇ Test reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState() started.
+✘ Test reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState() recorded an issue at CaptureApplyTests.swift:45:19: Issue recorded
+↳ Exact reuse must prepare missing additions: .failed(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Reviewed reuse is not implemented yet.", details: nil))
+✘ Test reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState() failed after 0.104 seconds with 1 issue.
+✘ Suite CaptureApplyTests failed after 0.104 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.104 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

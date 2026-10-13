@@ -1,0 +1,31 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[9 / 13] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (2,79 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CaptureApplyTests started.
+◇ Test reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState() started.
+✘ Test reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState() recorded an issue at CaptureApplyTests.swift:73:5: Expectation failed: after.content.links.map(\.originalUrl) == [originalUrl, extraUrl]
+↳ after.content.links.map(\.originalUrl) == [originalUrl, extraUrl] → false
+↳   after.content.links.map(\.originalUrl) → ["https://example.com/extra", "https://example.com/original"]
+↳   [originalUrl, extraUrl] → ["https://example.com/original", "https://example.com/extra"]
+✘ Test reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState() recorded an issue at CaptureApplyTests.swift:74:5: Expectation failed: after.content.links.first?.linkId == before.content.links.first?.linkId
+↳ after.content.links.first?.linkId == before.content.links.first?.linkId → false
+↳   after.content.links.first?.linkId → A834B86C-BA2C-45BA-83EB-DF22F0E2C6BD
+↳     some → A834B86C-BA2C-45BA-83EB-DF22F0E2C6BD
+↳   before.content.links.first?.linkId → 2E18852A-F22E-41B8-BC6B-7C926EC90AEE
+↳     some → 2E18852A-F22E-41B8-BC6B-7C926EC90AEE
+✘ Test reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState() recorded an issue at CaptureApplyTests.swift:75:5: Expectation failed: after.content.links.first?.label == "Existing label"
+↳ after.content.links.first?.label == "Existing label" → false
+↳   after.content.links.first?.label → nil
+↳     some → "Existing label"
+✘ Test reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState() failed after 0.162 seconds with 3 issues.
+✘ Suite CaptureApplyTests failed after 0.162 seconds with 3 issues.
+✘ Test run with 1 test in 1 suite failed after 0.162 seconds with 3 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

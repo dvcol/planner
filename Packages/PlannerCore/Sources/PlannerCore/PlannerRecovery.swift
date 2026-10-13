@@ -542,6 +542,13 @@ struct PlannerRecoveryArchive {
     )
   }
 
+  func discardPreparedProposal(_ proposalId: UUID) throws {
+    let proposalURL = namespaceURL.appendingPathComponent("proposal-\(proposalId.uuidString).json")
+    if FileManager.default.fileExists(atPath: proposalURL.path) {
+      try FileManager.default.removeItem(at: proposalURL)
+    }
+  }
+
   func latest() throws -> RecoveryEnvelope? {
     let files = try FileManager.default.contentsOfDirectory(
       at: namespaceURL, includingPropertiesForKeys: nil
