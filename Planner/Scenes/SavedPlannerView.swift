@@ -44,6 +44,7 @@ struct SavedPlannerView: View {
   @State private var listCatalogArchive = SavedItemFilters.Archive.active
   @State private var isOpeningListCatalog = false
   @State private var showNewItem = false
+  @State private var showCapture = false
   @State private var showAddItem = false
   @State private var bulkCompletionDraft: SavedBulkCompletionDraft?
   @State private var isPreparingBulkCompletion = false
@@ -167,6 +168,11 @@ struct SavedPlannerView: View {
     .sheet(isPresented: $showNewItem) {
       SavedNewItemForm(store: store) { source in selectedItemId = source.id }
     }
+    .sheet(isPresented: $showCapture) {
+      SavedCaptureForm(store: store) { source in
+        selectedItemId = source.id
+      }
+    }
     .sheet(isPresented: $showAddItem) {
       if let selectedList {
         SavedAddItemForm(store: store, list: selectedList) {}
@@ -212,6 +218,7 @@ struct SavedPlannerView: View {
             && bulkCompletionDraft == nil
             && !showLabels
             && !showSettings
+            && !showCapture
             && (selectedSection != .itineraries || showNewList || showNewItem)
         },
         set: { if !$0 { store.alertMessage = nil } })
@@ -433,8 +440,8 @@ struct SavedPlannerView: View {
       SavedItemCatalog(
         scope: catalogScope, items: catalogItems, selection: $selectedItemId,
         filters: catalogFilters, searchText: catalogSearchText, sort: itemSort,
-        canCreate: store.canCreate
-      ) { showNewItem = true }
+        canCreate: store.canCreate, create: { showNewItem = true }, capture: { showCapture = true }
+      )
       .overlay(alignment: .topTrailing) {
         if isOpeningCatalog { ProgressView("Updating Items").controlSize(.small).padding() }
       }

@@ -20,6 +20,7 @@ struct SavedItemCatalog: View {
   @Binding var sort: SavedItemSort
   let canCreate: Bool
   let create: () -> Void
+  let capture: () -> Void
 
   var body: some View {
     List(selection: $selection) {
@@ -56,6 +57,11 @@ struct SavedItemCatalog: View {
     .searchable(text: $searchText, prompt: Text(scope.searchPrompt))
     .searchPresentationToolbarBehavior(.avoidHidingContent)
     .toolbar {
+      ToolbarItem {
+        Button("Capture Text or Link", systemImage: "text.badge.plus", action: capture)
+          .disabled(!canCreate)
+          .accessibilityIdentifier("saved.capture.new")
+      }
       ToolbarItem {
         SavedItemFilterControl(
           filters: $filters, accessibilityIdentifier: "\(scope.identifierPrefix).filters")

@@ -39,7 +39,7 @@ struct SavedPlannerCalendarEntry: Identifiable {
 }
 
 enum SavedReviewedChangeResult {
-  case applied
+  case applied(PlannerAppliedResult)
   case reviewChanged(PlannerReview)
   case failed
 }
@@ -737,8 +737,53 @@ final class SavedPlannerStore {
         return .failed
       }
     }
-    guard handleChangeResult(result) != nil else { return .failed }
-    return .applied
+    guard let applied = handleChangeResult(result) else { return .failed }
+    return .applied(applied)
+  }
+
+  func prepareCapture(text: String) async -> PlannerCaptureDraftRead? {
+    guard let planner, let session, canCreate else { return nil }
+    alertMessage = nil
+    switch await planner.prepareCapture(session: session, input: .direct([.text(text)])) {
+    case .draft(let draft): return draft
+    case .rejected(let reason): alertMessage = reason.message
+    }
+    return nil
+  }
+
+  func updateCapture(_ draft: PlannerCaptureDraftRead, edit: PlannerCaptureEdit) async
+    -> PlannerCaptureDraftRead?
+  {
+    guard let planner, let session, canCreate else { return nil }
+    switch await planner.updateCapture(
+      session: session, draftId: draft.draftId, generation: draft.generation, edit: edit)
+    {
+    case .draft(let updated): return updated
+    case .rejected(let reason): alertMessage = reason.message
+    }
+    return nil
+  }
+
+  func discardCapture(_ draft: PlannerCaptureDraftRead) async {
+    guard let planner, let session else { return }
+    _ = await planner.cancelCapture(
+      session: session, draftId: draft.draftId, generation: draft.generation)
+  }
+
+  func reviewCapture(
+    _ draft: PlannerCaptureDraftRead, choice: PlannerCaptureChoice, listIdentifiers: Set<UUID>
+  ) async -> PlannerReview? {
+    guard let planner, let session, canCreate else { return nil }
+    switch await planner.prepareReview(
+      session: session,
+      command: .applyCapture(
+        draftId: draft.draftId, draftGeneration: draft.generation,
+        choice: choice, listIds: listIdentifiers))
+    {
+    case .reviewed(let review): return review
+    case .failed(let reason): alertMessage = reason.message
+    }
+    return nil
   }
 
   func reorderMembership(_ membershipId: UUID, listId: UUID, placement: PlannerPlacement) async
