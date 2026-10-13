@@ -1,0 +1,59 @@
+Building for debugging...
+[1 / 11] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,81 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CapturePreparationTests started.
+◇ Test emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test independentUnicodeTextPreservesLinesAndDistinctOriginalLinkOrder() started.
+◇ Test linkOnlyTextLanesRemainInNotesWhenTheCaptureAlsoContainsProse() started.
+◇ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() started.
+◇ Test captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() started.
+◇ Test case passing 1 argument example → .whitespace to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .empty to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .mixedUnsupportedURL to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .linkOnly to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .invalidURLOnly to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .nonWebText to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+✘ Test linkOnlyTextLanesRemainInNotesWhenTheCaptureAlsoContainsProse() recorded an issue at CapturePreparationTests.swift:25:5: Expectation failed: draft.content.notes == "https://example.com/menu\r\n"
+↳ draft.content.notes == "https://example.com/menu\r\n" → false
+↳   draft.content.notes → nil
+↳   "https://example.com/menu\r\n" → "https://example.com/menu
+    "
+↳     some → "https://example.com/menu
+      "
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+✔ Test emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) with 6 test cases passed after 0.111 seconds.
+✘ Test linkOnlyTextLanesRemainInNotesWhenTheCaptureAlsoContainsProse() failed after 0.111 seconds with 1 issue.
+✔ Test independentUnicodeTextPreservesLinesAndDistinctOriginalLinkOrder() passed after 0.112 seconds.
+✘ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() recorded an issue at CapturePreparationTests.swift:253:5: Expectation failed: cancelledFailure.code == "captureDraftUnavailable"
+↳ cancelledFailure.code == "captureDraftUnavailable" → false
+↳   cancelledFailure.code → "captureUnavailable"
+✘ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() recorded an issue at CapturePreparationTests.swift:264:5: Expectation failed: reopenedFailure.code == "captureDraftUnavailable" && reopenedData == before
+↳ reopenedFailure.code == "captureDraftUnavailable" && reopenedData == before → false
+↳   reopenedFailure.code == "captureDraftUnavailable" → false
+↳   reopenedData == before → <not evaluated>
+✘ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() failed after 0.134 seconds with 2 issues.
+✘ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() recorded an issue at CapturePreparationTests.swift:183:5: Expectation failed: staleCancellation.code == "captureDraftUnavailable"
+↳ staleCancellation.code == "captureDraftUnavailable" → false
+↳   staleCancellation.code → "staleCapture"
+✘ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() failed after 0.200 seconds with 1 issue.
+✔ Test captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) with 9 test cases passed after 1.928 seconds.
+✘ Suite CapturePreparationTests failed after 1.928 seconds with 4 issues.
+✘ Test run with 6 tests in 1 suite failed after 1.928 seconds with 4 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

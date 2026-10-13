@@ -1,0 +1,184 @@
+{
+  "baseCommit": "139ba0d",
+  "scope": "Core direct capture preparation/read/cancel; no capture execution",
+  "storageSchemaVersion": 18,
+  "portableFormatVersion": 2,
+  "newTests": {
+    "functions": 6,
+    "invocations": 19
+  },
+  "qualified": {
+    "macCore": {
+      "functions": 145,
+      "suites": 67,
+      "invocations": 386,
+      "failures": 0,
+      "skips": 0
+    },
+    "phoneCore": {
+      "functions": 145,
+      "suites": 67,
+      "invocations": 386,
+      "failures": 0,
+      "skips": 0
+    },
+    "http": {
+      "functions": 16,
+      "suites": 4,
+      "invocations": 22,
+      "failures": 0,
+      "skips": 0
+    },
+    "strictSwiftLintFiles": 3,
+    "macAppAndTestHost": "TEST BUILD SUCCEEDED",
+    "nativeUIRuntimeFunctions": 0,
+    "markdownLintDocuments": 1
+  },
+  "reviews": {
+    "initialFindings": [
+      "Mixed capture discarded link-only text lanes from notes",
+      "Capture failure codes differed from the declared contract"
+    ],
+    "resolved": "Both public regressions pass; both read-only rechecks report no remaining confirmed findings"
+  },
+  "redBeforeGreen": [
+    "api-absent-red.log",
+    "budget-draft-red.log.gz",
+    "candidates-red.log",
+    "independent-text-red.log",
+    "review-red.log",
+    "unsupported-url-red.log"
+  ],
+  "diagnostics": [
+    "Initial budget draft incorrectly applied the native32-provider limit to direct lanes; corrected before qualification",
+    "Unicode URL identity counterexample was rejected by existing native bookmark admission, so no identity bug was established and no speculative change was made"
+  ],
+  "sourceHashesVerifiedAfterAllTestProcessesExited": true,
+  "limits": [
+    "Native loaded capture/provenance and provider-count/concurrency/deadline/peak-allocation proof",
+    "Draft update/remove/retry",
+    "Maps lookup and obsolete results",
+    "Reviewed durable create/reuse and atomic memberships",
+    "Native views, Share, Intents and MCP capture integration",
+    "Physical sender/extension execution",
+    "Other map gates remain open"
+  ],
+  "artifacts": [
+    {
+      "path": "api-absent-red.log",
+      "sha256": "a49e9ceb652f3586ec3d4f08889fbe03f6467ffc177652a9bcc7b2084cbb3a62"
+    },
+    {
+      "path": "budget-draft-red.log.gz",
+      "sha256": "b24e7e91e9bebaa713fba625287760f24488f80d188b78342eb3ebeecf0815d0"
+    },
+    {
+      "path": "budgets-green.log",
+      "sha256": "cb526493568c2cdd4617a4cc00949719076bdd77b026832762a49a2bcaf1daff"
+    },
+    {
+      "path": "candidates-green.log",
+      "sha256": "20a4eba8d187276ce9ae1e7b179bd7614539a4c199a8f7af9a8a24113c8d76ab"
+    },
+    {
+      "path": "candidates-red.log",
+      "sha256": "90d474765ece57469fc7e1714117ca929dbad4414cafbde004491f2cca2b70e9"
+    },
+    {
+      "path": "commands.json",
+      "sha256": "207d810daa9188ceef1ff06d334107b1b8dbcf188a336f7562e4fc76e36867b7"
+    },
+    {
+      "path": "http-counts.json",
+      "sha256": "6a898f6b8b3ee0579f4c03b2cbd1a801f9a653dcb9d0b696336d0660cb987df1"
+    },
+    {
+      "path": "http-green.log.gz",
+      "sha256": "95509ee1553d13d111e6e8b460a0df22107406427befd52e24d70ef555da812b"
+    },
+    {
+      "path": "http-summary.json",
+      "sha256": "2ea6ec1d350550dd027aae56b5bce9e1b67111c803795e5f1594fbe17499f507"
+    },
+    {
+      "path": "http-tests.json",
+      "sha256": "f371bdbd8ffd08c6b92f2738eb09b61ead9dc7d343a971da6ebbd044351fafc4"
+    },
+    {
+      "path": "independent-text-green.log",
+      "sha256": "4ba911b5edd596dbca646a2abc8d8bfdd0e39c159ffce35a404afc6d72ca6cc3"
+    },
+    {
+      "path": "independent-text-red.log",
+      "sha256": "24019fedf8563305489c3f1a8c131e91ad8341ef9340cbc5f376caa584a7537e"
+    },
+    {
+      "path": "mac-build.log.gz",
+      "sha256": "0f7f5df809be8b9577d40a516267d8c61219f63ce84683a93b1ea9607e2e1a4a"
+    },
+    {
+      "path": "mac-core-green.log.gz",
+      "sha256": "639244be1e2c6058884b07613adcb0e65e6c38e5174ff923f917f161ea9c3914"
+    },
+    {
+      "path": "mac-counts.json",
+      "sha256": "6e93d4ef58a56f333eb873c40901d1d4701f79ebf11d2ca35a1c60746620d700"
+    },
+    {
+      "path": "markdownlint.log",
+      "sha256": "8de1573186223dcc0b485186b03de8eda3ccac74c81fc8f2007f9d4056044f7a"
+    },
+    {
+      "path": "original-link-green.log",
+      "sha256": "8c954b22c2f17a67591a56f63c4aadc7c13a16b9e9b0de2e89b85102dd76f9c4"
+    },
+    {
+      "path": "phone-core-green.log.gz",
+      "sha256": "c1b7345a950720641137984eff6b48e82e2eab76032c6b1a054f1648333d4602"
+    },
+    {
+      "path": "phone-counts.json",
+      "sha256": "6e93d4ef58a56f333eb873c40901d1d4701f79ebf11d2ca35a1c60746620d700"
+    },
+    {
+      "path": "phone-summary.json",
+      "sha256": "11c94c0b6065fe26303d8d82bd53cb66a80400ec1d59dcbe298e60ab8fefd435"
+    },
+    {
+      "path": "phone-tests.json.gz",
+      "sha256": "95d3091769b4f02cb1c20128b5fdd7d25943850be31f559a8e611d72ba22b3bc"
+    },
+    {
+      "path": "review-green.log",
+      "sha256": "e5b40ff28f7226c7427eaa8c58516e645a14819d4dfbb9fdbdb3cc4776eabbb3"
+    },
+    {
+      "path": "review-red.log",
+      "sha256": "f4b552939fc324b5cf21f70093c87311117948851ab23ebb0bcab2ee0a5e7fe3"
+    },
+    {
+      "path": "sources.json",
+      "sha256": "35f355c48427fbf1c3b65e5e9e26ce85f4b8ccae6083d6439773bd9cfbd3ddb8"
+    },
+    {
+      "path": "strict-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "test-store-cleanup.json",
+      "sha256": "c9408d1a1121e74cf756c70a6c34ebb584a20003b6ddcdb50a1a30f74c9b3178"
+    },
+    {
+      "path": "unicode-admission-diagnostic.log",
+      "sha256": "f6185be462cf37bc8af7eea332baf75c5c2ed63c6ddbafb181f0943fbfbf808a"
+    },
+    {
+      "path": "unsupported-url-green.log",
+      "sha256": "2431573e85bd9a360d034e2e5866da1c72578af8b24b1991659c5280ae5138f9"
+    },
+    {
+      "path": "unsupported-url-red.log",
+      "sha256": "c0d75e106f0aafd0d6f1bb54ef352204c26efb6f9458043c4400cbacc6a41b33"
+    }
+  ]
+}

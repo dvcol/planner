@@ -1,0 +1,37 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (2,82 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CapturePreparationTests started.
+◇ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() started.
+◇ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() started.
+◇ Test independentUnicodeTextPreservesLinesAndDistinctOriginalLinkOrder() started.
+✔ Test independentUnicodeTextPreservesLinesAndDistinctOriginalLinkOrder() passed after 0.037 seconds.
+✔ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() passed after 0.049 seconds.
+✘ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() recorded an issue at CapturePreparationTests.swift:44:5: Expectation failed: Set(draft.reuseCandidates.map(\.itemId)) == Set(identities.prefix(2))
+↳ Set(draft.reuseCandidates.map(\.itemId)) == Set(identities.prefix(2)) → false
+↳   Set(draft.reuseCandidates.map(\.itemId)) → []
+↳   Set(identities.prefix(2)) → [EB53A636-3122-4AFD-9A2F-64C8BA470501, 7E633F20-6625-41BF-A887-A3637066EEC9]
+✘ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() recorded an issue at CapturePreparationTests.swift:45:5: Expectation failed: draft.reuseCandidates.map(\.itemId) == identities.prefix(2).sorted { $0.uuidString < $1.uuidString }
+↳ draft.reuseCandidates.map(\.itemId) == identities.prefix(2).sorted { $0.uuidString < $1.uuidString } → false
+↳   draft.reuseCandidates.map(\.itemId) → []
+↳   identities.prefix(2).sorted { $0.uuidString < $1.uuidString } → [7E633F20-6625-41BF-A887-A3637066EEC9, EB53A636-3122-4AFD-9A2F-64C8BA470501]
+✘ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() recorded an issue at CapturePreparationTests.swift:47:5: Expectation failed: draft.reuseCandidates.first { $0.itemId == identities[0] }?.globalDone == true
+↳ draft.reuseCandidates.first { $0.itemId == identities[0] }?.globalDone == true → false
+↳   draft.reuseCandidates.first { $0.itemId == identities[0] }?.globalDone → nil
+↳     some → true
+✘ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() recorded an issue at CapturePreparationTests.swift:48:5: Expectation failed: draft.reuseCandidates.first { $0.itemId == identities[1] }?.archived == true
+↳ draft.reuseCandidates.first { $0.itemId == identities[1] }?.archived == true → false
+↳   draft.reuseCandidates.first { $0.itemId == identities[1] }?.archived → nil
+↳     some → true
+✘ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() failed after 0.114 seconds with 4 issues.
+✘ Suite CapturePreparationTests failed after 0.114 seconds with 4 issues.
+✘ Test run with 3 tests in 1 suite failed after 0.115 seconds with 4 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

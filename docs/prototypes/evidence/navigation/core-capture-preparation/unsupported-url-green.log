@@ -1,0 +1,41 @@
+Building for debugging...
+[1 / 14] PlannerCore
+[2 / 16] PlannerCore
+[4 / 18] PlannerCore
+[9 / 21] PlannerCore
+[12 / 14] PlannerCoreTests-product
+[13 / 15] PlannerCoreTests-product
+[14 / 15] PlannerCoreStoreTests-product
+[16 / 18] PlannerCoreStoreTests-product
+Build complete! (6,91 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CapturePreparationTests started.
+◇ Test independentUnicodeTextPreservesLinesAndDistinctOriginalLinkOrder() started.
+◇ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() started.
+◇ Test emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument example → .empty to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .whitespace to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .linkOnly to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .nonWebText to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument example → .invalidURLOnly to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .mixedUnsupportedURL to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+✔ Test emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) with 6 test cases passed after 0.062 seconds.
+✔ Test independentUnicodeTextPreservesLinesAndDistinctOriginalLinkOrder() passed after 0.062 seconds.
+✔ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() passed after 0.075 seconds.
+✔ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() passed after 0.129 seconds.
+✔ Test captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) with 9 test cases passed after 1.921 seconds.
+✔ Suite CapturePreparationTests passed after 1.921 seconds.
+✔ Test run with 5 tests in 1 suite passed after 1.921 seconds.

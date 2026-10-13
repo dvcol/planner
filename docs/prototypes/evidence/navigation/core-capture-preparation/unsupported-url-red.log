@@ -1,0 +1,44 @@
+Building for debugging...
+[1 / 11] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,73 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CapturePreparationTests started.
+◇ Test captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() started.
+◇ Test emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test independentUnicodeTextPreservesLinesAndDistinctOriginalLinkOrder() started.
+◇ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument example → .linkOnly to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .nonWebText to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .empty to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .mixedUnsupportedURL to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .whitespace to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+✘ Test emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) recorded an issue with 1 argument example → .mixedUnsupportedURL at CapturePreparationTests.swift:27:19: Issue recorded
+↳ Capture must report this input in its transient draft: .rejected(PlannerCore.PlannerFailure(code: "invalidInput", propertyPath: Optional("/inputs/0/originalUrl"), message: "A bookmark must be an absolute HTTP or HTTPS URL.", details: nil))
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument example → .invalidURLOnly to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+✔ Test independentUnicodeTextPreservesLinesAndDistinctOriginalLinkOrder() passed after 0.065 seconds.
+✘ Test emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) recorded an issue with 1 argument example → .invalidURLOnly at CapturePreparationTests.swift:27:19: Issue recorded
+↳ Capture must report this input in its transient draft: .rejected(PlannerCore.PlannerFailure(code: "invalidInput", propertyPath: Optional("/inputs/0/originalUrl"), message: "A bookmark must be an absolute HTTP or HTTPS URL.", details: nil))
+✘ Test emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) with 6 test cases failed after 0.085 seconds with 2 issues.
+✔ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() passed after 0.091 seconds.
+✔ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() passed after 0.133 seconds.
+✔ Test captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) with 9 test cases passed after 1.943 seconds.
+✘ Suite CapturePreparationTests failed after 1.944 seconds with 2 issues.
+✘ Test run with 5 tests in 1 suite failed after 1.944 seconds with 2 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

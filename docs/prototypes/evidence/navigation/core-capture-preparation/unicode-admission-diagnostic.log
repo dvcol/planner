@@ -1,0 +1,19 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[9 / 13] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (3,59 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CapturePreparationTests started.
+◇ Test canonicallyEquivalentUnicodeURLsRemainDistinctOriginals() started.
+✘ Test canonicallyEquivalentUnicodeURLsRemainDistinctOriginals() recorded an issue at CapturePreparationTests.swift:26:19: Issue recorded
+↳ Unicode original admission: PlannerOperationResult(operationId: EFF526C4-ECD2-4AC8-99C5-A0DD026DF9C7, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "invalidInput", propertyPath: Optional("/command/content/links/0/originalUrl"), message: "A bookmark must be an absolute HTTP or HTTPS URL.", details: nil)))
+✘ Test canonicallyEquivalentUnicodeURLsRemainDistinctOriginals() failed after 0.028 seconds with 1 issue.
+✘ Suite CapturePreparationTests failed after 0.028 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.028 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)
