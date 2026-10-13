@@ -1,0 +1,109 @@
+{
+  "baseCommit": "ebecef0",
+  "scope": "Native Calendar Item deletion, cancellation and invalid selection cleanup",
+  "productionChanged": false,
+  "qualified": {
+    "phone": {
+      "functions": 1,
+      "suites": 1,
+      "invocations": 1,
+      "failures": 0,
+      "skips": 0
+    },
+    "tablet": {
+      "functions": 1,
+      "suites": 1,
+      "invocations": 1,
+      "failures": 0,
+      "skips": 0
+    },
+    "mac": {
+      "appAndTestHostBuild": "passed",
+      "runtimeFunctions": 0
+    },
+    "strictSwiftLintFiles": 1,
+    "markdownLintDocuments": 1
+  },
+  "sourceHashesVerifiedAfterAllProcessesExited": true,
+  "lookupWorkExcludedFromQualification": true,
+  "screenshots": [
+    {
+      "path": "phone-calendar-deleted.png",
+      "inspected": true,
+      "originalExport": "4775294A-3422-4D3F-95F5-EEFC27A83659.png"
+    },
+    {
+      "path": "tablet-calendar-deleted.png",
+      "inspected": true,
+      "originalExport": "B889716D-3950-45CC-A8DC-464BCF589FF4.png"
+    }
+  ],
+  "limits": [
+    "Local user-confirmed Item deletion only",
+    "External refresh, other removal paths, cloud deletion-wins and interruption remain open",
+    "Mac runtime and signed physical sync/account/Share remain open",
+    "Q78\u201381 remain pending"
+  ],
+  "artifacts": [
+    {
+      "path": "PlannerCalendarDeletionFinalMarkdownlint.log",
+      "sha256": "92c793160009f8063dc2729e7ea952cd7040c6770e8694442f3518d3d1ffc0c7"
+    },
+    {
+      "path": "PlannerCalendarDeletionFinalStrictLint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "PlannerCalendarDeletionMacBuildFinal.log.gz",
+      "sha256": "1e8dacce0bb9fd5b3dc8b8ad8530df76fb3e0badf3ad7c2a9d9ced6986bd9c3b"
+    },
+    {
+      "path": "PlannerCalendarDeletionPhoneBaseline.log.gz",
+      "sha256": "2444fa80921e37ce0f9162d0a4093785bab81fbeca8fee57085347de16f586fb"
+    },
+    {
+      "path": "PlannerCalendarDeletionPhoneFinal.log.gz",
+      "sha256": "6829740ee27ba4ed37c8d392bad39050cf79bbc3f398e7508af341e2ab71c99a"
+    },
+    {
+      "path": "PlannerCalendarDeletionPhoneFinalSummary.json",
+      "sha256": "f11cbf832180b102676ba580f9bc298cddee73f8367810ffdbd77300fc1e158c"
+    },
+    {
+      "path": "PlannerCalendarDeletionPhoneFinalTests.json",
+      "sha256": "523c5216eb782951a2a7dad486c6e82aba0451b95826b2510b9d340497a29686"
+    },
+    {
+      "path": "PlannerCalendarDeletionTabletBaseline.log.gz",
+      "sha256": "d5bbf5a8973841beaf12ead6f08416e0821f1f650f36cf6bb567d094b1121f1a"
+    },
+    {
+      "path": "PlannerCalendarDeletionTabletFinal.log.gz",
+      "sha256": "3e50ca178f89cb86f0c8a7a0d47f007eab7dcd3fb2977c104a024d92dde8a359"
+    },
+    {
+      "path": "PlannerCalendarDeletionTabletFinalSummary.json",
+      "sha256": "7306d310135bc22f83afd92f52c87ccc19021a9e7be20af9aa5dd633f3448437"
+    },
+    {
+      "path": "PlannerCalendarDeletionTabletFinalTests.json",
+      "sha256": "be63e7934954528777848bbe535e132d59d7fe878b15769dd4991c5ff1d17d34"
+    },
+    {
+      "path": "commands.json",
+      "sha256": "ffdd232d10809e7218725935c0024c6fce43c2da7fc62b2fa4ed14125b2c2d37"
+    },
+    {
+      "path": "phone-calendar-deleted.png",
+      "sha256": "340556bb773f40b2ba377979cd0b5d1f25e2b49a533c284f8c3fbf442ed066e5"
+    },
+    {
+      "path": "sources.json",
+      "sha256": "b30ed2bd4487a65020a9f61886b5c85c927b072b524c017796274cc3039db79d"
+    },
+    {
+      "path": "tablet-calendar-deleted.png",
+      "sha256": "329252558e722d6ddee2fef06af476e35e6baf96ae92aa733dcbafb88a3a3d52"
+    }
+  ]
+}
