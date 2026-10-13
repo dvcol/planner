@@ -1,0 +1,80 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName" : "iPhone 18 Pro",
+      "modelName" : "iPhone 18 Pro",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "11s",
+                  "durationInSeconds" : 11.561726927757263,
+                  "name" : "testCalendarIsAMainDestinationWithNativeDateSelectionAndAnEmptyAgenda()",
+                  "nodeIdentifier" : "SavedCalendarJourneyTests/testCalendarIsAMainDestinationWithNativeDateSelectionAndAnEmptyAgenda()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarJourneyTests/testCalendarIsAMainDestinationWithNativeDateSelectionAndAnEmptyAgenda",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "49s",
+                  "durationInSeconds" : 49.69635999202728,
+                  "name" : "testCalendarItineraryEntryOpensItsExistingLiveDetails()",
+                  "nodeIdentifier" : "SavedCalendarJourneyTests/testCalendarItineraryEntryOpensItsExistingLiveDetails()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarJourneyTests/testCalendarItineraryEntryOpensItsExistingLiveDetails",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "1m 2s",
+                  "durationInSeconds" : 62.22781598567963,
+                  "name" : "testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection()",
+                  "nodeIdentifier" : "SavedCalendarJourneyTests/testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarJourneyTests/testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "33s",
+                  "durationInSeconds" : 33.395735025405884,
+                  "name" : "testTimedCalendarCaptionRetainsTheSavedStartOnlyValueAfterRelaunch()",
+                  "nodeIdentifier" : "SavedCalendarJourneyTests/testTimedCalendarCaptionRetainsTheSavedStartOnlyValueAfterRelaunch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarJourneyTests/testTimedCalendarCaptionRetainsTheSavedStartOnlyValueAfterRelaunch",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SavedCalendarJourneyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarJourneyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "PlannerNavigationUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "PlannerNavigation",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "57BFD32A-D91B-4A56-B9D4-3005454915DB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native main Calendar with empty saved data_0_D7FA5C79-B69F-444F-80B6-FBB019659C31.png",
+        "timestamp" : 1791886486.969
+      }
+    ],
+    "testIdentifier" : "SavedCalendarJourneyTests/testCalendarIsAMainDestinationWithNativeDateSelectionAndAnEmptyAgenda()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarJourneyTests/testCalendarIsAMainDestinationWithNativeDateSelectionAndAnEmptyAgenda"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "CA58C30F-E04B-4E8B-88F8-21EF6D40DDF1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Calendar opens native live Itinerary details_0_33A75D02-9558-4763-8B92-115F3796B754.png",
+        "timestamp" : 1791886541.166
+      }
+    ],
+    "testIdentifier" : "SavedCalendarJourneyTests/testCalendarItineraryEntryOpensItsExistingLiveDetails()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarJourneyTests/testCalendarItineraryEntryOpensItsExistingLiveDetails"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "6A1CA853-E249-4727-97E7-7F8114DD0AD1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Month Calendar agenda retains saved schedule identity_0_253C9F5A-1D51-4230-86A3-C756D5B1FBA8.png",
+        "timestamp" : 1791886578.265
+      }
+    ],
+    "testIdentifier" : "SavedCalendarJourneyTests/testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarJourneyTests/testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "5F680D43-B4DC-4ED5-9CAA-E892B6A426E1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native Calendar retains a start-only appointment_0_E981BA41-D7ED-4F05-8334-1301767A34EE.png",
+        "timestamp" : 1791886634.002
+      }
+    ],
+    "testIdentifier" : "SavedCalendarJourneyTests/testTimedCalendarCaptionRetainsTheSavedStartOnlyValueAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarJourneyTests/testTimedCalendarCaptionRetainsTheSavedStartOnlyValueAfterRelaunch"
+  }
+]

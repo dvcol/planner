@@ -1,0 +1,62 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "9BB3C537-B9FB-40C4-958C-9DFFFFFCC090.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native main Calendar with empty saved data_0_735851D8-BB1F-4540-88CE-89CA7511AD85.png",
+        "timestamp" : 1791886486.299
+      }
+    ],
+    "testIdentifier" : "SavedCalendarJourneyTests/testCalendarIsAMainDestinationWithNativeDateSelectionAndAnEmptyAgenda()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarJourneyTests/testCalendarIsAMainDestinationWithNativeDateSelectionAndAnEmptyAgenda"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "CB68BE67-F410-485A-8F3E-D3667ECF0DB1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Calendar opens native live Itinerary details_0_F76788FF-1F95-4FC6-B33E-8487C9C95201.png",
+        "timestamp" : 1791886535.848
+      }
+    ],
+    "testIdentifier" : "SavedCalendarJourneyTests/testCalendarItineraryEntryOpensItsExistingLiveDetails()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarJourneyTests/testCalendarItineraryEntryOpensItsExistingLiveDetails"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "C6B26B72-5F7E-46BD-AAFC-D414B7FDA4BE.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Month Calendar agenda retains saved schedule identity_0_A207E5B6-E5BC-45C6-90D8-9497AA80C259.png",
+        "timestamp" : 1791886569.661
+      }
+    ],
+    "testIdentifier" : "SavedCalendarJourneyTests/testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarJourneyTests/testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "3611C1BF-C317-42E4-9BFE-F44AD2107805.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native Calendar retains a start-only appointment_0_E1880F1C-7D8C-4570-809C-D5637F951D17.png",
+        "timestamp" : 1791886621.829
+      }
+    ],
+    "testIdentifier" : "SavedCalendarJourneyTests/testTimedCalendarCaptionRetainsTheSavedStartOnlyValueAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarJourneyTests/testTimedCalendarCaptionRetainsTheSavedStartOnlyValueAfterRelaunch"
+  }
+]

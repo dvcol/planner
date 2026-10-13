@@ -1,0 +1,257 @@
+{
+  "baseCommit": "996455b",
+  "scope": "Native Calendar Month date selection and saved selected-day agenda",
+  "qualified": {
+    "phone": {
+      "functions": 4,
+      "invocations": 4,
+      "failures": 0,
+      "skips": 0
+    },
+    "tablet": {
+      "functions": 4,
+      "invocations": 4,
+      "failures": 0,
+      "skips": 0
+    },
+    "core": {
+      "functions": 17,
+      "suites": 6,
+      "invocations": 17,
+      "failures": 0,
+      "skips": 0
+    },
+    "mac": {
+      "appAndTestHostBuild": "passed",
+      "runtimeFunctions": 0
+    },
+    "strictSwiftLintFiles": 4,
+    "markdownLintDocuments": 2
+  },
+  "sourceHashesVerifiedAfterAllProcessesExited": true,
+  "lookupWorkExcludedFromQualification": true,
+  "reviews": {
+    "standards": "No remaining confirmed findings; contextual child navigation fixed",
+    "spec": "No remaining actionable findings in this scoped step"
+  },
+  "screenshots": [
+    {
+      "path": "phone-9BB3C537-B9FB-40C4-958C-9DFFFFFCC090.png",
+      "test": "SavedCalendarJourneyTests/testCalendarIsAMainDestinationWithNativeDateSelectionAndAnEmptyAgenda()",
+      "name": "Native main Calendar with empty saved data_0_735851D8-BB1F-4540-88CE-89CA7511AD85.png",
+      "inspected": false
+    },
+    {
+      "path": "phone-CB68BE67-F410-485A-8F3E-D3667ECF0DB1.png",
+      "test": "SavedCalendarJourneyTests/testCalendarItineraryEntryOpensItsExistingLiveDetails()",
+      "name": "Calendar opens native live Itinerary details_0_F76788FF-1F95-4FC6-B33E-8487C9C95201.png",
+      "inspected": false
+    },
+    {
+      "path": "phone-C6B26B72-5F7E-46BD-AAFC-D414B7FDA4BE.png",
+      "test": "SavedCalendarJourneyTests/testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection()",
+      "name": "Month Calendar agenda retains saved schedule identity_0_A207E5B6-E5BC-45C6-90D8-9497AA80C259.png",
+      "inspected": true
+    },
+    {
+      "path": "phone-3611C1BF-C317-42E4-9BFE-F44AD2107805.png",
+      "test": "SavedCalendarJourneyTests/testTimedCalendarCaptionRetainsTheSavedStartOnlyValueAfterRelaunch()",
+      "name": "Native Calendar retains a start-only appointment_0_E1880F1C-7D8C-4570-809C-D5637F951D17.png",
+      "inspected": false
+    },
+    {
+      "path": "tablet-57BFD32A-D91B-4A56-B9D4-3005454915DB.png",
+      "test": "SavedCalendarJourneyTests/testCalendarIsAMainDestinationWithNativeDateSelectionAndAnEmptyAgenda()",
+      "name": "Native main Calendar with empty saved data_0_D7FA5C79-B69F-444F-80B6-FBB019659C31.png",
+      "inspected": false
+    },
+    {
+      "path": "tablet-CA58C30F-E04B-4E8B-88F8-21EF6D40DDF1.png",
+      "test": "SavedCalendarJourneyTests/testCalendarItineraryEntryOpensItsExistingLiveDetails()",
+      "name": "Calendar opens native live Itinerary details_0_33A75D02-9558-4763-8B92-115F3796B754.png",
+      "inspected": false
+    },
+    {
+      "path": "tablet-6A1CA853-E249-4727-97E7-7F8114DD0AD1.png",
+      "test": "SavedCalendarJourneyTests/testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection()",
+      "name": "Month Calendar agenda retains saved schedule identity_0_253C9F5A-1D51-4230-86A3-C756D5B1FBA8.png",
+      "inspected": false
+    },
+    {
+      "path": "tablet-5F680D43-B4DC-4ED5-9CAA-E892B6A426E1.png",
+      "test": "SavedCalendarJourneyTests/testTimedCalendarCaptionRetainsTheSavedStartOnlyValueAfterRelaunch()",
+      "name": "Native Calendar retains a start-only appointment_0_E981BA41-D7ED-4F05-8334-1301767A34EE.png",
+      "inspected": true
+    },
+    {
+      "path": "phone-child-BF5127BE-317F-4A62-83A3-4527FFB0A777.png",
+      "name": "Focused contextual child details",
+      "inspected": true
+    },
+    {
+      "path": "tablet-child-6B025AC0-AEFD-4C56-8649-4060CFD98F51.png",
+      "name": "Focused contextual child details",
+      "inspected": true
+    }
+  ],
+  "limits": [
+    "Day/Week grids and Month event overview remain open",
+    "Overlap, chronological ordering, DST/travel UI and display-zone override remain open",
+    "External deletion/refresh, paging/performance and accessibility/keyboard remain open",
+    "Native Mac runtime and signed physical sync/account/Share remain unqualified"
+  ],
+  "artifacts": [
+    {
+      "path": "PlannerCalendarAgendaFinalTabletFixed.log.gz",
+      "sha256": "58dfd0736bd82da2a308b89f53c8516de74a4ff6ecbe3434290ed83fd4356e73"
+    },
+    {
+      "path": "PlannerCalendarAgendaPhoneRed.log.gz",
+      "sha256": "ac34a7c6a4a94e397187843db965ea229e73c6db9f311d82f7c1dfc3d712a8bd"
+    },
+    {
+      "path": "PlannerCalendarAgendaQualifiedCore.log",
+      "sha256": "24edd1a4c5e84b6ecf8d6991eccc8c3d81ecf0391a865465258890652ee53d92"
+    },
+    {
+      "path": "PlannerCalendarAgendaQualifiedMacBuild.log.gz",
+      "sha256": "8afe2328be26a9ca1a608c15f3f6e3e98b716486410935be6043cd9651fc4d0c"
+    },
+    {
+      "path": "PlannerCalendarAgendaQualifiedMarkdownlint.log",
+      "sha256": "c01e383fad4fb21efca405132871b82f4a273f648fcae998611795284e312d65"
+    },
+    {
+      "path": "PlannerCalendarAgendaQualifiedPhone.log.gz",
+      "sha256": "cea46915713210b1ac78b350f36b35938bc767515dc687157219e4388b197d95"
+    },
+    {
+      "path": "PlannerCalendarAgendaQualifiedPhoneSummary.json",
+      "sha256": "f83bef7223dd23fe9febb70fa29558c63e87d8b9bb52af0e39ed630d8e5d244a"
+    },
+    {
+      "path": "PlannerCalendarAgendaQualifiedPhoneTests.json",
+      "sha256": "dfa6879d8a92233d3718bcbd92ce2127b68d7fedf21ec0604ede0a34d5abbaaa"
+    },
+    {
+      "path": "PlannerCalendarAgendaQualifiedStrictLint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "PlannerCalendarAgendaQualifiedTablet.log.gz",
+      "sha256": "d80b6b69d7734c6745443f987b794b609a1d68f5bc19228d33d9cb319666f5c7"
+    },
+    {
+      "path": "PlannerCalendarAgendaQualifiedTabletSummary.json",
+      "sha256": "beeb402ac2f04130c231c979eff268bdd00b6ef539f0f269c2e4d28e7b77ed08"
+    },
+    {
+      "path": "PlannerCalendarAgendaQualifiedTabletTests.json",
+      "sha256": "bc2d98a5113f592f9d4ceb962955892bf6864ab1389980081373477c68dbc181"
+    },
+    {
+      "path": "PlannerCalendarCaptionPhoneRed.log.gz",
+      "sha256": "e22aaddbea122cfa6fc325ac72d9480d8f76f9dc4481d863e2494d2affe1fe01"
+    },
+    {
+      "path": "PlannerCalendarChildPhoneGreen.log.gz",
+      "sha256": "8733dde4418a47a56f7b1d977c6d2f8ad40405a6b80793252ce1c747dcd60cb8"
+    },
+    {
+      "path": "PlannerCalendarChildPhoneRed.log.gz",
+      "sha256": "45aeec7c3e13ef5d29a26942f25ce118cd5e600faefbc54ccd44e1a516da8e61"
+    },
+    {
+      "path": "PlannerCalendarChildPhoneRedSummary.json",
+      "sha256": "c4ca6b91e110b3a9821a2abec7456f77298606fc426f21f355c81ee729161be7"
+    },
+    {
+      "path": "PlannerCalendarChildPhoneRedTests.json",
+      "sha256": "585b8339a7d56afa831d9aa6aaf25d4930de91c6880a039eae909c30a8df4447"
+    },
+    {
+      "path": "PlannerCalendarChildPhoneSelectionGreen.log.gz",
+      "sha256": "f27d3f869f332d9e4d281bf82d85903bc0980ed74f39f80d2b1cf10078ac5467"
+    },
+    {
+      "path": "PlannerCalendarChildPhoneSelectionGreenSummary.json",
+      "sha256": "a259d8ab89fac5ee82b490cd80ed357d823ef4474fe9f826650594d527d1ff5e"
+    },
+    {
+      "path": "PlannerCalendarChildTabletGreen.log.gz",
+      "sha256": "86199c7b0083b496e38942094102a8045f70d752a4147b77277383a3d69527e4"
+    },
+    {
+      "path": "PlannerCalendarChildTabletSelectionGreen.log.gz",
+      "sha256": "8fe50cb9d056a700d4e376ba4879d19512c4fea6b79f4b64d502f1afc3cf37f4"
+    },
+    {
+      "path": "PlannerCalendarChildTabletSelectionGreenSummary.json",
+      "sha256": "ce773e4c9c5d28fc2fb2f396b3d0f79a23770ca11f93e147846b1c2f9861513d"
+    },
+    {
+      "path": "PlannerCalendarDestinationPhoneRed.log.gz",
+      "sha256": "cd0a403d8452061fd98956a2e4769e66618953f0de4029a115a3051ae7ea547f"
+    },
+    {
+      "path": "PlannerCalendarDetailsPhoneRed.log.gz",
+      "sha256": "0398649c24bbe93292548b5cb3438062445edba12754422bc9763aa41426c6a6"
+    },
+    {
+      "path": "commands.json",
+      "sha256": "a2bfb99c52152756cc06f988d583a7d519f57047829acdb47cff38b0c6b9056e"
+    },
+    {
+      "path": "phone-3611C1BF-C317-42E4-9BFE-F44AD2107805.png",
+      "sha256": "0b065ef904c11826a333c6543f96fb5d48a8a21a4d580d2c04f51b65913835ec"
+    },
+    {
+      "path": "phone-9BB3C537-B9FB-40C4-958C-9DFFFFFCC090.png",
+      "sha256": "b0b3a7b912b4039f7a7fde492b6bb38ad2709a2aa5a6cad3afd81fc2f2085b96"
+    },
+    {
+      "path": "phone-C6B26B72-5F7E-46BD-AAFC-D414B7FDA4BE.png",
+      "sha256": "85ac0ebdf02c7c6af09ec9b4a7fcfecd78712cbf7817cbf289a6e80ae2093fed"
+    },
+    {
+      "path": "phone-CB68BE67-F410-485A-8F3E-D3667ECF0DB1.png",
+      "sha256": "193c2fd31f91d9a161512ee808d1158a7b4a38d9af7c3693625a693f4a7cb7d3"
+    },
+    {
+      "path": "phone-attachments.json",
+      "sha256": "59b74011fc01cca004a571050412d8283faaccf83a4b584e8b350afbacb94b87"
+    },
+    {
+      "path": "phone-child-BF5127BE-317F-4A62-83A3-4527FFB0A777.png",
+      "sha256": "028ab94f3047e011660be0fb13b213cd8ebc437d2ea52272a0c224365d1aba81"
+    },
+    {
+      "path": "sources.json",
+      "sha256": "f08cc7716d2cb7c42859ff8ce4fc3b38f3e41df8c75d9dc409be2311dce83002"
+    },
+    {
+      "path": "tablet-57BFD32A-D91B-4A56-B9D4-3005454915DB.png",
+      "sha256": "88586382d0f8db1322b9457dbbdf308e001cd044a7648ac84244e03b9bcd2945"
+    },
+    {
+      "path": "tablet-5F680D43-B4DC-4ED5-9CAA-E892B6A426E1.png",
+      "sha256": "6c7c7298b9aab4dc263072d00485de4c14f0bfb18c80ee3ff20bb05afbc37275"
+    },
+    {
+      "path": "tablet-6A1CA853-E249-4727-97E7-7F8114DD0AD1.png",
+      "sha256": "9cd8ac90e584b572d886becca863e0e16c761f6ee61590ef208a351d36b7aefe"
+    },
+    {
+      "path": "tablet-CA58C30F-E04B-4E8B-88F8-21EF6D40DDF1.png",
+      "sha256": "04c8bb4bc846280d4306d6cb135dd98ad4bdeb40aa1255b043f9e17a08f02d84"
+    },
+    {
+      "path": "tablet-attachments.json",
+      "sha256": "c32c4899f11db384814d9253aacd0ae3549b5bffd7701a21e06e5e09f4f56857"
+    },
+    {
+      "path": "tablet-child-6B025AC0-AEFD-4C56-8649-4060CFD98F51.png",
+      "sha256": "bb338f2c87f5c7cdd9fd91b53c849fdb52bd0c78bd1c46f49565a09e713c7013"
+    }
+  ]
+}

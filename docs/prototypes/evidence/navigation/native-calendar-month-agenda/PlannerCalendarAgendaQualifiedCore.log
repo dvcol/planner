@@ -1,0 +1,54 @@
+Building for debugging...
+[1 / 1]
+[1 / 14] PlannerCoreStoreTests-product
+Build complete! (0,62 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite DirectScheduleTests started.
+◇ Suite ScheduleZoneTests started.
+◇ Suite ItineraryScheduleTests started.
+◇ Suite ScheduleCatalogTests started.
+◇ Suite ScheduleSourceReadTests started.
+◇ Suite AllDayScheduleTests started.
+◇ Test itineraryAssignmentCanBeEditedAndRemovedWithoutChangingItsChildren() started.
+◇ Test zoneChangePreservesInstantsAndItemDataAcrossReopenAndLaterReplay() started.
+◇ Test zoneValidationAndCompleteFormGuardPreserveStartOnlyAndLaterTimedForms() started.
+◇ Test itineraryZoneChangePreservesInstantsAndRejectsStaleOrInvalidReplacement() started.
+◇ Test savedScheduleHasItsOwnReadableIdentityAndSingleFormHashAfterReopen() started.
+◇ Test scheduleCatalogRejectsRestrictionsAndRefreshesLiveOwnerTitlesWithoutChangingAssignments() started.
+◇ Test scheduleCatalogKeepsEachAssignmentIdentityAndLiveOwnerTitlesAcrossWindowsAndReopen() started.
+◇ Test directDateSummarySelectsOngoingThenFutureThenPastWithStableOverlapTie() started.
+◇ Test inclusiveAllDayDatesRetainSourceIdentityAndIndependentRecoveryAfterReopen() started.
+◇ Test contentBookmarkCompletionAndArchiveChangesPreserveIndependentSchedule() started.
+◇ Test emptyItineraryScheduleRetainsOwnershipAndRecoveryAfterReopen() started.
+◇ Test startOnlyStopsBeingNextWithoutBecomingAnEstimatedOngoingAppointment() started.
+◇ Test invalidAppointmentsAndAlteredReplayLeaveSourceAndRecoveryUnchanged() started.
+◇ Test rowsSelectInclusiveCivilSpansAcrossTravelWithoutMergingTheGap() started.
+◇ Test savedStartOnlyAppointmentKeepsItsInstantAndNoEstimatedEndAfterReopen() started.
+◇ Test invalidGregorianDatesRejectTogetherAndCompleteFormConversionsKeepIdentity() started.
+◇ Test planningZoneChangesRejectAllDayFormsWithoutSavingOrInvalidatingRows() started.
+✔ Test savedScheduleHasItsOwnReadableIdentityAndSingleFormHashAfterReopen() passed after 0.255 seconds.
+✔ Test inclusiveAllDayDatesRetainSourceIdentityAndIndependentRecoveryAfterReopen() passed after 0.255 seconds.
+✔ Test startOnlyStopsBeingNextWithoutBecomingAnEstimatedOngoingAppointment() passed after 0.255 seconds.
+✔ Test itineraryZoneChangePreservesInstantsAndRejectsStaleOrInvalidReplacement() passed after 0.255 seconds.
+✔ Test emptyItineraryScheduleRetainsOwnershipAndRecoveryAfterReopen() passed after 0.255 seconds.
+✔ Test zoneChangePreservesInstantsAndItemDataAcrossReopenAndLaterReplay() passed after 0.255 seconds.
+✔ Test contentBookmarkCompletionAndArchiveChangesPreserveIndependentSchedule() passed after 0.255 seconds.
+✔ Suite ScheduleSourceReadTests passed after 0.256 seconds.
+✔ Test directDateSummarySelectsOngoingThenFutureThenPastWithStableOverlapTie() passed after 0.258 seconds.
+✔ Test savedStartOnlyAppointmentKeepsItsInstantAndNoEstimatedEndAfterReopen() passed after 0.267 seconds.
+✔ Test zoneValidationAndCompleteFormGuardPreserveStartOnlyAndLaterTimedForms() passed after 0.285 seconds.
+✔ Suite ScheduleZoneTests passed after 0.285 seconds.
+✔ Test scheduleCatalogRejectsRestrictionsAndRefreshesLiveOwnerTitlesWithoutChangingAssignments() passed after 0.293 seconds.
+✔ Test planningZoneChangesRejectAllDayFormsWithoutSavingOrInvalidatingRows() passed after 0.315 seconds.
+✔ Test itineraryAssignmentCanBeEditedAndRemovedWithoutChangingItsChildren() passed after 0.316 seconds.
+✔ Suite ItineraryScheduleTests passed after 0.317 seconds.
+✔ Test invalidAppointmentsAndAlteredReplayLeaveSourceAndRecoveryUnchanged() passed after 0.328 seconds.
+✔ Suite DirectScheduleTests passed after 0.329 seconds.
+✔ Test scheduleCatalogKeepsEachAssignmentIdentityAndLiveOwnerTitlesAcrossWindowsAndReopen() passed after 0.333 seconds.
+✔ Suite ScheduleCatalogTests passed after 0.333 seconds.
+✔ Test rowsSelectInclusiveCivilSpansAcrossTravelWithoutMergingTheGap() passed after 0.359 seconds.
+✔ Test invalidGregorianDatesRejectTogetherAndCompleteFormConversionsKeepIdentity() passed after 0.439 seconds.
+✔ Suite AllDayScheduleTests passed after 0.439 seconds.
+✔ Test run with 17 tests in 6 suites passed after 0.439 seconds.
