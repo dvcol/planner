@@ -1,0 +1,7 @@
+{
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "f894ffa32e08de5b82c6a712138859ac2ad5ce028e59ed1a564ea6eab985a692",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerCaptureValues.swift": "f42474a039ac58bf49486285924be98d3e2e529d21605120cf76529fd09aad3d",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerCaptureEdits.swift": "5e399dd5792be61d46281357a59f5235e4e5bd1866bddca059719ac30d43adf9",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerNativeCaptureLoader.swift": "f16f901f1f5cfff5264388843476aa1e3df92b0d32f7a51ca8e51018942b7660",
+  "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeCaptureLoadingTests.swift": "9f324b1c938c571689318e2112eacabbf31a5663c4d95514d3e82f38252b1ec1"
+}

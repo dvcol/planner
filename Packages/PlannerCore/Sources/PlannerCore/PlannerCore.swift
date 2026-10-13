@@ -17,6 +17,8 @@ public actor Planner {
   }
   private var reviews: [UUID: ReviewBinding] = [:]
   private var captureDrafts: [UUID: PlannerPreparedCapture] = [:]
+  private var captureInputReloads:
+    [UUID: (requestId: UUID, task: Task<[PlannerCaptureRetainedInput], Never>)] = [:]
   private var appliedCaptureOperations:
     [UUID: (session: PlannerDatasetSession, generation: UUID, operationId: UUID)] = [:]
   private struct CaptureResolution {
@@ -186,14 +188,70 @@ public actor Planner {
 
   public func updateCapture(
     session: PlannerDatasetSession, draftId: UUID, generation: UUID, edit: PlannerCaptureEdit
-  ) -> PlannerCaptureDraftResult {
+  ) async -> PlannerCaptureDraftResult {
     do {
-      return try coordinated {
+      let initial = try coordinated {
         let draft = try preparedCapture(session: session, draftId: draftId)
         guard draft.read.generation == generation else {
           throw PlannerFailure(
             "captureDraftUnavailable", "The capture draft changed; read it before continuing.")
         }
+        let proposed = try plannerEditCapture(draft, edit: edit, items: [])
+        let context = ModelContext(try openContainer())
+        context.autosaveEnabled = false
+        _ = try selectedCategoryRecords(
+          proposed.read.content.categoryIds, context: context, propertyPath: "/changes/categoryIds")
+        _ = try selectedTagRecords(
+          proposed.read.content.tagIds, context: context, propertyPath: "/changes/tagIds")
+        guard !Task.isCancelled else {
+          throw PlannerFailure("captureDraftUnavailable", "The capture edit was cancelled.")
+        }
+        captureInputReloads.removeValue(forKey: draftId)?.task.cancel()
+        return draft
+      }
+      let nativeInputs = initial.retainedInputs.filter {
+        edit.retryInputIndexes.contains($0.inputIndex) && $0.nativeRepresentation != nil
+      }
+      var requestId: UUID?
+      var reloaded: [PlannerCaptureRetainedInput] = []
+      defer {
+        if let requestId, captureInputReloads[draftId]?.requestId == requestId {
+          captureInputReloads.removeValue(forKey: draftId)?.task.cancel()
+        }
+      }
+      if !nativeInputs.isEmpty {
+        let identifier = UUID()
+        requestId = identifier
+        let reservedBytes = initial.retainedInputs.reduce(0) { total, input in
+          guard !edit.retryInputIndexes.contains(input.inputIndex),
+            !edit.removeInputIndexes.contains(input.inputIndex), let value = input.input
+          else { return total }
+          switch value {
+          case .url(let text), .text(let text): return total + text.utf8.count
+          }
+        }
+        let availableBytes = PlannerCaptureLimits.maximumDecodedBytes - reservedBytes
+        let loading = Task {
+          await PlannerNativeCaptureLoader.reload(
+            inputs: nativeInputs, maximumDecodedBytes: availableBytes)
+        }
+        captureInputReloads[draftId] = (identifier, loading)
+        reloaded = await withTaskCancellationHandler(
+          operation: { await loading.value }, onCancel: { loading.cancel() })
+      }
+      return try coordinated {
+        let current = try preparedCapture(session: session, draftId: draftId)
+        guard current.read.generation == generation, !Task.isCancelled,
+          requestId == nil || captureInputReloads[draftId]?.requestId == requestId
+        else {
+          throw PlannerFailure(
+            "captureDraftUnavailable", "The capture draft changed; read it before continuing.")
+        }
+        let replacements = Dictionary(uniqueKeysWithValues: reloaded.map { ($0.inputIndex, $0) })
+        let draft = PlannerPreparedCapture(
+          session: current.session, read: current.read, contentOrigins: current.contentOrigins,
+          retainedInputs: current.retainedInputs.map { replacements[$0.inputIndex] ?? $0 },
+          overrides: current.overrides)
         let context = ModelContext(try openContainer())
         context.autosaveEnabled = false
         let items = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).map {
@@ -252,6 +310,7 @@ public actor Planner {
           throw PlannerFailure(
             "captureDraftUnavailable", "The capture draft changed; read it before continuing.")
         }
+        captureInputReloads.removeValue(forKey: draftId)?.task.cancel()
         captureDrafts.removeValue(forKey: draftId)
         return .cancelled
       }
@@ -560,6 +619,7 @@ public actor Planner {
         "The complete capture was not committed: \(error.localizedDescription)")
     }
     appliedCaptureOperations[draftId] = (operation.session, draftGeneration, operation.operationId)
+    captureInputReloads.removeValue(forKey: draftId)?.task.cancel()
     captureDrafts.removeValue(forKey: draftId)
     do {
       let generation = try archive.publish(

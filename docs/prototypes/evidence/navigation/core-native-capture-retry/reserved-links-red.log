@@ -1,0 +1,34 @@
+Building for debugging...
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeCaptureLoadingTests.swift:223:32: warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+221 |             reviewToken: review.reviewToken)).outcome
+222 |       else { throw CancellationError() }
+223 |       savedItem = try #require(result.generated.first)
+    |                                `- warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+224 |     default: retry.cancel()
+225 |     }
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,62 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test nativeRetryReservesAcceptedLinksBeforeAdmittingEarlierText(count:) started.
+◇ Test case passing 1 argument count → 127 to nativeRetryReservesAcceptedLinksBeforeAdmittingEarlierText(count:) started.
+◇ Test case passing 1 argument count → 128 to nativeRetryReservesAcceptedLinksBeforeAdmittingEarlierText(count:) started.
+✘ Test nativeRetryReservesAcceptedLinksBeforeAdmittingEarlierText(count:) recorded an issue with 1 argument count → 128 at NativeCaptureLoadingTests.swift:43:5: Expectation failed: retried.links.contains { $0.originalUrl == "https://example.com/original" }
+↳ retried.links.contains { $0.originalUrl == "https://example.com/original" } → <not evaluated>
+✘ Test nativeRetryReservesAcceptedLinksBeforeAdmittingEarlierText(count:) recorded an issue with 1 argument count → 128 at NativeCaptureLoadingTests.swift:48:7: Expectation failed: !retried.saveAllowed && retried.links.map(\.originalUrl) == ["https://example.com/original"]
+↳ !retried.saveAllowed && retried.links.map(\.originalUrl) == ["https://example.com/original"] → false
+↳   !retried.saveAllowed → true
+↳   retried.links.map(\.originalUrl) == ["https://example.com/original"] → false
+✘ Test nativeRetryReservesAcceptedLinksBeforeAdmittingEarlierText(count:) recorded an issue with 1 argument count → 128 at NativeCaptureLoadingTests.swift:49:7: Expectation failed: retried.inputIssues.contains { $0.inputIndex == 0 && $0.state == .oversized }
+↳ retried.inputIssues.contains { $0.inputIndex == 0 && $0.state == .oversized } → <not evaluated>
+◇ Test case passing 1 argument count → 129 to nativeRetryReservesAcceptedLinksBeforeAdmittingEarlierText(count:) started.
+✘ Test nativeRetryReservesAcceptedLinksBeforeAdmittingEarlierText(count:) with 3 test cases failed after 0.062 seconds with 3 issues.
+✘ Suite NativeCaptureLoadingTests failed after 0.062 seconds with 3 issues.
+✘ Test run with 1 test in 1 suite failed after 0.062 seconds with 3 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

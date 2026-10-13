@@ -1,0 +1,169 @@
+Building for debugging...
+[Computing dependencies]
+[1 / 3] PlannerCore_PlannerCoreStoreTests
+[2 / 7] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeCaptureLoadingTests.swift:111:32: warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+109 |             reviewToken: review.reviewToken)).outcome
+110 |       else { throw CancellationError() }
+111 |       savedItem = try #require(result.generated.first)
+    |                                `- warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+112 |     default: retry.cancel()
+113 |     }
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,82 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CaptureApplyTests started.
+◇ Suite NativeCaptureLoadingTests started.
+◇ Suite CaptureDraftEditTests started.
+◇ Test appliedCaptureCannotBeCancelledOrRetargetedByChangedReplay() started.
+◇ Suite CapturePreparationTests started.
+◇ Test recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) started.
+◇ Test reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState() started.
+◇ Test ownedFieldsAndLabelsSaveToInboxAndAnEmptyReuseLeavesDataUnchanged() started.
+◇ Test reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:) started.
+◇ Test removingOversizedInputUnblocksDraftAndPreservesExplicitEdits() started.
+◇ Test retryingRetainedDirectInputKeepsOwnEditsAndCurrentLinkIdentities() started.
+◇ Test rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test linkEditsRetainDraftBindingsAndNewIdentitiesAcrossLaterOwnEdits() started.
+◇ Test removingInputPathsPreservesSurvivingLinkIdentitiesAndExplicitClear() started.
+◇ Test invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test editedLinksRespectTheDistinctLinkBudgetWithoutPartialChanges(count:) started.
+◇ Test ownEditsRotateGenerationPreserveOriginalLinksAndNeverWriteSavedData() started.
+◇ Test nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:) started.
+◇ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() started.
+◇ Test case passing 1 argument usesExplicitTitle → false to reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:) started.
+◇ Test independentUnicodeTextPreservesLinesAndDistinctOriginalLinkOrder() started.
+◇ Test linkReplacementRecalculatesFallbackAndPreservesAnExplicitTitle(startsEmpty:) started.
+◇ Test case passing 1 argument reusesItem → false to recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) started.
+◇ Test case passing 1 argument reusesItem → true to recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) started.
+◇ Test captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument usesExplicitTitle → true to reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:) started.
+◇ Test linkOnlyTextLanesRemainInNotesWhenTheCaptureAlsoContainsProse() started.
+◇ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() started.
+◇ Test case passing 1 argument scenario → "blankTitle" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument scenario → "coordinate" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "category" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "tag" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "removeUnknown" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "retryUnknown" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "bothActions" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "unavailableRetry" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "empty" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "emptyDraft" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "noToken" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "editedDraft" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "canceled" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "archivedList" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "deletedList" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument count → 127 to editedLinksRespectTheDistinctLinkBudgetWithoutPartialChanges(count:) started.
+◇ Test case passing 1 argument scenario → "changedLists" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "changedSourceLinks" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "archivedSource" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument count → 128 to editedLinksRespectTheDistinctLinkBudgetWithoutPartialChanges(count:) started.
+◇ Test case passing 1 argument scenario → "deletedSource" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument offset → -1 to nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:) started.
+◇ Test case passing 1 argument count → 129 to editedLinksRespectTheDistinctLinkBudgetWithoutPartialChanges(count:) started.
+◇ Test case passing 1 argument scenario → "changedMembership" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument startsEmpty → false to linkReplacementRecalculatesFallbackAndPreservesAnExplicitTitle(startsEmpty:) started.
+◇ Test case passing 1 argument startsEmpty → true to linkReplacementRecalculatesFallbackAndPreservesAnExplicitTitle(startsEmpty:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument example → .empty to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .whitespace to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .linkOnly to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .nonWebText to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .mixedUnsupportedURL to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .invalidURLOnly to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+✔ Test rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) with 9 test cases passed after 0.419 seconds.
+✔ Test retryingRetainedDirectInputKeepsOwnEditsAndCurrentLinkIdentities() passed after 0.419 seconds.
+✔ Test removingOversizedInputUnblocksDraftAndPreservesExplicitEdits() passed after 0.419 seconds.
+✔ Test appliedCaptureCannotBeCancelledOrRetargetedByChangedReplay() passed after 0.419 seconds.
+✔ Test linkEditsRetainDraftBindingsAndNewIdentitiesAcrossLaterOwnEdits() passed after 0.419 seconds.
+✔ Test recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) with 2 test cases passed after 0.419 seconds.
+✔ Test ownedFieldsAndLabelsSaveToInboxAndAnEmptyReuseLeavesDataUnchanged() passed after 0.419 seconds.
+✔ Test reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:) with 2 test cases passed after 0.419 seconds.
+✔ Test removingInputPathsPreservesSurvivingLinkIdentitiesAndExplicitClear() passed after 0.419 seconds.
+✔ Test editedLinksRespectTheDistinctLinkBudgetWithoutPartialChanges(count:) with 3 test cases passed after 0.419 seconds.
+✔ Test ownEditsRotateGenerationPreserveOriginalLinksAndNeverWriteSavedData() passed after 0.419 seconds.
+✔ Test invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) with 11 test cases passed after 0.419 seconds.
+✔ Test reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState() passed after 0.419 seconds.
+✔ Test independentUnicodeTextPreservesLinesAndDistinctOriginalLinkOrder() passed after 0.419 seconds.
+✔ Test linkReplacementRecalculatesFallbackAndPreservesAnExplicitTitle(startsEmpty:) with 2 test cases passed after 0.419 seconds.
+✔ Test linkOnlyTextLanesRemainInNotesWhenTheCaptureAlsoContainsProse() passed after 0.419 seconds.
+✔ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() passed after 0.419 seconds.
+✔ Suite CaptureDraftEditTests passed after 0.419 seconds.
+✔ Suite CaptureApplyTests passed after 0.419 seconds.
+✔ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() passed after 0.443 seconds.
+✔ Test emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) with 6 test cases passed after 0.444 seconds.
+✔ Test captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) with 9 test cases passed after 2.235 seconds.
+✔ Suite CapturePreparationTests passed after 2.236 seconds.
+◇ Test case passing 1 argument offset → 0 to nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:) started.
+◇ Test case passing 1 argument offset → 1 to nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:) started.
+✔ Test nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:) with 3 test cases passed after 4.288 seconds.
+◇ Test obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+◇ Test case passing 1 argument scenario → "edit" to obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+◇ Test case passing 1 argument scenario → "remove" to obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+◇ Test case passing 1 argument scenario → "apply" to obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+◇ Test case passing 1 argument scenario → "cancelCaller" to obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+✔ Test obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) with 4 test cases passed after 0.079 seconds.
+◇ Test cancellingDraftCancelsItsNativeRetryAndRejectsLateInput() started.
+✔ Test cancellingDraftCancelsItsNativeRetryAndRejectsLateInput() passed after 0.013 seconds.
+◇ Test explicitRetryReloadsFailedNativeInputAndPreservesOwnedEdits() started.
+✔ Test explicitRetryReloadsFailedNativeInputAndPreservesOwnedEdits() passed after 0.019 seconds.
+◇ Test mixedFileAndWebRepresentationsKeepTheUsableWebLinkWithoutLoadingFileContent() started.
+✔ Test mixedFileAndWebRepresentationsKeepTheUsableWebLinkWithoutLoadingFileContent() passed after 0.012 seconds.
+◇ Test genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+◇ Test case passing 1 argument encoding → Unicode (UTF-8) to genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+◇ Test case passing 1 argument encoding → Unicode (UTF-16) to genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+◇ Test case passing 1 argument encoding → Unicode (UTF-32) to genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+✔ Test genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) with 3 test cases passed after 0.044 seconds.
+◇ Test nativeTextLinksShareTheDistinctLinkLimit(count:) started.
+◇ Test case passing 1 argument count → 127 to nativeTextLinksShareTheDistinctLinkLimit(count:) started.
+◇ Test case passing 1 argument count → 128 to nativeTextLinksShareTheDistinctLinkLimit(count:) started.
+◇ Test case passing 1 argument count → 129 to nativeTextLinksShareTheDistinctLinkLimit(count:) started.
+✔ Test nativeTextLinksShareTheDistinctLinkLimit(count:) with 3 test cases passed after 0.045 seconds.
+◇ Test loadedDescriptionsStayTemporaryAcrossRetryOwnEditsAndReviewedSave() started.
+✔ Test loadedDescriptionsStayTemporaryAcrossRetryOwnEditsAndReviewedSave() passed after 0.033 seconds.
+◇ Test decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf8", offset → -1 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf8", offset → 0 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf8", offset → 1 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf16", offset → -1 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf16", offset → 0 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf16", offset → 1 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+✔ Test decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) with 6 test cases passed after 7.722 seconds.
+◇ Test nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "failure" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "badEncoding" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "unsupported" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "file" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "textOnly" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "empty" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+✔ Test nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) with 6 test cases passed after 0.054 seconds.
+◇ Test providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument count → 31 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument count → 32 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument count → 33 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+✔ Test providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) with 3 test cases passed after 0.032 seconds.
+◇ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() started.
+✔ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() passed after 11.665 seconds.
+◇ Test cancellationCancelsNativeProgressAndLateDataCannotChangeTheLoadedResult() started.
+✔ Test cancellationCancelsNativeProgressAndLateDataCannotChangeTheLoadedResult() passed after 0.022 seconds.
+◇ Test outOfOrderNativeCallbacksKeepSourceAndRepresentationOrderWithFourConcurrentLoads() started.
+✔ Test outOfOrderNativeCallbacksKeepSourceAndRepresentationOrderWithFourConcurrentLoads() passed after 0.132 seconds.
+◇ Test registeredUrlAndTextRepresentationsProduceOneDraftWithoutPromotingProviderProse() started.
+✔ Test registeredUrlAndTextRepresentationsProduceOneDraftWithoutPromotingProviderProse() passed after 0.018 seconds.
+✔ Suite NativeCaptureLoadingTests passed after 24.188 seconds.
+✔ Test run with 35 tests in 4 suites passed after 24.188 seconds.

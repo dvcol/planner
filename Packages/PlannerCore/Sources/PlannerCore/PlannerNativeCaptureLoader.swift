@@ -6,32 +6,11 @@ import UniformTypeIdentifiers
     case input(PlannerCaptureRetainedInput)
     case deadline
   }
-  @MainActor private final class Representation {
-    let index: Int64
-    let provider: NSItemProvider
-    let type: UTType?
-    let lane: PlannerCaptureInputIssue.Lane
-    let encoding: String.Encoding?
-    let presetIssue: PlannerCaptureInputIssue?
-
-    init(
-      index: Int64, provider: NSItemProvider, type: UTType?,
-      lane: PlannerCaptureInputIssue.Lane, encoding: String.Encoding?,
-      presetIssue: PlannerCaptureInputIssue? = nil
-    ) {
-      self.index = index
-      self.provider = provider
-      self.type = type
-      self.lane = lane
-      self.encoding = encoding
-      self.presetIssue = presetIssue
-    }
-  }
 
   public static func load(providers: [NSItemProvider]) async -> PlannerLoadedCaptureInputs {
     let clock = ContinuousClock()
     let deadline = clock.now.advanced(by: .seconds(10))
-    var representations: [Representation] = []
+    var representations: [PlannerNativeCaptureRepresentation] = []
     for provider in providers.prefix(32) {
       if provider.registeredTypeIdentifiers.contains(UTType.url.identifier) {
         representations.append(
@@ -74,6 +53,24 @@ import UniformTypeIdentifiers
               "This capture exceeds 32 attachments. The extra attachments were not loaded; remove them or prepare a smaller capture before Add.",
             blocksSave: true)))
     }
+    return await load(representations: representations, deadline: deadline)
+  }
+
+  static func reload(
+    inputs: [PlannerCaptureRetainedInput], maximumDecodedBytes: Int
+  ) async -> [PlannerCaptureRetainedInput] {
+    let deadline = ContinuousClock().now.advanced(by: .seconds(10))
+    return await load(
+      representations: inputs.compactMap(\.nativeRepresentation), deadline: deadline,
+      maximumDecodedBytes: maximumDecodedBytes
+    ).inputs
+  }
+
+  private static func load(
+    representations: [PlannerNativeCaptureRepresentation], deadline: ContinuousClock.Instant,
+    maximumDecodedBytes: Int = PlannerCaptureLimits.maximumDecodedBytes
+  ) async -> PlannerLoadedCaptureInputs {
+    let clock = ContinuousClock()
     return await withTaskGroup(of: LoadEvent.self) { group in
       group.addTask {
         try? await clock.sleep(until: deadline)
@@ -122,7 +119,7 @@ import UniformTypeIdentifiers
           case .url(let value), .text(let value): text = value
           }
           let byteCount = text.utf8.count
-          guard byteCount <= PlannerCaptureLimits.maximumDecodedBytes - decodedBytes else {
+          guard byteCount <= maximumDecodedBytes - decodedBytes else {
             var lane = PlannerCaptureInputIssue.Lane.text
             if case .url = value { lane = .url }
             inputs.append(
@@ -132,7 +129,8 @@ import UniformTypeIdentifiers
                   inputIndex: input.inputIndex, lane: lane, state: .oversized,
                   message:
                     "This input exceeds the 1 MiB capture limit. Remove it or retry with less content.",
-                  blocksSave: true), source: .provider))
+                  blocksSave: true), source: .provider,
+                nativeRepresentation: input.nativeRepresentation))
             continue
           }
           decodedBytes += byteCount
@@ -144,10 +142,13 @@ import UniformTypeIdentifiers
     }
   }
 
-  private static func load(_ representation: Representation) async -> PlannerCaptureRetainedInput {
+  private static func load(_ representation: PlannerNativeCaptureRepresentation) async
+    -> PlannerCaptureRetainedInput
+  {
     if let issue = representation.presetIssue {
       return .init(
-        inputIndex: representation.index, input: nil, unavailableIssue: issue, source: .provider)
+        inputIndex: representation.index, input: nil, unavailableIssue: issue, source: .provider,
+        nativeRepresentation: representation)
     }
     guard let type = representation.type else {
       return issue(
@@ -223,18 +224,42 @@ import UniformTypeIdentifiers
     let input: PlannerCaptureDirectInput
     if representation.lane == .url { input = .url(text) } else { input = .text(text) }
     return .init(
-      inputIndex: representation.index, input: input, unavailableIssue: nil, source: .provider)
+      inputIndex: representation.index, input: input, unavailableIssue: nil, source: .provider,
+      nativeRepresentation: representation)
   }
 
   private static func issue(
-    _ representation: Representation, state: PlannerCaptureInputIssue.State,
+    _ representation: PlannerNativeCaptureRepresentation, state: PlannerCaptureInputIssue.State,
     message: String, blocksSave: Bool
   ) -> PlannerCaptureRetainedInput {
     .init(
       inputIndex: representation.index, input: nil,
       unavailableIssue: .init(
         inputIndex: representation.index, lane: representation.lane,
-        state: state, message: message, blocksSave: blocksSave), source: .provider)
+        state: state, message: message, blocksSave: blocksSave), source: .provider,
+      nativeRepresentation: representation)
+  }
+}
+
+@MainActor final class PlannerNativeCaptureRepresentation {
+  let index: Int64
+  let provider: NSItemProvider
+  let type: UTType?
+  let lane: PlannerCaptureInputIssue.Lane
+  let encoding: String.Encoding?
+  let presetIssue: PlannerCaptureInputIssue?
+
+  init(
+    index: Int64, provider: NSItemProvider, type: UTType?,
+    lane: PlannerCaptureInputIssue.Lane, encoding: String.Encoding?,
+    presetIssue: PlannerCaptureInputIssue? = nil
+  ) {
+    self.index = index
+    self.provider = provider
+    self.type = type
+    self.lane = lane
+    self.encoding = encoding
+    self.presetIssue = presetIssue
   }
 }
 

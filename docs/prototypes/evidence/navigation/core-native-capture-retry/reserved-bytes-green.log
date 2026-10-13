@@ -1,0 +1,34 @@
+Building for debugging...
+[1 / 9] PlannerCoreStoreTests-product
+[2 / 16] PlannerCore
+[5 / 19] PlannerCore
+[9 / 23] PlannerCore
+[11 / 23] PlannerCore
+[14 / 22] PlannerCoreTests-product
+[17 / 23] PlannerCoreTests-product
+[19 / 24] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeCaptureLoadingTests.swift:120:32: warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+118 |             reviewToken: review.reviewToken)).outcome
+119 |       else { throw CancellationError() }
+120 |       savedItem = try #require(result.generated.first)
+    |                                `- warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+121 |     default: retry.cancel()
+122 |     }
+[21 / 26] PlannerCoreStoreTests-product
+[25 / 29] PlannerCoreStoreTests-product
+[27 / 29] PlannerCoreStoreTests-product
+Build complete! (11,27 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:urlFirst:) started.
+◇ Test case passing 2 arguments offset → -1, urlFirst → true to nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:urlFirst:) started.
+◇ Test case passing 2 arguments offset → -1, urlFirst → false to nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:urlFirst:) started.
+◇ Test case passing 2 arguments offset → 0, urlFirst → true to nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:urlFirst:) started.
+◇ Test case passing 2 arguments offset → 0, urlFirst → false to nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:urlFirst:) started.
+◇ Test case passing 2 arguments offset → 1, urlFirst → true to nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:urlFirst:) started.
+◇ Test case passing 2 arguments offset → 1, urlFirst → false to nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:urlFirst:) started.
+✔ Test nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:urlFirst:) with 6 test cases passed after 8.069 seconds.
+✔ Suite NativeCaptureLoadingTests passed after 8.070 seconds.
+✔ Test run with 1 test in 1 suite passed after 8.070 seconds.

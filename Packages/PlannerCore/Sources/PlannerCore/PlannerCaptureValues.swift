@@ -128,16 +128,19 @@ struct PlannerCaptureRetainedInput: Sendable {
   let input: PlannerCaptureDirectInput?
   let unavailableIssue: PlannerCaptureInputIssue?
   let source: PlannerCaptureInputSource
+  let nativeRepresentation: PlannerNativeCaptureRepresentation?
 
   init(
     inputIndex: Int64, input: PlannerCaptureDirectInput?,
     unavailableIssue: PlannerCaptureInputIssue?,
-    source: PlannerCaptureInputSource = .independent
+    source: PlannerCaptureInputSource = .independent,
+    nativeRepresentation: PlannerNativeCaptureRepresentation? = nil
   ) {
     self.inputIndex = inputIndex
     self.input = input
     self.unavailableIssue = unavailableIssue
     self.source = source
+    self.nativeRepresentation = nativeRepresentation
   }
 }
 
@@ -157,7 +160,8 @@ func plannerPrepareDirectCapture(_ inputs: [PlannerCaptureDirectInput], items: [
 }
 
 func plannerPrepareCaptureInputs(
-  _ inputs: [PlannerCaptureRetainedInput], items: [ItemSnapshot]
+  _ inputs: [PlannerCaptureRetainedInput], items: [ItemSnapshot],
+  reservedOriginals: Set<String> = []
 ) throws -> PlannerCapturePreparation {
   var links: [PlannerCaptureDraftLink] = []
   var originals = Set<String>()
@@ -196,12 +200,16 @@ func plannerPrepareCaptureInputs(
         blocksSave: true)
       inputIssues.append(issue)
       retainedInputs.append(
-        .init(inputIndex: index, input: nil, unavailableIssue: issue, source: retained.source))
+        .init(
+          inputIndex: index, input: nil, unavailableIssue: issue, source: retained.source,
+          nativeRepresentation: retained.nativeRepresentation))
       continue
     }
     decodedBytes += byteCount
     retainedInputs.append(
-      .init(inputIndex: index, input: input, unavailableIssue: nil, source: retained.source))
+      .init(
+        inputIndex: index, input: input, unavailableIssue: nil, source: retained.source,
+        nativeRepresentation: retained.nativeRepresentation))
     if lane == .url,
       (try? PlannerLinkInput(originalUrl: text).validatedKind(propertyPath: "/inputs/\(index)"))
         == nil
@@ -232,7 +240,8 @@ func plannerPrepareCaptureInputs(
       }
     }
     guard
-      Set(inputOriginals).union(originals).count <= PlannerCaptureLimits.maximumDistinctLinks
+      Set(inputOriginals).union(originals).union(reservedOriginals).count
+        <= PlannerCaptureLimits.maximumDistinctLinks
     else {
       inputIssues.append(
         .init(

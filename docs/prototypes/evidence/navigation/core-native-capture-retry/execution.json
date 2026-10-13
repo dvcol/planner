@@ -1,0 +1,200 @@
+{
+  "baseCommit": "94282b2",
+  "scope": "Explicit native capture Retry, selected input reservation and obsolete request lifecycle",
+  "storageSchemaVersion": 18,
+  "portableFormatVersion": 2,
+  "newTests": {
+    "functions": 6,
+    "invocations": 20
+  },
+  "qualified": {
+    "macCore": {
+      "functions": 176,
+      "suites": 70,
+      "invocations": 470,
+      "failures": 0,
+      "skips": 0
+    },
+    "phoneCore": {
+      "functions": 176,
+      "suites": 70,
+      "invocations": 470,
+      "failures": 0,
+      "skips": 0
+    },
+    "http": {
+      "functions": 16,
+      "suites": 4,
+      "invocations": 22,
+      "failures": 0,
+      "skips": 0
+    },
+    "strictSwiftLintFiles": 5,
+    "macAppAndTestHost": "TEST BUILD SUCCEEDED",
+    "nativeUIRuntimeFunctions": 0,
+    "markdownLintDocuments": 2
+  },
+  "reviews": {
+    "standards": "No remaining confirmed findings",
+    "spec": "Byte/link reservation and rejected/obsolete request fixes reviewed; no remaining confirmed findings"
+  },
+  "redBeforeGreen": [
+    "reload-red.log",
+    "cancel-red.log",
+    "reserved-bytes-red.log",
+    "rejected-edit-red.log",
+    "reserved-links-red.log",
+    "cancelled-caller-red.log"
+  ],
+  "diagnostics": [
+    "Earlier qualification passed before review added an already-cancelled second-request case; corrected revision was qualified afresh"
+  ],
+  "sourceHashesVerifiedAfterAllTestProcessesExited": true,
+  "limits": [
+    "Native MKMapItem loading and permitted references",
+    "Physical provider payloads and peak-allocation proof",
+    "Maps lookup and obsolete callbacks",
+    "Capture transport advertisement/encoding",
+    "Native capture review, Share, Intents and MCP flows",
+    "Genuine database-save/cleanup failure and termination checkpoints",
+    "Other map gates remain open"
+  ],
+  "artifacts": [
+    {
+      "path": "before-cancelled-caller-http-diagnostic.log.gz",
+      "sha256": "afc30e6944762162794755c747c2cffd70be913cf4fc84ccf1f3956f89346c9f"
+    },
+    {
+      "path": "before-cancelled-caller-mac-diagnostic.log.gz",
+      "sha256": "a334217e2c0e41eb2899b79f08d6c55d163d3ade415dad28d71f084046eb50c2"
+    },
+    {
+      "path": "before-cancelled-caller-phone-diagnostic.log.gz",
+      "sha256": "24846744dea877405dea380c0098faa9864a9752efbd112993f8cb5772e510b9"
+    },
+    {
+      "path": "before-cancelled-caller-sources.json",
+      "sha256": "fe62a9f7e19e98cca16e969db449a30071dda86008dd11ecb8463930448aa846"
+    },
+    {
+      "path": "cancel-green.log",
+      "sha256": "dfc8cfbdb56613433eccb1d4bbaf9b3bfde0ebb1349594d0a5231af6b4474798"
+    },
+    {
+      "path": "cancel-red.log",
+      "sha256": "e4918298a57928ef6442fc8ebe7f27f7310988fce8a3ef03ee8558f943f17624"
+    },
+    {
+      "path": "cancelled-caller-green.log",
+      "sha256": "b56565bb82862785ea765c644cb3dc8e7a57f6c30071f610db0a591e775bd9f1"
+    },
+    {
+      "path": "cancelled-caller-red.log",
+      "sha256": "8271e3c7680358b8f185c0a861e2a8a042facdf4742a23f9f18d708f2144c14b"
+    },
+    {
+      "path": "commands.json",
+      "sha256": "8e245fd276c8ca1af44d0b1c984a29b722f2905e46c72f549ab9b39d037b4980"
+    },
+    {
+      "path": "http-counts.json",
+      "sha256": "6a898f6b8b3ee0579f4c03b2cbd1a801f9a653dcb9d0b696336d0660cb987df1"
+    },
+    {
+      "path": "http-green.log.gz",
+      "sha256": "e6bfac63d6692946edcd56293cd3d90689e7eae719b236adb966e73a7ed1ef62"
+    },
+    {
+      "path": "http-summary.json",
+      "sha256": "36b1b1913a2b1764238081cd4f47b511155d011b40871dfe3a55d531f00a73a3"
+    },
+    {
+      "path": "http-tests.json",
+      "sha256": "329cf9bff0bec95515ff77a96f83c6755d12638026bc7e39f0948e7f0344966b"
+    },
+    {
+      "path": "lifecycle-green.log",
+      "sha256": "903f47f3683678e6ef7367b5a95cbeda0b268bd21499b6237b4f9c21e525aa53"
+    },
+    {
+      "path": "mac-build.log.gz",
+      "sha256": "ef85ea34ca053cc8f7088261ca457e264e209e92f2c22c76adbd451bd93ad7e0"
+    },
+    {
+      "path": "mac-core-green.log.gz",
+      "sha256": "bd7ce57ae8d5d417882ee3589143583a316136da2972152f6260b04fa8ebc514"
+    },
+    {
+      "path": "mac-counts.json",
+      "sha256": "ff747d56425e28ec96c145690661bd715e584b8f1779ad8f73ce44362d5b54e4"
+    },
+    {
+      "path": "markdownlint.log",
+      "sha256": "b1bc92f8dd8838a2f0019e9ab1dd3c45d4d2e2ec4ace45bc2a0620745af77bee"
+    },
+    {
+      "path": "phone-core-green.log.gz",
+      "sha256": "cda112d80709376b6a133896696c7931998f9b50a2cdfc84f403c7016237ab17"
+    },
+    {
+      "path": "phone-counts.json",
+      "sha256": "ff747d56425e28ec96c145690661bd715e584b8f1779ad8f73ce44362d5b54e4"
+    },
+    {
+      "path": "phone-summary.json",
+      "sha256": "85af8527fc8284dd7fb3fe09706d84d122d9a09a99e606ecc98646291aa8f8db"
+    },
+    {
+      "path": "phone-tests.json.gz",
+      "sha256": "ecb17f2c7b03d7136ae912ea4f135135220123a54c7f6f56d9055a7bf7fe78b4"
+    },
+    {
+      "path": "rejected-edit-green.log",
+      "sha256": "8c56864fccabdda6a0a44d1faa8bb6c0aeed9ea1ece77cc8c7515a74abcb5719"
+    },
+    {
+      "path": "rejected-edit-red.log",
+      "sha256": "b7ee690299d14ed8b8d67067c03b863ecb3860866b22668edd44e9507ef75f6b"
+    },
+    {
+      "path": "reload-green.log",
+      "sha256": "c7d11141856dad96426579760071566f13fb37a2f623199b81bcd16c78ae05fc"
+    },
+    {
+      "path": "reload-red.log",
+      "sha256": "30b2b46040109921f09191dfc132435cde8d7596eea3358cc0b5bf0f485da809"
+    },
+    {
+      "path": "reserved-bytes-green.log",
+      "sha256": "d0879af94efc6f697a27bd4af72df902100f7a0c4a7bf87fb87838584af7e1c6"
+    },
+    {
+      "path": "reserved-bytes-red.log",
+      "sha256": "a9fef49b2ab068ffa1d3c498d46482eedafa9cbbbf432dccc487c341393298a1"
+    },
+    {
+      "path": "reserved-links-green.log",
+      "sha256": "bc5b0d8f6338aab6fde3b590952ee657864ce741333cbc8ebf66be7123de7aff"
+    },
+    {
+      "path": "reserved-links-red.log",
+      "sha256": "c51c650a5c79e1f5676571d87904a04db86c95eff6c700e9a19ced0449254d0b"
+    },
+    {
+      "path": "sources.json",
+      "sha256": "21e697b238cf142367d10345337c48140b2cfeaab18c9f4b91c8db46c7f7a401"
+    },
+    {
+      "path": "strict-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "target-green.log",
+      "sha256": "25e1b5dae3836bce02db3cfa7403a5ba515b48b63901c0c9407ace2a0cf5750c"
+    },
+    {
+      "path": "test-store-cleanup.json.gz",
+      "sha256": "7c9557696c01f35d22732f0540cc5ca41640787188a04aaf626cfcf0bc9a3a08"
+    }
+  ]
+}

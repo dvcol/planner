@@ -1,0 +1,53 @@
+Building for debugging...
+[Provisioning 4 / 6]
+[2 / 7] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeCaptureLoadingTests.swift:178:32: warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+176 |             reviewToken: review.reviewToken)).outcome
+177 |       else { throw CancellationError() }
+178 |       savedItem = try #require(result.generated.first)
+    |                                `- warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+179 |     default: retry.cancel()
+180 |     }
+[4 / 9] PlannerCoreStoreTests-product
+[9 / 11] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,68 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+◇ Test case passing 1 argument scenario → "category" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+✘ Test rejectedEditLeavesThePendingNativeRetryActive(scenario:) recorded an issue with 1 argument scenario → "category" at NativeCaptureLoadingTests.swift:56:5: Expectation failed: !progress.isCancelled && unchanged.generation == draft.generation
+↳ !progress.isCancelled && unchanged.generation == draft.generation → false
+↳   !progress.isCancelled → false
+↳   unchanged.generation == draft.generation → <not evaluated>
+✘ Test rejectedEditLeavesThePendingNativeRetryActive(scenario:) recorded an issue with 1 argument scenario → "category" at NativeCaptureLoadingTests.swift:60:19: Issue recorded
+↳ A rejected edit must preserve the active Retry, observed .rejected(PlannerCore.PlannerFailure(code: "captureDraftUnavailable", propertyPath: nil, message: "The capture draft changed; read it before continuing.", details: nil))
+◇ Test case passing 1 argument scenario → "tag" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+✘ Test rejectedEditLeavesThePendingNativeRetryActive(scenario:) recorded an issue with 1 argument scenario → "tag" at NativeCaptureLoadingTests.swift:56:5: Expectation failed: !progress.isCancelled && unchanged.generation == draft.generation
+↳ !progress.isCancelled && unchanged.generation == draft.generation → false
+↳   !progress.isCancelled → false
+↳   unchanged.generation == draft.generation → <not evaluated>
+✘ Test rejectedEditLeavesThePendingNativeRetryActive(scenario:) recorded an issue with 1 argument scenario → "tag" at NativeCaptureLoadingTests.swift:60:19: Issue recorded
+↳ A rejected edit must preserve the active Retry, observed .rejected(PlannerCore.PlannerFailure(code: "captureDraftUnavailable", propertyPath: nil, message: "The capture draft changed; read it before continuing.", details: nil))
+◇ Test case passing 1 argument scenario → "foreignLink" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+✘ Test rejectedEditLeavesThePendingNativeRetryActive(scenario:) recorded an issue with 1 argument scenario → "foreignLink" at NativeCaptureLoadingTests.swift:56:5: Expectation failed: !progress.isCancelled && unchanged.generation == draft.generation
+↳ !progress.isCancelled && unchanged.generation == draft.generation → false
+↳   !progress.isCancelled → false
+↳   unchanged.generation == draft.generation → <not evaluated>
+✘ Test rejectedEditLeavesThePendingNativeRetryActive(scenario:) recorded an issue with 1 argument scenario → "foreignLink" at NativeCaptureLoadingTests.swift:60:19: Issue recorded
+↳ A rejected edit must preserve the active Retry, observed .rejected(PlannerCore.PlannerFailure(code: "captureDraftUnavailable", propertyPath: nil, message: "The capture draft changed; read it before continuing.", details: nil))
+◇ Test case passing 1 argument scenario → "linkLimit" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+✘ Test rejectedEditLeavesThePendingNativeRetryActive(scenario:) recorded an issue with 1 argument scenario → "linkLimit" at NativeCaptureLoadingTests.swift:56:5: Expectation failed: !progress.isCancelled && unchanged.generation == draft.generation
+↳ !progress.isCancelled && unchanged.generation == draft.generation → false
+↳   !progress.isCancelled → false
+↳   unchanged.generation == draft.generation → <not evaluated>
+✘ Test rejectedEditLeavesThePendingNativeRetryActive(scenario:) recorded an issue with 1 argument scenario → "linkLimit" at NativeCaptureLoadingTests.swift:60:19: Issue recorded
+↳ A rejected edit must preserve the active Retry, observed .rejected(PlannerCore.PlannerFailure(code: "captureDraftUnavailable", propertyPath: nil, message: "The capture draft changed; read it before continuing.", details: nil))
+✘ Test rejectedEditLeavesThePendingNativeRetryActive(scenario:) with 4 test cases failed after 0.075 seconds with 8 issues.
+✘ Suite NativeCaptureLoadingTests failed after 0.075 seconds with 8 issues.
+✘ Test run with 1 test in 1 suite failed after 0.075 seconds with 8 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

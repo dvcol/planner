@@ -1,0 +1,22 @@
+Building for debugging...
+[1 / 1]
+[2 / 16] PlannerCore
+[4 / 18] PlannerCore
+[7 / 21] PlannerCore
+[9 / 21] PlannerCore
+[12 / 14] PlannerCoreTests-product
+[16 / 18] PlannerCoreStoreTests-product
+Build complete! (8,71 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+◇ Test case passing 1 argument scenario → "category" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+◇ Test case passing 1 argument scenario → "tag" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+◇ Test case passing 1 argument scenario → "foreignLink" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+◇ Test case passing 1 argument scenario → "linkLimit" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+◇ Test case passing 1 argument scenario → "cancelledCaller" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+✔ Test rejectedEditLeavesThePendingNativeRetryActive(scenario:) with 5 test cases passed after 0.089 seconds.
+✔ Suite NativeCaptureLoadingTests passed after 0.089 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.089 seconds.

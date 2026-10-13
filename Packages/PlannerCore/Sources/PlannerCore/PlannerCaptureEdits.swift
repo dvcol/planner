@@ -3,49 +3,23 @@ import Foundation
 func plannerEditCapture(
   _ draft: PlannerPreparedCapture, edit: PlannerCaptureEdit, items: [ItemSnapshot]
 ) throws -> PlannerPreparedCapture {
-  let fields: [PlannerItemField]
-  if edit.changes.hasChanges {
-    fields = try edit.changes.validatedFields()
-  } else {
-    fields = []
-  }
-  guard !fields.isEmpty || !edit.removeInputIndexes.isEmpty || !edit.retryInputIndexes.isEmpty
-  else {
-    throw PlannerFailure(
-      "invalidInput", "A capture edit must change a field or an input.", propertyPath: "/changes")
-  }
-  let availableIndexes = Set(draft.retainedInputs.map(\.inputIndex))
-  guard edit.removeInputIndexes.isSubset(of: availableIndexes) else {
-    throw PlannerFailure(
-      "invalidInput", "A removed input must belong to this draft.",
-      propertyPath: "/removeInputIndexes")
-  }
-  guard edit.retryInputIndexes.isSubset(of: availableIndexes) else {
-    throw PlannerFailure(
-      "invalidInput", "A retried input must belong to this draft.",
-      propertyPath: "/retryInputIndexes")
-  }
-  guard edit.removeInputIndexes.isDisjoint(with: edit.retryInputIndexes) else {
-    throw PlannerFailure(
-      "invalidInput", "An input cannot be removed and retried in the same edit.",
-      propertyPath: "/retryInputIndexes")
-  }
-  guard
-    !draft.retainedInputs.contains(where: {
-      edit.retryInputIndexes.contains($0.inputIndex) && $0.input == nil
-    })
-  else {
-    throw PlannerFailure(
-      "captureInputFailure",
-      "This input was not retained. Prepare it again or remove it from the draft.",
-      propertyPath: "/retryInputIndexes")
-  }
+  try plannerValidateCaptureEdit(edit, retainedInputs: draft.retainedInputs)
   var read = draft.read
   var origins = draft.contentOrigins
   var retainedInputs = draft.retainedInputs
   if !edit.removeInputIndexes.isEmpty || !edit.retryInputIndexes.isEmpty {
+    var reservedOriginals = Set<String>()
+    if !edit.retryInputIndexes.isEmpty {
+      let unaffected = try plannerPrepareCaptureInputs(
+        retainedInputs.filter {
+          !edit.retryInputIndexes.contains($0.inputIndex)
+            && !edit.removeInputIndexes.contains($0.inputIndex)
+        }, items: [])
+      reservedOriginals = Set(unaffected.read.links.map(\.originalUrl))
+    }
     let preparation = try plannerPrepareCaptureInputs(
-      retainedInputs.filter { !edit.removeInputIndexes.contains($0.inputIndex) }, items: items)
+      retainedInputs.filter { !edit.removeInputIndexes.contains($0.inputIndex) }, items: items,
+      reservedOriginals: reservedOriginals)
     read = preparation.read
     origins = preparation.contentOrigins
     retainedInputs = preparation.retainedInputs
@@ -165,5 +139,48 @@ extension PlannerItemChanges {
     !title.isUnchanged || !subtitle.isUnchanged || !notes.isUnchanged || !location.isUnchanged
       || !estimate.isUnchanged || !links.isUnchanged || !categoryIds.isUnchanged
       || !tagIds.isUnchanged
+  }
+}
+
+private func plannerValidateCaptureEdit(
+  _ edit: PlannerCaptureEdit, retainedInputs: [PlannerCaptureRetainedInput]
+) throws {
+  let fields: [PlannerItemField]
+  if edit.changes.hasChanges {
+    fields = try edit.changes.validatedFields()
+  } else {
+    fields = []
+  }
+  guard !fields.isEmpty || !edit.removeInputIndexes.isEmpty || !edit.retryInputIndexes.isEmpty
+  else {
+    throw PlannerFailure(
+      "invalidInput", "A capture edit must change a field or an input.", propertyPath: "/changes")
+  }
+  let availableIndexes = Set(retainedInputs.map(\.inputIndex))
+  guard edit.removeInputIndexes.isSubset(of: availableIndexes) else {
+    throw PlannerFailure(
+      "invalidInput", "A removed input must belong to this draft.",
+      propertyPath: "/removeInputIndexes")
+  }
+  guard edit.retryInputIndexes.isSubset(of: availableIndexes) else {
+    throw PlannerFailure(
+      "invalidInput", "A retried input must belong to this draft.",
+      propertyPath: "/retryInputIndexes")
+  }
+  guard edit.removeInputIndexes.isDisjoint(with: edit.retryInputIndexes) else {
+    throw PlannerFailure(
+      "invalidInput", "An input cannot be removed and retried in the same edit.",
+      propertyPath: "/retryInputIndexes")
+  }
+  guard
+    !retainedInputs.contains(where: {
+      edit.retryInputIndexes.contains($0.inputIndex) && $0.input == nil
+        && $0.nativeRepresentation == nil
+    })
+  else {
+    throw PlannerFailure(
+      "captureInputFailure",
+      "This input was not retained. Prepare it again or remove it from the draft.",
+      propertyPath: "/retryInputIndexes")
   }
 }

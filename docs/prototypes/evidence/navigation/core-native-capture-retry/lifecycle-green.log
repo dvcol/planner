@@ -1,0 +1,30 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeCaptureLoadingTests.swift:64:32: warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+ 62 |             reviewToken: review.reviewToken)).outcome
+ 63 |       else { throw CancellationError() }
+ 64 |       savedItem = try #require(result.generated.first)
+    |                                `- warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+ 65 |     default: retry.cancel()
+ 66 |     }
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,84 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+◇ Test case passing 1 argument scenario → "edit" to obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+◇ Test case passing 1 argument scenario → "remove" to obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+◇ Test case passing 1 argument scenario → "apply" to obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+◇ Test case passing 1 argument scenario → "cancelCaller" to obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+✔ Test obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) with 4 test cases passed after 0.091 seconds.
+◇ Test cancellingDraftCancelsItsNativeRetryAndRejectsLateInput() started.
+✔ Test cancellingDraftCancelsItsNativeRetryAndRejectsLateInput() passed after 0.013 seconds.
+◇ Test explicitRetryReloadsFailedNativeInputAndPreservesOwnedEdits() started.
+✔ Test explicitRetryReloadsFailedNativeInputAndPreservesOwnedEdits() passed after 0.016 seconds.
+✔ Suite NativeCaptureLoadingTests passed after 0.121 seconds.
+✔ Test run with 3 tests in 1 suite passed after 0.121 seconds.
