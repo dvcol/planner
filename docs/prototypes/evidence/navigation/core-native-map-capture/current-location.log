@@ -1,0 +1,23 @@
+Building for debugging...
+[1 / 10] PlannerCoreStoreTests-product
+[2 / 8] PlannerCoreStoreTests-product
+[4 / 10] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeCaptureLoadingTests.swift:392:32: warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+ 390 |         ).outcome
+ 391 |       else { throw CancellationError() }
+ 392 |       savedItem = try #require(result.generated.first)
+     |                                `- warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+ 393 |     default: retry.cancel()
+ 394 |     }
+[8 / 12] PlannerCoreStoreTests-product
+[10 / 12] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (6,27 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test nativeCurrentLocationDoesNotBecomeAFixedPlace() started.
+✔ Test nativeCurrentLocationDoesNotBecomeAFixedPlace() passed after 0.039 seconds.
+✔ Suite NativeCaptureLoadingTests passed after 0.039 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.039 seconds.

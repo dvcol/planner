@@ -1,0 +1,29 @@
+Building for debugging...
+[1 / 1]
+[1 / 15] PlannerCore
+[2 / 8] PlannerCoreStoreTests-product
+[4 / 10] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeCaptureLoadingTests.swift:534:32: warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+ 532 |         ).outcome
+ 533 |       else { throw CancellationError() }
+ 534 |       savedItem = try #require(result.generated.first)
+     |                                `- warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+ 535 |     default: retry.cancel()
+ 536 |     }
+[8 / 12] PlannerCoreStoreTests-product
+[10 / 12] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (5,17 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test nativeMapArchiveBudgetIsEightMiBBeforeSecureDecode(offset:) started.
+◇ Test case passing 1 argument offset → -1 to nativeMapArchiveBudgetIsEightMiBBeforeSecureDecode(offset:) started.
+◇ Test case passing 1 argument offset → 0 to nativeMapArchiveBudgetIsEightMiBBeforeSecureDecode(offset:) started.
+◇ Test case passing 1 argument offset → 1 to nativeMapArchiveBudgetIsEightMiBBeforeSecureDecode(offset:) started.
+✔ Test nativeMapArchiveBudgetIsEightMiBBeforeSecureDecode(offset:) with 3 test cases passed after 0.054 seconds.
+◇ Test nativeMapArchiveSizeIsIndependentFromDecodedMetadataSize() started.
+✔ Test nativeMapArchiveSizeIsIndependentFromDecodedMetadataSize() passed after 0.016 seconds.
+✔ Suite NativeCaptureLoadingTests passed after 0.071 seconds.
+✔ Test run with 2 tests in 1 suite passed after 0.071 seconds.

@@ -1,0 +1,39 @@
+Building for debugging...
+[1 / 2] PlannerCore
+[2 / 8] PlannerCoreStoreTests-product
+[14 / 38]
+[21 / 38]
+[23 / 38]
+[24 / 38]
+[26 / 38]
+[29 / 38]
+[30 / 38]
+[32 / 38] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeCaptureLoadingTests.swift:282:32: warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+280 |         ).outcome
+281 |       else { throw CancellationError() }
+282 |       savedItem = try #require(result.generated.first)
+    |                                `- warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+283 |     default: retry.cancel()
+284 |     }
+[36 / 40] PlannerCoreStoreTests-product
+[38 / 40] PlannerCoreStoreTests-product
+[40 / 42] PlannerCoreStoreTests-product
+Build complete! (6,73 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test nativeMapObjectProducesHeldPreviewWithoutOwnedContentOrInventedBookmark() started.
+✘ Test nativeMapObjectProducesHeldPreviewWithoutOwnedContentOrInventedBookmark() recorded an issue at NativeCaptureLoadingTests.swift:36:25: Expectation failed: draft.preview.candidate
+↳ draft.preview.candidate → nil
+↳   draft.preview → PlannerCapturePreview(state: PlannerCore.PlannerCapturePreview.State.notRequested, linkId: nil, candidate: nil)
+↳     state → .notRequested
+↳     linkId → nil
+↳     candidate → nil
+↳   candidate → nil
+✘ Test nativeMapObjectProducesHeldPreviewWithoutOwnedContentOrInventedBookmark() failed after 0.035 seconds with 1 issue.
+✘ Suite NativeCaptureLoadingTests failed after 0.036 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.036 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

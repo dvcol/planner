@@ -129,23 +129,51 @@ struct PlannerCaptureRetainedInput: Sendable {
   let unavailableIssue: PlannerCaptureInputIssue?
   let source: PlannerCaptureInputSource
   let nativeRepresentation: PlannerNativeCaptureRepresentation?
+  let mapCandidate: PlannerCapturePreviewCandidate?
+
+  var decodedByteCount: Int {
+    if let input {
+      switch input {
+      case .url(let text), .text(let text): return text.utf8.count
+      }
+    }
+    guard let mapCandidate else { return 0 }
+    return (mapCandidate.displayName?.utf8.count ?? 0)
+      + (mapCandidate.formattedAddress?.utf8.count ?? 0)
+      + (mapCandidate.providerReference?.value.utf8.count ?? 0)
+      + (mapCandidate.attributionText?.utf8.count ?? 0)
+  }
+
+  var lane: PlannerCaptureInputIssue.Lane {
+    if let input {
+      switch input {
+      case .url: return .url
+      case .text: return .text
+      }
+    }
+    if mapCandidate != nil { return .mapItem }
+    return unavailableIssue?.lane ?? .unsupported
+  }
 
   init(
     inputIndex: Int64, input: PlannerCaptureDirectInput?,
     unavailableIssue: PlannerCaptureInputIssue?,
     source: PlannerCaptureInputSource = .independent,
-    nativeRepresentation: PlannerNativeCaptureRepresentation? = nil
+    nativeRepresentation: PlannerNativeCaptureRepresentation? = nil,
+    mapCandidate: PlannerCapturePreviewCandidate? = nil
   ) {
     self.inputIndex = inputIndex
     self.input = input
     self.unavailableIssue = unavailableIssue
     self.source = source
     self.nativeRepresentation = nativeRepresentation
+    self.mapCandidate = mapCandidate
   }
 }
 
 enum PlannerCaptureLimits {
   static let maximumDecodedBytes = 1_048_576
+  static let maximumEncodedMapBytes = 8_388_608
   static let maximumDistinctLinks = 128
 }
 
@@ -172,6 +200,21 @@ func plannerPrepareCaptureInputs(
   var retainedInputs: [PlannerCaptureRetainedInput] = []
   for retained in inputs {
     let index = retained.inputIndex
+    let byteCount = retained.decodedByteCount
+    guard byteCount <= PlannerCaptureLimits.maximumDecodedBytes - decodedBytes else {
+      let issue = PlannerCaptureInputIssue(
+        inputIndex: index, lane: retained.lane, state: .oversized,
+        message:
+          "This input exceeds the 1 MiB capture limit. Remove it or retry with less content.",
+        blocksSave: true)
+      inputIssues.append(issue)
+      retainedInputs.append(
+        .init(
+          inputIndex: index, input: nil, unavailableIssue: issue, source: retained.source,
+          nativeRepresentation: retained.nativeRepresentation))
+      continue
+    }
+    decodedBytes += byteCount
     guard let input = retained.input else {
       guard let issue = retained.unavailableIssue else {
         throw PlannerFailure(
@@ -191,25 +234,10 @@ func plannerPrepareCaptureInputs(
       text = value
       lane = .text
     }
-    let byteCount = text.utf8.count
-    guard byteCount <= PlannerCaptureLimits.maximumDecodedBytes - decodedBytes else {
-      let issue = PlannerCaptureInputIssue(
-        inputIndex: index, lane: lane, state: .oversized,
-        message:
-          "This input exceeds the 1 MiB capture limit. Remove it or retry with less content.",
-        blocksSave: true)
-      inputIssues.append(issue)
-      retainedInputs.append(
-        .init(
-          inputIndex: index, input: nil, unavailableIssue: issue, source: retained.source,
-          nativeRepresentation: retained.nativeRepresentation))
-      continue
-    }
-    decodedBytes += byteCount
     retainedInputs.append(
       .init(
         inputIndex: index, input: input, unavailableIssue: nil, source: retained.source,
-        nativeRepresentation: retained.nativeRepresentation))
+        nativeRepresentation: retained.nativeRepresentation, mapCandidate: retained.mapCandidate))
     if lane == .url,
       (try? PlannerLinkInput(originalUrl: text).validatedKind(propertyPath: "/inputs/\(index)"))
         == nil
@@ -279,10 +307,7 @@ func plannerPrepareCaptureInputs(
     links: links.map { .init(originalUrl: $0.originalUrl, label: $0.label) })
   let draft = PlannerCaptureDraftRead(
     draftId: UUID(), generation: UUID(), content: content, links: links, inputIssues: inputIssues,
-    preview: .init(
-      state: .notRequested,
-      linkId: links.first { $0.kind == .appleMaps || $0.kind == .googleMaps }?.linkId,
-      candidate: nil),
+    preview: plannerCaptureInitialPreview(links: links, inputs: retainedInputs),
     reuseCandidates: plannerCaptureReuseCandidates(originals: originals, items: items),
     saveAllowed: !title.isEmpty && !inputIssues.contains(where: \.blocksSave))
   var origins = ["title": titleOrigin]
@@ -352,4 +377,16 @@ private func plannerCaptureTextFields(_ text: String) -> (title: String?, notes:
     lineOffset = lineEndOffset
   }
   return (nil, nil)
+}
+
+func plannerCaptureInitialPreview(
+  links: [PlannerCaptureDraftLink], inputs: [PlannerCaptureRetainedInput]
+) -> PlannerCapturePreview {
+  if let link = links.first(where: { $0.kind == .appleMaps || $0.kind == .googleMaps }) {
+    return .init(state: .notRequested, linkId: link.linkId, candidate: nil)
+  }
+  if let candidate = inputs.compactMap(\.mapCandidate).first {
+    return .init(state: .available, linkId: nil, candidate: candidate)
+  }
+  return .init(state: .notRequested, linkId: nil, candidate: nil)
 }

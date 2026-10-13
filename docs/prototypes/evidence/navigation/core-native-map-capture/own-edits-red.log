@@ -1,0 +1,29 @@
+Building for debugging...
+[1 / 1]
+[2 / 8] PlannerCoreStoreTests-product
+[4 / 10] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeCaptureLoadingTests.swift:328:32: warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+326 |         ).outcome
+327 |       else { throw CancellationError() }
+328 |       savedItem = try #require(result.generated.first)
+    |                                `- warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+329 |     default: retry.cancel()
+330 |     }
+[8 / 12] PlannerCoreStoreTests-product
+[10 / 12] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,52 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test ownCaptureEditsKeepNativeMapPreviewTemporaryThroughReviewedSave() started.
+✘ Test ownCaptureEditsKeepNativeMapPreviewTemporaryThroughReviewedSave() recorded an issue at NativeCaptureLoadingTests.swift:36:5: Expectation failed: edited.preview.candidate?.displayName == "Provider museum"
+↳ edited.preview.candidate?.displayName == "Provider museum" → false
+↳   edited.preview.candidate?.displayName → nil
+↳     some → "Provider museum"
+✘ Test ownCaptureEditsKeepNativeMapPreviewTemporaryThroughReviewedSave() failed after 0.061 seconds with 1 issue.
+✘ Suite NativeCaptureLoadingTests failed after 0.061 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.061 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

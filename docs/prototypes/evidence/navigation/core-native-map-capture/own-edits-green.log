@@ -1,0 +1,19 @@
+Building for debugging...
+[1 / 9] PlannerCoreStoreTests-product
+[2 / 16] PlannerCore
+[4 / 18] PlannerCore
+[9 / 21] PlannerCore
+[12 / 14] PlannerCoreTests-product
+[14 / 16] PlannerCoreStoreTests-product
+[16 / 18] PlannerCoreStoreTests-product
+Build complete! (7,84 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test ownCaptureEditsKeepNativeMapPreviewTemporaryThroughReviewedSave() started.
+✔ Test ownCaptureEditsKeepNativeMapPreviewTemporaryThroughReviewedSave() passed after 0.061 seconds.
+◇ Test nativeMapObjectProducesHeldPreviewWithoutOwnedContentOrInventedBookmark() started.
+✔ Test nativeMapObjectProducesHeldPreviewWithoutOwnedContentOrInventedBookmark() passed after 0.014 seconds.
+✔ Suite NativeCaptureLoadingTests passed after 0.076 seconds.
+✔ Test run with 2 tests in 1 suite passed after 0.076 seconds.

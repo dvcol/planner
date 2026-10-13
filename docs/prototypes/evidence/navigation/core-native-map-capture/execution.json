@@ -1,0 +1,208 @@
+{
+  "baseCommit": "3561799",
+  "scope": "Native MapItem capture, temporary previews, retry/removal and encoded/decoded admission",
+  "storageSchemaVersion": 18,
+  "portableFormatVersion": 2,
+  "acceptedDecision": {
+    "question": "Q77",
+    "choice": "B",
+    "encodedMapBytes": 8388608,
+    "aggregateDecodedBytes": 1048576
+  },
+  "newTests": {
+    "macFunctions": 7,
+    "macInvocations": 12,
+    "phoneFunctions": 6,
+    "phoneInvocations": 11
+  },
+  "qualified": {
+    "macCore": {
+      "functions": 183,
+      "suites": 70,
+      "invocations": 482,
+      "failures": 0,
+      "skips": 0
+    },
+    "phoneCore": {
+      "functions": 182,
+      "suites": 70,
+      "invocations": 481,
+      "failures": 0,
+      "skips": 0
+    },
+    "http": {
+      "functions": 16,
+      "suites": 4,
+      "invocations": 22,
+      "failures": 0,
+      "skips": 0
+    },
+    "strictSwiftLintFiles": 6,
+    "markdownLintDocuments": 3,
+    "macAppAndTestHost": "TEST BUILD SUCCEEDED",
+    "nativeUIRuntimeFunctions": 0
+  },
+  "reviews": {
+    "standards": "No confirmed actionable findings",
+    "spec": "No confirmed defects or unrequested behavior"
+  },
+  "redBeforeGreen": [
+    "preparation-red.log",
+    "own-edits-red.log",
+    "decoded-budget-red.log",
+    "encoded-red.log",
+    "encoded-phone-red.log.gz"
+  ],
+  "diagnostics": [
+    "Huge MapItem names serialize but native MapKit deserialization rejects them; these are diagnostic failures, not accepted-content proof",
+    "Mac encoded/decoded independence uses normal native metadata and separate public archive padding, not an observed sender",
+    "Existing native store test cleanup diagnostics are retained; no genuine crash/cleanup-failure proof is claimed"
+  ],
+  "sourceHashesVerifiedAfterAllTestProcessesExited": true,
+  "limits": [
+    "Physical sender compatibility and extension peak allocation",
+    "Genuine positive Apple place identifier preservation and original-link binding",
+    "Bounded Maps lookup and obsolete network callbacks",
+    "Capture transport/native review/Share/Intents/MCP",
+    "Real database-save/cleanup failure and termination checkpoints",
+    "Remaining import/Calendar/scale/sync/account/polish map gates"
+  ],
+  "artifacts": [
+    {
+      "path": "PlannerNativeMapDecodeProbe.log",
+      "sha256": "89085c44d7aa6e194f85ec28bf4e6be1d7b0aa83852d99160e832ff0b094904a"
+    },
+    {
+      "path": "PlannerNativeMapDecodeProbe.swift",
+      "sha256": "c19cc1432bff1fb88cc91f8e67c4c3b4f56614715541ca2a6b56acf0df3fb51b"
+    },
+    {
+      "path": "PlannerNativeMapReaderSignature.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "PlannerNativeMapReaderSignature.swift",
+      "sha256": "73d43d5369d074b85e6e08d7db890cb35211276723dc0facb8984be993c3958d"
+    },
+    {
+      "path": "commands.json",
+      "sha256": "31c417a0cae20b106aba2ae46614a4b74dd913bc929765586074243491525e19"
+    },
+    {
+      "path": "current-location.log",
+      "sha256": "4cb9b0b0d95bacdb6ab477e2068639880b5d43da731e547ee1d853637af97459"
+    },
+    {
+      "path": "decoded-budget-green.log",
+      "sha256": "c1a729e1e4771e44e6ed06351296992e77f4eb47cf905dbffcb814131cd515a3"
+    },
+    {
+      "path": "decoded-budget-red.log",
+      "sha256": "9e8ba38ffb35bec48665e16d7cbddafb691b5bac3de0c193294172ea97e0f1bf"
+    },
+    {
+      "path": "encoded-large-name-diagnostic.log",
+      "sha256": "774e51e58788b91cdf000d351ba0839decdf206058c460ec1d1d4bda012fc286"
+    },
+    {
+      "path": "encoded-mac.log",
+      "sha256": "44239c2f4f972a0d3058387296fec73915776268fd1916344135e78011a9d525"
+    },
+    {
+      "path": "encoded-phone-green.log.gz",
+      "sha256": "889b85343fa814d40b6e66ded0950d87d718d79a8705be8993a9bfac68765b91"
+    },
+    {
+      "path": "encoded-phone-red.log.gz",
+      "sha256": "2e2dc46a968b09b4cc9b470cc9e003f4828300a8db6b13a8f4f5b3526f3127f4"
+    },
+    {
+      "path": "encoded-red.log",
+      "sha256": "257ee20f4cbae4983df8b881f8aff11c81f4c0745f34a0e57f8eb8b55de1381c"
+    },
+    {
+      "path": "http-counts.json",
+      "sha256": "6a898f6b8b3ee0579f4c03b2cbd1a801f9a653dcb9d0b696336d0660cb987df1"
+    },
+    {
+      "path": "http-summary.json",
+      "sha256": "71b87906afc0bdec805a66c16224600c85395227aa1ddcf10c03092bab537023"
+    },
+    {
+      "path": "http-tests.json",
+      "sha256": "66a85896725d7298380bd9590cbfff607216e94a34f57c82df8655dafb0147c0"
+    },
+    {
+      "path": "http.log.gz",
+      "sha256": "b22169727977e55585cdf9fd1348d21ed8a4ff65bbdcd880ae8f95aee94c3405"
+    },
+    {
+      "path": "large-name-mac-diagnostic.log",
+      "sha256": "12185d8f0e27752593e0da33a92bffa7e5a4e3cec0c70c656697a87062cbd24b"
+    },
+    {
+      "path": "large-name-phone-diagnostic.log.gz",
+      "sha256": "c3501bc02c3ed8052b7f93a04be4a41728d3eba5bc5c400c2b05883bde234117"
+    },
+    {
+      "path": "lifecycle-mac.log",
+      "sha256": "fa44fe08f51282a2bb086feb9eb4d51390120679b572c6d858bd38742a02320c"
+    },
+    {
+      "path": "mac-build.log.gz",
+      "sha256": "8c2a66e87c94ff6677e76fa0aea9627c1625caeb2b18f43152af61be84ec859a"
+    },
+    {
+      "path": "mac-core.log.gz",
+      "sha256": "6542d5e500598629193174383b3e122463cc445e417df6acfbbfa41e671103c8"
+    },
+    {
+      "path": "mac-counts.json",
+      "sha256": "118cb776fb374e5cddc28833e87a2132bbd9496010b0b648a215ad316e90eaa9"
+    },
+    {
+      "path": "markdownlint.log",
+      "sha256": "c27967b63e6e89ee5f551a0e4488c253bf775eae2c9af2243e8c0b15e42eb6e7"
+    },
+    {
+      "path": "own-edits-green.log",
+      "sha256": "43b08c82091b63749175f425971732ca8ac7b2f10616a3ac780374cd15f87423"
+    },
+    {
+      "path": "own-edits-red.log",
+      "sha256": "01cb6ca8c2dbbd9087be9f4946dae957c2f36fe4b5d783c0b338718d8daa6729"
+    },
+    {
+      "path": "phone-core.log.gz",
+      "sha256": "e2606cc9c08ff0b64f55a8fba40d40e352ca032e35647308adc539f7a3146468"
+    },
+    {
+      "path": "phone-counts.json",
+      "sha256": "cb9a0c87e2a9773f4c6e6eede2344a4d3ca1ec1f0ef65040359b4ec47d20b83e"
+    },
+    {
+      "path": "phone-summary.json",
+      "sha256": "1abf773df2d701d924d47db173750e0aa5f285a36953940acbcf69ad6560a475"
+    },
+    {
+      "path": "phone-tests.json.gz",
+      "sha256": "34a087db5a6dfe9afce4c2f8ef1c85f4f1fca806ab1b9c75dd83ab219e944533"
+    },
+    {
+      "path": "preparation-green.log",
+      "sha256": "edd45948005646b73457c8c130106c154ca58d38f13718ad74cabb07036e7664"
+    },
+    {
+      "path": "preparation-red.log",
+      "sha256": "0b939bdc7b3d6eacf242373d52025de8e731be715bb7a8a922486748f4c9ad82"
+    },
+    {
+      "path": "sources.json",
+      "sha256": "4e75ddc988bf37f496c2820637c44c03d8e51dc3a43f61e598897d200e144e31"
+    },
+    {
+      "path": "strict-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

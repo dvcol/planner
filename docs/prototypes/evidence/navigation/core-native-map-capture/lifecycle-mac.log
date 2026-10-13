@@ -1,0 +1,114 @@
+Building for debugging...
+[1 / 5] PlannerCoreTests-product
+[2 / 17] PlannerCoreStoreTests-product
+[2 / 18] PlannerCore
+[5 / 21] PlannerCore
+[10 / 23] PlannerCore
+[13 / 19] PlannerCoreTests-product
+[15 / 21] PlannerCoreStoreTests-product
+[17 / 23] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeCaptureLoadingTests.swift:471:32: warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+ 469 |         ).outcome
+ 470 |       else { throw CancellationError() }
+ 471 |       savedItem = try #require(result.generated.first)
+     |                                `- warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+ 472 |     default: retry.cancel()
+ 473 |     }
+[21 / 25] PlannerCoreStoreTests-product
+[23 / 25] PlannerCoreStoreTests-product
+[25 / 27] PlannerCoreStoreTests-product
+Build complete! (11,22 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test failedNativeMapInputRequiresExplicitRetryOrRemoval(action:) started.
+◇ Test case passing 1 argument action → "retry" to failedNativeMapInputRequiresExplicitRetryOrRemoval(action:) started.
+◇ Test case passing 1 argument action → "remove" to failedNativeMapInputRequiresExplicitRetryOrRemoval(action:) started.
+✔ Test failedNativeMapInputRequiresExplicitRetryOrRemoval(action:) with 2 test cases passed after 0.065 seconds.
+◇ Test nativeCurrentLocationDoesNotBecomeAFixedPlace() started.
+✔ Test nativeCurrentLocationDoesNotBecomeAFixedPlace() passed after 0.015 seconds.
+◇ Test nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) started.
+◇ Test case passing 1 argument offset → -1 to nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) started.
+◇ Test case passing 1 argument offset → 0 to nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) started.
+◇ Test case passing 1 argument offset → 1 to nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) started.
+✔ Test nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) with 3 test cases passed after 3.866 seconds.
+◇ Test ownCaptureEditsKeepNativeMapPreviewTemporaryThroughReviewedSave() started.
+✔ Test ownCaptureEditsKeepNativeMapPreviewTemporaryThroughReviewedSave() passed after 0.062 seconds.
+◇ Test nativeMapObjectProducesHeldPreviewWithoutOwnedContentOrInventedBookmark() started.
+✔ Test nativeMapObjectProducesHeldPreviewWithoutOwnedContentOrInventedBookmark() passed after 0.015 seconds.
+◇ Test nativeRetryReservesAcceptedLinksBeforeAdmittingEarlierText(count:) started.
+◇ Test case passing 1 argument count → 127 to nativeRetryReservesAcceptedLinksBeforeAdmittingEarlierText(count:) started.
+◇ Test case passing 1 argument count → 128 to nativeRetryReservesAcceptedLinksBeforeAdmittingEarlierText(count:) started.
+◇ Test case passing 1 argument count → 129 to nativeRetryReservesAcceptedLinksBeforeAdmittingEarlierText(count:) started.
+✔ Test nativeRetryReservesAcceptedLinksBeforeAdmittingEarlierText(count:) with 3 test cases passed after 0.045 seconds.
+◇ Test rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+◇ Test case passing 1 argument scenario → "category" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+◇ Test case passing 1 argument scenario → "tag" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+◇ Test case passing 1 argument scenario → "foreignLink" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+◇ Test case passing 1 argument scenario → "linkLimit" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+◇ Test case passing 1 argument scenario → "cancelledCaller" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+✔ Test rejectedEditLeavesThePendingNativeRetryActive(scenario:) with 5 test cases passed after 0.074 seconds.
+◇ Test nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:urlFirst:) started.
+◇ Test case passing 2 arguments offset → -1, urlFirst → true to nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:urlFirst:) started.
+◇ Test case passing 2 arguments offset → -1, urlFirst → false to nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:urlFirst:) started.
+◇ Test case passing 2 arguments offset → 0, urlFirst → true to nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:urlFirst:) started.
+◇ Test case passing 2 arguments offset → 0, urlFirst → false to nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:urlFirst:) started.
+◇ Test case passing 2 arguments offset → 1, urlFirst → true to nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:urlFirst:) started.
+◇ Test case passing 2 arguments offset → 1, urlFirst → false to nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:urlFirst:) started.
+✔ Test nativeRetryKeepsOtherLanesAndEnforcesTheWholeDraftByteBudget(offset:urlFirst:) with 6 test cases passed after 7.849 seconds.
+◇ Test obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+◇ Test case passing 1 argument scenario → "edit" to obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+◇ Test case passing 1 argument scenario → "remove" to obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+◇ Test case passing 1 argument scenario → "apply" to obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+◇ Test case passing 1 argument scenario → "cancelCaller" to obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+✔ Test obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) with 4 test cases passed after 0.072 seconds.
+◇ Test cancellingDraftCancelsItsNativeRetryAndRejectsLateInput() started.
+✔ Test cancellingDraftCancelsItsNativeRetryAndRejectsLateInput() passed after 0.015 seconds.
+◇ Test explicitRetryReloadsFailedNativeInputAndPreservesOwnedEdits() started.
+✔ Test explicitRetryReloadsFailedNativeInputAndPreservesOwnedEdits() passed after 0.017 seconds.
+◇ Test mixedFileAndWebRepresentationsKeepTheUsableWebLinkWithoutLoadingFileContent() started.
+✔ Test mixedFileAndWebRepresentationsKeepTheUsableWebLinkWithoutLoadingFileContent() passed after 0.009 seconds.
+◇ Test genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+◇ Test case passing 1 argument encoding → Unicode (UTF-8) to genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+◇ Test case passing 1 argument encoding → Unicode (UTF-16) to genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+◇ Test case passing 1 argument encoding → Unicode (UTF-32) to genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+✔ Test genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) with 3 test cases passed after 0.042 seconds.
+◇ Test nativeTextLinksShareTheDistinctLinkLimit(count:) started.
+◇ Test case passing 1 argument count → 127 to nativeTextLinksShareTheDistinctLinkLimit(count:) started.
+◇ Test case passing 1 argument count → 128 to nativeTextLinksShareTheDistinctLinkLimit(count:) started.
+◇ Test case passing 1 argument count → 129 to nativeTextLinksShareTheDistinctLinkLimit(count:) started.
+✔ Test nativeTextLinksShareTheDistinctLinkLimit(count:) with 3 test cases passed after 0.035 seconds.
+◇ Test loadedDescriptionsStayTemporaryAcrossRetryOwnEditsAndReviewedSave() started.
+✔ Test loadedDescriptionsStayTemporaryAcrossRetryOwnEditsAndReviewedSave() passed after 0.028 seconds.
+◇ Test decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf8", offset → -1 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf8", offset → 0 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf8", offset → 1 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf16", offset → -1 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf16", offset → 0 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf16", offset → 1 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+✔ Test decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) with 6 test cases passed after 7.736 seconds.
+◇ Test nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "failure" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "badEncoding" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "unsupported" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "file" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "textOnly" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "empty" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+✔ Test nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) with 6 test cases passed after 0.060 seconds.
+◇ Test providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument count → 31 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument count → 32 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument count → 33 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+✔ Test providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) with 3 test cases passed after 0.034 seconds.
+◇ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() started.
+✔ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() passed after 11.504 seconds.
+◇ Test cancellationCancelsNativeProgressAndLateDataCannotChangeTheLoadedResult() started.
+✔ Test cancellationCancelsNativeProgressAndLateDataCannotChangeTheLoadedResult() passed after 0.026 seconds.
+◇ Test outOfOrderNativeCallbacksKeepSourceAndRepresentationOrderWithFourConcurrentLoads() started.
+✔ Test outOfOrderNativeCallbacksKeepSourceAndRepresentationOrderWithFourConcurrentLoads() passed after 0.131 seconds.
+◇ Test registeredUrlAndTextRepresentationsProduceOneDraftWithoutPromotingProviderProse() started.
+✔ Test registeredUrlAndTextRepresentationsProduceOneDraftWithoutPromotingProviderProse() passed after 0.018 seconds.
+✔ Suite NativeCaptureLoadingTests passed after 31.731 seconds.
+✔ Test run with 22 tests in 1 suite passed after 31.731 seconds.

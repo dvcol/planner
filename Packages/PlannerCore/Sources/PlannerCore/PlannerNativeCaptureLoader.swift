@@ -1,4 +1,5 @@
 import Foundation
+import MapKit
 import UniformTypeIdentifiers
 
 @MainActor public enum PlannerNativeCaptureLoader {
@@ -29,8 +30,15 @@ import UniformTypeIdentifiers
             type: type, lane: .text, encoding: encoding))
         break
       }
-      let supportedIdentifiers = [UTType.url, .utf8PlainText, .utf16PlainText, .plainText]
-        .map(\.identifier)
+      if provider.registeredTypeIdentifiers.contains(MKMapItemTypeIdentifier) {
+        representations.append(
+          .init(
+            index: Int64(representations.count), provider: provider,
+            type: .init(importedAs: MKMapItemTypeIdentifier), lane: .mapItem, encoding: nil))
+      }
+      let supportedIdentifiers =
+        [UTType.url, .utf8PlainText, .utf16PlainText, .plainText]
+        .map(\.identifier) + [MKMapItemTypeIdentifier]
       if provider.registeredTypeIdentifiers.isEmpty
         || provider.registeredTypeIdentifiers.contains(where: { !supportedIdentifiers.contains($0) }
         )
@@ -110,23 +118,13 @@ import UniformTypeIdentifiers
           }
         }
         for input in batch.sorted(by: { $0.inputIndex < $1.inputIndex }) {
-          guard let value = input.input else {
-            inputs.append(input)
-            continue
-          }
-          let text: String
-          switch value {
-          case .url(let value), .text(let value): text = value
-          }
-          let byteCount = text.utf8.count
+          let byteCount = input.decodedByteCount
           guard byteCount <= maximumDecodedBytes - decodedBytes else {
-            var lane = PlannerCaptureInputIssue.Lane.text
-            if case .url = value { lane = .url }
             inputs.append(
               .init(
                 inputIndex: input.inputIndex, input: nil,
                 unavailableIssue: .init(
-                  inputIndex: input.inputIndex, lane: lane, state: .oversized,
+                  inputIndex: input.inputIndex, lane: input.lane, state: .oversized,
                   message:
                     "This input exceeds the 1 MiB capture limit. Remove it or retry with less content.",
                   blocksSave: true), source: .provider,
@@ -187,6 +185,32 @@ import UniformTypeIdentifiers
         message: "This input could not be loaded. Retry it or remove it before Add.",
         blocksSave: true)
     }
+    if representation.lane == .mapItem {
+      guard data.count <= PlannerCaptureLimits.maximumEncodedMapBytes else {
+        return issue(
+          representation, state: .oversized,
+          message:
+            "This map input exceeds the 8 MiB encoded limit. Remove it or retry with less content.",
+          blocksSave: true)
+      }
+      do {
+        #if os(iOS)
+          let mapItem = try MKMapItem.object(
+            withItemProviderData: data, typeIdentifier: MKMapItemTypeIdentifier)
+        #else
+          guard
+            let mapItem = try NSKeyedUnarchiver.unarchivedObject(
+              ofClass: MKMapItem.self, from: data)
+          else { throw CocoaError(.coderReadCorrupt) }
+        #endif
+        return mapInput(representation, candidate: plannerNativeMapCandidate(mapItem))
+      } catch {
+        return issue(
+          representation, state: .failed,
+          message: "This map input could not be loaded. Retry it or remove it before Add.",
+          blocksSave: true)
+      }
+    }
     var maximumRepresentationBytes = PlannerCaptureLimits.maximumDecodedBytes + 3
     if representation.encoding == .utf16 {
       maximumRepresentationBytes = PlannerCaptureLimits.maximumDecodedBytes * 2 + 2
@@ -226,6 +250,17 @@ import UniformTypeIdentifiers
     return .init(
       inputIndex: representation.index, input: input, unavailableIssue: nil, source: .provider,
       nativeRepresentation: representation)
+  }
+
+  private static func mapInput(
+    _ representation: PlannerNativeCaptureRepresentation, candidate: PlannerCapturePreviewCandidate
+  ) -> PlannerCaptureRetainedInput {
+    .init(
+      inputIndex: representation.index, input: nil,
+      unavailableIssue: .init(
+        inputIndex: representation.index, lane: .mapItem, state: .held,
+        message: "Shared place: \(candidate.displayName ?? "Unnamed place")", blocksSave: false),
+      source: .provider, nativeRepresentation: representation, mapCandidate: candidate)
   }
 
   private static func issue(

@@ -1,0 +1,40 @@
+Building for debugging...
+[1 / 11] PlannerCoreStoreTests-product
+[2 / 8] PlannerCoreStoreTests-product
+[4 / 10] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeCaptureLoadingTests.swift:532:32: warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+ 530 |         ).outcome
+ 531 |       else { throw CancellationError() }
+ 532 |       savedItem = try #require(result.generated.first)
+     |                                `- warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+ 533 |     default: retry.cancel()
+ 534 |     }
+[7 / 11] PlannerCoreStoreTests-product
+[9 / 11] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (5,27 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test nativeMapArchiveLargerThanDecodedBudgetRetainsMetadataWithinBudget() started.
+✘ Test nativeMapArchiveLargerThanDecodedBudgetRetainsMetadataWithinBudget() recorded an issue at NativeCaptureLoadingTests.swift:62:7: Expectation failed: draft.preview.candidate?.displayName?.utf8.count == 524_288
+↳ Loading issues: ["This map input could not be loaded. Retry it or remove it before Add."]
+↳ draft.preview.candidate?.displayName?.utf8.count == 524_288 → false
+↳   draft.preview.candidate?.displayName?.utf8.count → nil
+↳   524_288 → 524288
+↳     some → 524288
+✘ Test nativeMapArchiveLargerThanDecodedBudgetRetainsMetadataWithinBudget() recorded an issue at NativeCaptureLoadingTests.swift:65:7: Expectation failed: draft.preview.candidate?.coordinate == .init(latitude: 35.66, longitude: 139.7)
+↳ draft.preview.candidate?.coordinate == .init(latitude: 35.66, longitude: 139.7) → false
+↳   draft.preview.candidate?.coordinate → nil
+↳   .init(latitude: 35.66, longitude: 139.7) → PlannerCoordinate(latitude: 35.66, longitude: 139.7)
+↳     some → PlannerCoordinate(latitude: 35.66, longitude: 139.7)
+↳       latitude → 35.66
+↳       longitude → 139.7
+✘ Test nativeMapArchiveLargerThanDecodedBudgetRetainsMetadataWithinBudget() recorded an issue at NativeCaptureLoadingTests.swift:66:7: Expectation failed: draft.inputIssues.allSatisfy { !$0.blocksSave }
+↳ draft.inputIssues.allSatisfy { !$0.blocksSave } → <not evaluated>
+✘ Test nativeMapArchiveLargerThanDecodedBudgetRetainsMetadataWithinBudget() failed after 0.037 seconds with 3 issues.
+✘ Suite NativeCaptureLoadingTests failed after 0.037 seconds with 3 issues.
+✘ Test run with 1 test in 1 suite failed after 0.038 seconds with 3 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

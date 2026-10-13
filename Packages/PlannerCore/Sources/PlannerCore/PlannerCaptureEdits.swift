@@ -56,10 +56,7 @@ func plannerEditCapture(
   let updated = PlannerCaptureDraftRead(
     draftId: draft.read.draftId, generation: UUID(), content: content, links: links,
     inputIssues: read.inputIssues,
-    preview: .init(
-      state: .notRequested,
-      linkId: links.first { $0.kind == .appleMaps || $0.kind == .googleMaps }?.linkId,
-      candidate: nil),
+    preview: plannerCaptureInitialPreview(links: links, inputs: retainedInputs),
     reuseCandidates: plannerCaptureReuseCandidates(
       originals: Set(links.map(\.originalUrl)), items: items),
     saveAllowed: !read.inputIssues.contains(where: \.blocksSave) && (try? content.validate()) != nil

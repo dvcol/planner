@@ -1,0 +1,30 @@
+Building for debugging...
+[1 / 10] PlannerCoreStoreTests-product
+[2 / 8] PlannerCoreStoreTests-product
+[4 / 10] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeCaptureLoadingTests.swift:367:32: warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+ 365 |         ).outcome
+ 366 |       else { throw CancellationError() }
+ 367 |       savedItem = try #require(result.generated.first)
+     |                                `- warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+ 368 |     default: retry.cancel()
+ 369 |     }
+[7 / 11] PlannerCoreStoreTests-product
+[9 / 11] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (4,95 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) started.
+◇ Test case passing 1 argument offset → -1 to nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) started.
+◇ Test case passing 1 argument offset → 0 to nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) started.
+◇ Test case passing 1 argument offset → 1 to nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) started.
+✘ Test nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) recorded an issue with 1 argument offset → 1 at NativeCaptureLoadingTests.swift:45:7: Expectation failed: draft.inputIssues.contains { $0.inputIndex == 1 && $0.lane == .text && $0.state == .oversized && $0.blocksSave }
+↳ draft.inputIssues.contains { $0.inputIndex == 1 && $0.lane == .text && $0.state == .oversized && $0.blocksSave } → <not evaluated>
+✘ Test nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) with 3 test cases failed after 5.872 seconds with 1 issue.
+✘ Suite NativeCaptureLoadingTests failed after 5.872 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 5.873 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

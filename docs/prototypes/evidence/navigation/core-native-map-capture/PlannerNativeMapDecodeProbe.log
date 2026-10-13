@@ -1,0 +1,1 @@
+Swift/ErrorType.swift:254: Fatal error: Error raised at top level: Error Domain=MKErrorDomain Code=1 "Data deserialization failed" UserInfo={NSLocalizedDescription=Data deserialization failed}

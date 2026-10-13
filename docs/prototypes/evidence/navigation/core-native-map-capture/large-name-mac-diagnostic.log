@@ -1,0 +1,50 @@
+Building for debugging...
+[Computing dependencies]
+[1 / 1]
+[1 / 10] PlannerCoreStoreTests-product
+[1 / 16] PlannerCore
+[2 / 8] PlannerCoreStoreTests-product
+[4 / 10] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeCaptureLoadingTests.swift:362:32: warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+ 360 |         ).outcome
+ 361 |       else { throw CancellationError() }
+ 362 |       savedItem = try #require(result.generated.first)
+     |                                `- warning: '#require(_:_:)' is redundant because 'result.generated.first' never equals 'nil' (from macro 'require')
+ 363 |     default: retry.cancel()
+ 364 |     }
+[8 / 12] PlannerCoreStoreTests-product
+[10 / 12] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (7,54 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) started.
+◇ Test case passing 1 argument offset → -1 to nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) started.
+✘ Test nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) recorded an issue with 1 argument offset → -1 at NativeCaptureLoadingTests.swift:36:5: Expectation failed: draft.preview.candidate?.displayName?.utf8.count == 524_288
+↳ draft.preview.candidate?.displayName?.utf8.count == 524_288 → false
+↳   draft.preview.candidate?.displayName?.utf8.count → nil
+↳   524_288 → 524288
+↳     some → 524288
+✘ Test nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) recorded an issue with 1 argument offset → -1 at NativeCaptureLoadingTests.swift:38:7: Expectation failed: draft.inputIssues.allSatisfy { !$0.blocksSave }
+↳ draft.inputIssues.allSatisfy { !$0.blocksSave } → <not evaluated>
+◇ Test case passing 1 argument offset → 0 to nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) started.
+✘ Test nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) recorded an issue with 1 argument offset → 0 at NativeCaptureLoadingTests.swift:36:5: Expectation failed: draft.preview.candidate?.displayName?.utf8.count == 524_288
+↳ draft.preview.candidate?.displayName?.utf8.count == 524_288 → false
+↳   draft.preview.candidate?.displayName?.utf8.count → nil
+↳   524_288 → 524288
+↳     some → 524288
+✘ Test nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) recorded an issue with 1 argument offset → 0 at NativeCaptureLoadingTests.swift:38:7: Expectation failed: draft.inputIssues.allSatisfy { !$0.blocksSave }
+↳ draft.inputIssues.allSatisfy { !$0.blocksSave } → <not evaluated>
+◇ Test case passing 1 argument offset → 1 to nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) started.
+✘ Test nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) recorded an issue with 1 argument offset → 1 at NativeCaptureLoadingTests.swift:36:5: Expectation failed: draft.preview.candidate?.displayName?.utf8.count == 524_288
+↳ draft.preview.candidate?.displayName?.utf8.count == 524_288 → false
+↳   draft.preview.candidate?.displayName?.utf8.count → nil
+↳   524_288 → 524288
+↳     some → 524288
+✘ Test nativeMapDescriptionsShareTheWholeCaptureByteBudget(offset:) with 3 test cases failed after 0.137 seconds with 5 issues.
+✘ Suite NativeCaptureLoadingTests failed after 0.138 seconds with 5 issues.
+✘ Test run with 1 test in 1 suite failed after 0.138 seconds with 5 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)
