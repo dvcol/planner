@@ -32,6 +32,12 @@ struct SavedPlannerItinerary: Identifiable {
   var id: UUID { source.id }
 }
 
+struct SavedPlannerCalendarEntry: Identifiable {
+  let schedule: PlannerScheduleSourceRead
+  let title: String
+  var id: UUID { schedule.source.id }
+}
+
 enum SavedReviewedChangeResult {
   case applied
   case reviewChanged(PlannerReview)
@@ -268,6 +274,41 @@ final class SavedPlannerStore {
     guard let planner, let session else { return nil }
     return await planner.read(
       session: session, request: .source(.init(kind: .schedule, id: identifier)))
+  }
+
+  func readCalendarEntries() async -> [SavedPlannerCalendarEntry]? {
+    guard let planner, let session else { return nil }
+    guard
+      case .snapshot(let snapshot) = await planner.query(
+        .init(
+          session: session, request: .catalog(.init(sourceKind: .schedule, archive: .all)))),
+      case .rows(let window) = await planner.read(
+        session: session,
+        request: .rows(generation: snapshot.generation, offset: 0, limit: Int64.max))
+    else {
+      alertMessage = "Planner could not read its Calendar schedules."
+      return nil
+    }
+    var entries: [SavedPlannerCalendarEntry] = []
+    for row in window.rows {
+      guard case .source(let source) = row.identity,
+        case .source(.schedule(let schedule)) = await planner.read(
+          session: session, request: .source(source))
+      else {
+        alertMessage = "Planner could not open a Calendar schedule."
+        return nil
+      }
+      let title: String
+      switch await planner.read(session: session, request: .source(schedule.content.source)) {
+      case .source(.item(let item)): title = item.content.title
+      case .source(.itinerary(let itinerary)): title = itinerary.content.title
+      default:
+        alertMessage = "Planner could not open a scheduled Item or Itinerary."
+        return nil
+      }
+      entries.append(.init(schedule: schedule, title: title))
+    }
+    return entries
   }
 
   func createSchedule(

@@ -2,11 +2,11 @@ import PlannerCore
 import SwiftUI
 
 private enum SavedPlannerSection: Hashable {
-  case lists, items, inbox, itineraries
+  case lists, items, inbox, itineraries, calendar
 }
 
 private enum SavedPlannerSidebarSelection: Hashable {
-  case lists, items, inbox, itineraries
+  case lists, items, inbox, itineraries, calendar
   case list(UUID)
 }
 
@@ -26,6 +26,7 @@ struct SavedPlannerView: View {
 
   @Bindable var store: SavedPlannerStore
   @State private var selectedSection: SavedPlannerSection = .lists
+  @State private var calendarSelection: SavedCalendarSelection?
   @State private var selectedItineraryIdentifier: UUID?
   @State private var selectedItineraryRow: SavedItineraryRowSelection?
   @State private var itineraryColumnVisibility: NavigationSplitViewVisibility = .all
@@ -125,6 +126,19 @@ struct SavedPlannerView: View {
       selectedItineraryRow = nil
       if selectedItineraryIdentifier != nil { itineraryDeletionMessage = nil }
     }
+    .onChange(of: calendarSelection) {
+      guard let selection = calendarSelection else { return }
+      if selection.source.kind == .item {
+        if selectedItemId != selection.source.id {
+          selectedItem = nil
+          isOpeningItem = true
+          selectedItemId = selection.source.id
+        }
+      } else if selection.source.kind == .itinerary {
+        selectedItineraryIdentifier = selection.source.id
+      }
+    }
+    .onChange(of: store.devicePreferenceNamespace) { calendarSelection = nil }
     .task(id: selectedAppearanceIdentity) { await loadSelectedAppearance() }
     .task(id: store.changeRevision) {
       await loadListCatalog()
@@ -220,6 +234,9 @@ struct SavedPlannerView: View {
         Tab("Lists", systemImage: "list.bullet", value: .lists) { plannerColumns }
         Tab("Items", systemImage: "square.stack", value: .items) { catalogColumns }
         Tab("Inbox", systemImage: "tray", value: .inbox) { catalogColumns }
+        Tab("Calendar", systemImage: "calendar", value: .calendar) {
+          calendarColumns
+        }
         Tab(
           "Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath",
           value: .itineraries
@@ -244,6 +261,61 @@ struct SavedPlannerView: View {
     }
   }
 
+  #if os(iOS)
+    @ViewBuilder
+    private var calendarColumns: some View {
+      if horizontalSizeClass == .regular {
+        NavigationSplitView {
+          SavedCalendarView(store: store, selection: $calendarSelection)
+        } detail: {
+          calendarDetailStack
+        }
+      } else {
+        NavigationStack {
+          SavedCalendarView(store: store, selection: $calendarSelection)
+            .navigationDestination(item: $calendarSelection) { _ in calendarDetail }
+        }
+      }
+    }
+  #endif
+
+  private var calendarDetailStack: some View {
+    NavigationStack {
+      calendarDetail
+    }
+    .id(calendarSelection)
+  }
+
+  @ViewBuilder
+  private var calendarDetail: some View {
+    if let selection = calendarSelection {
+      if selection.source.kind == .item {
+        if selectedItemId == selection.source.id,
+          selectedItem == nil || selectedItem?.source == selection.source
+        {
+          itemDetail
+        } else {
+          ProgressView("Opening Item")
+        }
+      } else if selection.source.kind == .itinerary {
+        if selectedItineraryIdentifier == selection.source.id {
+          itineraryDetail
+            .navigationDestination(item: $selectedItineraryRow) { row in
+              SavedItineraryItemDetail(
+                appearance: row.appearance(itineraryId: selection.source.id),
+                isReviewingDeletion: itineraryDeletionDraft?.source.id == selection.source.id
+              )
+              .id(row)
+            }
+        } else {
+          ProgressView("Opening Itinerary")
+        }
+      }
+    } else {
+      ContentUnavailableView("Choose a schedule", systemImage: "calendar")
+    }
+  }
+
   private var sidebarSelection: Binding<SavedPlannerSidebarSelection?> {
     Binding(
       get: {
@@ -251,6 +323,7 @@ struct SavedPlannerView: View {
           if selectedSection == .items { return .items }
           if selectedSection == .inbox { return .inbox }
           if selectedSection == .itineraries { return .itineraries }
+          if selectedSection == .calendar { return .calendar }
         #endif
         if let selectedListId { return .list(selectedListId) }
         #if os(macOS)
@@ -264,6 +337,7 @@ struct SavedPlannerView: View {
         case .items: selectedSection = .items
         case .inbox: selectedSection = .inbox
         case .itineraries: selectedSection = .itineraries
+        case .calendar: selectedSection = .calendar
         case .list(let identifier):
           selectedSection = .lists
           selectedListId = identifier
@@ -791,6 +865,10 @@ struct SavedPlannerView: View {
                 "Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
             }
             .accessibilityIdentifier("saved.section.itineraries")
+            NavigationLink(value: SavedPlannerSidebarSelection.calendar) {
+              Label("Calendar", systemImage: "calendar")
+            }
+            .accessibilityIdentifier("saved.section.calendar")
           }
         #endif
         Section("Lists") {
@@ -869,7 +947,9 @@ struct SavedPlannerView: View {
         }
       }
     } content: {
-      if usesItineraryColumns {
+      if selectedSection == .calendar {
+        SavedCalendarView(store: store, selection: $calendarSelection)
+      } else if usesItineraryColumns {
         if selectedItineraryIdentifier != nil {
           itineraryDetail
             .toolbar {
@@ -1062,7 +1142,9 @@ struct SavedPlannerView: View {
         ContentUnavailableView("Choose a List", systemImage: "list.bullet.rectangle")
       }
     } detail: {
-      if usesItineraryColumns {
+      if selectedSection == .calendar {
+        calendarDetailStack
+      } else if usesItineraryColumns {
         itineraryAppearanceDetail
       } else if isItemSection {
         itemDetail
