@@ -1,0 +1,42 @@
+Building for debugging...
+[Pre-planning 1 / 154]
+[Planning deferred tasks]
+[1 / 1]
+[8 / 22] PlannerCoreTests-product
+[8 / 21] PlannerCore_PlannerCoreStoreTests
+[12 / 23] PlannerCoreStoreTests-product
+[15 / 26] PlannerCoreStoreTests-product
+[21 / 25] PlannerCoreStoreTests-product
+[23 / 25] PlannerCoreStoreTests-product
+Build complete! (4,92 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeProvenanceMigrationTests started.
+◇ Suite NativeImportApplyTests started.
+◇ Suite NativeImportProvenanceTests started.
+◇ Test failedRecoveryPreparationLeavesGraphAndReceiptUnapplied() started.
+◇ Test unsupportedNativeProviderReferenceRejectsWithoutSavingAPartialImport() started.
+◇ Test genuineSchema16MigrationPreservesGraphRecoveryAndImportReceipt() started.
+◇ Test reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test case passing 1 argument retryRecovery → false to reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test case passing 1 argument kind → "item" to importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test case passing 1 argument retryRecovery → true to reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test case passing 1 argument kind → "itinerary" to importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test case passing 1 argument kind → "list" to importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test case passing 1 argument kind → "tag" to importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test case passing 1 argument scenario → "notes" to ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test case passing 1 argument kind → "category" to importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test case passing 1 argument scenario → "localCompletion" to ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+✔ Test unsupportedNativeProviderReferenceRejectsWithoutSavingAPartialImport() passed after 0.142 seconds.
+✔ Test failedRecoveryPreparationLeavesGraphAndReceiptUnapplied() passed after 0.142 seconds.
+✔ Test reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) with 2 test cases passed after 0.329 seconds.
+✔ Test ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) with 2 test cases passed after 0.379 seconds.
+✔ Suite NativeImportApplyTests passed after 0.380 seconds.
+✔ Test importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) with 5 test cases passed after 0.508 seconds.
+✔ Suite NativeImportProvenanceTests passed after 0.508 seconds.
+✔ Test genuineSchema16MigrationPreservesGraphRecoveryAndImportReceipt() passed after 0.957 seconds.
+✔ Suite NativeProvenanceMigrationTests passed after 0.957 seconds.
+✔ Test run with 6 tests in 3 suites passed after 0.957 seconds.

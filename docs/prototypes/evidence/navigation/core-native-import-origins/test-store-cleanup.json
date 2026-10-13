@@ -1,0 +1,600 @@
+{
+  "afterAllTestProcessesExited": true,
+  "removedDisposableFixtures": [
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/0560B495-103F-4037-ADA6-35A8FFCE0550",
+      "files": 22,
+      "bytes": 1482742
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/0A38161E-CF18-458E-A548-C04E57DCA3BD",
+      "files": 22,
+      "bytes": 1505827
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/0B127BE1-3729-4A98-A040-D0B0FAC27C9F",
+      "files": 22,
+      "bytes": 1473417
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/1BCCB2C6-957D-491B-83CA-27542C584458",
+      "files": 22,
+      "bytes": 1516953
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/20CD22B5-7AB7-4A7B-98AE-BC6A0970F1C6",
+      "files": 22,
+      "bytes": 1523659
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/27288EA9-7C4A-459C-B5CF-DA86CB077CA1",
+      "files": 22,
+      "bytes": 1492600
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/296DDC83-5C20-411B-9EE8-3D6EC2AAEEBB",
+      "files": 22,
+      "bytes": 1514499
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/30FA64D0-4CCF-4A74-A164-5122D4A0013C",
+      "files": 9,
+      "bytes": 603816
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/3204393E-DADA-48AB-809C-4DA2801F68E0",
+      "files": 22,
+      "bytes": 1483942
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/356429E5-AD84-4818-9D1C-F83553C8371D",
+      "files": 22,
+      "bytes": 1523720
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/37BA37B7-5172-4A2F-A4F5-DCB930FCA5BD",
+      "files": 22,
+      "bytes": 1514413
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/3FBA850F-C7A5-4172-B82D-44746FC539D9",
+      "files": 22,
+      "bytes": 1513216
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/48AFA519-AF2E-43E6-AA19-7FF9270FCDE7",
+      "files": 22,
+      "bytes": 1472549
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/508BD1BF-6A13-4C31-8FEA-7795D5C4E8EB",
+      "files": 22,
+      "bytes": 1490596
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/6170ABB2-DBD9-43E2-B490-8AF6C06937A9",
+      "files": 22,
+      "bytes": 1521020
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/6580BBD4-6E64-4E4D-A93C-70F6D4C6131E",
+      "files": 22,
+      "bytes": 1480207
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/717A1EE1-4DA1-4B20-B496-7F2FAFBE0E61",
+      "files": 22,
+      "bytes": 1492249
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/73E31E9F-95E9-46A8-B9AE-4A0C81894787",
+      "files": 22,
+      "bytes": 1488145
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/8BFEB383-1103-46E0-B01B-3B44B01EAF0E",
+      "files": 22,
+      "bytes": 1497270
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/8CDABC01-4165-4407-ACD7-5F3F0852A95E",
+      "files": 22,
+      "bytes": 1514485
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/A79A5D8F-0981-4BAC-9A05-20BCA7F90137",
+      "files": 11,
+      "bytes": 705444
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/AB146FB5-084B-4828-AD8A-75095BCA1485",
+      "files": 11,
+      "bytes": 717653
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/C005294E-92AA-4A56-AFFF-5DC01E820250",
+      "files": 22,
+      "bytes": 1511299
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/CD8DA2FB-ADF2-4C2E-990B-169FA71E4BAF",
+      "files": 22,
+      "bytes": 1475349
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/D04C34B0-CDE6-40F6-A77C-051548A3F0BB",
+      "files": 22,
+      "bytes": 1498324
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/D1333FCE-B824-4308-B9CB-5C09140F0289",
+      "files": 22,
+      "bytes": 1479156
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/DD18B1F1-3184-49E5-BA58-813426CC6909",
+      "files": 22,
+      "bytes": 1497367
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/E42F4DA6-4BAA-44A8-889A-D61B42CCF105",
+      "files": 22,
+      "bytes": 1481719
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/E94B8EC2-3838-43D8-A558-B8A821B6E05C",
+      "files": 22,
+      "bytes": 1499771
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/F4658AA5-D123-4726-81F2-0E71CEEF8A7B",
+      "files": 22,
+      "bytes": 1484944
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportOwnedRemovalTests/F7589E37-A539-47A1-A280-FD2794188DEB",
+      "files": 22,
+      "bytes": 1498902
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportRestorationTests/11CC9D88-69C9-4A18-9FB0-E04EA5A3375F",
+      "files": 9,
+      "bytes": 589899
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportRestorationTests/1F9E6238-A03E-45B3-A611-B7EADAF4054A",
+      "files": 26,
+      "bytes": 2192599
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportRestorationTests/4C31B915-5E98-45BD-8A0E-804D7A29180A",
+      "files": 24,
+      "bytes": 2083848
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportRestorationTests/6091DA23-174E-43FF-8EAA-D68EE086A747",
+      "files": 20,
+      "bytes": 494531
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportRestorationTests/6F81E5FB-BC35-4CB1-A4AE-CB6B46C65D75",
+      "files": 24,
+      "bytes": 1987837
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportRestorationTests/7F9A7163-AE61-49B5-8B1A-390FF1BA1A7F",
+      "files": 26,
+      "bytes": 2294556
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportRestorationTests/834FF579-29E0-4C49-9D27-1113D03DE4CC",
+      "files": 24,
+      "bytes": 1815976
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportRestorationTests/8D52900C-3CF0-416E-AE09-A2FC00E94E9E",
+      "files": 26,
+      "bytes": 2019721
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportRestorationTests/A1839C3C-7083-4099-A8BB-4ED91F9EC4CD",
+      "files": 26,
+      "bytes": 1966226
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportRestorationTests/BC7C37BF-4C04-497D-BCCF-7F209C23A100",
+      "files": 24,
+      "bytes": 1741511
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportRestorationTests/C2AA3D3A-BBED-4A87-978D-33CDA6FC634B",
+      "files": 24,
+      "bytes": 1741163
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportRestorationTests/F066BA0A-58FE-49B0-979B-E8C9026B3909",
+      "files": 26,
+      "bytes": 1966636
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportSourceDeletionTests/3CCAE33E-8FDD-4959-AE76-362DA0A34D5F",
+      "files": 22,
+      "bytes": 1425086
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportSourceDeletionTests/3FD5EEDC-D60C-47B4-9F22-A42FAB1A9C03",
+      "files": 22,
+      "bytes": 1356733
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportSourceDeletionTests/445A5864-CE21-4C46-ACBF-F7BA2E2CCCB5",
+      "files": 22,
+      "bytes": 1385488
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportSourceDeletionTests/63D30281-3768-43E3-B0E3-7E8D56C417A3",
+      "files": 22,
+      "bytes": 1448976
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportSourceDeletionTests/7079533C-A2D4-42C5-B027-B23E6C643096",
+      "files": 22,
+      "bytes": 1360788
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportSourceDeletionTests/92E5BBCD-E85A-4191-8239-BC323E3C6FEB",
+      "files": 7,
+      "bytes": 469631
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportSourceDeletionTests/A9E1A02E-D335-41E5-A6BA-99D65F53F194",
+      "files": 22,
+      "bytes": 1533929
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportSourceDeletionTests/B4613C8F-72D7-4457-A879-A18ED0D19AAA",
+      "files": 22,
+      "bytes": 1538047
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportSourceDeletionTests/BFA64262-2321-48C0-BF96-71D023AA402E",
+      "files": 22,
+      "bytes": 1580227
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportSourceDeletionTests/C9FBE018-1632-4755-B1DE-8A7AE96C7C29",
+      "files": 22,
+      "bytes": 1542805
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportSourceDeletionTests/CC9462DA-B481-4296-B3AD-46AA5D3ACFE6",
+      "files": 11,
+      "bytes": 800432
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportSourceDeletionTests/E6AA896B-6A81-41A1-A78E-14D4BFFC4FAC",
+      "files": 22,
+      "bytes": 1547042
+    },
+    {
+      "directory": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/tmp/PlannerNativeImportSourceDeletionTests/F36D7C83-11A7-416D-86A5-22BE5ABBA03B",
+      "files": 7,
+      "bytes": 469631
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/0400CFF8-6897-4458-BC0F-5883D658F15B",
+      "files": 22,
+      "bytes": 1523721
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/060C3C77-54EF-42F0-B314-0E36FC02F5DF",
+      "files": 22,
+      "bytes": 1472550
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/14990EE3-E155-4205-B39B-59EDB602D1C1",
+      "files": 22,
+      "bytes": 1499769
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/18AAB405-DCD3-4AD1-85F0-5675991FE7A1",
+      "files": 22,
+      "bytes": 1492248
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/1CC24852-4287-4AAD-97CE-15A7355A30FF",
+      "files": 22,
+      "bytes": 1498901
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/1F978E3D-5015-4223-9942-F593307D687F",
+      "files": 22,
+      "bytes": 1514483
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/20139B8E-7EDA-427A-ADA6-A16A7058F172",
+      "files": 22,
+      "bytes": 1473417
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/29B36FBD-1492-4577-ADA7-D5A327CDACEA",
+      "files": 22,
+      "bytes": 1511300
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/3EE495B5-120E-4E6F-AA13-008AA6C6829D",
+      "files": 11,
+      "bytes": 705445
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/46857D70-A785-4A97-B6EB-D38E8C765991",
+      "files": 22,
+      "bytes": 1497270
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/4C0F8D5F-B9B3-41C8-AA17-6C47613799EB",
+      "files": 22,
+      "bytes": 1514417
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/6C865B5C-7669-48F3-8331-A980EAFB080C",
+      "files": 11,
+      "bytes": 717651
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/71CCC71A-7595-495D-B26B-10DE424A8A70",
+      "files": 22,
+      "bytes": 1505825
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/76133697-5E3C-4E9D-A604-FBB087E129A9",
+      "files": 22,
+      "bytes": 1480209
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/7C158216-47A1-4F58-84C8-4511740F32F6",
+      "files": 22,
+      "bytes": 1513215
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/823AA1B0-8420-4218-96D8-B0F1CE95FC3D",
+      "files": 9,
+      "bytes": 603817
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/841690E8-8450-424C-BD6A-424A8DADE4FA",
+      "files": 22,
+      "bytes": 1523663
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/8CEEC1E8-411C-47C2-80B8-C00F8908DB34",
+      "files": 22,
+      "bytes": 1498322
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/9DD3BDC1-AEDC-41B1-AA97-AAE088C14D6F",
+      "files": 22,
+      "bytes": 1492601
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/A2BBE19E-CC1E-4781-82D7-FBB0C48A5679",
+      "files": 22,
+      "bytes": 1497365
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/B58EE3DB-2A35-4939-B16B-EA02F7DC0D5B",
+      "files": 22,
+      "bytes": 1479155
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/B96B2781-77E5-4C25-B94B-45B2E801A255",
+      "files": 22,
+      "bytes": 1483939
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/CD90D9A8-FE71-4009-A91B-DBA0FFF9C848",
+      "files": 22,
+      "bytes": 1516950
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/D0971F62-6E84-41E3-BFCF-977ABA3D1DD4",
+      "files": 22,
+      "bytes": 1484947
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/D0B4D11B-0AAA-4412-AE2F-50C604637BAD",
+      "files": 22,
+      "bytes": 1521018
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/D47D8384-6E57-477D-8EB2-B5083995DAF1",
+      "files": 22,
+      "bytes": 1475350
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/DF202FD4-976B-4BC9-AD6F-3922AB28323A",
+      "files": 22,
+      "bytes": 1514501
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/ECBD589D-800D-4BFC-98D8-10C699F21451",
+      "files": 22,
+      "bytes": 1481718
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/EF722D5E-B654-43AE-94F4-D283FE00E637",
+      "files": 22,
+      "bytes": 1490596
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/F1C6859B-9506-4CA4-9542-B1F7E823C6D4",
+      "files": 22,
+      "bytes": 1482740
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportOwnedRemovalTests/FD2A57D0-1DC8-4E2A-8EBF-A356319EF3F3",
+      "files": 22,
+      "bytes": 1488145
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportProvenanceTests/00126EA1-9CA4-4BB3-8EEA-DFEF4CAC749C",
+      "files": 19,
+      "bytes": 1119013
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportProvenanceTests/01B87948-FC31-4E2A-9D2D-D3BCAFDE0F4E",
+      "files": 17,
+      "bytes": 1030924
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportProvenanceTests/6FC4DB38-61B9-42FF-A124-FB346B67C422",
+      "files": 17,
+      "bytes": 1030923
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportProvenanceTests/7897576C-D9CB-4E74-9E47-28BE4529E245",
+      "files": 15,
+      "bytes": 943256
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportProvenanceTests/9F8AC333-0F2A-4B2C-845C-2846FB6D1646",
+      "files": 15,
+      "bytes": 943258
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportProvenanceTests/F54EA111-8D34-4B40-BFAD-60DAD93F708F",
+      "files": 19,
+      "bytes": 1119011
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportProvenanceTests/FA687144-4DDC-4B09-83B2-F7978EB82656",
+      "files": 13,
+      "bytes": 715920
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportRestorationTests/1ADAD549-4E9F-4764-9CDA-A2A9839B8A1A",
+      "files": 26,
+      "bytes": 1966637
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportRestorationTests/1F4F87DF-B0DF-44B3-9FE6-4AF1ECF816FE",
+      "files": 26,
+      "bytes": 1966225
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportRestorationTests/38BCC69D-34E5-45B3-BE64-7D4428E25B24",
+      "files": 24,
+      "bytes": 1815976
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportRestorationTests/57CCDDCC-9883-4CFD-9B05-84DBA64F38DC",
+      "files": 24,
+      "bytes": 2083848
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportRestorationTests/612F673D-F79D-4A54-8603-E404B084347B",
+      "files": 26,
+      "bytes": 2192598
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportRestorationTests/84BBD2DE-4439-4E0C-98C9-AD9A560D4CD4",
+      "files": 24,
+      "bytes": 1741513
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportRestorationTests/9F9FB7B4-8230-4097-A6A2-0DAE0D7359FA",
+      "files": 20,
+      "bytes": 494531
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportRestorationTests/A8A7C63B-FECB-4813-AB57-76C296234730",
+      "files": 24,
+      "bytes": 1741164
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportRestorationTests/BF92FD7D-2F12-4C03-BB5A-A605BF8A4498",
+      "files": 26,
+      "bytes": 2019720
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportRestorationTests/C45B7B1D-088D-4E9C-8A23-513FA949D363",
+      "files": 9,
+      "bytes": 589898
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportRestorationTests/F053E35C-CA7D-449C-A900-D984F668FF1F",
+      "files": 24,
+      "bytes": 1987839
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportRestorationTests/FAE821B4-9F30-4E03-9DA1-E99BBC674D0D",
+      "files": 26,
+      "bytes": 2294555
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportSourceDeletionTests/26B07970-5266-4BC6-865E-54210A249B6D",
+      "files": 7,
+      "bytes": 469630
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportSourceDeletionTests/2A5E154D-68B0-4024-B777-53729464CAA5",
+      "files": 22,
+      "bytes": 1425088
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportSourceDeletionTests/31326E4B-B10D-4F16-9AFD-30DA9796AD75",
+      "files": 22,
+      "bytes": 1360789
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportSourceDeletionTests/340DCB7C-861D-488D-9FF5-49C0FE378E15",
+      "files": 22,
+      "bytes": 1538046
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportSourceDeletionTests/52DE1DCD-316C-49AA-8D82-3A91C346D6AF",
+      "files": 11,
+      "bytes": 800432
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportSourceDeletionTests/6017CDF7-50C9-41F2-A4E2-578E0B88C7D6",
+      "files": 22,
+      "bytes": 1547042
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportSourceDeletionTests/77990AFB-63CC-43B6-BF89-5DE7C87E4CF8",
+      "files": 22,
+      "bytes": 1580224
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportSourceDeletionTests/A9DC1298-A27A-47CD-9A97-7DA2FA85F674",
+      "files": 22,
+      "bytes": 1385488
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportSourceDeletionTests/BAF36FD1-D8E4-46A7-88E2-DA5871ACFE25",
+      "files": 22,
+      "bytes": 1356734
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportSourceDeletionTests/BFDD97FF-53C6-4CA9-9EF0-52CE233E28B6",
+      "files": 22,
+      "bytes": 1533930
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportSourceDeletionTests/EF05B7FD-8B28-4741-9D4B-CFB4DB089456",
+      "files": 7,
+      "bytes": 469631
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportSourceDeletionTests/F67616E0-0EB7-4915-875A-91FE32FD5193",
+      "files": 22,
+      "bytes": 1448976
+    },
+    {
+      "directory": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportSourceDeletionTests/FFEE5781-CBFD-46FF-A424-0CD79969CBFC",
+      "files": 22,
+      "bytes": 1542803
+    }
+  ]
+}

@@ -57,8 +57,7 @@ struct NativeImportApplyTests {
     #expect(reopenedData == before)
   }
 
-  @Test(arguments: ["origin", "providerReference"])
-  func unsupportedNativeValuesRejectWithoutSavingAPartialImport(_ scenario: String) async throws {
+  @Test func unsupportedNativeProviderReferenceRejectsWithoutSavingAPartialImport() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     defer { try? FileManager.default.removeItem(at: directory) }
     let configuration = PlannerStorageConfiguration(
@@ -69,19 +68,11 @@ struct NativeImportApplyTests {
     let planner = Planner(configuration: configuration)
     var portable = try #require(
       JSONSerialization.jsonObject(with: nativeImportFixtureData()) as? [String: Any])
-    if scenario == "origin" {
-      var sources = try #require(portable["sources"] as? [[String: Any]])
-      var origins = try #require(sources[0]["contentOrigins"] as? [String: String])
-      origins["title"] = "appFallback"
-      sources[0]["contentOrigins"] = origins
-      portable["sources"] = sources
-    } else {
-      var links = try #require(portable["ownedLinks"] as? [[String: Any]])
-      links[0]["originalUrl"] = "https://maps.apple.com/?q=Nezu%20Museum"
-      links[0]["kind"] = "appleMaps"
-      links[0]["providerReference"] = ["kind": "applePlaceId", "value": "fixture-place"]
-      portable["ownedLinks"] = links
-    }
+    var links = try #require(portable["ownedLinks"] as? [[String: Any]])
+    links[0]["originalUrl"] = "https://maps.apple.com/?q=Nezu%20Museum"
+    links[0]["kind"] = "appleMaps"
+    links[0]["providerReference"] = ["kind": "applePlaceId", "value": "fixture-place"]
+    portable["ownedLinks"] = links
     guard case .ready(let session) = await planner.bootstrap(),
       case .exported(let before) = await planner.exportData(session: session),
       case .decoded(let backup) = planner.decodeImport(

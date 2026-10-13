@@ -89,7 +89,7 @@ struct CategoryMigrationTests {
     #expect(checkpoint == manifest.latestCheckpoint + 1)
     #expect(read.content.name == "Food")
     #expect(namespace.acknowledgedSnapshot?.storageSchemaVersion == 7)
-    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 16)
+    #expect(afterNamespaces.first?.acknowledgedSnapshot?.storageSchemaVersion == 17)
     #expect(historicalAfter.portableData == historical.portableData)
     let beforeData = try canonicalPortableFixtureExpectations(historical.portableData)
     let afterData = try #require(

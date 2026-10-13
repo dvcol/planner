@@ -1,0 +1,174 @@
+{
+  "baseCommit": "8672650",
+  "scope": "Native source-origin persistence and genuine schema16 migration",
+  "storageSchemaVersion": 17,
+  "portableFormatVersion": 2,
+  "newTests": {
+    "functions": 2,
+    "invocations": 6
+  },
+  "qualified": {
+    "macCore": {
+      "functions": 129,
+      "suites": 59,
+      "invocations": 356,
+      "failures": 0,
+      "skips": 0
+    },
+    "phoneCore": {
+      "functions": 129,
+      "suites": 59,
+      "invocations": 356,
+      "failures": 0,
+      "skips": 0
+    },
+    "http": {
+      "functions": 16,
+      "suites": 4,
+      "invocations": 22,
+      "failures": 0,
+      "skips": 0
+    },
+    "strictSwiftLintFiles": 31,
+    "macAppAndTestHost": "TEST BUILD SUCCEEDED",
+    "nativeUIRuntimeFunctions": 0
+  },
+  "reviews": {
+    "initialFinding": "Itinerary bulk snapshot dropped origins; public regression also confirmed Schedule loss",
+    "resolved": "Snapshot retains origins and schedules; both read-only rechecks have no remaining confirmed issues"
+  },
+  "redBeforeGreen": [
+    "origin-import-red.log",
+    "completion-recovery-red.log",
+    "explicit-edit-red.log",
+    "bulk-snapshot-red.log"
+  ],
+  "sourceHashesVerifiedAfterAllTestProcessesExited": true,
+  "genuineSchema16Producer": "../../../../../Packages/PlannerCore/Tests/PlannerCoreStoreTests/Fixtures/SchemaV16/producer.json",
+  "limits": [
+    "Provider-reference persistence",
+    "Native capture admission",
+    "Incoming candidates/family reconciliation",
+    "Broader rebinding",
+    "Complete generated/affected results",
+    "Native forms",
+    "Direct database-save failure",
+    "Physical sync/account/Share",
+    "Calendar",
+    "Scale/paging and polish"
+  ],
+  "artifacts": [
+    {
+      "path": "initial-test-compile-diagnostic.log",
+      "sha256": "168fc1a43606724669a4c29c98740d23edbfb43c9fab336759ac257632359598"
+    },
+    {
+      "path": "origin-import-red.log",
+      "sha256": "083a693f9ffe0225d948ce14fafccc8a1ee3a9d06aa6be741a2e895f8b5c110e"
+    },
+    {
+      "path": "serialization-diagnostic.log",
+      "sha256": "c4063f86f7b39fdbfd5dddd36d1b766c3d0c46c89e700fdb773da819ac12848f"
+    },
+    {
+      "path": "origin-import-green.log",
+      "sha256": "9ec97c54645b06222c434a6750aeb9cc7ba4fddc3d845b366f67ea050ead521b"
+    },
+    {
+      "path": "completion-recovery-red.log",
+      "sha256": "1356580ad0aecc854edec497ddf63b5244bce6dd4fa28ad37a4811ae15e9d34d"
+    },
+    {
+      "path": "completion-recovery-green.log",
+      "sha256": "ff4428a8d8c044371e8f279f252fdd06ca16e273e0b02df9fc84421664f84021"
+    },
+    {
+      "path": "explicit-edit-red.log",
+      "sha256": "4e2464dd5ff46ff8cec2b8a209d3506f4ec8a5c039b307d02237f37884d756cc"
+    },
+    {
+      "path": "explicit-edit-green.log",
+      "sha256": "9129e545b5d32607029ef9f4ef284d41031d6b4961a6b73badcb01268078b620"
+    },
+    {
+      "path": "five-kinds-green.log",
+      "sha256": "6e076fc09204e7da92ce736b0d713df1c8f454130f0faa6023c8369a5c2a9465"
+    },
+    {
+      "path": "schema16-migration-green.log",
+      "sha256": "c79e62efb3b6a2c46d1219f42a635e6806240d67a218c91fef8e39e219d3b76b"
+    },
+    {
+      "path": "bulk-snapshot-red.log.gz",
+      "sha256": "cd23d26a476c433751770c7fbf578bb51701c90ab0ebaa8166093df7282ed9f0"
+    },
+    {
+      "path": "bulk-snapshot-green.log",
+      "sha256": "3cbf04f31268420302762db0f41609192544ec2780e2bec46d413b33bf778f2f"
+    },
+    {
+      "path": "mac-core-green.log.gz",
+      "sha256": "ea64eb6ea1409cb8bd1fc14a475d7414e1aa215fcd6c647fd94b6951cfb23713"
+    },
+    {
+      "path": "phone-core-green.log.gz",
+      "sha256": "3632f1af5aab57dc222794b7f628042b26b762a9a53553fdfa46ff5d5774682f"
+    },
+    {
+      "path": "http-green.log.gz",
+      "sha256": "d3b76e9bdf4e778f23270f13511be2f9b7865dd4039e73f80a28aab196e7daf1"
+    },
+    {
+      "path": "mac-build.log.gz",
+      "sha256": "d929bc43f305257063e89b6f520cc7e2e3228cf5ef45a8c525d234007a66ef40"
+    },
+    {
+      "path": "strict-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "sources.json",
+      "sha256": "c6699d1e9481c7d06fd27a7eafa478f56c5bd5167000ad2902f2fa9701ffed71"
+    },
+    {
+      "path": "commands.json",
+      "sha256": "218a0ae1866a69950e6f5ec3c318afe50e870efd7b0beb34ebd087ff1decece5"
+    },
+    {
+      "path": "mac-counts.json",
+      "sha256": "2ba6e48cec7c75bff01459ce4a2401b66dd9c76ddbb3d76b3e54a8d161856c8e"
+    },
+    {
+      "path": "phone-summary.json",
+      "sha256": "33bc169260bdee74afdc88096412cff7ef9edcb09813895a5fbabeaa938feb50"
+    },
+    {
+      "path": "phone-tests.json.gz",
+      "sha256": "cc7506cc00f279ec712dc94af76130161199e65d9d174fcb9e784a5fe2b5e4af"
+    },
+    {
+      "path": "phone-counts.json",
+      "sha256": "2ba6e48cec7c75bff01459ce4a2401b66dd9c76ddbb3d76b3e54a8d161856c8e"
+    },
+    {
+      "path": "httpmac-summary.json",
+      "sha256": "755172a6d932cb0792e7ee87c6f458594ace5bc0ff02506fafe642d173be7341"
+    },
+    {
+      "path": "httpmac-tests.json",
+      "sha256": "cb7fa77f90e2ec636479bc4464a90d955588a49311c7698d523fc10545c51bf3"
+    },
+    {
+      "path": "httpmac-counts.json",
+      "sha256": "6a898f6b8b3ee0579f4c03b2cbd1a801f9a653dcb9d0b696336d0660cb987df1"
+    },
+    {
+      "path": "markdown-lint.log",
+      "sha256": "8dc73e4e1a1da6c23a8bf222f44c8d3673dbde32e0548cd4598ddd86ccf2b9c5"
+    },
+    {
+      "path": "test-store-cleanup.json",
+      "sha256": "320bde3d5f50a8234e07aba6a999008737c6951e3476debcad26e27debec5549"
+    }
+  ]
+}

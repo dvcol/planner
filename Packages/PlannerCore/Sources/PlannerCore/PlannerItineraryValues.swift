@@ -143,6 +143,8 @@ struct ItinerarySnapshot {
   var labels: [PlannerLabelRead] = []
   var entries: [ItineraryEntrySnapshot] = []
 
+  var contentOrigins: [String: String]? = nil
+
   var reference: PlannerEntityReference { .init(kind: .itinerary, id: id) }
 
   func read(

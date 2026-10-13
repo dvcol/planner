@@ -1,0 +1,28 @@
+Building for debugging...
+[1 / 10] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[9 / 13] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (3,59 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportProvenanceTests started.
+◇ Test importedFallbackOriginSurvivesNativeSaveAndRecovery() started.
+Native provenance seed: /var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportProvenanceTests/00126EA1-9CA4-4BB3-8EEA-DFEF4CAC749C/source
+✘ Test importedFallbackOriginSurvivesNativeSaveAndRecovery() recorded an issue at NativeImportProvenanceTests.swift:96:5: Expectation failed: edited.backup.items.first?.contentOrigins["title"] == "independent"
+↳ edited.backup.items.first?.contentOrigins["title"] == "independent" → false
+↳   edited.backup.items.first?.contentOrigins["title"] → "appFallback"
+↳     some → "appFallback"
+↳     some → "independent"
+✘ Test importedFallbackOriginSurvivesNativeSaveAndRecovery() recorded an issue at NativeImportProvenanceTests.swift:97:5: Expectation failed: editedRecovery.decodedBackup.backup.items.first?.contentOrigins["title"] == "independent"
+↳ editedRecovery.decodedBackup.backup.items.first?.contentOrigins["title"] == "independent" → false
+↳   editedRecovery.decodedBackup.backup.items.first?.contentOrigins["title"] → "appFallback"
+↳     some → "appFallback"
+↳     some → "independent"
+✘ Test importedFallbackOriginSurvivesNativeSaveAndRecovery() failed after 0.183 seconds with 2 issues.
+✘ Suite NativeImportProvenanceTests failed after 0.184 seconds with 2 issues.
+✘ Test run with 1 test in 1 suite failed after 0.184 seconds with 2 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

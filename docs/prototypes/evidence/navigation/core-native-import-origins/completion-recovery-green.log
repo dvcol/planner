@@ -1,0 +1,20 @@
+Building for debugging...
+[1 / 1]
+[2 / 17] PlannerCore
+[4 / 19] PlannerCore
+[7 / 22] PlannerCore
+[9 / 22] PlannerCore
+[12 / 14] PlannerCore-product
+[12 / 14] PlannerCoreTests-product
+[14 / 15] PlannerCoreTests-product
+[16 / 18] PlannerCoreStoreTests-product
+Build complete! (9,83 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportProvenanceTests started.
+◇ Test importedFallbackOriginSurvivesNativeSaveAndRecovery() started.
+Native provenance seed: /var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportProvenanceTests/6FC4DB38-61B9-42FF-A124-FB346B67C422/source
+✔ Test importedFallbackOriginSurvivesNativeSaveAndRecovery() passed after 0.165 seconds.
+✔ Suite NativeImportProvenanceTests passed after 0.165 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.165 seconds.

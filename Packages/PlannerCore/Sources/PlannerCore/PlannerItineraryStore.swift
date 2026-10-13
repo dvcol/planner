@@ -1,18 +1,18 @@
 import Foundation
 import SwiftData
 
-extension PlannerSchemaV15.Itinerary {
+extension PlannerSchemaV17.Itinerary {
   func replaceLinks(with snapshots: [OwnedLinkSnapshot], context: ModelContext) throws {
     let previous = links ?? []
     let retainedIdentifiers = Set(snapshots.map(\.id))
     links = try snapshots.map { snapshot in
-      let record: PlannerSchemaV15.OwnedLink
+      let record: PlannerSchemaV17.OwnedLink
       if let existing = previous.first(where: {
         $0.id == snapshot.id && $0.lifetimeId == snapshot.lifetimeId
       }) {
         record = existing
       } else {
-        record = try PlannerSchemaV15.OwnedLink(
+        record = try PlannerSchemaV17.OwnedLink(
           input: .init(originalUrl: snapshot.originalUrl, label: snapshot.label),
           rank: snapshot.rank, owner: self)
         record.id = snapshot.id
@@ -31,8 +31,8 @@ extension PlannerSchemaV15.Itinerary {
   }
 
   func replaceLabelAssociations(
-    with snapshots: [LabelAssociationSnapshot], categories: [PlannerSchemaV15.Category],
-    tags: [PlannerSchemaV15.Tag], context: ModelContext
+    with snapshots: [LabelAssociationSnapshot], categories: [PlannerSchemaV17.Category],
+    tags: [PlannerSchemaV17.Tag], context: ModelContext
   ) throws {
     let previous = labelAssociations ?? []
     labelAssociations = try snapshots.map { snapshot in
@@ -41,17 +41,17 @@ extension PlannerSchemaV15.Itinerary {
       }) {
         return existing
       }
-      let association: PlannerSchemaV15.LabelAssociation
+      let association: PlannerSchemaV17.LabelAssociation
       if let category = categories.first(where: {
         $0.id == snapshot.label.id && $0.lifetimeId == snapshot.label.lifetimeId
           && snapshot.label.kind == "category"
       }) {
-        association = PlannerSchemaV15.LabelAssociation(itinerary: self, category: category)
+        association = PlannerSchemaV17.LabelAssociation(itinerary: self, category: category)
       } else if let tag = tags.first(where: {
         $0.id == snapshot.label.id && $0.lifetimeId == snapshot.label.lifetimeId
           && snapshot.label.kind == "tag"
       }) {
-        association = PlannerSchemaV15.LabelAssociation(itinerary: self, tag: tag)
+        association = PlannerSchemaV17.LabelAssociation(itinerary: self, tag: tag)
       } else {
         throw PlannerFailure("readUnavailable", "A replacement label has no native source.")
       }

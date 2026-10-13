@@ -2,11 +2,11 @@ import Foundation
 import SwiftData
 
 enum BulkCompletionTarget {
-  case membership(PlannerSchemaV15.Membership, MembershipSnapshot)
-  case direct(PlannerSchemaV15.ItineraryEntry, ItineraryEntrySnapshot)
+  case membership(PlannerSchemaV17.Membership, MembershipSnapshot)
+  case direct(PlannerSchemaV17.ItineraryEntry, ItineraryEntrySnapshot)
   case expanded(
-    PlannerSchemaV15.ItineraryEntry, ItineraryEntrySnapshot,
-    PlannerSchemaV15.Membership, MembershipSnapshot)
+    PlannerSchemaV17.ItineraryEntry, ItineraryEntrySnapshot,
+    PlannerSchemaV17.Membership, MembershipSnapshot)
 
   var appearance: PlannerAppearance {
     switch self {
@@ -74,7 +74,7 @@ enum BulkCompletionTarget {
         existing.localDone = done
       } else if done {
         context.insert(
-          PlannerSchemaV15.ExpandedCompletion(
+          PlannerSchemaV17.ExpandedCompletion(
             listEntry: record, membership: membershipRecord, localDone: done))
       }
     }
@@ -83,8 +83,8 @@ enum BulkCompletionTarget {
 
 struct BulkCompletionResolution {
   let owner: PlannerBoundIdentity
-  let list: PlannerSchemaV15.List?
-  let itinerary: PlannerSchemaV15.Itinerary?
+  let list: PlannerSchemaV17.List?
+  let itinerary: PlannerSchemaV17.Itinerary?
   let scopeBindings: [PlannerBoundIdentity]
   let targets: [BulkCompletionTarget]
 
@@ -142,8 +142,9 @@ struct BulkCompletionResolution {
     }
     return .init(
       id: value.id, lifetimeId: value.lifetimeId, createdAt: value.createdAt, updatedAt: updatedAt,
-      input: value.input, archived: value.archived, links: value.links,
-      labelAssociations: value.labelAssociations, labels: value.labels, entries: entries)
+      input: value.input, archived: value.archived, links: value.links, schedules: value.schedules,
+      labelAssociations: value.labelAssociations, labels: value.labels, entries: entries,
+      contentOrigins: value.contentOrigins)
   }
 }
 
@@ -151,7 +152,7 @@ func resolveBulkCompletion(_ scope: PlannerBulkScope, context: ModelContext) thr
   -> BulkCompletionResolution
 {
   if case .list(let listId) = scope {
-    var descriptor = FetchDescriptor<PlannerSchemaV15.List>(
+    var descriptor = FetchDescriptor<PlannerSchemaV17.List>(
       predicate: #Predicate { $0.id == listId })
     descriptor.fetchLimit = 2
     let records = try context.fetch(descriptor)
@@ -177,7 +178,7 @@ func resolveBulkCompletion(_ scope: PlannerBulkScope, context: ModelContext) thr
     listEntryId = entryId
   case .list: throw PlannerFailure("invalidInput", "Expected an itinerary scope.")
   }
-  var descriptor = FetchDescriptor<PlannerSchemaV15.Itinerary>(
+  var descriptor = FetchDescriptor<PlannerSchemaV17.Itinerary>(
     predicate: #Predicate { $0.id == itineraryId })
   descriptor.fetchLimit = 2
   let records = try context.fetch(descriptor)
@@ -189,7 +190,7 @@ func resolveBulkCompletion(_ scope: PlannerBulkScope, context: ModelContext) thr
   let owner = PlannerBoundIdentity(kind: "itinerary", id: value.id, lifetimeId: value.lifetimeId)
   let lifetimeId = value.lifetimeId
   let entries = try context.fetch(
-    FetchDescriptor<PlannerSchemaV15.ItineraryEntry>(
+    FetchDescriptor<PlannerSchemaV17.ItineraryEntry>(
       predicate: #Predicate {
         $0.itineraryId == itineraryId && $0.itineraryLifetimeId == lifetimeId
       },
@@ -230,12 +231,12 @@ func resolveBulkCompletion(_ scope: PlannerBulkScope, context: ModelContext) thr
 }
 
 private func bulkMemberships(_ list: PlannerBoundIdentity, context: ModelContext) throws
-  -> [PlannerSchemaV15.Membership]
+  -> [PlannerSchemaV17.Membership]
 {
   let listId = list.id
   let lifetimeId = list.lifetimeId
   let records = try context.fetch(
-    FetchDescriptor<PlannerSchemaV15.Membership>(
+    FetchDescriptor<PlannerSchemaV17.Membership>(
       predicate: #Predicate { $0.listId == listId && $0.listLifetimeId == lifetimeId },
       sortBy: [SortDescriptor(\.rank), SortDescriptor(\.id)]))
   let values = try records.map { try $0.value() }

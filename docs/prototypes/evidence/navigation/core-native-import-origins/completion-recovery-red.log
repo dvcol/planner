@@ -1,0 +1,23 @@
+Building for debugging...
+[1 / 9] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[9 / 13] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (4,63 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportProvenanceTests started.
+◇ Test importedFallbackOriginSurvivesNativeSaveAndRecovery() started.
+Native provenance seed: /var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerNativeImportProvenanceTests/01B87948-FC31-4E2A-9D2D-D3BCAFDE0F4E/source
+✘ Test importedFallbackOriginSurvivesNativeSaveAndRecovery() recorded an issue at NativeImportProvenanceTests.swift:80:5: Expectation failed: completedRecovery.decodedBackup.backup.items.first?.contentOrigins["title"] == "appFallback"
+↳ completedRecovery.decodedBackup.backup.items.first?.contentOrigins["title"] == "appFallback" → false
+↳   completedRecovery.decodedBackup.backup.items.first?.contentOrigins["title"] → "independent"
+↳     some → "independent"
+↳     some → "appFallback"
+✘ Test importedFallbackOriginSurvivesNativeSaveAndRecovery() failed after 1.590 seconds with 1 issue.
+✘ Suite NativeImportProvenanceTests failed after 1.590 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 1.590 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

@@ -1,0 +1,81 @@
+Building for debugging...
+[1 / 10]
+[2 / 18] PlannerCore
+[8 / 24] PlannerCore
+[15 / 35] PlannerCore
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Sources/PlannerCore/PlannerItineraryValues.swift:158:12: warning: no calls to throwing functions occur within 'try' expression [#UnnecessaryEffectMarker]
+156 |       entries: entries
+157 |     ).progressAndEstimates(memberships: memberships, items: items, lists: lists)
+158 |     return try PlannerItinerarySourceRead(
+    |            `- warning: no calls to throwing functions occur within 'try' expression [#UnnecessaryEffectMarker]
+159 |       source: reference, sourceLifetimeId: lifetimeId,
+160 |       content: input.readContent(links: links.map(\.read)), labels: labels,
+
+[#UnnecessaryEffectMarker]: <https://docs.swift.org/compiler/documentation/diagnostics/unnecessary-effect-marker>
+[18 / 35] PlannerCore
+[19 / 35] PlannerCore
+[21 / 37] PlannerCore
+[25 / 40] PlannerCore
+[27 / 40] PlannerCore
+[30 / 38] PlannerCoreTests-product
+[33 / 39] PlannerCoreTests-product
+[35 / 40] PlannerCoreStoreTests-product
+[47 / 52] PlannerCoreStoreTests-product
+[48 / 52] PlannerCoreStoreTests-product
+[50 / 53] PlannerCoreStoreTests-product
+/Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore/Tests/PlannerCoreStoreTests/AllDayScheduleTests.swift:192:25: warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+190 |     let timedForm = PlannerScheduleForm.timed(
+191 |       start: try #require(ISO8601DateFormatter().date(from: "2026-10-11T01:00:00Z")),
+192 |       end: try #require(ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")),
+    |                         `- warning: '#require(_:_:)' is redundant because 'ISO8601DateFormatter().date(from: "2026-10-11T02:00:00Z")' never equals 'nil' (from macro 'require')
+193 |       planningTimeZone: "Asia/Tokyo")
+194 |     guard
+[52 / 56] PlannerCoreStoreTests-product
+[54 / 56] PlannerCoreStoreTests-product
+Build complete! (22,38 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportApplyTests started.
+◇ Suite BulkCompletionAdmissionTests started.
+◇ Suite NativeImportProvenanceTests started.
+◇ Suite BulkCompletionTests started.
+◇ Test canceledMissingChangedAndForeignReviewsNeverMutateThePlanner() started.
+◇ Test reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test failedRecoveryPreparationLeavesGraphAndReceiptUnapplied() started.
+◇ Test importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test emptyReviewsRemainNoItemsAndBlockedRecoveryLeavesAllTargetsUnchanged() started.
+◇ Suite NativeProvenanceMigrationTests started.
+◇ Test ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:) started.
+◇ Test unsupportedNativeProviderReferenceRejectsWithoutSavingAPartialImport() started.
+◇ Test reviewedBulkChangesEveryScopedAppearanceAndRetainsGlobalAndOtherContextStates() started.
+◇ Test case passing 1 argument kind → "item" to importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test case passing 1 argument kind → "list" to importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test case passing 1 argument kind → "category" to importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test genuineSchema16MigrationPreservesGraphRecoveryAndImportReceipt() started.
+◇ Test case passing 1 argument kind → "tag" to importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test case passing 1 argument scenario → "notes" to ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test case passing 1 argument retryRecovery → false to reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test case passing 1 argument kind → "itinerary" to importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test case passing 1 argument scenario → "localCompletion" to ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) started.
+◇ Test case passing 1 argument scopeName → "list" to postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:) started.
+◇ Test case passing 1 argument retryRecovery → true to reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) started.
+◇ Test case passing 1 argument scopeName → "itinerary" to postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:) started.
+◇ Test case passing 1 argument scopeName → "itineraryListEntry" to postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:) started.
+✔ Test failedRecoveryPreparationLeavesGraphAndReceiptUnapplied() passed after 0.395 seconds.
+✔ Test reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:) with 2 test cases passed after 0.395 seconds.
+✔ Test ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:) with 2 test cases passed after 0.395 seconds.
+✔ Test unsupportedNativeProviderReferenceRejectsWithoutSavingAPartialImport() passed after 0.395 seconds.
+✔ Suite NativeImportApplyTests passed after 0.395 seconds.
+✔ Test emptyReviewsRemainNoItemsAndBlockedRecoveryLeavesAllTargetsUnchanged() passed after 0.508 seconds.
+✔ Test importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) with 5 test cases passed after 0.523 seconds.
+✔ Suite NativeImportProvenanceTests passed after 0.523 seconds.
+✔ Test canceledMissingChangedAndForeignReviewsNeverMutateThePlanner() passed after 0.549 seconds.
+✔ Test postSaveRecoveryFailureRetainsEveryAppliedChildAndBlocksLaterMutation(_:) with 3 test cases passed after 0.583 seconds.
+✔ Suite BulkCompletionAdmissionTests passed after 0.583 seconds.
+✔ Test genuineSchema16MigrationPreservesGraphRecoveryAndImportReceipt() passed after 0.859 seconds.
+✔ Suite NativeProvenanceMigrationTests passed after 0.859 seconds.
+✔ Test reviewedBulkChangesEveryScopedAppearanceAndRetainsGlobalAndOtherContextStates() passed after 0.898 seconds.
+✔ Suite BulkCompletionTests passed after 0.898 seconds.
+✔ Test run with 10 tests in 5 suites passed after 0.898 seconds.

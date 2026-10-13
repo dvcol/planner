@@ -1,0 +1,21 @@
+Building for debugging...
+[1 / 11] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[14 / 19] PlannerCoreStoreTests-product
+[18 / 21] PlannerCoreStoreTests-product
+[20 / 24] PlannerCoreStoreTests-product
+[22 / 24] PlannerCoreStoreTests-product
+Build complete! (6,11 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportProvenanceTests started.
+◇ Test importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test case passing 1 argument kind → "item" to importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test case passing 1 argument kind → "list" to importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test case passing 1 argument kind → "tag" to importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test case passing 1 argument kind → "category" to importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+◇ Test case passing 1 argument kind → "itinerary" to importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) started.
+✔ Test importedFallbackOriginsSurviveNativeChangesAndRecovery(kind:) with 5 test cases passed after 0.282 seconds.
+✔ Suite NativeImportProvenanceTests passed after 0.282 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.282 seconds.

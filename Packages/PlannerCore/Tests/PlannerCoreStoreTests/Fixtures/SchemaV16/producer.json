@@ -1,0 +1,50 @@
+{
+  "sourceCommit": "8672650",
+  "storageSchemaVersion": 16,
+  "producer": "Public Planner bootstrap, full-fixture applyImport, exportData, terminated native macOS test process",
+  "files": [
+    {
+      "path": "expected-portable.json",
+      "bytes": 12498,
+      "sha256": "3849d4f9cf2dd4d4928eb22d8cf6713bfb61278328ae2de0663c1851745fd75a"
+    },
+    {
+      "path": "control/writer",
+      "bytes": 237,
+      "sha256": "236afbe512e69e8ec12333438cac887582ca8fd9e86c412c6b55fa9645970368"
+    },
+    {
+      "path": "store/Planner.sqlite",
+      "bytes": 204800,
+      "sha256": "abda4e34d47359ee179b88c8d3f8425f1fd9f72680c3b910c69057ff89c2789d"
+    },
+    {
+      "path": "store/Planner.sqlite-shm",
+      "bytes": 32768,
+      "sha256": "3637692ebd198434a0c619a3ea2a35c1a34a405ab21b83a79eaa423ad089e9e4"
+    },
+    {
+      "path": "store/Planner.sqlite-wal",
+      "bytes": 193672,
+      "sha256": "fca5f3b0d21bcaffebcb90cc3ce6b5a7b8d601cacf7d3bb5c8bb41172e9122ba"
+    },
+    {
+      "path": "recovery/E7499032-FFE8-4E81-91A0-EBE55135FFC9/identity.json",
+      "bytes": 237,
+      "sha256": "236afbe512e69e8ec12333438cac887582ca8fd9e86c412c6b55fa9645970368"
+    },
+    {
+      "path": "recovery/E7499032-FFE8-4E81-91A0-EBE55135FFC9/proposal-ADBBC207-84B2-4C31-8316-0899122E7989.json",
+      "bytes": 9122,
+      "sha256": "42fedc752d473a0687fe0de151f21d0a7fdcb5dcfabdef59f78308f28345648e"
+    },
+    {
+      "path": "recovery/E7499032-FFE8-4E81-91A0-EBE55135FFC9/checkpoint-1.json",
+      "bytes": 24544,
+      "sha256": "a918d8d148469a1e6d5dcfd042996b90f64d080a6a385413f9bfcc2b373b84d4"
+    }
+  ],
+  "seedOperationId": "3184A52A-AEAA-4B94-BE98-D55161D88D8A",
+  "seedCheckpointGeneration": "1",
+  "datasetId": "AB09D478-5164-4F60-86F2-8D7EB62A9030"
+}
