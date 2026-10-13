@@ -7,13 +7,15 @@
     static let definition = Tool(
       name: "planner_prepare_review",
       description:
-        "Review a full-context local completion action before applying it. Includes every independent appearance, including hidden/archived children. Global Item flags stay unchanged. Preparation saves no domain data. The token has no time-only expiry; changed payload, session or target lifetimes require a fresh review.",
+        "Review a full-context local completion action or exact capture create/reuse proposal before applying it. Capture lists proposed new content or only missing links and memberships on reuse. Includes every independent appearance, including hidden/archived children. Global Item flags stay unchanged. Preparation saves no domain data. The token has no time-only expiry; changed payload, session or target lifetimes require a fresh review.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("command")]),
         "properties": .object([
           "formatVersion": .object(["type": .string("integer"), "const": .int(1)]),
-          "command": PlannerMCPBulkCompletion.schema,
+          "command": .object([
+            "oneOf": .array([PlannerMCPBulkCompletion.schema, PlannerMCPCaptureTool.commandSchema])
+          ]),
         ]),
       ]))
 
@@ -44,35 +46,62 @@
             message: "Deletion, import and recovery administration are native Planner actions.",
             path: "/command/type")
         }
-        guard kind == "setBulkCompletion" else {
+        guard ["setBulkCompletion", "applyCapture"].contains(kind) else {
           return PlannerMCPSourceTool.failure(
             code: "invalidInput", message: "This command has no reviewable impact.",
             path: "/command/type")
         }
-        let command = try PlannerMCPBulkCompletion.command(fields["command"])
+        let command: PlannerCommand
+        if kind == "applyCapture" {
+          command = try PlannerMCPCaptureTool.command(fields["command"])
+        } else {
+          command = try PlannerMCPBulkCompletion.command(fields["command"])
+        }
         switch await planner.prepareReview(session: session, command: command) {
         case .failed(let failure): return PlannerMCPSourceTool.failure(failure)
         case .reviewed(let review):
           let value: Value = .object([
             "formatVersion": .int(1), "reviewId": .string(review.reviewId.uuidString),
             "reviewToken": .string(review.reviewToken.opaqueValue),
-            "command": try PlannerMCPBulkCompletion.commandValue(review.command),
+            "command": try commandValue(review.command),
             "targets": .array(
               try review.targets.map { target in
-                guard case .appearance(let appearance) = target else {
-                  throw PlannerMCPBulkCompletion.Failure(
-                    code: "readUnavailable", path: "/targets",
-                    message: "The bulk review contains another target kind.")
+                switch target {
+                case .source(let source):
+                  return .object([
+                    "kind": .string("source"),
+                    "source": .object([
+                      "kind": .string(source.kind.rawValue), "id": .string(source.id.uuidString),
+                    ]),
+                  ])
+                case .reference(let reference):
+                  return .object([
+                    "kind": .string("reference"),
+                    "reference": PlannerMCPSourceTool.referenceValue(reference),
+                  ])
+                case .appearance(let appearance):
+                  return .object([
+                    "kind": .string("appearance"),
+                    "appearance": PlannerMCPSourceTool.appearanceIdentityValue(appearance),
+                  ])
                 }
-                return .object([
-                  "kind": .string("appearance"),
-                  "appearance": PlannerMCPSourceTool.appearanceIdentityValue(appearance),
-                ])
               }),
             "impact": .object([
-              "kind": .string("bulkCompletion"), "targetCount": .string(String(review.targetCount)),
+              "kind": .string(review.impact.kind.rawValue),
+              "targetCount": .string(String(review.targetCount)),
               "globalFlagsChanged": .bool(review.globalFlagsChanged), "sourceDeletes": .array([]),
               "referenceRemovals": .array([]), "importDetails": .null,
+              "captureDetails": review.impact.captureDetails.map { details in
+                .object([
+                  "createContent": details.createContent.map(PlannerMCPCaptureTool.contentValue)
+                    ?? .null,
+                  "missingLinks": .array(details.missingLinks.map(PlannerMCPCaptureTool.linkValue)),
+                  "missingListIds": .array(
+                    details.missingListIds.sorted { $0.uuidString < $1.uuidString }.map {
+                      .string($0.uuidString)
+                    }),
+                ])
+              } ?? .null,
             ]),
           ])
           let text = String(decoding: try JSONEncoder().encode(value), as: UTF8.self)
@@ -87,6 +116,11 @@
         return PlannerMCPSourceTool.failure(
           code: "readUnavailable", message: "The review could not be prepared or encoded.")
       }
+    }
+
+    private static func commandValue(_ command: PlannerCommand) throws -> Value {
+      if case .applyCapture = command { return try PlannerMCPCaptureTool.commandValue(command) }
+      return try PlannerMCPBulkCompletion.commandValue(command)
     }
   }
 #endif
