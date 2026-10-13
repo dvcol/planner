@@ -125,7 +125,9 @@ struct PlannerNativeLineage {
   }
 }
 
-func plannerRemoveImportedReferences(notIn backup: PlannerPortableBackup, context: ModelContext)
+func plannerRemoveUnretainedImportedRecords(
+  notIn backup: PlannerPortableBackup, context: ModelContext
+)
   throws
 {
   let expandedContexts = Set(backup.expandedCompletions.map(\.context))
@@ -149,6 +151,21 @@ func plannerRemoveImportedReferences(notIn backup: PlannerPortableBackup, contex
   try plannerRemoveImportedRecords(
     PlannerSchemaV15.Schedule.self, identity: \.id,
     retaining: Set(backup.schedules.map(\.id)), context: context)
+  try plannerRemoveImportedRecords(
+    PlannerSchemaV15.Item.self, identity: \.id,
+    retaining: Set(backup.sources.filter { $0.kind == .item }.map(\.id)), context: context)
+  try plannerRemoveImportedRecords(
+    PlannerSchemaV15.List.self, identity: \.id,
+    retaining: Set(backup.sources.filter { $0.kind == .list }.map(\.id)), context: context)
+  try plannerRemoveImportedRecords(
+    PlannerSchemaV15.Itinerary.self, identity: \.id,
+    retaining: Set(backup.sources.filter { $0.kind == .itinerary }.map(\.id)), context: context)
+  try plannerRemoveImportedRecords(
+    PlannerSchemaV15.Category.self, identity: \.id,
+    retaining: Set(backup.sources.filter { $0.kind == .category }.map(\.id)), context: context)
+  try plannerRemoveImportedRecords(
+    PlannerSchemaV15.Tag.self, identity: \.id,
+    retaining: Set(backup.sources.filter { $0.kind == .tag }.map(\.id)), context: context)
   context.processPendingChanges()
 }
 

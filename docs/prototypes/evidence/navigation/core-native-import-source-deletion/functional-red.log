@@ -1,0 +1,50 @@
+Building for debugging...
+[Pre-planning 1 / 154]
+[Planning deferred tasks]
+[1 / 1]
+[5 / 14] PlannerCoreTests-product
+[9 / 20] PlannerCoreStoreTests-product
+[11 / 22] PlannerCoreStoreTests-product
+[17 / 21] PlannerCoreStoreTests-product
+[19 / 21] PlannerCoreStoreTests-product
+Build complete! (3,61 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportSourceDeletionTests started.
+◇ Test overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "list", declareSurvivingOwners → false to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "item", declareSurvivingOwners → true to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "itinerary", declareSurvivingOwners → false to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "list", declareSurvivingOwners → true to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "itinerary", declareSurvivingOwners → true to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "category", declareSurvivingOwners → false to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "item", declareSurvivingOwners → false to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "category", declareSurvivingOwners → true to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "tag", declareSurvivingOwners → false to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "tag", declareSurvivingOwners → true to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+✘ Test overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) recorded an issue with 2 arguments kind → "tag", declareSurvivingOwners → false at NativeImportSourceDeletionTests.swift:111:21: Issue recorded
+↳ Apply .overwrite source closure for tag: PlannerOperationResult(operationId: B3E01F39-E0D1-463A-B20A-E9F3F2E63A49, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Deleting or restoring current import owners still needs native reconciliation.", details: nil)))
+✘ Test overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) recorded an issue with 2 arguments kind → "list", declareSurvivingOwners → false at NativeImportSourceDeletionTests.swift:111:21: Issue recorded
+↳ Apply .overwrite source closure for list: PlannerOperationResult(operationId: CF73408A-B032-4BC0-A59B-01EE7F1EBF3F, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Deleting or restoring current import owners still needs native reconciliation.", details: nil)))
+✘ Test overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) recorded an issue with 2 arguments kind → "category", declareSurvivingOwners → true at NativeImportSourceDeletionTests.swift:111:21: Issue recorded
+↳ Apply .overwrite source closure for category: PlannerOperationResult(operationId: 62222D7A-ABD1-4DC4-A772-4CDB721482AC, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Deleting or restoring current import owners still needs native reconciliation.", details: nil)))
+✘ Test overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) recorded an issue with 2 arguments kind → "tag", declareSurvivingOwners → true at NativeImportSourceDeletionTests.swift:111:21: Issue recorded
+↳ Apply .overwrite source closure for tag: PlannerOperationResult(operationId: F3CD65C1-5EC8-4BB9-91CB-AD93467A1570, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Deleting or restoring current import owners still needs native reconciliation.", details: nil)))
+✘ Test overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) recorded an issue with 2 arguments kind → "category", declareSurvivingOwners → false at NativeImportSourceDeletionTests.swift:111:21: Issue recorded
+↳ Apply .overwrite source closure for category: PlannerOperationResult(operationId: BAC0CF4F-45BE-47D1-A41A-130E6AA9C848, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Deleting or restoring current import owners still needs native reconciliation.", details: nil)))
+✘ Test overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) recorded an issue with 2 arguments kind → "list", declareSurvivingOwners → true at NativeImportSourceDeletionTests.swift:111:21: Issue recorded
+↳ Apply .overwrite source closure for list: PlannerOperationResult(operationId: 3B8E2A5F-CB90-4C11-B00E-ACC3634B0075, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Deleting or restoring current import owners still needs native reconciliation.", details: nil)))
+✘ Test overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) recorded an issue with 2 arguments kind → "item", declareSurvivingOwners → false at NativeImportSourceDeletionTests.swift:111:21: Issue recorded
+↳ Apply .overwrite source closure for item: PlannerOperationResult(operationId: BD093CD5-4504-4735-8E2F-BE0031304CC7, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Deleting or restoring current import owners still needs native reconciliation.", details: nil)))
+✘ Test overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) recorded an issue with 2 arguments kind → "itinerary", declareSurvivingOwners → false at NativeImportSourceDeletionTests.swift:111:21: Issue recorded
+↳ Apply .overwrite source closure for itinerary: PlannerOperationResult(operationId: 132E320F-956B-4B84-B9B2-FC112CEB1A0C, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Deleting or restoring current import owners still needs native reconciliation.", details: nil)))
+✘ Test overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) recorded an issue with 2 arguments kind → "item", declareSurvivingOwners → true at NativeImportSourceDeletionTests.swift:111:21: Issue recorded
+↳ Apply .overwrite source closure for item: PlannerOperationResult(operationId: 1D0DDB6E-CBB6-4793-9657-F7CBEC931502, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Deleting or restoring current import owners still needs native reconciliation.", details: nil)))
+✘ Test overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) recorded an issue with 2 arguments kind → "itinerary", declareSurvivingOwners → true at NativeImportSourceDeletionTests.swift:111:21: Issue recorded
+↳ Apply .overwrite source closure for itinerary: PlannerOperationResult(operationId: 1C5F9ED8-DF7F-4926-A274-113917E12C54, outcome: PlannerCore.PlannerOperationResult.Outcome.rejected(PlannerCore.PlannerFailure(code: "unavailable", propertyPath: nil, message: "Deleting or restoring current import owners still needs native reconciliation.", details: nil)))
+✘ Test overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) with 10 test cases failed after 0.364 seconds with 10 issues.
+✘ Suite NativeImportSourceDeletionTests failed after 0.365 seconds with 10 issues.
+✘ Test run with 1 test in 1 suite failed after 0.365 seconds with 10 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

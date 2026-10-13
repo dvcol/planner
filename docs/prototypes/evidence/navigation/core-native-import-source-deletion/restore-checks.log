@@ -1,0 +1,27 @@
+Building for debugging...
+[Computing dependencies]
+[1 / 1]
+[1 / 8] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[9 / 13] PlannerCoreStoreTests-product
+[11 / 13] PlannerCoreStoreTests-product
+Build complete! (3,28 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeImportSourceDeletionTests started.
+◇ Test overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "item", declareSurvivingOwners → false to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "list", declareSurvivingOwners → true to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "itinerary", declareSurvivingOwners → false to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "item", declareSurvivingOwners → true to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "itinerary", declareSurvivingOwners → true to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "list", declareSurvivingOwners → false to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "category", declareSurvivingOwners → false to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "category", declareSurvivingOwners → true to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "tag", declareSurvivingOwners → false to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+◇ Test case passing 2 arguments kind → "tag", declareSurvivingOwners → true to overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) started.
+✔ Test overwriteAppliesSourceClosureWhileSkipPreservesTheCompleteGraph(kind:declareSurvivingOwners:) with 10 test cases passed after 0.646 seconds.
+✔ Suite NativeImportSourceDeletionTests passed after 0.646 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.646 seconds.

@@ -1,0 +1,84 @@
+{
+  "status": "Qualified native source deletion during Overwrite; full import remains open",
+  "beforeCommit": "a137c3b",
+  "commands": {
+    "core": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreFixturePackageBuild --filter 'NativeImportSourceDeletionTests|NativeContainerLifetimeTests|MissingStoreAdmissionTests|ItemEditTests|ItemListQueryTests|ItemTextQueryTests|NativeExportAdmissionTests|NativeStatusAdmissionTests|DatasetPresentationScopeTests|NativeImportOwnedRemovalTests|ScheduleRemovalTests|MembershipRemovalTests|ItineraryEntryRemovalTests|CategoryDeletionTests|CategoryDeletionAdmissionTests|ListDeletionTests|ListDeletionAdmissionTests|ItemDeletionTests|ItemDeletionAdmissionTests|TagDeletionTests|ItineraryDeletionTests|ItineraryDeletionAdmissionTests|SourceDeletionIntegrityTests|NativeImportOwnedAdditionTests|NativeImportMergeTests|NativeImportHistoryCollisionTests|NativeImportClosedHistoryTests|NativeImportIncomingDeletionReviewTests|NativeImportOverwriteDeletionReviewTests|NativeImportApplyTests|NativeImportLineageMigrationTests|ImportLineageEncodingTests|NativeImportLineageTests|RecoveryProposalSelectionTests|RecoveryCheckpointRetryTests|RecoveryCheckpointRetryAdmissionTests|ManualContainerEstimateMigrationTests|ExpandedCompletionMigrationTests|ItineraryEntryMigrationTests|ItemLabelMigrationTests|MembershipMigrationTests|CategoryMigrationTests|TagMigrationTests|ItineraryMigrationTests|ItineraryScheduleMigrationTests|ItemLinkMigrationTests|NativeImportReviewTests|NativeImportConflictReviewTests|NativeImportOmittedOwnerReviewTests|NativeImportBindingReviewTests'",
+    "phone": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerCore -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerCoreStoreTests/NativeImportSourceDeletionTests -only-testing:PlannerCoreStoreTests/ScheduleRemovalTests -only-testing:PlannerCoreStoreTests/MembershipRemovalTests -only-testing:PlannerCoreStoreTests/ItineraryEntryRemovalTests -only-testing:PlannerCoreStoreTests/CategoryDeletionTests -only-testing:PlannerCoreStoreTests/CategoryDeletionAdmissionTests -only-testing:PlannerCoreStoreTests/ListDeletionTests -only-testing:PlannerCoreStoreTests/ListDeletionAdmissionTests -only-testing:PlannerCoreStoreTests/ItemDeletionTests -only-testing:PlannerCoreStoreTests/ItemDeletionAdmissionTests -only-testing:PlannerCoreStoreTests/TagDeletionTests -only-testing:PlannerCoreStoreTests/ItineraryDeletionTests -only-testing:PlannerCoreStoreTests/ItineraryDeletionAdmissionTests -only-testing:PlannerCoreStoreTests/SourceDeletionIntegrityTests -only-testing:PlannerCoreStoreTests/NativeContainerLifetimeTests -only-testing:PlannerCoreStoreTests/MissingStoreAdmissionTests -only-testing:PlannerCoreStoreTests/ItemEditTests -only-testing:PlannerCoreStoreTests/ItemListQueryTests -only-testing:PlannerCoreStoreTests/ItemTextQueryTests -only-testing:PlannerCoreStoreTests/NativeExportAdmissionTests -only-testing:PlannerCoreStoreTests/NativeStatusAdmissionTests -only-testing:PlannerCoreStoreTests/DatasetPresentationScopeTests -only-testing:PlannerCoreStoreTests/NativeImportOwnedRemovalTests -only-testing:PlannerCoreStoreTests/NativeImportOwnedAdditionTests -only-testing:PlannerCoreStoreTests/NativeImportMergeTests -only-testing:PlannerCoreStoreTests/NativeImportHistoryCollisionTests -only-testing:PlannerCoreStoreTests/NativeImportClosedHistoryTests -only-testing:PlannerCoreStoreTests/NativeImportIncomingDeletionReviewTests -only-testing:PlannerCoreStoreTests/NativeImportOverwriteDeletionReviewTests -only-testing:PlannerCoreStoreTests/NativeImportApplyTests -only-testing:PlannerCoreStoreTests/NativeImportLineageMigrationTests -only-testing:PlannerCoreStoreTests/ImportLineageEncodingTests -only-testing:PlannerCoreStoreTests/NativeImportLineageTests -only-testing:PlannerCoreStoreTests/RecoveryProposalSelectionTests -only-testing:PlannerCoreStoreTests/RecoveryCheckpointRetryTests -only-testing:PlannerCoreStoreTests/RecoveryCheckpointRetryAdmissionTests -only-testing:PlannerCoreStoreTests/ManualContainerEstimateMigrationTests -only-testing:PlannerCoreStoreTests/ExpandedCompletionMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryEntryMigrationTests -only-testing:PlannerCoreStoreTests/ItemLabelMigrationTests -only-testing:PlannerCoreStoreTests/MembershipMigrationTests -only-testing:PlannerCoreStoreTests/CategoryMigrationTests -only-testing:PlannerCoreStoreTests/TagMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryMigrationTests -only-testing:PlannerCoreStoreTests/ItineraryScheduleMigrationTests -only-testing:PlannerCoreStoreTests/ItemLinkMigrationTests -only-testing:PlannerCoreStoreTests/NativeImportReviewTests -only-testing:PlannerCoreStoreTests/NativeImportConflictReviewTests -only-testing:PlannerCoreStoreTests/NativeImportOmittedOwnerReviewTests -only-testing:PlannerCoreStoreTests/NativeImportBindingReviewTests -resultBundlePath /private/tmp/PlannerNativeImportSourceDeletionQualifiedPhone.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "http": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerMCPTests/CommandRoutingTests -only-testing:PlannerMCPTests/OperationStatusRoutingTests -only-testing:PlannerMCPTests/BulkCompletionAdmissionRoutingTests -only-testing:PlannerMCPTests/ManualContainerEstimateRoutingTests -resultBundlePath /private/tmp/PlannerNativeImportSourceDeletionQualifiedHTTPMac.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "macBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO build-for-testing"
+  },
+  "storageSchemaVersion": 16,
+  "portableFormatVersion": 2,
+  "qualification": {
+    "macCore": {
+      "functions": 110,
+      "suites": 50,
+      "invocations": 290,
+      "failures": 0,
+      "skips": 0
+    },
+    "iOSCore": {
+      "functions": 110,
+      "suites": 50,
+      "invocations": 290,
+      "failures": 0,
+      "skips": 0
+    },
+    "macHTTP": {
+      "functions": 16,
+      "suites": 4,
+      "invocations": 22,
+      "failures": 0,
+      "skips": 0
+    },
+    "strictSwiftFiles": 4,
+    "macAppAndNavigationTestHost": "TEST BUILD SUCCEEDED",
+    "nativeUIFunctions": 0
+  },
+  "review": {
+    "spec": "No confirmed findings.",
+    "standards": "Misleading helper name corrected; no remaining findings."
+  },
+  "proofLimits": [
+    "Five kinds with owners declared or omitted qualify both Skip and Overwrite; source impacts compare with native Delete review and full surviving graphs are independently specified.",
+    "Three mixed cases qualify independent addition with source deletion, deleted dependency denial and marker identity collision denial.",
+    "Graph export, independent recovery, reopen, replay and repeated import qualify success; matrix also verifies faithful empty restore and obsolete-backup rejection without writes/receipt.",
+    "No restoration-family/rebinding or origin/provider persistence claim; full summaries/forms and direct context.save failure proof remain open.",
+    "No new UI runtime, physical iCloud/account/Share, Calendar or scale responsiveness qualification."
+  ],
+  "originalArtifacts": {
+    "phoneResult": "/private/tmp/PlannerNativeImportSourceDeletionQualifiedPhone.xcresult",
+    "httpResult": "/private/tmp/PlannerNativeImportSourceDeletionQualifiedHTTPMac.xcresult"
+  },
+  "sourceEpoch": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "7ba8af34b6db85c51d3005d5de0c7f41ae5cc9247a5a9b5c5f071d3e6da9d1db",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMerge.swift": "bb469c5d00caa204c7442c5c83c325bf0c3deb24987f73ca4d23178a59738668",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerNativeImportStorage.swift": "ad44ba6277fde9ab479ced83d92460833439fe841dedc53d2c78cfc6252a5910",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportSourceDeletionTests.swift": "7570d4410c993130328b17bbeda2363b53980128f6b36a9f0b3a318b60ea36bb"
+  },
+  "functionalRedSourceEpoch": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportMerge.swift": "7d12e54143f49e6b0fb39cc6442947ae783048fce5ba79dce37f0ac0f50f1bd4",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerNativeImportStorage.swift": "330ce2407c870564accb68c91782b05c2cc8f3060fd2059a4f3a4454df782e3b",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "c8557a8213fd4ad5b0253992ae850e3c8609248238e568af03bb7e664afd5d43",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportSourceDeletionTests.swift": "e9c35c4cfea1e4fff9dbe7c316289f0a79a13009b470a78fc6f54538a8ace253"
+  },
+  "retainedFiles": [
+    "functional-red.log",
+    "http-summary.json",
+    "http-tests.json",
+    "initial-native-types-compile.log",
+    "markdown-lint.log",
+    "mixed-decoding-case-compile.log",
+    "mixed-graph-green.log",
+    "mixed-recursive-macro-compile.log",
+    "phone-summary.json",
+    "phone-tests.json.gz",
+    "qualified-http.log.gz",
+    "qualified-mac-build.log.gz",
+    "qualified-mac.log.gz",
+    "qualified-phone.log.gz",
+    "restore-checks.log",
+    "strict-swift-lint.log",
+    "test-store-cleanup.json"
+  ]
+}
