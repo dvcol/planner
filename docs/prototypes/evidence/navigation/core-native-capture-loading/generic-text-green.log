@@ -1,0 +1,22 @@
+Building for debugging...
+[1 / 1]
+[2 / 17] PlannerCore
+[4 / 19] PlannerCore
+[10 / 22] PlannerCore
+[13 / 21] PlannerCoreTests-product
+[16 / 22] PlannerCoreTests-product
+[18 / 23] PlannerCoreStoreTests-product
+[21 / 24] PlannerCoreStoreTests-product
+[25 / 27] PlannerCoreStoreTests-product
+Build complete! (8,15 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+◇ Test case passing 1 argument encoding → Unicode (UTF-8) to genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+◇ Test case passing 1 argument encoding → Unicode (UTF-16) to genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+◇ Test case passing 1 argument encoding → Unicode (UTF-32) to genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+✔ Test genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) with 3 test cases passed after 0.051 seconds.
+✔ Suite NativeCaptureLoadingTests passed after 0.051 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.051 seconds.

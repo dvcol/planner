@@ -1,0 +1,26 @@
+Building for debugging...
+[1 / 8] PlannerCoreStoreTests-product
+[2 / 16] PlannerCore
+[4 / 18] PlannerCore
+[10 / 22] PlannerCore
+[13 / 21] PlannerCoreTests-product
+[16 / 22] PlannerCoreTests-product
+[18 / 23] PlannerCoreStoreTests-product
+[20 / 25] PlannerCoreStoreTests-product
+[24 / 28] PlannerCoreStoreTests-product
+[26 / 28] PlannerCoreStoreTests-product
+Build complete! (9,29 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() started.
+◇ Test cancellationCancelsNativeProgressAndLateDataCannotChangeTheLoadedResult() started.
+◇ Test outOfOrderNativeCallbacksKeepSourceAndRepresentationOrderWithFourConcurrentLoads() started.
+◇ Test registeredUrlAndTextRepresentationsProduceOneDraftWithoutPromotingProviderProse() started.
+✔ Test registeredUrlAndTextRepresentationsProduceOneDraftWithoutPromotingProviderProse() passed after 0.031 seconds.
+✔ Test outOfOrderNativeCallbacksKeepSourceAndRepresentationOrderWithFourConcurrentLoads() passed after 0.124 seconds.
+✔ Test cancellationCancelsNativeProgressAndLateDataCannotChangeTheLoadedResult() passed after 0.160 seconds.
+✔ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() passed after 11.766 seconds.
+✔ Suite NativeCaptureLoadingTests passed after 11.766 seconds.
+✔ Test run with 4 tests in 1 suite passed after 11.766 seconds.

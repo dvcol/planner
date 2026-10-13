@@ -1,0 +1,58 @@
+Building for debugging...
+[1 / 9] PlannerCoreStoreTests-product
+[2 / 16] PlannerCore
+[4 / 18] PlannerCore
+[9 / 21] PlannerCore
+[12 / 14] PlannerCoreTests-product
+[14 / 15] PlannerCoreStoreTests-product
+[16 / 18] PlannerCoreStoreTests-product
+Build complete! (6,98 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test mixedFileAndWebRepresentationsKeepTheUsableWebLinkWithoutLoadingFileContent() started.
+✔ Test mixedFileAndWebRepresentationsKeepTheUsableWebLinkWithoutLoadingFileContent() passed after 0.033 seconds.
+◇ Test genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+◇ Test case passing 1 argument encoding → Unicode (UTF-8) to genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+◇ Test case passing 1 argument encoding → Unicode (UTF-16) to genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+◇ Test case passing 1 argument encoding → Unicode (UTF-32) to genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+✔ Test genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) with 3 test cases passed after 0.048 seconds.
+◇ Test nativeTextLinksShareTheDistinctLinkLimit(count:) started.
+◇ Test case passing 1 argument count → 127 to nativeTextLinksShareTheDistinctLinkLimit(count:) started.
+◇ Test case passing 1 argument count → 128 to nativeTextLinksShareTheDistinctLinkLimit(count:) started.
+◇ Test case passing 1 argument count → 129 to nativeTextLinksShareTheDistinctLinkLimit(count:) started.
+✔ Test nativeTextLinksShareTheDistinctLinkLimit(count:) with 3 test cases passed after 0.037 seconds.
+◇ Test loadedDescriptionsStayTemporaryAcrossRetryOwnEditsAndReviewedSave() started.
+✔ Test loadedDescriptionsStayTemporaryAcrossRetryOwnEditsAndReviewedSave() passed after 0.041 seconds.
+◇ Test decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf8", offset → -1 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf8", offset → 0 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf8", offset → 1 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf16", offset → -1 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf16", offset → 0 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf16", offset → 1 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+✔ Test decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) with 6 test cases passed after 7.844 seconds.
+◇ Test nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "failure" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "badEncoding" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "unsupported" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "file" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "textOnly" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "empty" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+✔ Test nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) with 6 test cases passed after 0.062 seconds.
+◇ Test providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument count → 31 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument count → 32 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument count → 33 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+✔ Test providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) with 3 test cases passed after 0.033 seconds.
+◇ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() started.
+✔ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() passed after 11.779 seconds.
+◇ Test cancellationCancelsNativeProgressAndLateDataCannotChangeTheLoadedResult() started.
+✔ Test cancellationCancelsNativeProgressAndLateDataCannotChangeTheLoadedResult() passed after 0.022 seconds.
+◇ Test outOfOrderNativeCallbacksKeepSourceAndRepresentationOrderWithFourConcurrentLoads() started.
+✔ Test outOfOrderNativeCallbacksKeepSourceAndRepresentationOrderWithFourConcurrentLoads() passed after 0.128 seconds.
+◇ Test registeredUrlAndTextRepresentationsProduceOneDraftWithoutPromotingProviderProse() started.
+✔ Test registeredUrlAndTextRepresentationsProduceOneDraftWithoutPromotingProviderProse() passed after 0.020 seconds.
+✔ Suite NativeCaptureLoadingTests passed after 20.052 seconds.
+✔ Test run with 11 tests in 1 suite passed after 20.052 seconds.

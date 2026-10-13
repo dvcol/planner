@@ -1,0 +1,60 @@
+Building for debugging...
+[1 / 1]
+[2 / 16] PlannerCore
+[4 / 18] PlannerCore
+[9 / 21] PlannerCore
+[12 / 14] PlannerCoreTests-product
+[14 / 15] PlannerCoreStoreTests-product
+[16 / 18] PlannerCoreStoreTests-product
+Build complete! (7,00 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() started.
+◇ Test registeredUrlAndTextRepresentationsProduceOneDraftWithoutPromotingProviderProse() started.
+◇ Test loadedDescriptionsStayTemporaryAcrossRetryOwnEditsAndReviewedSave() started.
+◇ Test nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test nativeTextLinksShareTheDistinctLinkLimit(count:) started.
+◇ Test outOfOrderNativeCallbacksKeepSourceAndRepresentationOrderWithFourConcurrentLoads() started.
+◇ Test providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test cancellationCancelsNativeProgressAndLateDataCannotChangeTheLoadedResult() started.
+◇ Test case passing 1 argument count → 128 to nativeTextLinksShareTheDistinctLinkLimit(count:) started.
+◇ Test case passing 1 argument count → 127 to nativeTextLinksShareTheDistinctLinkLimit(count:) started.
+◇ Test case passing 1 argument count → 31 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument scenario → "failure" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument scenario → "badEncoding" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument count → 129 to nativeTextLinksShareTheDistinctLinkLimit(count:) started.
+◇ Test case passing 1 argument scenario → "unsupported" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 2 arguments encodingName → "utf8", offset → 0 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 1 argument scenario → "textOnly" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 1 argument count → 32 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 2 arguments encodingName → "utf16", offset → 0 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf8", offset → 1 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf8", offset → -1 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 2 arguments encodingName → "utf16", offset → -1 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+◇ Test case passing 1 argument count → 33 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument scenario → "empty" to nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) started.
+◇ Test case passing 2 arguments encodingName → "utf16", offset → 1 to decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) started.
+✘ Test cancellationCancelsNativeProgressAndLateDataCannotChangeTheLoadedResult() recorded an issue at NativeCaptureLoadingTests.swift:233:5: Expectation failed: progress.isCancelled && canceled.links.isEmpty && !canceled.saveAllowed
+↳ progress.isCancelled && canceled.links.isEmpty && !canceled.saveAllowed → false
+↳   progress.isCancelled && canceled.links.isEmpty → false
+↳   !canceled.saveAllowed → <not evaluated>
+✔ Test nativeFailuresAndUnsupportedDataKeepTheReviewHonest(scenario:) with 5 test cases passed after 0.113 seconds.
+✔ Test nativeTextLinksShareTheDistinctLinkLimit(count:) with 3 test cases passed after 0.118 seconds.
+✔ Test registeredUrlAndTextRepresentationsProduceOneDraftWithoutPromotingProviderProse() passed after 0.126 seconds.
+✔ Test providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) with 3 test cases passed after 0.141 seconds.
+✔ Test loadedDescriptionsStayTemporaryAcrossRetryOwnEditsAndReviewedSave() passed after 0.163 seconds.
+✔ Test outOfOrderNativeCallbacksKeepSourceAndRepresentationOrderWithFourConcurrentLoads() passed after 0.189 seconds.
+✘ Test cancellationCancelsNativeProgressAndLateDataCannotChangeTheLoadedResult() failed after 0.236 seconds with 1 issue.
+✔ Test decodedByteBudgetIncludesAllRepresentationsAndHeldText(encodingName:offset:) with 6 test cases passed after 2.058 seconds.
+✘ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() recorded an issue at NativeCaptureLoadingTests.swift:199:5: Expectation failed: elapsed >= .seconds(9.7) && elapsed < .seconds(10.6)
+↳ elapsed >= .seconds(9.7) && elapsed < .seconds(10.6) → false
+↳   elapsed >= .seconds(9.7) → true
+↳   elapsed < .seconds(10.6) → false
+✘ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() failed after 11.969 seconds with 1 issue.
+✘ Suite NativeCaptureLoadingTests failed after 11.969 seconds with 2 issues.
+✘ Test run with 9 tests in 1 suite failed after 11.970 seconds with 2 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

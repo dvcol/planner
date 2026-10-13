@@ -1,0 +1,21 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,47 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test mixedFileAndWebRepresentationsKeepTheUsableWebLinkWithoutLoadingFileContent() started.
+✘ Test mixedFileAndWebRepresentationsKeepTheUsableWebLinkWithoutLoadingFileContent() recorded an issue at NativeCaptureLoadingTests.swift:34:5: Expectation failed: draft.links.map(\.originalUrl) == ["https://example.com/visit"] && draft.saveAllowed
+↳ draft.links.map(\.originalUrl) == ["https://example.com/visit"] && draft.saveAllowed → false
+↳   draft.links.map(\.originalUrl) == ["https://example.com/visit"] → false
+↳   draft.saveAllowed → <not evaluated>
+✘ Test mixedFileAndWebRepresentationsKeepTheUsableWebLinkWithoutLoadingFileContent() failed after 0.025 seconds with 1 issue.
+✘ Suite NativeCaptureLoadingTests failed after 0.025 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.025 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

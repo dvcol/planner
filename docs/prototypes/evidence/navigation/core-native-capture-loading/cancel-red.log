@@ -1,0 +1,19 @@
+Building for debugging...
+[1 / 11] PlannerCoreStoreTests-product
+Build complete! (0,38 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test cancellationCancelsNativeProgressAndLateDataCannotChangeTheLoadedResult() started.
+✘ Test cancellationCancelsNativeProgressAndLateDataCannotChangeTheLoadedResult() recorded an issue at NativeCaptureLoadingTests.swift:32:5: Expectation failed: progress.isCancelled && canceled.links.isEmpty && !canceled.saveAllowed
+↳ progress.isCancelled && canceled.links.isEmpty && !canceled.saveAllowed → false
+↳   progress.isCancelled && canceled.links.isEmpty → false
+↳   !canceled.saveAllowed → <not evaluated>
+✘ Test cancellationCancelsNativeProgressAndLateDataCannotChangeTheLoadedResult() recorded an issue at NativeCaptureLoadingTests.swift:33:5: Expectation failed: canceled.inputIssues.contains { $0.state == .failed && $0.blocksSave }
+↳ canceled.inputIssues.contains { $0.state == .failed && $0.blocksSave } → <not evaluated>
+✘ Test cancellationCancelsNativeProgressAndLateDataCannotChangeTheLoadedResult() failed after 0.270 seconds with 2 issues.
+✘ Suite NativeCaptureLoadingTests failed after 0.270 seconds with 2 issues.
+✘ Test run with 1 test in 1 suite failed after 0.270 seconds with 2 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

@@ -1,0 +1,22 @@
+Building for debugging...
+[1 / 1]
+[2 / 16] PlannerCore
+[4 / 18] PlannerCore
+[10 / 22] PlannerCore
+[13 / 21] PlannerCoreTests-product
+[16 / 22] PlannerCoreTests-product
+[18 / 23] PlannerCoreStoreTests-product
+[21 / 24] PlannerCoreStoreTests-product
+[25 / 27] PlannerCoreStoreTests-product
+Build complete! (7,93 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument count → 31 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument count → 32 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument count → 33 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+✔ Test providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) with 3 test cases passed after 0.034 seconds.
+✔ Suite NativeCaptureLoadingTests passed after 0.034 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.034 seconds.

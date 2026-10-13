@@ -1,0 +1,20 @@
+Building for debugging...
+[1 / 1]
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (2,87 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test outOfOrderNativeCallbacksKeepSourceAndRepresentationOrderWithFourConcurrentLoads() started.
+✘ Test outOfOrderNativeCallbacksKeepSourceAndRepresentationOrderWithFourConcurrentLoads() recorded an issue at NativeCaptureLoadingTests.swift:37:5: Expectation failed: tracker.maximumActive == 4
+↳ tracker.maximumActive == 4 → false
+↳   tracker.maximumActive → 1
+✘ Test outOfOrderNativeCallbacksKeepSourceAndRepresentationOrderWithFourConcurrentLoads() failed after 0.270 seconds with 1 issue.
+✘ Suite NativeCaptureLoadingTests failed after 0.270 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.270 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

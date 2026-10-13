@@ -1,0 +1,204 @@
+{
+  "baseCommit": "b7659f5",
+  "scope": "Native registered URL/text loading, immutable classification, ordered budgets and cancellation",
+  "storageSchemaVersion": 18,
+  "portableFormatVersion": 2,
+  "newTests": {
+    "functions": 11,
+    "invocations": 27
+  },
+  "qualified": {
+    "macCore": {
+      "functions": 170,
+      "suites": 70,
+      "invocations": 450,
+      "failures": 0,
+      "skips": 0
+    },
+    "phoneCore": {
+      "functions": 170,
+      "suites": 70,
+      "invocations": 450,
+      "failures": 0,
+      "skips": 0
+    },
+    "http": {
+      "functions": 16,
+      "suites": 4,
+      "invocations": 22,
+      "failures": 0,
+      "skips": 0
+    },
+    "strictSwiftLintFiles": 4,
+    "macAppAndTestHost": "TEST BUILD SUCCEEDED",
+    "nativeUIRuntimeFunctions": 0,
+    "markdownLintDocuments": 2
+  },
+  "reviews": {
+    "standards": "No remaining confirmed findings",
+    "spec": "Native encoding detection and mixed URL/file fixes reviewed; no remaining confirmed findings"
+  },
+  "redBeforeGreen": [
+    "api-absent-red.log",
+    "order-red.log",
+    "cancel-red.log",
+    "deadline-red.log",
+    "provider-budget-red.log",
+    "generic-text-red.log",
+    "mixed-file-red.log"
+  ],
+  "diagnostics": [
+    "Concurrent native timing tests interfered; suite is now serialized with controlled cancellation delivery",
+    "Blanket file fixture incorrectly forbade a separate URL representation; corrected to prohibit only file content loading",
+    "Typed NSString loading did not coerce generic UTF16 fixture; Foundation encoding detection used"
+  ],
+  "sourceHashesVerifiedAfterAllTestProcessesExited": true,
+  "limits": [
+    "Native MKMapItem loading and permitted references",
+    "Actual failed-provider I/O reload registry/lifecycle",
+    "Physical provider payloads and peak-allocation proof",
+    "Maps lookup and obsolete callbacks",
+    "Capture transport advertisement/encoding",
+    "Native capture review, Share, Intents and MCP flows",
+    "Genuine database-save/cleanup failure and termination checkpoints",
+    "Other map gates remain open"
+  ],
+  "artifacts": [
+    {
+      "path": "api-absent-red.log",
+      "sha256": "bc0edeecb1430777b63f600655ee73c7a138af58ac75af7e7dfcb2696342706d"
+    },
+    {
+      "path": "blanket-file-diagnostic.log",
+      "sha256": "f45248a7260e8a96a7ad6f1b9f6095ba7e46a04aa4ae5e3151631a191dd619f3"
+    },
+    {
+      "path": "cancel-green.log",
+      "sha256": "37089bcfc896b7c03d685dd17bbfdf37147e1727251b7d66ac6c2b9deb9f9a78"
+    },
+    {
+      "path": "cancel-red.log",
+      "sha256": "b72373a1bd98d40ad4dd2f125c2bc60641e6dec072cfb7c15881dc8da26f9429"
+    },
+    {
+      "path": "commands.json",
+      "sha256": "739efdb4ce1aedc7b810f7c64126d2169989d3bced7d903c65458c9ff05a5907"
+    },
+    {
+      "path": "concurrent-admission-diagnostic.log",
+      "sha256": "b3c67f83a6a3744c09bf34704c8186169390ac0af7c606e01460195c48ea59e7"
+    },
+    {
+      "path": "concurrent-target-diagnostic.log",
+      "sha256": "d78d66feade4fbe2e182afd1405baeca8f37d90553c260adba1d6366d0cf61fd"
+    },
+    {
+      "path": "controlled-green.log",
+      "sha256": "bfbd18424b42cf28a2e57f6229efebfa2503c7294408b0447f095126d57383a0"
+    },
+    {
+      "path": "deadline-green.log",
+      "sha256": "24703706b6c1f9d357ecf0119556a8d91e07d5f1a792cfb04fc4b6f882b9c768"
+    },
+    {
+      "path": "deadline-red.log",
+      "sha256": "543b18bdb29ebb1ca1728ff063e3a4f95a13fcdfd4fd95ef270fc43e8b6a3517"
+    },
+    {
+      "path": "generic-text-green.log",
+      "sha256": "00f4cac7bb397509c4bf64072a34f64aadb83833e4c95414f497071cc216e50b"
+    },
+    {
+      "path": "generic-text-red.log",
+      "sha256": "275be022931dbeaec4ac0b4e47bb6019589cc44c468fed43e74df2be985a8ed6"
+    },
+    {
+      "path": "http-counts.json",
+      "sha256": "6a898f6b8b3ee0579f4c03b2cbd1a801f9a653dcb9d0b696336d0660cb987df1"
+    },
+    {
+      "path": "http-green.log.gz",
+      "sha256": "ff3909077534507a054433a5d1a7b6f4b469ec43f2b7934395efba5be8a6722f"
+    },
+    {
+      "path": "http-summary.json",
+      "sha256": "2caea97de7838d97ea4c94e00ce8915f4324fcb6fa8a843165350fafc4667c98"
+    },
+    {
+      "path": "http-tests.json",
+      "sha256": "5cfbb97bfb5f9189da9676d00f0af7f8092b7a9f71fc114853e75201856f3d55"
+    },
+    {
+      "path": "mac-build.log.gz",
+      "sha256": "a00ed9c83d5916662ced96401f1c8bfdfcc6626d0888c72e598eef5dfb215a14"
+    },
+    {
+      "path": "mac-core-green.log.gz",
+      "sha256": "d685dd9cdea3da2756a288a23edfde35a5c83ea07ea0457becb1a00a98b542af"
+    },
+    {
+      "path": "mac-counts.json",
+      "sha256": "93ec801b948a9f6dab5b850aee2cc788558a3d482cb44b970cd6fa976c223cb5"
+    },
+    {
+      "path": "markdownlint.log",
+      "sha256": "326bb1778f25bc703ddbf8531308ef421d6a0aac083a9ec69d4ce75fd199b0c2"
+    },
+    {
+      "path": "mixed-file-red.log",
+      "sha256": "d0365255dca0c9a5bfcd549f4a5e902ae0715cec2de3c1272b44cc8db5ce9de4"
+    },
+    {
+      "path": "order-green.log",
+      "sha256": "45d3eaa77fbfb28de77180f2528cd9c1fd810d718d35fe6c11a01ca6a1a2ca75"
+    },
+    {
+      "path": "order-red.log",
+      "sha256": "703835bfce06dcab474b5e4a17799af97f0672c86b4903602f6dd68d09281180"
+    },
+    {
+      "path": "phone-core-green.log.gz",
+      "sha256": "2dd49779f07ce07765362e8b8d6283070dd01f11b7425ea5bf5762b7ee58147f"
+    },
+    {
+      "path": "phone-counts.json",
+      "sha256": "93ec801b948a9f6dab5b850aee2cc788558a3d482cb44b970cd6fa976c223cb5"
+    },
+    {
+      "path": "phone-summary.json",
+      "sha256": "4f4e399a6e6df09f5ebeb8cd1deb6b0ffc7ef64b34db4d16a82d262f111fb148"
+    },
+    {
+      "path": "phone-tests.json.gz",
+      "sha256": "f0e00197dcb896f31c8802748ecead29c07be4e491e095115a5b362c78c3e5e2"
+    },
+    {
+      "path": "provider-budget-green.log",
+      "sha256": "7119c62f50244b39bbfcbe8b7b249d39edaac47ecd01cfba759238a1fa20f922"
+    },
+    {
+      "path": "provider-budget-red.log",
+      "sha256": "cd9738db252acf6112fc8110978ff1e53fc45a845a85f4b4bdafd027a82fab6c"
+    },
+    {
+      "path": "representations-green.log",
+      "sha256": "0233fe807c62f3ba872f4bc206e1b18c7d59251329314c6593e1fa958399819a"
+    },
+    {
+      "path": "review-green.log",
+      "sha256": "3d98706538c563ed4ef34b33ef3b936db27c886d3768906d2df0e955f7d74fa5"
+    },
+    {
+      "path": "sources.json",
+      "sha256": "9927d59ce85cd76864ac1d9d3f903a3d0abc6596c371dd46f2624569bc98b183"
+    },
+    {
+      "path": "strict-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "test-store-cleanup.json",
+      "sha256": "4b42136f9c7ac67b784bc0e48bc63e96c02105845ae7fe31c8785d6c7b43e2d3"
+    }
+  ]
+}

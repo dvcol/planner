@@ -1,0 +1,21 @@
+Building for debugging...
+[1 / 1]
+[1 / 16] PlannerCoreStoreTests-product
+[2 / 18] PlannerCore
+[4 / 20] PlannerCore
+[10 / 23] PlannerCore
+[13 / 21] PlannerCoreTests-product
+[16 / 22] PlannerCoreTests-product
+[18 / 23] PlannerCoreStoreTests-product
+[20 / 25] PlannerCoreStoreTests-product
+[26 / 30] PlannerCoreStoreTests-product
+[28 / 30] PlannerCoreStoreTests-product
+Build complete! (9,10 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test outOfOrderNativeCallbacksKeepSourceAndRepresentationOrderWithFourConcurrentLoads() started.
+✔ Test outOfOrderNativeCallbacksKeepSourceAndRepresentationOrderWithFourConcurrentLoads() passed after 0.143 seconds.
+✔ Suite NativeCaptureLoadingTests passed after 0.143 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.144 seconds.

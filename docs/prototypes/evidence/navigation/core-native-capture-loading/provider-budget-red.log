@@ -1,0 +1,31 @@
+Building for debugging...
+[1 / 1]
+[1 / 14] PlannerCore
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,73 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument count → 33 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument count → 31 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+◇ Test case passing 1 argument count → 32 to providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) started.
+✘ Test providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) recorded an issue with 1 argument count → 33 at NativeCaptureLoadingTests.swift:29:5: Expectation failed: tracker.totalStarted == min(count, 32) && draft.links.count == min(count, 32)
+↳ tracker.totalStarted == min(count, 32) && draft.links.count == min(count, 32) → false
+↳   tracker.totalStarted == min(count, 32) → false
+↳   draft.links.count == min(count, 32) → <not evaluated>
+✘ Test providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) recorded an issue with 1 argument count → 33 at NativeCaptureLoadingTests.swift:33:7: Expectation failed: !draft.saveAllowed && draft.inputIssues.contains { $0.state == .oversized && $0.blocksSave }
+↳ !draft.saveAllowed && draft.inputIssues.contains { $0.state == .oversized && $0.blocksSave } → false
+↳   !draft.saveAllowed → false
+↳   draft.inputIssues.contains { $0.state == .oversized && $0.blocksSave } → <not evaluated>
+✘ Test providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) recorded an issue with 1 argument count → 33 at NativeCaptureLoadingTests.swift:34:26: Expectation failed: draft.inputIssues.first { $0.state == .oversized }
+↳ draft.inputIssues.first { $0.state == .oversized } → nil
+✘ Test providerBudgetLoadsAtMostThirtyTwoAndReportsOverflowBeforeAdd(count:) with 3 test cases failed after 0.034 seconds with 3 issues.
+✘ Suite NativeCaptureLoadingTests failed after 0.034 seconds with 3 issues.
+✘ Test run with 1 test in 1 suite failed after 0.034 seconds with 3 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

@@ -1,0 +1,31 @@
+Building for debugging...
+[1 / 11] PlannerCoreStoreTests-product
+[2 / 7] PlannerCoreStoreTests-product
+[4 / 9] PlannerCoreStoreTests-product
+[10 / 14] PlannerCoreStoreTests-product
+[12 / 14] PlannerCoreStoreTests-product
+Build complete! (3,66 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() started.
+✘ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() recorded an issue at NativeCaptureLoadingTests.swift:30:5: Expectation failed: elapsed >= .seconds(9.7) && elapsed < .seconds(10.6)
+↳ elapsed >= .seconds(9.7) && elapsed < .seconds(10.6) → false
+↳   elapsed >= .seconds(9.7) → true
+↳   elapsed < .seconds(10.6) → false
+✘ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() recorded an issue at NativeCaptureLoadingTests.swift:31:5: Expectation failed: progress.isCancelled && draft.links.isEmpty && !draft.saveAllowed
+↳ progress.isCancelled && draft.links.isEmpty && !draft.saveAllowed → false
+↳   progress.isCancelled && draft.links.isEmpty → false
+↳   !draft.saveAllowed → <not evaluated>
+✘ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() recorded an issue at NativeCaptureLoadingTests.swift:32:5: Expectation failed: draft.inputIssues.contains { $0.state == .failed && $0.blocksSave }
+↳ draft.inputIssues.contains { $0.state == .failed && $0.blocksSave } → <not evaluated>
+✘ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() recorded an issue at NativeCaptureLoadingTests.swift:36:5: Expectation failed: unchanged.links.isEmpty && unchanged.generation == draft.generation
+↳ unchanged.links.isEmpty && unchanged.generation == draft.generation → false
+↳   unchanged.links.isEmpty → false
+↳   unchanged.generation == draft.generation → <not evaluated>
+✘ Test overallTenSecondDeadlineCancelsSlowNativeInputAndKeepsLateDataOutOfTheDraft() failed after 12.734 seconds with 4 issues.
+✘ Suite NativeCaptureLoadingTests failed after 12.734 seconds with 4 issues.
+✘ Test run with 1 test in 1 suite failed after 12.734 seconds with 4 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

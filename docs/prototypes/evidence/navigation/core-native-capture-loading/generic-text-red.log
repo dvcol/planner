@@ -1,0 +1,44 @@
+Building for debugging...
+[1 / 1]
+[1 / 16] PlannerCore
+[2 / 18] PlannerCore
+[5 / 21] PlannerCore
+[10 / 23] PlannerCore
+[13 / 19] PlannerCoreTests-product
+[15 / 20] PlannerCoreTests-product
+[15 / 20] PlannerCoreStoreTests-product
+[17 / 22] PlannerCoreStoreTests-product
+[23 / 27] PlannerCoreStoreTests-product
+[25 / 27] PlannerCoreStoreTests-product
+Build complete! (8,96 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite NativeCaptureLoadingTests started.
+◇ Test genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+◇ Test case passing 1 argument encoding → Unicode (UTF-8) to genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+◇ Test case passing 1 argument encoding → Unicode (UTF-16) to genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+✘ Test genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) recorded an issue with 1 argument encoding → Unicode (UTF-16) at NativeCaptureLoadingTests.swift:30:5: Expectation failed: draft.links.map(\.originalUrl) == ["https://example.com/visit"]
+↳ draft.links.map(\.originalUrl) == ["https://example.com/visit"] → false
+↳   draft.links.map(\.originalUrl) → []
+✘ Test genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) recorded an issue with 1 argument encoding → Unicode (UTF-16) at NativeCaptureLoadingTests.swift:31:5: Expectation failed: draft.saveAllowed && draft.content.title == "Saved link" && draft.content.notes == nil
+↳ draft.saveAllowed && draft.content.title == "Saved link" && draft.content.notes == nil → false
+↳   draft.saveAllowed && draft.content.title == "Saved link" → false
+↳   draft.content.notes == nil → <not evaluated>
+✘ Test genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) recorded an issue with 1 argument encoding → Unicode (UTF-16) at NativeCaptureLoadingTests.swift:32:5: Expectation failed: draft.inputIssues.contains { $0.state == .held && $0.message.contains("食事 🥢") }
+↳ draft.inputIssues.contains { $0.state == .held && $0.message.contains("食事 🥢") } → <not evaluated>
+◇ Test case passing 1 argument encoding → Unicode (UTF-32) to genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) started.
+✘ Test genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) recorded an issue with 1 argument encoding → Unicode (UTF-32) at NativeCaptureLoadingTests.swift:30:5: Expectation failed: draft.links.map(\.originalUrl) == ["https://example.com/visit"]
+↳ draft.links.map(\.originalUrl) == ["https://example.com/visit"] → false
+↳   draft.links.map(\.originalUrl) → []
+✘ Test genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) recorded an issue with 1 argument encoding → Unicode (UTF-32) at NativeCaptureLoadingTests.swift:31:5: Expectation failed: draft.saveAllowed && draft.content.title == "Saved link" && draft.content.notes == nil
+↳ draft.saveAllowed && draft.content.title == "Saved link" && draft.content.notes == nil → false
+↳   draft.saveAllowed && draft.content.title == "Saved link" → false
+↳   draft.content.notes == nil → <not evaluated>
+✘ Test genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) recorded an issue with 1 argument encoding → Unicode (UTF-32) at NativeCaptureLoadingTests.swift:32:5: Expectation failed: draft.inputIssues.contains { $0.state == .held && $0.message.contains("食事 🥢") }
+↳ draft.inputIssues.contains { $0.state == .held && $0.message.contains("食事 🥢") } → <not evaluated>
+✘ Test genericPlainTextUsesNativeEncodingDetectionWithoutPromotingDescriptions(encoding:) with 3 test cases failed after 0.071 seconds with 6 issues.
+✘ Suite NativeCaptureLoadingTests failed after 0.071 seconds with 6 issues.
+✘ Test run with 1 test in 1 suite failed after 0.071 seconds with 6 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)
