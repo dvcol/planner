@@ -1,0 +1,178 @@
+{
+  "baseCommit": "5638ee8978d0d432d90e1c4451e685ee94031bb2",
+  "scope": "Native direct text and link capture review, cancellation, persistence, exact reuse and remembered global destinations",
+  "qualified": {
+    "phone": {
+      "functions": 4,
+      "suites": 2,
+      "invocations": 4,
+      "failures": 0,
+      "skips": 0
+    },
+    "tablet": {
+      "functions": 4,
+      "suites": 2,
+      "invocations": 4,
+      "failures": 0,
+      "skips": 0
+    },
+    "mac": {
+      "appAndTestHostBuild": "passed",
+      "runtimeFunctions": 0
+    },
+    "strictSwiftLintFiles": 6,
+    "markdownLintDocuments": 1
+  },
+  "sourceHashesVerifiedAfterAllProcessesExited": true,
+  "lookupWorkExcludedFromQualification": true,
+  "sourceHashes": {
+    "Planner/Scenes/SavedCaptureForm.swift": "066534ea02f8b4d14d6a2a27f7cedb95ddfa8866fd123025e329587e8310bb95",
+    "Planner/Scenes/SavedPlannerStore.swift": "d6ebca15738e68086acbed7dbeabba86f5b70be0cf15f98a5d363dd07f70cf2d",
+    "Planner/Scenes/SavedItemViews.swift": "cb87f1c5334b39d8c77ed0f002c747835abf3b8ef5e66c12fb205b64b9644a3f",
+    "Planner/Scenes/SavedPlannerView.swift": "6c2ac654ccd8df4f5f9856a1a3c8f1e6847f5883c0a16c8a79500f1519c4458e",
+    "PlannerNavigationUITests/SavedCaptureJourneyTests.swift": "0223c082afe6704d987afbf6694ac0d466ce90b5ad487f604e88c1a96a7cfb77",
+    "PlannerNavigationUITests/SavedCaptureTextJourneyTests.swift": "3c1ec04835bd2bf58674e496be3c1d85f21b70c21744c1c8c9bb56e37a948c72",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1ca538a5ea664fb8f718eae11adce89e827220852074a33a7bec9120d1766713"
+  },
+  "screenshots": [
+    {
+      "path": "phone-review.png",
+      "originalExport": "3F30ACC0-2196-4AA7-8048-AE12E289BFEE.png",
+      "inspected": true
+    },
+    {
+      "path": "phone-saved.png",
+      "originalExport": "D15B7540-5A42-4A3B-96EC-19BC6C0D06A8.png",
+      "inspected": true
+    },
+    {
+      "path": "phone-plain-text.png",
+      "originalExport": "6EAF7572-B6ED-4196-B2B3-35A088249BA9.png",
+      "inspected": false
+    },
+    {
+      "path": "tablet-review.png",
+      "originalExport": "CD947582-980A-4D0D-870F-D1E86A9254A4.png",
+      "inspected": true
+    },
+    {
+      "path": "tablet-saved.png",
+      "originalExport": "8930A3D4-8CE6-4720-A73D-3B25DB496921.png",
+      "inspected": false
+    },
+    {
+      "path": "tablet-plain-text.png",
+      "originalExport": "0CE905E5-95D5-4DB1-AFD9-81B041955B30.png",
+      "inspected": true
+    }
+  ],
+  "redAndDiagnostics": {
+    "Red": "Missing native capture entry point before implementation",
+    "Green1": "Form Section initializer compile diagnostic, corrected before runtime",
+    "Phone2": "Completion toggle test selector diagnostic",
+    "Tablet2": "Same completion toggle selector diagnostic",
+    "Phone3": "Picker label/value test selector diagnostic",
+    "UntouchedRed": "Unchanged draft Add failed before empty-edit fix"
+  },
+  "reviews": {
+    "standards": "No remaining confirmed findings after fixes",
+    "spec": "No remaining confirmed findings after empty-edit fix"
+  },
+  "limits": [
+    "Direct text/link path only; provider intake and preview UI remain open",
+    "Ambiguous candidates, List-context and changed-destination native fixtures remain open",
+    "Share, Intents, MCP encoding and interrupted-operation presentation remain open",
+    "Mac runtime and physical sync/account/Share remain open",
+    "Q78\u2013Q81 remain pending"
+  ],
+  "artifacts": [
+    {
+      "path": "PlannerNativeCaptureGreen1.log.gz",
+      "sha256": "6e6c943294ea37101c90307064b0ca2b84814667e004001d9cb3d52cdac2938f"
+    },
+    {
+      "path": "PlannerNativeCaptureMacFinal.log.gz",
+      "sha256": "9cb7ae7eb9193df5a57c85d1acde2289a277e148971cb3e779a8106f6d372148"
+    },
+    {
+      "path": "PlannerNativeCaptureMarkdownlintFinal.log",
+      "sha256": "68e36256567853c61ea82961851de1320bb3cbd2d22e01c2a399e7483b8a8d59"
+    },
+    {
+      "path": "PlannerNativeCapturePhone2.log.gz",
+      "sha256": "336f8f08bf0bba5d9d5e4bcdc07e9406746acc47a2d44518110f8a546db4356b"
+    },
+    {
+      "path": "PlannerNativeCapturePhone3.log.gz",
+      "sha256": "b2a487ef5c77745c10ca2514530114f54415c5e922ee8f6c367d7cdbde21735c"
+    },
+    {
+      "path": "PlannerNativeCapturePhoneFinal.log.gz",
+      "sha256": "9a0a43399bdf35414a38aac87a82b0b8f63eb2f04b220e6f31a985e6144d4b57"
+    },
+    {
+      "path": "PlannerNativeCapturePhoneFinalSummary.json",
+      "sha256": "5ab6228ce1b7ada2038ff069587e6589d6a0a7e41373e7cc6a8861defee4670e"
+    },
+    {
+      "path": "PlannerNativeCapturePhoneFinalTests.json",
+      "sha256": "e7f01f27c2e1055de6033f97d8bbe94a7c9f40a6b0039d0c63acff92d9fc06b5"
+    },
+    {
+      "path": "PlannerNativeCaptureRed.log.gz",
+      "sha256": "9ae1a56e82e415e72fe9363f8b315aa4f95d71ad9a7613ed5805a5ba870751fe"
+    },
+    {
+      "path": "PlannerNativeCaptureStrictLintFinal.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "PlannerNativeCaptureTablet2.log.gz",
+      "sha256": "489672f217230bb6c8847e334dbc4203bfd56171014663fd1cda28f0dbb3fb9f"
+    },
+    {
+      "path": "PlannerNativeCaptureTabletFinal.log.gz",
+      "sha256": "9a5d4e05e1079479e5203fcfe7913d9d7b5e41ce8b7b8d68eea927961eff2809"
+    },
+    {
+      "path": "PlannerNativeCaptureTabletFinalSummary.json",
+      "sha256": "aad545faf17ebc3631a8e2a3eb613aaa29c75a3d0517fa17a79f3fbef745b605"
+    },
+    {
+      "path": "PlannerNativeCaptureTabletFinalTests.json",
+      "sha256": "212969d5e7425aaab8be612d4bc2ff6aa0fde906040e9ec9b64a3d8839f16d4b"
+    },
+    {
+      "path": "PlannerNativeCaptureUntouchedRed.log.gz",
+      "sha256": "9f95f10452c1ec848d3ddeb9f1175ab85bebe1a131500939de60ee4cf77c8f63"
+    },
+    {
+      "path": "commands.json",
+      "sha256": "8e6bd4a7be833939250d5d4beec03c6958a516af98f42c6e92cfc03b154c7651"
+    },
+    {
+      "path": "phone-plain-text.png",
+      "sha256": "b2d271edfd6d18d1300ba41bf0ee4b6c370fcc2f2f684cafc5e255272b4125b0"
+    },
+    {
+      "path": "phone-review.png",
+      "sha256": "bdb0da6bf5f584e387142bbd1ce917d176cd6f12aefccf84df225ca9a917fa6a"
+    },
+    {
+      "path": "phone-saved.png",
+      "sha256": "6a9d0988902df5e1dba60f20c9637d4986c7a4ee417b7477039673b645adef9e"
+    },
+    {
+      "path": "tablet-plain-text.png",
+      "sha256": "b972058032045bafc49753cf9eb947077e3fb4710d436669689e45079b3235cb"
+    },
+    {
+      "path": "tablet-review.png",
+      "sha256": "cb352bf28dd8c250af0673be8417a0ac4042b2e63daf1261acff84005daeba23"
+    },
+    {
+      "path": "tablet-saved.png",
+      "sha256": "35eef46aecb9083bf047a3469f3ada642c91aaeebd3043626298670336dda024"
+    }
+  ]
+}

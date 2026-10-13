@@ -1,0 +1,88 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName" : "iPad Air 11-inch (M4)",
+      "modelName" : "iPad Air 11-inch (M4)",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "1m 21s",
+                  "durationInSeconds" : 81.13332998752594,
+                  "name" : "testExactLinkReusePreservesDoneArchivedContentAndRememberedListWithoutDuplicates()",
+                  "nodeIdentifier" : "SavedCaptureJourneyTests/testExactLinkReusePreservesDoneArchivedContentAndRememberedListWithoutDuplicates()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureJourneyTests/testExactLinkReusePreservesDoneArchivedContentAndRememberedListWithoutDuplicates",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "45s",
+                  "durationInSeconds" : 45.461236000061035,
+                  "name" : "testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem()",
+                  "nodeIdentifier" : "SavedCaptureJourneyTests/testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureJourneyTests/testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "18s",
+                  "durationInSeconds" : 18.692901015281677,
+                  "name" : "testUntouchedSavedLinkDraftCanBeAddedWithoutAnEmptyEdit()",
+                  "nodeIdentifier" : "SavedCaptureJourneyTests/testUntouchedSavedLinkDraftCanBeAddedWithoutAnEmptyEdit()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureJourneyTests/testUntouchedSavedLinkDraftCanBeAddedWithoutAnEmptyEdit",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SavedCaptureJourneyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureJourneyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "17s",
+                  "durationInSeconds" : 17.552170991897583,
+                  "name" : "testPlainTextReviewPreservesItsTitleAndNotesWithoutInventingLinks()",
+                  "nodeIdentifier" : "SavedCaptureTextJourneyTests/testPlainTextReviewPreservesItsTitleAndNotesWithoutInventingLinks()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureTextJourneyTests/testPlainTextReviewPreservesItsTitleAndNotesWithoutInventingLinks",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SavedCaptureTextJourneyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureTextJourneyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "PlannerNavigationUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "PlannerNavigation",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}
