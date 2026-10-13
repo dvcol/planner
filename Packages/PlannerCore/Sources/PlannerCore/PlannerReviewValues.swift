@@ -14,7 +14,7 @@ public enum PlannerReviewTarget: Sendable, Equatable {
 
 public struct PlannerReviewImpact: Sendable {
   public enum Kind: String, Sendable {
-    case bulkCompletion, deleteSource
+    case bulkCompletion, capture, deleteSource
     case importData = "import"
   }
   public let kind: Kind
@@ -23,11 +23,12 @@ public struct PlannerReviewImpact: Sendable {
   public let sourceDeletes: [PlannerEntityReference]
   public let referenceRemovals: [PlannerReferenceRead]
   public let importDetails: PlannerImportReview?
+  public let captureDetails: PlannerCaptureReview?
 
   init(
     kind: Kind, targetCount: Int64, globalFlagsChanged: Bool,
     sourceDeletes: [PlannerEntityReference], referenceRemovals: [PlannerReferenceRead],
-    importDetails: PlannerImportReview? = nil
+    importDetails: PlannerImportReview? = nil, captureDetails: PlannerCaptureReview? = nil
   ) {
     self.kind = kind
     self.targetCount = targetCount
@@ -35,6 +36,7 @@ public struct PlannerReviewImpact: Sendable {
     self.sourceDeletes = sourceDeletes
     self.referenceRemovals = referenceRemovals
     self.importDetails = importDetails
+    self.captureDetails = captureDetails
   }
 }
 

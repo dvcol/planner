@@ -17,6 +17,18 @@ public actor Planner {
   }
   private var reviews: [UUID: ReviewBinding] = [:]
   private var captureDrafts: [UUID: PlannerPreparedCapture] = [:]
+  private var appliedCaptureOperations:
+    [UUID: (session: PlannerDatasetSession, generation: UUID, operationId: UUID)] = [:]
+  private struct CaptureResolution {
+    let draft: PlannerPreparedCapture
+    let item: PlannerSchemaV18.Item?
+    let lists: [PlannerSchemaV18.List]
+    let categories: [PlannerSchemaV18.Category]
+    let tags: [PlannerSchemaV18.Tag]
+    let bindings: [PlannerBoundIdentity]
+    let targets: [PlannerReviewTarget]
+    let details: PlannerCaptureReview
+  }
   private enum ItemStateChange {
     case archive(Bool)
     case completion(Bool)
@@ -222,6 +234,17 @@ public actor Planner {
   {
     do {
       return try coordinated {
+        if let applied = appliedCaptureOperations[draftId] {
+          _ = try validateSession(session)
+          guard applied.session.datasetId == session.datasetId,
+            applied.session.ownershipBinding == session.ownershipBinding,
+            applied.session.epochId == session.epochId, applied.generation == generation
+          else {
+            throw PlannerFailure(
+              "captureDraftUnavailable", "This applied capture belongs to another review.")
+          }
+          return .notCancellable(operationId: applied.operationId)
+        }
         let draft = try preparedCapture(session: session, draftId: draftId)
         guard draft.read.generation == generation else {
           throw PlannerFailure(
@@ -248,6 +271,310 @@ public actor Planner {
     return draft
   }
 
+  private func resolveCapture(
+    session: PlannerDatasetSession, draftId: UUID, draftGeneration: UUID,
+    choice: PlannerCaptureChoice, listIds: Set<UUID>, context: ModelContext
+  ) throws -> CaptureResolution {
+    let draft = try preparedCapture(session: session, draftId: draftId)
+    guard draft.read.generation == draftGeneration else {
+      throw PlannerFailure(
+        "staleReview", "The capture draft changed; review it again.", details: .staleReview)
+    }
+    guard draft.read.saveAllowed else {
+      throw PlannerFailure(
+        "invalidInput", "Resolve the capture's blocking input or content issues before Add.")
+    }
+    try draft.read.content.validate()
+    let availableLists = try context.fetch(FetchDescriptor<PlannerSchemaV18.List>())
+    let lists = try listIds.sorted { $0.uuidString < $1.uuidString }.map { identifier in
+      let matches = availableLists.filter { $0.id == identifier }
+      guard matches.count == 1, let list = matches.first, !list.archived else {
+        throw PlannerFailure(
+          "staleReview", "A selected List is unavailable or archived; choose again.",
+          propertyPath: "/command/listIds", details: .staleReview)
+      }
+      return list
+    }
+    var item: PlannerSchemaV18.Item?
+    var categories: [PlannerSchemaV18.Category] = []
+    var tags: [PlannerSchemaV18.Tag] = []
+    var missingLinks = draft.read.links
+    var missingListIds = listIds
+    switch choice {
+    case .createNew:
+      categories = try selectedCategoryRecords(draft.read.content.categoryIds, context: context)
+      tags = try selectedTagRecords(draft.read.content.tagIds, context: context)
+    case .reuse(let itemId):
+      let matches = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).filter {
+        $0.id == itemId
+      }
+      guard matches.count == 1, let selected = matches.first else {
+        throw PlannerFailure(
+          "staleReview", "The selected Item is unavailable; choose again.", details: .staleReview)
+      }
+      let source = try selected.value()
+      let originals = Set(source.links.map(\.originalUrl))
+      guard draft.read.links.contains(where: { originals.contains($0.originalUrl) }) else {
+        throw PlannerFailure(
+          "staleReview", "The selected Item no longer matches a captured original link.",
+          details: .staleReview)
+      }
+      item = selected
+      missingLinks = draft.read.links.filter { !originals.contains($0.originalUrl) }
+      let existingLists = Set(
+        try membershipSnapshots(context).filter {
+          $0.item.id == source.id && $0.item.lifetimeId == source.lifetimeId
+        }.map { $0.list.id })
+      missingListIds.subtract(existingLists)
+    }
+    var bindings =
+      try lists.map { record in
+        let value = try record.value()
+        return PlannerBoundIdentity(kind: "list", id: value.id, lifetimeId: value.lifetimeId)
+      }
+      + categories.map { record in
+        let value = try record.value()
+        return PlannerBoundIdentity(kind: "category", id: value.id, lifetimeId: value.lifetimeId)
+      }
+      + tags.map { record in
+        let value = try record.value()
+        return PlannerBoundIdentity(kind: "tag", id: value.id, lifetimeId: value.lifetimeId)
+      }
+    var targets: [PlannerReviewTarget] = try lists.map { .source(try $0.value().reference) }
+    var createContent: PlannerItemContentInput? = draft.read.content
+    if let item {
+      let source = try item.value()
+      bindings.append(.init(kind: "item", id: source.id, lifetimeId: source.lifetimeId))
+      bindings += source.links.map {
+        .init(kind: "ownedLink", id: $0.id, lifetimeId: $0.lifetimeId)
+      }
+      let existing = try membershipSnapshots(context).filter {
+        $0.item.id == source.id && $0.item.lifetimeId == source.lifetimeId
+          && listIds.contains($0.list.id)
+      }
+      bindings += existing.map { .init(kind: "membership", id: $0.id, lifetimeId: $0.lifetimeId) }
+      targets.append(.source(source.reference))
+      targets += existing.map { .reference($0.reference) }
+      createContent = nil
+    }
+    return .init(
+      draft: draft, item: item, lists: lists, categories: categories, tags: tags,
+      bindings: bindings, targets: targets,
+      details: .init(
+        createContent: createContent, missingLinks: missingLinks,
+        missingListIds: missingListIds))
+  }
+
+  private func executeCapture(
+    _ operation: PlannerOperation, draftId: UUID, draftGeneration: UUID,
+    choice: PlannerCaptureChoice, listIds: Set<UUID>, identity: PlannerStoreIdentity,
+    context: ModelContext, archive: PlannerRecoveryArchive, receipts: [PlannerSchemaV1.Receipt],
+    envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let digest = plannerCaptureOperationDigest(
+        draftId: draftId, draftGeneration: draftGeneration, choice: choice, listIds: listIds,
+        identity: identity, bindings: try receipt.evidence().bindings)
+      guard receipt.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "This operation describes another capture.")
+      }
+      return appliedResult(
+        operationId: operation.operationId,
+        evidence: try RecoveryReceipt(receipt, checkpoint: nil), envelope: envelope)
+    }
+    let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { completedIds.contains($0) } ?? false }) else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    guard let token = operation.reviewToken, let review = reviews[token.reviewId],
+      review.session == operation.session
+    else {
+      throw PlannerFailure(
+        "staleReview", "Review the capture in the current dataset session.",
+        propertyPath: "/reviewToken", details: .staleReview)
+    }
+    let resolution = try resolveCapture(
+      session: operation.session, draftId: draftId,
+      draftGeneration: draftGeneration, choice: choice,
+      listIds: listIds, context: context)
+    let digest = plannerCaptureOperationDigest(
+      draftId: draftId, draftGeneration: draftGeneration, choice: choice, listIds: listIds,
+      identity: identity, bindings: resolution.bindings)
+    let reviewDigest = plannerCaptureReviewDigest(
+      operationDigest: digest, source: try resolution.item?.value())
+    guard reviewDigest == review.payloadDigest else {
+      throw PlannerFailure(
+        "staleReview", "The capture or selected identities changed; review again.",
+        details: .staleReview)
+    }
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another capture.")
+      }
+      return .init(operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    let item: PlannerSchemaV18.Item
+    let snapshot: ItemSnapshot
+    if let existing = resolution.item {
+      item = existing
+      let before = try existing.value()
+      var links = before.links
+      if !resolution.details.missingLinks.isEmpty {
+        links = before.links.enumerated().map { index, link in
+          .init(
+            id: link.id, lifetimeId: link.lifetimeId, rank: Int64(index),
+            originalUrl: link.originalUrl, label: link.label, kind: link.kind,
+            providerReference: link.providerReference)
+        }
+      }
+      for link in resolution.details.missingLinks {
+        let identifier = UUID()
+        links.append(
+          .init(
+            id: identifier, lifetimeId: identifier, rank: Int64(links.count),
+            originalUrl: link.originalUrl, label: link.label, kind: link.kind,
+            providerReference: link.providerReference))
+      }
+      var updatedAt = before.updatedAt
+      if !resolution.details.missingLinks.isEmpty { updatedAt = Date() }
+      snapshot = .init(
+        id: before.id, lifetimeId: before.lifetimeId, createdAt: before.createdAt,
+        updatedAt: updatedAt, input: before.input, globalDone: before.globalDone,
+        archived: before.archived, links: links, schedules: before.schedules,
+        labelAssociations: before.labelAssociations, labels: before.labels,
+        contentOrigins: before.contentOrigins)
+    } else {
+      item = try PlannerSchemaV18.Item(input: resolution.draft.read.content)
+      item.applyContentOrigins(resolution.draft.contentOrigins)
+      item.labelAssociations =
+        resolution.categories.map {
+          PlannerSchemaV18.LabelAssociation(item: item, category: $0)
+        } + resolution.tags.map { PlannerSchemaV18.LabelAssociation(item: item, tag: $0) }
+      snapshot = try item.value()
+    }
+    let itemBinding = PlannerBoundIdentity(
+      kind: "item", id: snapshot.id, lifetimeId: snapshot.lifetimeId)
+    var memberships = try membershipSnapshots(context)
+    var added: [MembershipSnapshot] = []
+    for list in resolution.lists {
+      let owner = try list.value()
+      guard resolution.details.missingListIds.contains(owner.id) else { continue }
+      let ordered = memberships.filter { $0.list.id == owner.id }.sorted {
+        if $0.rank != $1.rank { return $0.rank < $1.rank }
+        return $0.id.uuidString < $1.id.uuidString
+      }
+      let rank = try associationInsertionRank(
+        at: ordered.count, ordered: ordered, associations: &memberships)
+      let identifier = UUID()
+      let membership = MembershipSnapshot(
+        id: identifier, lifetimeId: identifier,
+        list: .init(kind: "list", id: owner.id, lifetimeId: owner.lifetimeId),
+        item: itemBinding, rank: rank, localDone: false)
+      added.append(membership)
+      memberships.append(membership)
+    }
+    let updatedAt = Date()
+    let lists = try listSnapshots(context).map { value in
+      guard resolution.details.missingListIds.contains(value.id) else { return value }
+      return ListSnapshot(
+        id: value.id, lifetimeId: value.lifetimeId, createdAt: value.createdAt,
+        updatedAt: updatedAt, content: value.content, archived: value.archived,
+        contentOrigins: value.contentOrigins)
+    }
+    let items =
+      try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).filter { $0.id != snapshot.id }
+      .map { try $0.value() } + [snapshot]
+    let associations =
+      try labelAssociationSnapshots(context).filter {
+        $0.owner.kind != "item" || $0.owner.id != snapshot.id
+      } + snapshot.labelAssociations
+    let itineraries = try itinerarySnapshots(context)
+    let categories = try categorySnapshots(context)
+    let tags = try tagSnapshots(context)
+    let markers = try deletionMarkers(context)
+    var generatedIdentities = added.map { PlannerAppliedIdentity.reference($0.reference) }
+    if resolution.item == nil {
+      generatedIdentities =
+        [.source(snapshot.reference)]
+        + snapshot.labelAssociations.map { .reference($0.reference) } + generatedIdentities
+    }
+    let result = PlannerAppliedResult(
+      generatedIdentities: generatedIdentities,
+      affectedIdentities: [.source(snapshot.reference)]
+        + generatedIdentities.filter {
+          if case .source = $0 { return false }
+          return true
+        }
+        + (try resolution.lists.filter {
+          $0.id.map { resolution.details.missingListIds.contains($0) } ?? false
+        }.map { .source(try $0.value().reference) }))
+    let proposalIdentifier = UUID()
+    try archive.prepare(
+      .init(
+        proposalId: proposalIdentifier, originalOperationId: operation.operationId,
+        datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
+        proposedBackup: PlannerDataSnapshot(
+          itineraries: itineraries,
+          labelAssociations: associations, tags: tags, categories: categories,
+          items: items, lists: lists, memberships: memberships, deletionMarkers: markers),
+        payloadDigest: digest, evidence: "preparedUnverified"))
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result,
+      bindings: resolution.bindings)
+    if resolution.item == nil {
+      context.insert(item)
+      for association in item.labelAssociations ?? [] { context.insert(association) }
+    } else if !resolution.details.missingLinks.isEmpty {
+      item.replaceLinks(with: snapshot.links, context: context)
+      item.updatedAt = snapshot.updatedAt
+    }
+    for list in resolution.lists {
+      guard let membership = added.first(where: { $0.list.id == list.id }) else { continue }
+      context.insert(PlannerSchemaV18.Membership(snapshot: membership, list: list, item: item))
+      list.updatedAt = updatedAt
+    }
+    let ranks = Dictionary(uniqueKeysWithValues: memberships.map { ($0.id, $0.rank) })
+    for record in try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>()) {
+      if let identifier = record.id, let rank = ranks[identifier], record.rank != rank {
+        record.rank = rank
+      }
+    }
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      do { try archive.discardPreparedProposal(proposalIdentifier) } catch {
+        throw PlannerFailure(
+          "persistenceFailure",
+          "The capture save failed and its prepared evidence could not be cleared. Resolve operation status before retrying."
+        )
+      }
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The complete capture was not committed: \(error.localizedDescription)")
+    }
+    appliedCaptureOperations[draftId] = (operation.session, draftGeneration, operation.operationId)
+    captureDrafts.removeValue(forKey: draftId)
+    do {
+      let generation = try archive.publish(
+        itineraries: itineraries, labelAssociations: associations,
+        tags: tags, categories: categories, items: items, lists: lists, memberships: memberships,
+        deletionMarkers: markers, receipts: receipts + [receipt])
+      return .init(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return .init(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
+  }
+
   public func prepareReview(session: PlannerDatasetSession, command: PlannerCommand)
     -> PlannerReviewResult
   {
@@ -260,6 +587,19 @@ public actor Planner {
         let impact: PlannerReviewImpact
         let digest: String
         switch command {
+        case .applyCapture(let draftId, let draftGeneration, let choice, let listIds):
+          let resolution = try resolveCapture(
+            session: session, draftId: draftId, draftGeneration: draftGeneration,
+            choice: choice, listIds: listIds, context: context)
+          targets = resolution.targets
+          impact = .init(
+            kind: .capture, targetCount: Int64(targets.count), globalFlagsChanged: false,
+            sourceDeletes: [], referenceRemovals: [], captureDetails: resolution.details)
+          let operationDigest = plannerCaptureOperationDigest(
+            draftId: draftId, draftGeneration: draftGeneration, choice: choice, listIds: listIds,
+            identity: identity, bindings: resolution.bindings)
+          digest = plannerCaptureReviewDigest(
+            operationDigest: operationDigest, source: try resolution.item?.value())
         case .applyImport(let backup, let mode, let restoreDeletedData):
           guard !restoreDeletedData || mode == .overwrite else {
             throw PlannerFailure("invalidInput", "Restoration requires explicit Overwrite.")
@@ -354,6 +694,11 @@ public actor Planner {
         let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
         let envelope = try archive.latest()
         switch operation.command {
+        case .applyCapture(let draftId, let draftGeneration, let choice, let listIds):
+          return try executeCapture(
+            operation, draftId: draftId, draftGeneration: draftGeneration, choice: choice,
+            listIds: listIds, identity: identity, context: context, archive: archive,
+            receipts: receipts, envelope: envelope)
         case .applyImport(let backup, let mode, let restoreDeletedData):
           return try executeImport(
             operation, backup: backup, mode: mode, restoreDeletedData: restoreDeletedData,
