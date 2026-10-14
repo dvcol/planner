@@ -32,7 +32,7 @@ The human accepted B. Each encoded native Maps payload may contain up to 8 MiB; 
 
 ## Q78, controlled Maps HTTP lookup tests
 
-The human accepted A on 2026-10-13. Add a production HTTP transport boundary returning status and headers, test Core's redirect/deadline/draft rules with controlled results, and separately qualify the real URLSession delegate. Planner's public capture API must not gain test-only dependency parameters. Live services cannot reliably reproduce these outcomes. The native probe showed that global URLProtocol registration did not intercept an ordinary ephemeral URLSession, while explicit session configuration did. Implementation and native transport qualification remain open.
+The human accepted A on 2026-10-13. Add a production HTTP transport boundary returning status and headers, test Core's redirect/deadline/draft rules with controlled results, and separately qualify the real URLSession delegate. Planner's public capture API must not gain test-only dependency parameters. Live services cannot reliably reproduce these outcomes. The native probe showed that global URLProtocol registration did not intercept an ordinary ephemeral URLSession, while explicit session configuration did. The [native HEAD module](prototypes/native-capture-http-transport.md) and [Core Maps lookup](prototypes/core-maps-capture-lookup.md) now have their recorded qualifications. Native/agent preview integration, live provider/socket proof, iOS transport runtime and physical allocation/Share gates remain open.
 
 ## Q79 through Q81, remaining Calendar layout and reads
 
@@ -41,3 +41,7 @@ The human accepted A for each question on 2026-10-13. They do not reopen accepte
 - Q79 uses the main Calendar content width on iPad/Mac with native inspector details that can be shown or hidden. Phone details push through native navigation. Ordinary List/Item navigation retains third-panel details.
 - Q80 uses decorated pre-made UICalendarView and a selected-day agenda on mobile, plus a SwiftUI event grid on Mac. Mobile month cells show compact indicators; the agenda supplies event names. The [component investigation](research/native-calendar-display-components.md) establishes the platform capabilities and limits.
 - Q81 adds a shared typed Core Calendar date-window query returning Schedule forms and live owner identities/titles with generation-bound paging. Native views and agents share those reads. The current catalog has no date bounds; Calendar still makes separate source reads per Schedule. A facade extension alone does not prove batched storage or performance. The [Calendar contract readiness](container-estimates-and-calendar.md) still requires a separate reviewed public contract and Core tests, followed by measured storage evidence.
+
+## Q82, concrete Calendar window contract
+
+Pending human review. The [proposal](calendar-window-contract-review.md) defines inclusive civil-date bounds and display zone, consistent Schedule/owner/title/form pages, unchanged stored Schedule semantics, stale-generation rejection, retained archived-owner schedules, and exact timed/all-day boundary fixtures. Recommended A approves that packet; B requests changes before its new query tests and implementation. This is Q81's concrete contract step, not a reopened Calendar layout decision. Independent capture work remains authorized.
