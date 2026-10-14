@@ -7,6 +7,20 @@ struct SavedCalendarSelection: Hashable {
 }
 
 struct SavedCalendarView: View {
+  private enum Mode: String, CaseIterable {
+    case day = "Day"
+    case week = "Week"
+    case month = "Month"
+
+    var component: Calendar.Component {
+      switch self {
+      case .day: .day
+      case .week: .weekOfYear
+      case .month: .month
+      }
+    }
+  }
+
   @Environment(\.timeZone) private var displayTimeZone
   @Bindable var store: SavedPlannerStore
   @Binding var selection: SavedCalendarSelection?
@@ -14,11 +28,32 @@ struct SavedCalendarView: View {
   @State private var visibleDate = Date()
   @State private var entries: [PlannerCalendarEntry]?
   @State private var isLoading = true
+  @State private var mode = Mode.month
+
+  private var visibleInterval: DateInterval? {
+    displayCalendar.dateInterval(
+      of: mode.component, for: mode == .month ? visibleDate : selectedDate)
+  }
+
+  private var visibleDays: [Date] {
+    guard let interval = visibleInterval else { return [] }
+    var days: [Date] = []
+    var date = interval.start
+    while date < interval.end {
+      days.append(date)
+      guard let nextDate = displayCalendar.date(byAdding: .day, value: 1, to: date), nextDate > date
+      else { break }
+      date = nextDate
+    }
+    return days
+  }
 
   private var loadIdentity: String {
-    let components = displayCalendar.dateComponents([.year, .month], from: visibleDate)
+    let components = displayCalendar.dateComponents(
+      [.year, .month, .day], from: visibleInterval?.start ?? selectedDate)
     return store.changeRevision.uuidString + ":" + (store.devicePreferenceNamespace ?? "")
-      + ":" + displayTimeZone.identifier + ":\(components.year ?? 0)-\(components.month ?? 0)"
+      + ":" + displayTimeZone.identifier + ":" + mode.rawValue
+      + ":\(components.year ?? 0)-\(components.month ?? 0)-\(components.day ?? 0)"
   }
 
   private var displayCalendar: Calendar {
@@ -48,8 +83,8 @@ struct SavedCalendarView: View {
     }
   }
 
-  private var monthQuery: PlannerCalendarQuery? {
-    guard let interval = displayCalendar.dateInterval(of: .month, for: visibleDate),
+  private var windowQuery: PlannerCalendarQuery? {
+    guard let interval = visibleInterval,
       let lastDate = displayCalendar.date(byAdding: .day, value: -1, to: interval.end)
     else { return nil }
     let start = displayCalendar.dateComponents([.year, .month, .day], from: interval.start)
@@ -119,6 +154,59 @@ struct SavedCalendarView: View {
   }
 
   var body: some View {
+    VStack(spacing: 12) {
+      Picker("Calendar view", selection: $mode) {
+        ForEach(Mode.allCases, id: \.self) { mode in
+          Text(mode.rawValue).tag(mode)
+        }
+      }
+      .pickerStyle(.segmented)
+      .frame(maxWidth: 400)
+      .padding(.horizontal)
+      .accessibilityIdentifier("saved.calendar.mode")
+      if mode == .month {
+        monthContent
+      } else {
+        DatePicker("Date", selection: $selectedDate, displayedComponents: .date)
+          .datePickerStyle(.compact)
+          .padding(.horizontal)
+        if isLoading {
+          ProgressView("Loading schedules").frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else if entries != nil {
+          SavedCalendarTimeGrid(
+            days: visibleDays, selectedDate: selectedDate, calendar: displayCalendar,
+            selection: $selection,
+            entriesForDay: { date in
+              (entries ?? []).filter { occurs($0, on: date) }.sorted(by: precedes)
+            },
+            scheduleDescription: scheduleDescription)
+        } else {
+          ContentUnavailableView {
+            Label("Calendar unavailable", systemImage: "exclamationmark.triangle")
+          } actions: {
+            Button("Try Again") { Task { await loadEntries() } }
+          }
+        }
+      }
+    }
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier("saved.calendar.canvas")
+    .navigationTitle("Calendar")
+    .toolbar {
+      Button("Today", systemImage: "calendar") {
+        selectedDate = Date()
+        visibleDate = selectedDate
+      }
+    }
+    .onChange(of: selectedDate) {
+      let selectedMonth = displayCalendar.dateComponents([.year, .month], from: selectedDate)
+      let visibleMonth = displayCalendar.dateComponents([.year, .month], from: visibleDate)
+      if selectedMonth != visibleMonth { visibleDate = selectedDate }
+    }
+    .task(id: loadIdentity) { await loadEntries() }
+  }
+
+  private var monthContent: some View {
     ScrollView {
       VStack(alignment: .leading, spacing: 20) {
         #if os(iOS)
@@ -144,20 +232,6 @@ struct SavedCalendarView: View {
       }
       .padding()
     }
-    .accessibilityIdentifier("saved.calendar.canvas")
-    .navigationTitle("Calendar")
-    .toolbar {
-      Button("Today", systemImage: "calendar") {
-        selectedDate = Date()
-        visibleDate = selectedDate
-      }
-    }
-    .onChange(of: selectedDate) {
-      let selectedMonth = displayCalendar.dateComponents([.year, .month], from: selectedDate)
-      let visibleMonth = displayCalendar.dateComponents([.year, .month], from: visibleDate)
-      if selectedMonth != visibleMonth { visibleDate = selectedDate }
-    }
-    .task(id: loadIdentity) { await loadEntries() }
   }
 
   #if os(iOS)
@@ -215,7 +289,7 @@ struct SavedCalendarView: View {
     let identity = loadIdentity
     isLoading = true
     defer { if loadIdentity == identity { isLoading = false } }
-    guard let query = monthQuery else {
+    guard let query = windowQuery else {
       entries = nil
       return
     }

@@ -1,0 +1,239 @@
+import PlannerCore
+import SwiftUI
+
+struct SavedCalendarTimeGrid: View {
+  private struct AllDayPresentation: Identifiable {
+    let date: Date
+    var id: Date { date }
+  }
+
+  private struct TimedPlacement {
+    let entry: PlannerCalendarEntry
+    let top: CGFloat
+    let height: CGFloat
+    let lane: Int
+    var laneCount = 1
+  }
+
+  let days: [Date]
+  let selectedDate: Date
+  let calendar: Calendar
+  @Binding var selection: SavedCalendarSelection?
+  let entriesForDay: (Date) -> [PlannerCalendarEntry]
+  let scheduleDescription: (PlannerCalendarEntry) -> String
+
+  @State private var allDayPresentation: AllDayPresentation?
+  @ScaledMetric(relativeTo: .subheadline) private var allDayCardHeight = 64
+
+  private let pointsPerMinute: CGFloat = 1.5
+
+  private func dateIdentifier(_ date: Date) -> String {
+    let components = calendar.dateComponents([.year, .month, .day], from: date)
+    return "\(components.year ?? 0)-\(components.month ?? 0)-\(components.day ?? 0)"
+  }
+
+  private func hourIdentifier(_ date: Date, hour: Int) -> String {
+    dateIdentifier(date) + ":\(hour)"
+  }
+
+  private func timeDescription(_ date: Date) -> String {
+    var format = Date.FormatStyle(date: .omitted, time: .shortened)
+    format.calendar = calendar
+    format.timeZone = calendar.timeZone
+    return date.formatted(format)
+  }
+
+  private var initialHour: Int {
+    guard calendar.isDateInToday(selectedDate) else { return 8 }
+    let date = Date()
+    return Int(date.timeIntervalSince(calendar.startOfDay(for: date)) / 3600)
+  }
+
+  private func timedPlacements(
+    _ entries: [PlannerCalendarEntry], interval: DateInterval
+  ) -> [TimedPlacement] {
+    var placements: [TimedPlacement] = []
+    var laneEnds: [CGFloat] = []
+    var groupStart = 0
+    var groupEnd: CGFloat = 0
+    for entry in entries {
+      guard case .timed(let start, let end, _) = entry.form else { continue }
+      let visibleStart = max(start, interval.start)
+      let top = CGFloat(visibleStart.timeIntervalSince(interval.start) / 60) * pointsPerMinute
+      let height = max(
+        44,
+        CGFloat(min(end ?? start, interval.end).timeIntervalSince(visibleStart) / 60)
+          * pointsPerMinute)
+      if top >= groupEnd {
+        for index in groupStart..<placements.count { placements[index].laneCount = laneEnds.count }
+        groupStart = placements.count
+        laneEnds = []
+      }
+      let lane = laneEnds.firstIndex(where: { $0 <= top }) ?? laneEnds.count
+      if lane == laneEnds.count {
+        laneEnds.append(top + height)
+      } else {
+        laneEnds[lane] = top + height
+      }
+      groupEnd = max(groupEnd, top + height)
+      placements.append(.init(entry: entry, top: top, height: height, lane: lane))
+    }
+    for index in groupStart..<placements.count { placements[index].laneCount = laneEnds.count }
+    return placements
+  }
+
+  private var minimumColumnWidth: CGFloat {
+    var maximumLanes = 1
+    for day in days {
+      guard let interval = calendar.dateInterval(of: .day, for: day) else { continue }
+      let placements = timedPlacements(entriesForDay(day), interval: interval)
+      maximumLanes = max(maximumLanes, placements.map(\.laneCount).max() ?? 1)
+    }
+    return max(180, 60 + CGFloat(maximumLanes) * 100)
+  }
+
+  var body: some View {
+    GeometryReader { geometry in
+      let columnWidth = max(
+        minimumColumnWidth, geometry.size.width / CGFloat(max(1, days.count)))
+      ScrollViewReader { proxy in
+        ScrollView([.horizontal, .vertical]) {
+          LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
+            Section {
+              HStack(alignment: .top, spacing: 0) {
+                ForEach(days, id: \.self) { day in
+                  dayColumn(day, width: columnWidth)
+                }
+              }
+            } header: {
+              HStack(alignment: .top, spacing: 0) {
+                ForEach(days, id: \.self) { day in
+                  dayHeader(day, width: columnWidth)
+                }
+              }
+              .padding(.vertical, 8)
+              .background(.bar)
+            }
+          }
+          .frame(width: CGFloat(days.count) * columnWidth)
+        }
+        .onAppear {
+          proxy.scrollTo(hourIdentifier(selectedDate, hour: initialHour), anchor: .leading)
+        }
+      }
+    }
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier("saved.calendar.time-grid")
+    .sheet(item: $allDayPresentation) { presentation in
+      allDaySchedules(on: presentation.date)
+    }
+  }
+
+  private func allDaySchedules(on day: Date) -> some View {
+    NavigationStack {
+      List(allDayEntries(on: day), id: \.schedule.id) { entry in
+        entryButton(entry, day: day, isTimed: false).frame(height: allDayCardHeight)
+      }
+      .accessibilityElement(children: .contain)
+      .accessibilityIdentifier("saved.calendar.all-day-overflow")
+      .navigationTitle("All-day schedules")
+      #if os(iOS)
+        .navigationBarTitleDisplayMode(.inline)
+      #endif
+      .toolbar {
+        ToolbarItem(placement: .confirmationAction) {
+          Button("Done") { allDayPresentation = nil }
+        }
+      }
+    }
+    .frame(minWidth: 320, idealWidth: 360, minHeight: 420)
+    .presentationDetents([.medium, .large])
+  }
+
+  private func allDayEntries(on day: Date) -> [PlannerCalendarEntry] {
+    entriesForDay(day).filter {
+      if case .allDay = $0.form { return true }
+      return false
+    }
+  }
+
+  private func dayHeader(_ day: Date, width: CGFloat) -> some View {
+    let entries = allDayEntries(on: day)
+    return VStack(alignment: .leading, spacing: 12) {
+      Text(day, format: .dateTime.weekday().month().day())
+        .font(.headline).padding(.horizontal, 8)
+      ForEach(entries.prefix(2), id: \.schedule.id) { entry in
+        entryButton(entry, day: day, isTimed: false)
+          .frame(height: allDayCardHeight).padding(.horizontal, 8)
+      }
+      if entries.count > 2 {
+        Button("\(entries.count - 2) more all-day schedules") {
+          allDayPresentation = .init(date: day)
+        }
+        .padding(.horizontal, 8)
+        .accessibilityIdentifier("saved.calendar.all-day.more.\(dateIdentifier(day))")
+      }
+    }
+    .frame(width: width, alignment: .topLeading)
+  }
+
+  private func dayColumn(_ day: Date, width: CGFloat) -> some View {
+    let entries = entriesForDay(day)
+    return VStack(spacing: 0) {
+      if let interval = calendar.dateInterval(of: .day, for: day) {
+        ZStack(alignment: .topLeading) {
+          hourLines(day: day, interval: interval)
+          ForEach(timedPlacements(entries, interval: interval), id: \.entry.schedule.id) {
+            placement in
+            let laneWidth = (width - 60) / CGFloat(placement.laneCount)
+            entryButton(placement.entry, day: day, isTimed: true)
+              .frame(width: laneWidth - 4, height: placement.height, alignment: .topLeading)
+              .background(.regularMaterial, in: .rect(cornerRadius: 8))
+              .offset(x: 54 + CGFloat(placement.lane) * laneWidth, y: placement.top)
+          }
+        }
+        .frame(
+          width: width, height: CGFloat(interval.duration / 60) * pointsPerMinute + 44,
+          alignment: .topLeading)
+      }
+    }
+    .frame(width: width, alignment: .topLeading)
+  }
+
+  private func hourLines(day: Date, interval: DateInterval) -> some View {
+    let hours = Int(ceil(interval.duration / 3600))
+    return VStack(alignment: .leading, spacing: 0) {
+      ForEach(0..<hours, id: \.self) { hour in
+        let date = interval.start.addingTimeInterval(Double(hour) * 3600)
+        HStack(spacing: 4) {
+          Text(timeDescription(date)).font(.caption2).foregroundStyle(.secondary)
+            .frame(width: 50, alignment: .trailing)
+          Rectangle().fill(.separator).frame(height: 0.5)
+        }
+        .frame(height: 60 * pointsPerMinute, alignment: .top)
+        .id(hourIdentifier(day, hour: hour))
+      }
+    }
+  }
+
+  private func entryButton(_ entry: PlannerCalendarEntry, day: Date, isTimed: Bool) -> some View {
+    Button {
+      allDayPresentation = nil
+      selection = .init(scheduleIdentifier: entry.schedule.id, source: entry.source)
+    } label: {
+      VStack(alignment: .leading, spacing: 4) {
+        Text(entry.title).font(.subheadline.weight(.medium)).lineLimit(2)
+        Text(scheduleDescription(entry)).font(.caption2).foregroundStyle(.secondary)
+      }
+      .padding(6)
+      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+      .contentShape(.rect)
+    }
+    .buttonStyle(.plain)
+    .accessibilityLabel(entry.title)
+    .accessibilityValue(scheduleDescription(entry))
+    .accessibilityIdentifier(
+      "saved.calendar.\(isTimed ? "timed" : "all-day").\(dateIdentifier(day)).\(entry.schedule.id.uuidString)"
+    )
+  }
+}
