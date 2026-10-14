@@ -32,6 +32,7 @@ struct PlannerApp: App {
       .defaultSize(width: 1200, height: 800)
       .commands {
         SidebarCommands()
+        InspectorCommands()
         CommandMenu("Prototype") {
           Button("Open navigation comparison") { openWindow(id: "navigation-prototype") }
           Divider()

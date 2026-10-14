@@ -1,0 +1,2 @@
+Entry width with details: 788.0
+Entry width after hiding: 788.0

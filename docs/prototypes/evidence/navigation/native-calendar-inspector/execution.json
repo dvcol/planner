@@ -1,0 +1,186 @@
+{
+  "baseCommit": "928bbf7f5984b02674ecf1604dd2734db15de2c9",
+  "scope": "Q79 native Calendar inspector, identity-preserving hide/reopen, native itinerary overflow and confirmed owner deletion cleanup",
+  "qualified": {
+    "phone": {
+      "functions": 6,
+      "suites": 3,
+      "invocations": 6,
+      "runs": 1,
+      "failures": 0,
+      "skips": 0
+    },
+    "tablet": {
+      "functions": 7,
+      "suites": 4,
+      "invocations": 8,
+      "runs": 2,
+      "failures": 0,
+      "skips": 0
+    },
+    "mac": {
+      "appBuild": "passed",
+      "nativeTestHostBuild": "passed",
+      "runtimeFunctions": 0
+    },
+    "strictSwiftLintFiles": 5,
+    "markdownLintDocuments": 1
+  },
+  "sourceHashesVerifiedAfterAllProcessesExited": true,
+  "qualificationNotes": [
+    "Seven-function tablet regression run used landscape for the inspector; portrait capture follow-up reran that one function.",
+    "The follow-up changes only capture/orientation and correct Mac navigation identifiers in the inspector test; app source and the other six journeys remain unchanged.",
+    "Underlying agenda frame remains unchanged under a native overlay. Hide/reopen is verified through visible native controls and original full-screen captures.",
+    "Diagnostic failures and clipped landscape captures are excluded from qualification and visual evidence."
+  ],
+  "reviews": {
+    "standards": "No remaining confirmed source findings",
+    "spec": "No remaining confirmed source findings"
+  },
+  "screenshots": [
+    {
+      "path": "phone-calendar-deleted.png",
+      "inspected": true,
+      "originalExport": "PlannerCalendarInspectorPhoneFinal2Attachments/609C60F3-9FE7-4884-945B-D67716C633FC.png"
+    },
+    {
+      "path": "phone-itinerary-child.png",
+      "inspected": true,
+      "originalExport": "PlannerCalendarInspectorPhoneFinal2Attachments/7DF06C3E-2F3B-44F4-B020-AC5C5111C88C.png"
+    },
+    {
+      "path": "tablet-itinerary-child.png",
+      "inspected": true,
+      "originalExport": "PlannerCalendarInspectorTabletFinal2Attachments/26DD9592-0630-4595-8C4F-903B4E6C0540.png"
+    },
+    {
+      "path": "tablet-inspector-open.png",
+      "inspected": true,
+      "originalExport": "PlannerCalendarInspectorPortraitCapturesAttachments/CE9F8785-6CB6-461B-9B2D-E4EA2B72645C.png"
+    },
+    {
+      "path": "tablet-inspector-hidden.png",
+      "inspected": true,
+      "originalExport": "PlannerCalendarInspectorPortraitCapturesAttachments/2265FE37-2B02-4B99-BC86-5872436DB6F7.png"
+    },
+    {
+      "path": "tablet-inspector-reopened.png",
+      "inspected": true,
+      "originalExport": "PlannerCalendarInspectorPortraitCapturesAttachments/1362C8DE-19EC-4548-93C0-E67D1B46167D.png"
+    }
+  ],
+  "remainingGates": [
+    "Q80 decorated mobile UICalendarView and Mac event grid",
+    "Q82 concrete Core date-window contract approval before its tests/implementation",
+    "Day/Week/Month overlap, overflow, timezone/DST, accessibility and moving-window performance",
+    "Mac runtime and signed physical sync/account/Share",
+    "External deletion refresh and other Calendar removal paths",
+    "Whole-app polish"
+  ],
+  "artifacts": [
+    {
+      "path": "commands.json",
+      "sha256": "3916a550fd4e566dd8386f4e2531c8ce3dac1e10bc3937ed1fdbac78fba1d2f6"
+    },
+    {
+      "path": "inspector-missing-control-red.log.gz",
+      "sha256": "c1c9e9be2bd1da809329ae5c5cb7a115c439eec7191a79d4a0e7da05621ee11b"
+    },
+    {
+      "path": "mac-app-build.log.gz",
+      "sha256": "26230cfe82718e6ca128dcd04bf3dc096a91c120a45ccfcb54569eabfe871035"
+    },
+    {
+      "path": "mac-test-host-build.log.gz",
+      "sha256": "c42ac06c6849401e6408d01db7e22dcd10e604d5127eaefadb865e91db7cb825"
+    },
+    {
+      "path": "markdown-lint.log",
+      "sha256": "888d2e65c56fa21b5f5ec82eaa4cda9d6903f2efedd2a436398be142d68ed017"
+    },
+    {
+      "path": "native-layout-diagnostic.log.gz",
+      "sha256": "a4bd9b3a3e582ac2b0c5d6a382b3a16b44453082741e2f8aded0166fcc51d85c"
+    },
+    {
+      "path": "phone-calendar-deleted.png",
+      "sha256": "85d74f52c00aa06b44b39a915da6d5de07dd6f0f567435608e829cc08948c2a1"
+    },
+    {
+      "path": "phone-deletion-red.log.gz",
+      "sha256": "4ce2e21573e44f6dc676d9d0abca27414e6bc7e473ed3c72a0442db299126ec5"
+    },
+    {
+      "path": "phone-itinerary-child.png",
+      "sha256": "bdc4294710d9e53d06af2ec16bae32bfc2ae0c723e5ce27b218c336713022f88"
+    },
+    {
+      "path": "phone-summary.json",
+      "sha256": "b4a916e14c181317f9bb5cfa22b3d1d4e73d22c0ac0f26830269b4de7e546478"
+    },
+    {
+      "path": "phone-tests.json",
+      "sha256": "d8b054b029a751ad1b7644d86f5f789992154d96a88c507756c960e79fb1f0dc"
+    },
+    {
+      "path": "portrait-inspector-summary.json",
+      "sha256": "580141114af6374ca4ad9fb5a4539e1d4f317a3fa3af91f695170b6137046600"
+    },
+    {
+      "path": "portrait-inspector-tests.json",
+      "sha256": "37d79bb27c4f809d40e8ed21cb4f214cfac6647b00d9936265e7763304d408c2"
+    },
+    {
+      "path": "products.json",
+      "sha256": "0b8454821f3288a61a610e2285845c59ba3290526ab864d1ae42f3d44fba62af"
+    },
+    {
+      "path": "qualified-phone.log.gz",
+      "sha256": "b1dba725d2e06ef901964162daca96bf60d5698815fb9cc914c097ac9a9c09c4"
+    },
+    {
+      "path": "qualified-portrait-inspector.log.gz",
+      "sha256": "a84a95137baac23152626f9aa53e7d9eac48b624bb68e3bd5128a70f2b6d3a19"
+    },
+    {
+      "path": "qualified-tablet.log.gz",
+      "sha256": "80cb6674914f4a389c470e9c5fafb42e5b8d27ad1988fc862c9490f5173d8d5f"
+    },
+    {
+      "path": "sources.json",
+      "sha256": "2dd8276841f057968fa454d428667d92e45b368fd9e913eb8dce33105072f2ad"
+    },
+    {
+      "path": "swift-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tablet-inspector-hidden.png",
+      "sha256": "84da034259bda6d36d0b55be44e95aabf191efd1ba0193e08cee89531d4b0c4d"
+    },
+    {
+      "path": "tablet-inspector-open.png",
+      "sha256": "d36f9d280841fe621e97efde2818cf0695f89cc805cffec3e3f9fce9e3f12c38"
+    },
+    {
+      "path": "tablet-inspector-reopened.png",
+      "sha256": "63c287fdfa6665c6a2cde0ba1b3209ac8456d26b943c48e3b47c8e843a530155"
+    },
+    {
+      "path": "tablet-itinerary-child.png",
+      "sha256": "f690c1e1fb362cf6d18d094012b317e83035cb82ff2b223f2b07380175162b40"
+    },
+    {
+      "path": "tablet-native-overlay-frames.txt",
+      "sha256": "088f86fd97f9a9dc0621affb76c1d31344563123fe456d24ba5caedf74874784"
+    },
+    {
+      "path": "tablet-summary.json",
+      "sha256": "fcfdd96d5cbcbde8674efe86a198fe089bcddea0f1b36bf1861311aeba1b09ee"
+    },
+    {
+      "path": "tablet-tests.json",
+      "sha256": "ead284413c514c8dcaecec65798b5b683bab5f84f243fcd996011461d68a69e9"
+    }
+  ]
+}
