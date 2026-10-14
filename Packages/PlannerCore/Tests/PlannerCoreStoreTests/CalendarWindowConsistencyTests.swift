@@ -1,8 +1,58 @@
 import Foundation
 import PlannerCore
+import SQLite3
 import Testing
 
 struct CalendarWindowConsistencyTests {
+  @Test func duplicateScheduleIdentitiesOutsideTheWindowRejectTheWholeCalendarRead() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .applied(let creation, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .createItem(content: .init(title: "Museum")))
+      ).outcome,
+      let item = creation.generated.first
+    else { throw CancellationError() }
+    for day in [9, 10] {
+      guard
+        case .applied(_, .complete) = await planner.execute(
+          .init(
+            operationId: UUID(), session: session,
+            command: .createSchedule(
+              source: item,
+              form: .allDay(start: .init(year: 2026, month: 10, day: day), end: nil)))
+        ).outcome
+      else { throw CancellationError() }
+    }
+    /// Create malformed native input at the storage I/O boundary; assertions use public reads.
+    var database: OpaquePointer?
+    try #require(sqlite3_open(configuration.storeURL.path, &database) == SQLITE_OK)
+    defer { sqlite3_close(database) }
+    try #require(
+      sqlite3_exec(
+        database, "UPDATE ZSCHEDULE SET ZID = (SELECT ZID FROM ZSCHEDULE LIMIT 1);", nil, nil, nil)
+        == SQLITE_OK)
+    let reader = Planner(configuration: configuration)
+    guard case .ready(let readSession) = await reader.bootstrap() else { throw CancellationError() }
+    let day = PlannerCivilDate(year: 2026, month: 10, day: 9)
+    let response = await reader.query(
+      .init(
+        session: readSession,
+        request: .calendar(.init(startDay: day, endDay: day, displayTimeZone: "Asia/Tokyo"))))
+    guard case .failed(let failure) = response else {
+      Issue.record("Reject duplicate identities across retained dates: \(response)")
+      return
+    }
+    #expect(failure.code == "readUnavailable")
+  }
+
   @Test func pagesAndRejectedWindowsPreserveTheCompleteSavedCalendar() async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
     let planner = Planner(

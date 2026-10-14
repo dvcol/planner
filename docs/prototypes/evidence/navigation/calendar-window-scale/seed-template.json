@@ -1,0 +1,103 @@
+{
+  "completionChanges" : [
+
+  ],
+  "contextAliases" : [
+
+  ],
+  "deletionMarkers" : [
+
+  ],
+  "expandedCompletions" : [
+
+  ],
+  "format" : "planner-data",
+  "formatVersion" : 2,
+  "itineraryEntries" : [
+
+  ],
+  "labelAssociations" : [
+
+  ],
+  "memberships" : [
+    {
+      "id" : "1E22E163-1029-479D-9D93-33F280B51AA2",
+      "item" : {
+        "id" : "BC127F6C-038F-4E52-876E-8C9BD3B027D8",
+        "kind" : "item",
+        "lifetimeId" : "5ED01FBB-50AD-40D6-A9BB-33060AC9B4D9"
+      },
+      "lifetimeId" : "1E22E163-1029-479D-9D93-33F280B51AA2",
+      "list" : {
+        "id" : "5C72B257-24E3-4677-B379-24C716DAE46D",
+        "kind" : "list",
+        "lifetimeId" : "53DA9BDA-978B-4DB7-BCFC-3E567C4B09F5"
+      },
+      "localDone" : false,
+      "rank" : "0"
+    }
+  ],
+  "ownedLinks" : [
+
+  ],
+  "restorationFamilies" : [
+
+  ],
+  "schedules" : [
+    {
+      "form" : {
+        "end" : null,
+        "kind" : "timed",
+        "planningTimeZone" : "GMT",
+        "start" : 788918400
+      },
+      "id" : "0DE0A1A2-66F8-4F16-9F6C-557CE290AFBC",
+      "lifetimeId" : "C5F12B2D-2442-4180-87FC-42F739BADE5A",
+      "source" : {
+        "id" : "BC127F6C-038F-4E52-876E-8C9BD3B027D8",
+        "kind" : "item",
+        "lifetimeId" : "5ED01FBB-50AD-40D6-A9BB-33060AC9B4D9"
+      }
+    }
+  ],
+  "sources" : [
+    {
+      "archived" : false,
+      "content" : {
+        "color" : null,
+        "iconName" : null,
+        "manualEstimate" : null,
+        "name" : "Scale template List",
+        "notes" : null
+      },
+      "contentOrigins" : {
+        "name" : "independent"
+      },
+      "createdAt" : 813693085.476384,
+      "globalDone" : null,
+      "id" : "5C72B257-24E3-4677-B379-24C716DAE46D",
+      "kind" : "list",
+      "lifetimeId" : "53DA9BDA-978B-4DB7-BCFC-3E567C4B09F5",
+      "updatedAt" : 813693085.492669
+    },
+    {
+      "archived" : false,
+      "content" : {
+        "estimate" : null,
+        "location" : null,
+        "notes" : null,
+        "subtitle" : null,
+        "title" : "Scale template Item"
+      },
+      "contentOrigins" : {
+        "title" : "independent"
+      },
+      "createdAt" : 813693085.459777,
+      "globalDone" : false,
+      "id" : "BC127F6C-038F-4E52-876E-8C9BD3B027D8",
+      "kind" : "item",
+      "lifetimeId" : "5ED01FBB-50AD-40D6-A9BB-33060AC9B4D9",
+      "updatedAt" : 813693085.459777
+    }
+  ]
+}

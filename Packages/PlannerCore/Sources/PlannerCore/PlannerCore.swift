@@ -1322,7 +1322,7 @@ public actor Planner {
   private func resolvedSchedule(_ record: PlannerSchemaV18.Schedule, context: ModelContext) throws
     -> (snapshot: ScheduleSnapshot, source: PlannerEntityReference, owner: ScheduleOwner)
   {
-    guard let ownerIdentifier = record.sourceId, let ownerLifetime = record.sourceLifetimeId else {
+    guard let ownerIdentifier = record.sourceId, record.sourceLifetimeId != nil else {
       throw PlannerFailure("readUnavailable", "The Schedule's source binding is unresolved.")
     }
     guard let ownerKind = PlannerEntityKind(rawValue: record.sourceKind) else {
@@ -1330,13 +1330,36 @@ public actor Planner {
     }
     let owner = PlannerEntityReference(kind: ownerKind, id: ownerIdentifier)
     let resolvedOwner = try resolveScheduleOwner(owner, context: context)
-    let binding = try resolvedOwner.binding
+    return try resolvedSchedule(record, owner: resolvedOwner)
+  }
+
+  private func resolvedSchedule(_ record: PlannerSchemaV18.Schedule, owner: ScheduleOwner) throws
+    -> (snapshot: ScheduleSnapshot, source: PlannerEntityReference, owner: ScheduleOwner)
+  {
+    let binding = try owner.binding
+    let source = PlannerEntityReference(
+      kind: try scheduleOwnerKind(record), id: binding.id)
+    guard record.sourceId == binding.id, let ownerLifetime = record.sourceLifetimeId else {
+      throw PlannerFailure("readUnavailable", "The Schedule's source binding is unresolved.")
+    }
     guard binding.lifetimeId == ownerLifetime else {
       throw PlannerFailure("readUnavailable", "The Schedule's source lifetime no longer resolves.")
     }
     let snapshot = try record.value(
-      ownerId: ownerIdentifier, ownerLifetimeId: ownerLifetime, ownerKind: binding.kind)
-    return (snapshot, owner, resolvedOwner)
+      ownerId: binding.id, ownerLifetimeId: ownerLifetime, ownerKind: binding.kind)
+    return (snapshot, source, owner)
+  }
+
+  private func scheduleOwnerKind(_ record: PlannerSchemaV18.Schedule) throws -> PlannerEntityKind {
+    guard let kind = PlannerEntityKind(rawValue: record.sourceKind) else {
+      throw PlannerFailure("readUnavailable", "The Schedule has an unsupported source kind.")
+    }
+    guard kind == .item || kind == .itinerary else {
+      throw PlannerFailure(
+        "invalidInput", "Schedules can belong to an Item or Itinerary.",
+        propertyPath: "/command/source/kind")
+    }
+    return kind
   }
 
   private func resolveScheduleOwner(
@@ -2106,9 +2129,22 @@ public actor Planner {
     -> [PlannerCalendarEntry]
   {
     let interval = try query.interval()
+    let schedules = try context.fetch(FetchDescriptor<PlannerSchemaV18.Schedule>())
+    let owners = try calendarOwners(schedules: schedules, context: context)
     var entries: [PlannerCalendarEntry] = []
-    for record in try context.fetch(FetchDescriptor<PlannerSchemaV18.Schedule>()) {
-      let resolved = try resolvedSchedule(record, context: context)
+    var scheduleIdentifiers: Set<UUID> = []
+    for record in schedules {
+      guard let ownerIdentifier = record.sourceId else {
+        throw PlannerFailure("readUnavailable", "The Schedule's source binding is unresolved.")
+      }
+      let source = PlannerEntityReference(kind: try scheduleOwnerKind(record), id: ownerIdentifier)
+      guard let owner = owners[source] else {
+        throw PlannerFailure("missingReference", "The Schedule's source is missing or unresolved.")
+      }
+      let resolved = try resolvedSchedule(record, owner: owner)
+      guard scheduleIdentifiers.insert(resolved.snapshot.id).inserted else {
+        throw PlannerFailure("readUnavailable", "Calendar Schedule identities are duplicated.")
+      }
       let matches: Bool
       switch resolved.snapshot.form {
       case .timed(let start, let end, _):
@@ -2136,10 +2172,54 @@ public actor Planner {
           schedule: resolved.snapshot.reference, source: resolved.source, title: title,
           form: resolved.snapshot.form))
     }
-    guard Set(entries.map { $0.schedule.id }).count == entries.count else {
-      throw PlannerFailure("readUnavailable", "Calendar Schedule identities are duplicated.")
-    }
     return entries.sorted { $0.schedule.id.uuidString < $1.schedule.id.uuidString }
+  }
+
+  private func calendarOwners(
+    schedules: [PlannerSchemaV18.Schedule], context: ModelContext
+  ) throws -> [PlannerEntityReference: ScheduleOwner] {
+    var itemIdentifiers: Set<UUID?> = []
+    var itineraryIdentifiers: Set<UUID?> = []
+    for schedule in schedules {
+      guard let identifier = schedule.sourceId, schedule.sourceLifetimeId != nil else {
+        throw PlannerFailure("readUnavailable", "The Schedule's source binding is unresolved.")
+      }
+      switch try scheduleOwnerKind(schedule) {
+      case .item: itemIdentifiers.insert(identifier)
+      case .itinerary: itineraryIdentifiers.insert(identifier)
+      default: break
+      }
+    }
+    let itemValues = Array(itemIdentifiers)
+    let itineraryValues = Array(itineraryIdentifiers)
+    var owners: [PlannerEntityReference: ScheduleOwner] = [:]
+    if !itemIdentifiers.isEmpty {
+      var descriptor = FetchDescriptor<PlannerSchemaV18.Item>(
+        predicate: #Predicate { itemValues.contains($0.id) })
+      descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.title]
+      let records = Dictionary(grouping: try context.fetch(descriptor), by: \.id)
+      for (identifier, matches) in records {
+        guard let identifier, matches.count == 1, let owner = matches.first else {
+          throw PlannerFailure(
+            "missingReference", "The Schedule's source is missing or unresolved.")
+        }
+        owners[.init(kind: .item, id: identifier)] = .item(owner)
+      }
+    }
+    if !itineraryIdentifiers.isEmpty {
+      var descriptor = FetchDescriptor<PlannerSchemaV18.Itinerary>(
+        predicate: #Predicate { itineraryValues.contains($0.id) })
+      descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.title]
+      let records = Dictionary(grouping: try context.fetch(descriptor), by: \.id)
+      for (identifier, matches) in records {
+        guard let identifier, matches.count == 1, let owner = matches.first else {
+          throw PlannerFailure(
+            "missingReference", "The Schedule's source is missing or unresolved.")
+        }
+        owners[.init(kind: .itinerary, id: identifier)] = .itinerary(owner)
+      }
+    }
+    return owners
   }
 
   private func readCalendarRows(

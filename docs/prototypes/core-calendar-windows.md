@@ -1,6 +1,6 @@
 # Core Calendar windows and typed pages
 
-Core and MCP now return matching Schedule identities for an inclusive civil-date window, followed by generation-bound pages containing each Schedule's saved form and live Item/Itinerary identity and title. Native Calendar integration is the next step.
+Core and MCP now return matching Schedule identities for an inclusive civil-date window, followed by generation-bound pages containing each Schedule's saved form and live Item/Itinerary identity and title. Later native integration and storage measurements are linked below.
 
 ## Context and goal
 
@@ -32,6 +32,6 @@ The final authenticated HTTP run passes four functions across three suites, with
 
 ## Remaining work
 
-The current query resolves the Schedule catalog before matching its window. Storage fetch counts, latency, memory and generation-cache retention have not been benchmarked. Candidate-fetch optimization and large-catalog measurements retain their gate. Native consumers still use the previous catalog flow; switching them to moving Calendar windows is next, followed by Q80's mobile native Month/Mac event grid and Day/Week layout qualification.
+Follow-up work switched native consumers to Calendar windows, added [Day/Week layouts](native-calendar-day-week.md) and [per-device display zones](native-calendar-display-zone.md). The [large-catalog measurements and owner batching](calendar-window-scale.md) now record actual storage work, latency and desktop resident memory. Candidate date fetching, generation-cache retention and physical mobile latency/memory retain their gates.
 
-Account/dataset-transition qualification, physical sync/recovery/Share, adaptive UI and accessibility, Calendar display-zone preferences and whole-app polish remain open. Apple Calendar export remains outside the map.
+Account/dataset-transition qualification, physical sync/recovery/Share, temporal/adaptive UI and accessibility, and whole-app polish remain open. Apple Calendar export remains outside the map.

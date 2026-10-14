@@ -1,0 +1,36 @@
+{
+  "dataset" : "\/private\/tmp\/PlannerCalendarScaleRuns\/CF9F18FD-9A99-413B-9B7C-9E4E1BE9547B",
+  "items" : 5000,
+  "lists" : 200,
+  "matchingSchedules" : 3,
+  "measurements" : [
+    {
+      "iteration" : 1,
+      "matchingCount" : 3,
+      "queryAndThreePagesSeconds" : 1.6794407919999998,
+      "querySeconds" : 1.6113706670000001,
+      "residentAfterBytes" : 380108800,
+      "residentBeforeBytes" : 375701504
+    },
+    {
+      "iteration" : 2,
+      "matchingCount" : 3,
+      "queryAndThreePagesSeconds" : 1.680088375,
+      "querySeconds" : 1.6110411249999999,
+      "residentAfterBytes" : 380157952,
+      "residentBeforeBytes" : 380108800
+    },
+    {
+      "iteration" : 3,
+      "matchingCount" : 3,
+      "queryAndThreePagesSeconds" : 1.6807905839999999,
+      "querySeconds" : 1.613620584,
+      "residentAfterBytes" : 380289024,
+      "residentBeforeBytes" : 380157952
+    }
+  ],
+  "memberships" : 5000,
+  "queryDays" : 3,
+  "savedDataUnchanged" : true,
+  "schedules" : 5000
+}

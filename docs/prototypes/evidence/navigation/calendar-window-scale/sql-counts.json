@@ -1,0 +1,92 @@
+{
+  "baseline": [
+    {
+      "iteration": 1,
+      "selectCount": 30012,
+      "tables": {
+        "ACHANGE": 5,
+        "ATRANSACTION": 5,
+        "SQLITE_MASTER": 1,
+        "ZITEM": 5000,
+        "ZITINERARYENTRY": 5000,
+        "ZLABELASSOCIATION": 5000,
+        "ZMEMBERSHIP": 5000,
+        "ZOWNEDLINK": 5000,
+        "ZSCHEDULE": 5001
+      }
+    },
+    {
+      "iteration": 2,
+      "selectCount": 30011,
+      "tables": {
+        "ACHANGE": 5,
+        "ATRANSACTION": 5,
+        "ZITEM": 5000,
+        "ZITINERARYENTRY": 5000,
+        "ZLABELASSOCIATION": 5000,
+        "ZMEMBERSHIP": 5000,
+        "ZOWNEDLINK": 5000,
+        "ZSCHEDULE": 5001
+      }
+    },
+    {
+      "iteration": 3,
+      "selectCount": 30011,
+      "tables": {
+        "ACHANGE": 5,
+        "ATRANSACTION": 5,
+        "ZITEM": 5000,
+        "ZITINERARYENTRY": 5000,
+        "ZLABELASSOCIATION": 5000,
+        "ZMEMBERSHIP": 5000,
+        "ZOWNEDLINK": 5000,
+        "ZSCHEDULE": 5001
+      }
+    }
+  ],
+  "final": [
+    {
+      "iteration": 1,
+      "selectCount": 18,
+      "tables": {
+        "ACHANGE": 5,
+        "ATRANSACTION": 5,
+        "SQLITE_MASTER": 1,
+        "ZITEM": 1,
+        "ZITINERARYENTRY": 1,
+        "ZLABELASSOCIATION": 1,
+        "ZMEMBERSHIP": 1,
+        "ZOWNEDLINK": 1,
+        "ZSCHEDULE": 2
+      }
+    },
+    {
+      "iteration": 2,
+      "selectCount": 17,
+      "tables": {
+        "ACHANGE": 5,
+        "ATRANSACTION": 5,
+        "ZITEM": 1,
+        "ZITINERARYENTRY": 1,
+        "ZLABELASSOCIATION": 1,
+        "ZMEMBERSHIP": 1,
+        "ZOWNEDLINK": 1,
+        "ZSCHEDULE": 2
+      }
+    },
+    {
+      "iteration": 3,
+      "selectCount": 17,
+      "tables": {
+        "ACHANGE": 5,
+        "ATRANSACTION": 5,
+        "ZITEM": 1,
+        "ZITINERARYENTRY": 1,
+        "ZLABELASSOCIATION": 1,
+        "ZMEMBERSHIP": 1,
+        "ZOWNEDLINK": 1,
+        "ZSCHEDULE": 2
+      }
+    }
+  ]
+}

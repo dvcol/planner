@@ -1,0 +1,76 @@
+{
+  "artifactHashes": {
+    "Package.swift": "50ae4e8f958ab4c3a96dc4245816cbfc479f3a6a5319b48b82758c92d15d795c",
+    "baseline-core.swift": "1e6a1f45d66d5c4af350907928b870763da4240ac72ce4c3ee14614d96adc1a6",
+    "baseline-sql-timing.json": "2976d591dfe00903f73eb3c45055b8884f0cb94d3a1f190e5c539566d74971c3",
+    "baseline-sql.log.gz": "4799418d7477141deaa800f1d247df04c63230365fe5e8561d676bdb0c79fe56",
+    "baseline-unlogged.json": "7b5be9c081f1fbfb0647969fee1e3d47f4536f27f9a2dc13fa7307ee6254659c",
+    "commands.json": "45848da5ac262dc3a5b634e34e84cda3169e83d9bc46dec08e39e135c26e2b67",
+    "core-final.log.gz": "ac18df461b3ad607580728afbf53c62407eb2d1d5cb4b037f962779101862ae8",
+    "core-red.log.gz": "8bfc704ce33abf056957de1b7aa1be9e9dfaade8829dc5437039c7a09e27f6c1",
+    "final-sql-timing.json": "2af05aa60e9402aca67c094d1a5efaa6fc06e70e231e1012f7c99223947362da",
+    "final-sql.log.gz": "f313f6e47f3f313668788fb439d10e0b23565669ede9e48fcef898c8cbf287af",
+    "final-unlogged.json": "192c8766668de67526e2ffb0dbc2127fdded141beab3f391a31c8d0d5600112d",
+    "final-unlogged.log.gz": "eeaf6f9560a835b72057982bc614b832b52cd677a5a03ffa6b5d7c3a9f3f5960",
+    "fixture-template.log.gz": "1102a9f7a080018517a2c557f5afae638942b232acfa64694137ff723907cd7f",
+    "fixture.json.gz": "a1a091c6bcf872d84b6c268d1d58d2e4dd28c68cbd1fe24e2eb24b1c6344c8fd",
+    "generate-fixture.py": "e90186497eb56472dec1060119cd45152c36156057a2f4c9301f61cda7dd7ff2",
+    "http-final.log.gz": "c79fa1b6fd07c6749348ab5413c307ad9e2553ef3f3db9e162b8010b75978cdb",
+    "http-summary.json": "fb57b6bebe2d52e01a688df2de08fbb41d35671cf9a4ee329628e191d1c7ac10",
+    "http-tests.json": "7a8de75aaf4c7aa3a80b22865c1b897beeddb3801b910eb7121a557a018ba498",
+    "ios-build.log.gz": "2a409946e3a04b6131eec8f201ffe75bae6fe81c530cd7d4bf9195624566c7a1",
+    "ios-regression-typecheck-diagnostic.log.gz": "0a401fed7731de31651587e66b4ddfeb21d7f52505c7d0d3762b9481bc983fc7",
+    "ios-regression-typecheck.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "markdown-lint.log": "e90e1a3861860c80f0ab8804f5fd8779ba36e802067b55446e5838a0ab0a9f23",
+    "probe-build.log.gz": "a7a2a90df8b3331b1699ccfa26d3b1119f83a58095e4ac311fdbaa9ad8692366",
+    "probe.swift": "8ff023b6009cbde01acb39a45caa70c6b2ecca325bd4c9b379a539f04ce40b98",
+    "seed-empty.json": "1b172bcbaac11adf78b163128cf68eaaed4b6dc35d008da13e54b86c69542ce9",
+    "seed-template.json": "86bb655bb98e62c2282407ff8d0df1241f88e246f20dee14abb8bd72ab7a78cf",
+    "sql-counts.json": "f8f12ba393a90d67049fe64f861c1da6cdac065190527a0e30bd7d1ff9060120",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "baseCommit": "e2ff3f618f3714cf37e59b325e1b83c1f2a346c7",
+  "diagnostics": {
+    "benchmark": "Baseline and final debug desktop runs use the same public input. SQL timing is separate from unlogged latency. Entire-process resident memory is not mobile/query allocation proof.",
+    "iosTypecheck": "Initial manual command omitted Swift Testing macro plugin; corrected command passed.",
+    "redRegression": "Successful incomplete Calendar snapshot before duplicate-identity fix."
+  },
+  "fixture": {
+    "bytes": 5118801,
+    "generatedBytesVerified": true,
+    "sha256": "ceece309121ad136cf6cff6a8369c35c97e70e57ea94d7ba54586d68a4c4bb65"
+  },
+  "productHashes": {
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner": "2d2d27a032ebb21e31a0941e03e3862b409ae545274c10edb59ec22a5daea53e",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib": "6cee9e120e69ecfe3201caafeb6f8310e475f8f4d2f954cd6ab31990faa8d189",
+    "/private/tmp/PlannerCalendarWindowScaleProbe/.build/debug/CalendarWindowScaleProbe": "d3da3d73b9a41f6a5c496fa876c65b02cab1de13070a17f26c908cb2e90e9858",
+    "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "d929b79328326f1f18bfc8f4d3ef81075a0e5f88a76dec8419068b44b15fa1d5",
+    "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib": "4c4dfb8e3f1f3eaa087547388e0d4f41c88208c57911f56689e56b4948ad1328"
+  },
+  "qualification": {
+    "coreInvocations": 32,
+    "coreSuites": 11,
+    "httpFailed": 0,
+    "httpPassed": 4,
+    "httpSkipped": 0,
+    "iosAppAndTestHostBuild": "passed",
+    "iosRegressionTypecheck": "passed",
+    "macAppAndHTTPTestHostBuild": "passed",
+    "markdownLint": "passed",
+    "nativeUIInvocations": 0,
+    "swiftStrictLint": "passed",
+    "whitespace": "passed"
+  },
+  "report": "docs/prototypes/calendar-window-scale.md",
+  "reviews": {
+    "spec": "Duplicate retained identities are rejected before date filtering; no batching regression found.",
+    "standards": "No remaining material findings. Native SQLite C API and retained files correct both test setup concerns."
+  },
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "8cae6321675783bc9a7ebffb2438a9454a3ca032ac13ad1205d911bb49bad698",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CalendarWindowConsistencyTests.swift": "2fc0b17110015e4203f7e7ede2550dab1f73f8c27fa8e3ff05dd29205ce8790b",
+    "docs/calendar-window-contract-review.md": "f78d88a9836aa0952a64e1aae31b68b2eab10dafe40076e39a5281b2c20882de",
+    "docs/prototypes/calendar-window-scale.md": "5e687abcf686e69719f29fb1151579e35ea2260987948008f07fdb20419d909e",
+    "docs/prototypes/core-calendar-windows.md": "41764f0a73546b84fd920ab9fd4e00f9e6b0a2ce3938fc4723204e4f604023b4"
+  }
+}
