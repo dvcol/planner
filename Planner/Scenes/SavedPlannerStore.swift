@@ -69,6 +69,10 @@ final class SavedPlannerStore {
     planner = PlannerCore.Planner(configuration: configuration)
   }
 
+  init(planner: PlannerCore.Planner) {
+    self.planner = planner
+  }
+
   init() {
     let arguments = ProcessInfo.processInfo.arguments
     let directory: URL
@@ -760,6 +764,23 @@ final class SavedPlannerStore {
     {
     case .draft(let updated): return updated
     case .rejected(let reason): alertMessage = reason.message
+    }
+    return nil
+  }
+
+  func lookupCapture(_ draft: PlannerCaptureDraftRead, linkIdentifier: UUID) async
+    -> PlannerCaptureDraftRead?
+  {
+    guard let planner, let session, canCreate else { return nil }
+    switch await planner.lookupCapture(
+      session: session, draftId: draft.draftId, generation: draft.generation,
+      linkId: linkIdentifier)
+    {
+    case .draft(let updated): return updated
+    case .rejected(let reason):
+      if !Task.isCancelled, reason.code != "captureDraftUnavailable" {
+        alertMessage = reason.message
+      }
     }
     return nil
   }

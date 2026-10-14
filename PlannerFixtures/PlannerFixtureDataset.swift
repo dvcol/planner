@@ -13,6 +13,16 @@ enum PlannerFixtureDataset {
     case addressCandidates = "address-candidates"
     case addressRetry = "address-retry"
     case addressDelay = "address-delay"
+    case captureMaps = "capture-maps"
+    case captureMapsRetry = "capture-maps-retry"
+    case captureMapsDelay = "capture-maps-delay"
+
+    var isMapsCapture: Bool {
+      switch self {
+      case .captureMaps, .captureMapsRetry, .captureMapsDelay: true
+      default: false
+      }
+    }
   }
 
   static func makeStore() async throws -> SavedPlannerStore {
@@ -35,7 +45,16 @@ enum PlannerFixtureDataset {
       controlURL: directory.appendingPathComponent("control/writer"),
       recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
       processRole: .mainApplication, storageMode: .localOnly)
-    let planner = PlannerCore.Planner(configuration: configuration)
+    let planner: PlannerCore.Planner
+    if scenario.isMapsCapture {
+      planner = PlannerCore.Planner(
+        configuration: configuration,
+        captureHTTPTransport: FixtureCaptureHTTPTransport(
+          failingFirstRequest: scenario == .captureMapsRetry,
+          responseDelay: scenario == .captureMapsDelay ? .seconds(6) : .zero))
+    } else {
+      planner = PlannerCore.Planner(configuration: configuration)
+    }
     guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
     guard
       case .snapshot(let snapshot) = await planner.query(
@@ -43,7 +62,10 @@ enum PlannerFixtureDataset {
       case .rows(let window) = await planner.read(
         session: session, request: .rows(generation: snapshot.generation, offset: 0, limit: 1))
     else { throw CancellationError() }
-    if !window.rows.isEmpty { return SavedPlannerStore(configuration: configuration) }
+    if !window.rows.isEmpty {
+      if scenario.isMapsCapture { return SavedPlannerStore(planner: planner) }
+      return SavedPlannerStore(configuration: configuration)
+    }
     func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
       guard
         case .applied(let result, .complete) = await planner.execute(
@@ -51,6 +73,10 @@ enum PlannerFixtureDataset {
         ).outcome
       else { throw CancellationError() }
       return result
+    }
+    if scenario.isMapsCapture {
+      _ = try await save(.createItem(content: .init(title: "Existing")))
+      return SavedPlannerStore(planner: planner)
     }
     if scenario == .linkDelay {
       _ = try await save(
@@ -150,5 +176,27 @@ enum PlannerFixtureDataset {
     guard let index = arguments.firstIndex(of: name) else { return nil }
     guard arguments.indices.contains(index + 1) else { throw CancellationError() }
     return arguments[index + 1]
+  }
+}
+
+private actor FixtureCaptureHTTPTransport: PlannerCaptureHTTPTransport {
+  let failingFirstRequest: Bool
+  let responseDelay: Duration
+  private var requestedURLs: Set<URL> = []
+
+  init(failingFirstRequest: Bool, responseDelay: Duration) {
+    self.failingFirstRequest = failingFirstRequest
+    self.responseDelay = responseDelay
+  }
+
+  func head(requestURL: URL, timeout: Duration) async throws -> HTTPURLResponse {
+    let firstRequest = requestedURLs.insert(requestURL).inserted
+    try await Task.sleep(for: responseDelay)
+    guard
+      let response = HTTPURLResponse(
+        url: requestURL, statusCode: failingFirstRequest && firstRequest ? 503 : 200,
+        httpVersion: "HTTP/1.1", headerFields: [:])
+    else { throw URLError(.badServerResponse) }
+    return response
   }
 }

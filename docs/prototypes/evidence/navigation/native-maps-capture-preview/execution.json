@@ -1,0 +1,510 @@
+{
+  "baseCommit": "e37f163fb71086608a1078763c04ff27313a266a",
+  "scope": "Native temporary Maps capture preview, source selection, edited-link refresh, explicit Retry, pending Add/Cancel and saved provenance",
+  "qualified": {
+    "phone": {
+      "functions": 13,
+      "suites": 3,
+      "selectedInvocations": 13,
+      "failures": 0,
+      "skips": 0,
+      "runs": [
+        "phoneFinal",
+        "phoneRegression"
+      ]
+    },
+    "tablet": {
+      "functions": 9,
+      "suites": 1,
+      "selectedInvocations": 9,
+      "failures": 0,
+      "skips": 0,
+      "runs": [
+        "tabletFinal"
+      ]
+    }
+  },
+  "mac": {
+    "productionAppBuild": "passed",
+    "runtimeFunctions": 0
+  },
+  "strictSwiftLintFiles": 4,
+  "markdownLintDocuments": 1,
+  "sourceHashesVerifiedAfterAllBuildAndTestProcessesExited": true,
+  "reviews": {
+    "standards": "No remaining confirmed findings",
+    "spec": "No remaining confirmed findings"
+  },
+  "sourceHashes": {
+    "Planner/Scenes/SavedCaptureForm.swift": "97ec606ea67504a39c932bbe0563a32db1a9579392997aa507e323c35a5ed1a3",
+    "Planner/Scenes/SavedPlannerStore.swift": "9cc30fc654641705478f0e81a4706ddeba38ba67fdf2ad076c9693cdd3b65414",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "c633e8d6daffd2c6d31f8881743287d7cc82e0fc6566f326fba07bc1384118b8",
+    "PlannerFixtureUITests/CaptureMapsPreviewJourneyTests.swift": "e0192018feed9ee7a3aa1b7f88a544b9fe0c38a440aa87ac67543adbc2eee142",
+    "Planner/Scenes/ItemLocationSection.swift": "5712c5ac9ff059a73dd6abe162a58fc56532f1049926d8b75dcb105e415f21b9",
+    "Planner/Scenes/SavedOwnedLinksEditor.swift": "cfd1b9a55ee634a2ef2f3b3dd171fcf73a9e46076d8d4c2785586bd548f5d1ae",
+    "Planner/Scenes/SavedPlannerView.swift": "f57c8bc8f44a29abc9febffcbde62f05816c511e540b5ca94b919ebd043252cc",
+    "PlannerNavigationUITests/NativeNavigationElements.swift": "53659f78aa021f34bd5bd868e2da82eaa010993799d64f945c75959d7c3915e5",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "960a0cce68e8476f3b83a5f8845d60a7367d97913927d1451b1d97d5ec1212f3",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCaptureLookup.swift": "6d8578f720277b99e0752984fb006fa250bb5d2e78bee4189183fefdf164c5da",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCaptureHTTPTransport.swift": "3f13d1b3d37d8ab28cf6979c1edb765b9e247cefef0051d6e60e77c2ff34fb5f"
+  },
+  "productHashes": {
+    "iosFixture": {
+      "path": "/private/tmp/PlannerCaptureHTTPTransportIOSDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures",
+      "sha256": "0a0374ccb8de1d7f77cb2847f67ac0f90303439d312bc37c7d185759d7af4a60"
+    },
+    "iosProduction": {
+      "path": "/private/tmp/PlannerCaptureHTTPTransportIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner",
+      "sha256": "08179ef3d7ce845caf9ff4a86530f667dc1b6472d9a97d435612adf4fb06355c"
+    },
+    "macProduction": {
+      "path": "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner",
+      "sha256": "d929b79328326f1f18bfc8f4d3ef81075a0e5f88a76dec8419068b44b15fa1d5"
+    }
+  },
+  "screenshots": [
+    {
+      "path": "phone-preview.png",
+      "originalExport": "0F40E493-87D2-4FDB-ACC4-864CEB8BC43C.png",
+      "inspected": true,
+      "modified": false
+    },
+    {
+      "path": "phone-selection.png",
+      "originalExport": "1983F913-032B-4005-91F6-05C3C6CEFD6F.png",
+      "inspected": true,
+      "modified": false
+    },
+    {
+      "path": "tablet-preview.png",
+      "originalExport": "6622CD35-864E-4E6A-8BD2-9CC566B1D883.png",
+      "inspected": true,
+      "modified": false
+    },
+    {
+      "path": "tablet-selection.png",
+      "originalExport": "019563D6-2C8C-4226-8121-6DCDEF267388.png",
+      "inspected": true,
+      "modified": false
+    }
+  ],
+  "runs": {
+    "fallbackRed": {
+      "log": "fallbackRed.log.gz",
+      "result": "failed",
+      "functions": [
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testRemovingTheOnlyMapsLinkThenRefreshingDoesNotSaveAnAutomaticTitle",
+          "result": "failed",
+          "seconds": 32.589
+        }
+      ]
+    },
+    "linkEditRed": {
+      "log": "linkEditRed.log.gz",
+      "result": "failed",
+      "functions": [
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testEditingTheOriginalLinkHidesItsPreviewUntilExplicitRefresh",
+          "result": "failed",
+          "seconds": 23.015
+        }
+      ]
+    },
+    "linkEditSelectorDiagnostic": {
+      "log": "linkEditSelectorDiagnostic.log.gz",
+      "result": "failed",
+      "functions": [
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testEditingTheOriginalLinkHidesItsPreviewUntilExplicitRefresh",
+          "result": "failed",
+          "seconds": 23.785
+        }
+      ]
+    },
+    "macBuild": {
+      "log": "macBuild.log.gz",
+      "result": "passed",
+      "functions": []
+    },
+    "phoneEarlierRegression": {
+      "log": "phoneEarlierRegression.log.gz",
+      "result": "passed",
+      "functions": [
+        {
+          "suite": "SavedCaptureFieldsJourneyTests",
+          "name": "testCaptureSharedLabelsRemainStagedUntilAddAndPersistAfterRelaunch",
+          "result": "passed",
+          "seconds": 86.366
+        },
+        {
+          "suite": "SavedCaptureFieldsJourneyTests",
+          "name": "testEditingOnlyReuseLinkRequiresExplicitReselectionWithoutCreatingAnItem",
+          "result": "passed",
+          "seconds": 40.254
+        },
+        {
+          "suite": "SavedCaptureFieldsJourneyTests",
+          "name": "testOwnedCaptureFieldsAndLinkLabelPersistAfterRelaunch",
+          "result": "passed",
+          "seconds": 54.177
+        },
+        {
+          "suite": "SavedCaptureFieldsJourneyTests",
+          "name": "testRemovingOnlyLinkDoesNotPromoteAutomaticTitleIntoOwnedText",
+          "result": "passed",
+          "seconds": 26.987
+        },
+        {
+          "suite": "SavedCaptureJourneyTests",
+          "name": "testExactLinkReusePreservesDoneArchivedContentAndRememberedListWithoutDuplicates",
+          "result": "passed",
+          "seconds": 76.94
+        },
+        {
+          "suite": "SavedCaptureJourneyTests",
+          "name": "testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem",
+          "result": "passed",
+          "seconds": 43.231
+        },
+        {
+          "suite": "SavedCaptureJourneyTests",
+          "name": "testUntouchedSavedLinkDraftCanBeAddedWithoutAnEmptyEdit",
+          "result": "passed",
+          "seconds": 17.6
+        },
+        {
+          "suite": "SavedCaptureTextJourneyTests",
+          "name": "testPlainTextReviewPreservesItsTitleAndNotesWithoutInventingLinks",
+          "result": "passed",
+          "seconds": 16.647
+        }
+      ]
+    },
+    "phoneFinal": {
+      "log": "phoneFinal.log.gz",
+      "result": "passed",
+      "functions": [
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testAddRemainsAvailableDuringLookupAndPersistsOnePartialItemAfterRelaunch",
+          "result": "passed",
+          "seconds": 30.136
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testCancelDuringLookupLeavesNoSavedItemAfterRelaunch",
+          "result": "passed",
+          "seconds": 28.505
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testControlledMapsPreviewKeepsOwnedFieldsAndSavesOnlyTheOriginalBookmark",
+          "result": "passed",
+          "seconds": 34.588
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testEditedMapsLinksChooseTheFirstAvailableSourceAndRepairRemovedSelection",
+          "result": "passed",
+          "seconds": 45.998
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testEditingTheOriginalLinkHidesItsPreviewUntilExplicitRefresh",
+          "result": "passed",
+          "seconds": 35.939
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testRemovingTheOnlyMapsLinkThenRefreshingDoesNotSaveAnAutomaticTitle",
+          "result": "passed",
+          "seconds": 35.427
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testRevertingAChangedLinkDuringLookupRetainsAnExplicitPreviewRetry",
+          "result": "passed",
+          "seconds": 30.281
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testSelectingAnotherMapsLinkChangesOnlyTheTemporaryPreview",
+          "result": "passed",
+          "seconds": 28.905
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testUnavailablePreviewOffersExplicitRetryWithoutBlockingOrReplacingOwnedFields",
+          "result": "passed",
+          "seconds": 23.448
+        }
+      ]
+    },
+    "phoneInitial": {
+      "log": "phoneInitial.log.gz",
+      "result": "failed",
+      "functions": [
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testAddRemainsAvailableDuringLookupAndPersistsOnePartialItemAfterRelaunch",
+          "result": "passed",
+          "seconds": 30.136
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testCancelDuringLookupLeavesNoSavedItemAfterRelaunch",
+          "result": "passed",
+          "seconds": 28.477
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testControlledMapsPreviewKeepsOwnedFieldsAndSavesOnlyTheOriginalBookmark",
+          "result": "passed",
+          "seconds": 35.189
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testEditedMapsLinksChooseTheFirstAvailableSourceAndRepairRemovedSelection",
+          "result": "failed",
+          "seconds": 26.051
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testEditingTheOriginalLinkHidesItsPreviewUntilExplicitRefresh",
+          "result": "passed",
+          "seconds": 35.445
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testRemovingTheOnlyMapsLinkThenRefreshingDoesNotSaveAnAutomaticTitle",
+          "result": "passed",
+          "seconds": 35.106
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testSelectingAnotherMapsLinkChangesOnlyTheTemporaryPreview",
+          "result": "passed",
+          "seconds": 28.362
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testUnavailablePreviewOffersExplicitRetryWithoutBlockingOrReplacingOwnedFields",
+          "result": "passed",
+          "seconds": 23.186
+        }
+      ]
+    },
+    "phoneRegression": {
+      "log": "phoneRegression.log.gz",
+      "result": "passed",
+      "functions": [
+        {
+          "suite": "SavedCaptureFieldsJourneyTests",
+          "name": "testRemovingOnlyLinkDoesNotPromoteAutomaticTitleIntoOwnedText",
+          "result": "passed",
+          "seconds": 27.537
+        },
+        {
+          "suite": "SavedCaptureJourneyTests",
+          "name": "testExactLinkReusePreservesDoneArchivedContentAndRememberedListWithoutDuplicates",
+          "result": "passed",
+          "seconds": 76.749
+        },
+        {
+          "suite": "SavedCaptureJourneyTests",
+          "name": "testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem",
+          "result": "passed",
+          "seconds": 43.155
+        },
+        {
+          "suite": "SavedCaptureJourneyTests",
+          "name": "testUntouchedSavedLinkDraftCanBeAddedWithoutAnEmptyEdit",
+          "result": "passed",
+          "seconds": 20.366
+        }
+      ]
+    },
+    "preparationRace": {
+      "log": "preparationRace.log.gz",
+      "result": "failed",
+      "functions": [
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testEditingTheOriginalLinkHidesItsPreviewUntilExplicitRefresh",
+          "result": "failed",
+          "seconds": 26.633
+        }
+      ]
+    },
+    "previewRed": {
+      "log": "previewRed.log.gz",
+      "result": "failed",
+      "functions": [
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testControlledMapsPreviewKeepsOwnedFieldsAndSavesOnlyTheOriginalBookmark",
+          "result": "failed",
+          "seconds": 31.596
+        }
+      ]
+    },
+    "previewSelectorDiagnostic": {
+      "log": "previewSelectorDiagnostic.log.gz",
+      "result": "failed",
+      "functions": [
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testControlledMapsPreviewKeepsOwnedFieldsAndSavesOnlyTheOriginalBookmark",
+          "result": "failed",
+          "seconds": 28.054
+        }
+      ]
+    },
+    "replacementDiagnostic": {
+      "log": "replacementDiagnostic.log.gz",
+      "result": "failed",
+      "functions": [
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testEditingTheOriginalLinkHidesItsPreviewUntilExplicitRefresh",
+          "result": "failed",
+          "seconds": 29.822
+        }
+      ]
+    },
+    "revertedLinkRed": {
+      "log": "revertedLinkRed.log.gz",
+      "result": "failed",
+      "functions": [
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testRevertingAChangedLinkDuringLookupRetainsAnExplicitPreviewRetry",
+          "result": "failed",
+          "seconds": 24.75
+        }
+      ]
+    },
+    "selectionRed": {
+      "log": "selectionRed.log.gz",
+      "result": "failed",
+      "functions": [
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testSelectingAnotherMapsLinkChangesOnlyTheTemporaryPreview",
+          "result": "failed",
+          "seconds": 27.714
+        }
+      ]
+    },
+    "tabletFinal": {
+      "log": "tabletFinal.log.gz",
+      "result": "passed",
+      "functions": [
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testAddRemainsAvailableDuringLookupAndPersistsOnePartialItemAfterRelaunch",
+          "result": "passed",
+          "seconds": 30.695
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testCancelDuringLookupLeavesNoSavedItemAfterRelaunch",
+          "result": "passed",
+          "seconds": 28.994
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testControlledMapsPreviewKeepsOwnedFieldsAndSavesOnlyTheOriginalBookmark",
+          "result": "passed",
+          "seconds": 34.939
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testEditedMapsLinksChooseTheFirstAvailableSourceAndRepairRemovedSelection",
+          "result": "passed",
+          "seconds": 48.276
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testEditingTheOriginalLinkHidesItsPreviewUntilExplicitRefresh",
+          "result": "passed",
+          "seconds": 36.635
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testRemovingTheOnlyMapsLinkThenRefreshingDoesNotSaveAnAutomaticTitle",
+          "result": "passed",
+          "seconds": 36.216
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testRevertingAChangedLinkDuringLookupRetainsAnExplicitPreviewRetry",
+          "result": "passed",
+          "seconds": 30.291
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testSelectingAnotherMapsLinkChangesOnlyTheTemporaryPreview",
+          "result": "passed",
+          "seconds": 29.635
+        },
+        {
+          "suite": "CaptureMapsPreviewJourneyTests",
+          "name": "testUnavailablePreviewOffersExplicitRetryWithoutBlockingOrReplacingOwnedFields",
+          "result": "passed",
+          "seconds": 24.639
+        }
+      ]
+    },
+    "wrongSchemeDiagnostic": {
+      "log": "wrongSchemeDiagnostic.log.gz",
+      "result": "failed",
+      "functions": []
+    }
+  },
+  "remaining": [
+    "live providers",
+    "actual socket/memory/physical bounds",
+    "native forced edit-interruption and save/read failure fixtures",
+    "Share and App Intents",
+    "Mac UI runtime",
+    "signed-device sync/account recovery",
+    "Calendar Q79-Q81 and pending Q82",
+    "scale/paging",
+    "whole-app polish"
+  ],
+  "artifactHashes": {
+    "fallbackRed.log.gz": "36633f47870a8f47f384bccd84cf4d830dbb9c938038e16b3074fb2d6a95694d",
+    "linkEditRed.log.gz": "d1fdd090a6b27c51eeaa5614e00481000fe6212f256398c8368c8e086a54700c",
+    "linkEditSelectorDiagnostic.log.gz": "46781f292db5375b414524c922efc1f178bd4f07960e21742e77e5c3dfb1a2cc",
+    "macBuild.log.gz": "7294164756c13887a45bf5603df7cf57cae2741d544735bd822f354eb75da927",
+    "markdown-lint.log": "1a6faf8f95abb141254386166ffa9245e62a4271317e89d127c657d90ca909de",
+    "phone-final-summary.json": "043da12194bff98edc292b0736ff137fcd2cc78ffc2a0aa94c098ba54ad22298",
+    "phone-final-tests.json": "73da13396039531c8eaf5224d5bde2b64f0e3a9197f9d429bcaae98111578736",
+    "phone-preview.png": "7de3fa3227439c2e779f7c60ec9175487b6534e70643f1c3a4dca08d71b74577",
+    "phone-regression-summary.json": "08a1ab1a5a53794b2af1ebcdbb5c5fdc2a3cde002ad9d45da5caf3a7da7f0216",
+    "phone-regression-tests.json": "bf7113732f867851b6604ca594feb3ff38b2b90c57a549ea8ab12d449de47692",
+    "phone-selection.png": "00cddf6189f70cc6dcfbe1066b15d0179aec29818f3d003a0d0c8602474029d0",
+    "phoneEarlierRegression.log.gz": "d273208c4e4d6417b38ffded7af73991024e6c96a98eaf2432ec23b2a0af1255",
+    "phoneFinal.log.gz": "c75a881a473dd3b9398d02b8d351eb62022988c97622d6cab1f1d2ce5cdeb61d",
+    "phoneInitial.log.gz": "44f865e066b67c5a13f65b45daf8409c9e43ca7dc26a8ef1cdeae6b23d081745",
+    "phoneRegression.log.gz": "5d92a11d08f46b7a9d491c9d31b9e865d7ad25b8cc52f0c94007346e8abd8d92",
+    "preparationRace.log.gz": "c6e28c32a35398762dd09c89638da1a9509563e36490283e23b692e9bc757722",
+    "previewRed.log.gz": "6606cc8fc227a4248f4bc76764110273668d1772c7feaf145dd7fd4f93cb5414",
+    "previewSelectorDiagnostic.log.gz": "103ce922794804c457488839a4705d41d9bfe82a4f6522a81f9fd87214e68b3d",
+    "replacementDiagnostic.log.gz": "b1a127ac003282065224ae9269b6d6beca58620de5ef458855bf865c246ad3a3",
+    "revertedLinkRed.log.gz": "c5d0dce8f0d833b7cb753626affbf2220248abea24192aa8457af9c2139e894a",
+    "selectionRed.log.gz": "3fcbdb54f234ade0960778208c2252f8b9cba539cf311b37aa86d5720d4e9e9a",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tablet-final-summary.json": "6e506777918d871e0a278001a3074b294fc04925a2a19537fb7ea3ab03a30e89",
+    "tablet-final-tests.json": "d5280ca66a30f4f4a349764be322bbb9f86cac5e51bd0c2cfe6cbce3c18df4b2",
+    "tablet-preview.png": "1e4ec0e779448cd949a82ed469f9bdace04281181be141e8cbd49934e59a139e",
+    "tablet-selection.png": "40183737b9934fb222e4882fb7a75fb6f626b1beb4a30cd5e872de005da4aa82",
+    "tabletFinal.log.gz": "250b010afb5d7f059031762ce5fc8861a7049171dd0310da429fc6a019c278c1",
+    "wrongSchemeDiagnostic.log.gz": "ec661841b8728e2eeffd45d62c6387d87fe303ba34a37ee7de0aabb317e432ee"
+  }
+}
