@@ -21,7 +21,8 @@ struct SavedCalendarView: View {
     }
   }
 
-  @Environment(\.timeZone) private var displayTimeZone
+  @Environment(\.timeZone) private var deviceTimeZone
+  @AppStorage private var overrideTimeZoneIdentifier: String
   @Bindable var store: SavedPlannerStore
   @Binding var selection: SavedCalendarSelection?
   @State private var selectedDate = Date()
@@ -29,6 +30,19 @@ struct SavedCalendarView: View {
   @State private var entries: [PlannerCalendarEntry]?
   @State private var isLoading = true
   @State private var mode = Mode.month
+  @State private var showsTimeZonePreferences = false
+
+  init(store: SavedPlannerStore, selection: Binding<SavedCalendarSelection?>) {
+    self.store = store
+    self._selection = selection
+    let namespace = store.devicePreferenceNamespace ?? "unavailable"
+    self._overrideTimeZoneIdentifier = AppStorage(
+      wrappedValue: "", "planner.calendar.\(namespace).display-zone")
+  }
+
+  private var displayTimeZone: TimeZone {
+    TimeZone(identifier: overrideTimeZoneIdentifier) ?? deviceTimeZone
+  }
 
   private var visibleInterval: DateInterval? {
     displayCalendar.dateInterval(
@@ -191,12 +205,22 @@ struct SavedCalendarView: View {
     }
     .accessibilityElement(children: .contain)
     .accessibilityIdentifier("saved.calendar.canvas")
+    .environment(\.timeZone, displayTimeZone)
     .navigationTitle("Calendar")
     .toolbar {
+      Button("Display Time Zone", systemImage: "globe") {
+        showsTimeZonePreferences = true
+      }
+      .disabled(!store.isReady)
+      .accessibilityIdentifier("saved.calendar.zone.open")
       Button("Today", systemImage: "calendar") {
         selectedDate = Date()
         visibleDate = selectedDate
       }
+    }
+    .sheet(isPresented: $showsTimeZonePreferences) {
+      SavedCalendarDisplayZoneSettings(
+        overrideTimeZoneIdentifier: $overrideTimeZoneIdentifier, deviceTimeZone: deviceTimeZone)
     }
     .onChange(of: selectedDate) {
       let selectedMonth = displayCalendar.dateComponents([.year, .month], from: selectedDate)
