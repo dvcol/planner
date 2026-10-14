@@ -1,0 +1,86 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "FBDAC371-4644-4697-8724-786C0A8F4184.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Current dataset stays separate after export and relaunch_0_99C4985D-1D6B-4FED-93C6-D0F84A2AD2E1.png",
+        "timestamp": 1792020269.801
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "72EF9BB6-0141-42AA-960A-FA8E33F6C58B.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Retained recovery export reports successful delivery_0_180439E6-4A66-4ADC-8C27-A93A0952A625.png",
+        "timestamp": 1792020246.503
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "39D2B59C-7854-41E3-B602-CC5563143B62.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Public retained export expectation_0_28DA5103-C514-4511-8A05-5B5161A9F90D.txt",
+        "timestamp": 1792020246.409
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "3659FFCF-5A6E-495B-A9A0-BCDAE692E87E.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "System picker exports the retained dataset_0_0CBB68FF-2A13-47FC-BF41-AFB3A71415E8.png",
+        "timestamp": 1792020242.152
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "4F887FA9-E8ED-4A7B-81AF-A81BB4D70A18.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Retained copy shows its own saved Item and Tag_0_98157D63-89BC-40E5-AF01-3FD9098BC4EE.png",
+        "timestamp": 1792020234.204
+      }
+    ],
+    "testIdentifier": "RetainedRecoveryJourneyTests/testExportingRetainedCopyKeepsCurrentDatasetSeparateAfterRelaunch()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/RetainedRecoveryJourneyTests/testExportingRetainedCopyKeepsCurrentDatasetSeparateAfterRelaunch"
+  },
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "C8229722-D3BE-4114-84B2-56BBB119D263.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Restored and current identities survive native relaunch together_0_1A32E7A5-5801-46BD-AD4D-B1BC6008A777.png",
+        "timestamp": 1792020366.474
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "D6097EF5-B0C4-4B92-BC0A-3F5200C75A6C.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Explicit native confirmation restores the reviewed copy_0_947EEBD1-B868-47A5-B825-286C68C0F48D.png",
+        "timestamp": 1792020340.521
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "66CF27AA-6FAD-4C1C-AFDA-93A4AA244054.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Native review targets Current Planner and lists two additions_0_D05A69E3-68C1-4B8A-B227-C4E36133D010.png",
+        "timestamp": 1792020312.365
+      }
+    ],
+    "testIdentifier": "RetainedRecoveryJourneyTests/testReviewCancelAndRestoreRetainedCopyPreservesIdentitiesAfterRelaunch()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/RetainedRecoveryJourneyTests/testReviewCancelAndRestoreRetainedCopyPreservesIdentitiesAfterRelaunch"
+  }
+]

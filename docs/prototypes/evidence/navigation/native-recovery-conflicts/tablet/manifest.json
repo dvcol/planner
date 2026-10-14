@@ -1,0 +1,44 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "E7F045B1-DDE0-4292-A5CB-1C1C429EEEFF.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Recovery Overwrite preserves identities after relaunch_0_9BDEDDF6-BAD6-46E0-9A97-ECE9005D79AB.png",
+        "timestamp": 1792020729.923
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "C10E3F1F-B26F-4115-86D0-0AEC2733DB81.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Recovery Overwrite reviews current and retained Tag values_0_A005C014-B72E-4DDE-A7EA-651E5481400A.png",
+        "timestamp": 1792020701.813
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "EE8E1079-7C4B-4411-ADEF-DEA909F6A972.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Recovery Skip preserves identities after relaunch_0_0AA29F33-2E68-462D-8280-929A7ED1B672.png",
+        "timestamp": 1792020681.989
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName": "iPad Air 11-inch (M4)",
+        "exportedFileName": "728E2304-AC84-4598-833E-88839AB13885.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Recovery Skip keeps two current conflicts_0_A759FFF6-055B-4DA3-B8B8-CAD9C2104814.png",
+        "timestamp": 1792020653.282
+      }
+    ],
+    "testIdentifier": "RetainedRecoveryJourneyTests/testRecoverySkipAndOverwritePreserveCurrentDataAndRestoredIdentitiesAfterRelaunch()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/RetainedRecoveryJourneyTests/testRecoverySkipAndOverwritePreserveCurrentDataAndRestoredIdentitiesAfterRelaunch"
+  }
+]

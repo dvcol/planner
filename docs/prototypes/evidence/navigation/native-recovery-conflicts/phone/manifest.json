@@ -1,0 +1,44 @@
+[
+  {
+    "attachments": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "95E26B6D-04AE-46A8-AF77-4C4A2A5D6491.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Recovery Overwrite preserves identities after relaunch_0_CDC90EFB-06FD-4630-9021-CB77BCC3D0AE.png",
+        "timestamp": 1792020684.956
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "F8636E0D-DFE8-48EF-A6F1-66936D7B92C9.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Recovery Overwrite reviews current and retained Tag values_0_1140DB6E-105F-481A-847B-B22736E4F957.png",
+        "timestamp": 1792020656.789
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "66E17484-ECC9-4CEF-8B59-67143571774E.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Recovery Skip preserves identities after relaunch_0_9CA90045-13AF-4C2C-9165-01E7260CE2D8.png",
+        "timestamp": 1792020637.252
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName": "iPhone 18 Pro",
+        "exportedFileName": "14DFDDA2-A674-46E6-B974-A91942F15C68.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "Recovery Skip keeps two current conflicts_0_DA40E212-F58B-4D54-90C6-A5C327D7BB8B.png",
+        "timestamp": 1792020607.575
+      }
+    ],
+    "testIdentifier": "RetainedRecoveryJourneyTests/testRecoverySkipAndOverwritePreserveCurrentDataAndRestoredIdentitiesAfterRelaunch()",
+    "testIdentifierURL": "test://com.apple.xcode/Planner/PlannerFixtureUITests/RetainedRecoveryJourneyTests/testRecoverySkipAndOverwritePreserveCurrentDataAndRestoredIdentitiesAfterRelaunch"
+  }
+]

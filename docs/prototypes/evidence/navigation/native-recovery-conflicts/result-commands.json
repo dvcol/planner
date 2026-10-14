@@ -1,0 +1,74 @@
+{
+  "phone-summary": [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "summary",
+    "--path",
+    "/private/tmp/PlannerRecoveryConflictPhoneQualified.xcresult"
+  ],
+  "phone-tests": [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "tests",
+    "--path",
+    "/private/tmp/PlannerRecoveryConflictPhoneQualified.xcresult"
+  ],
+  "regression-phone-summary": [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "summary",
+    "--path",
+    "/private/tmp/PlannerRecoveryConflictPhoneFinal.xcresult"
+  ],
+  "regression-phone-tests": [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "tests",
+    "--path",
+    "/private/tmp/PlannerRecoveryConflictPhoneFinal.xcresult"
+  ],
+  "tablet-summary": [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "summary",
+    "--path",
+    "/private/tmp/PlannerRecoveryConflictTabletQualified.xcresult"
+  ],
+  "tablet-tests": [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "tests",
+    "--path",
+    "/private/tmp/PlannerRecoveryConflictTabletQualified.xcresult"
+  ],
+  "regression-tablet-summary": [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "summary",
+    "--path",
+    "/private/tmp/PlannerRecoveryConflictTabletFinal.xcresult"
+  ],
+  "regression-tablet-tests": [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "tests",
+    "--path",
+    "/private/tmp/PlannerRecoveryConflictTabletFinal.xcresult"
+  ]
+}
