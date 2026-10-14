@@ -1,0 +1,50 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "A951A6B7-2679-4056-BC83-3B05FA401374.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "2359 start-only appointment at the bottom of the Day grid_0_F496C0E7-3BC2-4255-BC7E-E1D6D5434047.png",
+        "timestamp" : 1792005208.673
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testLateStartOnlyCardCanBeScrolledFullyIntoTheDayViewport()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testLateStartOnlyCardCanBeScrolledFullyIntoTheDayViewport"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "A69375B4-57A9-4710-9195-E220F14B5486.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Distinct 0130 appointments in Month_0_B59D55FD-98C9-4FDF-B3AE-F5CFC0EB7812.png",
+        "timestamp" : 1792005254.269
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "0DF767E8-51D0-43EE-BF7C-8D388ACB7EA8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Distinct 0130 appointments in Week_0_689CD9B1-64B4-49EE-85AD-1EEB9D7B36E3.png",
+        "timestamp" : 1792005250.201
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "A56A9602-4C68-402C-A660-F38C80D346DB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Distinct 0130 appointments on the New York fall-back day_0_736FAA0F-64CF-41EB-97A3-40654987C0F5.png",
+        "timestamp" : 1792005242.956
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView"
+  }
+]

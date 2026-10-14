@@ -1,0 +1,72 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName" : "iPhone 18 Pro",
+      "modelName" : "iPhone 18 Pro",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/NativeNavigationElements.swift",
+                        "lineNumber" : 208
+                      }
+                    }
+                  ],
+                  "duration" : "14s",
+                  "durationInSeconds" : 14.694689989089966,
+                  "name" : "testLateStartOnlyCardCanBeScrolledFullyIntoTheDayViewport()",
+                  "nodeIdentifier" : "CalendarRepeatedTimeJourneyTests/testLateStartOnlyCardCanBeScrolledFullyIntoTheDayViewport()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testLateStartOnlyCardCanBeScrolledFullyIntoTheDayViewport",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "duration" : "50s",
+                  "durationInSeconds" : 50.44032001495361,
+                  "name" : "testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView()",
+                  "nodeIdentifier" : "CalendarRepeatedTimeJourneyTests/testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "CalendarRepeatedTimeJourneyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "PlannerFixtureUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "PlannerFixtures",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

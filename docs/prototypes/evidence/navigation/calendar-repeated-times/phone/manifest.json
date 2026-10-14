@@ -1,0 +1,50 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "D92E9BA9-7E84-4D24-B1DC-ED9DBDC20FAB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "2359 start-only appointment at the bottom of the Day grid_0_B18EB786-AA3C-49BF-ACC4-01EB9A191D0D.png",
+        "timestamp" : 1792005652.814
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testLateStartOnlyCardCanBeScrolledFullyIntoTheDayViewport()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testLateStartOnlyCardCanBeScrolledFullyIntoTheDayViewport"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "F84658F5-3B8F-4007-8CFA-C8C3D989A01E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Distinct 0130 appointments in Month_0_28F5987B-7DBD-435B-84FC-A4C343453A83.png",
+        "timestamp" : 1792005701.801
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "A11DDC88-1529-40BE-9C0F-DA742610BDA2.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Distinct 0130 appointments in Week_0_C217070A-61F3-4D9B-BDC5-043CD581B1BC.png",
+        "timestamp" : 1792005693.478
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "10E6AA5B-8B57-4B6A-B412-F9BE0B2C8A67.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Distinct 0130 appointments on the New York fall-back day_0_87B4F9E8-688B-4D47-BB3C-68A7CC019EC8.png",
+        "timestamp" : 1792005686.355
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView"
+  }
+]

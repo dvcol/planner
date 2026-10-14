@@ -139,6 +139,9 @@ struct SavedCalendarView: View {
       return "All day · " + allDayScheduleDescription(start: start, end: end)
     case .timed(let start, let end, _):
       var format = Date.FormatStyle(date: .abbreviated, time: .shortened)
+      if calendarDayHasClockChange(start, calendar: displayCalendar) {
+        format = format.timeZone(.specificName(.short))
+      }
       format.timeZone = displayTimeZone
       if let end {
         let formatter = DateIntervalFormatter()

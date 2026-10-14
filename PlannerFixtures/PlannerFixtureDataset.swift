@@ -5,6 +5,8 @@ import PlannerCore
 enum PlannerFixtureDataset {
   private enum Scenario: String {
     case catalogOverflow = "catalog-overflow"
+    case calendarRepeatedTimes = "calendar-repeated-times"
+    case calendarLatePoint = "calendar-late-point"
     case pinnedAddress = "pinned-address"
     case pinnedEmptyName = "pinned-empty-name"
     case linkImage = "link-image"
@@ -73,6 +75,30 @@ enum PlannerFixtureDataset {
         ).outcome
       else { throw CancellationError() }
       return result
+    }
+    if scenario == .calendarRepeatedTimes || scenario == .calendarLatePoint {
+      let title: String
+      let timestamps: [String]
+      if scenario == .calendarLatePoint {
+        title = "Late museum"
+        timestamps = ["2026-11-02T04:59:00Z"]
+      } else {
+        title = "Repeated-hour museum"
+        timestamps = ["2026-11-01T05:30:00Z", "2026-11-01T06:30:00Z"]
+      }
+      guard
+        let item = try await save(.createItem(content: .init(title: title)))
+          .generated.first
+      else { throw CancellationError() }
+      let formatter = ISO8601DateFormatter()
+      for timestamp in timestamps {
+        guard let start = formatter.date(from: timestamp) else { throw CancellationError() }
+        _ = try await save(
+          .createSchedule(
+            source: item,
+            form: .timed(start: start, end: nil, planningTimeZone: "America/New_York")))
+      }
+      return SavedPlannerStore(configuration: configuration)
     }
     if scenario.isMapsCapture {
       _ = try await save(.createItem(content: .init(title: "Existing")))

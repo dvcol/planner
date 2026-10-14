@@ -1,6 +1,12 @@
 import PlannerCore
 import SwiftUI
 
+func calendarDayHasClockChange(_ date: Date, calendar: Calendar) -> Bool {
+  guard let interval = calendar.dateInterval(of: .day, for: date) else { return false }
+  return calendar.timeZone.secondsFromGMT(for: interval.start)
+    != calendar.timeZone.secondsFromGMT(for: interval.end.addingTimeInterval(-1))
+}
+
 struct SavedCalendarTimeGrid: View {
   private struct AllDayPresentation: Identifiable {
     let date: Date
@@ -24,6 +30,7 @@ struct SavedCalendarTimeGrid: View {
 
   @State private var allDayPresentation: AllDayPresentation?
   @ScaledMetric(relativeTo: .subheadline) private var allDayCardHeight = 64
+  @ScaledMetric(relativeTo: .subheadline) private var startOnlyCardHeight = 80
 
   private let pointsPerMinute: CGFloat = 1.5
 
@@ -38,6 +45,9 @@ struct SavedCalendarTimeGrid: View {
 
   private func timeDescription(_ date: Date) -> String {
     var format = Date.FormatStyle(date: .omitted, time: .shortened)
+    if calendarDayHasClockChange(date, calendar: calendar) {
+      format = format.timeZone(.specificName(.short))
+    }
     format.calendar = calendar
     format.timeZone = calendar.timeZone
     return date.formatted(format)
@@ -61,7 +71,7 @@ struct SavedCalendarTimeGrid: View {
       let visibleStart = max(start, interval.start)
       let top = CGFloat(visibleStart.timeIntervalSince(interval.start) / 60) * pointsPerMinute
       let height = max(
-        44,
+        end == nil ? startOnlyCardHeight : 44,
         CGFloat(min(end ?? start, interval.end).timeIntervalSince(visibleStart) / 60)
           * pointsPerMinute)
       if top >= groupEnd {
@@ -193,7 +203,8 @@ struct SavedCalendarTimeGrid: View {
           }
         }
         .frame(
-          width: width, height: CGFloat(interval.duration / 60) * pointsPerMinute + 44,
+          width: width,
+          height: CGFloat(interval.duration / 60) * pointsPerMinute + max(44, startOnlyCardHeight),
           alignment: .topLeading)
       }
     }
@@ -223,7 +234,8 @@ struct SavedCalendarTimeGrid: View {
     } label: {
       VStack(alignment: .leading, spacing: 4) {
         Text(entry.title).font(.subheadline.weight(.medium)).lineLimit(2)
-        Text(scheduleDescription(entry)).font(.caption2).foregroundStyle(.secondary)
+        Text(previewDescription(entry, isTimed: isTimed)).font(.caption2)
+          .foregroundStyle(.secondary).lineLimit(2)
       }
       .padding(6)
       .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -235,5 +247,12 @@ struct SavedCalendarTimeGrid: View {
     .accessibilityIdentifier(
       "saved.calendar.\(isTimed ? "timed" : "all-day").\(dateIdentifier(day)).\(entry.schedule.id.uuidString)"
     )
+  }
+
+  private func previewDescription(_ entry: PlannerCalendarEntry, isTimed: Bool) -> String {
+    guard isTimed, case .timed(let start, nil, _) = entry.form else {
+      return scheduleDescription(entry)
+    }
+    return "Start only · " + timeDescription(start)
   }
 }
