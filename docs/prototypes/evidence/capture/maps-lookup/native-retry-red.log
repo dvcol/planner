@@ -1,0 +1,20 @@
+Building for debugging...
+[2 / 5] PlannerCoreStoreTests-product
+[4 / 7] PlannerCoreStoreTests-product
+[6 / 13] PlannerCoreStoreTests-product
+[12 / 12] PlannerCoreStoreTests-product
+Build complete! (4,97 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CaptureLookupTests started.
+◇ Test cancellingNativeInputRetryClearsItsObsoleteLookupIndicator() started.
+✘ Test cancellingNativeInputRetryClearsItsObsoleteLookupIndicator() recorded an issue at CaptureLookupTests.swift:65:5: Expectation failed: current.preview.state == .unavailable && current.preview.candidate == nil
+↳ current.preview.state == .unavailable && current.preview.candidate == nil → false
+↳   current.preview.state == .unavailable → false
+↳   current.preview.candidate == nil → <not evaluated>
+✘ Test cancellingNativeInputRetryClearsItsObsoleteLookupIndicator() failed after 0.048 seconds with 1 issue.
+✘ Suite CaptureLookupTests failed after 0.048 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.048 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

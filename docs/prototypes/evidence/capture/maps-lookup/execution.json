@@ -1,0 +1,66 @@
+{
+  "baseCommit": "07cbda4853b67cdebfc767eb650bcc4f49d92f47",
+  "scope": "Core selected Maps-link lookup through approved production HTTP I/O boundary; actual native HTTP regressions; no native UI/live-provider qualification",
+  "qualified": {
+    "mac": {
+      "functions": 45,
+      "suites": 6,
+      "invocations": 114,
+      "failures": 0,
+      "skips": 0
+    },
+    "lookup": {
+      "functions": 16,
+      "invocations": 40
+    },
+    "iosAppBuild": "passed",
+    "swiftLintFiles": 3,
+    "markdownLintDocuments": 3
+  },
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "960a0cce68e8476f3b83a5f8845d60a7367d97913927d1451b1d97d5ec1212f3",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCaptureLookup.swift": "6d8578f720277b99e0752984fb006fa250bb5d2e78bee4189183fefdf164c5da",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CaptureLookupTests.swift": "f5e0345f8a520ad0a6b7a3c7e6f3d9829db8732713cc9658df5ac186e4eaf1ae",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCaptureHTTPTransport.swift": "3f13d1b3d37d8ab28cf6979c1edb765b9e247cefef0051d6e60e77c2ff34fb5f",
+    "Packages/PlannerCore/Tests/PlannerCoreTests/CaptureHTTPTransportTests.swift": "ee80bdb80e9003397d9075597757855a93087a7b296fe9c638dcce8d93378e96"
+  },
+  "commands": {
+    "coreChecks": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreCaptureTransportBuild --jobs 1 --filter 'CaptureLookupTests|CapturePreparationTests|CaptureDraftEditTests|CaptureApplyTests|CaptureHTTPTransportTests|NativeCaptureLoadingTests/(obsoleteNativeRetry|cancellingDraft|rejectedEdit|explicitRetry|failedNativeMap)'",
+    "iosBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'generic/platform=iOS Simulator' -derivedDataPath /private/tmp/PlannerCaptureHTTPTransportIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCaptureHTTPTransportSourcePackages -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO build",
+    "swiftLint": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift-format lint --strict Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift Packages/PlannerCore/Sources/PlannerCore/PlannerCaptureLookup.swift Packages/PlannerCore/Tests/PlannerCoreStoreTests/CaptureLookupTests.swift",
+    "markdownLint": "pnpm dlx markdownlint-cli2 --config /private/tmp/PlannerCatalogEstimatesMarkdownlint.jsonc docs/prototypes/core-maps-capture-lookup.md docs/research/bounded-maps-capture-lookup.md docs/calendar-window-contract-review.md"
+  },
+  "diagnostics": [
+    "Allowed redirect initially failed to publish its candidate or dispatch the second hop.",
+    "Supersession initially failed to show loading and allowed an older lookup to overwrite a newer selection.",
+    "Cancelling native input Retry initially stranded loading feedback after stopping the lookup.",
+    "Google documented search intent initially produced no candidate.",
+    "Successful native Retry initially did not cancel a lookup started during native reload; cancelled Retry was the passing control.",
+    "New fixture stores are retained through test process exit, then cleaned. No production close hook was introduced."
+  ],
+  "reviews": {
+    "standards": "No remaining confirmed findings; successful/cancelled retry regression, post-process fixture cleanup, outcomes and source/artifact hashes checked.",
+    "spec": "No remaining confirmed findings; lifecycle, budgets, temporary content, qualified outcomes and remaining map gates checked."
+  },
+  "remainingGates": [
+    "native and agent preview integration and native Retry journeys",
+    "provider-reference-only URL enrichment",
+    "live Apple/Google and native socket qualification",
+    "iOS transport runtime",
+    "physical sender allocation and Share lifecycle",
+    "Q82 concrete Calendar window contract review, then Calendar implementation",
+    "signed-device sync/account recovery and whole-app UI polish"
+  ],
+  "artifactHashes": {
+    "qualified-mac.log": "292a06723354813ef89924eaa596112171c069899c927e156db187c86aa490b1",
+    "concurrent-native-retry-red.log": "d96e59c1b7e77eb4f0d5c5f9a8a6d6b879aef07a400cf5fc3790fa58ffabfc8e",
+    "google-intent-red.log": "4ea3029fbdde325715656158f11f1a09a1971592882fa1a8ef0ed8b0537dff79",
+    "post-process-cleanup.log": "51525b452549b617a93432f6c037a300ed3edfad343dd1eb78e7369c8a5c8fb0",
+    "supersession-red.log": "d6bd6e0a3ef793776b21b943dc79ed13084629b53762269514a2a6780f07eba5",
+    "redirect-red.log": "a012a062fa66d9044990035b71423718d3954d51b9176eb7382908e9ff7bc38f",
+    "native-retry-red.log": "cd63fa3a8718b7aa803d989fbc9006094eb20cff3e30ae3af98754f4a7300428",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "markdown-lint.log": "ef5aa4c1071740eea065b455e9bb62e2418407cf56fbefd3d7b4fcce006b0b93",
+    "ios-build.log": "5ecba442ba143b0c9edeed3d49321cf2f512b3808782d8cfc179e44f69053be6"
+  }
+}

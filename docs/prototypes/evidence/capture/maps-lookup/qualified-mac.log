@@ -1,0 +1,210 @@
+Building for debugging...
+[2 / 11] PlannerCore
+[3 / 13] PlannerCore
+[4 / 13] PlannerCore
+[9 / 14] PlannerCore
+[10 / 13] PlannerCoreStoreTests-product
+[12 / 15] PlannerCoreStoreTests-product
+[14 / 21] PlannerCoreStoreTests-product
+[19 / 19] PlannerCoreStoreTests-product
+[20 / 21] PlannerCoreTests-product
+Build complete! (18,04 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CaptureHTTPTransportTests started.
+◇ Test nativeTransportReturnsRedirectHeadersWithoutFollowingTheNextRequest() started.
+◇ Test nativeTransportUsesHEADAndReturnsStatusAndHeaders() started.
+◇ Test nativeRequestTimesOutWhenNoHeadersArrive() started.
+◇ Test cancelledNativeRequestReturnsCancellationBeforeItsTimeout(cancellationPhase:) started.
+◇ Test case passing 1 argument cancellationPhase → "pendingIO" to cancelledNativeRequestReturnsCancellationBeforeItsTimeout(cancellationPhase:) started.
+◇ Test case passing 1 argument cancellationPhase → "beforeStartup" to cancelledNativeRequestReturnsCancellationBeforeItsTimeout(cancellationPhase:) started.
+✔ Test nativeTransportReturnsRedirectHeadersWithoutFollowingTheNextRequest() passed after 0.007 seconds.
+✔ Test nativeTransportUsesHEADAndReturnsStatusAndHeaders() passed after 0.007 seconds.
+✔ Test cancelledNativeRequestReturnsCancellationBeforeItsTimeout(cancellationPhase:) with 2 test cases passed after 0.009 seconds.
+✔ Test nativeRequestTimesOutWhenNoHeadersArrive() passed after 0.063 seconds.
+✔ Suite CaptureHTTPTransportTests passed after 0.063 seconds.
+✔ Test run with 4 tests in 1 suite passed after 0.063 seconds.
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CaptureDraftEditTests started.
+◇ Suite CapturePreparationTests started.
+◇ Suite CaptureLookupTests started.
+◇ Suite NativeCaptureLoadingTests started.
+◇ Suite CaptureApplyTests started.
+◇ Test removingInputPathsPreservesSurvivingLinkIdentitiesAndExplicitClear() started.
+◇ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() started.
+◇ Test linkOnlyTextLanesRemainInNotesWhenTheCaptureAlsoContainsProse() started.
+◇ Test emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test ownEditsRotateGenerationPreserveOriginalLinksAndNeverWriteSavedData() started.
+◇ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() started.
+◇ Test retryingRetainedDirectInputKeepsOwnEditsAndCurrentLinkIdentities() started.
+◇ Test linkEditsRetainDraftBindingsAndNewIdentitiesAcrossLaterOwnEdits() started.
+◇ Test captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test failedHEADRequiresExplicitRetryAndPreservesOwnedEdits(statusCode:) started.
+◇ Test unusableRedirectStopsBeforeAnotherRequestAndKeepsPartialCapture(location:) started.
+◇ Test linkReplacementRecalculatesFallbackAndPreservesAnExplicitTitle(startsEmpty:) started.
+◇ Test httpMapsBookmarkRemainsUsableWithoutNetworkLookup() started.
+◇ Test documentedHTTPSPlaceLookupKeepsProviderPreviewSeparateFromSavedContent() started.
+◇ Test independentUnicodeTextPreservesLinesAndDistinctOriginalLinkOrder() started.
+◇ Test overallDeadlineReducesTheFinalRequestBudgetAndKeepsTheBookmarkUsable() started.
+◇ Test newerLookupKeepsItsSelectionWhenAnOlderResultArrives() started.
+◇ Test failedNativeMapInputRequiresExplicitRetryOrRemoval(action:) started.
+◇ Test allowedShortLinkRedirectKeepsTheOriginalBookmarkAndUsesExplicitHEADHops() started.
+◇ Test rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test unsupportedOrAmbiguousPlaceIntentRemainsAnUnchangedUsableBookmark(original:) started.
+◇ Test removingOversizedInputUnblocksDraftAndPreservesExplicitEdits() started.
+◇ Test nativeRetryStopsConcurrentLookupOnlyWhenItPublishesNewInputs(cancelRetry:) started.
+◇ Test editedLinksRespectTheDistinctLinkBudgetWithoutPartialChanges(count:) started.
+◇ Test redirectBudgetAllowsFiveHopsAndNeverIssuesASeventhRequest(redirectCount:) started.
+◇ Test googleSearchPreviewDescribesIntentWithoutInventingAResolvedPlace(query:) started.
+◇ Test draftChangesAndCancellationCannotPublishAnObsoleteLookup(action:) started.
+◇ Test savingWhileLookupIsPendingKeepsTheOriginalAndRejectsLatePreview() started.
+◇ Test rejectedLookupLeavesTheCurrentCaptureAndSavedDataUnchanged(scenario:) started.
+◇ Test reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState() started.
+◇ Test relativeRedirectResolvesAgainstTheCurrentHop() started.
+◇ Test invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test appliedCaptureCannotBeCancelledOrRetargetedByChangedReplay() started.
+◇ Test case passing 1 argument example → .whitespace to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .invalidURLOnly to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .linkOnly to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .nonWebText to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .empty to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test case passing 1 argument example → .mixedUnsupportedURL to emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) started.
+◇ Test reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:) started.
+◇ Test recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) started.
+◇ Test ownedFieldsAndLabelsSaveToInboxAndAnEmptyReuseLeavesDataUnchanged() started.
+◇ Test cancellingNativeInputRetryClearsItsObsoleteLookupIndicator() started.
+◇ Test case passing 1 argument statusCode → 405 to failedHEADRequiresExplicitRetryAndPreservesOwnedEdits(statusCode:) started.
+◇ Test case passing 1 argument location → nil to unusableRedirectStopsBeforeAnotherRequestAndKeepsPartialCapture(location:) started.
+◇ Test case passing 1 argument location → "" to unusableRedirectStopsBeforeAnotherRequestAndKeepsPartialCapture(location:) started.
+◇ Test case passing 1 argument statusCode → 503 to failedHEADRequiresExplicitRetryAndPreservesOwnedEdits(statusCode:) started.
+◇ Test case passing 1 argument startsEmpty → false to linkReplacementRecalculatesFallbackAndPreservesAnExplicitTitle(startsEmpty:) started.
+◇ Test case passing 1 argument location → "https://maps.apple/opaque#again" to unusableRedirectStopsBeforeAnotherRequestAndKeepsPartialCapture(location:) started.
+◇ Test case passing 1 argument startsEmpty → true to linkReplacementRecalculatesFallbackAndPreservesAnExplicitTitle(startsEmpty:) started.
+◇ Test case passing 1 argument location → "https://example.com/place" to unusableRedirectStopsBeforeAnotherRequestAndKeepsPartialCapture(location:) started.
+◇ Test case passing 1 argument location → "https://maps.apple.com.attacker.test/place" to unusableRedirectStopsBeforeAnotherRequestAndKeepsPartialCapture(location:) started.
+◇ Test case passing 1 argument location → "http://maps.apple.com/place" to unusableRedirectStopsBeforeAnotherRequestAndKeepsPartialCapture(location:) started.
+◇ Test case passing 1 argument location → "https://www.google.com/search?q=Museum" to unusableRedirectStopsBeforeAnotherRequestAndKeepsPartialCapture(location:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument action → "retry" to failedNativeMapInputRequiresExplicitRetryOrRemoval(action:) started.
+◇ Test case passing 1 argument scenario → "blankTitle" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "coordinate" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument original → "https://maps.apple.com/frame?center=35,139" to unsupportedOrAmbiguousPlaceIntentRemainsAnUnchangedUsableBookmark(original:) started.
+◇ Test case passing 1 argument scenario → "category" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument original → "https://maps.apple.com/directions?destination=35,139" to unsupportedOrAmbiguousPlaceIntentRemainsAnUnchangedUsableBookmark(original:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument scenario → "tag" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument original → "https://maps.apple.com/place?place-id=my-location" to unsupportedOrAmbiguousPlaceIntentRemainsAnUnchangedUsableBookmark(original:) started.
+◇ Test case passing 1 argument scenario → "removeUnknown" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument original → "https://maps.apple.com/place?place-id=parked-car" to unsupportedOrAmbiguousPlaceIntentRemainsAnUnchangedUsableBookmark(original:) started.
+◇ Test case passing 2 arguments budget → "directInputs", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument scenario → "retryUnknown" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument cancelRetry → false to nativeRetryStopsConcurrentLookupOnlyWhenItPublishesNewInputs(cancelRetry:) started.
+◇ Test case passing 1 argument original → "https://maps.apple.com/place?coordinate=NaN,139" to unsupportedOrAmbiguousPlaceIntentRemainsAnUnchangedUsableBookmark(original:) started.
+◇ Test case passing 1 argument scenario → "bothActions" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument cancelRetry → true to nativeRetryStopsConcurrentLookupOnlyWhenItPublishesNewInputs(cancelRetry:) started.
+◇ Test case passing 1 argument original → "https://maps.apple.com/place?coordinate=91,139" to unsupportedOrAmbiguousPlaceIntentRemainsAnUnchangedUsableBookmark(original:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument scenario → "unavailableRetry" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "empty" to rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) started.
+◇ Test case passing 1 argument original → "https://maps.apple.com/place?coordinate=35,139&coordinate=36,140" to unsupportedOrAmbiguousPlaceIntentRemainsAnUnchangedUsableBookmark(original:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument original → "https://www.google.com/maps/search/?query=35,139" to unsupportedOrAmbiguousPlaceIntentRemainsAnUnchangedUsableBookmark(original:) started.
+◇ Test case passing 1 argument original → "https://www.google.com/maps/search/?api=1&api=2&query=35,139" to unsupportedOrAmbiguousPlaceIntentRemainsAnUnchangedUsableBookmark(original:) started.
+◇ Test case passing 2 arguments budget → "bytes", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument original → "https://www.google.com/maps/search/?api=1&query=35,139&query=36,140" to unsupportedOrAmbiguousPlaceIntentRemainsAnUnchangedUsableBookmark(original:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → -1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument original → "https://www.google.com/maps/@?api=1&map_action=map&center=35,139" to unsupportedOrAmbiguousPlaceIntentRemainsAnUnchangedUsableBookmark(original:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → 0 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument redirectCount → 5 to redirectBudgetAllowsFiveHopsAndNeverIssuesASeventhRequest(redirectCount:) started.
+◇ Test case passing 1 argument count → 127 to editedLinksRespectTheDistinctLinkBudgetWithoutPartialChanges(count:) started.
+◇ Test case passing 2 arguments budget → "links", boundaryOffset → 1 to captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) started.
+◇ Test case passing 1 argument query → "35.0%2C139.0" to googleSearchPreviewDescribesIntentWithoutInventingAResolvedPlace(query:) started.
+◇ Test case passing 1 argument action → "edit" to draftChangesAndCancellationCannotPublishAnObsoleteLookup(action:) started.
+◇ Test case passing 1 argument redirectCount → 6 to redirectBudgetAllowsFiveHopsAndNeverIssuesASeventhRequest(redirectCount:) started.
+◇ Test case passing 1 argument action → "discard" to draftChangesAndCancellationCannotPublishAnObsoleteLookup(action:) started.
+◇ Test case passing 1 argument query → "restaurants+in+Tokyo%2BJapan" to googleSearchPreviewDescribesIntentWithoutInventingAResolvedPlace(query:) started.
+◇ Test case passing 1 argument action → "parentCancellation" to draftChangesAndCancellationCannotPublishAnObsoleteLookup(action:) started.
+◇ Test case passing 1 argument count → 128 to editedLinksRespectTheDistinctLinkBudgetWithoutPartialChanges(count:) started.
+◇ Test case passing 1 argument count → 129 to editedLinksRespectTheDistinctLinkBudgetWithoutPartialChanges(count:) started.
+◇ Test case passing 1 argument scenario → "website" to rejectedLookupLeavesTheCurrentCaptureAndSavedDataUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "foreignLink" to rejectedLookupLeavesTheCurrentCaptureAndSavedDataUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "staleGeneration" to rejectedLookupLeavesTheCurrentCaptureAndSavedDataUnchanged(scenario:) started.
+◇ Test case passing 1 argument scenario → "emptyDraft" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "noToken" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "editedDraft" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "canceled" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "archivedList" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "deletedList" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "changedLists" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "changedSourceLinks" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "archivedSource" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "deletedSource" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+◇ Test case passing 1 argument scenario → "changedMembership" to invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) started.
+✔ Test emptyUnsupportedAndLinkOnlyInputsHaveExplicitDraftOutcomes(example:) with 6 test cases passed after 0.448 seconds.
+◇ Test case passing 1 argument usesExplicitTitle → false to reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:) started.
+◇ Test case passing 1 argument usesExplicitTitle → true to reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:) started.
+◇ Test case passing 1 argument reusesItem → false to recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) started.
+◇ Test case passing 1 argument reusesItem → true to recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) started.
+✔ Test linkOnlyTextLanesRemainInNotesWhenTheCaptureAlsoContainsProse() passed after 0.532 seconds.
+✔ Test retryingRetainedDirectInputKeepsOwnEditsAndCurrentLinkIdentities() passed after 0.532 seconds.
+✔ Test ownEditsRotateGenerationPreserveOriginalLinksAndNeverWriteSavedData() passed after 0.532 seconds.
+✔ Test preparingAndCancellingAnOriginalLinkNeverWritesPlannerData() passed after 0.532 seconds.
+✔ Test removingInputPathsPreservesSurvivingLinkIdentitiesAndExplicitClear() passed after 0.533 seconds.
+✔ Test linkEditsRetainDraftBindingsAndNewIdentitiesAcrossLaterOwnEdits() passed after 0.533 seconds.
+✔ Test linkReplacementRecalculatesFallbackAndPreservesAnExplicitTitle(startsEmpty:) with 2 test cases passed after 0.533 seconds.
+✔ Test independentUnicodeTextPreservesLinesAndDistinctOriginalLinkOrder() passed after 0.533 seconds.
+✔ Test rejectedCaptureEditsLeaveTheCompleteDraftUnchanged(scenario:) with 9 test cases passed after 0.536 seconds.
+✔ Test exactOriginalCandidatesRetainIdentitiesAndDoNotOverwriteExistingItems() passed after 0.536 seconds.
+✔ Test removingOversizedInputUnblocksDraftAndPreservesExplicitEdits() passed after 0.536 seconds.
+✔ Test editedLinksRespectTheDistinctLinkBudgetWithoutPartialChanges(count:) with 3 test cases passed after 0.537 seconds.
+✔ Test rejectedLookupLeavesTheCurrentCaptureAndSavedDataUnchanged(scenario:) with 3 test cases passed after 0.545 seconds.
+✔ Test appliedCaptureCannotBeCancelledOrRetargetedByChangedReplay() passed after 0.547 seconds.
+✔ Test invalidOrChangedCaptureReviewMakesNoCaptureWrites(scenario:) with 11 test cases passed after 0.619 seconds.
+✔ Suite CaptureDraftEditTests passed after 0.620 seconds.
+✔ Test unusableRedirectStopsBeforeAnotherRequestAndKeepsPartialCapture(location:) with 7 test cases passed after 0.619 seconds.
+✔ Test httpMapsBookmarkRemainsUsableWithoutNetworkLookup() passed after 0.620 seconds.
+✔ Test reviewedCaptureCreatesOneItemAndEverySelectedMembershipWithDurableReplay(usesExplicitTitle:) with 2 test cases passed after 0.565 seconds.
+✔ Test documentedHTTPSPlaceLookupKeepsProviderPreviewSeparateFromSavedContent() passed after 0.620 seconds.
+✔ Test allowedShortLinkRedirectKeepsTheOriginalBookmarkAndUsesExplicitHEADHops() passed after 0.620 seconds.
+✔ Test unsupportedOrAmbiguousPlaceIntentRemainsAnUnchangedUsableBookmark(original:) with 11 test cases passed after 0.620 seconds.
+✔ Test reviewedReuseAddsOnlyMissingLinksAndMembershipsAndRetainsOtherPlanningState() passed after 0.619 seconds.
+✔ Test relativeRedirectResolvesAgainstTheCurrentHop() passed after 0.622 seconds.
+✔ Test redirectBudgetAllowsFiveHopsAndNeverIssuesASeventhRequest(redirectCount:) with 2 test cases passed after 0.622 seconds.
+✔ Test recoveryFailureRetainsTheWholeCaptureAndRetryDoesNotReapply(reusesItem:) with 2 test cases passed after 0.568 seconds.
+✔ Test googleSearchPreviewDescribesIntentWithoutInventingAResolvedPlace(query:) with 2 test cases passed after 0.627 seconds.
+✔ Test failedHEADRequiresExplicitRetryAndPreservesOwnedEdits(statusCode:) with 2 test cases passed after 0.634 seconds.
+✔ Test ownedFieldsAndLabelsSaveToInboxAndAnEmptyReuseLeavesDataUnchanged() passed after 0.583 seconds.
+✔ Suite CaptureApplyTests passed after 0.642 seconds.
+✔ Test newerLookupKeepsItsSelectionWhenAnOlderResultArrives() passed after 0.642 seconds.
+✔ Test draftChangesAndCancellationCannotPublishAnObsoleteLookup(action:) with 3 test cases passed after 0.646 seconds.
+◇ Test case passing 1 argument action → "remove" to failedNativeMapInputRequiresExplicitRetryOrRemoval(action:) started.
+✔ Test cancellingNativeInputRetryClearsItsObsoleteLookupIndicator() passed after 0.611 seconds.
+✔ Test savingWhileLookupIsPendingKeepsTheOriginalAndRejectsLatePreview() passed after 0.668 seconds.
+✔ Test nativeRetryStopsConcurrentLookupOnlyWhenItPublishesNewInputs(cancelRetry:) with 2 test cases passed after 0.678 seconds.
+✔ Test failedNativeMapInputRequiresExplicitRetryOrRemoval(action:) with 2 test cases passed after 0.682 seconds.
+◇ Test rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+◇ Test case passing 1 argument scenario → "category" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+◇ Test case passing 1 argument scenario → "tag" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+◇ Test case passing 1 argument scenario → "foreignLink" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+◇ Test case passing 1 argument scenario → "linkLimit" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+◇ Test case passing 1 argument scenario → "cancelledCaller" to rejectedEditLeavesThePendingNativeRetryActive(scenario:) started.
+✔ Test rejectedEditLeavesThePendingNativeRetryActive(scenario:) with 5 test cases passed after 0.067 seconds.
+◇ Test obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+◇ Test case passing 1 argument scenario → "edit" to obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+◇ Test case passing 1 argument scenario → "remove" to obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+◇ Test case passing 1 argument scenario → "apply" to obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+◇ Test case passing 1 argument scenario → "cancelCaller" to obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) started.
+✔ Test obsoleteNativeRetryCannotReplaceEditedRemovedOrSavedCapture(scenario:) with 4 test cases passed after 0.063 seconds.
+◇ Test cancellingDraftCancelsItsNativeRetryAndRejectsLateInput() started.
+✔ Test cancellingDraftCancelsItsNativeRetryAndRejectsLateInput() passed after 0.013 seconds.
+◇ Test explicitRetryReloadsFailedNativeInputAndPreservesOwnedEdits() started.
+✔ Test explicitRetryReloadsFailedNativeInputAndPreservesOwnedEdits() passed after 0.016 seconds.
+✔ Suite NativeCaptureLoadingTests passed after 0.845 seconds.
+✔ Test captureAcceptanceBudgetsReportOversizedInputsWithoutWriting(budget:boundaryOffset:) with 9 test cases passed after 2.291 seconds.
+✔ Suite CapturePreparationTests passed after 2.291 seconds.
+✔ Test overallDeadlineReducesTheFinalRequestBudgetAndKeepsTheBookmarkUsable() passed after 8.626 seconds.
+✔ Suite CaptureLookupTests passed after 8.626 seconds.
+✔ Test run with 41 tests in 5 suites passed after 8.626 seconds.

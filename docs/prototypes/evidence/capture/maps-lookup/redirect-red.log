@@ -1,0 +1,29 @@
+Building for debugging...
+[2 / 6] PlannerCoreStoreTests-product
+[3 / 8] PlannerCoreStoreTests-product
+[4 / 8] PlannerCoreStoreTests-product
+[10 / 12] PlannerCoreStoreTests-product
+[12 / 12] PlannerCoreStoreTests-product
+Build complete! (4,16 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CaptureLookupTests started.
+◇ Test allowedShortLinkRedirectKeepsTheOriginalBookmarkAndUsesExplicitHEADHops() started.
+✘ Test allowedShortLinkRedirectKeepsTheOriginalBookmarkAndUsesExplicitHEADHops() recorded an issue at CaptureLookupTests.swift:30:5: Expectation failed: observed.preview.state == .available && observed.preview.candidate?.displayName == "Museum"
+↳ observed.preview.state == .available && observed.preview.candidate?.displayName == "Museum" → false
+↳   observed.preview.state == .available → false
+↳   observed.preview.candidate?.displayName == "Museum" → <not evaluated>
+✘ Test allowedShortLinkRedirectKeepsTheOriginalBookmarkAndUsesExplicitHEADHops() recorded an issue at CaptureLookupTests.swift:35:5: Expectation failed: requests.map(\.absoluteString) == ["https://maps.apple/opaque?keep=%41", destination]
+↳ requests.map(\.absoluteString) == ["https://maps.apple/opaque?keep=%41", destination] → false
+↳   requests.map(\.absoluteString) → ["https://maps.apple/opaque?keep=%41"]
+↳   ["https://maps.apple/opaque?keep=%41", destination] → ["https://maps.apple/opaque?keep=%41", "https://maps.apple.com/place?name=Museum&coordinate=35,139"]
+✘ Test allowedShortLinkRedirectKeepsTheOriginalBookmarkAndUsesExplicitHEADHops() recorded an issue at CaptureLookupTests.swift:37:5: Expectation failed: timeouts == [.seconds(4), .seconds(4)]
+↳ timeouts == [.seconds(4), .seconds(4)] → false
+↳   timeouts → [4.0 seconds]
+↳   [.seconds(4), .seconds(4)] → [4.0 seconds, 4.0 seconds]
+✘ Test allowedShortLinkRedirectKeepsTheOriginalBookmarkAndUsesExplicitHEADHops() failed after 0.032 seconds with 3 issues.
+✘ Suite CaptureLookupTests failed after 0.032 seconds with 3 issues.
+✘ Test run with 1 test in 1 suite failed after 0.032 seconds with 3 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

@@ -1,0 +1,20 @@
+Building for debugging...
+[2 / 5] PlannerCoreStoreTests-product
+[4 / 7] PlannerCoreStoreTests-product
+[6 / 13] PlannerCoreStoreTests-product
+[12 / 12] PlannerCoreStoreTests-product
+Build complete! (4,83 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CaptureLookupTests started.
+◇ Test googleSearchPreviewDescribesIntentWithoutInventingAResolvedPlace(query:) started.
+◇ Test case passing 1 argument query → "35.0%2C139.0" to googleSearchPreviewDescribesIntentWithoutInventingAResolvedPlace(query:) started.
+◇ Test case passing 1 argument query → "restaurants+in+Tokyo%2BJapan" to googleSearchPreviewDescribesIntentWithoutInventingAResolvedPlace(query:) started.
+✘ Test googleSearchPreviewDescribesIntentWithoutInventingAResolvedPlace(query:) recorded an issue with 1 argument query → "restaurants+in+Tokyo%2BJapan" at CaptureLookupTests.swift:7:4: Caught error: CancellationError()
+✘ Test googleSearchPreviewDescribesIntentWithoutInventingAResolvedPlace(query:) recorded an issue with 1 argument query → "35.0%2C139.0" at CaptureLookupTests.swift:7:4: Caught error: CancellationError()
+✘ Test googleSearchPreviewDescribesIntentWithoutInventingAResolvedPlace(query:) with 2 test cases failed after 0.032 seconds with 2 issues.
+✘ Suite CaptureLookupTests failed after 0.032 seconds with 2 issues.
+✘ Test run with 1 test in 1 suite failed after 0.032 seconds with 2 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

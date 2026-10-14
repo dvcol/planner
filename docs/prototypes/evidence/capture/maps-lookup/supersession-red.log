@@ -1,0 +1,26 @@
+Building for debugging...
+[2 / 6] PlannerCoreStoreTests-product
+[4 / 8] PlannerCoreStoreTests-product
+[10 / 12] PlannerCoreStoreTests-product
+[12 / 12] PlannerCoreStoreTests-product
+Build complete! (5,20 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CaptureLookupTests started.
+◇ Test newerLookupKeepsItsSelectionWhenAnOlderResultArrives() started.
+✘ Test newerLookupKeepsItsSelectionWhenAnOlderResultArrives() recorded an issue at CaptureLookupTests.swift:40:5: Expectation failed: loading.preview.state == .loading && loading.preview.linkId == firstLink.linkId
+↳ loading.preview.state == .loading && loading.preview.linkId == firstLink.linkId → false
+↳   loading.preview.state == .loading → false
+↳   loading.preview.linkId == firstLink.linkId → <not evaluated>
+✘ Test newerLookupKeepsItsSelectionWhenAnOlderResultArrives() recorded an issue at CaptureLookupTests.swift:53:19: Issue recorded
+↳ A superseded lookup must not publish its old result.
+✘ Test newerLookupKeepsItsSelectionWhenAnOlderResultArrives() recorded an issue at CaptureLookupTests.swift:60:5: Expectation failed: current.preview.linkId == secondLink.linkId && current.preview.candidate?.displayName == "Second"
+↳ current.preview.linkId == secondLink.linkId && current.preview.candidate?.displayName == "Second" → false
+↳   current.preview.linkId == secondLink.linkId → false
+↳   current.preview.candidate?.displayName == "Second" → <not evaluated>
+✘ Test newerLookupKeepsItsSelectionWhenAnOlderResultArrives() failed after 0.050 seconds with 3 issues.
+✘ Suite CaptureLookupTests failed after 0.050 seconds with 3 issues.
+✘ Test run with 1 test in 1 suite failed after 0.050 seconds with 3 issues.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)

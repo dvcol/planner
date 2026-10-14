@@ -1,0 +1,5 @@
+markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)
+Finding: docs/prototypes/core-maps-capture-lookup.md docs/research/bounded-maps-capture-lookup.md docs/calendar-window-contract-review.md
+Linting: 3 files
+Summary: 0 issues in 0 files
+Done in 422ms using pnpm v12.10.1

@@ -1,0 +1,20 @@
+Building for debugging...
+[2 / 5] PlannerCoreStoreTests-product
+[4 / 7] PlannerCoreStoreTests-product
+[6 / 13] PlannerCoreStoreTests-product
+[12 / 12] PlannerCoreStoreTests-product
+Build complete! (4,91 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CaptureLookupTests started.
+◇ Test nativeRetryStopsConcurrentLookupOnlyWhenItPublishesNewInputs(cancelRetry:) started.
+◇ Test case passing 1 argument cancelRetry → true to nativeRetryStopsConcurrentLookupOnlyWhenItPublishesNewInputs(cancelRetry:) started.
+◇ Test case passing 1 argument cancelRetry → false to nativeRetryStopsConcurrentLookupOnlyWhenItPublishesNewInputs(cancelRetry:) started.
+✘ Test nativeRetryStopsConcurrentLookupOnlyWhenItPublishesNewInputs(cancelRetry:) recorded an issue with 1 argument cancelRetry → false at CaptureLookupTests.swift:78:7: Expectation failed: await transport.responsesDeliveredAfterCancellation == 1
+↳ await transport.responsesDeliveredAfterCancellation == 1 → <not evaluated>
+✘ Test nativeRetryStopsConcurrentLookupOnlyWhenItPublishesNewInputs(cancelRetry:) with 2 test cases failed after 0.049 seconds with 1 issue.
+✘ Suite CaptureLookupTests failed after 0.049 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 0.049 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreStoreTests (Swift Testing)
