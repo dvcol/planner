@@ -146,6 +146,49 @@ final class SavedBackupImportJourneyTests: XCTestCase {
         application, name: "Restoration and repeated import retain one original Tag identity")
     }
 
+    func testCancelingOverwriteReviewPreservesCurrentTagAfterRelaunch() throws {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      let exportedBackup = createAndExportTagBackup(application)
+      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+      application.plannerElement(exportedBackup.tagIdentifier).activateForPlannerJourney()
+      let name = application.textFields["saved.tag.name"]
+      XCTAssertTrue(name.waitForExistence(timeout: 10))
+      name.activateForPlannerJourney()
+      let originalName = try XCTUnwrap(name.value as? String)
+      name.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: originalName.count))
+      name.typeText("Keep current tag")
+      application.plannerElement("saved.tag.save").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.plannerElement(exportedBackup.tagIdentifier).waitForExistence(timeout: 10))
+      XCTAssertEqual(
+        application.plannerElement(exportedBackup.tagIdentifier).label, "Keep current tag")
+      application.plannerElement("saved.categories.done").activateForPlannerJourney()
+      selectBackup(exportedBackup.filename, application: application)
+      application.plannerElement("saved.import.mode").activateForPlannerJourney()
+      application.plannerElement("Overwrite").activateForPlannerJourney()
+      let replacements = application.staticTexts["saved.import.summary.replacements"]
+      revealImportElement(replacements, application: application)
+      XCTAssertTrue(replacements.waitForExistence(timeout: 15))
+      XCTAssertEqual(replacements.label, "Replacements, 1")
+      recordImport(application, name: "Cancel is available for a reviewed Tag replacement")
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      let importBackup = application.plannerElement("saved.settings.import")
+      XCTAssertTrue(importBackup.waitForPlannerHittability())
+      XCTAssertTrue(importBackup.isEnabled)
+      XCTAssertFalse(application.plannerElement("saved.import.applied").exists)
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openSettings(application)
+      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+      let retainedTag = application.plannerElement(exportedBackup.tagIdentifier)
+      XCTAssertTrue(retainedTag.waitForExistence(timeout: 10))
+      XCTAssertEqual(retainedTag.label, "Keep current tag")
+      recordImport(application, name: "Canceled Overwrite retains the current Tag after relaunch")
+    }
+
     private func createAndExportTagBackup(_ application: XCUIApplication) -> (
       tagIdentifier: String, filename: String
     ) {
