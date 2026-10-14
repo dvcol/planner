@@ -1,0 +1,2457 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination "platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446" -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO "-only-testing:PlannerNavigationUITests/SavedListCaptureJourneyTests" "-only-testing:PlannerNavigationUITests/SavedCaptureJourneyTests" "-only-testing:PlannerNavigationUITests/SavedCaptureTextJourneyTests" "-only-testing:PlannerNavigationUITests/SavedCaptureFieldsJourneyTests" -resultBundlePath /private/tmp/PlannerListCaptureQualifiedTablet.xcresult CODE_SIGNING_ALLOWED=NO test-without-building
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.104.0
+  EventSource: https://github.com/mattt/eventsource.git @ 1.5.1
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.1
+  swift-system: https://github.com/apple/swift-system.git @ 1.8.1
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk @ 0.12.1
+  PlannerCore: /Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore @ local
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.7.2
+  swift-log: https://github.com/apple/swift-log.git @ 1.16.1
+  PlannerPreviews: /Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerPreviews @ local
+
+Writing result bundle at path:
+	/private/tmp/PlannerListCaptureQualifiedTablet.xcresult
+
+2026-10-13 23:32:12.156300+0900 PlannerNavigationUITests-Runner[12728:38761535] [Default] Running tests...
+2026-10-13 23:32:12.234280+0900 PlannerNavigationUITests-Runner[12728:38761535] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-13 23:32:16.111.
+Test Suite 'PlannerNavigationUITests.xctest' started at 2026-10-13 23:32:16.113.
+Test Suite 'SavedCaptureFieldsJourneyTests' started at 2026-10-13 23:32:16.113.
+Test Case '-[PlannerNavigationUITests.SavedCaptureFieldsJourneyTests testCaptureSharedLabelsRemainStagedUntilAddAndPersistAfterRelaunch]' started.
+    t =     0.01s Start Test at 2026-10-13 23:32:16.124
+    t =     0.18s Set Up
+    t =     0.19s Open org.example.PlannerMCPPrototype
+    t =     0.19s     Launch org.example.PlannerMCPPrototype
+2026-10-13 23:32:16.445 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 23:32:16.445 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[12728]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x109c80398) and /Library/Developer/CoreSimulator/Volumes/iOS_24A434/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x109d74310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     1.85s         Setting up automation session
+    t =     4.60s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     6.07s Waiting 3.0s for "saved.categories.manage" Button to exist
+    t =     7.11s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.categories.manage" Button`
+    t =     7.11s         Checking existence of `"saved.categories.manage" Button`
+    t =     7.33s         Capturing element debug description
+    t =     8.08s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.categories.manage" Button`
+    t =     8.08s         Checking existence of `"saved.categories.manage" Button`
+    t =     8.11s         Capturing element debug description
+    t =     9.08s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.categories.manage" Button`
+    t =     9.08s         Checking existence of `"saved.categories.manage" Button`
+    t =     9.10s         Capturing element debug description
+    t =     9.10s     Checking existence of `"saved.categories.manage" Button`
+    t =     9.12s Collecting debug information to assist test failure triage
+    t =     9.12s     Requesting snapshot of accessibility hierarchy for app with pid 12853
+    t =     9.16s Tap "Lists" Button
+    t =     9.16s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.16s     Find the "Lists" Button
+    t =     9.17s     Check for interrupting elements affecting "list.bullet" Button
+    t =     9.20s         Wait for com.apple.springboard to idle
+    t =     9.26s     Synthesize event
+    t =     9.68s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.94s Waiting 2.0s for "saved.categories.manage" Button to exist
+    t =    11.97s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.categories.manage" Button`
+    t =    11.97s         Checking existence of `"saved.categories.manage" Button`
+    t =    12.02s         Capturing element debug description
+    t =    12.94s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.categories.manage" Button`
+    t =    12.94s         Checking existence of `"saved.categories.manage" Button`
+    t =    12.99s         Capturing element debug description
+    t =    12.99s     Checking existence of `"saved.categories.manage" Button`
+    t =    13.02s Collecting debug information to assist test failure triage
+    t =    13.02s     Requesting snapshot of accessibility hierarchy for app with pid 12853
+    t =    13.05s Checking existence of `"Show Sidebar" Button`
+    t =    13.07s Tap "Show Sidebar" Button
+    t =    13.07s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.08s     Find the "Show Sidebar" Button
+    t =    13.10s     Check for interrupting elements affecting "Show Sidebar" Button
+    t =    13.13s         Wait for com.apple.springboard to idle
+    t =    13.15s     Synthesize event
+    t =    13.45s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.26s Waiting 10.0s for "saved.categories.manage" Button to exist
+    t =    15.29s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.categories.manage" Button`
+    t =    15.29s         Checking existence of `"saved.categories.manage" Button`
+    t =    15.45s Tap "saved.categories.manage" Button
+    t =    15.46s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.46s     Find the "saved.categories.manage" Button
+    t =    15.51s     Check for interrupting elements affecting "saved.categories.manage" Button
+    t =    15.55s         Wait for com.apple.springboard to idle
+    t =    15.57s     Synthesize event
+    t =    15.86s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    16.37s Tap "saved.labels.new" Button
+    t =    16.37s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    16.47s     Find the "saved.labels.new" Button
+    t =    16.55s     Check for interrupting elements affecting "saved.labels.new" Button
+    t =    16.60s         Wait for com.apple.springboard to idle
+    t =    16.62s     Synthesize event
+    t =    16.92s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.72s Tap "New Category" Button
+    t =    17.72s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.73s     Find the "New Category" Button
+    t =    17.80s     Check for interrupting elements affecting "square.grid.2x2" Button
+    t =    17.86s         Wait for com.apple.springboard to idle
+    t =    17.88s     Synthesize event
+    t =    18.17s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    19.27s Waiting 5.0s for "saved.category.name" TextField to exist
+    t =    20.31s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.category.name" TextField`
+    t =    20.31s         Checking existence of `"saved.category.name" TextField`
+    t =    20.41s Tap "saved.category.name" TextField
+    t =    20.41s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    20.41s     Find the "saved.category.name" TextField
+    t =    20.49s     Check for interrupting elements affecting "saved.category.name" TextField
+    t =    20.56s         Wait for com.apple.springboard to idle
+    t =    20.57s     Synthesize event
+    t =    20.86s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    21.43s Type 'Culture' into "saved.category.name" TextField
+    t =    21.43s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    21.79s     Find the "saved.category.name" TextField
+    t =    21.92s     Check for interrupting elements affecting "saved.category.name" TextField
+    t =    22.01s         Wait for com.apple.springboard to idle
+    t =    22.03s     Synthesize event
+    t =    22.36s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.36s Tap "saved.category.save" Button
+    t =    22.36s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.36s     Find the "saved.category.save" Button
+    t =    22.46s     Check for interrupting elements affecting "saved.category.save" Button
+    t =    22.55s         Wait for com.apple.springboard to idle
+    t =    22.57s     Synthesize event
+    t =    22.87s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    23.60s Waiting 10.0s for "Culture" StaticText to exist
+    t =    24.63s     Checking `Expect predicate `existsNoRetry == 1` for object "Culture" StaticText`
+    t =    24.63s         Checking existence of `"Culture" StaticText`
+    t =    24.74s Tap "saved.labels.new" Button
+    t =    24.74s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    24.74s     Find the "saved.labels.new" Button
+    t =    24.81s     Check for interrupting elements affecting "saved.labels.new" Button
+    t =    24.87s         Wait for com.apple.springboard to idle
+    t =    24.88s     Synthesize event
+    t =    25.18s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    25.97s Tap "New Tag" Button
+    t =    25.97s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    25.98s     Find the "New Tag" Button
+    t =    26.05s     Check for interrupting elements affecting "tag" Button
+    t =    26.11s         Wait for com.apple.springboard to idle
+    t =    26.13s     Synthesize event
+    t =    26.42s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    27.49s Waiting 5.0s for "saved.tag.name" TextField to exist
+    t =    28.53s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.tag.name" TextField`
+    t =    28.53s         Checking existence of `"saved.tag.name" TextField`
+    t =    28.62s Tap "saved.tag.name" TextField
+    t =    28.62s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    28.63s     Find the "saved.tag.name" TextField
+    t =    28.70s     Check for interrupting elements affecting "saved.tag.name" TextField
+    t =    28.78s         Wait for com.apple.springboard to idle
+    t =    28.80s     Synthesize event
+    t =    29.10s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    29.42s Type 'Rain' into "saved.tag.name" TextField
+    t =    29.42s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    29.42s     Find the "saved.tag.name" TextField
+    t =    29.56s     Check for interrupting elements affecting "saved.tag.name" TextField
+    t =    29.66s         Wait for com.apple.springboard to idle
+    t =    29.69s     Synthesize event
+    t =    29.96s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    29.97s Tap "saved.tag.save" Button
+    t =    29.97s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    29.97s     Find the "saved.tag.save" Button
+    t =    30.08s     Check for interrupting elements affecting "saved.tag.save" Button
+    t =    30.18s         Wait for com.apple.springboard to idle
+    t =    30.21s     Synthesize event
+    t =    30.51s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    31.16s Waiting 10.0s for "Rain" StaticText to exist
+    t =    32.20s     Checking `Expect predicate `existsNoRetry == 1` for object "Rain" StaticText`
+    t =    32.20s         Checking existence of `"Rain" StaticText`
+    t =    32.30s Tap "saved.categories.done" Button
+    t =    32.30s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    32.30s     Find the "saved.categories.done" Button
+    t =    32.36s     Check for interrupting elements affecting "saved.categories.done" Button
+    t =    32.42s         Wait for com.apple.springboard to idle
+    t =    32.44s     Synthesize event
+    t =    32.74s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    33.21s Tap "Items" Button
+    t =    33.21s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    33.21s     Find the "Items" Button
+    t =    33.23s     Check for interrupting elements affecting "square.stack" Button
+    t =    33.29s         Wait for com.apple.springboard to idle
+    t =    33.31s     Synthesize event
+    t =    33.61s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    35.05s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =    36.09s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =    36.09s         Checking existence of `"saved.capture.new" Button`
+    t =    36.19s Tap "saved.capture.new" Button
+    t =    36.19s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    36.19s     Find the "saved.capture.new" Button
+    t =    36.27s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =    36.34s         Wait for com.apple.springboard to idle
+    t =    36.36s     Synthesize event
+    t =    36.70s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    37.19s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    38.23s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    38.23s         Checking existence of `"saved.capture.input" TextField`
+    t =    38.34s Tap "saved.capture.input" TextField
+    t =    38.34s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    38.35s     Find the "saved.capture.input" TextField
+    t =    38.45s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    38.54s         Wait for com.apple.springboard to idle
+    t =    38.56s     Synthesize event
+    t =    38.85s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    39.17s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    39.17s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    39.17s     Find the "saved.capture.input" TextField
+    t =    39.28s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    39.37s         Wait for com.apple.springboard to idle
+    t =    39.39s     Synthesize event
+    t =    40.17s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    40.18s Tap "saved.capture.review" Button
+    t =    40.18s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    40.18s     Find the "saved.capture.review" Button
+    t =    40.31s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    40.42s         Wait for com.apple.springboard to idle
+    t =    40.44s     Synthesize event
+    t =    40.74s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    41.09s Checking existence of `"saved.capture.categories" Button`
+    t =    41.24s Find the "saved.capture.categories" Button
+    t =    41.36s Checking existence of `Keyboard (First Match)`
+    t =    41.51s Find the Window (First Match)
+    t =    41.52s Find the "saved.capture.categories" Button
+    t =    41.62s Tap "saved.capture.categories" Button
+    t =    41.62s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    41.62s     Find the "saved.capture.categories" Button
+    t =    41.71s     Check for interrupting elements affecting "saved.capture.categories" Button
+    t =    41.80s         Wait for com.apple.springboard to idle
+    t =    41.81s     Synthesize event
+    t =    42.10s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    42.46s Waiting 5.0s for Any (First Match) to exist
+    t =    43.48s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    43.49s         Checking existence of `Any (First Match)`
+    t =    44.61s Checking `Expect predicate `value == 0 OR value == "0"` for object Any (First Match)`
+    t =    44.61s     Find the Any (First Match)
+    t =    44.68s     Find the "saved.item.label.category.D107F76C-D03C-4A94-A251-23CFB5AAD188" Switch
+    t =    44.75s Tap Switch (First Match)
+    t =    44.75s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    44.75s     Find the Switch (First Match)
+    t =    44.81s     Check for interrupting elements affecting "0" Switch
+    t =    44.90s         Wait for com.apple.springboard to idle
+    t =    44.93s     Synthesize event
+    t =    45.22s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    47.56s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.item.label.category.D107F76C-D03C-4A94-A251-23CFB5AAD188" Switch`
+    t =    47.56s     Find the "saved.item.label.category.D107F76C-D03C-4A94-A251-23CFB5AAD188" Switch
+    t =    47.63s     Find the "saved.item.label.category.D107F76C-D03C-4A94-A251-23CFB5AAD188" Switch
+    t =    47.69s Tap "saved.item.labels.done" Button
+    t =    47.69s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    47.69s     Find the "saved.item.labels.done" Button
+    t =    47.78s     Check for interrupting elements affecting "saved.item.labels.done" Button
+    t =    47.86s         Wait for com.apple.springboard to idle
+    t =    47.88s     Synthesize event
+    t =    48.18s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    48.52s Checking existence of `"saved.capture.tags" Button`
+    t =    48.65s Find the "saved.capture.tags" Button
+    t =    48.78s Checking existence of `Keyboard (First Match)`
+    t =    48.94s Find the Window (First Match)
+    t =    48.95s Find the "saved.capture.tags" Button
+    t =    49.06s Tap "saved.capture.tags" Button
+    t =    49.06s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    49.06s     Find the "saved.capture.tags" Button
+    t =    49.17s     Check for interrupting elements affecting "saved.capture.tags" Button
+    t =    49.27s         Wait for com.apple.springboard to idle
+    t =    49.29s     Synthesize event
+    t =    49.58s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    49.92s Waiting 5.0s for Any (First Match) to exist
+    t =    50.95s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    50.95s         Checking existence of `Any (First Match)`
+    t =    52.03s Checking `Expect predicate `value == 0 OR value == "0"` for object Any (First Match)`
+    t =    52.03s     Find the Any (First Match)
+    t =    52.10s     Find the "saved.item.label.tag.05ACF108-48AE-4349-B150-2E3439C2E06A" Switch
+    t =    52.16s Tap Switch (First Match)
+    t =    52.16s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    52.16s     Find the Switch (First Match)
+    t =    52.22s     Check for interrupting elements affecting "0" Switch
+    t =    52.29s         Wait for com.apple.springboard to idle
+    t =    52.33s     Synthesize event
+    t =    52.62s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    54.96s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.item.label.tag.05ACF108-48AE-4349-B150-2E3439C2E06A" Switch`
+    t =    54.96s     Find the "saved.item.label.tag.05ACF108-48AE-4349-B150-2E3439C2E06A" Switch
+    t =    55.03s     Find the "saved.item.label.tag.05ACF108-48AE-4349-B150-2E3439C2E06A" Switch
+    t =    55.09s Tap "saved.item.labels.done" Button
+    t =    55.09s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    55.10s     Find the "saved.item.labels.done" Button
+    t =    55.18s     Check for interrupting elements affecting "saved.item.labels.done" Button
+    t =    55.26s         Wait for com.apple.springboard to idle
+    t =    55.28s     Synthesize event
+    t =    55.58s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    55.90s Get all elements bound by index for: Descendants matching type CollectionView
+    t =    56.00s Swipe down CollectionView (Element at index 1)
+    t =    56.00s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    56.01s     Find the CollectionView (Element at index 1)
+    t =    56.11s     Check for interrupting elements affecting "Sidebar" CollectionView
+    t =    56.22s         Wait for com.apple.springboard to idle
+    t =    56.24s     Synthesize event
+    t =    56.70s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    57.08s Checking existence of `"saved.capture.title" TextField`
+    t =    57.19s Find the "saved.capture.title" TextField
+    t =    57.30s Checking existence of `Keyboard (First Match)`
+    t =    57.44s Find the Window (First Match)
+    t =    57.44s Find the "saved.capture.title" TextField
+    t =    57.53s Tap "saved.capture.title" TextField
+    t =    57.54s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    57.54s     Find the "saved.capture.title" TextField
+    t =    57.63s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    57.73s         Wait for com.apple.springboard to idle
+    t =    57.74s     Synthesize event
+    t =    58.04s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    58.42s Find the "saved.capture.title" TextField
+    t =    58.54s Type 'Cancelle...' into "saved.capture.title" TextField
+    t =    58.54s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    58.54s     Find the "saved.capture.title" TextField
+    t =    58.66s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    58.78s         Wait for com.apple.springboard to idle
+    t =    58.80s     Synthesize event
+    t =    59.60s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    59.60s Tap "saved.capture.cancel" Button
+    t =    59.60s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    59.61s     Find the "saved.capture.cancel" Button
+    t =    59.81s     Check for interrupting elements affecting "saved.capture.cancel" Button
+    t =    59.97s         Wait for com.apple.springboard to idle
+    t =    60.00s     Synthesize event
+    t =    60.32s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    60.91s Waiting 10.0s for "No matching items" StaticText to exist
+    t =    61.93s     Checking `Expect predicate `existsNoRetry == 1` for object "No matching items" StaticText`
+    t =    61.93s         Checking existence of `"No matching items" StaticText`
+    t =    62.01s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =    63.03s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =    63.03s         Checking existence of `"saved.capture.new" Button`
+    t =    63.10s Tap "saved.capture.new" Button
+    t =    63.10s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    63.10s     Find the "saved.capture.new" Button
+    t =    63.17s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =    63.24s         Wait for com.apple.springboard to idle
+    t =    63.25s     Synthesize event
+    t =    63.58s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    64.01s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    65.04s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    65.04s         Checking existence of `"saved.capture.input" TextField`
+    t =    65.16s Tap "saved.capture.input" TextField
+    t =    65.16s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    65.16s     Find the "saved.capture.input" TextField
+    t =    65.26s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    65.36s         Wait for com.apple.springboard to idle
+    t =    65.38s     Synthesize event
+    t =    65.69s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    66.04s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    66.04s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    66.05s     Find the "saved.capture.input" TextField
+    t =    66.17s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    66.28s         Wait for com.apple.springboard to idle
+    t =    66.31s     Synthesize event
+    t =    67.09s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    67.10s Tap "saved.capture.review" Button
+    t =    67.10s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    67.10s     Find the "saved.capture.review" Button
+    t =    67.25s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    67.40s         Wait for com.apple.springboard to idle
+    t =    67.43s     Synthesize event
+    t =    67.74s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    68.08s Checking existence of `"saved.capture.categories" Button`
+    t =    68.21s Find the "saved.capture.categories" Button
+    t =    68.32s Checking existence of `Keyboard (First Match)`
+    t =    68.47s Find the Window (First Match)
+    t =    68.48s Find the "saved.capture.categories" Button
+    t =    68.59s Tap "saved.capture.categories" Button
+    t =    68.60s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    68.60s     Find the "saved.capture.categories" Button
+    t =    68.71s     Check for interrupting elements affecting "saved.capture.categories" Button
+    t =    68.91s         Wait for com.apple.springboard to idle
+    t =    68.93s     Synthesize event
+    t =    69.23s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    69.57s Waiting 5.0s for Any (First Match) to exist
+    t =    70.59s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    70.59s         Checking existence of `Any (First Match)`
+    t =    71.68s Checking `Expect predicate `value == 0 OR value == "0"` for object Any (First Match)`
+    t =    71.68s     Find the Any (First Match)
+    t =    71.73s     Find the "saved.item.label.category.D107F76C-D03C-4A94-A251-23CFB5AAD188" Switch
+    t =    71.79s Tap Switch (First Match)
+    t =    71.79s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    71.79s     Find the Switch (First Match)
+    t =    71.85s     Check for interrupting elements affecting "0" Switch
+    t =    71.93s         Wait for com.apple.springboard to idle
+    t =    71.97s     Synthesize event
+    t =    72.27s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    74.60s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.item.label.category.D107F76C-D03C-4A94-A251-23CFB5AAD188" Switch`
+    t =    74.60s     Find the "saved.item.label.category.D107F76C-D03C-4A94-A251-23CFB5AAD188" Switch
+    t =    74.68s     Find the "saved.item.label.category.D107F76C-D03C-4A94-A251-23CFB5AAD188" Switch
+    t =    74.74s Tap "saved.item.labels.done" Button
+    t =    74.74s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    74.74s     Find the "saved.item.labels.done" Button
+    t =    74.82s     Check for interrupting elements affecting "saved.item.labels.done" Button
+    t =    74.90s         Wait for com.apple.springboard to idle
+    t =    74.92s     Synthesize event
+    t =    75.22s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    75.55s Checking existence of `"saved.capture.tags" Button`
+    t =    75.71s Find the "saved.capture.tags" Button
+    t =    75.86s Checking existence of `Keyboard (First Match)`
+    t =    76.03s Find the Window (First Match)
+    t =    76.04s Find the "saved.capture.tags" Button
+    t =    76.15s Tap "saved.capture.tags" Button
+    t =    76.15s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    76.15s     Find the "saved.capture.tags" Button
+    t =    76.25s     Check for interrupting elements affecting "saved.capture.tags" Button
+    t =    76.35s         Wait for com.apple.springboard to idle
+    t =    76.36s     Synthesize event
+    t =    76.66s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    76.99s Waiting 5.0s for Any (First Match) to exist
+    t =    78.01s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    78.01s         Checking existence of `Any (First Match)`
+    t =    79.09s Checking `Expect predicate `value == 0 OR value == "0"` for object Any (First Match)`
+    t =    79.09s     Find the Any (First Match)
+    t =    79.17s     Find the "saved.item.label.tag.05ACF108-48AE-4349-B150-2E3439C2E06A" Switch
+    t =    79.23s Tap Switch (First Match)
+    t =    79.23s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    79.23s     Find the Switch (First Match)
+    t =    79.29s     Check for interrupting elements affecting "0" Switch
+    t =    79.36s         Wait for com.apple.springboard to idle
+    t =    79.39s     Synthesize event
+    t =    79.69s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    82.00s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.item.label.tag.05ACF108-48AE-4349-B150-2E3439C2E06A" Switch`
+    t =    82.00s     Find the "saved.item.label.tag.05ACF108-48AE-4349-B150-2E3439C2E06A" Switch
+    t =    82.09s     Find the "saved.item.label.tag.05ACF108-48AE-4349-B150-2E3439C2E06A" Switch
+    t =    82.15s Tap "saved.item.labels.done" Button
+    t =    82.15s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    82.15s     Find the "saved.item.labels.done" Button
+    t =    82.23s     Check for interrupting elements affecting "saved.item.labels.done" Button
+    t =    82.31s         Wait for com.apple.springboard to idle
+    t =    82.33s     Synthesize event
+    t =    82.63s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    82.96s Get all elements bound by index for: Descendants matching type CollectionView
+    t =    83.07s Swipe down CollectionView (Element at index 1)
+    t =    83.07s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    83.07s     Find the CollectionView (Element at index 1)
+    t =    83.19s     Check for interrupting elements affecting "Sidebar" CollectionView
+    t =    83.30s         Wait for com.apple.springboard to idle
+    t =    83.32s     Synthesize event
+    t =    83.79s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    84.14s Checking existence of `"saved.capture.title" TextField`
+    t =    84.25s Find the "saved.capture.title" TextField
+    t =    84.35s Checking existence of `Keyboard (First Match)`
+    t =    84.51s Find the Window (First Match)
+    t =    84.51s Find the "saved.capture.title" TextField
+    t =    84.61s Tap "saved.capture.title" TextField
+    t =    84.61s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    84.61s     Find the "saved.capture.title" TextField
+    t =    84.72s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    84.81s         Wait for com.apple.springboard to idle
+    t =    84.82s     Synthesize event
+    t =    85.11s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    85.47s Find the "saved.capture.title" TextField
+    t =    85.63s Type 'Labeled ...' into "saved.capture.title" TextField
+    t =    85.63s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    85.64s     Find the "saved.capture.title" TextField
+    t =    85.80s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    85.95s         Wait for com.apple.springboard to idle
+    t =    85.98s     Synthesize event
+    t =    86.63s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    86.63s Tap "saved.capture.add" Button
+    t =    86.64s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    86.64s     Find the "saved.capture.add" Button
+    t =    86.78s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    86.90s         Wait for com.apple.springboard to idle
+    t =    86.92s     Synthesize event
+    t =    87.22s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    88.08s Waiting 10.0s for "Culture" StaticText to exist
+    t =    89.10s     Checking `Expect predicate `existsNoRetry == 1` for object "Culture" StaticText`
+    t =    89.10s         Checking existence of `"Culture" StaticText`
+    t =    89.29s Checking existence of `"Rain" StaticText`
+    t =    89.50s Find the Target Application 'org.example.PlannerMCPPrototype'
+    t =    89.73s Added attachment named 'Native capture saves selected shared Categories and Tags'
+    t =    89.73s Terminate org.example.PlannerMCPPrototype:12853
+    t =    90.78s Open org.example.PlannerMCPPrototype
+    t =    90.78s     Launch org.example.PlannerMCPPrototype
+2026-10-13 23:33:46.898 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 23:33:46.898 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    91.00s         Setting up automation session
+    t =    94.44s         Wait for org.example.PlannerMCPPrototype to idle
+    t =    95.92s Tap "Inbox" Button
+    t =    95.92s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    95.93s     Find the "Inbox" Button
+    t =    96.06s     Check for interrupting elements affecting "tray" Button
+    t =    96.14s         Wait for com.apple.springboard to idle
+    t =    96.16s     Synthesize event
+    t =    96.46s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    98.06s Waiting 10.0s for Button (First Match) to exist
+    t =    99.07s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    99.07s         Checking existence of `Button (First Match)`
+    t =    99.21s Get number of matches for: Elements matching predicate '(identifier BEGINSWITH "saved.item." OR identifier BEGINSWITH "saved.appearance.") AND label == "Labeled capture"'
+    t =    99.31s Get number of matches for: Elements matching predicate '(identifier BEGINSWITH "saved.item." OR identifier BEGINSWITH "saved.appearance.") AND label == "Cancelled labeled capture"'
+    t =    99.39s Tap Button (First Match)
+    t =    99.39s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    99.39s     Find the Button (First Match)
+    t =    99.49s     Check for interrupting elements affecting "saved.item.08758E2C-A1F7-4E96-B3D8-496D5CBA4A95" Button
+    t =    99.57s         Wait for com.apple.springboard to idle
+    t =    99.61s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    99.61s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    99.62s     Synthesize event
+    t =    99.91s     Wait for org.example.PlannerMCPPrototype to idle
+    t =   100.03s Waiting 5.0s for "Culture" StaticText to exist
+    t =   101.05s     Checking `Expect predicate `existsNoRetry == 1` for object "Culture" StaticText`
+    t =   101.05s         Checking existence of `"Culture" StaticText`
+    t =   101.21s Checking existence of `"Rain" StaticText`
+    t =   101.34s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedCaptureFieldsJourneyTests testCaptureSharedLabelsRemainStagedUntilAddAndPersistAfterRelaunch]' passed (101.771 seconds).
+Test Case '-[PlannerNavigationUITests.SavedCaptureFieldsJourneyTests testEditingOnlyReuseLinkRequiresExplicitReselectionWithoutCreatingAnItem]' started.
+    t =     0.00s Start Test at 2026-10-13 23:33:57.897
+    t =     0.04s Set Up
+    t =     0.04s Open org.example.PlannerMCPPrototype
+    t =     0.04s     Launch org.example.PlannerMCPPrototype
+    t =     0.04s         Terminate org.example.PlannerMCPPrototype:13471
+2026-10-13 23:33:58.980 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 23:33:58.980 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.29s         Setting up automation session
+    t =     4.04s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.46s Tap "Items" Button
+    t =     5.46s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.46s     Find the "Items" Button
+    t =     5.58s     Check for interrupting elements affecting "square.stack" Button
+    t =     5.67s         Wait for com.apple.springboard to idle
+    t =     5.70s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     5.70s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     5.70s     Synthesize event
+    t =     6.00s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     7.39s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =     8.39s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =     8.40s         Checking existence of `"saved.capture.new" Button`
+    t =     8.50s Tap "saved.capture.new" Button
+    t =     8.50s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.50s     Find the "saved.capture.new" Button
+    t =     8.57s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =     8.63s         Wait for com.apple.springboard to idle
+    t =     8.65s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.65s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.65s     Synthesize event
+    t =     8.97s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.48s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    10.50s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    10.50s         Checking existence of `"saved.capture.input" TextField`
+    t =    10.65s Tap "saved.capture.input" TextField
+    t =    10.65s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.65s     Find the "saved.capture.input" TextField
+    t =    10.75s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    10.82s         Wait for com.apple.springboard to idle
+    t =    10.84s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    10.84s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    10.85s     Synthesize event
+    t =    11.14s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.36s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    11.36s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.72s     Find the "saved.capture.input" TextField
+    t =    11.86s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    11.96s         Wait for com.apple.springboard to idle
+    t =    11.98s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    11.98s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    11.98s     Synthesize event
+    t =    12.75s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.76s Tap "saved.capture.review" Button
+    t =    12.77s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.77s     Find the "saved.capture.review" Button
+    t =    12.90s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    12.99s         Wait for com.apple.springboard to idle
+    t =    13.01s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    13.01s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    13.01s     Synthesize event
+    t =    13.30s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.33s Checking existence of `"saved.capture.title" TextField`
+    t =    13.46s Find the "saved.capture.title" TextField
+    t =    13.62s Checking existence of `Keyboard (First Match)`
+    t =    13.63s Find the Keyboard (First Match)
+    t =    13.64s Find the "saved.capture.title" TextField
+    t =    13.76s Tap "saved.capture.title" TextField
+    t =    13.76s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.76s     Find the "saved.capture.title" TextField
+    t =    13.85s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    13.94s         Wait for com.apple.springboard to idle
+    t =    13.96s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    13.96s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    13.97s     Synthesize event
+    t =    14.26s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.64s Find the "saved.capture.title" TextField
+    t =    14.77s Type 'Keep ori...' into "saved.capture.title" TextField
+    t =    14.77s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.77s     Find the "saved.capture.title" TextField
+    t =    14.88s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    14.99s         Wait for com.apple.springboard to idle
+    t =    15.01s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    15.01s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    15.01s     Synthesize event
+    t =    15.60s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.61s Tap "saved.capture.add" Button
+    t =    15.61s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.61s     Find the "saved.capture.add" Button
+    t =    15.73s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    15.84s         Wait for com.apple.springboard to idle
+    t =    15.86s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    15.86s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    15.87s     Synthesize event
+    t =    16.17s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.06s Waiting 10.0s for "saved.item.actions" Button to exist
+    t =    18.07s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.item.actions" Button`
+    t =    18.07s         Checking existence of `"saved.item.actions" Button`
+    t =    18.18s Terminate org.example.PlannerMCPPrototype:13553
+    t =    19.22s Open org.example.PlannerMCPPrototype
+    t =    19.22s     Launch org.example.PlannerMCPPrototype
+2026-10-13 23:34:17.115 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 23:34:17.115 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    19.48s         Setting up automation session
+    t =    22.21s         Wait for org.example.PlannerMCPPrototype to idle
+    t =    23.60s Tap "Items" Button
+    t =    23.60s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    23.60s     Find the "Items" Button
+    t =    23.72s     Check for interrupting elements affecting "square.stack" Button
+    t =    23.81s         Wait for com.apple.springboard to idle
+    t =    23.83s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    23.83s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    23.83s     Synthesize event
+    t =    24.12s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    25.53s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =    26.55s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =    26.55s         Checking existence of `"saved.capture.new" Button`
+    t =    26.66s Tap "saved.capture.new" Button
+    t =    26.66s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    26.67s     Find the "saved.capture.new" Button
+    t =    26.73s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =    26.80s         Wait for com.apple.springboard to idle
+    t =    26.82s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    26.82s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    26.82s     Synthesize event
+    t =    27.14s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    27.67s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    28.69s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    28.69s         Checking existence of `"saved.capture.input" TextField`
+    t =    28.79s Tap "saved.capture.input" TextField
+    t =    28.79s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    28.79s     Find the "saved.capture.input" TextField
+    t =    28.87s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    28.94s         Wait for com.apple.springboard to idle
+    t =    28.96s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    28.96s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    28.96s     Synthesize event
+    t =    29.26s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    29.53s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    29.53s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    29.89s     Find the "saved.capture.input" TextField
+    t =    30.03s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    30.14s         Wait for com.apple.springboard to idle
+    t =    30.17s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    30.17s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    30.17s     Synthesize event
+    t =    30.95s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    30.95s Tap "saved.capture.review" Button
+    t =    30.95s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    30.96s     Find the "saved.capture.review" Button
+    t =    31.09s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    31.21s         Wait for com.apple.springboard to idle
+    t =    31.23s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    31.24s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    31.25s     Synthesize event
+    t =    31.55s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    31.86s Waiting 10.0s for "saved.capture.choice" Button to exist
+    t =    32.87s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.choice" Button`
+    t =    32.87s         Checking existence of `"saved.capture.choice" Button`
+    t =    32.98s Find the "saved.capture.choice" Button
+    t =    33.07s Checking existence of `TextField (First Match)`
+    t =    33.14s Find the TextField (First Match)
+    t =    33.21s Checking existence of `Keyboard (First Match)`
+    t =    33.33s Find the Window (First Match)
+    t =    33.34s Find the "saved.capture.link.url.1F455252-8B6F-4E59-9EEC-73BA716297B1" TextField
+    t =    33.40s Tap "saved.capture.link.url.1F455252-8B6F-4E59-9EEC-73BA716297B1" TextField
+    t =    33.40s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    33.41s     Find the "saved.capture.link.url.1F455252-8B6F-4E59-9EEC-73BA716297B1" TextField
+    t =    33.47s     Check for interrupting elements affecting "saved.capture.link.url.1F455252-8B6F-4E59-9EEC-73BA716297B1" TextField
+    t =    33.56s         Wait for com.apple.springboard to idle
+    t =    33.58s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    33.58s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    33.58s     Synthesize event
+    t =    33.87s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    34.23s Find the "saved.capture.link.url.1F455252-8B6F-4E59-9EEC-73BA716297B1" TextField
+    t =    34.40s Type '...' into "saved.capture.link.url.1F455252-8B6F-4E59-9EEC-73BA716297B1" TextField
+    t =    34.40s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    34.40s     Find the "saved.capture.link.url.1F455252-8B6F-4E59-9EEC-73BA716297B1" TextField
+    t =    34.51s     Check for interrupting elements affecting "saved.capture.link.url.1F455252-8B6F-4E59-9EEC-73BA716297B1" TextField
+    t =    34.63s         Wait for com.apple.springboard to idle
+    t =    34.66s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    34.66s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    34.66s     Synthesize event
+    t =    35.88s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    35.89s Tap "saved.capture.add" Button
+    t =    35.89s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    35.89s     Find the "saved.capture.add" Button
+    t =    36.01s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    36.11s         Wait for com.apple.springboard to idle
+    t =    36.13s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    36.13s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    36.13s     Synthesize event
+    t =    36.43s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    38.16s Checking `Expect predicate `enabled == 0` for object "saved.capture.add" Button`
+    t =    38.17s     Find the "saved.capture.add" Button
+    t =    38.27s Find the "saved.capture.choice" Button
+    t =    38.36s Tap "saved.capture.cancel" Button
+    t =    38.36s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    38.36s     Find the "saved.capture.cancel" Button
+    t =    38.45s     Check for interrupting elements affecting "saved.capture.cancel" Button
+    t =    38.53s         Wait for com.apple.springboard to idle
+    t =    38.55s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    38.55s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    38.56s     Synthesize event
+    t =    38.85s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    39.36s Waiting 10.0s for Button (First Match) to exist
+    t =    40.39s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    40.39s         Checking existence of `Button (First Match)`
+    t =    40.51s Get number of matches for: Elements matching predicate '(identifier BEGINSWITH "saved.item." OR identifier BEGINSWITH "saved.appearance.") AND label == "Keep original"'
+    t =    40.58s Get number of matches for: Elements matching predicate '(identifier BEGINSWITH "saved.item." OR identifier BEGINSWITH "saved.appearance.") AND label == "Saved link"'
+    t =    40.64s Tap Button (First Match)
+    t =    40.64s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    40.64s     Find the Button (First Match)
+    t =    40.73s     Check for interrupting elements affecting "saved.item.AAEB241E-2C88-4314-A726-ABC6C4151468" Button
+    t =    40.79s         Wait for com.apple.springboard to idle
+    t =    40.80s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    40.81s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    40.81s     Synthesize event
+    t =    41.10s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    41.11s Waiting 5.0s for Any (First Match) to exist
+    t =    42.11s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    42.12s         Checking existence of `Any (First Match)`
+    t =    42.30s Find the Any (First Match)
+    t =    42.44s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedCaptureFieldsJourneyTests testEditingOnlyReuseLinkRequiresExplicitReselectionWithoutCreatingAnItem]' passed (50.131 seconds).
+Test Case '-[PlannerNavigationUITests.SavedCaptureFieldsJourneyTests testOwnedCaptureFieldsAndLinkLabelPersistAfterRelaunch]' started.
+    t =     0.00s Start Test at 2026-10-13 23:34:48.028
+    t =     0.03s Set Up
+    t =     0.03s Open org.example.PlannerMCPPrototype
+    t =     0.03s     Launch org.example.PlannerMCPPrototype
+    t =     0.03s         Terminate org.example.PlannerMCPPrototype:13635
+2026-10-13 23:34:49.131 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 23:34:49.131 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.35s         Setting up automation session
+    t =     3.89s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.35s Tap "Items" Button
+    t =     5.36s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.36s     Find the "Items" Button
+    t =     5.49s     Check for interrupting elements affecting "square.stack" Button
+    t =     5.58s         Wait for com.apple.springboard to idle
+    t =     5.60s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     5.60s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     5.61s     Synthesize event
+    t =     5.91s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     7.42s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =     8.44s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =     8.44s         Checking existence of `"saved.capture.new" Button`
+    t =     8.58s Tap "saved.capture.new" Button
+    t =     8.58s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.59s     Find the "saved.capture.new" Button
+    t =     8.66s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =     8.72s         Wait for com.apple.springboard to idle
+    t =     8.74s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.74s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.74s     Synthesize event
+    t =     9.06s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.57s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    10.59s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    10.59s         Checking existence of `"saved.capture.input" TextField`
+    t =    10.72s Tap "saved.capture.input" TextField
+    t =    10.72s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.72s     Find the "saved.capture.input" TextField
+    t =    10.79s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    10.87s         Wait for com.apple.springboard to idle
+    t =    10.88s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    10.88s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    10.89s     Synthesize event
+    t =    11.18s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.42s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    11.42s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.76s     Find the "saved.capture.input" TextField
+    t =    11.90s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    12.00s         Wait for com.apple.springboard to idle
+    t =    12.03s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    12.03s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    12.03s     Synthesize event
+    t =    12.81s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.82s Tap "saved.capture.review" Button
+    t =    12.82s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.82s     Find the "saved.capture.review" Button
+    t =    12.95s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    13.07s         Wait for com.apple.springboard to idle
+    t =    13.09s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    13.09s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    13.10s     Synthesize event
+    t =    13.40s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.50s Waiting 10.0s for "saved.capture.subtitle" TextField to exist
+    t =    14.50s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.subtitle" TextField`
+    t =    14.50s         Checking existence of `"saved.capture.subtitle" TextField`
+    t =    14.63s Checking existence of `"saved.capture.subtitle" TextField`
+    t =    14.73s Find the "saved.capture.subtitle" TextField
+    t =    14.82s Checking existence of `Keyboard (First Match)`
+    t =    14.96s Find the Window (First Match)
+    t =    14.97s Find the "saved.capture.subtitle" TextField
+    t =    15.08s Waiting 5.0s for "saved.capture.subtitle" TextField to exist
+    t =    16.10s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.subtitle" TextField`
+    t =    16.10s         Checking existence of `"saved.capture.subtitle" TextField`
+    t =    16.20s Tap "saved.capture.subtitle" TextField
+    t =    16.20s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    16.21s     Find the "saved.capture.subtitle" TextField
+    t =    16.30s     Check for interrupting elements affecting "saved.capture.subtitle" TextField
+    t =    16.39s         Wait for com.apple.springboard to idle
+    t =    16.41s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    16.41s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    16.41s     Synthesize event
+    t =    16.71s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.05s Type 'Afternoon visit' into "saved.capture.subtitle" TextField
+    t =    17.05s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.06s     Find the "saved.capture.subtitle" TextField
+    t =    17.19s     Check for interrupting elements affecting "saved.capture.subtitle" TextField
+    t =    17.31s         Wait for com.apple.springboard to idle
+    t =    17.33s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    17.33s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    17.33s     Synthesize event
+    t =    17.79s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.80s Checking existence of `"saved.capture.title" TextField`
+    t =    17.93s Find the "saved.capture.title" TextField
+    t =    18.04s Checking existence of `Keyboard (First Match)`
+    t =    18.05s Find the Keyboard (First Match)
+    t =    18.07s Find the "saved.capture.title" TextField
+    t =    18.18s Tap "saved.capture.title" TextField
+    t =    18.18s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    18.18s     Find the "saved.capture.title" TextField
+    t =    18.29s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    18.40s         Wait for com.apple.springboard to idle
+    t =    18.42s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    18.42s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    18.42s     Synthesize event
+    t =    18.71s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    18.71s Find the "saved.capture.title" TextField
+    t =    18.83s Type 'Owned ca...' into "saved.capture.title" TextField
+    t =    18.83s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    18.83s     Find the "saved.capture.title" TextField
+    t =    18.94s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    19.05s         Wait for com.apple.springboard to idle
+    t =    19.07s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    19.07s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    19.07s     Synthesize event
+    t =    19.66s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    19.66s Checking existence of `"saved.capture.estimate.enabled" Any`
+    t =    19.91s Find the "saved.capture.estimate.enabled" Any
+    t =    20.19s Checking existence of `Keyboard (First Match)`
+    t =    20.21s Find the Keyboard (First Match)
+    t =    20.22s Find the "saved.capture.estimate.enabled" Switch
+    t =    21.47s Checking `Expect predicate `value == 0 OR value == "0"` for object "saved.capture.estimate.enabled" Switch`
+    t =    21.47s     Find the "saved.capture.estimate.enabled" Switch
+    t =    21.72s     Find the "saved.capture.estimate.enabled" Switch
+    t =    21.93s Tap Switch (First Match)
+    t =    21.93s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    21.93s     Find the Switch (First Match)
+    t =    22.18s     Check for interrupting elements affecting "0" Switch
+    t =    22.28s         Wait for com.apple.springboard to idle
+    t =    22.31s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    22.31s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    22.33s     Synthesize event
+    t =    22.62s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    24.94s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.capture.estimate.enabled" Switch`
+    t =    24.94s     Find the "saved.capture.estimate.enabled" Switch
+    t =    25.20s     Find the "saved.capture.estimate.enabled" Switch
+    t =    25.43s Checking existence of `"saved.capture.location.name" TextField`
+    t =    25.55s Get all elements bound by index for: Descendants matching type CollectionView
+    t =    25.64s Swipe up CollectionView (Element at index 1)
+    t =    25.64s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    25.65s     Find the CollectionView (Element at index 1)
+    t =    25.76s     Check for interrupting elements affecting "Sidebar" CollectionView
+    t =    25.86s         Wait for com.apple.springboard to idle
+    t =    25.89s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    25.89s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    25.89s     Synthesize event
+    t =    26.36s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    27.33s Checking existence of `"saved.capture.location.name" TextField`
+    t =    27.45s Find the "saved.capture.location.name" TextField
+    t =    27.57s Checking existence of `Keyboard (First Match)`
+    t =    27.59s Find the Keyboard (First Match)
+    t =    27.60s Find the "saved.capture.location.name" TextField
+    t =    27.71s Waiting 5.0s for "saved.capture.location.name" TextField to exist
+    t =    28.74s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.location.name" TextField`
+    t =    28.74s         Checking existence of `"saved.capture.location.name" TextField`
+    t =    28.87s Tap "saved.capture.location.name" TextField
+    t =    28.87s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    28.87s     Find the "saved.capture.location.name" TextField
+    t =    28.99s     Check for interrupting elements affecting "saved.capture.location.name" TextField
+    t =    29.10s         Wait for com.apple.springboard to idle
+    t =    29.12s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    29.12s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    29.12s     Synthesize event
+    t =    29.41s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    29.41s Type 'My meeting point' into "saved.capture.location.name" TextField
+    t =    29.41s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    29.41s     Find the "saved.capture.location.name" TextField
+    t =    29.53s     Check for interrupting elements affecting "saved.capture.location.name" TextField
+    t =    29.64s         Wait for com.apple.springboard to idle
+    t =    29.66s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    29.66s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    29.66s     Synthesize event
+    t =    30.13s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    30.14s Checking existence of `"saved.capture.location.address" TextField`
+    t =    30.25s Find the "saved.capture.location.address" TextField
+    t =    30.37s Checking existence of `Keyboard (First Match)`
+    t =    30.38s Find the Keyboard (First Match)
+    t =    30.40s Find the "saved.capture.location.address" TextField
+    t =    30.53s Waiting 5.0s for "saved.capture.location.address" TextField to exist
+    t =    31.56s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.location.address" TextField`
+    t =    31.56s         Checking existence of `"saved.capture.location.address" TextField`
+    t =    31.70s Tap "saved.capture.location.address" TextField
+    t =    31.70s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    31.70s     Find the "saved.capture.location.address" TextField
+    t =    31.84s     Check for interrupting elements affecting "saved.capture.location.address" TextField
+    t =    31.97s         Wait for com.apple.springboard to idle
+    t =    31.99s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    31.99s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    32.00s     Synthesize event
+    t =    32.29s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    32.29s Type 'Independently ente...' into "saved.capture.location.address" TextField
+    t =    32.29s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    32.30s     Find the "saved.capture.location.address" TextField
+    t =    32.42s     Check for interrupting elements affecting "saved.capture.location.address" TextField
+    t =    32.54s         Wait for com.apple.springboard to idle
+    t =    32.56s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    32.56s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    32.56s     Synthesize event
+    t =    33.25s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    33.26s Checking existence of `TextField (First Match)`
+    t =    33.40s Find the TextField (First Match)
+    t =    33.52s Checking existence of `Keyboard (First Match)`
+    t =    33.53s Find the Keyboard (First Match)
+    t =    33.55s Find the "saved.capture.link.label.FFA8C2B5-B58D-49C5-8C7F-2B26D3286ABE" TextField
+    t =    33.68s Waiting 5.0s for "saved.capture.link.label.FFA8C2B5-B58D-49C5-8C7F-2B26D3286ABE" TextField to exist
+    t =    34.70s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.link.label.FFA8C2B5-B58D-49C5-8C7F-2B26D3286ABE" TextField`
+    t =    34.70s         Checking existence of `"saved.capture.link.label.FFA8C2B5-B58D-49C5-8C7F-2B26D3286ABE" TextField`
+    t =    34.86s Tap "saved.capture.link.label.FFA8C2B5-B58D-49C5-8C7F-2B26D3286ABE" TextField
+    t =    34.86s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    34.86s     Find the "saved.capture.link.label.FFA8C2B5-B58D-49C5-8C7F-2B26D3286ABE" TextField
+    t =    34.99s     Check for interrupting elements affecting "saved.capture.link.label.FFA8C2B5-B58D-49C5-8C7F-2B26D3286ABE" TextField
+    t =    35.10s         Wait for com.apple.springboard to idle
+    t =    35.12s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    35.12s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    35.13s     Synthesize event
+    t =    35.42s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    35.42s Type 'My guide' into "saved.capture.link.label.FFA8C2B5-B58D-49C5-8C7F-2B26D3286ABE" TextField
+    t =    35.42s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    35.42s     Find the "saved.capture.link.label.FFA8C2B5-B58D-49C5-8C7F-2B26D3286ABE" TextField
+    t =    35.56s     Check for interrupting elements affecting "saved.capture.link.label.FFA8C2B5-B58D-49C5-8C7F-2B26D3286ABE" TextField
+    t =    35.67s         Wait for com.apple.springboard to idle
+    t =    35.69s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    35.69s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    35.70s     Synthesize event
+    t =    36.04s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    36.04s Tap "saved.capture.add" Button
+    t =    36.04s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    36.05s     Find the "saved.capture.add" Button
+    t =    36.19s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    36.30s         Wait for com.apple.springboard to idle
+    t =    36.32s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    36.32s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    36.33s     Synthesize event
+    t =    36.62s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    37.67s Waiting 10.0s for "Afternoon visit" StaticText to exist
+    t =    38.77s     Checking `Expect predicate `existsNoRetry == 1` for object "Afternoon visit" StaticText`
+    t =    38.77s         Checking existence of `"Afternoon visit" StaticText`
+    t =    38.91s Checking existence of `"My meeting point" StaticText`
+    t =    39.02s Checking existence of `"Independently entered address" StaticText`
+    t =    40.16s Checking `Expect predicate `value == "60 minutes"` for object "saved.item.estimate" Any`
+    t =    40.16s     Find the "saved.item.estimate" Any
+    t =    40.41s Waiting 5.0s for Any (First Match) to exist
+    t =    41.42s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    41.42s         Checking existence of `Any (First Match)`
+    t =    41.58s Find the Any (First Match)
+    t =    41.71s Find the "saved.item.link.554E7EF2-5546-42C9-93E0-6F26028A05FF" Link
+    t =    41.85s Find the "saved.item.link.554E7EF2-5546-42C9-93E0-6F26028A05FF" Link
+    t =    41.99s Find the Target Application 'org.example.PlannerMCPPrototype'
+    t =    42.18s Added attachment named 'Native capture owns subtitle estimate location and bookmark label'
+    t =    42.18s Terminate org.example.PlannerMCPPrototype:14110
+    t =    43.24s Open org.example.PlannerMCPPrototype
+    t =    43.24s     Launch org.example.PlannerMCPPrototype
+2026-10-13 23:35:31.270 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 23:35:31.270 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    43.45s         Setting up automation session
+    t =    45.77s         Wait for org.example.PlannerMCPPrototype to idle
+    t =    47.17s Tap "Inbox" Button
+    t =    47.17s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    47.17s     Find the "Inbox" Button
+    t =    47.29s     Check for interrupting elements affecting "tray" Button
+    t =    47.37s         Wait for com.apple.springboard to idle
+    t =    47.40s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    47.40s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    47.41s     Synthesize event
+    t =    47.71s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    49.25s Waiting 10.0s for Button (First Match) to exist
+    t =    50.26s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    50.26s         Checking existence of `Button (First Match)`
+    t =    50.38s Tap Button (First Match)
+    t =    50.38s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    50.40s     Find the Button (First Match)
+    t =    50.49s     Check for interrupting elements affecting "saved.item.A0450F3C-7951-4F2E-B600-14089A2660DB" Button
+    t =    50.56s         Wait for com.apple.springboard to idle
+    t =    50.58s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    50.58s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    50.58s     Synthesize event
+    t =    50.87s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    50.98s Waiting 5.0s for "Afternoon visit" StaticText to exist
+    t =    52.00s     Checking `Expect predicate `existsNoRetry == 1` for object "Afternoon visit" StaticText`
+    t =    52.00s         Checking existence of `"Afternoon visit" StaticText`
+    t =    53.15s Checking `Expect predicate `value == "60 minutes"` for object "saved.item.estimate" Other`
+    t =    53.15s     Find the "saved.item.estimate" Other
+    t =    53.39s Waiting 5.0s for "saved.item.link.554E7EF2-5546-42C9-93E0-6F26028A05FF" Any to exist
+    t =    54.42s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.item.link.554E7EF2-5546-42C9-93E0-6F26028A05FF" Any`
+    t =    54.42s         Checking existence of `"saved.item.link.554E7EF2-5546-42C9-93E0-6F26028A05FF" Any`
+    t =    54.68s Find the "saved.item.link.554E7EF2-5546-42C9-93E0-6F26028A05FF" Any
+    t =    55.13s Find the "saved.item.link.554E7EF2-5546-42C9-93E0-6F26028A05FF" Link
+    t =    55.39s Checking existence of `"My meeting point" StaticText`
+    t =    55.49s Checking existence of `"Independently entered address" StaticText`
+    t =    55.59s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedCaptureFieldsJourneyTests testOwnedCaptureFieldsAndLinkLabelPersistAfterRelaunch]' passed (55.885 seconds).
+Test Case '-[PlannerNavigationUITests.SavedCaptureFieldsJourneyTests testRemovingOnlyLinkDoesNotPromoteAutomaticTitleIntoOwnedText]' started.
+    t =     0.00s Start Test at 2026-10-13 23:35:43.914
+    t =     0.03s Set Up
+    t =     0.03s Open org.example.PlannerMCPPrototype
+    t =     0.03s     Launch org.example.PlannerMCPPrototype
+    t =     0.03s         Terminate org.example.PlannerMCPPrototype:14308
+2026-10-13 23:35:44.989 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 23:35:44.989 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.28s         Setting up automation session
+    t =     3.63s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.01s Tap "Items" Button
+    t =     5.01s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.01s     Find the "Items" Button
+    t =     5.16s     Check for interrupting elements affecting "square.stack" Button
+    t =     5.25s         Wait for com.apple.springboard to idle
+    t =     5.27s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     5.27s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     5.28s     Synthesize event
+    t =     5.58s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     7.12s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =     8.14s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =     8.14s         Checking existence of `"saved.capture.new" Button`
+    t =     8.25s Tap "saved.capture.new" Button
+    t =     8.25s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.26s     Find the "saved.capture.new" Button
+    t =     8.33s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =     8.40s         Wait for com.apple.springboard to idle
+    t =     8.42s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.42s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.42s     Synthesize event
+    t =     8.75s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.27s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    10.28s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    10.28s         Checking existence of `"saved.capture.input" TextField`
+    t =    10.38s Tap "saved.capture.input" TextField
+    t =    10.38s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.38s     Find the "saved.capture.input" TextField
+    t =    10.46s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    10.54s         Wait for com.apple.springboard to idle
+    t =    10.56s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    10.56s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    10.56s     Synthesize event
+    t =    10.86s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.02s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    11.02s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.40s     Find the "saved.capture.input" TextField
+    t =    11.54s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    11.65s         Wait for com.apple.springboard to idle
+    t =    11.67s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    11.67s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    11.68s     Synthesize event
+    t =    12.45s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.46s Tap "saved.capture.review" Button
+    t =    12.46s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.46s     Find the "saved.capture.review" Button
+    t =    12.59s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    12.68s         Wait for com.apple.springboard to idle
+    t =    12.70s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    12.70s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    12.71s     Synthesize event
+    t =    13.00s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.05s Checking `Expect predicate `value == "Saved link"` for object "saved.capture.title" TextField`
+    t =    14.05s     Find the "saved.capture.title" TextField
+    t =    14.19s Checking existence of `Any (First Match)`
+    t =    14.33s Get all elements bound by index for: Descendants matching type CollectionView
+    t =    14.41s Swipe up CollectionView (Element at index 1)
+    t =    14.41s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.42s     Find the CollectionView (Element at index 1)
+    t =    14.50s     Check for interrupting elements affecting "Sidebar" CollectionView
+    t =    14.58s         Wait for com.apple.springboard to idle
+    t =    14.60s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    14.60s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    14.60s     Synthesize event
+    t =    15.06s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.82s Checking existence of `Any (First Match)`
+    t =    15.91s Find the Any (First Match)
+    t =    16.00s Checking existence of `Keyboard (First Match)`
+    t =    16.15s Find the Window (First Match)
+    t =    16.16s Find the "saved.capture.link.actions.8517181B-2FD4-4E5F-A0DA-3514468F5374" Button
+    t =    16.24s Tap "saved.capture.link.actions.8517181B-2FD4-4E5F-A0DA-3514468F5374" Button
+    t =    16.24s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    16.25s     Find the "saved.capture.link.actions.8517181B-2FD4-4E5F-A0DA-3514468F5374" Button
+    t =    16.33s     Check for interrupting elements affecting "saved.capture.link.actions.8517181B-2FD4-4E5F-A0DA-3514468F5374" Button
+    t =    16.43s         Wait for com.apple.springboard to idle
+    t =    16.45s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    16.45s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    16.49s     Synthesize event
+    t =    16.93s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.94s Tap "Remove Link" Button
+    t =    17.94s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.94s     Find the "Remove Link" Button
+    t =    18.10s     Check for interrupting elements affecting "minus.circle" Button
+    t =    18.20s         Wait for com.apple.springboard to idle
+    t =    18.22s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    18.22s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    18.23s     Synthesize event
+    t =    18.53s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    19.99s Tap "saved.capture.add" Button
+    t =    19.99s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    19.99s     Find the "saved.capture.add" Button
+    t =    20.10s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    20.20s         Wait for com.apple.springboard to idle
+    t =    20.21s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    20.22s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    20.22s     Synthesize event
+    t =    20.51s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    21.22s Checking existence of `"saved.capture.title" TextField`
+    t =    21.35s Find the "saved.capture.title" TextField
+    t =    21.47s Get all elements bound by index for: Descendants matching type CollectionView
+    t =    21.58s Swipe down CollectionView (Element at index 1)
+    t =    21.58s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    21.58s     Find the CollectionView (Element at index 1)
+    t =    21.69s     Check for interrupting elements affecting "Sidebar" CollectionView
+    t =    21.80s         Wait for com.apple.springboard to idle
+    t =    21.82s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    21.82s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    21.82s     Synthesize event
+    t =    22.29s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.92s Checking existence of `"saved.capture.title" TextField`
+    t =    23.03s Find the "saved.capture.title" TextField
+    t =    23.16s Checking existence of `"saved.capture.title" TextField`
+    t =    23.30s Find the "saved.capture.title" TextField
+    t =    23.44s Checking existence of `"saved.capture.title" TextField`
+    t =    23.57s Find the "saved.capture.title" TextField
+    t =    23.70s Waiting 5.0s for "saved.capture.title" TextField to exist
+    t =    24.72s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.title" TextField`
+    t =    24.73s         Checking existence of `"saved.capture.title" TextField`
+    t =    25.87s Checking `Expect predicate `value == "" OR value == "Title"` for object "saved.capture.title" TextField`
+    t =    25.87s     Find the "saved.capture.title" TextField
+    t =    26.00s     Find the "saved.capture.title" TextField
+    t =    26.10s Find the "saved.capture.add" Button
+    t =    26.19s Tap "saved.capture.cancel" Button
+    t =    26.19s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    26.19s     Find the "saved.capture.cancel" Button
+    t =    26.28s     Check for interrupting elements affecting "saved.capture.cancel" Button
+    t =    26.36s         Wait for com.apple.springboard to idle
+    t =    26.38s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    26.38s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    26.38s     Synthesize event
+    t =    26.71s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    27.15s Waiting 10.0s for "No matching items" StaticText to exist
+    t =    28.17s     Checking `Expect predicate `existsNoRetry == 1` for object "No matching items" StaticText`
+    t =    28.17s         Checking existence of `"No matching items" StaticText`
+    t =    28.25s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedCaptureFieldsJourneyTests testRemovingOnlyLinkDoesNotPromoteAutomaticTitleIntoOwnedText]' passed (28.513 seconds).
+Test Suite 'SavedCaptureFieldsJourneyTests' passed at 2026-10-13 23:36:12.428.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 236.301 (236.315) seconds
+Test Suite 'SavedCaptureJourneyTests' started at 2026-10-13 23:36:12.429.
+Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testExactLinkReusePreservesDoneArchivedContentAndRememberedListWithoutDuplicates]' started.
+    t =     0.00s Start Test at 2026-10-13 23:36:12.430
+    t =     0.03s Set Up
+    t =     0.03s Open org.example.PlannerMCPPrototype
+    t =     0.03s     Launch org.example.PlannerMCPPrototype
+    t =     0.03s         Terminate org.example.PlannerMCPPrototype:14402
+2026-10-13 23:36:13.517 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 23:36:13.517 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.29s         Setting up automation session
+    t =     3.67s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.09s Waiting 3.0s for "saved.list.new" Button to exist
+    t =     6.11s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =     6.11s         Checking existence of `"saved.list.new" Button`
+    t =     6.28s         Capturing element debug description
+    t =     7.09s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =     7.09s         Checking existence of `"saved.list.new" Button`
+    t =     7.12s         Capturing element debug description
+    t =     8.09s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =     8.09s         Checking existence of `"saved.list.new" Button`
+    t =     8.13s         Capturing element debug description
+    t =     8.13s     Checking existence of `"saved.list.new" Button`
+    t =     8.15s Collecting debug information to assist test failure triage
+    t =     8.15s     Requesting snapshot of accessibility hierarchy for app with pid 14653
+    t =     8.18s Tap "Show Sidebar" Button
+    t =     8.18s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.19s     Find the "Show Sidebar" Button
+    t =     8.21s     Check for interrupting elements affecting "Show Sidebar" Button
+    t =     8.24s         Wait for com.apple.springboard to idle
+    t =     8.26s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.26s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.27s     Synthesize event
+    t =     8.56s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.35s Waiting 5.0s for "saved.list.new" Button to exist
+    t =    10.37s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =    10.37s         Checking existence of `"saved.list.new" Button`
+    t =    10.51s Tap "saved.list.new" Button
+    t =    10.51s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.51s     Find the "saved.list.new" Button
+    t =    10.56s     Check for interrupting elements affecting "saved.list.new" Button
+    t =    10.61s         Wait for com.apple.springboard to idle
+    t =    10.62s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    10.63s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    10.63s     Synthesize event
+    t =    10.93s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.47s Waiting 5.0s for "saved.list.name" TextField to exist
+    t =    12.48s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.name" TextField`
+    t =    12.48s         Checking existence of `"saved.list.name" TextField`
+    t =    12.57s Tap "saved.list.name" TextField
+    t =    12.57s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.58s     Find the "saved.list.name" TextField
+    t =    12.64s     Check for interrupting elements affecting "saved.list.name" TextField
+    t =    12.71s         Wait for com.apple.springboard to idle
+    t =    12.73s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    12.73s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    12.74s     Synthesize event
+    t =    13.04s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.28s Type 'Capture destination' into "saved.list.name" TextField
+    t =    13.28s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.65s     Find the "saved.list.name" TextField
+    t =    13.77s     Check for interrupting elements affecting "saved.list.name" TextField
+    t =    13.85s         Wait for com.apple.springboard to idle
+    t =    13.87s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    13.87s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    13.88s     Synthesize event
+    t =    14.40s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.41s Tap "saved.list.save" Button
+    t =    14.41s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.41s     Find the "saved.list.save" Button
+    t =    14.49s     Check for interrupting elements affecting "saved.list.save" Button
+    t =    14.57s         Wait for com.apple.springboard to idle
+    t =    14.59s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    14.59s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    14.59s     Synthesize event
+    t =    14.88s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.70s Waiting 10.0s for "No items" StaticText to exist
+    t =    16.71s     Checking `Expect predicate `existsNoRetry == 1` for object "No items" StaticText`
+    t =    16.71s         Checking existence of `"No items" StaticText`
+    t =    16.79s Tap "Items" Button
+    t =    16.79s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    16.79s     Find the "Items" Button
+    t =    16.81s     Check for interrupting elements affecting "square.stack" Button
+    t =    16.86s         Wait for com.apple.springboard to idle
+    t =    16.88s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    16.88s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    16.88s     Synthesize event
+    t =    17.18s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    18.48s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =    19.50s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =    19.50s         Checking existence of `"saved.capture.new" Button`
+    t =    19.59s Tap "saved.capture.new" Button
+    t =    19.59s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    19.59s     Find the "saved.capture.new" Button
+    t =    19.66s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =    19.72s         Wait for com.apple.springboard to idle
+    t =    19.74s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    19.74s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    19.75s     Synthesize event
+    t =    20.07s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    20.54s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    21.57s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    21.57s         Checking existence of `"saved.capture.input" TextField`
+    t =    21.69s Tap "saved.capture.input" TextField
+    t =    21.69s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    21.69s     Find the "saved.capture.input" TextField
+    t =    21.76s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    21.84s         Wait for com.apple.springboard to idle
+    t =    21.85s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    21.85s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    21.86s     Synthesize event
+    t =    22.15s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.47s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    22.47s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.48s     Find the "saved.capture.input" TextField
+    t =    22.62s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    22.72s         Wait for com.apple.springboard to idle
+    t =    22.75s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    22.75s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    22.75s     Synthesize event
+    t =    23.56s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    23.57s Tap "saved.capture.review" Button
+    t =    23.57s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    23.57s     Find the "saved.capture.review" Button
+    t =    23.68s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    23.77s         Wait for com.apple.springboard to idle
+    t =    23.80s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    23.80s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    23.80s     Synthesize event
+    t =    24.10s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    24.41s Waiting 10.0s for "saved.capture.title" TextField to exist
+    t =    25.43s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.title" TextField`
+    t =    25.43s         Checking existence of `"saved.capture.title" TextField`
+    t =    25.54s Tap "saved.capture.title" TextField
+    t =    25.54s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    25.54s     Find the "saved.capture.title" TextField
+    t =    25.63s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    25.71s         Wait for com.apple.springboard to idle
+    t =    25.73s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    25.73s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    25.74s     Synthesize event
+    t =    26.03s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    26.39s Find the "saved.capture.title" TextField
+    t =    26.51s Type 'Keep ori...' into "saved.capture.title" TextField
+    t =    26.51s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    26.51s     Find the "saved.capture.title" TextField
+    t =    26.62s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    26.73s         Wait for com.apple.springboard to idle
+    t =    26.75s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    26.75s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    26.76s     Synthesize event
+    t =    27.35s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    27.36s Tap "saved.capture.notes" TextField
+    t =    27.36s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    27.36s     Find the "saved.capture.notes" TextField
+    t =    27.50s     Check for interrupting elements affecting "saved.capture.notes" TextField
+    t =    27.61s         Wait for com.apple.springboard to idle
+    t =    27.64s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    27.64s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    27.64s     Synthesize event
+    t =    27.94s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    27.94s Type 'Owned original not...' into "saved.capture.notes" TextField
+    t =    27.94s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    27.95s     Find the "saved.capture.notes" TextField
+    t =    28.07s     Check for interrupting elements affecting "saved.capture.notes" TextField
+    t =    28.19s         Wait for com.apple.springboard to idle
+    t =    28.22s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    28.22s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    28.22s     Synthesize event
+    t =    28.77s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    28.77s Checking existence of `Any (First Match)`
+    t =    28.97s Swipe up Target Application 'org.example.PlannerMCPPrototype'
+    t =    28.97s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    28.97s     Find the Target Application 'org.example.PlannerMCPPrototype'
+    t =    29.08s     Check for interrupting elements affecting "Planner navigation prototype" Application
+    t =    29.20s         Wait for com.apple.springboard to idle
+    t =    29.22s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    29.22s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    29.23s     Synthesize event
+    t =    29.65s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    30.45s Checking existence of `Any (First Match)`
+    t =    30.60s Find the Any (First Match)
+    t =    30.75s Checking existence of `"saved.capture.list.486E1E9E-B2AB-4B1F-859E-09F3C4A74DFF" Switch`
+    t =    30.87s Find the "saved.capture.list.486E1E9E-B2AB-4B1F-859E-09F3C4A74DFF" Switch
+    t =    31.01s Checking existence of `"saved.capture.list.486E1E9E-B2AB-4B1F-859E-09F3C4A74DFF" Switch`
+    t =    31.13s Find the "saved.capture.list.486E1E9E-B2AB-4B1F-859E-09F3C4A74DFF" Switch
+    t =    32.29s Checking `Expect predicate `value == 0 OR value == "0"` for object "saved.capture.list.486E1E9E-B2AB-4B1F-859E-09F3C4A74DFF" Switch`
+    t =    32.29s     Find the "saved.capture.list.486E1E9E-B2AB-4B1F-859E-09F3C4A74DFF" Switch
+    t =    32.45s     Find the "saved.capture.list.486E1E9E-B2AB-4B1F-859E-09F3C4A74DFF" Switch
+    t =    32.59s Tap Switch (First Match)
+    t =    32.59s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    32.59s     Find the Switch (First Match)
+    t =    32.72s     Check for interrupting elements affecting "0" Switch
+    t =    32.83s         Wait for com.apple.springboard to idle
+    t =    32.85s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    32.85s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    32.87s     Synthesize event
+    t =    33.16s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    35.50s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.capture.list.486E1E9E-B2AB-4B1F-859E-09F3C4A74DFF" Switch`
+    t =    35.50s     Find the "saved.capture.list.486E1E9E-B2AB-4B1F-859E-09F3C4A74DFF" Switch
+    t =    35.66s     Find the "saved.capture.list.486E1E9E-B2AB-4B1F-859E-09F3C4A74DFF" Switch
+    t =    35.78s Find the Target Application 'org.example.PlannerMCPPrototype'
+    t =    36.01s Added attachment named 'Native capture review selects a live List destination'
+    t =    36.01s Tap "saved.capture.add" Button
+    t =    36.01s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    36.01s     Find the "saved.capture.add" Button
+    t =    36.15s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    36.27s         Wait for com.apple.springboard to idle
+    t =    36.29s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    36.29s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    36.29s     Synthesize event
+    t =    36.59s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    37.46s Waiting 10.0s for "Owned original notes" StaticText to exist
+    t =    38.48s     Checking `Expect predicate `existsNoRetry == 1` for object "Owned original notes" StaticText`
+    t =    38.48s         Checking existence of `"Owned original notes" StaticText`
+    t =    39.62s Checking `Expect predicate `value == 0 OR value == "0"` for object "saved.item.completion" Any`
+    t =    39.62s     Find the "saved.item.completion" Any
+    t =    39.84s     Find the "saved.item.completion" Switch
+    t =    40.05s Tap Switch (First Match)
+    t =    40.05s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    40.06s     Find the Switch (First Match)
+    t =    40.30s     Check for interrupting elements affecting "0" Switch
+    t =    40.39s         Wait for com.apple.springboard to idle
+    t =    40.41s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    40.41s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    40.44s     Synthesize event
+    t =    40.73s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    43.08s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.item.completion" Switch`
+    t =    43.08s     Find the "saved.item.completion" Switch
+    t =    43.34s     Find the "saved.item.completion" Switch
+    t =    43.54s Tap "saved.item.actions" Button
+    t =    43.54s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    43.55s     Find the "saved.item.actions" Button
+    t =    43.64s     Check for interrupting elements affecting "saved.item.actions" Button
+    t =    43.72s         Wait for com.apple.springboard to idle
+    t =    43.74s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    43.74s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    43.74s     Synthesize event
+    t =    44.04s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    44.86s Tap "Archive Item" Button
+    t =    44.86s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    44.86s     Find the "Archive Item" Button
+    t =    44.98s     Check for interrupting elements affecting "Archive Item" Button
+    t =    45.07s         Wait for com.apple.springboard to idle
+    t =    45.09s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    45.09s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    45.10s     Synthesize event
+    t =    45.40s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    46.47s Waiting 10.0s for "Archived" StaticText to exist
+    t =    47.49s     Checking `Expect predicate `existsNoRetry == 1` for object "Archived" StaticText`
+    t =    47.49s         Checking existence of `"Archived" StaticText`
+    t =    47.65s Find the Any (First Match)
+    t =    47.78s Terminate org.example.PlannerMCPPrototype:14653
+    t =    48.81s Open org.example.PlannerMCPPrototype
+    t =    48.81s     Launch org.example.PlannerMCPPrototype
+2026-10-13 23:37:01.243 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 23:37:01.243 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    49.02s         Setting up automation session
+    t =    51.76s         Wait for org.example.PlannerMCPPrototype to idle
+    t =    53.22s Tap "Items" Button
+    t =    53.22s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    53.22s     Find the "Items" Button
+    t =    53.38s     Check for interrupting elements affecting "square.stack" Button
+    t =    53.46s         Wait for com.apple.springboard to idle
+    t =    53.48s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    53.48s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    53.49s     Synthesize event
+    t =    53.78s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    55.18s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =    56.20s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =    56.20s         Checking existence of `"saved.capture.new" Button`
+    t =    56.33s Tap "saved.capture.new" Button
+    t =    56.33s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    56.34s     Find the "saved.capture.new" Button
+    t =    56.40s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =    56.47s         Wait for com.apple.springboard to idle
+    t =    56.49s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    56.49s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    56.49s     Synthesize event
+    t =    56.82s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    57.34s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    58.35s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    58.35s         Checking existence of `"saved.capture.input" TextField`
+    t =    58.46s Tap "saved.capture.input" TextField
+    t =    58.46s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    58.46s     Find the "saved.capture.input" TextField
+    t =    58.55s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    58.64s         Wait for com.apple.springboard to idle
+    t =    58.66s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    58.66s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    58.66s     Synthesize event
+    t =    58.96s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    59.26s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    59.26s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    59.61s     Find the "saved.capture.input" TextField
+    t =    59.76s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    59.87s         Wait for com.apple.springboard to idle
+    t =    59.89s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    59.90s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    59.90s     Synthesize event
+    t =    60.71s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    60.72s Tap "saved.capture.review" Button
+    t =    60.72s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    60.73s     Find the "saved.capture.review" Button
+    t =    60.94s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    61.30s         Wait for com.apple.springboard to idle
+    t =    61.34s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    61.36s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    61.37s     Synthesize event
+    t =    61.67s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    61.93s Waiting 10.0s for "saved.capture.choice" Button to exist
+    t =    62.94s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.choice" Button`
+    t =    62.94s         Checking existence of `"saved.capture.choice" Button`
+    t =    63.15s Find the "saved.capture.choice" Button
+    t =    63.25s Checking existence of `"saved.capture.title" TextField`
+    t =    64.36s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.capture.list.486E1E9E-B2AB-4B1F-859E-09F3C4A74DFF" Any`
+    t =    64.36s     Find the "saved.capture.list.486E1E9E-B2AB-4B1F-859E-09F3C4A74DFF" Any
+    t =    64.46s     Find the "saved.capture.list.486E1E9E-B2AB-4B1F-859E-09F3C4A74DFF" Switch
+    t =    64.54s Tap "saved.capture.add" Button
+    t =    64.54s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    64.54s     Find the "saved.capture.add" Button
+    t =    64.62s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    64.70s         Wait for com.apple.springboard to idle
+    t =    64.72s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    64.72s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    64.72s     Synthesize event
+    t =    65.02s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    65.75s Waiting 10.0s for "Owned original notes" StaticText to exist
+    t =    66.76s     Checking `Expect predicate `existsNoRetry == 1` for object "Owned original notes" StaticText`
+    t =    66.76s         Checking existence of `"Owned original notes" StaticText`
+    t =    67.89s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.item.completion" Switch`
+    t =    67.89s     Find the "saved.item.completion" Switch
+    t =    68.12s     Find the "saved.item.completion" Switch
+    t =    68.33s Checking existence of `"Archived" StaticText`
+    t =    68.46s Checking existence of `"saved.item.link.16D32AAA-6F6A-4C4E-A810-1DECE599F511" Any`
+    t =    68.68s Get number of matches for: Elements matching predicate 'identifier BEGINSWITH "saved.item.link."'
+    t =    68.76s Terminate org.example.PlannerMCPPrototype:14886
+    t =    69.80s Open org.example.PlannerMCPPrototype
+    t =    69.80s     Launch org.example.PlannerMCPPrototype
+2026-10-13 23:37:22.237 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 23:37:22.237 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    70.02s         Setting up automation session
+    t =    72.60s         Wait for org.example.PlannerMCPPrototype to idle
+    t =    74.00s Tap "Items" Button
+    t =    74.00s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    74.00s     Find the "Items" Button
+    t =    74.10s     Check for interrupting elements affecting "square.stack" Button
+    t =    74.19s         Wait for com.apple.springboard to idle
+    t =    74.22s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    74.22s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    74.25s     Synthesize event
+    t =    74.58s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    76.78s Tap "saved.items.filters" Button
+    t =    76.78s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    76.80s     Find the "saved.items.filters" Button
+    t =    76.92s     Check for interrupting elements affecting "saved.items.filters" Button
+    t =    76.99s         Wait for com.apple.springboard to idle
+    t =    77.07s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    77.07s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    77.08s     Synthesize event
+    t =    77.40s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    78.68s Tap "Clear Filters" Button
+    t =    78.68s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    78.69s     Find the "Clear Filters" Button
+    t =    78.79s     Check for interrupting elements affecting "saved.filters.clear" Button
+    t =    78.87s         Wait for com.apple.springboard to idle
+    t =    78.90s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    78.90s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    78.91s     Synthesize event
+    t =    79.22s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    79.97s Tap "saved.filters.done" Button
+    t =    79.97s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    79.98s     Find the "saved.filters.done" Button
+    t =    80.11s     Check for interrupting elements affecting "saved.filters.done" Button
+    t =    80.16s         Wait for com.apple.springboard to idle
+    t =    80.18s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    80.18s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    80.19s     Synthesize event
+    t =    80.48s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    81.58s Waiting 10.0s for Button (First Match) to exist
+    t =    82.60s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    82.60s         Checking existence of `Button (First Match)`
+    t =    82.71s Get number of matches for: Elements matching predicate 'identifier MATCHES "saved\\.item\\.[0-9A-Fa-f-]{36}"'
+    t =    82.78s Tap Button (First Match)
+    t =    82.78s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    82.78s     Find the Button (First Match)
+    t =    82.92s     Check for interrupting elements affecting "saved.item.631C23DE-805E-4989-86AF-E51BBCAE5A1C" Button
+    t =    83.02s         Wait for com.apple.springboard to idle
+    t =    83.08s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    83.09s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    83.10s     Synthesize event
+    t =    83.42s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    83.61s Waiting 5.0s for "saved.item.link.16D32AAA-6F6A-4C4E-A810-1DECE599F511" Any to exist
+    t =    84.62s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.item.link.16D32AAA-6F6A-4C4E-A810-1DECE599F511" Any`
+    t =    84.62s         Checking existence of `"saved.item.link.16D32AAA-6F6A-4C4E-A810-1DECE599F511" Any`
+    t =    84.84s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testExactLinkReusePreservesDoneArchivedContentAndRememberedListWithoutDuplicates]' passed (85.207 seconds).
+Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem]' started.
+    t =     0.00s Start Test at 2026-10-13 23:37:37.638
+    t =     0.03s Set Up
+    t =     0.03s Open org.example.PlannerMCPPrototype
+    t =     0.03s     Launch org.example.PlannerMCPPrototype
+    t =     0.03s         Terminate org.example.PlannerMCPPrototype:14989
+2026-10-13 23:37:38.726 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 23:37:38.726 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.30s         Setting up automation session
+    t =     3.97s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.38s Tap "Items" Button
+    t =     5.38s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.41s     Find the "Items" Button
+    t =     5.54s     Check for interrupting elements affecting "square.stack" Button
+    t =     5.63s         Wait for com.apple.springboard to idle
+    t =     5.65s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     5.65s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     5.66s     Synthesize event
+    t =     5.95s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     7.44s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =     8.44s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =     8.44s         Checking existence of `"saved.capture.new" Button`
+    t =     8.61s Tap "saved.capture.new" Button
+    t =     8.61s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.61s     Find the "saved.capture.new" Button
+    t =     8.68s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =     8.75s         Wait for com.apple.springboard to idle
+    t =     8.77s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.77s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.78s     Synthesize event
+    t =     9.10s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.67s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    10.70s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    10.70s         Checking existence of `"saved.capture.input" TextField`
+    t =    10.83s Tap "saved.capture.input" TextField
+    t =    10.83s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.84s     Find the "saved.capture.input" TextField
+    t =    10.91s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    10.99s         Wait for com.apple.springboard to idle
+    t =    11.00s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    11.01s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    11.01s     Synthesize event
+    t =    11.30s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.48s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    11.48s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.84s     Find the "saved.capture.input" TextField
+    t =    11.98s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    12.10s         Wait for com.apple.springboard to idle
+    t =    12.12s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    12.12s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    12.12s     Synthesize event
+    t =    13.01s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.01s Tap "saved.capture.review" Button
+    t =    13.01s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.02s     Find the "saved.capture.review" Button
+    t =    13.12s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    13.21s         Wait for com.apple.springboard to idle
+    t =    13.24s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    13.24s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    13.24s     Synthesize event
+    t =    13.54s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.61s Waiting 10.0s for "saved.capture.title" TextField to exist
+    t =    14.64s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.title" TextField`
+    t =    14.65s         Checking existence of `"saved.capture.title" TextField`
+    t =    14.81s Find the "saved.capture.title" TextField
+    t =    14.91s Tap "saved.capture.title" TextField
+    t =    14.91s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.91s     Find the "saved.capture.title" TextField
+    t =    15.00s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    15.09s         Wait for com.apple.springboard to idle
+    t =    15.11s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    15.11s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    15.11s     Synthesize event
+    t =    15.40s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.49s Find the "saved.capture.title" TextField
+    t =    15.67s Type 'Cancelle...' into "saved.capture.title" TextField
+    t =    15.67s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.86s     Find the "saved.capture.title" TextField
+    t =    16.00s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    16.13s         Wait for com.apple.springboard to idle
+    t =    16.15s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    16.16s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    16.17s     Synthesize event
+    t =    16.82s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    16.83s Tap "saved.capture.cancel" Button
+    t =    16.83s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    16.84s     Find the "saved.capture.cancel" Button
+    t =    16.97s     Check for interrupting elements affecting "saved.capture.cancel" Button
+    t =    17.08s         Wait for com.apple.springboard to idle
+    t =    17.10s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    17.10s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    17.10s     Synthesize event
+    t =    17.40s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.92s Waiting 10.0s for "No matching items" StaticText to exist
+    t =    18.94s     Checking `Expect predicate `existsNoRetry == 1` for object "No matching items" StaticText`
+    t =    18.94s         Checking existence of `"No matching items" StaticText`
+    t =    19.03s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =    20.04s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =    20.04s         Checking existence of `"saved.capture.new" Button`
+    t =    20.11s Tap "saved.capture.new" Button
+    t =    20.11s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    20.11s     Find the "saved.capture.new" Button
+    t =    20.18s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =    20.25s         Wait for com.apple.springboard to idle
+    t =    20.27s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    20.27s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    20.27s     Synthesize event
+    t =    20.59s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    21.04s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    22.06s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    22.06s         Checking existence of `"saved.capture.input" TextField`
+    t =    22.16s Tap "saved.capture.input" TextField
+    t =    22.16s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.16s     Find the "saved.capture.input" TextField
+    t =    22.25s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    22.34s         Wait for com.apple.springboard to idle
+    t =    22.36s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    22.36s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    22.37s     Synthesize event
+    t =    22.66s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.98s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    22.98s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.98s     Find the "saved.capture.input" TextField
+    t =    23.10s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    23.20s         Wait for com.apple.springboard to idle
+    t =    23.22s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    23.22s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    23.23s     Synthesize event
+    t =    24.11s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    24.12s Tap "saved.capture.review" Button
+    t =    24.12s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    24.13s     Find the "saved.capture.review" Button
+    t =    24.24s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    24.34s         Wait for com.apple.springboard to idle
+    t =    24.36s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    24.36s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    24.36s     Synthesize event
+    t =    24.65s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    24.96s Waiting 10.0s for "saved.capture.title" TextField to exist
+    t =    25.98s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.title" TextField`
+    t =    25.98s         Checking existence of `"saved.capture.title" TextField`
+    t =    26.11s Tap "saved.capture.title" TextField
+    t =    26.11s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    26.11s     Find the "saved.capture.title" TextField
+    t =    26.21s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    26.29s         Wait for com.apple.springboard to idle
+    t =    26.31s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    26.31s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    26.32s     Synthesize event
+    t =    26.61s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    26.95s Find the "saved.capture.title" TextField
+    t =    27.10s Type 'Museum c...' into "saved.capture.title" TextField
+    t =    27.10s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    27.10s     Find the "saved.capture.title" TextField
+    t =    27.21s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    27.32s         Wait for com.apple.springboard to idle
+    t =    27.34s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    27.34s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    27.34s     Synthesize event
+    t =    27.95s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    27.95s Tap "saved.capture.notes" TextField
+    t =    27.95s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    27.95s     Find the "saved.capture.notes" TextField
+    t =    28.08s     Check for interrupting elements affecting "saved.capture.notes" TextField
+    t =    28.19s         Wait for com.apple.springboard to idle
+    t =    28.22s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    28.22s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    28.22s     Synthesize event
+    t =    28.51s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    28.51s Type 'Bring the museum p...' into "saved.capture.notes" TextField
+    t =    28.51s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    28.51s     Find the "saved.capture.notes" TextField
+    t =    28.63s     Check for interrupting elements affecting "saved.capture.notes" TextField
+    t =    28.74s         Wait for com.apple.springboard to idle
+    t =    28.76s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    28.76s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    28.76s     Synthesize event
+    t =    29.32s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    29.33s Tap "saved.capture.add" Button
+    t =    29.33s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    29.33s     Find the "saved.capture.add" Button
+    t =    29.47s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    29.60s         Wait for com.apple.springboard to idle
+    t =    29.62s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    29.62s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    29.63s     Synthesize event
+    t =    29.93s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    30.83s Waiting 10.0s for "Bring the museum pass" StaticText to exist
+    t =    31.86s     Checking `Expect predicate `existsNoRetry == 1` for object "Bring the museum pass" StaticText`
+    t =    31.86s         Checking existence of `"Bring the museum pass" StaticText`
+    t =    31.98s Waiting 5.0s for Any (First Match) to exist
+    t =    33.01s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    33.02s         Checking existence of `Any (First Match)`
+    t =    33.18s Find the Any (First Match)
+    t =    33.32s Find the "saved.item.link.EFBE74CF-2375-4606-BDAB-FEB8109455CB" Link
+    t =    33.45s Find the Target Application 'org.example.PlannerMCPPrototype'
+    t =    33.67s Added attachment named 'Reviewed native capture saves owned notes and original link'
+    t =    33.67s Terminate org.example.PlannerMCPPrototype:15076
+    t =    34.73s Open org.example.PlannerMCPPrototype
+    t =    34.74s     Launch org.example.PlannerMCPPrototype
+2026-10-13 23:38:12.376 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 23:38:12.376 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    34.96s         Setting up automation session
+    t =    37.67s         Wait for org.example.PlannerMCPPrototype to idle
+    t =    39.06s Tap "Inbox" Button
+    t =    39.06s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    39.07s     Find the "Inbox" Button
+    t =    39.17s     Check for interrupting elements affecting "tray" Button
+    t =    39.25s         Wait for com.apple.springboard to idle
+    t =    39.27s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    39.27s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    39.28s     Synthesize event
+    t =    39.57s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    41.04s Waiting 10.0s for Button (First Match) to exist
+    t =    42.05s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    42.05s         Checking existence of `Button (First Match)`
+    t =    42.19s Get number of matches for: Elements matching predicate '(identifier BEGINSWITH "saved.item." OR identifier BEGINSWITH "saved.appearance.") AND label == "Museum capture"'
+    t =    42.27s Get number of matches for: Elements matching predicate '(identifier BEGINSWITH "saved.item." OR identifier BEGINSWITH "saved.appearance.") AND label == "Cancelled capture"'
+    t =    42.35s Tap Button (First Match)
+    t =    42.35s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    42.37s     Find the Button (First Match)
+    t =    42.46s     Check for interrupting elements affecting "saved.item.5B83AD19-1A5E-48A7-9E20-CCD613A7F289" Button
+    t =    42.53s         Wait for com.apple.springboard to idle
+    t =    42.55s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    42.55s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    42.56s     Synthesize event
+    t =    42.89s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    42.98s Waiting 5.0s for "Bring the museum pass" StaticText to exist
+    t =    43.99s     Checking `Expect predicate `existsNoRetry == 1` for object "Bring the museum pass" StaticText`
+    t =    43.99s         Checking existence of `"Bring the museum pass" StaticText`
+    t =    44.14s Waiting 5.0s for "saved.item.link.EFBE74CF-2375-4606-BDAB-FEB8109455CB" Any to exist
+    t =    45.15s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.item.link.EFBE74CF-2375-4606-BDAB-FEB8109455CB" Any`
+    t =    45.16s         Checking existence of `"saved.item.link.EFBE74CF-2375-4606-BDAB-FEB8109455CB" Any`
+    t =    45.38s Find the "saved.item.link.EFBE74CF-2375-4606-BDAB-FEB8109455CB" Any
+    t =    45.57s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem]' passed (45.871 seconds).
+Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testUntouchedSavedLinkDraftCanBeAddedWithoutAnEmptyEdit]' started.
+    t =     0.00s Start Test at 2026-10-13 23:38:23.510
+    t =     0.03s Set Up
+    t =     0.03s Open org.example.PlannerMCPPrototype
+    t =     0.03s     Launch org.example.PlannerMCPPrototype
+    t =     0.03s         Terminate org.example.PlannerMCPPrototype:15302
+2026-10-13 23:38:24.591 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 23:38:24.591 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.29s         Setting up automation session
+    t =     3.61s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.08s Tap "Items" Button
+    t =     5.08s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.09s     Find the "Items" Button
+    t =     5.19s     Check for interrupting elements affecting "square.stack" Button
+    t =     5.27s         Wait for com.apple.springboard to idle
+    t =     5.29s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     5.29s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     5.30s     Synthesize event
+    t =     5.59s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     6.99s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =     8.00s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =     8.00s         Checking existence of `"saved.capture.new" Button`
+    t =     8.12s Tap "saved.capture.new" Button
+    t =     8.12s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.13s     Find the "saved.capture.new" Button
+    t =     8.20s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =     8.27s         Wait for com.apple.springboard to idle
+    t =     8.29s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.29s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.29s     Synthesize event
+    t =     8.61s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.14s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    10.17s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    10.17s         Checking existence of `"saved.capture.input" TextField`
+    t =    10.28s Tap "saved.capture.input" TextField
+    t =    10.28s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.28s     Find the "saved.capture.input" TextField
+    t =    10.37s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    10.44s         Wait for com.apple.springboard to idle
+    t =    10.46s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    10.46s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    10.46s     Synthesize event
+    t =    10.75s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.93s Type 'https://example.co...' into "saved.capture.input" TextField
+    t =    10.93s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.31s     Find the "saved.capture.input" TextField
+    t =    11.43s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    11.53s         Wait for com.apple.springboard to idle
+    t =    11.55s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    11.55s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    11.55s     Synthesize event
+    t =    12.48s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.48s Tap "saved.capture.review" Button
+    t =    12.49s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.49s     Find the "saved.capture.review" Button
+    t =    12.62s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    12.71s         Wait for com.apple.springboard to idle
+    t =    12.73s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    12.74s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    12.74s     Synthesize event
+    t =    13.03s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.05s Waiting 10.0s for "saved.capture.title" TextField to exist
+    t =    14.07s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.title" TextField`
+    t =    14.07s         Checking existence of `"saved.capture.title" TextField`
+    t =    14.20s Find the "saved.capture.title" TextField
+    t =    14.29s Tap "saved.capture.add" Button
+    t =    14.29s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.30s     Find the "saved.capture.add" Button
+    t =    14.39s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    14.47s         Wait for com.apple.springboard to idle
+    t =    14.49s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    14.50s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    14.50s     Synthesize event
+    t =    14.79s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.59s Waiting 10.0s for "saved.item.actions" Button to exist
+    t =    16.60s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.item.actions" Button`
+    t =    16.60s         Checking existence of `"saved.item.actions" Button`
+    t =    16.73s Waiting 5.0s for Any (First Match) to exist
+    t =    17.74s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    17.74s         Checking existence of `Any (First Match)`
+    t =    17.87s Find the Any (First Match)
+    t =    17.99s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testUntouchedSavedLinkDraftCanBeAddedWithoutAnEmptyEdit]' passed (18.281 seconds).
+Test Suite 'SavedCaptureJourneyTests' passed at 2026-10-13 23:38:41.791.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 149.359 (149.362) seconds
+Test Suite 'SavedCaptureTextJourneyTests' started at 2026-10-13 23:38:41.791.
+Test Case '-[PlannerNavigationUITests.SavedCaptureTextJourneyTests testPlainTextReviewPreservesItsTitleAndNotesWithoutInventingLinks]' started.
+    t =     0.00s Start Test at 2026-10-13 23:38:41.793
+    t =     0.03s Set Up
+    t =     0.03s Open org.example.PlannerMCPPrototype
+    t =     0.03s     Launch org.example.PlannerMCPPrototype
+    t =     0.03s         Terminate org.example.PlannerMCPPrototype:15387
+2026-10-13 23:38:42.871 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 23:38:42.871 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.29s         Setting up automation session
+    t =     3.71s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.20s Tap "Items" Button
+    t =     5.20s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.21s     Find the "Items" Button
+    t =     5.31s     Check for interrupting elements affecting "square.stack" Button
+    t =     5.38s         Wait for com.apple.springboard to idle
+    t =     5.40s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     5.40s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     5.40s     Synthesize event
+    t =     5.69s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     7.04s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =     8.06s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =     8.06s         Checking existence of `"saved.capture.new" Button`
+    t =     8.15s Tap "saved.capture.new" Button
+    t =     8.15s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.15s     Find the "saved.capture.new" Button
+    t =     8.22s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =     8.28s         Wait for com.apple.springboard to idle
+    t =     8.29s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.29s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.30s     Synthesize event
+    t =     8.62s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.10s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    10.12s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    10.12s         Checking existence of `"saved.capture.input" TextField`
+    t =    10.22s Tap "saved.capture.input" TextField
+    t =    10.22s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.22s     Find the "saved.capture.input" TextField
+    t =    10.31s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    10.49s         Wait for com.apple.springboard to idle
+    t =    10.52s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    10.52s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    10.53s     Synthesize event
+    t =    10.83s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.14s Type 'Picnic idea
+Bring ...' into "saved.capture.input" TextField
+    t =    11.14s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.48s     Find the "saved.capture.input" TextField
+    t =    11.67s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    11.78s         Wait for com.apple.springboard to idle
+    t =    11.80s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    11.80s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    11.81s     Synthesize event
+    t =    12.39s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.40s Tap "saved.capture.review" Button
+    t =    12.40s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.40s     Find the "saved.capture.review" Button
+    t =    12.52s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    12.62s         Wait for com.apple.springboard to idle
+    t =    12.64s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    12.64s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    12.65s     Synthesize event
+    t =    12.94s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.00s Waiting 10.0s for "saved.capture.title" TextField to exist
+    t =    14.02s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.title" TextField`
+    t =    14.02s         Checking existence of `"saved.capture.title" TextField`
+    t =    14.15s Find the "saved.capture.title" TextField
+    t =    14.23s Find the "saved.capture.notes" TextField
+    t =    14.32s Tap "saved.capture.add" Button
+    t =    14.32s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.32s     Find the "saved.capture.add" Button
+    t =    14.40s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    14.49s         Wait for com.apple.springboard to idle
+    t =    14.50s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    14.51s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    14.51s     Synthesize event
+    t =    14.80s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.51s Waiting 10.0s for "Bring lunch" StaticText to exist
+    t =    16.52s     Checking `Expect predicate `existsNoRetry == 1` for object "Bring lunch" StaticText`
+    t =    16.52s         Checking existence of `"Bring lunch" StaticText`
+    t =    16.63s Get number of matches for: Elements matching predicate 'identifier BEGINSWITH "saved.item.link."'
+    t =    16.73s Find the Target Application 'org.example.PlannerMCPPrototype'
+    t =    16.91s Added attachment named 'Native plain text capture keeps independently supplied content'
+    t =    16.91s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedCaptureTextJourneyTests testPlainTextReviewPreservesItsTitleAndNotesWithoutInventingLinks]' passed (17.137 seconds).
+Test Suite 'SavedCaptureTextJourneyTests' passed at 2026-10-13 23:38:58.930.
+	 Executed 1 test, with 0 failures (0 unexpected) in 17.137 (17.138) seconds
+Test Suite 'SavedListCaptureJourneyTests' started at 2026-10-13 23:38:58.932.
+Test Case '-[PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch]' started.
+    t =     0.00s Start Test at 2026-10-13 23:38:58.933
+    t =     0.02s Set Up
+    t =     0.03s Open org.example.PlannerMCPPrototype
+    t =     0.03s     Launch org.example.PlannerMCPPrototype
+    t =     0.03s         Terminate org.example.PlannerMCPPrototype:15476
+2026-10-13 23:39:00.014 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 23:39:00.014 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.29s         Setting up automation session
+    t =     3.92s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.32s Waiting 3.0s for "saved.list.new" Button to exist
+    t =     6.33s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =     6.33s         Checking existence of `"saved.list.new" Button`
+    t =     6.48s         Capturing element debug description
+    t =     7.40s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =     7.40s         Checking existence of `"saved.list.new" Button`
+    t =     7.43s         Capturing element debug description
+    t =     8.32s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =     8.32s         Checking existence of `"saved.list.new" Button`
+    t =     8.36s         Capturing element debug description
+    t =     8.36s     Checking existence of `"saved.list.new" Button`
+    t =     8.38s Collecting debug information to assist test failure triage
+    t =     8.38s     Requesting snapshot of accessibility hierarchy for app with pid 15586
+    t =     8.41s Checking existence of `"Show Sidebar" Button`
+    t =     8.44s Tap "Show Sidebar" Button
+    t =     8.44s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.44s     Find the "Show Sidebar" Button
+    t =     8.47s     Check for interrupting elements affecting "Show Sidebar" Button
+    t =     8.50s         Wait for com.apple.springboard to idle
+    t =     8.52s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.52s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.52s     Synthesize event
+    t =     8.83s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.64s Waiting 5.0s for "saved.list.new" Button to exist
+    t =    10.66s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =    10.66s         Checking existence of `"saved.list.new" Button`
+    t =    10.83s Tap "saved.list.new" Button
+    t =    10.83s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.83s     Find the "saved.list.new" Button
+    t =    10.88s     Check for interrupting elements affecting "saved.list.new" Button
+    t =    10.93s         Wait for com.apple.springboard to idle
+    t =    10.95s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    10.95s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    10.95s     Synthesize event
+    t =    11.26s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.88s Waiting 5.0s for "saved.list.name" TextField to exist
+    t =    12.89s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.name" TextField`
+    t =    12.89s         Checking existence of `"saved.list.name" TextField`
+    t =    12.99s Tap "saved.list.name" TextField
+    t =    12.99s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.99s     Find the "saved.list.name" TextField
+    t =    13.05s     Check for interrupting elements affecting "saved.list.name" TextField
+    t =    13.11s         Wait for com.apple.springboard to idle
+    t =    13.12s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    13.13s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    13.13s     Synthesize event
+    t =    13.42s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.66s Type 'Weekend' into "saved.list.name" TextField
+    t =    13.66s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.04s     Find the "saved.list.name" TextField
+    t =    14.15s     Check for interrupting elements affecting "saved.list.name" TextField
+    t =    14.23s         Wait for com.apple.springboard to idle
+    t =    14.25s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    14.25s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    14.26s     Synthesize event
+    t =    14.58s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.58s Tap "saved.list.save" Button
+    t =    14.58s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.59s     Find the "saved.list.save" Button
+    t =    14.69s     Check for interrupting elements affecting "saved.list.save" Button
+    t =    14.79s         Wait for com.apple.springboard to idle
+    t =    14.83s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    14.83s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    14.83s     Synthesize event
+    t =    15.14s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    16.01s Waiting 10.0s for "No items" StaticText to exist
+    t =    17.04s     Checking `Expect predicate `existsNoRetry == 1` for object "No items" StaticText`
+    t =    17.04s         Checking existence of `"No items" StaticText`
+    t =    17.10s Tap "saved.list.actions" Button
+    t =    17.10s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    17.11s     Find the "saved.list.actions" Button
+    t =    18.16s         Find the "saved.list.actions" Button (retry 1)
+    t =    19.22s         Find the "saved.list.actions" Button (retry 2)
+    t =    19.29s Requesting snapshot of accessibility hierarchy for app with pid 15586
+/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/NativeNavigationElements.swift:289: error: -[PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch] : Failed to tap "saved.list.actions" Button: No matches found for Elements matching predicate '"saved.list.actions" IN identifiers' from input {(
+    Button, identifier: 'list.bullet', label: 'Lists', Selected,
+    Button, identifier: 'square.stack', label: 'Items',
+    Button, identifier: 'tray', label: 'Inbox',
+    Button, identifier: 'calendar', label: 'Calendar',
+    Button, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries',
+    Button, identifier: 'list.bullet', label: 'Lists', Selected,
+    Button, identifier: 'square.stack', label: 'Items',
+    Button, identifier: 'tray', label: 'Inbox',
+    Button, identifier: 'calendar', label: 'Calendar',
+    Button, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries',
+    Button, label: 'Show Sidebar',
+    Button, identifier: 'saved.list.filters', label: 'All',
+    Button, identifier: 'saved.list.sort', label: 'Sort: Manual',
+    Button, identifier: 'saved.list.edit', label: 'Edit', Disabled,
+    Button, identifier: 'OverflowBarButtonItem', label: 'More'
+)}
+Possibly caused by runtime issues:
+Automation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {
+    "XC_kAXXCAttributeAutomationType" = 75;
+    "XC_kAXXCAttributeElementBaseType" = "_UIFloatingTabBarItemCell";
+    "XC_kAXXCAttributeElementType" = "_UIFloatingTabBarItemCell";
+    "XC_kAXXCAttributeTraits" = 146297323520;
+}
+Automation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {
+    "XC_kAXXCAttributeAutomationType" = 75;
+    "XC_kAXXCAttributeElementBaseType" = "_UIFloatingTabBarItemCell";
+    "XC_kAXXCAttributeElementType" = "_UIFloatingTabBarItemCell";
+    "XC_kAXXCAttributeTraits" = 146297323528;
+}
+Automation type mismatch: computed Button from legacy attributes vs Other from modern attribute. Input attributes and values: {
+    "XC_kAXXCAttributeAutomationType" = 0;
+    "XC_kAXXCAttributeElementBaseType" = "_UIFloatingTabBarItemView";
+    "XC_kAXXCAttributeElementType" = "_UIFloatingTabBarItemView";
+    "XC_kAXXCAttributeTraits" = 8858370056;
+}
+Automation type mismatch: computed Button from legacy attributes vs Other from modern attribute. Input attributes and values: {
+    "XC_kAXXCAttributeAutomationType" = 0;
+    "XC_kAXXCAttributeElementBaseType" = "_UIFloatingTabBarItemView";
+    "XC_kAXXCAttributeElementType" = "_UIFloatingTabBarItemView";
+    "XC_kAXXCAttributeTraits" = 8858370048;
+}
+See test report attachments for more detail.
+    t =    19.74s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch]' failed (20.016 seconds).
+Test Case '-[PlannerNavigationUITests.SavedListCaptureJourneyTests testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack]' started.
+    t =     0.00s Start Test at 2026-10-13 23:39:18.950
+    t =     0.03s Set Up
+    t =     0.03s Open org.example.PlannerMCPPrototype
+    t =     0.03s     Launch org.example.PlannerMCPPrototype
+    t =     0.03s         Terminate org.example.PlannerMCPPrototype:15586
+2026-10-13 23:39:20.049 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-10-13 23:39:20.049 xcodebuild[12665:38760875] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.31s         Setting up automation session
+    t =     3.87s         Wait for org.example.PlannerMCPPrototype to idle
+    t =     5.23s Waiting 3.0s for "saved.list.new" Button to exist
+    t =     6.24s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =     6.24s         Checking existence of `"saved.list.new" Button`
+    t =     6.47s         Capturing element debug description
+    t =     7.29s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =     7.29s         Checking existence of `"saved.list.new" Button`
+    t =     7.34s         Capturing element debug description
+    t =     8.24s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =     8.24s         Checking existence of `"saved.list.new" Button`
+    t =     8.28s         Capturing element debug description
+    t =     8.28s     Checking existence of `"saved.list.new" Button`
+    t =     8.31s Collecting debug information to assist test failure triage
+    t =     8.31s     Requesting snapshot of accessibility hierarchy for app with pid 15676
+    t =     8.35s Checking existence of `"Show Sidebar" Button`
+    t =     8.38s Tap "Show Sidebar" Button
+    t =     8.38s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     8.39s     Find the "Show Sidebar" Button
+    t =     8.41s     Check for interrupting elements affecting "Show Sidebar" Button
+    t =     8.44s         Wait for com.apple.springboard to idle
+    t =     8.47s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.47s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =     8.47s     Synthesize event
+    t =     8.77s     Wait for org.example.PlannerMCPPrototype to idle
+    t =     9.55s Waiting 5.0s for "saved.list.new" Button to exist
+    t =    10.56s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =    10.56s         Checking existence of `"saved.list.new" Button`
+    t =    10.72s Tap "saved.list.new" Button
+    t =    10.72s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    10.73s     Find the "saved.list.new" Button
+    t =    10.77s     Check for interrupting elements affecting "saved.list.new" Button
+    t =    10.82s         Wait for com.apple.springboard to idle
+    t =    10.84s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    10.84s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    10.84s     Synthesize event
+    t =    11.14s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    11.69s Waiting 5.0s for "saved.list.name" TextField to exist
+    t =    12.73s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.name" TextField`
+    t =    12.73s         Checking existence of `"saved.list.name" TextField`
+    t =    12.83s Tap "saved.list.name" TextField
+    t =    12.83s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    12.83s     Find the "saved.list.name" TextField
+    t =    12.89s     Check for interrupting elements affecting "saved.list.name" TextField
+    t =    12.97s         Wait for com.apple.springboard to idle
+    t =    13.01s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    13.01s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    13.02s     Synthesize event
+    t =    13.33s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    13.66s Type 'North' into "saved.list.name" TextField
+    t =    13.66s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.02s     Find the "saved.list.name" TextField
+    t =    14.15s     Check for interrupting elements affecting "saved.list.name" TextField
+    t =    14.22s         Wait for com.apple.springboard to idle
+    t =    14.24s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    14.25s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    14.25s     Synthesize event
+    t =    14.53s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.54s Tap "saved.list.save" Button
+    t =    14.54s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    14.54s     Find the "saved.list.save" Button
+    t =    14.63s     Check for interrupting elements affecting "saved.list.save" Button
+    t =    14.70s         Wait for com.apple.springboard to idle
+    t =    14.72s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    14.72s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    14.72s     Synthesize event
+    t =    15.02s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    15.89s Waiting 10.0s for "No items" StaticText to exist
+    t =    16.91s     Checking `Expect predicate `existsNoRetry == 1` for object "No items" StaticText`
+    t =    16.92s         Checking existence of `"No items" StaticText`
+    t =    17.01s Waiting 3.0s for "saved.list.new" Button to exist
+    t =    18.01s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =    18.01s         Checking existence of `"saved.list.new" Button`
+    t =    18.07s         Capturing element debug description
+    t =    19.09s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =    19.09s         Checking existence of `"saved.list.new" Button`
+    t =    19.15s         Capturing element debug description
+    t =    20.01s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =    20.01s         Checking existence of `"saved.list.new" Button`
+    t =    20.09s         Capturing element debug description
+    t =    20.09s     Checking existence of `"saved.list.new" Button`
+    t =    20.14s Collecting debug information to assist test failure triage
+    t =    20.14s     Requesting snapshot of accessibility hierarchy for app with pid 15676
+    t =    20.23s Checking existence of `"Show Sidebar" Button`
+    t =    20.28s Tap "Show Sidebar" Button
+    t =    20.28s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    20.28s     Find the "Show Sidebar" Button
+    t =    20.34s     Check for interrupting elements affecting "Show Sidebar" Button
+    t =    20.39s         Wait for com.apple.springboard to idle
+    t =    20.41s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    20.41s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    20.42s     Synthesize event
+    t =    20.73s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    21.49s Waiting 5.0s for "saved.list.new" Button to exist
+    t =    22.51s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.new" Button`
+    t =    22.51s         Checking existence of `"saved.list.new" Button`
+    t =    22.59s Tap "saved.list.new" Button
+    t =    22.59s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    22.59s     Find the "saved.list.new" Button
+    t =    22.67s     Check for interrupting elements affecting "saved.list.new" Button
+    t =    22.74s         Wait for com.apple.springboard to idle
+    t =    22.76s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    22.76s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    22.76s     Synthesize event
+    t =    23.07s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    23.54s Waiting 5.0s for "saved.list.name" TextField to exist
+    t =    24.56s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.name" TextField`
+    t =    24.56s         Checking existence of `"saved.list.name" TextField`
+    t =    24.69s Tap "saved.list.name" TextField
+    t =    24.69s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    24.69s     Find the "saved.list.name" TextField
+    t =    24.79s     Check for interrupting elements affecting "saved.list.name" TextField
+    t =    24.89s         Wait for com.apple.springboard to idle
+    t =    24.91s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    24.91s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    24.91s     Synthesize event
+    t =    25.21s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    25.58s Type 'South' into "saved.list.name" TextField
+    t =    25.58s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    25.59s     Find the "saved.list.name" TextField
+    t =    25.73s     Check for interrupting elements affecting "saved.list.name" TextField
+    t =    25.93s         Wait for com.apple.springboard to idle
+    t =    25.96s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    25.96s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    25.97s     Synthesize event
+    t =    26.29s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    26.29s Tap "saved.list.save" Button
+    t =    26.29s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    26.29s     Find the "saved.list.save" Button
+    t =    26.43s     Check for interrupting elements affecting "saved.list.save" Button
+    t =    26.54s         Wait for com.apple.springboard to idle
+    t =    26.56s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    26.57s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    26.57s     Synthesize event
+    t =    26.87s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    27.59s Waiting 10.0s for "No items" StaticText to exist
+    t =    28.62s     Checking `Expect predicate `existsNoRetry == 1` for object "No items" StaticText`
+    t =    28.62s         Checking existence of `"No items" StaticText`
+    t =    28.71s Tap "Items" Button
+    t =    28.71s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    28.72s     Find the "Items" Button
+    t =    28.74s     Check for interrupting elements affecting "square.stack" Button
+    t =    28.80s         Wait for com.apple.springboard to idle
+    t =    28.84s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    28.84s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    28.85s     Synthesize event
+    t =    29.19s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    30.48s Checking existence of `"Items" Button`
+    t =    30.58s Waiting 10.0s for "saved.capture.new" Button to exist
+    t =    31.61s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.new" Button`
+    t =    31.61s         Checking existence of `"saved.capture.new" Button`
+    t =    31.71s Tap "saved.capture.new" Button
+    t =    31.71s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    31.71s     Find the "saved.capture.new" Button
+    t =    31.77s     Check for interrupting elements affecting "saved.capture.new" Button
+    t =    31.84s         Wait for com.apple.springboard to idle
+    t =    31.86s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    31.86s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    31.86s     Synthesize event
+    t =    32.19s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    32.66s Waiting 5.0s for "saved.capture.input" TextField to exist
+    t =    33.67s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.input" TextField`
+    t =    33.67s         Checking existence of `"saved.capture.input" TextField`
+    t =    33.80s Tap "saved.capture.input" TextField
+    t =    33.80s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    33.80s     Find the "saved.capture.input" TextField
+    t =    33.90s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    34.00s         Wait for com.apple.springboard to idle
+    t =    34.02s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    34.02s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    34.03s     Synthesize event
+    t =    34.33s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    34.67s Type 'Global seed' into "saved.capture.input" TextField
+    t =    34.67s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    34.67s     Find the "saved.capture.input" TextField
+    t =    34.80s     Check for interrupting elements affecting "saved.capture.input" TextField
+    t =    34.90s         Wait for com.apple.springboard to idle
+    t =    34.92s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    34.93s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    34.93s     Synthesize event
+    t =    35.33s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    35.33s Tap "saved.capture.review" Button
+    t =    35.33s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    35.33s     Find the "saved.capture.review" Button
+    t =    35.45s     Check for interrupting elements affecting "saved.capture.review" Button
+    t =    35.56s         Wait for com.apple.springboard to idle
+    t =    35.59s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    35.59s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    35.60s     Synthesize event
+    t =    35.92s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    36.27s Waiting 5.0s for "saved.capture.title" TextField to exist
+    t =    37.30s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.capture.title" TextField`
+    t =    37.30s         Checking existence of `"saved.capture.title" TextField`
+    t =    37.43s Tap "saved.capture.title" TextField
+    t =    37.43s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    37.43s     Find the "saved.capture.title" TextField
+    t =    37.54s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    37.65s         Wait for com.apple.springboard to idle
+    t =    37.67s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    37.67s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    37.67s     Synthesize event
+    t =    37.97s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    38.06s Find the "saved.capture.title" TextField
+    t =    38.23s Type 'Global ...' into "saved.capture.title" TextField
+    t =    38.23s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    38.44s     Find the "saved.capture.title" TextField
+    t =    38.58s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    38.71s         Wait for com.apple.springboard to idle
+    t =    38.74s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    38.74s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    38.74s     Synthesize event
+    t =    39.32s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    39.33s Type '
+' into "saved.capture.title" TextField
+    t =    39.33s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    39.33s     Find the "saved.capture.title" TextField
+    t =    39.46s     Check for interrupting elements affecting "saved.capture.title" TextField
+    t =    39.58s         Wait for com.apple.springboard to idle
+    t =    39.60s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    39.60s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    39.61s     Synthesize event
+    t =    39.83s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    40.07s Checking existence of `Any (First Match)`
+    t =    40.27s Get all elements bound by index for: Descendants matching type CollectionView
+    t =    40.38s Swipe up CollectionView (Element at index 1)
+    t =    40.38s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    40.39s     Find the CollectionView (Element at index 1)
+    t =    40.50s     Check for interrupting elements affecting "Sidebar" CollectionView
+    t =    40.60s         Wait for com.apple.springboard to idle
+    t =    40.62s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    40.62s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    40.62s     Synthesize event
+    t =    41.11s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    41.92s Checking existence of `Any (First Match)`
+    t =    42.02s Find the Any (First Match)
+    t =    42.13s Checking existence of `Keyboard (First Match)`
+    t =    42.29s Find the Window (First Match)
+    t =    42.29s Find the "saved.capture.list.94DD09A1-F582-44D7-B8AF-C8A9106CA9EF" Switch
+    t =    42.38s Tap Switch (First Match)
+    t =    42.38s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    42.39s     Find the Switch (First Match)
+    t =    42.48s     Check for interrupting elements affecting "0" Switch
+    t =    42.58s         Wait for com.apple.springboard to idle
+    t =    42.60s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    42.60s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    42.62s     Synthesize event
+    t =    42.91s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    45.23s Checking `Expect predicate `value == 1 OR value == "1"` for object "saved.capture.list.94DD09A1-F582-44D7-B8AF-C8A9106CA9EF" Switch`
+    t =    45.23s     Find the "saved.capture.list.94DD09A1-F582-44D7-B8AF-C8A9106CA9EF" Switch
+    t =    45.34s     Find the "saved.capture.list.94DD09A1-F582-44D7-B8AF-C8A9106CA9EF" Switch
+    t =    45.44s Tap "saved.capture.add" Button
+    t =    45.44s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    45.44s     Find the "saved.capture.add" Button
+    t =    45.55s     Check for interrupting elements affecting "saved.capture.add" Button
+    t =    45.65s         Wait for com.apple.springboard to idle
+    t =    45.67s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    45.67s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    45.67s     Synthesize event
+    t =    45.98s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    46.79s Waiting 10.0s for "saved.item.actions" Button to exist
+    t =    47.83s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.item.actions" Button`
+    t =    47.83s         Checking existence of `"saved.item.actions" Button`
+    t =    47.95s Tap "Lists" Button
+    t =    47.95s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    47.95s     Find the "Lists" Button
+    t =    47.96s     Check for interrupting elements affecting "list.bullet" Button
+    t =    48.05s         Wait for com.apple.springboard to idle
+    t =    48.06s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    48.07s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    48.07s     Synthesize event
+    t =    48.37s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    49.62s Waiting 3.0s for Button (First Match) to exist
+    t =    50.65s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    50.65s         Checking existence of `Button (First Match)`
+    t =    50.77s         Capturing element debug description
+    t =    51.68s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    51.68s         Checking existence of `Button (First Match)`
+    t =    51.78s         Capturing element debug description
+    t =    52.62s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    52.62s         Checking existence of `Button (First Match)`
+    t =    52.74s         Capturing element debug description
+    t =    52.74s     Checking existence of `Button (First Match)`
+    t =    52.83s Collecting debug information to assist test failure triage
+    t =    52.83s     Requesting snapshot of accessibility hierarchy for app with pid 15676
+    t =    52.94s Checking existence of `"Show Sidebar" Button`
+    t =    53.01s Tap "Show Sidebar" Button
+    t =    53.01s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    53.01s     Find the "Show Sidebar" Button
+    t =    53.08s     Check for interrupting elements affecting "Show Sidebar" Button
+    t =    53.15s         Wait for com.apple.springboard to idle
+    t =    53.17s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    53.17s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    53.18s     Synthesize event
+    t =    53.51s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    54.27s Waiting 5.0s for Button (First Match) to exist
+    t =    55.29s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    55.29s         Checking existence of `Button (First Match)`
+    t =    55.44s Tap Button (First Match)
+    t =    55.44s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    55.44s     Find the Button (First Match)
+    t =    55.62s     Check for interrupting elements affecting "saved.list.F81A6AD4-289F-4976-93D4-48F0D431D49B" Button
+    t =    55.70s         Wait for com.apple.springboard to idle
+    t =    55.72s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    55.72s Ignoring failure to get hierarchy for remote element in process 13525 (Error getting main window kAXErrorServerNotFound)
+    t =    55.73s     Synthesize event
+    t =    56.02s     Wait for org.example.PlannerMCPPrototype to idle
+    t =    56.44s Waiting 5.0s for "saved.list.actions" Button to exist
+    t =    57.44s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.actions" Button`
+    t =    57.44s         Checking existence of `"saved.list.actions" Button`
+    t =    57.51s         Capturing element debug description
+    t =    58.44s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.actions" Button`
+    t =    58.44s         Checking existence of `"saved.list.actions" Button`
+    t =    58.52s         Capturing element debug description
+    t =    59.44s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.actions" Button`
+    t =    59.44s         Checking existence of `"saved.list.actions" Button`
+    t =    59.51s         Capturing element debug description
+    t =    60.52s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.actions" Button`
+    t =    60.53s         Checking existence of `"saved.list.actions" Button`
+    t =    60.58s         Capturing element debug description
+    t =    61.44s     Checking `Expect predicate `existsNoRetry == 1` for object "saved.list.actions" Button`
+    t =    61.44s         Checking existence of `"saved.list.actions" Button`
+    t =    61.51s         Capturing element debug description
+    t =    61.51s     Checking existence of `"saved.list.actions" Button`
+    t =    61.56s Collecting debug information to assist test failure triage
+    t =    61.56s     Requesting snapshot of accessibility hierarchy for app with pid 15676
+/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/SavedListCaptureJourneyTests.swift:168: error: -[PlannerNavigationUITests.SavedListCaptureJourneyTests testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack] : XCTAssertTrue failed
+    t =    61.64s Tear Down
+Test Case '-[PlannerNavigationUITests.SavedListCaptureJourneyTests testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack]' failed (62.017 seconds).
+Test Suite 'SavedListCaptureJourneyTests' failed at 2026-10-13 23:40:20.967.
+	 Executed 2 tests, with 2 failures (0 unexpected) in 82.033 (82.036) seconds
+Test Suite 'PlannerNavigationUITests.xctest' failed at 2026-10-13 23:40:20.968.
+	 Executed 10 tests, with 2 failures (0 unexpected) in 484.830 (484.856) seconds
+Test Suite 'Selected tests' failed at 2026-10-13 23:40:20.970.
+	 Executed 10 tests, with 2 failures (0 unexpected) in 484.830 (484.859) seconds
+2026-10-13 23:40:21.355 xcodebuild[12665:38772871]  IDETestOperationsObserverDebug: Failure collecting diagnostics from simulator: Process exited with error 72:
+ xcrun: error: unable to find utility "simctl", not a developer tool or in PATH
+
+2026-10-13 23:40:21.375 xcodebuild[12665:38760875] [MT] IDETestOperationsObserverDebug: 501.211 elapsed -- Testing started completed.
+2026-10-13 23:40:21.375 xcodebuild[12665:38760875] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-13 23:40:21.375 xcodebuild[12665:38760875] [MT] IDETestOperationsObserverDebug: 501.211 sec, +501.211 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/PlannerListCaptureQualifiedTablet.xcresult
+
+Failing tests:
+	SavedListCaptureJourneyTests.testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch()
+	SavedListCaptureJourneyTests.testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()
+
+** TEST EXECUTE FAILED **
+
+Testing started

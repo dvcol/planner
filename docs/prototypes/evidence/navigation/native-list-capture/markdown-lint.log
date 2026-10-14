@@ -1,0 +1,13 @@
+.../mv7iio40-t8w                         | Progress: resolved 0, reused 1, downloaded 0, added 0
+.../mv7iio40-t8w                         | Progress: resolved 0, reused 63, downloaded 0, added 0
+.../mv7iio40-t8w                         | Progress: resolved 1, reused 90, downloaded 0, added 0
+.../mv7iio40-t8w                         | Progress: resolved 87, reused 90, downloaded 0, added 87, done
+
+dependencies:
++ markdownlint-cli2 0.23.3
+
+markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)
+Finding: docs/prototypes/native-list-capture.md docs/prototypes/native-capture-owned-fields.md docs/prototypes/native-text-link-capture.md
+Linting: 3 files
+Summary: 0 issues in 0 files
+Done in 6.1s using pnpm v12.10.1

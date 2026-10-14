@@ -36,4 +36,4 @@ Four affected Swift files passed strict lint. The final macOS app and test host 
 
 ## Remaining map work
 
-The direct-input path still needs native provider intake/preview/retry, explicit pin selection, fuller existing-candidate inspection, List-context capture, interrupted-operation presentation, Share/Intents and physical-device qualification. Q78–Q81 remain unanswered. Full Calendar modes and whole-app native polish remain open.
+The subsequent [List capture](native-list-capture.md) adds the contextual entry point and separate remembered destinations. The direct-input path still needs native provider intake/preview/retry, explicit pin selection, fuller existing-candidate inspection, interrupted-operation presentation, Share/Intents and physical-device qualification. Q78–Q81 are now accepted; their Maps/Calendar implementation remains open. Full Calendar modes and whole-app native polish remain open.

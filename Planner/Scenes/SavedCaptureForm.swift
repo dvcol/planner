@@ -1,9 +1,27 @@
 import PlannerCore
 import SwiftUI
 
+enum SavedCaptureEntryPoint: Identifiable {
+  case global
+  case list(UUID)
+
+  var id: String {
+    switch self {
+    case .global: "global"
+    case .list(let identifier): "list.\(identifier.uuidString)"
+    }
+  }
+
+  var initialListIdentifier: UUID? {
+    guard case .list(let identifier) = self else { return nil }
+    return identifier
+  }
+}
+
 struct SavedCaptureForm: View {
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
+  let entryPoint: SavedCaptureEntryPoint
   let didSave: (PlannerEntityReference) -> Void
   @State private var input = ""
   @State private var draft: PlannerCaptureDraftRead?
@@ -17,7 +35,7 @@ struct SavedCaptureForm: View {
   @State private var locationAddress = ""
   @State private var links: [SavedOwnedLinkDraft] = []
   @State private var reuseIdentifier: UUID?
-  @State private var destinations: [SavedPlannerList] = []
+  @State private var destinations: [SavedPlannerList]?
   @State private var selectedListIdentifiers: Set<UUID> = []
   @State private var isWorking = false
   @State private var applied = false
@@ -153,7 +171,7 @@ struct SavedCaptureForm: View {
       }
     }
     SavedOwnedLinksEditor(links: $links, accessibilityIdentifierPrefix: "saved.capture.link")
-    if !destinations.isEmpty {
+    if let destinations, !destinations.isEmpty {
       Section {
         ForEach(destinations) { destination in
           Toggle(
@@ -175,8 +193,25 @@ struct SavedCaptureForm: View {
       } footer: {
         Text("With no Lists selected, a new Item goes to Inbox. Existing memberships are kept.")
       }
-    } else {
+    } else if destinations != nil {
       Section { Text("New Items will be added to Inbox.").foregroundStyle(.secondary) }
+    } else {
+      Section {
+        if isWorking {
+          ProgressView("Loading Lists")
+        } else {
+          Label("Lists unavailable", systemImage: "exclamationmark.triangle")
+          Button("Try Again") {
+            Task {
+              isWorking = true
+              store.alertMessage = nil
+              defer { isWorking = false }
+              await loadDestinations()
+            }
+          }
+          .accessibilityIdentifier("saved.capture.destinations.retry")
+        }
+      }
     }
     ForEach(draft.inputIssues, id: \.inputIndex) { issue in
       Section {
@@ -198,7 +233,9 @@ struct SavedCaptureForm: View {
   }
 
   private var canSave: Bool {
-    guard let draft, !draft.inputIssues.contains(where: \.blocksSave) else { return false }
+    guard let draft, destinations != nil, !draft.inputIssues.contains(where: \.blocksSave) else {
+      return false
+    }
     if let reuseIdentifier {
       return draft.reuseCandidates.contains { $0.itemId == reuseIdentifier }
     }
@@ -231,7 +268,7 @@ struct SavedCaptureForm: View {
   }
 
   private var destinationPreferenceKey: String? {
-    store.devicePreferenceNamespace.map { "Planner.capture.global.destinations.\($0)" }
+    store.devicePreferenceNamespace.map { "Planner.capture.\(entryPoint.id).destinations.\($0)" }
   }
 
   private func prepare() async {
@@ -250,13 +287,28 @@ struct SavedCaptureForm: View {
     locationAddress = prepared.content.location?.formattedAddress ?? ""
     links = prepared.links.map(SavedOwnedLinkDraft.init)
     if prepared.reuseCandidates.count == 1 { reuseIdentifier = prepared.reuseCandidates[0].itemId }
+    await loadDestinations()
+  }
+
+  private func loadDestinations() async {
+    destinations = nil
     guard let loaded = await store.readLists(archive: .active) else { return }
     destinations = loaded
+    selectedListIdentifiers = []
+    if let identifier = entryPoint.initialListIdentifier,
+      loaded.contains(where: { $0.id == identifier })
+    {
+      selectedListIdentifiers.insert(identifier)
+    }
     if let key = destinationPreferenceKey,
       let values = UserDefaults.standard.stringArray(forKey: key)
     {
       let remembered = Set(values.compactMap(UUID.init(uuidString:)))
-      if remembered.isSubset(of: Set(loaded.map(\.id))) { selectedListIdentifiers = remembered }
+      if remembered.isSubset(of: Set(loaded.map(\.id))) {
+        selectedListIdentifiers = remembered
+      } else {
+        selectedListIdentifiers = []
+      }
     }
   }
 

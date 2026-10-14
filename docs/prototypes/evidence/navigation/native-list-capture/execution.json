@@ -1,0 +1,159 @@
+{
+  "baseCommit": "b5b4d9229efea078572c1c081cef2461cca9d3ad",
+  "scope": "Native direct-input List capture, staged destinations, per-List preference isolation and membership navigation",
+  "qualified": {
+    "phone": {
+      "functions": 10,
+      "suites": 4,
+      "selectedInvocations": 10,
+      "failures": 0,
+      "skips": 0,
+      "selection": [
+        "SavedCaptureFieldsJourneyTests/testCaptureSharedLabelsRemainStagedUntilAddAndPersistAfterRelaunch()",
+        "SavedCaptureFieldsJourneyTests/testEditingOnlyReuseLinkRequiresExplicitReselectionWithoutCreatingAnItem()",
+        "SavedCaptureFieldsJourneyTests/testOwnedCaptureFieldsAndLinkLabelPersistAfterRelaunch()",
+        "SavedCaptureFieldsJourneyTests/testRemovingOnlyLinkDoesNotPromoteAutomaticTitleIntoOwnedText()",
+        "SavedCaptureJourneyTests/testExactLinkReusePreservesDoneArchivedContentAndRememberedListWithoutDuplicates()",
+        "SavedCaptureJourneyTests/testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem()",
+        "SavedCaptureJourneyTests/testUntouchedSavedLinkDraftCanBeAddedWithoutAnEmptyEdit()",
+        "SavedCaptureTextJourneyTests/testPlainTextReviewPreservesItsTitleAndNotesWithoutInventingLinks()",
+        "SavedListCaptureJourneyTests/testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch()",
+        "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+      ]
+    },
+    "tablet": {
+      "functions": 10,
+      "suites": 4,
+      "selectedInvocations": 10,
+      "failures": 0,
+      "skips": 0,
+      "selection": [
+        "SavedCaptureFieldsJourneyTests/testCaptureSharedLabelsRemainStagedUntilAddAndPersistAfterRelaunch()",
+        "SavedCaptureFieldsJourneyTests/testEditingOnlyReuseLinkRequiresExplicitReselectionWithoutCreatingAnItem()",
+        "SavedCaptureFieldsJourneyTests/testOwnedCaptureFieldsAndLinkLabelPersistAfterRelaunch()",
+        "SavedCaptureFieldsJourneyTests/testRemovingOnlyLinkDoesNotPromoteAutomaticTitleIntoOwnedText()",
+        "SavedCaptureJourneyTests/testExactLinkReusePreservesDoneArchivedContentAndRememberedListWithoutDuplicates()",
+        "SavedCaptureJourneyTests/testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem()",
+        "SavedCaptureJourneyTests/testUntouchedSavedLinkDraftCanBeAddedWithoutAnEmptyEdit()",
+        "SavedCaptureTextJourneyTests/testPlainTextReviewPreservesItsTitleAndNotesWithoutInventingLinks()",
+        "SavedListCaptureJourneyTests/testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch()",
+        "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+      ]
+    }
+  },
+  "mac": {
+    "appAndTestHostBuild": "passed",
+    "runtimeFunctions": 0
+  },
+  "strictSwiftLintFiles": 3,
+  "markdownLintDocuments": 3,
+  "sourceHashesVerifiedAfterAllBuildAndTestProcessesExited": true,
+  "productHashesMatchInitialRegressionBuild": true,
+  "lookupWorkExcludedFromQualification": true,
+  "sourceHashes": {
+    "Planner/Scenes/SavedCaptureForm.swift": "0993f667c8b5585dac130b45896561df2cb840441089a9a787803cbc0a3ad124",
+    "Planner/Scenes/SavedPlannerView.swift": "f57c8bc8f44a29abc9febffcbde62f05816c511e540b5ca94b919ebd043252cc",
+    "PlannerNavigationUITests/SavedListCaptureJourneyTests.swift": "5caa506416b2f72e15055f79e10661f3fc8b6729f15cd688d78c9cf1bd7c915f",
+    "PlannerNavigationUITests/SavedCaptureFieldsJourneyTests.swift": "2216d44d99c0354636ec7b92bb53ce3a529bdef60ac92fb7458440c172e624db",
+    "PlannerNavigationUITests/SavedCaptureJourneyTests.swift": "c25a07e846b9db62040164c2361ffed270193c0250495e8836fede039e6d6b0c",
+    "PlannerNavigationUITests/SavedCaptureTextJourneyTests.swift": "3c1ec04835bd2bf58674e496be3c1d85f21b70c21744c1c8c9bb56e37a948c72",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1ca538a5ea664fb8f718eae11adce89e827220852074a33a7bec9120d1766713"
+  },
+  "screenshots": [
+    {
+      "path": "phone-membership.png",
+      "originalExport": "0E9DBD58-9432-4373-90AF-8CBED6DE4D77.png",
+      "inspected": true
+    },
+    {
+      "path": "phone-archived-fallback.png",
+      "originalExport": "B1B99CF5-A79A-4980-9EA5-57CBA94DFCBE.png",
+      "inspected": true
+    },
+    {
+      "path": "tablet-membership.png",
+      "originalExport": "12B6278C-E8F9-4E60-BA8A-07C1C8967B50.png",
+      "inspected": true
+    },
+    {
+      "path": "tablet-archived-fallback.png",
+      "originalExport": "49D2AE68-1974-4E2A-A300-2DB37D833780.png",
+      "inspected": true
+    }
+  ],
+  "runs": {
+    "phoneInitial": {
+      "result": "Passed",
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0
+    },
+    "tabletInitial": {
+      "result": "Failed",
+      "passed": 8,
+      "failed": 2,
+      "skipped": 0
+    },
+    "phoneFollowup": {
+      "result": "Passed",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0
+    },
+    "tabletFollowup": {
+      "result": "Passed",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "qualificationPolicy": "Select eight unchanged capture regressions from each initial run and both List journeys from each final followup. Initial List outcomes, including passing phone outcomes, are excluded. The product code is identical in both runs; only the new List test helpers changed for toolbar overflow. This does not claim that the initial tablet run passed.",
+  "reviews": {
+    "standards": "No remaining confirmed findings; final source, artifacts and split-run qualification verified.",
+    "spec": "No remaining confirmed findings; final requirements, selected actual outcomes and open gates verified."
+  },
+  "remainingGates": [
+    "destination-read failure native fixture",
+    "provider intake/lookup/preview/retry",
+    "new pin selection",
+    "full candidate inspection",
+    "changed-target/save-failure/termination native fixtures",
+    "Share and Intents",
+    "native Mac UI runtime",
+    "physical iCloud/account/Share qualification",
+    "whole-app native polish"
+  ],
+  "commands": {
+    "phoneInitial": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedListCaptureJourneyTests -only-testing:PlannerNavigationUITests/SavedCaptureJourneyTests -only-testing:PlannerNavigationUITests/SavedCaptureTextJourneyTests -only-testing:PlannerNavigationUITests/SavedCaptureFieldsJourneyTests -resultBundlePath /private/tmp/PlannerListCaptureQualifiedPhone2.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "phoneFollowup": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedListCaptureJourneyTests -resultBundlePath /private/tmp/PlannerListCapturePhoneFollowup.xcresult CODE_SIGNING_ALLOWED=NO test-without-building",
+    "tabletInitial": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedListCaptureJourneyTests -only-testing:PlannerNavigationUITests/SavedCaptureJourneyTests -only-testing:PlannerNavigationUITests/SavedCaptureTextJourneyTests -only-testing:PlannerNavigationUITests/SavedCaptureFieldsJourneyTests -resultBundlePath /private/tmp/PlannerListCaptureQualifiedTablet.xcresult CODE_SIGNING_ALLOWED=NO test-without-building",
+    "tabletFollowup": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446' -derivedDataPath /private/tmp/PlannerNavigationContentPhoneDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedListCaptureJourneyTests -resultBundlePath /private/tmp/PlannerListCaptureTabletFollowup.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "mac": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS -derivedDataPath /private/tmp/PlannerNavigationContentMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerMCPSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO build-for-testing",
+    "swiftLint": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift-format lint --strict Planner/Scenes/SavedCaptureForm.swift Planner/Scenes/SavedPlannerView.swift PlannerNavigationUITests/SavedListCaptureJourneyTests.swift",
+    "markdownLint": "pnpm dlx markdownlint-cli2 --config /private/tmp/PlannerCatalogEstimatesMarkdownlint.jsonc docs/prototypes/native-list-capture.md docs/prototypes/native-capture-owned-fields.md docs/prototypes/native-text-link-capture.md"
+  },
+  "artifactHashes": {
+    "initial-source-hashes.json": "0865ae79c0607f691640d44b0612d0b89320f6b790c8b6a7de4595a1caefc8f4",
+    "mac-build.log": "1b109f82e770b77e2845c77a13181e8ae26a0bf8fdff34625a1cf702c870b3db",
+    "markdown-lint.log": "145110c7065dabc9ebee5169c916af0704bb42477a3176578c123b0890a8df31",
+    "missing-action-red-summary.json": "dd0f8397e32530e0150785f227a89e0ffabe80cf06e68f616d64428fdb9f7fe8",
+    "missing-action-red.log": "4f7da298c7b7c87ba79cd4f584e0122f4fa6c22d5a3cf01788be8fcaf4eaeb1a",
+    "phone-archived-fallback.png": "9fd862cb5dcaef0842da9ad8a36b9ebbd60920a22d56b4c5a42c0515dbb225cd",
+    "phone-followup.log": "6085632294dcb4b30aa96705711d6d7f351f3a9472c863127e60063580fc3bc4",
+    "phone-initial-summary.json": "3006a37070be3e9bc5de55be02154f71f9059f79f4f884e3f8c1e292feb5643f",
+    "phone-initial-tests.json": "3121658f296658772412af9dc02de448dac209418c55ec7d2a8ff440ff31bccd",
+    "phone-initial.log": "05034dd5cec0d7b8c47426cdf6ea2bd15292281bde1de03195f7c72a3bac99bd",
+    "phone-membership.png": "c5df0ff598779866a63165fb6b0aa3751a10d7b416cb125498ee22dce9961c38",
+    "phone-summary.json": "d8e9d1003e7bb0656dea116f529e9fc192a06b2274d1c649751d45e1fe1938a4",
+    "phone-tests.json": "3bef9519cfff53fb58e368beacaf5dbae14c545893f09f2f1cb60a8086266c57",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tablet-archived-fallback.png": "a7b6fbe8c95e0f6e1d2d794924f9304c00fa06a8bd57509dc9d6f7100e382b7e",
+    "tablet-followup.log": "66ed11a36972f82f946bfdc27cc88737f793b5508de532b6f6fd39e53bed4596",
+    "tablet-initial-summary.json": "845373826bc64a47b845fc55fe18222d31be6e372b29ba57b7b06b4ebdc8b673",
+    "tablet-initial-tests.json": "2fc22f225aad8de5318bde5c7cdfd3f3bf27cd9de7ec6857955955e8998c9ea4",
+    "tablet-initial.log": "82b71ba0feaa5ff3fc2ce275d23479202ca50a45badf328bc9317d231a26f235",
+    "tablet-membership.png": "c1dde296142a51152419d70a2ecba3cef00b2bf7342b4e5ed83264629e292838",
+    "tablet-summary.json": "bc472cc2a232177037667973f15ed1afa08b55e4e8f1f357ccd0871aa4ad1a54",
+    "tablet-tests.json": "6acb2ced17a17a66d5159e32576deb6484114bb459821019f60d4e51e807bc69"
+  }
+}

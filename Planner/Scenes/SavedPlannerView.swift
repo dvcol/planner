@@ -44,7 +44,7 @@ struct SavedPlannerView: View {
   @State private var listCatalogArchive = SavedItemFilters.Archive.active
   @State private var isOpeningListCatalog = false
   @State private var showNewItem = false
-  @State private var showCapture = false
+  @State private var captureEntryPoint: SavedCaptureEntryPoint?
   @State private var showAddItem = false
   @State private var bulkCompletionDraft: SavedBulkCompletionDraft?
   @State private var isPreparingBulkCompletion = false
@@ -168,9 +168,9 @@ struct SavedPlannerView: View {
     .sheet(isPresented: $showNewItem) {
       SavedNewItemForm(store: store) { source in selectedItemId = source.id }
     }
-    .sheet(isPresented: $showCapture) {
-      SavedCaptureForm(store: store) { source in
-        selectedItemId = source.id
+    .sheet(item: $captureEntryPoint) { entryPoint in
+      SavedCaptureForm(store: store, entryPoint: entryPoint) { source in
+        if case .global = entryPoint { selectedItemId = source.id }
       }
     }
     .sheet(isPresented: $showAddItem) {
@@ -218,7 +218,7 @@ struct SavedPlannerView: View {
             && bulkCompletionDraft == nil
             && !showLabels
             && !showSettings
-            && !showCapture
+            && captureEntryPoint == nil
             && (selectedSection != .itineraries || showNewList || showNewItem)
         },
         set: { if !$0 { store.alertMessage = nil } })
@@ -440,7 +440,8 @@ struct SavedPlannerView: View {
       SavedItemCatalog(
         scope: catalogScope, items: catalogItems, selection: $selectedItemId,
         filters: catalogFilters, searchText: catalogSearchText, sort: itemSort,
-        canCreate: store.canCreate, create: { showNewItem = true }, capture: { showCapture = true }
+        canCreate: store.canCreate, create: { showNewItem = true },
+        capture: { captureEntryPoint = .global }
       )
       .overlay(alignment: .topTrailing) {
         if isOpeningCatalog { ProgressView("Updating Items").controlSize(.small).padding() }
@@ -1102,6 +1103,12 @@ struct SavedPlannerView: View {
           }
           ToolbarItem(placement: .primaryAction) {
             Menu {
+              Button("Capture Text or Link", systemImage: "text.badge.plus") {
+                captureEntryPoint = .list(selectedList.source.id)
+              }
+              .disabled(selectedList.state.archived == true)
+              .accessibilityIdentifier("saved.list.capture")
+              Divider()
               Button("Edit estimate", systemImage: "clock") {
                 listEditDraft = .init(list: selectedList)
               }
