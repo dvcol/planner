@@ -129,6 +129,26 @@ final class SavedPlannerStore {
     }
   }
 
+  func readRecoveryCopies() async throws -> [PlannerRecoveryView] {
+    guard let planner else { throw CocoaError(.fileReadUnknown) }
+    switch await planner.inspectRecovery(request: .namespaces) {
+    case .listedNamespaces(let copies): return copies
+    case .failed(let reason): throw reason
+    default: throw CocoaError(.fileReadUnknown)
+    }
+  }
+
+  func selectRecoveryCopy(_ request: PlannerRecoveryRequest) async throws
+    -> PlannerRecoverySelection
+  {
+    guard let planner else { throw CocoaError(.fileReadUnknown) }
+    switch await planner.inspectRecovery(request: request) {
+    case .selected(let selection): return selection
+    case .failed(let reason): throw reason
+    default: throw CocoaError(.fileReadUnknown)
+    }
+  }
+
   func decodeBackup(_ data: Data) async throws -> PlannerDecodedBackup {
     guard let planner else { throw CocoaError(.fileReadUnknown) }
     let decoded = await Task.detached { planner.decodeImport(data) }.value

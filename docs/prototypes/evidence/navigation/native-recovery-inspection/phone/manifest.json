@@ -1,0 +1,26 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "04BA8650-8DAE-418B-8041-0ABD20AF71E0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Recovery inspection leaves the current Tag intact after relaunch_0_F895C097-92B1-42E4-BC7E-49CCD7B4CA5A.png",
+        "timestamp" : 1792014854.238
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "5DB744A7-441C-47B9-9BAD-595FA9B4B0A9.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native recovery inspection retains the saved Tag and evidence_0_F6B1FA9A-BC94-4159-87AE-D38A1DAF25A4.png",
+        "timestamp" : 1792014840.793
+      }
+    ],
+    "testIdentifier" : "SavedRecoveryJourneyTests/testInspectingSavedRecoveryCopyPreservesCurrentTagAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedRecoveryJourneyTests/testInspectingSavedRecoveryCopyPreservesCurrentTagAfterRelaunch"
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "productHashes": {
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner": "2d2d27a032ebb21e31a0941e03e3862b409ae545274c10edb59ec22a5daea53e",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib": "90463282acee8e79f9c6dc9c330c2962c6437a2a919df495aeab619c1ac08dbd",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests": "739e3df4e52a916249fff357d0669f788690973f460870ddc9b668c44fa384e1",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "e6f540414489754d2dcaf1af64a0bcbb2951a58bb2d85fcf1595226f15769cba",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib": "bb53dec864a7430bfa17059594d4a6ff51cc72dddb9a78cac5af47148c5560cf",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests": "d5f67ef784650ddc1384f27638195c84b874c1ead0067616865e4e9b083c50d9"
+  },
+  "sourceHashes": {
+    "Planner/Scenes/SavedPlannerSettingsView.swift": "329c5262a5dce04ccf4f96d2426baeea0f0ce8fc480c726536a34c79b3401e9d",
+    "Planner/Scenes/SavedPlannerStore.swift": "70d40e000b9f1451f23927de2637600cd1caf18a5c9bacae152ef4a35ff0d0d7",
+    "Planner/Scenes/SavedPlannerView.swift": "6bfa16c030dd214631def6f7056d8cf406b3ab262c58e4dd39fd61859fbb35dc",
+    "Planner/Scenes/SavedRecoveryCopiesView.swift": "c655d9c4a6e2b716ae2bc719a134a723b02dd316220a817e3cb1b8d79aed0170",
+    "Planner/Scenes/SavedRecoverySelectionView.swift": "88d95907029916a2a25175fb55547b95af2348e94b56afee7be89d7ddac3bb66",
+    "PlannerNavigationUITests/SavedRecoveryJourneyTests.swift": "3ae0c4f3632636ebfd6dd4e0fdc2d4e2d1485c2756f936d3543fd09ead5d4ce8"
+  }
+}

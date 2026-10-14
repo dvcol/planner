@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "1C6C58D2-3EEC-4AD4-9F45-7BD6BFC60A02.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native backup import picker_0_48877900-15E9-4B3D-8F44-8D2064AC566A.png",
+        "timestamp" : 1792015056.57
+      }
+    ],
+    "testIdentifier" : "SavedBackupImportJourneyTests/testCancelingNativeBackupImportKeepsSettingsAvailableAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testCancelingNativeBackupImportKeepsSettingsAvailableAfterRelaunch"
+  }
+]

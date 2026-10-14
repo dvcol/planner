@@ -41,6 +41,7 @@ struct SavedPlannerView: View {
   @State private var listEditDraft: SavedListEditDraft?
   @State private var showLabels = false
   @State private var showSettings = false
+  @State private var showRecovery = false
   @State private var listCatalog: [SavedPlannerList]?
   @State private var listCatalogArchive = SavedItemFilters.Archive.active
   @State private var isOpeningListCatalog = false
@@ -92,6 +93,10 @@ struct SavedPlannerView: View {
           Text(reason)
         } actions: {
           Button("Try Again") { Task { await store.open() } }
+          Button("Recovery Copies", systemImage: "clock.arrow.circlepath") {
+            showRecovery = true
+          }
+          .accessibilityIdentifier("saved.settings.recovery")
         }
       } else {
         ProgressView("Opening Planner")
@@ -158,6 +163,7 @@ struct SavedPlannerView: View {
     .sheet(isPresented: $showLabels) {
       SavedLabelsView(store: store)
     }
+    .sheet(isPresented: $showRecovery) { SavedRecoveryCopiesView(store: store) }
     #if os(iOS)
       .sheet(isPresented: $showSettings) { SavedPlannerSettingsView(store: store) }
     #endif

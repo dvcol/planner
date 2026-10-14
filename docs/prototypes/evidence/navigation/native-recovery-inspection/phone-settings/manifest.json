@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "3F8AD33C-7340-4DCA-8578-BB966EBD59A0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native backup import picker_0_C1A7EF36-7C9D-4255-97C9-A6FF78302102.png",
+        "timestamp" : 1792015035.009
+      }
+    ],
+    "testIdentifier" : "SavedBackupImportJourneyTests/testCancelingNativeBackupImportKeepsSettingsAvailableAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testCancelingNativeBackupImportKeepsSettingsAvailableAfterRelaunch"
+  }
+]
