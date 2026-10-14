@@ -733,7 +733,11 @@ public actor Planner {
             identity: identity, bindings: resolution.bindings)
           digest = plannerCaptureReviewDigest(
             operationDigest: operationDigest, source: try resolution.item?.value())
-        case .applyImport(let backup, let mode, let restoreDeletedData):
+        case .applyImport, .restoreRecovery:
+          let request = try PlannerImportRequest(command: command)
+          let backup = request.backup
+          let mode = request.mode
+          let restoreDeletedData = request.restoreDeletedData
           guard !restoreDeletedData || mode == .overwrite else {
             throw PlannerFailure("invalidInput", "Restoration requires explicit Overwrite.")
           }
@@ -752,7 +756,7 @@ public actor Planner {
             importDetails: resolution.details)
           digest = plannerImportDigest(
             incoming: backup, current: current, mode: mode, identity: identity,
-            restoreDeletedData: restoreDeletedData)
+            restoreDeletedData: restoreDeletedData, recoverySelection: request.recoverySelection)
         case .setBulkCompletion(let scope, let done):
           let resolution = try resolveBulkCompletion(scope, context: context)
           targets = resolution.targets.map { .appearance($0.appearance) }
@@ -832,9 +836,18 @@ public actor Planner {
             operation, draftId: draftId, draftGeneration: draftGeneration, choice: choice,
             listIds: listIds, identity: identity, context: context, archive: archive,
             receipts: receipts, envelope: envelope)
-        case .applyImport(let backup, let mode, let restoreDeletedData):
+        case .applyImport, .restoreRecovery:
+          let request = try PlannerImportRequest(command: operation.command)
+          if let selection = request.recoverySelection,
+            selection.evidence == .preparedUnverified,
+            selection.originalOperationId == operation.operationId
+          {
+            throw PlannerFailure(
+              "invalidInput", "An unverified recovery proposal requires a new operation identity.",
+              propertyPath: "/operationId")
+          }
           return try executeImport(
-            operation, backup: backup, mode: mode, restoreDeletedData: restoreDeletedData,
+            operation, request: request,
             identity: identity, context: context,
             archive: archive, receipts: receipts, envelope: envelope)
         case .deleteSource(let source):
@@ -2823,18 +2836,20 @@ public actor Planner {
   }
 
   private func executeImport(
-    _ operation: PlannerOperation, backup: PlannerDecodedBackup, mode: PlannerImportMode,
-    restoreDeletedData: Bool,
+    _ operation: PlannerOperation, request: PlannerImportRequest,
     identity: PlannerStoreIdentity, context: ModelContext, archive: PlannerRecoveryArchive,
     receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
   ) throws -> PlannerOperationResult {
+    let backup = request.backup
+    let mode = request.mode
+    let restoreDeletedData = request.restoreDeletedData
     let empty = PlannerDecodedBackup(
       backup: .init(
         sources: [], labelAssociations: [], memberships: [], itineraryEntries: [],
         expandedCompletions: [], deletionMarkers: []))
     let digest = plannerImportDigest(
       incoming: backup, current: empty, mode: mode, identity: identity,
-      restoreDeletedData: restoreDeletedData)
+      restoreDeletedData: restoreDeletedData, recoverySelection: request.recoverySelection)
     if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
       guard receipt.payloadDigest == digest else {
         throw PlannerFailure("operationPayloadMismatch", "This operation describes another import.")
@@ -2855,7 +2870,7 @@ public actor Planner {
       review.payloadDigest
         == plannerImportDigest(
           incoming: backup, current: current, mode: mode, identity: identity,
-          restoreDeletedData: restoreDeletedData)
+          restoreDeletedData: restoreDeletedData, recoverySelection: request.recoverySelection)
     else {
       throw PlannerFailure(
         "staleReview", "The import or current dataset changed; review it again.",

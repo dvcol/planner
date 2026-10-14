@@ -344,7 +344,8 @@ extension PlannerPortableBackup {
 
 func plannerImportDigest(
   incoming: PlannerDecodedBackup, current: PlannerDecodedBackup, mode: PlannerImportMode,
-  identity: PlannerStoreIdentity, restoreDeletedData: Bool = false
+  identity: PlannerStoreIdentity, restoreDeletedData: Bool = false,
+  recoverySelection: PlannerRecoverySelection? = nil
 ) -> String {
   let bindings = incoming.backup.sources.map(\.importBinding) + incoming.externalBindings
   var command: [String: PlannerCanonicalValue] = [
@@ -352,6 +353,22 @@ func plannerImportDigest(
     "mode": .string(mode.rawValue),
   ]
   if restoreDeletedData { command["restoreDeletedData"] = .boolean(true) }
+  if let selection = recoverySelection {
+    command["type"] = .string("restoreRecovery")
+    /// Read-specific selection IDs are transient; retained evidence binds restoration and replay.
+    command["selection"] = .record([
+      "namespaceId": .identity(selection.namespaceId),
+      "datasetId": .identity(selection.datasetId),
+      "ownershipBinding": .string(selection.ownershipBinding),
+      "evidence": .string(
+        selection.evidence == .acknowledgedSnapshot ? "acknowledgedSnapshot" : "preparedUnverified"),
+      "checkpointGeneration": .optional(
+        selection.checkpointGeneration.map(PlannerCanonicalValue.integer)),
+      "proposalId": .optional(selection.proposalId.map(PlannerCanonicalValue.identity)),
+      "originalOperationId": .optional(
+        selection.originalOperationId.map(PlannerCanonicalValue.identity)),
+    ])
+  }
   let value = PlannerCanonicalValue.record([
     "command": .record(command),
     "datasetId": .identity(identity.datasetId),
