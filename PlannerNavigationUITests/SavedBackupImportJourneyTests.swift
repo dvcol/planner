@@ -8,34 +8,10 @@ final class SavedBackupImportJourneyTests: XCTestCase {
       let application = XCUIApplication()
       application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
       application.launchSavedPlannerJourney()
-      openSettings(application)
-      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
-      application.plannerElement("saved.labels.new").activateForPlannerJourney()
-      application.plannerElement("New Tag").activateForPlannerJourney()
+      let exportedBackup = createAndExportTagBackup(application)
+      let tagIdentifier = exportedBackup.tagIdentifier
+      let filename = exportedBackup.filename
       let name = application.textFields["saved.tag.name"]
-      XCTAssertTrue(name.waitForExistence(timeout: 5))
-      name.activateForPlannerJourney()
-      name.typeText("Original backup tag")
-      application.plannerElement("saved.tag.save").activateForPlannerJourney()
-      let tag = application.descendants(matching: .any).matching(
-        NSPredicate(
-          format: "identifier BEGINSWITH %@ AND label == %@", "saved.tag.", "Original backup tag")
-      ).firstMatch
-      XCTAssertTrue(tag.waitForExistence(timeout: 10))
-      let tagIdentifier = tag.identifier
-      application.plannerElement("saved.categories.done").activateForPlannerJourney()
-      application.plannerElement("saved.settings.export").activateForPlannerJourney()
-      let save = application.buttons.matching(NSPredicate(format: "label == %@", "Save")).firstMatch
-      XCTAssertTrue(save.waitForExistence(timeout: 10))
-      chooseLocalFileLocation(application)
-      save.activateForPlannerJourney()
-      let replace = application.buttons.matching(NSPredicate(format: "label == %@", "Replace"))
-        .firstMatch
-      if replace.waitForExistence(timeout: 2) { replace.activateForPlannerJourney() }
-      let exported = application.staticTexts["saved.settings.exported"]
-      XCTAssertTrue(exported.waitForExistence(timeout: 10))
-      let filename = String(exported.label.dropFirst("Backup exported, ".count))
-      XCTAssertTrue(filename.hasSuffix(".json"))
       application.plannerElement("saved.settings.labels").activateForPlannerJourney()
       application.plannerElement(tagIdentifier).activateForPlannerJourney()
       XCTAssertTrue(name.waitForExistence(timeout: 10))
@@ -112,6 +88,96 @@ final class SavedBackupImportJourneyTests: XCTestCase {
         NSPredicate(
           format: "identifier BEGINSWITH %@ AND label == %@", "saved.tag.", "Original backup tag"))
       XCTAssertEqual(restoredTags.count, 1)
+    }
+
+    func testRestoringIntoEmptyDatasetAndReimportingKeepOneTagAfterRelaunch() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      let exportedBackup = createAndExportTagBackup(application)
+      application.terminate()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      openSettings(application)
+      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["No Tags yet"].waitForExistence(timeout: 10))
+      XCTAssertFalse(application.plannerElement(exportedBackup.tagIdentifier).exists)
+      application.plannerElement("saved.categories.done").activateForPlannerJourney()
+      selectBackup(exportedBackup.filename, application: application)
+      let additions = application.staticTexts["saved.import.summary.additions"]
+      XCTAssertTrue(additions.waitForExistence(timeout: 15))
+      XCTAssertEqual(additions.label, "Additions, 1")
+      recordImport(application, name: "Empty dataset reviews the backed-up Tag addition")
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.descendants(matching: .any)["saved.import.applied"].waitForExistence(
+          timeout: 15))
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.plannerElement(exportedBackup.tagIdentifier).waitForExistence(timeout: 10))
+      XCTAssertEqual(
+        application.plannerElement(exportedBackup.tagIdentifier).label, "Original backup tag")
+      application.plannerElement("saved.categories.done").activateForPlannerJourney()
+      selectBackup(exportedBackup.filename, application: application)
+      let unchanged = application.staticTexts["saved.import.summary.unchanged"]
+      XCTAssertTrue(unchanged.waitForExistence(timeout: 15))
+      XCTAssertEqual(unchanged.label, "Unchanged, 1")
+      XCTAssertEqual(additions.label, "Additions, 0")
+      recordImport(application, name: "Reimport reviews one unchanged Tag and no additions")
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.descendants(matching: .any)["saved.import.applied"].waitForExistence(
+          timeout: 15))
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openSettings(application)
+      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+      let restoredTag = application.plannerElement(exportedBackup.tagIdentifier)
+      XCTAssertTrue(restoredTag.waitForExistence(timeout: 10))
+      XCTAssertEqual(restoredTag.label, "Original backup tag")
+      let tags = application.descendants(matching: .any).matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@", "saved.tag.", "Original backup tag"))
+      XCTAssertEqual(tags.count, 1)
+      recordImport(
+        application, name: "Restoration and repeated import retain one original Tag identity")
+    }
+
+    private func createAndExportTagBackup(_ application: XCUIApplication) -> (
+      tagIdentifier: String, filename: String
+    ) {
+      openSettings(application)
+      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+      application.plannerElement("saved.labels.new").activateForPlannerJourney()
+      application.plannerElement("New Tag").activateForPlannerJourney()
+      let name = application.textFields["saved.tag.name"]
+      XCTAssertTrue(name.waitForExistence(timeout: 5))
+      name.activateForPlannerJourney()
+      name.typeText("Original backup tag")
+      application.plannerElement("saved.tag.save").activateForPlannerJourney()
+      let tag = application.descendants(matching: .any).matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@", "saved.tag.", "Original backup tag")
+      ).firstMatch
+      XCTAssertTrue(tag.waitForExistence(timeout: 10))
+      let tagIdentifier = tag.identifier
+      application.plannerElement("saved.categories.done").activateForPlannerJourney()
+      application.plannerElement("saved.settings.export").activateForPlannerJourney()
+      let save = application.buttons.matching(NSPredicate(format: "label == %@", "Save")).firstMatch
+      XCTAssertTrue(save.waitForExistence(timeout: 10))
+      chooseLocalFileLocation(application)
+      save.activateForPlannerJourney()
+      let replace = application.buttons.matching(NSPredicate(format: "label == %@", "Replace"))
+        .firstMatch
+      if replace.waitForExistence(timeout: 2) { replace.activateForPlannerJourney() }
+      let exported = application.staticTexts["saved.settings.exported"]
+      XCTAssertTrue(exported.waitForExistence(timeout: 10))
+      let filename = String(exported.label.dropFirst("Backup exported, ".count))
+      XCTAssertTrue(filename.hasSuffix(".json"))
+      return (tagIdentifier: tagIdentifier, filename: filename)
     }
 
     private func selectBackup(_ filename: String, application: XCUIApplication) {

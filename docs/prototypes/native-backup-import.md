@@ -34,4 +34,18 @@ Original phone/tablet Skip, Overwrite, applied-result, before/after and identity
 
 ## Remaining gates
 
-This qualifies picker cancellation and the represented Tag Skip/Overwrite workflow. Native empty-dataset additions, identical-state reimport, review cancellation, malformed/unsupported/dependency-invalid file presentation, restored/deleted identity fixtures, distinct reference/dependency details, stale review, read/save/termination and incomplete-recovery presentation still need their own runtime evidence. Earlier Core qualification is retained at its own boundary. Broad graph/family/scale, Mac runtime, signed physical sync/account/Share and whole-app polish stay open. Q83 Calendar alignment remains unanswered.
+This qualifies picker cancellation, the represented Tag Skip/Overwrite workflow and the single-Tag empty-dataset/reimport journey below. Native review cancellation, malformed/unsupported/dependency-invalid file presentation, restored/deleted identity fixtures, distinct reference/dependency details, stale review, read/save/termination and incomplete-recovery presentation still need their own runtime evidence. Earlier Core qualification is retained at its own boundary. Broad graph/family/scale, Mac runtime, signed physical sync/account/Share and whole-app polish stay open. Q83 Calendar alignment remains unanswered.
+
+## Empty-dataset restoration and identical reimport
+
+Before this qualification, the native import journey covers only an existing Tag. The next end state is a selected empty local dataset whose review lists one addition, restores the exported Tag with its original identity, and then classifies the identical backup as unchanged. Confirming that reimport and relaunching must retain one Tag with the same name and identity.
+
+Readiness comes from the accepted full-backup, empty-restore, default Skip and no-duplicate rules. Tests use the approved native UI and real exported-file boundary. The dataset switch is an existing local prototype launch option; it does not qualify an iCloud account change or independent recovery restoration.
+
+The required test creates/exports through native controls, verifies the new target has no Tags, reviews and confirms its addition, reimports the same file, and verifies zero additions plus one unchanged record. It must retain the identity and count through relaunch. Recheck the existing Skip/Overwrite workflow after extracting their shared export setup, run affected lint and compile the Mac host. Preserve graph-wide, invalid-input, restoration/deletion and failure gates.
+
+Both affected native journeys pass on each simulator, with two functions per device and zero failures or skips. The new journey reviews one addition into the empty target, imports the original Tag identity, then reviews one unchanged record and zero additions from the same file. After confirmation and relaunch it retains exactly one matching Tag with the original name and identity. The existing Skip/Overwrite journey passes after extracting the shared native export setup.
+
+The five production files are unchanged from the native import implementation. Original addition, unchanged and retained-Tag captures were inspected separately on both devices. Strict lint passes for the changed Swift test and this report. The affected Mac app/test host compiles; no Mac runtime function runs. This step adds no Core or HTTP invocations and does not qualify graph-wide restoration, deleted-identity restoration, an account transition or the independent recovery copy.
+
+[Restoration execution evidence](evidence/navigation/native-backup-restore/execution.json) records the two completed native runs, original captures, exact commands and frozen source/product hashes.
