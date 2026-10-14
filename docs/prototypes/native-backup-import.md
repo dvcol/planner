@@ -34,7 +34,7 @@ Original phone/tablet Skip, Overwrite, applied-result, before/after and identity
 
 ## Remaining gates
 
-This qualifies picker cancellation, the represented Tag Skip/Overwrite workflow and the single-Tag empty-dataset/reimport and replacement-cancellation journeys below. Native malformed/unsupported/dependency-invalid file presentation, restored/deleted identity fixtures, distinct reference/dependency details, stale review, read/save/termination and incomplete-recovery presentation still need their own runtime evidence. Earlier Core qualification is retained at its own boundary. Broad graph/family/scale, Mac runtime, signed physical sync/account/Share and whole-app polish stay open. Q83 Calendar alignment remains unanswered.
+This qualifies picker cancellation, the represented Tag Skip/Overwrite workflow, the single-Tag empty-dataset/reimport and replacement-cancellation journeys, and malformed-file rejection/retry below. Native unsupported/dependency-invalid file presentation, restored/deleted identity fixtures, distinct reference/dependency details, stale review, read/save/termination and incomplete-recovery presentation still need their own runtime evidence. Earlier Core qualification is retained at its own boundary. Broad graph/family/scale, Mac runtime, signed physical sync/account/Share and whole-app polish stay open. Q83 Calendar alignment remains unanswered.
 
 ## Empty-dataset restoration and identical reimport
 
@@ -59,3 +59,17 @@ The accepted explicit-confirmation rule and the same native UI/real-file seam pr
 The journey passes once per simulator, with zero failures or skips. Both original replacement-review and retained-current-Tag captures were inspected. The five production files remain unchanged. Strict affected Swift/Markdown lint and Mac app/test-host compilation pass; zero Mac runtime functions and no new Core/HTTP invocations are credited. This closes the represented Tag review-cancellation check, while stale-review, invalid-input, broader graph and recovery-failure gates remain open.
 
 [Cancellation execution evidence](evidence/navigation/native-backup-cancel/execution.json) retains the actual results, commands, original captures and frozen source/product hashes.
+
+## Malformed-file rejection and retry
+
+The native journeys above select valid exported files. This next qualification selects a deliberately truncated JSON file and requires a native failure before an import review or mutation. Settings must permit another selection, a valid backup must remain reviewable, and the existing Tag must retain its name and identity after relaunch.
+
+The accepted reject-together and useful-error rules apply at the same native UI/real-file seam. Stage the independent [truncated fixture](../fixtures/native-malformed-backup.json.invalid) as `Planner malformed backup.json` in the disposable simulator's local Files location before running. Fixture preparation writes only external input bytes; outcome assertions use native controls, not store inspection. Preserve the selected bytes and provenance in execution evidence.
+
+Required qualification selects the broken file through the system picker, verifies its specific JSON error and absent confirmation control, dismisses the failure, selects the actual valid export and verifies one unchanged Tag. Cancel that review and confirm the original identity/name after relaunch. Recheck Overwrite cancellation after splitting file selection from valid-review waiting, inspect phone/tablet captures, lint affected files and compile the Mac host. Unsupported versions, graph-invalid input, missing dependencies and recovery failures remain separate gates.
+
+Both affected native journeys pass per simulator, with two functions on each device and zero failures or skips. The broken file reaches the native read/decode path and shows "The backup contains an invalid JSON value." before a confirmation control exists. After dismissing it, the real exported file reviews one unchanged Tag. Canceling and relaunching preserves the original Tag identity/name. Overwrite review cancellation also passes after the selection-helper split.
+
+The exact 11-byte fixture and both staged copies have the same hash. Original native error, valid retry and retained-Tag captures were inspected separately. Strict affected Swift/Markdown lint and Mac app/test-host compilation pass. The five production files remain unchanged; zero Mac runtime functions and no new Core/HTTP test runs are credited. Other structural/dependency/version failures, full-graph restoration, stale review and recovery failures retain their gates.
+
+[Malformed-input execution evidence](evidence/navigation/native-backup-malformed/execution.json) retains the fixture bytes/provenance, completed results, commands, original captures and frozen source/product hashes.
