@@ -10,6 +10,7 @@ enum PlannerFixtureDataset {
     case calendarRepeatedShortSpan = "calendar-repeated-short-span"
     case calendarLatePoint = "calendar-late-point"
     case retainedRecovery = "retained-recovery"
+    case conflictingRecovery = "conflicting-recovery"
     case pinnedAddress = "pinned-address"
     case pinnedEmptyName = "pinned-empty-name"
     case linkImage = "link-image"
@@ -45,8 +46,9 @@ enum PlannerFixtureDataset {
       .appendingPathComponent("PlannerFixtures", isDirectory: true)
       .appendingPathComponent(scenario.rawValue, isDirectory: true)
       .appendingPathComponent(identifier.uuidString, isDirectory: true)
-    if scenario == .retainedRecovery {
-      return try await makeRetainedRecoveryStore(directory: directory)
+    if scenario == .retainedRecovery || scenario == .conflictingRecovery {
+      return try await makeRetainedRecoveryStore(
+        directory: directory, includesConflicts: scenario == .conflictingRecovery)
     }
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -221,7 +223,10 @@ enum PlannerFixtureDataset {
     return SavedPlannerStore(configuration: configuration)
   }
 
-  private static func makeRetainedRecoveryStore(directory: URL) async throws -> SavedPlannerStore {
+  private static func makeRetainedRecoveryStore(directory: URL, includesConflicts: Bool)
+    async throws
+    -> SavedPlannerStore
+  {
     func configuration(for name: String) -> PlannerStorageConfiguration {
       let datasetDirectory = directory.appendingPathComponent(name, isDirectory: true)
       return .init(
@@ -247,7 +252,9 @@ enum PlannerFixtureDataset {
     }
     let retainedCommands: [PlannerCommand] = [
       .createTag(content: .init(name: "Retained travel tag")),
-      .createItem(content: .init(title: "Retained museum")),
+      .createItem(
+        content: .init(
+          title: "Retained museum", notes: includesConflicts ? "Retained museum notes" : nil)),
     ]
     for command in retainedCommands {
       guard
@@ -255,6 +262,11 @@ enum PlannerFixtureDataset {
           .init(operationId: UUID(), session: retainedSession, command: command)
         ).outcome
       else { throw CancellationError() }
+    }
+    if includesConflicts {
+      try await seedRecoveryConflicts(
+        retainedPlanner: retainedPlanner, retainedSession: retainedSession,
+        currentPlanner: currentPlanner, currentSession: currentSession)
     }
     let currentCommands: [PlannerCommand] = [
       .createTag(content: .init(name: "Current travel tag")),
@@ -268,6 +280,49 @@ enum PlannerFixtureDataset {
       else { throw CancellationError() }
     }
     return SavedPlannerStore(configuration: currentConfiguration)
+  }
+
+  private static func seedRecoveryConflicts(
+    retainedPlanner: PlannerCore.Planner, retainedSession: PlannerDatasetSession,
+    currentPlanner: PlannerCore.Planner, currentSession: PlannerDatasetSession
+  ) async throws {
+    guard case .exported(let data) = await retainedPlanner.exportData(session: retainedSession),
+      case .decoded(let backup) = currentPlanner.decodeImport(data),
+      case .reviewed(let review) = await currentPlanner.prepareReview(
+        session: currentSession, command: .applyImport(backup: backup)),
+      case .applied(_, .complete) = await currentPlanner.execute(
+        .init(
+          operationId: UUID(), session: currentSession, command: review.command,
+          reviewToken: review.reviewToken)
+      ).outcome,
+      let item = backup.backup.items.first,
+      let tagSource = backup.backup.sources.first(where: {
+        if case .tag = $0 { return true }
+        return false
+      }),
+      case .tag(let tag) = tagSource,
+      case .source(.item(let currentItem)) = await currentPlanner.read(
+        session: currentSession, request: .source(.init(kind: .item, id: item.id))),
+      case .source(.tag(let currentTag)) = await currentPlanner.read(
+        session: currentSession, request: .source(.init(kind: .tag, id: tag.id))),
+      let notesHash = currentItem.fieldHashes[.notes],
+      let nameHash = currentTag.fieldHashes[.name]
+    else { throw CancellationError() }
+    let commands: [PlannerCommand] = [
+      .editItem(
+        sourceId: item.id, changes: .init(notes: .set("Current museum notes")),
+        expectedFieldHashes: [.notes: notesHash]),
+      .editTag(
+        sourceId: tag.id, changes: .init(name: .set("Edited retained tag")),
+        expectedFieldHashes: [.name: nameHash]),
+    ]
+    for command in commands {
+      guard
+        case .applied(_, .complete) = await currentPlanner.execute(
+          .init(operationId: UUID(), session: currentSession, command: command)
+        ).outcome
+      else { throw CancellationError() }
+    }
   }
 
   private static func argument(_ name: String, in arguments: [String]) throws -> String? {

@@ -3,6 +3,97 @@ import XCTest
 #if os(iOS)
   @MainActor
   final class RetainedRecoveryJourneyTests: XCTestCase {
+    func testRecoverySkipAndOverwritePreserveCurrentDataAndRestoredIdentitiesAfterRelaunch() throws
+    {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "conflicting-recovery", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      XCTAssertTrue(application.buttons["Items"].firstMatch.waitForExistence(timeout: 20))
+      application.openPlannerSection("Items")
+      let museum = application.savedPlannerItemRows("Retained museum").firstMatch
+      let hotel = application.savedPlannerItemRows("Current hotel").firstMatch
+      XCTAssertTrue(museum.waitForExistence(timeout: 20))
+      XCTAssertTrue(hotel.exists)
+      let museumIdentifier = museum.identifier
+      let hotelIdentifier = hotel.identifier
+      museum.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Current museum notes"].waitForExistence(timeout: 10))
+      openSettings(application)
+      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+      let editedTag = tag("Edited retained tag", in: application).firstMatch
+      let independentTag = tag("Current travel tag", in: application).firstMatch
+      XCTAssertTrue(editedTag.waitForExistence(timeout: 10))
+      XCTAssertTrue(independentTag.exists)
+      let tagIdentifier = editedTag.identifier
+      let independentTagIdentifier = independentTag.identifier
+      application.plannerElement("saved.categories.done").activateForPlannerJourney()
+
+      for overwrite in [false, true] {
+        try selectRetainedCopy(application)
+        let retainedItem = recoverySource("Retained museum", kind: "item", in: application)
+        let retainedTag = recoverySource("Retained travel tag", kind: "tag", in: application)
+        XCTAssertEqual(
+          "saved.item." + retainedItem.identifier.dropFirst("saved.recovery.source.item.".count),
+          museumIdentifier)
+        XCTAssertEqual(
+          "saved.tag." + retainedTag.identifier.dropFirst("saved.recovery.source.tag.".count),
+          tagIdentifier)
+        application.plannerElement("saved.recovery.restore.review").activateForPlannerJourney()
+        let conflicts = application.staticTexts["saved.import.summary.conflicts"]
+        revealReviewElement(conflicts, in: application)
+        XCTAssertEqual(conflicts.label, "Skipped conflicts, 2")
+        if overwrite {
+          let mode = application.plannerElement("saved.import.mode")
+          revealReviewElement(mode, in: application)
+          mode.activateForPlannerJourney()
+          application.plannerElement("Overwrite").activateForPlannerJourney()
+          let replacements = application.staticTexts["saved.import.summary.replacements"]
+          revealReviewElement(replacements, in: application)
+          XCTAssertEqual(replacements.label, "Replacements, 2")
+          let tagReplacement = application.buttons["Retained travel tag, Tag"].firstMatch
+          revealReviewElement(tagReplacement, in: application)
+          tagReplacement.activateForPlannerJourney()
+          let before = application.staticTexts["Name, Edited retained tag"]
+          revealReviewElement(before, in: application)
+          XCTAssertTrue(before.isHittable)
+          let after = application.staticTexts["Name, Retained travel tag"]
+          revealReviewElement(after, in: application)
+          XCTAssertTrue(after.isHittable)
+          capture("Recovery Overwrite reviews current and retained Tag values")
+        } else {
+          capture("Recovery Skip keeps two current conflicts")
+        }
+        application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+        XCTAssertTrue(
+          application.staticTexts["saved.recovery.restore.applied"].waitForExistence(timeout: 15))
+        application.plannerElement("saved.import.close").activateForPlannerJourney()
+        closeRecovery(application)
+        application.terminate()
+        application.launchSavedPlannerJourney()
+        application.openPlannerSection("Items")
+        XCTAssertTrue(application.plannerElement(hotelIdentifier).waitForExistence(timeout: 15))
+        XCTAssertEqual(application.plannerElement(hotelIdentifier).label, "Current hotel")
+        XCTAssertTrue(application.plannerElement(museumIdentifier).exists)
+        XCTAssertEqual(application.savedPlannerItemRows("Retained museum").count, 1)
+        application.plannerElement(museumIdentifier).activateForPlannerJourney()
+        let expectedNotes = overwrite ? "Retained museum notes" : "Current museum notes"
+        XCTAssertTrue(application.staticTexts[expectedNotes].waitForExistence(timeout: 10))
+        openSettings(application)
+        application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+        XCTAssertTrue(application.plannerElement(tagIdentifier).waitForExistence(timeout: 10))
+        let expectedTag = overwrite ? "Retained travel tag" : "Edited retained tag"
+        XCTAssertEqual(application.plannerElement(tagIdentifier).label, expectedTag)
+        XCTAssertEqual(tag(expectedTag, in: application).count, 1)
+        XCTAssertEqual(
+          application.plannerElement(independentTagIdentifier).label, "Current travel tag")
+        capture("Recovery \(overwrite ? "Overwrite" : "Skip") preserves identities after relaunch")
+        application.plannerElement("saved.categories.done").activateForPlannerJourney()
+      }
+    }
+
     func testReviewCancelAndRestoreRetainedCopyPreservesIdentitiesAfterRelaunch() throws {
       continueAfterFailure = false
       let application = XCUIApplication()
@@ -179,6 +270,19 @@ import XCTest
           format: "identifier BEGINSWITH %@ AND label CONTAINS %@",
           "saved.recovery.source.\(kind).", name)
       ).firstMatch
+    }
+
+    private func tag(_ name: String, in application: XCUIApplication) -> XCUIElementQuery {
+      application.buttons.matching(
+        NSPredicate(format: "identifier BEGINSWITH %@ AND label == %@", "saved.tag.", name))
+    }
+
+    private func revealReviewElement(_ element: XCUIElement, in application: XCUIApplication) {
+      for _ in 0..<8 {
+        if element.exists && element.isHittable { return }
+        application.collectionViews["saved.import.form"].swipeUp()
+      }
+      XCTAssertTrue(element.exists && element.isHittable)
     }
 
     private func selectRetainedCopy(_ application: XCUIApplication) throws {
