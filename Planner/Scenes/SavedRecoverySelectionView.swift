@@ -1,9 +1,14 @@
 import PlannerCore
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct SavedRecoverySelectionView: View {
   @Environment(\.dismiss) private var dismiss
   let selection: PlannerRecoverySelection
+  @State private var backupFile: SavedPlannerBackupFile?
+  @State private var showExporter = false
+  @State private var exportFailure: String?
+  @State private var exportedFilename: String?
 
   private var backup: PlannerPortableBackup { selection.decodedBackup.backup }
 
@@ -21,6 +26,10 @@ struct SavedRecoverySelectionView: View {
               .accessibilityIdentifier("saved.recovery.evidence")
             Text("These proposed changes have not been verified as saved data.")
               .foregroundStyle(.secondary)
+          }
+          if let exportedFilename {
+            LabeledContent("Recovery copy exported", value: exportedFilename)
+              .accessibilityIdentifier("saved.recovery.exported")
           }
           DisclosureGroup("Copy details") {
             LabeledContent("Dataset", value: selection.datasetId.uuidString)
@@ -59,13 +68,67 @@ struct SavedRecoverySelectionView: View {
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {
           Button("Done") { dismiss() }
+            .disabled(showExporter)
             .accessibilityIdentifier("saved.recovery.selection.done")
+        }
+        ToolbarItem(placement: .primaryAction) {
+          Button("Export", systemImage: "square.and.arrow.up") {
+            exportFailure = nil
+            exportedFilename = nil
+            backupFile = .init(data: selection.portableData, filename: exportFilename)
+            showExporter = true
+          }
+          .disabled(showExporter)
+          .accessibilityIdentifier("saved.recovery.export")
         }
       }
     }
+    .fileExporter(
+      isPresented: $showExporter, item: backupFile, contentTypes: [.json],
+      defaultFilename: backupFile?.filename, onCompletion: finishExport,
+      onCancellation: { backupFile = nil }
+    )
+    .alert("Recovery export failed", isPresented: exportFailurePresented) {
+      Button("OK", role: .cancel) { exportFailure = nil }
+    } message: {
+      Text(exportFailure ?? "")
+    }
+    .interactiveDismissDisabled(showExporter)
     #if os(macOS)
       .frame(minWidth: 480, minHeight: 440)
     #endif
+  }
+
+  private var exportFailurePresented: Binding<Bool> {
+    Binding(get: { exportFailure != nil }, set: { if !$0 { exportFailure = nil } })
+  }
+
+  private var exportFilename: String {
+    let evidenceName: String
+    switch selection.evidence {
+    case .acknowledgedSnapshot: evidenceName = "Saved"
+    case .preparedUnverified: evidenceName = "Unverified"
+    }
+    var components = ["Planner \(evidenceName) Recovery", selection.namespaceId.uuidString]
+    if let generation = selection.checkpointGeneration {
+      components.append("Generation \(generation)")
+    }
+    if let proposalIdentifier = selection.proposalId {
+      components.append("Proposal \(proposalIdentifier)")
+    }
+    return components.joined(separator: " ")
+  }
+
+  private func finishExport(_ result: Result<URL, any Error>) {
+    backupFile = nil
+    switch result {
+    case .success(let destination): exportedFilename = destination.lastPathComponent
+    case .failure(let error):
+      let reason = error as NSError
+      guard reason.domain != NSCocoaErrorDomain || reason.code != CocoaError.userCancelled.rawValue
+      else { return }
+      exportFailure = error.localizedDescription
+    }
   }
 
   private func sourceName(_ source: PlannerPortableSource) -> String {
