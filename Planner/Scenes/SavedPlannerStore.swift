@@ -129,6 +129,33 @@ final class SavedPlannerStore {
     }
   }
 
+  func decodeBackup(_ data: Data) async throws -> PlannerDecodedBackup {
+    guard let planner else { throw CocoaError(.fileReadUnknown) }
+    let decoded = await Task.detached { planner.decodeImport(data) }.value
+    try Task.checkCancellation()
+    switch decoded {
+    case .decoded(let backup): return backup
+    case .invalid(let reason): throw reason
+    }
+  }
+
+  func prepareBackupImport(
+    _ backup: PlannerDecodedBackup, mode: PlannerImportMode, restoreDeletedData: Bool
+  ) async throws -> PlannerReview {
+    guard let planner, let session, canCreate else {
+      throw CocoaError(
+        .fileWriteUnknown,
+        userInfo: [NSLocalizedDescriptionKey: "Planner is not ready to import data."])
+    }
+    switch await planner.prepareReview(
+      session: session,
+      command: .applyImport(backup: backup, mode: mode, restoreDeletedData: restoreDeletedData))
+    {
+    case .reviewed(let review): return review
+    case .failed(let reason): throw reason
+    }
+  }
+
   func readLists(archive: PlannerItemQuery.Archive, text: String = "") async -> [SavedPlannerList]?
   {
     guard let planner, let session else { return nil }

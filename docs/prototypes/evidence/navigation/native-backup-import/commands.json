@@ -1,0 +1,54 @@
+{
+  "red": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerCalendarDenseIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testCancelingNativeBackupImportKeepsSettingsAvailableAfterRelaunch\" -resultBundlePath /private/tmp/PlannerBackupImportPickerRed.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  "initial-picker": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerCalendarDenseIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testCancelingNativeBackupImportKeepsSettingsAvailableAfterRelaunch\" -resultBundlePath /private/tmp/PlannerBackupImportPickerPhoneCorrected.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  "phone-query-failure": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerCalendarDenseIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testRealBackupSkipAndOverwriteKeepTagIdentityAfterRelaunch\" -resultBundlePath /private/tmp/PlannerBackupImportRoundTripPhone.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  "phone-scroll-failure": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerCalendarDenseIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testRealBackupSkipAndOverwriteKeepTagIdentityAfterRelaunch\" -resultBundlePath /private/tmp/PlannerBackupImportRoundTripPhoneCorrected.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  "phone-initial-full": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerCalendarDenseIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testRealBackupSkipAndOverwriteKeepTagIdentityAfterRelaunch\" -resultBundlePath /private/tmp/PlannerBackupImportRoundTripPhoneDetails.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  "tablet-query-failure": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerCalendarDenseIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests\" -resultBundlePath /private/tmp/PlannerBackupImportTablet.xcresult CODE_SIGNING_ALLOWED=NO test-without-building"
+  },
+  "phone-pair": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerCalendarDenseIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests\" -resultBundlePath /private/tmp/PlannerBackupImportPhoneFinal.xcresult CODE_SIGNING_ALLOWED=NO test-without-building"
+  },
+  "tablet-pair": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerCalendarDenseIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests\" -resultBundlePath /private/tmp/PlannerBackupImportTabletSearch.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  "tablet-locator-failure": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerCalendarDenseIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testRealBackupSkipAndOverwriteKeepTagIdentityAfterRelaunch\" -resultBundlePath /private/tmp/PlannerBackupImportDetailsTablet.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  "phone-initial-details": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerCalendarDenseIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testRealBackupSkipAndOverwriteKeepTagIdentityAfterRelaunch\" -resultBundlePath /private/tmp/PlannerBackupImportDetailsPhone.xcresult CODE_SIGNING_ALLOWED=NO test-without-building"
+  },
+  "phone-details": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerCalendarDenseIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testRealBackupSkipAndOverwriteKeepTagIdentityAfterRelaunch\" -resultBundlePath /private/tmp/PlannerBackupImportLocalDetailsPhone.xcresult CODE_SIGNING_ALLOWED=NO test-without-building"
+  },
+  "tablet-details": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerCalendarDenseIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedBackupImportJourneyTests/testRealBackupSkipAndOverwriteKeepTagIdentityAfterRelaunch\" -resultBundlePath /private/tmp/PlannerBackupImportLocalDetailsTablet.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  "mac-build": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS -derivedDataPath /private/tmp/PlannerCalendarModesMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO build-for-testing"
+  }
+}

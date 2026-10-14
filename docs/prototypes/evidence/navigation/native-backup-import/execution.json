@@ -1,0 +1,183 @@
+{
+  "artifactHashes": {
+    "commands.json": "66f240409dec0652f18fe40582260b624b549b4e7a2351c0e92f59889423266b",
+    "compile-failure.log.gz": "a8f77a5bc403676f77601f9cc0c16268856f1784196f63b5876a8f2d5efc594d",
+    "compiled-source-hashes.json": "13ee56190749be3434cbe2d9ca3b2cc380dbc4955f53b2cd1bda380d1a1196d2",
+    "delayed-index-backup-provenance.json": "12d413983f8d21bed4e538165db917642c911bb6f938d4f27a9c4fa4fea6dd19",
+    "delayed-index-backup.json": "286f9ca2e4dbc8ee11c211a38ce5d25711eba18f93ae63d0b308e504646d62ad",
+    "initial-picker-summary.json": "55d9888c63285ec12b7a014489cb1e2177491c7b44a0b9a9d665ba79f47a6c07",
+    "initial-picker-tests.json": "dff5e5a2685d8a7030f0dcafe79323e4725cbf28866d3251f97215d2341c4b61",
+    "initial-picker.log.gz": "31b8dbb77790f60cceeaf365590cb741d3d2286541bc76d46a14cb7df3c372c6",
+    "mac-build.log.gz": "ea848e3a8745d0f168238576e85595b4b65e9f9c95d49f79c195ee810d39a131",
+    "markdown-lint.log": "61ad321dde4433e7f8a8d161e67eb61278081e9e25332ed7f1cdc61e593925d2",
+    "paired-source-hashes.json": "93eb2ca5c55de9f633dda412a42e4abf10fb05076cefb5d80845fd4e22d90644",
+    "phone-details-summary.json": "d5e7b8b8d3aeea64f2e299c2ba380a7dc284e53bc547359fd3719ae60c14483e",
+    "phone-details-tests.json": "7828425c737b3170be6503036dd193ec118b427e9a3924fecba240d70222cf7d",
+    "phone-details.log.gz": "59fdeb0643a5f3e79bcde93f380681d7227436adc9334341e805374603d686ac",
+    "phone-details/1903D261-4788-415F-9CA1-BF50F95F7E2F.png": "98cab45f59569b28e55fbca9cba164347e1e788e2d00c54d61b0219139b95566",
+    "phone-details/1B2212CF-FDA5-4714-B4CD-2FCFD58E0CE4.png": "2674d48b9a683642d82082ba62ff79aebfa4a3c85fca0e6d9cca4c7fc06b34c7",
+    "phone-details/28B93AC0-B744-40FA-83A3-AA33C90B9D85.png": "4685bfb7b073bea03469f9d48348d048e01d06c7537ea52906c67967a5610dfe",
+    "phone-details/4996E9B9-E1B1-4F33-88C0-3AF72C8648B9.png": "65b415513663dd3fad5390eedccd10fafd1b6e174eaeede9c6ac86c7b5ea9de0",
+    "phone-details/7F51811D-015E-413F-AD4E-7A3F82C81F2E.png": "65b415513663dd3fad5390eedccd10fafd1b6e174eaeede9c6ac86c7b5ea9de0",
+    "phone-details/863F0DDC-E093-4DCE-9A2A-77FD410E3A16.txt": "a4168679afe0826c22359ae884a786051c99c64e136628e98cce07ffc095abf1",
+    "phone-details/D0AEC986-0486-4480-BD47-B8366D718D33.png": "655f57cdd7465130fbd2042906a65bca6cbd816b607733006e8d1052c37b6490",
+    "phone-details/EFC1DD98-310D-4058-B808-D36E2423FD5E.txt": "a38d1b2c99e003ac49e0735d9cf28285cde9207609f075dcf97ad7fcd898ef39",
+    "phone-details/manifest.json": "af15e9bba92ed49af6ab8117e42a422c3ecf3508ff4da83474295054815b2346",
+    "phone-initial-details-summary.json": "6e4164818c0b4d51d3878490f54c3d198f0d327d6fc379688ad606d6ec841a45",
+    "phone-initial-details-tests.json": "292261cb9c626491c3ca8aa60c1973a257c1a9ac62dda42d8e6b9b5b62f46ee8",
+    "phone-initial-details.log.gz": "ad97545bef2ef045bebb2f2888924fe1e756a1c43ae315cbc57a0f854416f552",
+    "phone-initial-full-summary.json": "0269811c56455bb662d7f2f8b430fa3916d01aa45f0247ebc674816e28c10141",
+    "phone-initial-full-tests.json": "e69a7ec10b63b0209d392d32fa87b0416b8762224b79dccdc52405b0deec845c",
+    "phone-initial-full.log.gz": "acba5e9e92ba1fd0b2b34413af1c6d8052e2ee132b50aa0c8c122c65528f55ac",
+    "phone-pair-summary.json": "070b85250b7fbe771b1b96a0585dab8a0749c9558de7bed6994f8dc1822f0a35",
+    "phone-pair-tests.json": "bcef88c1049a5e6381ff8c9f600144acb5e4e210b7cd90f03794af34741a7fb0",
+    "phone-pair.log.gz": "faf84e29b93472a66a94db33bf224ba00502784edecee2ed5891cadb7789b1f0",
+    "phone-pair/05B58B29-CF55-4978-AECB-666E6C38343C.png": "9f11867ba4ec5d80a93fba22867e3bf449b614bb8ad281b664cd54a95693ae2b",
+    "phone-pair/3984CF58-2489-4EAB-AE11-3C06D168C536.txt": "b519540926e7e7db97cd8b4c56247dbb7c716682bdf7104fd7291b4bfd54196a",
+    "phone-pair/77E09280-1CB7-4512-AF08-2ED1FE53E425.png": "4f9dc7a98815645a2c0307126d85be61f87f1e64ccceb33aff45c321b862ad83",
+    "phone-pair/83FB995E-16CB-4A5B-B861-B907E20C1127.txt": "704d58cf65a7474c372af25ddc7c89e135d7f36ea79f2bebb342ea6bdf1f5398",
+    "phone-pair/90FC8358-9BDE-4F75-86CB-839904150DF4.png": "89f999db4c7ce01698a2294dcd8c1bb7d64a4190a8f3febe1bd1e318c0f57375",
+    "phone-pair/C22832BD-0DC9-40E8-A629-5E3737189FA8.png": "481fce81b7d13da1a56997b07820a331f4fb9aad1aaaf0edbcacf32c09201dca",
+    "phone-pair/manifest.json": "c852dff6de2e2969926c90db613f677d88f4d9cf73eef1d61361c4cec0858b48",
+    "phone-query-failure-hierarchy.txt": "ea67abe2d5f9cdeaa9dd82a838a5dafeae1b36680260a16dc6baed6b0a1f8b62",
+    "phone-query-failure-summary.json": "91af3a650ef438baf19fd45b33595a4ce2628d6c433c9b504b5f2a24b0ef9f89",
+    "phone-query-failure-tests.json": "845461da0594f94f020ebeb3807672ffebdecd3f87e29862f15d3632ae3f1c52",
+    "phone-query-failure.log.gz": "eda907dd1982bdfc12095c3812b15b3b4c2b67779c9079f410e06c53e69d657e",
+    "phone-scroll-failure-summary.json": "2ad871caefb3f8757ddcf397f780092494879e4606db08707deb20cad1f8df63",
+    "phone-scroll-failure-tests.json": "f80454d3dc1a085450f1af49a0f4bf8cb3869db4ed41bee55a1498c49eb3d6cb",
+    "phone-scroll-failure.log.gz": "a081ddd3968c1af1f019f2bc80cdf2b2f888f27771c1085bf946d291772cba48",
+    "red-summary.json": "9dbdd6904d2335930e7631c7fb3f46ba597a4d9a247c3a6b1c97d87968396a57",
+    "red-tests.json": "8bd6099130a752bd7b5bbcaaaeaff6abbfc8e0350547ec179856be1f8a00be19",
+    "red.log.gz": "a1bac70826352afa8f6e3f82d2468c56a5aceb849f4ffbb923c5b73104a24d2a",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tablet-details-summary.json": "43cfff47252d354eb282241885d6ac946ba088133db647c0e23e9b3e4c21085d",
+    "tablet-details-tests.json": "06984276b2b16be1e514ca7204917a2c5f1463430ca56b36a0e8d4fcfdf24434",
+    "tablet-details.log.gz": "fd98f5d67887d56d473bee3e1de4443de889b455b6147df9c4f2e394182074a2",
+    "tablet-details/0AD4F663-72C5-4533-9ABC-C1474BCF6865.png": "47b6bbe2d36bcd1fd39540e279a6fb45220b0192adc37745aae895fa7399fe0f",
+    "tablet-details/18031C85-0802-4E47-B647-52F2B6CACE36.txt": "2f361ef1fe975cb642c17492519c3edbe6cbdec0acac33cbbd6622366940e3da",
+    "tablet-details/21BE00A8-9383-4D70-B253-EBD6D25A16EE.png": "1078984bfa8a7b5d8b7ec07e4df1f5c08d0e70a3595a07df673da516f6bab3f3",
+    "tablet-details/2C962FF0-BD61-4876-A55F-F164E70520E9.png": "058c86ed816737f2f466d38b00773cda7e7cd35f5edade8d9949ad13b36e4713",
+    "tablet-details/4A4C97CF-5BA9-4FDE-844F-2AC82AE2D86E.png": "dcf15b0989de7129ba5fe1c3c89090e7aeb6872c7f79a9957a1dbb9049bb690b",
+    "tablet-details/7BF5BA00-57DB-4C5D-A8EA-668B44F78252.txt": "fdb63a6673544aa4bdfcffb5963f14fb3c82eda2be360ee278be5d44fbea09ab",
+    "tablet-details/A07C88F2-D402-45FE-9E46-EEAEE74F5721.png": "536bc816fe3102e42fb582e99a024c4a242d432ddea299fc227ba504172f2c76",
+    "tablet-details/E1767FDF-8342-4BB3-8CD0-AAFE69461FD9.png": "dcf15b0989de7129ba5fe1c3c89090e7aeb6872c7f79a9957a1dbb9049bb690b",
+    "tablet-details/manifest.json": "a697181471c8ea05d94e2f981020a210707cbe084c7f8b8824066ed0b555c253",
+    "tablet-locator-failure-hierarchy.txt": "3a4946f39dfc06184cff5d5f04e8acbd7283070cad273f8a94f94496bc88ae5e",
+    "tablet-locator-failure-summary.json": "6758f023a43d6d3b214a22add5a5896bdcb5fb351ffc1654c424bb01ffe58e28",
+    "tablet-locator-failure-tests.json": "a7e8842747b9426795e5826e9fe1556d9832a23f989f6a9a7cb95afbb7229832",
+    "tablet-locator-failure.log.gz": "c125b7a16569a51668f8124607ef66865b0200b9274d018abc558489d4ae7d86",
+    "tablet-pair-summary.json": "25a59f0c478e7b597905c821e47cf366d48f672c43968100552a1d784d9bdbec",
+    "tablet-pair-tests.json": "15962ba44d3a3aa60b931032a1e93f64ebd669b06f3a9db9af6f3b97489db47e",
+    "tablet-pair.log.gz": "c98aacd35c7dc99562dc9af8b2261d72035ad3fabd79fdcb7a201884e7a086f0",
+    "tablet-pair/625165B2-F89C-4325-9315-198655A5093D.png": "81570b77e138dc7ce8054257ab8f808adc025cc746da07fb169a51d5a9a6cd91",
+    "tablet-pair/81FC39CD-DF2E-44B9-BAC3-F69C2D9CA658.png": "0e2b53200adcb1c8d296a8f95169efa13bc5bf2e46a0511d03bae5f75b4fcf27",
+    "tablet-pair/A0E60DDD-EC8D-4745-9A86-3D9CE1B47125.png": "8832dafdc890f5f258d979498f4d0d2c2f541cb70ab678bf06c9f0b870606986",
+    "tablet-pair/E65C0FF8-1B5C-4C4E-BF84-87DD0FA71952.txt": "82df32491e4b32a3f6c81262357df5c1e8df951dd5be662ebf05cb22316ad9a1",
+    "tablet-pair/EC422847-50DC-4117-8C19-17F8D2AC6C60.txt": "a7aa0c3751bf2787cfd3dffb6f823823e21e61d9f27f148ce805f5b368d8ea92",
+    "tablet-pair/F391F9A1-0ED9-4811-9F40-D3AF0E6541FE.png": "c8c6e067d4d423737266f8628a573eb50cc9290d494bb1f00f182185a30736a6",
+    "tablet-pair/manifest.json": "201d4fe6e802b7ad12a882e8648e7f5e39070e1f3b01885821aedc6dc88b0e76",
+    "tablet-query-failure-hierarchy.txt": "b2ac9ea348cd58266701c77b730ba6d3b74054e34440b6e5b6141e34f60be1d4",
+    "tablet-query-failure-summary.json": "0e10840201f4ed2dc235f8800899a3cc7541dbbbe86e4b77b8f7b8576bd910ee",
+    "tablet-query-failure-tests.json": "c8d0f40383d445e14c05d3403798945f05bab27a3802f5f5d70ca8c76ddb8496",
+    "tablet-query-failure.log.gz": "9b041d7e9ac29effa5d876c1c008c1bb971ce57a29ffb8e3fcbd0897bf48f99e"
+  },
+  "baseCommit": "d2a312aaabda2fe46218931d7b000373a51e9a74",
+  "productHashes": {
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner": "2d2d27a032ebb21e31a0941e03e3862b409ae545274c10edb59ec22a5daea53e",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib": "8a8870c294fb28ab37c00abe2f8be7609629b4e5484e207601ac71b1241306eb",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests": "ab55d62e4e9bae4d54be6703a136e57e9f88c413b764feca9eafbba81df38e11",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "e6f540414489754d2dcaf1af64a0bcbb2951a58bb2d85fcf1595226f15769cba",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib": "02e1584c0d7cc6b303abfaa7dae9c40bbaa8249ea84f849ad6674fdcc56b1d10",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests": "a61efae08f1a84710215ba330370162859d48a015ed2e65c5bdf4817e0e35b61"
+  },
+  "qualification": {
+    "coreAndHTTPInvocationsThisStep": 0,
+    "initial-picker": {
+      "failedTests": 0,
+      "passedTests": 1,
+      "skippedTests": 0
+    },
+    "macAppAndUITestHostBuild": "passed",
+    "macNativeUIInvocations": 0,
+    "markdownLint": "passed",
+    "phone-details": {
+      "failedTests": 0,
+      "passedTests": 1,
+      "skippedTests": 0
+    },
+    "phone-initial-details": {
+      "failedTests": 0,
+      "passedTests": 1,
+      "skippedTests": 0
+    },
+    "phone-initial-full": {
+      "failedTests": 0,
+      "passedTests": 1,
+      "skippedTests": 0
+    },
+    "phone-pair": {
+      "failedTests": 0,
+      "passedTests": 2,
+      "skippedTests": 0
+    },
+    "phone-query-failure": {
+      "failedTests": 1,
+      "passedTests": 0,
+      "skippedTests": 0
+    },
+    "phone-scroll-failure": {
+      "failedTests": 1,
+      "passedTests": 0,
+      "skippedTests": 0
+    },
+    "red": {
+      "failedTests": 1,
+      "passedTests": 0,
+      "skippedTests": 0
+    },
+    "swiftStrictLint": "passed",
+    "tablet-details": {
+      "failedTests": 0,
+      "passedTests": 1,
+      "skippedTests": 0
+    },
+    "tablet-locator-failure": {
+      "failedTests": 1,
+      "passedTests": 0,
+      "skippedTests": 0
+    },
+    "tablet-pair": {
+      "failedTests": 0,
+      "passedTests": 2,
+      "skippedTests": 0
+    },
+    "tablet-query-failure": {
+      "failedTests": 1,
+      "passedTests": 1,
+      "skippedTests": 0
+    },
+    "whitespace": "passed"
+  },
+  "report": "docs/prototypes/native-backup-import.md",
+  "reviews": {
+    "spec": "Impact identity finding resolved. Actual native counts, unchanged production, original export and scoped remaining gates verified; no remaining source/evidence finding.",
+    "standards": "No material standards/evidence findings; all hashes, actual counts and complete capture manifests verified."
+  },
+  "scopeNotes": [
+    "Two unique native functions qualify on each device in the paired runs. The full workflow then qualifies once per device with strengthened visible before/after and identity assertions.",
+    "Five production Swift files are identical across paired and final detail runs. Only the test locator/visibility helper changed; paired-source-hashes.json preserves the earlier compiled epoch.",
+    "Final detail functions use the same frozen built iOS products. Current hashes describe those products and the final Mac compile; zero Mac runtime functions executed.",
+    "The failed iPad pair has one pass and one failure; it remains labeled failed. The later locator failure ended before import review. The public exported file proves save succeeded while Recents had not yet displayed it.",
+    "Selected original phone/tablet captures inspected separately. Early tablet Overwrite count was offscreen and is not visual proof; later tablet detail captures show the replacement, before/after names and exact identity.",
+    "This step qualifies the represented Tag workflow. Native new-owner/unchanged input, malformed input, complex references, restoration/deletion, stale review and failure recovery retain their separate runtime gates. Q83 remains pending."
+  ],
+  "sourceHashes": {
+    "Planner/Scenes/SavedBackupImportForm.swift": "6e627d98a9c052647ad3a0f31959cf9590d7b959b39f61e7cf7a7ba7c017c31c",
+    "Planner/Scenes/SavedBackupImportSummary.swift": "1da34a96a56d00edcd341a11a60565d3e2529db306f5182f844f238f4f35f6ce",
+    "Planner/Scenes/SavedPlannerBackupFile.swift": "e80dd7f66ee94b47ae4a0db557a6adb5356eae137d5d4e58131ecc1435f32046",
+    "Planner/Scenes/SavedPlannerSettingsView.swift": "9d6bca4fe526b6a34f742bd2a5b75fbbc25440495766ed5a2db9a456ad19b5fa",
+    "Planner/Scenes/SavedPlannerStore.swift": "946f31e6a6f7fcded82150722b74ec2b24b9d82ba78584714d7cf02eeffc8fea",
+    "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift": "b0457c55acfc82279ec4a3506346472f943663e76820eb2dd1f2559b2fd503ce",
+    "docs/prototypes/native-backup-import.md": "b8909d91c2bcf9dd4444b4009bf5e07e9a18646ee552465121831975f7599555"
+  }
+}
