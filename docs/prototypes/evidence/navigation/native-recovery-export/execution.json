@@ -1,0 +1,123 @@
+{
+  "artifactHashes": {
+    "commands.json": "1170abe7af7dc5a3918376658257822ce21b58a48d366dac5df7eb6608731132",
+    "compiled-source-hashes.json": "754d9f66e63df4b14f6c6469f1dccdab3a7548ecdf606af3dbe2b62fe6561f02",
+    "mac-build.log.gz": "61932427fc4f20eb5d95740b49a5409934a4448e1fb9c6f0fa4444fa64c2216e",
+    "markdown-lint.log": "aac6e6e4a562b6518518827bd7a8bcace9c78603154800ec3310092e1b23aab9",
+    "phone-default-output-provenance.json": "e3cd33297ff9c59428f036af4f7a45e4de154006298c39fcc4a9f831395aea44",
+    "phone-default-output.json": "0145b3c2320dd93fc9b20f0fca0a3a4747e025eea0c86663880b78d878d0d902",
+    "phone-default-summary.json": "79ed66141fde65132b8314899deebdbae602f3ec4b6dd4f26866eb25de2255de",
+    "phone-default-tests.json": "83d0be954017f777e143a30e36968efaa2aefb21a94882aef36b7789af1e3ed1",
+    "phone-default.log.gz": "57b4fa6fb154c007e971505cec1ada40b7f8bea35b69197770cd2364cf9c5957",
+    "phone-default/04F96408-1F13-4456-8DEC-D80F5A4FD1E5.png": "871736c59418e81af82c4b6adeeff2f4113034338e2e6175461e7117f0320932",
+    "phone-default/095E1B4C-0964-49E0-A898-40AFD1E2CF48.txt": "7856ea785fc3f234c4ef4eb955ad33f3ddcde25d455e008640d4f39b56d35182",
+    "phone-default/6D745E23-BE56-422D-B392-37025C1D445D.txt": "fb4d91f3b3e15fd8580fc87d9d8c38fd07236c22660383b246190fabdb979776",
+    "phone-default/A13E8718-6697-4FDA-8F85-E1162B4ED442.png": "c7764d7aed5bd52b5cf648a29cf14051f15eb81fee071644b3029af6da1541e8",
+    "phone-default/manifest.json": "83993917e3ca3a54a8c8331645a9bcf95dff9f8f3458ace4456955f82284280f",
+    "phone-recovery-output-provenance.json": "610bb7920f31cd5a7089795271e743144967e701155c504be65c9e44a633108c",
+    "phone-recovery-output.json": "c3a227ddf73add9f5711567170c831283e6ae18191383ef12498b34e8d66519c",
+    "phone-summary.json": "1939e53eedd00229f9c4f25fea1f0206b0f6c162f3c758ee76daa79680dffc66",
+    "phone-tests.json": "577924d4b22c6ebd4dc2931cde14e4fee63c44e477403a626990caf57417819c",
+    "phone.log.gz": "9c82d39109bd2d9bc2591300068d55bddd4de097f67512a8df874bef64a4850b",
+    "phone/13E2D1AC-7C8F-4D4B-A7F9-A383F66177E8.png": "91c1f339bfd2f4ba97f87308346f2d3a57cee58344c210ac94ac796eff6c7626",
+    "phone/22687A47-D6C3-44A6-9414-E287BFEC703F.txt": "c8e0298af1c827228627cb72dc3bf548f5e9ec514685be261b56f62eb2dff4f2",
+    "phone/CFB55A04-62A2-4D01-AD50-4C8DDE989352.png": "6329cc300e53a143a20c67a4b45d2b49a2d0192c8342aab5cdf1c76e0b339210",
+    "phone/E957ED02-B456-4E3A-A3C9-D60020059998.png": "82d699476ec74635a411c68328f7204d03e1cd4469690a7eb846ce9b5c32ebf3",
+    "phone/F031B2DA-AE41-4377-9D14-A26E96C49C52.png": "33ebeded3c628c20efe76b63ad9a8ea95f77f6c33f791a56cc51956e8e65647d",
+    "phone/manifest.json": "eac4db5cbcec4ea39cb32ba9853d937c122105401997b6888cb7a2565d3251ea",
+    "red-source-hashes.json": "25f0d4dd396586dcac03ce204d21128218e94449bfdd1d68be0619bd91679180",
+    "red-summary.json": "039ecb48e81729fc4f529a7d54b0df0d4fc84c99b249b104d99f9db6d146fad2",
+    "red-tests.json": "1006aeb273e794baf607c271343507c1dcf6948d6ed27a4966ca93d30e9de0a3",
+    "red.log.gz": "be61357239c3cf40d7b9bfa4a8f2f4394bcc8b0d4f6c2f124f3e72ec3bfdf9fc",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tablet-default-output-provenance.json": "56410f3cc442b7320027207f76670ad368e6baf3df69f4230a2b21c9d361e640",
+    "tablet-default-output.json": "e8b16f5ba868dcea41bb833cf8e2dfca6694de23936b8ad7446ac0938ef81e4d",
+    "tablet-default-summary.json": "eb8999c821a25eb9352578b07a1e4eaa26c8e0eb61296df3cf37c8d283e35b75",
+    "tablet-default-tests.json": "3380aaef6ef620a75aa0d73668ddf67edcd613105617b6e4f00455747e929589",
+    "tablet-default.log.gz": "7af0617c89cde42d6d3995267844fc2d933488a528ba4808237f7acbb01a7a3a",
+    "tablet-default/2432F53E-4EE1-44F6-AAB5-313B98892FFD.png": "f379f4ff1d7f3cfb4f88d846316f12298ecaa86078788962b767fc73299683f3",
+    "tablet-default/2C0555DC-0636-4EA5-90FB-BEFEA819266D.txt": "b93783736b66da7c9072563ca322d39d8ec7bdc7c268e957fb35a68c9709ea54",
+    "tablet-default/8407829F-C390-4374-87A7-AD52D6FCA860.png": "9492add0d0977d1778b797b3fb86fd1d4e5e803124e57214ef49db0b58313882",
+    "tablet-default/8555F980-2078-4A2F-B16D-4C6B69E746AF.txt": "cd85de57a962932abb2ea345f689ae84c2b6448ddc92c290f1c13767a295c86a",
+    "tablet-default/manifest.json": "2b82f560f8729adcfa7f9f19ceba84a2e469d7f06786758170a356677d71af74",
+    "tablet-recovery-output-provenance.json": "0480de6f4141e5bb2a12574550e4818c18922dbf0efcc3ccb87c8e800fbabbfd",
+    "tablet-recovery-output.json": "639435bc54394ca9cb60c1d94ddc839f101e2e326d28f11997da143c1ba4355d",
+    "tablet-summary.json": "6222c4898cda23b065b60460ba98505dcf90b4bc67306e6b9c4b5874c7c8ddc0",
+    "tablet-tests.json": "328ed125f3a325226120fd0873c07e348af8153f87c76628bf538e73fd9c2568",
+    "tablet.log.gz": "5b6be71bee16134974b83c3118c021335757e8f5a73f7656ab755b8fc9e202de",
+    "tablet/04EA9A44-C4CB-4656-AD9F-E1D79252EB98.png": "6068193462f0f88b9925386bc9f7ddf17afb8e2e568be0b18f8c02309a5faad5",
+    "tablet/665A4AE4-53E9-4987-AEEB-DDC4509B6AA9.txt": "a88dfe9114c5f614c9f92a6a3bfb27b06b6742743c7819ce8eb747c15564b169",
+    "tablet/72E8D579-C7F5-4562-95E9-6D6025FB70D8.png": "ae71f169d1779d338d736d76255c417f31c1e93c02da2e3fca21a9208eb5c3c1",
+    "tablet/738D613E-F120-4CB9-A265-B3B54B6D1C2B.png": "3db231130066e7d0c53cd8fbe85b56262ce6824a922b1fd6a5bb86e8457c49fc",
+    "tablet/C2D13389-CC9F-432D-B588-3C5ECE49F6DE.png": "3045dd30fd4398df4d1aa72c6e7d34b014c2677554de95acc1a33d39b577a51d",
+    "tablet/manifest.json": "3891a2963d31ad222005de024c0c566d19b045552149cddc381056423b65d96b"
+  },
+  "baseCommit": "941ead0c2e6e7c3293eb322a7a9b7be20edf48dc",
+  "productHashes": {
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner": "2d2d27a032ebb21e31a0941e03e3862b409ae545274c10edb59ec22a5daea53e",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib": "8d73ac0ee41bb25963529407d6436b15557e3cb037fdac5356f4ba40e11a8e46",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests": "cf1adb56870fa393243a738f58f65b1ec6b4f0f0a7fbc47f04423b5d4c47dd3a",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "e6f540414489754d2dcaf1af64a0bcbb2951a58bb2d85fcf1595226f15769cba",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib": "62e1a9695882f8a29240a6422009661d586daa3db7ec4cea2d3f4d651e107843",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests": "10adba5916a2681131a0c5ed58b3a2246995e028e6e2ddcb4fb9c6b2b59d2e6c"
+  },
+  "qualification": {
+    "coreAndHTTPInvocationsThisStep": 0,
+    "macAppAndUITestHostBuild": "passed",
+    "macNativeUIInvocations": 0,
+    "markdownLint": "passed",
+    "phone": {
+      "failedTests": 0,
+      "passedTests": 2,
+      "skippedTests": 0
+    },
+    "phone-default": {
+      "failedTests": 0,
+      "passedTests": 1,
+      "skippedTests": 0
+    },
+    "red": {
+      "failedTests": 1,
+      "passedTests": 0,
+      "skippedTests": 0
+    },
+    "swiftStrictLint": "passed",
+    "tablet": {
+      "failedTests": 0,
+      "passedTests": 2,
+      "skippedTests": 0
+    },
+    "tablet-default": {
+      "failedTests": 0,
+      "passedTests": 1,
+      "skippedTests": 0
+    },
+    "whitespace": "passed"
+  },
+  "report": "docs/prototypes/native-recovery-export.md",
+  "reviews": {
+    "spec": "Clear. Final source/product/artifact hashes, four complete passing manifests, delivered portable outputs and stated qualification limits reviewed.",
+    "standards": "Clear. No confirmed material findings; all 10 source, 6 product and 51 artifact hashes match and native counts/limits are accurate."
+  },
+  "scopeNotes": [
+    "Functional red reaches the saved-copy view and fails at the missing export control. The same native test source passes after the implementation; red remains excluded.",
+    "Export and inspection pass as two functions per simulator. Ordinary Settings export passes once per device in separate compatibility runs; its test source is unchanged from base.",
+    "Selected-copy export forwards immutable portableData directly to the native Transferable. It does not re-read active data or issue a domain command. Saved and Unverified filenames are distinct; unverified runtime remains unqualified.",
+    "Both actual recovery outputs are 575 bytes, both ordinary outputs 833 bytes. All four public files were independently parsed for portable format 2, permitted root keys and exact expected Tag identity/name; original bytes/provenance retained.",
+    "Selected original recovery picker/delivery and default Settings delivery captures inspected separately. Complete manifests retained for every passing run. Semantic output checks do not prove separate-selection exact-byte equality or full graph fidelity.",
+    "Two production files change; four other recovery source files remain fixed. Native test source and six compiled products stay frozen during final device and compatibility runs.",
+    "Mac app/test-host compile passed with zero Mac runtime. No new Core/HTTP test runs or schema/format/agent routes. Proposal/cancel/failure/exact-byte/separate-dataset/full-graph/restoration/physical/polish gates remain open. Q83 pending."
+  ],
+  "sourceHashes": {
+    "Planner/Scenes/SavedPlannerBackupFile.swift": "e1f9081a7cd4dfdb042c3072e2457ebf2d77ef28593d7c892f14aa0b4542710d",
+    "Planner/Scenes/SavedPlannerSettingsView.swift": "329c5262a5dce04ccf4f96d2426baeea0f0ce8fc480c726536a34c79b3401e9d",
+    "Planner/Scenes/SavedPlannerStore.swift": "70d40e000b9f1451f23927de2637600cd1caf18a5c9bacae152ef4a35ff0d0d7",
+    "Planner/Scenes/SavedPlannerView.swift": "6bfa16c030dd214631def6f7056d8cf406b3ab262c58e4dd39fd61859fbb35dc",
+    "Planner/Scenes/SavedRecoveryCopiesView.swift": "c655d9c4a6e2b716ae2bc719a134a723b02dd316220a817e3cb1b8d79aed0170",
+    "Planner/Scenes/SavedRecoverySelectionView.swift": "e8fba83c1f28cd22e288a4613d89321feddfaf1821efdabccbb1608d9e40a07b",
+    "PlannerNavigationUITests/SavedBackupExportJourneyTests.swift": "73369cb322c699c6e9d05879f36e870263d8df5f82feb1210832d34378cc6cc6",
+    "PlannerNavigationUITests/SavedRecoveryJourneyTests.swift": "ab54563d6fae0f445414ff4430f72a6a5cdcc2da77c9053f51daf6392b8890cf",
+    "docs/prototypes/native-recovery-export.md": "301c003b28f2ea9ddf20eebef07fd3cf3e5044eb002673806e86ccfeaff4de7c",
+    "docs/prototypes/native-recovery-inspection.md": "aff6e789f71ac1ff98b5cd2c2edd9e7c96509b3f5484af5434889bda7283cde6"
+  }
+}

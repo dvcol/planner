@@ -1,0 +1,225 @@
+Attributes: Application, 0x10a3557c0, pid: 59666, label: 'Planner navigation prototype'
+Element subtree:
+ →Application, 0x10a3557c0, pid: 59666, label: 'Planner navigation prototype'
+    Window (Main), 0x10a3570c0, {{0.0, 0.0}, {820.0, 1180.0}}
+      Other, 0x10a356f80, {{0.0, 0.0}, {820.0, 1180.0}}
+      Other, 0x10a356e40, {{0.0, 0.0}, {820.0, 1180.0}}
+        Other, 0x10a356bc0, {{0.0, 0.0}, {820.0, 1180.0}}
+          Other, 0x10a356d00, {{-820.0, -1180.0}, {2460.0, 3540.0}}, identifier: 'PopoverDismissRegion', label: 'dismiss popup'
+          Other, 0x10a356940, {{0.0, 0.0}, {820.0, 1180.0}}
+            Other, 0x10a356a80, {{0.0, 0.0}, {820.0, 1180.0}}
+              Other, 0x10a3552c0, {{0.0, 0.0}, {820.0, 1180.0}}
+                Other, 0x10a355540, {{0.0, 0.0}, {820.0, 1180.0}}
+                  Other, 0x10a356080, {{0.0, 0.0}, {820.0, 1180.0}}
+                    Other, 0x10a356800, {{0.0, 0.0}, {820.0, 1180.0}}
+                      Other, 0x10a356440, {{0.0, 0.0}, {820.0, 1180.0}}
+                        Other, 0x10a3566c0, {{0.0, 32.0}, {820.0, 1148.0}}
+                          Other, 0x10a356580, {{0.0, 32.0}, {820.0, 1148.0}}
+                            Other, 0x10a3561c0, {{0.0, 32.0}, {820.0, 1148.0}}
+                              Other, 0x10a356300, {{0.0, 32.0}, {820.0, 1148.0}}
+                                Other, 0x10a355680, {{0.0, 32.0}, {340.0, 1148.0}}
+                                  Other, 0x10a354500, {{0.0, 32.0}, {340.0, 1148.0}}
+                                    NavigationBar, 0x10a354140, {{0.0, 86.0}, {340.0, 54.0}}, identifier: '_TtGC7SwiftUI29PresentationHosting'
+                                      Button, 0x10a354280, {{14.0, 90.0}, {36.0, 36.0}}, label: 'Hide Sidebar'
+                                    Other, 0x10a354000, {{0.0, 32.0}, {340.0, 1148.0}}
+                                      Other, 0x10a36f340, {{0.0, 32.0}, {340.0, 1148.0}}
+                                        Other, 0x10a36f480, {{0.0, 32.0}, {340.0, 1148.0}}
+                                          Other, 0x10a36f5c0, {{0.0, 32.0}, {340.0, 1148.0}}
+                                            StaticText, 0x10a36f700, {{115.0, 569.0}, {110.0, 83.5}}, label: 'No Lists yet'
+                                            Image, 0x10a36f840, {{147.0, 569.0}, {46.5, 36.0}}, identifier: 'list.bullet.rectangle', label: 'Bulleted List In A Rectangle'
+                                            StaticText, 0x10a36f980, {{40.8, 655.5}, {258.5, 49.0}}, label: 'Change the archive filter or create a List to start planning.'
+                                    Toolbar, 0x10a36fac0, {{0.0, 32.0}, {340.0, 1148.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                      Other, 0x10a36fc00, {{0.0, 32.0}, {340.0, 1148.0}}
+                                  Other, 0x10a36fd40, {{0.0, 32.0}, {340.0, 1148.0}}
+                                Toolbar, 0x10a36fe80, {{0.0, 32.0}, {820.0, 1148.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                  Other, 0x10a1d5cc0, {{0.0, 32.0}, {820.0, 1148.0}}
+                                Other, 0x10a1d5a40, {{318.5, 32.0}, {44.0, 1148.0}}, value: 41 %
+                                Other, 0x10a1d5b80, {{341.0, 32.0}, {479.0, 1148.0}}
+                                  Other, 0x10a307e80, {{341.0, 32.0}, {479.0, 1148.0}}
+                                    NavigationBar, 0x10a31c000, {{341.0, 86.0}, {479.0, 54.0}}, identifier: '_TtGC7SwiftUI29PresentationHosting'
+                                    Other, 0x10a31c140, {{341.0, 32.0}, {479.0, 1148.0}}
+                                      Other, 0x10a31c280, {{341.0, 32.0}, {479.0, 1148.0}}
+                                        Other, 0x10a31c3c0, {{341.0, 32.0}, {479.0, 1148.0}}
+                                          Other, 0x10a31c500, {{341.0, 32.0}, {479.0, 1148.0}}
+                                            StaticText, 0x10a31c640, {{507.5, 602.5}, {146.0, 95.8}}, label: 'Choose an Item'
+                                            Image, 0x10a31c780, {{560.0, 602.5}, {41.0, 48.5}}, identifier: 'square.stack', label: 'Stack Of Squares'
+                                    Toolbar, 0x10a31cc80, {{341.0, 32.0}, {479.0, 1148.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                      Other, 0x10a31cdc0, {{341.0, 32.0}, {479.0, 1148.0}}
+                                  Other, 0x10a31cf00, {{341.0, 32.0}, {479.0, 1148.0}}
+                              Other, 0x10a31d040, {{0.0, 32.0}, {820.0, 1148.0}}
+                                Other, 0x10a31d180, {{0.0, 32.0}, {240.0, 1148.0}}
+                                  Other, 0x10a31d2c0, {{0.0, 32.0}, {240.0, 1148.0}}
+                                    Other, 0x10a31d540, {{0.0, 32.0}, {240.0, 1148.0}}
+                                      Other, 0x10a31d680, {{0.0, 32.0}, {240.0, 1148.0}}
+                                        Other, 0x10a31d7c0, {{0.0, 32.0}, {240.0, 1148.0}}
+                                          Other, 0x10a31d900, {{0.0, 32.0}, {240.0, 1148.0}}
+                                            CollectionView, 0x10a31db80, {{0.0, 32.0}, {240.0, 1148.0}}, label: 'Sidebar'
+                                              Other, 0x10a31dcc0, {{-16.0, -2156.0}, {272.0, 4646.0}}
+                                              Other, 0x10a31de00, {{0.0, 32.0}, {240.0, 1148.0}}
+                                                Other, 0x10a31df40, {{0.0, 32.0}, {240.0, 148.0}}
+                                                Other, 0x10a31e080, {{0.0, 1066.0}, {240.0, 114.0}}
+                                              Other, 0x10a31e1c0, {{0.0, 32.0}, {240.0, 1148.0}}
+                                              Cell, 0x10a31e300, {{16.0, 140.0}, {208.0, 44.0}}
+                                                Other, 0x10a31e440, {{16.0, 140.0}, {208.0, 44.0}}
+                                                Other, 0x10a31e580, {{16.0, 140.0}, {208.0, 44.0}}
+                                                  Other, 0x10a31e6c0, {{16.0, 140.0}, {208.0, 44.0}}
+                                                    Other, 0x10a31e800, {{16.0, 140.0}, {208.0, 44.0}}
+                                                      StaticText, 0x10a31e940, {{16.0, 140.0}, {208.0, 44.0}}, label: 'Lists'
+                                              Other, 0x10a31ea80, {{207.0, 140.0}, {30.0, 1040.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+                                                Other, 0x10a31fc00, {{234.0, 1055.0}, {3.0, 122.0}}
+                                              Other, 0x10a31fe80, {{207.0, 140.0}, {30.0, 1040.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+                                                Other, 0x10a31fd40, {{234.0, 1055.0}, {3.0, 122.0}}
+                                            StaticText, 0x10a31f200, {{65.0, 529.5}, {110.0, 83.5}}, label: 'No Lists yet'
+                                            Image, 0x10a31f980, {{97.0, 529.5}, {46.5, 36.0}}, identifier: 'list.bullet.rectangle', label: 'Bulleted List In A Rectangle'
+                                            StaticText, 0x10a31fac0, {{32.0, 616.0}, {176.0, 74.0}}, label: 'Change the archive filter or create a List to start planning.'
+                                    NavigationBar, 0x10a31f700, {{0.0, 86.0}, {240.0, 54.0}}, identifier: 'Planner'
+                                      StaticText, 0x10a31f840, {{16.0, 97.5}, {17.5, 21.0}}, label: 'Planner'
+                                      Other, 0x10a31f480, {{49.5, 90.0}, {61.5, 36.0}}
+                                        Other, 0x10a31f5c0, {{49.5, 90.0}, {61.5, 36.0}}
+                                          Button, 0x10a31f340, {{49.5, 90.0}, {61.5, 36.0}}, identifier: 'saved.lists.archive', label: 'Active Lists'
+                                            Button, 0x10a31f0c0, {{49.5, 90.0}, {61.5, 36.0}}
+                                              StaticText, 0x10a31ef80, {{56.5, 97.8}, {47.5, 20.5}}, label: 'Active'
+                                      Button, 0x10a31ed00, {{127.0, 90.0}, {37.0, 36.0}}, identifier: 'saved.list.new', label: 'New List'
+                                      Button, 0x10a31ee40, {{184.0, 90.0}, {36.0, 36.0}}, label: 'Hide Sidebar'
+                                    Toolbar, 0x10a31ebc0, {{0.0, 32.0}, {240.0, 1148.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                      Other, 0x10a31da40, {{0.0, 32.0}, {240.0, 1148.0}}
+                                  Other, 0x10a31d400, {{0.0, 32.0}, {240.0, 1148.0}}
+                                    Other, 0x10a330000, {{0.0, 32.0}, {240.0, 1148.0}}
+                                      Other, 0x10a330140, {{0.0, 32.0}, {240.0, 1148.0}}
+                                        Other, 0x10a330280, {{0.0, 32.0}, {240.0, 1148.0}}
+                                          Other, 0x10a3303c0, {{0.0, 32.0}, {240.0, 1148.0}}
+                                            Other, 0x10a330500, {{0.0, 32.0}, {240.0, 1148.0}}
+                                        Other, 0x10a330640, {{0.0, 32.0}, {240.0, 1148.0}}
+                                          Other, 0x10a330780, {{0.0, 32.0}, {240.0, 1148.0}}
+                                Toolbar, 0x10a3308c0, {{0.0, 32.0}, {820.0, 1148.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                  Other, 0x10a330a00, {{0.0, 32.0}, {820.0, 1148.0}}
+                                    Other, 0x10a330b40, {{0.0, 32.0}, {820.0, 1148.0}}
+                                      Other, 0x10a330c80, {{0.0, 32.0}, {820.0, 1148.0}}
+                                        Other, 0x10a330dc0, {{0.0, 32.0}, {0.0, 0.0}}
+                                          Other, 0x10a330f00, {{68.0, 1116.0}, {104.5, 44.0}}
+                                            Other, 0x10a331040, {{68.0, 1116.0}, {47.0, 44.0}}
+                                              Other, 0x10a331180, {{72.0, 1120.0}, {39.0, 36.0}}
+                                                Other, 0x10a3312c0, {{72.0, 1120.0}, {39.0, 36.0}}
+                                                  Button, 0x10a331400, {{72.0, 1120.0}, {39.0, 36.0}}, identifier: 'saved.categories.manage', label: 'Manage Labels'
+                                            Other, 0x10a331540, {{123.0, 1116.0}, {49.5, 44.0}}
+                                              Other, 0x10a331680, {{127.0, 1120.0}, {41.5, 36.0}}
+                                                Other, 0x10a3317c0, {{127.0, 1120.0}, {41.5, 36.0}}
+                                                  Button, 0x10a331900, {{127.0, 1120.0}, {41.5, 36.0}}, identifier: 'saved.settings.open', label: 'Settings'
+                            Other, 0x10a331a40, {{0.0, 32.0}, {820.0, 1148.0}}
+                              Other, 0x10a331b80, {{0.0, 32.0}, {820.0, 1148.0}}
+                Other, 0x10a331cc0, {{0.0, 0.0}, {820.0, 1180.0}}
+                  Other, 0x10a331e00, {{0.0, 32.0}, {820.0, 44.0}}
+                    Button, 0x10a331f40, {{194.0, 36.0}, {69.0, 36.0}}, identifier: 'list.bullet', label: 'Lists', Selected
+                      Button, 0x10a332080, {{194.0, 36.0}, {69.0, 36.0}}, identifier: 'list.bullet', label: 'Lists', Selected
+                    Button, 0x10a3321c0, {{263.0, 36.0}, {75.5, 36.0}}, identifier: 'square.stack', label: 'Items'
+                      Button, 0x10a332300, {{263.0, 36.0}, {75.5, 36.0}}, identifier: 'square.stack', label: 'Items'
+                    Button, 0x10a332440, {{338.5, 36.0}, {75.0, 36.0}}, identifier: 'tray', label: 'Inbox'
+                      Button, 0x10a332580, {{338.5, 36.0}, {75.0, 36.0}}, identifier: 'tray', label: 'Inbox'
+                    Button, 0x10a3326c0, {{413.5, 36.0}, {102.5, 36.0}}, identifier: 'calendar', label: 'Calendar'
+                      Button, 0x10a332800, {{413.5, 36.0}, {102.5, 36.0}}, identifier: 'calendar', label: 'Calendar'
+                    Button, 0x10a332940, {{516.0, 36.0}, {110.0, 36.0}}, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries'
+                      Button, 0x10a332a80, {{516.0, 36.0}, {110.0, 36.0}}, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries'
+      Other, 0x10a332bc0, {{0.0, 0.0}, {820.0, 1180.0}}
+        Other, 0x10a332d00, {{-820.0, -1180.0}, {2460.0, 3540.0}}, identifier: 'PopoverDismissRegion', label: 'dismiss popup'
+        Other, 0x10a332e40, {{120.0, 260.0}, {580.0, 660.0}}
+          Image, 0x10a332f80, {{-30.0, 110.0}, {880.0, 960.0}}
+          Other, 0x10a3330c0, {{120.0, 260.0}, {580.0, 660.0}}
+            Other, 0x10a333200, {{120.0, 260.0}, {580.0, 660.0}}
+              Other, 0x10a333340, {{120.0, 260.0}, {580.0, 660.0}}
+                Other, 0x10a333480, {{120.0, 260.0}, {580.0, 660.0}}
+                  NavigationBar, 0x10a3335c0, {{120.0, 270.0}, {580.0, 54.0}}, identifier: 'Planner Settings'
+                    StaticText, 0x10a333700, {{344.0, 281.5}, {131.5, 21.0}}, label: 'Planner Settings'
+                    Other, 0x10a333840, {{620.0, 274.0}, {66.0, 36.0}}
+                      Other, 0x10a333980, {{620.0, 274.0}, {66.0, 36.0}}
+                        Button, 0x10a333ac0, {{620.0, 274.0}, {66.0, 36.0}}, identifier: 'saved.settings.done', label: 'Done'
+                  Other, 0x10a333c00, {{120.0, 260.0}, {580.0, 660.0}}
+                    Other, 0x10a333d40, {{120.0, 260.0}, {580.0, 660.0}}
+                      Other, 0x10a333e80, {{120.0, 260.0}, {580.0, 660.0}}
+                        Other, 0x10a334000, {{120.0, 260.0}, {580.0, 660.0}}
+                          CollectionView, 0x10a334140, {{120.0, 260.0}, {580.0, 660.0}}
+                            Other, 0x10a334280, {{104.0, -996.0}, {612.0, 1430.0}}
+                            Other, 0x10a3343c0, {{120.0, 260.0}, {580.0, 660.0}}
+                              Other, 0x10a334500, {{120.0, 260.0}, {580.0, 104.0}}
+                            Other, 0x10a334640, {{120.0, 260.0}, {580.0, 660.0}}
+                            Cell, 0x10a334780, {{136.0, 324.0}, {548.0, 40.5}}
+                              Other, 0x10a3348c0, {{136.0, 324.0}, {548.0, 40.5}}
+                              Other, 0x10a334a00, {{136.0, 324.0}, {548.0, 40.5}}
+                                Other, 0x10a334b40, {{136.0, 324.0}, {548.0, 40.5}}
+                                  Other, 0x10a334c80, {{136.0, 324.0}, {548.0, 40.5}}
+                                    StaticText, 0x10a334dc0, {{136.0, 324.0}, {548.0, 40.5}}, label: 'Organization'
+                            Cell, 0x10a334f00, {{136.0, 364.5}, {548.0, 52.0}}
+                              Other, 0x10a335040, {{136.0, 364.5}, {548.0, 52.0}}
+                                Other, 0x10a335180, {{136.0, 364.5}, {548.0, 52.0}}
+                              Other, 0x10a3352c0, {{136.0, 364.5}, {548.0, 52.0}}
+                                Other, 0x10a335400, {{136.0, 364.5}, {548.0, 52.0}}
+                                  Other, 0x10a335540, {{136.0, 364.5}, {548.0, 52.0}}
+                                    Button, 0x10a335680, {{136.0, 364.5}, {548.0, 52.0}}, identifier: 'saved.settings.labels', label: 'Manage Labels'
+                                      StaticText, 0x10a3357c0, {{154.0, 380.2}, {153.5, 20.5}}, label: 'Manage Labels'
+                                      Image, 0x10a335900, {{154.0, 380.5}, {20.0, 20.0}}, identifier: 'square.grid.2x2', label: 'Grid View'
+                            Other, 0x10a335a40, {{104.0, 434.0}, {612.0, 1614.5}}
+                            Cell, 0x10a335b80, {{136.0, 434.0}, {548.0, 40.5}}
+                              Other, 0x10a335cc0, {{136.0, 434.0}, {548.0, 40.5}}
+                              Other, 0x10a335e00, {{136.0, 434.0}, {548.0, 40.5}}
+                                Other, 0x10a335f40, {{136.0, 434.0}, {548.0, 40.5}}
+                                  Other, 0x10a336080, {{136.0, 434.0}, {548.0, 40.5}}
+                                    StaticText, 0x10a3361c0, {{136.0, 434.0}, {548.0, 40.5}}, label: 'Data'
+                            Cell, 0x10a336300, {{136.0, 474.5}, {548.0, 52.0}}
+                              Other, 0x10a336440, {{136.0, 474.5}, {548.0, 52.0}}
+                                Other, 0x10a336580, {{136.0, 474.5}, {548.0, 52.0}}
+                              Other, 0x10a3366c0, {{136.0, 474.5}, {548.0, 52.0}}
+                                Other, 0x10a336800, {{136.0, 474.5}, {548.0, 52.0}}
+                                  Other, 0x10a336940, {{136.0, 474.5}, {548.0, 52.0}}
+                                    Button, 0x10a336a80, {{136.0, 474.5}, {548.0, 52.0}}, identifier: 'saved.settings.export', label: 'Export Backup'
+                                      Image, 0x10a336bc0, {{154.5, 488.0}, {19.0, 25.5}}, identifier: 'square.and.arrow.up', label: 'Share'
+                                      StaticText, 0x10a336d00, {{154.5, 488.0}, {149.0, 25.5}}, label: 'Export Backup'
+                            Cell, 0x10a336e40, {{136.0, 526.5}, {548.0, 52.0}}
+                              Other, 0x10a336f80, {{136.0, 526.5}, {548.0, 52.0}}
+                                Other, 0x10a3370c0, {{136.0, 526.5}, {548.0, 52.0}}
+                              Other, 0x10a337200, {{136.0, 526.5}, {548.0, 52.0}}
+                                Other, 0x10a337340, {{136.0, 526.5}, {548.0, 52.0}}
+                                  Other, 0x10a337480, {{136.0, 526.5}, {548.0, 52.0}}
+                                    StaticText, 0x10a3375c0, {{136.0, 526.5}, {548.0, 52.0}}, identifier: 'saved.settings.exported', label: 'Backup exported, Planner Backup 2026-10-14T22-13-40Z.json'
+                                    StaticText, 0x10a337700, {{152.0, 542.2}, {129.5, 20.5}}, label: 'Backup exported'
+                            Other, 0x10a337840, {{192.0, 525.5}, {476.0, 1.0}}
+                            Cell, 0x10a337980, {{136.0, 578.5}, {548.0, 52.0}}
+                              Other, 0x10a337ac0, {{136.0, 578.5}, {548.0, 52.0}}
+                                Other, 0x10a337c00, {{136.0, 578.5}, {548.0, 52.0}}
+                              Other, 0x10a337d40, {{136.0, 578.5}, {548.0, 52.0}}
+                                Other, 0x10a337e80, {{136.0, 578.5}, {548.0, 52.0}}
+                                  Other, 0x10a338000, {{136.0, 578.5}, {548.0, 52.0}}
+                                    Button, 0x10a338140, {{136.0, 578.5}, {548.0, 52.0}}, identifier: 'saved.settings.import', label: 'Import Backup'
+                                      Image, 0x10a338280, {{154.5, 592.5}, {19.0, 24.5}}, identifier: 'square.and.arrow.down', label: 'Download'
+                                      StaticText, 0x10a3383c0, {{154.5, 592.5}, {149.0, 24.5}}, label: 'Import Backup'
+                            Other, 0x10a338500, {{152.0, 577.5}, {516.0, 1.0}}
+                            Cell, 0x10a338640, {{136.0, 630.5}, {548.0, 52.0}}
+                              Other, 0x10a338780, {{136.0, 630.5}, {548.0, 52.0}}
+                                Other, 0x10a3388c0, {{136.0, 630.5}, {548.0, 52.0}}
+                              Other, 0x10a338a00, {{136.0, 630.5}, {548.0, 52.0}}
+                                Other, 0x10a338b40, {{136.0, 630.5}, {548.0, 52.0}}
+                                  Other, 0x10a338c80, {{136.0, 630.5}, {548.0, 52.0}}
+                                    Button, 0x10a338dc0, {{136.0, 630.5}, {548.0, 52.0}}, identifier: 'saved.settings.recovery', label: 'Recovery Copies'
+                                      Image, 0x10a338f00, {{151.0, 645.5}, {24.0, 22.0}}, identifier: 'clock.arrow.circlepath', label: 'Clock With A Circular Arrow'
+                                      StaticText, 0x10a339040, {{151.0, 645.5}, {169.0, 22.0}}, label: 'Recovery Copies'
+                            Other, 0x10a339180, {{192.0, 629.5}, {476.0, 1.0}}
+                            Cell, 0x10a3392c0, {{136.0, 682.5}, {548.0, 46.0}}
+                              Other, 0x10a339400, {{136.0, 682.5}, {548.0, 46.0}}
+                              Other, 0x10a339540, {{136.0, 682.5}, {548.0, 46.0}}
+                                Other, 0x10a339680, {{136.0, 682.5}, {548.0, 46.0}}
+                                  Other, 0x10a3397c0, {{136.0, 682.5}, {548.0, 46.0}}
+                                    StaticText, 0x10a339900, {{136.0, 682.5}, {548.0, 46.0}}, label: 'Save or import a JSON copy of your Planner data, including archived content. Import changes are reviewed before applying.'
+                            Other, 0x10a339a40, {{667.0, 324.0}, {30.0, 564.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+                              Other, 0x10a339b80, {{694.0, 570.5}, {3.0, 314.5}}
+                            Other, 0x10a339cc0, {{667.0, 324.0}, {30.0, 564.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+                              Other, 0x10a339e00, {{694.0, 570.5}, {3.0, 314.5}}
+                  Toolbar, 0x10a339f40, {{120.0, 260.0}, {580.0, 660.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                    Other, 0x10a33a080, {{120.0, 260.0}, {580.0, 660.0}}
+    Window, 0x10a33a1c0, {{0.0, 0.0}, {820.0, 1180.0}}
+      Other, 0x10a33a300, {{0.0, 0.0}, {820.0, 1180.0}}
+        Other, 0x10a33a440, {{0.0, 0.0}, {820.0, 1180.0}}
+Path to element:
+ →Application, 0x10a3557c0, pid: 59666, label: 'Planner navigation prototype'
+Query chain:
+ →Find: Target Application 'org.example.PlannerMCPPrototype'
+  Output: {
+    Application, 0x10a33a580, pid: 59666, label: 'Planner navigation prototype'
+  }

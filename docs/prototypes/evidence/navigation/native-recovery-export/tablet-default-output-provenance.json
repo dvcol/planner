@@ -1,0 +1,9 @@
+{
+  "bytes": 833,
+  "expectedTagIdentifier": "saved.tag.86D5432C-939B-4D8F-96D0-17C4037C59A1",
+  "expectedTitle": "Exported travel tag",
+  "filename": "Planner Backup 2026-10-14T22-13-40Z.json",
+  "publicFile": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner Backup 2026-10-14T22-13-40Z.json",
+  "sha256": "e8b16f5ba868dcea41bb833cf8e2dfca6694de23936b8ad7446ac0938ef81e4d",
+  "validation": "Original default filename; portable format 2; exact allowed root keys; one original Tag ID/name; empty other data arrays."
+}

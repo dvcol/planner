@@ -1,0 +1,59 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "E957ED02-B456-4E3A-A3C9-D60020059998.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native recovery copy confirms successful file delivery_0_6D01442F-032A-4541-B7AF-15C095911058.png",
+        "timestamp" : 1792015786.906
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "22687A47-D6C3-44A6-9414-E287BFEC703F.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Public recovery export expectation_0_AE365C28-7B26-4653-8F4B-AEEDC957E405.txt",
+        "timestamp" : 1792015786.818
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "F031B2DA-AE41-4377-9D14-A26E96C49C52.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "System picker saves the selected recovery copy_0_3E9C7ED4-5443-42B0-94F7-27F6C47B20E0.png",
+        "timestamp" : 1792015782.095
+      }
+    ],
+    "testIdentifier" : "SavedRecoveryJourneyTests/testExportingSavedRecoveryCopyRetainsTagAfterFileDeliveryAndRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedRecoveryJourneyTests/testExportingSavedRecoveryCopyRetainsTagAfterFileDeliveryAndRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "13E2D1AC-7C8F-4D4B-A7F9-A383F66177E8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Recovery inspection leaves the current Tag intact after relaunch_0_686BA7EC-2528-43E7-8393-553E22E90720.png",
+        "timestamp" : 1792015844.254
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "CFB55A04-62A2-4D01-AD50-4C8DDE989352.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native recovery inspection retains the saved Tag and evidence_0_D34593F7-3BFA-4605-A67A-CFC498394E05.png",
+        "timestamp" : 1792015830.043
+      }
+    ],
+    "testIdentifier" : "SavedRecoveryJourneyTests/testInspectingSavedRecoveryCopyPreservesCurrentTagAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedRecoveryJourneyTests/testInspectingSavedRecoveryCopyPreservesCurrentTagAfterRelaunch"
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "productHashes": {
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner": "2d2d27a032ebb21e31a0941e03e3862b409ae545274c10edb59ec22a5daea53e",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib": "8d73ac0ee41bb25963529407d6436b15557e3cb037fdac5356f4ba40e11a8e46",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests": "cf1adb56870fa393243a738f58f65b1ec6b4f0f0a7fbc47f04423b5d4c47dd3a",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "e6f540414489754d2dcaf1af64a0bcbb2951a58bb2d85fcf1595226f15769cba",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib": "62e1a9695882f8a29240a6422009661d586daa3db7ec4cea2d3f4d651e107843",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests": "10adba5916a2681131a0c5ed58b3a2246995e028e6e2ddcb4fb9c6b2b59d2e6c"
+  },
+  "sourceHashes": {
+    "Planner/Scenes/SavedPlannerBackupFile.swift": "e1f9081a7cd4dfdb042c3072e2457ebf2d77ef28593d7c892f14aa0b4542710d",
+    "Planner/Scenes/SavedPlannerSettingsView.swift": "329c5262a5dce04ccf4f96d2426baeea0f0ce8fc480c726536a34c79b3401e9d",
+    "Planner/Scenes/SavedPlannerStore.swift": "70d40e000b9f1451f23927de2637600cd1caf18a5c9bacae152ef4a35ff0d0d7",
+    "Planner/Scenes/SavedPlannerView.swift": "6bfa16c030dd214631def6f7056d8cf406b3ab262c58e4dd39fd61859fbb35dc",
+    "Planner/Scenes/SavedRecoveryCopiesView.swift": "c655d9c4a6e2b716ae2bc719a134a723b02dd316220a817e3cb1b8d79aed0170",
+    "Planner/Scenes/SavedRecoverySelectionView.swift": "e8fba83c1f28cd22e288a4613d89321feddfaf1821efdabccbb1608d9e40a07b",
+    "PlannerNavigationUITests/SavedRecoveryJourneyTests.swift": "ab54563d6fae0f445414ff4430f72a6a5cdcc2da77c9053f51daf6392b8890cf"
+  }
+}

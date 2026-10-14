@@ -1,0 +1,59 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "72E8D579-C7F5-4562-95E9-6D6025FB70D8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native recovery copy confirms successful file delivery_0_7936D92B-75AA-47D0-987E-BB274E08CB9F.png",
+        "timestamp" : 1792015869.846
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "665A4AE4-53E9-4987-AEEB-DDC4509B6AA9.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Public recovery export expectation_0_BD13607B-EE56-4C99-8282-6D28A7639309.txt",
+        "timestamp" : 1792015869.734
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "04EA9A44-C4CB-4656-AD9F-E1D79252EB98.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "System picker saves the selected recovery copy_0_CB1C796F-8192-4357-9C4F-0FE06260380A.png",
+        "timestamp" : 1792015864.727
+      }
+    ],
+    "testIdentifier" : "SavedRecoveryJourneyTests/testExportingSavedRecoveryCopyRetainsTagAfterFileDeliveryAndRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedRecoveryJourneyTests/testExportingSavedRecoveryCopyRetainsTagAfterFileDeliveryAndRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "C2D13389-CC9F-432D-B588-3C5ECE49F6DE.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Recovery inspection leaves the current Tag intact after relaunch_0_5DF415DA-97BB-4E9B-A03B-4191A2346ED3.png",
+        "timestamp" : 1792015929.222
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "738D613E-F120-4CB9-A265-B3B54B6D1C2B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native recovery inspection retains the saved Tag and evidence_0_A3C233E7-1261-4FDB-9578-14069A2D20B4.png",
+        "timestamp" : 1792015913.751
+      }
+    ],
+    "testIdentifier" : "SavedRecoveryJourneyTests/testInspectingSavedRecoveryCopyPreservesCurrentTagAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedRecoveryJourneyTests/testInspectingSavedRecoveryCopyPreservesCurrentTagAfterRelaunch"
+  }
+]

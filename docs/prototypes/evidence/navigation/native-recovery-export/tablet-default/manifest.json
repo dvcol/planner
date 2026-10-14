@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "2432F53E-4EE1-44F6-AAB5-313B98892FFD.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Settings confirms successful native file delivery_0_1AC831D6-4755-469D-AE5C-51F763812687.png",
+        "timestamp" : 1792016035.804
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "8555F980-2078-4A2F-B16D-4C6B69E746AF.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Public exported file expectation_0_A8C61953-66DF-4D81-A724-1086DC0DB045.txt",
+        "timestamp" : 1792016035.646
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "2C0555DC-0636-4EA5-90FB-BEFEA819266D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native Settings after file delivery_0_393687C6-DC9C-40D3-A1B8-1C676D01523C.txt",
+        "timestamp" : 1792016035.645
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "8407829F-C390-4374-87A7-AD52D6FCA860.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "System picker saves a Planner JSON backup_0_4DE01FAA-C9C5-4CF6-8F5D-70F9E84D74C6.png",
+        "timestamp" : 1792016028.231
+      }
+    ],
+    "testIdentifier" : "SavedBackupExportJourneyTests/testSavingBackupExportsSavedLabelAndPreservesItAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupExportJourneyTests/testSavingBackupExportsSavedLabelAndPreservesItAfterRelaunch"
+  }
+]

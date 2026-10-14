@@ -1,0 +1,9 @@
+{
+  "bytes": 575,
+  "expectedTagIdentifier": "saved.tag.1D7AD42F-57C4-4502-BD07-2371A3AFFD65",
+  "expectedTitle": "Recovery travel tag",
+  "filename": "Planner Saved Recovery 82AD7E72-B135-43AE-8088-1C13ACFD6601 Generation 1.json",
+  "publicFile": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner Saved Recovery 82AD7E72-B135-43AE-8088-1C13ACFD6601 Generation 1.json",
+  "sha256": "c3a227ddf73add9f5711567170c831283e6ae18191383ef12498b34e8d66519c",
+  "validation": "Portable format 2; exact allowed root keys; one original Tag ID/name; empty other data arrays; no internal recovery/UI/account fields."
+}

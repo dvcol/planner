@@ -1,0 +1,12 @@
+{
+  "productHashes": {
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner": "2d2d27a032ebb21e31a0941e03e3862b409ae545274c10edb59ec22a5daea53e",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib": "90463282acee8e79f9c6dc9c330c2962c6437a2a919df495aeab619c1ac08dbd",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests": "cf1adb56870fa393243a738f58f65b1ec6b4f0f0a7fbc47f04423b5d4c47dd3a"
+  },
+  "sourceHashes": {
+    "Planner/Scenes/SavedPlannerBackupFile.swift": "e80dd7f66ee94b47ae4a0db557a6adb5356eae137d5d4e58131ecc1435f32046",
+    "Planner/Scenes/SavedRecoverySelectionView.swift": "88d95907029916a2a25175fb55547b95af2348e94b56afee7be89d7ddac3bb66",
+    "PlannerNavigationUITests/SavedRecoveryJourneyTests.swift": "ab54563d6fae0f445414ff4430f72a6a5cdcc2da77c9053f51daf6392b8890cf"
+  }
+}

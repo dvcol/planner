@@ -4,8 +4,19 @@ import UniformTypeIdentifiers
 
 struct SavedPlannerBackupFile: Transferable {
   let data: Data
-  let filename =
-    "Planner Backup " + Date.now.ISO8601Format().replacingOccurrences(of: ":", with: "-")
+  let filename: String
+
+  init(data: Data) {
+    self.init(
+      data: data,
+      filename: "Planner Backup "
+        + Date.now.ISO8601Format().replacingOccurrences(of: ":", with: "-"))
+  }
+
+  init(data: Data, filename: String) {
+    self.data = data
+    self.filename = filename
+  }
 
   static var transferRepresentation: some TransferRepresentation {
     DataRepresentation(exportedContentType: .json) { backup in backup.data }

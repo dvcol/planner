@@ -1,0 +1,53 @@
+{
+  "completionChanges" : [
+
+  ],
+  "contextAliases" : [
+
+  ],
+  "deletionMarkers" : [
+
+  ],
+  "expandedCompletions" : [
+
+  ],
+  "format" : "planner-data",
+  "formatVersion" : 2,
+  "itineraryEntries" : [
+
+  ],
+  "labelAssociations" : [
+
+  ],
+  "memberships" : [
+
+  ],
+  "ownedLinks" : [
+
+  ],
+  "restorationFamilies" : [
+
+  ],
+  "schedules" : [
+
+  ],
+  "sources" : [
+    {
+      "archived" : null,
+      "content" : {
+        "color" : null,
+        "iconName" : null,
+        "name" : "Exported travel tag"
+      },
+      "contentOrigins" : {
+        "name" : "independent"
+      },
+      "createdAt" : 813708816.239777,
+      "globalDone" : null,
+      "id" : "86D5432C-939B-4D8F-96D0-17C4037C59A1",
+      "kind" : "tag",
+      "lifetimeId" : "BC0F24AD-24AF-4D8C-9A8C-9FB5F61DFB31",
+      "updatedAt" : 813708816.239777
+    }
+  ]
+}

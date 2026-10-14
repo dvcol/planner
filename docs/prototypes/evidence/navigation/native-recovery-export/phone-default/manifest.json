@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "A13E8718-6697-4FDA-8F85-E1162B4ED442.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Settings confirms successful native file delivery_0_FE6419F5-6E54-4EF5-A3E6-C30A96828C17.png",
+        "timestamp" : 1792016018.619
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "095E1B4C-0964-49E0-A898-40AFD1E2CF48.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Public exported file expectation_0_F2EB9B6D-EA22-47C6-B4EA-42FECB9C8792.txt",
+        "timestamp" : 1792016018.471
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "6D745E23-BE56-422D-B392-37025C1D445D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native Settings after file delivery_0_922DBCE6-A3D0-4BAD-86D7-F3124847093F.txt",
+        "timestamp" : 1792016018.47
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "04F96408-1F13-4456-8DEC-D80F5A4FD1E5.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "System picker saves a Planner JSON backup_0_0103DFCD-26C1-4C2E-9E9B-30B117B211FA.png",
+        "timestamp" : 1792016011.086
+      }
+    ],
+    "testIdentifier" : "SavedBackupExportJourneyTests/testSavingBackupExportsSavedLabelAndPreservesItAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupExportJourneyTests/testSavingBackupExportsSavedLabelAndPreservesItAfterRelaunch"
+  }
+]
