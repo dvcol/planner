@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "75F228FD-836E-44B7-8DEE-6AD74EAC4B65.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Retained source Schedule across the clock change_0_E8966084-51C9-42F1-8BD3-0DF28FB47F81.png",
+        "timestamp" : 1792008262.142
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "2BD984DC-FC69-4F98-9C7D-2230C581D16F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Booked clock-change span in Month_0_27E877BE-3755-4CE1-8176-9EDB26BABC4C.png",
+        "timestamp" : 1792008259.561
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "FE746C2B-420A-40F2-A510-AF3F7D2AD5E3.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Booked clock-change span in Week_0_55A4F0DB-72AB-4293-8BFD-ABD4D083B09D.png",
+        "timestamp" : 1792008255.51
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "80619983-0FF1-4751-8F1F-76BCC8E218DD.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Booked span from 0130 EDT to 0130 EST_0_7B2C2DC9-3574-4B52-AF55-92342F87C39B.png",
+        "timestamp" : 1792008250.427
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testBookedSpanAcrossRepeatedClockTimeDescribesBothEndpoints()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testBookedSpanAcrossRepeatedClockTimeDescribesBothEndpoints"
+  }
+]

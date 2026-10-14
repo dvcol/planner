@@ -7,6 +7,22 @@ func calendarDayHasClockChange(_ date: Date, calendar: Calendar) -> Bool {
     != calendar.timeZone.secondsFromGMT(for: interval.end.addingTimeInterval(-1))
 }
 
+func calendarClockChangeSpanDescription(
+  start: Date, end: Date, calendar: Calendar, includesDate: Bool
+) -> String? {
+  guard
+    calendarDayHasClockChange(start, calendar: calendar)
+      || calendarDayHasClockChange(end, calendar: calendar)
+      || calendar.timeZone.secondsFromGMT(for: start) != calendar.timeZone.secondsFromGMT(for: end)
+  else { return nil }
+  var format = Date.FormatStyle(
+    date: includesDate ? .abbreviated : .omitted, time: .shortened
+  ).timeZone(.specificName(.short))
+  format.calendar = calendar
+  format.timeZone = calendar.timeZone
+  return start.formatted(format) + " – " + end.formatted(format)
+}
+
 struct SavedCalendarTimeGrid: View {
   private struct AllDayPresentation: Identifiable {
     let date: Date
@@ -30,7 +46,7 @@ struct SavedCalendarTimeGrid: View {
 
   @State private var allDayPresentation: AllDayPresentation?
   @ScaledMetric(relativeTo: .subheadline) private var allDayCardHeight = 64
-  @ScaledMetric(relativeTo: .subheadline) private var startOnlyCardHeight = 80
+  @ScaledMetric(relativeTo: .subheadline) private var timedCardMinimumHeight = 80
 
   private let pointsPerMinute: CGFloat = 1.5
 
@@ -71,7 +87,7 @@ struct SavedCalendarTimeGrid: View {
       let visibleStart = max(start, interval.start)
       let top = CGFloat(visibleStart.timeIntervalSince(interval.start) / 60) * pointsPerMinute
       let height = max(
-        end == nil ? startOnlyCardHeight : 44,
+        max(44, timedCardMinimumHeight),
         CGFloat(min(end ?? start, interval.end).timeIntervalSince(visibleStart) / 60)
           * pointsPerMinute)
       if top >= groupEnd {
@@ -204,7 +220,8 @@ struct SavedCalendarTimeGrid: View {
         }
         .frame(
           width: width,
-          height: CGFloat(interval.duration / 60) * pointsPerMinute + max(44, startOnlyCardHeight),
+          height: CGFloat(interval.duration / 60) * pointsPerMinute
+            + max(44, timedCardMinimumHeight),
           alignment: .topLeading)
       }
     }
@@ -250,8 +267,13 @@ struct SavedCalendarTimeGrid: View {
   }
 
   private func previewDescription(_ entry: PlannerCalendarEntry, isTimed: Bool) -> String {
-    guard isTimed, case .timed(let start, nil, _) = entry.form else {
+    guard isTimed, case .timed(let start, let end, _) = entry.form else {
       return scheduleDescription(entry)
+    }
+    if let end {
+      return calendarClockChangeSpanDescription(
+        start: start, end: end, calendar: calendar, includesDate: false)
+        ?? scheduleDescription(entry)
     }
     return "Start only · " + timeDescription(start)
   }

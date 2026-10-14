@@ -1,0 +1,116 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "1739E5B3-8F39-4D41-B8F5-9F0D08618726.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Retained source Schedule across the clock change_0_4C5EBDD6-766B-4963-85FC-748D967000A1.png",
+        "timestamp" : 1792007781.128
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "1FDA376D-22DD-4B5D-A0CE-106AD09BADBF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Booked clock-change span in Month_0_AB61DB47-9F8F-498E-8201-1CA78465C579.png",
+        "timestamp" : 1792007778.35
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "6F6849D8-5C4E-47F2-9C77-A5B587D3C351.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Booked clock-change span in Week_0_B9E513FA-1557-45A0-AE70-7CB1B618A944.png",
+        "timestamp" : 1792007774.593
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "2ADF61B7-D3DA-437A-B68C-3C5CC2A58EB1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Booked span from 0130 EDT to 0130 EST_0_7DBE6E9E-FFE5-4611-95E8-38DAF28958AE.png",
+        "timestamp" : 1792007769.458
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testBookedSpanAcrossRepeatedClockTimeDescribesBothEndpoints()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testBookedSpanAcrossRepeatedClockTimeDescribesBothEndpoints"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "8FF45039-4998-4F3C-A2C2-87070D121406.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "2359 start-only appointment at the bottom of the Day grid_0_434CA680-A364-42B7-AFBF-EF9FCEDDD2D3.png",
+        "timestamp" : 1792007818.05
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testLateStartOnlyCardCanBeScrolledFullyIntoTheDayViewport()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testLateStartOnlyCardCanBeScrolledFullyIntoTheDayViewport"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "64539827-87E0-4480-B72E-BCA204C3ED9A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Distinct 0130 appointments in Month_0_FF127D48-0BAD-4335-B02A-853399B21147.png",
+        "timestamp" : 1792007865.123
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "9069DE14-48BB-4C86-A15C-9C3DBC3E83DF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Distinct 0130 appointments in Week_0_0FEAADB6-57CD-411C-86F9-50E16EC80508.png",
+        "timestamp" : 1792007860.747
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "0DF7E09C-A842-4E09-A204-F7608CAE82D2.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Distinct 0130 appointments on the New York fall-back day_0_9351F694-E3D6-4590-A6FE-D46A10B54E47.png",
+        "timestamp" : 1792007853.755
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "A0501324-87C5-4C87-AD71-EFCD22784CBD.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Visible appointment text recognized by native Vision_0_3C9CE3AC-564E-4616-AAD1-BEDBA75996B0.txt",
+        "timestamp" : 1792007899.98
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "4FD03FD4-99BD-4B7F-9A9B-41B47B420196.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Ten-minute booked span with both clock-change endpoints_0_8B98E300-4C64-43AB-A9A6-14E19F0E16AF.png",
+        "timestamp" : 1792007898.911
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testShortBookedClockChangeSpanPaintsBothTimezoneNamesInWeekView()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testShortBookedClockChangeSpanPaintsBothTimezoneNamesInWeekView"
+  }
+]

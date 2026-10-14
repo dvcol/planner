@@ -6,6 +6,8 @@ enum PlannerFixtureDataset {
   private enum Scenario: String {
     case catalogOverflow = "catalog-overflow"
     case calendarRepeatedTimes = "calendar-repeated-times"
+    case calendarRepeatedSpan = "calendar-repeated-span"
+    case calendarRepeatedShortSpan = "calendar-repeated-short-span"
     case calendarLatePoint = "calendar-late-point"
     case pinnedAddress = "pinned-address"
     case pinnedEmptyName = "pinned-empty-name"
@@ -75,6 +77,23 @@ enum PlannerFixtureDataset {
         ).outcome
       else { throw CancellationError() }
       return result
+    }
+    if scenario == .calendarRepeatedSpan || scenario == .calendarRepeatedShortSpan {
+      let startTimestamp =
+        scenario == .calendarRepeatedShortSpan ? "2026-11-01T05:55:00Z" : "2026-11-01T05:30:00Z"
+      let endTimestamp =
+        scenario == .calendarRepeatedShortSpan ? "2026-11-01T06:05:00Z" : "2026-11-01T06:30:00Z"
+      guard
+        let item = try await save(.createItem(content: .init(title: "Clock-change museum")))
+          .generated.first,
+        let start = ISO8601DateFormatter().date(from: startTimestamp),
+        let end = ISO8601DateFormatter().date(from: endTimestamp)
+      else { throw CancellationError() }
+      _ = try await save(
+        .createSchedule(
+          source: item,
+          form: .timed(start: start, end: end, planningTimeZone: "America/New_York")))
+      return SavedPlannerStore(configuration: configuration)
     }
     if scenario == .calendarRepeatedTimes || scenario == .calendarLatePoint {
       let title: String

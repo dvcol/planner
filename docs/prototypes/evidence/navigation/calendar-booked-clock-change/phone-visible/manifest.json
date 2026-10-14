@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "E575C4D5-2E6C-4741-93DA-A215C9801770.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Retained source Schedule across the clock change_0_F9B724F8-6EA2-4564-B95C-41503EBB7F85.png",
+        "timestamp" : 1792008111.791
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "4462A03A-24AD-455C-81A0-ACCE6A1B6C6E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Booked clock-change span in Month_0_D12AE382-1E3B-4A35-86E4-CCA4C7A150E6.png",
+        "timestamp" : 1792008109.66
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "28DD5D4F-374F-4B7F-A522-0B1C141F854D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Booked clock-change span in Week_0_EF35B29F-AE79-4870-8CA2-C2CC24A7C0BA.png",
+        "timestamp" : 1792008104.584
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "29C337C2-77F0-45A6-AF88-B7AFB546DACC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Booked span from 0130 EDT to 0130 EST_0_C6968326-FF52-4B6E-AA55-D4F4F3DEDE73.png",
+        "timestamp" : 1792008099.224
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testBookedSpanAcrossRepeatedClockTimeDescribesBothEndpoints()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testBookedSpanAcrossRepeatedClockTimeDescribesBothEndpoints"
+  }
+]

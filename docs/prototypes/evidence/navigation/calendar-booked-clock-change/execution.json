@@ -1,0 +1,153 @@
+{
+  "artifactHashes": {
+    "calendar-red-summary.json": "21d98ee532ac70d328b5d5cdaa03b545070cd37e694e0009e181d48a92af9011",
+    "calendar-red-tests.json": "c55418a781f0288ac970cacfeb31a7ff301f153afd196f622f40099c8f261d23",
+    "calendar-red.log.gz": "5d19a2d46850a1f40b1356809898e498dbc690b36d59f603b5c6c0af767a00e3",
+    "calendar-red.png": "b6db833212c150b2668d085b10b68a2d3691de3dc4ce14d3c6d584cd3f2a0b95",
+    "commands.json": "f7441f9dc9bf82d544ac72d2863fea5f404ca5b59ff8a53b7cf241c39a1210ff",
+    "compiled-source-hashes.json": "d079b5b4d597218c642181630ad4a367d9cde12fb1ffb0db9b8c19864cb10c46",
+    "foundation-probe.log": "26ef2f8ada2305fa8b7d7663493694885305d19572fdedb0aa366b6639bfd48f",
+    "foundation-probe.swift": "3845a306a7d79407c7b3264a98c2b9359e8904da1d63fa4aed44b95cbf8c3c24",
+    "mac-build.log.gz": "460902ca2ba76e14f7702e01b98807e0d9123ee3d2b378b4195dc3f862491c45",
+    "markdown-lint.log": "d482459d7df54871daf5ac298dc9bae728941089793b1110bc04dbba5b205672",
+    "ordinary-tablet-summary.json": "697f82f545c3b586b136e35f4d1400fd5c5fd9d7700ad8c7775e1b853f8715eb",
+    "ordinary-tablet-tests.json": "3d2f958f9ab4275bc64d3f3818df4efb74f142760b4db1af43d5c53dcb83cea8",
+    "ordinary-tablet.log.gz": "22f6ab305e8f2c75c622246e82cc49b8cef99e9397b226478e9016a2cfc0eab5",
+    "phone-quartet-summary.json": "6b943367f8ec695327eeaa9d1277d609062de257f6e7ffb26520897162d46dd5",
+    "phone-quartet-tests.json": "ed127b60c048e628894c621414cb8f8df5f0cb11aa9b9359211a6b1d591a6439",
+    "phone-quartet.log.gz": "0d2b38930ce0ddbc240659c8142b9371d1645a75dcdc39a9ac64691f42b4c308",
+    "phone-quartet/03D2AA01-86E8-485C-B12A-EF073EF7AA54.png": "4505ac37af48d41a0258aa0c750bdeab6b15ce750f446b29a93dd3ccdfc0ed99",
+    "phone-quartet/29C5C9A7-81D4-4207-BDB6-2104275820CF.png": "7e04ad78d7f63fbcdc11bbe3a1c34684e564df3df0940ea85ed5351915ba74c9",
+    "phone-quartet/4A3DDCA7-9B95-4DD9-81D7-12BB972F6625.png": "3b163dc8404b74ed8f08f7e0f247b03b6ee9f167b6a3bbdc8a37a2efc3077d6a",
+    "phone-quartet/535B30D9-CB9F-4CD3-A4E1-35A1C5892B81.png": "1cd091269e2dfa4b79d9fc910c20f7ef164f1f016b75a609697b0fa3efc388d4",
+    "phone-quartet/62DD7AED-628C-4BAF-B0A7-3976DDE01043.txt": "416469c9125c6a755eda34ebcaeee899f23d67f10dd43850f73b127df6856230",
+    "phone-quartet/6E6DAC06-DD80-4644-AF3A-F1BC47365E09.png": "1a2aa66135233ed536bfdbd7cec0307e2ce89011cc5abb6dd7261be070251694",
+    "phone-quartet/84BF7286-E40B-481B-849E-1F6B85B14CAD.png": "e0e9a0589edb6e0aebd629a2c806a525bc1ca5ccf035e8e955cd92f95c8f9cb1",
+    "phone-quartet/B46F1BAE-2621-4C7F-BFB7-59341CF25437.png": "d502a6329afc7f565409350f55cc7954ebbc5ee874e5fb0008521da0ec238abf",
+    "phone-quartet/C1D2AEEA-7C22-4C74-BD9D-C7283CC98FAB.png": "87999b5807bf12a48e99253efc21b0a477d9e2dde3e000894c7984fe4130730d",
+    "phone-quartet/C82AA294-D380-454C-8FD3-E8ED96D8CA50.png": "b8c98ceae1a3157472c43fdf4fed23721843a04962f111b03b7b2089bbf2268d",
+    "phone-quartet/manifest.json": "6e8ad741c4b9797cc68694f3c7f1b3455718a77e90b22e05f806283d9be5dae8",
+    "phone-visible-summary.json": "db9953db515f020327b7446f8eb46bf0a6f3b10bcb2358bfe9a70ab8fbe95896",
+    "phone-visible-tests.json": "05ed053c3a5c1ca9576e238b8c33c6dafca04adb68ece0f7a16ee1047ba5578a",
+    "phone-visible.log.gz": "358257f5ea32232986533a628f06c52fed7d61b71d63f38a78e7cdb2c55b4c74",
+    "phone-visible/28DD5D4F-374F-4B7F-A522-0B1C141F854D.png": "8e111670d23a9be21d6b38e4e84ac239fe62e0dc3cea051009dd7edc66c8f465",
+    "phone-visible/29C337C2-77F0-45A6-AF88-B7AFB546DACC.png": "ad6e8a4de0795c0e00de2e8cacb632eed61cde475dd02616018634a1211682ad",
+    "phone-visible/4462A03A-24AD-455C-81A0-ACCE6A1B6C6E.png": "ebfaaad53f169ff2565b932cd36f6517e5df290b42f2a47ee1f93b1debb081ca",
+    "phone-visible/E575C4D5-2E6C-4741-93DA-A215C9801770.png": "4ee4384bdc79bec83f2ade10375a02b9890ed869e4a501bc447b5addbefe0bee",
+    "phone-visible/manifest.json": "e4e34b086742bb87a0a553ffd781140a86792638a6573b4ada9f5be189002c84",
+    "short-card-red-summary.json": "74cfc7f5469f194e0380c58339fd3ecc04b6506fef825a5643020600cc273b89",
+    "short-card-red-tests.json": "c06de354be26ee639727e9470b8ff7e41f5ba05a64fed2492a12f1e5428aba4a",
+    "short-card-red-visible-text.txt": "14df17733a460bda6925f4b5aa2805a972e4d2db35b24f7af6cdc2ff54513006",
+    "short-card-red.log.gz": "688b49f97f96e898fe4ce17812ebd485a927bfc165089d0bc975a8d6b40493a3",
+    "short-card-red.png": "66ebf8ea11002b5e0b23d62c5095066fbc18aa289f2e0ad53a1c5ac283b3e756",
+    "source-red-summary.json": "62037a624787b86370c80d74c4cdadca44393fa1fc2e663b13c2dbf162580bc7",
+    "source-red-tests.json": "62038e2bc5b7586d916431921a209199d0499f0346c85573b6fb38e41a9b8bc0",
+    "source-red.log.gz": "e8aac6a7786ed45cc382ec3135dc2b1b77ea752a80697f9149bd6b677b776647",
+    "source-red.png": "c23ca3f39557367578cf1cbb2f48e1691642238b9003517207aef06bbe00773f",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tablet-quartet-summary.json": "06e63310bbbd5a02ab9454009aa23f53c608cc3911996f5a59308e69392ebb7d",
+    "tablet-quartet-tests.json": "d9ff74204de0f1aec69f70f4ef73a51bfc213711e6623154e4c25e9d86ff6a5f",
+    "tablet-quartet.log.gz": "4eda5404777cd2c678d8999ebf3c59791f55a99d514c35fcf13a2678d370daad",
+    "tablet-quartet/0DF7E09C-A842-4E09-A204-F7608CAE82D2.png": "167d056b53c731ebbd57df45a814329634d0a3930435b2026b8b246bec654dac",
+    "tablet-quartet/1739E5B3-8F39-4D41-B8F5-9F0D08618726.png": "6c74a719124b6e120d61a35924fc082195f10b488deb0c4acad38a1da4618ecd",
+    "tablet-quartet/1FDA376D-22DD-4B5D-A0CE-106AD09BADBF.png": "de751b84dcbd9849b5c730696f1f8e9923bfe29dac8237ecc1281de51c159173",
+    "tablet-quartet/2ADF61B7-D3DA-437A-B68C-3C5CC2A58EB1.png": "6d0b364cefbcf83198abc2f1772025691ac373fcb2770f5494006ab85085b793",
+    "tablet-quartet/4FD03FD4-99BD-4B7F-9A9B-41B47B420196.png": "e9a59425dc7a4be53dab106aac2d9f803ce889ee1f8eb21164ed074a8df6af29",
+    "tablet-quartet/64539827-87E0-4480-B72E-BCA204C3ED9A.png": "d150a0afc4ee89dd49768bb126e7d2eda7016b21206bd87f66a04b14ae4c41fa",
+    "tablet-quartet/6F6849D8-5C4E-47F2-9C77-A5B587D3C351.png": "105057705ae5a4aa57bcf859601d2198887608bacbe63b1180f9ae60527f6641",
+    "tablet-quartet/8FF45039-4998-4F3C-A2C2-87070D121406.png": "6fa6420a8e86384bf0facdecb74924dcb601f668266a0c8338a4390487826d19",
+    "tablet-quartet/9069DE14-48BB-4C86-A15C-9C3DBC3E83DF.png": "97a6f867c74382b95aa0b6509ac8521b4125446e5a9c34c115f0c7590d389579",
+    "tablet-quartet/A0501324-87C5-4C87-AD71-EFCD22784CBD.txt": "416469c9125c6a755eda34ebcaeee899f23d67f10dd43850f73b127df6856230",
+    "tablet-quartet/manifest.json": "58ad10d1fa159f6dc71e356dbe6cd6f1a7b32d1835afb4d4ea329d53285eb93b",
+    "tablet-visible-summary.json": "184b6ad9eb92b73ebe81967d155363f22ad35c0fc60f43018c30b1f49d2729f9",
+    "tablet-visible-tests.json": "4a02cf3fd88a01b659a8099b68f711fa589e67198ab02ad44ff0e5dc55396cfb",
+    "tablet-visible.log.gz": "97af4d9ebdbb734e00f8d3c534273c736722ede737e6213c09942de72cd46a37",
+    "tablet-visible/2BD984DC-FC69-4F98-9C7D-2230C581D16F.png": "26a7ef3c331c5c28f709a50417ad52ae92d7331f2cc8451764af2a321e0fdf63",
+    "tablet-visible/75F228FD-836E-44B7-8DEE-6AD74EAC4B65.png": "23b9507fbe4f75fe9ff6451c5f79ed121985fa79ac5a227c5731fb88183db166",
+    "tablet-visible/80619983-0FF1-4751-8F1F-76BCC8E218DD.png": "ab610a4d49275fba03026062383a416e63e3c1cac56bf3dcb1fcf04f742cdeb1",
+    "tablet-visible/FE746C2B-420A-40F2-A510-AF3F7D2AD5E3.png": "d07e6dec281318bb46727bb0e59236f5a5ff479b4649b323d94ed2cde89a4972",
+    "tablet-visible/manifest.json": "f545495ec37071d629e9c7590483151bef690607c8a782e461ba64607d87163b"
+  },
+  "baseCommit": "b9758442cb1e4c4e0659021d8dccf61563ceb699",
+  "productHashes": {
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner": "2d2d27a032ebb21e31a0941e03e3862b409ae545274c10edb59ec22a5daea53e",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib": "7fe2be3de35cccbb4ec3ffeae382238d0b6fd07491c36743d4edf93496961028",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests": "82903a83a8ad6b7356769a61755d874cf46f053e793b70a17d9162eebfdb7a02",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "e6f540414489754d2dcaf1af64a0bcbb2951a58bb2d85fcf1595226f15769cba",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib": "afcfc8397ab612ccc452c81ff4b47638f725c3ce29c620f18c065a17a95efa8b",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests": "f2cfc132a8811453d69e0764c08ec62174156fabfa0b76d0c03e0507a29a7c64",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtureUITests-Runner.app/PlugIns/PlannerFixtureUITests.xctest/PlannerFixtureUITests": "4e2c8b453197aae8f626fca651b6ad7398ae6a7d135b3252d6d3c3deae4bf627",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures": "b799e68c823737b89ec582b1a32a618b3db6efb402ed424cd22990cc82ceddbc",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures.debug.dylib": "a2aad8f1addd69ed3acc2c799daa94f292b7e215bfbf965ca9182c9966c0a8ce"
+  },
+  "qualification": {
+    "calendar-red": {
+      "failedTests": 1,
+      "passedTests": 0,
+      "skippedTests": 0
+    },
+    "coreAndHTTPInvocationsThisStep": 0,
+    "macAppAndUITestHostBuild": "passed",
+    "macNativeUIInvocations": 0,
+    "markdownLint": "passed",
+    "ordinary-tablet": {
+      "failedTests": 0,
+      "passedTests": 1,
+      "skippedTests": 0
+    },
+    "phone-quartet": {
+      "failedTests": 0,
+      "passedTests": 4,
+      "skippedTests": 0
+    },
+    "phone-visible": {
+      "failedTests": 0,
+      "passedTests": 1,
+      "skippedTests": 0
+    },
+    "short-card-red": {
+      "failedTests": 1,
+      "passedTests": 0,
+      "skippedTests": 0
+    },
+    "source-red": {
+      "failedTests": 1,
+      "passedTests": 0,
+      "skippedTests": 0
+    },
+    "swiftStrictLint": "passed",
+    "tablet-quartet": {
+      "failedTests": 0,
+      "passedTests": 4,
+      "skippedTests": 0
+    },
+    "tablet-visible": {
+      "failedTests": 0,
+      "passedTests": 1,
+      "skippedTests": 0
+    },
+    "whitespace": "passed"
+  },
+  "report": "docs/prototypes/native-calendar-booked-clock-change.md",
+  "reviews": {
+    "spec": "Short-card finding resolved with native screenshot red/green; no remaining source or evidence mismatch. Counts, source differences and Month visibility verified.",
+    "standards": "No remaining material source or evidence findings; counts and hashes verified."
+  },
+  "scopeNotes": [
+    "Four fixture functions pass per device on the same frozen production code. The booked function was then rerun once per device after adding test-only Month row visibility checks; the other three methods are unchanged.",
+    "The phone visibility run precedes a test-only tab-bar existence guard. The tablet visibility run includes it. Production source and fixture seed hashes match the captured quartet source hashes; the UI-test file legitimately differs.",
+    "Current product hashes describe the final tablet-visible fixture build, ordinary iPad main-app build and final Mac compile. Mac native runtime executed zero functions.",
+    "Original new booked/short-span, source and late-point captures inspected separately at original resolution. Phone Month before the stricter check is retained and does not prove visible full captions; the later phone-visible capture does.",
+    "Foundation interval-template probe is API investigation only. Native red cases separately prove Calendar collapse, source-row collapse and painted short-card truncation.",
+    "Q83 remains pending. Other transitions, source start-only descriptions, adaptive/accessibility, Mac runtime and physical sync/account/Share gates remain open."
+  ],
+  "sourceHashes": {
+    "Planner/Scenes/SavedCalendarTimeGrid.swift": "6b489b5b11ed7c44c04f1573809457e07e2fe9c8be714641be2b8ca55a6279d8",
+    "Planner/Scenes/SavedCalendarView.swift": "b57cd311302d19850a940bfb1bd65550e17cc7ccd412107ddb0bc1b33163ad02",
+    "Planner/Scenes/SavedItemScheduleViews.swift": "4efb19d7d7951ec894c9b645c7c3939f5e0ead04cbf61b84c0cde43b0c752742",
+    "PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests.swift": "f27b3cbf47305b732bbc15e3974167667df7e207e66299d947d3f616ae42fe69",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "7c0e2af536cb787abeb65f983512bf690a24c35bd5b41f46d3bec015826f9118",
+    "docs/open-decisions.md": "3686bae54608f461ca0478668f952cf336f63448671f559f31ed3b98ec4cbdad",
+    "docs/prototypes/native-calendar-booked-clock-change.md": "775d6af1250de9c6c32c0c96994530692301fb3aef666924b3d5755a4f7930f0"
+  }
+}
