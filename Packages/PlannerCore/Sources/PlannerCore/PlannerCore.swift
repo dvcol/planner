@@ -1400,15 +1400,20 @@ public actor Planner {
         case .calendar(let calendarQuery):
           let historyToken = try latestHistoryToken(in: context)
           let entries = try calendarEntries(query: calendarQuery, context: context)
-          let snapshot = PlannerQuerySnapshot(
-            session: query.session, generation: UUID(),
-            rows: entries.map { .source($0.schedule) }, matchingCount: Int64(entries.count),
-            rowPresentation: nil, progress: [], unresolvedReferences: [])
           guard try latestHistoryToken(in: context) == historyToken else {
             throw PlannerFailure(
               "readUnavailable", "The store changed while building this Calendar.")
           }
           querySnapshots = querySnapshots.filter { $0.value.historyToken == historyToken }
+          if let retained = querySnapshots.values.first(where: {
+            $0.snapshot.session == query.session && $0.calendarEntries == entries
+          }) {
+            return .snapshot(retained.snapshot)
+          }
+          let snapshot = PlannerQuerySnapshot(
+            session: query.session, generation: UUID(),
+            rows: entries.map { .source($0.schedule) }, matchingCount: Int64(entries.count),
+            rowPresentation: nil, progress: [], unresolvedReferences: [])
           querySnapshots[snapshot.generation] = QueryBinding(
             snapshot: snapshot, historyToken: historyToken, calendarEntries: entries)
           return .snapshot(snapshot)
