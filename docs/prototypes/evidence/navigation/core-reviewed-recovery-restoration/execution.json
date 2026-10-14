@@ -1,0 +1,104 @@
+{
+  "baseCommit": "c87a5b1",
+  "scope": "Approved native-only reviewed restoreRecovery Core command. Existing durable import path, retained-evidence/target binding, Skip/Overwrite and proposal admission. No native restore form yet.",
+  "runs": {
+    "macCore": {
+      "functions": 12,
+      "invocations": 26,
+      "suites": 3,
+      "failures": 0,
+      "skips": 0,
+      "evidence": "mac-qualified.log.gz"
+    },
+    "iOSCore": {
+      "functions": 12,
+      "invocations": 26,
+      "suites": 3,
+      "failures": 0,
+      "skips": 0
+    },
+    "HTTP": {
+      "functions": 12,
+      "invocations": 17,
+      "suites": 1,
+      "failures": 0,
+      "skips": 0
+    },
+    "newRestorationSuite": {
+      "functions": 6,
+      "invocations": 15,
+      "suites": 1,
+      "failures": 0,
+      "skips": 0
+    },
+    "macNativeUI": {
+      "runtimeFunctions": 0
+    }
+  },
+  "functionalRed": "New full-graph tracer failed at missing recovery review, then passed before later test additions. Earlier red/green source snapshots were not independently hashed; final hashes describe final qualification only.",
+  "initialCorrections": [
+    "Compile-only nonexistent portable .tags test projection corrected to source enum lookup",
+    "Per-function live-store unlink removed; final tests retain named directories through process exit",
+    "Pre-correction iOS run warned about SQLite vnode unlink in six regression fixture defers. Those fixtures now retain named directories; final Mac/iOS logs have no vnode-unlink warnings and assertions are unchanged."
+  ],
+  "sources": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "a246061bd9a6057831933166d0235489f816f7b526ee4f99b3a6d78a4ba6181e",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "854282b2c7e31c0251eb94f0d7daf600782de135e573365334c2fe691405744b",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportValues.swift": "b64939492c6f8c8859dce0e856e7bb3f62d450979bc9033f0cbade6a949b16d3",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportEncoding.swift": "11c0d761f6a197ca278bac11351a426f75f924f921cfa5669caaa18fdbdf51e6",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "7e9eca6b1e233a697d02b67684ff7d4bdc87446218756938eba077847fe5665c",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "f64e58d3d017227c767dd75a1ca47f3fa1fb80aaa30cfe287a295d30dfe4a9aa",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoveryRestorationTests.swift": "f6c50fb2a2008bd6007c0b0c8f5e3bb646304200fff7949f191f385d791003f8",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportApplyTests.swift": "7118810427bcc7a1ffddb6281a10591aba83f5d9216eaebbda436810c682f33b",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportDeletedReviewTests.swift": "38b27ec0ef803d35f1396a1a93bde186204d22413d7ac74be984a234c33a84b3",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/BulkCompletionAdmissionTests.swift": "56a99d5ab6b3637da5dba8dfa863c2aaf2b9b8d81e72c47d88e0ec28f6d3bcba",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/PortableFixtureExpectations.swift": "fa22af4987ad5d36e680bf0e8912057bbf18408cbaeb84f3221cf18dde00f1a2",
+    "PlannerMCPTests/CommandRoutingTests.swift": "1e92f7d776f3ca25173267959f9132b3761280047d8034613fdd37abb89be4e9",
+    "docs/prototypes/core-reviewed-recovery-restoration.md": "8ea03b811fa5fc6c27f603fc43a1179d70bbc2282206518ebb0639e4519b8e42",
+    "docs/portable-data-contract.md": "6b4b50328354b87b19f7f7195db206cb06d045c6f49bfae289752f214d086d1e"
+  },
+  "products": {
+    "/private/tmp/PlannerCoreFixturePackageBuild/out/Products/Debug/PlannerCoreStoreTests.xctest/Contents/MacOS/PlannerCoreStoreTests": "ca4e7a91ba09a1e829090451db317e2df1a2aecb01e90904dfa0e3e8c6296bba",
+    "/private/tmp/PlannerCoreCategoryPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerCoreStoreTests.xctest/PlannerCoreStoreTests": "5a5d7cbb5463060f3466242c26ebfb4b9bf656070240a1d524cbc1a75facd6c5",
+    "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "d929b79328326f1f18bfc8f4d3ef81075a0e5f88a76dec8419068b44b15fa1d5",
+    "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib": "4d7e18cf8aebe17686b84f819dd4126ab9d899959ae9c83ee795f004a91f2ea6",
+    "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/PlugIns/PlannerMCPTests.xctest/Contents/MacOS/PlannerMCPTests": "afeb7fd9fff9c2a5b80f0eadd98c5fa7ff730eb8c61e507afc8c3acde68601ca"
+  },
+  "limits": [
+    "Native reviewed-restore form and UI journeys not implemented",
+    "Local storage only, no physical iCloud ownership/cutoff/sync/Share proof",
+    "Known-applied checkpoint retry UI remains open",
+    "Broader lineage/migration/scale/accessibility/polish retain owning gates",
+    "Q83 Calendar alignment unanswered"
+  ],
+  "reviews": {
+    "spec": "Clear. Final14source/5product/22artifact hashes, exact counts, warning-free final Core logs, preserved assertions and stated limits verified.",
+    "standards": "Clear. No remaining confirmed findings; all selected fixture lifetimes corrected, final evidence integrity and HTTP source/product epoch verified."
+  },
+  "artifacts": {
+    "bindings.log.gz": "e27184d576c5f576ea591320137b5afe61d416d2e0b9991be96d9df648f8533f",
+    "commands.json": "8e8e3b0169db2a2882b6da87cd6c5de01f318c574514b7b74190b67e972c3bbd",
+    "compiled-hashes.json": "d26ff434870044f24938a6b8aff94260adf0f37eafd8824320ad6e0ae4207f71",
+    "first-green.log.gz": "7380cfa12a89b09a022ee63482fb4d07c0565920acf79144ab6f819b968c7553",
+    "http-qualified.log.gz": "4f9c8c951bdf585b5b342d08acabd356fa40079e3a2d9ca8b8a610412c3ea128",
+    "http-summary.json": "c59aa8e995fd46f3c9f4d64b3f66e758c25c275de527dfc693de0fac9d2f8ec8",
+    "http-tests.json": "191e41417b50455c447b45c52ebdd59a600b02f22bda10d8e733afb97fceedfc",
+    "mac-qualified.log.gz": "d33b9dd9b88df2071ea194fbbee0f403a6b811b356309acde865c9d402d6585b",
+    "markdown-lint.log": "a092112ebe83ded5ca6a17fe8f2ab1a81ca745e2037be7d3b71c76911c110f24",
+    "mode-compile-failure.log.gz": "050ab88fbfcdba6729bbb55a901eba1a31265eb6a8f697646bf1f93b56217090",
+    "modes.log.gz": "80f017831ec2646c59652d23c1b4bfd0c385f9e86cc3cfae33b53dcd6d766937",
+    "phone-qualified.log.gz": "338d2278aa29ed80b370c82d9f46d6e9bdc2a63c2f752ee9bc2b54bd7c7b3e38",
+    "phone-summary.json": "e8ae87c05b8b66c3370ee3fe9c87a1187987192a565b31d605799f32a7397167",
+    "phone-tests.json": "88e4c5df1f4636ca5420064595a1aed26bd18ce11c71444ce00606738d81c654",
+    "pre-cleanup-compiled-hashes.json": "4883905621bc88d7a6df1f2bd42178a57fa56720140517ff26d36baaa3055419",
+    "pre-cleanup-mac-qualified.log.gz": "5c78f98d93b9976f80ebee520136746a6a54ee0543c5f506cf2c62d487f3f5fc",
+    "pre-cleanup-phone-qualified.log.gz": "583b1fd3b67e1eeabecdfcd92e7b87c0e9d7eecfb863fa6b10e3ac9a094a23a6",
+    "pre-cleanup-phone-summary.json": "4916677269a8d5d3410cd5f2f40d8fc1b1a46b666f11409f5c6c0adb41d4c85f",
+    "pre-cleanup-phone-tests.json": "60e53b4d79fcbd9eef18811e0e37da652f97576cc15e3c69e71ce6b0505af370",
+    "proposal.log.gz": "b5eb3d2f29e9b78ecae716f8769f05f1b4c42d35ae2ba264e8a551a28a6f2737",
+    "red.log.gz": "875ec077d0f5ac82d17d5e7d039a13ead7a42d53732660a319f0aed1ce68a808",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "httpEpoch": "HTTP executed before final Core-test-only fixture correction. Production sources and three HTTP app/test-host product hashes unchanged; no repeat credited.",
+  "finalFixtureLifetime": "All selected Core fixtures retain named directories through process exit. Final Mac/iOS logs inspected for vnode-unlink warnings; none."
+}

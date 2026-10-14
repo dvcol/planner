@@ -1,5 +1,29 @@
 import Foundation
 
+struct PlannerImportRequest {
+  let backup: PlannerDecodedBackup
+  let mode: PlannerImportMode
+  let restoreDeletedData: Bool
+  let recoverySelection: PlannerRecoverySelection?
+
+  init(command: PlannerCommand) throws {
+    switch command {
+    case .applyImport(let backup, let mode, let restoreDeletedData):
+      self.backup = backup
+      self.mode = mode
+      self.restoreDeletedData = restoreDeletedData
+      recoverySelection = nil
+    case .restoreRecovery(let selection, let mode):
+      backup = selection.decodedBackup
+      self.mode = mode
+      restoreDeletedData = mode == .overwrite
+      recoverySelection = selection
+    default:
+      throw PlannerFailure("invalidInput", "This command does not import Planner data.")
+    }
+  }
+}
+
 public enum PlannerImportDecodingResult: Sendable {
   case decoded(PlannerDecodedBackup)
   case invalid(PlannerFailure)

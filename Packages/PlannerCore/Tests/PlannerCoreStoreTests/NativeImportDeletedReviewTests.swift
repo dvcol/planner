@@ -4,8 +4,9 @@ import Testing
 
 struct NativeImportDeletedReviewTests {
   @Test func unrelatedDeletionDoesNotBlockLiveOwnerOverwriteReview() async throws {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeImportDeletedReviewTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -79,8 +80,9 @@ struct NativeImportDeletedReviewTests {
   func closedScheduleSkipsItsNewOwnerOrRequiresExplicitRestoration(mode: PlannerImportMode)
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeImportDeletedReviewTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
@@ -188,8 +190,9 @@ struct NativeImportDeletedReviewTests {
   )
     async throws
   {
-    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-    defer { try? FileManager.default.removeItem(at: directory) }
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerNativeImportDeletedReviewTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
     let planner = Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),

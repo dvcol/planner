@@ -1,0 +1,360 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName" : "iPhone 18 Pro",
+      "modelName" : "iPhone 18 Pro",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "1s",
+                  "durationInSeconds" : 1.0784969329833984,
+                  "name" : "failedRecoveryPreparationLeavesGraphAndReceiptUnapplied()",
+                  "nodeIdentifier" : "NativeImportApplyTests/failedRecoveryPreparationLeavesGraphAndReceiptUnapplied()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportApplyTests/failedRecoveryPreparationLeavesGraphAndReceiptUnapplied()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,14s",
+                      "durationInSeconds" : 0.1369328498840332,
+                      "name" : "\"localCompletion\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportApplyTests/ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:)?args=dc1f633669c1757a277f058c82b3efe84a8240ee9ca17360596f96a76ae1ffc0",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,23s",
+                      "durationInSeconds" : 0.2262129783630371,
+                      "name" : "\"notes\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportApplyTests/ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:)?args=f58ccf08e74ff87e0a1e16cbdd9177f95d4a5e09082d3926d5b51913dbe10481",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,18s",
+                  "durationInSeconds" : 0.18157291412353516,
+                  "name" : "ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:)",
+                  "nodeIdentifier" : "NativeImportApplyTests/ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportApplyTests/ordinaryEditAfterImportPreservesCompleteNativeAndRecoveryGraph(_:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,14s",
+                      "durationInSeconds" : 0.14123010635375977,
+                      "name" : "false",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportApplyTests/reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,28s",
+                      "durationInSeconds" : 0.2754068374633789,
+                      "name" : "true",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportApplyTests/reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,21s",
+                  "durationInSeconds" : 0.20831847190856934,
+                  "name" : "reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:)",
+                  "nodeIdentifier" : "NativeImportApplyTests/reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportApplyTests/reviewedCompleteBackupRestoresItsGraphAndSurvivesReopen(retryRecovery:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "NativeImportApplyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportApplyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,12s",
+                  "durationInSeconds" : 0.1156620979309082,
+                  "name" : "unrelatedDeletionDoesNotBlockLiveOwnerOverwriteReview()",
+                  "nodeIdentifier" : "NativeImportDeletedReviewTests/unrelatedDeletionDoesNotBlockLiveOwnerOverwriteReview()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportDeletedReviewTests/unrelatedDeletionDoesNotBlockLiveOwnerOverwriteReview()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,25s",
+                      "durationInSeconds" : 0.24596190452575684,
+                      "name" : ".overwrite",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportDeletedReviewTests/closedScheduleSkipsItsNewOwnerOrRequiresExplicitRestoration(mode:)?args=30569e10e6ea73718c2fe8fd1ee762a0f58af39982d92686b8236878c13022e5",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,16s",
+                      "durationInSeconds" : 0.15798401832580566,
+                      "name" : ".skip",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportDeletedReviewTests/closedScheduleSkipsItsNewOwnerOrRequiresExplicitRestoration(mode:)?args=3fcfe71c199e24d6c42a446390c40d7e2e2825bf4253fde431d6ec9a6ee3a217",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,2s",
+                  "durationInSeconds" : 0.20197296142578125,
+                  "name" : "closedScheduleSkipsItsNewOwnerOrRequiresExplicitRestoration(mode:)",
+                  "nodeIdentifier" : "NativeImportDeletedReviewTests/closedScheduleSkipsItsNewOwnerOrRequiresExplicitRestoration(mode:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportDeletedReviewTests/closedScheduleSkipsItsNewOwnerOrRequiresExplicitRestoration(mode:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,1s",
+                      "durationInSeconds" : 0.10492992401123047,
+                      "name" : ".declared",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportDeletedReviewTests/skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:)?args=2e6465636c61726564",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,23s",
+                      "durationInSeconds" : 0.2265768051147461,
+                      "name" : ".external",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportDeletedReviewTests/skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:)?args=2e65787465726e616c",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,13s",
+                      "durationInSeconds" : 0.12534284591674805,
+                      "name" : ".externalWrongLifetime",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportDeletedReviewTests/skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:)?args=2e65787465726e616c57726f6e674c69666574696d65",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,15s",
+                  "durationInSeconds" : 0.1522831916809082,
+                  "name" : "skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:)",
+                  "nodeIdentifier" : "NativeImportDeletedReviewTests/skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportDeletedReviewTests/skipKeepsDeletedItemClosedAndSkipsEveryDependentOwnerWithoutShorteningThem(sourceCase:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "NativeImportDeletedReviewTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/NativeImportDeletedReviewTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,14s",
+                      "durationInSeconds" : 0.13924217224121094,
+                      "name" : ".overwrite",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/deletedIdentityStaysDeletedUnlessRecoveryOverwriteExplicitlyRestoresIt(_:)?args=30569e10e6ea73718c2fe8fd1ee762a0f58af39982d92686b8236878c13022e5",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,17s",
+                      "durationInSeconds" : 0.17233991622924805,
+                      "name" : ".skip",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/deletedIdentityStaysDeletedUnlessRecoveryOverwriteExplicitlyRestoresIt(_:)?args=3fcfe71c199e24d6c42a446390c40d7e2e2825bf4253fde431d6ec9a6ee3a217",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,16s",
+                  "durationInSeconds" : 0.1557910442352295,
+                  "name" : "deletedIdentityStaysDeletedUnlessRecoveryOverwriteExplicitlyRestoresIt(_:)",
+                  "nodeIdentifier" : "RecoveryRestorationTests/deletedIdentityStaysDeletedUnlessRecoveryOverwriteExplicitlyRestoresIt(_:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/deletedIdentityStaysDeletedUnlessRecoveryOverwriteExplicitlyRestoresIt(_:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,18s",
+                  "durationInSeconds" : 0.17763495445251465,
+                  "name" : "unverifiedProposalRequiresFreshOperationAndDoesNotAcknowledgeSource()",
+                  "nodeIdentifier" : "RecoveryRestorationTests/unverifiedProposalRequiresFreshOperationAndDoesNotAcknowledgeSource()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/unverifiedProposalRequiresFreshOperationAndDoesNotAcknowledgeSource()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,11s",
+                      "durationInSeconds" : 0.11033010482788086,
+                      "name" : "\"current\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/changedRecoveryReviewCannotApplyToDifferentData(_:)?args=694df57a7909d9f9edbd3acb4ccfce5fbee156fab749383121f17fef16bbab57",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,097s",
+                      "durationInSeconds" : 0.09664297103881836,
+                      "name" : "\"fileCommand\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/changedRecoveryReviewCannotApplyToDifferentData(_:)?args=8af8757a6ed0623fd970ec31805145c0ac67fcaa07a7ba969e56fec55c80e9b6",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,096s",
+                      "durationInSeconds" : 0.09635710716247559,
+                      "name" : "\"mode\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/changedRecoveryReviewCannotApplyToDifferentData(_:)?args=b6d5c2c378457da0413ba54385a563ca5e39b791f308a1871a69bbc84e45d947",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,15s",
+                      "durationInSeconds" : 0.1518840789794922,
+                      "name" : "\"selection\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/changedRecoveryReviewCannotApplyToDifferentData(_:)?args=5d7642cc69080cf161bddfd3b46d6188f43e9b7d7c2bc8aeb1ef833afac83214",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,14s",
+                      "durationInSeconds" : 0.13926196098327637,
+                      "name" : "\"target\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/changedRecoveryReviewCannotApplyToDifferentData(_:)?args=aa962f43aa13b734bd1704f05204720de1c69a6c1a3969fd131c78c6240e7f57",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,12s",
+                  "durationInSeconds" : 0.11889524459838867,
+                  "name" : "changedRecoveryReviewCannotApplyToDifferentData(_:)",
+                  "nodeIdentifier" : "RecoveryRestorationTests/changedRecoveryReviewCannotApplyToDifferentData(_:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/changedRecoveryReviewCannotApplyToDifferentData(_:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,17s",
+                      "durationInSeconds" : 0.16916394233703613,
+                      "name" : "\"fileCommand\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/recoveryReceiptBindsRetainedEvidenceAndAllowsEquivalentReselection(_:)?args=8af8757a6ed0623fd970ec31805145c0ac67fcaa07a7ba969e56fec55c80e9b6",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,15s",
+                      "durationInSeconds" : 0.14603710174560547,
+                      "name" : "\"mode\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/recoveryReceiptBindsRetainedEvidenceAndAllowsEquivalentReselection(_:)?args=b6d5c2c378457da0413ba54385a563ca5e39b791f308a1871a69bbc84e45d947",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,24s",
+                      "durationInSeconds" : 0.24076390266418457,
+                      "name" : "\"reselected\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/recoveryReceiptBindsRetainedEvidenceAndAllowsEquivalentReselection(_:)?args=aad78aa4529465a9770e913d830b4ea86a4edda3c940e44605c4abddedbbda29",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,17s",
+                      "durationInSeconds" : 0.17259764671325684,
+                      "name" : "\"selection\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/recoveryReceiptBindsRetainedEvidenceAndAllowsEquivalentReselection(_:)?args=5d7642cc69080cf161bddfd3b46d6188f43e9b7d7c2bc8aeb1ef833afac83214",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,18s",
+                  "durationInSeconds" : 0.18214064836502075,
+                  "name" : "recoveryReceiptBindsRetainedEvidenceAndAllowsEquivalentReselection(_:)",
+                  "nodeIdentifier" : "RecoveryRestorationTests/recoveryReceiptBindsRetainedEvidenceAndAllowsEquivalentReselection(_:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/recoveryReceiptBindsRetainedEvidenceAndAllowsEquivalentReselection(_:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,19s",
+                      "durationInSeconds" : 0.19329285621643066,
+                      "name" : ".overwrite",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/recoveryMergePreservesIndependentDataAndUsesReviewedConflictMode(_:)?args=30569e10e6ea73718c2fe8fd1ee762a0f58af39982d92686b8236878c13022e5",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,29s",
+                      "durationInSeconds" : 0.292248010635376,
+                      "name" : ".skip",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/recoveryMergePreservesIndependentDataAndUsesReviewedConflictMode(_:)?args=3fcfe71c199e24d6c42a446390c40d7e2e2825bf4253fde431d6ec9a6ee3a217",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,24s",
+                  "durationInSeconds" : 0.24277043342590332,
+                  "name" : "recoveryMergePreservesIndependentDataAndUsesReviewedConflictMode(_:)",
+                  "nodeIdentifier" : "RecoveryRestorationTests/recoveryMergePreservesIndependentDataAndUsesReviewedConflictMode(_:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/recoveryMergePreservesIndependentDataAndUsesReviewedConflictMode(_:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,22s",
+                  "durationInSeconds" : 0.21757793426513672,
+                  "name" : "reviewedSnapshotRestoresCompleteGraphIntoSeparateEmptyDatasetAndReplaysAfterReopen()",
+                  "nodeIdentifier" : "RecoveryRestorationTests/reviewedSnapshotRestoresCompleteGraphIntoSeparateEmptyDatasetAndReplaysAfterReopen()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests/reviewedSnapshotRestoresCompleteGraphIntoSeparateEmptyDatasetAndReplaysAfterReopen()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "RecoveryRestorationTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests/RecoveryRestorationTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "PlannerCoreStoreTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerCoreStoreTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "PlannerCore",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

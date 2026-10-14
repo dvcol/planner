@@ -190,6 +190,7 @@ public enum PlannerCommand: Sendable {
     draftId: UUID, draftGeneration: UUID, choice: PlannerCaptureChoice, listIds: Set<UUID>)
   case applyImport(
     backup: PlannerDecodedBackup, mode: PlannerImportMode = .skip, restoreDeletedData: Bool = false)
+  case restoreRecovery(selection: PlannerRecoverySelection, mode: PlannerImportMode = .skip)
   case deleteSource(source: PlannerEntityReference)
   case createItem(content: PlannerItemContentInput)
   case createList(content: PlannerListContentInput)

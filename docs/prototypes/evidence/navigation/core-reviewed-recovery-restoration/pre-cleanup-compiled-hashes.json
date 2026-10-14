@@ -1,0 +1,23 @@
+{
+  "sources": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "a246061bd9a6057831933166d0235489f816f7b526ee4f99b3a6d78a4ba6181e",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "854282b2c7e31c0251eb94f0d7daf600782de135e573365334c2fe691405744b",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportValues.swift": "b64939492c6f8c8859dce0e856e7bb3f62d450979bc9033f0cbade6a949b16d3",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportEncoding.swift": "11c0d761f6a197ca278bac11351a426f75f924f921cfa5669caaa18fdbdf51e6",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "7e9eca6b1e233a697d02b67684ff7d4bdc87446218756938eba077847fe5665c",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerRecovery.swift": "f64e58d3d017227c767dd75a1ca47f3fa1fb80aaa30cfe287a295d30dfe4a9aa",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/RecoveryRestorationTests.swift": "f6c50fb2a2008bd6007c0b0c8f5e3bb646304200fff7949f191f385d791003f8",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportApplyTests.swift": "ecbb45ec308a346f409d0bb176e7bb2f564ca9bf2d2e5391126a56ba0779b293",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/NativeImportDeletedReviewTests.swift": "76749ef4081583a64fb5cc725f5da8d2d1925e9886a2bd17a78511f859da159d",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/BulkCompletionAdmissionTests.swift": "56a99d5ab6b3637da5dba8dfa863c2aaf2b9b8d81e72c47d88e0ec28f6d3bcba",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/PortableFixtureExpectations.swift": "fa22af4987ad5d36e680bf0e8912057bbf18408cbaeb84f3221cf18dde00f1a2",
+    "PlannerMCPTests/CommandRoutingTests.swift": "1e92f7d776f3ca25173267959f9132b3761280047d8034613fdd37abb89be4e9"
+  },
+  "products": {
+    "/private/tmp/PlannerCoreFixturePackageBuild/out/Products/Debug/PlannerCoreStoreTests.xctest/Contents/MacOS/PlannerCoreStoreTests": "41b9b6a6dc171eb160510706e60bab71c851fa225f691171bd24b03db2dcde29",
+    "/private/tmp/PlannerCoreCategoryPhoneDerivedData/Build/Products/Debug-iphonesimulator/PlannerCoreStoreTests.xctest/PlannerCoreStoreTests": "8501b5eea5eefb8bd3d5d129f73eb609715ee88867aa7b2f198b9fae70cb2214",
+    "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "d929b79328326f1f18bfc8f4d3ef81075a0e5f88a76dec8419068b44b15fa1d5",
+    "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib": "4d7e18cf8aebe17686b84f819dd4126ab9d899959ae9c83ee795f004a91f2ea6",
+    "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/PlugIns/PlannerMCPTests.xctest/Contents/MacOS/PlannerMCPTests": "afeb7fd9fff9c2a5b80f0eadd98c5fa7ff730eb8c61e507afc8c3acde68601ca"
+  }
+}
