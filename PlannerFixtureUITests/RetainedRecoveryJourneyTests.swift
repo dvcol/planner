@@ -3,6 +3,80 @@ import XCTest
 #if os(iOS)
   @MainActor
   final class RetainedRecoveryJourneyTests: XCTestCase {
+    func testReviewCancelAndRestoreRetainedCopyPreservesIdentitiesAfterRelaunch() throws {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "retained-recovery", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      let currentItem = application.savedPlannerItemRows("Current hotel").firstMatch
+      XCTAssertTrue(currentItem.waitForExistence(timeout: 20))
+      let currentItemIdentifier = currentItem.identifier
+      openSettings(application)
+      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+      let currentTag = application.descendants(matching: .any).matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@", "saved.tag.", "Current travel tag")
+      ).firstMatch
+      XCTAssertTrue(currentTag.waitForExistence(timeout: 10))
+      let currentTagIdentifier = currentTag.identifier
+      application.plannerElement("saved.categories.done").activateForPlannerJourney()
+      try selectRetainedCopy(application)
+      let retainedItem = recoverySource("Retained museum", kind: "item", in: application)
+      let retainedTag = recoverySource("Retained travel tag", kind: "tag", in: application)
+      let restoredItemIdentifier =
+        "saved.item." + retainedItem.identifier.dropFirst("saved.recovery.source.item.".count)
+      let restoredTagIdentifier =
+        "saved.tag." + retainedTag.identifier.dropFirst("saved.recovery.source.tag.".count)
+      let restore = application.plannerElement("saved.recovery.restore.review")
+      XCTAssertTrue(restore.waitForExistence(timeout: 10))
+      restore.activateForPlannerJourney()
+      let destination = application.staticTexts["saved.recovery.restore.target"]
+      XCTAssertTrue(destination.waitForExistence(timeout: 10))
+      XCTAssertTrue(destination.label.contains("Current Planner"))
+      let additions = application.staticTexts["saved.import.summary.additions"]
+      XCTAssertTrue(additions.waitForExistence(timeout: 10))
+      XCTAssertEqual(additions.label, "Additions, 2")
+      capture("Native review targets Current Planner and lists two additions")
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      closeRecovery(application)
+      application.openPlannerSection("Items")
+      XCTAssertTrue(application.plannerElement(currentItemIdentifier).waitForExistence(timeout: 10))
+      XCTAssertFalse(application.savedPlannerItemRows("Retained museum").firstMatch.exists)
+      openSettings(application)
+      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+      XCTAssertTrue(application.plannerElement(currentTagIdentifier).waitForExistence(timeout: 10))
+      XCTAssertFalse(application.plannerElement(restoredTagIdentifier).exists)
+      application.plannerElement("saved.categories.done").activateForPlannerJourney()
+      try selectRetainedCopy(application)
+      restore.activateForPlannerJourney()
+      XCTAssertTrue(additions.waitForExistence(timeout: 10))
+      let confirm = application.plannerElement("saved.import.confirm")
+      XCTAssertEqual(confirm.label, "Restore")
+      confirm.activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["saved.recovery.restore.applied"].waitForExistence(timeout: 15))
+      capture("Explicit native confirmation restores the reviewed copy")
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      closeRecovery(application)
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      XCTAssertTrue(application.plannerElement(currentItemIdentifier).waitForExistence(timeout: 15))
+      XCTAssertTrue(
+        application.plannerElement(restoredItemIdentifier).waitForExistence(timeout: 10))
+      XCTAssertEqual(application.plannerElement(restoredItemIdentifier).label, "Retained museum")
+      openSettings(application)
+      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+      XCTAssertTrue(application.plannerElement(currentTagIdentifier).waitForExistence(timeout: 10))
+      XCTAssertEqual(application.plannerElement(currentTagIdentifier).label, "Current travel tag")
+      XCTAssertTrue(application.plannerElement(restoredTagIdentifier).waitForExistence(timeout: 10))
+      XCTAssertEqual(application.plannerElement(restoredTagIdentifier).label, "Retained travel tag")
+      capture("Restored and current identities survive native relaunch together")
+    }
+
     func testExportingRetainedCopyKeepsCurrentDatasetSeparateAfterRelaunch() throws {
       continueAfterFailure = false
       let application = XCUIApplication()
@@ -105,6 +179,29 @@ import XCTest
           format: "identifier BEGINSWITH %@ AND label CONTAINS %@",
           "saved.recovery.source.\(kind).", name)
       ).firstMatch
+    }
+
+    private func selectRetainedCopy(_ application: XCUIApplication) throws {
+      application.plannerElement("saved.settings.recovery").activateForPlannerJourney()
+      let snapshots = application.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.recovery.snapshot."))
+      XCTAssertTrue(snapshots.firstMatch.waitForExistence(timeout: 15))
+      XCTAssertEqual(snapshots.count, 2)
+      for index in 0..<2 {
+        snapshots.element(boundBy: index).activateForPlannerJourney()
+        XCTAssertTrue(
+          application.staticTexts["saved.recovery.evidence"].waitForExistence(timeout: 10))
+        if recoverySource("Retained travel tag", kind: "tag", in: application).exists { return }
+        application.plannerElement("saved.recovery.selection.done").activateForPlannerJourney()
+      }
+      XCTFail("The retained Item/Tag copy must be available.")
+      throw CancellationError()
+    }
+
+    private func closeRecovery(_ application: XCUIApplication) {
+      application.plannerElement("saved.recovery.selection.done").activateForPlannerJourney()
+      application.plannerElement("saved.recovery.done").activateForPlannerJourney()
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
     }
 
     private func openSettings(_ application: XCUIApplication) {

@@ -105,7 +105,7 @@ struct SavedRecoveryCopiesView: View {
     .task(id: store.changeRevision) { await loadCopies() }
     .task(id: requestIdentifier) { await loadSelection() }
     .sheet(item: $selection) { draft in
-      SavedRecoverySelectionView(selection: draft.selection)
+      SavedRecoverySelectionView(store: store, selection: draft.selection)
     }
     #if os(macOS)
       .frame(minWidth: 480, minHeight: 440)
