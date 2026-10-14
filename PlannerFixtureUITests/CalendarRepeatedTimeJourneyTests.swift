@@ -153,6 +153,9 @@ import XCTest
       XCTAssertEqual(appointments.count, 2)
       let values = appointments.allElementsBoundByIndex
       XCTAssertEqual(Set(values.map(\.identifier)).count, 2)
+      let scheduleIdentifiers = try values.map {
+        String(try XCTUnwrap($0.identifier.split(separator: ".").last))
+      }
       for _ in 0..<6 {
         if values.allSatisfy(\.isHittable) { break }
         grid.swipeDown()
@@ -198,6 +201,28 @@ import XCTest
         capture.lifetime = .keepAlways
         add(capture)
       }
+      application.buttons["saved.calendar.schedule.\(scheduleIdentifiers[0])"].firstMatch
+        .activateForPlannerJourney()
+      let sourceSchedules = application.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule."))
+      XCTAssertTrue(sourceSchedules.firstMatch.waitForExistence(timeout: 10))
+      XCTAssertEqual(sourceSchedules.count, 2)
+      let sourceValues = sourceSchedules.allElementsBoundByIndex
+      XCTAssertTrue(sourceValues.allSatisfy { $0.label == "Start only" })
+      XCTAssertEqual(
+        Set(
+          sourceValues.map {
+            $0.identifier.replacingOccurrences(of: "saved.item.schedule.", with: "")
+          }),
+        Set(scheduleIdentifiers))
+      let sourceDescriptions = try sourceValues.map { try XCTUnwrap($0.value as? String) }
+      let sourceCapture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+      sourceCapture.name = "Independent start-only source Schedules in the repeated hour"
+      sourceCapture.lifetime = .keepAlways
+      add(sourceCapture)
+      XCTAssertTrue(sourceDescriptions.contains { $0.contains("EDT") })
+      XCTAssertTrue(sourceDescriptions.contains { $0.contains("EST") })
+      XCTAssertTrue(sourceDescriptions.allSatisfy { $0.hasSuffix("America/New_York") })
     }
     func testLateStartOnlyCardCanBeScrolledFullyIntoTheDayViewport() throws {
       continueAfterFailure = false

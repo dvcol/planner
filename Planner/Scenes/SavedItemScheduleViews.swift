@@ -138,20 +138,23 @@ private struct SavedScheduleRow: View {
     switch schedule.content.form {
     case .timed(let start, let end, let planningTimeZone):
       let timeZone = TimeZone(identifier: planningTimeZone) ?? .current
+      var planningCalendar = Calendar(identifier: .gregorian)
+      planningCalendar.timeZone = timeZone
       let dateDescription: String
       if let end {
         let dateIntervalFormatter = DateIntervalFormatter()
         dateIntervalFormatter.dateStyle = .medium
         dateIntervalFormatter.timeStyle = .short
         dateIntervalFormatter.timeZone = timeZone
-        var planningCalendar = Calendar(identifier: .gregorian)
-        planningCalendar.timeZone = timeZone
         dateDescription =
           calendarClockChangeSpanDescription(
             start: start, end: end, calendar: planningCalendar, includesDate: true)
           ?? dateIntervalFormatter.string(from: start, to: end)
       } else {
         var dateFormatStyle = Date.FormatStyle(date: .abbreviated, time: .shortened)
+        if calendarDayHasClockChange(start, calendar: planningCalendar) {
+          dateFormatStyle = dateFormatStyle.timeZone(.specificName(.short))
+        }
         dateFormatStyle.timeZone = timeZone
         dateDescription = start.formatted(dateFormatStyle)
       }
