@@ -128,7 +128,21 @@ final class SavedCalendarJourneyTests: XCTestCase {
     XCTAssertTrue((entry.value as? String)?.contains("All day") == true)
     entry.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Live route notes"].waitForExistence(timeout: 5))
-    XCTAssertTrue(application.plannerElement("saved.itinerary.actions").exists)
+    let actions = application.plannerElement("saved.itinerary.actions")
+    if actions.exists {
+      actions.activateForPlannerJourney()
+    } else {
+      let overflow = application.buttons["OverflowBarButtonItem"].firstMatch
+      XCTAssertTrue(overflow.waitForExistence(timeout: 5))
+      overflow.activateForPlannerJourney()
+      let itineraryActions = application.plannerElement("Itinerary actions")
+      if itineraryActions.exists { itineraryActions.activateForPlannerJourney() }
+    }
+    let scheduleAction = application.plannerElement("Schedule Itinerary")
+    XCTAssertTrue(scheduleAction.waitForExistence(timeout: 5))
+    scheduleAction.activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement("saved.schedule.cancel").waitForExistence(timeout: 5))
+    application.plannerElement("saved.schedule.cancel").activateForPlannerJourney()
     let retained = application.descendants(matching: .any)
       .matching(identifier: schedule.identifier).firstMatch
     XCTAssertTrue(retained.exists)

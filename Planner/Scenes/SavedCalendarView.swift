@@ -124,6 +124,7 @@ struct SavedCalendarView: View {
       }
       .padding()
     }
+    .accessibilityIdentifier("saved.calendar.canvas")
     .navigationTitle("Calendar")
     .toolbar {
       Button("Today", systemImage: "calendar") { selectedDate = Date() }

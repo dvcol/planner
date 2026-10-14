@@ -27,6 +27,7 @@ struct SavedPlannerView: View {
   @Bindable var store: SavedPlannerStore
   @State private var selectedSection: SavedPlannerSection = .lists
   @State private var calendarSelection: SavedCalendarSelection?
+  @State private var calendarInspectorPresented = false
   @State private var selectedItineraryIdentifier: UUID?
   @State private var selectedItineraryRow: SavedItineraryRowSelection?
   @State private var itineraryColumnVisibility: NavigationSplitViewVisibility = .all
@@ -128,7 +129,11 @@ struct SavedPlannerView: View {
       if selectedItineraryIdentifier != nil { itineraryDeletionMessage = nil }
     }
     .onChange(of: calendarSelection) {
-      guard let selection = calendarSelection else { return }
+      guard let selection = calendarSelection else {
+        calendarInspectorPresented = false
+        return
+      }
+      calendarInspectorPresented = true
       if selection.source.kind == .item {
         if selectedItemId != selection.source.id {
           selectedItem = nil
@@ -235,7 +240,16 @@ struct SavedPlannerView: View {
   @ViewBuilder
   private var nativeLayout: some View {
     #if os(macOS)
-      plannerColumns
+      if selectedSection == .calendar {
+        NavigationSplitView(columnVisibility: $columnVisibility) {
+          plannerSidebar
+        } detail: {
+          wideCalendar
+        }
+        .navigationSplitViewStyle(.balanced)
+      } else {
+        plannerColumns
+      }
     #else
       TabView(selection: $selectedSection) {
         Tab("Lists", systemImage: "list.bullet", value: .lists) { plannerColumns }
@@ -272,11 +286,7 @@ struct SavedPlannerView: View {
     @ViewBuilder
     private var calendarColumns: some View {
       if horizontalSizeClass == .regular {
-        NavigationSplitView {
-          SavedCalendarView(store: store, selection: $calendarSelection)
-        } detail: {
-          calendarDetailStack
-        }
+        wideCalendar
       } else {
         NavigationStack {
           SavedCalendarView(store: store, selection: $calendarSelection)
@@ -286,9 +296,53 @@ struct SavedPlannerView: View {
     }
   #endif
 
+  private var calendarInspectorSelection: Binding<SavedCalendarSelection?> {
+    Binding(
+      get: { calendarSelection },
+      set: { selection in
+        calendarSelection = selection
+        calendarInspectorPresented = selection != nil
+      })
+  }
+
+  private var wideCalendar: some View {
+    NavigationStack {
+      SavedCalendarView(store: store, selection: calendarInspectorSelection)
+        .toolbar {
+          if !calendarInspectorPresented {
+            ToolbarItem(placement: .primaryAction) { calendarDetailsToggle }
+          }
+        }
+    }
+    .inspector(isPresented: $calendarInspectorPresented) { calendarInspector }
+  }
+
+  private var calendarDetailsToggle: some View {
+    Button {
+      calendarInspectorPresented.toggle()
+    } label: {
+      Label(
+        calendarInspectorPresented ? "Hide Details" : "Show Details",
+        systemImage: "sidebar.right")
+    }
+    .disabled(calendarSelection == nil)
+    .help(calendarInspectorPresented ? "Hide Details" : "Show Details")
+    .accessibilityIdentifier("saved.calendar.details.toggle")
+  }
+
+  private var calendarInspector: some View {
+    calendarDetailStack
+      .inspectorColumnWidth(min: 300, ideal: 360, max: 520)
+  }
+
   private var calendarDetailStack: some View {
     NavigationStack {
       calendarDetail
+        .toolbar {
+          if calendarInspectorPresented {
+            ToolbarItem(placement: .primaryAction) { calendarDetailsToggle }
+          }
+        }
     }
     .id(calendarSelection)
   }
@@ -305,18 +359,14 @@ struct SavedPlannerView: View {
           ProgressView("Opening Item")
         }
       } else if selection.source.kind == .itinerary {
-        if selectedItineraryIdentifier == selection.source.id {
-          itineraryDetail
-            .navigationDestination(item: $selectedItineraryRow) { row in
-              SavedItineraryItemDetail(
-                appearance: row.appearance(itineraryId: selection.source.id),
-                isReviewingDeletion: itineraryDeletionDraft?.source.id == selection.source.id
-              )
-              .id(row)
-            }
-        } else {
-          ProgressView("Opening Itinerary")
-        }
+        itineraryDetail(identifier: selection.source.id)
+          .navigationDestination(item: $selectedItineraryRow) { row in
+            SavedItineraryItemDetail(
+              appearance: row.appearance(itineraryId: selection.source.id),
+              isReviewingDeletion: itineraryDeletionDraft?.source.id == selection.source.id
+            )
+            .id(row)
+          }
       }
     } else {
       ContentUnavailableView("Choose a schedule", systemImage: "calendar")
@@ -375,13 +425,7 @@ struct SavedPlannerView: View {
   @ViewBuilder
   private var itineraryDetail: some View {
     if let selectedItineraryIdentifier {
-      SavedItineraryDetail(
-        store: store, identifier: selectedItineraryIdentifier, selection: $selectedItineraryRow,
-        isPreparingDeletion: isPreparingItineraryDeletion,
-        isReviewingDeletion: itineraryDeletionDraft?.source.id == selectedItineraryIdentifier,
-        prepareDeletion: { itinerary in Task { await prepareItineraryDeletion(itinerary) } }
-      )
-      .id(selectedItineraryIdentifier)
+      itineraryDetail(identifier: selectedItineraryIdentifier)
     } else if let itineraryDeletionMessage {
       ContentUnavailableView(
         "Itinerary deleted", systemImage: "trash", description: Text(itineraryDeletionMessage))
@@ -389,6 +433,16 @@ struct SavedPlannerView: View {
       ContentUnavailableView(
         "Choose an Itinerary", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
     }
+  }
+
+  private func itineraryDetail(identifier: UUID) -> some View {
+    SavedItineraryDetail(
+      store: store, identifier: identifier, selection: $selectedItineraryRow,
+      isPreparingDeletion: isPreparingItineraryDeletion,
+      isReviewingDeletion: itineraryDeletionDraft?.source.id == identifier,
+      prepareDeletion: { itinerary in Task { await prepareItineraryDeletion(itinerary) } }
+    )
+    .id(identifier)
   }
 
   @ViewBuilder
@@ -566,6 +620,7 @@ struct SavedPlannerView: View {
   }
 
   private func clearDeletedItemSelection(_ draft: SavedSourceDeletionDraft, review: PlannerReview) {
+    if calendarSelection?.source == draft.source { calendarSelection = nil }
     if selectedItemId == draft.source.id {
       selectedItemId = nil
       selectedItem = nil
@@ -629,6 +684,7 @@ struct SavedPlannerView: View {
   }
 
   private func clearDeletedItinerarySelection(_ draft: SavedSourceDeletionDraft) {
+    if calendarSelection?.source == draft.source { calendarSelection = nil }
     guard selectedItineraryIdentifier == draft.source.id else { return }
     selectedItineraryIdentifier = nil
     selectedItineraryRow = nil
@@ -851,113 +907,115 @@ struct SavedPlannerView: View {
       sourceListName: list.content.name, itemTitle: itemTitle)
   }
 
+  private var plannerSidebar: some View {
+    List(selection: sidebarSelection) {
+      #if os(macOS)
+        Section("Planner") {
+          NavigationLink(value: SavedPlannerSidebarSelection.lists) {
+            Label("Lists", systemImage: "list.bullet")
+          }
+          .accessibilityIdentifier("saved.section.lists")
+          NavigationLink(value: SavedPlannerSidebarSelection.items) {
+            Label("Items", systemImage: "square.stack")
+          }
+          .accessibilityIdentifier("saved.section.items")
+          NavigationLink(value: SavedPlannerSidebarSelection.inbox) {
+            Label("Inbox", systemImage: "tray")
+          }
+          .accessibilityIdentifier("saved.section.inbox")
+          NavigationLink(value: SavedPlannerSidebarSelection.itineraries) {
+            Label(
+              "Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+          }
+          .accessibilityIdentifier("saved.section.itineraries")
+          NavigationLink(value: SavedPlannerSidebarSelection.calendar) {
+            Label("Calendar", systemImage: "calendar")
+          }
+          .accessibilityIdentifier("saved.section.calendar")
+        }
+      #endif
+      Section("Lists") {
+        ForEach(listCatalog ?? []) { list in
+          NavigationLink(value: SavedPlannerSidebarSelection.list(list.id)) {
+            VStack(alignment: .leading, spacing: 4) {
+              HStack {
+                Label(list.name, systemImage: "list.bullet.rectangle")
+                if list.archived {
+                  Image(systemName: "archivebox").foregroundStyle(.secondary)
+                    .accessibilityHidden(true)
+                }
+              }
+              SavedContainerEstimatePreview(
+                estimates: list.estimates, manualEstimate: list.manualEstimate)
+            }
+          }
+          .accessibilityLabel(list.name)
+          .accessibilityValue(
+            (list.archived ? "Archived. " : "Active. ")
+              + list.estimates.nativeEstimatePreviewAccessibilityDescription(
+                manualEstimate: list.manualEstimate)
+          )
+          .accessibilityIdentifier("saved.list.\(list.id.uuidString)")
+          .contextMenu {
+            Button(list.archived ? "Unarchive List" : "Archive List", systemImage: "archivebox") {
+              Task { _ = await store.setListArchived(list.id, archived: !list.archived) }
+            }
+            .disabled(!store.canCreate)
+          }
+        }
+      }
+    }
+    .listStyle(.sidebar)
+    .overlay {
+      #if os(iOS)
+        if listCatalog?.isEmpty == true {
+          ContentUnavailableView(
+            listCatalogArchive == .active ? "No Lists yet" : "No matching Lists",
+            systemImage: "list.bullet.rectangle",
+            description: Text("Change the archive filter or create a List to start planning."))
+        }
+      #endif
+      if isOpeningListCatalog {
+        ProgressView("Updating Lists")
+      } else if listCatalog == nil {
+        ContentUnavailableView {
+          Label("Lists unavailable", systemImage: "exclamationmark.triangle")
+        } actions: {
+          Button("Try Again") { Task { await loadListCatalog() } }
+        }
+      }
+    }
+    .navigationTitle("Planner")
+    .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
+    .toolbar {
+      ToolbarItem(placement: categoryToolbarPlacement) {
+        Button("Manage Labels", systemImage: "square.grid.2x2") { showLabels = true }
+          .disabled(!store.isReady)
+          .accessibilityIdentifier("saved.categories.manage")
+      }
+      #if os(iOS)
+        ToolbarItem(placement: categoryToolbarPlacement) {
+          Button("Settings", systemImage: "gearshape") { showSettings = true }
+            .disabled(!store.isReady)
+            .accessibilityIdentifier("saved.settings.open")
+        }
+      #endif
+      ToolbarItem {
+        SavedListArchiveFilterMenu(archive: $listCatalogArchive)
+      }
+      ToolbarItem {
+        Button("New List", systemImage: "plus") { showNewList = true }
+          .disabled(!store.canCreate)
+          .accessibilityIdentifier("saved.list.new")
+      }
+    }
+  }
+
   private var plannerColumns: some View {
     NavigationSplitView(columnVisibility: $columnVisibility) {
-      List(selection: sidebarSelection) {
-        #if os(macOS)
-          Section("Planner") {
-            NavigationLink(value: SavedPlannerSidebarSelection.lists) {
-              Label("Lists", systemImage: "list.bullet")
-            }
-            .accessibilityIdentifier("saved.section.lists")
-            NavigationLink(value: SavedPlannerSidebarSelection.items) {
-              Label("Items", systemImage: "square.stack")
-            }
-            .accessibilityIdentifier("saved.section.items")
-            NavigationLink(value: SavedPlannerSidebarSelection.inbox) {
-              Label("Inbox", systemImage: "tray")
-            }
-            .accessibilityIdentifier("saved.section.inbox")
-            NavigationLink(value: SavedPlannerSidebarSelection.itineraries) {
-              Label(
-                "Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
-            }
-            .accessibilityIdentifier("saved.section.itineraries")
-            NavigationLink(value: SavedPlannerSidebarSelection.calendar) {
-              Label("Calendar", systemImage: "calendar")
-            }
-            .accessibilityIdentifier("saved.section.calendar")
-          }
-        #endif
-        Section("Lists") {
-          ForEach(listCatalog ?? []) { list in
-            NavigationLink(value: SavedPlannerSidebarSelection.list(list.id)) {
-              VStack(alignment: .leading, spacing: 4) {
-                HStack {
-                  Label(list.name, systemImage: "list.bullet.rectangle")
-                  if list.archived {
-                    Image(systemName: "archivebox").foregroundStyle(.secondary)
-                      .accessibilityHidden(true)
-                  }
-                }
-                SavedContainerEstimatePreview(
-                  estimates: list.estimates, manualEstimate: list.manualEstimate)
-              }
-            }
-            .accessibilityLabel(list.name)
-            .accessibilityValue(
-              (list.archived ? "Archived. " : "Active. ")
-                + list.estimates.nativeEstimatePreviewAccessibilityDescription(
-                  manualEstimate: list.manualEstimate)
-            )
-            .accessibilityIdentifier("saved.list.\(list.id.uuidString)")
-            .contextMenu {
-              Button(list.archived ? "Unarchive List" : "Archive List", systemImage: "archivebox") {
-                Task { _ = await store.setListArchived(list.id, archived: !list.archived) }
-              }
-              .disabled(!store.canCreate)
-            }
-          }
-        }
-      }
-      .listStyle(.sidebar)
-      .overlay {
-        #if os(iOS)
-          if listCatalog?.isEmpty == true {
-            ContentUnavailableView(
-              listCatalogArchive == .active ? "No Lists yet" : "No matching Lists",
-              systemImage: "list.bullet.rectangle",
-              description: Text("Change the archive filter or create a List to start planning."))
-          }
-        #endif
-        if isOpeningListCatalog {
-          ProgressView("Updating Lists")
-        } else if listCatalog == nil {
-          ContentUnavailableView {
-            Label("Lists unavailable", systemImage: "exclamationmark.triangle")
-          } actions: {
-            Button("Try Again") { Task { await loadListCatalog() } }
-          }
-        }
-      }
-      .navigationTitle("Planner")
-      .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
-      .toolbar {
-        ToolbarItem(placement: categoryToolbarPlacement) {
-          Button("Manage Labels", systemImage: "square.grid.2x2") { showLabels = true }
-            .disabled(!store.isReady)
-            .accessibilityIdentifier("saved.categories.manage")
-        }
-        #if os(iOS)
-          ToolbarItem(placement: categoryToolbarPlacement) {
-            Button("Settings", systemImage: "gearshape") { showSettings = true }
-              .disabled(!store.isReady)
-              .accessibilityIdentifier("saved.settings.open")
-          }
-        #endif
-        ToolbarItem {
-          SavedListArchiveFilterMenu(archive: $listCatalogArchive)
-        }
-        ToolbarItem {
-          Button("New List", systemImage: "plus") { showNewList = true }
-            .disabled(!store.canCreate)
-            .accessibilityIdentifier("saved.list.new")
-        }
-      }
+      plannerSidebar
     } content: {
-      if selectedSection == .calendar {
-        SavedCalendarView(store: store, selection: $calendarSelection)
-      } else if usesItineraryColumns {
+      if usesItineraryColumns {
         if selectedItineraryIdentifier != nil {
           itineraryDetail
             .toolbar {
@@ -1156,9 +1214,7 @@ struct SavedPlannerView: View {
         ContentUnavailableView("Choose a List", systemImage: "list.bullet.rectangle")
       }
     } detail: {
-      if selectedSection == .calendar {
-        calendarDetailStack
-      } else if usesItineraryColumns {
+      if usesItineraryColumns {
         itineraryAppearanceDetail
       } else if isItemSection {
         itemDetail
