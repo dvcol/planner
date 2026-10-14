@@ -10,6 +10,7 @@ public actor Planner {
   private struct QueryBinding {
     let snapshot: PlannerQuerySnapshot
     let historyToken: DefaultHistoryToken?
+    var calendarEntries: [PlannerCalendarEntry]? = nil
   }
   private var querySnapshots: [UUID: QueryBinding] = [:]
   private struct ReviewBinding {
@@ -1128,6 +1129,13 @@ public actor Planner {
             try readRows(
               session: session, context: context, generation: generation, offset: offset,
               limit: limit))
+        case .calendarRows(let generation, let offset, let limit):
+          let context = ModelContext(try openContainer())
+          context.autosaveEnabled = false
+          return .calendarRows(
+            try readCalendarRows(
+              session: session, context: context, generation: generation, offset: offset,
+              limit: limit))
         case .source(let source):
           let context = ModelContext(try openContainer())
           context.autosaveEnabled = false
@@ -1366,6 +1374,21 @@ public actor Planner {
         let context = ModelContext(container)
         context.autosaveEnabled = false
         switch query.request {
+        case .calendar(let calendarQuery):
+          let historyToken = try latestHistoryToken(in: context)
+          let entries = try calendarEntries(query: calendarQuery, context: context)
+          let snapshot = PlannerQuerySnapshot(
+            session: query.session, generation: UUID(),
+            rows: entries.map { .source($0.schedule) }, matchingCount: Int64(entries.count),
+            rowPresentation: nil, progress: [], unresolvedReferences: [])
+          guard try latestHistoryToken(in: context) == historyToken else {
+            throw PlannerFailure(
+              "readUnavailable", "The store changed while building this Calendar.")
+          }
+          querySnapshots = querySnapshots.filter { $0.value.historyToken == historyToken }
+          querySnapshots[snapshot.generation] = QueryBinding(
+            snapshot: snapshot, historyToken: historyToken, calendarEntries: entries)
+          return .snapshot(snapshot)
         case .catalog(let catalogQuery):
           let historyToken = try latestHistoryToken(in: context)
           let snapshot = try listCatalogSnapshot(
@@ -2077,6 +2100,72 @@ public actor Planner {
       memberships: memberships,
       items: try itemEstimateSnapshots(context, itemIdentifiers: itemIdentifiers),
       lists: try listEstimateSnapshots(context, listIdentifiers: listIdentifiers), entries: entries)
+  }
+
+  private func calendarEntries(query: PlannerCalendarQuery, context: ModelContext) throws
+    -> [PlannerCalendarEntry]
+  {
+    let interval = try query.interval()
+    var entries: [PlannerCalendarEntry] = []
+    for record in try context.fetch(FetchDescriptor<PlannerSchemaV18.Schedule>()) {
+      let resolved = try resolvedSchedule(record, context: context)
+      let matches: Bool
+      switch resolved.snapshot.form {
+      case .timed(let start, let end, _):
+        if let end {
+          matches = start < interval.end && end > interval.start
+        } else {
+          matches = start >= interval.start && start < interval.end
+        }
+      case .allDay(let start, let end):
+        matches =
+          !query.endDay.isEarlier(than: start)
+          && !(end ?? start).isEarlier(than: query.startDay)
+      }
+      guard matches else { continue }
+      let title: String
+      switch resolved.owner {
+      case .item(let owner): title = owner.title
+      case .itinerary(let owner): title = owner.title
+      }
+      guard !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        throw PlannerFailure("readUnavailable", "The Schedule owner has an unresolved title.")
+      }
+      entries.append(
+        PlannerCalendarEntry(
+          schedule: resolved.snapshot.reference, source: resolved.source, title: title,
+          form: resolved.snapshot.form))
+    }
+    guard Set(entries.map { $0.schedule.id }).count == entries.count else {
+      throw PlannerFailure("readUnavailable", "Calendar Schedule identities are duplicated.")
+    }
+    return entries.sorted { $0.schedule.id.uuidString < $1.schedule.id.uuidString }
+  }
+
+  private func readCalendarRows(
+    session: PlannerDatasetSession, context: ModelContext, generation: UUID, offset: Int64,
+    limit: Int64
+  ) throws -> PlannerCalendarRowWindow {
+    guard offset >= 0, limit > 0 else {
+      throw PlannerFailure("invalidInput", "Row offset must be nonnegative and limit positive.")
+    }
+    guard let binding = querySnapshots[generation], binding.snapshot.session == session,
+      let entries = binding.calendarEntries
+    else { throw staleSnapshot(generation) }
+    guard try latestHistoryToken(in: context) == binding.historyToken else {
+      querySnapshots.removeValue(forKey: generation)
+      throw staleSnapshot(generation)
+    }
+    let rows: [PlannerCalendarEntry]
+    if offset >= binding.snapshot.matchingCount {
+      rows = []
+    } else {
+      let count = min(limit, binding.snapshot.matchingCount - offset)
+      rows = Array(entries.dropFirst(Int(offset)).prefix(Int(count)))
+    }
+    return PlannerCalendarRowWindow(
+      generation: generation, offset: offset, matchingCount: binding.snapshot.matchingCount,
+      rows: rows)
   }
 
   private func readRows(
