@@ -189,6 +189,38 @@ final class SavedBackupImportJourneyTests: XCTestCase {
       recordImport(application, name: "Canceled Overwrite retains the current Tag after relaunch")
     }
 
+    func testMalformedBackupShowsFailureAndPreservesCurrentTagAfterRelaunch() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      let exportedBackup = createAndExportTagBackup(application)
+      selectBackupFile("Planner malformed backup.json", application: application)
+      let failure = application.alerts["Backup import failed"]
+      XCTAssertTrue(failure.waitForExistence(timeout: 15))
+      XCTAssertTrue(failure.staticTexts["The backup contains an invalid JSON value."].exists)
+      XCTAssertFalse(application.plannerElement("saved.import.confirm").exists)
+      recordImport(application, name: "Malformed JSON shows a native failure before review")
+      failure.buttons["OK"].activateForPlannerJourney()
+      let importBackup = application.plannerElement("saved.settings.import")
+      XCTAssertTrue(importBackup.waitForPlannerHittability())
+      XCTAssertTrue(importBackup.isEnabled)
+      selectBackup(exportedBackup.filename, application: application)
+      let unchanged = application.staticTexts["saved.import.summary.unchanged"]
+      XCTAssertTrue(unchanged.waitForExistence(timeout: 15))
+      XCTAssertEqual(unchanged.label, "Unchanged, 1")
+      recordImport(application, name: "A valid backup remains reviewable after malformed input")
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openSettings(application)
+      application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+      let retainedTag = application.plannerElement(exportedBackup.tagIdentifier)
+      XCTAssertTrue(retainedTag.waitForExistence(timeout: 10))
+      XCTAssertEqual(retainedTag.label, "Original backup tag")
+      recordImport(application, name: "Rejected malformed input preserves the Tag after relaunch")
+    }
+
     private func createAndExportTagBackup(_ application: XCUIApplication) -> (
       tagIdentifier: String, filename: String
     ) {
@@ -224,6 +256,12 @@ final class SavedBackupImportJourneyTests: XCTestCase {
     }
 
     private func selectBackup(_ filename: String, application: XCUIApplication) {
+      selectBackupFile(filename, application: application)
+      XCTAssertTrue(
+        application.plannerElement("saved.import.confirm").waitForExistence(timeout: 15))
+    }
+
+    private func selectBackupFile(_ filename: String, application: XCUIApplication) {
       application.plannerElement("saved.settings.import").activateForPlannerJourney()
       let documentName = String(filename.dropLast(".json".count))
       let document = application.descendants(matching: .any).matching(
@@ -248,13 +286,11 @@ final class SavedBackupImportJourneyTests: XCTestCase {
         search.typeText(documentName + "\n")
       }
       let hierarchy = XCTAttachment(string: application.debugDescription)
-      hierarchy.name = "Native picker for the actual exported file"
+      hierarchy.name = "Native picker for the selected backup file"
       hierarchy.lifetime = .keepAlways
       add(hierarchy)
       XCTAssertTrue(document.waitForExistence(timeout: 15))
       document.activateForPlannerJourney()
-      XCTAssertTrue(
-        application.plannerElement("saved.import.confirm").waitForExistence(timeout: 15))
     }
 
     private func chooseLocalFileLocation(_ application: XCUIApplication) {

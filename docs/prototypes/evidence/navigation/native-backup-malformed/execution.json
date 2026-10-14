@@ -1,0 +1,85 @@
+{
+  "artifactHashes": {
+    "commands.json": "f145d9ae15b99cde4decf7d7679f5c310cfed2ab5d1cb4303b34075b96f5babd",
+    "compiled-source-hashes.json": "338060a30e4f6f09e7eb9dc6dbf990de4ef47b1486373072d946a76c52b9aaea",
+    "fixture-provenance.json": "eaaeceb90eaceb38061887e7549c835d0611453373bc96248290abe008c6d16f",
+    "mac-build.log.gz": "9d1337214c30083b789239fa3434ba5e2cc231787ad98d6effc2da0b35a761bb",
+    "markdown-lint.log": "6057a6637ba0e81ca2c5b0bae688e8b03686b510267ce7c8782273b3211af4cb",
+    "phone-summary.json": "450c5dad85b4643f2a73362cf2cdc1827341b2ac19331ffa16febfa8da7a68a0",
+    "phone-tests.json": "6615e0c073bbeaa9447fa0ab234f1297749049afaef69787c117aaae09d86858",
+    "phone.log.gz": "7050d74aadcf8c92af1b3c40a11c1e68437cc513d00977cc1dd2e5a948b7f034",
+    "phone/08161DB3-9578-4333-BFBB-C1EB593168AC.txt": "6770079786de3ca3865c394d44969d454780238b9de09d5ffe8c31a842eab8d8",
+    "phone/128F39E6-6255-4765-969C-1C4379E38245.txt": "227565fbccc4fcded6463c638a77a5b58e87ae20f86ddb24212e05f438b0aa47",
+    "phone/4A4F5819-5755-4C88-9313-77F2225FF49C.png": "e4d824d08ce1f49154fd09eeadaa62e7d1ba5b03795f6fb2f5fd95b8b023582b",
+    "phone/52266A82-8799-4307-86CA-9DD308BF7A9C.png": "e5cc94bb50847164b1dc4a812f28e6a918f9b5f48a808800be539a79e107ddb3",
+    "phone/8A88BC72-5A9D-4645-BCD7-5A6DA9D478FF.txt": "1386a4c7b7650c791414fcf6595de73378e6948cd2d6079f3a8f5b6e5045c27d",
+    "phone/AF9C3D4D-25BD-46F9-B5D8-52812CE1E28D.png": "dfa974117e7d379552ce20517ef725a990d0cd51258f7b7e19fbc26dc16bb376",
+    "phone/C910D9C4-6896-40A0-BA32-004CE71EDC88.png": "af96cdd6b4a96771a591e48e708693ceca05d78e0a0b37dcfb09de182e70d783",
+    "phone/D2F20A44-7CDD-49E0-8881-5229EB4A402B.png": "a5c2f375982b109d419fe8cb9bc33e0db8c56fd5df714525ae0eee08b6a04817",
+    "phone/manifest.json": "3e5976333a2c071f4c16c3c24d7260ef87da8f87cc370e8e135d9fec38829feb",
+    "selected-malformed-input.json.invalid": "56f645df4814d15663c134a4b83fd6d40711272ffcbe36c43fb4ef15593724c6",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tablet-summary.json": "540b3a1bad9ba7b03ad990e88afe0cefe10acf13caa240ac10679ab7a6f0a670",
+    "tablet-tests.json": "605cb3616eaf3148aff18358897fd6afcfa1866302dbc928241d0f6fe57bbe83",
+    "tablet.log.gz": "94d710fde5d71e4616d2208b66f311b867ebe9427139e803ad099303be525e7f",
+    "tablet/0FCDBEE7-4981-4CC2-A202-4FDA08236FDF.png": "a7c4904270312f4528da1e2643cec0548009d592f3659ff7f5c8f58d06a9a12e",
+    "tablet/34184CBA-CF26-4EF6-9FC6-B00E4F132323.png": "defb6d60ca26083f1e30a9eb0b9d6ff74d0c00b6435128acdd4fb82606d0f1d8",
+    "tablet/783EDDBF-4815-4537-80DC-7F37640FDDFF.txt": "4aaac29f30ffd21e8ff4eb9d6af7a05f3647c61b1a9007370ab873e6448fbde8",
+    "tablet/9D73097C-BB91-4589-A05A-CCD7381B7EF8.txt": "112cb52b7dc9ef1656e2d31180d0b2fb05bd65cc5b37eb3db589277a962463e5",
+    "tablet/ACFEB9F5-4092-413F-B2ED-5BDF8FFC30A7.png": "3bebc69b97408c379b227058c7dfdb91f62a186015ddf9f0d7ccc1de62c0d58e",
+    "tablet/AEE75B32-8450-4E70-ABFC-6513442A3D33.png": "130377cb0f976a999b39bcff3fc56cce74dc427b1c96a8105ee2c3eaed0bea52",
+    "tablet/F1AAAA30-702D-45A0-8984-E1AF45C34EE7.png": "d28750d89beef378aee409e89ba94153f69c18e3f9f8b6f9166e4e415a7cea53",
+    "tablet/F446976A-815B-4B0A-96DE-22527852FB22.txt": "df1ab1c1b985b0ae1d0822675950a496e6b3f93ca3a1eed938b7b24a8a8e98cb",
+    "tablet/manifest.json": "261f0f8896b7bbb2a0f5491fb0e9074b28c3543dc90eac48f16c1558d9f01b98"
+  },
+  "baseCommit": "f8bec5697b0c8fad6e8a1617c2a650190a595691",
+  "productHashes": {
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner": "2d2d27a032ebb21e31a0941e03e3862b409ae545274c10edb59ec22a5daea53e",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib": "8a8870c294fb28ab37c00abe2f8be7609629b4e5484e207601ac71b1241306eb",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests": "e7e3410b04503c2928b8981c461e48e171193d03bb7a73410429ac3e10ecc9e6",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "e6f540414489754d2dcaf1af64a0bcbb2951a58bb2d85fcf1595226f15769cba",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib": "02e1584c0d7cc6b303abfaa7dae9c40bbaa8249ea84f849ad6674fdcc56b1d10",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests": "9ecd0b58edf98a576dda779d6a0ea3d993856319c67baf16aec2ec30339ac758"
+  },
+  "qualification": {
+    "coreAndHTTPInvocationsThisStep": 0,
+    "macAppAndUITestHostBuild": "passed",
+    "macNativeUIInvocations": 0,
+    "markdownLint": "passed",
+    "phone": {
+      "failedTests": 0,
+      "passedTests": 2,
+      "skippedTests": 0
+    },
+    "swiftStrictLint": "passed",
+    "tablet": {
+      "failedTests": 0,
+      "passedTests": 2,
+      "skippedTests": 0
+    },
+    "whitespace": "passed"
+  },
+  "report": "docs/prototypes/native-backup-import.md",
+  "reviews": {
+    "spec": "No material source/evidence findings. Actual counts, all eight source/six product/31 artifact hashes, fixture copies, manifests and scoped gates verified.",
+    "standards": "No material standards/evidence findings. Native runs and complete eight-attachment manifests verified; production unchanged and Mac compilation-only scope retained."
+  },
+  "scopeNotes": [
+    "Two native functions pass per simulator with zero failures/skips: new malformed-file rejection/retry and Overwrite cancellation compatibility.",
+    "The independent 11-byte fixture is selected through the actual native file picker. The specific JSON error precedes review; a valid exported file remains reviewable and the original Tag identity/name survives relaunch.",
+    "Input staging only writes fixture bytes into disposable simulator Files locations. Native outcome assertions do not query the store or use production test parameters.",
+    "Five production files match the prior import implementation. Frozen source/product hashes remain unchanged through both runs.",
+    "Original malformed-error, valid-retry and retained-Tag captures inspected separately on both devices. Eight attachments per device retained in complete manifests.",
+    "Mac app/test-host compilation passed; zero Mac runtime and no new Core/HTTP test runs. Other invalid/version/dependency cases, full-graph restoration, stale review and recovery failure gates remain open. Q83 remains pending."
+  ],
+  "sourceHashes": {
+    "Planner/Scenes/SavedBackupImportForm.swift": "6e627d98a9c052647ad3a0f31959cf9590d7b959b39f61e7cf7a7ba7c017c31c",
+    "Planner/Scenes/SavedBackupImportSummary.swift": "1da34a96a56d00edcd341a11a60565d3e2529db306f5182f844f238f4f35f6ce",
+    "Planner/Scenes/SavedPlannerBackupFile.swift": "e80dd7f66ee94b47ae4a0db557a6adb5356eae137d5d4e58131ecc1435f32046",
+    "Planner/Scenes/SavedPlannerSettingsView.swift": "9d6bca4fe526b6a34f742bd2a5b75fbbc25440495766ed5a2db9a456ad19b5fa",
+    "Planner/Scenes/SavedPlannerStore.swift": "946f31e6a6f7fcded82150722b74ec2b24b9d82ba78584714d7cf02eeffc8fea",
+    "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift": "a19ed0b00a569b0f9b50fa7da18eda3264e7ddf339760d93e15e738365155bb4",
+    "docs/fixtures/native-malformed-backup.json.invalid": "56f645df4814d15663c134a4b83fd6d40711272ffcbe36c43fb4ef15593724c6",
+    "docs/prototypes/native-backup-import.md": "9bb529b2f51f880320d91db78f98d6c43540fce0965a8b84c917bc266bd0e0ac"
+  }
+}

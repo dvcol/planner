@@ -1,0 +1,86 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "0FCDBEE7-4981-4CC2-A202-4FDA08236FDF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Canceled Overwrite retains the current Tag after relaunch_0_FBE4CCBA-EF10-4655-BCB1-5AF1DD4F4B7E.png",
+        "timestamp" : 1792013963.933
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "AEE75B32-8450-4E70-ABFC-6513442A3D33.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Cancel is available for a reviewed Tag replacement_0_ABDEB0A1-D591-464B-B275-B54D987AF7CB.png",
+        "timestamp" : 1792013947.394
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "9D73097C-BB91-4589-A05A-CCD7381B7EF8.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the selected backup file_0_BC8B0AE5-2AD7-47E3-8792-93766943C35E.txt",
+        "timestamp" : 1792013936.464
+      }
+    ],
+    "testIdentifier" : "SavedBackupImportJourneyTests/testCancelingOverwriteReviewPreservesCurrentTagAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testCancelingOverwriteReviewPreservesCurrentTagAfterRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "ACFEB9F5-4092-413F-B2ED-5BDF8FFC30A7.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Rejected malformed input preserves the Tag after relaunch_0_64347D88-11EF-4E46-B4E7-03EF0F9EFE44.png",
+        "timestamp" : 1792014030.784
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "F1AAAA30-702D-45A0-8984-E1AF45C34EE7.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "A valid backup remains reviewable after malformed input_0_0F75D060-8717-4AD9-BD0A-D8BED0327073.png",
+        "timestamp" : 1792014016.254
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "F446976A-815B-4B0A-96DE-22527852FB22.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the selected backup file_0_40DEC817-16EB-40E7-B8ED-5D42E29FC8A8.txt",
+        "timestamp" : 1792014011.838
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "34184CBA-CF26-4EF6-9FC6-B00E4F132323.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Malformed JSON shows a native failure before review_0_3C8D96F8-70A1-48DB-91CF-EB436319420F.png",
+        "timestamp" : 1792014004.814
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "783EDDBF-4815-4537-80DC-7F37640FDDFF.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the selected backup file_0_2B359E95-FA11-42E0-83AD-C25F39E3A29B.txt",
+        "timestamp" : 1792014001.462
+      }
+    ],
+    "testIdentifier" : "SavedBackupImportJourneyTests/testMalformedBackupShowsFailureAndPreservesCurrentTagAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testMalformedBackupShowsFailureAndPreservesCurrentTagAfterRelaunch"
+  }
+]

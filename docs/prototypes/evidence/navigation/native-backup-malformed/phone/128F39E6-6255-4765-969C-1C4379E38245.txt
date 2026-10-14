@@ -1,0 +1,413 @@
+Attributes: Application, 0x107e19a40, pid: 45315, label: 'Planner navigation prototype'
+Element subtree:
+ →Application, 0x107e19a40, pid: 45315, label: 'Planner navigation prototype'
+    Window (Main), 0x107e19b80, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x107e19cc0, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x107e19e00, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x107e19f40, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x107e1a080, {{-402.0, -874.0}, {1206.0, 2622.0}}
+          Other, 0x107e1a1c0, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x107e1a300, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x107e1a440, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x107e1a580, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x107e1a6c0, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x107e1a800, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x107e1a940, {{0.0, 0.0}, {402.0, 874.0}}
+                        Other, 0x107e1aa80, {{0.0, 0.0}, {402.0, 874.0}}
+                          Other, 0x107e1abc0, {{0.0, 0.0}, {402.0, 874.0}}
+                            Other, 0x107e1ad00, {{0.0, 0.0}, {402.0, 874.0}}
+                              Other, 0x107e1ae40, {{0.0, 0.0}, {402.0, 874.0}}
+                                Other, 0x107e1af80, {{0.0, 0.0}, {402.0, 874.0}}
+                                  Other, 0x107e1b0c0, {{0.0, 0.0}, {402.0, 874.0}}
+                                    NavigationBar, 0x107e1b200, {{0.0, 62.0}, {402.0, 106.0}}, identifier: 'Planner'
+                                      Button, 0x107e1b340, {{154.7, 66.0}, {39.3, 36.0}}, identifier: 'saved.categories.manage', label: 'Manage Labels'
+                                      Button, 0x107e1b480, {{210.0, 66.0}, {41.3, 36.0}}, identifier: 'saved.settings.open', label: 'Settings'
+                                      Other, 0x107e1b5c0, {{267.3, 66.0}, {61.3, 36.0}}
+                                        Other, 0x107e1b700, {{267.3, 66.0}, {61.3, 36.0}}
+                                          Button, 0x107e1b840, {{267.3, 66.0}, {61.3, 36.0}}, identifier: 'saved.lists.archive', label: 'Active Lists'
+                                            Button, 0x107e1b980, {{267.3, 66.0}, {61.3, 36.0}}
+                                              StaticText, 0x107e1bac0, {{274.3, 73.8}, {47.3, 20.3}}, label: 'Active'
+                                      Button, 0x107e1bc00, {{344.7, 66.0}, {37.3, 36.0}}, identifier: 'saved.list.new', label: 'New List'
+                                      StaticText, 0x107e1bd40, {{16.0, 119.7}, {121.0, 40.7}}, label: 'Planner'
+                                    Other, 0x107e1be80, {{0.0, 0.0}, {402.0, 874.0}}
+                                      Other, 0x107e42800, {{0.0, 0.0}, {402.0, 874.0}}
+                                        Other, 0x107e84000, {{0.0, 0.0}, {402.0, 874.0}}
+                                          Other, 0x107e84140, {{0.0, 0.0}, {402.0, 874.0}}
+                                            CollectionView, 0x107e84280, {{0.0, 0.0}, {402.0, 874.0}}
+                                              Other, 0x107e843c0, {{-16.0, -1580.0}, {434.0, 3556.3}}
+                                              Other, 0x107e84500, {{0.0, 0.0}, {402.0, 874.0}}
+                                                Other, 0x107e84640, {{0.0, 0.0}, {402.0, 156.0}}
+                                                Other, 0x107e84780, {{0.0, 741.0}, {402.0, 133.0}}
+                                              Other, 0x107e848c0, {{0.0, 0.0}, {402.0, 874.0}}
+                                              Cell, 0x107e84a00, {{16.0, 168.0}, {370.0, 40.3}}
+                                                Other, 0x107e84b40, {{16.0, 168.0}, {370.0, 40.3}}
+                                                Other, 0x107e84c80, {{16.0, 168.0}, {370.0, 40.3}}
+                                                  Other, 0x107e84dc0, {{16.0, 168.0}, {370.0, 40.3}}
+                                                    Other, 0x107e84f00, {{16.0, 168.0}, {370.0, 40.3}}
+                                                      StaticText, 0x107e85040, {{16.0, 168.0}, {370.0, 40.3}}, label: 'Lists'
+                                              Other, 0x107e85180, {{369.0, 116.0}, {30.0, 675.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+                                                Other, 0x107e852c0, {{396.0, 681.7}, {3.0, 106.3}}
+                                              Other, 0x107e85400, {{369.0, 116.0}, {30.0, 675.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+                                                Other, 0x107e85540, {{396.0, 681.7}, {3.0, 106.3}}
+                                            StaticText, 0x107e85680, {{146.0, 398.7}, {110.0, 83.2}}, label: 'No Lists yet'
+                                            Image, 0x107e857c0, {{178.0, 398.7}, {46.3, 36.0}}, identifier: 'list.bullet.rectangle', label: 'Bulleted List In A Rectangle'
+                                            StaticText, 0x107e85900, {{43.0, 484.8}, {316.0, 49.0}}, label: 'Change the archive filter or create a List to start planning.'
+                                    Toolbar, 0x107e85a40, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                      Other, 0x107e85b80, {{0.0, 0.0}, {402.0, 874.0}}
+                                Toolbar, 0x107e85cc0, {{0.0, 0.0}, {402.0, 874.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                  Other, 0x107e85e00, {{0.0, 0.0}, {402.0, 874.0}}
+                            Other, 0x107e85f40, {{0.0, 0.0}, {402.0, 874.0}}
+                              Other, 0x107e86080, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x107e861c0, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x107e86300, {{0.0, 791.0}, {402.0, 83.0}}
+                    Other, 0x107e86440, {{0.0, 0.0}, {402.0, 874.0}}
+                      TabBar, 0x107e86580, {{0.0, 791.0}, {402.0, 83.0}}, label: 'Tab Bar'
+                        Other, 0x107e866c0, {{21.0, 791.0}, {360.0, 62.0}}
+                          Other, 0x107e86800, {{21.0, 791.0}, {84.0, 54.0}}
+                          Other, 0x107e86940, {{21.0, 791.0}, {360.0, 62.0}}
+                            Button, 0x107e86a80, {{25.0, 795.0}, {84.0, 54.0}}, identifier: 'list.bullet', label: 'Lists', Selected
+                              Image, 0x107e86bc0, {{52.3, 804.3}, {29.3, 21.0}}, identifier: 'list.bullet', label: 'List'
+                            Button, 0x107e86d00, {{89.0, 795.0}, {84.0, 54.0}}, identifier: 'square.stack', label: 'Items'
+                              Image, 0x107e86e40, {{118.0, 799.7}, {26.0, 32.3}}, identifier: 'square.stack.fill', label: 'Stack of squares, filled'
+                            Button, 0x107e86f80, {{152.9, 795.0}, {84.0, 54.0}}, identifier: 'tray', label: 'Inbox'
+                              Image, 0x107e870c0, {{178.2, 803.0}, {33.0, 23.7}}, identifier: 'tray.fill', label: 'inbox'
+                            Button, 0x107e87200, {{216.9, 795.0}, {86.7, 54.0}}, identifier: 'calendar', label: 'Calendar'
+                              Image, 0x107e87340, {{245.9, 802.3}, {29.0, 25.0}}, identifier: 'calendar', label: 'calendar'
+                            Button, 0x107e87480, {{283.6, 795.0}, {93.4, 54.0}}, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries'
+                              Image, 0x107e875c0, {{317.2, 800.3}, {26.3, 29.0}}, identifier: 'point.topleft.down.to.point.bottomright.curvepath.fill', label: 'Downward point at the top-left corner of to point at the bottom-right corner of curvepath, filled'
+                          Other, 0x107e87700, {{21.0, 791.0}, {360.0, 62.0}}
+                          Other, 0x107e87840, {{25.0, 795.0}, {84.0, 54.0}}
+                            Other, 0x107e87980, {{25.0, 795.0}, {83.7, 54.0}}
+                              Other, 0x107e87ac0, {{25.0, 795.0}, {83.7, 54.0}}
+                              Other, 0x107e87c00, {{25.0, 795.0}, {83.7, 54.0}}
+                                Other, 0x107e87d40, {{25.0, 795.0}, {83.7, 54.0}}
+                                  Other, 0x107e87e80, {{25.0, 795.0}, {83.7, 54.0}}
+                                    Other, 0x107f9c000, {{25.0, 795.0}, {83.7, 54.0}}
+                                  Other, 0x107f9c140, {{25.0, 795.0}, {83.7, 54.0}}
+                                Other, 0x107f9c280, {{25.0, 795.0}, {83.7, 54.0}}
+                    Other, 0x107f9c3c0, {{0.0, 791.0}, {402.0, 83.0}}
+                      Other, 0x107f9c500, {{0.0, 791.0}, {402.0, 83.0}}
+                        Other, 0x107f9c640, {{0.0, 791.0}, {402.0, 83.0}}
+                          Other, 0x107f9c780, {{0.0, 791.0}, {402.0, 83.0}}
+                            Other, 0x107f9c8c0, {{0.0, 791.0}, {402.0, 83.0}}
+                              Other, 0x107f9ca00, {{0.0, 791.0}, {402.0, 83.0}}
+      Other, 0x107f9cb40, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x107f9cc80, {{-402.0, -874.0}, {1206.0, 2622.0}}
+        Other, 0x107f9cdc0, {{16.0, 62.0}, {370.0, 747.4}}
+          Other, 0x107f9cf00, {{16.0, 62.0}, {370.0, 747.4}}
+            Other, 0x107f9d040, {{-354.0, -685.4}, {1110.0, 2242.1}}
+            Other, 0x107f9d180, {{16.0, 62.0}, {370.0, 747.4}}
+              Other, 0x107f9d2c0, {{16.0, 62.0}, {370.0, 747.4}}
+                Other, 0x107f9d400, {{16.0, 62.0}, {370.0, 747.4}}
+                  NavigationBar, 0x107f9d540, {{16.0, 76.7}, {370.0, 49.7}}, identifier: 'Planner Settings'
+                    StaticText, 0x107f9d680, {{140.6, 87.5}, {120.9, 19.0}}, label: 'Planner Settings'
+                    Other, 0x107f9d7c0, {{307.2, 80.4}, {60.4, 33.1}}
+                      Other, 0x107f9d900, {{307.2, 80.4}, {60.4, 33.1}}
+                        Button, 0x107f9da40, {{307.2, 80.4}, {60.4, 33.1}}, identifier: 'saved.settings.done', label: 'Done'
+                  Other, 0x107f9db80, {{16.0, 62.0}, {370.0, 747.4}}
+                    Other, 0x107f9dcc0, {{16.0, 62.0}, {370.0, 747.4}}
+                      Other, 0x107f9de00, {{16.0, 62.0}, {370.0, 747.4}}
+                        Other, 0x107f9df40, {{16.0, 62.0}, {370.0, 747.4}}
+                          CollectionView, 0x107f9e080, {{16.0, 62.0}, {370.0, 747.4}}
+                            Other, 0x107f9e1c0, {{1.3, -1368.3}, {399.5, 1596.0}}
+                            Other, 0x107f9e300, {{16.0, 62.0}, {370.0, 747.4}}
+                              Other, 0x107f9e440, {{16.0, 62.0}, {370.0, 101.2}}
+                            Other, 0x107f9e580, {{16.0, 62.0}, {370.0, 747.4}}
+                            Cell, 0x107f9e6c0, {{30.7, 126.4}, {340.5, 37.1}}
+                              Other, 0x107f9e800, {{30.7, 126.4}, {340.5, 37.1}}
+                              Other, 0x107f9e940, {{30.7, 126.4}, {340.5, 37.1}}
+                                Other, 0x107f9ea80, {{30.7, 126.4}, {340.5, 37.1}}
+                                  Other, 0x107f9ebc0, {{30.7, 126.4}, {340.5, 37.1}}
+                                    StaticText, 0x107f9ed00, {{30.7, 126.4}, {340.5, 37.1}}, label: 'Organization'
+                            Cell, 0x107f9ee40, {{30.7, 163.6}, {340.5, 47.9}}
+                              Other, 0x107f9ef80, {{30.7, 163.6}, {340.5, 47.9}}
+                                Other, 0x107f9f0c0, {{30.7, 163.6}, {340.5, 47.9}}
+                              Other, 0x107f9f200, {{30.7, 163.6}, {340.5, 47.9}}
+                                Other, 0x107f9f340, {{30.7, 163.6}, {340.5, 47.9}}
+                                  Other, 0x107f9f480, {{30.7, 163.6}, {340.5, 47.9}}
+                                    Button, 0x107f9f5c0, {{30.7, 163.6}, {340.5, 47.9}}, identifier: 'saved.settings.labels', label: 'Manage Labels'
+                                      Image, 0x107f9f700, {{47.3, 178.6}, {18.1, 18.1}}, identifier: 'square.grid.2x2', label: 'Grid View'
+                                      StaticText, 0x107f9f840, {{47.3, 178.1}, {141.1, 18.7}}, label: 'Manage Labels'
+                            Other, 0x107f9f980, {{1.3, 227.7}, {399.5, 1773.3}}
+                            Cell, 0x107f9fac0, {{30.7, 227.7}, {340.5, 37.1}}
+                              Other, 0x107f9fc00, {{30.7, 227.7}, {340.5, 37.1}}
+                              Other, 0x107f9fd40, {{30.7, 227.7}, {340.5, 37.1}}
+                                Other, 0x107f9fe80, {{30.7, 227.7}, {340.5, 37.1}}
+                                  Other, 0x107fa8000, {{30.7, 227.7}, {340.5, 37.1}}
+                                    StaticText, 0x107fa8140, {{30.7, 227.7}, {340.5, 37.1}}, label: 'Data'
+                            Cell, 0x107fa8280, {{30.7, 264.8}, {340.5, 47.9}}
+                              Other, 0x107fa83c0, {{30.7, 264.8}, {340.5, 47.9}}
+                                Other, 0x107fa8500, {{30.7, 264.8}, {340.5, 47.9}}
+                              Other, 0x107fa8640, {{30.7, 264.8}, {340.5, 47.9}}
+                                Other, 0x107fa8780, {{30.7, 264.8}, {340.5, 47.9}}
+                                  Other, 0x107fa88c0, {{30.7, 264.8}, {340.5, 47.9}}
+                                    Button, 0x107fa8a00, {{30.7, 264.8}, {340.5, 47.9}}, identifier: 'saved.settings.export', label: 'Export Backup'
+                                      Image, 0x107fa8b40, {{47.9, 277.1}, {17.5, 23.6}}, identifier: 'square.and.arrow.up', label: 'Share'
+                                      StaticText, 0x107fa8c80, {{47.9, 277.1}, {136.8, 23.6}}, label: 'Export Backup'
+                            Cell, 0x107fa8dc0, {{30.7, 312.7}, {340.5, 89.0}}
+                              Other, 0x107fa8f00, {{30.7, 312.7}, {340.5, 89.0}}
+                                Other, 0x107fa9040, {{30.7, 312.7}, {340.5, 89.0}}
+                              Other, 0x107fa9180, {{30.7, 312.7}, {340.5, 89.0}}
+                                Other, 0x107fa92c0, {{30.7, 312.7}, {340.5, 89.0}}
+                                  Other, 0x107fa9400, {{30.7, 312.7}, {340.5, 89.0}}
+                                    StaticText, 0x107fa9540, {{30.7, 312.7}, {340.5, 89.0}}, identifier: 'saved.settings.exported', label: 'Backup exported, Planner Backup 2026-10-14T21-37-05Z.json'
+                                    StaticText, 0x107fa9680, {{45.5, 326.5}, {119.3, 18.7}}, label: 'Backup exported'
+                            Other, 0x107fa97c0, {{82.3, 311.7}, {274.3, 0.9}}
+                            Cell, 0x107fa9900, {{30.7, 401.6}, {340.5, 47.9}}
+                              Other, 0x107fa9a40, {{30.7, 401.6}, {340.5, 47.9}}
+                                Other, 0x107fa9b80, {{30.7, 401.6}, {340.5, 47.9}}
+                              Other, 0x107fa9cc0, {{30.7, 401.6}, {340.5, 47.9}}
+                                Other, 0x107fa9e00, {{30.7, 401.6}, {340.5, 47.9}}
+                                  Other, 0x107fa9f40, {{30.7, 401.6}, {340.5, 47.9}}
+                                    Button, 0x107faa080, {{30.7, 401.6}, {340.5, 47.9}}, identifier: 'saved.settings.import', label: 'Import Backup'
+                                      Image, 0x107faa1c0, {{47.9, 414.2}, {17.5, 22.7}}, identifier: 'square.and.arrow.down', label: 'Download'
+                                      StaticText, 0x107faa300, {{47.9, 414.2}, {137.1, 22.7}}, label: 'Import Backup'
+                            Other, 0x107faa440, {{45.5, 400.7}, {311.1, 0.9}}
+                            Cell, 0x107faa580, {{30.7, 449.5}, {340.5, 56.8}}
+                              Other, 0x107faa6c0, {{30.7, 449.5}, {340.5, 56.8}}
+                              Other, 0x107faa800, {{30.7, 449.5}, {340.5, 56.8}}
+                                Other, 0x107faa940, {{30.7, 449.5}, {340.5, 56.8}}
+                                  Other, 0x107faaa80, {{30.7, 449.5}, {340.5, 56.8}}
+                                    StaticText, 0x107faabc0, {{30.7, 449.5}, {340.5, 56.8}}, label: 'Save or import a JSON copy of your Planner data, including archived content. Import changes are reviewed before applying.'
+                            Other, 0x107faad00, {{355.6, 126.4}, {27.6, 625.9}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+                              Other, 0x107faae40, {{380.5, 401.0}, {2.8, 348.5}}
+                            Other, 0x107faaf80, {{355.6, 126.4}, {27.6, 625.9}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+                              Other, 0x107fab0c0, {{380.5, 401.0}, {2.8, 348.5}}
+                  Toolbar, 0x107fab200, {{16.0, 62.0}, {370.0, 747.4}}, identifier: 'Toolbar', label: 'Toolbar'
+                    Other, 0x107fab340, {{16.0, 62.0}, {370.0, 747.4}}
+      Other, 0x107fab480, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x107fab5c0, {{-402.0, -874.0}, {1206.0, 2622.0}}
+        Other, 0x107fab700, {{0.0, 0.0}, {402.0, 874.0}}
+          Other, 0x107fab840, {{0.0, 0.0}, {402.0, 874.0}}
+            Other, 0x107fab980, {{0.0, 0.0}, {402.0, 874.0}}
+              Other, 0x107fabac0, {{0.0, 0.0}, {402.0, 874.0}}
+                Other, 0x107fabc00, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x107fabd40, {{290.5, 91.6}, {37.3, 36.8}}, label: 'Cancel'
+                Other, 0x107fabe80, {{0.0, 0.0}, {402.0, 874.0}}
+                  Other, 0x107fb0000, {{0.0, 0.0}, {402.0, 874.0}}
+                    Other, 0x107fb0140, {{0.0, 0.0}, {402.0, 874.0}}
+                      Other, 0x107fb0280, {{0.0, 0.0}, {804.0, 1748.0}}
+                        Other, 0x107fb03c0, {{0.0, 0.0}, {402.0, 874.0}}
+                          Other, 0x107fb0500, {{0.0, 0.0}, {402.0, 874.0}}
+                            Other, 0x107fb0640, {{0.0, 72.0}, {402.0, 802.0}}
+                              Image, 0x107fb0780, {{-150.0, -78.0}, {702.0, 1102.0}}
+                              Other, 0x107fb08c0, {{0.0, 72.0}, {402.0, 802.0}}
+                                Other, 0x107fb0a00, {{0.0, 72.0}, {402.0, 802.0}}
+                                  Other, 0x107fb0b40, {{0.0, 72.0}, {402.0, 802.0}}
+                                    Other, 0x107fb0c80, {{0.0, 72.0}, {402.0, 802.0}}
+                                      Other, 0x107fb0dc0, {{0.0, 72.0}, {402.0, 802.0}}
+                                      Other, 0x107fb0f00, {{0.0, 72.0}, {402.0, 802.0}}
+                                        Other, 0x107fb1040, {{0.0, 72.0}, {402.0, 802.0}}
+                                          Other, 0x107fb1180, {{0.0, 72.0}, {402.0, 802.0}}
+                                            Other, 0x107fb12c0, {{0.0, 72.0}, {402.0, 802.0}}
+                                              Other, 0x107fb1400, {{0.0, 72.0}, {402.0, 802.0}}, identifier: 'Browse View (Picker)'
+                                                Other, 0x107fb1540, {{0.0, 72.0}, {402.0, 802.0}}
+                                                  Other, 0x107fb1680, {{0.0, 72.0}, {402.0, 802.0}}
+                                                    Other, 0x107fb17c0, {{0.0, 72.0}, {402.0, 802.0}}
+                                                      Other, 0x107fb1900, {{0.0, 72.0}, {402.0, 802.0}}
+                                                        Other, 0x107fb1a40, {{0.0, 72.0}, {402.0, 802.0}}
+                                                        Other, 0x107fb1b80, {{0.0, 72.0}, {402.0, 802.0}}, identifier: 'DOC.browsingRoot Source: com.apple.DocumentManager.RecentDocuments, Title: Recents'
+                                                          NavigationBar, 0x107fb1cc0, {{0.0, 88.0}, {402.0, 108.0}}, identifier: 'FullDocumentManagerViewControllerNavigationBar'
+                                                            Button, 0x107fb1e00, {{20.0, 92.0}, {36.0, 36.0}}, identifier: 'DOC.navBarButton.backInHistory', label: 'Back'
+                                                            Button, 0x107fb1f40, {{72.0, 92.0}, {36.0, 36.0}}, identifier: 'DOC.navBarButton.forwardInHistory', label: 'Forward', Disabled
+                                                            StaticText, 0x107fb2080, {{168.7, 99.7}, {64.7, 20.7}}, label: 'Recents'
+                                                            Button, 0x107fb21c0, {{291.3, 92.0}, {36.7, 36.0}}, label: 'Cancel'
+                                                            Button, 0x107fb2300, {{344.0, 92.0}, {38.0, 36.0}}, identifier: 'OverflowBarButtonItem', label: 'More'
+                                                            SearchField, 0x107fb2440, {{16.0, 142.0}, {370.0, 44.0}}, label: 'Search', placeholderValue: 'Search'
+                                                              Image, 0x107fb2580, {{28.0, 154.0}, {20.7, 19.3}}, identifier: 'magnifyingglass', label: 'Search'
+                                                          Other, 0x107fb26c0, {{0.0, 72.0}, {402.0, 802.0}}
+                                                            Other, 0x107fb2800, {{0.0, 72.0}, {402.0, 802.0}}
+                                                              Other, 0x107fb2940, {{0.0, 72.0}, {402.0, 802.0}}
+                                                                Other, 0x107fb2a80, {{0.0, 72.0}, {402.0, 802.0}}
+                                                                  ScrollView, 0x107fb2bc0, {{0.0, 72.0}, {402.0, 802.0}}
+                                                                    Other, 0x107fb2d00, {{0.0, 72.0}, {402.0, 802.0}}
+                                                                      Other, 0x107fb2e40, {{0.0, 72.0}, {402.0, 110.0}}
+                                                                      Other, 0x107fb2f80, {{0.0, 741.0}, {402.0, 133.0}}
+                                                                    Other, 0x107fb30c0, {{0.0, 72.0}, {402.0, 802.0}}
+                                                                      Other, 0x107fb3200, {{0.0, 741.0}, {402.0, 133.0}}
+                                                                    CollectionView, 0x107fb3340, {{0.0, 72.0}, {402.0, 802.0}}, identifier: 'File View', value: Icon Mode
+                                                                      Other, 0x107fb3480, {{0.0, 72.0}, {402.0, 802.0}}
+                                                                        Other, 0x107fb35c0, {{0.0, 72.0}, {402.0, 110.0}}
+                                                                        Other, 0x107fb3700, {{0.0, 741.0}, {402.0, 133.0}}
+                                                                      Other, 0x107fb3840, {{0.0, 72.0}, {402.0, 802.0}}
+                                                                        Other, 0x107fb3980, {{0.0, 741.0}, {402.0, 133.0}}
+                                                                      Cell, 0x107fb3ac0, {{10.0, 206.0}, {122.0, 189.7}}, identifier: 'Planner Backup 2026-10-14T21-37-05Z.json, json', label: 'Planner Backup 2026-10-14T21-37-05Z.json, json, 06:37, 833 bytes'
+                                                                        Other, 0x107fb3c00, {{10.0, 206.0}, {122.0, 189.7}}
+                                                                        Other, 0x107fb3d40, {{10.0, 206.0}, {122.0, 189.7}}
+                                                                          Other, 0x107fb3e80, {{29.0, 210.0}, {84.0, 84.0}}
+                                                                            Image, 0x107fb8000, {{39.7, 210.0}, {63.0, 84.0}}
+                                                                            Other, 0x107fb8140, {{39.7, 210.0}, {63.0, 84.0}}
+                                                                          Other, 0x107fb8280, {{13.0, 299.0}, {116.0, 75.7}}
+                                                                            StaticText, 0x107fb83c0, {{13.0, 299.0}, {116.0, 40.0}}, label: 'Planner Backup 2026-10-14T21-37-05Z.json'
+                                                                            StaticText, 0x107fb8500, {{13.0, 342.0}, {116.0, 14.3}}, label: '06:37'
+                                                                            StaticText, 0x107fb8640, {{13.0, 360.3}, {116.0, 14.3}}, label: '833 bytes'
+                                                                      Cell, 0x107fb8780, {{140.0, 206.0}, {122.0, 189.7}}, identifier: 'Planner Backup 2026-10-14T21-30-12Z.json, json', label: 'Planner Backup 2026-10-14T21-30-12Z.json, json, 06:30, 833 bytes'
+                                                                        Other, 0x107fb88c0, {{140.0, 206.0}, {122.0, 189.7}}
+                                                                        Other, 0x107fb8a00, {{140.0, 206.0}, {122.0, 189.7}}
+                                                                          Other, 0x107fb8b40, {{159.0, 210.0}, {84.0, 84.0}}
+                                                                            Image, 0x107fb8c80, {{169.7, 210.0}, {63.0, 84.0}}
+                                                                            Other, 0x107fb8dc0, {{169.7, 210.0}, {63.0, 84.0}}
+                                                                          Other, 0x107fb8f00, {{143.0, 299.0}, {116.0, 75.7}}
+                                                                            StaticText, 0x107fb9040, {{143.0, 299.0}, {116.0, 40.0}}, label: 'Planner Backup 2026-10-14T21-30-12Z.json'
+                                                                            StaticText, 0x107fb9180, {{143.0, 342.0}, {116.0, 14.3}}, label: '06:30'
+                                                                            StaticText, 0x107fb92c0, {{143.0, 360.3}, {116.0, 14.3}}, label: '833 bytes'
+                                                                      Cell, 0x107fb9400, {{270.0, 206.0}, {122.0, 189.7}}, identifier: 'Planner Backup 2026-10-14T21-21-44Z.json, json', label: 'Planner Backup 2026-10-14T21-21-44Z.json, json, 06:22, 833 bytes'
+                                                                        Other, 0x107fb9540, {{270.0, 206.0}, {122.0, 189.7}}
+                                                                        Other, 0x107fb9680, {{270.0, 206.0}, {122.0, 189.7}}
+                                                                          Other, 0x107fb97c0, {{289.0, 210.0}, {84.0, 84.0}}
+                                                                            Image, 0x107fb9900, {{299.7, 210.0}, {63.0, 84.0}}
+                                                                            Other, 0x107fb9a40, {{299.7, 210.0}, {63.0, 84.0}}
+                                                                          Other, 0x107fb9b80, {{273.0, 299.0}, {116.0, 75.7}}
+                                                                            StaticText, 0x107fb9cc0, {{273.0, 299.0}, {116.0, 40.0}}, label: 'Planner Backup 2026-10-14T21-21-44Z.json'
+                                                                            StaticText, 0x107fb9e00, {{273.0, 342.0}, {116.0, 14.3}}, label: '06:22'
+                                                                            StaticText, 0x107fb9f40, {{273.0, 360.3}, {116.0, 14.3}}, label: '833 bytes'
+                                                                      Cell, 0x107fba080, {{10.0, 403.7}, {122.0, 189.7}}, identifier: 'Planner Backup 2026-10-14T21-20-04Z.json, json', label: 'Planner Backup 2026-10-14T21-20-04Z.json, json, 06:20, 833 bytes'
+                                                                        Other, 0x107fba1c0, {{10.0, 403.7}, {122.0, 189.7}}
+                                                                        Other, 0x107fba300, {{10.0, 403.7}, {122.0, 189.7}}
+                                                                          Other, 0x107fba440, {{29.0, 407.7}, {84.0, 84.0}}
+                                                                            Image, 0x107fba580, {{39.7, 407.7}, {63.0, 84.0}}
+                                                                            Other, 0x107fba6c0, {{39.7, 407.7}, {63.0, 84.0}}
+                                                                          Other, 0x107fba800, {{13.0, 496.7}, {116.0, 75.7}}
+                                                                            StaticText, 0x107fba940, {{13.0, 496.7}, {116.0, 40.0}}, label: 'Planner Backup 2026-10-14T21-20-04Z.json'
+                                                                            StaticText, 0x107fbaa80, {{13.0, 539.7}, {116.0, 14.3}}, label: '06:20'
+                                                                            StaticText, 0x107fbabc0, {{13.0, 558.0}, {116.0, 14.3}}, label: '833 bytes'
+                                                                      Cell, 0x107fbad00, {{140.0, 403.7}, {122.0, 189.7}}, identifier: 'Planner Backup 2026-10-14T21-04-19Z.json, json', label: 'Planner Backup 2026-10-14T21-04-19Z.json, json, 06:04, 833 bytes'
+                                                                        Other, 0x107fbae40, {{140.0, 403.7}, {122.0, 189.7}}
+                                                                        Other, 0x107fbaf80, {{140.0, 403.7}, {122.0, 189.7}}
+                                                                          Other, 0x107fbb0c0, {{159.0, 407.7}, {84.0, 84.0}}
+                                                                            Image, 0x107fbb200, {{169.7, 407.7}, {63.0, 84.0}}
+                                                                            Other, 0x107fbb340, {{169.7, 407.7}, {63.0, 84.0}}
+                                                                          Other, 0x107fbb480, {{143.0, 496.7}, {116.0, 75.7}}
+                                                                            StaticText, 0x107fbb5c0, {{143.0, 496.7}, {116.0, 40.0}}, label: 'Planner Backup 2026-10-14T21-04-19Z.json'
+                                                                            StaticText, 0x107fbb700, {{143.0, 539.7}, {116.0, 14.3}}, label: '06:04'
+                                                                            StaticText, 0x107fbb840, {{143.0, 558.0}, {116.0, 14.3}}, label: '833 bytes'
+                                                                      Cell, 0x107fbb980, {{270.0, 403.7}, {122.0, 189.7}}, identifier: 'Planner Backup 2026-10-14T20-58-10Z.json, json', label: 'Planner Backup 2026-10-14T20-58-10Z.json, json, 05:58, 833 bytes'
+                                                                        Other, 0x107fbbac0, {{270.0, 403.7}, {122.0, 189.7}}
+                                                                        Other, 0x107fbbc00, {{270.0, 403.7}, {122.0, 189.7}}
+                                                                          Other, 0x107fbbd40, {{289.0, 407.7}, {84.0, 84.0}}
+                                                                            Image, 0x107fbbe80, {{299.7, 407.7}, {63.0, 84.0}}
+                                                                            Other, 0x107fc0000, {{299.7, 407.7}, {63.0, 84.0}}
+                                                                          Other, 0x107fc0140, {{273.0, 496.7}, {116.0, 75.7}}
+                                                                            StaticText, 0x107fc0280, {{273.0, 496.7}, {116.0, 40.0}}, label: 'Planner Backup 2026-10-14T20-58-10Z.json'
+                                                                            StaticText, 0x107fc03c0, {{273.0, 539.7}, {116.0, 14.3}}, label: '05:58'
+                                                                            StaticText, 0x107fc0500, {{273.0, 558.0}, {116.0, 14.3}}, label: '833 bytes'
+                                                                      Cell, 0x107fc0640, {{10.0, 601.3}, {122.0, 189.7}}, identifier: 'Planner Backup 2026-10-14T20-53-26Z.json, json', label: 'Planner Backup 2026-10-14T20-53-26Z.json, json, 05:54, 831 bytes'
+                                                                        Other, 0x107fc0780, {{10.0, 601.3}, {122.0, 189.7}}
+                                                                        Other, 0x107fc08c0, {{10.0, 601.3}, {122.0, 189.7}}
+                                                                          Other, 0x107fc0a00, {{29.0, 605.3}, {84.0, 84.0}}
+                                                                            Image, 0x107fc0b40, {{39.7, 605.3}, {63.0, 84.0}}
+                                                                            Other, 0x107fc0c80, {{39.7, 605.3}, {63.0, 84.0}}
+                                                                          Other, 0x107fc0dc0, {{13.0, 694.3}, {116.0, 75.7}}
+                                                                            StaticText, 0x107fc0f00, {{13.0, 694.3}, {116.0, 40.0}}, label: 'Planner Backup 2026-10-14T20-53-26Z.json'
+                                                                            StaticText, 0x107fc1040, {{13.0, 737.3}, {116.0, 14.3}}, label: '05:54'
+                                                                            StaticText, 0x107fc1180, {{13.0, 755.7}, {116.0, 14.3}}, label: '831 bytes'
+                                                                      Cell, 0x107fc12c0, {{140.0, 601.3}, {122.0, 189.7}}, identifier: 'Planner Backup 2026-10-14T20-45-03Z.json, json', label: 'Planner Backup 2026-10-14T20-45-03Z.json, json, 05:45, 833 bytes'
+                                                                        Other, 0x107fc1400, {{140.0, 601.3}, {122.0, 189.7}}
+                                                                        Other, 0x107fc1540, {{140.0, 601.3}, {122.0, 189.7}}
+                                                                          Other, 0x107fc1680, {{159.0, 605.3}, {84.0, 84.0}}
+                                                                            Image, 0x107fc17c0, {{169.7, 605.3}, {63.0, 84.0}}
+                                                                            Other, 0x107fc1900, {{169.7, 605.3}, {63.0, 84.0}}
+                                                                          Other, 0x107fc1a40, {{143.0, 694.3}, {116.0, 75.7}}
+                                                                            StaticText, 0x107fc1b80, {{143.0, 694.3}, {116.0, 40.0}}, label: 'Planner Backup 2026-10-14T20-45-03Z.json'
+                                                                            StaticText, 0x107fc1cc0, {{143.0, 737.3}, {116.0, 14.3}}, label: '05:45'
+                                                                            StaticText, 0x107fc1e00, {{143.0, 755.7}, {116.0, 14.3}}, label: '833 bytes'
+                                                                      Cell, 0x107fc1f40, {{270.0, 601.3}, {122.0, 189.7}}, identifier: 'Planner Backup 2026-10-14T20-41-04Z.json, json', label: 'Planner Backup 2026-10-14T20-41-04Z.json, json, 05:41, 833 bytes'
+                                                                        Other, 0x107fc2080, {{270.0, 601.3}, {122.0, 189.7}}
+                                                                        Other, 0x107fc21c0, {{270.0, 601.3}, {122.0, 189.7}}
+                                                                          Other, 0x107fc2300, {{289.0, 605.3}, {84.0, 84.0}}
+                                                                            Image, 0x107fc2440, {{299.7, 605.3}, {63.0, 84.0}}
+                                                                            Other, 0x107fc2580, {{299.7, 605.3}, {63.0, 84.0}}
+                                                                          Other, 0x107fc26c0, {{273.0, 694.3}, {116.0, 75.7}}
+                                                                            StaticText, 0x107fc2800, {{273.0, 694.3}, {116.0, 40.0}}, label: 'Planner Backup 2026-10-14T20-41-04Z.json'
+                                                                            StaticText, 0x107fc2940, {{273.0, 737.3}, {116.0, 14.3}}, label: '05:41'
+                                                                            StaticText, 0x107fc2a80, {{273.0, 755.7}, {116.0, 14.3}}, label: '833 bytes'
+                                                                      Cell, 0x107fc2bc0, {{10.0, 799.0}, {122.0, 189.7}}, identifier: 'Planner Backup 2026-10-14T20-38-23Z.json, json', label: 'Planner Backup 2026-10-14T20-38-23Z.json, json, 05:38, 833 bytes'
+                                                                        Other, 0x107fc2d00, {{10.0, 799.0}, {122.0, 189.7}}
+                                                                        Other, 0x107fc2e40, {{10.0, 799.0}, {122.0, 189.7}}
+                                                                          Other, 0x107fc2f80, {{29.0, 803.0}, {84.0, 84.0}}
+                                                                            Image, 0x107fc30c0, {{39.7, 803.0}, {63.0, 84.0}}
+                                                                            Other, 0x107fc3200, {{39.7, 803.0}, {63.0, 84.0}}
+                                                                          Other, 0x107fc3340, {{13.0, 892.0}, {116.0, 75.7}}
+                                                                            StaticText, 0x107fc3480, {{13.0, 892.0}, {116.0, 40.0}}, label: 'Planner Backup 2026-10-14T20-38-23Z.json'
+                                                                            StaticText, 0x107fc35c0, {{13.0, 935.0}, {116.0, 14.3}}, label: '05:38'
+                                                                            StaticText, 0x107fc3700, {{13.0, 953.3}, {116.0, 14.3}}, label: '833 bytes'
+                                                                      Cell, 0x107fc3840, {{140.0, 799.0}, {122.0, 189.7}}, identifier: 'Planner Backup 2026-10-12T03-08-12Z.json, json', label: 'Planner Backup 2026-10-12T03-08-12Z.json, json, 12/10/2026, 833 bytes'
+                                                                        Other, 0x107fc3980, {{140.0, 799.0}, {122.0, 189.7}}
+                                                                        Other, 0x107fc3ac0, {{140.0, 799.0}, {122.0, 189.7}}
+                                                                          Other, 0x107fc3c00, {{159.0, 803.0}, {84.0, 84.0}}
+                                                                            Image, 0x107fc3d40, {{169.7, 803.0}, {63.0, 84.0}}
+                                                                            Other, 0x107fc3e80, {{169.7, 803.0}, {63.0, 84.0}}
+                                                                          Other, 0x107fcc000, {{143.0, 892.0}, {116.0, 75.7}}
+                                                                            StaticText, 0x107fcc140, {{143.0, 892.0}, {116.0, 40.0}}, label: 'Planner Backup 2026-10-12T03-08-12Z.json'
+                                                                            StaticText, 0x107fcc280, {{143.0, 935.0}, {116.0, 14.3}}, label: '12/10/2026'
+                                                                            StaticText, 0x107fcc3c0, {{143.0, 953.3}, {116.0, 14.3}}, label: '833 bytes'
+                                                                      Cell, 0x107fcc500, {{270.0, 799.0}, {122.0, 189.7}}, identifier: 'Planner Backup.json, json', label: 'Planner Backup.json, json, 12/10/2026, 833 bytes'
+                                                                        Other, 0x107fcc640, {{270.0, 799.0}, {122.0, 189.7}}
+                                                                        Other, 0x107fcc780, {{270.0, 799.0}, {122.0, 189.7}}
+                                                                          Other, 0x107fcc8c0, {{289.0, 803.0}, {84.0, 84.0}}
+                                                                            Image, 0x107fcca00, {{299.7, 803.0}, {63.0, 84.0}}
+                                                                            Other, 0x107fccb40, {{299.7, 803.0}, {63.0, 84.0}}
+                                                                          Other, 0x107fccc80, {{273.0, 892.0}, {116.0, 75.7}}
+                                                                            StaticText, 0x107fccdc0, {{273.0, 892.0}, {116.0, 40.0}}, label: 'Planner Backup.json'
+                                                                            StaticText, 0x107fccf00, {{273.0, 935.0}, {116.0, 14.3}}, label: '12/10/2026'
+                                                                            StaticText, 0x107fcd040, {{273.0, 953.3}, {116.0, 14.3}}, label: '833 bytes'
+                                                                      Other, 0x107fcd180, {{369.0, 142.0}, {30.0, 649.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+                                                                        Other, 0x107fcd2c0, {{396.0, 145.0}, {3.0, 484.7}}
+                                                                      Other, 0x107fcd400, {{369.0, 142.0}, {30.0, 649.0}}, label: 'Vertical scroll bar, 2 pages', value: 0 %
+                                                                        Other, 0x107fcd540, {{396.0, 145.0}, {3.0, 484.7}}
+                                                                    Other, 0x107fcd680, {{369.0, 196.0}, {30.0, 595.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+                                                                      Other, 0x107fcd7c0, {{396.0, 199.0}, {3.0, 546.7}}
+                                                                    Other, 0x107fcd900, {{62.0, 758.0}, {278.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0 %
+                                                                      Other, 0x107fcda40, {{60.7, 785.0}, {280.7, 3.0}}
+                                                                    Other, 0x107fcdb80, {{369.0, 196.0}, {30.0, 595.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+                                                                      Other, 0x107fcdcc0, {{396.0, 199.0}, {3.0, 546.7}}
+                                                                    Other, 0x107fcde00, {{62.0, 758.0}, {278.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0 %
+                                                                      Other, 0x107fcdf40, {{60.7, 785.0}, {280.7, 3.0}}
+                                                          Toolbar, 0x107fce080, {{0.0, 72.0}, {402.0, 802.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                                            Other, 0x107fce1c0, {{0.0, 72.0}, {402.0, 802.0}}
+                                                    Toolbar, 0x107fce300, {{0.0, 72.0}, {402.0, 802.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                                      Other, 0x107fce440, {{0.0, 72.0}, {402.0, 802.0}}
+                                                Other, 0x107fce580, {{0.0, 72.0}, {402.0, 802.0}}
+                                                  Other, 0x107fce6c0, {{0.0, 72.0}, {402.0, 802.0}}
+                                        Other, 0x107fce800, {{0.0, 72.0}, {402.0, 802.0}}
+                                          Other, 0x107fce940, {{0.0, 791.0}, {402.0, 83.0}}
+                                            Other, 0x107fcea80, {{0.0, 72.0}, {402.0, 802.0}}
+                                              TabBar, 0x107fcebc0, {{0.0, 791.0}, {402.0, 83.0}}, identifier: 'DOC.browsingModeTabBar', label: 'Tab Bar'
+                                                Other, 0x107fced00, {{64.0, 791.0}, {274.0, 62.0}}
+                                                  Other, 0x107fcee40, {{64.0, 791.0}, {94.0, 54.0}}
+                                                  Other, 0x107fcef80, {{64.0, 791.0}, {274.0, 62.0}}
+                                                    Button, 0x107fcf0c0, {{68.0, 795.0}, {94.0, 54.0}}, label: 'Recents', Selected
+                                                      Image, 0x107fcf200, {{101.3, 801.3}, {27.3, 27.3}}, identifier: 'clock.fill', label: 'clock'
+                                                    Button, 0x107fcf340, {{154.0, 795.0}, {94.0, 54.0}}, label: 'Shared'
+                                                      Image, 0x107fcf480, {{182.7, 802.7}, {37.0, 26.0}}, identifier: 'person.2.fill', label: 'Two people, filled'
+                                                    Button, 0x107fcf5c0, {{240.0, 795.0}, {94.0, 54.0}}, label: 'Browse'
+                                                      Image, 0x107fcf700, {{271.0, 802.3}, {32.0, 25.0}}, identifier: 'folder.fill', label: 'move'
+                                                  Other, 0x107fcf840, {{64.0, 791.0}, {274.0, 62.0}}
+                                                  Other, 0x107fcf980, {{68.0, 795.0}, {94.0, 54.0}}
+                                                    Other, 0x107fcfac0, {{68.0, 795.0}, {94.0, 54.0}}
+                                                      Other, 0x107fcfc00, {{68.0, 795.0}, {94.0, 54.0}}
+                                                      Other, 0x107fcfd40, {{68.0, 795.0}, {94.0, 54.0}}
+                                                        Other, 0x107fcfe80, {{68.0, 795.0}, {94.0, 54.0}}
+                                                          Other, 0x107fd4000, {{68.0, 795.0}, {94.0, 54.0}}
+                                                            Other, 0x107fd4140, {{68.0, 795.0}, {94.0, 54.0}}
+                                                          Other, 0x107fd4280, {{68.0, 795.0}, {94.0, 54.0}}
+                                                        Other, 0x107fd43c0, {{68.0, 795.0}, {94.0, 54.0}}
+                                            Other, 0x107fd4500, {{0.0, 791.0}, {402.0, 83.0}}
+                                              Other, 0x107fd4640, {{0.0, 791.0}, {402.0, 83.0}}
+                                                Other, 0x107fd4780, {{0.0, 791.0}, {402.0, 83.0}}
+                                                  Other, 0x107fd48c0, {{0.0, 791.0}, {402.0, 83.0}}
+                                                    Other, 0x107fd4a00, {{0.0, 791.0}, {402.0, 83.0}}
+                                                      Other, 0x107fd4b40, {{0.0, 791.0}, {402.0, 83.0}}
+                                                  Other, 0x107fd4c80, {{0.0, 791.0}, {402.0, 83.0}}
+                                                    Other, 0x107fd4dc0, {{0.0, 791.0}, {402.0, 83.0}}
+                          Other, 0x107fd4f00, {{0.0, 0.0}, {402.0, 874.0}}
+    Window, 0x107fd5040, {{0.0, 0.0}, {402.0, 874.0}}
+      Other, 0x107fd5180, {{0.0, 0.0}, {402.0, 874.0}}
+        Other, 0x107fd52c0, {{0.0, 0.0}, {402.0, 874.0}}
+Path to element:
+ →Application, 0x107e19a40, pid: 45315, label: 'Planner navigation prototype'
+Query chain:
+ →Find: Target Application 'org.example.PlannerMCPPrototype'
+  Output: {
+    Application, 0x107fd5400, pid: 45315, label: 'Planner navigation prototype'
+  }

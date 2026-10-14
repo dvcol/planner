@@ -1,0 +1,86 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "D2F20A44-7CDD-49E0-8881-5229EB4A402B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Canceled Overwrite retains the current Tag after relaunch_0_280029F7-A7C6-41A2-8051-3011DC16FD31.png",
+        "timestamp" : 1792013875.841
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "52266A82-8799-4307-86CA-9DD308BF7A9C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Cancel is available for a reviewed Tag replacement_0_177EA227-D680-48C7-BA2A-B13CE047AD42.png",
+        "timestamp" : 1792013858.999
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "128F39E6-6255-4765-969C-1C4379E38245.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the selected backup file_0_73D1A76F-CA7A-418A-9447-92B2DF889553.txt",
+        "timestamp" : 1792013848.727
+      }
+    ],
+    "testIdentifier" : "SavedBackupImportJourneyTests/testCancelingOverwriteReviewPreservesCurrentTagAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testCancelingOverwriteReviewPreservesCurrentTagAfterRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "AF9C3D4D-25BD-46F9-B5D8-52812CE1E28D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Rejected malformed input preserves the Tag after relaunch_0_DB6DE00B-02AF-4940-BBEB-0BD5E3FFE9A1.png",
+        "timestamp" : 1792013952.574
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "C910D9C4-6896-40A0-BA32-004CE71EDC88.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "A valid backup remains reviewable after malformed input_0_69FA7FDB-C7FE-40FC-BA35-7D897A709811.png",
+        "timestamp" : 1792013940.247
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "08161DB3-9578-4333-BFBB-C1EB593168AC.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the selected backup file_0_38EC64D9-03C8-4436-B54A-C44EF45A3AB5.txt",
+        "timestamp" : 1792013935.835
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "4A4F5819-5755-4C88-9313-77F2225FF49C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Malformed JSON shows a native failure before review_0_948A2CA9-1C00-47A2-B28E-788AB7A846EF.png",
+        "timestamp" : 1792013929.884
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "8A88BC72-5A9D-4645-BCD7-5A6DA9D478FF.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the selected backup file_0_C7F084C7-88D5-4B4A-B399-A341A50C47FB.txt",
+        "timestamp" : 1792013926.409
+      }
+    ],
+    "testIdentifier" : "SavedBackupImportJourneyTests/testMalformedBackupShowsFailureAndPreservesCurrentTagAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testMalformedBackupShowsFailureAndPreservesCurrentTagAfterRelaunch"
+  }
+]
