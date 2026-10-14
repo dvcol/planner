@@ -1,0 +1,20 @@
+{
+  "sourceHashes": {
+    "Planner/Scenes/SavedItemScheduleViews.swift": "437d5aa84ca9c1804d7abf840ad40fca54ad3645f3714ae62ef5aed1036c88e6",
+    "PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests.swift": "ed03db2f363e41ab4c8077d871d8eb25d9113aac49ff6a5d27c4b440b770ad84",
+    "Planner/Scenes/SavedCalendarTimeGrid.swift": "6b489b5b11ed7c44c04f1573809457e07e2fe9c8be714641be2b8ca55a6279d8",
+    "Planner/Scenes/SavedCalendarView.swift": "b57cd311302d19850a940bfb1bd65550e17cc7ccd412107ddb0bc1b33163ad02",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "7c0e2af536cb787abeb65f983512bf690a24c35bd5b41f46d3bec015826f9118"
+  },
+  "productHashes": {
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner": "2d2d27a032ebb21e31a0941e03e3862b409ae545274c10edb59ec22a5daea53e",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib": "539855b3e9084f9063cdfe0a2d83025c4d318f3ceadee55e9e5ff96e08b560c8",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests": "82903a83a8ad6b7356769a61755d874cf46f053e793b70a17d9162eebfdb7a02",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "e6f540414489754d2dcaf1af64a0bcbb2951a58bb2d85fcf1595226f15769cba",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib": "17815611f082a0697de144daee640bddf84f298c3b4c92b7f756321c0e15e10e",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests": "f2cfc132a8811453d69e0764c08ec62174156fabfa0b76d0c03e0507a29a7c64",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtureUITests-Runner.app/PlugIns/PlannerFixtureUITests.xctest/PlannerFixtureUITests": "7baca6eeea9a49d4637271aae6cc3ef813f3b4ee74217a595c191ba804620650",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures": "b799e68c823737b89ec582b1a32a618b3db6efb402ed424cd22990cc82ceddbc",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures.debug.dylib": "dda6ddbf92d5f1d4b29ec6ecaafcc991828dc222ba92d48347d590acc03ba446"
+  }
+}

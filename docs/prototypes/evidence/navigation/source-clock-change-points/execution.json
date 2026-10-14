@@ -1,0 +1,101 @@
+{
+  "artifactHashes": {
+    "commands.json": "c310e05698adf1702f3d3dfbce6518d9af84083a250f99f5b76b291f55069a10",
+    "compiled-source-hashes.json": "bb8dbca235f5ef016ef9a1809e96eb43c49ab3620c89d5783c0e4f15ebb1a26b",
+    "mac-build.log.gz": "e936814b08efb7e11ca37bf2f2f30d1a1db57d320a73877c1456cd2a93f08574",
+    "markdown-lint.log": "6d1b01f5f81975f7f49c9b8423d4e6634c8d738b619de0021326349856f8fdcc",
+    "ordinary-tablet-summary.json": "9adf5cf3b15ef30ac4829b0337554a0eb2c6b1310e71f1f7f1012136b6fd7306",
+    "ordinary-tablet-tests.json": "bcc71f235f86d8b0f7c0d8a8eb78f074160407f9703b880d5c4948ebb0d5cdfb",
+    "ordinary-tablet.log.gz": "c537f7169a317d86577523c8f242b30a15777520d238584d2178980384d8ef03",
+    "phone-summary.json": "142178af667ac5232a8e00e8d10349a43bf4c8ab1c9a886fc2d42f681adc8ab9",
+    "phone-tests.json": "2a8828537f0fbc08c93e942e342e28843ac4d125cb561705f87a9212da0a0d0d",
+    "phone.log.gz": "f33b9fa1b19705c99b54d3854d7ac81d4040c2ec19f0095cf9e87c2047cc47d3",
+    "phone/01F404D3-DBD6-4E80-9767-F3448C9596D4.png": "12b85b771ec4f0fe26e4c34cca438820dba1502918703dac7c51e26690733a68",
+    "phone/1D456932-4F10-4610-8412-8933FD6D22BB.png": "05c64539b999a72d853f462f3052da7e606f48a3fa3cb5643e572a909de9936c",
+    "phone/2331D047-9815-421F-A024-5402C80C1C95.png": "05b1d6d1900b060bdd060bfc73454a5e4acf77fc686876242e81cd2a7c722171",
+    "phone/3E7EB058-A4A1-4092-97DF-3FD5CBE43436.png": "6cb68ecc98b4a82b5018f763ac20d2ea725abc70470e81e3f72e310f4eafd24f",
+    "phone/4809AAD1-BDB5-4B3E-BFDA-0BBF8BF6E780.png": "2ca461f96b599558acac9f482010714da64d03ec5800b4f3894267f8ec01aec5",
+    "phone/5442572D-BAAD-4520-8945-F4F4158C2658.png": "ec6cd1b611d936798111c22763f3e435395d2cf6315be237f571a455b1f286b4",
+    "phone/A49E3994-5838-44CB-9CAC-C3CAD5A76A40.png": "2da68f6a167a46e7aacc24fff853683c25d1da3d1aa24239a195d014a2db4324",
+    "phone/E50EB42A-16AA-4749-87BB-D2D529B60820.png": "f729f0f32dd3aef9cdbdb69e05b3df344bcf884d580443e236c494c02da3b34c",
+    "phone/manifest.json": "4a7b32071792a24680a2c94c677713da215456b7838753083e95fe6273a47178",
+    "red-summary.json": "a094a7a9680656ca78ce9dc917639505ad88360511ed88e58b91f6b3d6e3a9c0",
+    "red-tests.json": "7d8f4b280f98aebcd35aaa3f9c19246494d6387eeb8fccce531d4590193f9790",
+    "red.log.gz": "83facc3dead03e6bf1500c5ad4bc468f7ad807187ca4b01a897a66dbc0aa9f3b",
+    "red.png": "5df2f037c3fd090ceb1567303113fae0f823aeea7929c4c06aad0ed2db0c838a",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tablet-summary.json": "2473d009d39ead6797d4dce95399d2f09abfb572a77f5733e6a407fe773ce47f",
+    "tablet-tests.json": "51aa019cee0327792eed7741db9004bd0c57fcc4c48ce1808d5c0ab7efc3fad3",
+    "tablet.log.gz": "1b53c4c0d44715d7d50ff02bdc7ab4befa8c4547c3a35cf2b78d403e1cc7b8f4",
+    "tablet/4409140C-35CD-4C63-A858-74D68C131839.png": "78cf410a9a148d02bf2fa76071bd1de7441a850f4014d3d76833579b6191409d",
+    "tablet/518C2401-26C4-44B1-B393-7EB3B404B746.png": "24915c4f74de581f5752afc82f3c0fb3fa61275159254d23d2802d9b370074c3",
+    "tablet/7722FB8E-EBC0-4E3C-A6CF-0C78CD2D77E2.png": "047a945fe26678b9be41721d38213cde499dc7e8a9a264a061159a6b45fc8bbd",
+    "tablet/D74680A8-4BAA-4798-ABC6-F1F77BF0AE39.png": "1d41dec95934bc33fee8b4b3a3765a85b11a9b4a12de19e65dcb8ca1a12e3907",
+    "tablet/EAA3B446-64EC-44FA-A677-B6DA09B39C77.png": "43e1a83ad7b4e94c0ce77ad0c20c2aa28039f17f0b574ece35fff33db3e9e9b2",
+    "tablet/ED2C3038-5240-4460-9A5C-ED576DE1E9E7.png": "b08f56eb3e999fdb8e3649f79fad7acfb09b5f6a3254a46f5c47fc59d1bdd468",
+    "tablet/F5655FBE-F0DA-4C44-A392-0EB7094C72F7.png": "e91b4be23a44f0b0a497ca99db6d6b7aad6c451e1fcac8543ddd0e02a635cea2",
+    "tablet/FC2C1FDB-F523-4344-B350-4307F58DA601.png": "a59a4850ced34f2e6ef965f45f6f05519c7ec7a75abe7d80f719ccf027c6c894",
+    "tablet/manifest.json": "144737bc2a47c37d7098edd8bca6434344a431f06a4d5daf561cb4908cec7c76"
+  },
+  "baseCommit": "508769c7a5a894b1db56b885312248a361e9fb2f",
+  "productHashes": {
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner": "2d2d27a032ebb21e31a0941e03e3862b409ae545274c10edb59ec22a5daea53e",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib": "539855b3e9084f9063cdfe0a2d83025c4d318f3ceadee55e9e5ff96e08b560c8",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests": "82903a83a8ad6b7356769a61755d874cf46f053e793b70a17d9162eebfdb7a02",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "e6f540414489754d2dcaf1af64a0bcbb2951a58bb2d85fcf1595226f15769cba",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib": "17815611f082a0697de144daee640bddf84f298c3b4c92b7f756321c0e15e10e",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests": "f2cfc132a8811453d69e0764c08ec62174156fabfa0b76d0c03e0507a29a7c64",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtureUITests-Runner.app/PlugIns/PlannerFixtureUITests.xctest/PlannerFixtureUITests": "7baca6eeea9a49d4637271aae6cc3ef813f3b4ee74217a595c191ba804620650",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures": "b799e68c823737b89ec582b1a32a618b3db6efb402ed424cd22990cc82ceddbc",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures.debug.dylib": "dda6ddbf92d5f1d4b29ec6ecaafcc991828dc222ba92d48347d590acc03ba446"
+  },
+  "qualification": {
+    "coreAndHTTPInvocationsThisStep": 0,
+    "macAppAndUITestHostBuild": "passed",
+    "macNativeUIInvocations": 0,
+    "markdownLint": "passed",
+    "ordinary-tablet": {
+      "failedTests": 0,
+      "passedTests": 1,
+      "skippedTests": 0
+    },
+    "phone": {
+      "failedTests": 0,
+      "passedTests": 2,
+      "skippedTests": 0
+    },
+    "red": {
+      "failedTests": 1,
+      "passedTests": 0,
+      "skippedTests": 0
+    },
+    "swiftStrictLint": "passed",
+    "tablet": {
+      "failedTests": 0,
+      "passedTests": 2,
+      "skippedTests": 0
+    },
+    "whitespace": "passed"
+  },
+  "report": "docs/prototypes/native-source-clock-change-points.md",
+  "reviews": {
+    "spec": "No source or evidence mismatch; raw counts, hashes and complete capture manifests verified. Q83 and broader gates remain open.",
+    "standards": "No material standards or evidence findings; counts, hashes and report links verified."
+  },
+  "scopeNotes": [
+    "The red run failed at missing EDT after the exact source Schedule identity assertions passed. The final journey also asserts Start only labels.",
+    "Phone and tablet fixture runs use the same frozen source and built products; the tablet used test-without-building.",
+    "Both new source-row captures inspected separately at original resolution. Other fixture captures retained as regression evidence; prior visual qualification remains separately scoped.",
+    "Mac build only; zero native Mac runtime invocations. Q83 alignment remains pending, with broader temporal/accessibility/adaptive and physical gates open."
+  ],
+  "sourceHashes": {
+    "Planner/Scenes/SavedCalendarTimeGrid.swift": "6b489b5b11ed7c44c04f1573809457e07e2fe9c8be714641be2b8ca55a6279d8",
+    "Planner/Scenes/SavedCalendarView.swift": "b57cd311302d19850a940bfb1bd65550e17cc7ccd412107ddb0bc1b33163ad02",
+    "Planner/Scenes/SavedItemScheduleViews.swift": "437d5aa84ca9c1804d7abf840ad40fca54ad3645f3714ae62ef5aed1036c88e6",
+    "PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests.swift": "ed03db2f363e41ab4c8077d871d8eb25d9113aac49ff6a5d27c4b440b770ad84",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "7c0e2af536cb787abeb65f983512bf690a24c35bd5b41f46d3bec015826f9118",
+    "docs/open-decisions.md": "dc89b721120c80588dad548c70dd139450e0dbe8824c7d772b167d0f657dd0de",
+    "docs/prototypes/native-calendar-booked-clock-change.md": "30faaedbe12ff244821e2d690c7b21d9c0c9084c5e62428b3613514c90f35c51",
+    "docs/prototypes/native-source-clock-change-points.md": "454ea5a71bb032ec76d7666a9d046a667ffd3e703f34e94881daa52fb05e5428"
+  }
+}

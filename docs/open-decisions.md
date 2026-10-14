@@ -50,4 +50,4 @@ The human accepted A on 14 October 2026. The [approved contract](calendar-window
 
 Q83 was asked on 15 October 2026 and remains unanswered. The [question and impacts](calendar-time-grid-alignment-question.md) distinguish aligned local clock times, shared repeated-hour rows and the current elapsed-time columns. The native Week capture shows why the choice matters: New York's 25-hour Sunday places 02:00 beside the following ordinary day's 03:00.
 
-[Repeated-hour previews](prototypes/native-calendar-repeated-times.md) now distinguish EDT and EST without changing placement. Booked-span description work can proceed independently. Neither establishes approval of Q83 or completes the broader Calendar, Mac runtime or physical-device gates.
+[Repeated-hour previews](prototypes/native-calendar-repeated-times.md) now distinguish EDT and EST without changing placement. [Booked-span](prototypes/native-calendar-booked-clock-change.md) and [start-only source-row](prototypes/native-source-clock-change-points.md) descriptions have their separate native qualifications. Neither establishes approval of Q83 or completes the broader Calendar, Mac runtime or physical-device gates.

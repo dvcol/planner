@@ -33,6 +33,8 @@ One existing ordinary Schedule edit function also passes on iPad, covering Cance
 
 [Execution evidence](evidence/navigation/calendar-booked-clock-change/execution.json) records exact commands, raw summaries/trees, compressed logs, source/product hashes, the three red failures, Vision's recognized text and original captures. New booked/short-span, source and late-card captures were inspected individually at original resolution. The earlier repeated-hour qualification remains in [its report](native-calendar-repeated-times.md).
 
+The subsequent [start-only source-row slice](native-source-clock-change-points.md) distinguishes its repeated-hour descriptions with its own red/green evidence.
+
 ## Remaining gates
 
-Q83 alignment remains pending. Other transitions, half-hour changes, overnight spans, start-only source-row descriptions, Dynamic Type, VoiceOver/keyboard, compact/adaptive layouts and Mac runtime retain separate qualification. Physical sync/account/Share and whole-app polish remain open. This step does not change saved scheduling semantics or complete those gates. Apple Calendar export stays outside the map.
+Q83 alignment remains pending. Other transitions, half-hour changes, overnight spans, Dynamic Type, VoiceOver/keyboard, compact/adaptive layouts and Mac runtime retain separate qualification. Physical sync/account/Share and whole-app polish remain open. This step does not change saved scheduling semantics or complete those gates. Apple Calendar export stays outside the map.

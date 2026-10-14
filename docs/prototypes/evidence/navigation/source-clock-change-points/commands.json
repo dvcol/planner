@@ -1,0 +1,22 @@
+{
+  "red": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerCalendarTemporalDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView\" -resultBundlePath /private/tmp/PlannerCalendarSourcePointsRed.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  "phone": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerCalendarTemporalDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView\" \"-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testBookedSpanAcrossRepeatedClockTimeDescribesBothEndpoints\" -resultBundlePath /private/tmp/PlannerCalendarSourcePointsPhone.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  "ordinary-tablet": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerCalendarDenseIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedItemJourneyTests/testCancelingScheduleDraftAndSavingStartOnlyAssignmentPreserveItemAfterRelaunch\" -resultBundlePath /private/tmp/PlannerCalendarSourcePointsOrdinaryTablet.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  "mac-build": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS -derivedDataPath /private/tmp/PlannerCalendarModesMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO build-for-testing"
+  },
+  "tablet": {
+    "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerFixtures -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerCalendarTemporalDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView\" \"-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testBookedSpanAcrossRepeatedClockTimeDescribesBothEndpoints\" -resultBundlePath /private/tmp/PlannerCalendarSourcePointsTablet.xcresult CODE_SIGNING_ALLOWED=NO test-without-building"
+  }
+}
