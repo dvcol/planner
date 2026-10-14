@@ -52,6 +52,7 @@ final class SavedPlannerStore {
   var alertMessage: String?
   var isReady: Bool { session != nil && !isOpening }
   var canCreate: Bool { isReady && !isOpening && !isSaving && !recoveryBlocked }
+  var currentDatasetIdentifier: UUID? { session?.datasetId }
 
   var devicePreferenceNamespace: String? {
     guard let session else { return nil }
@@ -162,14 +163,24 @@ final class SavedPlannerStore {
   func prepareBackupImport(
     _ backup: PlannerDecodedBackup, mode: PlannerImportMode, restoreDeletedData: Bool
   ) async throws -> PlannerReview {
+    try await prepareDataImportReview(
+      command: .applyImport(backup: backup, mode: mode, restoreDeletedData: restoreDeletedData))
+  }
+
+  func prepareRecoveryRestoration(_ selection: PlannerRecoverySelection, mode: PlannerImportMode)
+    async throws -> PlannerReview
+  {
+    try await prepareDataImportReview(command: .restoreRecovery(selection: selection, mode: mode))
+  }
+
+  private func prepareDataImportReview(command: PlannerCommand) async throws -> PlannerReview {
     guard let planner, let session, canCreate else {
       throw CocoaError(
         .fileWriteUnknown,
         userInfo: [NSLocalizedDescriptionKey: "Planner is not ready to import data."])
     }
     switch await planner.prepareReview(
-      session: session,
-      command: .applyImport(backup: backup, mode: mode, restoreDeletedData: restoreDeletedData))
+      session: session, command: command)
     {
     case .reviewed(let review): return review
     case .failed(let reason): throw reason

@@ -2,9 +2,36 @@ import PlannerCore
 import SwiftUI
 
 struct SavedBackupImportDraft: Identifiable {
+  enum Source {
+    case file(filename: String, backup: PlannerDecodedBackup)
+    case recovery(PlannerRecoverySelection)
+  }
+
   let id = UUID()
-  let filename: String
-  let backup: PlannerDecodedBackup
+  let source: Source
+
+  init(filename: String, backup: PlannerDecodedBackup) {
+    source = .file(filename: filename, backup: backup)
+  }
+
+  init(recoverySelection: PlannerRecoverySelection) {
+    source = .recovery(recoverySelection)
+  }
+
+  var recoverySelection: PlannerRecoverySelection? {
+    guard case .recovery(let selection) = source else { return nil }
+    return selection
+  }
+
+  var isRecovery: Bool { recoverySelection != nil }
+
+  var name: String {
+    switch source {
+    case .file(let filename, _): filename
+    case .recovery(let selection):
+      selection.evidence == .acknowledgedSnapshot ? "Saved snapshot" : "Unverified proposal"
+    }
+  }
 }
 
 struct SavedBackupImportForm: View {
@@ -28,10 +55,28 @@ struct SavedBackupImportForm: View {
     NavigationStack {
       Form {
         Section {
-          Text(draft.filename).font(.headline)
+          Text(draft.name).font(.headline)
+          if let recoverySelection = draft.recoverySelection {
+            LabeledContent("Destination", value: "Current Planner")
+              .accessibilityIdentifier("saved.recovery.restore.target")
+            if recoverySelection.evidence == .preparedUnverified {
+              Text("This proposal contains intended changes that were not verified as saved data.")
+                .foregroundStyle(.secondary)
+            }
+            DisclosureGroup("Recovery details") {
+              LabeledContent("Copy dataset", value: recoverySelection.datasetId.uuidString)
+              if let targetIdentifier = store.currentDatasetIdentifier {
+                LabeledContent("Destination dataset", value: targetIdentifier.uuidString)
+              }
+            }
+          }
           if appliedResult != nil {
-            Label("Import applied", systemImage: "checkmark.circle")
-              .accessibilityIdentifier("saved.import.applied")
+            Label(
+              draft.isRecovery ? "Restore applied" : "Import applied",
+              systemImage: "checkmark.circle"
+            )
+            .accessibilityIdentifier(
+              draft.isRecovery ? "saved.recovery.restore.applied" : "saved.import.applied")
           } else {
             Picker("Matching records", selection: $mode) {
               Text("Skip").tag(PlannerImportMode.skip)
@@ -41,7 +86,7 @@ struct SavedBackupImportForm: View {
             .disabled(store.isSaving)
             Text(modeExplanation)
               .foregroundStyle(.secondary)
-            if mode == .overwrite {
+            if mode == .overwrite && !draft.isRecovery {
               Toggle("Restore previously deleted data", isOn: $restoreDeletedData)
                 .disabled(store.isSaving)
                 .accessibilityIdentifier("saved.import.restore")
@@ -57,7 +102,7 @@ struct SavedBackupImportForm: View {
         } else if appliedResult != nil {
           Section {
             Label(
-              "The import was applied, but its summary is unavailable.",
+              "The changes were applied, but their summary is unavailable.",
               systemImage: "exclamationmark.triangle")
           }
         } else if isReviewing {
@@ -86,7 +131,7 @@ struct SavedBackupImportForm: View {
       .id(appliedResult != nil)
       .formStyle(.grouped)
       .accessibilityIdentifier("saved.import.form")
-      .navigationTitle(appliedResult == nil ? "Review Backup" : "Import Result")
+      .navigationTitle(navigationTitle)
       #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
       #endif
@@ -99,13 +144,17 @@ struct SavedBackupImportForm: View {
         }
         if appliedResult == nil {
           ToolbarItem(placement: .confirmationAction) {
-            Button("Import") { Task { await confirmImport() } }
+            Button(draft.isRecovery ? "Restore" : "Import") { Task { await confirmImport() } }
               .disabled(currentReview == nil || isReviewing || !store.canCreate)
               .accessibilityIdentifier("saved.import.confirm")
           }
         }
       }
-      .overlay { if store.isSaving { ProgressView("Importing backup") } }
+      .overlay {
+        if store.isSaving {
+          ProgressView(draft.isRecovery ? "Restoring recovery copy" : "Importing backup")
+        }
+      }
     }
     .task(id: selection) { await prepareReview() }
     .onChange(of: mode) { if mode == .skip { restoreDeletedData = false } }
@@ -120,9 +169,18 @@ struct SavedBackupImportForm: View {
     return review
   }
 
+  private var navigationTitle: String {
+    if appliedResult != nil { return draft.isRecovery ? "Restore Result" : "Import Result" }
+    return draft.isRecovery ? "Review Recovery" : "Review Backup"
+  }
+
   private var modeExplanation: String {
     if mode == .skip {
       return "Keep current matching records and their contents. Add independent new records."
+    }
+    if draft.isRecovery {
+      return
+        "Replace matching records with this copy and restore the listed deleted records. Omitted records stay available."
     }
     return
       "Replace represented matching records and their contents with the backup. Omitted records stay available."
@@ -140,8 +198,14 @@ struct SavedBackupImportForm: View {
     isReviewing = true
     defer { if reviewRequest == request { isReviewing = false } }
     do {
-      let prepared = try await store.prepareBackupImport(
-        draft.backup, mode: mode, restoreDeletedData: mode == .overwrite && restoreDeletedData)
+      let prepared: PlannerReview
+      switch draft.source {
+      case .file(_, let backup):
+        prepared = try await store.prepareBackupImport(
+          backup, mode: mode, restoreDeletedData: mode == .overwrite && restoreDeletedData)
+      case .recovery(let recoverySelection):
+        prepared = try await store.prepareRecoveryRestoration(recoverySelection, mode: mode)
+      }
       guard !Task.isCancelled, reviewRequest == request, selection == requestedSelection else {
         return
       }

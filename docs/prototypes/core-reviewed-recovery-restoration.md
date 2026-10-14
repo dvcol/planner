@@ -40,4 +40,4 @@ Affected strict Swift/Markdown lint and whitespace checks pass. [Execution evide
 
 ## Remaining gates
 
-The reviewed native restoration form and its selected/target dataset presentation are not implemented yet. Native cancellation/stale-review/failure/relaunch journeys, checkpoint-retry UI, physical iCloud ownership/cutoff and sync/Share remain open. Broader lineage/migration, adaptive/accessibility/scale and whole-app polish retain their owning gates. This slice proves local Core restoration and agent exclusion, not an account transition. Q83 Calendar alignment is still unanswered.
+The [native restoration form](native-reviewed-recovery-restoration.md) now has its own subsequent local saved-Item/Tag review, cancellation, confirmation and relaunch qualification. Remaining native full-graph/mode/deletion/proposal/stale-review/failure journeys, checkpoint-retry UI, physical iCloud ownership/cutoff and sync/Share remain open. Broader lineage/migration, adaptive/accessibility/scale and whole-app polish retain their owning gates. This slice proves local Core restoration and agent exclusion, not an account transition. Q83 Calendar alignment is still unanswered.

@@ -1,0 +1,14 @@
+{
+  "expectation": "/private/tmp/PlannerNativeRecoveryRestorePhoneEvidence/60D648A0-E660-492B-9FDE-4A80599EFBC8.txt",
+  "values": {
+    "Filename": "Planner Saved Recovery 029DD3D1-127C-470D-9F50-6BCA0A49DA4C Generation 2.json",
+    "Tag": "F64CC325-AC3F-430B-981E-6DE46E7CF49F",
+    "Item": "4B932892-4068-4B45-89E7-5F6494F339D6",
+    "Current tag": "saved.tag.59C395D0-9945-4AFE-8D0F-70434CF17866",
+    "Current item": "saved.item.8C49C269-2FFF-4229-BCC1-13BB29AEDDFF"
+  },
+  "deliveredPath": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner Saved Recovery 029DD3D1-127C-470D-9F50-6BCA0A49DA4C Generation 2.json",
+  "bytes": 921,
+  "sha256": "f86ea6386041251cc3f9dcdf83f6b76414039beb7c9ab6e3f756330c4b37d47b",
+  "checks": "Data-only exact root, format2, native-observed retained Item/Tag IDs/names; current IDs absent; other groups empty. Semantic checks only."
+}

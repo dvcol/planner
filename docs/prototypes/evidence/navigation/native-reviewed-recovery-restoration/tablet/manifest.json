@@ -1,0 +1,86 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "9E0958A8-59FD-45BF-8F23-97555C8680F1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Current dataset stays separate after export and relaunch_0_241814AE-8213-44C3-A169-E94977B5755D.png",
+        "timestamp" : 1792019022.37
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "15DA035E-20FA-4052-BB81-C5464CE0A130.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Retained recovery export reports successful delivery_0_7BFEBFEE-4CE6-43E1-872D-0D3822EE5503.png",
+        "timestamp" : 1792018998.758
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "40059917-F784-41AC-BDDA-54A76CBE8502.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Public retained export expectation_0_C6B3DA06-49B6-4812-9287-15DA6BD0A7D6.txt",
+        "timestamp" : 1792018998.614
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "04D542BC-328E-4525-83B3-D4E54AD6065D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "System picker exports the retained dataset_0_34DE46F7-AB5A-42AE-BFEB-06DEA14EEAE0.png",
+        "timestamp" : 1792018995.388
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "61D2F8D8-6297-4E28-9BAF-511FA83ACA06.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Retained copy shows its own saved Item and Tag_0_34C126AE-C85A-4F3C-98C1-06B9E38D6975.png",
+        "timestamp" : 1792018985.993
+      }
+    ],
+    "testIdentifier" : "RetainedRecoveryJourneyTests/testExportingRetainedCopyKeepsCurrentDatasetSeparateAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RetainedRecoveryJourneyTests/testExportingRetainedCopyKeepsCurrentDatasetSeparateAfterRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "8CFDA135-7EF8-4228-ADFE-BCB8554F70E8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Restored and current identities survive native relaunch together_0_48C3893F-EF71-457C-9FB9-6E4199517EDE.png",
+        "timestamp" : 1792019108.872
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "BC3F49A1-2A78-4147-891B-534E71B01785.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Explicit native confirmation restores the reviewed copy_0_95677D74-E990-4C19-9A73-C931DF8CB7DA.png",
+        "timestamp" : 1792019082.292
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "65CD3B1B-7362-4B1F-9CE3-9921CA2BD4A0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native review targets Current Planner and lists two additions_0_B318F835-336A-4292-80E8-775AB71F863F.png",
+        "timestamp" : 1792019054.627
+      }
+    ],
+    "testIdentifier" : "RetainedRecoveryJourneyTests/testReviewCancelAndRestoreRetainedCopyPreservesIdentitiesAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RetainedRecoveryJourneyTests/testReviewCancelAndRestoreRetainedCopyPreservesIdentitiesAfterRelaunch"
+  }
+]

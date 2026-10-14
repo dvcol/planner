@@ -1,0 +1,80 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "52FA8072-3A19-4616-B377-CB17DECFDE7D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Applied import retains the actual Core summary_0_545A4BD1-44D1-4D50-BCBC-48E0BD2A7E18.png",
+        "timestamp" : 1792019257.527
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "EE6F8557-475D-4052-B3B6-B79C9E697B22.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Expandable backup details retain the exact Tag identity_0_6FE21AF0-53B7-43BD-88BF-90B975F7AC93.png",
+        "timestamp" : 1792019255.815
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "BCBCE3D8-75F8-4580-B7B0-65680CC3FC8A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Replacement after summary shows the incoming Tag name_0_76002151-F440-411D-9A59-96110CF0A61E.png",
+        "timestamp" : 1792019252.895
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "D746A750-67C1-4EA1-B608-044B6C55F221.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Replacement before summary keeps the current Tag name_0_CCC36D17-715B-4B30-84F6-C88FCEF36A31.png",
+        "timestamp" : 1792019252.537
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "5BB65063-C3C9-47C9-AD4D-1194257A40ED.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Overwrite reviews the represented Tag replacement_0_5EFE9B77-D560-42C7-AEE1-A68157C57303.png",
+        "timestamp" : 1792019251.077
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "C4464566-B253-499D-BF75-C848D862DB93.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the selected backup file_0_EC787DC5-A014-4140-BF22-F8D04DF41254.txt",
+        "timestamp" : 1792019239.641
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "7F6024C7-19B8-4368-98C4-DD3663FC195C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Default Skip reviews the current Tag conflict_0_79FE115E-76AE-4234-930F-132B7A96E492.png",
+        "timestamp" : 1792019228.63
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "7576EDA5-616F-4DAA-8147-B9D9C0DAF1AE.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the selected backup file_0_CE81C9D3-EDDE-4E23-8213-225C03C7ADBC.txt",
+        "timestamp" : 1792019224.145
+      }
+    ],
+    "testIdentifier" : "SavedBackupImportJourneyTests/testRealBackupSkipAndOverwriteKeepTagIdentityAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testRealBackupSkipAndOverwriteKeepTagIdentityAfterRelaunch"
+  }
+]

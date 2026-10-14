@@ -4,11 +4,13 @@ import UniformTypeIdentifiers
 
 struct SavedRecoverySelectionView: View {
   @Environment(\.dismiss) private var dismiss
+  let store: SavedPlannerStore
   let selection: PlannerRecoverySelection
   @State private var backupFile: SavedPlannerBackupFile?
   @State private var showExporter = false
   @State private var exportFailure: String?
   @State private var exportedFilename: String?
+  @State private var restoreDraft: SavedBackupImportDraft?
 
   private var backup: PlannerPortableBackup { selection.decodedBackup.backup }
 
@@ -44,6 +46,11 @@ struct SavedRecoverySelectionView: View {
               LabeledContent("Original operation", value: operationIdentifier.uuidString)
             }
           }
+          Button("Review Restore", systemImage: "arrow.uturn.backward") {
+            restoreDraft = .init(recoverySelection: selection)
+          }
+          .disabled(!store.canCreate || showExporter)
+          .accessibilityIdentifier("saved.recovery.restore.review")
         }
         Section("Planner data") {
           if backup.sources.isEmpty {
@@ -68,7 +75,7 @@ struct SavedRecoverySelectionView: View {
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {
           Button("Done") { dismiss() }
-            .disabled(showExporter)
+            .disabled(showExporter || store.isSaving)
             .accessibilityIdentifier("saved.recovery.selection.done")
         }
         ToolbarItem(placement: .primaryAction) {
@@ -78,10 +85,13 @@ struct SavedRecoverySelectionView: View {
             backupFile = .init(data: selection.portableData, filename: exportFilename)
             showExporter = true
           }
-          .disabled(showExporter)
+          .disabled(showExporter || store.isSaving)
           .accessibilityIdentifier("saved.recovery.export")
         }
       }
+    }
+    .sheet(item: $restoreDraft) { draft in
+      SavedBackupImportForm(store: store, draft: draft)
     }
     .fileExporter(
       isPresented: $showExporter, item: backupFile, contentTypes: [.json],
@@ -93,7 +103,7 @@ struct SavedRecoverySelectionView: View {
     } message: {
       Text(exportFailure ?? "")
     }
-    .interactiveDismissDisabled(showExporter)
+    .interactiveDismissDisabled(showExporter || store.isSaving)
     #if os(macOS)
       .frame(minWidth: 480, minHeight: 440)
     #endif

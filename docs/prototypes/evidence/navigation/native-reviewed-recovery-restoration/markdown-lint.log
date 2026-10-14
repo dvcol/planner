@@ -1,0 +1,5 @@
+markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)
+Finding: docs/prototypes/native-reviewed-recovery-restoration.md docs/prototypes/core-reviewed-recovery-restoration.md docs/portable-data-contract.md
+Linting: 3 files
+Summary: 0 issues in 0 files
+Done in 196ms using pnpm v12.10.1

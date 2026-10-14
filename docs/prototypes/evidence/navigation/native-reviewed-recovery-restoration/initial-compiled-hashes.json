@@ -1,0 +1,21 @@
+{
+  "sources": {
+    "Planner/Scenes/SavedBackupImportForm.swift": "45015698617d9cbb5dfd8e5dd90b2219a512a67a8695d2d75b9ad033bb9c0eae",
+    "Planner/Scenes/SavedPlannerStore.swift": "62aeaf82bff2366e62c7ae7cb908fff5b86a47a5b85a69baea7fa6594c85e525",
+    "Planner/Scenes/SavedRecoverySelectionView.swift": "9d746dd4f368573456f499e9d3d40f2812ce15632c57b36f61138dadb3024d39",
+    "Planner/Scenes/SavedRecoveryCopiesView.swift": "4ed2645cb05705dde6a5ea3b5658da94bbc1d80b211ae3bce7cd8aa8b2045b62",
+    "PlannerFixtureUITests/RetainedRecoveryJourneyTests.swift": "ac0940ede7cd630a4620a802d7dc506cc64e4ea31d5bf916209942b171137b78",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "ac510cacf36585086a09e8e575d472a52722720e1c6256d5b5d32531026153b1",
+    "Planner/Scenes/SavedPlannerSettingsView.swift": "329c5262a5dce04ccf4f96d2426baeea0f0ce8fc480c726536a34c79b3401e9d",
+    "PlannerNavigationUITests/NativeNavigationElements.swift": "53659f78aa021f34bd5bd868e2da82eaa010993799d64f945c75959d7c3915e5",
+    "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift": "a19ed0b00a569b0f9b50fa7da18eda3264e7ddf339760d93e15e738365155bb4"
+  },
+  "products": {
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures": "b799e68c823737b89ec582b1a32a618b3db6efb402ed424cd22990cc82ceddbc",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures.debug.dylib": "484e0df58b26ab62d40983a5c717b0285a54795d6cad4e98336a24f45c1ad4d8",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtureUITests-Runner.app/PlugIns/PlannerFixtureUITests.xctest/PlannerFixtureUITests": "9699fa06e899f1789dcd645065aa622781d9f99549a201a0e78d3647160ba43f",
+    "/private/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures": "d96edb02b239719167b1bfdb2e1a9c1312c230765f19fd706e22c9a892913bfa",
+    "/private/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures.debug.dylib": "5200ee92a7e9a4d8cee86dacb171b6ef35d05315442142c55c4ee7106a2a7cc1",
+    "/private/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests-Runner.app/Contents/PlugIns/PlannerFixtureUITests.xctest/Contents/MacOS/PlannerFixtureUITests": "56bffc5ed88e03a255627de8032651aa6171985dadc67cd7aee4221bf0f5cbc9"
+  }
+}
