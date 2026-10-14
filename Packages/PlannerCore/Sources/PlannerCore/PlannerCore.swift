@@ -3,6 +3,7 @@ import SwiftData
 
 public actor Planner {
   private let configuration: PlannerStorageConfiguration
+  private let captureHTTPTransport: any PlannerCaptureHTTPTransport
   private var nativeContainer:
     (container: ModelContainer, fileNumber: UInt64, systemNumber: UInt64)?
   private var sessions: [UUID: PlannerDatasetSession] = [:]
@@ -19,6 +20,8 @@ public actor Planner {
   private var captureDrafts: [UUID: PlannerPreparedCapture] = [:]
   private var captureInputReloads:
     [UUID: (requestId: UUID, task: Task<[PlannerCaptureRetainedInput], Never>)] = [:]
+  private var captureLookups:
+    [UUID: (requestId: UUID, task: Task<PlannerCapturePreviewCandidate?, Never>)] = [:]
   private var appliedCaptureOperations:
     [UUID: (session: PlannerDatasetSession, generation: UUID, operationId: UUID)] = [:]
   private struct CaptureResolution {
@@ -74,8 +77,12 @@ public actor Planner {
     }
   }
 
-  public init(configuration: PlannerStorageConfiguration) {
+  public init(
+    configuration: PlannerStorageConfiguration,
+    captureHTTPTransport: any PlannerCaptureHTTPTransport = PlannerNativeCaptureHTTPTransport()
+  ) {
     self.configuration = configuration
+    self.captureHTTPTransport = captureHTTPTransport
   }
 
   public func bootstrap() -> PlannerBootstrapResult {
@@ -206,6 +213,7 @@ public actor Planner {
         guard !Task.isCancelled else {
           throw PlannerFailure("captureDraftUnavailable", "The capture edit was cancelled.")
         }
+        cancelCaptureLookup(draftId: draftId)
         captureInputReloads.removeValue(forKey: draftId)?.task.cancel()
         return draft
       }
@@ -260,6 +268,7 @@ public actor Planner {
           updated.read.content.categoryIds, context: context, propertyPath: "/changes/categoryIds")
         _ = try selectedTagRecords(
           updated.read.content.tagIds, context: context, propertyPath: "/changes/tagIds")
+        cancelCaptureLookup(draftId: draftId)
         captureDrafts[draftId] = updated
         return .draft(updated.read)
       }
@@ -287,6 +296,67 @@ public actor Planner {
     }
   }
 
+  public func lookupCapture(
+    session: PlannerDatasetSession, draftId: UUID, generation: UUID, linkId: UUID
+  ) async -> PlannerCaptureDraftResult {
+    let requestIdentifier = UUID()
+    defer {
+      if captureLookups[draftId]?.requestId == requestIdentifier {
+        cancelCaptureLookup(draftId: draftId)
+      }
+    }
+    do {
+      let lookup = try coordinated {
+        let draft = try preparedCapture(session: session, draftId: draftId)
+        guard draft.read.generation == generation, !Task.isCancelled else {
+          throw PlannerFailure(
+            "captureDraftUnavailable", "The capture draft changed; read it before continuing.")
+        }
+        guard let link = draft.read.links.first(where: { $0.linkId == linkId }),
+          link.kind == .appleMaps || link.kind == .googleMaps
+        else {
+          throw PlannerFailure(
+            "invalidInput", "Choose a Maps link from this capture before lookup.",
+            propertyPath: "/linkId")
+        }
+        cancelCaptureLookup(draftId: draftId)
+        captureDrafts[draftId] = draft.replacingPreview(
+          .init(state: .loading, linkId: linkId, candidate: nil))
+        let lookup = Task {
+          await plannerLookupCapturePlace(link.originalUrl, transport: captureHTTPTransport)
+        }
+        captureLookups[draftId] = (requestIdentifier, lookup)
+        return lookup
+      }
+      let candidate = await withTaskCancellationHandler(
+        operation: { await lookup.value }, onCancel: { lookup.cancel() })
+      return try coordinated {
+        let draft = try preparedCapture(session: session, draftId: draftId)
+        guard draft.read.generation == generation, !Task.isCancelled,
+          captureLookups[draftId]?.requestId == requestIdentifier
+        else {
+          throw PlannerFailure(
+            "captureDraftUnavailable", "The capture draft changed; read it before continuing.")
+        }
+        let state: PlannerCapturePreview.State = candidate == nil ? .unavailable : .available
+        let observed = draft.replacingPreview(
+          .init(state: state, linkId: linkId, candidate: candidate))
+        captureDrafts[draftId] = observed
+        return .draft(observed.read)
+      }
+    } catch {
+      return .rejected(failure(error, code: "captureDraftUnavailable"))
+    }
+  }
+
+  private func cancelCaptureLookup(draftId: UUID) {
+    guard let lookup = captureLookups.removeValue(forKey: draftId) else { return }
+    lookup.task.cancel()
+    guard let draft = captureDrafts[draftId], draft.read.preview.state == .loading else { return }
+    captureDrafts[draftId] = draft.replacingPreview(
+      .init(state: .unavailable, linkId: draft.read.preview.linkId, candidate: nil))
+  }
+
   public func cancelCapture(session: PlannerDatasetSession, draftId: UUID, generation: UUID)
     -> PlannerCaptureCancelResult
   {
@@ -308,6 +378,7 @@ public actor Planner {
           throw PlannerFailure(
             "captureDraftUnavailable", "The capture draft changed; read it before continuing.")
         }
+        cancelCaptureLookup(draftId: draftId)
         captureInputReloads.removeValue(forKey: draftId)?.task.cancel()
         captureDrafts.removeValue(forKey: draftId)
         return .cancelled
@@ -617,6 +688,7 @@ public actor Planner {
         "The complete capture was not committed: \(error.localizedDescription)")
     }
     appliedCaptureOperations[draftId] = (operation.session, draftGeneration, operation.operationId)
+    cancelCaptureLookup(draftId: draftId)
     captureInputReloads.removeValue(forKey: draftId)?.task.cancel()
     captureDrafts.removeValue(forKey: draftId)
     do {
