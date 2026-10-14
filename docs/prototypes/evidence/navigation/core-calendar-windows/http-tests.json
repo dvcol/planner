@@ -1,0 +1,96 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "00006030-001A586C3EA3001C",
+      "deviceName" : "My Mac",
+      "modelName" : "MacBook Pro",
+      "osBuildNumber" : "26A434",
+      "osVersion" : "27.0.1",
+      "platform" : "macOS"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0,1s",
+                  "durationInSeconds" : 0.10443902015686035,
+                  "name" : "calendarQueryAndTypedPagesExposeLiveOwnersAndSavedFormsOverHttp()",
+                  "nodeIdentifier" : "CalendarWindowRoutingTests/calendarQueryAndTypedPagesExposeLiveOwnersAndSavedFormsOverHttp()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CalendarWindowRoutingTests/calendarQueryAndTypedPagesExposeLiveOwnersAndSavedFormsOverHttp()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,14s",
+                  "durationInSeconds" : 0.13884186744689941,
+                  "name" : "advertisedCalendarGrammarRejectsInvalidRequestsAndPreservesItsIssuedPage()",
+                  "nodeIdentifier" : "CalendarWindowRoutingTests/advertisedCalendarGrammarRejectsInvalidRequestsAndPreservesItsIssuedPage()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CalendarWindowRoutingTests/advertisedCalendarGrammarRejectsInvalidRequestsAndPreservesItsIssuedPage()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "CalendarWindowRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/CalendarWindowRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,035s",
+                  "durationInSeconds" : 0.034716129302978516,
+                  "name" : "queryDiscoversHotelBeforeMuseumWithoutChangingStoredItems()",
+                  "nodeIdentifier" : "QueryRoutingTests/queryDiscoversHotelBeforeMuseumWithoutChangingStoredItems()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/QueryRoutingTests/queryDiscoversHotelBeforeMuseumWithoutChangingStoredItems()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "QueryRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/QueryRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,24s",
+                  "durationInSeconds" : 0.2399590015411377,
+                  "name" : "advertisedScheduleCatalogReadsEachBoundAssignmentAndRejectsRestrictionsOverHttp()",
+                  "nodeIdentifier" : "ScheduleCatalogRoutingTests/advertisedScheduleCatalogReadsEachBoundAssignmentAndRejectsRestrictionsOverHttp()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ScheduleCatalogRoutingTests/advertisedScheduleCatalogReadsEachBoundAssignmentAndRejectsRestrictionsOverHttp()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "ScheduleCatalogRoutingTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests/ScheduleCatalogRoutingTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "PlannerMCPTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerMCPTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "Planner",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "formatVersion": 1,
+  "date": "2026-10-14",
+  "baseline": "c054026b733b4194a928dadc16fdde99987ddb6f",
+  "approvedContract": "docs/calendar-window-contract-review.md",
+  "decisions": [
+    "Q81 A",
+    "Q82 A"
+  ],
+  "counts": {
+    "core": {
+      "functions": 12,
+      "suites": 5,
+      "invocations": 13,
+      "failed": 0,
+      "skipped": 0
+    },
+    "http": {
+      "functions": 4,
+      "suites": 3,
+      "invocations": 4,
+      "failed": 0,
+      "skipped": 0
+    },
+    "nativeUIFunctions": 0
+  },
+  "qualification": "Final scoped executions completed after both public timezone regressions were fixed. iOS app/native UI test-host compilation only; macOS HTTP test-host runtime does not qualify native UI.",
+  "sourceHashes": {
+    "Packages/PlannerCore/Package.swift": "a581f4fe459fac23b9307ee37f91fd1fe1083afe6d8becec272bbb1081e3cf69",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCalendarValues.swift": "74b643d99757b3b72b2b0d4e24a474a87ad1e7db2ce6cd8fa32612d6a311c392",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1e6a1f45d66d5c4af350907928b870763da4240ac72ce4c3ee14614d96adc1a6",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "f2dfd6c6ba2676c15d0491fd8a4d74cc8a927c491d645d376f791f78810da6fc",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CalendarWindowQueryTests.swift": "73acdff7921f2166487a2f2695e04f5dc3bd20859cbf40fbb2008686bb0da534",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CalendarWindowConsistencyTests.swift": "bd558de01b28719320b1276e6ef844f0c7b91f7cb02caeef77a9ed340bb85aa4",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/CalendarWindowTimeZoneTests.swift": "98ea721a1f4391363269a7bf95240c1bc2e12507e5ebda379931b42df95a858a",
+    "Planner/AgentControl/PlannerMCPQueryTool.swift": "2c3def57248d6abf8d754991ea9129e0d9ea9250330cd304225753e9a782a54a",
+    "Planner/AgentControl/PlannerMCPSourceTool.swift": "1bc96bafb64c07af61aa38526776345353f74252374655327280820400dda2d4",
+    "Planner/AgentControl/PlannerMCPRowValue.swift": "0c185673636754e1d17fa8556c411393a6d6ed3f4577338041757397bf585cdc",
+    "PlannerMCPTests/CalendarWindowRoutingTests.swift": "55351d835565e114b56752efc1ce2c42b011b208c357c79945e0b08ed27f367f"
+  },
+  "productHashes": {
+    "mac-app": {
+      "path": "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner",
+      "sha256": "d929b79328326f1f18bfc8f4d3ef81075a0e5f88a76dec8419068b44b15fa1d5"
+    },
+    "mac-debug-library": {
+      "path": "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib",
+      "sha256": "832c71c8d9b52db5062e72ee1861c1df030b6a9f5b34b58c4012273bd71a645a"
+    },
+    "ios-app": {
+      "path": "/private/tmp/PlannerCaptureHTTPTransportIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner",
+      "sha256": "08179ef3d7ce845caf9ff4a86530f667dc1b6472d9a97d435612adf4fb06355c"
+    },
+    "ios-debug-library": {
+      "path": "/private/tmp/PlannerCaptureHTTPTransportIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib",
+      "sha256": "420763a82a8f69211c351c810fc8d54fa2a531b20a48e264fa57d4f44fda5114"
+    }
+  },
+  "artifacts": {
+    "all-day-red.log.gz": "96ba70468c039d06bbf3d1591741ded6d42eed7d222df20bd400aaa79f1a2860",
+    "commands.json": "e9d182f4a368328351fad6f9afa8116b4aa56324fb93c848e7a9344638c55ea7",
+    "core-final.log.gz": "06e8e9dc5c8f0a679206484cabe2fe3c7d9e8c5a985be83119592e33b6be1f00",
+    "empty-green.log.gz": "b9a8cbe88eaa343817577177707863b105205770de139e168d4803738c8c7152",
+    "empty-red.log.gz": "a243a9733d298f03869a91bae2d2b8ef2b887977fbea4b5d3be368aa37ce17e5",
+    "http-admission-red.log.gz": "2a269cfb2dcde5cf195180a9fa0b80d93fa52332864c72d35ad1f84fe9ec7c00",
+    "http-final.log.gz": "47a016864d2c56fd98b01bdf055727e99f5d4c743e2a170e66e0e92742acc7d6",
+    "http-summary.json": "2841ae0765330f5e9a7700aeeb8c6a3c6110b57d6f31e86deb30192c8f7d2d1c",
+    "http-tests.json": "8eebae9585f6ea8a681402e621f12203e0bb97711c2ba2dd754726e8985a0a5c",
+    "http-type-red.log.gz": "2628779a9086c7f60e0237ca7b94aec6f494e2bf87299788220d02dfe7e7dcfe",
+    "ios-typecheck.log.gz": "dcd166f335584cc847c8c5e413dda4836220f87007f5583f77375f7288bf2393",
+    "markdown-lint.log.gz": "09383ac9326bed429991fb410e8158bc2f06ccdf9c26eefff37ca276daaee349",
+    "midnight-red.log.gz": "5b8cd02507d35bd2abd666bbcd61efe498914b409a068f542f78d2e789838a65",
+    "skipped-day-red.log.gz": "628348ce036f7986d724752eb4a102599049093f6c68581b4f43c383e3531e9b",
+    "swift-lint.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "timed-red.log.gz": "0e4acfce387ae120acb87fa845379af06594205e39310ed4a9bb6b8ac9e97fb5"
+  },
+  "remaining": [
+    "Native date-window consumer integration",
+    "Storage work/latency/memory and generation retention measurements",
+    "Account/dataset transitions",
+    "Q80 and Day/Week/Month native layouts",
+    "Physical sync/recovery/Share",
+    "Whole-app UI polish"
+  ]
+}

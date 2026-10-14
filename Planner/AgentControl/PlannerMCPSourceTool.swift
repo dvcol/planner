@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_read",
       description:
-        "Read an Item, List, Itinerary, Category, Tag or Schedule source, an exact List/direct/expanded itinerary appearance, or a generation-bound row window from the local Planner prototype.",
+        "Read an Item, List, Itinerary, Category, Tag or Schedule source, an exact List/direct/expanded itinerary appearance, or a generation-bound row window from the local Planner prototype. calendarRows returns Schedule identities, live owner identities/titles and saved forms from a Calendar query generation.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("request")]),
@@ -51,7 +51,10 @@
                   .string("kind"), .string("generation"), .string("offset"), .string("limit"),
                 ]),
                 "properties": .object([
-                  "kind": .object(["type": .string("string"), "const": .string("rows")]),
+                  "kind": .object([
+                    "type": .string("string"),
+                    "enum": .array([.string("rows"), .string("calendarRows")]),
+                  ]),
                   "generation": .object(["type": .string("string"), "format": .string("uuid")]),
                   "offset": .object([
                     "type": .string("string"), "pattern": .string("^(0|[1-9][0-9]*)$"),
@@ -107,6 +110,8 @@
           ])
         case .rows(let window):
           structured = PlannerMCPRowValue.window(window)
+        case .calendarRows(let window):
+          structured = PlannerMCPRowValue.calendarWindow(window)
         case .failed(let reason):
           return failure(reason)
         case .source(.schedule(let read)):
@@ -187,9 +192,15 @@
         return .source(
           PlannerEntityReference(
             kind: sourceKind, id: try identifier(source["id"], path: "/request/source/id")))
-      case .string("rows"):
+      case .string("rows"), .string("calendarRows"):
         let request = try object(
           value, keys: ["kind", "generation", "offset", "limit"], path: "/request")
+        if request["kind"] == .string("calendarRows") {
+          return .calendarRows(
+            generation: try identifier(request["generation"], path: "/request/generation"),
+            offset: try count(request["offset"], minimum: 0, path: "/request/offset"),
+            limit: try count(request["limit"], minimum: 1, path: "/request/limit"))
+        }
         return .rows(
           generation: try identifier(request["generation"], path: "/request/generation"),
           offset: try count(request["offset"], minimum: 0, path: "/request/offset"),
@@ -197,7 +208,7 @@
       default:
         throw AdmissionFailure(
           code: "invalidInput", path: "/request/kind",
-          message: "Expected source, appearance or rows.")
+          message: "Expected source, appearance, rows or calendarRows.")
       }
     }
 

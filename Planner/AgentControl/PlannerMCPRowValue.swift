@@ -3,6 +3,29 @@
   import PlannerCore
 
   enum PlannerMCPRowValue {
+    static func calendarWindow(_ window: PlannerCalendarRowWindow) -> Value {
+      .object([
+        "formatVersion": .int(1), "kind": .string("calendarRows"),
+        "generation": .string(window.generation.uuidString),
+        "offset": .string(String(window.offset)),
+        "matchingCount": .string(String(window.matchingCount)),
+        "rows": .array(
+          window.rows.map { entry in
+            .object([
+              "schedule": .object([
+                "kind": .string(entry.schedule.kind.rawValue),
+                "id": .string(entry.schedule.id.uuidString),
+              ]),
+              "source": .object([
+                "kind": .string(entry.source.kind.rawValue),
+                "id": .string(entry.source.id.uuidString),
+              ]),
+              "title": .string(entry.title), "form": scheduleForm(entry.form),
+            ])
+          }),
+      ])
+    }
+
     static func presentation(_ context: PlannerRowPresentationContext) -> Value {
       .object([
         "referenceInstant": .double(context.referenceInstant.timeIntervalSinceReferenceDate),

@@ -8,7 +8,7 @@ Calendar currently loads the whole Schedule catalog and reads each Schedule form
 
 Q81 accepts the shared Core capability. The [Calendar readiness gate](container-estimates-and-calendar.md#definition-of-ready) still requires its separate public contract step. The end state is one typed query shared by native and agent clients, followed by generation-bound pages containing the exact Schedule and live owner information needed to render the visible period. Storage fetch counts and performance require execution evidence.
 
-## Proposed public values
+## Public values
 
 Add `calendar(PlannerCalendarQuery)` to the existing native query request and its `planner_query` encoding. The query contains `startDay` and `endDay` as Gregorian `PlannerCivilDate` values, both inclusive, and `displayTimeZone` as a valid Foundation timezone identifier. Invalid dates, an end before the start, and invalid zones fail before publishing a snapshot. Clients request the period they actually display; changing the display zone changes timed bucketing, never saved instants or all-day dates.
 
@@ -18,7 +18,7 @@ Paging follows the existing nonnegative-offset/positive-limit contract without a
 
 Include every retained Schedule with a valid live owner, including archived owners. Archive alone does not delete a Schedule. Deleted or unresolved owners never become invented entries; unresolved data fails the read rather than silently claiming a complete calendar. Query and page operations perform no domain writes, provider lookup or system Calendar access.
 
-## Proposed date matching
+## Date matching
 
 Convert the selected civil-date window into its local start-of-first-day and start-of-day-after-last-day instants using the display zone and calendar arithmetic, without assuming 86,400 seconds per day.
 

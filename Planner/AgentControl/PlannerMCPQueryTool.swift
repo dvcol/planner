@@ -4,6 +4,28 @@
   import PlannerCore
 
   enum PlannerMCPQueryTool {
+    private static let civilDateSchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("year"), .string("month"), .string("day")]),
+      "properties": .object([
+        "year": .object(["type": .string("integer")]),
+        "month": .object(["type": .string("integer")]),
+        "day": .object(["type": .string("integer")]),
+      ]),
+    ])
+
+    private static let calendarQuerySchema = Value.object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([
+        .string("kind"), .string("startDay"), .string("endDay"), .string("displayTimeZone"),
+      ]),
+      "properties": .object([
+        "kind": .object(["type": .string("string"), "const": .string("calendar")]),
+        "startDay": civilDateSchema, "endDay": civilDateSchema,
+        "displayTimeZone": .object(["type": .string("string")]),
+      ]),
+    ])
+
     private static let itemQuerySchema: Value = .object([
       "type": .string("object"), "additionalProperties": .bool(false),
       "required": .array([.string("kind"), .string("scope")]),
@@ -175,7 +197,7 @@
     static let definition = Tool(
       name: "planner_query",
       description:
-        "Discover Item or exact List/Itinerary appearance identities, List/Itinerary title catalogs, shared labels and source-bound Schedule identities in the local Planner prototype. Schedule catalogs require empty text and archive all; their order is UUID ascending. Filters narrow cumulatively; contextual progress includes hidden/archived appearances. Explicit ascending Manual preserves saved List/Itinerary order; omitted sort is alphabetical. Read rows through their issued generation.",
+        "Discover Item or exact List/Itinerary appearance identities, List/Itinerary title catalogs, shared labels and source-bound Schedule identities in the local Planner prototype. Calendar queries use inclusive Gregorian days and a display timezone, returning matching Schedule identities in UUID order; read their forms/live owners with calendarRows. Schedule catalogs require empty text and archive all; their order is UUID ascending. Filters narrow cumulatively; contextual progress includes hidden/archived appearances. Explicit ascending Manual preserves saved List/Itinerary order; omitted sort is alphabetical. Read rows through their issued generation.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("query")]),
@@ -184,7 +206,7 @@
           "query": .object([
             "oneOf": .array([
               itemQuerySchema, catalogQuerySchema, labelCatalogQuerySchema,
-              scheduleCatalogQuerySchema,
+              scheduleCatalogQuerySchema, calendarQuerySchema,
             ])
           ]),
         ]),
@@ -238,6 +260,21 @@
     }
 
     private static func queryRequest(_ value: Value?) throws -> PlannerQueryRequest {
+      if case .object(let fields) = value, fields["kind"] == .string("calendar") {
+        let query = try object(
+          value, allowed: ["kind", "startDay", "endDay", "displayTimeZone"],
+          required: ["kind", "startDay", "endDay", "displayTimeZone"], path: "/query")
+        guard case .string(let timeZone) = query["displayTimeZone"] else {
+          throw AdmissionFailure(
+            code: "invalidInput", path: "/query/displayTimeZone",
+            message: "Expected a display timezone String.")
+        }
+        return .calendar(
+          .init(
+            startDay: try civilDate(query["startDay"], path: "/query/startDay"),
+            endDay: try civilDate(query["endDay"], path: "/query/endDay"),
+            displayTimeZone: timeZone))
+      }
       let query = try object(
         value,
         allowed: [
@@ -250,7 +287,8 @@
       }
       guard query["kind"] == .string("items") else {
         throw AdmissionFailure(
-          code: "invalidInput", path: "/query/kind", message: "Expected items or catalog.")
+          code: "invalidInput", path: "/query/kind", message: "Expected items, catalog or calendar."
+        )
       }
       if query["sourceKind"] != nil {
         throw AdmissionFailure(
@@ -507,6 +545,20 @@
       return PlannerRowPresentationContext(
         referenceInstant: Date(timeIntervalSinceReferenceDate: referenceInstant),
         displayTimeZone: displayTimeZone)
+    }
+
+    private static func civilDate(_ value: Value?, path: String) throws -> PlannerCivilDate {
+      let fields = try object(
+        value, allowed: ["year", "month", "day"], required: ["year", "month", "day"], path: path)
+      func component(_ name: String) throws -> Int {
+        guard case .int(let number) = fields[name] else {
+          throw AdmissionFailure(
+            code: "invalidInput", path: path + "/" + name,
+            message: "Expected an integer Gregorian component.")
+        }
+        return number
+      }
+      return try .init(year: component("year"), month: component("month"), day: component("day"))
     }
 
     private static func object(
