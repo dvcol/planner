@@ -1,0 +1,123 @@
+{
+  "devices": [
+    {
+      "architecture": "arm64",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "modelName": "iPhone 18 Pro",
+      "osBuildNumber": "24A434",
+      "osVersion": "27.0",
+      "platform": "iOS Simulator"
+    }
+  ],
+  "testNodes": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "duration": "1m 15s",
+                  "durationInSeconds": 75.09789204597473,
+                  "name": "testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+                  "nodeIdentifier": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "55s",
+                  "durationInSeconds": 55.66778492927551,
+                  "name": "testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+                  "nodeIdentifier": "SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "SavedCalendarDisplayZoneJourneyTests",
+              "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "50s",
+                  "durationInSeconds": 50.56287503242493,
+                  "name": "testAllDaySpanStaysVisibleAboveAlignedWeekHours()",
+                  "nodeIdentifier": "SavedCalendarModesJourneyTests/testAllDaySpanStaysVisibleAboveAlignedWeekHours()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests/testAllDaySpanStaysVisibleAboveAlignedWeekHours",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "54s",
+                  "durationInSeconds": 54.682950019836426,
+                  "name": "testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt()",
+                  "nodeIdentifier": "SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "1m 49s",
+                  "durationInSeconds": 109.30229890346527,
+                  "name": "testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+                  "nodeIdentifier": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "55s",
+                  "durationInSeconds": 55.46407401561737,
+                  "name": "testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()",
+                  "nodeIdentifier": "SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "SavedCalendarModesJourneyTests",
+              "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "28s",
+                  "durationInSeconds": 28.157703042030334,
+                  "name": "testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity()",
+                  "nodeIdentifier": "SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "SavedCalendarMonthJourneyTests",
+              "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarMonthJourneyTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            }
+          ],
+          "name": "PlannerNavigationUITests",
+          "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests",
+          "nodeType": "UI test bundle",
+          "result": "Passed"
+        }
+      ],
+      "name": "PlannerNavigation",
+      "nodeType": "Test Plan",
+      "result": "Passed"
+    }
+  ],
+  "testPlanConfigurations": [
+    {
+      "configurationId": "1",
+      "configurationName": "Test Scheme Action"
+    }
+  ]
+}

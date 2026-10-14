@@ -1,0 +1,96 @@
+{
+  "devices": [
+    {
+      "architecture": "arm64",
+      "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName": "iPhone 18 Pro",
+      "modelName": "iPhone 18 Pro",
+      "osBuildNumber": "24A434",
+      "osVersion": "27.0",
+      "platform": "iOS Simulator"
+    }
+  ],
+  "testNodes": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "duration": "1m 13s",
+                  "durationInSeconds": 73.1214040517807,
+                  "name": "testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+                  "nodeIdentifier": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "56s",
+                  "durationInSeconds": 56.29586398601532,
+                  "name": "testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+                  "nodeIdentifier": "SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "SavedCalendarDisplayZoneJourneyTests",
+              "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "1m 16s",
+                  "durationInSeconds": 76.1076979637146,
+                  "name": "testPlanningTimeZoneSelectionStagesCancelAndPreservesInstantAfterRelaunch()",
+                  "nodeIdentifier": "SavedItemJourneyTests/testPlanningTimeZoneSelectionStagesCancelAndPreservesInstantAfterRelaunch()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItemJourneyTests/testPlanningTimeZoneSelectionStagesCancelAndPreservesInstantAfterRelaunch",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "SavedItemJourneyTests",
+              "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItemJourneyTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "1m 20s",
+                  "durationInSeconds": 80.00691401958466,
+                  "name": "testItineraryPlanningTimeZoneSelectionPreservesInstantAndOwnerAfterCancelAndRelaunch()",
+                  "nodeIdentifier": "SavedItineraryJourneyTests/testItineraryPlanningTimeZoneSelectionPreservesInstantAndOwnerAfterCancelAndRelaunch()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItineraryJourneyTests/testItineraryPlanningTimeZoneSelectionPreservesInstantAndOwnerAfterCancelAndRelaunch",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "SavedItineraryJourneyTests",
+              "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItineraryJourneyTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            }
+          ],
+          "name": "PlannerNavigationUITests",
+          "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests",
+          "nodeType": "UI test bundle",
+          "result": "Passed"
+        }
+      ],
+      "name": "PlannerNavigation",
+      "nodeType": "Test Plan",
+      "result": "Passed"
+    }
+  ],
+  "testPlanConfigurations": [
+    {
+      "configurationId": "1",
+      "configurationName": "Test Scheme Action"
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "devices": [
+    {
+      "architecture": "arm64",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "modelName": "iPad Air 11-inch (M4)",
+      "osBuildNumber": "24A434",
+      "osVersion": "27.0",
+      "platform": "iOS Simulator"
+    }
+  ],
+  "testNodes": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "name": "Failed to tap \"saved.calendar.zone.choose\" Button: No matches found for Elements matching predicate '\"saved.calendar.zone.choose\" IN identifiers' from input {(\n    Button, label: 'Sheet Grabber', value: Half screen,\n    Button, identifier: 'list.bullet', label: 'Lists',\n    Button, identifier: 'square.stack', label: 'Items',\n    Button, identifier: 'tray', label: 'Inbox',\n    Button, identifier: 'calendar', label: 'Calendar', Selected,\n    Button, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries',\n    Button, identifier: 'list.bullet', label: 'Lists',\n    Button, identifier: 'square.stack', label: 'Items',\n    Button, identifier: 'tray', label: 'Inbox',\n    Button, identifier: 'calendar', label: 'Calendar', Selected,\n    Button, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries',\n    Button, identifier: 'saved.calendar.zone.done', label: 'Done',\n    Button, identifier: 'saved.calendar.zone.open', label: 'Display Time Zone',\n    Button, label: 'Today',\n    Button, identifier: 'saved.calendar.details.toggle', label: 'Show Details', Disabled,\n    Button, label: 'Day',\n    Button, label: 'Week',\n    Button, label: 'Month', Selected,\n    Button, identifier: 'saved.calendar.schedule.C93D66BB-2AB6-46C5-BB6A-577E8D522AB7', label: 'Civil-date museum', value: All day \u00b7 15 Oct 2...,\n    Button, label: 'Month', value: October 2026,\n    Button, identifier: 'DatePicker.PreviousMonth', label: 'Previous Month',\n    Button, identifier: 'DatePicker.NextMonth', label: 'Next Month',\n    Button, identifier: 'DatePicker.Show', label: 'Show year picker', value: October 2026,\n    Button, label: 'Thursday 1 October',\n    Button, label: 'Friday 2 October',\n    Button, label: 'Saturday 3 October',\n    Button, label: 'Sunday 4 October',\n    Button, label: 'Monday 5 October',\n    Button, label: 'Tuesday 6 October',\n    Button, label: 'Wednesday 7 October',\n    Button, label: 'Thursday 8 October',\n    Button, label: 'Friday 9 October',\n    Button, label: 'Saturday 10 October',\n    Button, label: 'Sunday 11 October',\n    Button, label: 'Monday 12 October',\n    Button, label: 'Tuesday 13 October',\n    Button, label: 'Wednesday 14 October',\n    Button, label: 'Today, Thursday 15 October', value: 1 scheduled entry, Selected,\n    Button, label: 'Friday 16 October',\n    Button, label: 'Saturday 17 October',\n    Button, label: 'Sunday 18 October',\n    Button, label: 'Monday 19 October',\n    Button, label: 'Tuesday 20 October',\n    Button, label: 'Wednesday 21 October',\n    Button, label: 'Thursday 22 October',\n    Button, label: 'Friday 23 October',\n    Button, label: 'Saturday 24 October',\n    Button, label: 'Sunday 25 October',\n    Button, label: 'Monday 26 October',\n    Button, label: 'Tuesday 27 October',\n    Button, label: 'Wednesday 28 October',\n    Button, label: 'Thursday 29 October',\n    Button, label: 'Friday 30 October',\n    Button, label: 'Saturday 31 October'\n)}\nPossibly caused by runtime issues:\nAutomation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 75;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeTraits\" = 146297323520;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 75;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UICalendarDateViewCell\";\n    \"XC_kAXXCAttributeElementType\" = \"_UICalendarDateViewCell\";\n    \"XC_kAXXCAttributeTraits\" = 146028888065;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 75;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UICalendarDateViewCell\";\n    \"XC_kAXXCAttributeElementType\" = \"_UICalendarDateViewCell\";\n    \"XC_kAXXCAttributeTraits\" = 146028888073;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Other from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 0;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeTraits\" = 8858370048;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 75;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeTraits\" = 146297323528;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Other from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 0;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeTraits\" = 8858370056;\n}\nSee test report attachments for more detail.",
+                      "nodeType": "Failure Message",
+                      "sourceLocation": {
+                        "filePath": "/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/NativeNavigationElements.swift",
+                        "lineNumber": 289
+                      }
+                    }
+                  ],
+                  "duration": "38s",
+                  "durationInSeconds": 38.14965498447418,
+                  "name": "testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+                  "nodeIdentifier": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone",
+                  "nodeType": "Test Case",
+                  "result": "Failed"
+                },
+                {
+                  "children": [
+                    {
+                      "name": "Failed to tap \"saved.calendar.zone.choose\" Button: No matches found for Elements matching predicate '\"saved.calendar.zone.choose\" IN identifiers' from input {(\n    Button, label: 'Sheet Grabber', value: Half screen,\n    Button, identifier: 'list.bullet', label: 'Lists',\n    Button, identifier: 'square.stack', label: 'Items',\n    Button, identifier: 'tray', label: 'Inbox',\n    Button, identifier: 'calendar', label: 'Calendar', Selected,\n    Button, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries',\n    Button, identifier: 'list.bullet', label: 'Lists',\n    Button, identifier: 'square.stack', label: 'Items',\n    Button, identifier: 'tray', label: 'Inbox',\n    Button, identifier: 'calendar', label: 'Calendar', Selected,\n    Button, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries',\n    Button, identifier: 'saved.calendar.zone.done', label: 'Done',\n    Button, identifier: 'saved.calendar.zone.open', label: 'Display Time Zone',\n    Button, label: 'Today',\n    Button, identifier: 'saved.calendar.details.toggle', label: 'Show Details', Disabled,\n    Button, label: 'Day',\n    Button, label: 'Week',\n    Button, label: 'Month', Selected,\n    Button, identifier: 'saved.calendar.schedule.C198207D-FA18-48C2-AA64-D25CD7CD4E36', label: 'Travelling museum', value: Start only \u00b7 15 Oc...,\n    Button, label: 'Month', value: October 2026,\n    Button, identifier: 'DatePicker.PreviousMonth', label: 'Previous Month',\n    Button, identifier: 'DatePicker.NextMonth', label: 'Next Month',\n    Button, identifier: 'DatePicker.Show', label: 'Show year picker', value: October 2026,\n    Button, label: 'Thursday 1 October',\n    Button, label: 'Friday 2 October',\n    Button, label: 'Saturday 3 October',\n    Button, label: 'Sunday 4 October',\n    Button, label: 'Monday 5 October',\n    Button, label: 'Tuesday 6 October',\n    Button, label: 'Wednesday 7 October',\n    Button, label: 'Thursday 8 October',\n    Button, label: 'Friday 9 October',\n    Button, label: 'Saturday 10 October',\n    Button, label: 'Sunday 11 October',\n    Button, label: 'Monday 12 October',\n    Button, label: 'Tuesday 13 October',\n    Button, label: 'Wednesday 14 October',\n    Button, label: 'Today, Thursday 15 October', value: 1 scheduled entry, Selected,\n    Button, label: 'Friday 16 October',\n    Button, label: 'Saturday 17 October',\n    Button, label: 'Sunday 18 October',\n    Button, label: 'Monday 19 October',\n    Button, label: 'Tuesday 20 October',\n    Button, label: 'Wednesday 21 October',\n    Button, label: 'Thursday 22 October',\n    Button, label: 'Friday 23 October',\n    Button, label: 'Saturday 24 October',\n    Button, label: 'Sunday 25 October',\n    Button, label: 'Monday 26 October',\n    Button, label: 'Tuesday 27 October',\n    Button, label: 'Wednesday 28 October',\n    Button, label: 'Thursday 29 October',\n    Button, label: 'Friday 30 October',\n    Button, label: 'Saturday 31 October'\n)}\nPossibly caused by runtime issues:\nAutomation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 75;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeTraits\" = 146297323520;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 75;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UICalendarDateViewCell\";\n    \"XC_kAXXCAttributeElementType\" = \"_UICalendarDateViewCell\";\n    \"XC_kAXXCAttributeTraits\" = 146028888065;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 75;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UICalendarDateViewCell\";\n    \"XC_kAXXCAttributeElementType\" = \"_UICalendarDateViewCell\";\n    \"XC_kAXXCAttributeTraits\" = 146028888073;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Other from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 0;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeTraits\" = 8858370048;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 75;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeTraits\" = 146297323528;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Other from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 0;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeTraits\" = 8858370056;\n}\nSee test report attachments for more detail.",
+                      "nodeType": "Failure Message",
+                      "sourceLocation": {
+                        "filePath": "/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/NativeNavigationElements.swift",
+                        "lineNumber": 289
+                      }
+                    }
+                  ],
+                  "duration": "33s",
+                  "durationInSeconds": 33.6652569770813,
+                  "name": "testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+                  "nodeIdentifier": "SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule",
+                  "nodeType": "Test Case",
+                  "result": "Failed"
+                }
+              ],
+              "name": "SavedCalendarDisplayZoneJourneyTests",
+              "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests",
+              "nodeType": "Test Suite",
+              "result": "Failed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "42s",
+                  "durationInSeconds": 42.68893599510193,
+                  "name": "testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+                  "nodeIdentifier": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "SavedCalendarInspectorJourneyTests",
+              "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarInspectorJourneyTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "58s",
+                  "durationInSeconds": 58.8689569234848,
+                  "name": "testAllDaySpanStaysVisibleAboveAlignedWeekHours()",
+                  "nodeIdentifier": "SavedCalendarModesJourneyTests/testAllDaySpanStaysVisibleAboveAlignedWeekHours()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests/testAllDaySpanStaysVisibleAboveAlignedWeekHours",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "55s",
+                  "durationInSeconds": 55.36018991470337,
+                  "name": "testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt()",
+                  "nodeIdentifier": "SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "1m 45s",
+                  "durationInSeconds": 105.6853129863739,
+                  "name": "testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+                  "nodeIdentifier": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                },
+                {
+                  "duration": "58s",
+                  "durationInSeconds": 58.260022044181824,
+                  "name": "testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()",
+                  "nodeIdentifier": "SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "SavedCalendarModesJourneyTests",
+              "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarModesJourneyTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            },
+            {
+              "children": [
+                {
+                  "duration": "28s",
+                  "durationInSeconds": 28.335301995277405,
+                  "name": "testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity()",
+                  "nodeIdentifier": "SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity",
+                  "nodeType": "Test Case",
+                  "result": "Passed"
+                }
+              ],
+              "name": "SavedCalendarMonthJourneyTests",
+              "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarMonthJourneyTests",
+              "nodeType": "Test Suite",
+              "result": "Passed"
+            }
+          ],
+          "name": "PlannerNavigationUITests",
+          "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests",
+          "nodeType": "UI test bundle",
+          "result": "Failed"
+        }
+      ],
+      "name": "PlannerNavigation",
+      "nodeType": "Test Plan",
+      "result": "Failed"
+    }
+  ],
+  "testPlanConfigurations": [
+    {
+      "configurationId": "1",
+      "configurationName": "Test Scheme Action"
+    }
+  ]
+}

@@ -1,0 +1,740 @@
+{
+  "baseCommit": "18a8fdb",
+  "scope": "Native per-device Calendar display-zone override and saved form preservation",
+  "qualified": {
+    "phone": {
+      "uniqueFunctions": 9,
+      "qualificationRuns": 2,
+      "finalTimeZoneFunctions": 2,
+      "skips": 0
+    },
+    "tablet": {
+      "uniqueFunctions": 10,
+      "qualificationRuns": 3,
+      "finalTimeZoneFunctions": 2,
+      "skips": 0
+    },
+    "Mac": {
+      "appBuild": "passed",
+      "testHostBuild": "passed",
+      "runtimeJourneysThisSlice": 0
+    },
+    "strictSwiftLintFiles": 4,
+    "markdownLintDocuments": 1
+  },
+  "notes": [
+    "Calendar regressions preceded the settings presentation and shared search correction. Their ordinary Month/inspector/Day/Week paths remain unchanged. The two final timezone and two shared Item/Itinerary planning-zone functions qualify the affected controls on both devices.",
+    "Tablet medium-sheet Toggle interaction failed. Whole-row activation, frame removal and view-identity changes did not fix it. Default native Form presentation allowed the Toggle; active search then hid Done after popping. The final searched child invokes dismissSearch before dismissal.",
+    "Temporary logging and visible diagnostics were removed. The speculative view-identity change was reverted. An earlier PhoneSizing run was interrupted and supplies no qualification."
+  ],
+  "remainingGates": [
+    "Mac runtime",
+    "Week short/long-day alignment and repeated local hours",
+    "Physical travel, keyboard/VoiceOver/Dynamic Type and responsive layouts",
+    "Storage-scale performance, physical sync/account/recovery/Share and whole-app polish"
+  ],
+  "buildLog": {
+    "original": "/private/tmp/PlannerCalendarDisplayZoneMacSearch.log",
+    "originalSha256": "7e86188eb3df8bbc9341d816c096f72ccecc95ad6d966c21176341409d03171e"
+  },
+  "sourceHashes": [
+    {
+      "path": "Planner/Scenes/SavedCalendarView.swift",
+      "sha256": "bf6d335eb563bd12d4e61a4cd1aa33306e4dcbecfdb442e5e11394757745e4df"
+    },
+    {
+      "path": "Planner/Scenes/SavedCalendarDisplayZoneSettings.swift",
+      "sha256": "c3c00803efa7b63254cc9adb7e962df1a409f251e7914a068fe1b41d2ad82552"
+    },
+    {
+      "path": "Planner/Scenes/SavedPlanningTimeZonePicker.swift",
+      "sha256": "f5988de17bf331b245ebe8ecff05c8342f8ac519da4897506763247141913999"
+    },
+    {
+      "path": "PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests.swift",
+      "sha256": "007f2d3f11c471bcb218b5021c1404e342c2d7d9e44b4582f791fffb75b4becd"
+    },
+    {
+      "path": "docs/prototypes/native-calendar-display-zone.md",
+      "sha256": "72b8ac06e0ef9cde868ac8fe14b0f957767b8649f1a03d7dbef0de5dc168b7a4"
+    }
+  ],
+  "productHashes": [
+    {
+      "path": "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner",
+      "sha256": "2d2d27a032ebb21e31a0941e03e3862b409ae545274c10edb59ec22a5daea53e"
+    },
+    {
+      "path": "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib",
+      "sha256": "925632855bb604732b8ba7300d70a78557042dc7b973263dd7d4db0a8d5edd3e"
+    },
+    {
+      "path": "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests",
+      "sha256": "82903a83a8ad6b7356769a61755d874cf46f053e793b70a17d9162eebfdb7a02"
+    },
+    {
+      "path": "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner",
+      "sha256": "e6f540414489754d2dcaf1af64a0bcbb2951a58bb2d85fcf1595226f15769cba"
+    },
+    {
+      "path": "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib",
+      "sha256": "0aa91ce9ab8a111462a37d86496791dadb97a1c6f3606c2837e22603663e8acc"
+    },
+    {
+      "path": "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests",
+      "sha256": "f2cfc132a8811453d69e0764c08ec62174156fabfa0b76d0c03e0507a29a7c64"
+    }
+  ],
+  "runs": [
+    {
+      "label": "Red",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZoneRed.xcresult",
+      "originalLogSha256": "6a9bd15dd4c05993370150cd87445a42ed4cee30feaef130e9a1babc7bab1340",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "TimedGreen",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZoneGreen.xcresult",
+      "originalLogSha256": "276a19da0d523a1ec70228f593a19a67d018df3cce628a23b9858f21b920d1e3",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "CivilGreen",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZoneCivil.xcresult",
+      "originalLogSha256": "37e2fb26d30f30c88d022910a62c27f86d87b33d2ad8557e316a5f0551b00ad7",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "PhoneCalendarRegression",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZonePhoneFinal.xcresult",
+      "originalLogSha256": "5c9b58e9254bdb38f4e674dfa836503eac4d3674a7e131f6d95abb6a9e835e36",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 7,
+        "passedTests": 7,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testAllDaySpanStaysVisibleAboveAlignedWeekHours()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "TabletCalendarRegression",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZoneTabletFinal.xcresult",
+      "originalLogSha256": "66816623971ce2c00ca4c0ce9fed41f8484edc23b65849443071af4bf0ca9b91",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 8,
+        "passedTests": 6,
+        "failedTests": 2,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+          "result": "Failed"
+        },
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+          "result": "Failed"
+        },
+        {
+          "identity": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testAllDaySpanStaysVisibleAboveAlignedWeekHours()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "PhoneRowToggleFailed",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZonePhoneToggle.xcresult",
+      "originalLogSha256": "00f318519eb65ae3812d70b5b597badeac3feaa42f8a48fad8c2dc93c2b86b59",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 2,
+        "passedTests": 0,
+        "failedTests": 2,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+          "result": "Failed"
+        },
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "TabletRowToggleFailed",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZoneTabletToggle.xcresult",
+      "originalLogSha256": "4fa9dbe91787227a6f1a2399aaad94260c052aaa707d29d93a901d1d6b1ab6e2",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 2,
+        "passedTests": 0,
+        "failedTests": 2,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+          "result": "Failed"
+        },
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "TabletLogDiagnosticFailed",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZoneTabletDiagnostic.xcresult",
+      "originalLogSha256": "00e6dfe93ca8d9da24e18c4cd0ed74dffeece61b936f47d349c7ec1f3dbe49b7",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "TabletSizingFailed",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZoneTabletSizing.xcresult",
+      "originalLogSha256": "ad99b96334818bf3d438c2cf7b85abbb3015c9cff900f30b2b4f0685538e4d26",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 2,
+        "passedTests": 0,
+        "failedTests": 2,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+          "result": "Failed"
+        },
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "TabletVisibleDiagnosticFailed",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZoneTabletVisibleDiagnostic.xcresult",
+      "originalLogSha256": "a758a3be40c70f158ca8c4b81825a728fc8b08f034adc0567714b55f2bf533d6",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "TabletCallbackDiagnosticFailed",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZoneTabletCallback.xcresult",
+      "originalLogSha256": "534619ca3015ab64da5000726eddb5c32e50bb914d5a2c3634633e90e9685006",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "TabletIdentityFailed",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZoneTabletIdentity.xcresult",
+      "originalLogSha256": "1e50f0e40f20b739bbdf2ef22f111532ef8f924bf9e8bcd3417e8fb4659688f1",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "TabletNativeSheetSearchFailed",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZoneTabletNativeSheet.xcresult",
+      "originalLogSha256": "07184d25891a78b30af913ca63ea1bc96335d1677e91dfc30b0cf2362304796c",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "PhoneNativeSheetPassed",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZonePhoneQualified.xcresult",
+      "originalLogSha256": "fc536d4eb7922dba2d38ffcf1ce77fe707878dc2640ba1c127561a6449975b78",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 2,
+        "passedTests": 2,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "PhoneFinal",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZonePhoneSearch.xcresult",
+      "originalLogSha256": "5724a7fa73b55e59414449e82806bb669bd12a7f35e3f125bd92266468ade47d",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 4,
+        "passedTests": 4,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedItemJourneyTests/testPlanningTimeZoneSelectionStagesCancelAndPreservesInstantAfterRelaunch()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedItineraryJourneyTests/testItineraryPlanningTimeZoneSelectionPreservesInstantAndOwnerAfterCancelAndRelaunch()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "TabletFinal",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZoneTabletSearch.xcresult",
+      "originalLogSha256": "bb6643f38fdb223481c0e26f29c4dec05d164159a6dc81bc536732e0e5c6df39",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 2,
+        "passedTests": 2,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "TabletPlanningFinal",
+      "bundle": "/private/tmp/PlannerCalendarDisplayZoneTabletPlanning.xcresult",
+      "originalLogSha256": "c633bb7c249af1d53bdc49f699dcf3603bc79165fe6107b057f0a74a2625c480",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 2,
+        "passedTests": 2,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedItemJourneyTests/testPlanningTimeZoneSelectionStagesCancelAndPreservesInstantAfterRelaunch()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedItineraryJourneyTests/testItineraryPlanningTimeZoneSelectionPreservesInstantAndOwnerAfterCancelAndRelaunch()",
+          "result": "Passed"
+        }
+      ]
+    }
+  ],
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/phone-civil-date.png",
+      "original": "/private/tmp/PlannerCalendarDisplayZonePhoneSearchAttachments/E9B35E4D-2978-4E2F-8BB1-9F7231218B01.png",
+      "sha256": "52e409ab4cec511a6129a9835a395291503b4b10e5d6a0f8891b34145117a4b6",
+      "journey": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+      "name": "All-day civil date stays fixed across Calendar display zones_0_CDDDFDC4-6FB4-44D2-932B-E8689F4F6664.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/phone-timed-override.png",
+      "original": "/private/tmp/PlannerCalendarDisplayZonePhoneSearchAttachments/6A57C205-DB53-4D68-9B5C-4190D4A15538.png",
+      "sha256": "ab2f0247a1aa72de3fcd3645cf1ff96a39ee978dedef7c428f8a54c78ed016f0",
+      "journey": "SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+      "name": "Native Calendar uses a local display time-zone override_0_28EA707A-B92D-43CE-8DA3-132D06340283.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/tablet-civil-date.png",
+      "original": "/private/tmp/PlannerCalendarDisplayZoneTabletSearchAttachments/BA92C76E-6646-4349-83BA-3E5E6232FAF8.png",
+      "sha256": "2bb9a48196ee74c196e691103048cf63da811d626df46bb606583fb8c47608c8",
+      "journey": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+      "name": "All-day civil date stays fixed across Calendar display zones_0_C5852602-2896-4FE5-9211-ACB40D26B4FC.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/tablet-timed-override.png",
+      "original": "/private/tmp/PlannerCalendarDisplayZoneTabletSearchAttachments/D671CB16-5078-4991-8354-DACAE5BE062C.png",
+      "sha256": "7684e83e87dd2948ea6b8ce0c8b7380a59294a597bca1f2842596180db145d48",
+      "journey": "SavedCalendarDisplayZoneJourneyTests/testDisplayZonePersistsWithoutChangingTheSavedStartOnlySchedule()",
+      "name": "Native Calendar uses a local display time-zone override_0_68B31056-8DDC-4828-B313-0D832A23DA75.png"
+    }
+  ],
+  "artifactHashes": [
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/CivilGreen.log.gz",
+      "sha256": "094429989f01b7fab45f97b64eb19367dead7e7e836c6424068ecc82d403c3e2"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/CivilGreen.summary.json",
+      "sha256": "a1488410d8768f277947a0f1faa490359d3e6ccc4d7838e87f00e03fd78a2cf5"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/CivilGreen.tests.json",
+      "sha256": "4b133a1b8f4502776cbbe1666275433cab43cb65f7d63cef3acf5fe7eb305627"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/PhoneCalendarRegression.log.gz",
+      "sha256": "c501b63a4bab5cc310d8d5321e295d0f6e8d6064c0eeeba67b65da0285f0097f"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/PhoneCalendarRegression.summary.json",
+      "sha256": "6ac0d894e3c6e5409646057084541cde9c76f3d67b44cbc0bf4c16f46730b403"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/PhoneCalendarRegression.tests.json",
+      "sha256": "371bf7b3b8bf3238cd2be9af99bf9d70f63d7f78470293695b7e00648e088820"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/PhoneFinal.log.gz",
+      "sha256": "6e6e583ac5705f31fcd2ae5e4c45b6e896852aedbd6389cfd27a969bd241ecc4"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/PhoneFinal.summary.json",
+      "sha256": "b96288e21e500341b701bed5ff7c9f228b0565f013c0ff9890b3db0fce637c7c"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/PhoneFinal.tests.json",
+      "sha256": "ecfc466e9c85079e1b8d66f1e4b674136e217a02e4ce86440b97c066cfd0fce1"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/PhoneNativeSheetPassed.log.gz",
+      "sha256": "b199215915706b0f5db863e203d9e949fbd592aa28b6df8181f438419da69ee9"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/PhoneNativeSheetPassed.summary.json",
+      "sha256": "91a9568b748eb37eb8c2672dc7808587ed8ceba2a38b10715465469c88f620c8"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/PhoneNativeSheetPassed.tests.json",
+      "sha256": "03ef84d8a3b024a6f4a2dc9b20bd7190cc66a2c6d0570e1ed62c1c9a1c6d8f11"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/PhoneRowToggleFailed.log.gz",
+      "sha256": "38c4b306ba322fda260283ead86781a1431817c4c6a0efcb14f91774f8266008"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/PhoneRowToggleFailed.summary.json",
+      "sha256": "04d25c5bd67174166eb6d75ca617863243cd04e717fd3754ee3a655328946fd9"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/PhoneRowToggleFailed.tests.json",
+      "sha256": "9773d79dbf7b53887cb1a24a5c56f14df563c84d9b6ad29756915a89f382f85b"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/Red.log.gz",
+      "sha256": "ff88cb942a64cb7b47520a18466a08569d59c9cba103e579e9b0d9902b068295"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/Red.summary.json",
+      "sha256": "bbbbd90e005542c3aaef5ca7f43e8b6ffa2092d844dcb00f0ef5d03b2c0475f0"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/Red.tests.json",
+      "sha256": "a6d78856c7606e85dd05542bd43497cdf26ccf5c022a3f0df2163cd82de8e6a2"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletCalendarRegression.log.gz",
+      "sha256": "ff28ead5cc88c04143c2c7c6021522807683c1de0161bb816e23b104c05733c1"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletCalendarRegression.summary.json",
+      "sha256": "3924ae8eb9f365e251f47d05fc765ae3e71d5fb0d33520dbd86446927cc8d7e0"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletCalendarRegression.tests.json",
+      "sha256": "e57f5b7aaf4c2309729d48294d292e53813987df3403ddc7f70a6c9dfa5724b0"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletCallbackDiagnosticFailed.log.gz",
+      "sha256": "a66004dc968724742036ee520ccd7cac5c936caf5ecab6e41d56bf5b83fdff02"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletCallbackDiagnosticFailed.summary.json",
+      "sha256": "ae9a1a236ebcb11c65309351405c0406c029456434784870ae2649d6db9bd1cd"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletCallbackDiagnosticFailed.tests.json",
+      "sha256": "080df79a8ed779387c69bec702c1bbe701b1085b276e11c75396f516ca6eb69a"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletFinal.log.gz",
+      "sha256": "936578cf8f99bfc0eecda805cdbae814d1d6d6bf9aadcbe0f629e969495d2b7d"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletFinal.summary.json",
+      "sha256": "67e5e592aca6e5441be9570eb7e3758a7cdd90c42f5b9b19b5d3d997c3af9af5"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletFinal.tests.json",
+      "sha256": "4c5f12e64a8772d10ddd7b7884d6b9dc0febc689e2da88c35a29ce7662d86c4b"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletIdentityFailed.log.gz",
+      "sha256": "fe6a3974c6b93fe950daf23d03b49b20f5b8f4ba023f59fa1ec708236d311c5a"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletIdentityFailed.summary.json",
+      "sha256": "dc41ca1dc754cbabd85c39220c12f4193a77b0d86be056b4670f826c8aaf4198"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletIdentityFailed.tests.json",
+      "sha256": "509099b0d0db0ecc2cb071f35aab6280f4fd3beb81fec5370dbd6eabd2c6b6a3"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletLogDiagnosticFailed.log.gz",
+      "sha256": "ebc98475ee3e94a373afd8a719d33dd81c442ee6a817478e552abbb68176ddcf"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletLogDiagnosticFailed.summary.json",
+      "sha256": "263c9a4c12447d5ecffeb5b7fb122c727bae72b3f05e64837a6faa8eca8b282b"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletLogDiagnosticFailed.tests.json",
+      "sha256": "51267e31f85b6038704c3b1237cb0750d15abe593c4b9365a879b17980b0d908"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletNativeSheetSearchFailed.log.gz",
+      "sha256": "ac74e6d8b060bd6021937bff4f53358eb612a4c43ce2e443b617ee5b3606c2d9"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletNativeSheetSearchFailed.summary.json",
+      "sha256": "b1ae23543b396abe71e21c60335a439ba2bca7addf1b9167f32d69584a5ba9c3"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletNativeSheetSearchFailed.tests.json",
+      "sha256": "3c697efb7b55c58b857a3320d49956f3663b90ec89a1b0218fa4d63e77fbf6d7"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletPlanningFinal.log.gz",
+      "sha256": "5e6efe575fa6099c703954c8e3291009e025686eeb07fa85ab2878d3adc925ef"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletPlanningFinal.summary.json",
+      "sha256": "254607d959ebfeb684d7a7f45c73e72dfd9bf3864d916738ab42862f07df0368"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletPlanningFinal.tests.json",
+      "sha256": "eb1d66b4c88ec9aa75f16de33e00a53d19da1c4b40de10acb55f24507e507dec"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletRowToggleFailed.log.gz",
+      "sha256": "f9c839e40f52ff85627906b737cbf4319a6cb29cc1a274f4a936a73155880d6f"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletRowToggleFailed.summary.json",
+      "sha256": "f388b27a5411dae7aaa505a8459c495202d7fd341cacea10cfe3dabe68a1c168"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletRowToggleFailed.tests.json",
+      "sha256": "72fb586f58fe0ddd123687a846510cc95b5c7c0a83a10c4feceeee1db7c931e1"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletSizingFailed.log.gz",
+      "sha256": "c7d250a469c077d99028c75f81a9e616c3c66ac3c45874e2e8b9c943d5ecb5b1"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletSizingFailed.summary.json",
+      "sha256": "d2263e58d13e56e6999630d3f2052dcd9ae2c18d73b57cb5061c48af053d3829"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletSizingFailed.tests.json",
+      "sha256": "f6e046e5b3a5b16642588bc3adaad9fa2dec4e5299852acfcfdb53681540c68a"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletVisibleDiagnosticFailed.log.gz",
+      "sha256": "1af0d6bb5f9d9c435eb3d777e2cce9f6de8d180ad6d77baa9742ec83f47afb84"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletVisibleDiagnosticFailed.summary.json",
+      "sha256": "a58519745854d623ec6f28a60891fe92244283481a8e4a3911bcb5c69f60f707"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TabletVisibleDiagnosticFailed.tests.json",
+      "sha256": "c11bf01b014592e43f828a7ab0aeeea8f080a5ddc4bf73c4a04594d1d754ba3d"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TimedGreen.log.gz",
+      "sha256": "4ef13875331d3bbe1bd3fae13971894d2356026981c90caab0fe9104245e0cc9"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TimedGreen.summary.json",
+      "sha256": "6befd742ae14366ab27eec376a1cdc79badd1e7163366d7ebad40fb5b193ed08"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/TimedGreen.tests.json",
+      "sha256": "9c053d5aac4611ff2d7b82e4a747f4f2ab3c0fbf587c0983e1cb55f29e732248"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/mac-build.log.gz",
+      "sha256": "6bcadd39488b9fcc0dbf503e22862c2c170cdf56cc862bfc382fc61a9376ad02"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/phone-civil-date.png",
+      "sha256": "52e409ab4cec511a6129a9835a395291503b4b10e5d6a0f8891b34145117a4b6"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/phone-timed-override.png",
+      "sha256": "ab2f0247a1aa72de3fcd3645cf1ff96a39ee978dedef7c428f8a54c78ed016f0"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/tablet-civil-date.png",
+      "sha256": "2bb9a48196ee74c196e691103048cf63da811d626df46bb606583fb8c47608c8"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-display-zone/tablet-timed-override.png",
+      "sha256": "7684e83e87dd2948ea6b8ce0c8b7380a59294a597bca1f2842596180db145d48"
+    }
+  ]
+}

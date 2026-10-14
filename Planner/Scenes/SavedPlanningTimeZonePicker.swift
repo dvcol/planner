@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct SavedPlanningTimeZonePicker: View {
-  @Environment(\.dismiss) private var dismiss
   @Binding var selectedTimeZoneIdentifier: String
   @State private var searchText = ""
 
@@ -9,21 +8,43 @@ struct SavedPlanningTimeZonePicker: View {
     let identifiers = Set(TimeZone.knownTimeZoneIdentifiers + [selectedTimeZoneIdentifier])
     return identifiers.filter { identifier in
       searchText.isEmpty || identifier.localizedStandardContains(searchText)
-        || timeZoneName(identifier).localizedStandardContains(searchText)
-        || locationName(identifier).localizedStandardContains(searchText)
+        || planningTimeZoneName(identifier).localizedStandardContains(searchText)
+        || planningTimeZoneLocationName(identifier).localizedStandardContains(searchText)
     }.sorted { $0.localizedStandardCompare($1) == .orderedAscending }
   }
 
   var body: some View {
-    List(matchingTimeZoneIdentifiers, id: \.self) { identifier in
+    SavedPlanningTimeZoneResults(
+      selectedTimeZoneIdentifier: $selectedTimeZoneIdentifier,
+      identifiers: matchingTimeZoneIdentifiers
+    )
+    .searchable(text: $searchText, prompt: "Search time zones")
+    .navigationTitle("Time Zone")
+    .overlay {
+      if matchingTimeZoneIdentifiers.isEmpty {
+        ContentUnavailableView.search(text: searchText)
+      }
+    }
+  }
+}
+
+private struct SavedPlanningTimeZoneResults: View {
+  @Environment(\.dismiss) private var dismiss
+  @Environment(\.dismissSearch) private var dismissSearch
+  @Binding var selectedTimeZoneIdentifier: String
+  let identifiers: [String]
+
+  var body: some View {
+    List(identifiers, id: \.self) { identifier in
       Button {
         selectedTimeZoneIdentifier = identifier
+        dismissSearch()
         dismiss()
       } label: {
         HStack {
           VStack(alignment: .leading) {
-            Text(locationName(identifier))
-            Text(timeZoneName(identifier)).font(.caption).foregroundStyle(.secondary)
+            Text(planningTimeZoneLocationName(identifier))
+            Text(planningTimeZoneName(identifier)).font(.caption).foregroundStyle(.secondary)
           }
           Spacer()
           if identifier == selectedTimeZoneIdentifier {
@@ -36,23 +57,16 @@ struct SavedPlanningTimeZonePicker: View {
       .accessibilityAddTraits(identifier == selectedTimeZoneIdentifier ? .isSelected : [])
       .accessibilityIdentifier("saved.schedule.zone.option.\(identifier)")
     }
-    .searchable(text: $searchText, prompt: "Search time zones")
-    .navigationTitle("Time Zone")
-    .overlay {
-      if matchingTimeZoneIdentifiers.isEmpty {
-        ContentUnavailableView.search(text: searchText)
-      }
-    }
   }
+}
 
-  private func locationName(_ identifier: String) -> String {
-    let components = identifier.split(separator: "/")
-    let location =
-      components.count > 1 ? components.dropFirst().joined(separator: " / ") : identifier
-    return location.replacingOccurrences(of: "_", with: " ")
-  }
+private func planningTimeZoneLocationName(_ identifier: String) -> String {
+  let components = identifier.split(separator: "/")
+  let location =
+    components.count > 1 ? components.dropFirst().joined(separator: " / ") : identifier
+  return location.replacingOccurrences(of: "_", with: " ")
+}
 
-  private func timeZoneName(_ identifier: String) -> String {
-    TimeZone(identifier: identifier)?.localizedName(for: .generic, locale: .current) ?? identifier
-  }
+private func planningTimeZoneName(_ identifier: String) -> String {
+  TimeZone(identifier: identifier)?.localizedName(for: .generic, locale: .current) ?? identifier
 }

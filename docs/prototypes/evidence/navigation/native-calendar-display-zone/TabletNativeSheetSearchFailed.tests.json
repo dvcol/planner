@@ -1,0 +1,63 @@
+{
+  "devices": [
+    {
+      "architecture": "arm64",
+      "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "deviceName": "iPad Air 11-inch (M4)",
+      "modelName": "iPad Air 11-inch (M4)",
+      "osBuildNumber": "24A434",
+      "osVersion": "27.0",
+      "platform": "iOS Simulator"
+    }
+  ],
+  "testNodes": [
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "name": "Failed to tap \"saved.calendar.zone.done\" Button: No matches found for Elements matching predicate '\"saved.calendar.zone.done\" IN identifiers' from input {(\n    Button, identifier: 'tab', label: 'Tab',\n    Button, identifier: 'Search', label: 'search', Disabled,\n    Button, identifier: 'shift', label: 'shift', Selected,\n    Button, identifier: 'emoji', label: 'Next keyboard', value: Fran\u00e7ais (France),\n    Button, identifier: 'dictation', label: 'Dictate',\n    Button, label: 'Hide keyboard',\n    Button, identifier: 'list.bullet', label: 'Lists',\n    Button, identifier: 'square.stack', label: 'Items',\n    Button, identifier: 'tray', label: 'Inbox',\n    Button, identifier: 'calendar', label: 'Calendar', Selected,\n    Button, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries',\n    Button, identifier: 'list.bullet', label: 'Lists',\n    Button, identifier: 'square.stack', label: 'Items',\n    Button, identifier: 'tray', label: 'Inbox',\n    Button, identifier: 'calendar', label: 'Calendar', Selected,\n    Button, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries',\n    Button,\n    Button,\n    Button,\n    Button, identifier: 'saved.calendar.zone.choose', label: 'Display time zone, Pacific Time',\n    Button, identifier: 'saved.calendar.zone.open', label: 'Display Time Zone',\n    Button, label: 'Today',\n    Button, identifier: 'saved.calendar.details.toggle', label: 'Show Details', Disabled,\n    Button, label: 'Day',\n    Button, label: 'Week',\n    Button, label: 'Month', Selected,\n    Button, label: 'Month', value: October 2026,\n    Button, identifier: 'DatePicker.PreviousMonth', label: 'Previous Month',\n    Button, identifier: 'DatePicker.NextMonth', label: 'Next Month',\n    Button, identifier: 'DatePicker.Show', label: 'Show year picker', value: October 2026,\n    Button, label: 'Thursday 1 October',\n    Button, label: 'Friday 2 October',\n    Button, label: 'Saturday 3 October',\n    Button, label: 'Sunday 4 October',\n    Button, label: 'Monday 5 October',\n    Button, label: 'Tuesday 6 October',\n    Button, label: 'Wednesday 7 October',\n    Button, label: 'Thursday 8 October',\n    Button, label: 'Friday 9 October',\n    Button, label: 'Saturday 10 October',\n    Button, label: 'Sunday 11 October',\n    Button, label: 'Monday 12 October',\n    Button, label: 'Tuesday 13 October',\n    Button, label: 'Today, Wednesday 14 October', Selected,\n    Button, label: 'Thursday 15 October', value: 1 scheduled entry,\n    Button, label: 'Friday 16 October',\n    Button, label: 'Saturday 17 October',\n    Button, label: 'Sunday 18 October',\n    Button, label: 'Monday 19 October',\n    Button, label: 'Tuesday 20 October',\n    Button, label: 'Wednesday 21 October',\n    Button, label: 'Thursday 22 October',\n    Button, label: 'Friday 23 October',\n    Button, label: 'Saturday 24 October',\n    Button, label: 'Sunday 25 October',\n    Button, label: 'Monday 26 October',\n    Button, label: 'Tuesday 27 October',\n    Button, label: 'Wednesday 28 October',\n    Button, label: 'Thursday 29 October',\n    Button, label: 'Friday 30 October',\n    Button, label: 'Saturday 31 October'\n)}\nPossibly caused by runtime issues:\nAutomation type mismatch: computed Button from legacy attributes vs Other from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 0;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeTraits\" = 8858370048;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Other from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 0;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemView\";\n    \"XC_kAXXCAttributeTraits\" = 8858370056;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Key from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 20;\n    \"XC_kAXXCAttributeElementBaseType\" = UIAccessibilityElement;\n    \"XC_kAXXCAttributeElementType\" = UIAccessibilityElementKBKey;\n    \"XC_kAXXCAttributeTraits\" = 8589934641;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Key from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 20;\n    \"XC_kAXXCAttributeElementBaseType\" = UIAccessibilityElement;\n    \"XC_kAXXCAttributeElementType\" = UIAccessibilityElementKBKey;\n    \"XC_kAXXCAttributeTraits\" = 8589934897;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Key from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 20;\n    \"XC_kAXXCAttributeElementBaseType\" = UIAccessibilityElement;\n    \"XC_kAXXCAttributeElementType\" = UIAccessibilityElementKBKey;\n    \"XC_kAXXCAttributeTraits\" = 8589934649;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Key from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 20;\n    \"XC_kAXXCAttributeElementBaseType\" = UIAccessibilityElement;\n    \"XC_kAXXCAttributeElementType\" = UIAccessibilityElementKBKey;\n    \"XC_kAXXCAttributeTraits\" = 8589936689;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 75;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeTraits\" = 146297323520;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 75;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UICalendarDateViewCell\";\n    \"XC_kAXXCAttributeElementType\" = \"_UICalendarDateViewCell\";\n    \"XC_kAXXCAttributeTraits\" = 146028888065;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 75;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UICalendarDateViewCell\";\n    \"XC_kAXXCAttributeElementType\" = \"_UICalendarDateViewCell\";\n    \"XC_kAXXCAttributeTraits\" = 146028888073;\n}\nAutomation type mismatch: computed Button from legacy attributes vs Cell from modern attribute. Input attributes and values: {\n    \"XC_kAXXCAttributeAutomationType\" = 75;\n    \"XC_kAXXCAttributeElementBaseType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeElementType\" = \"_UIFloatingTabBarItemCell\";\n    \"XC_kAXXCAttributeTraits\" = 146297323528;\n}\nSee test report attachments for more detail.",
+                      "nodeType": "Failure Message",
+                      "sourceLocation": {
+                        "filePath": "/Users/dinh-van.colomban/Workspace/private/planner/PlannerNavigationUITests/NativeNavigationElements.swift",
+                        "lineNumber": 289
+                      }
+                    }
+                  ],
+                  "duration": "46s",
+                  "durationInSeconds": 46.00435400009155,
+                  "name": "testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+                  "nodeIdentifier": "SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone()",
+                  "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests/testAllDayDatesSurviveAnOverrideAndReturningToTheDeviceZone",
+                  "nodeType": "Test Case",
+                  "result": "Failed"
+                }
+              ],
+              "name": "SavedCalendarDisplayZoneJourneyTests",
+              "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarDisplayZoneJourneyTests",
+              "nodeType": "Test Suite",
+              "result": "Failed"
+            }
+          ],
+          "name": "PlannerNavigationUITests",
+          "nodeIdentifierURL": "test://com.apple.xcode/Planner/PlannerNavigationUITests",
+          "nodeType": "UI test bundle",
+          "result": "Failed"
+        }
+      ],
+      "name": "PlannerNavigation",
+      "nodeType": "Test Plan",
+      "result": "Failed"
+    }
+  ],
+  "testPlanConfigurations": [
+    {
+      "configurationId": "1",
+      "configurationName": "Test Scheme Action"
+    }
+  ]
+}
