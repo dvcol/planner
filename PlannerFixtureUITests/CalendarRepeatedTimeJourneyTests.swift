@@ -1,8 +1,141 @@
+import Vision
 import XCTest
 
 #if os(iOS)
   @MainActor
   final class CalendarRepeatedTimeJourneyTests: XCTestCase {
+    func testShortBookedClockChangeSpanPaintsBothTimezoneNamesInWeekView() throws {
+      continueAfterFailure = false
+      let application = try openNovemberCalendar(scenario: "calendar-repeated-short-span")
+      let modes = application.descendants(matching: .any).matching(
+        identifier: "saved.calendar.mode"
+      ).firstMatch
+      modes.buttons["Week"].activateForPlannerJourney()
+      let grid = application.descendants(matching: .any).matching(
+        identifier: "saved.calendar.time-grid"
+      ).firstMatch
+      XCTAssertTrue(grid.waitForExistence(timeout: 5))
+      let appointment = grid.buttons.matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.timed.2026-11-1.")
+      ).firstMatch
+      XCTAssertTrue(appointment.waitForExistence(timeout: 10))
+      for _ in 0..<6 {
+        if appointment.isHittable { break }
+        grid.swipeDown()
+      }
+      XCTAssertTrue(appointment.isHittable)
+      let screenshot = XCUIScreen.main.screenshot()
+      let capture = XCTAttachment(screenshot: screenshot)
+      capture.name = "Ten-minute booked span with both clock-change endpoints"
+      capture.lifetime = .keepAlways
+      add(capture)
+      let visibleFrame = appointment.frame.intersection(application.frame)
+      XCTAssertFalse(visibleFrame.isEmpty)
+      let recognition = VNRecognizeTextRequest()
+      recognition.recognitionLevel = .accurate
+      recognition.recognitionLanguages = ["en-US"]
+      recognition.usesLanguageCorrection = false
+      recognition.regionOfInterest = CGRect(
+        x: visibleFrame.minX / application.frame.width,
+        y: 1 - visibleFrame.maxY / application.frame.height,
+        width: visibleFrame.width / application.frame.width,
+        height: visibleFrame.height / application.frame.height)
+      let image = try XCTUnwrap(screenshot.image.cgImage)
+      try VNImageRequestHandler(cgImage: image).perform([recognition])
+      let recognizedText = (recognition.results ?? []).compactMap {
+        $0.topCandidates(1).first?.string
+      }.joined(separator: " ")
+      let textCapture = XCTAttachment(string: recognizedText)
+      textCapture.name = "Visible appointment text recognized by native Vision"
+      textCapture.lifetime = .keepAlways
+      add(textCapture)
+      XCTAssertTrue(recognizedText.contains("EDT"), recognizedText)
+      XCTAssertTrue(recognizedText.contains("EST"), recognizedText)
+    }
+
+    func testBookedSpanAcrossRepeatedClockTimeDescribesBothEndpoints() throws {
+      continueAfterFailure = false
+      let application = try openNovemberCalendar(scenario: "calendar-repeated-span")
+      let modes = application.descendants(matching: .any).matching(
+        identifier: "saved.calendar.mode"
+      ).firstMatch
+      modes.buttons["Day"].activateForPlannerJourney()
+      let grid = application.descendants(matching: .any).matching(
+        identifier: "saved.calendar.time-grid"
+      ).firstMatch
+      XCTAssertTrue(grid.waitForExistence(timeout: 5))
+      let appointment = grid.buttons.matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.calendar.timed.2026-11-1.")
+      ).firstMatch
+      XCTAssertTrue(appointment.waitForExistence(timeout: 10))
+      for _ in 0..<6 {
+        if appointment.isHittable { break }
+        grid.swipeDown()
+      }
+      XCTAssertTrue(appointment.isHittable)
+      let description = try XCTUnwrap(appointment.value as? String)
+      let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+      capture.name = "Booked span from 01:30 EDT to 01:30 EST"
+      capture.lifetime = .keepAlways
+      add(capture)
+      XCTAssertTrue(description.contains("EDT"), description)
+      XCTAssertTrue(description.contains("EST"), description)
+      XCTAssertFalse(description.hasPrefix("Start only"))
+      let scheduleIdentifier = try XCTUnwrap(appointment.identifier.split(separator: ".").last)
+      for mode in ["Week", "Month"] {
+        modes.buttons[mode].activateForPlannerJourney()
+        let entry: XCUIElement
+        if mode == "Month" {
+          entry = application.buttons["saved.calendar.schedule.\(scheduleIdentifier)"].firstMatch
+        } else {
+          entry =
+            grid.buttons.matching(
+              NSPredicate(
+                format: "identifier BEGINSWITH %@ AND identifier ENDSWITH %@",
+                "saved.calendar.timed.2026-11-1.", String(scheduleIdentifier))
+            ).firstMatch
+        }
+        XCTAssertTrue(entry.waitForExistence(timeout: 10))
+        for _ in 0..<6 {
+          let tabBar = application.tabBars.firstMatch
+          let bottomBarObscuresEntry =
+            mode == "Month" && tabBar.exists && tabBar.frame.minY > application.frame.midY
+            && entry.frame.maxY > tabBar.frame.minY
+          if entry.isHittable && !bottomBarObscuresEntry { break }
+          if mode == "Month" {
+            application.scrollViews.firstMatch.swipeUp()
+          } else {
+            grid.swipeDown()
+          }
+        }
+        XCTAssertTrue(entry.isHittable)
+        if mode == "Month", application.tabBars.firstMatch.exists,
+          application.tabBars.firstMatch.frame.minY > application.frame.midY
+        {
+          XCTAssertLessThanOrEqual(entry.frame.maxY, application.tabBars.firstMatch.frame.minY)
+        }
+        XCTAssertEqual(entry.value as? String, description)
+        let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        capture.name = "Booked clock-change span in \(mode)"
+        capture.lifetime = .keepAlways
+        add(capture)
+      }
+      application.buttons["saved.calendar.schedule.\(scheduleIdentifier)"].firstMatch
+        .activateForPlannerJourney()
+      let sourceSchedule = application.descendants(matching: .any).matching(
+        identifier: "saved.item.schedule.\(scheduleIdentifier)"
+      ).firstMatch
+      XCTAssertTrue(sourceSchedule.waitForExistence(timeout: 10))
+      let sourceDescription = try XCTUnwrap(sourceSchedule.value as? String)
+      let sourceCapture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+      sourceCapture.name = "Retained source Schedule across the clock change"
+      sourceCapture.lifetime = .keepAlways
+      add(sourceCapture)
+      XCTAssertTrue(sourceDescription.contains("EDT"), sourceDescription)
+      XCTAssertTrue(sourceDescription.contains("EST"), sourceDescription)
+      XCTAssertTrue(sourceDescription.hasSuffix("America/New_York"), sourceDescription)
+    }
+
     func testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView() throws {
       continueAfterFailure = false
       let application = try openNovemberCalendar(scenario: "calendar-repeated-times")

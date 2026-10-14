@@ -44,4 +44,10 @@ The human accepted A for each question on 2026-10-13. They do not reopen accepte
 
 ## Q82, concrete Calendar window contract
 
-The human accepted A on 14 October 2026. The [approved contract](calendar-window-contract-review.md) defines inclusive civil-date bounds and display zone, consistent Schedule/owner/title/form pages, unchanged stored Schedule semantics, stale-generation rejection, retained archived-owner schedules, and exact timed/all-day boundary fixtures. The [Core and HTTP qualification](prototypes/core-calendar-windows.md) records the implementation and executed tests. Native adoption, storage performance and broader Calendar qualification remain open. No recorded question remains unanswered.
+The human accepted A on 14 October 2026. The [approved contract](calendar-window-contract-review.md) defines inclusive civil-date bounds and display zone, consistent Schedule/owner/title/form pages, unchanged stored Schedule semantics, stale-generation rejection, retained archived-owner schedules, and exact timed/all-day boundary fixtures. The [Core and HTTP qualification](prototypes/core-calendar-windows.md) records the implementation and executed tests. Native Month/Day/Week consume that shared query. [Storage scale](prototypes/calendar-window-scale.md) and [unchanged capture reuse](prototypes/calendar-capture-retention.md) retain measured evidence and their remaining limits. Broader Calendar qualification remains open, including the later Q83 presentation choice.
+
+## Q83, Calendar clock-change alignment
+
+Q83 was asked on 15 October 2026 and remains unanswered. The [question and impacts](calendar-time-grid-alignment-question.md) distinguish aligned local clock times, shared repeated-hour rows and the current elapsed-time columns. The native Week capture shows why the choice matters: New York's 25-hour Sunday places 02:00 beside the following ordinary day's 03:00.
+
+[Repeated-hour previews](prototypes/native-calendar-repeated-times.md) now distinguish EDT and EST without changing placement. Booked-span description work can proceed independently. Neither establishes approval of Q83 or completes the broader Calendar, Mac runtime or physical-device gates.

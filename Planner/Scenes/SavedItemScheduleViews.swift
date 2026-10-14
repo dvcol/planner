@@ -144,7 +144,12 @@ private struct SavedScheduleRow: View {
         dateIntervalFormatter.dateStyle = .medium
         dateIntervalFormatter.timeStyle = .short
         dateIntervalFormatter.timeZone = timeZone
-        dateDescription = dateIntervalFormatter.string(from: start, to: end)
+        var planningCalendar = Calendar(identifier: .gregorian)
+        planningCalendar.timeZone = timeZone
+        dateDescription =
+          calendarClockChangeSpanDescription(
+            start: start, end: end, calendar: planningCalendar, includesDate: true)
+          ?? dateIntervalFormatter.string(from: start, to: end)
       } else {
         var dateFormatStyle = Date.FormatStyle(date: .abbreviated, time: .shortened)
         dateFormatStyle.timeZone = timeZone

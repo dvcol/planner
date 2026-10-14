@@ -144,6 +144,11 @@ struct SavedCalendarView: View {
       }
       format.timeZone = displayTimeZone
       if let end {
+        if let description = calendarClockChangeSpanDescription(
+          start: start, end: end, calendar: displayCalendar, includesDate: true)
+        {
+          return description
+        }
         let formatter = DateIntervalFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .short
