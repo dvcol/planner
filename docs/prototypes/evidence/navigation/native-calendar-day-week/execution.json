@@ -1,0 +1,696 @@
+{
+  "baseCommit": "6344f28",
+  "scope": "Ordinary native Day/Week layouts, overlap lanes and bounded all-day overflow",
+  "qualified": {
+    "phone": {
+      "uniqueFunctions": 11,
+      "qualificationRuns": 2,
+      "finalDayWeekFunctions": 4,
+      "skips": 0
+    },
+    "tablet": {
+      "uniqueFunctions": 12,
+      "qualificationRuns": 2,
+      "finalDayWeekFunctions": 4,
+      "skips": 0
+    },
+    "Mac": {
+      "appBuild": "passed",
+      "testHostBuild": "passed",
+      "runtimeJourneysThisSlice": 0
+    },
+    "strictSwiftLintFiles": 3,
+    "markdownLintDocuments": 1
+  },
+  "notes": [
+    "Window regressions ran before the internal TimeGrid overflow change. The four final renderer journeys ran on both devices after that change; existing Month/inspector paths were not changed by it.",
+    "Boolean presentation failed to open. Item-based presentation fixed opening. Subsequent failures exposed native List virtualization and an incorrect Button query for source Schedule rows. Traversal and actual accessibility types corrected those fixtures. Tablet popover variants remained invisible despite nonzero outer bounds; a zero-sized hosting ancestor clipped them. Final overflow uses one item-based native sheet attached to the stable grid root.",
+    "Earlier Mac runtime evidence records a runner startup hang before any native journey executed. This slice compiles the app/test host and does not claim Mac runtime qualification."
+  ],
+  "remainingGates": [
+    "Week clock alignment on short/long days, repeated-hour descriptions and travel",
+    "Per-device calendar display-zone override",
+    "Mac runtime, keyboard, VoiceOver, Dynamic Type and additional responsive layouts",
+    "Storage-scale performance, physical sync/account/recovery/Share and whole-app polish"
+  ],
+  "earlierWindowRegressionProductionHashes": {
+    "Planner/Scenes/SavedCalendarView.swift": "d1d6cae3095d0273e7c75e3a818492f15959378d3f83d080e49a2af47edb488f",
+    "Planner/Scenes/SavedCalendarTimeGrid.swift": "7e173e4d19de20f72084df71f55413ae7c44dd5870fe0e7e7f3e8850d3ce126f"
+  },
+  "buildLog": {
+    "original": "/private/tmp/PlannerCalendarDayWeekSheetMacBuild.log",
+    "originalSha256": "00f10f1ae460460ba693c0176855e9bedc4e545617233ba600728bc49445a884",
+    "normalization": "Trailing whitespace and extra blank lines at EOF removed"
+  },
+  "sourceHashes": [
+    {
+      "path": "Planner/Scenes/SavedCalendarView.swift",
+      "sha256": "d1d6cae3095d0273e7c75e3a818492f15959378d3f83d080e49a2af47edb488f"
+    },
+    {
+      "path": "Planner/Scenes/SavedCalendarTimeGrid.swift",
+      "sha256": "107e0062a567f3a87e6029ecd81e659511d40beef4f0eccc19405d31623e1b94"
+    },
+    {
+      "path": "PlannerNavigationUITests/SavedCalendarModesJourneyTests.swift",
+      "sha256": "1693b3aa882c57e6bd5298915954adff44b973b15c53afd7272b319a47ab18c0"
+    },
+    {
+      "path": "docs/prototypes/native-calendar-day-week.md",
+      "sha256": "4795be188679e7aa0a1d410dce54e007f071e8c38308c70c073982175902b3ce"
+    }
+  ],
+  "productHashes": [
+    {
+      "path": "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner",
+      "sha256": "2d2d27a032ebb21e31a0941e03e3862b409ae545274c10edb59ec22a5daea53e"
+    },
+    {
+      "path": "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib",
+      "sha256": "dc7a9111bc3ee40df960585befae69ca3610e9b7b46bb4ef713b46ba9c46d786"
+    },
+    {
+      "path": "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests",
+      "sha256": "2d321ccd1a10e2e80ff16aecc572bd04a22d1b241c43e425c067a8e32dcb25ee"
+    },
+    {
+      "path": "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner",
+      "sha256": "e6f540414489754d2dcaf1af64a0bcbb2951a58bb2d85fcf1595226f15769cba"
+    },
+    {
+      "path": "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib",
+      "sha256": "c49ce8606bb85fea20884a9d313fe05dc80ba9c4e2ba032cb205a189145fc759"
+    },
+    {
+      "path": "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests",
+      "sha256": "6375e485628ac7b05b636e45d8836b6a404624975fac7b88f0c4498fedbbfa09"
+    }
+  ],
+  "runs": [
+    {
+      "label": "ModeRed",
+      "bundle": "/private/tmp/PlannerCalendarModesRed.xcresult",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "OverlapRed",
+      "bundle": "/private/tmp/PlannerCalendarModesOverlapRed.xcresult",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "DenseAllDayRed",
+      "bundle": "/private/tmp/PlannerCalendarDenseRed.xcresult",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "BooleanPresentationFailed",
+      "bundle": "/private/tmp/PlannerCalendarDenseGreen.xcresult",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "LazyListFixtureFailed",
+      "bundle": "/private/tmp/PlannerCalendarDensePresentation.xcresult",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "SourceRowFixtureFailed",
+      "bundle": "/private/tmp/PlannerCalendarDenseTraversal.xcresult",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "PhoneWindowRegression",
+      "bundle": "/private/tmp/PlannerCalendarModesPhoneRegression.xcresult",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 7,
+        "passedTests": 7,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDeletionJourneyTests/testConfirmedItemDeletionClearsItsCalendarEntryAndSelectionAfterRelaunch()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarJourneyTests/testCalendarIsAMainDestinationWithNativeDateSelectionAndAnEmptyAgenda()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarJourneyTests/testCalendarItineraryEntryOpensItsExistingLiveDetails()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarJourneyTests/testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarJourneyTests/testTimedCalendarCaptionRetainsTheSavedStartOnlyValueAfterRelaunch()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarOrderingJourneyTests/testOverlappingAllDayAssignmentsUseTheirDatesRatherThanIdentityOrder()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "TabletWindowRegression",
+      "bundle": "/private/tmp/PlannerCalendarModesTabletFinal.xcresult",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 11,
+        "passedTests": 11,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarDeletionJourneyTests/testConfirmedItemDeletionClearsItsCalendarEntryAndSelectionAfterRelaunch()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarJourneyTests/testCalendarIsAMainDestinationWithNativeDateSelectionAndAnEmptyAgenda()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarJourneyTests/testCalendarItineraryEntryOpensItsExistingLiveDetails()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarJourneyTests/testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarJourneyTests/testTimedCalendarCaptionRetainsTheSavedStartOnlyValueAfterRelaunch()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testAllDaySpanStaysVisibleAboveAlignedWeekHours()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarOrderingJourneyTests/testOverlappingAllDayAssignmentsUseTheirDatesRatherThanIdentityOrder()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "PhonePreAnchor",
+      "bundle": "/private/tmp/PlannerCalendarDayWeekPhoneFinal.xcresult",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 4,
+        "passedTests": 4,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarModesJourneyTests/testAllDaySpanStaysVisibleAboveAlignedWeekHours()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "TabletPreAnchor",
+      "bundle": "/private/tmp/PlannerCalendarDayWeekTabletFinal.xcresult",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 4,
+        "passedTests": 3,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarModesJourneyTests/testAllDaySpanStaysVisibleAboveAlignedWeekHours()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+          "result": "Failed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "TabletAnchorFailed",
+      "bundle": "/private/tmp/PlannerCalendarDayWeekTabletAnchor.xcresult",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "TabletSizingFailed",
+      "bundle": "/private/tmp/PlannerCalendarDayWeekTabletSizing.xcresult",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "PhoneAnchorPassed",
+      "bundle": "/private/tmp/PlannerCalendarDayWeekPhoneQualified.xcresult",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 4,
+        "passedTests": 4,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarModesJourneyTests/testAllDaySpanStaysVisibleAboveAlignedWeekHours()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "PhoneFinal",
+      "bundle": "/private/tmp/PlannerCalendarDayWeekPhoneSheet.xcresult",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 4,
+        "passedTests": 4,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarModesJourneyTests/testAllDaySpanStaysVisibleAboveAlignedWeekHours()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "TabletFinal",
+      "bundle": "/private/tmp/PlannerCalendarDayWeekTabletSheet.xcresult",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 4,
+        "passedTests": 4,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeys": [
+        {
+          "identity": "SavedCalendarModesJourneyTests/testAllDaySpanStaysVisibleAboveAlignedWeekHours()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDayAndWeekShowTheSavedStartOnlyEntryWithoutReschedulingIt()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testDenseAllDaySchedulesKeepTimedAppointmentsAndEveryScheduleAccessible()",
+          "result": "Passed"
+        },
+        {
+          "identity": "SavedCalendarModesJourneyTests/testSimultaneousStartOnlyAppointmentsRemainSeparateAndUsableInDayView()",
+          "result": "Passed"
+        }
+      ]
+    }
+  ],
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/phone-week.png",
+      "original": "/private/tmp/PlannerCalendarDayWeekPhoneSheetAttachments/1BD7F3B1-15BD-405A-8CCC-697ADC6C41A7.png",
+      "sha256": "ceeb78efe167676fb27e1d3cf69da01c476d266c5464a4644761448a440415cd",
+      "journey": null,
+      "name": "Native Week time grid_0_E775EB07-AE46-44FF-88E3-3858057759C0.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/phone-overflow.png",
+      "original": "/private/tmp/PlannerCalendarDayWeekPhoneSheetAttachments/7D7B72EC-0FA6-4003-8EEF-0712C9F23AC7.png",
+      "sha256": "526075d56e200089099089f885b2f2a452e6539523b6250fb772b793cabf393e",
+      "journey": null,
+      "name": "Native overflow traversal reaches all nine Schedule identities_0_2E5E0C5D-4B46-4FFA-9AD5-9A73922B806B.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/phone-dense-header.png",
+      "original": "/private/tmp/PlannerCalendarDayWeekPhoneSheetAttachments/BC2AF23C-A2DC-4E0B-A8CF-FF1A257FEBC4.png",
+      "sha256": "318e25a8c4257a0722ac48cd0e8c4bea57675cf03dc2fbbb9bd39b64783a6ddd",
+      "journey": null,
+      "name": "Dense all-day header preserves the timed appointment_0_28107D50-F41C-4AAA-93ED-36211C2B5E74.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/phone-overlap.png",
+      "original": "/private/tmp/PlannerCalendarDayWeekPhoneSheetAttachments/4B72EDA4-3ED6-40CB-B7B4-86DEF91CBB6C.png",
+      "sha256": "f448d949e5aa78e3748dde096f2fa6a881c5f35ee8e02e5ef23f50f40d43dc6f",
+      "journey": null,
+      "name": "Independent overlapping start-only appointments in Week_0_6D29A220-CFD7-4C34-8A05-4E17C29A2D34.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/tablet-week.png",
+      "original": "/private/tmp/PlannerCalendarDayWeekTabletSheetAttachments/71BE42A2-5F3A-41B9-B99B-5C26F07BB6A3.png",
+      "sha256": "00028e0951468cb1b660f999acd64f63ddd7d7095c6d5dde6692ba1ad848dfdd",
+      "journey": null,
+      "name": "Native Week time grid_0_D04831D2-CF82-45AD-9D80-DF5FF1A47AE5.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/tablet-overflow.png",
+      "original": "/private/tmp/PlannerCalendarDayWeekTabletSheetAttachments/0E1EC19B-C319-4AC6-B37E-D50C9E4BF16C.png",
+      "sha256": "0c9faa869b20cc905abb5a5a43157d302c29237f6529f1dcdebefcc33d88d52d",
+      "journey": null,
+      "name": "Native overflow traversal reaches all nine Schedule identities_0_5714A735-94F9-4DC5-A1D4-29E2055DF305.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/tablet-dense-header.png",
+      "original": "/private/tmp/PlannerCalendarDayWeekTabletSheetAttachments/36B20108-FFCC-414F-A0B5-5EEB96D11539.png",
+      "sha256": "fb5306b1e146d3ea8d350bbff4e5a6ab19466e2bdc4f5483644a06747c95291b",
+      "journey": null,
+      "name": "Dense all-day header preserves the timed appointment_0_35CAEA6E-E9C7-4FB8-AE25-D7B1EB9F452E.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/tablet-overlap.png",
+      "original": "/private/tmp/PlannerCalendarDayWeekTabletSheetAttachments/1643BE52-547B-43BF-ABA6-FF1DCE4FC685.png",
+      "sha256": "8975bcdabe487e16902dddfc01fcac1d6a8525b01a9ebe21d4e61ae5395eb640",
+      "journey": null,
+      "name": "Independent overlapping start-only appointments in Week_0_2FAD1EB0-8F54-457E-A192-EA807D6B5798.png"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/phone-unbounded-header-red.png",
+      "original": "/private/tmp/PlannerCalendarDenseRedAttachments/C5173BC2-A56D-47AE-8CF8-8708E4A4C393.png",
+      "sha256": "a92042c59234ec4432700abf701f6d97395284bcf2bf8f35bb10611a91ef84c3",
+      "name": "Dense all-day header red reproduction"
+    }
+  ],
+  "artifactHashes": [
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/BooleanPresentationFailed.summary.json",
+      "sha256": "a206378ea38a7315ad5c77bcbea21dfbd937ed58e1d42e46b29a5e4b7920b051"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/BooleanPresentationFailed.tests.json",
+      "sha256": "389e6d39c55d79aff4162e039e5f913219353406e95d73a2ea2fb292ea59452a"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/DenseAllDayRed.summary.json",
+      "sha256": "f27da6ed76001bf71437440978e5b40f64450bc4ad0770c5008ef46b89d79f24"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/DenseAllDayRed.tests.json",
+      "sha256": "a478eec5dfc5d6eec9782ee9348d7bfc5e1cf2a14efaf42a3128ac2a0815b48b"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/LazyListFixtureFailed.summary.json",
+      "sha256": "9fea23c426fa734c250cf5534f1793b9560154e0827f987a0f1290a6ade7f2f1"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/LazyListFixtureFailed.tests.json",
+      "sha256": "e34a00558478724b824fbb4952d867acc3032340210c516c14e295fe99c90358"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/ModeRed.summary.json",
+      "sha256": "e9aa14dd3aff7e85c248b78f01241b75a1534b90f5714437742aab145c401dac"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/ModeRed.tests.json",
+      "sha256": "66947731f21a486ac802d301459c4dcfcdb5856be3ec34cbeb40243c4dae7fb8"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/OverlapRed.summary.json",
+      "sha256": "45e28158f1c79e398b96e8fb178af863ec2c9f72f2e586f80f13560e79eb9616"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/OverlapRed.tests.json",
+      "sha256": "b7669f3963b77d205a1868ad5189a1e527eeacb2a98792bb18581fdfa754c425"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/PhoneAnchorPassed.summary.json",
+      "sha256": "8f8423b4d20e86e619595d8e63d093d0049166393e18542d14c059a23a72be6a"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/PhoneAnchorPassed.tests.json",
+      "sha256": "25631a381e4d3b9e960c5842d914bdc383e2fde3fb27d718a2876957b8ee3b3f"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/PhoneFinal.summary.json",
+      "sha256": "74013296626377d11e1871d698fb014a1d9e05ced0adf73c203556330a6b9f67"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/PhoneFinal.tests.json",
+      "sha256": "fd5da0d496a7fffec15bdb7b62c8e7d94f286b56e918ce6ca55962719ce58eb1"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/PhonePreAnchor.summary.json",
+      "sha256": "a8e2ac459de673ac1a65b0e9736e8ad1aaba1975d7a79cea4c6e0f03a4ad3d84"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/PhonePreAnchor.tests.json",
+      "sha256": "baf00958a4901571d3929757d1017959f342dcffb91a52ef3e654b3b71064281"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/PhoneWindowRegression.summary.json",
+      "sha256": "d883d2b79ff5bc231c6ef87233c0ed55c9fb7cec6d3ca0e9c16cdb75cb999311"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/PhoneWindowRegression.tests.json",
+      "sha256": "70cde32042b54bff351777f46f7150656f333aa45cdd1a122281b4bcb333c1bd"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/SourceRowFixtureFailed.summary.json",
+      "sha256": "2c754d2159277cb2380cd247f44c6857f42b80d575aabe701580531e08ccfad7"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/SourceRowFixtureFailed.tests.json",
+      "sha256": "6ff91affd8f389f88ec38c678cbe11cd9170f96d3b4660dbd1ce6932ad07239b"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/TabletAnchorFailed.summary.json",
+      "sha256": "3266f10f36ffa318129a013c8b670b156f6c11bfbf7d400042d25eee65553e5f"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/TabletAnchorFailed.tests.json",
+      "sha256": "54f99c22596fbcc8faea3be8eedddce57210826635d5254040250c0224a936cf"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/TabletFinal.summary.json",
+      "sha256": "0425f97f92ac3fd9fb0f522f5cb4f02a7c3a2858e902de8660818e79489394e4"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/TabletFinal.tests.json",
+      "sha256": "c9cb667bf160b39bf6cdd67a2fcb54204e02d0a3ab51dad399126825c63176df"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/TabletPreAnchor.summary.json",
+      "sha256": "9f0264dbc267e8430c2fb11c1ab08065ba95563369fcc740a02605f41f052aa2"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/TabletPreAnchor.tests.json",
+      "sha256": "294cc3a5980eafa13fe0d55a358da0176d7186486b6731ff17b4bc2e66a66fff"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/TabletSizingFailed.summary.json",
+      "sha256": "349e67aa51ab488cc393099548fa98c13d4666a632d9549ff02725f4119eebe3"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/TabletSizingFailed.tests.json",
+      "sha256": "21c7e723a561b083bf6a6ba29e1dfcf07f0faa698e5921b27f251a683c60312e"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/TabletWindowRegression.summary.json",
+      "sha256": "7231e6a123217a4e10921ccfedc642802923070466c76971963fbb42d9983cc1"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/TabletWindowRegression.tests.json",
+      "sha256": "c84a4fd97e5ceb86b31407c8c764f7a71d8f7e06e01f809e8ae3d012af55ce9f"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/mac-build.log",
+      "sha256": "3de3f8d7b7eb7bddfbd858d020c48f0f8bd0f894e32356363c1d079bb5450541"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/phone-dense-header.png",
+      "sha256": "318e25a8c4257a0722ac48cd0e8c4bea57675cf03dc2fbbb9bd39b64783a6ddd"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/phone-overflow.png",
+      "sha256": "526075d56e200089099089f885b2f2a452e6539523b6250fb772b793cabf393e"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/phone-overlap.png",
+      "sha256": "f448d949e5aa78e3748dde096f2fa6a881c5f35ee8e02e5ef23f50f40d43dc6f"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/phone-unbounded-header-red.png",
+      "sha256": "a92042c59234ec4432700abf701f6d97395284bcf2bf8f35bb10611a91ef84c3"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/phone-week.png",
+      "sha256": "ceeb78efe167676fb27e1d3cf69da01c476d266c5464a4644761448a440415cd"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/tablet-dense-header.png",
+      "sha256": "fb5306b1e146d3ea8d350bbff4e5a6ab19466e2bdc4f5483644a06747c95291b"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/tablet-overflow.png",
+      "sha256": "0c9faa869b20cc905abb5a5a43157d302c29237f6529f1dcdebefcc33d88d52d"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/tablet-overlap.png",
+      "sha256": "8975bcdabe487e16902dddfc01fcac1d6a8525b01a9ebe21d4e61ae5395eb640"
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-calendar-day-week/tablet-week.png",
+      "sha256": "00028e0951468cb1b660f999acd64f63ddd7d7095c6d5dde6692ba1ad848dfdd"
+    }
+  ]
+}
