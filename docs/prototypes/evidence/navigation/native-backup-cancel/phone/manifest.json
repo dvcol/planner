@@ -1,0 +1,35 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "EE83F4BD-D685-4762-83B0-344B020466AB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Canceled Overwrite retains the current Tag after relaunch_0_261CFDF8-28A6-40D9-B9E4-E70866E72A16.png",
+        "timestamp" : 1792013460.481
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "17E03DC2-AD3D-4A74-B8B4-48813649125A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Cancel is available for a reviewed Tag replacement_0_96E901D6-BE7B-4389-AEF7-26861C88CBB6.png",
+        "timestamp" : 1792013446.459
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "48A01173-1616-4FF7-894A-A09BB983DE36.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the actual exported file_0_984DE18B-FE5E-485F-AB51-8B5BD52E06CF.txt",
+        "timestamp" : 1792013435.358
+      }
+    ],
+    "testIdentifier" : "SavedBackupImportJourneyTests/testCancelingOverwriteReviewPreservesCurrentTagAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testCancelingOverwriteReviewPreservesCurrentTagAfterRelaunch"
+  }
+]

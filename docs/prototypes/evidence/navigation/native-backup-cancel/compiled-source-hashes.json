@@ -1,0 +1,18 @@
+{
+  "productHashes": {
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner": "2d2d27a032ebb21e31a0941e03e3862b409ae545274c10edb59ec22a5daea53e",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib": "8a8870c294fb28ab37c00abe2f8be7609629b4e5484e207601ac71b1241306eb",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests": "d6dadde0e1a6b3d33258cc5974b11c666b413d7ae1ece241bc8ed85839420901",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "e6f540414489754d2dcaf1af64a0bcbb2951a58bb2d85fcf1595226f15769cba",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib": "02e1584c0d7cc6b303abfaa7dae9c40bbaa8249ea84f849ad6674fdcc56b1d10",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests": "48f1981f0cb5b23e575e85525552a9022c1ee3cf94a40db079829958b01f8ce4"
+  },
+  "sourceHashes": {
+    "Planner/Scenes/SavedBackupImportForm.swift": "6e627d98a9c052647ad3a0f31959cf9590d7b959b39f61e7cf7a7ba7c017c31c",
+    "Planner/Scenes/SavedBackupImportSummary.swift": "1da34a96a56d00edcd341a11a60565d3e2529db306f5182f844f238f4f35f6ce",
+    "Planner/Scenes/SavedPlannerBackupFile.swift": "e80dd7f66ee94b47ae4a0db557a6adb5356eae137d5d4e58131ecc1435f32046",
+    "Planner/Scenes/SavedPlannerSettingsView.swift": "9d6bca4fe526b6a34f742bd2a5b75fbbc25440495766ed5a2db9a456ad19b5fa",
+    "Planner/Scenes/SavedPlannerStore.swift": "946f31e6a6f7fcded82150722b74ec2b24b9d82ba78584714d7cf02eeffc8fea",
+    "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift": "dbcadec57ea8bc1d3dabffd0071fbf2635741c63e1994e8ee54c91f315137821"
+  }
+}

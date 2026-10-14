@@ -1,0 +1,71 @@
+{
+  "artifactHashes": {
+    "commands.json": "e9212882c0686396472de2dc4831682bab64cd1bffe318317db98c4851336928",
+    "compiled-source-hashes.json": "592b82989084a40dcb83b5550a3d69bcb7f9cb095e53dcde94a0fbd7aebbbb48",
+    "mac-build.log.gz": "ebb794db12619d6da851c8980228a271ddfc06726666ff8d950cf7a1ff9e9fb4",
+    "markdown-lint.log": "293650845878240d145fd55b7aa1cda17cb3be73abcb43cc38a2b352e345ed28",
+    "phone-summary.json": "bf307765135164947945846b65faa7d152f0a6f6ae23494f5c7f0689530b7387",
+    "phone-tests.json": "93173222a6c06e00f369f73c362547f6e829c641d927ebdaba2823670e7fe84c",
+    "phone.log.gz": "d92cef24546a53f8d3ce2f0e7881c92a3cf45c19830a482736047b547454a83b",
+    "phone/17E03DC2-AD3D-4A74-B8B4-48813649125A.png": "ac50c8da7fd10b99e5376f8773ade0ac5a8f0f544b6a1524f87c855658ff75ca",
+    "phone/48A01173-1616-4FF7-894A-A09BB983DE36.txt": "145ffc56f3f7eeeb1421da654b99faf6125ec5f7dd9e002e988b029c6553eaf8",
+    "phone/EE83F4BD-D685-4762-83B0-344B020466AB.png": "de584b143d121aa425897fc9bba5c5f602f406ad13f02bdf96ac81bb6f19872b",
+    "phone/manifest.json": "91dc036ecd95eadbf1dce1b4c6311ad048728321a3951b79beb43959b264911b",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tablet-summary.json": "455f77acbf27ef5eb6bc88733ec9dc122a91b9c6e041e7386a562f776cbb75f3",
+    "tablet-tests.json": "4caade4471bcfa91b2478bb84185dca71ea883e7546772f8234af0edead3ae09",
+    "tablet.log.gz": "9b0ef6efa2afd139c52fd58fc38332358ac16c917e804468af5c12fc72005f26",
+    "tablet/60CAF24A-A98C-46B4-BFD5-5533E035CDE5.png": "f5700237cd825a21c7691c3e5c19621c007dfac251ffec1a80613b8ac9ebbe41",
+    "tablet/8F8C9C5F-85E2-4DEE-978E-04761D0C13C4.txt": "2766c30b5213754124a448ed29710e21fa429ea6ed8a34627addbaf4b858e82d",
+    "tablet/F3943D67-596E-4000-85A4-9F4A2FC09A67.png": "386807277ea1b0036f7edcae2d052c00735ae65affe8b8951cb166be48b906ae",
+    "tablet/manifest.json": "429f8387aadd3a994f0f570100f06fb629d99f34564c17a7740d26d2cf4efe15"
+  },
+  "baseCommit": "8725bb5d8eb555a7164f22ae87d5ca3358359610",
+  "productHashes": {
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner": "2d2d27a032ebb21e31a0941e03e3862b409ae545274c10edb59ec22a5daea53e",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib": "8a8870c294fb28ab37c00abe2f8be7609629b4e5484e207601ac71b1241306eb",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests": "d6dadde0e1a6b3d33258cc5974b11c666b413d7ae1ece241bc8ed85839420901",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "e6f540414489754d2dcaf1af64a0bcbb2951a58bb2d85fcf1595226f15769cba",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib": "02e1584c0d7cc6b303abfaa7dae9c40bbaa8249ea84f849ad6674fdcc56b1d10",
+    "/private/tmp/PlannerCalendarModesMacDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests": "48f1981f0cb5b23e575e85525552a9022c1ee3cf94a40db079829958b01f8ce4"
+  },
+  "qualification": {
+    "coreAndHTTPInvocationsThisStep": 0,
+    "macAppAndUITestHostBuild": "passed",
+    "macNativeUIInvocations": 0,
+    "markdownLint": "passed",
+    "phone": {
+      "failedTests": 0,
+      "passedTests": 1,
+      "skippedTests": 0
+    },
+    "swiftStrictLint": "passed",
+    "tablet": {
+      "failedTests": 0,
+      "passedTests": 1,
+      "skippedTests": 0
+    },
+    "whitespace": "passed"
+  },
+  "report": "docs/prototypes/native-backup-import.md",
+  "reviews": {
+    "spec": "No material source/evidence findings. Actual counts, seven source/six product/19 artifact hashes, complete manifests, unchanged production and remaining gates verified.",
+    "standards": "No material standards/evidence findings. Each native run has one passing function; complete three-attachment manifests and all hashes verified."
+  },
+  "scopeNotes": [
+    "One native Overwrite-review cancellation function passes per simulator with zero failures/skips.",
+    "The real exported backup differs from the current Tag. The review shows one replacement; Cancel preserves the current identity and newer name after relaunch without invoking Import.",
+    "Five production files match the prior import implementation; only test source and report change. No new schema, dependency, agent route or test-only production DI.",
+    "Original replacement and retained-current-Tag captures inspected individually on both devices. All three original attachments per device retained.",
+    "Mac app/test-host build passed; zero Mac runtime and no new Core/HTTP invocations. Broader graph, invalid input, stale review and recovery failures remain open. Q83 remains pending."
+  ],
+  "sourceHashes": {
+    "Planner/Scenes/SavedBackupImportForm.swift": "6e627d98a9c052647ad3a0f31959cf9590d7b959b39f61e7cf7a7ba7c017c31c",
+    "Planner/Scenes/SavedBackupImportSummary.swift": "1da34a96a56d00edcd341a11a60565d3e2529db306f5182f844f238f4f35f6ce",
+    "Planner/Scenes/SavedPlannerBackupFile.swift": "e80dd7f66ee94b47ae4a0db557a6adb5356eae137d5d4e58131ecc1435f32046",
+    "Planner/Scenes/SavedPlannerSettingsView.swift": "9d6bca4fe526b6a34f742bd2a5b75fbbc25440495766ed5a2db9a456ad19b5fa",
+    "Planner/Scenes/SavedPlannerStore.swift": "946f31e6a6f7fcded82150722b74ec2b24b9d82ba78584714d7cf02eeffc8fea",
+    "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift": "dbcadec57ea8bc1d3dabffd0071fbf2635741c63e1994e8ee54c91f315137821",
+    "docs/prototypes/native-backup-import.md": "6358c48702f1d8226ee988427c80c180a829ae13e7b1e6dbb488b2553e4b6814"
+  }
+}

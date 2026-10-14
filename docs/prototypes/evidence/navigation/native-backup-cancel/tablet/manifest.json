@@ -1,0 +1,35 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "60CAF24A-A98C-46B4-BFD5-5533E035CDE5.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Canceled Overwrite retains the current Tag after relaunch_0_35A5ECD5-7E6D-44E3-9FDD-BAB6DC639F3F.png",
+        "timestamp" : 1792013542.005
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "F3943D67-596E-4000-85A4-9F4A2FC09A67.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Cancel is available for a reviewed Tag replacement_0_80312741-7D40-4C1D-983C-A9EB68232514.png",
+        "timestamp" : 1792013526.215
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "8F8C9C5F-85E2-4DEE-978E-04761D0C13C4.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the actual exported file_0_B9D02CF3-7CB7-4494-915B-88A5F83695AB.txt",
+        "timestamp" : 1792013515.65
+      }
+    ],
+    "testIdentifier" : "SavedBackupImportJourneyTests/testCancelingOverwriteReviewPreservesCurrentTagAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testCancelingOverwriteReviewPreservesCurrentTagAfterRelaunch"
+  }
+]

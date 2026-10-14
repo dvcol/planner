@@ -34,7 +34,7 @@ Original phone/tablet Skip, Overwrite, applied-result, before/after and identity
 
 ## Remaining gates
 
-This qualifies picker cancellation, the represented Tag Skip/Overwrite workflow and the single-Tag empty-dataset/reimport journey below. Native review cancellation, malformed/unsupported/dependency-invalid file presentation, restored/deleted identity fixtures, distinct reference/dependency details, stale review, read/save/termination and incomplete-recovery presentation still need their own runtime evidence. Earlier Core qualification is retained at its own boundary. Broad graph/family/scale, Mac runtime, signed physical sync/account/Share and whole-app polish stay open. Q83 Calendar alignment remains unanswered.
+This qualifies picker cancellation, the represented Tag Skip/Overwrite workflow and the single-Tag empty-dataset/reimport and replacement-cancellation journeys below. Native malformed/unsupported/dependency-invalid file presentation, restored/deleted identity fixtures, distinct reference/dependency details, stale review, read/save/termination and incomplete-recovery presentation still need their own runtime evidence. Earlier Core qualification is retained at its own boundary. Broad graph/family/scale, Mac runtime, signed physical sync/account/Share and whole-app polish stay open. Q83 Calendar alignment remains unanswered.
 
 ## Empty-dataset restoration and identical reimport
 
@@ -49,3 +49,13 @@ Both affected native journeys pass on each simulator, with two functions per dev
 The five production files are unchanged from the native import implementation. Original addition, unchanged and retained-Tag captures were inspected separately on both devices. Strict lint passes for the changed Swift test and this report. The affected Mac app/test host compiles; no Mac runtime function runs. This step adds no Core or HTTP invocations and does not qualify graph-wide restoration, deleted-identity restoration, an account transition or the independent recovery copy.
 
 [Restoration execution evidence](evidence/navigation/native-backup-restore/execution.json) records the two completed native runs, original captures, exact commands and frozen source/product hashes.
+
+## Canceling a reviewed replacement
+
+The earlier cancellation tracer closes the file picker before decoding. The next goal is to cancel a prepared Overwrite review without replacing the current Tag. The before state has a backup of the original Tag and a newer current name. Canceling its one-replacement review must preserve that current name and identity through relaunch and leave Settings able to import again.
+
+The accepted explicit-confirmation rule and the same native UI/real-file seam provide readiness. The required journey creates and exports the original Tag, edits its current name, selects Overwrite, verifies the replacement impact, then cancels without invoking Import. Verify the retained current name after relaunch, inspect native captures on both devices, and run affected lint plus Mac app/test-host compilation.
+
+The journey passes once per simulator, with zero failures or skips. Both original replacement-review and retained-current-Tag captures were inspected. The five production files remain unchanged. Strict affected Swift/Markdown lint and Mac app/test-host compilation pass; zero Mac runtime functions and no new Core/HTTP invocations are credited. This closes the represented Tag review-cancellation check, while stale-review, invalid-input, broader graph and recovery-failure gates remain open.
+
+[Cancellation execution evidence](evidence/navigation/native-backup-cancel/execution.json) retains the actual results, commands, original captures and frozen source/product hashes.
