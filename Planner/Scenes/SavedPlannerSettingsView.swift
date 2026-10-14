@@ -6,6 +6,7 @@ struct SavedPlannerSettingsView: View {
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
   @State private var showLabels = false
+  @State private var showRecovery = false
   @State private var exportRequest: UUID?
   @State private var backupFile: SavedPlannerBackupFile?
   @State private var showExporter = false
@@ -50,6 +51,10 @@ struct SavedPlannerSettingsView: View {
               )
               .accessibilityIdentifier("saved.settings.import")
               if importURL != nil { ProgressView("Reading backup") }
+              Button("Recovery Copies", systemImage: "clock.arrow.circlepath") {
+                showRecovery = true
+              }
+              .accessibilityIdentifier("saved.settings.recovery")
             } header: {
               Text("Data")
             } footer: {
@@ -66,6 +71,10 @@ struct SavedPlannerSettingsView: View {
             Text(reason)
           } actions: {
             Button("Try Again") { Task { await store.open() } }
+            Button("Recovery Copies", systemImage: "clock.arrow.circlepath") {
+              showRecovery = true
+            }
+            .accessibilityIdentifier("saved.settings.recovery")
           }
         } else {
           ProgressView("Opening Planner")
@@ -87,6 +96,7 @@ struct SavedPlannerSettingsView: View {
     .task(id: exportRequest) { await prepareBackup() }
     .task(id: importURL) { await prepareImport() }
     .sheet(isPresented: $showLabels) { SavedLabelsView(store: store) }
+    .sheet(isPresented: $showRecovery) { SavedRecoveryCopiesView(store: store) }
     .sheet(item: $importDraft) { draft in SavedBackupImportForm(store: store, draft: draft) }
     .fileImporter(isPresented: $showImporter, allowedContentTypes: [.json]) { result in
       switch result {
