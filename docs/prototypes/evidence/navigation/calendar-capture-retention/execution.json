@@ -1,0 +1,56 @@
+{
+  "artifactHashes": {
+    "Package.swift": "507e25bae5595c9fd617ff204e1f71760a47807b7840fc359f0a7de6eb2f135d",
+    "before.json": "81c13a41a447d046a4d069b9e6b70c6960dfeba4b83ddb96b2b87f8770648456",
+    "before.log.gz": "af9828c59678f7a1efd5780ef8b3e9fe3a234b2f156458b6dbd1dc1b225518d2",
+    "commands.json": "75332af372585510da2259c93eca0a488a84617c68bb2343b5e971465b90de34",
+    "core.log.gz": "d4d33fc033379424424a1e71cad3472e245099303937063fb8c20fd2d16d7e86",
+    "final.json": "0d2c15a1e90e412fc9f0d6b95dfb3f1ec0992d3e6fdcf848fab96a7faf0e7f8b",
+    "final.log.gz": "5258ef9b2bd36710dd39e41e6a5acbc8bb3ed577736f8e7a5c1e393bbda59ce4",
+    "first-reuse.json": "c12e886982c2becd943501230204685fdaa7f5406edb95b98e21fef60fbb0c62",
+    "first-reuse.log.gz": "4635750ffdef009d6e6630584ee46b2d48076ef847e8ab18739436a45966baa1",
+    "http-summary.json": "3ba1c3b8d6b2cbfea6190a0160fffaa03868929a0f4e3d9424d00d0214bd073f",
+    "http-tests.json": "fc6934f72d3c454112a151937b0d0d151c150a01173a6fca4d7ba77c40807e82",
+    "http.log.gz": "bc62e6a02d69aad40bf4406cca497957561900234eb6981642cb7995d0269a21",
+    "ios-build.log.gz": "ee2b5db3895fa64e25edbb228cfa0e15da4dc482deadfe33a8f0b08b9a6c5f60",
+    "markdown-lint.log": "df3f5e9b6c90f07b4d5f77c941d53f42d7cd4bf92567e4317524cdb87e62cc6c",
+    "probe-before.swift": "6f07d721e88e722f16deaa0cb4d493fa42430b8b61ac7d20052f05872263d2c9",
+    "probe-final.swift": "e48953f828b98eed7426792d428db836e6b44eda390c858912231dec4a583c04",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "baseCommit": "d33bb0386d770cce28dc7e4afb04032b0d39625d",
+  "fixture": {
+    "decodedSHA256": "ceece309121ad136cf6cff6a8369c35c97e70e57ea94d7ba54586d68a4c4bb65",
+    "path": "../calendar-window-scale/fixture.json.gz"
+  },
+  "productHashes": {
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner": "2d2d27a032ebb21e31a0941e03e3862b409ae545274c10edb59ec22a5daea53e",
+    "/private/tmp/PlannerCalendarDenseIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib": "e70d76f495898fdfeeb1a7fbb9f64853ebc1a73530b8d72784d827fdca9ecbec",
+    "/private/tmp/PlannerCalendarRetentionProbe/.build/debug/CalendarRetentionProbe": "07d8f881b547cd97a8212e3f30a921232525975f92358dea5812fa813a0b40b4",
+    "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "d929b79328326f1f18bfc8f4d3ef81075a0e5f88a76dec8419068b44b15fa1d5",
+    "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib": "25f0e434722c5de70cb626dcb3b25da63f1a5e141efdc4e32bfb2820a593ddf6"
+  },
+  "qualification": {
+    "coreInvocations": 32,
+    "coreSuites": 11,
+    "httpFailed": 0,
+    "httpPassed": 4,
+    "httpSkipped": 0,
+    "iosAppAndTestHostBuild": "passed",
+    "macAppAndHTTPTestHostBuild": "passed",
+    "markdownLint": "passed",
+    "nativeUIInvocations": 0,
+    "swiftStrictLint": "passed",
+    "whitespace": "passed"
+  },
+  "report": "docs/prototypes/calendar-capture-retention.md",
+  "reviews": {
+    "spec": "No confirmed findings; immutable equivalent values may share a generation; distinct capture retention remains open.",
+    "standards": "No confirmed findings; session and complete Calendar values gate reuse after validation/history pruning."
+  },
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "4386ea4d9a164a2b93ac159f71fa3908ed619501f5f2b150dc6c9fcca20036c0",
+    "docs/prototypes/calendar-capture-retention.md": "7667cda7aa0aad678f3ef766431eeb916ac01edbf529477494aa2966b3a98feb",
+    "docs/prototypes/calendar-window-scale.md": "a454319d5c8f6932fa339ec19ce0c4a539a48829d9152a1958d27f77a8dac84e"
+  }
+}

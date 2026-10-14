@@ -1,0 +1,812 @@
+{
+  "dataset" : "\/private\/tmp\/PlannerCalendarRetentionRuns\/D1C04BCA-71F4-4B01-AB00-BC158640A591",
+  "items" : 5000,
+  "lists" : 200,
+  "matchingSchedules" : 5000,
+  "measurements" : [
+    {
+      "iteration" : 1,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32553116700000001,
+      "querySeconds" : 0.31843749999999998,
+      "residentAfterBytes" : 354762752,
+      "residentBeforeBytes" : 350814208
+    },
+    {
+      "iteration" : 2,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.33668991599999998,
+      "querySeconds" : 0.32896462500000001,
+      "residentAfterBytes" : 354762752,
+      "residentBeforeBytes" : 354762752
+    },
+    {
+      "iteration" : 3,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32810979099999998,
+      "querySeconds" : 0.32092087499999999,
+      "residentAfterBytes" : 354910208,
+      "residentBeforeBytes" : 354762752
+    },
+    {
+      "iteration" : 4,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32591350000000002,
+      "querySeconds" : 0.31891283300000001,
+      "residentAfterBytes" : 354975744,
+      "residentBeforeBytes" : 354910208
+    },
+    {
+      "iteration" : 5,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32760645799999999,
+      "querySeconds" : 0.320586708,
+      "residentAfterBytes" : 354975744,
+      "residentBeforeBytes" : 354975744
+    },
+    {
+      "iteration" : 6,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32028862499999999,
+      "querySeconds" : 0.31315920800000002,
+      "residentAfterBytes" : 355008512,
+      "residentBeforeBytes" : 354975744
+    },
+    {
+      "iteration" : 7,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32504091699999998,
+      "querySeconds" : 0.31805875,
+      "residentAfterBytes" : 355024896,
+      "residentBeforeBytes" : 355008512
+    },
+    {
+      "iteration" : 8,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.31997775000000001,
+      "querySeconds" : 0.31233383300000001,
+      "residentAfterBytes" : 355024896,
+      "residentBeforeBytes" : 355024896
+    },
+    {
+      "iteration" : 9,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.33083729200000001,
+      "querySeconds" : 0.32392562499999999,
+      "residentAfterBytes" : 355074048,
+      "residentBeforeBytes" : 355024896
+    },
+    {
+      "iteration" : 10,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32321879100000001,
+      "querySeconds" : 0.31618637500000002,
+      "residentAfterBytes" : 355074048,
+      "residentBeforeBytes" : 355074048
+    },
+    {
+      "iteration" : 11,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32373516699999999,
+      "querySeconds" : 0.31698349999999997,
+      "residentAfterBytes" : 355074048,
+      "residentBeforeBytes" : 355074048
+    },
+    {
+      "iteration" : 12,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.31918758400000002,
+      "querySeconds" : 0.31241095899999999,
+      "residentAfterBytes" : 355074048,
+      "residentBeforeBytes" : 355074048
+    },
+    {
+      "iteration" : 13,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32415854199999999,
+      "querySeconds" : 0.31741891700000002,
+      "residentAfterBytes" : 355123200,
+      "residentBeforeBytes" : 355074048
+    },
+    {
+      "iteration" : 14,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32051091599999998,
+      "querySeconds" : 0.31363858300000003,
+      "residentAfterBytes" : 355172352,
+      "residentBeforeBytes" : 355123200
+    },
+    {
+      "iteration" : 15,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.33017391699999998,
+      "querySeconds" : 0.32324245800000001,
+      "residentAfterBytes" : 355172352,
+      "residentBeforeBytes" : 355172352
+    },
+    {
+      "iteration" : 16,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32797004099999999,
+      "querySeconds" : 0.32130075000000002,
+      "residentAfterBytes" : 355205120,
+      "residentBeforeBytes" : 355172352
+    },
+    {
+      "iteration" : 17,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32003783400000002,
+      "querySeconds" : 0.313276,
+      "residentAfterBytes" : 355205120,
+      "residentBeforeBytes" : 355205120
+    },
+    {
+      "iteration" : 18,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.33419241700000002,
+      "querySeconds" : 0.32732250000000002,
+      "residentAfterBytes" : 355205120,
+      "residentBeforeBytes" : 355205120
+    },
+    {
+      "iteration" : 19,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32860166699999999,
+      "querySeconds" : 0.32148604200000003,
+      "residentAfterBytes" : 355237888,
+      "residentBeforeBytes" : 355205120
+    },
+    {
+      "iteration" : 20,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32735820799999998,
+      "querySeconds" : 0.320622833,
+      "residentAfterBytes" : 355237888,
+      "residentBeforeBytes" : 355237888
+    },
+    {
+      "iteration" : 21,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32249158300000003,
+      "querySeconds" : 0.31566141599999997,
+      "residentAfterBytes" : 355237888,
+      "residentBeforeBytes" : 355237888
+    },
+    {
+      "iteration" : 22,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.325589458,
+      "querySeconds" : 0.31876824999999998,
+      "residentAfterBytes" : 355237888,
+      "residentBeforeBytes" : 355237888
+    },
+    {
+      "iteration" : 23,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.31968249999999998,
+      "querySeconds" : 0.31283541599999998,
+      "residentAfterBytes" : 355237888,
+      "residentBeforeBytes" : 355237888
+    },
+    {
+      "iteration" : 24,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32579291599999999,
+      "querySeconds" : 0.31880950000000002,
+      "residentAfterBytes" : 355237888,
+      "residentBeforeBytes" : 355237888
+    },
+    {
+      "iteration" : 25,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.31902208399999998,
+      "querySeconds" : 0.31211295900000002,
+      "residentAfterBytes" : 355237888,
+      "residentBeforeBytes" : 355237888
+    },
+    {
+      "iteration" : 26,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32328062499999999,
+      "querySeconds" : 0.31644487500000001,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355237888
+    },
+    {
+      "iteration" : 27,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.322384542,
+      "querySeconds" : 0.315428125,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 28,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.31863849999999999,
+      "querySeconds" : 0.31116720799999997,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 29,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.31909062500000002,
+      "querySeconds" : 0.31218245900000002,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 30,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.31754850000000001,
+      "querySeconds" : 0.31076375000000001,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 31,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32297183299999999,
+      "querySeconds" : 0.31614333300000003,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 32,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32654670800000002,
+      "querySeconds" : 0.31951533300000001,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 33,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.33192183400000003,
+      "querySeconds" : 0.32505333400000003,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 34,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.33362391699999999,
+      "querySeconds" : 0.32670775000000002,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 35,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32774245800000001,
+      "querySeconds" : 0.320783708,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 36,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32135091599999999,
+      "querySeconds" : 0.31441195799999999,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 37,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32372974999999998,
+      "querySeconds" : 0.31680900000000001,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 38,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32557470799999999,
+      "querySeconds" : 0.318462833,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 39,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32782041699999998,
+      "querySeconds" : 0.32094941700000001,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 40,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32858799999999999,
+      "querySeconds" : 0.32162912500000002,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 41,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32726149999999998,
+      "querySeconds" : 0.32020799999999999,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 42,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32412866600000001,
+      "querySeconds" : 0.31715908300000001,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 43,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32923883300000001,
+      "querySeconds" : 0.32244624999999999,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 44,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32292741600000002,
+      "querySeconds" : 0.31610704099999998,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 45,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32959133299999999,
+      "querySeconds" : 0.32190524999999998,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 46,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.33083116600000001,
+      "querySeconds" : 0.32379425000000001,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 47,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32557654200000002,
+      "querySeconds" : 0.31860545800000001,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 48,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.327636333,
+      "querySeconds" : 0.32064074999999997,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 49,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.33558162499999999,
+      "querySeconds" : 0.32770824999999998,
+      "residentAfterBytes" : 355254272,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 50,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.35946508300000002,
+      "querySeconds" : 0.35248629100000001,
+      "residentAfterBytes" : 330334208,
+      "residentBeforeBytes" : 355254272
+    },
+    {
+      "iteration" : 51,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32387916700000002,
+      "querySeconds" : 0.31642208300000002,
+      "residentAfterBytes" : 330334208,
+      "residentBeforeBytes" : 330334208
+    },
+    {
+      "iteration" : 52,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32157529200000001,
+      "querySeconds" : 0.314679708,
+      "residentAfterBytes" : 330334208,
+      "residentBeforeBytes" : 330334208
+    },
+    {
+      "iteration" : 53,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32697095799999998,
+      "querySeconds" : 0.32008270799999999,
+      "residentAfterBytes" : 330334208,
+      "residentBeforeBytes" : 330334208
+    },
+    {
+      "iteration" : 54,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32608625000000002,
+      "querySeconds" : 0.31910345899999998,
+      "residentAfterBytes" : 330334208,
+      "residentBeforeBytes" : 330334208
+    },
+    {
+      "iteration" : 55,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32522558299999998,
+      "querySeconds" : 0.31797470799999999,
+      "residentAfterBytes" : 330334208,
+      "residentBeforeBytes" : 330334208
+    },
+    {
+      "iteration" : 56,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32458266699999999,
+      "querySeconds" : 0.31768587500000001,
+      "residentAfterBytes" : 330334208,
+      "residentBeforeBytes" : 330334208
+    },
+    {
+      "iteration" : 57,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32993362500000001,
+      "querySeconds" : 0.32301924999999998,
+      "residentAfterBytes" : 330334208,
+      "residentBeforeBytes" : 330334208
+    },
+    {
+      "iteration" : 58,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.324922875,
+      "querySeconds" : 0.31796945799999998,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330334208
+    },
+    {
+      "iteration" : 59,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32880350000000003,
+      "querySeconds" : 0.32196266699999998,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 60,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32071325000000001,
+      "querySeconds" : 0.313916625,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 61,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32258595800000001,
+      "querySeconds" : 0.31572370799999999,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 62,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32336900000000002,
+      "querySeconds" : 0.31653641700000001,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 63,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.324476125,
+      "querySeconds" : 0.317587167,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 64,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32732708399999999,
+      "querySeconds" : 0.32048729199999998,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 65,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.34123550000000002,
+      "querySeconds" : 0.32972774999999999,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 66,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32566075,
+      "querySeconds" : 0.31853770799999997,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 67,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32841679099999999,
+      "querySeconds" : 0.32136570800000003,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 68,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32226512499999999,
+      "querySeconds" : 0.31559937500000002,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 69,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32878808399999998,
+      "querySeconds" : 0.321848209,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 70,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.33806966700000002,
+      "querySeconds" : 0.33136520800000002,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 71,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.340213708,
+      "querySeconds" : 0.33337279199999997,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 72,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32353508399999997,
+      "querySeconds" : 0.31658429199999999,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 73,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32583254099999998,
+      "querySeconds" : 0.31868258300000002,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 74,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.31867233299999997,
+      "querySeconds" : 0.31169354100000002,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 75,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.324511208,
+      "querySeconds" : 0.317483083,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 76,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32294558400000001,
+      "querySeconds" : 0.31586604200000001,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 77,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32485562499999998,
+      "querySeconds" : 0.31785266600000001,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 78,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32361795799999998,
+      "querySeconds" : 0.31659037499999998,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 79,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32026479099999999,
+      "querySeconds" : 0.31318041600000002,
+      "residentAfterBytes" : 330350592,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 80,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32045791699999998,
+      "querySeconds" : 0.313320459,
+      "residentAfterBytes" : 308166656,
+      "residentBeforeBytes" : 330350592
+    },
+    {
+      "iteration" : 81,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.34109520799999998,
+      "querySeconds" : 0.33407112500000002,
+      "residentAfterBytes" : 308166656,
+      "residentBeforeBytes" : 308166656
+    },
+    {
+      "iteration" : 82,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.33011491700000001,
+      "querySeconds" : 0.32316729199999999,
+      "residentAfterBytes" : 308166656,
+      "residentBeforeBytes" : 308166656
+    },
+    {
+      "iteration" : 83,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32190908299999998,
+      "querySeconds" : 0.31468412499999998,
+      "residentAfterBytes" : 308166656,
+      "residentBeforeBytes" : 308166656
+    },
+    {
+      "iteration" : 84,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.321209833,
+      "querySeconds" : 0.314126458,
+      "residentAfterBytes" : 308166656,
+      "residentBeforeBytes" : 308166656
+    },
+    {
+      "iteration" : 85,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32233279100000001,
+      "querySeconds" : 0.315263083,
+      "residentAfterBytes" : 308166656,
+      "residentBeforeBytes" : 308166656
+    },
+    {
+      "iteration" : 86,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32596662500000001,
+      "querySeconds" : 0.31885304199999998,
+      "residentAfterBytes" : 308166656,
+      "residentBeforeBytes" : 308166656
+    },
+    {
+      "iteration" : 87,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.33619816600000002,
+      "querySeconds" : 0.32931908300000001,
+      "residentAfterBytes" : 308166656,
+      "residentBeforeBytes" : 308166656
+    },
+    {
+      "iteration" : 88,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.33583137499999999,
+      "querySeconds" : 0.32870395800000002,
+      "residentAfterBytes" : 308166656,
+      "residentBeforeBytes" : 308166656
+    },
+    {
+      "iteration" : 89,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32964254199999998,
+      "querySeconds" : 0.32269054200000002,
+      "residentAfterBytes" : 308166656,
+      "residentBeforeBytes" : 308166656
+    },
+    {
+      "iteration" : 90,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32781608299999998,
+      "querySeconds" : 0.320960458,
+      "residentAfterBytes" : 308183040,
+      "residentBeforeBytes" : 308166656
+    },
+    {
+      "iteration" : 91,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32734487499999998,
+      "querySeconds" : 0.32046270900000001,
+      "residentAfterBytes" : 308183040,
+      "residentBeforeBytes" : 308183040
+    },
+    {
+      "iteration" : 92,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32129633299999999,
+      "querySeconds" : 0.314458291,
+      "residentAfterBytes" : 308183040,
+      "residentBeforeBytes" : 308183040
+    },
+    {
+      "iteration" : 93,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32606354199999998,
+      "querySeconds" : 0.319238625,
+      "residentAfterBytes" : 308183040,
+      "residentBeforeBytes" : 308183040
+    },
+    {
+      "iteration" : 94,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.323872041,
+      "querySeconds" : 0.31685495800000002,
+      "residentAfterBytes" : 308183040,
+      "residentBeforeBytes" : 308183040
+    },
+    {
+      "iteration" : 95,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32783224999999999,
+      "querySeconds" : 0.318623459,
+      "residentAfterBytes" : 308183040,
+      "residentBeforeBytes" : 308183040
+    },
+    {
+      "iteration" : 96,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.331134333,
+      "querySeconds" : 0.32434875000000002,
+      "residentAfterBytes" : 308183040,
+      "residentBeforeBytes" : 308183040
+    },
+    {
+      "iteration" : 97,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.33568537500000001,
+      "querySeconds" : 0.32893079200000003,
+      "residentAfterBytes" : 308183040,
+      "residentBeforeBytes" : 308183040
+    },
+    {
+      "iteration" : 98,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.32195858300000002,
+      "querySeconds" : 0.31494054100000002,
+      "residentAfterBytes" : 308183040,
+      "residentBeforeBytes" : 308183040
+    },
+    {
+      "iteration" : 99,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.334939875,
+      "querySeconds" : 0.32752712499999997,
+      "residentAfterBytes" : 308183040,
+      "residentBeforeBytes" : 308183040
+    },
+    {
+      "iteration" : 100,
+      "matchingCount" : 5000,
+      "queryAndThreePagesSeconds" : 0.42465900000000001,
+      "querySeconds" : 0.36701337499999998,
+      "residentAfterBytes" : 308264960,
+      "residentBeforeBytes" : 308183040
+    }
+  ],
+  "memberships" : 5000,
+  "queryRepeats" : 100,
+  "savedDataUnchanged" : true,
+  "schedules" : 5000
+}

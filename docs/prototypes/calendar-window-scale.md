@@ -50,3 +50,5 @@ No native UI journey ran for this Core-only step. The macOS app and HTTP test ho
 ## Remaining gates
 
 Calendar still fetches and validates every retained Schedule before matching dates. These batches reduce repeated native fetches; they do not prove bounded work as the catalog grows. Candidate date fetching, generation-cache retention and physical mobile latency/memory remain open. Existing temporal/adaptive/accessibility qualification and whole-app native UI polish also remain open. Apple Calendar export stays outside the map.
+
+The subsequent [unchanged-capture retention step](calendar-capture-retention.md) measures repeated full Calendar queries and reuses equivalent captures. Retention of distinct results and sessions remains open.
