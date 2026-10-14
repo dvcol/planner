@@ -1,6 +1,6 @@
 # Calendar window contract review
 
-Status: proposed under accepted Q81 A. This packet declares the concrete public reads before their tests or implementation. Existing Schedule catalog and Item-query defaults remain unchanged.
+Status: approved under Q81 A and Q82 A on 14 October 2026. This packet declares the concrete public reads before their tests or implementation. Existing Schedule catalog and Item-query defaults remain unchanged.
 
 ## Context, goal and readiness
 
