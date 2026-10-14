@@ -1,0 +1,53 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "0B717FCF-9570-4AA8-923C-2CC2FBE21F45.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Current dataset stays separate after export and relaunch_0_71D19F89-7A3B-4439-B500-6F2E8AD53832.png",
+        "timestamp" : 1792016888.13
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "C65453BA-08C3-4456-AB74-F6A03D29101F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Retained recovery export reports successful delivery_0_2C92DEA6-A08D-40CF-8B94-5E1010396C9A.png",
+        "timestamp" : 1792016865.459
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "B9454AF1-7560-48F3-88D5-C9D77FB87FBA.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Public retained export expectation_0_0B72EC93-BAAD-45EC-AA3F-8952275C1722.txt",
+        "timestamp" : 1792016865.353
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "934AB0DD-AD71-46E3-8D6F-B2BD9C2EB4E8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "System picker exports the retained dataset_0_6B4D3BB0-02F3-4DBA-9C4B-AE90231FB87D.png",
+        "timestamp" : 1792016862.229
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "7510E9B0-5609-4DED-ADA8-887A8E9809B0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Retained copy shows its own saved Item and Tag_0_6FA3322E-F002-4B0A-BB18-8D9B07819FF4.png",
+        "timestamp" : 1792016854.212
+      }
+    ],
+    "testIdentifier" : "RetainedRecoveryJourneyTests/testExportingRetainedCopyKeepsCurrentDatasetSeparateAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RetainedRecoveryJourneyTests/testExportingRetainedCopyKeepsCurrentDatasetSeparateAfterRelaunch"
+  }
+]

@@ -1,0 +1,53 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "23AC2765-3807-42AF-BB16-AA3DF78A8EA6.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Current dataset stays separate after export and relaunch_0_A43CA0D9-1BAB-46A6-94A5-6F158031E016.png",
+        "timestamp" : 1792016756.879
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "81035B1E-9DEF-4AD2-9A88-863413A2A874.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Retained recovery export reports successful delivery_0_A96FE63F-85B8-4977-8F3B-233965441977.png",
+        "timestamp" : 1792016734.778
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "BEA6940F-56C6-45F5-B5F5-33B238238038.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Public retained export expectation_0_54B20C31-4E1D-4F5A-913C-560975EFD5CD.txt",
+        "timestamp" : 1792016734.688
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "D1C8B0CF-3050-4BF4-B0C3-FB550DA42F7D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "System picker exports the retained dataset_0_71FB21A8-CB5F-4444-8C6F-FFBE74B6309F.png",
+        "timestamp" : 1792016731.715
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "602CD9E5-20D5-40B1-A0BA-4265E2FE3B5F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Retained copy shows its own saved Item and Tag_0_AF4DF498-81BB-4234-B167-6A7AC8FFBD75.png",
+        "timestamp" : 1792016724.677
+      }
+    ],
+    "testIdentifier" : "RetainedRecoveryJourneyTests/testExportingRetainedCopyKeepsCurrentDatasetSeparateAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RetainedRecoveryJourneyTests/testExportingRetainedCopyKeepsCurrentDatasetSeparateAfterRelaunch"
+  }
+]

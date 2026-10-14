@@ -1,0 +1,16 @@
+{
+  "expectation": "/private/tmp/PlannerRetainedRecoveryTabletEvidence/B9454AF1-7560-48F3-88D5-C9D77FB87FBA.txt",
+  "values": {
+    "Filename": "Planner Saved Recovery F25C0A1A-7500-435F-B2FF-CDB05F18846E Generation 2.json",
+    "Tag": "9AE35574-E3F8-4D61-8FE5-F0BA5FA89F25",
+    "Item": "293875EC-289F-487E-8CD4-5EB8EC12AA0C",
+    "Current tag": "saved.tag.CBF260F1-2C30-4A76-A4D3-EABCE0D46C56",
+    "Current item": "saved.item.82310EB8-7A1D-435C-B135-EC2D4AEFCCA5"
+  },
+  "deliveredPaths": [
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner Saved Recovery F25C0A1A-7500-435F-B2FF-CDB05F18846E Generation 2.json"
+  ],
+  "sha256": "9123dabf8baa57740594340b02b92a3f4d09d61855c795a4ad7c81d1652104b8",
+  "bytes": 921,
+  "checks": "Exact permitted root, format 2, native-observed retained Item/Tag identities and names, empty other groups, current sources absent."
+}
