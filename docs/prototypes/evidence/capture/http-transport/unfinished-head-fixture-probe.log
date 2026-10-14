@@ -1,0 +1,27 @@
+Building for debugging...
+[2 / 5] PlannerCore
+[3 / 7] PlannerCore
+[4 / 7] PlannerCore
+[8 / 11] PlannerCore
+[10 / 11] PlannerCoreStoreTests-product
+[12 / 12] PlannerCoreStoreTests-product
+[13 / 15] PlannerCoreTests-product
+[15 / 17] PlannerCoreTests-product
+[17 / 23] PlannerCoreTests-product
+Build complete! (8,07 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CaptureHTTPTransportTests started.
+◇ Test nativeTransportReturnsHEADResponseBeforeBodyFinishes() started.
+Capture transport protocols Optional([PlannerCoreTests.(unknown context at $10b0575d8).CaptureHeaderProtocol])
+Capture fixture canInit HEAD
+Capture fixture startLoading
+✘ Test nativeTransportReturnsHEADResponseBeforeBodyFinishes() recorded an issue at CaptureHTTPTransportTests.swift:6:4: Caught error: Error Domain=NSURLErrorDomain Code=-1001 "The request timed out." UserInfo={_kCFStreamErrorCodeKey=-2103, _NSURLErrorFailingURLSessionTaskErrorKey=LocalDataTask <F45754F4-1578-40A3-8B6B-C56892493DF3>.<1>, _NSURLErrorRelatedURLSessionTaskErrorKey=(
+    "LocalDataTask <F45754F4-1578-40A3-8B6B-C56892493DF3>.<1>"
+), NSLocalizedDescription=The request timed out., NSErrorFailingURLStringKey=https://maps.apple.com/transport-fixture, NSErrorFailingURLKey=https://maps.apple.com/transport-fixture, _kCFStreamErrorDomainKey=4}
+✘ Test nativeTransportReturnsHEADResponseBeforeBodyFinishes() failed after 4.024 seconds with 1 issue.
+✘ Suite CaptureHTTPTransportTests failed after 4.024 seconds with 1 issue.
+✘ Test run with 1 test in 1 suite failed after 4.025 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - PlannerCoreTests (Swift Testing)

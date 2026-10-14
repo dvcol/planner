@@ -1,0 +1,21 @@
+Building for debugging...
+[2 / 4] PlannerCoreTests-product
+[4 / 6] PlannerCoreTests-product
+[6 / 12] PlannerCoreTests-product
+Build complete! (1,61 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CaptureHTTPTransportTests started.
+◇ Test cancelledNativeRequestReturnsCancellationBeforeItsTimeout(cancellationPhase:) started.
+◇ Test nativeRequestTimesOutWhenNoHeadersArrive() started.
+◇ Test nativeTransportUsesHEADAndReturnsStatusAndHeaders() started.
+◇ Test nativeTransportReturnsRedirectHeadersWithoutFollowingTheNextRequest() started.
+◇ Test case passing 1 argument cancellationPhase → "beforeStartup" to cancelledNativeRequestReturnsCancellationBeforeItsTimeout(cancellationPhase:) started.
+◇ Test case passing 1 argument cancellationPhase → "pendingIO" to cancelledNativeRequestReturnsCancellationBeforeItsTimeout(cancellationPhase:) started.
+✔ Test nativeTransportReturnsRedirectHeadersWithoutFollowingTheNextRequest() passed after 0.009 seconds.
+✔ Test nativeTransportUsesHEADAndReturnsStatusAndHeaders() passed after 0.009 seconds.
+✔ Test cancelledNativeRequestReturnsCancellationBeforeItsTimeout(cancellationPhase:) with 2 test cases passed after 0.012 seconds.
+✔ Test nativeRequestTimesOutWhenNoHeadersArrive() passed after 0.062 seconds.
+✔ Suite CaptureHTTPTransportTests passed after 0.062 seconds.
+✔ Test run with 4 tests in 1 suite passed after 0.062 seconds.

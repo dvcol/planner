@@ -1,0 +1,56 @@
+{
+  "baseCommit": "63a0cd2699b5430a7942901b54e08d3cbc90895e",
+  "scope": "Native single HEAD request transport; controlled Foundation delegate I/O; Core lookup excluded",
+  "qualified": {
+    "mac": {
+      "functions": 4,
+      "suites": 1,
+      "invocations": 5,
+      "failures": 0,
+      "skips": 0
+    },
+    "iosAppBuild": "passed",
+    "swiftLintFiles": 2,
+    "markdownLintDocuments": 1
+  },
+  "lookupWorkExcludedFromQualification": true,
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCaptureHTTPTransport.swift": "3f13d1b3d37d8ab28cf6979c1edb765b9e247cefef0051d6e60e77c2ff34fb5f",
+    "Packages/PlannerCore/Tests/PlannerCoreTests/CaptureHTTPTransportTests.swift": "ee80bdb80e9003397d9075597757855a93087a7b296fe9c638dcce8d93378e96",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "1ca538a5ea664fb8f718eae11adce89e827220852074a33a7bec9120d1766713"
+  },
+  "commands": {
+    "nativeChecks": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --scratch-path /private/tmp/PlannerCoreCaptureTransportBuild --jobs 1 --filter CaptureHTTPTransportTests",
+    "iosBuild": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination 'generic/platform=iOS Simulator' -derivedDataPath /private/tmp/PlannerCaptureHTTPTransportIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCaptureHTTPTransportSourcePackages -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO build",
+    "swiftLint": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift-format lint --strict Packages/PlannerCore/Sources/PlannerCore/PlannerCaptureHTTPTransport.swift Packages/PlannerCore/Tests/PlannerCoreTests/CaptureHTTPTransportTests.swift",
+    "markdownLint": "pnpm dlx markdownlint-cli2 --config /private/tmp/PlannerCatalogEstimatesMarkdownlint.jsonc docs/prototypes/native-capture-http-transport.md"
+  },
+  "diagnostics": [
+    "The missing production type failed before implementation.",
+    "An unfinished controlled HEAD fixture timed out despite reaching URLProtocol; completing an empty HEAD response corrected that fixture.",
+    "The initial iOS build lacked old temporary dependency checkouts; the pinned versions were restored without a lockfile change.",
+    "Review found an unbounded startup observation; the final fixture uses a deadline and observed startup."
+  ],
+  "reviews": {
+    "standards": "No remaining confirmed findings; bounded fixture wait, source/artifact hashes and actual outcomes verified.",
+    "spec": "No remaining confirmed findings; actual native outcome counts, excluded lookup source and remaining gates verified."
+  },
+  "remainingGates": [
+    "Core provider and redirect policy integration",
+    "eight-second attempt budget and obsolete draft protection",
+    "controlled Core response tests",
+    "native socket/provider qualification",
+    "iOS transport runtime",
+    "physical sender allocations and Share lifecycle",
+    "native/agent preview integration"
+  ],
+  "artifactHashes": {
+    "missing-module-red.log": "6a2174239ab706062e13fd78e7dbba674015ec967a871ccff4e16fbb5639810e",
+    "unfinished-head-fixture-probe.log": "7035f0d4e2f27e4e7f4293818d6c1472285025f0dbe7d9fb14e0050c7e2d0e59",
+    "qualified.log": "ab6a76f319afbb49ebfcd65f0de762b8ec3d88c98940abcef81383b710e139d1",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ios-build.log": "67cd0e37f7079274c8e0edfc43b0ff72ada7dd97609568b8439b509f36f00747",
+    "dependency-resolution.log": "11cb52f63564d8d45765e8ecffa07fd1dc429cd12a0ece28bbb0f73e92429f7f",
+    "markdown-lint.log": "00598d17c0b2cb3d480eabaa22eb8b38b7b213cf26384887db08264410bc4ba2"
+  }
+}

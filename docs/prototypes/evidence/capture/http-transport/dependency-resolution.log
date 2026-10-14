@@ -1,0 +1,60 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -resolvePackageDependencies -project Planner.xcodeproj -scheme PlannerNavigation -clonedSourcePackagesDirPath /private/tmp/PlannerCaptureHTTPTransportSourcePackages -onlyUsePackageVersionsFromResolvedFile
+
+Resolve Package Graph
+
+Fetching from https://github.com/modelcontextprotocol/swift-sdk (cached)
+
+Fetching from https://github.com/apple/swift-nio.git (cached)
+
+Fetching from https://github.com/mattt/eventsource.git (cached)
+
+Fetching from https://github.com/apple/swift-log.git (cached)
+
+Fetching from https://github.com/apple/swift-system.git (cached)
+
+Fetching from https://github.com/apple/swift-collections.git (cached)
+
+Fetching from https://github.com/apple/swift-atomics.git (cached)
+
+Creating working copy of package ‘swift-system’
+
+Creating working copy of package ‘swift-sdk’
+
+Creating working copy of package ‘swift-log’
+
+Creating working copy of package ‘swift-collections’
+
+Creating working copy of package ‘swift-atomics’
+
+Creating working copy of package ‘swift-nio’
+
+Creating working copy of package ‘eventsource’
+
+Checking out 0.12.1 of package ‘swift-sdk’
+
+Checking out 1.8.1 of package ‘swift-system’
+
+Checking out 1.5.1 of package ‘eventsource’
+
+Checking out 2.104.0 of package ‘swift-nio’
+
+Checking out 1.3.1 of package ‘swift-atomics’
+
+Checking out 1.16.1 of package ‘swift-log’
+
+Checking out 1.7.2 of package ‘swift-collections’
+
+
+Resolved source packages:
+  swift-system: https://github.com/apple/swift-system.git @ 1.8.1
+  EventSource: https://github.com/mattt/eventsource.git @ 1.5.1
+  swift-log: https://github.com/apple/swift-log.git @ 1.16.1
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.1
+  PlannerPreviews: /Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerPreviews @ local
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk @ 0.12.1
+  PlannerCore: /Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore @ local
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.104.0
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.7.2
+
+resolved source packages: swift-system, EventSource, swift-log, swift-atomics, PlannerPreviews, mcp-swift-sdk, PlannerCore, swift-nio, swift-collections
