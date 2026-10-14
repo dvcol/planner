@@ -1,0 +1,131 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "110BE668-C156-4A3C-9ACC-CD18DBFA4244.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Applied import retains the actual Core summary_0_07F1EE3E-E6F2-487F-B8A7-0E3A19088A0D.png",
+        "timestamp" : 1792012861.351
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "E2F2F6DB-496B-47EB-A39B-0FFF880B6AC8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Expandable backup details retain the exact Tag identity_0_E31F0DFF-0065-4E19-982B-0001A60D4652.png",
+        "timestamp" : 1792012858.872
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "00307E0A-CA92-41B6-A25B-D38B4E20BCE2.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Replacement after summary shows the incoming Tag name_0_683D277F-BDA0-433F-BC9F-815F0F8ECD7E.png",
+        "timestamp" : 1792012854.908
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "D121CB4C-8410-4CD3-9AF9-53935907D85B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Replacement before summary keeps the current Tag name_0_2F504585-8AAA-4ED3-A61E-8C63D971FDD4.png",
+        "timestamp" : 1792012854.449
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "E2AD614B-84BE-431C-8DF7-354D2A2E07FA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Overwrite reviews the represented Tag replacement_0_EFCB778B-3963-4F32-8681-0F501D5C72D7.png",
+        "timestamp" : 1792012852.779
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "B4AC934D-F8B0-4A8E-B0D4-43F979D63CA8.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the actual exported file_0_75D8A813-0645-443F-9AA0-2DBCC21B1F36.txt",
+        "timestamp" : 1792012841.625
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "1CA0EE66-5DB5-4F14-82A9-9603A687D74C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Default Skip reviews the current Tag conflict_0_4A490339-9722-4F12-B9D9-C627BE48E1C4.png",
+        "timestamp" : 1792012831.759
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "EBFC57A5-67A0-4ED5-9A36-386038FE4269.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the actual exported file_0_27C0A882-AEE3-4DB7-9DE1-EF7D749D3F5E.txt",
+        "timestamp" : 1792012827.376
+      }
+    ],
+    "testIdentifier" : "SavedBackupImportJourneyTests/testRealBackupSkipAndOverwriteKeepTagIdentityAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testRealBackupSkipAndOverwriteKeepTagIdentityAfterRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "B0FC7866-5D0A-4997-BC50-8B55C079959B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Restoration and repeated import retain one original Tag identity_0_E369D4CB-BE0B-474B-BC6D-B32DDCEFA423.png",
+        "timestamp" : 1792012974.814
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "CB12952D-132A-4A56-BFFA-7C1F2B711C01.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Reimport reviews one unchanged Tag and no additions_0_79F2B803-02EF-4551-BBCE-3134CEE15567.png",
+        "timestamp" : 1792012960.012
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "9F4F4929-C5AB-4B81-91B5-475A221863FF.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the actual exported file_0_B3E9982F-D6E2-4FDC-8BE3-FFE1CC52094A.txt",
+        "timestamp" : 1792012955.652
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "9AAE54C4-98AC-4C1B-800E-2DC191AD6814.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Empty dataset reviews the backed-up Tag addition_0_77470D81-C8A4-40A4-A6A2-C16A649C026A.png",
+        "timestamp" : 1792012945.405
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "B034DBB1-E1F4-4098-89FB-FE426D812B32.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the actual exported file_0_D8589BEA-9823-4366-AA31-0853FF70D946.txt",
+        "timestamp" : 1792012940.773
+      }
+    ],
+    "testIdentifier" : "SavedBackupImportJourneyTests/testRestoringIntoEmptyDatasetAndReimportingKeepOneTagAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testRestoringIntoEmptyDatasetAndReimportingKeepOneTagAfterRelaunch"
+  }
+]

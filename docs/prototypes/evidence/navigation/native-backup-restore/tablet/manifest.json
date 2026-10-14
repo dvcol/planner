@@ -1,0 +1,131 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "B917D153-44FE-4C98-8F1E-6C16C5393859.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Applied import retains the actual Core summary_0_0B56733B-A50C-46C4-B0FA-A3764F5BB9AF.png",
+        "timestamp" : 1792012979.018
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "CEBA1F23-2B3E-48D9-B650-0C7D269DFCB8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Expandable backup details retain the exact Tag identity_0_0CA4965B-9CC1-4F01-9927-EA7B80B4C20A.png",
+        "timestamp" : 1792012977.12
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "97ECF729-DF24-4308-8F13-AE97AC944A0B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Replacement after summary shows the incoming Tag name_0_3E63B2D0-32BE-4966-9797-C448F77EE602.png",
+        "timestamp" : 1792012973.906
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "F5854ECD-81E2-4AAE-8F7E-B66DC0896532.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Replacement before summary keeps the current Tag name_0_C4F35AC2-D9F3-4D31-98D3-724AE63F6CC5.png",
+        "timestamp" : 1792012973.535
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "BFDEDDDD-BFD1-4C0A-B7EF-B328DF5ECECB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Overwrite reviews the represented Tag replacement_0_72C68764-A031-4692-ABA3-3FEB51F3E6EB.png",
+        "timestamp" : 1792012972.073
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "25900C14-0B83-4509-AEF8-39B108D386E6.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the actual exported file_0_86052448-6898-41F4-84FF-503F99682E08.txt",
+        "timestamp" : 1792012960.565
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "45ADFFF8-2DA5-4BE6-BDAF-BD6D9B6B836C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Default Skip reviews the current Tag conflict_0_83AAD57F-4360-44C6-A703-23DA5170E8EF.png",
+        "timestamp" : 1792012950.029
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "76F9FF00-FD87-481C-8005-95BB62872B1D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the actual exported file_0_9881DB21-6B21-457D-825B-7CF8E0FB780C.txt",
+        "timestamp" : 1792012944.502
+      }
+    ],
+    "testIdentifier" : "SavedBackupImportJourneyTests/testRealBackupSkipAndOverwriteKeepTagIdentityAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testRealBackupSkipAndOverwriteKeepTagIdentityAfterRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "F95A4D5B-25AC-4B30-BD04-8C8A50E74709.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Restoration and repeated import retain one original Tag identity_0_518EAE51-D692-4F56-AB5C-612389BB6F93.png",
+        "timestamp" : 1792013084.961
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "7008EE0E-9A5C-4154-824D-A762FF19951C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Reimport reviews one unchanged Tag and no additions_0_62638726-73EF-4751-8187-8EDA79338141.png",
+        "timestamp" : 1792013068.828
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "02AEBBB5-C761-4176-9CB2-AD3E02E7FF6C.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the actual exported file_0_20006BBB-5332-4322-95F2-16BAD9B2EF62.txt",
+        "timestamp" : 1792013064.321
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "C739432F-9D6A-4FD5-91CE-BA0468DFD832.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Empty dataset reviews the backed-up Tag addition_0_C7709FC3-1DF9-4C59-AF5A-912F23CDAB6F.png",
+        "timestamp" : 1792013054.351
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "B0C56527-AC58-4295-BD3A-B46AC56A0063.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native picker for the actual exported file_0_6BB603F9-3A3C-4F79-9C95-12AD3A198968.txt",
+        "timestamp" : 1792013049.781
+      }
+    ],
+    "testIdentifier" : "SavedBackupImportJourneyTests/testRestoringIntoEmptyDatasetAndReimportingKeepOneTagAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedBackupImportJourneyTests/testRestoringIntoEmptyDatasetAndReimportingKeepOneTagAfterRelaunch"
+  }
+]
