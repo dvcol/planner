@@ -9,6 +9,7 @@ enum PlannerFixtureDataset {
     case calendarRepeatedSpan = "calendar-repeated-span"
     case calendarRepeatedShortSpan = "calendar-repeated-short-span"
     case calendarLatePoint = "calendar-late-point"
+    case retainedRecovery = "retained-recovery"
     case pinnedAddress = "pinned-address"
     case pinnedEmptyName = "pinned-empty-name"
     case linkImage = "link-image"
@@ -44,6 +45,9 @@ enum PlannerFixtureDataset {
       .appendingPathComponent("PlannerFixtures", isDirectory: true)
       .appendingPathComponent(scenario.rawValue, isDirectory: true)
       .appendingPathComponent(identifier.uuidString, isDirectory: true)
+    if scenario == .retainedRecovery {
+      return try await makeRetainedRecoveryStore(directory: directory)
+    }
     let configuration = PlannerStorageConfiguration(
       storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
       controlURL: directory.appendingPathComponent("control/writer"),
@@ -215,6 +219,55 @@ enum PlannerFixtureDataset {
       _ = try await save(.addMembership(itemId: item.id, listId: list.id, placement: .last))
     }
     return SavedPlannerStore(configuration: configuration)
+  }
+
+  private static func makeRetainedRecoveryStore(directory: URL) async throws -> SavedPlannerStore {
+    func configuration(for name: String) -> PlannerStorageConfiguration {
+      let datasetDirectory = directory.appendingPathComponent(name, isDirectory: true)
+      return .init(
+        storeURL: datasetDirectory.appendingPathComponent("store/Planner.sqlite"),
+        controlURL: datasetDirectory.appendingPathComponent("control/writer"),
+        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+        processRole: .mainApplication, storageMode: .localOnly)
+    }
+    let currentConfiguration = configuration(for: "current")
+    let currentPlanner = PlannerCore.Planner(configuration: currentConfiguration)
+    guard case .ready(let currentSession) = await currentPlanner.bootstrap(),
+      case .snapshot(let snapshot) = await currentPlanner.query(
+        .init(session: currentSession, request: .items(.init(archive: .all)))),
+      case .rows(let window) = await currentPlanner.read(
+        session: currentSession,
+        request: .rows(generation: snapshot.generation, offset: 0, limit: 1))
+    else { throw CancellationError() }
+    if !window.rows.isEmpty { return SavedPlannerStore(configuration: currentConfiguration) }
+
+    let retainedPlanner = PlannerCore.Planner(configuration: configuration(for: "retained"))
+    guard case .ready(let retainedSession) = await retainedPlanner.bootstrap() else {
+      throw CancellationError()
+    }
+    let retainedCommands: [PlannerCommand] = [
+      .createTag(content: .init(name: "Retained travel tag")),
+      .createItem(content: .init(title: "Retained museum")),
+    ]
+    for command in retainedCommands {
+      guard
+        case .applied(_, .complete) = await retainedPlanner.execute(
+          .init(operationId: UUID(), session: retainedSession, command: command)
+        ).outcome
+      else { throw CancellationError() }
+    }
+    let currentCommands: [PlannerCommand] = [
+      .createTag(content: .init(name: "Current travel tag")),
+      .createItem(content: .init(title: "Current hotel")),
+    ]
+    for command in currentCommands {
+      guard
+        case .applied(_, .complete) = await currentPlanner.execute(
+          .init(operationId: UUID(), session: currentSession, command: command)
+        ).outcome
+      else { throw CancellationError() }
+    }
+    return SavedPlannerStore(configuration: currentConfiguration)
   }
 
   private static func argument(_ name: String, in arguments: [String]) throws -> String? {
