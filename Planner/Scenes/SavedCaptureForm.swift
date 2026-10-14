@@ -1,3 +1,4 @@
+import MapKit
 import PlannerCore
 import SwiftUI
 
@@ -41,6 +42,8 @@ struct SavedCaptureForm: View {
   @State private var applied = false
   @State private var operationIdentifier = UUID()
   @State private var reviewChanged = false
+  @State private var selectedPreviewLinkIdentifier: UUID?
+  @State private var activePreviewRequestIdentifier: UUID?
 
   var body: some View {
     NavigationStack {
@@ -110,6 +113,11 @@ struct SavedCaptureForm: View {
       }
     }
     .interactiveDismissDisabled(isWorking || store.isSaving)
+    .task(id: selectedPreviewLinkIdentifier) { await lookupMaps() }
+    .onChange(of: links.map(\.input)) {
+      guard let draft, links.map(\.input) != captureLinkInputs(draft) else { return }
+      activePreviewRequestIdentifier = nil
+    }
     .onDisappear {
       if let draft, !applied { Task { await store.discardCapture(draft) } }
     }
@@ -171,6 +179,7 @@ struct SavedCaptureForm: View {
       }
     }
     SavedOwnedLinksEditor(links: $links, accessibilityIdentifierPrefix: "saved.capture.link")
+    mapsPreviewSection(draft)
     if let destinations, !destinations.isEmpty {
       Section {
         ForEach(destinations) { destination in
@@ -223,13 +232,134 @@ struct SavedCaptureForm: View {
             if let updated = await store.updateCapture(
               draft, edit: .init(removeInputIndexes: [issue.inputIndex]))
             {
-              if title == draft.content.title { title = updated.content.title }
-              self.draft = updated
+              adoptCaptureDraft(updated, replacing: draft)
             }
           }
         }
       }
     }
+  }
+
+  @ViewBuilder
+  private func mapsPreviewSection(_ draft: PlannerCaptureDraftRead) -> some View {
+    let previewLinks = draft.links.filter { $0.kind == .appleMaps || $0.kind == .googleMaps }
+    let linksChanged = links.map(\.input) != captureLinkInputs(draft)
+    if linksChanged || !previewLinks.isEmpty {
+      Section {
+        if !linksChanged, previewLinks.count > 1 {
+          Picker("Preview link", selection: $selectedPreviewLinkIdentifier) {
+            ForEach(previewLinks, id: \.linkId) { previewLink in
+              Text(previewLink.label ?? previewLink.originalUrl).tag(Optional(previewLink.linkId))
+            }
+          }
+          .pickerStyle(.menu)
+          .accessibilityIdentifier("saved.capture.preview.source")
+        }
+        if linksChanged {
+          Label("Links changed. Refresh to preview the edited links.", systemImage: "map")
+          Button("Refresh Preview") { Task { await lookupMaps() } }
+            .accessibilityIdentifier("saved.capture.preview.refresh")
+        } else if activePreviewRequestIdentifier != nil {
+          ProgressView("Loading Maps preview")
+            .accessibilityIdentifier("saved.capture.preview.loading")
+        } else if draft.preview.linkId == selectedPreviewLinkIdentifier,
+          let candidate = draft.preview.candidate
+        {
+          if let name = candidate.displayName {
+            Text(name).font(.headline).accessibilityIdentifier("saved.capture.preview.title")
+          }
+          if let address = candidate.formattedAddress {
+            Label(address, systemImage: "mappin.and.ellipse")
+          }
+          if candidate.provider == .googleMaps {
+            Label("Search preview", systemImage: "magnifyingglass").foregroundStyle(.secondary)
+          }
+          if let coordinate = candidate.coordinate {
+            ItemLocationMap(
+              title: candidate.displayName ?? title,
+              coordinate: .init(latitude: coordinate.latitude, longitude: coordinate.longitude),
+              accessibilityIdentifier: "saved.capture.preview.map")
+          }
+          if let attribution = candidate.attributionText {
+            Text(attribution).font(.caption).foregroundStyle(.secondary)
+          }
+        } else {
+          Label(
+            draft.preview.state == .unavailable ? "Preview unavailable" : "No Maps preview",
+            systemImage: "map"
+          )
+          .accessibilityIdentifier("saved.capture.preview.unavailable")
+          Button("Retry") { Task { await lookupMaps() } }
+            .accessibilityIdentifier("saved.capture.preview.retry")
+        }
+      } header: {
+        Text("Maps preview")
+      } footer: {
+        Text("This preview is temporary. Your own fields and the original link are saved.")
+      }
+    }
+  }
+
+  private func lookupMaps() async {
+    guard var draft, !isWorking, !applied else {
+      return
+    }
+    let requestedLinks = links.map(\.input)
+    let requestIdentifier = UUID()
+    activePreviewRequestIdentifier = requestIdentifier
+    defer {
+      if activePreviewRequestIdentifier == requestIdentifier {
+        activePreviewRequestIdentifier = nil
+      }
+    }
+    if requestedLinks != captureLinkInputs(draft) {
+      isWorking = true
+      let updated = await store.updateCapture(
+        draft, edit: .init(changes: .init(links: .set(requestedLinks))))
+      isWorking = false
+      guard let updated, self.draft?.generation == draft.generation
+      else { return }
+      adoptCaptureDraft(updated, replacing: draft)
+      draft = updated
+      if links.map(\.input) == requestedLinks {
+        links = updated.links.map(SavedOwnedLinkDraft.init)
+      }
+    }
+    guard !Task.isCancelled, activePreviewRequestIdentifier == requestIdentifier,
+      links.map(\.input) == captureLinkInputs(draft), !applied
+    else { return }
+    let previewLinks = draft.links.filter { $0.kind == .appleMaps || $0.kind == .googleMaps }
+    let linkIdentifier =
+      previewLinks.first { $0.linkId == selectedPreviewLinkIdentifier }?.linkId
+      ?? previewLinks.first?.linkId
+    guard let linkIdentifier else {
+      selectedPreviewLinkIdentifier = nil
+      return
+    }
+    if selectedPreviewLinkIdentifier != linkIdentifier {
+      selectedPreviewLinkIdentifier = linkIdentifier
+      return
+    }
+    guard let updated = await store.lookupCapture(draft, linkIdentifier: linkIdentifier),
+      !Task.isCancelled, activePreviewRequestIdentifier == requestIdentifier,
+      selectedPreviewLinkIdentifier == linkIdentifier, self.draft?.draftId == draft.draftId,
+      self.draft?.generation == draft.generation, links.map(\.input) == captureLinkInputs(draft),
+      !isWorking, !applied
+    else { return }
+    self.draft = updated
+  }
+
+  private func captureLinkInputs(_ draft: PlannerCaptureDraftRead) -> [PlannerLinkInput] {
+    draft.links.map {
+      PlannerLinkInput(linkId: $0.linkId, originalUrl: $0.originalUrl, label: $0.label)
+    }
+  }
+
+  private func adoptCaptureDraft(
+    _ updated: PlannerCaptureDraftRead, replacing previous: PlannerCaptureDraftRead
+  ) {
+    if title == previous.content.title { title = updated.content.title }
+    draft = updated
   }
 
   private var canSave: Bool {
@@ -288,6 +418,8 @@ struct SavedCaptureForm: View {
     links = prepared.links.map(SavedOwnedLinkDraft.init)
     if prepared.reuseCandidates.count == 1 { reuseIdentifier = prepared.reuseCandidates[0].itemId }
     await loadDestinations()
+    isWorking = false
+    selectedPreviewLinkIdentifier = prepared.preview.linkId
   }
 
   private func loadDestinations() async {
@@ -350,9 +482,8 @@ struct SavedCaptureForm: View {
           draft,
           edit: .init(changes: changes))
       else { return }
-      if title == draft.content.title { title = updated.content.title }
+      adoptCaptureDraft(updated, replacing: draft)
       draft = updated
-      self.draft = updated
       links = updated.links.map(SavedOwnedLinkDraft.init)
     }
     guard canSave else { return }
