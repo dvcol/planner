@@ -63,7 +63,8 @@ final class SavedCalendarDeletionJourneyTests: XCTestCase {
     XCTAssertTrue(entry.waitForNonExistence(timeout: 10))
     XCTAssertTrue(application.staticTexts["No scheduled entries"].waitForExistence(timeout: 10))
     XCTAssertTrue(actions.waitForNonExistence(timeout: 5))
-    let picker = application.datePickers["saved.calendar.date"]
+    let picker = application.descendants(matching: .any).matching(identifier: "saved.calendar.date")
+      .firstMatch
     XCTAssertTrue(picker.exists)
     XCTAssertTrue(picker.buttons["DatePicker.NextMonth"].isHittable)
     let attachment = XCTAttachment(screenshot: application.screenshot())

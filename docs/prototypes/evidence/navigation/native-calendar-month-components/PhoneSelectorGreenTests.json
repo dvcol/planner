@@ -1,0 +1,70 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName" : "iPhone 18 Pro",
+      "modelName" : "iPhone 18 Pro",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "1m 13s",
+                  "durationInSeconds" : 73.16170799732208,
+                  "name" : "testConfirmedItemDeletionClearsItsCalendarEntryAndSelectionAfterRelaunch()",
+                  "nodeIdentifier" : "SavedCalendarDeletionJourneyTests/testConfirmedItemDeletionClearsItsCalendarEntryAndSelectionAfterRelaunch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarDeletionJourneyTests/testConfirmedItemDeletionClearsItsCalendarEntryAndSelectionAfterRelaunch",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SavedCalendarDeletionJourneyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarDeletionJourneyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "1m 28s",
+                  "durationInSeconds" : 88.27675199508667,
+                  "name" : "testOverlappingAllDayAssignmentsUseTheirDatesRatherThanIdentityOrder()",
+                  "nodeIdentifier" : "SavedCalendarOrderingJourneyTests/testOverlappingAllDayAssignmentsUseTheirDatesRatherThanIdentityOrder()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarOrderingJourneyTests/testOverlappingAllDayAssignmentsUseTheirDatesRatherThanIdentityOrder",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "SavedCalendarOrderingJourneyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCalendarOrderingJourneyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "PlannerNavigationUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "PlannerNavigation",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

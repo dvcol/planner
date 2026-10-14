@@ -1,0 +1,88 @@
+[
+  {
+    "label": "WideRed",
+    "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerCalendarMonthIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity\" -resultBundlePath /private/tmp/PlannerCalendarMonthWideRed.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  {
+    "label": "WideGreen",
+    "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerCalendarMonthIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity\" -resultBundlePath /private/tmp/PlannerCalendarMonthWideGreen.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  {
+    "label": "NavigationRed",
+    "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerCalendarMonthIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedCalendarJourneyTests/testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection\" -resultBundlePath /private/tmp/PlannerCalendarMonthNavigationRed.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  {
+    "label": "NavigationGreen",
+    "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerCalendarMonthIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedCalendarJourneyTests/testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection\" -resultBundlePath /private/tmp/PlannerCalendarMonthNavigationGreen.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  {
+    "label": "PhoneQualification",
+    "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerCalendarMonthIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedCalendarJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedCalendarDeletionJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedCalendarOrderingJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedCalendarMonthJourneyTests\" -resultBundlePath /private/tmp/PlannerCalendarMonthPhoneQualification.xcresult CODE_SIGNING_ALLOWED=NO test-without-building"
+  },
+  {
+    "label": "TabletQualification",
+    "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerCalendarMonthIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedCalendarJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedCalendarDeletionJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedCalendarOrderingJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedCalendarMonthJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedCalendarInspectorJourneyTests\" -resultBundlePath /private/tmp/PlannerCalendarMonthTabletQualification.xcresult CODE_SIGNING_ALLOWED=NO test-without-building"
+  },
+  {
+    "label": "PhoneSelectorGreen",
+    "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE\" -derivedDataPath /private/tmp/PlannerCalendarMonthIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedCalendarDeletionJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedCalendarOrderingJourneyTests\" -resultBundlePath /private/tmp/PlannerCalendarMonthPhoneSelectorGreen.xcresult CODE_SIGNING_ALLOWED=NO test"
+  },
+  {
+    "label": "TabletSelectorGreen",
+    "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination \"platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446\" -derivedDataPath /private/tmp/PlannerCalendarMonthIOSDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedCalendarDeletionJourneyTests\" \"-only-testing:PlannerNavigationUITests/SavedCalendarOrderingJourneyTests\" -resultBundlePath /private/tmp/PlannerCalendarMonthTabletSelectorGreen.xcresult CODE_SIGNING_ALLOWED=NO test-without-building"
+  },
+  {
+    "label": "MacProbe",
+    "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS -derivedDataPath /private/tmp/PlannerCalendarMonthMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO \"-only-testing:PlannerNavigationUITests/SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity\" -resultBundlePath /private/tmp/PlannerCalendarMonthMacProbe.xcresult CODE_SIGNING_ALLOWED=NO test-without-building"
+  },
+  {
+    "label": "MacBuild",
+    "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS -derivedDataPath /private/tmp/PlannerCalendarMonthMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO build-for-testing"
+  },
+  {
+    "label": "MacFinalBuild",
+    "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS -derivedDataPath /private/tmp/PlannerCalendarMonthMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO build-for-testing"
+  },
+  {
+    "label": "MacRebuild",
+    "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS -derivedDataPath /private/tmp/PlannerCalendarMonthMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO build-for-testing"
+  },
+  {
+    "label": "MacVerifiedBuild",
+    "workingDirectory": "/Users/dinh-van.colomban/Workspace/private/planner",
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme PlannerNavigation -destination platform=macOS -derivedDataPath /private/tmp/PlannerCalendarMonthMacVerifiedDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO build-for-testing"
+  },
+  {
+    "label": "Lint",
+    "command": "xcrun swift-format lint --strict Planner/Scenes/SavedCalendarView.swift Planner/Scenes/SavedPlannerStore.swift Planner/Scenes/SavedCalendarMonthPicker.swift Planner/Scenes/SavedCalendarMonthGrid.swift PlannerNavigationUITests/SavedCalendarJourneyTests.swift PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift PlannerNavigationUITests/SavedCalendarDeletionJourneyTests.swift PlannerNavigationUITests/SavedCalendarOrderingJourneyTests.swift"
+  },
+  {
+    "label": "MarkdownLint",
+    "command": "pnpm dlx markdownlint-cli2 --config /private/tmp/PlannerCalendarMonthMarkdownlint.jsonc docs/open-decisions.md docs/prototypes/native-calendar-month-components.md"
+  }
+]

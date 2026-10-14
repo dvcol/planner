@@ -32,12 +32,6 @@ struct SavedPlannerItinerary: Identifiable {
   var id: UUID { source.id }
 }
 
-struct SavedPlannerCalendarEntry: Identifiable {
-  let schedule: PlannerScheduleSourceRead
-  let title: String
-  var id: UUID { schedule.source.id }
-}
-
 enum SavedReviewedChangeResult {
   case applied(PlannerAppliedResult)
   case reviewChanged(PlannerReview)
@@ -280,39 +274,48 @@ final class SavedPlannerStore {
       session: session, request: .source(.init(kind: .schedule, id: identifier)))
   }
 
-  func readCalendarEntries() async -> [SavedPlannerCalendarEntry]? {
+  func readCalendarEntries(query: PlannerCalendarQuery) async -> [PlannerCalendarEntry]? {
     guard let planner, let session else { return nil }
-    guard
-      case .snapshot(let snapshot) = await planner.query(
-        .init(
-          session: session, request: .catalog(.init(sourceKind: .schedule, archive: .all)))),
-      case .rows(let window) = await planner.read(
-        session: session,
-        request: .rows(generation: snapshot.generation, offset: 0, limit: Int64.max))
-    else {
-      alertMessage = "Planner could not read its Calendar schedules."
-      return nil
-    }
-    var entries: [SavedPlannerCalendarEntry] = []
-    for row in window.rows {
-      guard case .source(let source) = row.identity,
-        case .source(.schedule(let schedule)) = await planner.read(
-          session: session, request: .source(source))
-      else {
-        alertMessage = "Planner could not open a Calendar schedule."
+    while !Task.isCancelled {
+      let result = await planner.query(.init(session: session, request: .calendar(query)))
+      guard !Task.isCancelled else { return nil }
+      guard case .snapshot(let snapshot) = result else {
+        if case .failed(let reason) = result { alertMessage = reason.message }
         return nil
       }
-      let title: String
-      switch await planner.read(session: session, request: .source(schedule.content.source)) {
-      case .source(.item(let item)): title = item.content.title
-      case .source(.itinerary(let itinerary)): title = itinerary.content.title
-      default:
-        alertMessage = "Planner could not open a scheduled Item or Itinerary."
-        return nil
+      var entries: [PlannerCalendarEntry] = []
+      var offset: Int64 = 0
+      var needsRefresh = false
+      while offset < snapshot.matchingCount {
+        let result = await planner.read(
+          session: session,
+          request: .calendarRows(generation: snapshot.generation, offset: offset, limit: 64))
+        guard !Task.isCancelled else { return nil }
+        switch result {
+        case .calendarRows(let page):
+          guard !page.rows.isEmpty else {
+            alertMessage = "Planner could not read the complete Calendar period."
+            return nil
+          }
+          entries.append(contentsOf: page.rows)
+          offset += Int64(page.rows.count)
+        case .failed(let reason):
+          if reason.code == "staleSnapshot" {
+            needsRefresh = true
+          } else {
+            alertMessage = reason.message
+            return nil
+          }
+        default:
+          alertMessage = "Planner could not read its Calendar schedules."
+          return nil
+        }
+        if needsRefresh { break }
       }
-      entries.append(.init(schedule: schedule, title: title))
+      if needsRefresh { continue }
+      return entries
     }
-    return entries
+    return nil
   }
 
   func createSchedule(

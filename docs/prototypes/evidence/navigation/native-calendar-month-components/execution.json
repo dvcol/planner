@@ -1,0 +1,525 @@
+{
+  "baseCommit": "a100d4541afc4ccbb0b69b3927bed308a40fc769",
+  "scope": "Q80 native Month components and Q81\u201382 native Calendar window consumer",
+  "qualified": {
+    "phone": {
+      "functions": 7,
+      "suites": 4,
+      "successfulInvocations": 7,
+      "qualificationRuns": 2,
+      "skips": 0
+    },
+    "tablet": {
+      "functions": 8,
+      "suites": 5,
+      "successfulInvocations": 8,
+      "qualificationRuns": 2,
+      "skips": 0
+    },
+    "Mac": {
+      "appBuild": "passed",
+      "nativeTestHostBuild": "passed",
+      "runtimeJourneyFunctions": 0,
+      "startupFailure": "The test runner hung before establishing connection."
+    },
+    "strictSwiftLintFiles": 8,
+    "markdownLintDocuments": 2
+  },
+  "qualificationNotes": [
+    "First qualification runs passed five phone/six tablet functions and failed two obsolete DatePicker selectors per device. Both corrected functions passed focused reruns. No production source or other test functions changed between these runs.",
+    "The two initial selector files match a100d45; their hashes are retained separately. Current source/product hashes were verified after all known test/build processes became terminal.",
+    "Red/green layout and navigation runs are separate from the final qualification matrix.",
+    "Mac result totalTestCount=1 describes a synthetic System Failures entry, not an executed journey. Developer mode was observed disabled without proving that it caused the startup hang.",
+    "The launched temporary Mac test bundle rejected subsequent linker writes with Operation not permitted. A fresh derived-data build passed without source or system-permission changes."
+  ],
+  "reviews": {
+    "standards": "No remaining confirmed hard violations or material findings",
+    "spec": "No remaining confirmed spec findings"
+  },
+  "remainingGates": [
+    "Mac runtime/keyboard/accessibility and additional responsive layouts",
+    "Day/Week appointment grids, temporal overlap/overflow and timezone/DST travel fixtures",
+    "Per-device calendar display-zone override",
+    "Storage-scale performance, candidate fetching and generation-cache retention",
+    "Physical sync/account/recovery/Share and whole-app polish"
+  ],
+  "sourceHashesVerifiedAfterAllKnownProcessesExited": true,
+  "sourceHashes": [
+    {
+      "path": "Planner/Scenes/SavedCalendarView.swift",
+      "sha256": "9aecdcbd9ef60b9f8cd3eadad12b3c47630b173d22dbb92b019b1c1760f0764a"
+    },
+    {
+      "path": "Planner/Scenes/SavedPlannerStore.swift",
+      "sha256": "2ad16ffea55b42355dbff03b0834c7e95d2330741cc6670f87bd8876c74db360"
+    },
+    {
+      "path": "Planner/Scenes/SavedCalendarMonthPicker.swift",
+      "sha256": "b1366f93f7cd27cd47d7efcf02cfbfb1bbc4616a5208eff708373095e4530b91"
+    },
+    {
+      "path": "Planner/Scenes/SavedCalendarMonthGrid.swift",
+      "sha256": "2d016cef6419966eea31157f7a9cf31c6863fc1c63eadea2d55b40105f53948f"
+    },
+    {
+      "path": "PlannerNavigationUITests/SavedCalendarJourneyTests.swift",
+      "sha256": "abcd4010e6c2118b72623310b748b864fdd7f71ee58fc26f01f16e0db1908f1b"
+    },
+    {
+      "path": "PlannerNavigationUITests/SavedCalendarMonthJourneyTests.swift",
+      "sha256": "1d75c0e88e1c3064252430eec438167c847e45195ce0862c81fb47b2ae94cf97"
+    },
+    {
+      "path": "PlannerNavigationUITests/SavedCalendarDeletionJourneyTests.swift",
+      "sha256": "1df915cfd20f2cc2cd777ad304f05267769ed6273811849411d8883cbc037ef6"
+    },
+    {
+      "path": "PlannerNavigationUITests/SavedCalendarOrderingJourneyTests.swift",
+      "sha256": "bcadca84290715fa8d2e37547a804489048cb57fb95fbd7a5ec451af25f41793"
+    },
+    {
+      "path": "docs/open-decisions.md",
+      "sha256": "a210d987839c1077d00753771031f515f059be36c883fdf7cdf4cd315a0cd7b2"
+    },
+    {
+      "path": "docs/prototypes/native-calendar-month-components.md",
+      "sha256": "df5d9e9de73c4ca5ae4838aec63996aa7266646055215e6581ae0c1aaac080fe"
+    }
+  ],
+  "originalSelectorSourceHashes": [
+    {
+      "path": "PlannerNavigationUITests/SavedCalendarDeletionJourneyTests.swift",
+      "sha256": "13cede51959978d0e55d3d675d6109f8f5ecee7ec1d644269b42efe8aa65e465"
+    },
+    {
+      "path": "PlannerNavigationUITests/SavedCalendarOrderingJourneyTests.swift",
+      "sha256": "e1c83034b571b20b7f3e8a7291703d57c5629c67935a86f8ebbce2ee89a39f99"
+    }
+  ],
+  "productHashes": [
+    {
+      "platform": "phone/tablet",
+      "path": "/private/tmp/PlannerCalendarMonthIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner",
+      "sha256": "0e78afbbaa6b964a064ea345be87c9788bef4530a9b53b572924dc83948c990e"
+    },
+    {
+      "platform": "phone/tablet",
+      "path": "/private/tmp/PlannerCalendarMonthIOSDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib",
+      "sha256": "befca19964fd063e9a609757487c6af819a6b9d87870f40a466ebdfe416442dc"
+    },
+    {
+      "platform": "phone/tablet",
+      "path": "/private/tmp/PlannerCalendarMonthIOSDerivedData/Build/Products/Debug-iphonesimulator/PlannerNavigationUITests-Runner.app/PlugIns/PlannerNavigationUITests.xctest/PlannerNavigationUITests",
+      "sha256": "024a37947d3814b6bfb2f8a13b3dc7e59fcfc48901dfd7d81c236f036fed5683"
+    },
+    {
+      "platform": "Mac compile only",
+      "path": "/private/tmp/PlannerCalendarMonthMacVerifiedDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner",
+      "sha256": "2bca1cd0158ccd9e39513317e18a91429f3d8c9cfd6ae12e8ddba3b664c29a06"
+    },
+    {
+      "platform": "Mac compile only",
+      "path": "/private/tmp/PlannerCalendarMonthMacVerifiedDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib",
+      "sha256": "25593a7afc4c4fb84100527397079e42a580298ed8cbe61a9f934187105b39c4"
+    },
+    {
+      "platform": "Mac compile only",
+      "path": "/private/tmp/PlannerCalendarMonthMacVerifiedDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests",
+      "sha256": "e2cd856e4800424850d54758ed89b67c8f7cf452d80b1c180b8730031fea0b48"
+    }
+  ],
+  "runs": [
+    {
+      "label": "WideRed",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeyFunctions": 1,
+      "journeyResults": [
+        {
+          "nodeIdentifier": "SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "WideGreen",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeyFunctions": 1,
+      "journeyResults": [
+        {
+          "nodeIdentifier": "SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "NavigationRed",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeyFunctions": 1,
+      "journeyResults": [
+        {
+          "nodeIdentifier": "SavedCalendarJourneyTests/testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "NavigationGreen",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 1,
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeyFunctions": 1,
+      "journeyResults": [
+        {
+          "nodeIdentifier": "SavedCalendarJourneyTests/testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "PhoneQualification",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 7,
+        "passedTests": 5,
+        "failedTests": 2,
+        "skippedTests": 0
+      },
+      "journeyFunctions": 7,
+      "journeyResults": [
+        {
+          "nodeIdentifier": "SavedCalendarDeletionJourneyTests/testConfirmedItemDeletionClearsItsCalendarEntryAndSelectionAfterRelaunch()",
+          "result": "Failed"
+        },
+        {
+          "nodeIdentifier": "SavedCalendarJourneyTests/testCalendarIsAMainDestinationWithNativeDateSelectionAndAnEmptyAgenda()",
+          "result": "Passed"
+        },
+        {
+          "nodeIdentifier": "SavedCalendarJourneyTests/testCalendarItineraryEntryOpensItsExistingLiveDetails()",
+          "result": "Passed"
+        },
+        {
+          "nodeIdentifier": "SavedCalendarJourneyTests/testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection()",
+          "result": "Passed"
+        },
+        {
+          "nodeIdentifier": "SavedCalendarJourneyTests/testTimedCalendarCaptionRetainsTheSavedStartOnlyValueAfterRelaunch()",
+          "result": "Passed"
+        },
+        {
+          "nodeIdentifier": "SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity()",
+          "result": "Passed"
+        },
+        {
+          "nodeIdentifier": "SavedCalendarOrderingJourneyTests/testOverlappingAllDayAssignmentsUseTheirDatesRatherThanIdentityOrder()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "TabletQualification",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 8,
+        "passedTests": 6,
+        "failedTests": 2,
+        "skippedTests": 0
+      },
+      "journeyFunctions": 8,
+      "journeyResults": [
+        {
+          "nodeIdentifier": "SavedCalendarDeletionJourneyTests/testConfirmedItemDeletionClearsItsCalendarEntryAndSelectionAfterRelaunch()",
+          "result": "Failed"
+        },
+        {
+          "nodeIdentifier": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+          "result": "Passed"
+        },
+        {
+          "nodeIdentifier": "SavedCalendarJourneyTests/testCalendarIsAMainDestinationWithNativeDateSelectionAndAnEmptyAgenda()",
+          "result": "Passed"
+        },
+        {
+          "nodeIdentifier": "SavedCalendarJourneyTests/testCalendarItineraryEntryOpensItsExistingLiveDetails()",
+          "result": "Passed"
+        },
+        {
+          "nodeIdentifier": "SavedCalendarJourneyTests/testMonthAgendaUsesSavedAllDayIdentityAndFollowsNativeDateSelection()",
+          "result": "Passed"
+        },
+        {
+          "nodeIdentifier": "SavedCalendarJourneyTests/testTimedCalendarCaptionRetainsTheSavedStartOnlyValueAfterRelaunch()",
+          "result": "Passed"
+        },
+        {
+          "nodeIdentifier": "SavedCalendarMonthJourneyTests/testMonthIndicatesTheDateOfASavedScheduleAndKeepsItsAgendaIdentity()",
+          "result": "Passed"
+        },
+        {
+          "nodeIdentifier": "SavedCalendarOrderingJourneyTests/testOverlappingAllDayAssignmentsUseTheirDatesRatherThanIdentityOrder()",
+          "result": "Failed"
+        }
+      ]
+    },
+    {
+      "label": "PhoneSelectorGreen",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 2,
+        "passedTests": 2,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeyFunctions": 2,
+      "journeyResults": [
+        {
+          "nodeIdentifier": "SavedCalendarDeletionJourneyTests/testConfirmedItemDeletionClearsItsCalendarEntryAndSelectionAfterRelaunch()",
+          "result": "Passed"
+        },
+        {
+          "nodeIdentifier": "SavedCalendarOrderingJourneyTests/testOverlappingAllDayAssignmentsUseTheirDatesRatherThanIdentityOrder()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "TabletSelectorGreen",
+      "summary": {
+        "result": "Passed",
+        "totalTestCount": 2,
+        "passedTests": 2,
+        "failedTests": 0,
+        "skippedTests": 0
+      },
+      "journeyFunctions": 2,
+      "journeyResults": [
+        {
+          "nodeIdentifier": "SavedCalendarDeletionJourneyTests/testConfirmedItemDeletionClearsItsCalendarEntryAndSelectionAfterRelaunch()",
+          "result": "Passed"
+        },
+        {
+          "nodeIdentifier": "SavedCalendarOrderingJourneyTests/testOverlappingAllDayAssignmentsUseTheirDatesRatherThanIdentityOrder()",
+          "result": "Passed"
+        }
+      ]
+    },
+    {
+      "label": "MacProbe",
+      "summary": {
+        "result": "Failed",
+        "totalTestCount": 1,
+        "passedTests": 0,
+        "failedTests": 1,
+        "skippedTests": 0
+      },
+      "journeyFunctions": 0,
+      "journeyResults": []
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "phone-month.png",
+      "originalExport": "PlannerCalendarMonthPhoneQualificationAttachments/19129053-7818-41F8-8D0F-280F392861AB.png",
+      "inspected": true
+    },
+    {
+      "path": "tablet-month.png",
+      "originalExport": "PlannerCalendarMonthTabletQualificationAttachments/4FACCB26-26C0-41A5-B83F-8B9783361322.png",
+      "inspected": true
+    },
+    {
+      "path": "tablet-ordered-agenda.png",
+      "originalExport": "PlannerCalendarMonthTabletSelectorGreenAttachments/47FFF034-5D9A-46F5-998B-1B01A8A29CAD.png",
+      "inspected": true
+    },
+    {
+      "path": "tablet-inspector.png",
+      "originalExport": "PlannerCalendarMonthTabletQualificationAttachments/F5CCD689-1BD0-4389-90E2-86AF98ED9666.png",
+      "inspected": true
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "Lint.log.gz",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "path": "MacBuild.log.gz",
+      "sha256": "6e4449d41779e7e232dfa190338495ed2650aaf246b13dd6ae8a621528439386"
+    },
+    {
+      "path": "MacFinalBuild.log.gz",
+      "sha256": "6b6af2626d3beb75ebb5fbc52ea10e20508057b315ea78a6b30ac6b2cc6bf7b7"
+    },
+    {
+      "path": "MacProbe.log.gz",
+      "sha256": "7947cd078f2d2c861734475a29d9f5b41cc06bd63ae1f527a223964a6c6a78a5"
+    },
+    {
+      "path": "MacProbeSummary.json",
+      "sha256": "4d4b802ecd0017e624d0b17b12bf4d0c6fdc3f86216feb68ea1c84a4e30ff8ee"
+    },
+    {
+      "path": "MacProbeTests.json",
+      "sha256": "f1e9c0ca5157e20f2ff6d3d0b5dbd6a160f363b47a5c9cc666dc38f98309f456"
+    },
+    {
+      "path": "MacRebuild.log.gz",
+      "sha256": "04a637471e1faae0233180f9b07e1c8891f159ac77910972a9c5e405bcd24b18"
+    },
+    {
+      "path": "MacVerifiedBuild.log.gz",
+      "sha256": "ebb206314bf23b1970ee0cf1c6f44be9c73cc4ce31d89c056ba0393ac91342b8"
+    },
+    {
+      "path": "MarkdownLint.log.gz",
+      "sha256": "6679a8fc549a0f85e4119a01bffa225db9002380153f400b449e8f5468282994"
+    },
+    {
+      "path": "NavigationGreen.log.gz",
+      "sha256": "5044e9e25233e45e8b85ba64d0fc7ebd9e47935b683d6eee0ff761e5892c8197"
+    },
+    {
+      "path": "NavigationGreenSummary.json",
+      "sha256": "723392db12f436a27e1ec71483d244bf814fe6243f9279a22f845471ebb0c4b8"
+    },
+    {
+      "path": "NavigationGreenTests.json",
+      "sha256": "5d4dad9b189d0eddb7417a1c9d9446c4cf0eacdf66ef5dbf0824c7f0a81fdcb9"
+    },
+    {
+      "path": "NavigationRed.log.gz",
+      "sha256": "9a6e503a38aa52d82b1a124a7412d80e3b386bdea10c747caa47f2d647a59d64"
+    },
+    {
+      "path": "NavigationRedSummary.json",
+      "sha256": "9b31b26e3b60e945719268587eef8123e1bfcdf88d379b59a609225a7d7ec17e"
+    },
+    {
+      "path": "NavigationRedTests.json",
+      "sha256": "a0d69fd01ffa3e1cf00a93a8d815357d741b6c737c67dfa3678be32fde7544eb"
+    },
+    {
+      "path": "PhoneQualification.log.gz",
+      "sha256": "bd28b4d87619bb029bd67d668a9bb4dc9e0c8fcd462db50c812cc3e3c919bdde"
+    },
+    {
+      "path": "PhoneQualificationSummary.json",
+      "sha256": "f9fe03d1e0f35068a946b48726931b401eba77f50c05c5af0152eac586b92059"
+    },
+    {
+      "path": "PhoneQualificationTests.json",
+      "sha256": "19abe7891042ebd646095f48ae172357fc5beb1be1efe74d320127222901ba5a"
+    },
+    {
+      "path": "PhoneSelectorGreen.log.gz",
+      "sha256": "24c086f5f01cab5a96b3d030247882a16a1686c540c1416521bee94732ed66c0"
+    },
+    {
+      "path": "PhoneSelectorGreenSummary.json",
+      "sha256": "9fae9eab5d06b5a526c0f4649d4462775cabf905637970ab7385e34c57bf12e6"
+    },
+    {
+      "path": "PhoneSelectorGreenTests.json",
+      "sha256": "7bb0fe2dffab21804333f5c5fc8accc00c69d69b034492c99fed8bd46966f404"
+    },
+    {
+      "path": "TabletQualification.log.gz",
+      "sha256": "916ebe6bdc9368f4c5e301bda594f3d73fa298edaa3441115e932872a6a2feb8"
+    },
+    {
+      "path": "TabletQualificationSummary.json",
+      "sha256": "cb654494200dc6001ee9b1a1932e8abb066b98702c0ece050db56e78e298fe6e"
+    },
+    {
+      "path": "TabletQualificationTests.json",
+      "sha256": "a57d63323fd6bb5d4ca22e55f7a54c7935a6ee3e1cb4a4b2f88c78d20ba26fa0"
+    },
+    {
+      "path": "TabletSelectorGreen.log.gz",
+      "sha256": "e713f86ee8faf05451ebaa19d6c79574de057c482c29fdee38f4ea3aaa624724"
+    },
+    {
+      "path": "TabletSelectorGreenSummary.json",
+      "sha256": "54bd5e8b33282f0cbfe393a691b4b77368039f51b1b2955e23d16eaf2c23f0c1"
+    },
+    {
+      "path": "TabletSelectorGreenTests.json",
+      "sha256": "1de41e8ca6f0661ffaaac8451413d1a8cc6939f1c69ba319645f6d985eb7c5ed"
+    },
+    {
+      "path": "WideGreen.log.gz",
+      "sha256": "9c8a4fa31744d0a8acb567f830523567056e3b119ecc96ba0d1df14f5c2faf66"
+    },
+    {
+      "path": "WideGreenSummary.json",
+      "sha256": "59a5258c481ce375a869dafeddbf655b2b5c54e4fcce20b842d76723caef830e"
+    },
+    {
+      "path": "WideGreenTests.json",
+      "sha256": "f3c6f2997ce1ac3d3b0aaa093f7f14d65fc3664462df49310d7229c6c12f0601"
+    },
+    {
+      "path": "WideRed.log.gz",
+      "sha256": "bc81f3c815386540f44832d2be271eadc3dddfe0a7fc12e644b22568745fc056"
+    },
+    {
+      "path": "WideRedSummary.json",
+      "sha256": "f604ad91ad6d74927b188d5d1797209fea0912939a37f5841e9b4fc83044c4e6"
+    },
+    {
+      "path": "WideRedTests.json",
+      "sha256": "db769b0d3dd361c2c8569ca7a21b7403fa00c76c24fc0e1004825c2e3c76f559"
+    },
+    {
+      "path": "commands.json",
+      "sha256": "a6fc55542b8264e8bf91bec1737dc7673a1ca07d47605e1330e602213a997840"
+    },
+    {
+      "path": "mac-developer-status.txt",
+      "sha256": "6b0b50655a6c77982eb3b673ec0e8eab027f980084a62fea3c65f445862e4fff"
+    },
+    {
+      "path": "markdownlint.jsonc",
+      "sha256": "3ed78a3be207540535a3490c785a74c961bab1ac4556381651d59ee14f33afe5"
+    },
+    {
+      "path": "phone-month.png",
+      "sha256": "227dc5061b919c0cc93ebfbc9991fef47417bade317b1ed498c6b1844fd61d0f"
+    },
+    {
+      "path": "tablet-inspector.png",
+      "sha256": "1bd9dfc4caba82ca1d9ed55f6d0b664487609b3f05a4c6a91321ad3f5302e36a"
+    },
+    {
+      "path": "tablet-month.png",
+      "sha256": "3444446b1afbec55b9f074d22ea8bc99ef8e40b6b63d7a10ca4503522bc7ce46"
+    },
+    {
+      "path": "tablet-ordered-agenda.png",
+      "sha256": "d5e29a0372f595392c841cff517fa26b7e47f955a5f390dcb1b5e79594099a0f"
+    }
+  ]
+}

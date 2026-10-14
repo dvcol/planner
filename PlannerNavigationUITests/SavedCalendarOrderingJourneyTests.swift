@@ -72,7 +72,8 @@ final class SavedCalendarOrderingJourneyTests: XCTestCase {
     #else
       application.buttons["Calendar"].firstMatch.activateForPlannerJourney()
     #endif
-    let picker = application.datePickers["saved.calendar.date"]
+    let picker = application.descendants(matching: .any).matching(identifier: "saved.calendar.date")
+      .firstMatch
     XCTAssertTrue(picker.waitForExistence(timeout: 5))
     picker.buttons.containing(.staticText, identifier: "11").firstMatch.activateForPlannerJourney()
     let entries = application.buttons.matching(
