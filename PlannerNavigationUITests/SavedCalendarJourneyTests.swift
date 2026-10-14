@@ -198,11 +198,14 @@ final class SavedCalendarJourneyTests: XCTestCase {
       .matching(identifier: "saved.calendar.schedule.\(scheduleIdentifier)").firstMatch
     XCTAssertTrue(entry.waitForExistence(timeout: 10))
     XCTAssertTrue(entry.label.contains("Museum calendar"))
-    let picker = application.datePickers["saved.calendar.date"]
+    let picker = application.descendants(matching: .any).matching(identifier: "saved.calendar.date")
+      .firstMatch
     XCTAssertTrue(picker.waitForExistence(timeout: 5))
     picker.buttons["DatePicker.NextMonth"].activateForPlannerJourney()
     let firstDay = picker.buttons.containing(.staticText, identifier: "1").firstMatch
     XCTAssertTrue(firstDay.waitForExistence(timeout: 5))
+    XCTAssertTrue(
+      firstDay.isSelected, "Browsing a month keeps the agenda's selected day in that month.")
     firstDay.activateForPlannerJourney()
     XCTAssertTrue(entry.waitForNonExistence(timeout: 5))
     XCTAssertTrue(application.staticTexts["No scheduled entries"].exists)
@@ -247,7 +250,9 @@ final class SavedCalendarJourneyTests: XCTestCase {
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
     openCalendar(application)
-    XCTAssertTrue(application.datePickers["saved.calendar.date"].waitForExistence(timeout: 5))
+    XCTAssertTrue(
+      application.descendants(matching: .any).matching(identifier: "saved.calendar.date").firstMatch
+        .waitForExistence(timeout: 5))
     XCTAssertTrue(application.staticTexts["No scheduled entries"].waitForExistence(timeout: 5))
     let attachment = XCTAttachment(screenshot: application.screenshot())
     attachment.name = "Native main Calendar with empty saved data"
