@@ -5,8 +5,7 @@ import Testing
 @testable import Planner
 
 struct CaptureRoutingTests {
-  @Test func discoveryAdvertisesCaptureAndReviewedApplyWithoutLookupOrAdministration() async throws
-  {
+  @Test func discoveryAdvertisesCaptureAndReviewedApplyWithoutAdministration() async throws {
     let fixture = try await CaptureHTTPFixture.open()
     do {
       let result = try await fixture.request(method: "tools/list", parameters: [:])
@@ -15,9 +14,19 @@ struct CaptureRoutingTests {
       #expect(
         [
           "planner_prepare_capture", "planner_update_capture", "planner_read_capture",
-          "planner_cancel_capture",
+          "planner_cancel_capture", "planner_lookup_capture",
         ].allSatisfy(names.contains))
-      #expect(!names.contains("planner_lookup_capture") && !names.contains("planner_export"))
+      #expect(!names.contains("planner_export"))
+      let lookup = try #require(tools.first { $0["name"] as? String == "planner_lookup_capture" })
+      let lookupSchema = try #require(lookup["inputSchema"] as? [String: Any])
+      #expect(
+        Set(try #require(lookupSchema["required"] as? [String])) == [
+          "formatVersion", "draftId", "generation", "linkId",
+        ])
+      #expect(lookupSchema["additionalProperties"] as? Bool == false)
+      let lookupAnnotations = try #require(lookup["annotations"] as? [String: Any])
+      #expect(lookupAnnotations["openWorldHint"] as? Bool == true)
+      #expect(lookupAnnotations["destructiveHint"] as? Bool == false)
       let update = try #require(tools.first { $0["name"] as? String == "planner_update_capture" })
       let schema = try #require(update["inputSchema"] as? [String: Any])
       #expect(
@@ -507,7 +516,7 @@ struct CaptureRoutingTests {
   }
 }
 
-private struct CaptureHTTPFixture {
+struct CaptureHTTPFixture {
   let directory: URL
   let planner: PlannerCore.Planner
   let session: PlannerDatasetSession
@@ -518,14 +527,16 @@ private struct CaptureHTTPFixture {
 
   static func open(
     directory: URL = FileManager.default.temporaryDirectory.appendingPathComponent(
-      UUID().uuidString)
+      UUID().uuidString),
+    captureHTTPTransport: any PlannerCaptureHTTPTransport = PlannerNativeCaptureHTTPTransport()
   ) async throws -> Self {
     let planner = PlannerCore.Planner(
       configuration: .init(
         storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
         controlURL: directory.appendingPathComponent("control/writer"),
         recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
-        processRole: .mainApplication, storageMode: .localOnly))
+        processRole: .mainApplication, storageMode: .localOnly),
+      captureHTTPTransport: captureHTTPTransport)
     guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
     let handler = PlannerMCPRequestHandler(
       credential: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
