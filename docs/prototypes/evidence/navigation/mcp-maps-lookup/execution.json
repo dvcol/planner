@@ -1,0 +1,67 @@
+{
+  "baseCommit": "49410e1d312707c8e4e3f35bd497e58b06aaa229",
+  "scope": "Authenticated stateless MCP Maps lookup advertisement, admission, encoding and concurrent reviewed Add through real HTTP with controlled production provider I/O",
+  "qualified": {
+    "lookup": {
+      "functions": 5,
+      "invocations": 6,
+      "rejectionVariantsWithinOneFunction": 10
+    },
+    "affectedHTTP": {
+      "functions": 29,
+      "suites": 8,
+      "invocations": 37,
+      "failures": 0,
+      "skips": 0
+    },
+    "macAppAndTestHostBuild": "passed",
+    "strictSwiftLintFiles": 3,
+    "markdownLintDocuments": 1
+  },
+  "sourceHashes": {
+    "Planner/AgentControl/PlannerMCPCaptureTool.swift": "900c1fa9a6b9d47595058ee6b1de82eeead74a19a0416fe6e3fe6c451c31fc56",
+    "PlannerMCPTests/CaptureRoutingTests.swift": "44efb068ab4f37884da57a13a39465bb563d8dab9443195b132920e271549cd9",
+    "PlannerMCPTests/CaptureLookupRoutingTests.swift": "db7eb9f0f608a9ca4f6eadd76a336a47abe51f874f820d364c5285ddcb074235",
+    "Planner/AgentControl/PlannerMCPRequestHandler.swift": "d246a58cb832071c71b7d7d062e01f5a5012d98487b4c20cf87f30bd74329f46",
+    "Planner/AgentControl/PlannerMCPLoopbackListener.swift": "56e00b716e0680245e521b9f671e43a7990f1c8103a5bd3f85e2bd14d7756e94",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "960a0cce68e8476f3b83a5f8845d60a7367d97913927d1451b1d97d5ec1212f3",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCaptureLookup.swift": "6d8578f720277b99e0752984fb006fa250bb5d2e78bee4189183fefdf164c5da",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCaptureHTTPTransport.swift": "3f13d1b3d37d8ab28cf6979c1edb765b9e247cefef0051d6e60e77c2ff34fb5f"
+  },
+  "commands": {
+    "http": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Planner.xcodeproj -scheme Planner -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCaptureHTTPTransportSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerMCPTests/CaptureRoutingTests -only-testing:PlannerMCPTests/CaptureLookupRoutingTests -only-testing:PlannerMCPTests/CommandRoutingTests -only-testing:PlannerMCPTests/BulkCompletionAdmissionRoutingTests -only-testing:PlannerMCPTests/OperationStatusRoutingTests -only-testing:PlannerMCPTests/ManualContainerEstimateRoutingTests -only-testing:PlannerMCPTests/AuthenticationTests -only-testing:PlannerMCPTests/SourceRoutingTests -resultBundlePath /private/tmp/PlannerMCPLookupQualified.xcresult CODE_SIGNING_ALLOWED=NO test",
+    "swiftLint": "env DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift-format lint --strict Planner/AgentControl/PlannerMCPCaptureTool.swift PlannerMCPTests/CaptureRoutingTests.swift PlannerMCPTests/CaptureLookupRoutingTests.swift",
+    "markdownLint": "pnpm dlx markdownlint-cli2 --config /private/tmp/PlannerCatalogEstimatesMarkdownlint.jsonc docs/prototypes/mcp-maps-capture-lookup.md"
+  },
+  "diagnostics": [
+    "The initial method selector matched zero Swift Testing functions; its successful status is not qualification.",
+    "Selecting the capture suite executed five functions and failed the missing lookup discovery assertion before implementation.",
+    "xcresulttool required native report-cache access to export the completed bundle.",
+    "Log parsing removes the native zero-width line prefix before counting parameter invocations."
+  ],
+  "reviews": {
+    "standards": "No remaining confirmed source/evidence findings; production boundary composition, bounded late gate and post-host fixture cleanup verified.",
+    "spec": "No remaining confirmed source/evidence findings; schema, authorization, temporary data, pending Add, actual late delivery, outcomes and remaining gates verified."
+  },
+  "remainingGates": [
+    "native preview UI/Retry, Share and App Intents",
+    "live Apple/Google and native socket qualification",
+    "physical sender allocation and lifecycle",
+    "four real agent clients and credential-reader UX",
+    "native Mac UI runtime and signed-device sync/account recovery",
+    "Calendar Q79-Q81 and pending Q82",
+    "scale/paging and whole-app polish"
+  ],
+  "artifactHashes": {
+    "zero-selected-diagnostic.log": "9a145ade7305836928f0fd7b716e0944cc4a949fe47f50005b7ff45b6bec143b",
+    "discovery-red.log": "4fd1c467c20d73c9755cb67d45b3db643e9b84f195f9aa58ac3eec9b5ae43a9c",
+    "discovery-green.log": "e8191a28fdd48826e3640727cfe9835e5c58038ba28e1d36ff4ce05a8ec9e766",
+    "qualified.log": "dca424013adfee06e922ac2be89d5ef9a9d21d813e4ad6a83438051cf7385d35",
+    "qualified-summary.json": "d55e7c63a8e4e057429d8edcd182b5580ac393798e843fcbcb0f49437e07a240",
+    "qualified-tests.json": "eb240c76b80273a4701d2f3172f8eb8dea4709ca99f1665dff06eab266ad2db2",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "markdown-lint.log": "14c6ff4a1b595b4770a40d38fe5558cde6c5901f761077c19bf0927e08214823",
+    "host-exit.json": "2fc826f727b6823a06abecf6fa5fb735afc55b189bbbd2f054365d9f73766c5c",
+    "post-process-cleanup.log": "ef568b896eccf52cef042087ba0eb73c96a9a4771f728d54a09dd5dc131aacd6"
+  }
+}

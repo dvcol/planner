@@ -78,6 +78,13 @@
           ])
         ], required: ["inputs"], readOnly: false),
       definition(
+        "planner_lookup_capture",
+        description:
+          "Look up the selected Maps link in a current unsaved draft. Uses bounded HTTPS header requests; provider candidates stay temporary. Add never waits, and failed lookup retains the original bookmark. Retry is explicit.",
+        properties: [
+          "draftId": identifierSchema, "generation": identifierSchema, "linkId": identifierSchema,
+        ], required: ["draftId", "generation", "linkId"], readOnly: false, openWorld: true),
+      definition(
         "planner_read_capture",
         description: "Read an unsaved draft in the authorized dataset without applying it.",
         properties: ["draftId": identifierSchema], required: ["draftId"], readOnly: true),
@@ -99,6 +106,8 @@
         case "planner_prepare_capture": required = ["formatVersion", "inputs"]
         case "planner_read_capture": required = ["formatVersion", "draftId"]
         case "planner_cancel_capture": required = ["formatVersion", "draftId", "generation"]
+        case "planner_lookup_capture":
+          required = ["formatVersion", "draftId", "generation", "linkId"]
         case "planner_update_capture":
           required = ["formatVersion", "draftId", "generation", "changes"]
         default:
@@ -125,6 +134,12 @@
           return try encode(await planner.readCapture(session: session, draftId: draftIdentifier))
         }
         let generation = try identifier(fields["generation"], path: "/generation")
+        if parameters.name == "planner_lookup_capture" {
+          return try encode(
+            await planner.lookupCapture(
+              session: session, draftId: draftIdentifier, generation: generation,
+              linkId: identifier(fields["linkId"], path: "/linkId")))
+        }
         if parameters.name == "planner_update_capture" {
           let edit = PlannerCaptureEdit(
             changes: try PlannerMCPExecutionTool.itemChanges(fields["changes"], path: "/changes"),
@@ -371,7 +386,7 @@
 
     private static func definition(
       _ name: String, description: String, properties: [String: Value], required: [String],
-      readOnly: Bool
+      readOnly: Bool, openWorld: Bool = false
     ) -> Tool {
       var properties = properties
       properties["formatVersion"] = .object(["type": .string("integer"), "const": .int(1)])
@@ -384,7 +399,7 @@
         ]),
         annotations: .init(
           readOnlyHint: readOnly, destructiveHint: false, idempotentHint: readOnly,
-          openWorldHint: false))
+          openWorldHint: openWorld))
     }
   }
 #endif

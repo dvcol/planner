@@ -1,0 +1,377 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project Planner.xcodeproj -scheme Planner -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCaptureHTTPTransportSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO "-only-testing:PlannerMCPTests/CaptureRoutingTests" -resultBundlePath /private/tmp/PlannerMCPLookupDiscoveryRedSuite.xcresult CODE_SIGNING_ALLOWED=NO test
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  swift-log: https://github.com/apple/swift-log.git @ 1.16.1
+  PlannerCore: /Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore @ local
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.104.0
+  EventSource: https://github.com/mattt/eventsource.git @ 1.5.1
+  swift-system: https://github.com/apple/swift-system.git @ 1.8.1
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.7.2
+  PlannerPreviews: /Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerPreviews @ local
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.1
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk @ 0.12.1
+
+Writing result bundle at path:
+	/private/tmp/PlannerMCPLookupDiscoveryRedSuite.xcresult
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (43 targets)
+    Target 'PlannerMCPTests' in project 'Planner'
+        ➜ Explicit dependency on target 'Planner' in project 'Planner'
+        ➜ Explicit dependency on target 'MCP-product' in project 'mcp-swift-sdk'
+    Target 'Planner' in project 'Planner'
+        ➜ Explicit dependency on target 'PlannerPreviews-product' in project 'PlannerPreviews'
+        ➜ Explicit dependency on target 'PlannerCore-product' in project 'PlannerCore'
+        ➜ Explicit dependency on target 'MCP-product' in project 'mcp-swift-sdk'
+        ➜ Explicit dependency on target 'NIOCore-product' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOPosix-product' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOHTTP1-product' in project 'swift-nio'
+    Target 'NIOHTTP1-product' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOHTTP1' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOEmbedded' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIO' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLLHTTP' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'NIOHTTP1' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOEmbedded' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIO' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLLHTTP' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'CNIOLLHTTP' in project 'swift-nio' (no dependencies)
+    Target 'NIO' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOEmbedded' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'NIOEmbedded' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'NIOPosix-product' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'swift-nio_NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'swift-nio_NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'CNIOPosix' in project 'swift-nio' (no dependencies)
+    Target 'swift-nio_NIOPosix' in project 'swift-nio' (no dependencies)
+    Target 'NIOCore-product' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'Atomics-product' in project 'swift-atomics'
+        ➜ Explicit dependency on target 'Atomics' in project 'swift-atomics'
+        ➜ Explicit dependency on target '_AtomicsShims' in project 'swift-atomics'
+    Target 'Atomics' in project 'swift-atomics'
+        ➜ Explicit dependency on target '_AtomicsShims' in project 'swift-atomics'
+    Target '_AtomicsShims' in project 'swift-atomics' (no dependencies)
+    Target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'DequeModule' in project 'swift-collections'
+        ➜ Explicit dependency on target 'InternalCollectionsUtilities' in project 'swift-collections'
+        ➜ Explicit dependency on target 'SpanPreview' in project 'swift-collections'
+    Target 'DequeModule' in project 'swift-collections'
+        ➜ Explicit dependency on target 'InternalCollectionsUtilities' in project 'swift-collections'
+        ➜ Explicit dependency on target 'SpanPreview' in project 'swift-collections'
+    Target 'SpanPreview' in project 'swift-collections'
+        ➜ Explicit dependency on target 'InternalCollectionsUtilities' in project 'swift-collections'
+    Target 'InternalCollectionsUtilities' in project 'swift-collections' (no dependencies)
+    Target '_NIODataStructures' in project 'swift-nio' (no dependencies)
+    Target 'CNIOWASI' in project 'swift-nio' (no dependencies)
+    Target 'CNIOWindows' in project 'swift-nio' (no dependencies)
+    Target 'CNIOLinux' in project 'swift-nio' (no dependencies)
+    Target 'CNIODarwin' in project 'swift-nio' (no dependencies)
+    Target 'CNIOFreeBSD' in project 'swift-nio' (no dependencies)
+    Target 'CNIOOpenBSD' in project 'swift-nio' (no dependencies)
+    Target '_NIOBase64' in project 'swift-nio' (no dependencies)
+    Target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+    Target 'CNIOAtomics' in project 'swift-nio' (no dependencies)
+    Target 'MCP-product' in project 'mcp-swift-sdk'
+        ➜ Explicit dependency on target 'MCP' in project 'mcp-swift-sdk'
+        ➜ Explicit dependency on target 'SystemPackage-product' in project 'swift-system'
+        ➜ Explicit dependency on target 'Logging-product' in project 'swift-log'
+        ➜ Explicit dependency on target 'EventSource-product' in project 'EventSource'
+    Target 'MCP' in project 'mcp-swift-sdk'
+        ➜ Explicit dependency on target 'SystemPackage-product' in project 'swift-system'
+        ➜ Explicit dependency on target 'Logging-product' in project 'swift-log'
+        ➜ Explicit dependency on target 'EventSource-product' in project 'EventSource'
+    Target 'EventSource-product' in project 'EventSource'
+        ➜ Explicit dependency on target 'EventSource' in project 'EventSource'
+    Target 'EventSource' in project 'EventSource' (no dependencies)
+    Target 'Logging-product' in project 'swift-log'
+        ➜ Explicit dependency on target 'Logging' in project 'swift-log'
+    Target 'Logging' in project 'swift-log' (no dependencies)
+    Target 'SystemPackage-product' in project 'swift-system'
+        ➜ Explicit dependency on target 'SystemPackage' in project 'swift-system'
+        ➜ Explicit dependency on target 'CSystem' in project 'swift-system'
+    Target 'SystemPackage' in project 'swift-system'
+        ➜ Explicit dependency on target 'CSystem' in project 'swift-system'
+    Target 'CSystem' in project 'swift-system' (no dependencies)
+    Target 'PlannerCore-product' in project 'PlannerCore'
+        ➜ Explicit dependency on target 'PlannerCore' in project 'PlannerCore'
+    Target 'PlannerCore' in project 'PlannerCore' (no dependencies)
+    Target 'PlannerPreviews-product' in project 'PlannerPreviews'
+        ➜ Explicit dependency on target 'PlannerPreviews' in project 'PlannerPreviews'
+    Target 'PlannerPreviews' in project 'PlannerPreviews' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ReadFileContents /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
+
+Build description signature: 2873a3a38d9559a46f8a395800cab41a
+Build description path: /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/XCBuildData/2873a3a38d9559a46f8a395800cab41a.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk /tmp/PlannerMCPDerivedData/SDKStatCaches.noindex/macosx27.0-26A425-7231f6df4def33e022ae2eb8f782df1a.sdkstatcache
+    cd /Users/dinh-van.colomban/Workspace/private/planner/Planner.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -o /tmp/PlannerMCPDerivedData/SDKStatCaches.noindex/macosx27.0-26A425-7231f6df4def33e022ae2eb8f782df1a.sdkstatcache
+
+ProcessInfoPlistFile /tmp/PlannerMCPDerivedData/Build/Products/Debug/PackageFrameworks/EventSource_16D03289A377287E_PackageProduct.framework/Versions/A/Resources/Info.plist /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/EventSource.build/Debug/EventSource-product-t.build/empty-EventSource_16D03289A377287E_PackageProduct.plist (in target 'EventSourcedynamic-product' from project 'EventSource')
+    cd /tmp/PlannerCaptureHTTPTransportSourcePackages/checkouts/eventsource
+    builtin-infoPlistUtility /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/EventSource.build/Debug/EventSource-product-t.build/empty-EventSource_16D03289A377287E_PackageProduct.plist -producttype com.apple.product-type.framework -expandbuildsettings -platform macosx -o /tmp/PlannerMCPDerivedData/Build/Products/Debug/PackageFrameworks/EventSource_16D03289A377287E_PackageProduct.framework/Versions/A/Resources/Info.plist
+
+ProcessInfoPlistFile /tmp/PlannerMCPDerivedData/Build/Products/Debug/PackageFrameworks/Logging_35C93DA702091ECE_PackageProduct.framework/Versions/A/Resources/Info.plist /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/swift-log.build/Debug/Logging-product-t.build/empty-Logging_35C93DA702091ECE_PackageProduct.plist (in target 'Loggingdynamic-product' from project 'swift-log')
+    cd /tmp/PlannerCaptureHTTPTransportSourcePackages/checkouts/swift-log
+    builtin-infoPlistUtility /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/swift-log.build/Debug/Logging-product-t.build/empty-Logging_35C93DA702091ECE_PackageProduct.plist -producttype com.apple.product-type.framework -expandbuildsettings -platform macosx -o /tmp/PlannerMCPDerivedData/Build/Products/Debug/PackageFrameworks/Logging_35C93DA702091ECE_PackageProduct.framework/Versions/A/Resources/Info.plist
+
+ProcessInfoPlistFile /tmp/PlannerMCPDerivedData/Build/Products/Debug/PackageFrameworks/SystemPackage_-32606F4011EB0AC2_PackageProduct.framework/Versions/A/Resources/Info.plist /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/swift-system.build/Debug/SystemPackage-product-t.build/empty-SystemPackage_-32606F4011EB0AC2_PackageProduct.plist (in target 'SystemPackagedynamic-product' from project 'swift-system')
+    cd /tmp/PlannerCaptureHTTPTransportSourcePackages/checkouts/swift-system
+    builtin-infoPlistUtility /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/swift-system.build/Debug/SystemPackage-product-t.build/empty-SystemPackage_-32606F4011EB0AC2_PackageProduct.plist -producttype com.apple.product-type.framework -expandbuildsettings -platform macosx -o /tmp/PlannerMCPDerivedData/Build/Products/Debug/PackageFrameworks/SystemPackage_-32606F4011EB0AC2_PackageProduct.framework/Versions/A/Resources/Info.plist
+
+ProcessInfoPlistFile /tmp/PlannerMCPDerivedData/Build/Products/Debug/PackageFrameworks/MCP_1E0E1DFB_PackageProduct.framework/Versions/A/Resources/Info.plist /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/mcp-swift-sdk.build/Debug/MCP-product-t.build/empty-MCP_1E0E1DFB_PackageProduct.plist (in target 'MCPdynamic-product' from project 'mcp-swift-sdk')
+    cd /tmp/PlannerCaptureHTTPTransportSourcePackages/checkouts/swift-sdk
+    builtin-infoPlistUtility /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/mcp-swift-sdk.build/Debug/MCP-product-t.build/empty-MCP_1E0E1DFB_PackageProduct.plist -producttype com.apple.product-type.framework -expandbuildsettings -platform macosx -o /tmp/PlannerMCPDerivedData/Build/Products/Debug/PackageFrameworks/MCP_1E0E1DFB_PackageProduct.framework/Versions/A/Resources/Info.plist
+
+ProcessInfoPlistFile /tmp/PlannerMCPDerivedData/Build/Products/Debug/swift-nio_NIOPosix.bundle/Contents/Info.plist /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/swift-nio.build/Debug/swift-nio_NIOPosix-b.build/empty-swift-nio_NIOPosix.plist (in target 'swift-nio_NIOPosix' from project 'swift-nio')
+    cd /tmp/PlannerCaptureHTTPTransportSourcePackages/checkouts/swift-nio
+    builtin-infoPlistUtility /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/swift-nio.build/Debug/swift-nio_NIOPosix-b.build/empty-swift-nio_NIOPosix.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /tmp/PlannerMCPDerivedData/Build/Products/Debug/swift-nio_NIOPosix.bundle/Contents/Info.plist
+
+CopySwiftLibs /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app (in target 'Planner' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib --scan-folder /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/Frameworks --scan-folder /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/PlugIns --scan-folder /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/Library/SystemExtensions --scan-folder /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/Extensions --scan-folder /tmp/PlannerMCPDerivedData/Build/Products/Debug/PackageFrameworks/MCP_1E0E1DFB_PackageProduct.framework --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/Planner.build/Debug/Planner.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+ProcessInfoPlistFile /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/Info.plist /Users/dinh-van.colomban/Workspace/private/planner/Configuration/Planner-Info.plist (in target 'Planner' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-infoPlistUtility /Users/dinh-van.colomban/Workspace/private/planner/Configuration/Planner-Info.plist -producttype com.apple.product-type.application -genpkginfo /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/PkgInfo -expandbuildsettings -platform macosx -scanforprivacyfile /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/Frameworks/EventSource_16D03289A377287E_PackageProduct.framework -scanforprivacyfile /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/Frameworks/Logging_35C93DA702091ECE_PackageProduct.framework -scanforprivacyfile /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/Frameworks/MCP_1E0E1DFB_PackageProduct.framework -scanforprivacyfile /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/Frameworks/SystemPackage_-32606F4011EB0AC2_PackageProduct.framework -scanforprivacyfile /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/Resources/swift-nio_NIOPosix.bundle -o /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/Info.plist
+
+ProcessInfoPlistFile /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/PlugIns/PlannerMCPTests.xctest/Contents/Info.plist /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerMCPTests.build/empty-PlannerMCPTests.plist (in target 'PlannerMCPTests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-infoPlistUtility /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerMCPTests.build/empty-PlannerMCPTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -platform macosx -scanforprivacyfile /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/PlugIns/PlannerMCPTests.xctest/Contents/Resources/swift-nio_NIOPosix.bundle -o /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/PlugIns/PlannerMCPTests.xctest/Contents/Info.plist
+
+CopySwiftLibs /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/PlugIns/PlannerMCPTests.xctest (in target 'PlannerMCPTests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/PlugIns/PlannerMCPTests.xctest/Contents/MacOS/PlannerMCPTests --scan-folder /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/PlugIns/PlannerMCPTests.xctest/Contents/Frameworks --scan-folder /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/PlugIns/PlannerMCPTests.xctest/Contents/PlugIns --scan-folder /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/PlugIns/PlannerMCPTests.xctest/Contents/Library/SystemExtensions --scan-folder /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/PlugIns/PlannerMCPTests.xctest/Contents/Extensions --scan-folder /tmp/PlannerMCPDerivedData/Build/Products/Debug/PackageFrameworks/MCP_1E0E1DFB_PackageProduct.framework --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/PlugIns/PlannerMCPTests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerMCPTests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+PruneExplicitPrecompiledModules /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/PlannerMCPDerivedData/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/PlannerMCPDerivedData/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+2026-10-14 13:49:22.055382+0900 Planner[83498:41127664] [Connection] Unable to get synchronousRemoteObjectProxy, error: Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.linkd.autoShortcut" UserInfo={NSDebugDescription=connection to service named com.apple.linkd.autoShortcut}
+2026-10-14 13:49:22.055663+0900 Planner[83498:41127664] [Application] Error registering app with intents framework: Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.linkd.autoShortcut" UserInfo={NSDebugDescription=connection to service named com.apple.linkd.autoShortcut}
+2026-10-14 13:49:22.056046+0900 Planner[83498:41127730] [Connection] Unable to get synchronousRemoteObjectProxy, error: Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.linkd.autoShortcut" UserInfo={NSDebugDescription=connection to service named com.apple.linkd.autoShortcut}
+2026-10-14 13:49:22.056108+0900 Planner[83498:41127730] [Connection] Unable to re-register with Process Instance Registry, error: Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.linkd.autoShortcut" UserInfo={NSDebugDescription=connection to service named com.apple.linkd.autoShortcut}
+2026-10-14 13:49:22.056673+0900 Planner[83498:41127663] [Connection] Unable to get synchronousRemoteObjectProxy, error: Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.linkd.autoShortcut" UserInfo={NSDebugDescription=connection to service named com.apple.linkd.autoShortcut}
+2026-10-14 13:49:22.056693+0900 Planner[83498:41127663] [Connection] Unable to re-register with Process Instance Registry, error: Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.linkd.autoShortcut" UserInfo={NSDebugDescription=connection to service named com.apple.linkd.autoShortcut}
+2026-10-14 13:49:22.057189+0900 Planner[83498:41127663] [Connection] Will NOT re-try to establish the connection
+2026-10-14 13:49:22.057217+0900 Planner[83498:41127664] [Connection] Unable to get synchronousRemoteObjectProxy, error: Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.linkd.autoShortcut" UserInfo={NSDebugDescription=connection to service named com.apple.linkd.autoShortcut}
+2026-10-14 13:49:22.057228+0900 Planner[83498:41127664] [Connection] Unable to re-register with Process Instance Registry, error: Error Domain=NSCocoaErrorDomain Code=4097 "connection to service named com.apple.linkd.autoShortcut" UserInfo={NSDebugDescription=connection to service named com.apple.linkd.autoShortcut}
+2026-10-14 13:49:22.092178+0900 Planner[83498:41127626] ApplePersistenceIgnoreState: Existing state will not be touched. New state will be written to /var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/org.example.PlannerMCPPrototype.savedState
+Test Suite 'Selected tests' started at 2026-10-14 13:49:22.369.
+Test Suite 'PlannerMCPTests.xctest' started at 2026-10-14 13:49:22.369.
+Test Suite 'PlannerMCPTests.xctest' passed at 2026-10-14 13:49:22.369.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-10-14 13:49:22.369.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite CaptureRoutingTests started.
+◇ Test discoveryAdvertisesCaptureAndReviewedApplyWithoutAdministration() started.
+✘ Test discoveryAdvertisesCaptureAndReviewedApplyWithoutAdministration() recorded an issue at CaptureRoutingTests.swift:15:7: Expectation failed: [
+          "planner_prepare_capture", "planner_update_capture", "planner_read_capture",
+          "planner_cancel_capture", "planner_lookup_capture",
+        ].allSatisfy(names.contains)
+↳ [
+            "planner_prepare_capture", "planner_update_capture", "planner_read_capture",
+            "planner_cancel_capture", "planner_lookup_capture",
+          ].allSatisfy(names.contains) → false
+↳   [
+              "planner_prepare_capture", "planner_update_capture", "planner_read_capture",
+              "planner_cancel_capture", "planner_lookup_capture",
+            ] → ["planner_prepare_capture", "planner_update_capture", "planner_read_capture", "planner_cancel_capture", "planner_lookup_capture"]
+✘ Test discoveryAdvertisesCaptureAndReviewedApplyWithoutAdministration() recorded an issue at CaptureRoutingTests.swift:21:24: Expectation failed: tools.first { $0["name"] as? String == "planner_lookup_capture" }
+↳ tools.first { $0["name"] as? String == "planner_lookup_capture" } → nil
+✘ Test discoveryAdvertisesCaptureAndReviewedApplyWithoutAdministration() failed after 0.083 seconds with 2 issues.
+◇ Test exactReuseAddsOnlyMissingLinksAndMembershipsWithoutChangingOwnedOrLocalState() started.
+2026-10-14 13:49:22.574638+0900 Planner[83498:41127825] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+✔ Test exactReuseAddsOnlyMissingLinksAndMembershipsWithoutChangingOwnedOrLocalState() passed after 0.128 seconds.
+◇ Test malformedAndStaleCaptureRequestsPreserveTheCurrentDraftAndSavedData() started.
+2026-10-14 13:49:22.598542+0900 Planner[83498:41127789] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+2026-10-14 13:49:22.601897+0900 Planner[83498:41127662] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+2026-10-14 13:49:22.603427+0900 Planner[83498:41127787] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+2026-10-14 13:49:22.605002+0900 Planner[83498:41127825] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+2026-10-14 13:49:22.606488+0900 Planner[83498:41127662] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+2026-10-14 13:49:22.609811+0900 Planner[83498:41127787] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+2026-10-14 13:49:22.612796+0900 Planner[83498:41127787] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+2026-10-14 13:49:22.614632+0900 Planner[83498:41127662] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+2026-10-14 13:49:22.625444+0900 Planner[83498:41127787] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+2026-10-14 13:49:22.633912+0900 Planner[83498:41127662] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+✔ Test malformedAndStaleCaptureRequestsPreserveTheCurrentDraftAndSavedData() passed after 0.060 seconds.
+◇ Test agentEditsReviewsAppliesAndReplaysOneCaptureWithItsListMemberships() started.
+2026-10-14 13:49:22.686348+0900 Planner[83498:41127787] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+2026-10-14 13:49:22.706484+0900 Planner[83498:41127824] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+2026-10-14 13:49:22.713771+0900 Planner[83498:41127787] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+✔ Test agentEditsReviewsAppliesAndReplaysOneCaptureWithItsListMemberships() passed after 0.082 seconds.
+◇ Test prepareReadAndCancelRetainExactInputsWithoutSavingData() started.
+2026-10-14 13:49:22.744535+0900 Planner[83498:41127662] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+2026-10-14 13:49:22.746772+0900 Planner[83498:41127824] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+2026-10-14 13:49:22.748900+0900 Planner[83498:41127663] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+2026-10-14 13:49:22.755955+0900 Planner[83498:41127824] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+2026-10-14 13:49:22.760057+0900 Planner[83498:41127787] [] nw_path_necp_check_for_updates Failed to copy updated result (22)
+✔ Test prepareReadAndCancelRetainExactInputsWithoutSavingData() passed after 0.037 seconds.
+✘ Suite CaptureRoutingTests failed after 0.392 seconds with 2 issues.
+✘ Test run with 5 tests in 1 suite failed after 0.392 seconds with 2 issues.
+2026-10-14 13:49:38.266 xcodebuild[83454:41127333] [MT] IDETestOperationsObserverDebug: 16.485 elapsed -- Testing started completed.
+2026-10-14 13:49:38.266 xcodebuild[83454:41127333] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-14 13:49:38.266 xcodebuild[83454:41127333] [MT] IDETestOperationsObserverDebug: 16.485 sec, +16.485 sec -- end
+
+Test session results, code coverage, and logs:
+	/tmp/PlannerMCPLookupDiscoveryRedSuite.xcresult
+
+Failing tests:
+	CaptureRoutingTests.discoveryAdvertisesCaptureAndReviewedApplyWithoutAdministration()
+	CaptureRoutingTests.discoveryAdvertisesCaptureAndReviewedApplyWithoutAdministration()
+
+** TEST FAILED **
+
+Testing started
