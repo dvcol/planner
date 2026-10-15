@@ -47,6 +47,60 @@ import XCTest
       capture("The same retained Item and Tag survive unavailable-store relaunch")
     }
 
+    func testUnavailableStoreExportsItsSavedGenerationWithoutRestoringIt() throws {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      let fixtureIdentifier = UUID().uuidString
+      application.launchArguments = [
+        "--fixture", "unavailable-store", "--fixture-dataset", fixtureIdentifier,
+      ]
+      application.launchSavedPlannerJourney()
+      assertUnavailable(application)
+      let identities = inspectRecovery(application)
+      let namespaceIdentifier = try XCTUnwrap(
+        identities.first { $0.hasPrefix("saved.recovery.snapshot.") })
+      let namespace = String(namespaceIdentifier.dropFirst("saved.recovery.snapshot.".count))
+      let itemIdentifier = try XCTUnwrap(
+        identities.first { $0.hasPrefix("saved.recovery.source.item.") })
+      let tagIdentifier = try XCTUnwrap(
+        identities.first { $0.hasPrefix("saved.recovery.source.tag.") })
+      application.plannerElement("saved.recovery.export").activateForPlannerJourney()
+      let save = application.buttons.matching(NSPredicate(format: "label == %@", "Save")).firstMatch
+      XCTAssertTrue(save.waitForExistence(timeout: 10))
+      let localLocation = application.cells.matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "DOC.sidebar.item.On My ")
+      ).firstMatch
+      if localLocation.exists && localLocation.isHittable {
+        localLocation.activateForPlannerJourney()
+      }
+      capture("Unavailable-store recovery uses the native local file destination")
+      save.activateForPlannerJourney()
+      let exported = application.staticTexts["saved.recovery.exported"]
+      XCTAssertTrue(exported.waitForExistence(timeout: 10))
+      XCTAssertEqual(
+        exported.label,
+        "Recovery copy exported, Planner Saved Recovery \(namespace) Generation 2.json")
+      XCTAssertFalse(application.alerts["Recovery export failed"].exists)
+      XCTAssertFalse(application.plannerElement("saved.recovery.restore.review").isEnabled)
+      reveal(exported, application: application)
+      let expectation = XCTAttachment(
+        string:
+          "Filename: Planner Saved Recovery \(namespace) Generation 2.json\nFixture: \(fixtureIdentifier)\nItem: \(itemIdentifier)\nTag: \(tagIdentifier)\nGeneration: 2"
+      )
+      expectation.name = "Public unavailable-store export expectation"
+      expectation.lifetime = .keepAlways
+      add(expectation)
+      capture("Unavailable-store recovery reports successful native file delivery")
+      application.plannerElement("saved.recovery.selection.done").activateForPlannerJourney()
+      application.plannerElement("saved.recovery.done").activateForPlannerJourney()
+      assertUnavailable(application)
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      assertUnavailable(application)
+      XCTAssertEqual(inspectRecovery(application), identities)
+      capture("Export leaves the same recovery copy separate after unavailable-store relaunch")
+    }
+
     private func assertUnavailable(_ application: XCUIApplication) {
       XCTAssertTrue(application.staticTexts["Planner unavailable"].waitForExistence(timeout: 20))
       XCTAssertTrue(
