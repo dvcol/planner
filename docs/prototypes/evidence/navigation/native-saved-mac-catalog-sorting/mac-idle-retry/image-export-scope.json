@@ -1,0 +1,17 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerMacCatalogSort-mac-idle-retry.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerSavedMacImages-mac-idle-retry-e23fkimn",
+    "--filter",
+    "*.png"
+  ],
+  "originalManifestLocalPath": "/private/tmp/PlannerSavedMacImages-mac-idle-retry-e23fkimn/manifest.json",
+  "originalManifestSHA256": "370a043ce21ee57df696337cfc063af314417389eec1f9fce0b9dae1bffcf9d2",
+  "scope": "Only explicitly named manual fixture-window captures copied unchanged. Automatic desktop/failure images, if present, remain local and receive no shared visual credit."
+}

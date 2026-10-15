@@ -1,0 +1,67 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "EB529A98-0EEF-46ED-BBBD-36DE84020AC6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Returning to the original dataset restores both catalog choices_0_06FF50EE-C725-440A-9C6E-366FC63EF816.png",
+    "timestamp": 1792070293.305,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCatalogsRememberSeparateNativeSortsAcrossRelaunchAndDatasetChanges()",
+    "originalExportPath": "/private/tmp/PlannerSavedMacImages-mac-idle-retry-e23fkimn/EB529A98-0EEF-46ED-BBBD-36DE84020AC6.png",
+    "sharedFile": "EB529A98-0EEF-46ED-BBBD-36DE84020AC6.png",
+    "sha256": "502cbdfd023c2e15a0325702b172f29e8fb3bf8457154eea642fdd9062aeae81"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "FB702E36-3393-4104-B580-380D0DA32AE6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "A separate local dataset starts with alphabetical catalog defaults_0_BCDBDEBE-758E-47A6-96C5-94833B98B58D.png",
+    "timestamp": 1792070280.165,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCatalogsRememberSeparateNativeSortsAcrossRelaunchAndDatasetChanges()",
+    "originalExportPath": "/private/tmp/PlannerSavedMacImages-mac-idle-retry-e23fkimn/FB702E36-3393-4104-B580-380D0DA32AE6.png",
+    "sharedFile": "FB702E36-3393-4104-B580-380D0DA32AE6.png",
+    "sha256": "e790d4e66569cb3426411200f27c24c82a7e997bda8e2e5c1ddfaf5ca2575f62"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "7B9B152C-5C08-41D2-9ADB-659565969FA0.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itineraries keep their separate full estimate ascending choice_0_72BFE94A-9942-43FC-9AC2-0DD483AE1AFB.png",
+    "timestamp": 1792070250.522,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCatalogsRememberSeparateNativeSortsAcrossRelaunchAndDatasetChanges()",
+    "originalExportPath": "/private/tmp/PlannerSavedMacImages-mac-idle-retry-e23fkimn/7B9B152C-5C08-41D2-9ADB-659565969FA0.png",
+    "sharedFile": "7B9B152C-5C08-41D2-9ADB-659565969FA0.png",
+    "sha256": "335a651504fd875a43ec3a7d826c63e68f1a8902e84ebd34fb31fdac22eca546"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "23F97885-D3FA-46C1-A9A2-E15283BA9CD3.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Lists sorted by full estimate descending with incomplete plans last_0_4C980B4A-4E1B-40D1-AAC2-C8A7A10461C5.png",
+    "timestamp": 1792070202.516,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCatalogsRememberSeparateNativeSortsAcrossRelaunchAndDatasetChanges()",
+    "originalExportPath": "/private/tmp/PlannerSavedMacImages-mac-idle-retry-e23fkimn/23F97885-D3FA-46C1-A9A2-E15283BA9CD3.png",
+    "sharedFile": "23F97885-D3FA-46C1-A9A2-E15283BA9CD3.png",
+    "sha256": "ee1d172f92c76863da035a53719d1a51b4ce382a4bd1ac3161dbd858a0ba0e1f"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "C43FEB14-BF4A-4177-984C-58209CB7255E.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Sorting the visible List catalog retains the selected Zulu plan contents_0_C1E36454-5EE9-486D-A7AA-F1817DE1071B.png",
+    "timestamp": 1792070321.186,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testSharedEstimateEditsRefreshBothCatalogsWithoutReplacingValidSelection()",
+    "originalExportPath": "/private/tmp/PlannerSavedMacImages-mac-idle-retry-e23fkimn/C43FEB14-BF4A-4177-984C-58209CB7255E.png",
+    "sharedFile": "C43FEB14-BF4A-4177-984C-58209CB7255E.png",
+    "sha256": "19cadda1c39e82105cac87d74b0e979d2f73fbf30f4c3436f830c8459c79c75f"
+  }
+]

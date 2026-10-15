@@ -1,0 +1,153 @@
+Planner fixture state: 4, windows: 1
+Attributes: Window (Main), 0x7a84662440, {{684.0, 537.0}, {900.0, 592.0}}, identifier: 'SwiftUI.WindowGroup<SwiftUI.ModifiedContent<SwiftUI.Group<SwiftUI._ConditionalContent<SwiftUI._ConditionalContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<PlannerFixtures.SavedPlannerView, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerFixtures.SavedPlannerStore>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerPreviews>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerAddressPreviews>>>, SwiftUI.Conte', title: 'Items', Disabled
+Element subtree:
+ →Window (Main), 0x7a84662440, {{684.0, 537.0}, {900.0, 592.0}}, identifier: 'SwiftUI.WindowGroup<SwiftUI.ModifiedContent<SwiftUI.Group<SwiftUI._ConditionalContent<SwiftUI._ConditionalContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<PlannerFixtures.SavedPlannerView, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerFixtures.SavedPlannerStore>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerPreviews>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerAddressPreviews>>>, SwiftUI.Conte', title: 'Items', Disabled
+    Group, 0x7a846630c0, {{684.0, 537.0}, {900.0, 592.0}}, Disabled
+      SplitGroup, 0x7a84662800, {{684.0, 537.0}, {900.0, 592.0}}, identifier: 'SwiftUI.WindowGroup<SwiftUI.ModifiedContent<SwiftUI.Group<SwiftUI._ConditionalContent<SwiftUI._ConditionalContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<PlannerFixtures.SavedPlannerView, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerFixtures.SavedPlannerStore>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerPreviews>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerAddressPreviews>>>, SwiftUI.Conte', Disabled
+        Group, 0x7a846617c0, {{684.0, 537.0}, {240.0, 592.0}}, Disabled
+          ScrollView, 0x7a84661cc0, {{684.0, 589.0}, {240.0, 540.0}}, Disabled
+            Outline, 0x7a84663980, {{683.0, 588.0}, {242.0, 542.0}}, label: 'Sidebar'
+              OutlineRow, 0x7a84661b80, {{684.0, 589.0}, {240.0, 19.0}}, Disabled
+                Cell, 0x7a84661040, {{694.0, 589.0}, {220.0, 19.0}}, Keyboard Focused
+                  Group, 0x7a84661680, {{698.0, 589.0}, {224.0, 19.0}}, Disabled
+                    StaticText, 0x7a84662d00, {{698.0, 591.5}, {42.0, 14.0}}, label: 'Planner'
+              OutlineRow, 0x7a84661e00, {{684.0, 608.0}, {240.0, 32.0}}, Disabled
+                Cell, 0x7a84663480, {{694.0, 608.0}, {220.0, 32.0}}, Keyboard Focused
+                  Button, 0x7a84661180, {{704.5, 616.0}, {54.0, 16.0}}, identifier: 'saved.section.lists', label: 'Lists'
+              OutlineRow, 0x7a846612c0, {{684.0, 640.0}, {240.0, 32.0}}, Selected, Disabled
+                Cell, 0x7a84663840, {{694.0, 640.0}, {220.0, 32.0}}, Keyboard Focused, Selected
+                  Button, 0x7a84663340, {{704.5, 646.0}, {61.0, 20.5}}, identifier: 'saved.section.items', label: 'Items'
+              OutlineRow, 0x7a84661900, {{684.0, 672.0}, {240.0, 32.0}}, Disabled
+                Cell, 0x7a84663e80, {{694.0, 672.0}, {220.0, 32.0}}, Keyboard Focused
+                  Button, 0x7a84663c00, {{703.5, 679.8}, {59.5, 16.0}}, identifier: 'saved.section.inbox', label: 'Inbox'
+              OutlineRow, 0x7a8407b200, {{684.0, 704.0}, {240.0, 32.0}}, Disabled
+                Cell, 0x7a84079b80, {{694.0, 704.0}, {220.0, 32.0}}, Keyboard Focused
+                  Button, 0x7a84078640, {{705.5, 711.0}, {85.0, 18.0}}, identifier: 'saved.section.itineraries', label: 'Itineraries'
+              OutlineRow, 0x7a8407a300, {{684.0, 736.0}, {240.0, 32.0}}, Disabled
+                Cell, 0x7a84079e00, {{694.0, 736.0}, {220.0, 32.0}}, Keyboard Focused
+                  Button, 0x7a84079cc0, {{704.5, 743.8}, {80.0, 16.2}}, identifier: 'saved.section.calendar', label: 'Calendar'
+              OutlineRow, 0x7a8407b700, {{684.0, 781.0}, {240.0, 19.0}}, Disabled
+                Cell, 0x7a840792c0, {{694.0, 781.0}, {220.0, 19.0}}, Keyboard Focused
+                  Group, 0x7a84079540, {{698.0, 781.0}, {224.0, 19.0}}, Disabled
+                    StaticText, 0x7a8407b5c0, {{698.0, 783.5}, {26.5, 14.0}}, label: 'Lists'
+              OutlineRow, 0x7a8407a580, {{684.0, 800.0}, {240.0, 45.5}}, Disabled
+                Cell, 0x7a84288000, {{694.0, 800.0}, {220.0, 45.5}}, Keyboard Focused
+                  Button, 0x7a84288140, {{703.5, 805.1}, {202.5, 35.4}}, identifier: 'saved.list.C519E765-98BC-4C2A-833F-9C464FEA3272', label: 'Manual plan'
+              OutlineRow, 0x7a84288280, {{684.0, 845.5}, {240.0, 45.5}}, Disabled
+                Cell, 0x7a842883c0, {{694.0, 845.5}, {220.0, 45.5}}, Keyboard Focused
+                  Button, 0x7a84288500, {{703.5, 850.6}, {203.5, 35.4}}, identifier: 'saved.list.B42E771D-7F0D-403B-A38A-5D2375CF8C26', label: 'Zulu plan'
+              OutlineRow, 0x7a84288640, {{684.0, 891.0}, {240.0, 45.5}}, Disabled
+                Cell, 0x7a84288780, {{694.0, 891.0}, {220.0, 45.5}}, Keyboard Focused
+                  Button, 0x7a842888c0, {{703.5, 896.1}, {189.5, 35.4}}, identifier: 'saved.list.81D71BEB-DCA5-486A-BB39-19C617DB34F1', label: 'Alpha plan'
+              OutlineRow, 0x7a84288a00, {{684.0, 936.5}, {240.0, 45.5}}, Disabled
+                Cell, 0x7a84288b40, {{694.0, 936.5}, {220.0, 45.5}}, Keyboard Focused
+                  Button, 0x7a84288c80, {{703.5, 941.6}, {201.0, 35.4}}, identifier: 'saved.list.C06B66EE-F33E-43CD-A97A-D93ABF97ED73', label: 'Missing plan'
+              TableColumn, 0x7a84288dc0, {{694.0, 589.0}, {220.0, 540.0}}, identifier: 'ListColumn', Disabled
+        Splitter, 0x7a84288f00, {{924.0, 589.0}, {0.5, 540.0}}, value: 240, Disabled
+        Group, 0x7a84289040, {{684.0, 537.0}, {440.0, 592.0}}, Disabled
+          ScrollView, 0x7a84289180, {{924.0, 589.0}, {200.0, 540.0}}, Disabled
+            Outline, 0x7a842892c0, {{923.0, 588.0}, {202.0, 542.0}}
+              OutlineRow, 0x7a84289400, {{924.0, 599.0}, {200.0, 41.0}}, Selected, Disabled
+                Cell, 0x7a84289540, {{934.0, 599.0}, {180.0, 41.0}}, Keyboard Focused, Selected
+                  Button, 0x7a84289680, {{941.0, 603.0}, {133.5, 33.0}}, identifier: 'saved.item.42DBDB03-5C01-470E-9F3C-A4300BFBA448', label: 'Alpha plan activity'
+              OutlineRow, 0x7a842897c0, {{924.0, 640.0}, {200.0, 24.0}}, Disabled
+                Cell, 0x7a84289900, {{934.0, 640.0}, {180.0, 24.0}}, Keyboard Focused
+                  Button, 0x7a84289a40, {{941.0, 644.0}, {142.5, 16.0}}, identifier: 'saved.item.9AA601BD-764F-475C-900E-879930792C79', label: 'Manual plan activity'
+              OutlineRow, 0x7a84289b80, {{924.0, 664.0}, {200.0, 24.0}}, Disabled
+                Cell, 0x7a84289cc0, {{934.0, 664.0}, {180.0, 24.0}}, Keyboard Focused
+                  Button, 0x7a84289e00, {{941.0, 668.0}, {145.5, 16.0}}, identifier: 'saved.item.F3C78E8F-91CD-4129-8621-C488C6A30EDE', label: 'Missing plan activity'
+              OutlineRow, 0x7a84289f40, {{924.0, 688.0}, {200.0, 41.0}}, Disabled
+                Cell, 0x7a8428a080, {{934.0, 688.0}, {180.0, 41.0}}, Keyboard Focused
+                  Button, 0x7a8428a1c0, {{941.0, 692.0}, {126.0, 33.0}}, identifier: 'saved.item.6B6DCC72-1336-4957-A717-4F13B33731AA', label: 'Zulu plan activity'
+              TableColumn, 0x7a8428a300, {{934.0, 589.0}, {180.0, 540.0}}, identifier: 'ListColumn', Disabled
+        Splitter, 0x7a8428a440, {{1124.0, 589.0}, {1.0, 540.0}}, value: 199.5, Disabled
+        Group, 0x7a8428a580, {{1125.0, 537.0}, {459.0, 592.0}}, Disabled
+          ScrollView, 0x7a8428a6c0, {{1125.0, 589.0}, {459.0, 540.0}}, Disabled
+            Group, 0x7a8428a800, {{1145.0, 609.0}, {419.0, 78.0}}
+              StaticText, 0x7a8428a940, {{1155.0, 619.0}, {146.5, 20.5}}, value: Alpha plan activity
+              StaticText, 0x7a8428aa80, {{1155.0, 660.5}, {66.5, 16.0}}, value: Completed
+              Switch, 0x7a8428abc0, {{1517.0, 660.0}, {38.0, 18.0}}, identifier: 'saved.item.completion', value: 0
+            StaticText, 0x7a8428ad00, {{1155.0, 697.0}, {337.5, 14.0}}, value: Completing this It...
+            StaticText, 0x7a8428ae40, {{1155.0, 741.0}, {106.5, 16.0}}, label: 'Activity estimate'
+            Group, 0x7a8428af80, {{1145.0, 767.0}, {419.0, 36.0}}
+              Other, 0x7a8428b0c0, {{1155.0, 777.0}, {399.0, 16.0}}, identifier: 'saved.item.estimate', label: 'Activity estimate'
+    Toolbar, 0x7a8428b200, {{684.0, 537.0}, {900.0, 52.0}}, Disabled
+      Button, 0x7a8428b340, {{776.0, 537.0}, {44.0, 52.0}}, identifier: 'saved.categories.manage', label: 'Manage Labels'
+      Button, 0x7a8428b480, {{820.0, 537.0}, {44.0, 52.0}}, label: 'Hide Sidebar'
+      Button, 0x7a8428b5c0, {{1088.0, 537.0}, {41.0, 52.0}}, identifier: 'saved.capture.new', label: 'Capture Text or Link'
+      Button, 0x7a8428b700, {{1129.0, 537.0}, {89.0, 52.0}}, identifier: 'saved.items.filters', label: 'Active'
+      Group, 0x7a8428b840, {{1218.0, 537.0}, {56.0, 52.0}}, Disabled
+        MenuButton, 0x7a8428b980, {{1222.0, 545.0}, {48.0, 36.0}}, identifier: 'saved.items.sort', title: 'Sort: Title · Ascending'
+      Button, 0x7a8428bac0, {{1274.0, 537.0}, {40.0, 52.0}}, identifier: 'saved.item.new', label: 'New Item'
+      Group, 0x7a8428bc00, {{1323.0, 537.0}, {47.0, 52.0}}, Disabled
+        MenuButton, 0x7a8428bd40, {{1327.5, 545.0}, {42.5, 36.0}}, identifier: 'saved.item.actions', title: 'Item actions'
+      Group, 0x7a8428be80, {{1540.0, 537.0}, {40.0, 52.0}}, Disabled
+        SearchField, 0x7a84370000, {{1539.0, 544.0}, {38.0, 38.0}}, label: 'Search', Disabled
+      PopUpButton, 0x7a84370140, {{1499.0, 544.0}, {38.0, 38.0}}, label: 'more toolbar items', value: Sort: Full estimat...
+    Button, 0x7a84370280, {{702.0, 555.0}, {16.0, 16.0}}, identifier: '_XCUI:CloseWindow', Disabled
+    Button, 0x7a843703c0, {{748.0, 555.0}, {16.0, 16.0}}, identifier: '_XCUI:ZoomWindow'
+      Group, 0x7a84370500, {{749.0, 556.0}, {14.0, 14.0}}, Disabled
+        Group, 0x7a84370640, {{749.0, 556.0}, {14.0, 14.0}}, Disabled
+    Button, 0x7a84370780, {{725.0, 555.0}, {16.0, 16.0}}, identifier: '_XCUI:MinimizeWindow'
+    StaticText, 0x7a843708c0, {{928.0, 537.0}, {160.0, 52.0}}, value: Items
+    Sheet, 0x7a84370a00, {{899.0, 589.0}, {470.0, 500.0}}, Disabled
+      Group, 0x7a84370b40, {{899.0, 589.0}, {470.0, 500.0}}, Disabled
+        StaticText, 0x7a84370c80, {{947.0, 605.5}, {58.0, 16.0}}, value: Edit Item
+        ScrollView, 0x7a84370dc0, {{899.0, 636.5}, {470.0, 387.5}}, Disabled
+          Group, 0x7a84370f00, {{919.0, 656.5}, {430.0, 142.0}}, Keyboard Focused
+            StaticText, 0x7a84371040, {{929.0, 666.6}, {26.5, 16.0}}, value: Title
+            TextField, 0x7a84371180, {{962.5, 665.5}, {377.5, 18.0}}, identifier: 'saved.item.edit.title', value: Alpha plan activity, Keyboard Focused
+            StaticText, 0x7a843712c0, {{929.0, 703.6}, {47.0, 16.0}}, value: Subtitle
+            TextField, 0x7a84371400, {{983.0, 702.5}, {357.0, 18.0}}, identifier: 'saved.item.edit.subtitle'
+            StaticText, 0x7a84371540, {{929.0, 740.6}, {36.0, 47.5}}, value: Notes
+            TextField, 0x7a84371680, {{972.0, 739.5}, {368.0, 50.0}}, identifier: 'saved.item.edit.notes'
+          StaticText, 0x7a843717c0, {{929.0, 808.6}, {229.5, 14.0}}, value: Changes appear whe...
+          StaticText, 0x7a84371900, {{929.0, 852.6}, {106.5, 16.0}}, label: 'Activity estimate'
+          Group, 0x7a84371a40, {{919.0, 878.5}, {430.0, 153.5}}
+            StaticText, 0x7a84371b80, {{929.0, 888.6}, {100.0, 16.0}}, value: Include estimate
+            Switch, 0x7a84371cc0, {{1302.0, 888.0}, {38.0, 18.0}}, identifier: 'saved.item.edit.estimate.enabled', value: 1
+            StaticText, 0x7a84371e00, {{929.0, 926.1}, {71.0, 16.0}}, value: Display unit
+            PopUpButton, 0x7a84371f40, {{1243.0, 922.5}, {96.0, 24.0}}, identifier: 'saved.item.edit.estimate.unit', value: Minutes
+            StaticText, 0x7a84372080, {{929.0, 964.4}, {48.5, 16.0}}, value: Minutes
+            StaticText, 0x7a843721c0, {{985.5, 964.4}, {16.5, 16.0}}, value: 60
+            Stepper, 0x7a84372300, {{1318.0, 960.0}, {22.0, 26.0}}, identifier: 'saved.item.edit.estimate.quantity', value: 60
+              IncrementArrow, 0x7a84372440, {{1319.0, 961.0}, {20.0, 12.0}}, Disabled
+              DecrementArrow, 0x7a84372580, {{1319.0, 973.0}, {20.0, 12.0}}, Disabled
+            StaticText, 0x7a843726c0, {{929.0, 1007.4}, {247.5, 13.0}}, value: Changing the displ...
+          StaticText, 0x7a84372800, {{929.0, 1061.9}, {41.5, 16.0}}, label: 'Labels'
+          Group, 0x7a84372940, {{919.0, 1088.0}, {430.0, 73.0}}
+            Button, 0x7a84372a80, {{919.0, 1088.0}, {430.0, 36.0}}, identifier: 'saved.item.edit.categories', label: 'Categories, None'
+            Button, 0x7a84372bc0, {{919.0, 1125.0}, {430.0, 36.0}}, identifier: 'saved.item.edit.tags', label: 'Tags, None'
+          StaticText, 0x7a84372d00, {{929.0, 1190.9}, {54.5, 16.0}}, label: 'Location'
+          Group, 0x7a84372e40, {{919.0, 1217.0}, {430.0, 73.0}}
+            StaticText, 0x7a84372f80, {{929.0, 1226.9}, {70.0, 16.0}}, value: Place name
+            TextField, 0x7a843730c0, {{1006.0, 1226.0}, {334.0, 18.0}}, identifier: 'saved.item.edit.location.name'
+            StaticText, 0x7a84373200, {{929.0, 1263.9}, {49.5, 16.0}}, value: Address
+            TextField, 0x7a84373340, {{985.5, 1263.0}, {354.5, 18.0}}, identifier: 'saved.item.edit.location.address'
+          StaticText, 0x7a84373480, {{929.0, 1319.9}, {33.5, 16.0}}, label: 'Links'
+          Group, 0x7a843735c0, {{919.0, 1346.0}, {430.0, 44.0}}
+            Button, 0x7a84373700, {{929.0, 1356.0}, {103.0, 24.0}}, identifier: 'saved.item.edit.link.add', label: 'Add Link'
+          ScrollBar, 0x7a84373840, {{1351.0, 635.5}, {19.0, 389.5}}, value: 0
+            ValueIndicator, 0x7a84373980, {{1360.0, 639.5}, {6.0, 202.0}}, value: 0, Disabled
+            IncrementArrow, 0x7a84373ac0, {{1352.0, 636.5}, {0.0, 0.0}}, Disabled
+            DecrementArrow, 0x7a84373c00, {{1352.0, 636.5}, {0.0, 0.0}}, Disabled
+            Button, 0x7a84373d40, {{1360.0, 842.0}, {6.0, 179.0}}, Disabled
+            Button, 0x7a84373e80, {{1360.0, 639.5}, {6.0, 0.0}}, Disabled
+        Button, 0x7a84374000, {{1209.0, 1045.0}, {66.0, 24.0}}, identifier: 'saved.item.edit.cancel', label: 'Cancel'
+        Button, 0x7a84374140, {{1283.0, 1045.0}, {66.0, 24.0}}, identifier: 'saved.item.edit.save', label: 'Save', Disabled
+Path to element:
+ →Application, 0x7a84663700, pid: 82539, title: 'PlannerFixtures', Disabled
+  ↳Window (Main), 0x7a84662440, {{684.0, 537.0}, {900.0, 592.0}}, identifier: 'SwiftUI.WindowGroup<SwiftUI.ModifiedContent<SwiftUI.Group<SwiftUI._ConditionalContent<SwiftUI._ConditionalContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<PlannerFixtures.SavedPlannerView, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerFixtures.SavedPlannerStore>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerPreviews>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerAddressPreviews>>>, SwiftUI.Conte', title: 'Items', Disabled
+Query chain:
+ →Find: Target Application 'org.example.PlannerFixtures'
+  Output: {
+    Application, 0x7a84383d40, pid: 82539, title: 'PlannerFixtures', Disabled
+  }
+  ↪︎Find: Descendants matching type Window
+    Output: {
+      Window (Main), 0x7a84383e80, {{684.0, 537.0}, {900.0, 592.0}}, identifier: 'SwiftUI.WindowGroup<SwiftUI.ModifiedContent<SwiftUI.Group<SwiftUI._ConditionalContent<SwiftUI._ConditionalContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<PlannerFixtures.SavedPlannerView, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerFixtures.SavedPlannerStore>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerPreviews>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerAddressPreviews>>>, SwiftUI.Conte', title: 'Items', Disabled
+    }
+    ↪︎Find: Element at index 0
+      Output: {
+        Window (Main), 0x7a84383e80, {{684.0, 537.0}, {900.0, 592.0}}, identifier: 'SwiftUI.WindowGroup<SwiftUI.ModifiedContent<SwiftUI.Group<SwiftUI._ConditionalContent<SwiftUI._ConditionalContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<PlannerFixtures.SavedPlannerView, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerFixtures.SavedPlannerStore>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerPreviews>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerAddressPreviews>>>, SwiftUI.Conte', title: 'Items', Disabled
+      }

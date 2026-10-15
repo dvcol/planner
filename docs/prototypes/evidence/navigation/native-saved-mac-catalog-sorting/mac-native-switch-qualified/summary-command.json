@@ -1,0 +1,9 @@
+[
+  "xcrun",
+  "xcresulttool",
+  "get",
+  "test-results",
+  "summary",
+  "--path",
+  "/private/tmp/PlannerMacCatalogSort-mac-native-switch-qualified.xcresult"
+]

@@ -1,0 +1,8 @@
+{
+  "qualifiedSourceSnapshot": "docs/prototypes/evidence/navigation/native-mac-container-catalog-sorting/phone-adapter-regression/ContainerCatalogSortJourneyTests.swift.gz",
+  "qualifiedSourceSHA256": "9e8669ebbcbeb6c70ffb7d1ce29155dd5bc23fe86931a6587902e1fc5b5a8ffd",
+  "finalSourceSHA256": "905ff25df36adfa67865002d004f13c5c3d4947686a00a77473f266c27981b6f",
+  "exactDifference": "One line inside #if os(macOS): use the identified Switch itself instead of looking for its CheckBox descendant. Every other source byte matches the prior two-function phone compatibility pass.",
+  "reusedPhoneResults": "docs/prototypes/evidence/navigation/native-mac-container-catalog-sorting/phone-adapter-regression/result-summary.json",
+  "newMobileRuntimeTests": 0
+}

@@ -1,0 +1,95 @@
+{
+  "scope": "Fixture-window images only; no desktop captures. All originals viewed individually, including byte-identical files from different checkpoints.",
+  "files": [
+    {
+      "file": "mac-estimate-role-observation/fixture-window-images/BE816217-0329-48B4-B71B-3281C7928B41.png",
+      "sha256": "8789a5d495636824014ce4741d00b13b76068fd1d6b680f96f2ad4b04f45d057",
+      "testCheckpoint": "Native estimate editor before toggling_0_2AA7BC44-4A3B-4F7C-9D41-AB2F09413AC8.png",
+      "inspection": "Original window PNG individually viewed. Checkpoint agrees with native order, selection or estimate-form assertions. Narrow text truncation/wrapping remains a polish limitation."
+    },
+    {
+      "file": "mac-estimate-role-observation/fixture-window-images/9BB2F73A-18A7-475D-8D42-B837A133CB6A.png",
+      "sha256": "d6e8a70ad0d233675fe9e0f7fcfa8f530b6bb8572757c2e0d912045ef7b7f371",
+      "testCheckpoint": "Sorting the visible List catalog retains the selected Zulu plan contents_0_BFFB5CB5-B99B-4984-B520-CA7AF3C7186E.png",
+      "inspection": "Original window PNG individually viewed. Checkpoint agrees with native order, selection or estimate-form assertions. Narrow text truncation/wrapping remains a polish limitation."
+    },
+    {
+      "file": "mac-idle-retry/fixture-window-images/EB529A98-0EEF-46ED-BBBD-36DE84020AC6.png",
+      "sha256": "502cbdfd023c2e15a0325702b172f29e8fb3bf8457154eea642fdd9062aeae81",
+      "testCheckpoint": "Returning to the original dataset restores both catalog choices_0_06FF50EE-C725-440A-9C6E-366FC63EF816.png",
+      "inspection": "Original window PNG individually viewed. Checkpoint agrees with native order, selection or estimate-form assertions. Narrow text truncation/wrapping remains a polish limitation."
+    },
+    {
+      "file": "mac-idle-retry/fixture-window-images/FB702E36-3393-4104-B580-380D0DA32AE6.png",
+      "sha256": "e790d4e66569cb3426411200f27c24c82a7e997bda8e2e5c1ddfaf5ca2575f62",
+      "testCheckpoint": "A separate local dataset starts with alphabetical catalog defaults_0_BCDBDEBE-758E-47A6-96C5-94833B98B58D.png",
+      "inspection": "Original window PNG individually viewed. Checkpoint agrees with native order, selection or estimate-form assertions. Narrow text truncation/wrapping remains a polish limitation."
+    },
+    {
+      "file": "mac-idle-retry/fixture-window-images/7B9B152C-5C08-41D2-9ADB-659565969FA0.png",
+      "sha256": "335a651504fd875a43ec3a7d826c63e68f1a8902e84ebd34fb31fdac22eca546",
+      "testCheckpoint": "Itineraries keep their separate full estimate ascending choice_0_72BFE94A-9942-43FC-9AC2-0DD483AE1AFB.png",
+      "inspection": "Original window PNG individually viewed. Checkpoint agrees with native order, selection or estimate-form assertions. Narrow text truncation/wrapping remains a polish limitation."
+    },
+    {
+      "file": "mac-idle-retry/fixture-window-images/23F97885-D3FA-46C1-A9A2-E15283BA9CD3.png",
+      "sha256": "ee1d172f92c76863da035a53719d1a51b4ce382a4bd1ac3161dbd858a0ba0e1f",
+      "testCheckpoint": "Lists sorted by full estimate descending with incomplete plans last_0_4C980B4A-4E1B-40D1-AAC2-C8A7A10461C5.png",
+      "inspection": "Original window PNG individually viewed. Checkpoint agrees with native order, selection or estimate-form assertions. Narrow text truncation/wrapping remains a polish limitation."
+    },
+    {
+      "file": "mac-idle-retry/fixture-window-images/C43FEB14-BF4A-4177-984C-58209CB7255E.png",
+      "sha256": "19cadda1c39e82105cac87d74b0e979d2f73fbf30f4c3436f830c8459c79c75f",
+      "testCheckpoint": "Sorting the visible List catalog retains the selected Zulu plan contents_0_C1E36454-5EE9-486D-A7AA-F1817DE1071B.png",
+      "inspection": "Original window PNG individually viewed. Checkpoint agrees with native order, selection or estimate-form assertions. Narrow text truncation/wrapping remains a polish limitation."
+    },
+    {
+      "file": "mac-native-switch-qualified/fixture-window-images/3B3AA8D8-809B-42BF-B9CA-72A582041049.png",
+      "sha256": "a466f2c863f3adff7abe29d800deec5820dc91db7f203dda27313880c3669e73",
+      "testCheckpoint": "Returning to the original dataset restores both catalog choices_0_C1F99CEA-1D1B-454E-9DB4-B8C56C930A26.png",
+      "inspection": "Original window PNG individually viewed. Checkpoint agrees with native order, selection or estimate-form assertions. Narrow text truncation/wrapping remains a polish limitation."
+    },
+    {
+      "file": "mac-native-switch-qualified/fixture-window-images/67922C11-78BE-41DE-8065-A088C4A5A36D.png",
+      "sha256": "c3c2c0da72c24f2af4fa7a01e710e06f0708363d61faa6f2bc317523c8f49981",
+      "testCheckpoint": "A separate local dataset starts with alphabetical catalog defaults_0_91FFCA78-A044-4148-82BB-AFD649FF9FDF.png",
+      "inspection": "Original window PNG individually viewed. Checkpoint agrees with native order, selection or estimate-form assertions. Narrow text truncation/wrapping remains a polish limitation."
+    },
+    {
+      "file": "mac-native-switch-qualified/fixture-window-images/16A7E9A0-E207-4E13-AA7A-AC0958837A69.png",
+      "sha256": "a81aa0d8ee39fdfb357be11476997a53b1f26f61bd63332b1358913b639593f3",
+      "testCheckpoint": "Itineraries keep their separate full estimate ascending choice_0_BE6DA094-98EF-4294-BD0C-9157FB786555.png",
+      "inspection": "Original window PNG individually viewed. Checkpoint agrees with native order, selection or estimate-form assertions. Narrow text truncation/wrapping remains a polish limitation."
+    },
+    {
+      "file": "mac-native-switch-qualified/fixture-window-images/9559F30D-59CC-40DB-AC18-94981434EABF.png",
+      "sha256": "ba17efee417c77fa7251d1835cb81dfc6ba8e064cb6763c5e4ac77db6b892118",
+      "testCheckpoint": "Lists sorted by full estimate descending with incomplete plans last_0_E1AF8B5D-6F98-42CC-9B3C-2257A9F567AC.png",
+      "inspection": "Original window PNG individually viewed. Checkpoint agrees with native order, selection or estimate-form assertions. Narrow text truncation/wrapping remains a polish limitation."
+    },
+    {
+      "file": "mac-native-switch-qualified/fixture-window-images/864B5337-2477-4A2A-9E1D-46AA8246E97A.png",
+      "sha256": "216a8531703b199666118d40f2fd6e7c1445fc97ffe11402d747dcc47a01a5ac",
+      "testCheckpoint": "The final sort and archive choice publishes one consistent catalog_0_51404005-1883-4DE2-8A8A-07D2C5BFF1BC.png",
+      "inspection": "Original window PNG individually viewed. Checkpoint agrees with native order, selection or estimate-form assertions. Narrow text truncation/wrapping remains a polish limitation."
+    },
+    {
+      "file": "mac-native-switch-qualified/fixture-window-images/E9856551-A2BE-4FAF-BA82-846087102160.png",
+      "sha256": "dfdae72228d6c453da1f7ca6019756db47343b89be357ef889ac71236c056715",
+      "testCheckpoint": "A shared Item edit preserves the Itineraries own Last updated order_0_971F03CD-ED9C-436D-B089-056D7C51975B.png",
+      "inspection": "Original window PNG individually viewed. Checkpoint agrees with native order, selection or estimate-form assertions. Narrow text truncation/wrapping remains a polish limitation."
+    },
+    {
+      "file": "mac-native-switch-qualified/fixture-window-images/09CECFBB-F195-42AE-8E52-4556CDA57405.png",
+      "sha256": "c473ccb961c4d6f9edb2a66c8579411f8845f44118e865ed1963036b0458426a",
+      "testCheckpoint": "Removing a shared Item estimate moves its List into the incomplete group_0_8F009EB9-A787-4D2F-958E-85F4DE020435.png",
+      "inspection": "Original window PNG individually viewed. Checkpoint agrees with native order, selection or estimate-form assertions. Narrow text truncation/wrapping remains a polish limitation."
+    },
+    {
+      "file": "mac-native-switch-qualified/fixture-window-images/ED6EA273-B1EF-46B8-8FB7-F758A38D94F1.png",
+      "sha256": "bc7a42ce6cee80f31c87a1ad669cc9a791871db892f8f435235df4eac6d8ea5d",
+      "testCheckpoint": "Sorting the visible List catalog retains the selected Zulu plan contents_0_9CDD0678-0043-44B8-8CCE-04C15B83858D.png",
+      "inspection": "Original window PNG individually viewed. Checkpoint agrees with native order, selection or estimate-form assertions. Narrow text truncation/wrapping remains a polish limitation."
+    }
+  ]
+}

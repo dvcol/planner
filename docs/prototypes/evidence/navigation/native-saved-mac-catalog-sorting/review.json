@@ -1,0 +1,12 @@
+{
+  "baseline": "bad1718",
+  "standards": {
+    "sourceFindings": 0,
+    "finalEvidenceFindings": 0
+  },
+  "spec": {
+    "sourceFindings": 0,
+    "finalEvidenceFindings": 0
+  },
+  "scope": "Independent source and final evidence reviews; original captures and raw outcomes verified. Broader Mac workflows, adaptive/accessibility, performance and signed sync/account/Share remain open."
+}

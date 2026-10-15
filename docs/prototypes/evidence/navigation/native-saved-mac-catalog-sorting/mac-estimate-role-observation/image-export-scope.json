@@ -1,0 +1,17 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerMacCatalogSort-mac-estimate-role-observation.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerSavedMacImages-mac-estimate-role-observation-v2gdo66_",
+    "--filter",
+    "*.png"
+  ],
+  "originalManifestLocalPath": "/private/tmp/PlannerSavedMacImages-mac-estimate-role-observation-v2gdo66_/manifest.json",
+  "originalManifestSHA256": "f39429e174e4693211e80cadc89f7e37e074dff095bf488632bfc8c4aa9c266a",
+  "scope": "Only explicitly named manual fixture-window captures copied unchanged. Automatic desktop/failure images, if present, remain local and receive no shared visual credit."
+}

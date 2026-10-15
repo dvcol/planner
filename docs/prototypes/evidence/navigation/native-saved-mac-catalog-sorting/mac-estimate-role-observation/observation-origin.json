@@ -1,0 +1,6 @@
+{
+  "originalExportPath": "/private/tmp/PlannerMacEstimateRoleAttachments/4480D466-6587-4583-8C11-3DAE4EC67EED.txt",
+  "sha256": "4ef59b3fa18d2fbf579893e03ce4d12d822a7cecb9eb4424df0856f6c9136236",
+  "scope": "Exact original manually attached fixture-window hierarchy; excludes application menus.",
+  "finding": "Edit form contains Switch saved.item.edit.estimate.enabled with value 1; the failed query searched for a CheckBox descendant."
+}

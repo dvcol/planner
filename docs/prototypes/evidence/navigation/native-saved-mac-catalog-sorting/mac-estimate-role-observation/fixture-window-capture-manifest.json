@@ -1,0 +1,28 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "BE816217-0329-48B4-B71B-3281C7928B41.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native estimate editor before toggling_0_2AA7BC44-4A3B-4F7C-9D41-AB2F09413AC8.png",
+    "timestamp": 1792070474.177,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testSharedEstimateEditsRefreshBothCatalogsWithoutReplacingValidSelection()",
+    "originalExportPath": "/private/tmp/PlannerSavedMacImages-mac-estimate-role-observation-v2gdo66_/BE816217-0329-48B4-B71B-3281C7928B41.png",
+    "sharedFile": "BE816217-0329-48B4-B71B-3281C7928B41.png",
+    "sha256": "8789a5d495636824014ce4741d00b13b76068fd1d6b680f96f2ad4b04f45d057"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "9BB2F73A-18A7-475D-8D42-B837A133CB6A.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Sorting the visible List catalog retains the selected Zulu plan contents_0_BFFB5CB5-B99B-4984-B520-CA7AF3C7186E.png",
+    "timestamp": 1792070464.345,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testSharedEstimateEditsRefreshBothCatalogsWithoutReplacingValidSelection()",
+    "originalExportPath": "/private/tmp/PlannerSavedMacImages-mac-estimate-role-observation-v2gdo66_/9BB2F73A-18A7-475D-8D42-B837A133CB6A.png",
+    "sharedFile": "9BB2F73A-18A7-475D-8D42-B837A133CB6A.png",
+    "sha256": "d6e8a70ad0d233675fe9e0f7fcfa8f530b6bb8572757c2e0d912045ef7b7f371"
+  }
+]

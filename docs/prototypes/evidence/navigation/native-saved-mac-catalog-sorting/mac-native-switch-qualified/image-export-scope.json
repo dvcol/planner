@@ -1,0 +1,17 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerMacCatalogSort-mac-native-switch-qualified.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerSavedMacImages-mac-native-switch-qualified-_y19084q",
+    "--filter",
+    "*.png"
+  ],
+  "originalManifestLocalPath": "/private/tmp/PlannerSavedMacImages-mac-native-switch-qualified-_y19084q/manifest.json",
+  "originalManifestSHA256": "d02639e760b397b64c1228b9d6b8fcd2740e763969d30b2b19359c976442e8c7",
+  "scope": "Only explicitly named manual fixture-window captures copied unchanged. Automatic desktop/failure images, if present, remain local and receive no shared visual credit."
+}
