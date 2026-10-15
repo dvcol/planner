@@ -1,0 +1,16 @@
+{
+  "expectation": "/private/tmp/PlannerUnavailableExportTabletText/065CB5A0-EFA3-4A52-BAB5-BC40CE7F497F.txt",
+  "values": {
+    "Filename": "Planner Saved Recovery 24F9EC44-4312-48B5-89E7-D62F37DC0A3F Generation 2.json",
+    "Fixture": "98B4E3AA-3950-4A72-AD02-D54A67646E4D",
+    "Item": "saved.recovery.source.item.D51FC232-11DE-4AB3-BFA8-F927450C9A8A",
+    "Tag": "saved.recovery.source.tag.2522DE65-4AD7-4D05-B9BF-EDA7FE9E2CB5",
+    "Generation": "2"
+  },
+  "deliveredPaths": [
+    "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner Saved Recovery 24F9EC44-4312-48B5-89E7-D62F37DC0A3F Generation 2.json"
+  ],
+  "sha256": "f26e46fee1c2b21ba55c0296e81fa76efd782ef054a3a38f2c111e174567f2de",
+  "bytes": 1317,
+  "checks": "Exact permitted public root, portable format 2, two native-observed source identities, expected Item title/notes/Todo/Active and Tag name, one correctly lifetime-bound association, every other data group empty. No selected-byte comparison or full-graph claim."
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "CC2145B7-2E80-4222-85F5-698F93DA0CBD.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Public unavailable-store export expectation_0_AF919FE7-F684-4CB4-B520-6E9A8A3939AD.txt",
+        "timestamp" : 1792037590.985
+      }
+    ],
+    "testIdentifier" : "UnavailableStoreRecoveryJourneyTests/testUnavailableStoreExportsItsSavedGenerationWithoutRestoringIt()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/UnavailableStoreRecoveryJourneyTests/testUnavailableStoreExportsItsSavedGenerationWithoutRestoringIt"
+  }
+]

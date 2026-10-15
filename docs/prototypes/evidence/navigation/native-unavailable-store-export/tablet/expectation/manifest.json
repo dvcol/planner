@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "065CB5A0-EFA3-4A52-BAB5-BC40CE7F497F.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Public unavailable-store export expectation_0_BE210D06-1D60-4F69-B0D9-95F632F63E45.txt",
+        "timestamp" : 1792037781.303
+      }
+    ],
+    "testIdentifier" : "UnavailableStoreRecoveryJourneyTests/testUnavailableStoreExportsItsSavedGenerationWithoutRestoringIt()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/UnavailableStoreRecoveryJourneyTests/testUnavailableStoreExportsItsSavedGenerationWithoutRestoringIt"
+  }
+]

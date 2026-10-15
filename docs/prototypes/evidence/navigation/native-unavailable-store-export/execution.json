@@ -1,0 +1,198 @@
+{
+  "baseCommit": "f1c6b11",
+  "scope": "Qualification of actual public file delivery from an unavailable initialized store. Production and fixture unchanged. No functional feature red is claimed.",
+  "mode": "localOnly",
+  "storageSchemaVersion": 18,
+  "portableFormatVersion": 2,
+  "stages": {
+    "phone": {
+      "bundle": "/private/tmp/PlannerUnavailableExportPhone.xcresult",
+      "result": "Passed",
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "uniqueFunctions": 2,
+      "suites": 1,
+      "functions": [
+        {
+          "name": "testUnavailableStoreExportsItsSavedGenerationWithoutRestoringIt()",
+          "durationSeconds": 52.48176598548889
+        },
+        {
+          "name": "testUnavailableStoreKeepsItsRecoveryCopyReadableAfterRetryAndRelaunch()",
+          "durationSeconds": 53.24938893318176
+        }
+      ],
+      "originalPNGFiles": 10,
+      "distinctImages": 6,
+      "imageGroupSizes": [
+        4,
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "tablet": {
+      "bundle": "/private/tmp/PlannerUnavailableExportTablet.xcresult",
+      "result": "Passed",
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "uniqueFunctions": 2,
+      "suites": 1,
+      "functions": [
+        {
+          "name": "testUnavailableStoreExportsItsSavedGenerationWithoutRestoringIt()",
+          "durationSeconds": 61.481034994125366
+        },
+        {
+          "name": "testUnavailableStoreKeepsItsRecoveryCopyReadableAfterRetryAndRelaunch()",
+          "durationSeconds": 56.03859996795654
+        }
+      ],
+      "originalPNGFiles": 10,
+      "distinctImages": 6,
+      "imageGroupSizes": [
+        3,
+        3,
+        1,
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "qualification": {
+    "nativeFunctionsPerSimulator": 2,
+    "nativeSuitesPerSimulator": 1,
+    "nativeQualifiedBundles": 2,
+    "nativeFinalInvocationsAcrossSimulators": 4,
+    "newDeliveryFunctionPerSimulator": 1,
+    "unchangedCancellationRegressionPerSimulator": 1,
+    "coreFunctions": 0,
+    "httpTestInvocations": 0,
+    "nativeMacFunctions": 0,
+    "fixtureMacBuild": "TEST BUILD SUCCEEDED",
+    "strictSwiftFiles": 1,
+    "markdownFiles": 1
+  },
+  "publicOutputs": {
+    "phone": {
+      "expectation": "/private/tmp/PlannerUnavailableExportPhoneText/CC2145B7-2E80-4222-85F5-698F93DA0CBD.txt",
+      "values": {
+        "Filename": "Planner Saved Recovery 5D17045B-00D0-4522-B37B-4478CF057509 Generation 2.json",
+        "Fixture": "77F33CA4-1FEE-45F9-95A3-59E6F7461BAA",
+        "Item": "saved.recovery.source.item.78045DCE-A2D4-404C-B940-C616CA6932CE",
+        "Tag": "saved.recovery.source.tag.56EB84A9-8B7F-4096-BD0D-2901E43878E7",
+        "Generation": "2"
+      },
+      "deliveredPaths": [
+        "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data/Containers/Shared/AppGroup/940F447B-1527-45F9-B0FD-3BAE0E22F750/File Provider Storage/Planner Saved Recovery 5D17045B-00D0-4522-B37B-4478CF057509 Generation 2.json"
+      ],
+      "sha256": "84793a581a4cab661436741a35be405cc608f091992caf912c27901ff69ff258",
+      "bytes": 1317,
+      "checks": "Exact permitted public root, portable format 2, two native-observed source identities, expected Item title/notes/Todo/Active and Tag name, one correctly lifetime-bound association, every other data group empty. No selected-byte comparison or full-graph claim."
+    },
+    "tablet": {
+      "expectation": "/private/tmp/PlannerUnavailableExportTabletText/065CB5A0-EFA3-4A52-BAB5-BC40CE7F497F.txt",
+      "values": {
+        "Filename": "Planner Saved Recovery 24F9EC44-4312-48B5-89E7-D62F37DC0A3F Generation 2.json",
+        "Fixture": "98B4E3AA-3950-4A72-AD02-D54A67646E4D",
+        "Item": "saved.recovery.source.item.D51FC232-11DE-4AB3-BFA8-F927450C9A8A",
+        "Tag": "saved.recovery.source.tag.2522DE65-4AD7-4D05-B9BF-EDA7FE9E2CB5",
+        "Generation": "2"
+      },
+      "deliveredPaths": [
+        "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data/Containers/Shared/AppGroup/D9172E80-3C6D-4B62-B193-29FBA1E71DDA/File Provider Storage/Planner Saved Recovery 24F9EC44-4312-48B5-89E7-D62F37DC0A3F Generation 2.json"
+      ],
+      "sha256": "f26e46fee1c2b21ba55c0296e81fa76efd782ef054a3a38f2c111e174567f2de",
+      "bytes": 1317,
+      "checks": "Exact permitted public root, portable format 2, two native-observed source identities, expected Item title/notes/Todo/Active and Tag name, one correctly lifetime-bound association, every other data group empty. No selected-byte comparison or full-graph claim."
+    }
+  },
+  "reviews": {
+    "standards": "Clear. Verified all source/product/artifact hashes, six frozen sources, three lossless logs, paired native counts, complete manifests, twenty original captures and actual public-file fidelity/provenance.",
+    "spec": "Clear. Verified both actual delivered files against native expectations, data and association semantics, frozen source/product/artifact hashes, counts and qualification limits. Production and fixture unchanged."
+  },
+  "notes": [
+    "Both current-source paired native runs pass on their first execution. Production Core/HTTP/native views, fixture, schema and format are unchanged.",
+    "The delivered files are copied byte-for-byte from the exact filenames reported by the native exporter. UUID/name/notes/state/association checks use native-observed identity expectations and the known disposable fixture, not a generated replacement backup.",
+    "Output verification checks semantic fidelity. There is no separately issued selected-byte comparison, full-graph, proposal or write-failure qualification.",
+    "Twenty original PNG files were individually inspected. Each device has six distinct images across ten captures; phone duplicate groups contain four and two files, tablet groups contain three and three.",
+    "Actual generation 2 is asserted in native details before and after relaunch. The portable JSON remains planner data without recovery-generation or app-state root fields. Export never initializes or restores the unavailable dataset.",
+    "Compressed logs preserve original bytes. Mac evidence is fixture/test-host compilation only; no ordinary-app rebuild or native Mac runtime is credited in this slice."
+  ],
+  "remainingGates": [
+    "Exact selected-byte fidelity",
+    "Full graph and proposal exports",
+    "File-write failure handling",
+    "Replacement-dataset restoration",
+    "Native Mac runtime",
+    "Physical account/sync/Share lifecycle",
+    "Broader accessibility/scale and whole-app polish",
+    "Q85 catalog sorting choice"
+  ],
+  "sourceHashes": {
+    "PlannerFixtureUITests/UnavailableStoreRecoveryJourneyTests.swift": "41263934ae766d56df51a70b0aaf146287243e68655242c4bdc1694c37ef1b7f",
+    "PlannerFixtures/PlannerUnavailableStoreFixture.swift": "9178e959a6304f235bd1ac4695a0cde1ff6879583f9cef45067ea4963eb45811",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "2fe356a476b69cd883e4271ba12a67c53356e0736d2c179a3694d2747db1668d",
+    "Planner/Scenes/SavedRecoverySelectionView.swift": "78c0b297c2bf1d92f0c5025816710a65b260332f2bc4aa7cb6b8e1465d201507",
+    "Planner/Scenes/SavedRecoveryCopiesView.swift": "4ed2645cb05705dde6a5ea3b5658da94bbc1d80b211ae3bce7cd8aa8b2045b62",
+    "Planner/Scenes/SavedPlannerStore.swift": "bea05c6e842891eaf16610f8e3a28d7514180947be7f1a8d4cab3b6f6d4799af",
+    "docs/prototypes/native-unavailable-store-export.md": "9ffb07f214cfc4463e482c08b7dedc148421db541f33a1960305a4135bb7e721"
+  },
+  "productHashes": {
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures": "b799e68c823737b89ec582b1a32a618b3db6efb402ed424cd22990cc82ceddbc",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures.debug.dylib": "717f6549a43ec049e7b47fc92fb305d21dfb81637556b6e41abbc445ba91305c",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtureUITests-Runner.app/PlugIns/PlannerFixtureUITests.xctest/PlannerFixtureUITests": "94e0a0d517064a54c069fb9c6f01d1e3d38acbe1f9a4b87399f759d756ff631b",
+    "/private/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures": "d96edb02b239719167b1bfdb2e1a9c1312c230765f19fd706e22c9a892913bfa",
+    "/private/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures.debug.dylib": "5db2d5df9a483c1e693df70a4cab00b155f1d8c1c08654fb8199320886c9efd6",
+    "/private/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests-Runner.app/Contents/PlugIns/PlannerFixtureUITests.xctest/Contents/MacOS/PlannerFixtureUITests": "63702636af3fc9743e7a0eca8d076ffc345b621fa160fe36c0f5cec33ada6066"
+  },
+  "artifactHashes": {
+    "check-delivered-file.py": "4c4585977794727eac080ceadd3e2201e2f656fa8470631f9dff3703ef22644d",
+    "commands.json": "88d107a9bd528e2edecd8b7be894d2207d70c120e76511e826f34202de4ba285",
+    "fixture-mac-build.log.gz": "699faad5751ced658c1805bd7924b53084c6add95245f9213485f0dfd7f61208",
+    "frozen-sources.json": "34244f151ee9da469149b03cfafe581a5a42013af37c329e5d4ec21637118ec1",
+    "markdown-lint.log": "a8b61ada4cf905a1ab5284d316594def1c9610a947271e00863370f564cf174b",
+    "phone/expectation/CC2145B7-2E80-4222-85F5-698F93DA0CBD.txt": "0c0ad921ec03cad53bc5165f19ff1c29e4c6c9f93e08fffabbe6c8161c638616",
+    "phone/expectation/manifest.json": "5e42890754acf4dd40298a0202767e7743d4cd50a39a66bf1660a2e71c6823a7",
+    "phone/png/23BEDA82-7690-433E-A626-94D90703AE16.png": "598c393d372051889bd46862bbe548c3eb76d763023ef4914b4cd71718702a98",
+    "phone/png/3B17CFEF-31EB-4C30-96FF-FED549E012C3.png": "d33761a49ffdd5afe2da66c10f1b823d5736ed613456dc9d0424affccfab4966",
+    "phone/png/6E2B8AE9-0772-4FEF-89B0-2B79AD3EE210.png": "598c393d372051889bd46862bbe548c3eb76d763023ef4914b4cd71718702a98",
+    "phone/png/746B34C8-8E17-48DD-AC6D-579EB53D9F01.png": "d33761a49ffdd5afe2da66c10f1b823d5736ed613456dc9d0424affccfab4966",
+    "phone/png/852DC67B-125A-4D17-896F-B7B20D240B60.png": "1b87ed3f04892d26510e3ef2f93576ce96b72af8cf5623528de5cdf480620965",
+    "phone/png/880A6C67-CA87-45F4-A638-258B34388812.png": "476032987d5b7f0581f69c9c81670829dad051f4dc47ad476cdc9e3084a66e6c",
+    "phone/png/8EDCC313-130B-4F5B-9F5F-287AF40F0EBF.png": "598c393d372051889bd46862bbe548c3eb76d763023ef4914b4cd71718702a98",
+    "phone/png/909CBA6D-F301-4C5A-A7BF-FDA622E91DC5.png": "b9107eb94a67c057cec0236e582d73d45d397dfcb5ea0cf82fa913de5854f823",
+    "phone/png/CE370215-4A22-4822-AE98-D564A07BB1A4.png": "598c393d372051889bd46862bbe548c3eb76d763023ef4914b4cd71718702a98",
+    "phone/png/FC1290C9-8A5E-49A0-8DDD-79A14FD13685.png": "642f776425f5bd77c0f78fac1f5e0e15c03ac684d7df218f63eaf5e58be338b8",
+    "phone/png/manifest.json": "9910c1081b205dd236fc234cc41e9cab25f1a3fd1ca445a189a1acdd0fa9a779",
+    "phone/summary.json": "30457fc26954ed7696a2921de15881a95e819de7af95b1c9c8eb8499e09add9e",
+    "phone/test.log.gz": "7e791e12d3ce03bdbb36a5eb1777c2cb2b50f192b0ff422eb3faf1b9ebc2d422",
+    "phone/tests.json": "5318ee71115db1e3a9c34ef200dad3161ee7e0d95c93547130cfea96ff2c9c1e",
+    "phone-output-provenance.json": "f230862f9a808fb8025905bde29720fa3111ea5699825fa2f759243778087f45",
+    "phone-output.json": "84793a581a4cab661436741a35be405cc608f091992caf912c27901ff69ff258",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tablet/expectation/065CB5A0-EFA3-4A52-BAB5-BC40CE7F497F.txt": "879a5993c47de556cf1022586e362dc374e2de1c098df90cd47024f8ce1ccc55",
+    "tablet/expectation/manifest.json": "7fe8179921241d2584f0fb55601ad04a73dd7e0dbf2068f6de72e7bd3137e26b",
+    "tablet/png/012CABE6-15A1-403A-B014-3F8178005846.png": "98dcbc9809b4b68289e8971d9fc64dc1b294e7cae9eda83cc2e91401e47446c1",
+    "tablet/png/6BB4A6BB-8BE8-4B61-BDE9-8719AB7A9713.png": "11dfd7a6143b588fb00b343d3bfa4e52083dd28566cdea945a95d33a78592fcd",
+    "tablet/png/70E4F9A0-74DD-4447-A0A3-6F8D8E65E20A.png": "944488637f0f71350d43d972496e7945811afe463767498d4c5900362211c54b",
+    "tablet/png/7C5E4DCC-B10B-457B-8A94-3B84E17CE3A1.png": "9d5af5f19d30dcb65dfd9b08428b45f5754d8426d7e5a05491558c8b9092368f",
+    "tablet/png/9D6A25A0-9BAB-4F33-B5E1-144978912CE1.png": "11dfd7a6143b588fb00b343d3bfa4e52083dd28566cdea945a95d33a78592fcd",
+    "tablet/png/AB8FD861-C19F-4D60-BE6B-2A0450F2E7E8.png": "c0885f72701140cdc5c31588a3c79562149dc6568b25f378a484250edc8b4295",
+    "tablet/png/D2C84A51-1176-4C1C-8F85-ADAD70F7D56C.png": "98dcbc9809b4b68289e8971d9fc64dc1b294e7cae9eda83cc2e91401e47446c1",
+    "tablet/png/D53A5274-BEC6-48C4-95C7-AAC06AF6832C.png": "11dfd7a6143b588fb00b343d3bfa4e52083dd28566cdea945a95d33a78592fcd",
+    "tablet/png/E57593E8-C2A1-4F14-82AA-15BC5DCC53A2.png": "e7f66ce1abc91039e40d92d7a1be2439048fcee49fba12fcef342873ab960ce3",
+    "tablet/png/F06202B3-C476-443A-970B-148050B6646A.png": "98dcbc9809b4b68289e8971d9fc64dc1b294e7cae9eda83cc2e91401e47446c1",
+    "tablet/png/manifest.json": "b9ddc1f417a8b9899d8b6d9d5e569c7a938fd599a825caf22f7ca87b456f0eb0",
+    "tablet/summary.json": "16242cc536d2a4674052f564e9bcc35cc1d095bcc37e487cf3d0810f33da6f4a",
+    "tablet/test.log.gz": "e2b5bf816cd5473f4e50200e1c115b74ad40980cd3b95c6ac12ec42306d50a50",
+    "tablet/tests.json": "d8e474da19a8a2e9287fccfa54ce481c23c9672b28c6cf41c13c90acb33fa4b2",
+    "tablet-output-provenance.json": "3f5ff8883e72d6841869f85e1717e41e3a75640465668809002f62aa5c42976e",
+    "tablet-output.json": "f26e46fee1c2b21ba55c0296e81fa76efd782ef054a3a38f2c111e174567f2de"
+  }
+}

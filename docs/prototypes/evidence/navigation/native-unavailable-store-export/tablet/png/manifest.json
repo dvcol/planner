@@ -1,0 +1,104 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "D2C84A51-1176-4C1C-8F85-ADAD70F7D56C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Export leaves the same recovery copy separate after unavailable-store relaunch_0_E6DD43DC-BD3F-4051-A68C-534BF8F889E2.png",
+        "timestamp" : 1792037806.285
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "012CABE6-15A1-403A-B014-3F8178005846.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Saved recovery remains readable while restore has no current destination_0_29BB4775-99D6-49A5-85E3-2E8FC39F959E.png",
+        "timestamp" : 1792037806.137
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "E57593E8-C2A1-4F14-82AA-15BC5DCC53A2.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unavailable-store recovery reports successful native file delivery_0_3603F87D-C398-4572-A202-1AC929EE10ED.png",
+        "timestamp" : 1792037781.447
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "70E4F9A0-74DD-4447-A0A3-6F8D8E65E20A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unavailable-store recovery uses the native local file destination_0_0386BD1F-5249-4B22-8C9F-3D6DBD15914A.png",
+        "timestamp" : 1792037777.981
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "F06202B3-C476-443A-970B-148050B6646A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Saved recovery remains readable while restore has no current destination_0_6D2096BE-4401-414A-8A0B-107CBD4707C7.png",
+        "timestamp" : 1792037768.447
+      }
+    ],
+    "testIdentifier" : "UnavailableStoreRecoveryJourneyTests/testUnavailableStoreExportsItsSavedGenerationWithoutRestoringIt()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/UnavailableStoreRecoveryJourneyTests/testUnavailableStoreExportsItsSavedGenerationWithoutRestoringIt"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "D53A5274-BEC6-48C4-95C7-AAC06AF6832C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The same retained Item and Tag survive unavailable-store relaunch_0_C1E85B40-78EE-458C-836B-251CA998F8DF.png",
+        "timestamp" : 1792037862.347
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "9D6A25A0-9BAB-4F33-B5E1-144978912CE1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Saved recovery remains readable while restore has no current destination_0_ED847796-8978-41D6-AC42-D7563362D10D.png",
+        "timestamp" : 1792037862.218
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "7C5E4DCC-B10B-457B-8A94-3B84E17CE3A1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unavailable-store recovery can open the native file exporter_0_8B56CF54-36F6-408E-9027-9AE511C70049.png",
+        "timestamp" : 1792037835.831
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "6BB4A6BB-8BE8-4B61-BDE9-8719AB7A9713.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Saved recovery remains readable while restore has no current destination_0_ECAED6D7-CA6F-4F5B-A4DF-DB712E2AE74E.png",
+        "timestamp" : 1792037828.606
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "AB8FD861-C19F-4D60-BE6B-2A0450F2E7E8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unavailable Planner offers recovery without creating a replacement dataset_0_07B8E240-F54A-4F4B-B02E-790EA94671B4.png",
+        "timestamp" : 1792037814.709
+      }
+    ],
+    "testIdentifier" : "UnavailableStoreRecoveryJourneyTests/testUnavailableStoreKeepsItsRecoveryCopyReadableAfterRetryAndRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/UnavailableStoreRecoveryJourneyTests/testUnavailableStoreKeepsItsRecoveryCopyReadableAfterRetryAndRelaunch"
+  }
+]
