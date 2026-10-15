@@ -1,0 +1,54 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "6444DB79-EAA2-4E55-AE9A-2DA0EE8BB74D.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Global completion overrides both saved List appearances_0_198884FE-888A-41C1-8C80-8CA9BFA23847.png",
+    "timestamp": 1792072573.525,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-mac-serialized-qualified-pmivrmtm/6444DB79-EAA2-4E55-AE9A-2DA0EE8BB74D.png",
+    "sharedFile": "6444DB79-EAA2-4E55-AE9A-2DA0EE8BB74D.png",
+    "sha256": "dd3ea16327d1db4d0db2db949f760d82ea72c13cceef9c69c62f00e7d097c2bd"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "A4730B50-130F-440C-91CE-A64D2D08695B.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List with globally completed Item_0_426E80B8-3F9B-4215-9044-3C5EE7676B99.png",
+    "timestamp": 1792072564.535,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-mac-serialized-qualified-pmivrmtm/A4730B50-130F-440C-91CE-A64D2D08695B.png",
+    "sharedFile": "A4730B50-130F-440C-91CE-A64D2D08695B.png",
+    "sha256": "49817597cd7ed232ba04629bca6c01a90288d04a69edfcb5b8b248c6b150d938"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "580A403C-05A9-4428-B4C5-623E04318AAD.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List with contextual completion and details_0_9CFD0DCA-181D-4489-A3CB-E533AFF98FF8.png",
+    "timestamp": 1792072527.542,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-mac-serialized-qualified-pmivrmtm/580A403C-05A9-4428-B4C5-623E04318AAD.png",
+    "sharedFile": "580A403C-05A9-4428-B4C5-623E04318AAD.png",
+    "sha256": "097487d2f42333ce247cdc68588c1320ff9f09ee53481331ab04f9cea3a2bf71"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "E1CABC14-88FE-42DA-8999-A89D952CCE21.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List appearance details_0_CEE6BDD9-62C6-475B-938F-57BA3338EEDA.png",
+    "timestamp": 1792072666.166,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-mac-serialized-qualified-pmivrmtm/E1CABC14-88FE-42DA-8999-A89D952CCE21.png",
+    "sharedFile": "E1CABC14-88FE-42DA-8999-A89D952CCE21.png",
+    "sha256": "f831c96b8f8fd9f8061fe1e014a896713c8cd96d9bbdcaaaee55e21b8cf3a53f"
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerMacCompletion-tablet-toolbar-qualified.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerMacCompletionImages-tablet-toolbar-qualified-42lb2tcf",
+    "--filter",
+    "*.png"
+  ],
+  "originalManifestLocalPath": "/private/tmp/PlannerMacCompletionImages-tablet-toolbar-qualified-42lb2tcf/manifest.json",
+  "originalManifestSHA256": "ac75c2540f761354c270f69b03cce39a1210a03b64c160330eabd5d3ce10cdf3",
+  "scope": "Only explicitly named manual fixture-window captures copied unchanged. Automatic desktop/failure images, if present, remain local and receive no shared visual credit."
+}

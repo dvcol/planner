@@ -1,0 +1,124 @@
+{
+  "files": [
+    {
+      "file": "mac-native-create-overflow/fixture-window-images/C06CC716-9511-470B-A507-7D4223BFEE78.png",
+      "sha256": "f065bcb324635f318764bef017f1ed6178d0161865602962681a189606d7dc0a",
+      "checkpoint": "Saved List with globally completed Item_0_E71F64D6-EE6A-4BC8-8807-6DE60E1E7E99.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "mac-native-create-overflow/fixture-window-images/1CD3FE47-211D-47CB-9937-D70EFA8B1377.png",
+      "sha256": "a49b64a0a909accf5af50d20af7ddbea0f10743cacefb4e48ee1c27219e67c93",
+      "checkpoint": "Saved List with contextual completion and details_0_4DB0B4D4-F5F0-421D-9AF8-2987781027C1.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "mac-native-create-overflow/fixture-window-images/78258425-C130-44EB-BC15-06A45A027774.png",
+      "sha256": "55b475d6788ac7b0c03eb0f46cbb580252a65829d3cfb6ada22ee795ce339905",
+      "checkpoint": "Saved List appearance details_0_1D4EC769-FA13-488E-AE32-8395BCE912DA.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "mac-serialized-qualified/fixture-window-images/6444DB79-EAA2-4E55-AE9A-2DA0EE8BB74D.png",
+      "sha256": "dd3ea16327d1db4d0db2db949f760d82ea72c13cceef9c69c62f00e7d097c2bd",
+      "checkpoint": "Global completion overrides both saved List appearances_0_198884FE-888A-41C1-8C80-8CA9BFA23847.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "mac-serialized-qualified/fixture-window-images/A4730B50-130F-440C-91CE-A64D2D08695B.png",
+      "sha256": "49817597cd7ed232ba04629bca6c01a90288d04a69edfcb5b8b248c6b150d938",
+      "checkpoint": "Saved List with globally completed Item_0_426E80B8-3F9B-4215-9044-3C5EE7676B99.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "mac-serialized-qualified/fixture-window-images/580A403C-05A9-4428-B4C5-623E04318AAD.png",
+      "sha256": "097487d2f42333ce247cdc68588c1320ff9f09ee53481331ab04f9cea3a2bf71",
+      "checkpoint": "Saved List with contextual completion and details_0_9CFD0DCA-181D-4489-A3CB-E533AFF98FF8.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "mac-serialized-qualified/fixture-window-images/E1CABC14-88FE-42DA-8999-A89D952CCE21.png",
+      "sha256": "f831c96b8f8fd9f8061fe1e014a896713c8cd96d9bbdcaaaee55e21b8cf3a53f",
+      "checkpoint": "Saved List appearance details_0_CEE6BDD9-62C6-475B-938F-57BA3338EEDA.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "phone-adaptive-qualified/fixture-window-images/C7515388-CD8F-4B75-9F76-0CDDCE4E2C6F.png",
+      "sha256": "7efbe047b5bb3c5898c79937728dfe278739b443f57beab6bcc4538c93e4627d",
+      "checkpoint": "Global completion overrides both saved List appearances_0_FCFE65F1-8ABA-4B76-A860-E82081BDB8F4.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "phone-adaptive-qualified/fixture-window-images/587CA797-BFE6-483B-A672-F09E3A2263B7.png",
+      "sha256": "b1d951485518f33c2feb25acf9f32b623765f9c18be48238430ddba91915f2c4",
+      "checkpoint": "Saved List with globally completed Item_0_B7E5A945-B70B-4387-91E7-E7E449DE33E9.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "phone-adaptive-qualified/fixture-window-images/78966AF6-E554-4532-AE4B-5075743CB257.png",
+      "sha256": "fd403a09a9b270277bec8763df58b4fc331532b9dc0df3192e0715469c4c6012",
+      "checkpoint": "Saved List with contextual completion and details_0_1C75B8B2-AB89-4107-BAFA-6FA6E5D0A7FF.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "phone-adaptive-qualified/fixture-window-images/26505C9B-6F2C-4DCD-BBD5-FFAD1852DDB5.png",
+      "sha256": "50f50fc355da752f5699d75a5f101a0866378bb861b1cd531b6c34edcce56fba",
+      "checkpoint": "Saved List appearance details_0_3009F007-2D18-416F-A704-6151FEF319E2.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "phone-both-global-qualified/fixture-window-images/F7703B47-FAAE-4040-8F92-296FC7466ECC.png",
+      "sha256": "5526cf73450d2e79bf1cccec6ae90c206fa7bb352da892e64e20dbdbb5663ab3",
+      "checkpoint": "Global completion overrides both saved List appearances_0_F9CEE248-DC5B-4A34-B1BE-902489E6A018.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "phone-both-global-qualified/fixture-window-images/A5D90344-31A4-4DD1-8D59-38D32A4285D2.png",
+      "sha256": "21a15347e3e844c7f13fc4eebd0881342a64926fd33ebea545f0e1835ee0efb9",
+      "checkpoint": "Saved List with globally completed Item_0_DE3F6346-6089-44BA-B689-21DEF485ACC4.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "phone-both-global-qualified/fixture-window-images/B4C66B07-CA87-4146-91CE-30E339A77C79.png",
+      "sha256": "c7dbe4e519b7821ddb1be4bf8a6085014fd8c7d6907958259384399974a1babb",
+      "checkpoint": "Saved List with contextual completion and details_0_A7CC1278-863D-4B39-8D96-498206A2BEF4.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "tablet-toolbar-qualified/fixture-window-images/FE9D023A-6D56-4024-8188-C573A4515781.png",
+      "sha256": "dc46b0802439f81dee5f8a4e405319d391304dc1e48eeabaf8d9542c27ef831b",
+      "checkpoint": "Saved List with contextual completion and details_0_96B1C8F5-2234-48C3-960A-212092EC61C6.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "tablet-toolbar-qualified/fixture-window-images/9C3AEF18-43EF-4D4F-B111-6FB325E66139.png",
+      "sha256": "cc3e4ccb0ab8d45478a0bd2e4ad6e184036cdd6b3223702663c0ac674594897d",
+      "checkpoint": "Saved List appearance details_0_5D226948-F5DA-4E48-95F6-8C82591FA1F9.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "tablet-toolbar-scoped-qualified/fixture-window-images/40382D6B-C933-459D-9236-68641267E508.png",
+      "sha256": "6aadbb9151c77f05279583ec76d232abc11aff6941a22f89d7b4bbb5f1aa1928",
+      "checkpoint": "Global completion overrides both saved List appearances_0_ACC4CF09-3961-43DA-BFA9-F26AFBBFECC7.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "tablet-toolbar-scoped-qualified/fixture-window-images/5476A2B8-B466-4917-AFCD-5787FA9EEA0F.png",
+      "sha256": "614b52e51293931f9c4121a846cf107d805b75f58949eb52e1d6526130a1d48a",
+      "checkpoint": "Saved List with globally completed Item_0_9DA0A69B-24F0-44F6-9698-F452095EC7BF.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "tablet-toolbar-scoped-qualified/fixture-window-images/AAB93BD8-28EC-42A1-8B0D-B998FADC39B0.png",
+      "sha256": "a084fb2434bfe8fdddbac09898c16eeb1f83fe2c66d6a5fc8e4ca1e5083c4259",
+      "checkpoint": "Saved List with contextual completion and details_0_22F87EBB-9CCD-4216-BB38-2C6E1A04AE3D.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    },
+    {
+      "file": "tablet-toolbar-scoped-qualified/fixture-window-images/9D71B344-1138-4F6B-820A-24B7022D44D1.png",
+      "sha256": "cbdbe9e2865392e690413fe6ba1658db1a7ad4b4ee9efa55df278ac03e6436f0",
+      "checkpoint": "Saved List appearance details_0_9A69151B-9B6F-4E8E-AFF8-CECB2EFFB199.png",
+      "inspection": "Original native app/window PNG individually viewed; expected completion, selection, notes and detail state agree. General polish remains open."
+    }
+  ]
+}

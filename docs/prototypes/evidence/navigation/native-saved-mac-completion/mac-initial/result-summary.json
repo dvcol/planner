@@ -1,0 +1,60 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006030-001A586C3EA3001C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 2,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "PlannerNavigation · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 2,
+  "finishTime" : 1792071543.622,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1792071412.865,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Failed to click \"Show Sidebar\" Any: Find single matching element. Multiple matching elements found for <XCUIElementQuery: 0x75fca0e170>.\nSparse tree of matches:\n→Application, pid: 97076, title: 'Planner'\n  ↳Window, identifier: 'SwiftUI.WindowGroup<SwiftUI._ConditionalContent<Planner.NavigationPrototypeView, SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<Planner.SavedPlannerView, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<Planner.SavedPlannerStore>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerPreviews>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerAddressPreviews>>>>>-1-AppWindow-1', title: 'Planner navigation prototype'\n  ⋅ ↳Toolbar\n  ⋅   ↳Button, label: 'Show Sidebar'\n  ↳MenuBar\n    ↳MenuBarItem, title: 'View'\n      ↳Menu\n        ↳MenuItem, identifier: 'toggleSidebar:', title: 'Show Sidebar'",
+      "targetName" : "PlannerNavigationUITests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt",
+      "testName" : "testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()"
+    },
+    {
+      "failureText" : "Failed to click \"Show Sidebar\" Any: Find single matching element. Multiple matching elements found for <XCUIElementQuery: 0x75fca0e440>.\nSparse tree of matches:\n→Application, pid: 98624, title: 'Planner'\n  ↳Window, identifier: 'SwiftUI.WindowGroup<SwiftUI._ConditionalContent<Planner.NavigationPrototypeView, SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<SwiftUI.ModifiedContent<Planner.SavedPlannerView, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<Planner.SavedPlannerStore>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerPreviews>>>, SwiftUI._EnvironmentKeyWritingModifier<Swift.Optional<PlannerPreviews.PlannerAddressPreviews>>>>>-1-AppWindow-1', title: 'Planner navigation prototype'\n  ⋅ ↳Toolbar\n  ⋅   ↳Button, label: 'Show Sidebar'\n  ↳MenuBar\n    ↳MenuBarItem, title: 'View'\n      ↳Menu\n        ↳MenuItem, identifier: 'toggleSidebar:', title: 'Show Sidebar'",
+      "targetName" : "PlannerNavigationUITests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation",
+      "testName" : "testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()"
+    }
+  ],
+  "title" : "Test - PlannerNavigation",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 2
+}

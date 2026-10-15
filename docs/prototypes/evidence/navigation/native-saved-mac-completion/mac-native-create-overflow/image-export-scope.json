@@ -1,0 +1,17 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerMacCompletion-mac-native-create-overflow.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerMacCompletionImages-mac-native-create-overflow-plgq3iwb",
+    "--filter",
+    "*.png"
+  ],
+  "originalManifestLocalPath": "/private/tmp/PlannerMacCompletionImages-mac-native-create-overflow-plgq3iwb/manifest.json",
+  "originalManifestSHA256": "4a74193d916a9f091b5ee3ff40ca8f092c911d317ff5b3f6f4e454b191fab719",
+  "scope": "Only explicitly named manual fixture-window captures copied unchanged. Automatic desktop/failure images, if present, remain local and receive no shared visual credit."
+}

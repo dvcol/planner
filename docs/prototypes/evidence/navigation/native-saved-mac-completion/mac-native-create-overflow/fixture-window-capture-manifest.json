@@ -1,0 +1,41 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "C06CC716-9511-470B-A507-7D4223BFEE78.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List with globally completed Item_0_E71F64D6-EE6A-4BC8-8807-6DE60E1E7E99.png",
+    "timestamp": 1792071699.959,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-mac-native-create-overflow-plgq3iwb/C06CC716-9511-470B-A507-7D4223BFEE78.png",
+    "sharedFile": "C06CC716-9511-470B-A507-7D4223BFEE78.png",
+    "sha256": "f065bcb324635f318764bef017f1ed6178d0161865602962681a189606d7dc0a"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "1CD3FE47-211D-47CB-9937-D70EFA8B1377.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List with contextual completion and details_0_4DB0B4D4-F5F0-421D-9AF8-2987781027C1.png",
+    "timestamp": 1792071663.162,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-mac-native-create-overflow-plgq3iwb/1CD3FE47-211D-47CB-9937-D70EFA8B1377.png",
+    "sharedFile": "1CD3FE47-211D-47CB-9937-D70EFA8B1377.png",
+    "sha256": "a49b64a0a909accf5af50d20af7ddbea0f10743cacefb4e48ee1c27219e67c93"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "78258425-C130-44EB-BC15-06A45A027774.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List appearance details_0_1D4EC769-FA13-488E-AE32-8395BCE912DA.png",
+    "timestamp": 1792071791.636,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-mac-native-create-overflow-plgq3iwb/78258425-C130-44EB-BC15-06A45A027774.png",
+    "sharedFile": "78258425-C130-44EB-BC15-06A45A027774.png",
+    "sha256": "55b475d6788ac7b0c03eb0f46cbb580252a65829d3cfb6ada22ee795ce339905"
+  }
+]

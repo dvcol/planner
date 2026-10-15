@@ -1,0 +1,9 @@
+[
+  "xcrun",
+  "xcresulttool",
+  "get",
+  "test-results",
+  "summary",
+  "--path",
+  "/private/tmp/PlannerMacCompletion-tablet-toolbar-scoped-qualified.xcresult"
+]

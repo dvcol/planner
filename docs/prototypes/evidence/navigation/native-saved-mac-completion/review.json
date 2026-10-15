@@ -1,0 +1,12 @@
+{
+  "baseline": "37d479a",
+  "standards": {
+    "sourceFindings": 0,
+    "finalEvidenceFindings": 0
+  },
+  "spec": {
+    "sourceFindings": 0,
+    "finalEvidenceFindings": 0
+  },
+  "scope": "Independent final source and evidence reviews. Six qualified function passes, ten source epochs, platform compatibility, product hashes and all 20 original capture hashes verified. Q88-Q92 and broader qualification remain separate."
+}

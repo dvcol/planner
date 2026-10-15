@@ -1,0 +1,17 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerMacCompletion-phone-adaptive-qualified.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerMacCompletionImages-phone-adaptive-qualified-rv4lhep_",
+    "--filter",
+    "*.png"
+  ],
+  "originalManifestLocalPath": "/private/tmp/PlannerMacCompletionImages-phone-adaptive-qualified-rv4lhep_/manifest.json",
+  "originalManifestSHA256": "a4805985b0168f1071bb8a8c998b9e353dc1f9a0700953c33a8b2d65be4a2935",
+  "scope": "Only explicitly named manual fixture-window captures copied unchanged. Automatic desktop/failure images, if present, remain local and receive no shared visual credit."
+}

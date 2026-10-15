@@ -1,0 +1,54 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "C7515388-CD8F-4B75-9F76-0CDDCE4E2C6F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Global completion overrides both saved List appearances_0_FCFE65F1-8ABA-4B76-A860-E82081BDB8F4.png",
+    "timestamp": 1792072891.769,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-phone-adaptive-qualified-rv4lhep_/C7515388-CD8F-4B75-9F76-0CDDCE4E2C6F.png",
+    "sharedFile": "C7515388-CD8F-4B75-9F76-0CDDCE4E2C6F.png",
+    "sha256": "7efbe047b5bb3c5898c79937728dfe278739b443f57beab6bcc4538c93e4627d"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "587CA797-BFE6-483B-A672-F09E3A2263B7.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List with globally completed Item_0_B7E5A945-B70B-4387-91E7-E7E449DE33E9.png",
+    "timestamp": 1792072881.325,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-phone-adaptive-qualified-rv4lhep_/587CA797-BFE6-483B-A672-F09E3A2263B7.png",
+    "sharedFile": "587CA797-BFE6-483B-A672-F09E3A2263B7.png",
+    "sha256": "b1d951485518f33c2feb25acf9f32b623765f9c18be48238430ddba91915f2c4"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "78966AF6-E554-4532-AE4B-5075743CB257.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List with contextual completion and details_0_1C75B8B2-AB89-4107-BAFA-6FA6E5D0A7FF.png",
+    "timestamp": 1792072828.808,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-phone-adaptive-qualified-rv4lhep_/78966AF6-E554-4532-AE4B-5075743CB257.png",
+    "sharedFile": "78966AF6-E554-4532-AE4B-5075743CB257.png",
+    "sha256": "fd403a09a9b270277bec8763df58b4fc331532b9dc0df3192e0715469c4c6012"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "26505C9B-6F2C-4DCD-BBD5-FFAD1852DDB5.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List appearance details_0_3009F007-2D18-416F-A704-6151FEF319E2.png",
+    "timestamp": 1792073016.708,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-phone-adaptive-qualified-rv4lhep_/26505C9B-6F2C-4DCD-BBD5-FFAD1852DDB5.png",
+    "sharedFile": "26505C9B-6F2C-4DCD-BBD5-FFAD1852DDB5.png",
+    "sha256": "50f50fc355da752f5699d75a5f101a0866378bb861b1cd531b6c34edcce56fba"
+  }
+]

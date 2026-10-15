@@ -1,0 +1,54 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "40382D6B-C933-459D-9236-68641267E508.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Global completion overrides both saved List appearances_0_ACC4CF09-3961-43DA-BFA9-F26AFBBFECC7.png",
+    "timestamp": 1792073602.67,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-tablet-toolbar-scoped-qualified-zxrjeli_/40382D6B-C933-459D-9236-68641267E508.png",
+    "sharedFile": "40382D6B-C933-459D-9236-68641267E508.png",
+    "sha256": "6aadbb9151c77f05279583ec76d232abc11aff6941a22f89d7b4bbb5f1aa1928"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "5476A2B8-B466-4917-AFCD-5787FA9EEA0F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List with globally completed Item_0_9DA0A69B-24F0-44F6-9698-F452095EC7BF.png",
+    "timestamp": 1792073590.11,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-tablet-toolbar-scoped-qualified-zxrjeli_/5476A2B8-B466-4917-AFCD-5787FA9EEA0F.png",
+    "sharedFile": "5476A2B8-B466-4917-AFCD-5787FA9EEA0F.png",
+    "sha256": "614b52e51293931f9c4121a846cf107d805b75f58949eb52e1d6526130a1d48a"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "AAB93BD8-28EC-42A1-8B0D-B998FADC39B0.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List with contextual completion and details_0_22F87EBB-9CCD-4216-BB38-2C6E1A04AE3D.png",
+    "timestamp": 1792073537.586,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-tablet-toolbar-scoped-qualified-zxrjeli_/AAB93BD8-28EC-42A1-8B0D-B998FADC39B0.png",
+    "sharedFile": "AAB93BD8-28EC-42A1-8B0D-B998FADC39B0.png",
+    "sha256": "a084fb2434bfe8fdddbac09898c16eeb1f83fe2c66d6a5fc8e4ca1e5083c4259"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "9D71B344-1138-4F6B-820A-24B7022D44D1.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List appearance details_0_9A69151B-9B6F-4E8E-AFF8-CECB2EFFB199.png",
+    "timestamp": 1792073732.113,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-tablet-toolbar-scoped-qualified-zxrjeli_/9D71B344-1138-4F6B-820A-24B7022D44D1.png",
+    "sharedFile": "9D71B344-1138-4F6B-820A-24B7022D44D1.png",
+    "sha256": "cbdbe9e2865392e690413fe6ba1658db1a7ad4b4ee9efa55df278ac03e6436f0"
+  }
+]

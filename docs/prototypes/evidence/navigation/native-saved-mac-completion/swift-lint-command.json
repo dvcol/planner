@@ -1,0 +1,7 @@
+[
+  "xcrun",
+  "swift-format",
+  "lint",
+  "--strict",
+  "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift"
+]

@@ -1,0 +1,7 @@
+{
+  "qualifiedSourceSnapshot": "mac-serialized-qualified/SavedAppearanceJourneyTests.swift.gz",
+  "qualifiedSourceSHA256": "bffb04c4993c77861c33945d89612ea1cace84b3e869f8f55e3167e8df7584f2",
+  "currentSourceSHA256": "8e7f0934bca36a129c602dbdfe9c71d32f6c6815a31849c3059679d4cc1a4ea7",
+  "comparison": "Fold every os(macOS)/os(iOS) conditional and compare every active nonblank line after stripping indentation. All active Mac statements match exactly; the later changes only adapt iOS section navigation and a regular-width iPad toolbar fallback.",
+  "newMacRuntimeAfterIOSControllerChange": 0
+}

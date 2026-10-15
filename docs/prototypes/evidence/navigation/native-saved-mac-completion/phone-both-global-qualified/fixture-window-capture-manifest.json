@@ -1,0 +1,41 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "F7703B47-FAAE-4040-8F92-296FC7466ECC.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Global completion overrides both saved List appearances_0_F9CEE248-DC5B-4A34-B1BE-902489E6A018.png",
+    "timestamp": 1792072052.517,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-phone-both-global-qualified-atcnasdg/F7703B47-FAAE-4040-8F92-296FC7466ECC.png",
+    "sharedFile": "F7703B47-FAAE-4040-8F92-296FC7466ECC.png",
+    "sha256": "5526cf73450d2e79bf1cccec6ae90c206fa7bb352da892e64e20dbdbb5663ab3"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "A5D90344-31A4-4DD1-8D59-38D32A4285D2.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List with globally completed Item_0_DE3F6346-6089-44BA-B689-21DEF485ACC4.png",
+    "timestamp": 1792072042.328,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-phone-both-global-qualified-atcnasdg/A5D90344-31A4-4DD1-8D59-38D32A4285D2.png",
+    "sharedFile": "A5D90344-31A4-4DD1-8D59-38D32A4285D2.png",
+    "sha256": "21a15347e3e844c7f13fc4eebd0881342a64926fd33ebea545f0e1835ee0efb9"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "B4C66B07-CA87-4146-91CE-30E339A77C79.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List with contextual completion and details_0_A7CC1278-863D-4B39-8D96-498206A2BEF4.png",
+    "timestamp": 1792071990.871,
+    "testIdentifier": "SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+    "originalExportPath": "/private/tmp/PlannerMacCompletionImages-phone-both-global-qualified-atcnasdg/B4C66B07-CA87-4146-91CE-30E339A77C79.png",
+    "sharedFile": "B4C66B07-CA87-4146-91CE-30E339A77C79.png",
+    "sha256": "c7dbe4e519b7821ddb1be4bf8a6085014fd8c7d6907958259384399974a1babb"
+  }
+]

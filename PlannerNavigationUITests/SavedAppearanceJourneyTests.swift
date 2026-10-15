@@ -2238,6 +2238,13 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     assertProgress(1, application: application)
     recordScreenshot(application, name: "Saved List with globally completed Item")
 
+    openList("Tokyo Food", application: application)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    XCTAssertFalse(completion.isEnabled)
+    XCTAssertTrue(completion.label.contains("Completed globally"))
+    assertProgress(1, application: application)
+    recordScreenshot(application, name: "Global completion overrides both saved List appearances")
+
     viewGlobalItem(application)
     activateGlobalCompletion(globalCompletion)
     XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
@@ -2447,8 +2454,37 @@ final class SavedAppearanceJourneyTests: XCTestCase {
   private func createList(_ title: String, application: XCUIApplication) {
     openSection("Lists", application: application)
     let create = application.plannerElement("saved.list.new")
-    revealSidebarIfNeeded(application, element: create)
-    create.activateForPlannerJourney()
+    #if os(macOS)
+      if create.exists && create.isHittable {
+        create.activateForPlannerJourney()
+      } else {
+        let overflow = application.windows.firstMatch.popUpButtons["more toolbar items"]
+        XCTAssertTrue(
+          overflow.waitForExistence(timeout: 5), application.windows.firstMatch.debugDescription)
+        overflow.activateForPlannerJourney()
+        let nativeCreate = overflow.menuItems["New List"]
+        XCTAssertTrue(
+          nativeCreate.waitForExistence(timeout: 5),
+          application.windows.firstMatch.debugDescription)
+        nativeCreate.activateForPlannerJourney()
+      }
+    #else
+      if application.windows.firstMatch.frame.width > 600, !create.exists,
+        let overflow = application.navigationBars["Planner"].buttons.matching(
+          identifier: "OverflowBarButtonItem"
+        ).allElementsBoundByIndex.first(where: \.isHittable)
+      {
+        overflow.activateForPlannerJourney()
+        let nativeCreate = application.plannerElement("New List")
+        XCTAssertTrue(
+          nativeCreate.waitForExistence(timeout: 5),
+          application.windows.firstMatch.debugDescription)
+        nativeCreate.activateForPlannerJourney()
+      } else {
+        revealSidebarIfNeeded(application, element: create)
+        create.activateForPlannerJourney()
+      }
+    #endif
     let name = application.textFields["saved.list.name"]
     XCTAssertTrue(name.waitForExistence(timeout: 5))
     name.activateForPlannerJourney()
@@ -2493,12 +2529,14 @@ final class SavedAppearanceJourneyTests: XCTestCase {
 
   private func openSection(_ title: String, application: XCUIApplication) {
     #if os(macOS)
+      application.activate()
+      XCTAssertTrue(application.wait(for: .runningForeground, timeout: 10))
       let section = application.plannerElement("saved.section.\(title.lowercased())")
+      XCTAssertTrue(section.waitForExistence(timeout: 10))
+      section.activateForPlannerJourney()
     #else
-      let section = application.buttons[title].firstMatch
+      application.openPlannerSection(title)
     #endif
-    XCTAssertTrue(section.waitForExistence(timeout: 10))
-    section.activateForPlannerJourney()
   }
 
   private func openCatalogSection(_ title: String, application: XCUIApplication) {

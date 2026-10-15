@@ -1,0 +1,16 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerMacCompletion-tablet-both-global-qualified.xcresult",
+    "--output-path",
+    "/private/tmp/PlannerCompletionTabletFailure-rlulfhoh",
+    "--filter",
+    "*.png"
+  ],
+  "originalManifestLocalPath": "/private/tmp/PlannerCompletionTabletFailure-rlulfhoh/manifest.json",
+  "scope": "Private automatic iPad app failure images; no desktop screenshots or qualification credit."
+}

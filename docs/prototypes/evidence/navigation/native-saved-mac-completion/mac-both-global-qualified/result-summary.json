@@ -1,0 +1,60 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "00006030-001A586C3EA3001C",
+        "deviceName" : "My Mac",
+        "modelName" : "MacBook Pro",
+        "osBuildNumber" : "26A434",
+        "osVersion" : "27.0.1",
+        "platform" : "macOS"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 2,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "PlannerNavigation · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 2,
+  "finishTime" : 1792071927.195,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1792071883.784,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "XCTAssertTrue failed",
+      "targetName" : "PlannerNavigationUITests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt",
+      "testName" : "testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt()"
+    },
+    {
+      "failureText" : "XCTAssertTrue failed",
+      "targetName" : "PlannerNavigationUITests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedAppearanceJourneyTests/testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation",
+      "testName" : "testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation()"
+    }
+  ],
+  "title" : "Test - PlannerNavigation",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 2
+}
