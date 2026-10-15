@@ -87,9 +87,11 @@ enum PlannerLargeCollectionFixture {
       let membershipIdentifier = UUID().uuidString
       let minutes = index == 5000 ? 91 : index % 120 + 1
       let notes = index == 5000 ? "Far-end collection marker" : "Scale notes \(index)"
+      /// Make Created sorting distinguishable from Title sorting near the end of the catalog.
+      let creationOffset = index == 4999 ? 4997 : index
       sources.append([
         "kind": "item", "id": itemIdentifier, "lifetimeId": itemLifetimeIdentifier,
-        "createdAt": 813_000_000 + index, "updatedAt": 813_000_000 + index,
+        "createdAt": 813_000_000 + creationOffset, "updatedAt": 813_000_000 + index,
         "content": [
           "title": String(format: "Scale Item %05d", index), "subtitle": NSNull(),
           "notes": notes, "location": NSNull(),
