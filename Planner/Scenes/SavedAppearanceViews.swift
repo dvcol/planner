@@ -79,7 +79,8 @@ struct SavedAppearanceDetail: View {
       SavedItemEstimateSection(estimate: item.content.estimate)
       ItemLabelsSection(labels: item.labels)
       ItemLocationSection(
-        title: item.content.title, location: item.content.location, previewSource: previewSource)
+        title: item.content.title, location: item.content.location, previewSource: previewSource,
+        links: item.content.links)
       ItemLinksSection(
         links: item.content.links, sourceId: item.source.id,
         sourceLifetimeId: item.sourceLifetimeId)

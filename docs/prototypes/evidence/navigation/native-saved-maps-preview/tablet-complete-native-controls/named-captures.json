@@ -1,0 +1,20 @@
+[
+  {
+    "test": "SavedCaptureJourneyTests/testAppleMapsPreviewYieldsToAnOwnedAddressWithoutChangingTheBookmark()",
+    "name": "Owned address takes precedence over the saved Apple Maps bookmark_0_6DF4A775-9C5C-459F-A8F0-F6AD001F03CD.png",
+    "file": "owned-address.png",
+    "sha256": "15bc1ed800bc924df25378ef5bc9fa7676302be309af6c0b2424aa4be1d15d2e"
+  },
+  {
+    "test": "SavedCaptureJourneyTests/testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch()",
+    "name": "Saved Google Maps search location uses the native map_0_361DB370-19F9-470E-A2EF-CAAEE6823F11.png",
+    "file": "google-map.png",
+    "sha256": "7d5abda36e961b09292e199727b1e8d70885ff07e653e1bdb5dbefbc0a654490"
+  },
+  {
+    "test": "SavedCaptureJourneyTests/testGoogleTextSearchRetainsAUsefulFallbackWithoutInventingAMapPin()",
+    "name": "Google text search stays a search with a useful saved-link fallback_0_76DDAB86-015D-45BF-9EE2-E5F0E2601AFE.png",
+    "file": "text-search-fallback.png",
+    "sha256": "4aef2eba72aebb9dbc1f658565697f681978622ed7174b09fe26d73d0fc3131a"
+  }
+]

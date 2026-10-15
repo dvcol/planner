@@ -42,7 +42,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     XCTAssertEqual(previewTitle.label, "Museum")
     application.plannerElement("saved.capture.add").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["My visit"].waitForExistence(timeout: 10))
-    XCTAssertFalse(application.staticTexts["Museum"].exists)
+    assertOwnedLocationIsEmpty(application, expectedTitle: "My visit")
   }
 
   func testEditedMapsLinksChooseTheFirstAvailableSourceAndRepairRemovedSelection() {
@@ -106,11 +106,12 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     let savedLinks = application.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
     )
+    revealSavedDetail(savedLinks.firstMatch, application: application)
     XCTAssertTrue(savedLinks.firstMatch.waitForExistence(timeout: 5))
     XCTAssertEqual(savedLinks.count, 1)
     XCTAssertEqual(savedLinks.firstMatch.value as? String, second)
     XCTAssertFalse(application.staticTexts["Museum"].exists)
-    XCTAssertFalse(application.staticTexts["Cafe"].exists)
+    assertOwnedLocationIsEmpty(application, expectedTitle: "My route")
   }
 
   func testRemovingTheOnlyMapsLinkThenRefreshingDoesNotSaveAnAutomaticTitle() {
@@ -230,7 +231,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     XCTAssertTrue(add.isEnabled)
     add.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts[original].waitForExistence(timeout: 10))
-    XCTAssertFalse(application.staticTexts["Museum"].exists)
+    assertOwnedLocationIsEmpty(application, expectedTitle: "Partial visit")
     application.terminate()
     application.launchSavedPlannerJourney()
     application.openPlannerSection("Items")
@@ -239,7 +240,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     XCTAssertEqual(rows.count, 1)
     rows.firstMatch.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts[original].waitForExistence(timeout: 10))
-    XCTAssertFalse(application.staticTexts["Museum"].exists)
+    assertOwnedLocationIsEmpty(application, expectedTitle: "Partial visit")
   }
 
   func testUnavailablePreviewOffersExplicitRetryWithoutBlockingOrReplacingOwnedFields() {
@@ -276,7 +277,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     application.plannerElement("saved.capture.add").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["My saved visit"].waitForExistence(timeout: 10))
     XCTAssertTrue(application.staticTexts[original].exists)
-    XCTAssertFalse(application.staticTexts["Museum"].exists)
+    assertOwnedLocationIsEmpty(application, expectedTitle: "My saved visit")
   }
 
   func testEditingTheOriginalLinkHidesItsPreviewUntilExplicitRefresh() {
@@ -331,10 +332,11 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     let savedLink = application.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
     ).firstMatch
+    revealSavedDetail(savedLink, application: application)
     XCTAssertTrue(savedLink.waitForExistence(timeout: 5))
     XCTAssertEqual(savedLink.value as? String, replacement)
     XCTAssertFalse(application.staticTexts["Museum"].exists)
-    XCTAssertFalse(application.staticTexts["Cafe"].exists)
+    assertOwnedLocationIsEmpty(application, expectedTitle: "Evening visit")
     XCTAssertTrue(application.staticTexts[original].exists)
   }
 
@@ -379,8 +381,15 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     add(attachment)
     application.plannerElement("saved.capture.add").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts[first + "\n" + second].waitForExistence(timeout: 10))
-    XCTAssertFalse(application.staticTexts["Museum"].exists)
+    assertOwnedLocationIsEmpty(application, expectedTitle: "My route")
+    let savedSourcePicker = application.plannerElement("saved.item.maps.preview.source")
+    revealSavedDetail(savedSourcePicker, application: application)
+    XCTAssertTrue(application.staticTexts["Museum"].waitForExistence(timeout: 10))
     XCTAssertFalse(application.staticTexts["Cafe"].exists)
+    savedSourcePicker.activateForPlannerJourney()
+    application.buttons[second].activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Cafe"].waitForExistence(timeout: 10))
+    XCTAssertFalse(application.staticTexts["Museum"].exists)
   }
 
   func testControlledMapsPreviewKeepsOwnedFieldsAndSavesOnlyTheOriginalBookmark() {
@@ -421,8 +430,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     add(attachment)
     application.plannerElement("saved.capture.add").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts[original].waitForExistence(timeout: 10))
-    XCTAssertFalse(application.staticTexts["Museum"].exists)
-    XCTAssertFalse(application.staticTexts["Tokyo"].exists)
+    assertOwnedLocationIsEmpty(application, expectedTitle: "My visit")
     application.terminate()
     application.launchSavedPlannerJourney()
     application.openPlannerSection("Items")
@@ -430,8 +438,48 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     XCTAssertTrue(row.waitForExistence(timeout: 20))
     row.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts[original].waitForExistence(timeout: 10))
-    XCTAssertFalse(application.staticTexts["Museum"].exists)
-    XCTAssertFalse(application.staticTexts["Tokyo"].exists)
+    assertOwnedLocationIsEmpty(application, expectedTitle: "My visit")
+  }
+
+  private func assertOwnedLocationIsEmpty(
+    _ application: XCUIApplication, expectedTitle: String
+  ) {
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Edit Item").activateForPlannerJourney()
+    let title = application.textFields["saved.item.edit.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    XCTAssertEqual(title.value as? String, expectedTitle)
+    let name = application.textFields["saved.item.edit.location.name"]
+    let address = application.textFields["saved.item.edit.location.address"]
+    reveal(name, application: application)
+    XCTAssertEqual(name.value as? String, name.placeholderValue)
+    reveal(address, application: application)
+    XCTAssertEqual(address.value as? String, address.placeholderValue)
+    XCTAssertFalse(
+      application.descendants(matching: .any)
+        .matching(identifier: "saved.item.edit.location.pin").firstMatch.exists)
+    application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
+    XCTAssertTrue(title.waitForNonExistence(timeout: 5))
+  }
+
+  private func revealSavedDetail(_ element: XCUIElement, application: XCUIApplication) {
+    for _ in 0..<6 {
+      if element.exists && element.isHittable { return }
+      #if os(macOS)
+        let form = application.scrollViews.containing(
+          .any, identifier: "saved.item.completion"
+        ).firstMatch
+      #else
+        let form = application.collectionViews.containing(
+          .any, identifier: "saved.item.completion"
+        ).firstMatch
+      #endif
+      XCTAssertTrue(form.waitForExistence(timeout: 5))
+      let start = form.coordinate(withNormalizedOffset: .init(dx: 0.97, dy: 0.8))
+      let end = form.coordinate(withNormalizedOffset: .init(dx: 0.97, dy: 0.25))
+      start.press(forDuration: 0.05, thenDragTo: end)
+    }
+    XCTAssertTrue(element.waitForExistence(timeout: 5))
   }
 
   private func reveal(_ element: XCUIElement, application: XCUIApplication) {

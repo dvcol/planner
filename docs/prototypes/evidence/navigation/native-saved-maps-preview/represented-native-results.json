@@ -1,0 +1,83 @@
+{
+  "phone-complete-native-controls": [
+    {
+      "function": "PlannerNavigationUITests.SavedCaptureJourneyTests testAppleMapsPreviewYieldsToAnOwnedAddressWithoutChangingTheBookmark",
+      "result": "passed",
+      "seconds": 52.497
+    },
+    {
+      "function": "PlannerNavigationUITests.SavedCaptureJourneyTests testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch",
+      "result": "passed",
+      "seconds": 51.99
+    },
+    {
+      "function": "PlannerNavigationUITests.SavedCaptureJourneyTests testGoogleTextSearchRetainsAUsefulFallbackWithoutInventingAMapPin",
+      "result": "passed",
+      "seconds": 23.107
+    }
+  ],
+  "tablet-complete-native-controls": [
+    {
+      "function": "PlannerNavigationUITests.SavedCaptureJourneyTests testAppleMapsPreviewYieldsToAnOwnedAddressWithoutChangingTheBookmark",
+      "result": "passed",
+      "seconds": 159.538
+    },
+    {
+      "function": "PlannerNavigationUITests.SavedCaptureJourneyTests testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch",
+      "result": "passed",
+      "seconds": 85.222
+    },
+    {
+      "function": "PlannerNavigationUITests.SavedCaptureJourneyTests testGoogleTextSearchRetainsAUsefulFallbackWithoutInventingAMapPin",
+      "result": "passed",
+      "seconds": 32.319
+    }
+  ],
+  "phone-capture-compatibility-qualified": [
+    {
+      "function": "PlannerFixtureUITests.CaptureMapsPreviewJourneyTests testAddRemainsAvailableDuringLookupAndPersistsOnePartialItemAfterRelaunch",
+      "result": "passed",
+      "seconds": 47.132
+    },
+    {
+      "function": "PlannerFixtureUITests.CaptureMapsPreviewJourneyTests testCancelDuringLookupLeavesNoSavedItemAfterRelaunch",
+      "result": "passed",
+      "seconds": 30.164
+    },
+    {
+      "function": "PlannerFixtureUITests.CaptureMapsPreviewJourneyTests testControlledMapsPreviewKeepsOwnedFieldsAndSavesOnlyTheOriginalBookmark",
+      "result": "passed",
+      "seconds": 56.336
+    },
+    {
+      "function": "PlannerFixtureUITests.CaptureMapsPreviewJourneyTests testEditedMapsLinksChooseTheFirstAvailableSourceAndRepairRemovedSelection",
+      "result": "passed",
+      "seconds": 59.424
+    },
+    {
+      "function": "PlannerFixtureUITests.CaptureMapsPreviewJourneyTests testEditingTheOriginalLinkHidesItsPreviewUntilExplicitRefresh",
+      "result": "passed",
+      "seconds": 54.145
+    },
+    {
+      "function": "PlannerFixtureUITests.CaptureMapsPreviewJourneyTests testRemovingTheOnlyMapsLinkThenRefreshingDoesNotSaveAnAutomaticTitle",
+      "result": "passed",
+      "seconds": 36.75
+    },
+    {
+      "function": "PlannerFixtureUITests.CaptureMapsPreviewJourneyTests testRevertingAChangedLinkDuringLookupRetainsAnExplicitPreviewRetry",
+      "result": "passed",
+      "seconds": 37.652
+    },
+    {
+      "function": "PlannerFixtureUITests.CaptureMapsPreviewJourneyTests testSelectingAnotherMapsLinkChangesOnlyTheTemporaryPreview",
+      "result": "passed",
+      "seconds": 42.304
+    },
+    {
+      "function": "PlannerFixtureUITests.CaptureMapsPreviewJourneyTests testUnavailablePreviewOffersExplicitRetryWithoutBlockingOrReplacingOwnedFields",
+      "result": "passed",
+      "seconds": 30.926
+    }
+  ]
+}

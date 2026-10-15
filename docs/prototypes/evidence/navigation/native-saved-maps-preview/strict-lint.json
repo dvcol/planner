@@ -1,0 +1,40 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMapsLinkResolver.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreTests/MapsLinkPreviewResolverTests.swift",
+    "Packages/PlannerPreviews/Package.swift",
+    "Packages/PlannerPreviews/Sources/PlannerPreviews/PlannerMapsPreviews.swift",
+    "Packages/PlannerPreviews/Tests/PlannerPreviewsTests/MapsPreviewTests.swift",
+    "Planner/Scenes/ItemMapsPreview.swift",
+    "Planner/Scenes/ItemLocationSection.swift",
+    "Planner/Scenes/SavedItemViews.swift",
+    "Planner/Scenes/SavedAppearanceViews.swift",
+    "Planner/Scenes/SavedItineraryContentViews.swift",
+    "Planner/PlannerApp.swift",
+    "PlannerFixtures/PlannerFixtureApp.swift",
+    "PlannerNavigationUITests/SavedCaptureJourneyTests.swift",
+    "PlannerFixtureUITests/CaptureMapsPreviewJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "output": "",
+  "sourceSHA256": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerMapsLinkResolver.swift": "8ace790645fb5123a72d320df6a3ce06b3f9e591d136bf92eef0446fc016776c",
+    "Packages/PlannerCore/Tests/PlannerCoreTests/MapsLinkPreviewResolverTests.swift": "9a2221fba6943e40aa95f476bb394255a1ba583a5c28730727e0228084101398",
+    "Packages/PlannerPreviews/Package.swift": "efe2c1f41a195bc4f9445e8aa5c00b618bf1d95f6706867a1c4177d8f6159b25",
+    "Packages/PlannerPreviews/Sources/PlannerPreviews/PlannerMapsPreviews.swift": "08c6e1c6fc36ed7b452e8c3694506e009abead10111bdbaf565d03fa914f364f",
+    "Packages/PlannerPreviews/Tests/PlannerPreviewsTests/MapsPreviewTests.swift": "101ea0290cdf4f0ca6b304ab00ca9c28ab02d8e5f2e1e92427639a7cb04ba093",
+    "Planner/Scenes/ItemMapsPreview.swift": "bb8ff1f414952ea3610315dd84f8dc19f310a5d07d54b7668d53578b31aeeba3",
+    "Planner/Scenes/ItemLocationSection.swift": "0fd116a7c6721a3ec38c368b95b10b15284f69d2c6df6d2f7c4ea52a3681dfca",
+    "Planner/Scenes/SavedItemViews.swift": "5072e043e4449290fb04c33a6129aa98ba419ef773dbabde4599fd653f1f3fdd",
+    "Planner/Scenes/SavedAppearanceViews.swift": "39800ed5ecd9ce73530e80816e9743e8010d42c3c893786be20796c71dc1e43d",
+    "Planner/Scenes/SavedItineraryContentViews.swift": "fceb04eb843f19e2cd1e6c5eb58e821afc9571acf0f4743d6c8c696b00a20c2a",
+    "Planner/PlannerApp.swift": "f73a5ec56a1d7b3dbdd5ed5c001a693bfcd7669e5770f1b9a00d09e6c54cce23",
+    "PlannerFixtures/PlannerFixtureApp.swift": "9c442d3031923523ec015f9bac2441e6852b58670ed3151b4f5509c65bcac0e7",
+    "PlannerNavigationUITests/SavedCaptureJourneyTests.swift": "49f652c35e6a162223fb0e920964f2484cb0076bd255ccd6a8bb0ea07f4cc9b4",
+    "PlannerFixtureUITests/CaptureMapsPreviewJourneyTests.swift": "5ce4751579361f23ad259143ce5114d2a766c20359fa5bc52652bb6c7959e8c6"
+  }
+}

@@ -8,6 +8,7 @@ struct ItemLocationSection: View {
   let location: PlannerOwnedLocation?
   var showMissingLocation = false
   var previewSource: PlannerPreviewSource?
+  var links: [PlannerOwnedLinkRead] = []
 
   var body: some View {
     if let location {
@@ -26,7 +27,7 @@ struct ItemLocationSection: View {
           ItemAddressPreview(request: request).id(request)
         }
       }
-    } else if showMissingLocation {
+    } else if showMissingLocation && !canPreviewMapsLink {
       Section("Location") {
         ContentUnavailableView(
           "No location", systemImage: "mappin.slash",
@@ -36,6 +37,18 @@ struct ItemLocationSection: View {
         .accessibilityIdentifier("map.location")
       }
     }
+    if canPreviewMapsLink, let previewSource {
+      ItemMapsPreviewSection(links: mapsLinks, source: previewSource)
+    }
+  }
+
+  private var mapsLinks: [PlannerOwnedLinkRead] {
+    links.filter { $0.kind == .appleMaps || $0.kind == .googleMaps }
+  }
+
+  private var canPreviewMapsLink: Bool {
+    location?.coordinate == nil && location?.formattedAddress == nil
+      && previewSource != nil && !mapsLinks.isEmpty
   }
 }
 

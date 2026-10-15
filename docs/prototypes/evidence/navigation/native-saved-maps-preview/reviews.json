@@ -1,0 +1,19 @@
+{
+  "standards": {
+    "findings": 0,
+    "scope": "Q92 resolver/cache and native presentation; duplicate Apple name now removed",
+    "finalEvidenceFindings": 0,
+    "finalEvidenceScope": "Final Q92 report, actual nine-function compatibility log, 228 frozen sources, 14 strict-lint sources and represented simulator captures/results"
+  },
+  "spec": {
+    "findings": 0,
+    "scope": "Q92 resolver/cache and native presentation",
+    "finalEvidenceFindings": 0,
+    "finalEvidenceScope": "Final Q92 report, actual nine-function compatibility log, 228 frozen sources, 14 strict-lint sources and represented simulator captures/results"
+  },
+  "excluded": [
+    "Q93 provisional ordinary creation adapter",
+    "Unexecuted Mac UI runtime",
+    "Unrepresented wider native lifecycle cases"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "phase": "phone-capture-compatibility-qualified",
+  "functions": 9,
+  "passed": 9,
+  "failed": 0,
+  "skipped": 0,
+  "seconds": 394.833,
+  "currentSourceFileCount": 228,
+  "currentSourceDifferences": [],
+  "strictLintFilesVerified": 14
+}

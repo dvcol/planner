@@ -1,0 +1,8 @@
+{
+  "sourceFileCount": 228,
+  "identicalSourceInputs": true,
+  "identicalProductHashes": true,
+  "currentDifferences": [
+    "PlannerFixtureUITests/CaptureMapsPreviewJourneyTests.swift"
+  ]
+}
