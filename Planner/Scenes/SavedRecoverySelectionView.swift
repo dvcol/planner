@@ -51,6 +51,13 @@ struct SavedRecoverySelectionView: View {
           }
           .disabled(!store.canCreate || showExporter)
           .accessibilityIdentifier("saved.recovery.restore.review")
+        } footer: {
+          if !store.isReady {
+            Text(
+              "Restore is unavailable while Planner cannot open its saved data. You can still inspect or export this copy."
+            )
+            .accessibilityIdentifier("saved.recovery.restore.unavailable")
+          }
         }
         Section("Planner data") {
           if backup.sources.isEmpty {

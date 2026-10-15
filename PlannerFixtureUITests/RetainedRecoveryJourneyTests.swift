@@ -101,6 +101,7 @@ import XCTest
         "--fixture", "retained-recovery", "--fixture-dataset", UUID().uuidString,
       ]
       application.launchSavedPlannerJourney()
+      XCTAssertTrue(application.buttons["Items"].firstMatch.waitForExistence(timeout: 20))
       application.openPlannerSection("Items")
       let currentItem = application.savedPlannerItemRows("Current hotel").firstMatch
       XCTAssertTrue(currentItem.waitForExistence(timeout: 20))
@@ -154,6 +155,7 @@ import XCTest
       closeRecovery(application)
       application.terminate()
       application.launchSavedPlannerJourney()
+      XCTAssertTrue(application.buttons["Items"].firstMatch.waitForExistence(timeout: 20))
       application.openPlannerSection("Items")
       XCTAssertTrue(application.plannerElement(currentItemIdentifier).waitForExistence(timeout: 15))
       XCTAssertTrue(

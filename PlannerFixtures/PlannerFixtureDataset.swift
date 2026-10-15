@@ -15,6 +15,7 @@ enum PlannerFixtureDataset {
     case incompleteRecovery = "incomplete-recovery"
     case recoveryRetryFailure = "recovery-retry-failure"
     case unavailableRecovery = "unavailable-recovery"
+    case unavailableStore = "unavailable-store"
     case graphRecovery = "graph-recovery"
     case pinnedAddress = "pinned-address"
     case pinnedEmptyName = "pinned-empty-name"
@@ -61,6 +62,9 @@ enum PlannerFixtureDataset {
       .appendingPathComponent("PlannerFixtures", isDirectory: true)
       .appendingPathComponent(scenario.rawValue, isDirectory: true)
       .appendingPathComponent(identifier.uuidString, isDirectory: true)
+    if scenario == .unavailableStore {
+      return try await PlannerUnavailableStoreFixture.makeStore(directory: directory)
+    }
     if scenario == .graphRecovery {
       return try await PlannerRecoveryGraphFixture.makeStore(directory: directory)
     }
