@@ -1,0 +1,24 @@
+{
+  "issue": 14,
+  "startHeading": "## Owned Item row implementation and shutdown qualification",
+  "endHeading": "## Local implementation progress, 2026-10-13",
+  "excerptBytes": 35265,
+  "excerptSHA256": "5d624410aad5944d64626c78fcace5dd105ccfcbfbd28b9071b103626fc3ad9a",
+  "originalBodyBytes": 65507,
+  "normalization": "Only trailing blank lines removed from the rendered history file. Original excerpt retained losslessly.",
+  "historyFile": "docs/prototypes/native-navigation-qualification-history.md",
+  "historySHA256": "758156bb79b0c6ce9554ccaae4675fc6c517da7eb06d6e7ce26aa621a4c21280",
+  "compressedExcerptSHA256": "9b88c0c2202f08f720c12418f238ef4e9b07c6e3afb98dc6df5a509b0ea701bd",
+  "preservedIssueSections": [
+    "Context",
+    "Starting state",
+    "Goal and question",
+    "Expected end state",
+    "Definition of ready",
+    "Required tests and validation",
+    "Definition of done",
+    "Current readiness review",
+    "Requested row interactions and previews",
+    "Local implementation progress, 2026-10-13"
+  ]
+}
