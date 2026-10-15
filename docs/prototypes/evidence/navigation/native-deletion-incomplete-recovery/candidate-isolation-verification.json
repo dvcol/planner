@@ -1,0 +1,12 @@
+{
+  "baseCommit": "b29a26f02830f3a59d52fcb4f09ca3547d311a5f",
+  "onlyChangedSourceInputs": [
+    "Planner/Scenes/SavedSourceDeletionForm.swift",
+    "PlannerFixtureUITests/DeletionRecoveryJourneyTests.swift",
+    "PlannerFixtures/PlannerDeletionRecoveryFixture.swift",
+    "PlannerFixtures/PlannerFixtureDataset.swift",
+    "PlannerFixtures/PlannerRecoveryFixture.swift"
+  ],
+  "sourceFileCount": 233,
+  "otherWorkingTreeChangesIncluded": false
+}

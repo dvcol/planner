@@ -1,0 +1,23 @@
+[
+  {
+    "test": "DeletionRecoveryJourneyTests/testAppliedDeletionKeepsATruthfulOneShotDialogAndRepairsRecoveryWithoutReapplying()",
+    "name": "Checkpoint repair preserves deletion and a later independent edit_0_7ACC2604-DDA0-497F-9F83-14F67901D00C.png",
+    "file": "later-edit.png",
+    "device": "iPad Air 11-inch (M4)",
+    "sha256": "d6231b25509e35ac9cab160c04c0d1e0546cfd5a9e3d6c69ee75cec8a9b0bec9"
+  },
+  {
+    "test": "DeletionRecoveryJourneyTests/testAppliedDeletionKeepsATruthfulOneShotDialogAndRepairsRecoveryWithoutReapplying()",
+    "name": "Relaunch preserves applied deletion and offers checkpoint-only repair_0_92D23CBE-629A-4449-8998-D0CDF7FB152D.png",
+    "file": "checkpoint-repair.png",
+    "device": "iPad Air 11-inch (M4)",
+    "sha256": "ea5ec2b6f16c7b4b2de0915a7a3870dc753d10b9e3903ae75689f9916a36fd63"
+  },
+  {
+    "test": "DeletionRecoveryJourneyTests/testAppliedDeletionKeepsATruthfulOneShotDialogAndRepairsRecoveryWithoutReapplying()",
+    "name": "Applied deletion retains an honest recovery failure and Close action_0_1C4F09DD-12E3-405C-803A-6DCCBC018F50.png",
+    "file": "retained-dialog.png",
+    "device": "iPad Air 11-inch (M4)",
+    "sha256": "b689fb8377e2408a230d3415cb2b2dc75230c812230fee5164df09ee6052542a"
+  }
+]

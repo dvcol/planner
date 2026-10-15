@@ -1,0 +1,15 @@
+{
+  "sourceCandidate": "/private/tmp/PlannerDeletionRecoveryCandidate",
+  "standards": {
+    "agent": "/root/catalog_standards_review",
+    "sourceFindings": [],
+    "evidenceFindings": [],
+    "summary": "No remaining Standards or evidence findings. One pass per simulator, zero failures, Mac compilation only. Matching 233 inputs, archived sources, current products, six capture hashes and five-source lint. Exactly five overlays; unrelated WIP and callback default excluded. Controller failures separated from qualification; broader gates remain open."
+  },
+  "spec": {
+    "agent": "/root/catalog_spec_review",
+    "sourceFindings": [],
+    "evidenceFindings": [],
+    "summary": "No remaining findings. Phone 79.967 s and tablet 79.060 s, one pass each and zero failures/skips; Mac compilation only. All 233 inputs match candidate/base plus exactly five overlays. Products and six capture hashes verify. Reports exclude historical controller failures/root pass from final qualification and preserve open wider Q89/Q93/Mac/physical gates."
+  }
+}

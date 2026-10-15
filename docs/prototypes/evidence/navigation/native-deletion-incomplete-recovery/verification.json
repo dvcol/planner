@@ -1,0 +1,31 @@
+{
+  "sourceFileCount": 233,
+  "identicalFrozenSourceInputs": true,
+  "identicalSimulatorApplicationAndTestProducts": true,
+  "currentProductHashesVerified": true,
+  "passingNativeJourneys": {
+    "phone-isolated-candidate": {
+      "passingFunctions": 1,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "seconds": 79.967,
+      "ownAppCaptures": 3
+    },
+    "tablet-isolated-candidate": {
+      "passingFunctions": 1,
+      "failedFunctions": 0,
+      "skippedFunctions": 0,
+      "seconds": 79.06,
+      "ownAppCaptures": 3
+    }
+  },
+  "visualInspection": "All six named original own-app captures inspected individually by the parent agent.",
+  "macEvidence": "Fixture application and test-target compilation only; no runtime credit.",
+  "sourceIsolation": "Committed base plus exactly five declared overlays; unrelated working-tree changes excluded.",
+  "historicalControllerAttempts": [
+    "phone-dialog-initial",
+    "phone-later-edit-diagnosis",
+    "phone-native-switch"
+  ],
+  "scope": "Focused retained deletion dialog and checkpoint repair; wider map gates remain open."
+}

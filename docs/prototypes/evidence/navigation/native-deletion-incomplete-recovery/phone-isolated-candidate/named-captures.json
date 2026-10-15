@@ -1,0 +1,23 @@
+[
+  {
+    "test": "DeletionRecoveryJourneyTests/testAppliedDeletionKeepsATruthfulOneShotDialogAndRepairsRecoveryWithoutReapplying()",
+    "name": "Checkpoint repair preserves deletion and a later independent edit_0_AB107FAC-9C23-40A3-AF66-F62A084203B6.png",
+    "file": "later-edit.png",
+    "device": "iPhone 18 Pro",
+    "sha256": "9f2bfc446542ec46a9323b8e00d2a686a24b5474280fd35ca782400578286e79"
+  },
+  {
+    "test": "DeletionRecoveryJourneyTests/testAppliedDeletionKeepsATruthfulOneShotDialogAndRepairsRecoveryWithoutReapplying()",
+    "name": "Relaunch preserves applied deletion and offers checkpoint-only repair_0_770F37E9-DAE1-4AE4-A82A-FEC303135AD5.png",
+    "file": "checkpoint-repair.png",
+    "device": "iPhone 18 Pro",
+    "sha256": "932c5b877bc113ea5d81d3106fef7010d8b71afe358dbefd802c1a98c0db71ff"
+  },
+  {
+    "test": "DeletionRecoveryJourneyTests/testAppliedDeletionKeepsATruthfulOneShotDialogAndRepairsRecoveryWithoutReapplying()",
+    "name": "Applied deletion retains an honest recovery failure and Close action_0_51AA4160-3217-4191-8CDA-586EF394A21C.png",
+    "file": "retained-dialog.png",
+    "device": "iPhone 18 Pro",
+    "sha256": "e141739ed75ec324b0c710d2d376b3f5a4765d635b0508fcd0bce3609b93878c"
+  }
+]

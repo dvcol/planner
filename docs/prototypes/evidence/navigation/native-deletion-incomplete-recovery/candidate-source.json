@@ -1,0 +1,12 @@
+{
+  "baseCommit": "b29a26f02830f3a59d52fcb4f09ca3547d311a5f",
+  "candidateRoot": "/private/tmp/PlannerDeletionRecoveryCandidate",
+  "overlays": {
+    "Planner/Scenes/SavedSourceDeletionForm.swift": "68217df2061cabd9e16034871ff4398403822780e8bda0f73d2b0267985e82f8",
+    "PlannerFixtures/PlannerRecoveryFixture.swift": "3368e843b459d1a9a4e74ad51f25a50db394369e49c884a3ebe7474a27572ebf",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "c67dd550e51f11b883c7b9c0552a4ce3ec3dccc8e4920e451649e1ca0fc84c7e",
+    "PlannerFixtures/PlannerDeletionRecoveryFixture.swift": "0c8e4c17a24b078890c0cea4f4e55881dc2a3f0483db952b704c38823ee234ef",
+    "PlannerFixtureUITests/DeletionRecoveryJourneyTests.swift": "eb14ed9752c8480a7b6fa5dcc85205f21a657cce26ff7c1bf3077c991e4f1344"
+  },
+  "excluded": "All other working-tree changes, including the unrelated default onDeleted callback. No Git checkout or user data was changed."
+}
