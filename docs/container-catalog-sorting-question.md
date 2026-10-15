@@ -1,6 +1,6 @@
 # Q85, sorting the List and Itinerary catalogs
 
-Status: pending human decision. No production sorting change is authorized by this proposal alone.
+Status: the human accepted A on 15 October 2026. Shared Core and native catalog sorting is in scope. The concrete public contract and uncertain-duration ordering still require review before their implementation.
 
 ## Context, before and goal
 
@@ -26,7 +26,7 @@ Full estimates may be exact, a known lower bound with missing child estimates, o
 
 ## Definition of ready
 
-- The human selects the catalog scope and shared-versus-native approach.
+- The human selected shared Core and native sorting through Q85 A.
 - For a selected extension, review the concrete supported sorts, default/tie rules, uncertain-duration placement and preference scope before TDD.
 - Use the approved public Core/HTTP and production-view native fixture seams. No private sorting helper becomes a separate test interface.
 
@@ -38,4 +38,16 @@ Full estimates may be exact, a known lower bound with missing child estimates, o
 - Cover missing/uncertain estimates and overflow according to the separately accepted rules. Keep full and remaining estimates distinct.
 - Qualify focused native behavior on phone/tablet, compile Mac, run affected strict lint/type checks, and retain original evidence. Mac runtime, scale/moving-window reads, physical sync and whole-app polish stay separate gates.
 
-If C is selected, record the narrower scope and retain the existing implementation. It requires no invented red/green qualification credit.
+The unselected B/C alternatives remain recorded for context. This scope decision supplies no runtime qualification credit and does not settle uncertain-duration ordering.
+
+## Q86, incomplete full estimates
+
+Pending human choice after Q85 A. Current full totals are exact, a lower bound with missing-child count, or unavailable after checked arithmetic fails. A manual overall budget supplies an exact full total even when its separate calculation is incomplete. Empty automatic containers have exact zero full duration and retain empty progress. Upper bounds describe remaining time and do not currently arise as full estimates.
+
+For exact 180-minute and 300-minute plans, a plan of at least 120 minutes with one missing estimate, and an unavailable total:
+
+- A, recommended: exact totals first, incomplete lower bounds next, unavailable last in both directions. Sort each numeric group by the selected direction. Ascending gives 180, 300, at least 120, unavailable.
+- B: mix exact totals and numeric lower bounds in the selected direction, then unavailable. Ascending gives at least 120, 180, 300, unavailable, despite the incomplete plan potentially taking longer.
+- C: exact totals in the selected direction, then all incomplete/unavailable plans in title order. Known incomplete subtotals do not affect their order.
+
+Readiness requires the human's choice and subsequent concrete-contract review. Required public Core/HTTP tests must cover both container kinds, both directions, multiple lower bounds, unavailable totals, numeric ties, exact manual budgets with incomplete calculations and empty automatic zero totals. Native rows must retain their uncertainty warnings, and selecting this sort must preserve remaining totals, completion, route order and bookings. No duration comparator is implemented before the policy is accepted.
