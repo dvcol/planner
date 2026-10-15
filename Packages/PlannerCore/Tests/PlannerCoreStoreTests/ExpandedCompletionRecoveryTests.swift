@@ -74,7 +74,7 @@ struct ExpandedCompletionRecoveryTests {
     defer { try? originalEnvelope.write(to: checkpointURL, options: .atomic) }
     var envelope = try #require(
       JSONSerialization.jsonObject(with: originalEnvelope) as? [String: Any])
-    var payload = try #require(
+    let payload = try #require(
       JSONSerialization.jsonObject(with: original.portableData) as? [String: Any])
     let completions = try #require(payload["expandedCompletions"] as? [[String: Any]])
     let originalRecord = try #require(completions.first)
@@ -99,9 +99,30 @@ struct ExpandedCompletionRecoveryTests {
     var foreignRecord = originalRecord
     foreignRecord["context"] = foreignContext
     invalidCollections.append([foreignRecord])
-    for invalidCompletions in invalidCollections {
-      payload["expandedCompletions"] = invalidCompletions
-      let bytes = try JSONSerialization.data(withJSONObject: payload)
+    var invalidPayloads = invalidCollections.map { invalidCompletions in
+      var invalid = payload
+      invalid["expandedCompletions"] = invalidCompletions
+      return invalid
+    }
+    let membershipRecords = try #require(payload["memberships"] as? [[String: Any]])
+    for bindingName in ["item", "list"] {
+      for field in ["kind", "id", "lifetimeId"] {
+        var invalidMemberships = membershipRecords
+        var binding = try #require(invalidMemberships[0][bindingName] as? [String: Any])
+        binding[field] = field == "kind" ? "itinerary" : UUID().uuidString
+        invalidMemberships[0][bindingName] = binding
+        var invalid = payload
+        invalid["memberships"] = invalidMemberships
+        invalidPayloads.append(invalid)
+      }
+    }
+    var invalidMemberships = membershipRecords
+    invalidMemberships[0]["rank"] = "01"
+    var invalidRank = payload
+    invalidRank["memberships"] = invalidMemberships
+    invalidPayloads.append(invalidRank)
+    for invalidPayload in invalidPayloads {
+      let bytes = try JSONSerialization.data(withJSONObject: invalidPayload)
       envelope["portablePayloadBase64"] = bytes.base64EncodedString()
       envelope["dataDigest"] =
         "sha256:" + SHA256.hash(data: bytes).map { String(format: "%02x", $0) }.joined()
@@ -112,7 +133,7 @@ struct ExpandedCompletionRecoveryTests {
           request: .acknowledgedSnapshot(
             namespaceId: namespace.namespaceId, checkpointGeneration: 10))
       else {
-        Issue.record("Reject the complete malformed expanded-context input.")
+        Issue.record("Reject the complete malformed membership or expanded-context input.")
         continue
       }
       #expect(failure.code == "recoveryIntegrityFailure")

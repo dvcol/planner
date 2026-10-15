@@ -1206,9 +1206,11 @@ public actor Planner {
             throw PlannerFailure(
               "unavailable", "This fixture currently implements Item reads only.")
           }
-          let items = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).filter {
-            $0.id == source.id
-          }
+          let sourceIdentifier = source.id
+          var descriptor = FetchDescriptor<PlannerSchemaV18.Item>(
+            predicate: #Predicate { $0.id == sourceIdentifier })
+          descriptor.fetchLimit = 2
+          let items = try context.fetch(descriptor)
           guard items.count == 1, let item = items.first else {
             throw PlannerFailure("missingReference", "The selected Item is missing or unresolved.")
           }

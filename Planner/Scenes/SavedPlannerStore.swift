@@ -626,37 +626,61 @@ final class SavedPlannerStore {
     sort: PlannerItemQuery.Sort = .init(mode: .title)
   ) async -> [SavedPlannerItem]? {
     guard let planner, let session else { return nil }
-    switch await planner.query(
-      PlannerQuery(
-        session: session,
-        request: .items(
-          .init(
-            scope: scope, text: text, completion: completion, archive: archive,
-            categories: categories, tags: tags, lists: lists, hasAddress: hasAddress,
-            hasLinks: hasLinks, scheduled: scheduled,
-            sort: sort))
-      ))
-    {
-    case .failed(let reason): alertMessage = reason.message
-    case .snapshot(let snapshot):
-      switch await planner.read(
-        session: session,
-        request: .rows(generation: snapshot.generation, offset: 0, limit: Int64.max))
-      {
-      case .rows(let window):
-        var loadedItems: [SavedPlannerItem] = []
-        for row in window.rows {
-          guard case .source(let source) = row.identity, source.kind == .item else {
-            alertMessage = "Planner could not resolve its Items."
+    while !Task.isCancelled {
+      let result = await planner.query(
+        PlannerQuery(
+          session: session,
+          request: .items(
+            .init(
+              scope: scope, text: text, completion: completion, archive: archive,
+              categories: categories, tags: tags, lists: lists, hasAddress: hasAddress,
+              hasLinks: hasLinks, scheduled: scheduled,
+              sort: sort))
+        ))
+      guard !Task.isCancelled else { return nil }
+      guard case .snapshot(let snapshot) = result else {
+        if case .failed(let reason) = result { alertMessage = reason.message }
+        return nil
+      }
+      var loadedItems: [SavedPlannerItem] = []
+      var offset: Int64 = 0
+      var needsRefresh = false
+      while offset < snapshot.matchingCount {
+        guard !Task.isCancelled else { return nil }
+        let result = await planner.read(
+          session: session,
+          request: .rows(generation: snapshot.generation, offset: offset, limit: 64))
+        guard !Task.isCancelled else { return nil }
+        switch result {
+        case .rows(let window):
+          guard !window.rows.isEmpty else {
+            alertMessage = "Planner could not read its complete Items."
             return nil
           }
-          loadedItems.append(
-            SavedPlannerItem(id: source.id, row: row, rowPresentation: window.rowPresentation))
+          for row in window.rows {
+            guard case .source(let source) = row.identity, source.kind == .item else {
+              alertMessage = "Planner could not resolve its Items."
+              return nil
+            }
+            loadedItems.append(
+              SavedPlannerItem(id: source.id, row: row, rowPresentation: window.rowPresentation))
+          }
+          offset += Int64(window.rows.count)
+        case .failed(let reason):
+          if reason.code == "staleSnapshot" {
+            needsRefresh = true
+          } else {
+            alertMessage = reason.message
+            return nil
+          }
+        default:
+          alertMessage = "Planner could not read its Items."
+          return nil
         }
-        return loadedItems
-      case .failed(let reason): alertMessage = reason.message
-      default: alertMessage = "Planner could not read its Items."
+        if needsRefresh { break }
       }
+      if needsRefresh { continue }
+      return loadedItems
     }
     return nil
   }
