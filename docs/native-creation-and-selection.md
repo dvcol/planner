@@ -25,8 +25,8 @@ Q92 A adds a temporary map card derived from a saved Maps bookmark. Owned locati
 ## Definition of ready
 
 - Q88-Q92 and the existing completion, archive, capture provenance, recovery and selection policies are read together. This document changes deletion replacement and creation presentation while retaining valid-selection and scope rules.
-- Inspect the production native editor, capture, query and preview boundaries before writing tests. Existing public capture prepare/update/review/apply can author the rich Item and optional memberships without a new public Core command.
-- The capture writer inserts content, labels, memberships and receipt before one local save. Independent recovery publication has its existing separate outcome; never misreport an applied local operation as unapplied when recovery publication fails.
+- Inspect the production native editor, capture, query and preview boundaries before writing tests. The initial Capture reuse proposal is superseded by [the atomic ordinary creation contract](create-item-in-list-contract-review.md): Capture exact-URL deduplication cannot preserve distinct ordinary authored bookmarks.
+- The ordinary creation writer must insert content, labels, optional membership and receipt before one local save. Independent recovery publication has its existing separate outcome; never misreport an applied local operation as unapplied when recovery publication fails.
 - Select literal fixtures, native actions and expected values before each /tdd slice. Keep provider I/O tests at the accepted production boundary rather than adding test-only production parameters.
 - Native Mac and both simulator form factors are available. Signing/physical sync and Share remain deferred and cannot be credited by these local tests.
 
