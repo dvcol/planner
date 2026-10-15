@@ -1,0 +1,20 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "PlannerFixtures/PlannerFixtureDataset.swift",
+    "PlannerFixtures/PlannerDeletionSelectionFixture.swift",
+    "PlannerFixtureUITests/DeletionEmptyResultsJourneyTests.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift"
+  ],
+  "exitCode": 0,
+  "output": "",
+  "sourceSHA256": {
+    "PlannerFixtures/PlannerFixtureDataset.swift": "39dc948239ccc36220986d0770fb16fb982b4b39892c659c8d0b1fd2734bbe48",
+    "PlannerFixtures/PlannerDeletionSelectionFixture.swift": "f7be5bf30336eafde22604227768ff7f2a9f2503dd7b5d3b2f42ed5e44cb8f6b",
+    "PlannerFixtureUITests/DeletionEmptyResultsJourneyTests.swift": "da69603e19d0bdb0aa5b9dbd00d90de7d4760ca4948de1668bfc8f9c26f440f6",
+    "PlannerNavigationUITests/NativeNavigationElements.swift": "3aff42b9c47033040238da87c339584ffc48fbc4bbddd469c35c566f411760b9"
+  }
+}

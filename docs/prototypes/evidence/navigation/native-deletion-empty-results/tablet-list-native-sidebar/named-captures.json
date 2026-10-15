@@ -1,0 +1,16 @@
+[
+  {
+    "test": "DeletionEmptyResultsJourneyTests/testDeletingTheLastVisibleListRetainsArchivedListsAndItsSourceItem()",
+    "name": "Archived List and membership retain their identities after relaunch_0_E8061CBC-808B-42FF-B01A-B0785341DFBD.png",
+    "file": "archived-list.png",
+    "device": "iPad Air 11-inch (M4)",
+    "sha256": "b05664cf847d054c4e37060a0b91672ef02eb137f74eb449b8b5c5f82ffffeff"
+  },
+  {
+    "test": "DeletionEmptyResultsJourneyTests/testDeletingTheLastVisibleListRetainsArchivedListsAndItsSourceItem()",
+    "name": "Deleting the last visible List leaves its active catalog empty_0_23AE0EA7-2DD1-4CBC-B1CF-5F783E95D7C8.png",
+    "file": "empty-lists.png",
+    "device": "iPad Air 11-inch (M4)",
+    "sha256": "d6150bf807a22a9160fa1a184aa3fb68b3dfb5775a6d322ac1cc7ad93d557eb2"
+  }
+]

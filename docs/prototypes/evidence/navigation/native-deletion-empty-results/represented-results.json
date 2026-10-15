@@ -1,0 +1,72 @@
+{
+  "phone-combined-selection-qualified": {
+    "phaseExitCode": 0,
+    "creditedFunction": {
+      "function": "testDeletingTheLastVisibleItemKeepsTheEmptyCatalogWithoutSelectingAnArchivedItem",
+      "result": "passed",
+      "seconds": 81.62
+    },
+    "allExecutedFunctions": [
+      {
+        "function": "testDeletingTheLastVisibleItemKeepsTheEmptyCatalogWithoutSelectingAnArchivedItem",
+        "result": "passed",
+        "seconds": 81.62
+      },
+      {
+        "function": "testDeletingTheLastVisibleListRetainsArchivedListsAndItsSourceItem",
+        "result": "passed",
+        "seconds": 103.665
+      }
+    ]
+  },
+  "tablet-combined-selection-qualified": {
+    "phaseExitCode": 65,
+    "creditedFunction": {
+      "function": "testDeletingTheLastVisibleItemKeepsTheEmptyCatalogWithoutSelectingAnArchivedItem",
+      "result": "passed",
+      "seconds": 82.582
+    },
+    "allExecutedFunctions": [
+      {
+        "function": "testDeletingTheLastVisibleItemKeepsTheEmptyCatalogWithoutSelectingAnArchivedItem",
+        "result": "passed",
+        "seconds": 82.582
+      },
+      {
+        "function": "testDeletingTheLastVisibleListRetainsArchivedListsAndItsSourceItem",
+        "result": "failed",
+        "seconds": 20.318
+      }
+    ]
+  },
+  "phone-list-native-sidebar": {
+    "phaseExitCode": 0,
+    "creditedFunction": {
+      "function": "testDeletingTheLastVisibleListRetainsArchivedListsAndItsSourceItem",
+      "result": "passed",
+      "seconds": 115.339
+    },
+    "allExecutedFunctions": [
+      {
+        "function": "testDeletingTheLastVisibleListRetainsArchivedListsAndItsSourceItem",
+        "result": "passed",
+        "seconds": 115.339
+      }
+    ]
+  },
+  "tablet-list-native-sidebar": {
+    "phaseExitCode": 0,
+    "creditedFunction": {
+      "function": "testDeletingTheLastVisibleListRetainsArchivedListsAndItsSourceItem",
+      "result": "passed",
+      "seconds": 132.117
+    },
+    "allExecutedFunctions": [
+      {
+        "function": "testDeletingTheLastVisibleListRetainsArchivedListsAndItsSourceItem",
+        "result": "passed",
+        "seconds": 132.117
+      }
+    ]
+  }
+}

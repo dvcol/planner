@@ -1,0 +1,23 @@
+{
+  "sourceFileCount": 232,
+  "representedPassingFunctions": 4,
+  "representedSkippedFunctions": 0,
+  "historicalControllerDifferences": {
+    "phone-combined-selection-qualified": [
+      "PlannerFixtureUITests/DeletionEmptyResultsJourneyTests.swift"
+    ],
+    "tablet-combined-selection-qualified": [
+      "PlannerFixtureUITests/DeletionEmptyResultsJourneyTests.swift"
+    ],
+    "phone-list-native-sidebar": [],
+    "tablet-list-native-sidebar": []
+  },
+  "identicalApplicationProductsAcrossRepresentedSimulatorEpochs": true,
+  "identicalFinalPhoneTabletTestProducts": true,
+  "finalListAndMacCompileSourcesMatchCurrent": true,
+  "namedCaptures": 8,
+  "rootVisualReview": "Eight original own-app captures inspected.",
+  "macEvidence": "Current fixture app/test compilation only; no UI runtime.",
+  "partialFailedBatch": "tablet-combined-selection-qualified passes Item and fails List setup at missing toolbar control; it is not credited as an entirely passing batch.",
+  "creditedItemFunctionAndLaunchHelperByteIdenticalToCurrent": true
+}

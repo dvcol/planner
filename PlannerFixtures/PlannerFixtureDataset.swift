@@ -33,6 +33,7 @@ enum PlannerFixtureDataset {
     case captureMapsDelay = "capture-maps-delay"
     case savedMapsDelay = "saved-maps-delay"
     case savedMapsRetry = "saved-maps-retry"
+    case deletionEmptyResults = "deletion-empty-results"
 
     var isMapsCapture: Bool {
       switch self {
@@ -119,6 +120,10 @@ enum PlannerFixtureDataset {
     }
     if scenario == .catalogSorting {
       try await PlannerCatalogSortFixture.seed(planner, session: session)
+      return SavedPlannerStore(configuration: configuration)
+    }
+    if scenario == .deletionEmptyResults {
+      try await PlannerDeletionSelectionFixture.seed(planner, session: session)
       return SavedPlannerStore(configuration: configuration)
     }
     if scenario == .savedMapsDelay || scenario == .savedMapsRetry {

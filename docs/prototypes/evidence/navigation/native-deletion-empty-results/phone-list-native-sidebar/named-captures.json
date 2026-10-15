@@ -1,0 +1,16 @@
+[
+  {
+    "test": "DeletionEmptyResultsJourneyTests/testDeletingTheLastVisibleListRetainsArchivedListsAndItsSourceItem()",
+    "name": "Archived List and membership retain their identities after relaunch_0_8695DC68-D3BC-456B-B54B-6708F64CB5DD.png",
+    "file": "archived-list.png",
+    "device": "iPhone 18 Pro",
+    "sha256": "dadb9ef875e346c1b99b4a38d0c693098ee64541dff0c8d4bef767d283847503"
+  },
+  {
+    "test": "DeletionEmptyResultsJourneyTests/testDeletingTheLastVisibleListRetainsArchivedListsAndItsSourceItem()",
+    "name": "Deleting the last visible List leaves its active catalog empty_0_283285F4-12C0-4CA8-B517-7B48B73A316B.png",
+    "file": "empty-lists.png",
+    "device": "iPhone 18 Pro",
+    "sha256": "d7c0156259f53a8375ee2ef099c3d43c459f546eff84f067528223bd3f6abb0b"
+  }
+]

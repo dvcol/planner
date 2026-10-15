@@ -1,0 +1,16 @@
+[
+  {
+    "test": "DeletionEmptyResultsJourneyTests/testDeletingTheLastVisibleItemKeepsTheEmptyCatalogWithoutSelectingAnArchivedItem()",
+    "name": "Archived Item remains available with its identity after relaunch_0_74E75A5A-D584-47E0-ABB3-672307DCE2D1.png",
+    "file": "archived-item.png",
+    "device": "iPhone 18 Pro",
+    "sha256": "7c864ff9ac2db410d53f8d73f32ede932b131ce1b69e80f655d569e92404d515"
+  },
+  {
+    "test": "DeletionEmptyResultsJourneyTests/testDeletingTheLastVisibleItemKeepsTheEmptyCatalogWithoutSelectingAnArchivedItem()",
+    "name": "Deleting the last visible Item leaves its filtered catalog empty_0_16C2DB2C-EF76-4FEF-9A83-3D52FD20EC75.png",
+    "file": "empty-items.png",
+    "device": "iPhone 18 Pro",
+    "sha256": "8b34ef6989e85d4fa3aaaada3a94d6b021eecf644344c0fe25b716ccb9279c8f"
+  }
+]

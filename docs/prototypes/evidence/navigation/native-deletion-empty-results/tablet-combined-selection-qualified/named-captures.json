@@ -1,0 +1,16 @@
+[
+  {
+    "test": "DeletionEmptyResultsJourneyTests/testDeletingTheLastVisibleItemKeepsTheEmptyCatalogWithoutSelectingAnArchivedItem()",
+    "name": "Archived Item remains available with its identity after relaunch_0_22AA38BB-9D2C-4DC8-B360-E5F1426CCA9F.png",
+    "file": "archived-item.png",
+    "device": "iPad Air 11-inch (M4)",
+    "sha256": "0ca44002f4c9320acc22472358a338981abaa8e33cea59da18de82edcddcf1bb"
+  },
+  {
+    "test": "DeletionEmptyResultsJourneyTests/testDeletingTheLastVisibleItemKeepsTheEmptyCatalogWithoutSelectingAnArchivedItem()",
+    "name": "Deleting the last visible Item leaves its filtered catalog empty_0_033E99CB-AE10-4D40-AEA1-B3BC8FE36FC2.png",
+    "file": "empty-items.png",
+    "device": "iPad Air 11-inch (M4)",
+    "sha256": "247bdb9db79464e29411a21aea8faf188c23e5ec2d00bbb19c2aceb76fd5d864"
+  }
+]
