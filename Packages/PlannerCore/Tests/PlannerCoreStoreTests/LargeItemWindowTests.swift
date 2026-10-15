@@ -154,6 +154,123 @@ struct LargeItemWindowTests {
     #expect(after == before)
   }
 
+  @Test func secondWriterInvalidatesLargeItemWindowsWithoutLosingSavedReferences() async throws {
+    let directory = FileManager.default.temporaryDirectory
+      .appendingPathComponent("PlannerLargeItemWindowTests", isDirectory: true)
+      .appendingPathComponent(UUID().uuidString, isDirectory: true)
+    print("Large Item window fixture: \(directory.path)")
+    let configuration = PlannerStorageConfiguration(
+      storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+      controlURL: directory.appendingPathComponent("control/writer"),
+      recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+      processRole: .mainApplication, storageMode: .localOnly)
+    let planner = Planner(configuration: configuration)
+    let fixture = try makeLargeWindowFixture()
+    let lastItem = try #require(fixture.items.last)
+    guard case .ready(let session) = await planner.bootstrap(),
+      case .decoded(let decoded) = planner.decodeImport(fixture.data),
+      case .reviewed(let review) = await planner.prepareReview(
+        session: session, command: .applyImport(backup: decoded)),
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session, command: review.command,
+          reviewToken: review.reviewToken)
+      ).outcome,
+      case .exported(let originalData) = await planner.exportData(session: session),
+      case .decoded(let originalBackup) = planner.decodeImport(originalData),
+      case .snapshot(let original) = await planner.query(
+        .init(session: session, request: .items(.init()))),
+      case .rows(let firstPage) = await planner.read(
+        session: session, request: .rows(generation: original.generation, offset: 0, limit: 64))
+    else {
+      Issue.record("Import and read the first page of the original 5,000 Todo Items.")
+      return
+    }
+    #expect(original.matchingCount == 5000)
+    #expect(original.rows == fixture.items.map(PlannerRowIdentity.source))
+    #expect(firstPage.rows.map(\.identity) == Array(original.rows.prefix(64)))
+    let otherWriter = Planner(configuration: configuration)
+    guard case .ready(let otherSession) = await otherWriter.bootstrap(),
+      case .applied(_, .complete) = await otherWriter.execute(
+        .init(
+          operationId: UUID(), session: otherSession,
+          command: .setCompletion(scope: .globalItem(itemId: lastItem.id), done: true))
+      ).outcome
+    else {
+      Issue.record("The second writer must durably complete Item 05000 between page reads.")
+      return
+    }
+    for offset: Int64 in [64, 0, 4992] {
+      guard
+        case .failed(let failure) = await planner.read(
+          session: session,
+          request: .rows(generation: original.generation, offset: offset, limit: 64))
+      else {
+        Issue.record("An obsolete generation must reject its page at \(offset).")
+        return
+      }
+      #expect(failure.code == "staleSnapshot")
+      #expect(
+        failure.details
+          == .staleSnapshot(requestedGeneration: original.generation, currentGeneration: nil))
+    }
+    let expectedRows = fixture.items.dropLast().map(PlannerRowIdentity.source)
+    guard
+      case .snapshot(let refreshed) = await planner.query(
+        .init(session: session, request: .items(.init())))
+    else {
+      Issue.record("The original reader must refresh its Todo query after the other writer.")
+      return
+    }
+    #expect(refreshed.generation != original.generation)
+    #expect(refreshed.matchingCount == 4999)
+    #expect(refreshed.rows == expectedRows)
+    var traversed: [PlannerRowIdentity] = []
+    var pageCount = 0
+    for offset in stride(from: 0, to: 4999, by: 64) {
+      guard
+        case .rows(let page) = await planner.read(
+          session: session,
+          request: .rows(generation: refreshed.generation, offset: Int64(offset), limit: 64))
+      else {
+        Issue.record("Read the complete refreshed generation at \(offset).")
+        return
+      }
+      #expect(page.generation == refreshed.generation)
+      #expect(page.offset == Int64(offset) && page.matchingCount == 4999)
+      #expect(page.rows.map(\.identity) == Array(expectedRows[offset..<min(offset + 64, 4999)]))
+      #expect(page.rows.allSatisfy { $0.globalDone == false && $0.archived == false })
+      traversed.append(contentsOf: page.rows.map(\.identity))
+      pageCount += 1
+    }
+    #expect(pageCount == 79)
+    #expect(traversed == expectedRows)
+    guard
+      case .source(.item(let completed)) = await planner.read(
+        session: session, request: .source(lastItem)),
+      case .exported(let after) = await planner.exportData(session: session),
+      case .decoded(let savedBackup) = planner.decodeImport(after)
+    else {
+      Issue.record("Read the retained completed source and complete graph after refresh.")
+      return
+    }
+    #expect(completed.source == lastItem)
+    #expect(completed.state.globalDone == true && completed.state.archived == false)
+    #expect(Set(savedBackup.backup.items.map(\.id)) == Set(fixture.items.map(\.id)))
+    #expect(Set(savedBackup.backup.lists.map(\.id)) == Set(fixture.lists.map(\.id)))
+    let memberships = savedBackup.backup.memberships
+    #expect(
+      Dictionary(uniqueKeysWithValues: memberships.map { ($0.id, $0) })
+        == Dictionary(
+          uniqueKeysWithValues: originalBackup.backup.memberships.map { ($0.id, $0) }))
+    #expect(memberships.count == 5000 && Set(memberships.map(\.id)).count == 5000)
+    #expect(Set(memberships.map(\.item.id)) == Set(fixture.items.map(\.id)))
+    let membershipsByList = Dictionary(grouping: memberships, by: \.list.id)
+    #expect(Set(membershipsByList.keys) == Set(fixture.lists.map(\.id)))
+    #expect(membershipsByList.values.allSatisfy { $0.count == 25 })
+    #expect(memberships.allSatisfy { !$0.localDone })
+  }
+
   private func makeLargeWindowFixture() throws -> (
     data: Data, items: [PlannerEntityReference], lists: [PlannerEntityReference]
   ) {
