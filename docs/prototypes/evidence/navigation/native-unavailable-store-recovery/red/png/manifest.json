@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "1125D441-5EE0-497B-92E8-79BA8C546FC0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unavailable Planner offers recovery without creating a replacement dataset_0_F600239C-17C0-42B4-82E8-8252CB258B62.png",
+        "timestamp" : 1792035107.652
+      }
+    ],
+    "testIdentifier" : "UnavailableStoreRecoveryJourneyTests/testUnavailableStoreKeepsItsRecoveryCopyReadableAfterRetryAndRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/UnavailableStoreRecoveryJourneyTests/testUnavailableStoreKeepsItsRecoveryCopyReadableAfterRetryAndRelaunch"
+  }
+]

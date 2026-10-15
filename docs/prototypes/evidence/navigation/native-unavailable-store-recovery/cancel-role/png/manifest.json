@@ -1,0 +1,35 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "DED89434-4D5B-4D00-8EA4-234BA1FFAAA7.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unavailable-store recovery can open the native file exporter_0_401CD1D6-F69D-4CAF-B798-DD7223F68B60.png",
+        "timestamp" : 1792034229.604
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "B9FFFFE1-E85E-4C8A-B85F-F13516355259.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Saved recovery remains readable while restore has no current destination_0_44E7A733-E420-45DB-91C1-313F3543D06D.png",
+        "timestamp" : 1792034220.327
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "846A33E5-A0F3-4147-B38E-8CB0AA08F39B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unavailable Planner offers recovery without creating a replacement dataset_0_1D9FE941-C1B9-4AF2-BCF1-8DC11D131DA1.png",
+        "timestamp" : 1792034214.124
+      }
+    ],
+    "testIdentifier" : "UnavailableStoreRecoveryJourneyTests/testUnavailableStoreKeepsItsRecoveryCopyReadableAfterRetryAndRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/UnavailableStoreRecoveryJourneyTests/testUnavailableStoreKeepsItsRecoveryCopyReadableAfterRetryAndRelaunch"
+  }
+]
