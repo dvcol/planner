@@ -1,0 +1,50 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "BF359DFB-40D4-4F9A-9805-E90018CFBC12.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Backward span retains both endpoints on the aligned Day grid_0_0396F852-4557-4739-8D1A-B424E6B25D20.png",
+        "timestamp" : 1792028144.308
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testAutumnSpanCoversItsClockSegmentsAndAlignsWithOrdinaryDay()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testAutumnSpanCoversItsClockSegmentsAndAlignsWithOrdinaryDay"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "C71A240D-9769-4FC3-8FDD-78C35B6FE169.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Clock bounds for Midnight boundary_0_52A9CC02-59F0-48D1-9CF4-4E221726CE3B.png",
+        "timestamp" : 1792028297.009
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "9EAC4808-70A3-49E9-88C6-7D663A42CC73.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Clock bounds for Overnight museum_0_64AA3452-4857-4302-BC88-2B7870498418.png",
+        "timestamp" : 1792028237.112
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "6C314966-BF72-4F20-962C-BBB6F0FEB90A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Clock bounds for Island spring_0_99167507-42CF-40FC-94B9-65DE8BC7E338.png",
+        "timestamp" : 1792028186.085
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testHalfHourForwardChangeAndOvernightClippingUseClockBounds()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testHalfHourForwardChangeAndOvernightClippingUseClockBounds"
+  }
+]

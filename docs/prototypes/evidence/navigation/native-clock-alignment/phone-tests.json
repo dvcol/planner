@@ -1,0 +1,126 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName" : "iPhone 18 Pro",
+      "modelName" : "iPhone 18 Pro",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed - Nov 1, 2026 at 1:55 AM EDT – Nov 1, 2026 at 1:05 AM EST",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/dinh-van.colomban/Workspace/private/planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests.swift",
+                        "lineNumber" : 78
+                      }
+                    }
+                  ],
+                  "duration" : "40s",
+                  "durationInSeconds" : 40.325328946113586,
+                  "name" : "testAutumnSpanCoversItsClockSegmentsAndAlignsWithOrdinaryDay()",
+                  "nodeIdentifier" : "CalendarRepeatedTimeJourneyTests/testAutumnSpanCoversItsClockSegmentsAndAlignsWithOrdinaryDay()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testAutumnSpanCoversItsClockSegmentsAndAlignsWithOrdinaryDay",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "duration" : "47s",
+                  "durationInSeconds" : 47.956485986709595,
+                  "name" : "testBookedSpanAcrossRepeatedClockTimeDescribesBothEndpoints()",
+                  "nodeIdentifier" : "CalendarRepeatedTimeJourneyTests/testBookedSpanAcrossRepeatedClockTimeDescribesBothEndpoints()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testBookedSpanAcrossRepeatedClockTimeDescribesBothEndpoints",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "1m 59s",
+                  "durationInSeconds" : 119.98210394382477,
+                  "name" : "testHalfHourForwardChangeAndOvernightClippingUseClockBounds()",
+                  "nodeIdentifier" : "CalendarRepeatedTimeJourneyTests/testHalfHourForwardChangeAndOvernightClippingUseClockBounds()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testHalfHourForwardChangeAndOvernightClippingUseClockBounds",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "43s",
+                  "durationInSeconds" : 43.28980302810669,
+                  "name" : "testHalfHourRepeatedClockTimesKeepIndependentLanes()",
+                  "nodeIdentifier" : "CalendarRepeatedTimeJourneyTests/testHalfHourRepeatedClockTimesKeepIndependentLanes()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testHalfHourRepeatedClockTimesKeepIndependentLanes",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "37s",
+                  "durationInSeconds" : 37.41996502876282,
+                  "name" : "testLateStartOnlyCardCanBeScrolledFullyIntoTheDayViewport()",
+                  "nodeIdentifier" : "CalendarRepeatedTimeJourneyTests/testLateStartOnlyCardCanBeScrolledFullyIntoTheDayViewport()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testLateStartOnlyCardCanBeScrolledFullyIntoTheDayViewport",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "50s",
+                  "durationInSeconds" : 50.36220705509186,
+                  "name" : "testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView()",
+                  "nodeIdentifier" : "CalendarRepeatedTimeJourneyTests/testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "34s",
+                  "durationInSeconds" : 34.29711198806763,
+                  "name" : "testShortBookedClockChangeSpanPaintsBothTimezoneNamesInWeekView()",
+                  "nodeIdentifier" : "CalendarRepeatedTimeJourneyTests/testShortBookedClockChangeSpanPaintsBothTimezoneNamesInWeekView()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testShortBookedClockChangeSpanPaintsBothTimezoneNamesInWeekView",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "49s",
+                  "durationInSeconds" : 49.03120303153992,
+                  "name" : "testSpringSpanUsesLocalClockHeightAndAlignsWithOrdinaryDay()",
+                  "nodeIdentifier" : "CalendarRepeatedTimeJourneyTests/testSpringSpanUsesLocalClockHeightAndAlignsWithOrdinaryDay()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testSpringSpanUsesLocalClockHeightAndAlignsWithOrdinaryDay",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "CalendarRepeatedTimeJourneyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "PlannerFixtureUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "PlannerFixtures",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

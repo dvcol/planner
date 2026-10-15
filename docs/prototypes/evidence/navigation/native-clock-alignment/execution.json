@@ -1,0 +1,601 @@
+{
+  "qualifiedUniqueFunctions": {
+    "phone": [
+      "testAutumnSpanCoversItsClockSegmentsAndAlignsWithOrdinaryDay",
+      "testBookedSpanAcrossRepeatedClockTimeDescribesBothEndpoints",
+      "testHalfHourForwardChangeAndOvernightClippingUseClockBounds",
+      "testHalfHourRepeatedClockTimesKeepIndependentLanes",
+      "testLateStartOnlyCardCanBeScrolledFullyIntoTheDayViewport",
+      "testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView",
+      "testShortBookedClockChangeSpanPaintsBothTimezoneNamesInWeekView",
+      "testSpringSpanUsesLocalClockHeightAndAlignsWithOrdinaryDay"
+    ],
+    "tablet": [
+      "testAutumnSpanCoversItsClockSegmentsAndAlignsWithOrdinaryDay",
+      "testBookedSpanAcrossRepeatedClockTimeDescribesBothEndpoints",
+      "testHalfHourForwardChangeAndOvernightClippingUseClockBounds",
+      "testHalfHourRepeatedClockTimesKeepIndependentLanes",
+      "testLateStartOnlyCardCanBeScrolledFullyIntoTheDayViewport",
+      "testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView",
+      "testShortBookedClockChangeSpanPaintsBothTimezoneNamesInWeekView",
+      "testSpringSpanUsesLocalClockHeightAndAlignsWithOrdinaryDay"
+    ]
+  },
+  "baseCommit": "20f3b1d",
+  "scope": "Q83 A native local-clock Day/Week placement; Core/HTTP/schema unchanged. Only filtered original PNG/TXT attachment exports are retained; automatic event traces/videos are excluded.",
+  "stages": {
+    "point-red": {
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "point-green": {
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "span-red": {
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "span-green": {
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "boundary-red": {
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "phone": {
+      "passedTests": 7,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 8
+    },
+    "tablet": {
+      "passedTests": 7,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 8
+    },
+    "phone-followup": {
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 2
+    },
+    "tablet-followup": {
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "phone-spring": {
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "tablet-spring": {
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    }
+  },
+  "commands": {
+    "point-red": {
+      "environment": {
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+        "test",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerFixtures",
+        "-destination",
+        "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "-derivedDataPath",
+        "/private/tmp/PlannerCalendarTemporalDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView",
+        "-resultBundlePath",
+        "/private/tmp/PlannerClockAlignmentRed.xcresult",
+        "CODE_SIGNING_ALLOWED=NO"
+      ]
+    },
+    "point-green": {
+      "environment": {
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+        "test",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerFixtures",
+        "-destination",
+        "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "-derivedDataPath",
+        "/private/tmp/PlannerCalendarTemporalDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testRepeatedClockTimesKeepSeparateReadableAppointmentsInDayView",
+        "-resultBundlePath",
+        "/private/tmp/PlannerClockAlignmentGreen.xcresult",
+        "CODE_SIGNING_ALLOWED=NO"
+      ]
+    },
+    "span-red": {
+      "environment": {
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+        "test",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerFixtures",
+        "-destination",
+        "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "-derivedDataPath",
+        "/private/tmp/PlannerCalendarTemporalDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testSpringSpanUsesLocalClockHeightAndAlignsWithOrdinaryDay",
+        "-resultBundlePath",
+        "/private/tmp/PlannerClockSpanRed.xcresult",
+        "CODE_SIGNING_ALLOWED=NO"
+      ]
+    },
+    "span-green": {
+      "environment": {
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+        "test",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerFixtures",
+        "-destination",
+        "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "-derivedDataPath",
+        "/private/tmp/PlannerCalendarTemporalDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testSpringSpanUsesLocalClockHeightAndAlignsWithOrdinaryDay",
+        "-resultBundlePath",
+        "/private/tmp/PlannerClockSpanGreen.xcresult",
+        "CODE_SIGNING_ALLOWED=NO"
+      ]
+    },
+    "boundary-red": {
+      "environment": {
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+        "test",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerFixtures",
+        "-destination",
+        "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "-derivedDataPath",
+        "/private/tmp/PlannerCalendarTemporalDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testSpringSpanUsesLocalClockHeightAndAlignsWithOrdinaryDay",
+        "-resultBundlePath",
+        "/private/tmp/PlannerClockBoundaryRed.xcresult",
+        "CODE_SIGNING_ALLOWED=NO"
+      ]
+    },
+    "phone": {
+      "environment": {
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+        "test",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerFixtures",
+        "-destination",
+        "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "-derivedDataPath",
+        "/private/tmp/PlannerCalendarTemporalDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests",
+        "-resultBundlePath",
+        "/private/tmp/PlannerClockAlignmentQualifiedPhone.xcresult",
+        "CODE_SIGNING_ALLOWED=NO"
+      ]
+    },
+    "tablet": {
+      "environment": {
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+        "test",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerFixtures",
+        "-destination",
+        "platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "-derivedDataPath",
+        "/private/tmp/PlannerCalendarTemporalDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests",
+        "-resultBundlePath",
+        "/private/tmp/PlannerClockAlignmentQualifiedTablet.xcresult",
+        "CODE_SIGNING_ALLOWED=NO"
+      ]
+    },
+    "phone-followup": {
+      "environment": {
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+        "test",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerFixtures",
+        "-destination",
+        "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "-derivedDataPath",
+        "/private/tmp/PlannerCalendarTemporalDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testAutumnSpanCoversItsClockSegmentsAndAlignsWithOrdinaryDay",
+        "-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testHalfHourForwardChangeAndOvernightClippingUseClockBounds",
+        "-resultBundlePath",
+        "/private/tmp/PlannerClockAlignmentViewportPhone.xcresult",
+        "CODE_SIGNING_ALLOWED=NO"
+      ]
+    },
+    "tablet-followup": {
+      "environment": {
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerFixtures",
+        "-destination",
+        "platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "-derivedDataPath",
+        "/private/tmp/PlannerCalendarTemporalDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testAutumnSpanCoversItsClockSegmentsAndAlignsWithOrdinaryDay",
+        "-resultBundlePath",
+        "/private/tmp/PlannerClockAlignmentFollowupTablet.xcresult",
+        "CODE_SIGNING_ALLOWED=NO"
+      ]
+    },
+    "phone-spring": {
+      "environment": {
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerFixtures",
+        "-destination",
+        "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "-derivedDataPath",
+        "/private/tmp/PlannerCalendarTemporalDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testSpringSpanUsesLocalClockHeightAndAlignsWithOrdinaryDay",
+        "-resultBundlePath",
+        "/private/tmp/PlannerClockAlignmentSpringPhone.xcresult",
+        "CODE_SIGNING_ALLOWED=NO"
+      ]
+    },
+    "tablet-spring": {
+      "environment": {
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+        "test-without-building",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerFixtures",
+        "-destination",
+        "platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "-derivedDataPath",
+        "/private/tmp/PlannerCalendarTemporalDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testSpringSpanUsesLocalClockHeightAndAlignsWithOrdinaryDay",
+        "-resultBundlePath",
+        "/private/tmp/PlannerClockAlignmentSpringTablet.xcresult",
+        "CODE_SIGNING_ALLOWED=NO"
+      ]
+    },
+    "mac-build": {
+      "environment": {
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerFixtures",
+        "-destination",
+        "platform=macOS,arch=arm64",
+        "-derivedDataPath",
+        "/private/tmp/PlannerRetainedRecoveryMacDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "CODE_SIGNING_ALLOWED=NO"
+      ]
+    },
+    "superseded-phone": {
+      "environment": {
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+        "test",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerFixtures",
+        "-destination",
+        "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "-derivedDataPath",
+        "/private/tmp/PlannerCalendarTemporalDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-parallel-testing-enabled",
+        "NO",
+        "-only-testing:PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests",
+        "-resultBundlePath",
+        "/private/tmp/PlannerClockAlignmentPhone.xcresult",
+        "CODE_SIGNING_ALLOWED=NO"
+      ]
+    },
+    "ios-final-build": {
+      "environment": {
+        "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+      },
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+        "build-for-testing",
+        "-project",
+        "Planner.xcodeproj",
+        "-scheme",
+        "PlannerFixtures",
+        "-destination",
+        "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "-derivedDataPath",
+        "/private/tmp/PlannerCalendarTemporalDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/private/tmp/PlannerCalendarMonthSourcePackages",
+        "-disableAutomaticPackageResolution",
+        "CODE_SIGNING_ALLOWED=NO"
+      ]
+    }
+  },
+  "supersededRun": "Initial phone qualification interrupted with SIGINT to fix review finding; excluded from pass counts.",
+  "testSourceDeltas": "Full phone suite uses phone-suite-test.swift. Full tablet suite uses tablet-suite-test.swift with two stronger viewport assertions. Final source normalizes native whitespace in the autumn literal check. Phone followup qualifies both affected functions; tablet followup qualifies autumn. Spring was then strengthened with full visible-frame assertions after an initial iPad capture showed later hours; both devices rerun that function using final source. Unchanged production throughout these six runs.",
+  "sourceHashes": {
+    "Planner/Scenes/SavedCalendarTimeGrid.swift": "702efe886cf6b4fe5ba4ea2d269fabab65a97efbf78102528fd89292e1859cf2",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "13a6e388124282bf609fc33b215dc9303911e1157468d4787a5cd0a648265e14",
+    "PlannerFixtures/PlannerClockAlignmentFixture.swift": "9cf5a8018bd94a7440cb398facc889feb79cef844eedbc23fb115f25162cd5ee",
+    "PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests.swift": "bb4672e07158a2efa56942c7a5be47f04196340854cceb742aaf9f3537dae911",
+    "docs/calendar-time-grid-alignment-question.md": "3d4ecb913a576ce05b54c8d6959f87a0335bd1fc27446ae041e5b5b484509813",
+    "docs/open-decisions.md": "44f9b0c223ccbeddf02aaca68db494c2652167eda9cbe22425794940b6467db5",
+    "docs/prototypes/native-clock-alignment.md": "598f86ef9e63b25f6f24e476950e112f1caae10555ec497e4f9f1c9e28f2f212"
+  },
+  "productHashes": {
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures": "b799e68c823737b89ec582b1a32a618b3db6efb402ed424cd22990cc82ceddbc",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures.debug.dylib": "edd6754a17fdc6ef847ddc8bfef3dabad6440e5482ca840aacdf2b4c0d68c33b",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtureUITests-Runner.app/PlugIns/PlannerFixtureUITests.xctest/PlannerFixtureUITests": "4fff53c6c91b22ed85742e8818f8d3779e35f5951ad2ee3fdf9c3ae4ac64c739",
+    "/private/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures": "d96edb02b239719167b1bfdb2e1a9c1312c230765f19fd706e22c9a892913bfa",
+    "/private/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures.debug.dylib": "e9f2361f5a43ba352e9961b41b50f81c627f001a3809d9be07cdba05f64d7fb8"
+  },
+  "artifactHashes": {
+    "boundary-red-summary.json": "8b555e887a8ff9c3f6999d5f3762e75b15481bb86185361e4ef7a551ace63e79",
+    "boundary-red-tests.json": "1e267fe23ba78f43879e8e89fc9494793a075250eb5b032740a4a89aee7459a4",
+    "boundary-red.log.gz": "0e8452512d8848ff2a547e525f6113b6eb339f08fe184b2773ffeeacc9d58adc",
+    "followup-suite-test.swift": "edd525e5f80bda336f3cac7d33be9df1fe7d25e1f45d547ceab034f9cc9e296d",
+    "ios-final-build.log.gz": "e7a35e4295490a19ba0d1f24812a841bd385a2b9550d7660d7ff4447b56a9f1b",
+    "mac-build.log.gz": "9e79275156b7c48f088d37ccae4e47ab728bbd6826999c6d39988de33585e3c0",
+    "markdown-lint.log": "733964f8289d79398ed9120de222c4a7648bf059d1e110cb482aea63e6cb2302",
+    "phone/png/159B0D51-B89E-4228-86D8-9846930AB52E.png": "886f1657f5d29d74cdb1986a2e5a3cb9b8c08f4c5bf3fd8832171c05b8f42463",
+    "phone/png/18C346A6-79B4-4B34-8687-4E683ACA2F40.png": "c73d76b792d6d6d78782d52b92872c591f108a89bc1738ec70f8625e8f3cf2ab",
+    "phone/png/1A282216-E45A-468F-8CC7-490B3BD912A6.png": "0f39e0f1671232407e2499edf650241ee8348cff1faae1a4097bd2bd5e8a36cb",
+    "phone/png/3217ED13-670A-428F-BB7A-7CE3121A7B96.png": "2efd9e8eb319eca78e9673c7ba977f265d64c2bd24d402ec12764752274a7b79",
+    "phone/png/336C7DFF-0740-4F47-AAC6-540B0BE19978.png": "8ae9999afd01de18867a8a96037696dfc70343c0cf12fe243295334397cfa63d",
+    "phone/png/36E5B391-1387-481E-8CF8-08DB66C7AF0E.png": "5c3dea15b8c604fc4e039c5549a0cfc67c3950490a6914e819f1723f9e36bea5",
+    "phone/png/4D085412-4C4C-451D-88D7-0EFE2FBF2ECD.png": "6ca82f058adc8a97228b03e39297fdac7968da78f057c78636f83a76220c0f8d",
+    "phone/png/62B5B828-1989-4764-855C-FE5D5EC6D4F5.png": "996544b5de8d68c9a96e5b0b7053ba737324fb922218fd5d6fb4862a2e407eea",
+    "phone/png/75601A03-BF61-451A-8FD3-C3AD2A7D4E18.png": "f83459091df25f3678866b5821fb8dab48b66fa2e7cef54f89edfd73cd953e87",
+    "phone/png/8A1F92EE-600B-4BEA-AA9B-B3835D17195D.png": "c0d7bd8a39eeb875c852c62f67c082eac4ca16a68fb2ceb893569c2f07ddfd39",
+    "phone/png/96391D1A-A5FA-4054-B4D1-2F6B9980BDA1.png": "5800cafddb446c5b644ed1b9db31301accbd819ff7e7858c1dd1c6f492c54383",
+    "phone/png/A94B7B4B-FCE1-4897-81FC-DE03A4D9483F.png": "06fc9dc6947d509c875395b81875f6c1232ec734ee9e64b4fcdb33f5da1ea1a1",
+    "phone/png/C7BBFA38-D4DA-4C66-9317-06F81A40B9BC.png": "f3e42b83bb7e22eafc64dfcf1af2b0526dceeba403077acb9cb6032749676053",
+    "phone/png/CFC2FDE0-F72C-431F-802B-C3CC898BD061.png": "257c5abe916fac8d5b413f1e643c49982b5b64731159d9bc0a0ae93a949cd711",
+    "phone/png/F68877E4-2C8E-4025-A5B2-6459D7400D5F.png": "7837021e5dd942913d97f63e651331e5c333abb0b1958f7a78608060d7069837",
+    "phone/png/manifest.json": "620b29c4c9077ee2ffc094edd758bb418fb682dd83c929182361b0a66522371e",
+    "phone/txt/2AF3CE6B-8F30-4FAB-BA16-B774141D56F8.txt": "0277f94437b93d7d2763ecf15499d983796ffe8f05d42d6025074932d6719b3b",
+    "phone/txt/manifest.json": "9835ef0902983037875d0f7b864e5fc39cec1d4df174e380cfc65628893643cb",
+    "phone-followup/png/6C314966-BF72-4F20-962C-BBB6F0FEB90A.png": "b726f2c7f459dd47ac284e57bac2b46ac27dde79bf43721b3d80a585f68cf4c5",
+    "phone-followup/png/9EAC4808-70A3-49E9-88C6-7D663A42CC73.png": "7e061174831b152123785a34ebbf571fe268b58145f9322e713bab71893560a7",
+    "phone-followup/png/BF359DFB-40D4-4F9A-9805-E90018CFBC12.png": "7bf32a93f43621a5b9436fbace7b8266d024a3dae795f6e0d75dba33043691bb",
+    "phone-followup/png/C71A240D-9769-4FC3-8FDD-78C35B6FE169.png": "cc163957e2faf3caac66aded28198de4b2185db3f7120ff3c0cda962a60780f3",
+    "phone-followup/png/manifest.json": "8a41810a5f399ad21ab27793e5cf46833d96471d06317d0a32b46d679b084723",
+    "phone-followup/txt/manifest.json": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05",
+    "phone-followup-summary.json": "389ac32001219e0e4157ee2797ed1f0e2d7bf840046700d24ba989f8b122b382",
+    "phone-followup-tests.json": "d2eeeeb87643a0061f2b59864e133930203aecdf1219779d608884762f6d50e0",
+    "phone-followup.log.gz": "d6cba4d13f8dce1c3f0e553f32733ec88d567c355f819e5cba20887d46806d5f",
+    "phone-spring/png/0D326632-FDAB-4C46-8646-980877DC3D95.png": "5eeae06b9f79fcd476195256927d37965e8a6dcda98840cf2ad4d5516fad8001",
+    "phone-spring/png/manifest.json": "7551d35faf8aa981a5f5b05bae38ce4e57205108aea51018911380a8fb36142d",
+    "phone-spring/txt/manifest.json": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05",
+    "phone-spring-summary.json": "a04ac7494ea5c4ada656d4a31305f91b505eaf79f7d6186111298ac62f4da05a",
+    "phone-spring-tests.json": "45d19c975b7f09fa3e4dc119a95c91c7fd5b9d0e48d567a39239d057de57d988",
+    "phone-spring.log.gz": "183b8864efe3ded3960cb4badee87372f162a80669d73f467de8db0ee233ce0c",
+    "phone-suite-test.swift": "8f8d46451aa90e9c981d7126140a42d5659f8d195717711f6cd021775805712a",
+    "phone-summary.json": "222c36b129e161e761ff7f8479a7476632e4b465b36d23c9ab8d5a17aa5057e2",
+    "phone-tests.json": "e06776b6004b0e9196006cd0e836ab2494e0723fbd7eff41737c90a7a7f669e3",
+    "phone.log.gz": "60a2ee5254549bb8471f4340730490053c2b3b73d7d08e958a3252e4f91086b1",
+    "point-green-summary.json": "97fabc7847a561a7963c4a00e128a3d62ab73533a5af37288bd506215af8f1b0",
+    "point-green-tests.json": "db897f10cb6248a7d3d16dd900a471dca4f0d1faf5b83c6bc5ad4d3b419b050d",
+    "point-green.log.gz": "03262809f20adfe37f2d2a77a385653cd8031e3441be3fb91a1057849be59d6f",
+    "point-red-summary.json": "f4b1a458c9ae45aa7861c66b091b1b6c8a304fe78d24c10790a690b77d4c6ae1",
+    "point-red-tests.json": "0edb637700b97a8222989155693a3ff8b7e8f6f3d2591ec03e5945b23c073a56",
+    "point-red.log.gz": "992049d72b31c1b5fc64911bf200d29f632a9f834046feea831bfb23dd1f6c87",
+    "span-green-summary.json": "56d2b051d6b34764b177591b16ae173c64dd3be39dca925495887dc481126963",
+    "span-green-tests.json": "2a0017c6b074e4cf105c00a887edfdabcff70b433ef29be6238d2fc8da5be85c",
+    "span-green.log.gz": "236bfcff49c9ea410494f86e46a400310dd99ffff35a3f3dc2d19f5fa3c20f03",
+    "span-red-source-hashes.json": "bacb8085ce35a727c55ee015253dc73d56cda5ba6b987fd214fe02284b03d22c",
+    "span-red-summary.json": "4d2b6c82043db13ed5fda065d41de8ef1d89a64f74a6dde858172ab40ae41336",
+    "span-red-tests.json": "2a488e7b0f53f7223b846b572da04721897c3c187eb7951b3834bcf5541ff985",
+    "span-red.log.gz": "3a7f2d4eec673f905a2286bc1efb963ad4b98791eceebfffd7009f9fbaa0316c",
+    "superseded-phone.log.gz": "a60e2e4780faf6dd2a999af898c5daf7247b4ddc3a654a9d242ecc180326d890",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tablet/png/05330DEC-166A-4C8D-A6DC-0C46BAB1D3BF.png": "f613aff778ecf841b473ae6cc980f53e63a38504d97f3b20c773a5baae0ba4f5",
+    "tablet/png/13BFE9E4-ECB5-4F33-B234-5A4CBCC9DA5C.png": "b65b9072dc641c40494e7389a36d7f68429977d4cecd59f9df4f155f4b2149e4",
+    "tablet/png/21594818-FAF2-4200-B55A-D6ABE0BA6514.png": "7768c10bccd2d9e6687f29e7a8a7f8bfd34449245eadf0dc8f3d8bdac9ccc042",
+    "tablet/png/2E00F826-D81A-4794-AA44-6FAF61BCDF64.png": "444f2622fdea64695039ecf26a3ba59c919581a0ff9f422272938ae6d8f8491a",
+    "tablet/png/3B012EB8-0F0A-4789-A1FB-DAA252508BFF.png": "4725bf79f3db6cb556f4d9154db29e7c55549a8aea35b87778be47c7d75309f3",
+    "tablet/png/4EBC1202-AE0C-45DE-8775-E6FF029E28C0.png": "90e2f3406a866dd928a1ca196d750fb4ec86567fed68b540f5bb11f0088fde64",
+    "tablet/png/707BF102-088D-4028-90D0-AA927E336B1F.png": "8e9f2e32fda4d6ea7bad36b3bc873975d485e99bd99c6cb690d777ebb9c247bc",
+    "tablet/png/7A0727AD-6CB3-4DD8-A6A2-CA820E5E32C1.png": "172ca9078ca304a21efce516c31f7e7a41e613bbc71c4770384d98bbae517403",
+    "tablet/png/95F0FBA1-50FE-4BE3-84C0-D42E857918F4.png": "a45b9686b54615f1af3078948cc105b8871c40b9bf9ce63609abc0fbac3b4c6f",
+    "tablet/png/9BD510C9-438E-4B93-9352-030261D7D28A.png": "0c94bdd59ce3a790c498291cead8c1e551548f8974d878ae791c4bdfd1771070",
+    "tablet/png/A7958D3A-DBDF-4917-9372-005C79A999F5.png": "b96fc7c67688a351aeaa50da4e38ef9ad6535de499cd57ba161eca1b705159f5",
+    "tablet/png/BA9CD7AA-FD63-4FF8-9918-22DE8C2DE6AE.png": "385c6dbf8577ddeb8d6fbd1b74c813408249416e0143cdb37cc3b2383fccb77a",
+    "tablet/png/C4F5F029-2B97-4B5E-A0B2-524191C1145B.png": "c56183e6fe0d4bd07902fc8084b73d521d35c48c32c4b0cd6c487355883c85e7",
+    "tablet/png/CE0598D3-0988-489C-A85F-09FF9EA656F2.png": "085a38d49bfa0bca56d5d3053aa8758934d48d7eb88440678395f3b55d8c064b",
+    "tablet/png/FC0A7427-89F5-43F6-B5AD-21F7DEA2E89F.png": "3dec557a87df44650bee1d020def88d97fbcdade792799b2d15b83e17906b1b6",
+    "tablet/png/manifest.json": "4094f121b5b29ade5bd4f0d9686b62b352b0189102d2e72f81590ffcf06c2e8a",
+    "tablet/txt/24DAACFB-BA97-48C0-87B1-CC9374119650.txt": "0277f94437b93d7d2763ecf15499d983796ffe8f05d42d6025074932d6719b3b",
+    "tablet/txt/manifest.json": "7e83e28cd246f0a48ffb6ac0769538203f704156b3514b00372e4837fea0e10e",
+    "tablet-followup/png/D8A864D5-8515-4EF4-834C-A0753A3DE743.png": "120c1fb2989ec52105340d873f4bfa45691f3820f77dd90b3c1b7f67c0335a7b",
+    "tablet-followup/png/manifest.json": "98c762e84258436d2501b50d49b3874976a6aa2b6c0f863073e2f9a50c19fc97",
+    "tablet-followup/txt/manifest.json": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05",
+    "tablet-followup-summary.json": "8106c93b5648c4f8c3b29a24eaa549bdc732a5fc8b8ac1a8462855103e0c877d",
+    "tablet-followup-tests.json": "2eb4319c0472d5890bce13a4cd08d5d838bbcef7c501f66358da87f64ce0d957",
+    "tablet-followup.log.gz": "1c0b68daf7a3a97e7de99a3597129ec00d095eb2cf2e1337d1cf0aeb07504589",
+    "tablet-spring/png/A5D031A8-1F02-4BC5-B7A8-EE4B88B19EB0.png": "8b087399e4ce9063743c589b547e42ffd3812edc31753f55ce6c8a188b63ccce",
+    "tablet-spring/png/manifest.json": "9697358fc055168e1ea66b13cefe4d53c684dedb8fc466ba179314cec8ed6d3e",
+    "tablet-spring/txt/manifest.json": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05",
+    "tablet-spring-summary.json": "d9e7f7c66dc6b397d92190b6fe737c30749734dbc94d07979e68545aae4551ea",
+    "tablet-spring-tests.json": "a93003ac8a5a4903c6d0c6082280d7177f53837cf1f5193ae810b059c4947527",
+    "tablet-spring.log.gz": "6d0d45560eda824367c2eb2105470c6bd928050f1204e8b9910c9d2c95083836",
+    "tablet-suite-test.swift": "b832ff3a5dcd7096ddaf0733b4aa7fe7f0575f08777e961fa9564abe11d0ce3b",
+    "tablet-summary.json": "91a3137f92807e80294ac95919538e29b0513841757655f9ae5b8d506ad0b5b3",
+    "tablet-tests.json": "ef529afa70915ec98f6e7ac7056d50dc02f8aef244171c73cbe9236f56db16c4",
+    "tablet.log.gz": "65906d1bd1466d89f23d4a3cb28d3f87d3a7c343ceb460d9d774d603c350adef"
+  },
+  "validationCommands": [
+    [
+      "xcrun",
+      "swift-format",
+      "lint",
+      "--strict",
+      "Planner/Scenes/SavedCalendarTimeGrid.swift",
+      "PlannerFixtures/PlannerFixtureDataset.swift",
+      "PlannerFixtures/PlannerClockAlignmentFixture.swift",
+      "PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests.swift"
+    ],
+    [
+      "pnpm",
+      "dlx",
+      "markdownlint-cli2",
+      "--config",
+      "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+      "docs/calendar-time-grid-alignment-question.md",
+      "docs/open-decisions.md",
+      "docs/prototypes/native-clock-alignment.md"
+    ],
+    [
+      "git",
+      "diff",
+      "--check"
+    ]
+  ],
+  "rootInspectedOriginals": [
+    "phone/png/F68877E4-2C8E-4025-A5B2-6459D7400D5F.png",
+    "phone/png/C7BBFA38-D4DA-4C66-9317-06F81A40B9BC.png",
+    "phone/png/62B5B828-1989-4764-855C-FE5D5EC6D4F5.png",
+    "tablet/png/95F0FBA1-50FE-4BE3-84C0-D42E857918F4.png",
+    "tablet/png/7A0727AD-6CB3-4DD8-A6A2-CA820E5E32C1.png",
+    "tablet/png/05330DEC-166A-4C8D-A6DC-0C46BAB1D3BF.png",
+    "phone-spring/png/0D326632-FDAB-4C46-8646-980877DC3D95.png",
+    "tablet-spring/png/A5D031A8-1F02-4BC5-B7A8-EE4B88B19EB0.png"
+  ]
+}

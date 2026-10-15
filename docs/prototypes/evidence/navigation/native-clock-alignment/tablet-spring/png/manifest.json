@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "A5D031A8-1F02-4BC5-B7A8-EE4B88B19EB0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Spring clock-aligned Week appointments_0_DFAF02A4-0A88-4E74-93C9-99652B79A75A.png",
+        "timestamp" : 1792028481.193
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testSpringSpanUsesLocalClockHeightAndAlignsWithOrdinaryDay()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testSpringSpanUsesLocalClockHeightAndAlignsWithOrdinaryDay"
+  }
+]

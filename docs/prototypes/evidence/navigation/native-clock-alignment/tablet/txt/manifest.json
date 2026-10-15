@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "24DAACFB-BA97-48C0-87B1-CC9374119650.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Visible appointment text recognized by native Vision_0_F072AAB5-3E18-4A8A-92FE-AD87148DFE59.txt",
+        "timestamp" : 1792028123.375
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testShortBookedClockChangeSpanPaintsBothTimezoneNamesInWeekView()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testShortBookedClockChangeSpanPaintsBothTimezoneNamesInWeekView"
+  }
+]

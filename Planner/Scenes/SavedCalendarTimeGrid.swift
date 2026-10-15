@@ -33,7 +33,7 @@ struct SavedCalendarTimeGrid: View {
     let entry: PlannerCalendarEntry
     let top: CGFloat
     let height: CGFloat
-    let lane: Int
+    var lane: Int
     var laneCount = 1
   }
 
@@ -72,27 +72,33 @@ struct SavedCalendarTimeGrid: View {
   private var initialHour: Int {
     guard calendar.isDateInToday(selectedDate) else { return 8 }
     let date = Date()
-    return Int(date.timeIntervalSince(calendar.startOfDay(for: date)) / 3600)
+    return calendar.component(.hour, from: date)
   }
 
   private func timedPlacements(
     _ entries: [PlannerCalendarEntry], interval: DateInterval
   ) -> [TimedPlacement] {
-    var placements: [TimedPlacement] = []
+    var placements = entries.compactMap { entry -> TimedPlacement? in
+      guard case .timed(let start, let end, _) = entry.form else { return nil }
+      let visibleStart = max(start, interval.start)
+      let bounds = clockBounds(
+        start: visibleStart, end: min(end ?? start, interval.end), interval: interval)
+      let top = bounds.lowerBound * pointsPerMinute
+      let height = max(
+        max(44, timedCardMinimumHeight),
+        (bounds.upperBound - bounds.lowerBound) * pointsPerMinute)
+      return .init(entry: entry, top: top, height: height, lane: 0)
+    }
+    placements.sort { $0.top < $1.top }
     var laneEnds: [CGFloat] = []
     var groupStart = 0
     var groupEnd: CGFloat = 0
-    for entry in entries {
-      guard case .timed(let start, let end, _) = entry.form else { continue }
-      let visibleStart = max(start, interval.start)
-      let top = CGFloat(visibleStart.timeIntervalSince(interval.start) / 60) * pointsPerMinute
-      let height = max(
-        max(44, timedCardMinimumHeight),
-        CGFloat(min(end ?? start, interval.end).timeIntervalSince(visibleStart) / 60)
-          * pointsPerMinute)
+    for index in placements.indices {
+      let top = placements[index].top
+      let height = placements[index].height
       if top >= groupEnd {
-        for index in groupStart..<placements.count { placements[index].laneCount = laneEnds.count }
-        groupStart = placements.count
+        for groupIndex in groupStart..<index { placements[groupIndex].laneCount = laneEnds.count }
+        groupStart = index
         laneEnds = []
       }
       let lane = laneEnds.firstIndex(where: { $0 <= top }) ?? laneEnds.count
@@ -102,10 +108,40 @@ struct SavedCalendarTimeGrid: View {
         laneEnds[lane] = top + height
       }
       groupEnd = max(groupEnd, top + height)
-      placements.append(.init(entry: entry, top: top, height: height, lane: lane))
+      placements[index].lane = lane
     }
     for index in groupStart..<placements.count { placements[index].laneCount = laneEnds.count }
     return placements
+  }
+
+  private func clockMinute(_ date: Date, interval: DateInterval) -> CGFloat {
+    if date == interval.end { return 24 * 60 }
+    let components = calendar.dateComponents([.hour, .minute, .second], from: date)
+    return CGFloat((components.hour ?? 0) * 60 + (components.minute ?? 0))
+      + CGFloat(components.second ?? 0) / 60
+  }
+
+  /// A backward change can put the end above the start; include both transition boundaries.
+  private func clockBounds(start: Date, end: Date, interval: DateInterval)
+    -> ClosedRange<CGFloat>
+  {
+    var minutes = [clockMinute(start, interval: interval), clockMinute(end, interval: interval)]
+    var cursor = start
+    while let transition = calendar.timeZone.nextDaylightSavingTimeTransition(after: cursor),
+      transition > cursor, transition <= end
+    {
+      let previousMinute =
+        clockMinute(transition.addingTimeInterval(-1), interval: interval)
+        + 1 / 60
+      if transition == end {
+        minutes[1] = max(minutes[1], previousMinute)
+      } else {
+        minutes.append(previousMinute)
+        minutes.append(clockMinute(transition, interval: interval))
+      }
+      cursor = transition
+    }
+    return (minutes.min() ?? 0)...(minutes.max() ?? 0)
   }
 
   private var minimumColumnWidth: CGFloat {
@@ -208,7 +244,7 @@ struct SavedCalendarTimeGrid: View {
     return VStack(spacing: 0) {
       if let interval = calendar.dateInterval(of: .day, for: day) {
         ZStack(alignment: .topLeading) {
-          hourLines(day: day, interval: interval)
+          hourLines(day: day)
           ForEach(timedPlacements(entries, interval: interval), id: \.entry.schedule.id) {
             placement in
             let laneWidth = (width - 60) / CGFloat(placement.laneCount)
@@ -220,7 +256,7 @@ struct SavedCalendarTimeGrid: View {
         }
         .frame(
           width: width,
-          height: CGFloat(interval.duration / 60) * pointsPerMinute
+          height: 24 * 60 * pointsPerMinute
             + max(44, timedCardMinimumHeight),
           alignment: .topLeading)
       }
@@ -228,13 +264,14 @@ struct SavedCalendarTimeGrid: View {
     .frame(width: width, alignment: .topLeading)
   }
 
-  private func hourLines(day: Date, interval: DateInterval) -> some View {
-    let hours = Int(ceil(interval.duration / 3600))
+  private func hourLines(day: Date) -> some View {
+    var hourFormat = Date.FormatStyle(date: .omitted, time: .shortened)
+    hourFormat.timeZone = .gmt
     return VStack(alignment: .leading, spacing: 0) {
-      ForEach(0..<hours, id: \.self) { hour in
-        let date = interval.start.addingTimeInterval(Double(hour) * 3600)
+      ForEach(0..<24, id: \.self) { hour in
+        let date = Date(timeIntervalSinceReferenceDate: Double(hour) * 3600)
         HStack(spacing: 4) {
-          Text(timeDescription(date)).font(.caption2).foregroundStyle(.secondary)
+          Text(date.formatted(hourFormat)).font(.caption2).foregroundStyle(.secondary)
             .frame(width: 50, alignment: .trailing)
           Rectangle().fill(.separator).frame(height: 0.5)
         }

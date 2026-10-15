@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "D8A864D5-8515-4EF4-834C-A0753A3DE743.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Backward span retains both endpoints on the aligned Day grid_0_8DA85B93-1276-42D7-8B0C-63CD9E648236.png",
+        "timestamp" : 1792028297.119
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testAutumnSpanCoversItsClockSegmentsAndAlignsWithOrdinaryDay()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testAutumnSpanCoversItsClockSegmentsAndAlignsWithOrdinaryDay"
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "0D326632-FDAB-4C46-8646-980877DC3D95.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Spring clock-aligned Week appointments_0_222BB696-3C64-4DAF-93BF-619DF2AF0DA7.png",
+        "timestamp" : 1792028412.835
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testSpringSpanUsesLocalClockHeightAndAlignsWithOrdinaryDay()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testSpringSpanUsesLocalClockHeightAndAlignsWithOrdinaryDay"
+  }
+]

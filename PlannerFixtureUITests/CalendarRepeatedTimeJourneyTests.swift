@@ -4,6 +4,207 @@ import XCTest
 #if os(iOS)
   @MainActor
   final class CalendarRepeatedTimeJourneyTests: XCTestCase {
+    func testSpringSpanUsesLocalClockHeightAndAlignsWithOrdinaryDay() throws {
+      continueAfterFailure = false
+      let application = try openNovemberCalendar(
+        scenario: "calendar-clock-alignment", month: 3, day: 8)
+      let modes = application.descendants(matching: .any).matching(
+        identifier: "saved.calendar.mode"
+      ).firstMatch
+      modes.buttons["Day"].activateForPlannerJourney()
+      let grid = application.descendants(matching: .any).matching(
+        identifier: "saved.calendar.time-grid"
+      ).firstMatch
+      let appointment = grid.buttons.matching(
+        NSPredicate(format: "label == %@", "Spring museum")
+      ).firstMatch
+      XCTAssertTrue(appointment.waitForExistence(timeout: 10))
+      for _ in 0..<6 {
+        if appointment.isHittable { break }
+        grid.swipeDown()
+      }
+      XCTAssertTrue(appointment.isHittable)
+      XCTAssertEqual(appointment.frame.height, 270, accuracy: 1)
+      let boundary = grid.buttons.matching(NSPredicate(format: "label == %@", "Spring boundary"))
+        .firstMatch
+      XCTAssertTrue(boundary.waitForExistence(timeout: 10))
+      XCTAssertEqual(boundary.frame.height, 180, accuracy: 1)
+      modes.buttons["Week"].activateForPlannerJourney()
+      XCTAssertTrue(appointment.waitForExistence(timeout: 10))
+      let monday = grid.buttons.matching(NSPredicate(format: "label == %@", "Monday museum"))
+        .firstMatch
+      XCTAssertTrue(monday.waitForExistence(timeout: 10))
+      XCTAssertEqual(appointment.frame.minY, monday.frame.minY, accuracy: 1)
+      XCTAssertEqual(appointment.frame.height, monday.frame.height, accuracy: 1)
+      for _ in 0..<12 {
+        if appointment.isHittable, appointment.frame.minY >= grid.frame.minY + 60,
+          appointment.frame.maxY <= grid.frame.maxY
+        {
+          break
+        }
+        if appointment.frame.minY < grid.frame.minY + 60 {
+          grid.swipeDown()
+        } else {
+          grid.swipeUp()
+        }
+      }
+      XCTAssertTrue(appointment.isHittable)
+      XCTAssertGreaterThanOrEqual(appointment.frame.minY, grid.frame.minY + 60)
+      XCTAssertLessThanOrEqual(appointment.frame.maxY, grid.frame.maxY)
+      let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+      capture.name = "Spring clock-aligned Week appointments"
+      capture.lifetime = .keepAlways
+      add(capture)
+      let description = try XCTUnwrap(appointment.value as? String)
+      XCTAssertTrue(description.contains("EST"), description)
+      XCTAssertTrue(description.contains("EDT"), description)
+    }
+
+    func testAutumnSpanCoversItsClockSegmentsAndAlignsWithOrdinaryDay() throws {
+      continueAfterFailure = false
+      let application = try openNovemberCalendar(scenario: "calendar-clock-alignment")
+      let modes = application.descendants(matching: .any).matching(
+        identifier: "saved.calendar.mode"
+      ).firstMatch
+      modes.buttons["Day"].activateForPlannerJourney()
+      let grid = application.descendants(matching: .any).matching(
+        identifier: "saved.calendar.time-grid"
+      ).firstMatch
+      let backward = grid.buttons.matching(NSPredicate(format: "label == %@", "Backward span"))
+        .firstMatch
+      let later = grid.buttons.matching(NSPredicate(format: "label == %@", "Autumn museum"))
+        .firstMatch
+      XCTAssertTrue(backward.waitForExistence(timeout: 10))
+      XCTAssertTrue(later.waitForExistence(timeout: 10))
+      XCTAssertEqual(backward.frame.height, 90, accuracy: 1)
+      XCTAssertEqual(later.frame.minY - backward.frame.minY, 90, accuracy: 1)
+      XCTAssertEqual(later.frame.height, 180, accuracy: 1)
+      for _ in 0..<6 {
+        if backward.isHittable { break }
+        grid.swipeDown()
+      }
+      XCTAssertTrue(backward.isHittable)
+      let description = try XCTUnwrap(backward.value as? String)
+      let normalizedDescription = description.split(whereSeparator: \.isWhitespace).joined(
+        separator: " ")
+      XCTAssertTrue(normalizedDescription.contains("1:55 AM EDT"), description)
+      XCTAssertTrue(normalizedDescription.contains("1:05 AM EST"), description)
+      let identifier = try XCTUnwrap(backward.identifier.split(separator: ".").last)
+      let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+      capture.name = "Backward span retains both endpoints on the aligned Day grid"
+      capture.lifetime = .keepAlways
+      add(capture)
+      modes.buttons["Week"].activateForPlannerJourney()
+      XCTAssertTrue(later.waitForExistence(timeout: 10))
+      let monday = grid.buttons.matching(NSPredicate(format: "label == %@", "Monday autumn"))
+        .firstMatch
+      XCTAssertTrue(monday.waitForExistence(timeout: 10))
+      XCTAssertEqual(later.frame.minY, monday.frame.minY, accuracy: 1)
+      XCTAssertEqual(later.frame.height, monday.frame.height, accuracy: 1)
+      modes.buttons["Day"].activateForPlannerJourney()
+      for _ in 0..<6 {
+        if backward.isHittable { break }
+        grid.swipeDown()
+      }
+      backward.activateForPlannerJourney()
+      let source = application.descendants(matching: .any).matching(
+        identifier: "saved.item.schedule.\(identifier)"
+      ).firstMatch
+      XCTAssertTrue(source.waitForExistence(timeout: 10))
+      let sourceDescription = try XCTUnwrap(source.value as? String)
+      let normalizedSource = sourceDescription.split(whereSeparator: \.isWhitespace).joined(
+        separator: " ")
+      XCTAssertTrue(normalizedSource.contains("1:55 AM EDT"), sourceDescription)
+      XCTAssertTrue(normalizedSource.contains("1:05 AM EST"), sourceDescription)
+      XCTAssertTrue(sourceDescription.hasSuffix("America/New_York"), sourceDescription)
+    }
+
+    func testHalfHourForwardChangeAndOvernightClippingUseClockBounds() throws {
+      continueAfterFailure = false
+      let cases: [(zone: String, month: Int, day: Int, title: String)] = [
+        ("Australia/Lord_Howe", 10, 4, "Island spring"),
+        ("America/New_York", 5, 3, "Overnight museum"),
+        ("America/Nuuk", 3, 28, "Midnight boundary"),
+      ]
+      for fixture in cases {
+        let application = try openNovemberCalendar(
+          scenario: "calendar-clock-alignment", zone: fixture.zone,
+          month: fixture.month, day: fixture.day)
+        let modes = application.descendants(matching: .any).matching(
+          identifier: "saved.calendar.mode"
+        ).firstMatch
+        modes.buttons["Day"].activateForPlannerJourney()
+        let grid = application.descendants(matching: .any).matching(
+          identifier: "saved.calendar.time-grid"
+        ).firstMatch
+        let appointment = grid.buttons.matching(NSPredicate(format: "label == %@", fixture.title))
+          .firstMatch
+        XCTAssertTrue(appointment.waitForExistence(timeout: 10))
+        XCTAssertEqual(appointment.frame.height, 180, accuracy: 1)
+        for _ in 0..<12 {
+          if appointment.isHittable, appointment.frame.minY >= grid.frame.minY,
+            appointment.frame.maxY <= grid.frame.maxY
+          {
+            break
+          }
+          if appointment.frame.minY < grid.frame.minY {
+            grid.swipeDown()
+          } else {
+            grid.swipeUp()
+          }
+        }
+        XCTAssertTrue(appointment.isHittable)
+        XCTAssertGreaterThanOrEqual(appointment.frame.minY, grid.frame.minY)
+        XCTAssertLessThanOrEqual(appointment.frame.maxY, grid.frame.maxY)
+        let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        capture.name = "Clock bounds for \(fixture.title)"
+        capture.lifetime = .keepAlways
+        add(capture)
+        if fixture.zone == "Australia/Lord_Howe" {
+          modes.buttons["Week"].activateForPlannerJourney()
+          let monday = grid.buttons.matching(NSPredicate(format: "label == %@", "Island Monday"))
+            .firstMatch
+          XCTAssertTrue(monday.waitForExistence(timeout: 10))
+          XCTAssertEqual(appointment.frame.minY, monday.frame.minY, accuracy: 1)
+          XCTAssertEqual(appointment.frame.height, monday.frame.height, accuracy: 1)
+        }
+        application.terminate()
+      }
+    }
+
+    func testHalfHourRepeatedClockTimesKeepIndependentLanes() throws {
+      continueAfterFailure = false
+      let application = try openNovemberCalendar(
+        scenario: "calendar-clock-alignment", zone: "Australia/Lord_Howe", month: 4, day: 5)
+      let modes = application.descendants(matching: .any).matching(
+        identifier: "saved.calendar.mode"
+      ).firstMatch
+      modes.buttons["Day"].activateForPlannerJourney()
+      let grid = application.descendants(matching: .any).matching(
+        identifier: "saved.calendar.time-grid"
+      ).firstMatch
+      let first = grid.buttons.matching(NSPredicate(format: "label == %@", "Island first"))
+        .firstMatch
+      let second = grid.buttons.matching(NSPredicate(format: "label == %@", "Island second"))
+        .firstMatch
+      XCTAssertTrue(first.waitForExistence(timeout: 10))
+      XCTAssertTrue(second.waitForExistence(timeout: 10))
+      XCTAssertNotEqual(first.identifier, second.identifier)
+      XCTAssertEqual(first.frame.minY, second.frame.minY, accuracy: 1)
+      XCTAssertFalse(first.frame.intersects(second.frame))
+      for _ in 0..<6 {
+        if first.isHittable && second.isHittable { break }
+        grid.swipeDown()
+      }
+      XCTAssertTrue(first.isHittable)
+      XCTAssertTrue(second.isHittable)
+      XCTAssertNotEqual(first.value as? String, second.value as? String)
+      let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+      capture.name = "Independent 01:45 appointments across Lord Howe half-hour change"
+      capture.lifetime = .keepAlways
+      add(capture)
+    }
+
     func testShortBookedClockChangeSpanPaintsBothTimezoneNamesInWeekView() throws {
       continueAfterFailure = false
       let application = try openNovemberCalendar(scenario: "calendar-repeated-short-span")
@@ -161,6 +362,8 @@ import XCTest
         grid.swipeDown()
       }
       XCTAssertTrue(values.allSatisfy(\.isHittable))
+      XCTAssertEqual(values[0].frame.minY, values[1].frame.minY, accuracy: 1)
+      XCTAssertNotEqual(values[0].frame.minX, values[1].frame.minX)
       XCTAssertFalse(values[0].frame.intersects(values[1].frame))
       let descriptions = try values.map { try XCTUnwrap($0.value as? String) }
       let capture = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
@@ -254,7 +457,9 @@ import XCTest
       XCTAssertTrue((appointment.value as? String)?.contains("11:59") == true)
     }
 
-    private func openNovemberCalendar(scenario: String) throws -> XCUIApplication {
+    private func openNovemberCalendar(
+      scenario: String, zone: String = "America/New_York", month targetMonth: Int = 11, day: Int = 1
+    ) throws -> XCUIApplication {
       let application = XCUIApplication()
       application.launchArguments = [
         "--fixture", scenario, "--fixture-dataset", UUID().uuidString,
@@ -274,8 +479,8 @@ import XCTest
       let search = application.searchFields.firstMatch
       XCTAssertTrue(search.waitForExistence(timeout: 5))
       search.activateForPlannerJourney()
-      search.typeText("America/New_York")
-      application.plannerElement("saved.schedule.zone.option.America/New_York")
+      search.typeText(zone)
+      application.plannerElement("saved.schedule.zone.option.\(zone)")
         .activateForPlannerJourney()
       application.plannerElement("saved.calendar.zone.done").activateForPlannerJourney()
       let picker = application.descendants(matching: .any).matching(
@@ -283,11 +488,11 @@ import XCTest
       ).firstMatch
       XCTAssertTrue(picker.waitForExistence(timeout: 5))
       var calendar = Calendar(identifier: .gregorian)
-      calendar.timeZone = try XCTUnwrap(TimeZone(identifier: "America/New_York"))
+      calendar.timeZone = try XCTUnwrap(TimeZone(identifier: zone))
       let today = calendar.dateComponents([.year, .month], from: Date())
       let year = try XCTUnwrap(today.year)
       let month = try XCTUnwrap(today.month)
-      let monthDifference = (2026 - year) * 12 + 11 - month
+      let monthDifference = (2026 - year) * 12 + targetMonth - month
       let direction = monthDifference >= 0 ? "next" : "previous"
       for _ in 0..<abs(monthDifference) {
         let navigation = picker.buttons.matching(
@@ -296,7 +501,7 @@ import XCTest
         XCTAssertTrue(navigation.waitForExistence(timeout: 5), application.debugDescription)
         navigation.activateForPlannerJourney()
       }
-      let firstDay = picker.buttons.containing(.staticText, identifier: "1").firstMatch
+      let firstDay = picker.buttons.containing(.staticText, identifier: String(day)).firstMatch
       XCTAssertTrue(firstDay.waitForExistence(timeout: 5), application.debugDescription)
       firstDay.activateForPlannerJourney()
       return application

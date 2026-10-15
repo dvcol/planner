@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "2AF3CE6B-8F30-4FAB-BA16-B774141D56F8.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Visible appointment text recognized by native Vision_0_A73F07CB-F362-4962-975D-0D3F91F09486.txt",
+        "timestamp" : 1792027947.84
+      }
+    ],
+    "testIdentifier" : "CalendarRepeatedTimeJourneyTests/testShortBookedClockChangeSpanPaintsBothTimezoneNamesInWeekView()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests/testShortBookedClockChangeSpanPaintsBothTimezoneNamesInWeekView"
+  }
+]
