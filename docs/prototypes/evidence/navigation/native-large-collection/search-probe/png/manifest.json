@@ -1,0 +1,26 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "69897E1B-E3F4-475C-BFB5-9091AD60B02B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Large-collection far-end search did not settle_0_C9E8D5A9-6128-4C93-A583-3CDADEB6A00A.png",
+        "timestamp" : 1792040783.208
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "B7C7540B-373D-4F5E-A02C-9F5B84736D27.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The large native catalog opens at the first of five thousand Items_0_445456B0-155F-4E99-9794-67ECEA420849.png",
+        "timestamp" : 1792040749.637
+      }
+    ],
+    "testIdentifier" : "LargeCollectionJourneyTests/testFiveThousandItemsAndTwoHundredListsKeepFarEndSearchAndCompletionAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LargeCollectionJourneyTests/testFiveThousandItemsAndTwoHundredListsKeepFarEndSearchAndCompletionAfterRelaunch"
+  }
+]

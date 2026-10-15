@@ -1,0 +1,68 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "AA38C00F-01AC-44E7-B5D7-7569F873D74C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Item deletion clears the removed List appearance_0_9EA75AA9-EEB2-4A83-A969-3965F835E912.png",
+        "timestamp" : 1792042719.185
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "2D1CCBB3-D38E-47C1-8767-3F32DC6A9701.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Item deletion clears the removed List appearance_0_F561E801-555B-437C-89E4-F84B5A00FD7C.png",
+        "timestamp" : 1792042853.34
+      }
+    ],
+    "testIdentifier" : "SavedItemDeletionJourneyTests/testDeletingTheOriginalItemFromAListAppearanceClearsTheRemovedSelectionAndKeepsTheList()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItemDeletionJourneyTests/testDeletingTheOriginalItemFromAListAppearanceClearsTheRemovedSelectionAndKeepsTheList"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "7601E52C-B519-413D-B8C7-58B5B37CD38B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Saved Item reopened globally after relaunch_0_8AAD4D2F-C23E-4C84-9E48-31600551C01A.png",
+        "timestamp" : 1792042779.976
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "21DA9136-7FDD-4634-BD80-71C7A3A6DBC0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Saved Item with global completion_0_1311C389-E6E1-4321-8AA3-CAFC96854741.png",
+        "timestamp" : 1792042764.008
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "F23EBBCD-0C10-4369-B163-939A6AFAEDCA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Saved Item reopened globally after relaunch_0_384A3D68-DED8-4133-BF42-8C2F6C5FE74C.png",
+        "timestamp" : 1792042919.206
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "DCC552E1-D159-494F-921E-66A3914C7A6F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Saved Item with global completion_0_0B6162A3-AE3F-462E-9EF7-2EF8CDDA8B81.png",
+        "timestamp" : 1792042901.669
+      }
+    ],
+    "testIdentifier" : "SavedItemJourneyTests/testItemDraftCancellationAndGlobalCompletionSurviveNativeRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItemJourneyTests/testItemDraftCancellationAndGlobalCompletionSurviveNativeRelaunch"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "D29F31EA-861E-4237-856E-8102B188AE64.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Large-collection completion did not settle_0_8409432E-B55F-472F-B87A-8162D805DAD2.png",
+        "timestamp" : 1792041729.402
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "E3EEC1F4-B36C-42B7-A8EE-AA013098761B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The large native catalog opens at the first of five thousand Items_0_EAC03326-416B-4134-A8EF-1A44BED1A2A4.png",
+        "timestamp" : 1792041711.961
+      }
+    ],
+    "testIdentifier" : "LargeCollectionJourneyTests/testFiveThousandItemsAndTwoHundredListsKeepFarEndSearchAndCompletionAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LargeCollectionJourneyTests/testFiveThousandItemsAndTwoHundredListsKeepFarEndSearchAndCompletionAfterRelaunch"
+  }
+]

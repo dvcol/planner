@@ -1,0 +1,6 @@
+Item: saved.item.67DC2BDF-530E-4911-A0B3-3728CDC6943A
+List: saved.list.714CBD36-7431-4A63-8A3D-895461FFAFDC
+Appearance: saved.appearance.4C1C2DEE-3349-4188-932D-3D1ABFFD20F9
+Items: 5000
+Lists: 200
+Memberships per List: 25

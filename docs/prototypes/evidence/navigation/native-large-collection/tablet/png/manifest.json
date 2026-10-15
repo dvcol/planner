@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "F879FBE8-5E95-4CE9-B8F1-90DE7083F9A0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The far-end source identity and completion survive large-dataset relaunch_0_6FFEA08B-F6FB-4349-95AE-624E2399E040.png",
+        "timestamp" : 1792042346.566
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "B0316B5F-1718-4515-A06E-39239FF519E5.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The two-hundredth List retains its twenty-five live Item references_0_07681592-1A3A-4631-AB3A-10F77ADDDAC2.png",
+        "timestamp" : 1792042298.748
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "0E31A376-1C57-4713-BBDA-F1C4CDD044CB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The sole far-end match keeps its selected detail after global completion_0_963683F7-38D6-4098-A31F-F479DAD8238D.png",
+        "timestamp" : 1792042196.626
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "90F3FBD6-EB79-470D-9687-3790D06E401D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The large native catalog opens at the first of five thousand Items_0_CD53A392-5372-4E0F-9ABC-C4A66BF9E64B.png",
+        "timestamp" : 1792042181.504
+      }
+    ],
+    "testIdentifier" : "LargeCollectionJourneyTests/testFiveThousandItemsAndTwoHundredListsKeepFarEndSearchAndCompletionAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LargeCollectionJourneyTests/testFiveThousandItemsAndTwoHundredListsKeepFarEndSearchAndCompletionAfterRelaunch"
+  }
+]

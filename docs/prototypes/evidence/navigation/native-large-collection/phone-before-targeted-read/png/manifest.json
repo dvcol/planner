@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "94924918-EDB7-4B6E-A2F4-B669BFBBAD8B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The far-end source identity and completion survive large-dataset relaunch_0_D3DE75AE-1CDF-4FBC-B272-A09E24E03B0A.png",
+        "timestamp" : 1792041596.6
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "E6AD481D-C445-43DB-B7A8-CA243948C299.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The two-hundredth List retains its twenty-five live Item references_0_FF87A175-1D2B-4C77-A392-5FB151F6B75F.png",
+        "timestamp" : 1792041548.969
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "1DF629EE-D51E-4CAF-82C0-99CFF449D11E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The sole far-end match keeps its selected detail after global completion_0_1B014CDD-6011-47C2-943A-E4149C2AB12E.png",
+        "timestamp" : 1792041451.947
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "82E72539-88AF-4871-9568-C68910DC0E07.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The large native catalog opens at the first of five thousand Items_0_0BE3FE9C-95E0-4E0A-B401-9FAE7CBB5022.png",
+        "timestamp" : 1792041437.475
+      }
+    ],
+    "testIdentifier" : "LargeCollectionJourneyTests/testFiveThousandItemsAndTwoHundredListsKeepFarEndSearchAndCompletionAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LargeCollectionJourneyTests/testFiveThousandItemsAndTwoHundredListsKeepFarEndSearchAndCompletionAfterRelaunch"
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "PlannerFixtures/PlannerLargeCollectionFixture.swift": "6f4c34a681145f0a36bd74859f825fc02a32e1ac5e5b8f22ade81cdaf9592d2e",
+  "PlannerFixtures/PlannerFixtureDataset.swift": "07ca44ade4a6d31898d8423abc8710ca8ec668deb1a9768801611e3f95ffb5f1",
+  "PlannerFixtureUITests/LargeCollectionJourneyTests.swift": "2f828a907f558a62a968089f74678fdb59d7404debfcfbd04202342b03e9c0e9",
+  "Planner/Scenes/SavedPlannerStore.swift": "bea05c6e842891eaf16610f8e3a28d7514180947be7f1a8d4cab3b6f6d4799af",
+  "Planner/Scenes/SavedPlannerView.swift": "e1ce710398cd2110fa00b76b4cd3ada18eb769e3ae513c448cd79ded180c8f62",
+  "Planner/Scenes/SavedItemViews.swift": "cb87f1c5334b39d8c77ed0f002c747835abf3b8ef5e66c12fb205b64b9644a3f"
+}

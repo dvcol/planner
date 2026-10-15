@@ -1,0 +1,35 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "2D1176FC-28CE-4354-A914-D53CE9864C18.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Large-collection Tablet state after additional diagnostic observation_0_2BBF78ED-B782-42FA-869D-E1979A78F0D4.png",
+        "timestamp" : 1792042031.245
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "8D6ED536-0B5F-4953-BB1B-0398AABE55CF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Large-collection completion did not settle_0_5693B096-C6D4-4BEF-A2AA-2B0308E8CB35.png",
+        "timestamp" : 1792042029.494
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "BDB540CB-33D5-4B6F-A53D-B8D9AABAE088.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The large native catalog opens at the first of five thousand Items_0_4145420D-C76C-4ADA-94EC-760C0A322FFF.png",
+        "timestamp" : 1792042012.098
+      }
+    ],
+    "testIdentifier" : "LargeCollectionJourneyTests/testFiveThousandItemsAndTwoHundredListsKeepFarEndSearchAndCompletionAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LargeCollectionJourneyTests/testFiveThousandItemsAndTwoHundredListsKeepFarEndSearchAndCompletionAfterRelaunch"
+  }
+]

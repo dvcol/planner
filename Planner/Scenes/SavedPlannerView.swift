@@ -152,10 +152,10 @@ struct SavedPlannerView: View {
     .onChange(of: store.devicePreferenceNamespace) { calendarSelection = nil }
     .task(id: selectedAppearanceIdentity) { await loadSelectedAppearance() }
     .task(id: store.changeRevision) {
+      if itemDeletionDraft == nil { await loadSelectedItem() }
       await loadListCatalog()
       await loadSelectedList()
       await loadCatalogItems()
-      if itemDeletionDraft == nil { await loadSelectedItem() }
       if itemDeletionDraft == nil || itemDeletionDraft?.source.id != selectedAppearance?.source.id {
         await loadSelectedAppearance()
       }

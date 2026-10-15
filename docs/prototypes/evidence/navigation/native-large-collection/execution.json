@@ -1,0 +1,89 @@
+{
+  "baseCommit": "5e30339",
+  "sourceManifest": "source-sha256.json",
+  "finalNative": [
+    {
+      "directory": "phone",
+      "device": "iPhone 18 Pro",
+      "operatingSystem": "iOS 27.0 simulator",
+      "functions": 1,
+      "suites": 1,
+      "invocations": 1,
+      "failures": 0,
+      "skips": 0,
+      "functionSeconds": 212.9,
+      "originalPngs": 4
+    },
+    {
+      "directory": "tablet",
+      "device": "iPad Air 11-inch M4",
+      "operatingSystem": "iOS 27.0 simulator",
+      "functions": 1,
+      "suites": 1,
+      "invocations": 1,
+      "failures": 0,
+      "skips": 0,
+      "functionSeconds": 206.542,
+      "originalPngs": 4
+    },
+    {
+      "directory": "nearby",
+      "devices": [
+        "iPhone 18 Pro",
+        "iPad Air 11-inch M4"
+      ],
+      "operatingSystem": "iOS 27.0 simulator",
+      "distinctFunctions": 2,
+      "distinctSuites": 2,
+      "invocationsPerDevice": 2,
+      "totalInvocations": 4,
+      "failures": 0,
+      "skips": 0,
+      "originalPngs": 6
+    }
+  ],
+  "core": {
+    "summary": "core-targeted-summary.json",
+    "functions": 12,
+    "suites": 9,
+    "invocations": 41,
+    "failures": 0,
+    "skips": 0,
+    "internalMalformedRecoveryPayloads": 14
+  },
+  "mac": {
+    "fixtureBuildForTesting": "passed",
+    "ordinaryAppBuild": "passed",
+    "signing": "disabled",
+    "runtimeInvocations": 0
+  },
+  "checks": {
+    "affectedSwiftFilesStrictLint": 9,
+    "markdownFilesLinted": 1,
+    "temporaryProbesRemoved": true
+  },
+  "attemptClassifications": {
+    "setup-failure": "Fixture-schema setup failure; no functional red credit.",
+    "phone-completion": "Original five-second native completion assertion failed.",
+    "tablet-completion": "Original five-second native completion assertion failed.",
+    "probe-compile": "Temporary diagnostic probe did not compile; zero runtime credit.",
+    "timed-probe": "Original five-second assertion failed with tagged diagnostic source.",
+    "late-probe": "Original five-second assertion failed; additional sixty-second observation established eventual completion and sampled repeated membership validation.",
+    "indexed-attempt": "Membership indexes implemented; thirty-second far-end search assertion failed while a separate Core build was active.",
+    "search-probe": "Serial reproduction of thirty-second search failure with no concurrent build; profiled complete-row reads.",
+    "paged-attempt": "Paged cancellable reads passed search but original completion assertion failed.",
+    "priority-attempt": "Completion and search passed; incorrect test label expectation stopped the journey.",
+    "relaunch-precondition": "Completion and List appearance passed; test interacted before the relaunched catalog exposed Filters.",
+    "phone-before-targeted-read": "Complete phone pass on a superseded source revision, before UUID-targeted Item read.",
+    "tablet-attempt": "Original five-second assertion failed, despite a later captured Completed state.",
+    "tablet-probe": "Original assertion failed; tagged timing observed save/read delays before UUID-targeted Item read."
+  },
+  "limits": [
+    "Native catalogs accumulate all matching rows before publication; 64-row reads do not prove moving-window memory retention.",
+    "No calibrated final-input-to-visible 300 ms physical-device acceptance, memory budget or hitch measurement.",
+    "Complete traversal under every sort and stale-query/cancellation races remain unqualified.",
+    "No Mac runtime, physical-device, CloudKit, HTTP, account-transition or Share lifecycle qualification in this slice.",
+    "The existing iPad catalog heading is clipped beneath its native toolbar; adaptive and whole-app polish remain open.",
+    "Q84 C leaves existing generation retention unchanged. Q85 container catalog sorting remains pending."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "runtime": "macOS 27.0.1, SwiftPM through scoped Xcode toolchain",
+  "functions": 12,
+  "suites": 9,
+  "parameterizedCases": 30,
+  "invocations": 41,
+  "failures": 0,
+  "skips": 0,
+  "membershipAndExpandedRecoveryInvalidPayloads": 14,
+  "provenance": "core-targeted-test.log.gz"
+}

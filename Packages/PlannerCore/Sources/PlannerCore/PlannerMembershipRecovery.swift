@@ -28,12 +28,13 @@ struct PortableMembershipRecord: Codable {
     localDone = membership.localDone
   }
 
-  func validated(items: [PortableItemRecord], lists: [PortableListRecord]) throws
+  func validated(itemLifetimesByIdentity: [UUID: UUID], listLifetimesByIdentity: [UUID: UUID])
+    throws
     -> PlannerPortableMembership
   {
     guard list.kind == "list", item.kind == "item",
-      lists.contains(where: { $0.id == list.id && $0.lifetimeId == list.lifetimeId }),
-      items.contains(where: { $0.id == item.id && $0.lifetimeId == item.lifetimeId }),
+      listLifetimesByIdentity[list.id] == list.lifetimeId,
+      itemLifetimesByIdentity[item.id] == item.lifetimeId,
       let parsedRank = Int64(rank), String(parsedRank) == rank
     else {
       throw PlannerFailure(

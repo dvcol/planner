@@ -1,0 +1,2 @@
+Original completion assertion: false
+Settled during extra observation: true

@@ -1,0 +1,35 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "167496EA-47D0-44E5-A89B-9A51339E80A4.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Large-collection state after additional diagnostic observation_0_327FE935-26D8-4312-8907-82739C4B5596.png",
+        "timestamp" : 1792040461.477
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "CC627317-6D53-408E-BF80-1BBAE02E46CD.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Large-collection completion after the unchanged native wait_0_F8D4E9B7-1471-4189-8413-8943EB513458.png",
+        "timestamp" : 1792040436.881
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "033300FC-980D-40AD-97CE-81EF8636ADF6.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The large native catalog opens at the first of five thousand Items_0_B75A27BB-5E00-4686-8E69-EAD09DF6A266.png",
+        "timestamp" : 1792040403.19
+      }
+    ],
+    "testIdentifier" : "LargeCollectionJourneyTests/testFiveThousandItemsAndTwoHundredListsKeepFarEndSearchAndCompletionAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LargeCollectionJourneyTests/testFiveThousandItemsAndTwoHundredListsKeepFarEndSearchAndCompletionAfterRelaunch"
+  }
+]

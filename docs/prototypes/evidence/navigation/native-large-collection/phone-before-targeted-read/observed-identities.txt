@@ -1,0 +1,6 @@
+Item: saved.item.3E80D19E-F77E-44C3-8698-1EF44A35A024
+List: saved.list.D2584E59-8029-4E33-8BC3-A04DC7CB4F62
+Appearance: saved.appearance.21CD8A0A-84DA-4ADF-9A68-7AB1DD1D21F0
+Items: 5000
+Lists: 200
+Memberships per List: 25

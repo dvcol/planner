@@ -1,0 +1,6 @@
+Item: saved.item.8FD6824A-D920-4CF1-BB41-0563EA2E23CD
+List: saved.list.1BC9DDFB-1679-40E5-BE7B-1D2E96997C1E
+Appearance: saved.appearance.7F98B3A1-D68E-4216-B1F5-9B0E8D0EC8E5
+Items: 5000
+Lists: 200
+Memberships per List: 25

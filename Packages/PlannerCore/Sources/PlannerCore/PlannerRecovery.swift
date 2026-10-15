@@ -290,6 +290,10 @@ struct PlannerDataSnapshot: Codable {
       guard case .itinerary(let itinerary) = source else { return nil }
       return itinerary
     }
+    let itemLifetimesByIdentity = Dictionary(
+      uniqueKeysWithValues: itemRecords.map { ($0.id, $0.lifetimeId) })
+    let listLifetimesByIdentity = Dictionary(
+      uniqueKeysWithValues: listRecords.map { ($0.id, $0.lifetimeId) })
     let lists = try listRecords.map { try $0.validated() }
     let categories = try sources.compactMap { source -> PlannerPortableCategory? in
       guard case .category(let category) = source else { return nil }
@@ -389,7 +393,9 @@ struct PlannerDataSnapshot: Codable {
           + tags.map(PlannerPortableSource.tag),
         labelAssociations: labels,
         memberships: try memberships.map {
-          try $0.validated(items: itemRecords, lists: listRecords)
+          try $0.validated(
+            itemLifetimesByIdentity: itemLifetimesByIdentity,
+            listLifetimesByIdentity: listLifetimesByIdentity)
         },
         itineraryEntries: try itineraryEntries.map {
           try $0.validated(items: itemRecords, lists: listRecords, itineraries: itineraryRecords)

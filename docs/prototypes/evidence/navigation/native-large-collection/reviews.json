@@ -1,0 +1,34 @@
+{
+  "baseCommit": "5e30339",
+  "standards": {
+    "sourceFindings": 0,
+    "evidenceFindings": 0,
+    "addressedDuringReview": [
+      "Changed the recovery test payload binding to let before final compilation and tests."
+    ],
+    "originalImageReview": {
+      "allImagesReviewedIndividually": true,
+      "images": 41,
+      "distinctImageHashes": 41
+    },
+    "nearbyCaptureInterpretation": "Both deletion captures show the preserved empty List. iPad also shows cleared details. Completion captures show Done. Reopened captures show Todo after the test deliberately reverses completion following its successful retained-Done assertion.",
+    "metadataIntegrityAudit": {
+      "status": "complete",
+      "findings": 0,
+      "verifiedArtifactHashes": 168,
+      "parsedJsonFilesBeforeArtifactManifest": 80,
+      "gzipFiles": 37,
+      "rawLogsMatchOriginalBytes": true,
+      "diagnosticPatches": "Archived losslessly as gzip because raw patch context contains intentional trailing blank-line spaces."
+    }
+  },
+  "spec": {
+    "status": "complete",
+    "addressedDuringReview": [
+      "A stale page now discards accumulated rows and requeries instead of treating staleSnapshot as terminal."
+    ],
+    "sourceFindings": 0,
+    "evidenceFindings": 0,
+    "conclusion": "Final counts, source/product hashes, capture manifests, historical/final distinctions, stale-page restart and Q84 C retention are accurate. Full traversal, moving-window memory, physical 300 ms acceptance, stale-query race qualification and Mac runtime remain open."
+  }
+}
