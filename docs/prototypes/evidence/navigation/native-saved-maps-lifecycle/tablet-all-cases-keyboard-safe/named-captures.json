@@ -1,0 +1,37 @@
+[
+  {
+    "test": "SavedMapsPreviewJourneyTests/testEditingAPendingMapsURLPreservesBookmarkIdentityAndRejectsItsOldPreview()",
+    "name": "Editing a saved Maps URL rejects the old link response_0_CB7AF4DB-6E6F-414A-8C56-995B06B5FE2C.png",
+    "file": "edited-url.png",
+    "device": "iPad Air 11-inch (M4)",
+    "sha256": "2ed60bd324d5330a88404785668fe478c8b3ed13bed45552e841a6efef1fc2ce"
+  },
+  {
+    "test": "SavedMapsPreviewJourneyTests/testEditingAPendingMapsURLPreservesBookmarkIdentityAndRejectsItsOldPreview()",
+    "name": "Native URL selection stays above the keyboard_0_59F4173B-F269-4371-8C05-820AE7039EA2.png",
+    "file": "url-selection.png",
+    "device": "iPad Air 11-inch (M4)",
+    "sha256": "ef17896c1fde28051a0565c8b0002e5c7b6f700b1e9db34419ce2418efb422be"
+  },
+  {
+    "test": "SavedMapsPreviewJourneyTests/testExplicitMapsRetrySurvivesNavigationAndRestartsAfterRelaunch()",
+    "name": "Explicit Maps Retry survives leaving and returning to Items_0_46ED43E6-AD8D-4E40-B73B-519DE2E8B786.png",
+    "file": "retry.png",
+    "device": "iPad Air 11-inch (M4)",
+    "sha256": "89fc31414c874aa3b6c0529b0855d2431afd12c003f6264bd855884b6b69d310"
+  },
+  {
+    "test": "SavedMapsPreviewJourneyTests/testRemovingThePendingMapsLinkKeepsTheSurvivingBookmarkAndPreview()",
+    "name": "Removing the pending Maps link retains the current map_0_D1CF3682-87EB-402F-9672-27E78703127C.png",
+    "file": "removed-link.png",
+    "device": "iPad Air 11-inch (M4)",
+    "sha256": "be3d571a3cc3ce0c121cd1b316a19dc83519cef0ccd3002579cbb8979d92f10f"
+  },
+  {
+    "test": "SavedMapsPreviewJourneyTests/testSwitchingSavedMapsLinksRejectsTheReleasedObsoletePreview()",
+    "name": "Selected saved Maps link survives the released obsolete preview_0_3109B956-22B0-4AAC-9CD2-88E4AA734613.png",
+    "file": "switched-link.png",
+    "device": "iPad Air 11-inch (M4)",
+    "sha256": "693950c0cbd76f0f9ff9ffd92e24e519ca11dec6f3cd067eb247bbdca9fa100c"
+  }
+]

@@ -1,6 +1,6 @@
 # Saved Maps link previews
 
-Status: Q92 has a working native presentation with focused simulator qualification. Wider native failure cases, ordinary creation Q93 and final Mac UI qualification remain open.
+Status: Q92 has a working native presentation with focused simulator qualification. The [lifecycle follow-up](native-saved-maps-lifecycle.md) adds controlled native Retry, stale-response and edit/removal evidence. Ordinary creation Q93 and final Mac UI qualification remain open.
 
 ## Context and goal
 
@@ -50,4 +50,4 @@ The older capture suite used whole-screen absence of provider names as its reten
 
 The first nine-function compatibility run passes seven functions and fails two checks for bookmarks below the visible Form. Scrolling through the Form gutter fixes those controller failures. The final run passes all nine functions in 394.833 seconds. These journeys cover capture-side cancellation, edits, removal, source selection, explicit Retry and saved owned fields. The saved-link Picker assertion proves Museum appears and Cafe is absent before switching, then Cafe appears and Museum is absent afterward.
 
-Saved-card controlled-delay, edit/delete during a pending lookup and Retry-reappearance journeys remain unqualified in native UI. Their provider/cache behavior has controlled unit coverage. Mac UI runtime, physical sync, signed Share, accessibility, performance and final whole-app polish remain open. No map gate is closed by this slice.
+At this slice's commit, saved-card controlled-delay, edit/delete during a pending lookup and Retry-reappearance journeys remain unqualified in native UI. The [lifecycle follow-up](native-saved-maps-lifecycle.md) records their subsequent native qualification and Retry fix. Mac UI runtime, physical sync, signed Share, accessibility, performance and final whole-app polish remain open. No map gate is closed by this slice.

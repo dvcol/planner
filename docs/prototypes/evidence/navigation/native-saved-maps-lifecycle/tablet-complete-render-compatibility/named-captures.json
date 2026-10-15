@@ -1,0 +1,23 @@
+[
+  {
+    "test": "SavedCaptureJourneyTests/testAppleMapsPreviewYieldsToAnOwnedAddressWithoutChangingTheBookmark()",
+    "name": "Owned address takes precedence over the saved Apple Maps bookmark_0_06674075-CA50-49D2-8F67-9848B5172691.png",
+    "file": "owned-address.png",
+    "device": "iPad Air 11-inch (M4)",
+    "sha256": "ca162cf4169708d9b96f6150b711b71d94df02baa011686a3d2ecbdd3b991551"
+  },
+  {
+    "test": "SavedCaptureJourneyTests/testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch()",
+    "name": "Saved Google Maps search location uses the native map_0_835DC058-A281-48AD-82F4-492E0E8F58F0.png",
+    "file": "google-map.png",
+    "device": "iPad Air 11-inch (M4)",
+    "sha256": "38f2329a3725bb3f70ff06eec645a256053b41f4c4b8761985f455477a54e634"
+  },
+  {
+    "test": "SavedCaptureJourneyTests/testGoogleTextSearchRetainsAUsefulFallbackWithoutInventingAMapPin()",
+    "name": "Google text search stays a search with a useful saved-link fallback_0_4DA82618-DC6E-496E-A23F-DCAA03225E27.png",
+    "file": "text-search-fallback.png",
+    "device": "iPad Air 11-inch (M4)",
+    "sha256": "28ca514ad87d99bd3308b6ea76932d1765ca1a4aff49ffafc1d693d7c215d832"
+  }
+]

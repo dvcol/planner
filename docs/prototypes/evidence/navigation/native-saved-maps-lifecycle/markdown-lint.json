@@ -1,0 +1,17 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2@0.23.3",
+    "--config",
+    "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+    "docs/prototypes/native-saved-maps-lifecycle.md",
+    "docs/prototypes/native-saved-maps-preview.md"
+  ],
+  "exitCode": 0,
+  "output": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-saved-maps-lifecycle.md docs/prototypes/native-saved-maps-preview.md\nLinting: 2 files\nSummary: 0 issues in 0 files\nDone in 376ms using pnpm v12.10.1\n",
+  "sourceSHA256": {
+    "docs/prototypes/native-saved-maps-lifecycle.md": "963864368cd880670fcea5bcbfdaebcf185f6cff2fab24218f271cc6430372f2",
+    "docs/prototypes/native-saved-maps-preview.md": "750ec16fe7937bea75ab51fb4fac3d4a0822785a2a6aca55b1cc78f8ea3a922d"
+  }
+}

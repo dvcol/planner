@@ -1,0 +1,80 @@
+{
+  "phone-all-cases-keyboard-safe": [
+    {
+      "function": "PlannerFixtureUITests.SavedMapsPreviewJourneyTests testEditingAPendingMapsURLPreservesBookmarkIdentityAndRejectsItsOldPreview",
+      "result": "passed",
+      "seconds": 57.649
+    },
+    {
+      "function": "PlannerFixtureUITests.SavedMapsPreviewJourneyTests testExplicitMapsRetrySurvivesNavigationAndRestartsAfterRelaunch",
+      "result": "passed",
+      "seconds": 41.011
+    },
+    {
+      "function": "PlannerFixtureUITests.SavedMapsPreviewJourneyTests testRemovingThePendingMapsLinkKeepsTheSurvivingBookmarkAndPreview",
+      "result": "passed",
+      "seconds": 47.142
+    },
+    {
+      "function": "PlannerFixtureUITests.SavedMapsPreviewJourneyTests testSwitchingSavedMapsLinksRejectsTheReleasedObsoletePreview",
+      "result": "passed",
+      "seconds": 23.906
+    }
+  ],
+  "tablet-all-cases-keyboard-safe": [
+    {
+      "function": "PlannerFixtureUITests.SavedMapsPreviewJourneyTests testEditingAPendingMapsURLPreservesBookmarkIdentityAndRejectsItsOldPreview",
+      "result": "passed",
+      "seconds": 42.945
+    },
+    {
+      "function": "PlannerFixtureUITests.SavedMapsPreviewJourneyTests testExplicitMapsRetrySurvivesNavigationAndRestartsAfterRelaunch",
+      "result": "passed",
+      "seconds": 38.368
+    },
+    {
+      "function": "PlannerFixtureUITests.SavedMapsPreviewJourneyTests testRemovingThePendingMapsLinkKeepsTheSurvivingBookmarkAndPreview",
+      "result": "passed",
+      "seconds": 39.89
+    },
+    {
+      "function": "PlannerFixtureUITests.SavedMapsPreviewJourneyTests testSwitchingSavedMapsLinksRejectsTheReleasedObsoletePreview",
+      "result": "passed",
+      "seconds": 20.614
+    }
+  ],
+  "phone-complete-render-compatibility": [
+    {
+      "function": "PlannerNavigationUITests.SavedCaptureJourneyTests testAppleMapsPreviewYieldsToAnOwnedAddressWithoutChangingTheBookmark",
+      "result": "passed",
+      "seconds": 53.185
+    },
+    {
+      "function": "PlannerNavigationUITests.SavedCaptureJourneyTests testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch",
+      "result": "passed",
+      "seconds": 49.567
+    },
+    {
+      "function": "PlannerNavigationUITests.SavedCaptureJourneyTests testGoogleTextSearchRetainsAUsefulFallbackWithoutInventingAMapPin",
+      "result": "passed",
+      "seconds": 21.829
+    }
+  ],
+  "tablet-complete-render-compatibility": [
+    {
+      "function": "PlannerNavigationUITests.SavedCaptureJourneyTests testAppleMapsPreviewYieldsToAnOwnedAddressWithoutChangingTheBookmark",
+      "result": "passed",
+      "seconds": 127.48
+    },
+    {
+      "function": "PlannerNavigationUITests.SavedCaptureJourneyTests testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch",
+      "result": "passed",
+      "seconds": 44.729
+    },
+    {
+      "function": "PlannerNavigationUITests.SavedCaptureJourneyTests testGoogleTextSearchRetainsAUsefulFallbackWithoutInventingAMapPin",
+      "result": "passed",
+      "seconds": 23.722
+    }
+  ]
+}

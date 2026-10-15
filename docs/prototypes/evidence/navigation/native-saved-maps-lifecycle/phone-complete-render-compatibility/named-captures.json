@@ -1,0 +1,23 @@
+[
+  {
+    "test": "SavedCaptureJourneyTests/testAppleMapsPreviewYieldsToAnOwnedAddressWithoutChangingTheBookmark()",
+    "name": "Owned address takes precedence over the saved Apple Maps bookmark_0_C2F760CF-60FF-4419-B00B-86A07A1B98EE.png",
+    "file": "owned-address.png",
+    "device": "iPhone 18 Pro",
+    "sha256": "b1c48ebe3ea99dd9b2e9ae3f3d771f13e9662b8f550321ab2902bd1776450c5b"
+  },
+  {
+    "test": "SavedCaptureJourneyTests/testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch()",
+    "name": "Saved Google Maps search location uses the native map_0_8D704BE9-3CB0-4D17-9790-B8D0056F85FB.png",
+    "file": "google-map.png",
+    "device": "iPhone 18 Pro",
+    "sha256": "9c29d1a767f7e21222e2f6035afaf81fa0ee5924d146dac3f9bd812ba479f814"
+  },
+  {
+    "test": "SavedCaptureJourneyTests/testGoogleTextSearchRetainsAUsefulFallbackWithoutInventingAMapPin()",
+    "name": "Google text search stays a search with a useful saved-link fallback_0_23A6522E-B989-4770-B5BA-563C319381D6.png",
+    "file": "text-search-fallback.png",
+    "device": "iPhone 18 Pro",
+    "sha256": "2be5fb6ecf58b6a20eabc3254706b84371e5c61e920adf0c2e8b5de89eb9dca0"
+  }
+]

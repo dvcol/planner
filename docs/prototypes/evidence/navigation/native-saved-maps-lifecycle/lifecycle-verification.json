@@ -1,0 +1,15 @@
+{
+  "sourceFileCount": 230,
+  "identicalSourceInputsAcrossFiveFinalPhases": true,
+  "identicalPhoneTabletFixtureProductHashes": true,
+  "identicalPhoneTabletProductionProductHashes": true,
+  "currentSourceDifferences": [],
+  "currentProductDifferences": [],
+  "passedFunctions": 14,
+  "failedFunctions": 0,
+  "skippedFunctions": 0,
+  "originalNamedCaptures": 16,
+  "rootVisualReview": "Ten final lifecycle captures and six final production rendering captures inspected.",
+  "macEvidence": "Current-source fixture app/test compilation only; no runtime credited.",
+  "affectedStrictLint": "Five files pass with current source hashes."
+}

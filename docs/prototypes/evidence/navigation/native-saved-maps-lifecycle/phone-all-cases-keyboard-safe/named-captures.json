@@ -1,0 +1,37 @@
+[
+  {
+    "test": "SavedMapsPreviewJourneyTests/testEditingAPendingMapsURLPreservesBookmarkIdentityAndRejectsItsOldPreview()",
+    "name": "Editing a saved Maps URL rejects the old link response_0_34C3F571-1FB3-48EF-B4B0-F2871E0174D4.png",
+    "file": "edited-url.png",
+    "device": "iPhone 18 Pro",
+    "sha256": "b95086711c2ae64414b6d4683495db4a12ddd35751c8bb1633866e021b45ac99"
+  },
+  {
+    "test": "SavedMapsPreviewJourneyTests/testEditingAPendingMapsURLPreservesBookmarkIdentityAndRejectsItsOldPreview()",
+    "name": "Native URL selection stays above the keyboard_0_4A5997E0-D8EB-401F-828D-829324D44E8E.png",
+    "file": "url-selection.png",
+    "device": "iPhone 18 Pro",
+    "sha256": "69150c698566af89c3a7b9d4ab8da7b632f15e77c05b77bb7e4a1ef48bb94fa5"
+  },
+  {
+    "test": "SavedMapsPreviewJourneyTests/testExplicitMapsRetrySurvivesNavigationAndRestartsAfterRelaunch()",
+    "name": "Explicit Maps Retry survives leaving and returning to Items_0_90351FC5-3EBF-4B42-8D57-BEC9D08ADC9D.png",
+    "file": "retry.png",
+    "device": "iPhone 18 Pro",
+    "sha256": "41ef84ee86b43e0b47e22c9e5813fe1a5dc3a1b8d8b38808d3f79b9bd88e6eed"
+  },
+  {
+    "test": "SavedMapsPreviewJourneyTests/testRemovingThePendingMapsLinkKeepsTheSurvivingBookmarkAndPreview()",
+    "name": "Removing the pending Maps link retains the current map_0_EE6AA5E6-5D4C-450D-9FFB-B0761BCC9F03.png",
+    "file": "removed-link.png",
+    "device": "iPhone 18 Pro",
+    "sha256": "9d7e84bd8998f02d4a03bd9994e0613bef60ac6cf357a1a9fd61a57d79523678"
+  },
+  {
+    "test": "SavedMapsPreviewJourneyTests/testSwitchingSavedMapsLinksRejectsTheReleasedObsoletePreview()",
+    "name": "Selected saved Maps link survives the released obsolete preview_0_632F618F-8778-464B-BB15-7510BBC14E6C.png",
+    "file": "switched-link.png",
+    "device": "iPhone 18 Pro",
+    "sha256": "e2625e466122aec5a4b342294124dd9ee97a9f668d5de52913ac63c9c6d20fa3"
+  }
+]

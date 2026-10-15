@@ -31,6 +31,8 @@ enum PlannerFixtureDataset {
     case captureMaps = "capture-maps"
     case captureMapsRetry = "capture-maps-retry"
     case captureMapsDelay = "capture-maps-delay"
+    case savedMapsDelay = "saved-maps-delay"
+    case savedMapsRetry = "saved-maps-retry"
 
     var isMapsCapture: Bool {
       switch self {
@@ -117,6 +119,11 @@ enum PlannerFixtureDataset {
     }
     if scenario == .catalogSorting {
       try await PlannerCatalogSortFixture.seed(planner, session: session)
+      return SavedPlannerStore(configuration: configuration)
+    }
+    if scenario == .savedMapsDelay || scenario == .savedMapsRetry {
+      try await PlannerSavedMapsFixture.seed(
+        planner, session: session, usesRetry: scenario == .savedMapsRetry)
       return SavedPlannerStore(configuration: configuration)
     }
     if scenario == .calendarClockAlignment {

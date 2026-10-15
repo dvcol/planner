@@ -1,0 +1,22 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/Scenes/ItemMapsPreview.swift",
+    "PlannerFixtures/PlannerFixtureApp.swift",
+    "PlannerFixtures/PlannerFixtureDataset.swift",
+    "PlannerFixtures/PlannerSavedMapsFixture.swift",
+    "PlannerFixtureUITests/SavedMapsPreviewJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "output": "",
+  "sourceSHA256": {
+    "Planner/Scenes/ItemMapsPreview.swift": "db635b1489098ed91d5b31308414bd5fbfd13908977e7d75812159955b4ec0cc",
+    "PlannerFixtures/PlannerFixtureApp.swift": "15e15d06f52bbe3a7c5788681122e67a8eaa6df2b6605b3bb153281875a4c742",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "4c810dca9496b09dc7f25c3d7075192d66af28ca660c45b6fbe90d55c8a60472",
+    "PlannerFixtures/PlannerSavedMapsFixture.swift": "470dc7a7abdceb97e7055800cfcb58fc38b39aab0cc88d46bc8f34f1ee5e5576",
+    "PlannerFixtureUITests/SavedMapsPreviewJourneyTests.swift": "1a19c9f692fac7cb9aaef7dc2295932a489ca92b75af0ae444e7eec780bdef7e"
+  }
+}

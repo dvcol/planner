@@ -1,0 +1,18 @@
+{
+  "sdkHeader": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks/XCUIAutomation.framework/Headers/XCUIElement.h",
+  "sha256": "2279cc5f76043ff8ccbdeefc6b0966f3c6c64330cc93904fa03b9fbbbaad01e3",
+  "platformGuard": "TARGET_OS_OSX || TARGET_OS_MACCATALYST || TARGET_OS_IOS",
+  "api": "-[XCUIElement typeKey:modifierFlags:]",
+  "testUse": "Command-A remains the Mac test interaction. iOS API availability did not establish reliable selection on this simulator.",
+  "phoneEvidence": {
+    "focusedPhase": "phone-url-edit-native-keyboard",
+    "repeatedPhase": "phone-all-cases-qualified",
+    "identicalSourceInputs": true,
+    "result": "Focused pass; combined run failed the exact field-value assertion."
+  },
+  "touchSelection": {
+    "documentation": "https://support.apple.com/guide/iphone/select-edit-and-move-text-iph1a9cae52c/27/ios/27",
+    "interaction": "Triple-tap after scrolling the URL field at least 80 points above the keyboard.",
+    "focusedPhase": "phone-url-edit-keyboard-geometry"
+  }
+}
