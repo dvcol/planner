@@ -22,6 +22,7 @@ struct SavedPlannerSettingsView: View {
       Group {
         if store.isReady {
           Form {
+            SavedRecoveryStatusSection(store: store)
             Section("Organization") {
               Button("Manage Labels", systemImage: "square.grid.2x2") { showLabels = true }
                 .disabled(store.isSaving)
@@ -92,7 +93,10 @@ struct SavedPlannerSettingsView: View {
         }
       #endif
     }
-    .task { await store.open() }
+    .task {
+      await store.open()
+      await store.refreshRecoveryStatus()
+    }
     .task(id: exportRequest) { await prepareBackup() }
     .task(id: importURL) { await prepareImport() }
     .sheet(isPresented: $showLabels) { SavedLabelsView(store: store) }

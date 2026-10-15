@@ -244,6 +244,26 @@ struct SavedPlannerView: View {
   }
 
   @ViewBuilder
+  private var recoveryNotice: some View {
+    if store.isReady && store.recoveryBlocked {
+      HStack {
+        Label(store.recoveryStatusTitle, systemImage: "exclamationmark.triangle")
+          .font(.callout)
+        Spacer()
+        #if os(macOS)
+          SettingsLink { Text("Recovery") }
+            .accessibilityIdentifier("saved.recovery.status.open")
+        #else
+          Button("Recovery") { showSettings = true }
+            .accessibilityIdentifier("saved.recovery.status.open")
+        #endif
+      }
+      .padding(.horizontal).padding(.vertical, 8)
+      .background(.bar)
+    }
+  }
+
+  @ViewBuilder
   private var nativeLayout: some View {
     #if os(macOS)
       if selectedSection == .calendar {
@@ -296,6 +316,7 @@ struct SavedPlannerView: View {
       } else {
         NavigationStack {
           SavedCalendarView(store: store, selection: $calendarSelection)
+            .safeAreaInset(edge: .top) { recoveryNotice }
             .navigationDestination(item: $calendarSelection) { _ in calendarDetail }
         }
       }
@@ -314,6 +335,7 @@ struct SavedPlannerView: View {
   private var wideCalendar: some View {
     NavigationStack {
       SavedCalendarView(store: store, selection: calendarInspectorSelection)
+        .safeAreaInset(edge: .top) { recoveryNotice }
         .toolbar {
           if !calendarInspectorPresented {
             ToolbarItem(placement: .primaryAction) { calendarDetailsToggle }
@@ -425,7 +447,9 @@ struct SavedPlannerView: View {
           #if os(iOS)
             if identifier != nil { itineraryColumnVisibility = .doubleColumn }
           #endif
-        }))
+        })
+    )
+    .safeAreaInset(edge: .top) { recoveryNotice }
   }
 
   @ViewBuilder
@@ -506,6 +530,7 @@ struct SavedPlannerView: View {
       .overlay(alignment: .topTrailing) {
         if isOpeningCatalog { ProgressView("Updating Items").controlSize(.small).padding() }
       }
+      .safeAreaInset(edge: .top) { recoveryNotice }
     } else if isOpeningCatalog {
       ProgressView("Opening Items")
     } else {
@@ -990,6 +1015,9 @@ struct SavedPlannerView: View {
           Button("Try Again") { Task { await loadListCatalog() } }
         }
       }
+    }
+    .safeAreaInset(edge: .top) {
+      if selectedSection == .lists { recoveryNotice }
     }
     .navigationTitle("Planner")
     .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)

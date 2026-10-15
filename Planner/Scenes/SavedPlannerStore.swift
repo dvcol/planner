@@ -47,11 +47,21 @@ final class SavedPlannerStore {
   private(set) var isOpening = false
   private(set) var isSaving = false
   private(set) var recoveryBlocked = false
+  private(set) var recoveryStatusTitle = "Checking local recovery"
+  private(set) var recoveryStatusFailure: String?
+  private(set) var isCheckingRecovery = false
+  private(set) var isRetryingRecovery = false
+  private(set) var incompleteRecoveryOperationIdentifiers: [UUID] = []
+  private var requiresRecoveryReview = false
   private(set) var changeRevision = UUID()
   private(set) var openingFailure: String?
   var alertMessage: String?
   var isReady: Bool { session != nil && !isOpening }
-  var canCreate: Bool { isReady && !isOpening && !isSaving && !recoveryBlocked }
+  var canCreate: Bool { isReady && !isSaving && !isCheckingRecovery && !recoveryBlocked }
+  var canRetryRecovery: Bool {
+    isReady && !isSaving && !isCheckingRecovery && !requiresRecoveryReview
+      && !incompleteRecoveryOperationIdentifiers.isEmpty
+  }
   var currentDatasetIdentifier: UUID? { session?.datasetId }
 
   var devicePreferenceNamespace: String? {
@@ -110,12 +120,72 @@ final class SavedPlannerStore {
     switch await planner.bootstrap() {
     case .ready(let ready):
       session = ready
+      await refreshRecoveryStatus()
       await refreshLists()
       await refreshItems()
     case .unavailable(let reason): openingFailure = reason.message
     case .mainAppSetupRequired, .mainAppMigrationRequired:
       openingFailure = "Planner could not initialize its local data."
     }
+  }
+
+  func refreshRecoveryStatus() async {
+    guard let planner, let session, !isCheckingRecovery else { return }
+    isCheckingRecovery = true
+    defer { isCheckingRecovery = false }
+    switch await planner.read(session: session, request: .status) {
+    case .status(let status):
+      switch status.recovery {
+      case .known(let checkpoint, let incompleteIdentifiers, let mutationBlocked):
+        incompleteRecoveryOperationIdentifiers = incompleteIdentifiers
+        recoveryBlocked = mutationBlocked || requiresRecoveryReview
+        recoveryStatusFailure = nil
+        if requiresRecoveryReview {
+          recoveryStatusTitle = "Recovery review needed"
+        } else if mutationBlocked {
+          recoveryStatusTitle = "Recovery copy incomplete"
+        } else {
+          recoveryStatusTitle = checkpoint == nil ? "No saved changes yet" : "Saved on this device"
+        }
+      case .unavailable(let reason): showUnavailableRecovery(reason.message)
+      }
+    case .failed(let reason): showUnavailableRecovery(reason.message)
+    default: showUnavailableRecovery("Planner could not read its local recovery evidence.")
+    }
+  }
+
+  func retryIncompleteRecovery() async {
+    guard let planner, let session, canRetryRecovery else { return }
+    let operationIdentifiers = incompleteRecoveryOperationIdentifiers
+    isSaving = true
+    isRetryingRecovery = true
+    alertMessage = nil
+    recoveryStatusFailure = nil
+    defer {
+      isSaving = false
+      isRetryingRecovery = false
+    }
+    var retryFailure: String?
+    for identifier in operationIdentifiers {
+      let result = await planner.retryRecovery(session: session, operationId: identifier)
+      switch result.outcome {
+      case .applied(_, .complete): continue
+      case .applied(_, .incomplete(let reason)), .rejected(let reason):
+        retryFailure = reason.message
+      case .unverified:
+        requiresRecoveryReview = true
+        retryFailure = "The change needs recovery review before it can be acknowledged."
+      }
+      break
+    }
+    await refreshRecoveryStatus()
+    if recoveryBlocked, let retryFailure { recoveryStatusFailure = retryFailure }
+  }
+
+  private func showUnavailableRecovery(_ message: String) {
+    recoveryBlocked = true
+    recoveryStatusTitle = "Recovery status unavailable"
+    recoveryStatusFailure = message
   }
 
   func refreshLists() async {
@@ -802,7 +872,7 @@ final class SavedPlannerStore {
         return .failed
       }
     }
-    guard let applied = handleChangeResult(result) else { return .failed }
+    guard let applied = await handleChangeResult(result) else { return .failed }
     return .applied(applied)
   }
 
@@ -884,24 +954,33 @@ final class SavedPlannerStore {
     defer { isSaving = false }
     let result = await planner.execute(
       PlannerOperation(operationId: operationId, session: session, command: command))
-    return handleChangeResult(result)
+    return await handleChangeResult(result)
   }
 
-  private func handleChangeResult(_ result: PlannerOperationResult) -> PlannerAppliedResult? {
+  private func handleChangeResult(_ result: PlannerOperationResult) async -> PlannerAppliedResult? {
     switch result.outcome {
     case .rejected(let reason):
       alertMessage = reason.message
+      if reason.code == "mutationBlocked" { await refreshRecoveryStatus() }
       return nil
     case .unverified:
+      requiresRecoveryReview = true
       recoveryBlocked = true
+      recoveryStatusTitle = "Recovery review needed"
       alertMessage = "The change could not be verified. Further changes need recovery review."
       return nil
     case .applied(let applied, let recovery):
       changeRevision = UUID()
-      if case .incomplete = recovery {
+      if case .incomplete(let reason) = recovery {
         recoveryBlocked = true
+        incompleteRecoveryOperationIdentifiers = [result.operationId]
+        recoveryStatusTitle = "Recovery copy incomplete"
+        recoveryStatusFailure = reason.message
         alertMessage =
-          "The change was saved, but its recovery copy is incomplete. Further changes are paused."
+          "Your change is in local storage, but its recovery copy is incomplete. Further changes are paused."
+      } else {
+        recoveryStatusTitle = "Saved on this device"
+        recoveryStatusFailure = nil
       }
       return applied
     }
@@ -1011,24 +1090,9 @@ final class SavedPlannerStore {
         operationId: operationId, session: session,
         command: .createList(content: .init(name: name, manualEstimate: manualEstimate))
       ))
-    switch result.outcome {
-    case .rejected(let reason):
-      alertMessage = reason.message
-      return nil
-    case .unverified:
-      recoveryBlocked = true
-      alertMessage = "The List's save could not be verified. Further changes need recovery review."
-      return nil
-    case .applied(let applied, let recovery):
-      changeRevision = UUID()
-      if case .incomplete = recovery {
-        recoveryBlocked = true
-        alertMessage =
-          "The List was saved, but its recovery copy is incomplete. Further changes are paused."
-      }
-      await refreshLists()
-      return applied.generated.first { $0.kind == .list }
-    }
+    guard let applied = await handleChangeResult(result) else { return nil }
+    await refreshLists()
+    return applied.generated.first { $0.kind == .list }
   }
 
   func editList(
