@@ -1,0 +1,17 @@
+{
+  "standards": {
+    "findings": 0,
+    "scope": "Q89 source, final native overflow controller and evidence report"
+  },
+  "spec": {
+    "findings": 0,
+    "scope": "Q89 source, final native overflow controller and evidence report"
+  },
+  "excluded": [
+    "Q93 provisional ordinary creation adapter",
+    "Q92 read-only Maps work",
+    "Unexecuted Mac runtime qualification",
+    "Incomplete-recovery dialog runtime branch"
+  ],
+  "inspectedNamedCaptures": 5
+}

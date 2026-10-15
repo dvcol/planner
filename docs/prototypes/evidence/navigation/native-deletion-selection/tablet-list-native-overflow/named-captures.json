@@ -1,0 +1,8 @@
+[
+  {
+    "test": "SavedAppearanceJourneyTests/testDeletingSelectedListChoosesTheFirstVisibleListAndItsFirstItemOnRegularLayouts()",
+    "name": "Confirmed List deletion selects the first surviving context_0_CEDCCEF2-BCF3-4BD8-9163-23CE8F720CC3.png",
+    "file": "list-first-visible.png",
+    "sha256": "382d4b99d14e772ea7e2b7e69471f5d8274e4762edddf946e9f41a62510885bd"
+  }
+]

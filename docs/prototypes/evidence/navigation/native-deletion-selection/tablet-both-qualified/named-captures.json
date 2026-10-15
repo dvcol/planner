@@ -1,0 +1,8 @@
+[
+  {
+    "test": "SavedAppearanceJourneyTests/testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort()",
+    "name": "Confirmed Item deletion selects the first visible survivor_0_AB4EC4D3-EBA7-44CF-B89C-0F501B2BA074.png",
+    "file": "item-first-visible.png",
+    "sha256": "f73bfff2adf95d5c1668d77deda013c9d86cab87c34a904055f0b7f3a483af4f"
+  }
+]

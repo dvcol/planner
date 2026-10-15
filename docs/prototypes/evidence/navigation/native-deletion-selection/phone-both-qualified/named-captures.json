@@ -1,0 +1,14 @@
+[
+  {
+    "test": "SavedAppearanceJourneyTests/testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort()",
+    "name": "Confirmed Item deletion selects the first visible survivor_0_889B7EBA-BDE7-4EF0-A1D1-78DC3DC8F676.png",
+    "file": "item-first-visible.png",
+    "sha256": "0c13b49be3cbed06ae5b690c1952f72ebb2438a5737aefd1f3e13a58cbe7da53"
+  },
+  {
+    "test": "SavedAppearanceJourneyTests/testDeletingSelectedListChoosesTheFirstVisibleListAndItsFirstItemOnRegularLayouts()",
+    "name": "Confirmed List deletion selects the first surviving context_0_5BA9D220-F7CB-4914-AC90-BA024A13055D.png",
+    "file": "list-first-visible.png",
+    "sha256": "3603ce0785154d6627a7ea8ed9096186031d687a9e6fc66d27ad3a69445071c7"
+  }
+]

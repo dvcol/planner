@@ -1,0 +1,10 @@
+{
+  "sourceDifferences": [
+    "PlannerNavigationUITests/NativeNavigationElements.swift",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift"
+  ],
+  "sameProductionAppProducts": {
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner": true,
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/Planner.app/Planner.debug.dylib": true
+  }
+}

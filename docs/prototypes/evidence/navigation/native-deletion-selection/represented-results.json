@@ -1,0 +1,56 @@
+{
+  "phone-both-qualified": {
+    "exitCode": 0,
+    "functions": [
+      {
+        "name": "testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort",
+        "status": "passed",
+        "seconds": "76.335"
+      },
+      {
+        "name": "testDeletingSelectedListChoosesTheFirstVisibleListAndItsFirstItemOnRegularLayouts",
+        "status": "passed",
+        "seconds": "118.214"
+      }
+    ],
+    "sourceCount": 215
+  },
+  "tablet-both-qualified": {
+    "exitCode": 65,
+    "functions": [
+      {
+        "name": "testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort",
+        "status": "passed",
+        "seconds": "85.113"
+      },
+      {
+        "name": "testDeletingSelectedListChoosesTheFirstVisibleListAndItsFirstItemOnRegularLayouts",
+        "status": "failed",
+        "seconds": "69.463"
+      }
+    ],
+    "sourceCount": 215
+  },
+  "tablet-list-native-overflow": {
+    "exitCode": 0,
+    "functions": [
+      {
+        "name": "testDeletingSelectedListChoosesTheFirstVisibleListAndItsFirstItemOnRegularLayouts",
+        "status": "passed",
+        "seconds": "146.442"
+      }
+    ],
+    "sourceCount": 215
+  },
+  "mac-list-original-window-green": {
+    "exitCode": 0,
+    "functions": [
+      {
+        "name": "testDeletingSelectedListChoosesTheFirstVisibleListAndItsFirstItemOnRegularLayouts",
+        "status": "passed",
+        "seconds": "139.585"
+      }
+    ],
+    "sourceCount": 215
+  }
+}
