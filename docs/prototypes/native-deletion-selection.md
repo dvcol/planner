@@ -17,7 +17,7 @@ Use production native views and disposable local datasets. Keep each replacement
 - Contextual Items: select Deleted inside List Context, then delete its source from another Mac window. Select surviving Birch inside Context, preserving its membership identity; never substitute the unrelated global Alpha outside Item.
 - Preserve source epochs, literal function results and original named own-app/window captures. Run strict affected lint and compiler checks. Keep failed setup/controller attempts separate from product red-green evidence.
 
-Final Mac runtime, the retained dialog after incomplete recovery, empty-result and delayed-refresh/dataset-transition matrices remain open. These examples do not establish every Q89 edge case or cross-device CloudKit behavior.
+Final Mac runtime, the retained dialog after incomplete recovery and delayed-refresh/dataset-transition matrices remain open. The [empty-result follow-up](native-deletion-empty-results.md) qualifies deletion of the last visible Item/List while archived records remain hidden, including their retained identities after relaunch. These examples do not establish every Q89 edge case or cross-device CloudKit behavior.
 
 ## Implementation and witnessed failures
 

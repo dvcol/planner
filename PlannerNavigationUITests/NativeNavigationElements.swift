@@ -38,6 +38,36 @@ extension XCUIApplication {
     return coloredPixels > 256
   }
 
+  func openSavedPlannerListActionsMenu() {
+    openSavedPlannerListMenu(identifier: "saved.list.actions", title: "List actions")
+  }
+
+  private func openSavedPlannerListMenu(identifier: String, title: String) {
+    var menu = plannerElement(identifier)
+    if !menu.exists || !menu.isHittable {
+      #if os(macOS)
+        let overflow = windows.firstMatch.popUpButtons["more toolbar items"].firstMatch
+        XCTAssertTrue(overflow.waitForExistence(timeout: 5))
+        overflow.activateForPlannerJourney()
+      #else
+        let contentBar = navigationBars.allElementsBoundByIndex.last {
+          $0.identifier != "Planner"
+            && $0.buttons["OverflowBarButtonItem"].firstMatch.isHittable
+        }
+        guard let contentBar else {
+          XCTFail("The selected List's \(title) menu is unavailable")
+          return
+        }
+        contentBar.buttons["OverflowBarButtonItem"].firstMatch.activateForPlannerJourney()
+        if !menu.exists {
+          menu = collectionViews.buttons[title].firstMatch
+        }
+      #endif
+    }
+    XCTAssertTrue(menu.waitForExistence(timeout: 5))
+    menu.activateForPlannerJourney()
+  }
+
   func launchSavedPlannerJourney() {
     launch()
     #if os(macOS)
