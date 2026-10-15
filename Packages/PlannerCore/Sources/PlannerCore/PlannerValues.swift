@@ -448,16 +448,30 @@ public enum PlannerQueryRequest: Sendable {
 }
 
 public struct PlannerCatalogQuery: Sendable {
+  public struct Sort: Sendable {
+    public enum Mode: String, Sendable { case title, created, lastUpdated, fullEstimate }
+    public enum Direction: String, Sendable { case ascending, descending }
+    public let mode: Mode
+    public let direction: Direction
+
+    public init(mode: Mode = .title, direction: Direction = .ascending) {
+      self.mode = mode
+      self.direction = direction
+    }
+  }
   public let sourceKind: PlannerEntityKind
   public let text: String
   public let archive: PlannerItemQuery.Archive
+  public let sort: Sort?
 
   public init(
-    sourceKind: PlannerEntityKind, text: String = "", archive: PlannerItemQuery.Archive = .active
+    sourceKind: PlannerEntityKind, text: String = "", archive: PlannerItemQuery.Archive = .active,
+    sort: Sort? = nil
   ) {
     self.sourceKind = sourceKind
     self.text = text
     self.archive = archive
+    self.sort = sort
   }
 }
 
