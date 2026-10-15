@@ -1,0 +1,625 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild build-for-testing -project Planner.xcodeproj -scheme PlannerFixtures -destination platform=macOS,arch=arm64 -derivedDataPath /private/tmp/PlannerRetainedRecoveryMacDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.1
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.7.2
+  swift-system: https://github.com/apple/swift-system.git @ 1.8.1
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.104.0
+  PlannerPreviews: /Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerPreviews @ local
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk @ 0.12.1
+  PlannerCore: /Users/dinh-van.colomban/Workspace/private/planner/Packages/PlannerCore @ local
+  swift-log: https://github.com/apple/swift-log.git @ 1.16.1
+  EventSource: https://github.com/mattt/eventsource.git @ 1.5.1
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (43 targets)
+    Target 'PlannerFixtureUITests' in project 'Planner'
+        ➜ Explicit dependency on target 'PlannerFixtures' in project 'Planner'
+    Target 'PlannerFixtures' in project 'Planner'
+        ➜ Explicit dependency on target 'PlannerCore-product' in project 'PlannerCore'
+        ➜ Explicit dependency on target 'MCP-product' in project 'mcp-swift-sdk'
+        ➜ Explicit dependency on target 'NIOCore-product' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOPosix-product' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOHTTP1-product' in project 'swift-nio'
+        ➜ Explicit dependency on target 'PlannerPreviews-product' in project 'PlannerPreviews'
+    Target 'PlannerPreviews-product' in project 'PlannerPreviews'
+        ➜ Explicit dependency on target 'PlannerPreviews' in project 'PlannerPreviews'
+    Target 'PlannerPreviews' in project 'PlannerPreviews' (no dependencies)
+    Target 'NIOHTTP1-product' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOHTTP1' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOEmbedded' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIO' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLLHTTP' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'NIOHTTP1' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOEmbedded' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIO' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLLHTTP' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'CNIOLLHTTP' in project 'swift-nio' (no dependencies)
+    Target 'NIO' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOEmbedded' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'NIOEmbedded' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'NIOPosix-product' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'swift-nio_NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'swift-nio_NIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOPosix' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'CNIOPosix' in project 'swift-nio' (no dependencies)
+    Target 'swift-nio_NIOPosix' in project 'swift-nio' (no dependencies)
+    Target 'NIOCore-product' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'NIOCore' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+        ➜ Explicit dependency on target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIOBase64' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOOpenBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOFreeBSD' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIODarwin' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOLinux' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWindows' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOWASI' in project 'swift-nio'
+        ➜ Explicit dependency on target '_NIODataStructures' in project 'swift-nio'
+        ➜ Explicit dependency on target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'Atomics-product' in project 'swift-atomics'
+    Target 'Atomics-product' in project 'swift-atomics'
+        ➜ Explicit dependency on target 'Atomics' in project 'swift-atomics'
+        ➜ Explicit dependency on target '_AtomicsShims' in project 'swift-atomics'
+    Target 'Atomics' in project 'swift-atomics'
+        ➜ Explicit dependency on target '_AtomicsShims' in project 'swift-atomics'
+    Target '_AtomicsShims' in project 'swift-atomics' (no dependencies)
+    Target 'DequeModule-product' in project 'swift-collections'
+        ➜ Explicit dependency on target 'DequeModule' in project 'swift-collections'
+        ➜ Explicit dependency on target 'InternalCollectionsUtilities' in project 'swift-collections'
+        ➜ Explicit dependency on target 'SpanPreview' in project 'swift-collections'
+    Target 'DequeModule' in project 'swift-collections'
+        ➜ Explicit dependency on target 'InternalCollectionsUtilities' in project 'swift-collections'
+        ➜ Explicit dependency on target 'SpanPreview' in project 'swift-collections'
+    Target 'SpanPreview' in project 'swift-collections'
+        ➜ Explicit dependency on target 'InternalCollectionsUtilities' in project 'swift-collections'
+    Target 'InternalCollectionsUtilities' in project 'swift-collections' (no dependencies)
+    Target '_NIODataStructures' in project 'swift-nio' (no dependencies)
+    Target 'CNIOWASI' in project 'swift-nio' (no dependencies)
+    Target 'CNIOWindows' in project 'swift-nio' (no dependencies)
+    Target 'CNIOLinux' in project 'swift-nio' (no dependencies)
+    Target 'CNIODarwin' in project 'swift-nio' (no dependencies)
+    Target 'CNIOFreeBSD' in project 'swift-nio' (no dependencies)
+    Target 'CNIOOpenBSD' in project 'swift-nio' (no dependencies)
+    Target '_NIOBase64' in project 'swift-nio' (no dependencies)
+    Target 'NIOConcurrencyHelpers' in project 'swift-nio'
+        ➜ Explicit dependency on target 'CNIOAtomics' in project 'swift-nio'
+    Target 'CNIOAtomics' in project 'swift-nio' (no dependencies)
+    Target 'MCP-product' in project 'mcp-swift-sdk'
+        ➜ Explicit dependency on target 'MCP' in project 'mcp-swift-sdk'
+        ➜ Explicit dependency on target 'SystemPackage-product' in project 'swift-system'
+        ➜ Explicit dependency on target 'Logging-product' in project 'swift-log'
+        ➜ Explicit dependency on target 'EventSource-product' in project 'EventSource'
+    Target 'MCP' in project 'mcp-swift-sdk'
+        ➜ Explicit dependency on target 'SystemPackage-product' in project 'swift-system'
+        ➜ Explicit dependency on target 'Logging-product' in project 'swift-log'
+        ➜ Explicit dependency on target 'EventSource-product' in project 'EventSource'
+    Target 'EventSource-product' in project 'EventSource'
+        ➜ Explicit dependency on target 'EventSource' in project 'EventSource'
+    Target 'EventSource' in project 'EventSource' (no dependencies)
+    Target 'Logging-product' in project 'swift-log'
+        ➜ Explicit dependency on target 'Logging' in project 'swift-log'
+    Target 'Logging' in project 'swift-log' (no dependencies)
+    Target 'SystemPackage-product' in project 'swift-system'
+        ➜ Explicit dependency on target 'SystemPackage' in project 'swift-system'
+        ➜ Explicit dependency on target 'CSystem' in project 'swift-system'
+    Target 'SystemPackage' in project 'swift-system'
+        ➜ Explicit dependency on target 'CSystem' in project 'swift-system'
+    Target 'CSystem' in project 'swift-system' (no dependencies)
+    Target 'PlannerCore-product' in project 'PlannerCore'
+        ➜ Explicit dependency on target 'PlannerCore' in project 'PlannerCore'
+    Target 'PlannerCore' in project 'PlannerCore' (no dependencies)
+
+GatherProvisioningInputs
+
+CreateBuildDescription
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc --version
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -v -E -dM -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -x c -c /dev/null
+
+ExecuteExternalTool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -version_details
+
+ReadFileContents /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/docc/features.json
+
+Build description signature: 2500638de865eb9a300e97774df9b724
+Build description path: /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/XCBuildData/2500638de865eb9a300e97774df9b724.xcbuilddata
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk /tmp/PlannerRetainedRecoveryMacDerivedData/SDKStatCaches.noindex/macosx27.0-26A425-7231f6df4def33e022ae2eb8f782df1a.sdkstatcache
+    cd /Users/dinh-van.colomban/Workspace/private/planner/Planner.xcodeproj
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -o /tmp/PlannerRetainedRecoveryMacDerivedData/SDKStatCaches.noindex/macosx27.0-26A425-7231f6df4def33e022ae2eb8f782df1a.sdkstatcache
+
+ProcessInfoPlistFile /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/swift-nio_NIOPosix.bundle/Contents/Info.plist /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/swift-nio.build/Debug/swift-nio_NIOPosix-b.build/empty-swift-nio_NIOPosix.plist (in target 'swift-nio_NIOPosix' from project 'swift-nio')
+    cd /tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio
+    builtin-infoPlistUtility /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/swift-nio.build/Debug/swift-nio_NIOPosix-b.build/empty-swift-nio_NIOPosix.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/swift-nio_NIOPosix.bundle/Contents/Info.plist
+
+WriteAuxiliaryFile /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.SwiftFileList (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    write-file /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.SwiftFileList
+
+WriteAuxiliaryFile /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.LinkFileList (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    write-file /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.LinkFileList
+
+WriteAuxiliaryFile /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.SwiftConstValuesFileList (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    write-file /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.SwiftConstValuesFileList (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    write-file /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.SwiftConstValuesFileList
+
+WriteAuxiliaryFile /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.SwiftFileList (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    write-file /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.SwiftFileList
+
+WriteAuxiliaryFile /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures-OutputFileMap.json (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    write-file /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures-OutputFileMap.json
+
+WriteAuxiliaryFile /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.LinkFileList (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    write-file /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.LinkFileList
+
+WriteAuxiliaryFile /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests-OutputFileMap.json (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    write-file /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests-OutputFileMap.json
+
+SwiftDriver PlannerFixtures normal arm64 com.apple.xcode.tools.swift.compiler (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name PlannerFixtures -Onone @/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.SwiftFileList -DDEBUG -DPLANNER_FIXTURES -Xcc -fmodule-map-file\=/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-system/Sources/CSystem/include/module.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-atomics/Sources/_AtomicsShims/include/module.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOLLHTTP.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOPosix.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOWASI.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOWindows/include/module.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOLinux.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIODarwin.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOFreeBSD.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOOpenBSD.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOAtomics.modulemap -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -target arm64-apple-macos27.0 -g -module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/PlannerRetainedRecoveryMacDerivedData/Index.noindex/DataStore -swift-version 6 -I /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -F /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PackageFrameworks -F /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -c -j11 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/SDKStatCaches.noindex/macosx27.0-26A425-7231f6df4def33e022ae2eb8f782df1a.sdkstatcache -output-file-map /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex -sdk-module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-generated-files.hmap -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-own-target-headers.hmap -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/Planner-d1fe009a27a9e9002364fb384a69f78d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-project-headers.hmap -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-system/Sources/CSystem/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-atomics/Sources/_AtomicsShims/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOLLHTTP/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOPosix/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOWASI/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOWindows/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOLinux/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIODarwin/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOFreeBSD/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOOpenBSD/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOAtomics/include -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/include -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/DerivedSources-normal/arm64 -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/DerivedSources/arm64 -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures-Swift.h -working-directory /Users/dinh-van.colomban/Workspace/private/planner -experimental-emit-module-separately -disable-cmo
+
+ProcessInfoPlistFile /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/Info.plist /Users/dinh-van.colomban/Workspace/private/planner/Configuration/Planner-Info.plist (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-infoPlistUtility /Users/dinh-van.colomban/Workspace/private/planner/Configuration/Planner-Info.plist -producttype com.apple.product-type.application -genpkginfo /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/PkgInfo -expandbuildsettings -platform macosx -scanforprivacyfile /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/Resources/swift-nio_NIOPosix.bundle -o /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/Info.plist
+
+SwiftCompile normal arm64 Compiling\ SavedItineraryViews.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedItineraryViews.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedItineraryViews.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedItineraryViews.swift
+
+SwiftCompile normal arm64 Compiling\ SavedEditItemForm.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedEditItemForm.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedEditItemForm.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedEditItemForm.swift
+
+SwiftCompile normal arm64 Compiling\ SavedOwnedLocationEditor.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedOwnedLocationEditor.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedOwnedLocationEditor.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedOwnedLocationEditor.swift
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ PlannerFixtures (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    
+
+SwiftCompile normal arm64 Compiling\ SavedPlannerStore.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedPlannerStore.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedPlannerStore.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedPlannerStore.swift
+
+SwiftCompile normal arm64 Compiling\ PlannerFixtureDataset.swift /Users/dinh-van.colomban/Workspace/private/planner/PlannerFixtures/PlannerFixtureDataset.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/PlannerFixtures/PlannerFixtureDataset.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile PlannerFixtureDataset.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedOwnedLocationEditor.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedEditItemForm.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 Compiling\ PlannerApp.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/PlannerApp.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/PlannerApp.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile PlannerApp.swift
+
+SwiftCompile normal arm64 Compiling\ PlannerFixtureApp.swift /Users/dinh-van.colomban/Workspace/private/planner/PlannerFixtures/PlannerFixtureApp.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/PlannerFixtures/PlannerFixtureApp.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile PlannerFixtureApp.swift
+
+SwiftCompile normal arm64 Compiling\ SavedPlannerView.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedPlannerView.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedPlannerView.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedPlannerView.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling PlannerFixtureDataset.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedPlannerStore.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 Compiling\ SavedAddItemForm.swift,\ SavedAddToListForm.swift,\ SavedAppearanceViews.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedAddItemForm.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedAddToListForm.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedAppearanceViews.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedAddItemForm.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedAddItemForm.swift
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedAddToListForm.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedAddToListForm.swift
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedAppearanceViews.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedAppearanceViews.swift
+
+SwiftCompile normal arm64 Compiling\ SavedLabelsView.swift,\ SavedMacMembershipTable.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedLabelsView.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedMacMembershipTable.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedLabelsView.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedLabelsView.swift
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedMacMembershipTable.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedMacMembershipTable.swift
+
+SwiftCompile normal arm64 Compiling\ SavedItemRowContent.swift,\ SavedItemScheduleViews.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedItemRowContent.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedItemScheduleViews.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedItemRowContent.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedItemRowContent.swift
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedItemScheduleViews.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedItemScheduleViews.swift
+
+SwiftCompile normal arm64 Compiling\ SavedItemViews.swift,\ SavedItineraryContentViews.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedItemViews.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedItineraryContentViews.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedItemViews.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedItemViews.swift
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedItineraryContentViews.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedItineraryContentViews.swift
+
+SwiftCompile normal arm64 Compiling\ SavedItemFilters.swift,\ SavedItemLabelPicker.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedItemFilters.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedItemLabelPicker.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedItemFilters.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedItemFilters.swift
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedItemLabelPicker.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedItemLabelPicker.swift
+
+SwiftCompile normal arm64 Compiling\ SavedRecoveryCopiesView.swift,\ SavedRecoverySelectionView.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedRecoveryCopiesView.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedRecoverySelectionView.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedRecoveryCopiesView.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedRecoveryCopiesView.swift
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedRecoverySelectionView.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedRecoverySelectionView.swift
+
+SwiftCompile normal arm64 Compiling\ SavedRecoveryStatusSection.swift,\ SavedSourceDeletionForm.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedRecoveryStatusSection.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedSourceDeletionForm.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedRecoveryStatusSection.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedRecoveryStatusSection.swift
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedSourceDeletionForm.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedSourceDeletionForm.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling PlannerApp.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 Compiling\ SavedBackupImportForm.swift,\ SavedBulkCompletionForm.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedBackupImportForm.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedBulkCompletionForm.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedBackupImportForm.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedBackupImportForm.swift
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedBulkCompletionForm.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedBulkCompletionForm.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling PlannerFixtureApp.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 Compiling\ SavedCalendarView.swift,\ SavedCaptureForm.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedCalendarView.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedCaptureForm.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedCalendarView.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedCalendarView.swift
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedCaptureForm.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedCaptureForm.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedAddItemForm.swift, SavedAddToListForm.swift, SavedAppearanceViews.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 Compiling\ PlannerRecoveryFixture.swift,\ PlannerRecoveryGraphFixture.swift,\ ItemLinksSection.swift /Users/dinh-van.colomban/Workspace/private/planner/PlannerFixtures/PlannerRecoveryFixture.swift /Users/dinh-van.colomban/Workspace/private/planner/PlannerFixtures/PlannerRecoveryGraphFixture.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/ItemLinksSection.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/PlannerFixtures/PlannerRecoveryFixture.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile PlannerRecoveryFixture.swift
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/PlannerFixtures/PlannerRecoveryGraphFixture.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile PlannerRecoveryGraphFixture.swift
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/ItemLinksSection.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile ItemLinksSection.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedItineraryViews.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 Compiling\ SavedMoveItemForm.swift,\ SavedPlannerSettingsView.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedMoveItemForm.swift /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedPlannerSettingsView.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedMoveItemForm.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedMoveItemForm.swift
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/Planner/Scenes/SavedPlannerSettingsView.swift (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile SavedPlannerSettingsView.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedRecoveryStatusSection.swift, SavedSourceDeletionForm.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedItemRowContent.swift, SavedItemScheduleViews.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedRecoveryCopiesView.swift, SavedRecoverySelectionView.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedItemFilters.swift, SavedItemLabelPicker.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedLabelsView.swift, SavedMacMembershipTable.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for PlannerFixtures (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftDriver\ Compilation\ Requirements PlannerFixtures normal arm64 com.apple.xcode.tools.swift.compiler (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name PlannerFixtures -Onone @/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.SwiftFileList -DDEBUG -DPLANNER_FIXTURES -Xcc -fmodule-map-file\=/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-system/Sources/CSystem/include/module.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-atomics/Sources/_AtomicsShims/include/module.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOLLHTTP.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOPosix.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOWASI.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOWindows/include/module.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOLinux.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIODarwin.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOFreeBSD.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOOpenBSD.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOAtomics.modulemap -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -target arm64-apple-macos27.0 -g -module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/PlannerRetainedRecoveryMacDerivedData/Index.noindex/DataStore -swift-version 6 -I /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -F /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PackageFrameworks -F /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -c -j11 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/SDKStatCaches.noindex/macosx27.0-26A425-7231f6df4def33e022ae2eb8f782df1a.sdkstatcache -output-file-map /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex -sdk-module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-generated-files.hmap -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-own-target-headers.hmap -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/Planner-d1fe009a27a9e9002364fb384a69f78d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-project-headers.hmap -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-system/Sources/CSystem/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-atomics/Sources/_AtomicsShims/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOLLHTTP/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOPosix/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOWASI/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOWindows/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOLinux/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIODarwin/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOFreeBSD/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOOpenBSD/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOAtomics/include -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/include -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/DerivedSources-normal/arm64 -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/DerivedSources/arm64 -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures-Swift.h -working-directory /Users/dinh-van.colomban/Workspace/private/planner -experimental-emit-module-separately -disable-cmo
+
+Copy /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.swiftmodule/arm64-apple-macos.swiftmodule /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.swiftmodule (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.swiftmodule /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.swiftmodule/arm64-apple-macos.swiftmodule
+
+Copy /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.swiftmodule/arm64-apple-macos.abi.json /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.abi.json (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.abi.json /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.swiftmodule/arm64-apple-macos.abi.json
+
+Copy /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.swiftsourceinfo (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.swiftsourceinfo /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+SwiftDriver PlannerFixtureUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftDriver -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name PlannerFixtureUITests -Onone @/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -target arm64-apple-macos27.0 -g -module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/PlannerRetainedRecoveryMacDerivedData/Index.noindex/DataStore -swift-version 6 -I /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j11 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/SDKStatCaches.noindex/macosx27.0-26A425-7231f6df4def33e022ae2eb8f782df1a.sdkstatcache -output-file-map /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex -sdk-module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/PlannerFixtureUITests-generated-files.hmap -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/PlannerFixtureUITests-own-target-headers.hmap -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/PlannerFixtureUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/Planner-d1fe009a27a9e9002364fb384a69f78d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/PlannerFixtureUITests-project-headers.hmap -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/include -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/DerivedSources/arm64 -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests-Swift.h -working-directory /Users/dinh-van.colomban/Workspace/private/planner -experimental-emit-module-separately -disable-cmo
+
+SwiftDriverJobDiscovery normal arm64 Compiling PlannerRecoveryFixture.swift, PlannerRecoveryGraphFixture.swift, ItemLinksSection.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedBackupImportForm.swift, SavedBulkCompletionForm.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ PlannerFixtureUITests (in target 'PlannerFixtureUITests' from project 'Planner')
+
+SwiftCompile normal arm64 (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    
+
+SwiftCompile normal arm64 Compiling\ CalendarRepeatedTimeJourneyTests.swift /Users/dinh-van.colomban/Workspace/private/planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests.swift (in target 'PlannerFixtureUITests' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/PlannerFixtureUITests/CalendarRepeatedTimeJourneyTests.swift (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile CalendarRepeatedTimeJourneyTests.swift
+
+SwiftCompile normal arm64 Compiling\ ItineraryLocationJourneyTests.swift /Users/dinh-van.colomban/Workspace/private/planner/PlannerFixtureUITests/ItineraryLocationJourneyTests.swift (in target 'PlannerFixtureUITests' from project 'Planner')
+
+SwiftCompile normal arm64 /Users/dinh-van.colomban/Workspace/private/planner/PlannerFixtureUITests/ItineraryLocationJourneyTests.swift (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-SwiftPerFileCompile ItineraryLocationJourneyTests.swift
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedItemViews.swift, SavedItineraryContentViews.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftDriverJobDiscovery normal arm64 Compiling ItineraryLocationJourneyTests.swift (in target 'PlannerFixtureUITests' from project 'Planner')
+
+SwiftDriverJobDiscovery normal arm64 Compiling CalendarRepeatedTimeJourneyTests.swift (in target 'PlannerFixtureUITests' from project 'Planner')
+
+SwiftDriverJobDiscovery normal arm64 Emitting module for PlannerFixtureUITests (in target 'PlannerFixtureUITests' from project 'Planner')
+
+SwiftDriver\ Compilation\ Requirements PlannerFixtureUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name PlannerFixtureUITests -Onone @/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -target arm64-apple-macos27.0 -g -module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/PlannerRetainedRecoveryMacDerivedData/Index.noindex/DataStore -swift-version 6 -I /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j11 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/SDKStatCaches.noindex/macosx27.0-26A425-7231f6df4def33e022ae2eb8f782df1a.sdkstatcache -output-file-map /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex -sdk-module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/PlannerFixtureUITests-generated-files.hmap -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/PlannerFixtureUITests-own-target-headers.hmap -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/PlannerFixtureUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/Planner-d1fe009a27a9e9002364fb384a69f78d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/PlannerFixtureUITests-project-headers.hmap -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/include -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/DerivedSources/arm64 -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests-Swift.h -working-directory /Users/dinh-van.colomban/Workspace/private/planner -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver\ Compilation PlannerFixtureUITests normal arm64 com.apple.xcode.tools.swift.compiler (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name PlannerFixtureUITests -Onone @/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.SwiftFileList -DDEBUG -module-alias Testing\=_Testing_Unavailable -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -target arm64-apple-macos27.0 -g -module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/PlannerRetainedRecoveryMacDerivedData/Index.noindex/DataStore -swift-version 6 -I /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -c -j11 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/SDKStatCaches.noindex/macosx27.0-26A425-7231f6df4def33e022ae2eb8f782df1a.sdkstatcache -output-file-map /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex -sdk-module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/PlannerFixtureUITests-generated-files.hmap -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/PlannerFixtureUITests-own-target-headers.hmap -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/PlannerFixtureUITests-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/Planner-d1fe009a27a9e9002364fb384a69f78d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/PlannerFixtureUITests-project-headers.hmap -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/include -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/DerivedSources-normal/arm64 -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/DerivedSources/arm64 -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests-Swift.h -working-directory /Users/dinh-van.colomban/Workspace/private/planner -experimental-emit-module-separately -disable-cmo
+
+Copy /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests.swiftmodule/arm64-apple-macos.swiftmodule /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.swiftmodule (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.swiftmodule /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests.swiftmodule/arm64-apple-macos.swiftmodule
+
+Copy /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.swiftsourceinfo (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.swiftsourceinfo /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo
+
+Copy /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests.swiftmodule/arm64-apple-macos.abi.json /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.abi.json (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -strip-unsigned-binaries -strip-deterministic -strip-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip -resolve-src-symlinks -rename /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.abi.json /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests.swiftmodule/arm64-apple-macos.abi.json
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedMoveItemForm.swift, SavedPlannerSettingsView.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedCalendarView.swift, SavedCaptureForm.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftDriverJobDiscovery normal arm64 Compiling SavedPlannerView.swift (in target 'PlannerFixtures' from project 'Planner')
+
+SwiftDriver\ Compilation PlannerFixtures normal arm64 com.apple.xcode.tools.swift.compiler (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-Swift-Compilation -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name PlannerFixtures -Onone @/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.SwiftFileList -DDEBUG -DPLANNER_FIXTURES -Xcc -fmodule-map-file\=/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-system/Sources/CSystem/include/module.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-atomics/Sources/_AtomicsShims/include/module.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOLLHTTP.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOPosix.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOWASI.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOWindows/include/module.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOLinux.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIODarwin.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOFreeBSD.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOOpenBSD.modulemap -Xcc -fmodule-map-file\=/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CNIOAtomics.modulemap -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -target arm64-apple-macos27.0 -g -module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /tmp/PlannerRetainedRecoveryMacDerivedData/Index.noindex/DataStore -swift-version 6 -I /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -F /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PackageFrameworks -F /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -c -j11 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/SDKStatCaches.noindex/macosx27.0-26A425-7231f6df4def33e022ae2eb8f782df1a.sdkstatcache -output-file-map /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex -sdk-module-cache-path /tmp/PlannerRetainedRecoveryMacDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /tmp/PlannerRetainedRecoveryMacDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -emit-const-values -const-gather-protocols-list /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures_const_extract_protocols.json -Xcc -iquote -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-generated-files.hmap -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-own-target-headers.hmap -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/Planner-d1fe009a27a9e9002364fb384a69f78d-VFS/all-product-headers.yaml -Xcc -iquote -Xcc /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-project-headers.hmap -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-system/Sources/CSystem/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-atomics/Sources/_AtomicsShims/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOLLHTTP/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOPosix/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOWASI/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOWindows/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOLinux/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIODarwin/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOFreeBSD/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOOpenBSD/include -Xcc -I/tmp/PlannerCalendarMonthSourcePackages/checkouts/swift-nio/Sources/CNIOAtomics/include -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/include -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/DerivedSources-normal/arm64 -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/DerivedSources/arm64 -Xcc -I/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/DerivedSources -Xcc -DDEBUG\=1 -emit-objc-header -emit-objc-header-path /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures-Swift.h -working-directory /Users/dinh-van.colomban/Workspace/private/planner -experimental-emit-module-separately -disable-cmo
+
+Ld /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures.debug.dylib normal (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos27.0 -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -L/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -F/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -F/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PackageFrameworks -F/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -filelist /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.LinkFileList -install_name @rpath/PlannerFixtures.debug.dylib -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/../Frameworks -Xlinker -object_path_lto -Xlinker /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures_lto.o -rdynamic -Xlinker -dependency_info -Xlinker /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.swiftmodule -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -o /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures.debug.dylib
+
+ConstructStubExecutorLinkFileList /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-ExecutorLinkFileList-normal-arm64.txt (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    construct-stub-executor-link-file-list /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures.debug.dylib /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libPreviewsJITStubExecutor_no_swift_entry_point.a /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libPreviewsJITStubExecutor.a --output /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-ExecutorLinkFileList-normal-arm64.txt
+note: Using stub executor library with Swift entry point. (in target 'PlannerFixtures' from project 'Planner')
+
+Ld /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures normal (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos27.0 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -F/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PackageFrameworks -F/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -Xlinker -rpath -Xlinker @executable_path -Xlinker -rpath -Xlinker @loader_path -Xlinker -rpath -Xlinker /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PackageFrameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -rpath -Xlinker @executable_path/../Frameworks -rdynamic -e ___debug_blank_executor_main -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_dylib -Xlinker /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-DebugDylibPath-normal-arm64.txt -Xlinker -sectcreate -Xlinker __TEXT -Xlinker __debug_instlnm -Xlinker /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-DebugDylibInstallName-normal-arm64.txt -Xlinker -filelist -Xlinker /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures-ExecutorLinkFileList-normal-arm64.txt /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures.debug.dylib -o /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures
+
+ExtractAppIntentsMetadata (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name PlannerFixtures --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk --xcode-version 27A266a --platform-family macOS --deployment-target 27.0 --bundle-identifier org.example.PlannerFixtures --output /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/Resources --target-triple arm64-apple-macos27.0 --binary-file /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures --dependency-file /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures_dependency_info.dat --stringsdata-file /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.SwiftFileList --metadata-file-list /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures.DependencyMetadataFileList --static-metadata-file-list /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/PlannerFixtures.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/Objects-normal/arm64/PlannerFixtures.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-15 11:16:57.873 appintentsmetadataprocessor[85293:3835576] Starting appintentsmetadataprocessor export
+2026-10-15 11:16:57.881 appintentsmetadataprocessor[85293:3835576] warning: Metadata extraction skipped, no AppIntents.framework dependency found
+
+CopySwiftLibs /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app (in target 'PlannerFixtures' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures.debug.dylib --scan-folder /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/Frameworks --scan-folder /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/PlugIns --scan-folder /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/Library/SystemExtensions --scan-folder /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/Frameworks --strip-bitcode --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtures.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+Ld /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests-Runner.app/Contents/PlugIns/PlannerFixtureUITests.xctest/Contents/MacOS/PlannerFixtureUITests normal (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos27.0 -bundle -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -Os -Xlinker -no_warn_duplicate_libraries -L/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -L/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -L/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -F/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -filelist /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.LinkFileList -Xlinker -rpath -Xlinker @loader_path/../Frameworks -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -object_path_lto -Xlinker /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests_lto.o -rdynamic -Xlinker -dependency_info -Xlinker /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/macosx -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.swiftmodule -Xlinker -needed_framework -Xlinker XCTest -framework XCTest -Xlinker -needed-lXCTestSwiftSupport -lXCTestSwiftSupport -o /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests-Runner.app/Contents/PlugIns/PlannerFixtureUITests.xctest/Contents/MacOS/PlannerFixtureUITests
+
+ExtractAppIntentsMetadata (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --module-name PlannerFixtureUITests --sdk-root /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk --xcode-version 27A266a --platform-family macOS --deployment-target 27.0 --bundle-identifier org.example.PlannerFixtures.PlannerFixtureUITests --output /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests-Runner.app/Contents/PlugIns/PlannerFixtureUITests.xctest/Contents/Resources --target-triple arm64-apple-macos27.0 --binary-file /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests-Runner.app/Contents/PlugIns/PlannerFixtureUITests.xctest/Contents/MacOS/PlannerFixtureUITests --dependency-file /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests_dependency_info.dat --stringsdata-file /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/ExtractedAppShortcutsMetadata.stringsdata --source-file-list /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.SwiftFileList --metadata-file-list /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/PlannerFixtureUITests.DependencyMetadataFileList --static-metadata-file-list /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/PlannerFixtureUITests.DependencyStaticMetadataFileList --swift-const-vals-list /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/Objects-normal/arm64/PlannerFixtureUITests.SwiftConstValuesFileList --compile-time-extraction --deployment-aware-processing --no-app-shortcuts-localization
+2026-10-15 11:16:58.205 appintentsmetadataprocessor[85301:3835600] Starting appintentsmetadataprocessor export
+2026-10-15 11:16:58.208 appintentsmetadataprocessor[85301:3835600] warning: Metadata extraction skipped, no AppIntents.framework dependency found
+
+CopySwiftLibs /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests-Runner.app/Contents/PlugIns/PlannerFixtureUITests.xctest (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-swiftStdLibTool --copy --verbose --scan-executable /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests-Runner.app/Contents/PlugIns/PlannerFixtureUITests.xctest/Contents/MacOS/PlannerFixtureUITests --scan-folder /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests-Runner.app/Contents/PlugIns/PlannerFixtureUITests.xctest/Contents/Frameworks --scan-folder /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests-Runner.app/Contents/PlugIns/PlannerFixtureUITests.xctest/Contents/PlugIns --scan-folder /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests-Runner.app/Contents/PlugIns/PlannerFixtureUITests.xctest/Contents/Library/SystemExtensions --scan-folder /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests-Runner.app/Contents/PlugIns/PlannerFixtureUITests.xctest/Contents/Extensions --platform macosx --toolchain /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain --destination /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests-Runner.app/Contents/PlugIns/PlannerFixtureUITests.xctest/Contents/Frameworks --strip-bitcode --scan-executable /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/libXCTestSwiftSupport.dylib --strip-bitcode-tool /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip --emit-dependency-info /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/SwiftStdLibToolInputDependencies.dep --filter-for-swift-os
+Ignoring --strip-bitcode because --sign was not passed
+
+ProcessInfoPlistFile /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests-Runner.app/Contents/PlugIns/PlannerFixtureUITests.xctest/Contents/Info.plist /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/empty-PlannerFixtureUITests.plist (in target 'PlannerFixtureUITests' from project 'Planner')
+    cd /Users/dinh-van.colomban/Workspace/private/planner
+    builtin-infoPlistUtility /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/empty-PlannerFixtureUITests.plist -producttype com.apple.product-type.bundle.ui-testing -expandbuildsettings -platform macosx -additionalcontentfile /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/Planner.build/Debug/PlannerFixtureUITests.build/ProductTypeInfoPlistAdditions.plist -o /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests-Runner.app/Contents/PlugIns/PlannerFixtureUITests.xctest/Contents/Info.plist
+
+PruneExplicitPrecompiledModules /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/PlannerRetainedRecoveryMacDerivedData/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /tmp/PlannerRetainedRecoveryMacDerivedData/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+** TEST BUILD SUCCEEDED **
+

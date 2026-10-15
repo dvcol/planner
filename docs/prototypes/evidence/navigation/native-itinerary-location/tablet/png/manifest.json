@@ -1,0 +1,74 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "EAA3796C-B51C-443B-864C-49D91058299C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Itinerary location is cleared while its identity and notes survive_0_2E427D79-14EA-4DEC-9D62-DDEBA4359103.png",
+        "timestamp" : 1792030934.709
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "DEA7152E-AB65-4EEE-BD96-543A25A55AF0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Itinerary displays its saved owned location_0_06233509-907B-47EA-962E-337873C637EB.png",
+        "timestamp" : 1792030864.67
+      }
+    ],
+    "testIdentifier" : "ItineraryLocationJourneyTests/testItineraryOwnedLocationStagesSaveCancelClearAndRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ItineraryLocationJourneyTests/testItineraryOwnedLocationStagesSaveCancelClearAndRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "C7A921C2-EA7C-413B-B453-738350B12B3D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Itinerary address and child remain after saved pin removal and relaunch_0_B37FCF7A-0428-4647-8C60-E9FACFBB8B7D.png",
+        "timestamp" : 1792031060.539
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "2A21082C-151D-41A2-9DE1-A5801972FD97.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Itinerary pin removal remains staged until Save_0_D46D2DCD-4C77-4CC8-AC14-DE26DBCD5923.png",
+        "timestamp" : 1792031037.095
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "255628DA-E537-408B-ABF4-35A3427582B4.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Itinerary details display their saved coordinate map_0_76E07077-FC60-416F-9EF4-37CB9E755E92.png",
+        "timestamp" : 1792030964.713
+      }
+    ],
+    "testIdentifier" : "ItineraryLocationJourneyTests/testPinnedItineraryKeepsOrRemovesPinOnlyAfterSaveAndSurvivesRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ItineraryLocationJourneyTests/testPinnedItineraryKeepsOrRemovesPinOnlyAfterSaveAndSurvivesRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "681E16BC-8003-49C5-AA02-6D7F06099629.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Pin removal is staged alongside editable address fields_0_F092B517-8DB1-4443-9C56-E9CEE416F270.png",
+        "timestamp" : 1792031140.357
+      }
+    ],
+    "testIdentifier" : "PinnedAddressEditJourneyTests/testPinnedAddressKeepsOrRemovesPinOnlyAfterSaveAndSurvivesRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/PinnedAddressEditJourneyTests/testPinnedAddressKeepsOrRemovesPinOnlyAfterSaveAndSurvivesRelaunch"
+  }
+]

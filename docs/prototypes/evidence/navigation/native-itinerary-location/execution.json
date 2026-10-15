@@ -1,0 +1,127 @@
+{
+  "baseCommit": "263d94a",
+  "scope": "Native Itinerary owned-location editing/details; shared existing Item editor. Core/HTTP contracts and implementation unchanged. Controlled address provider and localOnly fixture stores; no live address-lookup qualification.",
+  "storageSchemaVersion": 18,
+  "portableFormatVersion": 2,
+  "stages": {
+    "phone": {
+      "bundle": "/private/tmp/PlannerItineraryLocationPhoneQualified.xcresult",
+      "passedTests": 4,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    "tablet": {
+      "bundle": "/private/tmp/PlannerItineraryLocationTabletQualified.xcresult",
+      "passedTests": 4,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    "red": {
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    "controllerFailure": {
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    "initialPhone": {
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0
+    }
+  },
+  "qualification": {
+    "uniqueNativeFunctionsPerSimulator": 4,
+    "newItineraryFunctionsPerSimulator": 2,
+    "existingItemRegressionFunctionsPerSimulator": 2,
+    "nativeMacExecutedFunctions": 0,
+    "fixtureMacBuild": "TEST BUILD SUCCEEDED",
+    "ordinaryMacBuild": "BUILD SUCCEEDED",
+    "strictSwiftFiles": 6,
+    "markdownFiles": 1,
+    "coreTestsExecuted": 0,
+    "httpTestsExecuted": 0
+  },
+  "reviews": {
+    "standards": "No confirmed findings.",
+    "spec": "No confirmed findings."
+  },
+  "evidenceNotes": [
+    "The genuine native red reaches the New Itinerary form and fails because its Place name control is absent.",
+    "The first implementation failure targets a 44-point keyboard accessory scroll view. Only the test controller changes before the initial phone pass.",
+    "The initial phone pass precedes stronger empty-field assertions and the pinned-Itinerary journey. Final phone/tablet bundles execute the same four final functions.",
+    "controller-before-scroll.swift records the earlier controller, not the final qualified test source.",
+    "Only original filtered PNG and TXT attachments are exported; the red bundle has no exported PNG. Automatic videos/events are excluded."
+  ],
+  "remainingGates": [
+    "Q84 query-generation lifetime choice",
+    "Native moving-window/scale proof",
+    "Native Mac runtime",
+    "Broad accessibility/adaptive layouts",
+    "Physical sync/account/Share",
+    "Whole-app polish"
+  ],
+  "sourceHashes": {
+    "Planner/Scenes/SavedOwnedLocationEditor.swift": "dab62697f69768a060394a11eff316b654d4173dd2aa9bd904c11c284b9e249d",
+    "Planner/Scenes/SavedEditItemForm.swift": "d3cb0766b7ca228843b3fc808a65cf3a541377cc1de10a4e6b3e1f8e035fb68d",
+    "Planner/Scenes/SavedItineraryViews.swift": "b76413716233289bb5274e3f03592e1ea270e3a9ed449ec48eed26d4f6b885f1",
+    "Planner/Scenes/SavedPlannerStore.swift": "0f58d57653fa6f1a35399a37a95c324b32b8859d79a4b9d9c747ee06856f5c41",
+    "PlannerFixtures/PlannerFixtureDataset.swift": "5df5dcc6e96e87c097b786e554f93d0d64b188a2d7229fd363e6f854022d5e73",
+    "PlannerFixtureUITests/ItineraryLocationJourneyTests.swift": "bdff589cc88b83d8450d7280b5c3cc12ec8fdd2c46a19d7be116aa443c948d6d",
+    "PlannerFixtureUITests/PinnedAddressEditJourneyTests.swift": "d14bc6ec1a28ce6a5001074356f8b9493449cb8b05598587ca176271e2267fc4",
+    "docs/prototypes/native-itinerary-location.md": "35a70121a193503afa4a7469c6dcb1e6ab02bb351e501ff6f9b8d9d0ca995ddb"
+  },
+  "productHashes": {
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures": "b799e68c823737b89ec582b1a32a618b3db6efb402ed424cd22990cc82ceddbc",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures.debug.dylib": "faefa495f8ee48042ddaeb0d92404c6720d9218136462b4c813c00df7de87586",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtureUITests-Runner.app/PlugIns/PlannerFixtureUITests.xctest/PlannerFixtureUITests": "598e9b59a10661e9d113852d74460c185fb7c7294c1180736d6fbdf23940d396",
+    "/private/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures": "d96edb02b239719167b1bfdb2e1a9c1312c230765f19fd706e22c9a892913bfa",
+    "/private/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures.debug.dylib": "4c4350099318e6eed5ab8c55463fee4b15812fbd3053d5fcbe619ae478368c95",
+    "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "d929b79328326f1f18bfc8f4d3ef81075a0e5f88a76dec8419068b44b15fa1d5",
+    "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib": "eba75f9688714f55aa94711d2e428e580d98002f4e1312848e21a3746c22d827"
+  },
+  "artifactHashes": {
+    "commands.json": "3c61f7a18949fc31f570c0a30be031b0e4a0a4410715cf6187c4316c3f0c3ab9",
+    "controller-before-scroll.swift": "8b6fe43de690b24c2ae34ae9ae5abe29db9c186e0e3cd37976834a01878feab1",
+    "controller-failure/test.log": "fca4ee9ed789e434ae0887373264f0572dece49586095891a989ed2d3d241f3a",
+    "controller-failure.json": "9f3b2c57da643f119273770c0d517fbe6963f01ec5d0eb04bb8ac01eaecf1bb7",
+    "fixture-mac-build.log": "d8b3bacc9114f1d5d5a7f57f65f59e862d7214758570cb329171d226c7f6e0d3",
+    "initial-phone/summary.json": "4d207f0f01e1b218bfc3a9124d4403f76e8bc4ab2c8e63a25ab299131de068a8",
+    "initial-phone/test.log": "c514c16fa3c2ead457489e33e6649707bba33d4fb319bd961ba04de8fc5fa38d",
+    "markdown-lint.log": "dafda4f24c6ba440e217f3f91b9988fdc5a4e66e0a90288a328d88f060559642",
+    "ordinary-mac-build.log": "ea9fcaa31de955d4f27061c9f1fa5a2e4320efc0a366ffd1feebc28ca8f76e48",
+    "phone/png/317A4019-E6E1-4527-B79F-2D8465DAFF89.png": "0c8c3c5821e4c322434b932cd03302f723f65e8d836eb0a066ac1b62ec3b62ac",
+    "phone/png/47F5ECD9-45A5-44F4-8F6E-6F9471125B69.png": "d147e24ead049c5939b7531e04cdfe0a008601c529072d338c59c2d0b52f9860",
+    "phone/png/B6A37C36-9284-4512-9B49-6F1D7F8F129E.png": "fa48ee1597906ac070a49ae46f66dd25f4055cab2681bdd59bb7c988190e53e4",
+    "phone/png/B91FA79B-21DA-4A1D-95C2-5C94DCCB1A60.png": "e8b467685eeb252be8c798609a321e170e2e2be216a3cb847e1fc84b96d20fc5",
+    "phone/png/D23239E6-87D8-4B00-B22F-E8140646CA0D.png": "b01ee8bcc222942b77246e641f992a56ffef972b4690efad6071e33b043ab23e",
+    "phone/png/E00FAB9A-C315-4321-84E3-C05B1774811A.png": "bb79d531f6165b793072a9de0503dd789b020861cbedc6ae8e1d604cb55b02e6",
+    "phone/png/manifest.json": "4e694136ba79d778dcaddd685f7189066a0a58ba5540fb2d278e0b6107365dcb",
+    "phone/summary.json": "78ede922ec4e2204baceef2c2068c62826512ce42994a4dc6e1ed612ac42e706",
+    "phone/test.log": "a5ffca801ec1dc766b7a9546f3f9349f75f0cac323bffa303132ca42d8396eb7",
+    "phone/tests.json": "2b782382403676ff6a127290296031e1b07e5387a4b63cbe836cb6cc521578ec",
+    "red/png/manifest.json": "ace810d7e2cbb4f8c40ce09dc8e191ae466adb4e1a7d49c59f2215b411d38b05",
+    "red/summary.json": "5e5cd15d8c43bf80d90e726abf4406ab607398b08c3fc07999069431b8ffd2e4",
+    "red/test.log": "094b8d7b90c8b5452a92314cc4d14118b41a94723ebdef1fe02f8860ff3484e7",
+    "red/text/1957203A-2115-4605-972A-0D057D210063.txt": "54c0aaea50f5ded66f8ba45a4638b71bd088066afc2a09e284fa971e0fb23b86",
+    "red/text/39AE4586-A48D-4FA8-88C9-6E1023A065DD.txt": "54c0aaea50f5ded66f8ba45a4638b71bd088066afc2a09e284fa971e0fb23b86",
+    "red/text/6B568E3A-0EDF-467E-AF4E-EA4129CE32AF.txt": "e99ee734419098b8864a64af354f882f4758464e983709fc604fe835637d796d",
+    "red/text/7B82E274-3D97-4B4A-9588-72C6426C3D46.txt": "54c0aaea50f5ded66f8ba45a4638b71bd088066afc2a09e284fa971e0fb23b86",
+    "red/text/CBECCD5E-777E-4958-B44C-DC6FC5552BDD.txt": "54c0aaea50f5ded66f8ba45a4638b71bd088066afc2a09e284fa971e0fb23b86",
+    "red/text/FECF7B4D-4D3E-4461-B22E-F76232C69AF1.txt": "54c0aaea50f5ded66f8ba45a4638b71bd088066afc2a09e284fa971e0fb23b86",
+    "red/text/manifest.json": "bc328f61a42132ed756c44dd2fbe5ccc8667a30aa6a0177cc6d748e7671f0847",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tablet/png/255628DA-E537-408B-ABF4-35A3427582B4.png": "643b75a59370e3b5bbce7e4f5715b0eb6b2ec3a8a0f3302d7a6e11e46256a294",
+    "tablet/png/2A21082C-151D-41A2-9DE1-A5801972FD97.png": "c8c0ce868864b66db665b21ebae949d352e32a34d760eab39b5aae4ddece6d23",
+    "tablet/png/681E16BC-8003-49C5-AA02-6D7F06099629.png": "86dbb4c5ae0d05f96cbc2fed2bd1879711a7f4c65ee85589585edd8e2e6c8c6c",
+    "tablet/png/C7A921C2-EA7C-413B-B453-738350B12B3D.png": "fdd1b6ec1b79d509a944f259cb950890061e31933f277a8299c8f55682aeece4",
+    "tablet/png/DEA7152E-AB65-4EEE-BD96-543A25A55AF0.png": "96c320ff412713d936be9f994c99544757622111ab12312063a2400fc8591d59",
+    "tablet/png/EAA3796C-B51C-443B-864C-49D91058299C.png": "75d96c4867607863a6cdfbf30c6b67c070252040274cc9d13d0de592d8c5a84c",
+    "tablet/png/manifest.json": "a63b7750ee5f7843fae98d91ec5a435a7ef46fe26e8c33dd415a9e453d1b997e",
+    "tablet/summary.json": "ba3cf0f3c505b46dc0042625a8102236c17915443f266ad3d63258b3dd095eef",
+    "tablet/test.log": "c6c4a002d585e2a0ed0fb6277234f3044f87e4c12f0910f0228aa16bbe9e8978",
+    "tablet/tests.json": "5bf224824ca11f7b5ffcaced36e20a9e870243262a9227b00961ba7e052a06dd"
+  }
+}

@@ -1,0 +1,4 @@
+Query chain:
+ →Find: Target Application 'org.example.PlannerFixtures'
+  ↪︎Find: Descendants matching type TextField
+    ↪︎Find: Elements matching predicate '"saved.itinerary.location.name" IN identifiers'

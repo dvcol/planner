@@ -1,0 +1,88 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "deviceName" : "iPhone 18 Pro",
+      "modelName" : "iPhone 18 Pro",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "1m 31s",
+                  "durationInSeconds" : 91.04007601737976,
+                  "name" : "testItineraryOwnedLocationStagesSaveCancelClearAndRelaunch()",
+                  "nodeIdentifier" : "ItineraryLocationJourneyTests/testItineraryOwnedLocationStagesSaveCancelClearAndRelaunch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ItineraryLocationJourneyTests/testItineraryOwnedLocationStagesSaveCancelClearAndRelaunch",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "1m 18s",
+                  "durationInSeconds" : 78.46249008178711,
+                  "name" : "testPinnedItineraryKeepsOrRemovesPinOnlyAfterSaveAndSurvivesRelaunch()",
+                  "nodeIdentifier" : "ItineraryLocationJourneyTests/testPinnedItineraryKeepsOrRemovesPinOnlyAfterSaveAndSurvivesRelaunch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ItineraryLocationJourneyTests/testPinnedItineraryKeepsOrRemovesPinOnlyAfterSaveAndSurvivesRelaunch",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "ItineraryLocationJourneyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ItineraryLocationJourneyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "25s",
+                  "durationInSeconds" : 25.33651602268219,
+                  "name" : "testOpeningPinnedItemWithEmptyNameKeepsSaveDisabledUntilNotesChange()",
+                  "nodeIdentifier" : "PinnedAddressEditJourneyTests/testOpeningPinnedItemWithEmptyNameKeepsSaveDisabledUntilNotesChange()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/PinnedAddressEditJourneyTests/testOpeningPinnedItemWithEmptyNameKeepsSaveDisabledUntilNotesChange",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "1m 5s",
+                  "durationInSeconds" : 65.22593092918396,
+                  "name" : "testPinnedAddressKeepsOrRemovesPinOnlyAfterSaveAndSurvivesRelaunch()",
+                  "nodeIdentifier" : "PinnedAddressEditJourneyTests/testPinnedAddressKeepsOrRemovesPinOnlyAfterSaveAndSurvivesRelaunch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/PinnedAddressEditJourneyTests/testPinnedAddressKeepsOrRemovesPinOnlyAfterSaveAndSurvivesRelaunch",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "PinnedAddressEditJourneyTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/PinnedAddressEditJourneyTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "PlannerFixtureUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "PlannerFixtures",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

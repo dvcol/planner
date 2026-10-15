@@ -1,4 +1,5 @@
 import PlannerCore
+import PlannerPreviews
 import SwiftUI
 
 struct SavedItineraryCatalog: View {
@@ -150,6 +151,9 @@ struct SavedItineraryDetail: View {
             Section("Notes") { Text(notes).textSelection(.enabled) }
           }
           ItemLabelsSection(labels: itinerary.labels)
+          ItemLocationSection(
+            title: itinerary.content.title, location: itinerary.content.location,
+            previewSource: previewSource(for: itinerary))
           ItemLinksSection(
             links: itinerary.content.links, sourceId: itinerary.source.id,
             sourceLifetimeId: itinerary.sourceLifetimeId)
@@ -394,6 +398,13 @@ struct SavedItineraryDetail: View {
       identifier: identifier, revision: store.changeRevision, text: searchText, filters: filters)
   }
 
+  private func previewSource(for itinerary: PlannerItinerarySourceRead) -> PlannerPreviewSource? {
+    guard let namespace = store.devicePreferenceNamespace else { return nil }
+    return .init(
+      namespace: namespace, sourceId: itinerary.source.id,
+      sourceLifetimeId: itinerary.sourceLifetimeId)
+  }
+
   private func itineraryRow(_ item: SavedItineraryItem) -> some View {
     SavedItineraryItemRow(item: item, canChange: store.canCreate) {
       Task {
@@ -524,6 +535,7 @@ private struct SavedItineraryForm: View {
   @State private var title: String
   @State private var notes: String
   @State private var manualEstimate: PlannerEstimate?
+  @State private var locationDraft: SavedOwnedLocationDraft
   @State private var links: [SavedOwnedLinkDraft]
   @State private var categoryIdentifiers: Set<UUID>
   @State private var tagIdentifiers: Set<UUID>
@@ -539,6 +551,7 @@ private struct SavedItineraryForm: View {
     _title = State(initialValue: itinerary?.content.title ?? "")
     _notes = State(initialValue: itinerary?.content.notes ?? "")
     _manualEstimate = State(initialValue: itinerary?.content.manualEstimate)
+    _locationDraft = State(initialValue: SavedOwnedLocationDraft(itinerary?.content.location))
     _links = State(initialValue: itinerary?.content.links.map(SavedOwnedLinkDraft.init) ?? [])
     _categoryIdentifiers = State(initialValue: itinerary?.content.categoryIds ?? [])
     _tagIdentifiers = State(initialValue: itinerary?.content.tagIds ?? [])
@@ -554,6 +567,7 @@ private struct SavedItineraryForm: View {
       || categoryIdentifiers != itinerary.content.categoryIds
       || tagIdentifiers != itinerary.content.tagIds
       || manualEstimate != itinerary.content.manualEstimate
+      || locationDraft.value != itinerary.content.location
   }
 
   var body: some View {
@@ -581,6 +595,9 @@ private struct SavedItineraryForm: View {
           }
           .accessibilityIdentifier("saved.itinerary.tags")
         }
+        SavedOwnedLocationEditor(
+          draft: $locationDraft, title: title,
+          accessibilityIdentifierPrefix: "saved.itinerary.location")
         SavedOwnedLinksEditor(links: $links, accessibilityIdentifierPrefix: "saved.itinerary.link")
       }
       .disabled(store.isSaving)
@@ -627,14 +644,15 @@ private struct SavedItineraryForm: View {
     let source: PlannerEntityReference?
     if let itinerary {
       let saved = await store.editItinerary(
-        itinerary, title: title, notes: notes, links: links.map(\.input),
+        itinerary, title: title, notes: notes, location: locationDraft.value,
+        links: links.map(\.input),
         categoryIdentifiers: categoryIdentifiers,
         tagIdentifiers: tagIdentifiers, manualEstimate: manualEstimate,
         operationIdentifier: operationIdentifier)
       source = saved ? itinerary.source : nil
     } else {
       source = await store.createItinerary(
-        title: title, notes: notes, links: links.map(\.input),
+        title: title, notes: notes, location: locationDraft.value, links: links.map(\.input),
         categoryIdentifiers: categoryIdentifiers,
         tagIdentifiers: tagIdentifiers, manualEstimate: manualEstimate,
         operationIdentifier: operationIdentifier)

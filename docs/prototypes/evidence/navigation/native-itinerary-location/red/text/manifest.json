@@ -1,0 +1,61 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "FECF7B4D-4D3E-4461-B22E-F76232C69AF1.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"saved.itinerary.location.name\" TextField`_0_37B532F2-A205-4857-9A4B-21354C26E33D.txt",
+        "timestamp" : 1792029824.65
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "CBECCD5E-777E-4958-B44C-DC6FC5552BDD.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"saved.itinerary.location.name\" TextField`_0_AF96C2D1-DC95-4A0B-BD21-B751291FC2F9.txt",
+        "timestamp" : 1792029823.711
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "1957203A-2115-4605-972A-0D057D210063.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"saved.itinerary.location.name\" TextField`_0_CA2043F7-CBE6-40C3-9260-258C72C03D5A.txt",
+        "timestamp" : 1792029822.675
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "7B82E274-3D97-4B4A-9588-72C6426C3D46.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"saved.itinerary.location.name\" TextField`_0_42839D5E-F3CA-41A8-9888-4D0AABAF9B25.txt",
+        "timestamp" : 1792029821.625
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "39AE4586-A48D-4FA8-88C9-6E1023A065DD.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"saved.itinerary.location.name\" TextField`_0_95C6D4C9-3044-4928-AB29-7C6CAA182176.txt",
+        "timestamp" : 1792029820.696
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "6B568E3A-0EDF-467E-AF4E-EA4129CE32AF.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      }
+    ],
+    "testIdentifier" : "ItineraryLocationJourneyTests/testItineraryOwnedLocationStagesSaveCancelClearAndRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ItineraryLocationJourneyTests/testItineraryOwnedLocationStagesSaveCancelClearAndRelaunch"
+  }
+]

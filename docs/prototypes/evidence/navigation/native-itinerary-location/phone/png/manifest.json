@@ -1,0 +1,74 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "E00FAB9A-C315-4321-84E3-C05B1774811A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Itinerary location is cleared while its identity and notes survive_0_DD38CB66-8CB6-4980-BBF4-AAC08FB801FE.png",
+        "timestamp" : 1792030591.402
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "317A4019-E6E1-4527-B79F-2D8465DAFF89.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Itinerary displays its saved owned location_0_B1D3F038-259C-4E77-819A-DC4BFB4D4ED5.png",
+        "timestamp" : 1792030536.405
+      }
+    ],
+    "testIdentifier" : "ItineraryLocationJourneyTests/testItineraryOwnedLocationStagesSaveCancelClearAndRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ItineraryLocationJourneyTests/testItineraryOwnedLocationStagesSaveCancelClearAndRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "B91FA79B-21DA-4A1D-95C2-5C94DCCB1A60.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Itinerary address and child remain after saved pin removal and relaunch_0_65CCCB04-52FE-449D-899E-DBE882426545.png",
+        "timestamp" : 1792030675.268
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "47F5ECD9-45A5-44F4-8F6E-6F9471125B69.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Itinerary pin removal remains staged until Save_0_6AD5883F-C079-4FE6-866A-F4A8731B2543.png",
+        "timestamp" : 1792030654.529
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "D23239E6-87D8-4B00-B22F-E8140646CA0D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Itinerary details display their saved coordinate map_0_3B47D089-CB04-48FA-9009-46472C8999FD.png",
+        "timestamp" : 1792030619.79
+      }
+    ],
+    "testIdentifier" : "ItineraryLocationJourneyTests/testPinnedItineraryKeepsOrRemovesPinOnlyAfterSaveAndSurvivesRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ItineraryLocationJourneyTests/testPinnedItineraryKeepsOrRemovesPinOnlyAfterSaveAndSurvivesRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "B6A37C36-9284-4512-9B49-6F1D7F8F129E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Pin removal is staged alongside editable address fields_0_A384EC6C-0F34-48A1-90BA-CF19A928A5F6.png",
+        "timestamp" : 1792030750.656
+      }
+    ],
+    "testIdentifier" : "PinnedAddressEditJourneyTests/testPinnedAddressKeepsOrRemovesPinOnlyAfterSaveAndSurvivesRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/PinnedAddressEditJourneyTests/testPinnedAddressKeepsOrRemovesPinOnlyAfterSaveAndSurvivesRelaunch"
+  }
+]
