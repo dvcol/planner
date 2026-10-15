@@ -31,6 +31,15 @@ struct PlannerFixtureApp: App {
         }
       }
     }
+    #if os(macOS)
+      Settings {
+        if let store {
+          SavedPlannerSettingsView(store: store)
+        } else {
+          ProgressView("Preparing fixture")
+        }
+      }
+    #endif
   }
 }
 

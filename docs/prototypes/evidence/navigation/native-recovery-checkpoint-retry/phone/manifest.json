@@ -1,0 +1,50 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "04606A8F-587F-4AAD-8C60-4327A7825211.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Failed retry preserves one original Item after native relaunch_0_1FF08F79-4BC7-4F89-8293-039B74B5ECF9.png",
+        "timestamp" : 1792023228.142
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "9FFCB3EC-2407-4A69-B9BC-F32A846AF5F6.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Failed checkpoint retry reports the real file error and retains recovery block_0_852A778E-D286-4543-AC62-E0456B0B76A1.png",
+        "timestamp" : 1792023208.658
+      }
+    ],
+    "testIdentifier" : "RecoveryCheckpointJourneyTests/testRetryFailureKeepsSavedItemReadableAndChangesBlockedAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RecoveryCheckpointJourneyTests/testRetryFailureKeepsSavedItemReadableAndChangesBlockedAfterRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "36CCF611-2BE7-4430-972F-E3DABED393F4.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unreadable recovery evidence does not hide committed Item content_0_85BFBD52-BA98-4E17-958D-82F2F4C7AE10.png",
+        "timestamp" : 1792023257.563
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "B9819B70-E777-44D9-A3C0-033888B05211.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unavailable recovery evidence stays explicit after native recheck_0_BC9BB5A9-729A-432A-B43B-4AC0BBA4D0EC.png",
+        "timestamp" : 1792023244.548
+      }
+    ],
+    "testIdentifier" : "RecoveryCheckpointJourneyTests/testUnavailableRecoveryEvidenceBlocksChangesAndAllowsReadingAfterRecheck()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RecoveryCheckpointJourneyTests/testUnavailableRecoveryEvidenceBlocksChangesAndAllowsReadingAfterRecheck"
+  }
+]

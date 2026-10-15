@@ -11,6 +11,9 @@ enum PlannerFixtureDataset {
     case calendarLatePoint = "calendar-late-point"
     case retainedRecovery = "retained-recovery"
     case conflictingRecovery = "conflicting-recovery"
+    case incompleteRecovery = "incomplete-recovery"
+    case recoveryRetryFailure = "recovery-retry-failure"
+    case unavailableRecovery = "unavailable-recovery"
     case pinnedAddress = "pinned-address"
     case pinnedEmptyName = "pinned-empty-name"
     case linkImage = "link-image"
@@ -27,6 +30,15 @@ enum PlannerFixtureDataset {
       switch self {
       case .captureMaps, .captureMapsRetry, .captureMapsDelay: true
       default: false
+      }
+    }
+
+    var recoveryAccess: PlannerRecoveryFixture.Access? {
+      switch self {
+      case .incompleteRecovery: .writable
+      case .recoveryRetryFailure: .readOnly
+      case .unavailableRecovery: .unavailable
+      default: nil
       }
     }
   }
@@ -46,6 +58,10 @@ enum PlannerFixtureDataset {
       .appendingPathComponent("PlannerFixtures", isDirectory: true)
       .appendingPathComponent(scenario.rawValue, isDirectory: true)
       .appendingPathComponent(identifier.uuidString, isDirectory: true)
+    if let recoveryAccess = scenario.recoveryAccess {
+      return try await PlannerRecoveryFixture.makeStore(
+        directory: directory, access: recoveryAccess)
+    }
     if scenario == .retainedRecovery || scenario == .conflictingRecovery {
       return try await makeRetainedRecoveryStore(
         directory: directory, includesConflicts: scenario == .conflictingRecovery)

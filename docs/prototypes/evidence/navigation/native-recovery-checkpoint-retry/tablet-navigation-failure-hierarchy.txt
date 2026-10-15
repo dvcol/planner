@@ -1,0 +1,75 @@
+Application, 0x106f58000, pid: 97201, label: 'Planner fixtures' <App element pid: 97201>
+  Window (Main), 0x106f5a1c0, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 97201, elementOrHash.elementID: 4322706432.4>
+    Other, 0x106f5a300, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 97201, elementOrHash.elementID: 4324146496.5>
+    Other, 0x106f5a440, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 97201, elementOrHash.elementID: 4337768448.6>
+      Other, 0x106f5a580, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 97201, elementOrHash.elementID: 4337721472.7>
+        Other, 0x106f5a800, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 97201, elementOrHash.elementID: 4322705408.8>
+          Other, 0x106f5a6c0, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 97201, elementOrHash.elementID: 4580214176.9>
+            Other, 0x106f58140, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 97201, elementOrHash.elementID: 4451981824.10>
+              Other, 0x106f58280, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 97201, elementOrHash.elementID: 4451988480.14>
+                Other, 0x106f583c0, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 97201, elementOrHash.elementID: 4337592384.253>
+                  Other, 0x106f58500, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 97201, elementOrHash.elementID: 4322808832.18>
+                    Other, 0x106f5a940, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 97201, elementOrHash.elementID: 4635039200.254>
+                      Other, 0x106f5aa80, {{0.0, 32.0}, {820.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4635037440.255>
+                        Other, 0x106f5b0c0, {{0.0, 32.0}, {820.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4337138112.31>
+                          Other, 0x106f5b200, {{0.0, 32.0}, {820.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4337138560.32>
+                            Other, 0x106f5b340, {{0.0, 32.0}, {820.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4337190656.34>
+                              Other, 0x106f5b480, {{0.0, 32.0}, {340.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4450972800.37>
+                                Other, 0x106f5b700, {{0.0, 32.0}, {340.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4466354176.42>
+                                  NavigationBar, 0x106f5b5c0, {{0.0, 86.0}, {340.0, 160.0}}, identifier: 'After recovery' <AX element pid: 97201, elementOrHash.elementID: 4341029632.46>
+                                    Button, 0x106f5abc0, {{14.0, 90.0}, {36.0, 36.0}}, label: 'Show Sidebar' <AX element pid: 97201, elementOrHash.elementID: 4577288320.52>
+                                    Button, 0x106f5ad00, {{92.0, 90.0}, {41.0, 36.0}}, identifier: 'saved.list.filters', label: 'All' <AX element pid: 97201, elementOrHash.elementID: 4643512448.463>
+                                    Button, 0x106f5a080, {{149.0, 90.0}, {44.5, 36.0}}, identifier: 'saved.list.sort', label: 'Sort: Manual' <AX element pid: 97201, elementOrHash.elementID: 4643513728.464>
+                                    Button, 0x106f5ae40, {{213.5, 90.0}, {54.5, 36.0}}, identifier: 'saved.list.edit', label: 'Edit', Disabled <AX element pid: 97201, elementOrHash.elementID: 4643515008.465>
+                                    Button, 0x106f5b840, {{288.0, 90.0}, {38.0, 36.0}}, identifier: 'OverflowBarButtonItem', label: 'More' <AX element pid: 97201, elementOrHash.elementID: 4643518208.466>
+                                    StaticText, 0x106f5b980, {{16.0, 143.5}, {226.0, 41.0}}, label: 'After recovery' <AX element pid: 97201, elementOrHash.elementID: 4337130944.467>
+                                    SearchField, 0x106f5bac0, {{16.0, 192.0}, {308.0, 44.0}}, label: 'Search this List', placeholderValue: 'Search this List' <AX element pid: 97201, elementOrHash.elementID: 4645295104.468>
+                                      Image, 0x106f5bc00, {{28.0, 203.5}, {20.5, 20.0}}, identifier: 'magnifyingglass', label: 'Search' <AX element pid: 97201, elementOrHash.elementID: 4643509888.469>
+                                  Other, 0x106f5af80, {{0.0, 32.0}, {340.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4337158784.47>
+                                    Other, 0x106f5bd40, {{0.0, 32.0}, {340.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4337204544.53>
+                                      Other, 0x106f5be80, {{0.0, 32.0}, {340.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4323462656.57>
+                                        Other, 0x105cb4780, {{0.0, 32.0}, {340.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4635036320.256>
+                                          Other, 0x105cb6e40, {{16.0, 262.0}, {308.0, 14.5}}, identifier: 'saved.list.estimate.full', label: 'Estimate', value: 0 minutes <AX element pid: 97201, elementOrHash.elementID: 4669046560.470>
+                                            StaticText, 0x105cb70c0, {{16.0, 262.0}, {49.0, 14.5}}, label: 'Estimate' <AX element pid: 97201, elementOrHash.elementID: 4669041440.474>
+                                            StaticText, 0x105cb7340, {{268.0, 262.0}, {56.0, 14.5}}, label: '0 minutes' <AX element pid: 97201, elementOrHash.elementID: 4669044960.475>
+                                          Other, 0x105cb7480, {{16.0, 282.5}, {308.0, 14.5}}, identifier: 'saved.list.estimate.remaining', label: 'Remaining', value: 0 minutes <AX element pid: 97201, elementOrHash.elementID: 4620737888.471>
+                                            StaticText, 0x105cb7700, {{16.0, 282.5}, {59.0, 14.5}}, label: 'Remaining' <AX element pid: 97201, elementOrHash.elementID: 4669045280.476>
+                                            StaticText, 0x105cb75c0, {{268.0, 282.5}, {56.0, 14.5}}, label: '0 minutes' <AX element pid: 97201, elementOrHash.elementID: 4669045920.477>
+                                          StaticText, 0x105cb7840, {{128.2, 693.5}, {83.5, 86.8}}, label: 'No items' <AX element pid: 97201, elementOrHash.elementID: 4672208896.472>
+                                          Image, 0x105cb7980, {{148.0, 693.5}, {44.0, 39.5}}, identifier: 'checklist', label: 'Checklist With Checkmarks' <AX element pid: 97201, elementOrHash.elementID: 4620734848.473>
+                                  Toolbar, 0x105cb7c00, {{0.0, 32.0}, {340.0, 1148.0}}, identifier: 'Toolbar', label: 'Toolbar' <AX element pid: 97201, elementOrHash.elementID: 4466354688.48>
+                                    Other, 0x105cb7ac0, {{0.0, 32.0}, {340.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4466355200.54>
+                              Toolbar, 0x106e31400, {{0.0, 32.0}, {820.0, 1148.0}}, identifier: 'Toolbar', label: 'Toolbar' <AX element pid: 97201, elementOrHash.elementID: 4579939840.38>
+                                Other, 0x106e30f00, {{0.0, 32.0}, {820.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4579940352.43>
+                              Other, 0x106e326c0, {{318.5, 32.0}, {44.0, 1148.0}}, value: 41 % <AX element pid: 97201, elementOrHash.elementID: 4465210880.39>
+                              Other, 0x106e30500, {{341.0, 32.0}, {479.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4450971520.40>
+                                Other, 0x106e30640, {{341.0, 32.0}, {479.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4466356224.44>
+                                  NavigationBar, 0x106e30780, {{341.0, 86.0}, {479.0, 54.0}}, identifier: '_TtGC7SwiftUI32NavigationStackHosting' <AX element pid: 97201, elementOrHash.elementID: 4341030400.49>
+                                  Other, 0x106e308c0, {{341.0, 32.0}, {479.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4337161024.50>
+                                    Other, 0x106e30a00, {{341.0, 32.0}, {479.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4337205248.55>
+                                      Other, 0x106e30000, {{341.0, 32.0}, {479.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4323463552.58>
+                                        Other, 0x106e31540, {{341.0, 32.0}, {479.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4635034080.257>
+                                          StaticText, 0x106e317c0, {{507.5, 602.5}, {146.0, 95.8}}, label: 'Choose an Item' <AX element pid: 97201, elementOrHash.elementID: 4635033600.261>
+                                          Image, 0x106e31680, {{560.0, 602.5}, {41.0, 48.5}}, identifier: 'square.stack', label: 'Stack Of Squares' <AX element pid: 97201, elementOrHash.elementID: 4635035360.262>
+                                  Toolbar, 0x106e30c80, {{341.0, 32.0}, {479.0, 1148.0}}, identifier: 'Toolbar', label: 'Toolbar' <AX element pid: 97201, elementOrHash.elementID: 4466356736.51>
+                                    Other, 0x106e30b40, {{341.0, 32.0}, {479.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4466357248.56>
+                            Other, 0x106e30dc0, {{0.0, 32.0}, {820.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4337191552.35>
+                              Toolbar, 0x106e31180, {{0.0, 32.0}, {820.0, 1148.0}}, identifier: 'Toolbar', label: 'Toolbar' <AX element pid: 97201, elementOrHash.elementID: 4579941376.41>
+                                Other, 0x106e31040, {{0.0, 32.0}, {820.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4579941888.45>
+                          Other, 0x106e33340, {{0.0, 32.0}, {820.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4337139008.33>
+                            Other, 0x106e312c0, {{0.0, 32.0}, {820.0, 1148.0}} <AX element pid: 97201, elementOrHash.elementID: 4337156096.36>
+              Other, 0x106f88000, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 97201, elementOrHash.elementID: 4323460864.15>
+                Other, 0x106f88140, {{0.0, 32.0}, {820.0, 44.0}} <AX element pid: 97201, elementOrHash.elementID: 4323459968.17>
+                  Button, 0x106f88280, {{194.0, 36.0}, {69.0, 36.0}}, identifier: 'list.bullet', label: 'Lists', Selected <AX element pid: 97201, elementOrHash.elementID: 4579737600.19>
+                    Button, 0x106f883c0, {{194.0, 36.0}, {69.0, 36.0}}, identifier: 'list.bullet', label: 'Lists', Selected <AX element pid: 97201, elementOrHash.elementID: 4576979456.25>
+                  Button, 0x106f88500, {{263.0, 36.0}, {75.5, 36.0}}, identifier: 'square.stack', label: 'Items' <AX element pid: 97201, elementOrHash.elementID: 4579738368.20>
+                    Button, 0x106f88640, {{263.0, 36.0}, {75.5, 36.0}}, identifier: 'square.stack', label: 'Items' <AX element pid: 97201, elementOrHash.elementID: 4576980992.26>
+                  Button, 0x106f88780, {{338.5, 36.0}, {75.0, 36.0}}, identifier: 'tray', label: 'Inbox' <AX element pid: 97201, elementOrHash.elementID: 4579739136.21>
+                    Button, 0x106f888c0, {{338.5, 36.0}, {75.0, 36.0}}, identifier: 'tray', label: 'Inbox' <AX element pid: 97201, elementOrHash.elementID: 4576982528.27>
+                  Button, 0x106f88a00, {{413.5, 36.0}, {102.5, 36.0}}, identifier: 'calendar', label: 'Calendar' <AX element pid: 97201, elementOrHash.elementID: 4579739904.22>
+                    Button, 0x106f88b40, {{413.5, 36.0}, {102.5, 36.0}}, identifier: 'calendar', label: 'Calendar' <AX element pid: 97201, elementOrHash.elementID: 4576984064.28>
+                  Button, 0x106f88c80, {{516.0, 36.0}, {110.0, 36.0}}, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries' <AX element pid: 97201, elementOrHash.elementID: 4579740672.23>
+                    Button, 0x106f88dc0, {{516.0, 36.0}, {110.0, 36.0}}, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries' <AX element pid: 97201, elementOrHash.elementID: 4579934720.29>
+  Window, 0x106f88f00, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 97201, elementOrHash.elementID: 4631784704.384>
+    Other, 0x106f89040, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 97201, elementOrHash.elementID: 4632396800.386>
+      Other, 0x106f89180, {{0.0, 0.0}, {820.0, 1180.0}} <AX element pid: 97201, elementOrHash.elementID: 4337311616.388>

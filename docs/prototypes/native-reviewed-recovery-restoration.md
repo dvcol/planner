@@ -39,3 +39,5 @@ All 26 original review/result/relaunch, export and real-file captures were indiv
 ## Remaining gates
 
 This qualifies the represented saved Item/Tag merge with default Skip and cancellation, plus ordinary-file compatibility. The later [native conflict-policy qualification](native-recovery-conflicts.md) covers retained Item/Tag Skip and Overwrite while preserving independent current data. Native empty-target/full-graph, deleted-identity restoration, unverified proposal, stale-review/read/save failure, recovery-blocked/startup-unavailable and checkpoint-retry journeys remain open. The Core qualification for those supported commands is separate from native UI proof. Mac runtime, physical account ownership/cutoff/sync/Share, broader adaptive/accessibility/scale and whole-app polish retain their gates. Q83 remains unanswered.
+
+The later [native checkpoint retry/status qualification](native-recovery-checkpoint-retry.md) covers the represented readable-store recovery block, retry and unavailable-checkpoint cases. The broader recovery-blocked interactions and unavailable-store, unverified, full-graph and physical gates above remain open.

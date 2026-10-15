@@ -1,0 +1,14 @@
+{
+  "PlannerFixtures/PlannerFixtureDataset.swift": "86180d05f31e7726bc2d2aabe2b771b8a70d557d4d1abe04ed5204fdb2dba2ba",
+  "PlannerFixtures/PlannerRecoveryFixture.swift": "194e619ab489789dc177109b9dd8c20789e13ef350499d51c8d8f797f4e9e8ef",
+  "PlannerFixtures/PlannerFixtureApp.swift": "6c7bdc5e58ad8faef86c59e94288f98f6be450594212eb90b2386f9451ac17bc",
+  "PlannerFixtureUITests/RecoveryCheckpointJourneyTests.swift": "77bb5965f898f26443fbf04021680020621cd175dd075174359c86283c88b188",
+  "PlannerFixtureUITests/RetainedRecoveryJourneyTests.swift": "f45ba55bf1d9a54ff2a168d2fc52e765a4adf68997a971d71d436344c167d0c0",
+  "Planner/Scenes/SavedPlannerStore.swift": "4c8d0a194f7023f393462b3f93dacf37f967e3ef82d0c3ce397da75de7f271ab",
+  "Planner/Scenes/SavedPlannerSettingsView.swift": "73e3c7325e6e1f04d7e35e2bcbed9e69ee1f8e70a4780dd305ac580aacb7fa33",
+  "Planner/Scenes/SavedPlannerView.swift": "2dfb04b0057e0aed46396ebfe8ba7f340c440ea2b99fccd7f3c805b691f4ca05",
+  "Planner/Scenes/SavedRecoveryStatusSection.swift": "2c2eadd0ba2cdd52d532e658865c8537059dc0e17442f582a6ba844a63f0d3a4",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerStatusValues.swift": "11b14bbe2d1732eb1aa5545e8880167198c74baafa9aff43184dffaac060c70e",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "854282b2c7e31c0251eb94f0d7daf600782de135e573365334c2fe691405744b",
+  "PlannerNavigationUITests/NativeNavigationElements.swift": "53659f78aa021f34bd5bd868e2da82eaa010993799d64f945c75959d7c3915e5"
+}

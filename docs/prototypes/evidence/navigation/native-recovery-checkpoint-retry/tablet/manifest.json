@@ -1,0 +1,50 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "2ADC537B-9F23-4EB0-9DBE-FFFE01943999.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Failed retry preserves one original Item after native relaunch_0_68D550E8-4C73-468D-B2C9-5C39ADDB1FA3.png",
+        "timestamp" : 1792023268.674
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "7E947C37-C797-4C98-BF64-ADDD59275607.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Failed checkpoint retry reports the real file error and retains recovery block_0_EC7358DB-2BEF-478C-8628-B128D1342201.png",
+        "timestamp" : 1792023253.027
+      }
+    ],
+    "testIdentifier" : "RecoveryCheckpointJourneyTests/testRetryFailureKeepsSavedItemReadableAndChangesBlockedAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RecoveryCheckpointJourneyTests/testRetryFailureKeepsSavedItemReadableAndChangesBlockedAfterRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "5A03FE8E-07BF-4DD3-9938-0C6EAFDAB59F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unreadable recovery evidence does not hide committed Item content_0_27425615-D265-4722-B07B-EF617323CFCC.png",
+        "timestamp" : 1792023295.469
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "8DD1BF92-CAF9-4706-AAB1-0B31601E3D3B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unavailable recovery evidence stays explicit after native recheck_0_B351339E-182C-4CED-A979-E630CCC2AD90.png",
+        "timestamp" : 1792023283.659
+      }
+    ],
+    "testIdentifier" : "RecoveryCheckpointJourneyTests/testUnavailableRecoveryEvidenceBlocksChangesAndAllowsReadingAfterRecheck()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RecoveryCheckpointJourneyTests/testUnavailableRecoveryEvidenceBlocksChangesAndAllowsReadingAfterRecheck"
+  }
+]

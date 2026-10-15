@@ -1,0 +1,218 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "4948DE64-3F2F-433A-A6E6-7A0AB49FE9F5.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Failed retry preserves one original Item after native relaunch_0_0ED7EB6A-7CBD-4609-A01E-88B5C5E4E5FD.png",
+        "timestamp" : 1792022630.07
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "7D1A7A35-8B52-4BED-8B2F-42A60FE94F19.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Failed checkpoint retry reports the real file error and retains recovery block_0_4FC8A7DE-2D81-42C5-B7A6-D988B6083867.png",
+        "timestamp" : 1792022613.896
+      }
+    ],
+    "testIdentifier" : "RecoveryCheckpointJourneyTests/testRetryFailureKeepsSavedItemReadableAndChangesBlockedAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RecoveryCheckpointJourneyTests/testRetryFailureKeepsSavedItemReadableAndChangesBlockedAfterRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "7847DC6D-E76E-423F-9F2F-35EE14C53E78.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Relaunch retains original Item identity and the later independent change_0_5BE243E0-25E1-48A7-B7C8-DBD58117FEDD.png",
+        "timestamp" : 1792022690.439
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "B47D33D6-4415-4D9F-880F-D2DB2B56AE1F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Recovery checkpoint completes without applying the Item again_0_47A36973-94C7-4ADC-B5FF-F7D6B8025A5F.png",
+        "timestamp" : 1792022660.887
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "FDDBC057-FC04-4D7B-B095-39142179887E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native Settings offers checkpoint-only retry after relaunch_0_A9928F98-134A-4147-A694-4493C84A0C1D.png",
+        "timestamp" : 1792022658.888
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "81A3595F-DDAD-444D-B709-6771FA74F724.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Incomplete recovery keeps saved Items readable and changes disabled_0_AA192FC5-F0A3-424F-9D8F-FBBB1610BED8.png",
+        "timestamp" : 1792022644.828
+      }
+    ],
+    "testIdentifier" : "RecoveryCheckpointJourneyTests/testRetryingRecoveryAfterRelaunchPreservesSavedItemAndUnblocksChanges()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RecoveryCheckpointJourneyTests/testRetryingRecoveryAfterRelaunchPreservesSavedItemAndUnblocksChanges"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "7301E26D-F06C-442E-AFEB-923C2B78C415.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unreadable recovery evidence does not hide committed Item content_0_E528FAD7-4B59-478E-BC98-E8AA998D6F15.png",
+        "timestamp" : 1792022718.272
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "573F15D0-10DA-43E2-BE65-5B12631A7947.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unavailable recovery evidence stays explicit after native recheck_0_C36EA582-7420-44F0-BBCC-31833C5F68CE.png",
+        "timestamp" : 1792022705.426
+      }
+    ],
+    "testIdentifier" : "RecoveryCheckpointJourneyTests/testUnavailableRecoveryEvidenceBlocksChangesAndAllowsReadingAfterRecheck()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RecoveryCheckpointJourneyTests/testUnavailableRecoveryEvidenceBlocksChangesAndAllowsReadingAfterRecheck"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "0D862E52-84D0-47AA-8DFD-FAB248BEBE47.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Current dataset stays separate after export and relaunch_0_5B90E9F5-8A25-4FBB-9A47-F1EB58568E87.png",
+        "timestamp" : 1792022780.47
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "FC139540-5C42-4CA2-879C-D6A723637D0F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Retained recovery export reports successful delivery_0_229065F0-EA77-4390-84C3-63CB258FC185.png",
+        "timestamp" : 1792022758.382
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "8BC01EC1-22AA-4C66-8CB1-F6947AA0ECB1.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Public retained export expectation_0_7942BA89-68E5-42A1-8747-5373F974C7E6.txt",
+        "timestamp" : 1792022758.294
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "A538B048-BD81-4ACF-BD04-4D65D4F4226C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "System picker exports the retained dataset_0_FB3E4DB9-99A1-4106-A25C-CB656AFDD413.png",
+        "timestamp" : 1792022755.316
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "B006FBEB-B5DC-4BE2-846B-A36B7B17E149.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Retained copy shows its own saved Item and Tag_0_C110AD1A-3FB7-4ED6-8868-8C6019ECA0C4.png",
+        "timestamp" : 1792022748.006
+      }
+    ],
+    "testIdentifier" : "RetainedRecoveryJourneyTests/testExportingRetainedCopyKeepsCurrentDatasetSeparateAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RetainedRecoveryJourneyTests/testExportingRetainedCopyKeepsCurrentDatasetSeparateAfterRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "A8DD22C4-F0BB-4D05-A1C5-3D374E6FBA81.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Recovery Overwrite preserves identities after relaunch_0_FB6F5E8B-67EF-4D96-B00A-CFAC75F3B7A5.png",
+        "timestamp" : 1792022889.099
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "B6897E4C-7468-4D3F-B2B0-D1E97A428417.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Recovery Overwrite reviews current and retained Tag values_0_9163E817-E685-4CC1-AC5B-AAD3981D382A.png",
+        "timestamp" : 1792022861.159
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "6C4605B1-54C2-4F36-8582-E162C0E08697.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Recovery Skip preserves identities after relaunch_0_097EC714-F33A-4137-825B-C3741F775121.png",
+        "timestamp" : 1792022842.366
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "636CBDFD-D406-40C7-8DF2-DA0DB63C4C92.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Recovery Skip keeps two current conflicts_0_3929116D-A168-469D-A8EE-680E69BB0F85.png",
+        "timestamp" : 1792022813.852
+      }
+    ],
+    "testIdentifier" : "RetainedRecoveryJourneyTests/testRecoverySkipAndOverwritePreserveCurrentDataAndRestoredIdentitiesAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RetainedRecoveryJourneyTests/testRecoverySkipAndOverwritePreserveCurrentDataAndRestoredIdentitiesAfterRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "02F655C0-72D6-4549-9EAD-758C908D5050.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Restored and current identities survive native relaunch together_0_26535762-7036-4768-A8D7-53276F9412ED.png",
+        "timestamp" : 1792022973.698
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "B30A7D8A-DAFA-419A-9A27-1CAC672007D8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Explicit native confirmation restores the reviewed copy_0_CF8EA47F-759C-4845-B9F4-033EA4B3135D.png",
+        "timestamp" : 1792022947.972
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "EF0754E2-FE51-464B-8811-36E6F1DC928B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native review targets Current Planner and lists two additions_0_7E0AA9EC-5C38-466E-B804-EB7B451FDCA1.png",
+        "timestamp" : 1792022920.121
+      }
+    ],
+    "testIdentifier" : "RetainedRecoveryJourneyTests/testReviewCancelAndRestoreRetainedCopyPreservesIdentitiesAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RetainedRecoveryJourneyTests/testReviewCancelAndRestoreRetainedCopyPreservesIdentitiesAfterRelaunch"
+  }
+]

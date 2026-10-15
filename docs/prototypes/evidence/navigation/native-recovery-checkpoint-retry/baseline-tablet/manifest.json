@@ -1,0 +1,218 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "9319A7FF-C205-4955-97F5-2B51E10541AB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Failed retry preserves one original Item after native relaunch_0_09B4B319-2A0B-49A7-A7BF-CD40BC80E8A8.png",
+        "timestamp" : 1792022679.365
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "73FDF0EF-E8DA-453B-92DF-54E0483DF07A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Failed checkpoint retry reports the real file error and retains recovery block_0_EEBA8F17-38B8-41D3-A5A3-E03DA5B30FB2.png",
+        "timestamp" : 1792022663.186
+      }
+    ],
+    "testIdentifier" : "RecoveryCheckpointJourneyTests/testRetryFailureKeepsSavedItemReadableAndChangesBlockedAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RecoveryCheckpointJourneyTests/testRetryFailureKeepsSavedItemReadableAndChangesBlockedAfterRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "937B9566-902B-43F6-AF99-26395FDAFCBC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Relaunch retains original Item identity and the later independent change_0_93A0130F-7B45-4165-BD72-23CB6F5E4CE3.png",
+        "timestamp" : 1792022739.636
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "318DD6AB-EB3A-4E55-9332-CDA364FCCEA5.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Recovery checkpoint completes without applying the Item again_0_5EC374CD-E067-4DED-8F79-0F8F20C80F16.png",
+        "timestamp" : 1792022708.227
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "E2521F2A-DD43-45B8-BD06-663B42B44481.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native Settings offers checkpoint-only retry after relaunch_0_BC461E10-FF22-4693-A7A8-640964CC94D8.png",
+        "timestamp" : 1792022706.165
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "CC7C4A1E-3378-4490-906F-98D746423ACE.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Incomplete recovery keeps saved Items readable and changes disabled_0_02484FB2-A013-41FB-97C9-F126046E3999.png",
+        "timestamp" : 1792022692.12
+      }
+    ],
+    "testIdentifier" : "RecoveryCheckpointJourneyTests/testRetryingRecoveryAfterRelaunchPreservesSavedItemAndUnblocksChanges()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RecoveryCheckpointJourneyTests/testRetryingRecoveryAfterRelaunchPreservesSavedItemAndUnblocksChanges"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "0F6DC389-57C3-4336-B627-1F3B19B4F606.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unreadable recovery evidence does not hide committed Item content_0_80F18948-291C-48ED-AE8A-7921D31F6481.png",
+        "timestamp" : 1792022767.411
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "B3FDD652-E8C9-46C5-AF9C-7CE004020AA6.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unavailable recovery evidence stays explicit after native recheck_0_4B742E61-5E8E-4784-86ED-A6CA0A5E4B21.png",
+        "timestamp" : 1792022755.077
+      }
+    ],
+    "testIdentifier" : "RecoveryCheckpointJourneyTests/testUnavailableRecoveryEvidenceBlocksChangesAndAllowsReadingAfterRecheck()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RecoveryCheckpointJourneyTests/testUnavailableRecoveryEvidenceBlocksChangesAndAllowsReadingAfterRecheck"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "F237CD2E-3758-4A88-91B1-1CDEC8907EF8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Current dataset stays separate after export and relaunch_0_E498D6AD-23FB-4307-AF95-A3A932A44DA2.png",
+        "timestamp" : 1792022833.925
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "C0937AB3-65F5-4CAB-BE51-2FD85E57012D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Retained recovery export reports successful delivery_0_563DF43E-574D-47AA-8E56-0A9FA0C00492.png",
+        "timestamp" : 1792022810.209
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "F34F361B-25E1-4797-8AE7-58C5FEF28BEC.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Public retained export expectation_0_873E071F-A1F1-4D3E-BEA2-7779F5CA5F81.txt",
+        "timestamp" : 1792022810.107
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "E6D012A4-5AE1-4BF6-B894-80BDDB5A7ED4.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "System picker exports the retained dataset_0_8EC34B86-9E4C-464F-B928-6A5A49CB3096.png",
+        "timestamp" : 1792022806.787
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "36925606-E56F-4806-9472-1C6CA44779D8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Retained copy shows its own saved Item and Tag_0_356661DC-D879-40FA-95CB-48494BD2F1CB.png",
+        "timestamp" : 1792022797.656
+      }
+    ],
+    "testIdentifier" : "RetainedRecoveryJourneyTests/testExportingRetainedCopyKeepsCurrentDatasetSeparateAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RetainedRecoveryJourneyTests/testExportingRetainedCopyKeepsCurrentDatasetSeparateAfterRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "7F5CED41-77FB-4783-86B4-D8601A07BBA1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Recovery Overwrite preserves identities after relaunch_0_F8F4AC8F-4211-45B4-AF5E-50CC4B8194EB.png",
+        "timestamp" : 1792022943.883
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "0A4006E1-12D9-4B34-BB54-E1E9D3551396.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Recovery Overwrite reviews current and retained Tag values_0_45401EB3-63F6-437B-8E25-C90711E9A973.png",
+        "timestamp" : 1792022915.411
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "514740FB-AE6E-4DD9-A7F7-12E43DAC638E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Recovery Skip preserves identities after relaunch_0_B33CFF03-E850-40D2-9670-8ACCA681F1FD.png",
+        "timestamp" : 1792022896.245
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "82F58D8C-8FE0-44B6-A885-70D148A0DDA0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Recovery Skip keeps two current conflicts_0_B4111F1F-A825-406D-B3FB-61C712DB8698.png",
+        "timestamp" : 1792022867.689
+      }
+    ],
+    "testIdentifier" : "RetainedRecoveryJourneyTests/testRecoverySkipAndOverwritePreserveCurrentDataAndRestoredIdentitiesAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RetainedRecoveryJourneyTests/testRecoverySkipAndOverwritePreserveCurrentDataAndRestoredIdentitiesAfterRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "0646AAAE-CE1A-41F8-8DD8-8A628E1FEE75.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Restored and current identities survive native relaunch together_0_3EBD246B-3924-4EEF-9B90-99BB3BF11E0C.png",
+        "timestamp" : 1792023036.759
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "4C44E7FB-F9C7-4152-9EC4-FC2F6C8CCDF4.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Explicit native confirmation restores the reviewed copy_0_B1A1D46A-8298-401F-9493-0BE0B4CA24F0.png",
+        "timestamp" : 1792023010.384
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "622192B2-DA10-489F-B987-A3D93F312468.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Native review targets Current Planner and lists two additions_0_894B50D8-A104-4F21-9C52-00171C741FF5.png",
+        "timestamp" : 1792022979.426
+      }
+    ],
+    "testIdentifier" : "RetainedRecoveryJourneyTests/testReviewCancelAndRestoreRetainedCopyPreservesIdentitiesAfterRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RetainedRecoveryJourneyTests/testReviewCancelAndRestoreRetainedCopyPreservesIdentitiesAfterRelaunch"
+  }
+]

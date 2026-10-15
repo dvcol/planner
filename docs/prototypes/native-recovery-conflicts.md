@@ -36,3 +36,5 @@ The [execution packet](evidence/navigation/native-recovery-conflicts/execution.j
 ## Remaining gates
 
 Native empty-target/full-graph, deleted-identity restoration, unverified proposals, stale-review/read/save failures, recovery-blocked/startup-unavailable and checkpoint retry retain their separate qualification gates. Mac compilation does not qualify Mac runtime. Physical account ownership/cutoff/sync/Share, broader accessibility/adaptive/scale and whole-app polish remain open.
+
+The later [native checkpoint retry/status qualification](native-recovery-checkpoint-retry.md) covers the represented readable-store recovery block, retry and unavailable-checkpoint cases. The broader recovery-blocked interactions and unavailable-store, unverified, full-graph and physical gates above remain open.

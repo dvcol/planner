@@ -1,0 +1,392 @@
+[
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryRed.xcresult"
+    ],
+    "output": "red-summary.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryRed.xcresult"
+    ],
+    "output": "red-tests.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryPhone.xcresult"
+    ],
+    "output": "initial-summary.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryPhone.xcresult"
+    ],
+    "output": "initial-tests.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryPhoneFailure.xcresult"
+    ],
+    "output": "failure-pair-summary.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryPhoneFailure.xcresult"
+    ],
+    "output": "failure-pair-tests.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryPhoneFinal.xcresult"
+    ],
+    "output": "navigation-phone-summary.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryPhoneFinal.xcresult"
+    ],
+    "output": "navigation-phone-tests.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryTabletFinal.xcresult"
+    ],
+    "output": "navigation-tablet-summary.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryTabletFinal.xcresult"
+    ],
+    "output": "navigation-tablet-tests.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryPhoneQualified.xcresult"
+    ],
+    "output": "pre-layout-phone-summary.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryPhoneQualified.xcresult"
+    ],
+    "output": "pre-layout-phone-tests.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryTabletQualified.xcresult"
+    ],
+    "output": "pre-layout-tablet-summary.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryTabletQualified.xcresult"
+    ],
+    "output": "pre-layout-tablet-tests.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryPhoneLayout.xcresult"
+    ],
+    "output": "baseline-phone-summary.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryPhoneLayout.xcresult"
+    ],
+    "output": "baseline-phone-tests.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryPhoneLayout.xcresult",
+      "--output-path",
+      "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-recovery-checkpoint-retry/baseline-phone"
+    ]
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryTabletLayout.xcresult"
+    ],
+    "output": "baseline-tablet-summary.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryTabletLayout.xcresult"
+    ],
+    "output": "baseline-tablet-tests.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryTabletLayout.xcresult",
+      "--output-path",
+      "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-recovery-checkpoint-retry/baseline-tablet"
+    ]
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryPhoneErrors.xcresult"
+    ],
+    "output": "phone-summary.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryPhoneErrors.xcresult"
+    ],
+    "output": "phone-tests.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryPhoneErrors.xcresult",
+      "--output-path",
+      "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-recovery-checkpoint-retry/phone"
+    ]
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "summary",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryTabletErrors.xcresult"
+    ],
+    "output": "tablet-summary.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "get",
+      "test-results",
+      "tests",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryTabletErrors.xcresult"
+    ],
+    "output": "tablet-tests.json"
+  },
+  {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "xcresulttool",
+      "export",
+      "attachments",
+      "--path",
+      "/private/tmp/PlannerRecoveryRetryTabletErrors.xcresult",
+      "--output-path",
+      "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-recovery-checkpoint-retry/tablet"
+    ]
+  }
+]
