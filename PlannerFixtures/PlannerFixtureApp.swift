@@ -7,7 +7,7 @@ struct PlannerFixtureApp: App {
   @State private var failure: String?
   @State private var previews = PlannerPreviews(provider: FixturePreviewProvider())
   @State private var addressPreviews = PlannerAddressPreviews(provider: FixturePreviewProvider())
-  @State private var mapsPreviews = PlannerMapsPreviews(provider: NativeMapsPreviewProvider())
+  @State private var mapsPreviews = PlannerMapsPreviews(provider: FixtureMapsPreviewProvider())
 
   var body: some Scene {
     WindowGroup {

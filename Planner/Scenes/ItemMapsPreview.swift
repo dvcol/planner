@@ -40,7 +40,7 @@ private struct ItemMapsPreview: View {
   @State private var activeRequestIdentifier: UUID?
 
   var body: some View {
-    Group {
+    VStack(alignment: .leading, spacing: 12) {
       switch result {
       case nil:
         ProgressView("Loading map preview")
@@ -97,6 +97,7 @@ private struct ItemMapsPreview: View {
 
   private var retryButton: some View {
     Button("Retry", systemImage: "arrow.clockwise") { retryIdentifier = UUID() }
+      .buttonStyle(.borderless)
       .accessibilityIdentifier("saved.item.maps.preview.retry")
   }
 
@@ -104,6 +105,7 @@ private struct ItemMapsPreview: View {
   private var fallbackLink: some View {
     if let destination = URL(string: request.originalURL) {
       Link("Open saved Maps link", destination: destination)
+        .buttonStyle(.borderless)
     }
   }
 }
