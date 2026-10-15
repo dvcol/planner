@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "705970D7-9B5C-43C7-AB74-548F645C7FBA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unarchived Itinerary retains the same Todo child after relaunch_0_D9AFB914-EB71-4B17-8B01-4DFD91F2E98F.png",
+        "timestamp" : 1792032797.202
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "F43FA761-ADC9-4094-A4D8-D312B266912C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "All Itineraries includes the archived source once_0_D3279018-8E7D-4DA7-BA5F-6C0C3FA34DA8.png",
+        "timestamp" : 1792032697.185
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "22762EF7-647E-464C-A92A-72421C02E85A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Archived Itinerary retains its content and child progress_0_BC22C8A5-7202-4A06-87C7-8F46457925A1.png",
+        "timestamp" : 1792032676.708
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "624A6A10-DAA9-4349-B963-0A22001B9097.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Itinerary action menu before archive_0_FFC6D229-0484-4CF6-8608-D6443D08D613.png",
+        "timestamp" : 1792032672.094
+      }
+    ],
+    "testIdentifier" : "ItineraryArchiveJourneyTests/testArchivedItineraryCanBeFoundAndUnarchivedWithoutChangingItsChildren()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ItineraryArchiveJourneyTests/testArchivedItineraryCanBeFoundAndUnarchivedWithoutChangingItsChildren"
+  }
+]

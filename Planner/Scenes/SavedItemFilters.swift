@@ -321,26 +321,28 @@ private struct SavedFilterListPicker: View {
   }
 }
 
-struct SavedListArchiveFilterMenu: View {
+struct SavedCatalogArchiveFilterMenu: View {
   @Binding var archive: SavedItemFilters.Archive
+  let pluralTitle: String
+  let accessibilityIdentifier: String
 
   private var title: String {
-    archive == .all ? "All Lists" : "\(archive.rawValue.capitalized) Lists"
+    archive == .all ? "All \(pluralTitle)" : "\(archive.rawValue.capitalized) \(pluralTitle)"
   }
 
   var body: some View {
     Menu {
       Picker("Archive", selection: $archive) {
-        Text("Active Lists").tag(SavedItemFilters.Archive.active)
-        Text("Archived Lists").tag(SavedItemFilters.Archive.archived)
-        Text("All Lists").tag(SavedItemFilters.Archive.all)
+        Text("Active \(pluralTitle)").tag(SavedItemFilters.Archive.active)
+        Text("Archived \(pluralTitle)").tag(SavedItemFilters.Archive.archived)
+        Text("All \(pluralTitle)").tag(SavedItemFilters.Archive.all)
       }
       .pickerStyle(.inline)
     } label: {
       Text(archive.rawValue.capitalized).fixedSize(horizontal: true, vertical: false)
     }
     .accessibilityLabel(title)
-    .accessibilityIdentifier("saved.lists.archive")
+    .accessibilityIdentifier(accessibilityIdentifier)
     .help("Show \(title.lowercased())")
   }
 }

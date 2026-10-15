@@ -27,6 +27,7 @@ struct SavedPlannerLabel: Identifiable {
 struct SavedPlannerItinerary: Identifiable {
   let source: PlannerEntityReference
   let title: String
+  let archived: Bool
   let manualEstimate: PlannerEstimate?
   let estimates: PlannerContainerEstimates
   var id: UUID { source.id }
@@ -345,10 +346,10 @@ final class SavedPlannerStore {
     return nil
   }
 
-  func readItineraries() async -> [SavedPlannerItinerary]? {
+  func readItineraries(archive: PlannerItemQuery.Archive) async -> [SavedPlannerItinerary]? {
     guard let planner, let session else { return nil }
     switch await planner.query(
-      .init(session: session, request: .catalog(.init(sourceKind: .itinerary, archive: .active))))
+      .init(session: session, request: .catalog(.init(sourceKind: .itinerary, archive: archive))))
     {
     case .snapshot(let snapshot):
       switch await planner.read(
@@ -366,7 +367,7 @@ final class SavedPlannerStore {
           }
           itineraries.append(
             .init(
-              source: source, title: row.title,
+              source: source, title: row.title, archived: row.archived == true,
               manualEstimate: row.manualEstimate, estimates: estimates))
         }
         return itineraries
@@ -798,6 +799,12 @@ final class SavedPlannerStore {
     else { return false }
     await refreshLists()
     return true
+  }
+
+  func setItineraryArchived(_ identifier: UUID, archived: Bool) async -> Bool {
+    await executeChange(
+      .setArchive(source: .init(kind: .itinerary, id: identifier), archived: archived),
+      operationId: UUID()) != nil
   }
 
   func addMembership(itemId: UUID, listId: UUID, operationId: UUID) async -> Bool {

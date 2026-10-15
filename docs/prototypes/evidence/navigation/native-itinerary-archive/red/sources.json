@@ -1,0 +1,15 @@
+{
+  "baseCommit": "d5f342e3031300d705b389a669913000c93fee9e",
+  "sourceHashes": {
+    "Planner/Scenes/SavedItineraryViews.swift": "b76413716233289bb5274e3f03592e1ea270e3a9ed449ec48eed26d4f6b885f1",
+    "Planner/Scenes/SavedItemFilters.swift": "b04cf92860dd97bc2d796b7405cf689ce089db1fffa1e46a9a79c7c920110516",
+    "Planner/Scenes/SavedPlannerView.swift": "856312d2450b3407ba9cd50e963a394ef62b564dc15ddb41455996da7c975155",
+    "Planner/Scenes/SavedPlannerStore.swift": "0f58d57653fa6f1a35399a37a95c324b32b8859d79a4b9d9c747ee06856f5c41",
+    "PlannerFixtureUITests/ItineraryArchiveJourneyTests.swift": "fab96170ea3807bbb5e19c5a7def45371ee765d8e454ccb03f6a3411ab2548b0"
+  },
+  "productHashes": {
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures": "b799e68c823737b89ec582b1a32a618b3db6efb402ed424cd22990cc82ceddbc",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures.debug.dylib": "faefa495f8ee48042ddaeb0d92404c6720d9218136462b4c813c00df7de87586",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtureUITests-Runner.app/PlugIns/PlannerFixtureUITests.xctest/PlannerFixtureUITests": "3818276f8c2378a4d397f345d934f49457c7ecbb62947618390b71d3b89b5e95"
+  }
+}

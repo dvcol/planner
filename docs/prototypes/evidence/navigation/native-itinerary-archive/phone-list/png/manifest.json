@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "3E649711-5DD1-4BCE-B49F-2B3DA4931ECF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unarchive restores unfinished itinerary branches without changing source List Done_0_E603006C-87C6-4E75-B6FB-4AA1389E4BA6.png",
+        "timestamp" : 1792032949.16
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "E78C04EC-B804-487C-9DC1-2E46167DC036.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Archived branches retain source identities and Todo checks after relaunch_0_429B0454-57FF-40E7-A2EF-125F7DB6EC95.png",
+        "timestamp" : 1792032895.381
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "EAEC1596-7172-4CEE-AE41-1265CB7B21AA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Done header filtering retains both archived branches_0_14CC3879-CA29-4A04-BF16-E96E02955558.png",
+        "timestamp" : 1792032869.454
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "FC3537A9-E76E-401D-88A4-1B569397F20A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Archived repeated List branches finish progress with Todo checks_0_F217C7FD-1CAE-4B24-BE5C-4189CB2AD510.png",
+        "timestamp" : 1792032849.662
+      }
+    ],
+    "testIdentifier" : "SavedItineraryBulkJourneyTests/testArchivedRepeatedListBranchesFinishProgressWithoutCompletingTheirItems()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItineraryBulkJourneyTests/testArchivedRepeatedListBranchesFinishProgressWithoutCompletingTheirItems"
+  }
+]

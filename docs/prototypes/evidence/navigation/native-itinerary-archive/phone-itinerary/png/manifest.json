@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "A3A97B92-F412-42B9-9C0D-E23621427F87.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unarchived Itinerary retains the same Todo child after relaunch_0_E87F0894-EA5E-4F6A-8F85-FF2B4C911CA7.png",
+        "timestamp" : 1792032625.582
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "95657048-6B0F-4693-BA7E-FFCEF7FD81BA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "All Itineraries includes the archived source once_0_7A17AE4D-BF95-4137-9132-3D3854E6BD12.png",
+        "timestamp" : 1792032523.934
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "AB3A7BD2-FFB3-48E9-98ED-109B6940DB38.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Archived Itinerary retains its content and child progress_0_DE96B8F3-4631-43FB-8796-D7F35E3511C8.png",
+        "timestamp" : 1792032506.948
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "533369BA-404D-43ED-A2F0-CF4D235B2A38.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Itinerary action menu before archive_0_DE4EAB49-17E4-4BC4-8AA4-CBECF787C8F9.png",
+        "timestamp" : 1792032499.696
+      }
+    ],
+    "testIdentifier" : "ItineraryArchiveJourneyTests/testArchivedItineraryCanBeFoundAndUnarchivedWithoutChangingItsChildren()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ItineraryArchiveJourneyTests/testArchivedItineraryCanBeFoundAndUnarchivedWithoutChangingItsChildren"
+  }
+]

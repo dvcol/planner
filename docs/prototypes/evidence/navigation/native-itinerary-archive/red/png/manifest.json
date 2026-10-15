@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "A139E513-399F-4927-A1F5-BEFFB3C57C07.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Itinerary action menu before archive_0_E35C9EC1-C45C-4BD2-B50E-2BD49421156C.png",
+        "timestamp" : 1792031820.826
+      }
+    ],
+    "testIdentifier" : "ItineraryArchiveJourneyTests/testArchivedItineraryCanBeFoundAndUnarchivedWithoutChangingItsChildren()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ItineraryArchiveJourneyTests/testArchivedItineraryCanBeFoundAndUnarchivedWithoutChangingItsChildren"
+  }
+]

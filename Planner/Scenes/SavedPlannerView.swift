@@ -1035,7 +1035,9 @@ struct SavedPlannerView: View {
         }
       #endif
       ToolbarItem {
-        SavedListArchiveFilterMenu(archive: $listCatalogArchive)
+        SavedCatalogArchiveFilterMenu(
+          archive: $listCatalogArchive, pluralTitle: "Lists",
+          accessibilityIdentifier: "saved.lists.archive")
       }
       ToolbarItem {
         Button("New List", systemImage: "plus") { showNewList = true }

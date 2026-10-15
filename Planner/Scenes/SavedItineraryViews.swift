@@ -2,6 +2,11 @@ import PlannerCore
 import PlannerPreviews
 import SwiftUI
 
+private struct SavedItineraryCatalogReadInputs: Equatable {
+  let revision: UUID
+  let archive: SavedItemFilters.Archive
+}
+
 struct SavedItineraryCatalog: View {
   let store: SavedPlannerStore
   @Binding var selection: UUID?
@@ -9,21 +14,30 @@ struct SavedItineraryCatalog: View {
   @State private var isLoading = false
   @State private var loadingFailure: String?
   @State private var showNewItinerary = false
+  @State private var archive = SavedItemFilters.Archive.active
 
   var body: some View {
     List(selection: $selection) {
       ForEach(itineraries ?? []) { itinerary in
         NavigationLink(value: itinerary.id) {
           VStack(alignment: .leading, spacing: 4) {
-            Label(itinerary.title, systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+            HStack {
+              Label(
+                itinerary.title, systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+              if itinerary.archived {
+                Image(systemName: "archivebox").foregroundStyle(.secondary)
+                  .accessibilityHidden(true)
+              }
+            }
             SavedContainerEstimatePreview(
               estimates: itinerary.estimates, manualEstimate: itinerary.manualEstimate)
           }
         }
         .accessibilityLabel(itinerary.title)
         .accessibilityValue(
-          itinerary.estimates.nativeEstimatePreviewAccessibilityDescription(
-            manualEstimate: itinerary.manualEstimate)
+          (itinerary.archived ? "Archived. " : "Active. ")
+            + itinerary.estimates.nativeEstimatePreviewAccessibilityDescription(
+              manualEstimate: itinerary.manualEstimate)
         )
         .accessibilityIdentifier("saved.itinerary.row.\(itinerary.id.uuidString)")
       }
@@ -41,20 +55,28 @@ struct SavedItineraryCatalog: View {
         }
       } else if itineraries?.isEmpty == true {
         ContentUnavailableView(
-          "No Itineraries yet", systemImage: "point.topleft.down.to.point.bottomright.curvepath",
-          description: Text("Create an Itinerary to start planning."))
+          archive == .active ? "No Itineraries yet" : "No matching Itineraries",
+          systemImage: "point.topleft.down.to.point.bottomright.curvepath",
+          description: Text("Change the archive filter or create an Itinerary to start planning."))
       }
     }
     .navigationTitle("Itineraries")
     .navigationSplitViewColumnWidth(min: 240, ideal: 320, max: 480)
     .toolbar {
       ToolbarItem(placement: .primaryAction) {
+        SavedCatalogArchiveFilterMenu(
+          archive: $archive, pluralTitle: "Itineraries",
+          accessibilityIdentifier: "saved.itineraries.archive")
+      }
+      ToolbarItem(placement: .primaryAction) {
         Button("New Itinerary", systemImage: "plus") { showNewItinerary = true }
           .disabled(!store.canCreate)
           .accessibilityIdentifier("saved.itinerary.new")
       }
     }
-    .task(id: store.changeRevision) { await loadItineraries() }
+    .task(id: SavedItineraryCatalogReadInputs(revision: store.changeRevision, archive: archive)) {
+      await loadItineraries()
+    }
     .sheet(isPresented: $showNewItinerary) {
       SavedItineraryForm(store: store) { source in selection = source.id }
     }
@@ -64,8 +86,11 @@ struct SavedItineraryCatalog: View {
     isLoading = true
     loadingFailure = nil
     let revision = store.changeRevision
-    let loaded = await store.readItineraries()
-    guard !Task.isCancelled, store.changeRevision == revision else { return }
+    let selectedArchive = archive
+    let loaded = await store.readItineraries(archive: selectedArchive.queryValue)
+    guard !Task.isCancelled, store.changeRevision == revision, archive == selectedArchive else {
+      return
+    }
     if let loaded {
       itineraries = loaded
     } else {
@@ -118,6 +143,9 @@ struct SavedItineraryDetail: View {
         let itinerary = contents.itinerary
         List(selection: $selection) {
           Section {
+            if itinerary.state.archived == true {
+              Label("Archived Itinerary", systemImage: "archivebox").foregroundStyle(.secondary)
+            }
             if itinerary.progress.state == .empty {
               Text("No items").foregroundStyle(.secondary)
             } else if let done = itinerary.progress.doneCount,
@@ -295,6 +323,13 @@ struct SavedItineraryDetail: View {
           ToolbarItem(placement: .primaryAction) {
             Menu {
               Button("Schedule Itinerary") { showNewSchedule = true }
+              Button(itinerary.state.archived == true ? "Unarchive Itinerary" : "Archive Itinerary")
+              {
+                Task {
+                  _ = await store.setItineraryArchived(
+                    identifier, archived: itinerary.state.archived != true)
+                }
+              }
               Divider()
               Group {
                 Button("Mark all Done") {

@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "8023E570-6BED-4F40-9C55-FAE082C44A01.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Unarchive restores unfinished itinerary branches without changing source List Done_0_B2178304-7AA9-474D-9955-054863EB817C.png",
+        "timestamp" : 1792032575.88
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "77312EBA-699A-44AB-A54D-758B7CF6EA36.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Archived branches retain source identities and Todo checks after relaunch_0_2B03DECF-E79B-4418-9C85-BD5F4150C297.png",
+        "timestamp" : 1792032515.579
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "78AD9DA0-92FE-467F-B564-221C8A8EFBC1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Done header filtering retains both archived branches_0_127C58F2-6074-49A5-BDC1-70DD1B0FDAE8.png",
+        "timestamp" : 1792032484.996
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "73984408-A330-4A94-BC7D-AA64BA3AFF84.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Archived repeated List branches finish progress with Todo checks_0_1785EB21-486F-45E6-9F66-0BA570D705CE.png",
+        "timestamp" : 1792032464.53
+      }
+    ],
+    "testIdentifier" : "SavedItineraryBulkJourneyTests/testArchivedRepeatedListBranchesFinishProgressWithoutCompletingTheirItems()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedItineraryBulkJourneyTests/testArchivedRepeatedListBranchesFinishProgressWithoutCompletingTheirItems"
+  }
+]
