@@ -1,6 +1,6 @@
 # Container catalog sort contract review
 
-Status: ready for Q87 review following accepted Q85 A and Q86 A on 15 October 2026. Scope and uncertainty placement are settled. This concrete public contract requires review before TDD; no new catalog sort is implemented by this document.
+Status: approved through Q87 A on 15 October 2026, following Q85 A and Q86 A. Scope, uncertainty placement and this concrete public contract are settled for TDD. This document declares behavior; it supplies no implementation qualification.
 
 ## Context, starting state and goal
 
@@ -57,7 +57,7 @@ Changing sort refreshes the catalog while retaining a valid source selection. A 
 ## Definition of ready
 
 - Q85 A authorizes shared Core and native sorting.
-- Q86 A settles uncertainty groups. The human reviews this concrete query, ordering, preference and error contract through Q87 before TDD.
+- Q86 A settles uncertainty groups. Q87 A approves this concrete query, ordering, preference and error contract for TDD.
 - Use existing public Core import/query/read/export boundaries, the actual MCP HTTP routing seam and production native views with disposable local fixtures. No comparator or preference helper becomes a test-only public interface.
 - Declare the exact seeded orders for both catalog kinds and each direction before writing their behavior tests.
 

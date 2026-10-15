@@ -60,7 +60,7 @@ Equivalent Calendar capture reuse remains implemented. There is no new early evi
 
 ## Q85, top-level container catalog sorting
 
-The human accepted A on 15 October 2026. Extend shared Core catalog sorting to Title, Created date, Last updated and Full estimate in both directions, with native controls and per-device/dataset/catalog preferences. Native views and agents share the sequence; API callers omitting sort retain alphabetical order. Route/child order, completion and bookings remain unchanged. The [proposal, impacts and required tests](container-catalog-sorting-question.md) retains the unselected alternatives. Q86 now settles uncertain-duration placement; concrete contract review remains open before implementation. Earlier records describing Q85 as pending are historical.
+The human accepted A on 15 October 2026. Extend shared Core catalog sorting to Title, Created date, Last updated and Full estimate in both directions, with native controls and per-device/dataset/catalog preferences. Native views and agents share the sequence; API callers omitting sort retain alphabetical order. Route/child order, completion and bookings remain unchanged. The [proposal, impacts and required tests](container-catalog-sorting-question.md) retains the unselected alternatives. Q86 settles uncertain-duration placement and Q87 approves the concrete contract for implementation. Earlier pending records are historical.
 
 ## Q86, incomplete full-estimate ordering
 
@@ -68,4 +68,4 @@ The human accepted A on 15 October 2026. Sort exact full estimates first, incomp
 
 ## Q87, concrete container catalog sort contract
 
-Pending review of the [concrete contract](container-catalog-sort-contract-review.md) after Q85 A and Q86 A. It declares the optional Core/MCP sort values, omitted-sort compatibility, deterministic ties, accepted uncertainty groups, strict errors, generation-bound paging, native preference scope and required public Core/HTTP/native tests. The existing read boundary remains in use; no new testing seam is proposed. This review concerns the concrete extension before its tests and implementation, not whether catalog sorting is in scope.
+The human accepted A on 15 October 2026 after Q85 A and Q86 A. The [approved contract](container-catalog-sort-contract-review.md) declares the optional Core/MCP sort values, omitted-sort compatibility, deterministic ties, accepted uncertainty groups, strict errors, generation-bound paging, native preference scope and required public Core/HTTP/native tests. The existing read boundary remains in use; no new testing seam is proposed. Implementation and qualification remain required. Earlier records describing Q87 as pending are historical; this recorded decision frontier has no unanswered question.
