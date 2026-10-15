@@ -1,0 +1,23 @@
+[
+  [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "summary",
+    "--path",
+    "/private/tmp/PlannerNativeCatalogSort-phone-final.xcresult"
+  ],
+  [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerNativeCatalogSort-phone-final.xcresult",
+    "--output-path",
+    "docs/prototypes/evidence/navigation/native-container-catalog-sorting/phone-final/attachments",
+    "--filter",
+    "*.png"
+  ]
+]

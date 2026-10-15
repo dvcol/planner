@@ -1,0 +1,46 @@
+{
+  "baseCommit": "2e70d040f3dee38a6d24afeeaccf152098e3670a",
+  "combinedPhone": {
+    "phase": "phone-final-current",
+    "functions": 2,
+    "failures": 0,
+    "skips": 0,
+    "seconds": 217.831
+  },
+  "combinedTablet": {
+    "phase": "tablet-final-current",
+    "functions": 2,
+    "failures": 0,
+    "skips": 0,
+    "seconds": 236.653
+  },
+  "focusedFinalTablet": {
+    "phase": "tablet-selection-qualified",
+    "functions": 1,
+    "failures": 0,
+    "skips": 0,
+    "seconds": 119.229
+  },
+  "sourceEpochs": "Combined phone/tablet/Mac share identical seven source hashes. Final focused tablet adds only the observed-order assertion in selection-assertion.patch. Production and fixture hashes remain identical.",
+  "macBuild": {
+    "phase": "mac-build",
+    "exitCode": 0,
+    "runtimeTests": 0
+  },
+  "strictSwiftFiles": 7,
+  "originalInspectedPNGs": 19,
+  "fixtureCleanup": "Native local datasets retained in simulators; no removal claim",
+  "reviews": {
+    "standards": "One test-oracle finding corrected and verified; no remaining source finding",
+    "spec": "No confirmed source findings",
+    "artifactAudit": {
+      "standards": "No remaining confirmed standards/evidence findings; 236 hashes verified",
+      "spec": "No confirmed material specification/evidence findings; 236 hashes verified"
+    }
+  },
+  "limitations": [
+    "No physical iCloud/account/Share or Mac UI runtime",
+    "No controlled out-of-order I/O timing",
+    "No large catalog performance, memory, resizing, VoiceOver or whole-app polish qualification"
+  ]
+}

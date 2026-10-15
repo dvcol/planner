@@ -1,0 +1,12 @@
+--- combined/ContainerCatalogSortJourneyTests.swift
++++ selection-qualified/ContainerCatalogSortJourneyTests.swift
+@@ -92,6 +92,9 @@
+         if sidebar.exists { sidebar.activateForPlannerJourney() }
+         XCTAssertTrue(listSort.waitForExistence(timeout: 10))
+         choose("Descending", menu: listSort, application: application)
++        requireOrder(
++          ["Manual plan", "Zulu plan", "Alpha plan", "Missing plan"], kind: "list",
++          application: application)
+         XCTAssertTrue(selectedActivity.exists, application.debugDescription)
+         capture("Sorting the visible List catalog retains the selected Zulu plan contents")
+       }

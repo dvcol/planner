@@ -1,0 +1,13 @@
+[
+  "xcrun",
+  "swift-format",
+  "lint",
+  "--strict",
+  "Planner/Scenes/SavedPlannerView.swift",
+  "Planner/Scenes/SavedPlannerStore.swift",
+  "Planner/Scenes/SavedItineraryViews.swift",
+  "PlannerFixtures/PlannerFixtureDataset.swift",
+  "PlannerFixtures/PlannerCatalogSortFixture.swift",
+  "PlannerFixtureUITests/ContainerCatalogSortJourneyTests.swift",
+  "Planner/Scenes/SavedCatalogSort.swift"
+]

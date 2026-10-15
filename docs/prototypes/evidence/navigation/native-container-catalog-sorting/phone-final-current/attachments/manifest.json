@@ -1,0 +1,77 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "34BD36FA-E404-4C03-8849-70867D28ED6B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Returning to the original dataset restores both catalog choices_0_451F2D53-2330-4461-8A40-34B7D323B960.png",
+        "timestamp" : 1792057386.396
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "9FDC114D-C3EB-4E0B-AD89-8756064AE2E6.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "A separate local dataset starts with alphabetical catalog defaults_0_B105394F-C999-43A9-90A3-47951388F7F5.png",
+        "timestamp" : 1792057371.989
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "FC1B935A-B710-4EB6-BE6C-3A294671F3C8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Itineraries keep their separate full estimate ascending choice_0_24BE8F56-F21C-4D33-8745-2101FB9C6756.png",
+        "timestamp" : 1792057336.189
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "34B1D411-1537-46AE-8722-1F2029C64FBD.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Lists sorted by full estimate descending with incomplete plans last_0_646D75A0-0D70-4FA3-9AB6-F1B46B37E39E.png",
+        "timestamp" : 1792057298.643
+      }
+    ],
+    "testIdentifier" : "ContainerCatalogSortJourneyTests/testCatalogsRememberSeparateNativeSortsAcrossRelaunchAndDatasetChanges()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ContainerCatalogSortJourneyTests/testCatalogsRememberSeparateNativeSortsAcrossRelaunchAndDatasetChanges"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "83F1EE84-9C61-45BB-AE62-47F317AD98EA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The final sort and archive choice publishes one consistent catalog_0_36F63349-C8B5-4CA2-ABB2-227B29E6EA68.png",
+        "timestamp" : 1792057486.334
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "B7C3593E-DA76-4BBC-9641-45AB15066937.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "A shared Item edit preserves the Itineraries own Last updated order_0_060DC715-E03E-4671-805F-05923448ED07.png",
+        "timestamp" : 1792057459.115
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "CD42904D-3CE2-4AEF-A7C3-B62598185421.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Removing a shared Item estimate moves its List into the incomplete group_0_36D9B93A-0DEE-401D-8105-406AD52F5604.png",
+        "timestamp" : 1792057436.382
+      }
+    ],
+    "testIdentifier" : "ContainerCatalogSortJourneyTests/testSharedEstimateEditsRefreshBothCatalogsWithoutReplacingValidSelection()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ContainerCatalogSortJourneyTests/testSharedEstimateEditsRefreshBothCatalogsWithoutReplacingValidSelection"
+  }
+]

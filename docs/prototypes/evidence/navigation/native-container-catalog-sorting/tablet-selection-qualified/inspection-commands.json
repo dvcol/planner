@@ -1,0 +1,23 @@
+{
+  "summary": [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "summary",
+    "--path",
+    "/private/tmp/PlannerNativeCatalogSort-tablet-selection-qualified.xcresult"
+  ],
+  "attachments": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerNativeCatalogSort-tablet-selection-qualified.xcresult",
+    "--output-path",
+    "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-container-catalog-sorting/tablet-selection-qualified/attachments",
+    "--filter",
+    "*.png"
+  ]
+}

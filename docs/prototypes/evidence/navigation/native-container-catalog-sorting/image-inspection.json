@@ -1,0 +1,139 @@
+{
+  "originalScreenshots": 19,
+  "scope": "Default-size phone and portrait tablet native catalog states. Catalog orders, wrapping and available native controls inspected. Tablet sidebar overlays part of the selected content; test also verifies the unique activity exists. No resizing, VoiceOver, Mac or physical UI claim. Existing missing-estimate subtitles remain wordy.",
+  "images": [
+    {
+      "phase": "phone-final-current",
+      "file": "phone-final-current/attachments/34BD36FA-E404-4C03-8849-70867D28ED6B.png",
+      "description": "Returning to the original dataset restores both catalog choices_0_451F2D53-2330-4461-8A40-34B7D323B960.png",
+      "sha256": "f85f303d20baf0f82e65dd2efc6000ca9b80c54afcfe9da9f858abf6e6bcb161",
+      "inspected": true
+    },
+    {
+      "phase": "phone-final-current",
+      "file": "phone-final-current/attachments/9FDC114D-C3EB-4E0B-AD89-8756064AE2E6.png",
+      "description": "A separate local dataset starts with alphabetical catalog defaults_0_B105394F-C999-43A9-90A3-47951388F7F5.png",
+      "sha256": "cc0274e57d5c977b1692384b2ecd6f500dea907ffce8c42aa7d518913ed34606",
+      "inspected": true
+    },
+    {
+      "phase": "phone-final-current",
+      "file": "phone-final-current/attachments/FC1B935A-B710-4EB6-BE6C-3A294671F3C8.png",
+      "description": "Itineraries keep their separate full estimate ascending choice_0_24BE8F56-F21C-4D33-8745-2101FB9C6756.png",
+      "sha256": "1de686a7b9d8e81a8e68c13874e1835eedb63d5efcce674fad3d5d0ec577b0a9",
+      "inspected": true
+    },
+    {
+      "phase": "phone-final-current",
+      "file": "phone-final-current/attachments/34B1D411-1537-46AE-8722-1F2029C64FBD.png",
+      "description": "Lists sorted by full estimate descending with incomplete plans last_0_646D75A0-0D70-4FA3-9AB6-F1B46B37E39E.png",
+      "sha256": "2ef9198092fca4c71d02169034c1ff26ecd8b4b93269d1f011e2c3efc272331b",
+      "inspected": true
+    },
+    {
+      "phase": "phone-final-current",
+      "file": "phone-final-current/attachments/83F1EE84-9C61-45BB-AE62-47F317AD98EA.png",
+      "description": "The final sort and archive choice publishes one consistent catalog_0_36F63349-C8B5-4CA2-ABB2-227B29E6EA68.png",
+      "sha256": "c3f0c12c53f536897825bc89fc264b61fb1811a161858fd149c5ae25d3d6b57a",
+      "inspected": true
+    },
+    {
+      "phase": "phone-final-current",
+      "file": "phone-final-current/attachments/B7C3593E-DA76-4BBC-9641-45AB15066937.png",
+      "description": "A shared Item edit preserves the Itineraries own Last updated order_0_060DC715-E03E-4671-805F-05923448ED07.png",
+      "sha256": "542be5ccefb3d1aff178d4fc7c8fcc16fc1316cba9c2828f1f3d91cba25601d7",
+      "inspected": true
+    },
+    {
+      "phase": "phone-final-current",
+      "file": "phone-final-current/attachments/CD42904D-3CE2-4AEF-A7C3-B62598185421.png",
+      "description": "Removing a shared Item estimate moves its List into the incomplete group_0_36D9B93A-0DEE-401D-8105-406AD52F5604.png",
+      "sha256": "61a01a2b9f823f1ad3b228054298ed72581aee494c7bffd2bc53115afec92a53",
+      "inspected": true
+    },
+    {
+      "phase": "tablet-final-current",
+      "file": "tablet-final-current/attachments/2A1366AF-F2A1-4698-B307-0E371DC06B67.png",
+      "description": "Returning to the original dataset restores both catalog choices_0_F90613A3-6AB9-497E-B66A-ED2EA96783BF.png",
+      "sha256": "a79052c1d32f77b6112973e1bdf404c8d479d3f14780e6bbdc099876d288d5f7",
+      "inspected": true
+    },
+    {
+      "phase": "tablet-final-current",
+      "file": "tablet-final-current/attachments/FA981169-D833-4E1C-B725-D99E46EAD70A.png",
+      "description": "A separate local dataset starts with alphabetical catalog defaults_0_58FA9C39-FC5C-44A2-97D9-AF5FFE7A6EB1.png",
+      "sha256": "5fbea88204ee06f946c0dab37a9465e1391217b32cb34417770084398ebaf0dc",
+      "inspected": true
+    },
+    {
+      "phase": "tablet-final-current",
+      "file": "tablet-final-current/attachments/040061E1-3618-41B5-AFCD-366DC751A748.png",
+      "description": "Itineraries keep their separate full estimate ascending choice_0_87140449-026D-4F55-8E04-759F092302BF.png",
+      "sha256": "bb393f7a4b8c9f20c8b5931add4cda277d069c47d248995eb36dad26e4a6674d",
+      "inspected": true
+    },
+    {
+      "phase": "tablet-final-current",
+      "file": "tablet-final-current/attachments/12DE63A5-D122-494A-9C83-0563E6E6B20C.png",
+      "description": "Lists sorted by full estimate descending with incomplete plans last_0_6E12BD2F-A2D9-4A8C-93DF-E19074914402.png",
+      "sha256": "aa346093c0db0815df211f1bf380890e5f950f63c95f9000bd8f72c1c44e2b71",
+      "inspected": true
+    },
+    {
+      "phase": "tablet-final-current",
+      "file": "tablet-final-current/attachments/8A7BB08C-9F43-4898-8B26-0C097B6177BB.png",
+      "description": "The final sort and archive choice publishes one consistent catalog_0_6823D722-0051-4062-8897-7FF6B843E35E.png",
+      "sha256": "65f7295bd1f60762b960366410c9cf57291b8fb1e42369e0bb0dd9717ef47a4c",
+      "inspected": true
+    },
+    {
+      "phase": "tablet-final-current",
+      "file": "tablet-final-current/attachments/2CAB4C57-3EB0-49E4-A0D2-ED9679294032.png",
+      "description": "A shared Item edit preserves the Itineraries own Last updated order_0_81C09079-3805-4326-8955-17F71213B537.png",
+      "sha256": "529aeffb3519195ce0709b149907b9c761579386c2026606597769e5cf9a1918",
+      "inspected": true
+    },
+    {
+      "phase": "tablet-final-current",
+      "file": "tablet-final-current/attachments/1D3400A4-E8F2-42F5-AD3E-7E30F6FAF478.png",
+      "description": "Removing a shared Item estimate moves its List into the incomplete group_0_36D66209-A90C-425E-9937-12D91D3F66B8.png",
+      "sha256": "796d606a51325148147700008cef0af650ee0c32cc7bc281f556d62ac6a78549",
+      "inspected": true
+    },
+    {
+      "phase": "tablet-final-current",
+      "file": "tablet-final-current/attachments/45147EE9-11A9-417F-B876-4FC94B648177.png",
+      "description": "Sorting the visible List catalog retains the selected Zulu plan contents_0_738FC50E-9B94-48F4-861C-975BE4204511.png",
+      "sha256": "724de8f67a3d494106799d3fa1a00df1a88bbe12b6ee631a9f0d95e6ee281ffe",
+      "inspected": true
+    },
+    {
+      "phase": "tablet-selection-qualified",
+      "file": "tablet-selection-qualified/attachments/FA1E8340-34A3-48F8-8764-5B15F193C9B5.png",
+      "description": "The final sort and archive choice publishes one consistent catalog_0_2206B269-E47A-4ADA-B30F-04A28D04E731.png",
+      "sha256": "684a9efa03ffc5822a9c72953d9b5094049ac6f5179963965177794c414940df",
+      "inspected": true
+    },
+    {
+      "phase": "tablet-selection-qualified",
+      "file": "tablet-selection-qualified/attachments/01EE1FB7-09E9-412C-AA1A-0DCA62747556.png",
+      "description": "A shared Item edit preserves the Itineraries own Last updated order_0_D2C948A5-9834-4C79-9F7F-5456367F53B5.png",
+      "sha256": "091b44f5539bf72a57d976d49c475d952fb9849b86caf2fdf5de52d319473723",
+      "inspected": true
+    },
+    {
+      "phase": "tablet-selection-qualified",
+      "file": "tablet-selection-qualified/attachments/60F9CF1C-4D28-4329-A7D2-7998B6EF5A78.png",
+      "description": "Removing a shared Item estimate moves its List into the incomplete group_0_3DE4A408-BC2B-47B9-855E-2FA2EFBA4C18.png",
+      "sha256": "bf6bce6417224413575afd64c8a1da3387d484da63888a84bc58b0447cc06c30",
+      "inspected": true
+    },
+    {
+      "phase": "tablet-selection-qualified",
+      "file": "tablet-selection-qualified/attachments/3B9CBF81-6CD2-4F04-A33D-EFF6FA31919C.png",
+      "description": "Sorting the visible List catalog retains the selected Zulu plan contents_0_32B385F1-2BA0-431D-9EBD-2BF1C0021AF1.png",
+      "sha256": "03c382a1fbb667149d1dc42f63ff674cd7c5c6d838262c8b4a576a1ebde1582c",
+      "inspected": true
+    }
+  ]
+}

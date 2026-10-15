@@ -5,6 +5,8 @@ import SwiftUI
 private struct SavedItineraryCatalogReadInputs: Equatable {
   let revision: UUID
   let archive: SavedItemFilters.Archive
+  let sort: SavedCatalogSort
+  let namespace: String?
 }
 
 struct SavedItineraryCatalog: View {
@@ -15,6 +17,7 @@ struct SavedItineraryCatalog: View {
   @State private var loadingFailure: String?
   @State private var showNewItinerary = false
   @State private var archive = SavedItemFilters.Archive.active
+  @State private var sortPreferences = SavedCatalogSortPreferences()
 
   var body: some View {
     List(selection: $selection) {
@@ -64,6 +67,9 @@ struct SavedItineraryCatalog: View {
     .navigationSplitViewColumnWidth(min: 240, ideal: 320, max: 480)
     .toolbar {
       ToolbarItem(placement: .primaryAction) {
+        SavedCatalogSortMenu(sort: sort, accessibilityIdentifier: "saved.itineraries.sort")
+      }
+      ToolbarItem(placement: .primaryAction) {
         SavedCatalogArchiveFilterMenu(
           archive: $archive, pluralTitle: "Itineraries",
           accessibilityIdentifier: "saved.itineraries.archive")
@@ -74,7 +80,11 @@ struct SavedItineraryCatalog: View {
           .accessibilityIdentifier("saved.itinerary.new")
       }
     }
-    .task(id: SavedItineraryCatalogReadInputs(revision: store.changeRevision, archive: archive)) {
+    .task(
+      id: SavedItineraryCatalogReadInputs(
+        revision: store.changeRevision, archive: archive, sort: sort.wrappedValue,
+        namespace: store.devicePreferenceNamespace)
+    ) {
       await loadItineraries()
     }
     .sheet(isPresented: $showNewItinerary) {
@@ -82,13 +92,25 @@ struct SavedItineraryCatalog: View {
     }
   }
 
+  private var sort: Binding<SavedCatalogSort> {
+    let key = store.devicePreferenceNamespace.map { "planner.catalog-sort.\($0).itineraries" }
+    return Binding(
+      get: { sortPreferences.selection(for: key) },
+      set: { sortPreferences.select($0, for: key) })
+  }
+
   private func loadItineraries() async {
     isLoading = true
     loadingFailure = nil
     let revision = store.changeRevision
     let selectedArchive = archive
-    let loaded = await store.readItineraries(archive: selectedArchive.queryValue)
-    guard !Task.isCancelled, store.changeRevision == revision, archive == selectedArchive else {
+    let selectedSort = sort.wrappedValue
+    let namespace = store.devicePreferenceNamespace
+    let loaded = await store.readItineraries(
+      archive: selectedArchive.queryValue, sort: selectedSort.queryValue)
+    guard !Task.isCancelled, store.changeRevision == revision, archive == selectedArchive,
+      sort.wrappedValue == selectedSort, store.devicePreferenceNamespace == namespace
+    else {
       return
     }
     if let loaded {

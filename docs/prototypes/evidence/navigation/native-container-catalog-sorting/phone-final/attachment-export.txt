@@ -1,0 +1,12 @@
+Exported 4 attachments for: ContainerCatalogSortJourneyTests/testCatalogsRememberSeparateNativeSortsAcrossRelaunchAndDatasetChanges():
+File: B28005CA-F803-47E0-9933-1CB485A2C904.png, suggested name: "Returning to the original dataset restores both catalog choices_0_84965FAF-4E1F-4853-8B57-CF9C837418A9.png"
+File: 928728D7-9D08-444B-AB80-9AA9A23FC35F.png, suggested name: "A separate local dataset starts with alphabetical catalog defaults_0_4ABDDEF0-5C1F-4F08-AE22-1B2DCB41221F.png"
+File: EE3800A4-3D18-4A82-9076-33E8430A4E11.png, suggested name: "Itineraries keep their separate full estimate ascending choice_0_F69C7EB0-31E0-4A58-98D5-20E1CD9CAEA6.png"
+File: B280E9C4-63C2-41D6-8BE3-45F4538BBB1C.png, suggested name: "Lists sorted by full estimate descending with incomplete plans last_0_5E9DDAE6-DAFC-459C-8E08-79EBEBF0DD36.png"
+
+Exported 3 attachments for: ContainerCatalogSortJourneyTests/testSharedEstimateEditsRefreshBothCatalogsWithoutReplacingValidSelection():
+File: 67373581-C5B6-45DB-87FA-B1A2B3A09603.png, suggested name: "The final sort and archive choice publishes one consistent catalog_0_28D1CBBE-CFF3-4356-ADA1-30CE1A5B85B1.png"
+File: 78F4E5E3-E3E8-41D2-805D-9A64B3E75736.png, suggested name: "A shared Item edit preserves the Itineraries own Last updated order_0_14506FE7-8CF8-4F0A-B9CA-C8A1C12D4590.png"
+File: D07AD9A8-0C50-48B2-89C8-00CB325AA0C5.png, suggested name: "Removing a shared Item estimate moves its List into the incomplete group_0_06FB9201-4262-49A5-B65D-34AF78853605.png"
+
+Generated manifest file with attachment details: /Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-container-catalog-sorting/phone-final/attachments/manifest.json

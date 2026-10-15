@@ -1,0 +1,86 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "2A1366AF-F2A1-4698-B307-0E371DC06B67.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Returning to the original dataset restores both catalog choices_0_F90613A3-6AB9-497E-B66A-ED2EA96783BF.png",
+        "timestamp" : 1792057621.163
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "FA981169-D833-4E1C-B725-D99E46EAD70A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "A separate local dataset starts with alphabetical catalog defaults_0_58FA9C39-FC5C-44A2-97D9-AF5FFE7A6EB1.png",
+        "timestamp" : 1792057605.691
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "040061E1-3618-41B5-AFCD-366DC751A748.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Itineraries keep their separate full estimate ascending choice_0_87140449-026D-4F55-8E04-759F092302BF.png",
+        "timestamp" : 1792057567.503
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "12DE63A5-D122-494A-9C83-0563E6E6B20C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Lists sorted by full estimate descending with incomplete plans last_0_6E12BD2F-A2D9-4A8C-93DF-E19074914402.png",
+        "timestamp" : 1792057528.407
+      }
+    ],
+    "testIdentifier" : "ContainerCatalogSortJourneyTests/testCatalogsRememberSeparateNativeSortsAcrossRelaunchAndDatasetChanges()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ContainerCatalogSortJourneyTests/testCatalogsRememberSeparateNativeSortsAcrossRelaunchAndDatasetChanges"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "8A7BB08C-9F43-4898-8B26-0C097B6177BB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The final sort and archive choice publishes one consistent catalog_0_6823D722-0051-4062-8897-7FF6B843E35E.png",
+        "timestamp" : 1792057735.568
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "2CAB4C57-3EB0-49E4-A0D2-ED9679294032.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "A shared Item edit preserves the Itineraries own Last updated order_0_81C09079-3805-4326-8955-17F71213B537.png",
+        "timestamp" : 1792057707.309
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "1D3400A4-E8F2-42F5-AD3E-7E30F6FAF478.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Removing a shared Item estimate moves its List into the incomplete group_0_36D66209-A90C-425E-9937-12D91D3F66B8.png",
+        "timestamp" : 1792057682.755
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "45147EE9-11A9-417F-B876-4FC94B648177.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Sorting the visible List catalog retains the selected Zulu plan contents_0_738FC50E-9B94-48F4-861C-975BE4204511.png",
+        "timestamp" : 1792057652.585
+      }
+    ],
+    "testIdentifier" : "ContainerCatalogSortJourneyTests/testSharedEstimateEditsRefreshBothCatalogsWithoutReplacingValidSelection()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ContainerCatalogSortJourneyTests/testSharedEstimateEditsRefreshBothCatalogsWithoutReplacingValidSelection"
+  }
+]

@@ -1,0 +1,57 @@
+{
+  "commands": {
+    "host": [
+      "sw_vers"
+    ],
+    "xcode": [
+      "xcodebuild",
+      "-version"
+    ],
+    "swift": [
+      "xcrun",
+      "swift",
+      "--version"
+    ],
+    "devices": [
+      "xcrun",
+      "simctl",
+      "list",
+      "devices",
+      "available",
+      "-j"
+    ]
+  },
+  "results": {
+    "host": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434",
+    "xcode": "Xcode 27.0\nBuild version 27A266a",
+    "swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+    "devices": [
+      {
+        "dataPath": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data",
+        "dataPathSize": 9915527168,
+        "logPath": "/Users/dinh-van.colomban/Library/Logs/CoreSimulator/2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "udid": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "lastUsedAt": "2026-10-15T04:47:52Z",
+        "isAvailable": true,
+        "logPathSize": 696320,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro",
+        "state": "Booted",
+        "name": "iPhone 18 Pro",
+        "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0"
+      },
+      {
+        "dataPath": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data",
+        "dataPathSize": 9595895808,
+        "logPath": "/Users/dinh-van.colomban/Library/Logs/CoreSimulator/FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "udid": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "lastUsedAt": "2026-10-15T05:24:37Z",
+        "isAvailable": true,
+        "logPathSize": 651264,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Air-11-inch-M4",
+        "state": "Booted",
+        "name": "iPad Air 11-inch (M4)",
+        "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0"
+      }
+    ]
+  }
+}

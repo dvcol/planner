@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "FA1E8340-34A3-48F8-8764-5B15F193C9B5.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The final sort and archive choice publishes one consistent catalog_0_2206B269-E47A-4ADA-B30F-04A28D04E731.png",
+        "timestamp" : 1792057934.382
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "01EE1FB7-09E9-412C-AA1A-0DCA62747556.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "A shared Item edit preserves the Itineraries own Last updated order_0_D2C948A5-9834-4C79-9F7F-5456367F53B5.png",
+        "timestamp" : 1792057905.077
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "60F9CF1C-4D28-4329-A7D2-7998B6EF5A78.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Removing a shared Item estimate moves its List into the incomplete group_0_3DE4A408-BC2B-47B9-855E-2FA2EFBA4C18.png",
+        "timestamp" : 1792057880.631
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "3B9CBF81-6CD2-4F04-A33D-EFF6FA31919C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Sorting the visible List catalog retains the selected Zulu plan contents_0_32B385F1-2BA0-431D-9EBD-2BF1C0021AF1.png",
+        "timestamp" : 1792057850.512
+      }
+    ],
+    "testIdentifier" : "ContainerCatalogSortJourneyTests/testSharedEstimateEditsRefreshBothCatalogsWithoutReplacingValidSelection()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/ContainerCatalogSortJourneyTests/testSharedEstimateEditsRefreshBothCatalogsWithoutReplacingValidSelection"
+  }
+]

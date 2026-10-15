@@ -5,6 +5,7 @@ import PlannerCore
 enum PlannerFixtureDataset {
   private enum Scenario: String {
     case catalogOverflow = "catalog-overflow"
+    case catalogSorting = "catalog-sorting"
     case calendarClockAlignment = "calendar-clock-alignment"
     case calendarRepeatedTimes = "calendar-repeated-times"
     case calendarRepeatedSpan = "calendar-repeated-span"
@@ -113,6 +114,10 @@ enum PlannerFixtureDataset {
         ).outcome
       else { throw CancellationError() }
       return result
+    }
+    if scenario == .catalogSorting {
+      try await PlannerCatalogSortFixture.seed(planner, session: session)
+      return SavedPlannerStore(configuration: configuration)
     }
     if scenario == .calendarClockAlignment {
       try await PlannerClockAlignmentFixture.seed(planner, session: session)

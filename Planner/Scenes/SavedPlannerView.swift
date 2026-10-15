@@ -60,6 +60,7 @@ struct SavedPlannerView: View {
   @State private var inboxSearchText = ""
   @State private var isOpeningCatalog = false
   @State private var sortPreferences = SavedItemSortPreferences()
+  @State private var catalogSortPreferences = SavedCatalogSortPreferences()
   @State private var selectedAppearanceIdentity: PlannerAppearance?
   @State private var selectedAppearance: PlannerAppearanceRead?
   @State private var appearanceChangeMessage: String?
@@ -106,6 +107,7 @@ struct SavedPlannerView: View {
     .task(id: store.isReady) { await loadCatalogItems() }
     .task(id: store.isReady) { await loadListCatalog() }
     .task(id: listCatalogArchive) { await loadListCatalog() }
+    .task(id: listCatalogSort.wrappedValue) { await loadListCatalog() }
     .task(id: catalogScope) { await loadCatalogItems() }
     .task(id: catalogFilters.wrappedValue) { await loadCatalogItems() }
     .task(id: catalogSearchText.wrappedValue) { await loadCatalogItems() }
@@ -510,9 +512,10 @@ struct SavedPlannerView: View {
     let archive = listCatalogArchive
     let revision = store.changeRevision
     let namespace = store.devicePreferenceNamespace
-    let loaded = await store.readLists(archive: archive.queryValue)
+    let sort = listCatalogSort.wrappedValue
+    let loaded = await store.readLists(archive: archive.queryValue, sort: sort.queryValue)
     guard !Task.isCancelled, listCatalogArchive == archive, store.changeRevision == revision,
-      store.devicePreferenceNamespace == namespace
+      store.devicePreferenceNamespace == namespace, listCatalogSort.wrappedValue == sort
     else { return }
     listCatalog = loaded
     isOpeningListCatalog = false
@@ -579,6 +582,13 @@ struct SavedPlannerView: View {
 
   private var catalogSearchText: Binding<String> {
     catalogScope == .inbox ? $inboxSearchText : $itemSearchText
+  }
+
+  private var listCatalogSort: Binding<SavedCatalogSort> {
+    let key = store.devicePreferenceNamespace.map { "planner.catalog-sort.\($0).lists" }
+    return Binding(
+      get: { catalogSortPreferences.selection(for: key) },
+      set: { catalogSortPreferences.select($0, for: key) })
   }
 
   private var itemSort: Binding<SavedItemSort> {
@@ -1035,6 +1045,9 @@ struct SavedPlannerView: View {
             .accessibilityIdentifier("saved.settings.open")
         }
       #endif
+      ToolbarItem {
+        SavedCatalogSortMenu(sort: listCatalogSort, accessibilityIdentifier: "saved.lists.sort")
+      }
       ToolbarItem {
         SavedCatalogArchiveFilterMenu(
           archive: $listCatalogArchive, pluralTitle: "Lists",
