@@ -258,12 +258,14 @@ final class SavedPlannerStore {
     }
   }
 
-  func readLists(archive: PlannerItemQuery.Archive, text: String = "") async -> [SavedPlannerList]?
-  {
+  func readLists(
+    archive: PlannerItemQuery.Archive, text: String = "", sort: PlannerCatalogQuery.Sort? = nil
+  ) async -> [SavedPlannerList]? {
     guard let planner, let session else { return nil }
     switch await planner.query(
       PlannerQuery(
-        session: session, request: .catalog(.init(sourceKind: .list, text: text, archive: archive)))
+        session: session,
+        request: .catalog(.init(sourceKind: .list, text: text, archive: archive, sort: sort)))
     )
     {
     case .failed(let reason): alertMessage = reason.message
@@ -346,10 +348,14 @@ final class SavedPlannerStore {
     return nil
   }
 
-  func readItineraries(archive: PlannerItemQuery.Archive) async -> [SavedPlannerItinerary]? {
+  func readItineraries(
+    archive: PlannerItemQuery.Archive, sort: PlannerCatalogQuery.Sort? = nil
+  ) async -> [SavedPlannerItinerary]? {
     guard let planner, let session else { return nil }
     switch await planner.query(
-      .init(session: session, request: .catalog(.init(sourceKind: .itinerary, archive: archive))))
+      .init(
+        session: session,
+        request: .catalog(.init(sourceKind: .itinerary, archive: archive, sort: sort))))
     {
     case .snapshot(let snapshot):
       switch await planner.read(
