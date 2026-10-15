@@ -1,0 +1,12 @@
+[
+  "xcrun",
+  "xcresulttool",
+  "export",
+  "attachments",
+  "--path",
+  "/private/tmp/PlannerLargeCatalogScroll-tablet-hittable-checkpoints.xcresult",
+  "--output-path",
+  "/private/tmp/PlannerLargeCatalogScrollTabletQualifiedText",
+  "--filter",
+  "*.txt"
+]

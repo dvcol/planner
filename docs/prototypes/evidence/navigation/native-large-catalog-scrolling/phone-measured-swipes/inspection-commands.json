@@ -1,0 +1,23 @@
+{
+  "summary": [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "summary",
+    "--path",
+    "/private/tmp/PlannerLargeCatalogScroll-phone-measured-swipes.xcresult"
+  ],
+  "attachments": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerLargeCatalogScroll-phone-measured-swipes.xcresult",
+    "--output-path",
+    "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-large-catalog-scrolling/phone-measured-swipes/attachments",
+    "--filter",
+    "*.png"
+  ]
+}

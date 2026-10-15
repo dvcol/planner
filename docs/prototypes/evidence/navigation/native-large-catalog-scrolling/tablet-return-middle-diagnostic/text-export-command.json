@@ -1,0 +1,12 @@
+[
+  "xcrun",
+  "xcresulttool",
+  "export",
+  "attachments",
+  "--path",
+  "/private/tmp/PlannerLargeCatalogScroll-tablet-return-middle-diagnostic.xcresult",
+  "--output-path",
+  "/private/tmp/PlannerLargeCatalogScrollTabletMiddleText",
+  "--filter",
+  "*.txt"
+]

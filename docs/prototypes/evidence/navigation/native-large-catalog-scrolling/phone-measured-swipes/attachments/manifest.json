@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "8EB09971-F204-4328-AD23-478CCF56652C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The far-end source reopens with the same notes and Todo state_0_E2483E92-9653-4213-886B-7317C0352E6C.png",
+        "timestamp" : 1792062718.121
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "4A13E10D-A2AD-4C02-94AF-1F8B4C14DBE1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Returning to the beginning retains the first source identity_0_4A803527-F8D6-4BC9-80F3-FA80E6A5962E.png",
+        "timestamp" : 1792061917.086
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "A8A7A5C5-9E2F-4164-989A-9AF91F9DA5F6.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The unfiltered native catalog reaches Item 05000 without search_0_CE339022-2F40-4542-870C-6FFDDB79DEE7.png",
+        "timestamp" : 1792061047.907
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "1069F534-4095-46EC-BA8C-6C52983CB85A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The unfiltered native catalog begins at Item 00001_0_CA5F66D0-937F-4ADB-9D53-D5B1605DEF8C.png",
+        "timestamp" : 1792060251.582
+      }
+    ],
+    "testIdentifier" : "LargeCollectionScrollJourneyTests/testUnfilteredCatalogScrollsToBothEndsAndReopensTheSameSource()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LargeCollectionScrollJourneyTests/testUnfilteredCatalogScrollsToBothEndsAndReopensTheSameSource"
+  }
+]

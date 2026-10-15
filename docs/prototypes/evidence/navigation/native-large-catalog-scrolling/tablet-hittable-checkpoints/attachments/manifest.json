@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "25C45B9A-3F08-4D8C-9D77-E853BA8B442B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The far-end source reopens with the same notes and Todo state_0_4CEB4703-DA8B-4E3C-9946-576A4AF4D961.png",
+        "timestamp" : 1792065220.499
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "A7FCE75B-5DED-44C6-8E3F-2F965A3A5651.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Returning to the beginning retains the first source identity_0_2CDF22E5-EBBF-4E28-82B3-A88FB089E4B7.png",
+        "timestamp" : 1792064465.515
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "EEFAD24E-3E17-4DAC-B5B7-0FAD1A7119B2.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The unfiltered native catalog reaches Item 05000 without search_0_35548F5C-67BA-40D4-A49F-F6DD1D042875.png",
+        "timestamp" : 1792063739.245
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "861B2DA7-27C0-48AC-A719-F2B020D9D62F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The unfiltered native catalog begins at Item 00001_0_87D6EB15-78C6-43E8-82AC-80A208EEE187.png",
+        "timestamp" : 1792063014.183
+      }
+    ],
+    "testIdentifier" : "LargeCollectionScrollJourneyTests/testUnfilteredCatalogScrollsToBothEndsAndReopensTheSameSource()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LargeCollectionScrollJourneyTests/testUnfilteredCatalogScrollsToBothEndsAndReopensTheSameSource"
+  }
+]

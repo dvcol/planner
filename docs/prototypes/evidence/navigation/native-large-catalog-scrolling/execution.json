@@ -1,0 +1,49 @@
+{
+  "baseCommit": "05edd5b137bd9df82b6305b1a0b53ef51036c595",
+  "phone": {
+    "phase": "phone-measured-swipes",
+    "functions": 1,
+    "failures": 0,
+    "skips": 0,
+    "seconds": 2514.964
+  },
+  "tablet": {
+    "phase": "tablet-hittable-checkpoints",
+    "functions": 1,
+    "failures": 0,
+    "skips": 0,
+    "seconds": 2272.652
+  },
+  "sourceEpochs": "Only hittable-checkpoint.patch separates the qualified phone and tablet test sources. Production and fixture sources stay unchanged. The temporary diagnostic is removed from build sources.",
+  "macBuild": {
+    "phase": "mac-hittable-checkpoint-build",
+    "exitCode": 0,
+    "runtimeTests": 0
+  },
+  "diagnostic": {
+    "phase": "tablet-return-middle-diagnostic",
+    "functions": 1,
+    "failures": 0,
+    "seconds": 155.398,
+    "scope": "Reproduces retained offscreen AX selection while native scrolling returns to the beginning; not full-catalog qualification"
+  },
+  "originalInspectedPNGs": 16,
+  "strictSwiftFiles": 1,
+  "fixtureCleanup": "Native local fixture datasets retained; no removal claim",
+  "reviews": {
+    "standardsSource": "No remaining finding after checkpoint correction",
+    "specSource": "No confirmed finding after checkpoint correction",
+    "artifactAudit": {
+      "standards": "No remaining confirmed findings; 244 hashes across 13 epochs verified",
+      "spec": "No remaining findings; 244 hashes across 13 epochs verified"
+    }
+  },
+  "limitations": [
+    "No Core/HTTP or 200-List scrolling credit",
+    "No complete intermediate-row rendering, bounded data-memory or hitch proof",
+    "No physical 300 ms or signed sync/account/Share proof",
+    "No Mac UI runtime, adaptive accessibility or whole-app polish qualification"
+  ],
+  "qualifiedSourceConfigurationHashes": 168,
+  "distinctInspectedPNGHashes": 15
+}

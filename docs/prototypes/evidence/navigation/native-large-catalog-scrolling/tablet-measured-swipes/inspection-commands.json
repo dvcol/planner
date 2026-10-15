@@ -1,0 +1,23 @@
+{
+  "summary": [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "summary",
+    "--path",
+    "/private/tmp/PlannerLargeCatalogScroll-tablet-measured-swipes.xcresult"
+  ],
+  "attachments": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerLargeCatalogScroll-tablet-measured-swipes.xcresult",
+    "--output-path",
+    "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-large-catalog-scrolling/tablet-measured-swipes/attachments",
+    "--filter",
+    "*.png"
+  ]
+}

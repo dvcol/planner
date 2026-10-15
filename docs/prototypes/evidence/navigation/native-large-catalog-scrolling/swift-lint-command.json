@@ -1,0 +1,7 @@
+[
+  "xcrun",
+  "swift-format",
+  "lint",
+  "--strict",
+  "PlannerFixtureUITests/LargeCollectionScrollJourneyTests.swift"
+]

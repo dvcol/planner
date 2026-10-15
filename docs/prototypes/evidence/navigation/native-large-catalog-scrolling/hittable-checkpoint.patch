@@ -1,0 +1,13 @@
+--- phone-qualified/LargeCollectionScrollJourneyTests.swift
++++ tablet-qualified/LargeCollectionScrollJourneyTests.swift
+@@ -79,8 +79,8 @@
+         if attempt == 1 || attempt.isMultiple(of: 10) {
+           let rows = contents.buttons.matching(
+             NSPredicate(format: "label BEGINSWITH %@", "Scale Item "))
+-          if rows.count > 0 {
+-            let tailTitle = rows.element(boundBy: rows.count - 1).label
++          if let tailRow = rows.allElementsBoundByIndex.reversed().first(where: \.isHittable) {
++            let tailTitle = tailRow.label
+             if let previousTailTitle {
+               XCTAssertNotEqual(
+                 tailTitle, previousTailTitle, "Native touch scrolling did not advance.")

@@ -1,0 +1,23 @@
+{
+  "summary": [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "summary",
+    "--path",
+    "/private/tmp/PlannerLargeCatalogScroll-tablet-return-diagnostic.xcresult"
+  ],
+  "attachments": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerLargeCatalogScroll-tablet-return-diagnostic.xcresult",
+    "--output-path",
+    "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-large-catalog-scrolling/tablet-return-diagnostic/attachments",
+    "--filter",
+    "*.png"
+  ]
+}

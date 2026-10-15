@@ -1,0 +1,12 @@
+[
+  "xcrun",
+  "xcresulttool",
+  "export",
+  "attachments",
+  "--path",
+  "/private/tmp/PlannerLargeCatalogScroll-tablet-measured-swipes.xcresult",
+  "--output-path",
+  "/private/tmp/PlannerLargeCatalogScrollTabletDiagnostics",
+  "--filter",
+  "*.txt"
+]

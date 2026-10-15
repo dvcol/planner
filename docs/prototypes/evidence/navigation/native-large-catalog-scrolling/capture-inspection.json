@@ -1,0 +1,101 @@
+{
+  "method": "Individually viewed the original exported PNG files with view_image; file bytes unchanged.",
+  "captures": [
+    {
+      "file": "phone-measured-swipes/attachments/8EB09971-F204-4328-AD23-478CCF56652C.png",
+      "sha256": "03bdb23b3162bbf85190b0b86f5c30813d46aad282a7876471e8ff1255194695",
+      "name": "The far-end source reopens with the same notes and Todo state_0_E2483E92-9653-4213-886B-7317C0352E6C.png",
+      "inspected": true
+    },
+    {
+      "file": "phone-measured-swipes/attachments/4A13E10D-A2AD-4C02-94AF-1F8B4C14DBE1.png",
+      "sha256": "41e68293093d440babe09c8ce14f53fb2f7a480e22c2ae20bf4e7c19d26393af",
+      "name": "Returning to the beginning retains the first source identity_0_4A803527-F8D6-4BC9-80F3-FA80E6A5962E.png",
+      "inspected": true
+    },
+    {
+      "file": "phone-measured-swipes/attachments/A8A7A5C5-9E2F-4164-989A-9AF91F9DA5F6.png",
+      "sha256": "809661df64e5140de4eff5c084fd95cf3748cb1da49f25886e3ad48ffe41a125",
+      "name": "The unfiltered native catalog reaches Item 05000 without search_0_CE339022-2F40-4542-870C-6FFDDB79DEE7.png",
+      "inspected": true
+    },
+    {
+      "file": "phone-measured-swipes/attachments/1069F534-4095-46EC-BA8C-6C52983CB85A.png",
+      "sha256": "eafc3ed1a2409aca93eea4b11664f988d04650a0d5e988a71b32cb5122af95f7",
+      "name": "The unfiltered native catalog begins at Item 00001_0_CA5F66D0-937F-4ADB-9D53-D5B1605DEF8C.png",
+      "inspected": true
+    },
+    {
+      "file": "tablet-measured-swipes/attachments/2D14C947-34A5-4C7E-B4CF-59091BDF8456.png",
+      "sha256": "d03fbeaff7370ef3964be22ddc4dec1175c05598e4ed8c8cd6779d75928f2fd1",
+      "name": "The unfiltered native catalog reaches Item 05000 without search_0_F83D443E-4661-4B0C-B13D-23628E72B374.png",
+      "inspected": true
+    },
+    {
+      "file": "tablet-measured-swipes/attachments/02C15972-E5BC-480E-A3C4-952CA6CF0A26.png",
+      "sha256": "c5b2cd192a666597fb84b4eb9eefbc22ddce53ad059830c54c938d9662f316aa",
+      "name": "The unfiltered native catalog begins at Item 00001_0_D13C9486-6EDF-4790-A59E-64D5E044897C.png",
+      "inspected": true
+    },
+    {
+      "file": "tablet-return-middle-diagnostic/attachments/74BB1978-E39C-4E5A-8E03-27B310624A99.png",
+      "sha256": "77c404c84e90cbf5dec647653c6775937e406f1bc663f477a96fddec9b0843f7",
+      "name": "Selected row during return_0_05ED487A-9A50-4617-9CDB-DDF6C7FDD09F.png",
+      "inspected": true
+    },
+    {
+      "file": "tablet-return-middle-diagnostic/attachments/C4A94E18-23B4-4D87-B1EA-65F5AEA0809E.png",
+      "sha256": "3592c99fb54bd551f584a67a1f3b5700475356aa2fc1b87a5cfc64dd54f846d2",
+      "name": "Selected row during return_0_4334FB91-6426-4858-AE57-8B5FC096B92A.png",
+      "inspected": true
+    },
+    {
+      "file": "tablet-return-middle-diagnostic/attachments/2139C2F6-FD21-4B43-9A38-90413CFEDE8F.png",
+      "sha256": "3c64d68c72d1f8dcfa35643d2a9260b0aab5e3412de59922c0873bda791ea4a3",
+      "name": "Selected row during return_0_AD5534BF-FEB1-4778-A4FA-EB7F272F6C3F.png",
+      "inspected": true
+    },
+    {
+      "file": "tablet-return-middle-diagnostic/attachments/4CD4A548-F386-4D9B-9E2E-2FC141A6A4CC.png",
+      "sha256": "c745e5b10681a62231bbc2ff78e442d6cd3a49a206406e25428083cac5eb0d47",
+      "name": "Selected row during return_0_7D32CE66-6BDE-4B33-97B1-F89F65F1FBB0.png",
+      "inspected": true
+    },
+    {
+      "file": "tablet-return-middle-diagnostic/attachments/7A6DF3DE-98BC-4937-8226-A662CB84E2E8.png",
+      "sha256": "c6ca084bc3be4720c6bc358733d698151fa738fe06abf83145fcfe22580c02f3",
+      "name": "Selected row before return_0_1338AA84-B431-4D5E-8AC2-22E2F99CAD50.png",
+      "inspected": true
+    },
+    {
+      "file": "tablet-return-middle-diagnostic/attachments/42B534BF-34C3-41B1-B3A2-B9B2FC375E1F.png",
+      "sha256": "c6ca084bc3be4720c6bc358733d698151fa738fe06abf83145fcfe22580c02f3",
+      "name": "Selected row after activation_0_EF5667FC-B0F4-4154-B217-2B149C89EB56.png",
+      "inspected": true
+    },
+    {
+      "file": "tablet-hittable-checkpoints/attachments/25C45B9A-3F08-4D8C-9D77-E853BA8B442B.png",
+      "sha256": "c1b63e6984abf8a1afa1fc6e0a23ce8c111339a307d1d02adb901badce823244",
+      "name": "The far-end source reopens with the same notes and Todo state_0_4CEB4703-DA8B-4E3C-9946-576A4AF4D961.png",
+      "inspected": true
+    },
+    {
+      "file": "tablet-hittable-checkpoints/attachments/A7FCE75B-5DED-44C6-8E3F-2F965A3A5651.png",
+      "sha256": "6dee17c30ea0ddb10d08cec2f800b0bc8760cfb8067e4fb7dbeaa0dab6f93719",
+      "name": "Returning to the beginning retains the first source identity_0_2CDF22E5-EBBF-4E28-82B3-A88FB089E4B7.png",
+      "inspected": true
+    },
+    {
+      "file": "tablet-hittable-checkpoints/attachments/EEFAD24E-3E17-4DAC-B5B7-0FAD1A7119B2.png",
+      "sha256": "2b7e74109fdbb26210e837f8620ce768892133a8613a172a258ee917115577b6",
+      "name": "The unfiltered native catalog reaches Item 05000 without search_0_35548F5C-67BA-40D4-A49F-F6DD1D042875.png",
+      "inspected": true
+    },
+    {
+      "file": "tablet-hittable-checkpoints/attachments/861B2DA7-27C0-48AC-A719-F2B020D9D62F.png",
+      "sha256": "9b3a2e5ef1b3a68edfc701636bc1badf6a8b6047578e31d142147469f20540ba",
+      "name": "The unfiltered native catalog begins at Item 00001_0_87D6EB15-78C6-43E8-82AC-80A208EEE187.png",
+      "inspected": true
+    }
+  ]
+}

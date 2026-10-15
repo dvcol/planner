@@ -1,0 +1,28 @@
+{
+  "operation": "SIGINT to xcodebuild PID 39392",
+  "exitCode": 75,
+  "result": "TEST INTERRUPTED",
+  "reason": "Repeated custom-velocity touch events retained the same Scale Item 00020 accessibility tail; no endpoint was observed.",
+  "memoryObservation": {
+    "command": [
+      "/usr/bin/vmmap",
+      "-summary",
+      "40591"
+    ],
+    "result": "Timed out after 15 seconds; no memory result retained or claimed.",
+    "fixtureProcessEvidence": {
+      "command": [
+        "xcrun",
+        "simctl",
+        "spawn",
+        "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "launchctl",
+        "list"
+      ],
+      "matchingRows": [
+        "40591\t0\tUIKitApplication:org.example.PlannerFixtures[6a32][rb-legacy]"
+      ]
+    }
+  },
+  "credit": "No completed functional or performance qualification"
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "command": [
+      "git",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "PlannerFixtureUITests/LargeCollectionScrollJourneyTests.swift"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "",
+    "directTrailingWhitespaceCheck": "passed"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "docs/prototypes/native-large-catalog-scrolling.md"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": "",
+    "directTrailingWhitespaceCheck": "passed"
+  }
+]

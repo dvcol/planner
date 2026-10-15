@@ -1,0 +1,12 @@
+[
+  "xcrun",
+  "xcresulttool",
+  "export",
+  "attachments",
+  "--path",
+  "/private/tmp/PlannerLargeCatalogScroll-phone-measured-swipes.xcresult",
+  "--output-path",
+  "/private/tmp/PlannerLargeCatalogScrollPhoneQualifiedText",
+  "--filter",
+  "*.txt"
+]

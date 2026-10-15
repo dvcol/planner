@@ -1,0 +1,7 @@
+{
+  "operation": "SIGINT to xcodebuild PID 48005",
+  "exitCode": 75,
+  "result": "TEST INTERRUPTED",
+  "reason": "Standard preset advances through Item 00257; stopped to calibrate a shorter complete traversal and correct a source formatting warning.",
+  "credit": "No completed functional qualification"
+}
