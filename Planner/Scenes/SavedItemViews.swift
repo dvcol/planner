@@ -45,7 +45,13 @@ struct SavedItemCatalog: View {
     .overlay {
       if items.isEmpty {
         if !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-          ContentUnavailableView.search(text: searchText)
+          if filters.summary == "All" {
+            ContentUnavailableView.search(text: searchText)
+          } else {
+            ContentUnavailableView(
+              "No matching items", systemImage: "magnifyingglass",
+              description: Text("Change the filters or try a different search."))
+          }
         } else {
           ContentUnavailableView(
             filters.summary == "All" ? "No Items yet" : "No matching items",
