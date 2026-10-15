@@ -1,0 +1,62 @@
+{
+  "environment": {
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+  },
+  "core": {
+    "title/test.log.gz": [
+      "xcrun",
+      "swift",
+      "test",
+      "--package-path",
+      "Packages/PlannerCore",
+      "--scratch-path",
+      "/private/tmp/PlannerLargeCollectionCoreBuild",
+      "--filter",
+      "LargeItemWindowTests",
+      "--jobs",
+      "1"
+    ],
+    "before-review/test.log.gz": [
+      "xcrun",
+      "swift",
+      "test",
+      "--package-path",
+      "Packages/PlannerCore",
+      "--scratch-path",
+      "/private/tmp/PlannerLargeCollectionCoreBuild",
+      "--filter",
+      "LargeItemWindowTests",
+      "--jobs",
+      "1"
+    ],
+    "final/test.log.gz": [
+      "xcrun",
+      "swift",
+      "test",
+      "--package-path",
+      "Packages/PlannerCore",
+      "--scratch-path",
+      "/private/tmp/PlannerLargeCollectionCoreBuild",
+      "--filter",
+      "LargeItemWindowTests",
+      "--jobs",
+      "1"
+    ]
+  },
+  "strictSwift": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/LargeItemWindowTests.swift"
+  ],
+  "markdown": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+    "docs/prototypes/core-large-item-windows.md"
+  ],
+  "cleanup": "The final command wrapper waits for subprocess.run to return, validates the printed fixture parent name and UUID, removes only that generated child after successful test exit, and records cleanup.json. Earlier revisions used in-function teardown and are superseded."
+}

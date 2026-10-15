@@ -1,0 +1,58 @@
+{
+  "baseCommit": "abcfdd2c994849d5882d41dadf8cd8e0133bf4be",
+  "productionChanges": false,
+  "initialTitleOnly": {
+    "directory": "title",
+    "functions": 1,
+    "suites": 1,
+    "invocations": 1,
+    "failures": 0,
+    "skips": 0,
+    "seconds": 18.664
+  },
+  "beforeReview": {
+    "directory": "before-review",
+    "functions": 1,
+    "suites": 1,
+    "invocations": 1,
+    "internalSortScenarios": 8,
+    "failures": 0,
+    "skips": 0,
+    "seconds": 90.635,
+    "supersededByReviewCorrections": true
+  },
+  "final": {
+    "directory": "final",
+    "host": "macOS 27.0.1",
+    "functions": 1,
+    "suites": 1,
+    "invocations": 1,
+    "internalSortScenarios": 8,
+    "traversalPages": 632,
+    "traversedRows": 40000,
+    "revisitedFirstPages": 8,
+    "emptyTerminalWindows": 8,
+    "oldestGenerationRevisits": 1,
+    "soleFarEndMatches": 1,
+    "failures": 0,
+    "skips": 0,
+    "seconds": 96.307,
+    "savedItems": 5000,
+    "savedLists": 200,
+    "uniqueSavedMemberships": 5000,
+    "membersPerList": 25,
+    "backupBytesUnchanged": true,
+    "fixtureRemovedAfterProcessExit": true
+  },
+  "checks": {
+    "strictSwiftFiles": 1,
+    "markdownReports": 1
+  },
+  "limits": [
+    "Specific monotonic fixture sequences only; ties/missing estimates and Manual order receive no new qualification.",
+    "No concurrent stale/canceled queries or complete native UI traversal.",
+    "No measured scrolling hitches, memory budget or physical 300 ms acceptance.",
+    "No new native UI, HTTP, CloudKit or physical-device run; the Core test executes on Mac.",
+    "Q84 C unchanged; Q85 container sorting remains pending."
+  ]
+}

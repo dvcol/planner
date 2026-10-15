@@ -1,0 +1,21 @@
+{
+  "baseCommit": "abcfdd2c994849d5882d41dadf8cd8e0133bf4be",
+  "standards": {
+    "sourceFindings": 0,
+    "addressed": [
+      "Persisted membership graph now explicitly verified.",
+      "Named store retained until test process exit, then removed by external runner."
+    ],
+    "finalEvidenceAudit": "complete",
+    "evidenceFindings": 0,
+    "artifactHashesVerified": 18,
+    "cleanupReceiptVerified": true
+  },
+  "spec": {
+    "sourceFindings": 0,
+    "finalEvidenceAudit": "complete",
+    "evidenceFindings": 0,
+    "artifactHashesVerified": 18,
+    "counting": "One function, one suite, one invocation with eight internal sort scenarios. Historical runs are separate."
+  }
+}

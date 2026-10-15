@@ -1,0 +1,11 @@
+{
+  "testProcessExited": true,
+  "testExitCode": 0,
+  "fixtures": [
+    {
+      "path": "/private/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerLargeItemWindowTests/A2B8C3A9-87EA-4649-944A-3D5B01526CC8",
+      "sqlitePresentAfterProcessExit": true,
+      "removedAfterProcessExit": true
+    }
+  ]
+}
