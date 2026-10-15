@@ -1,6 +1,6 @@
 # Container catalog sort contract review
 
-Status: draft following Q85 A. Q86's incomplete-estimate ordering and this concrete contract still require human review before implementation. No new catalog sort is implemented by this document.
+Status: ready for Q87 review following accepted Q85 A and Q86 A on 15 October 2026. Scope and uncertainty placement are settled. This concrete public contract requires review before TDD; no new catalog sort is implemented by this document.
 
 ## Context, starting state and goal
 
@@ -35,7 +35,16 @@ When present, `sort` requires both mode and direction. Null, missing members, wr
 
 Title uses the existing Foundation case/diacritic-insensitive comparison with the existing POSIX locale. Direction reverses the title comparison; equivalent titles retain ascending source UUID ties. Created and Last updated compare the saved source date in the selected direction, then folded Title ascending and source UUID ascending. Equal full-estimate keys use those same ascending title/identity ties. Direction never reverses the fixed tie-break.
 
-Full-estimate placement for exact totals, incomplete lower bounds and unavailable totals is pending Q86. Implement its accepted policy for both directions. Manual overall budgets are exact full estimates even when their separate calculated estimate is incomplete; empty automatic containers have exact zero. Neither case rewrites completion. Full totals currently do not produce upper bounds, which belong to remaining-time presentation. Arithmetic failure remains unavailable rather than an invented number.
+Accepted Q86 A fixes three groups in this order for both directions: exact full totals, incomplete lower bounds, then unavailable totals. Sort the numeric value within each of the first two groups in the selected direction. Equal numeric values and unavailable totals use the fixed ascending folded-Title/UUID tie-break. Manual overall budgets are exact full estimates even when their separate calculated estimate is incomplete; empty automatic containers have exact zero. Neither case rewrites completion. Full totals currently do not produce upper bounds, which belong to remaining-time presentation. Arithmetic failure remains unavailable rather than an invented number.
+
+For independently specified full estimates of Empty 0, Museum 180, Manual 240 with missing children, Long 300, Partial short at least 120, Partial long at least 240 and Overflow unavailable, the required sequence for either container kind is:
+
+| Direction | Required full-estimate sequence |
+| --- | --- |
+| Ascending | Empty, Museum, Manual, Long, Partial short, Partial long, Overflow |
+| Descending | Long, Manual, Museum, Empty, Partial long, Partial short, Overflow |
+
+These examples specify expected values, not executed evidence. The tests also cover ties and multiple unavailable containers. Displayed warnings are retained; sorting never turns a lower bound into an exact total.
 
 Query and row reads perform no domain writes. Preserve search/archive matching and reject unresolved source identities, required sort data or live references rather than silently omitting rows. A saved-history change invalidates an old generation, including a source rename, changed timestamp or referenced Item estimate. Clients refresh the whole result instead of combining generations. Q84 C's retained-generation lifetime is unchanged; sort selection introduces no expiry or eviction.
 
@@ -48,7 +57,7 @@ Changing sort refreshes the catalog while retaining a valid source selection. A 
 ## Definition of ready
 
 - Q85 A authorizes shared Core and native sorting.
-- The human settles Q86 and reviews this concrete query, ordering, preference and error contract before TDD.
+- Q86 A settles uncertainty groups. The human reviews this concrete query, ordering, preference and error contract through Q87 before TDD.
 - Use existing public Core import/query/read/export boundaries, the actual MCP HTTP routing seam and production native views with disposable local fixtures. No comparator or preference helper becomes a test-only public interface.
 - Declare the exact seeded orders for both catalog kinds and each direction before writing their behavior tests.
 
