@@ -1,0 +1,815 @@
+{
+  "dataset" : "\/private\/tmp\/PlannerCalendarDistinctRuns\/214DB8EE-3714-4B0E-803B-1233F151C2BB",
+  "firstMatchingCount" : 3001,
+  "items" : 5000,
+  "lastMatchingCount" : 3100,
+  "lists" : 200,
+  "measurements" : [
+    {
+      "iteration" : 1,
+      "iterationSeconds" : 0.320330375,
+      "matchingCount" : 3001,
+      "querySeconds" : 0.31585687499999998,
+      "residentAfterBytes" : 385974272,
+      "residentBeforeBytes" : 381779968
+    },
+    {
+      "iteration" : 2,
+      "iterationSeconds" : 0.31614716700000001,
+      "matchingCount" : 3002,
+      "querySeconds" : 0.31150499999999998,
+      "residentAfterBytes" : 385974272,
+      "residentBeforeBytes" : 385974272
+    },
+    {
+      "iteration" : 3,
+      "iterationSeconds" : 0.32358408399999999,
+      "matchingCount" : 3003,
+      "querySeconds" : 0.318973167,
+      "residentAfterBytes" : 385990656,
+      "residentBeforeBytes" : 385974272
+    },
+    {
+      "iteration" : 4,
+      "iterationSeconds" : 0.319618291,
+      "matchingCount" : 3004,
+      "querySeconds" : 0.31515629099999998,
+      "residentAfterBytes" : 386023424,
+      "residentBeforeBytes" : 385990656
+    },
+    {
+      "iteration" : 5,
+      "iterationSeconds" : 0.32219483399999999,
+      "matchingCount" : 3005,
+      "querySeconds" : 0.31798949999999998,
+      "residentAfterBytes" : 386039808,
+      "residentBeforeBytes" : 386023424
+    },
+    {
+      "iteration" : 6,
+      "iterationSeconds" : 0.32050383300000002,
+      "matchingCount" : 3006,
+      "querySeconds" : 0.316173333,
+      "residentAfterBytes" : 386039808,
+      "residentBeforeBytes" : 386039808
+    },
+    {
+      "iteration" : 7,
+      "iterationSeconds" : 0.32162854200000002,
+      "matchingCount" : 3007,
+      "querySeconds" : 0.317038125,
+      "residentAfterBytes" : 386039808,
+      "residentBeforeBytes" : 386039808
+    },
+    {
+      "iteration" : 8,
+      "iterationSeconds" : 0.32011858300000001,
+      "matchingCount" : 3008,
+      "querySeconds" : 0.31569541699999998,
+      "residentAfterBytes" : 386039808,
+      "residentBeforeBytes" : 386039808
+    },
+    {
+      "iteration" : 9,
+      "iterationSeconds" : 0.32231716599999999,
+      "matchingCount" : 3009,
+      "querySeconds" : 0.31777387499999998,
+      "residentAfterBytes" : 386056192,
+      "residentBeforeBytes" : 386039808
+    },
+    {
+      "iteration" : 10,
+      "iterationSeconds" : 0.32116062499999998,
+      "matchingCount" : 3010,
+      "querySeconds" : 0.31674391699999999,
+      "residentAfterBytes" : 386056192,
+      "residentBeforeBytes" : 386056192
+    },
+    {
+      "iteration" : 11,
+      "iterationSeconds" : 0.32237229099999998,
+      "matchingCount" : 3011,
+      "querySeconds" : 0.31812966599999998,
+      "residentAfterBytes" : 386056192,
+      "residentBeforeBytes" : 386056192
+    },
+    {
+      "iteration" : 12,
+      "iterationSeconds" : 0.318565708,
+      "matchingCount" : 3012,
+      "querySeconds" : 0.31422095799999999,
+      "residentAfterBytes" : 386072576,
+      "residentBeforeBytes" : 386056192
+    },
+    {
+      "iteration" : 13,
+      "iterationSeconds" : 0.32793395800000003,
+      "matchingCount" : 3013,
+      "querySeconds" : 0.32342074999999998,
+      "residentAfterBytes" : 386072576,
+      "residentBeforeBytes" : 386072576
+    },
+    {
+      "iteration" : 14,
+      "iterationSeconds" : 0.31963591699999999,
+      "matchingCount" : 3014,
+      "querySeconds" : 0.314981542,
+      "residentAfterBytes" : 386072576,
+      "residentBeforeBytes" : 386072576
+    },
+    {
+      "iteration" : 15,
+      "iterationSeconds" : 0.32650783300000003,
+      "matchingCount" : 3015,
+      "querySeconds" : 0.32202779100000001,
+      "residentAfterBytes" : 386072576,
+      "residentBeforeBytes" : 386072576
+    },
+    {
+      "iteration" : 16,
+      "iterationSeconds" : 0.322646459,
+      "matchingCount" : 3016,
+      "querySeconds" : 0.31826070899999997,
+      "residentAfterBytes" : 386138112,
+      "residentBeforeBytes" : 386072576
+    },
+    {
+      "iteration" : 17,
+      "iterationSeconds" : 0.32157858299999997,
+      "matchingCount" : 3017,
+      "querySeconds" : 0.31714291700000002,
+      "residentAfterBytes" : 386252800,
+      "residentBeforeBytes" : 386138112
+    },
+    {
+      "iteration" : 18,
+      "iterationSeconds" : 0.32347366599999999,
+      "matchingCount" : 3018,
+      "querySeconds" : 0.31896408300000001,
+      "residentAfterBytes" : 386383872,
+      "residentBeforeBytes" : 386252800
+    },
+    {
+      "iteration" : 19,
+      "iterationSeconds" : 0.32000962500000002,
+      "matchingCount" : 3019,
+      "querySeconds" : 0.315579041,
+      "residentAfterBytes" : 386531328,
+      "residentBeforeBytes" : 386383872
+    },
+    {
+      "iteration" : 20,
+      "iterationSeconds" : 0.32041700000000001,
+      "matchingCount" : 3020,
+      "querySeconds" : 0.31604749999999998,
+      "residentAfterBytes" : 386662400,
+      "residentBeforeBytes" : 386531328
+    },
+    {
+      "iteration" : 21,
+      "iterationSeconds" : 0.32326341600000003,
+      "matchingCount" : 3021,
+      "querySeconds" : 0.31885879099999997,
+      "residentAfterBytes" : 386793472,
+      "residentBeforeBytes" : 386662400
+    },
+    {
+      "iteration" : 22,
+      "iterationSeconds" : 0.326438542,
+      "matchingCount" : 3022,
+      "querySeconds" : 0.322041625,
+      "residentAfterBytes" : 386924544,
+      "residentBeforeBytes" : 386793472
+    },
+    {
+      "iteration" : 23,
+      "iterationSeconds" : 0.31972175000000003,
+      "matchingCount" : 3023,
+      "querySeconds" : 0.31537775000000001,
+      "residentAfterBytes" : 387055616,
+      "residentBeforeBytes" : 386924544
+    },
+    {
+      "iteration" : 24,
+      "iterationSeconds" : 0.31980649999999999,
+      "matchingCount" : 3024,
+      "querySeconds" : 0.31529879100000002,
+      "residentAfterBytes" : 387186688,
+      "residentBeforeBytes" : 387055616
+    },
+    {
+      "iteration" : 25,
+      "iterationSeconds" : 0.32073379200000002,
+      "matchingCount" : 3025,
+      "querySeconds" : 0.31646395900000002,
+      "residentAfterBytes" : 387334144,
+      "residentBeforeBytes" : 387186688
+    },
+    {
+      "iteration" : 26,
+      "iterationSeconds" : 0.31939220800000001,
+      "matchingCount" : 3026,
+      "querySeconds" : 0.31487925,
+      "residentAfterBytes" : 387448832,
+      "residentBeforeBytes" : 387334144
+    },
+    {
+      "iteration" : 27,
+      "iterationSeconds" : 0.31813783400000001,
+      "matchingCount" : 3027,
+      "querySeconds" : 0.31376341699999999,
+      "residentAfterBytes" : 387579904,
+      "residentBeforeBytes" : 387448832
+    },
+    {
+      "iteration" : 28,
+      "iterationSeconds" : 0.32487525,
+      "matchingCount" : 3028,
+      "querySeconds" : 0.32057191699999998,
+      "residentAfterBytes" : 387842048,
+      "residentBeforeBytes" : 387579904
+    },
+    {
+      "iteration" : 29,
+      "iterationSeconds" : 0.33658812500000002,
+      "matchingCount" : 3029,
+      "querySeconds" : 0.33209775000000002,
+      "residentAfterBytes" : 387973120,
+      "residentBeforeBytes" : 387842048
+    },
+    {
+      "iteration" : 30,
+      "iterationSeconds" : 0.31960012500000001,
+      "matchingCount" : 3030,
+      "querySeconds" : 0.31513354100000002,
+      "residentAfterBytes" : 388104192,
+      "residentBeforeBytes" : 387973120
+    },
+    {
+      "iteration" : 31,
+      "iterationSeconds" : 0.32343833300000002,
+      "matchingCount" : 3031,
+      "querySeconds" : 0.31898183299999999,
+      "residentAfterBytes" : 388235264,
+      "residentBeforeBytes" : 388104192
+    },
+    {
+      "iteration" : 32,
+      "iterationSeconds" : 0.32897712499999998,
+      "matchingCount" : 3032,
+      "querySeconds" : 0.32453320800000002,
+      "residentAfterBytes" : 388366336,
+      "residentBeforeBytes" : 388235264
+    },
+    {
+      "iteration" : 33,
+      "iterationSeconds" : 0.32030083300000001,
+      "matchingCount" : 3033,
+      "querySeconds" : 0.31591312500000002,
+      "residentAfterBytes" : 388497408,
+      "residentBeforeBytes" : 388366336
+    },
+    {
+      "iteration" : 34,
+      "iterationSeconds" : 0.325062458,
+      "matchingCount" : 3034,
+      "querySeconds" : 0.32046449999999999,
+      "residentAfterBytes" : 388628480,
+      "residentBeforeBytes" : 388497408
+    },
+    {
+      "iteration" : 35,
+      "iterationSeconds" : 0.3299475,
+      "matchingCount" : 3035,
+      "querySeconds" : 0.32561299999999999,
+      "residentAfterBytes" : 388923392,
+      "residentBeforeBytes" : 388628480
+    },
+    {
+      "iteration" : 36,
+      "iterationSeconds" : 0.32225900000000002,
+      "matchingCount" : 3036,
+      "querySeconds" : 0.318016083,
+      "residentAfterBytes" : 389120000,
+      "residentBeforeBytes" : 388923392
+    },
+    {
+      "iteration" : 37,
+      "iterationSeconds" : 0.323706667,
+      "matchingCount" : 3037,
+      "querySeconds" : 0.3192025,
+      "residentAfterBytes" : 390201344,
+      "residentBeforeBytes" : 389120000
+    },
+    {
+      "iteration" : 38,
+      "iterationSeconds" : 0.32199133400000002,
+      "matchingCount" : 3038,
+      "querySeconds" : 0.31748641700000002,
+      "residentAfterBytes" : 390348800,
+      "residentBeforeBytes" : 390201344
+    },
+    {
+      "iteration" : 39,
+      "iterationSeconds" : 0.32648120899999999,
+      "matchingCount" : 3039,
+      "querySeconds" : 0.32198900000000003,
+      "residentAfterBytes" : 358170624,
+      "residentBeforeBytes" : 390348800
+    },
+    {
+      "iteration" : 40,
+      "iterationSeconds" : 0.32979908299999999,
+      "matchingCount" : 3040,
+      "querySeconds" : 0.32538070800000002,
+      "residentAfterBytes" : 358318080,
+      "residentBeforeBytes" : 358170624
+    },
+    {
+      "iteration" : 41,
+      "iterationSeconds" : 0.32370408299999998,
+      "matchingCount" : 3041,
+      "querySeconds" : 0.31918312500000001,
+      "residentAfterBytes" : 358465536,
+      "residentBeforeBytes" : 358318080
+    },
+    {
+      "iteration" : 42,
+      "iterationSeconds" : 0.32142670800000001,
+      "matchingCount" : 3042,
+      "querySeconds" : 0.31687262500000002,
+      "residentAfterBytes" : 358629376,
+      "residentBeforeBytes" : 358465536
+    },
+    {
+      "iteration" : 43,
+      "iterationSeconds" : 0.320045458,
+      "matchingCount" : 3043,
+      "querySeconds" : 0.31538579100000003,
+      "residentAfterBytes" : 359071744,
+      "residentBeforeBytes" : 358629376
+    },
+    {
+      "iteration" : 44,
+      "iterationSeconds" : 0.32069249999999999,
+      "matchingCount" : 3044,
+      "querySeconds" : 0.31608583299999998,
+      "residentAfterBytes" : 359481344,
+      "residentBeforeBytes" : 359071744
+    },
+    {
+      "iteration" : 45,
+      "iterationSeconds" : 0.33508166700000003,
+      "matchingCount" : 3045,
+      "querySeconds" : 0.330472667,
+      "residentAfterBytes" : 359612416,
+      "residentBeforeBytes" : 359481344
+    },
+    {
+      "iteration" : 46,
+      "iterationSeconds" : 0.32509204200000003,
+      "matchingCount" : 3046,
+      "querySeconds" : 0.32056616700000001,
+      "residentAfterBytes" : 359743488,
+      "residentBeforeBytes" : 359612416
+    },
+    {
+      "iteration" : 47,
+      "iterationSeconds" : 0.324472333,
+      "matchingCount" : 3047,
+      "querySeconds" : 0.31986829100000003,
+      "residentAfterBytes" : 360038400,
+      "residentBeforeBytes" : 359743488
+    },
+    {
+      "iteration" : 48,
+      "iterationSeconds" : 0.32321050000000001,
+      "matchingCount" : 3048,
+      "querySeconds" : 0.31862291599999998,
+      "residentAfterBytes" : 360169472,
+      "residentBeforeBytes" : 360038400
+    },
+    {
+      "iteration" : 49,
+      "iterationSeconds" : 0.32323966700000001,
+      "matchingCount" : 3049,
+      "querySeconds" : 0.31866312499999999,
+      "residentAfterBytes" : 360349696,
+      "residentBeforeBytes" : 360169472
+    },
+    {
+      "iteration" : 50,
+      "iterationSeconds" : 0.31897512500000003,
+      "matchingCount" : 3050,
+      "querySeconds" : 0.31428795799999998,
+      "residentAfterBytes" : 360890368,
+      "residentBeforeBytes" : 360349696
+    },
+    {
+      "iteration" : 51,
+      "iterationSeconds" : 0.32293154200000002,
+      "matchingCount" : 3051,
+      "querySeconds" : 0.31855995799999998,
+      "residentAfterBytes" : 361250816,
+      "residentBeforeBytes" : 360890368
+    },
+    {
+      "iteration" : 52,
+      "iterationSeconds" : 0.32146054200000002,
+      "matchingCount" : 3052,
+      "querySeconds" : 0.31697704199999999,
+      "residentAfterBytes" : 361463808,
+      "residentBeforeBytes" : 361250816
+    },
+    {
+      "iteration" : 53,
+      "iterationSeconds" : 0.324896291,
+      "matchingCount" : 3053,
+      "querySeconds" : 0.32034195799999998,
+      "residentAfterBytes" : 361594880,
+      "residentBeforeBytes" : 361463808
+    },
+    {
+      "iteration" : 54,
+      "iterationSeconds" : 0.323708,
+      "matchingCount" : 3054,
+      "querySeconds" : 0.31906320799999999,
+      "residentAfterBytes" : 361725952,
+      "residentBeforeBytes" : 361594880
+    },
+    {
+      "iteration" : 55,
+      "iterationSeconds" : 0.326490167,
+      "matchingCount" : 3055,
+      "querySeconds" : 0.32179491700000001,
+      "residentAfterBytes" : 361857024,
+      "residentBeforeBytes" : 361725952
+    },
+    {
+      "iteration" : 56,
+      "iterationSeconds" : 0.32202866699999999,
+      "matchingCount" : 3056,
+      "querySeconds" : 0.317422708,
+      "residentAfterBytes" : 361988096,
+      "residentBeforeBytes" : 361857024
+    },
+    {
+      "iteration" : 57,
+      "iterationSeconds" : 0.32973625000000001,
+      "matchingCount" : 3057,
+      "querySeconds" : 0.32505224999999999,
+      "residentAfterBytes" : 362119168,
+      "residentBeforeBytes" : 361988096
+    },
+    {
+      "iteration" : 58,
+      "iterationSeconds" : 0.33408958300000002,
+      "matchingCount" : 3058,
+      "querySeconds" : 0.32968258299999997,
+      "residentAfterBytes" : 362364928,
+      "residentBeforeBytes" : 362119168
+    },
+    {
+      "iteration" : 59,
+      "iterationSeconds" : 0.33136429099999998,
+      "matchingCount" : 3059,
+      "querySeconds" : 0.32692062500000002,
+      "residentAfterBytes" : 362561536,
+      "residentBeforeBytes" : 362364928
+    },
+    {
+      "iteration" : 60,
+      "iterationSeconds" : 0.330951459,
+      "matchingCount" : 3060,
+      "querySeconds" : 0.326227084,
+      "residentAfterBytes" : 362692608,
+      "residentBeforeBytes" : 362561536
+    },
+    {
+      "iteration" : 61,
+      "iterationSeconds" : 0.39746587500000002,
+      "matchingCount" : 3061,
+      "querySeconds" : 0.39310374999999997,
+      "residentAfterBytes" : 364724224,
+      "residentBeforeBytes" : 362692608
+    },
+    {
+      "iteration" : 62,
+      "iterationSeconds" : 0.323127208,
+      "matchingCount" : 3062,
+      "querySeconds" : 0.31869175,
+      "residentAfterBytes" : 365871104,
+      "residentBeforeBytes" : 364724224
+    },
+    {
+      "iteration" : 63,
+      "iterationSeconds" : 0.32557154199999999,
+      "matchingCount" : 3063,
+      "querySeconds" : 0.32103566700000002,
+      "residentAfterBytes" : 366755840,
+      "residentBeforeBytes" : 365871104
+    },
+    {
+      "iteration" : 64,
+      "iterationSeconds" : 0.322957041,
+      "matchingCount" : 3064,
+      "querySeconds" : 0.31842933299999998,
+      "residentAfterBytes" : 367312896,
+      "residentBeforeBytes" : 366755840
+    },
+    {
+      "iteration" : 65,
+      "iterationSeconds" : 0.32699366699999999,
+      "matchingCount" : 3065,
+      "querySeconds" : 0.322394709,
+      "residentAfterBytes" : 367869952,
+      "residentBeforeBytes" : 367312896
+    },
+    {
+      "iteration" : 66,
+      "iterationSeconds" : 0.326441125,
+      "matchingCount" : 3066,
+      "querySeconds" : 0.32191729200000002,
+      "residentAfterBytes" : 368787456,
+      "residentBeforeBytes" : 367869952
+    },
+    {
+      "iteration" : 67,
+      "iterationSeconds" : 0.330383292,
+      "matchingCount" : 3067,
+      "querySeconds" : 0.32563999999999999,
+      "residentAfterBytes" : 369164288,
+      "residentBeforeBytes" : 368787456
+    },
+    {
+      "iteration" : 68,
+      "iterationSeconds" : 0.32857729200000002,
+      "matchingCount" : 3068,
+      "querySeconds" : 0.32396420799999998,
+      "residentAfterBytes" : 370393088,
+      "residentBeforeBytes" : 369164288
+    },
+    {
+      "iteration" : 69,
+      "iterationSeconds" : 0.32066116700000002,
+      "matchingCount" : 3069,
+      "querySeconds" : 0.31600899999999998,
+      "residentAfterBytes" : 371048448,
+      "residentBeforeBytes" : 370393088
+    },
+    {
+      "iteration" : 70,
+      "iterationSeconds" : 0.32183304099999999,
+      "matchingCount" : 3070,
+      "querySeconds" : 0.31724316600000002,
+      "residentAfterBytes" : 371965952,
+      "residentBeforeBytes" : 371048448
+    },
+    {
+      "iteration" : 71,
+      "iterationSeconds" : 0.32348816699999999,
+      "matchingCount" : 3071,
+      "querySeconds" : 0.31897737500000001,
+      "residentAfterBytes" : 372539392,
+      "residentBeforeBytes" : 371965952
+    },
+    {
+      "iteration" : 72,
+      "iterationSeconds" : 0.37260262500000002,
+      "matchingCount" : 3072,
+      "querySeconds" : 0.368017541,
+      "residentAfterBytes" : 373194752,
+      "residentBeforeBytes" : 372539392
+    },
+    {
+      "iteration" : 73,
+      "iterationSeconds" : 0.32874233400000002,
+      "matchingCount" : 3073,
+      "querySeconds" : 0.32392300000000002,
+      "residentAfterBytes" : 373964800,
+      "residentBeforeBytes" : 373194752
+    },
+    {
+      "iteration" : 74,
+      "iterationSeconds" : 0.325595833,
+      "matchingCount" : 3074,
+      "querySeconds" : 0.32112800000000002,
+      "residentAfterBytes" : 374620160,
+      "residentBeforeBytes" : 373964800
+    },
+    {
+      "iteration" : 75,
+      "iterationSeconds" : 0.31856887499999997,
+      "matchingCount" : 3075,
+      "querySeconds" : 0.31418258300000002,
+      "residentAfterBytes" : 375554048,
+      "residentBeforeBytes" : 374620160
+    },
+    {
+      "iteration" : 76,
+      "iterationSeconds" : 0.360209958,
+      "matchingCount" : 3076,
+      "querySeconds" : 0.355659583,
+      "residentAfterBytes" : 376094720,
+      "residentBeforeBytes" : 375554048
+    },
+    {
+      "iteration" : 77,
+      "iterationSeconds" : 0.32614437499999999,
+      "matchingCount" : 3077,
+      "querySeconds" : 0.32172795799999998,
+      "residentAfterBytes" : 376979456,
+      "residentBeforeBytes" : 376094720
+    },
+    {
+      "iteration" : 78,
+      "iterationSeconds" : 0.3246115,
+      "matchingCount" : 3078,
+      "querySeconds" : 0.319961459,
+      "residentAfterBytes" : 378028032,
+      "residentBeforeBytes" : 376979456
+    },
+    {
+      "iteration" : 79,
+      "iterationSeconds" : 0.32070791700000001,
+      "matchingCount" : 3079,
+      "querySeconds" : 0.31613295800000002,
+      "residentAfterBytes" : 378159104,
+      "residentBeforeBytes" : 378028032
+    },
+    {
+      "iteration" : 80,
+      "iterationSeconds" : 0.32353583400000002,
+      "matchingCount" : 3080,
+      "querySeconds" : 0.31903679200000001,
+      "residentAfterBytes" : 379191296,
+      "residentBeforeBytes" : 378159104
+    },
+    {
+      "iteration" : 81,
+      "iterationSeconds" : 0.36002904099999999,
+      "matchingCount" : 3081,
+      "querySeconds" : 0.35517208300000003,
+      "residentAfterBytes" : 379846656,
+      "residentBeforeBytes" : 379191296
+    },
+    {
+      "iteration" : 82,
+      "iterationSeconds" : 0.33481645799999998,
+      "matchingCount" : 3082,
+      "querySeconds" : 0.33011299999999999,
+      "residentAfterBytes" : 380780544,
+      "residentBeforeBytes" : 379846656
+    },
+    {
+      "iteration" : 83,
+      "iterationSeconds" : 0.336701166,
+      "matchingCount" : 3083,
+      "querySeconds" : 0.33159941599999998,
+      "residentAfterBytes" : 381665280,
+      "residentBeforeBytes" : 380780544
+    },
+    {
+      "iteration" : 84,
+      "iterationSeconds" : 0.345740834,
+      "matchingCount" : 3084,
+      "querySeconds" : 0.34127508400000001,
+      "residentAfterBytes" : 382631936,
+      "residentBeforeBytes" : 381665280
+    },
+    {
+      "iteration" : 85,
+      "iterationSeconds" : 0.32148816600000002,
+      "matchingCount" : 3085,
+      "querySeconds" : 0.316791041,
+      "residentAfterBytes" : 383123456,
+      "residentBeforeBytes" : 382631936
+    },
+    {
+      "iteration" : 86,
+      "iterationSeconds" : 0.32389358299999998,
+      "matchingCount" : 3086,
+      "querySeconds" : 0.31925079200000001,
+      "residentAfterBytes" : 383827968,
+      "residentBeforeBytes" : 383123456
+    },
+    {
+      "iteration" : 87,
+      "iterationSeconds" : 0.324409542,
+      "matchingCount" : 3087,
+      "querySeconds" : 0.31994995900000001,
+      "residentAfterBytes" : 384253952,
+      "residentBeforeBytes" : 383827968
+    },
+    {
+      "iteration" : 88,
+      "iterationSeconds" : 0.32350237500000001,
+      "matchingCount" : 3088,
+      "querySeconds" : 0.31893529199999998,
+      "residentAfterBytes" : 384909312,
+      "residentBeforeBytes" : 384253952
+    },
+    {
+      "iteration" : 89,
+      "iterationSeconds" : 0.32330970799999997,
+      "matchingCount" : 3089,
+      "querySeconds" : 0.31882054100000001,
+      "residentAfterBytes" : 385875968,
+      "residentBeforeBytes" : 384909312
+    },
+    {
+      "iteration" : 90,
+      "iterationSeconds" : 0.32444216599999998,
+      "matchingCount" : 3090,
+      "querySeconds" : 0.31997795800000001,
+      "residentAfterBytes" : 386547712,
+      "residentBeforeBytes" : 385875968
+    },
+    {
+      "iteration" : 91,
+      "iterationSeconds" : 0.327284083,
+      "matchingCount" : 3091,
+      "querySeconds" : 0.322316667,
+      "residentAfterBytes" : 387432448,
+      "residentBeforeBytes" : 386547712
+    },
+    {
+      "iteration" : 92,
+      "iterationSeconds" : 0.339168417,
+      "matchingCount" : 3092,
+      "querySeconds" : 0.33468616699999998,
+      "residentAfterBytes" : 388104192,
+      "residentBeforeBytes" : 387432448
+    },
+    {
+      "iteration" : 93,
+      "iterationSeconds" : 0.32515791599999999,
+      "matchingCount" : 3093,
+      "querySeconds" : 0.32072158299999998,
+      "residentAfterBytes" : 388825088,
+      "residentBeforeBytes" : 388104192
+    },
+    {
+      "iteration" : 94,
+      "iterationSeconds" : 0.32121149999999998,
+      "matchingCount" : 3094,
+      "querySeconds" : 0.31669270799999999,
+      "residentAfterBytes" : 389480448,
+      "residentBeforeBytes" : 388825088
+    },
+    {
+      "iteration" : 95,
+      "iterationSeconds" : 0.32887316700000002,
+      "matchingCount" : 3095,
+      "querySeconds" : 0.32419004200000001,
+      "residentAfterBytes" : 390234112,
+      "residentBeforeBytes" : 389480448
+    },
+    {
+      "iteration" : 96,
+      "iterationSeconds" : 0.32170245800000002,
+      "matchingCount" : 3096,
+      "querySeconds" : 0.316907208,
+      "residentAfterBytes" : 390889472,
+      "residentBeforeBytes" : 390234112
+    },
+    {
+      "iteration" : 97,
+      "iterationSeconds" : 0.32165549999999998,
+      "matchingCount" : 3097,
+      "querySeconds" : 0.317153291,
+      "residentAfterBytes" : 391643136,
+      "residentBeforeBytes" : 390889472
+    },
+    {
+      "iteration" : 98,
+      "iterationSeconds" : 0.32454775000000002,
+      "matchingCount" : 3098,
+      "querySeconds" : 0.32012412499999998,
+      "residentAfterBytes" : 392560640,
+      "residentBeforeBytes" : 391643136
+    },
+    {
+      "iteration" : 99,
+      "iterationSeconds" : 0.32382029200000001,
+      "matchingCount" : 3099,
+      "querySeconds" : 0.319224542,
+      "residentAfterBytes" : 393035776,
+      "residentBeforeBytes" : 392560640
+    },
+    {
+      "iteration" : 100,
+      "iterationSeconds" : 0.32275220799999998,
+      "matchingCount" : 3100,
+      "querySeconds" : 0.31803129099999999,
+      "residentAfterBytes" : 393740288,
+      "residentBeforeBytes" : 393035776
+    }
+  ],
+  "memberships" : 5000,
+  "queryRepeats" : 100,
+  "readableGenerations" : 100,
+  "savedDataUnchanged" : true,
+  "schedules" : 5000,
+  "uniqueGenerations" : 100
+}

@@ -51,3 +51,9 @@ The human accepted A on 14 October 2026. The [approved contract](calendar-window
 The human accepted A on 15 October 2026: align Day/Week by local clock time. Equal clock times align across days; repeated times occupy separate lanes with explicit timezone names. The [decision and required tests](calendar-time-grid-alignment-question.md) cover skipped/repeated hours, half-hour changes, crossing spans and overnight clipping. Saved instants, planning zones, Schedule identities and all-day dates remain unchanged.
 
 [Repeated-hour previews](prototypes/native-calendar-repeated-times.md), [booked-span](prototypes/native-calendar-booked-clock-change.md) and [start-only source-row](prototypes/native-source-clock-change-points.md) descriptions have their earlier native qualifications. Those captures used elapsed-time placement. The [native alignment slice](prototypes/native-clock-alignment.md) now supplies implementation and focused phone/tablet evidence. Broader Calendar, Mac runtime and physical-device gates stay open.
+
+## Q84, query-generation lifetime
+
+Q84 was asked through the question tool on 15 October 2026 and remains unanswered. The [proposal and impacts](query-generation-retention-question.md) distinguish temporary captures with stale-query refresh, older captures in temporary storage, and the current in-memory lifetime. Public Core probes keep 100 distinct large Calendar generations readable and preserve the full backup. Their resident-memory observations vary and do not establish exhaustion or a mobile budget.
+
+Equivalent Calendar capture reuse is already implemented. No early eviction, generation expiry, release operation or agent-access restriction is approved by this pending question. A changed retention guarantee needs the contract amendment and selected-policy tests before implementation.

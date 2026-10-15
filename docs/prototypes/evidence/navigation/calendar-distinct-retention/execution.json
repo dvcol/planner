@@ -1,0 +1,86 @@
+{
+  "baseCommit": "cf22a6236f5379c44f7012b3a67eaaa87f5c9e2c",
+  "scope": "Public Core measurement only; no production change or cache eviction policy.",
+  "command": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "swift",
+      "run",
+      "--package-path",
+      "/private/tmp/PlannerCalendarDistinctProbe",
+      "--scratch-path",
+      "/private/tmp/PlannerCalendarRetentionProbe/.build",
+      "--jobs",
+      "1",
+      "CalendarRetentionProbe"
+    ]
+  },
+  "inputSHA256": "ceece309121ad136cf6cff6a8369c35c97e70e57ea94d7ba54586d68a4c4bb65",
+  "inputProvenance": "../calendar-window-scale/fixture.json.gz",
+  "measurement": {
+    "distinctReadableGenerations": 100,
+    "firstMatchingCount": 3001,
+    "lastMatchingCount": 3100,
+    "medianQuerySeconds": 0.318975271,
+    "firstResidentBytes": 385974272,
+    "lastResidentBytes": 393740288,
+    "savedDataUnchanged": true
+  },
+  "qualification": {
+    "publicProbeExecutions": 2,
+    "coreTestInvocations": 0,
+    "httpTestInvocations": 0,
+    "nativeUITestInvocations": 0
+  },
+  "formatting": "Initial probe ran before swift-format. Final measured execution recompiles the retained formatted source; the initial measurement/log remain separate.",
+  "sourceHashes": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "854282b2c7e31c0251eb94f0d7daf600782de135e573365334c2fe691405744b",
+    "Planner/Scenes/SavedPlannerStore.swift": "4c8d0a194f7023f393462b3f93dacf37f967e3ef82d0c3ce397da75de7f271ab",
+    "docs/calendar-window-contract-review.md": "f78d88a9836aa0952a64e1aae31b68b2eab10dafe40076e39a5281b2c20882de",
+    "docs/adapter-contract.md": "eccb98ac4623741d4d41e22f0e5a68ee2995d29c6c92444d03dfa09c5468a0a3",
+    "docs/query-generation-retention-question.md": "cd82600bf79df1f82dcbebf3b1898ed1e91ebfc863c10f80d50e07134f91c2df",
+    "docs/prototypes/evidence/navigation/calendar-distinct-retention/probe.swift": "83efa8c91fffec68b486883df4eaec1d791d3bd72c7d7979bb31fa060b0d8795",
+    "docs/prototypes/evidence/navigation/calendar-distinct-retention/Package.swift": "18e453e5cda9ae53946914041b0a6c5de907aeb25b3d13c50daa0dd210e21ace",
+    "docs/open-decisions.md": "a847f70b92d76c08ad194d9c7f9acce65c2a79f46c7e75e930b0b7f3a3088f0b"
+  },
+  "productHashes": {
+    "/private/tmp/PlannerCalendarRetentionProbe/.build/debug/CalendarRetentionProbe": "e1f57111ffd7a23b5c4c39e43b7551a5bb888744feb72d6bedfd997fe41b3eea"
+  },
+  "artifactHashes": {
+    "Package.swift": "18e453e5cda9ae53946914041b0a6c5de907aeb25b3d13c50daa0dd210e21ace",
+    "initial-measurement.json": "fc9ad3ba75cc94ce8db1b607b4f16ab462da8dd74d4c3e5b82f87b33760b65b2",
+    "initial-probe.log.gz": "29bc24243f2aac40d19a769b7ad142f8167bf4511b241a891dc11a978e2cfb74",
+    "markdown-lint.log": "f70ffe7de8d27e76cb097f2a8e95611d1b909c65784dda34d67be6379f1ef696",
+    "measurement.json": "46fa0d6b5e215a63d8a0bf43a263c37471edf6e11919d4c0762011b33ae45ff4",
+    "probe.log.gz": "cb1e32ee66041d54dc5f6574ed5d8167b38efd0a390d1b0aa926adc1b3b4fdb6",
+    "probe.swift": "83efa8c91fffec68b486883df4eaec1d791d3bd72c7d7979bb31fa060b0d8795",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "validationCommands": [
+    [
+      "xcrun",
+      "swift-format",
+      "lint",
+      "--strict",
+      "docs/prototypes/evidence/navigation/calendar-distinct-retention/Package.swift",
+      "docs/prototypes/evidence/navigation/calendar-distinct-retention/probe.swift"
+    ],
+    [
+      "pnpm",
+      "dlx",
+      "markdownlint-cli2",
+      "--config",
+      "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+      "docs/query-generation-retention-question.md",
+      "docs/open-decisions.md"
+    ],
+    [
+      "git",
+      "diff",
+      "--check"
+    ]
+  ]
+}
