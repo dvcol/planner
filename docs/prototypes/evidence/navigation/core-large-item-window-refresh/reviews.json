@@ -1,0 +1,19 @@
+{
+  "baseCommit": "65128c5e960dfd3b70bd92128979d670225c717b",
+  "standards": {
+    "sourceFindings": 0,
+    "evidenceFindings": 0,
+    "finalEvidenceAudit": "complete",
+    "artifactHashesVerified": 15,
+    "sourceHashesVerified": 3,
+    "compiledProductHashVerified": true,
+    "cleanupReceiptsVerified": true
+  },
+  "spec": {
+    "sourceFindings": 0,
+    "evidenceFindings": 0,
+    "finalEvidenceAudit": "complete",
+    "artifactHashesVerified": 15,
+    "counting": "One function, one suite, one invocation in 20.588 seconds; 79 refreshed pages and 4,999 identities. Initial 22.101-second run remains distinct."
+  }
+}

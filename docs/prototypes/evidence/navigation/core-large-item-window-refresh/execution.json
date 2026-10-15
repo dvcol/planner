@@ -1,0 +1,51 @@
+{
+  "baseCommit": "65128c5e960dfd3b70bd92128979d670225c717b",
+  "productionChanges": false,
+  "initial": {
+    "functions": 1,
+    "suites": 1,
+    "invocations": 1,
+    "seconds": 22.101,
+    "obsoletePageOffsets": [
+      0,
+      64,
+      4992
+    ],
+    "failures": 0,
+    "skips": 0,
+    "supersededByNextPageFirstOrder": true
+  },
+  "final": {
+    "host": "macOS 27.0.1",
+    "functions": 1,
+    "suites": 1,
+    "invocations": 1,
+    "seconds": 20.588,
+    "failures": 0,
+    "skips": 0,
+    "obsoletePageOffsets": [
+      64,
+      0,
+      4992
+    ],
+    "originalMatchingItems": 5000,
+    "refreshedMatchingItems": 4999,
+    "refreshedTraversalPages": 79,
+    "savedItems": 5000,
+    "savedLists": 200,
+    "savedMemberships": 5000,
+    "membersPerList": 25,
+    "membershipRecordsUnchanged": true,
+    "fixtureRemovedAfterProcessExit": true
+  },
+  "checks": {
+    "strictSwiftFiles": 1,
+    "markdownReports": 1
+  },
+  "limits": [
+    "One controlled second-writer interleaving in one process using a real local-only SQLite store.",
+    "No simultaneous writer race, native cancellation/selection, CloudKit or physical-device qualification.",
+    "No memory/hitch/physical 300 ms acceptance claim.",
+    "No production behavior or Q84 C retention change; Q86 remains pending."
+  ]
+}
