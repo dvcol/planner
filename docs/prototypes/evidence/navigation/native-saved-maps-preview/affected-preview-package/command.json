@@ -1,0 +1,11 @@
+[
+  "xcrun",
+  "swift",
+  "test",
+  "--package-path",
+  "Packages/PlannerPreviews",
+  "--scratch-path",
+  "/private/tmp/PlannerMapsNativePreviewBuild",
+  "--jobs",
+  "1"
+]
