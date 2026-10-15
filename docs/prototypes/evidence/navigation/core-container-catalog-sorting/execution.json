@@ -1,0 +1,54 @@
+{
+  "baseCommit": "45e4985",
+  "final": {
+    "filter": "ContainerCatalogSortTests",
+    "tests": 5,
+    "suites": 1,
+    "failed": 0,
+    "skipped": 0,
+    "suiteSeconds": 22.049,
+    "functionSeconds": {
+      "title": 0.4,
+      "admission": 0.147,
+      "chronological": 0.336,
+      "fullEstimate": 22.049,
+      "externalWriter": 0.542
+    },
+    "fixtureDirectoriesRemovedAfterExit": 5
+  },
+  "initialCycles": {
+    "title": {
+      "redSeconds": 0.315,
+      "issues": 12,
+      "greenSeconds": 0.272
+    },
+    "admission": {
+      "redSeconds": 0.071,
+      "issues": 24,
+      "greenSeconds": 0.059
+    },
+    "chronological": {
+      "redSeconds": 0.207,
+      "issues": 28,
+      "greenSeconds": 0.298
+    },
+    "fullEstimate": {
+      "redSeconds": 47.009,
+      "issues": 44,
+      "greenSeconds": 49.437
+    }
+  },
+  "initialGreensAreFinalQualification": false,
+  "reviewCorrections": [
+    "Retain named SQLite fixtures until process exit; clean externally",
+    "Share one private sorting policy across both catalog projections"
+  ],
+  "macBuild": "Passed; no UI runtime",
+  "phoneSimulatorBuild": "Passed; no iOS sorting runtime",
+  "sourceReview": "Final standards/spec reviews complete; zero remaining findings after warning-history wording correction",
+  "limits": [
+    "HTTP parser/schema/runtime adoption pending",
+    "Native controls and preference/runtime qualification pending",
+    "No scale/memory/physical/UI/CloudKit/account claim"
+  ]
+}

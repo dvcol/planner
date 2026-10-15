@@ -1,0 +1,5 @@
+{
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "6685a8834fb6d4cd6b86b60fea0a8b5e9b417f6839e9537635f0af2f0c4f69a7",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "03108c26001d24a6be0872f419576779cc7d6b0695a7fb77e17d39211417d30c",
+  "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ContainerCatalogSortTests.swift": "ca0cb24b4672aabaa88bf46601f078d84766558f3dd97ef0b63f21de38654198"
+}

@@ -1725,12 +1725,65 @@ public actor Planner {
     return date
   }
 
+  private struct CatalogSortValue {
+    let source: PlannerEntityReference
+    let comparisonName: String
+    let comparisonDate: Date?
+  }
+
+  private func sortedCatalogIdentities(
+    _ values: [CatalogSortValue], sort: PlannerCatalogQuery.Sort?, context: ModelContext
+  ) throws -> [PlannerRowIdentity] {
+    let estimateKeys: [UUID: CatalogEstimateSortKey]
+    if sort?.mode == .fullEstimate {
+      estimateKeys = try catalogEstimateSortKeys(sources: values.map(\.source), context: context)
+    } else {
+      estimateKeys = [:]
+    }
+    let comparator = String.Comparator(
+      options: [.caseInsensitive, .diacriticInsensitive], locale: Locale(identifier: "en_US_POSIX"))
+    let descendingTitle = sort?.mode == .title && sort?.direction == .descending
+    let sorted = try values.sorted { first, second in
+      if let firstDate = first.comparisonDate, let secondDate = second.comparisonDate,
+        firstDate != secondDate
+      {
+        if sort?.direction == .descending { return firstDate > secondDate }
+        return firstDate < secondDate
+      }
+      if sort?.mode == .fullEstimate,
+        let precedes = try catalogEstimatePrecedes(
+          estimateKeys[first.source.id], estimateKeys[second.source.id],
+          direction: sort?.direction ?? .ascending)
+      {
+        return precedes
+      }
+      let comparison = comparator.compare(first.comparisonName, second.comparisonName)
+      if comparison != .orderedSame {
+        return comparison == (descendingTitle ? .orderedDescending : .orderedAscending)
+      }
+      return first.source.id.uuidString < second.source.id.uuidString
+    }
+    return sorted.map { .source($0.source) }
+  }
+
+  private func requiredCatalogSortDate(_ date: Date?) throws -> Date {
+    guard let date, date.timeIntervalSinceReferenceDate.isFinite else {
+      throw PlannerFailure("readUnavailable", "A catalog source has an unresolved sort timestamp.")
+    }
+    return date
+  }
+
   private func listCatalogSnapshot(
     session: PlannerDatasetSession, query: PlannerCatalogQuery, context: ModelContext
   ) throws -> PlannerQuerySnapshot {
     guard query.sourceKind != .item else {
       throw PlannerFailure(
         "invalidInput", "Item discovery requires an Item query.", propertyPath: "/query/sourceKind")
+    }
+    if query.sort != nil, query.sourceKind != .list, query.sourceKind != .itinerary {
+      throw PlannerFailure(
+        "invalidInput", "Only List and Itinerary catalogs support sorting.",
+        propertyPath: "/query/sort")
     }
     if query.sourceKind == .category {
       return try categoryCatalogSnapshot(session: session, query: query, context: context)
@@ -1751,6 +1804,9 @@ public actor Planner {
     }
     var descriptor = FetchDescriptor<PlannerSchemaV18.List>()
     descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.name, \.archived]
+    if query.sort?.mode == .created || query.sort?.mode == .lastUpdated {
+      descriptor.propertiesToFetch += [\.createdAt, \.updatedAt]
+    }
     let locale = Locale(identifier: "en_US_POSIX")
     let terms = query.text.split(whereSeparator: \.isWhitespace).map(String.init)
     let matches = try context.fetch(descriptor).filter { list in
@@ -1764,32 +1820,35 @@ public actor Planner {
           != nil
       }
     }
-    let values = try matches.map { list in
+    let values = try matches.map { list -> CatalogSortValue in
       guard let identifier = list.id, list.lifetimeId != nil,
         !list.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
       else {
         throw PlannerFailure("readUnavailable", "A catalog List has unresolved identity or name.")
       }
-      return (
+      let comparisonDate: Date?
+      if query.sort?.mode == .created {
+        comparisonDate = try requiredCatalogSortDate(list.createdAt)
+      } else if query.sort?.mode == .lastUpdated {
+        comparisonDate = try requiredCatalogSortDate(list.updatedAt)
+      } else {
+        comparisonDate = nil
+      }
+      return CatalogSortValue(
         source: PlannerEntityReference(kind: .list, id: identifier),
         comparisonName: list.name.folding(
-          options: [.caseInsensitive, .diacriticInsensitive], locale: locale)
+          options: [.caseInsensitive, .diacriticInsensitive], locale: locale),
+        comparisonDate: comparisonDate
       )
     }
     guard Set(values.map { $0.source.id }).count == values.count else {
       throw PlannerFailure(
         "readUnavailable", "Catalog List identities are duplicated and unresolved.")
     }
-    let comparator = String.Comparator(
-      options: [.caseInsensitive, .diacriticInsensitive], locale: locale)
-    let sorted = values.sorted { first, second in
-      let comparison = comparator.compare(first.comparisonName, second.comparisonName)
-      if comparison != .orderedSame { return comparison == .orderedAscending }
-      return first.source.id.uuidString < second.source.id.uuidString
-    }
+    let rows = try sortedCatalogIdentities(values, sort: query.sort, context: context)
     return PlannerQuerySnapshot(
-      session: session, generation: UUID(), rows: sorted.map { .source($0.source) },
-      matchingCount: Int64(sorted.count), rowPresentation: nil,
+      session: session, generation: UUID(), rows: rows,
+      matchingCount: Int64(rows.count), rowPresentation: nil,
       progress: [], unresolvedReferences: [])
   }
 
@@ -1798,6 +1857,9 @@ public actor Planner {
   ) throws -> PlannerQuerySnapshot {
     var descriptor = FetchDescriptor<PlannerSchemaV18.Itinerary>()
     descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.title, \.archived]
+    if query.sort?.mode == .created || query.sort?.mode == .lastUpdated {
+      descriptor.propertiesToFetch += [\.createdAt, \.updatedAt]
+    }
     let locale = Locale(identifier: "en_US_POSIX")
     let terms = query.text.split(whereSeparator: \.isWhitespace).map(String.init)
     let matches = try context.fetch(descriptor).filter { itinerary in
@@ -1811,33 +1873,36 @@ public actor Planner {
           of: $0, options: [.caseInsensitive, .diacriticInsensitive], locale: locale) != nil
       }
     }
-    let values = try matches.map { itinerary in
+    let values = try matches.map { itinerary -> CatalogSortValue in
       guard let identifier = itinerary.id, itinerary.lifetimeId != nil,
         !itinerary.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
       else {
         throw PlannerFailure(
           "readUnavailable", "A catalog Itinerary has unresolved identity or title.")
       }
-      return (
+      let comparisonDate: Date?
+      if query.sort?.mode == .created {
+        comparisonDate = try requiredCatalogSortDate(itinerary.createdAt)
+      } else if query.sort?.mode == .lastUpdated {
+        comparisonDate = try requiredCatalogSortDate(itinerary.updatedAt)
+      } else {
+        comparisonDate = nil
+      }
+      return CatalogSortValue(
         source: PlannerEntityReference(kind: .itinerary, id: identifier),
         comparisonName: itinerary.title.folding(
-          options: [.caseInsensitive, .diacriticInsensitive], locale: locale)
+          options: [.caseInsensitive, .diacriticInsensitive], locale: locale),
+        comparisonDate: comparisonDate
       )
     }
     guard Set(values.map { $0.source.id }).count == values.count else {
       throw PlannerFailure(
         "readUnavailable", "Catalog Itinerary identities are duplicated and unresolved.")
     }
-    let comparator = String.Comparator(
-      options: [.caseInsensitive, .diacriticInsensitive], locale: locale)
-    let sorted = values.sorted { first, second in
-      let comparison = comparator.compare(first.comparisonName, second.comparisonName)
-      if comparison != .orderedSame { return comparison == .orderedAscending }
-      return first.source.id.uuidString < second.source.id.uuidString
-    }
+    let rows = try sortedCatalogIdentities(values, sort: query.sort, context: context)
     return PlannerQuerySnapshot(
-      session: session, generation: UUID(), rows: sorted.map { .source($0.source) },
-      matchingCount: Int64(sorted.count), rowPresentation: nil,
+      session: session, generation: UUID(), rows: rows,
+      matchingCount: Int64(rows.count), rowPresentation: nil,
       progress: [], unresolvedReferences: [])
   }
 
@@ -2107,6 +2172,69 @@ public actor Planner {
           container: container, state: state,
           doneCount: doneCount, totalCount: totalCount, archivedCount: archivedCount)
       ], unresolvedReferences: [])
+  }
+
+  private struct CatalogEstimateSortKey {
+    let certaintyRank: Int
+    let minutes: Int64
+  }
+
+  private func catalogEstimatePrecedes(
+    _ first: CatalogEstimateSortKey?, _ second: CatalogEstimateSortKey?,
+    direction: PlannerCatalogQuery.Sort.Direction
+  ) throws -> Bool? {
+    guard let first, let second else {
+      throw PlannerFailure("readUnavailable", "A catalog full-estimate key is unresolved.")
+    }
+    if first.certaintyRank != second.certaintyRank {
+      return first.certaintyRank < second.certaintyRank
+    }
+    guard first.minutes != second.minutes else { return nil }
+    if direction == .ascending { return first.minutes < second.minutes }
+    return first.minutes > second.minutes
+  }
+
+  private func catalogEstimateSortKeys(
+    sources: [PlannerEntityReference], context: ModelContext
+  ) throws -> [UUID: CatalogEstimateSortKey] {
+    let graph = try catalogEstimateGraph(
+      identities: sources.map(PlannerRowIdentity.source), context: context)
+    let listIdentifiers = Set(sources.filter { $0.kind == .list }.map(\.id))
+    var totals: [UUID: PlannerDurationTotal] = [:]
+    for list in graph.lists where listIdentifiers.contains(list.id) {
+      totals[list.id] = try list.progressAndEstimates(
+        memberships: graph.memberships, items: graph.items
+      ).estimates.fullEstimate
+    }
+    let itineraryIdentifiers = sources.filter { $0.kind == .itinerary }.map(\.id)
+    if !itineraryIdentifiers.isEmpty {
+      let optionalIdentifiers = itineraryIdentifiers.map(Optional.some)
+      var descriptor = FetchDescriptor<PlannerSchemaV18.Itinerary>(
+        predicate: #Predicate { optionalIdentifiers.contains($0.id) })
+      descriptor.propertiesToFetch = [\.id, \.lifetimeId, \.archived, \.manualEstimateData]
+      for itinerary in try context.fetch(descriptor) {
+        let snapshot = try itinerary.estimateSnapshot(entries: graph.entries)
+        let total = try snapshot.progressAndEstimates(
+          memberships: graph.memberships, items: graph.items, lists: graph.lists
+        ).estimates.fullEstimate
+        guard totals.updateValue(total, forKey: snapshot.reference.id) == nil else {
+          throw PlannerFailure(
+            "readUnavailable", "Catalog full-estimate identities are duplicated.")
+        }
+      }
+    }
+    guard Set(totals.keys) == Set(sources.map(\.id)) else {
+      throw PlannerFailure("readUnavailable", "A catalog full estimate is unresolved.")
+    }
+    return try totals.mapValues { total in
+      switch total {
+      case .exact(let minutes): return .init(certaintyRank: 0, minutes: minutes)
+      case .lowerBound(let minutes, _): return .init(certaintyRank: 1, minutes: minutes)
+      case .unavailable: return .init(certaintyRank: 2, minutes: 0)
+      case .upperBound:
+        throw PlannerFailure("readUnavailable", "A full estimate has an invalid upper bound.")
+      }
+    }
   }
 
   private struct CatalogEstimateGraph {

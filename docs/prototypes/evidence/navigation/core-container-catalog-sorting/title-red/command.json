@@ -1,0 +1,13 @@
+[
+  "xcrun",
+  "swift",
+  "test",
+  "--package-path",
+  "Packages/PlannerCore",
+  "--scratch-path",
+  "/private/tmp/PlannerLargeCollectionCoreBuild",
+  "--filter",
+  "explicitTitleDirectionsKeepCatalogDefaultsTiesFiltersAndOrderedPages",
+  "--jobs",
+  "1"
+]
