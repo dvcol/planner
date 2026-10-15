@@ -1,0 +1,343 @@
+{
+  "environment": {
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+  },
+  "commands": [
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhone.xcresult"
+      ],
+      "output": "initial-summary.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "tests",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhone.xcresult"
+      ],
+      "output": "initial-tests.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneDiagnostic.xcresult"
+      ],
+      "output": "references-diagnostic-summary.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "tests",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneDiagnostic.xcresult"
+      ],
+      "output": "references-diagnostic-tests.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneVisible.xcresult"
+      ],
+      "output": "visible-summary.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "tests",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneVisible.xcresult"
+      ],
+      "output": "visible-tests.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneReviewDiagnostic.xcresult"
+      ],
+      "output": "review-diagnostic-summary.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "tests",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneReviewDiagnostic.xcresult"
+      ],
+      "output": "review-diagnostic-tests.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneRendered.xcresult"
+      ],
+      "output": "owner-count-summary.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "tests",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneRendered.xcresult"
+      ],
+      "output": "owner-count-tests.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneOwners.xcresult"
+      ],
+      "output": "schedule-type-summary.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "tests",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneOwners.xcresult"
+      ],
+      "output": "schedule-type-tests.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneSources.xcresult"
+      ],
+      "output": "gutter-phone-summary.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "tests",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneSources.xcresult"
+      ],
+      "output": "gutter-phone-tests.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphTabletSources.xcresult"
+      ],
+      "output": "gutter-tablet-summary.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "tests",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphTabletSources.xcresult"
+      ],
+      "output": "gutter-tablet-tests.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneFinal.xcresult"
+      ],
+      "output": "regression-phone-summary.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "tests",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneFinal.xcresult"
+      ],
+      "output": "regression-phone-tests.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphTabletFinal.xcresult"
+      ],
+      "output": "regression-tablet-summary.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "tests",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphTabletFinal.xcresult"
+      ],
+      "output": "regression-tablet-tests.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneQualified.xcresult"
+      ],
+      "output": "before-back-phone-summary.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "tests",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneQualified.xcresult"
+      ],
+      "output": "before-back-phone-tests.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneComplete.xcresult"
+      ],
+      "output": "phone-summary.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "tests",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneComplete.xcresult"
+      ],
+      "output": "phone-tests.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "export",
+        "attachments",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphPhoneComplete.xcresult",
+        "--output-path",
+        "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-empty-recovery-graph/phone"
+      ]
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphTabletQualified.xcresult"
+      ],
+      "output": "tablet-summary.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "tests",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphTabletQualified.xcresult"
+      ],
+      "output": "tablet-tests.json"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "export",
+        "attachments",
+        "--path",
+        "/private/tmp/PlannerRecoveryGraphTabletQualified.xcresult",
+        "--output-path",
+        "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-empty-recovery-graph/tablet"
+      ]
+    }
+  ]
+}

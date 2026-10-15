@@ -1,0 +1,257 @@
+{
+  "baseCommit": "ef26c8ddfa66c64e5843c6dcb3e0e41a7f197fa6",
+  "scope": "Native explicit recovery into an empty local Planner: complete represented plan graph, Cancel, source identities, observable references/completion/archive and relaunch. Fixtures/tests/docs only.",
+  "stages": {
+    "before-back-phone": {
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "gutter-phone": {
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "gutter-tablet": {
+      "passedTests": 1,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 2
+    },
+    "initial": {
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "owner-count": {
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "phone": {
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "references-diagnostic": {
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "regression-phone": {
+      "passedTests": 1,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 2
+    },
+    "regression-tablet": {
+      "passedTests": 1,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 2
+    },
+    "review-diagnostic": {
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "schedule-type": {
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "tablet": {
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "visible": {
+      "passedTests": 0,
+      "failedTests": 1,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    }
+  },
+  "finalTargeted": {
+    "phone": {
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    },
+    "tablet": {
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "totalTestCount": 1
+    }
+  },
+  "compatibility": {
+    "creditedFunctionsPerDevice": 1,
+    "name": "testReviewCancelAndRestoreRetainedCopyPreservesIdentitiesAfterRelaunch",
+    "bundles": [
+      "regression-phone",
+      "regression-tablet"
+    ],
+    "qualification": "Each mixed bundle passes the unchanged reviewed Item/Tag regression and fails the then-current new graph function. Only the regression is credited; final graph proof is separate."
+  },
+  "uniquePassingFunctionsPerDevice": 2,
+  "qualifiedSourceDifference": {
+    "tabletToFinalSources": [
+      "PlannerFixtureUITests/RecoveryGraphJourneyTests.swift"
+    ],
+    "tabletToFinalProducts": [
+      "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtureUITests-Runner.app/PlugIns/PlannerFixtureUITests.xctest/PlannerFixtureUITests"
+    ],
+    "reason": "After iPad passed, add only native Back fallback to the new test helper when phone has no sidebar. Final phone then passes. App/fixture/Core and existing regression sources remain unchanged."
+  },
+  "mac": {
+    "buildForTesting": "passed",
+    "runtimeFunctions": 0
+  },
+  "coreHTTP": {
+    "newRuns": 0,
+    "productionChanges": 0,
+    "storageSchema": 18,
+    "portableFormat": 2
+  },
+  "visualInspection": {
+    "standardsOriginals": [
+      "phone/35D3EEE5-D6E3-4F4C-B8FC-F0F7EC2B7636.png",
+      "phone/01D0C0F6-9F42-42CA-8D0E-E3505B38B0F5.png",
+      "phone/CD9FFFD1-4CF6-4932-8338-CD1450A64CBB.png",
+      "phone/CCC977F7-B92A-4BEF-9CB9-172B26B7DA4D.png",
+      "phone/F938B25E-AFEC-4F3E-BEE8-670DB98ABA89.png",
+      "tablet/9FD1F6E2-9C66-495E-B15C-70426E21EC55.png",
+      "tablet/82B54536-B82F-4B3C-812D-A032158CA2BE.png",
+      "tablet/2484B728-A302-4D6F-A867-0E183D541DF2.png",
+      "tablet/1F677B75-B251-4B14-A63C-7779ABB3B71C.png",
+      "tablet/533098D1-35F6-445D-8C0E-1969BD615236.png"
+    ],
+    "rootOriginals": [
+      "tablet/1F677B75-B251-4B14-A63C-7779ABB3B71C.png",
+      "tablet/2484B728-A302-4D6F-A867-0E183D541DF2.png",
+      "tablet/82B54536-B82F-4B3C-812D-A032158CA2BE.png",
+      "phone/CCC977F7-B92A-4BEF-9CB9-172B26B7DA4D.png",
+      "phone/CD9FFFD1-4CF6-4932-8338-CD1450A64CBB.png",
+      "phone/35D3EEE5-D6E3-4F4C-B8FC-F0F7EC2B7636.png"
+    ],
+    "qualification": "Ten originals individually inspected by standards review; six selected originals by root. No material source or recovery-flow visual findings; broader app polish remains open."
+  },
+  "attachmentRetention": "Complete targeted phone/tablet capture manifests retained. Earlier diagnostic/mixed runs retain summaries/test trees/raw logs plus selected source/product snapshots and two original diagnostic images. Complete earlier failure/compatibility attachment inventories are not claimed.",
+  "sources": {
+    "PlannerFixtures/PlannerFixtureDataset.swift": "06fecd0897cb773a8906b18b6ed39a84b9f4cb75d0f0e99f7e52ada8c8d434c4",
+    "PlannerFixtures/PlannerRecoveryGraphFixture.swift": "0dbdecdc3ad37963dcd6bae37adb2e27b5404b928a56f78aec4f8e00b542a54e",
+    "PlannerFixtureUITests/RecoveryGraphJourneyTests.swift": "57b93ebff149dee08d159d37b711edd677de73d27f7df64a73c3ce4c84aa8469",
+    "PlannerFixtureUITests/RetainedRecoveryJourneyTests.swift": "f45ba55bf1d9a54ff2a168d2fc52e765a4adf68997a971d71d436344c167d0c0",
+    "Planner/Scenes/SavedPlannerStore.swift": "4c8d0a194f7023f393462b3f93dacf37f967e3ef82d0c3ce397da75de7f271ab",
+    "Planner/Scenes/SavedRecoveryCopiesView.swift": "4ed2645cb05705dde6a5ea3b5658da94bbc1d80b211ae3bce7cd8aa8b2045b62",
+    "Planner/Scenes/SavedRecoverySelectionView.swift": "9d746dd4f368573456f499e9d3d40f2812ce15632c57b36f61138dadb3024d39",
+    "Planner/Scenes/SavedBackupImportForm.swift": "45015698617d9cbb5dfd8e5dd90b2219a512a67a8695d2d75b9ad033bb9c0eae",
+    "Planner/Scenes/SavedBackupImportSummary.swift": "1da34a96a56d00edcd341a11a60565d3e2529db306f5182f844f238f4f35f6ce",
+    "docs/prototypes/native-empty-recovery-graph.md": "d6e251f788e0f7aa4667a2511144c8245e964c8422f7eefffa3cb4caad1c9208",
+    "docs/prototypes/native-reviewed-recovery-restoration.md": "60c31c433ecc39855e891198a6bc3861874138fec6e0d82e8810f9eb2ed8a44a",
+    "docs/portable-data-contract.md": "ce464c0f480ffe66fb1770ad11afcf949e5823668409c4572842ee65b9533e38"
+  },
+  "products": {
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures": "b799e68c823737b89ec582b1a32a618b3db6efb402ed424cd22990cc82ceddbc",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtures.app/PlannerFixtures.debug.dylib": "204a668b2b61d821266eb19e49500e11451a72e0704431e9e7bdcd0f3a8b3ef4",
+    "/private/tmp/PlannerCalendarTemporalDerivedData/Build/Products/Debug-iphonesimulator/PlannerFixtureUITests-Runner.app/PlugIns/PlannerFixtureUITests.xctest/PlannerFixtureUITests": "6f72bf4f3e4e76abfdf256eb1315bec04c52b7952218f69521f038ad0d6e7e3d",
+    "/private/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures": "d96edb02b239719167b1bfdb2e1a9c1312c230765f19fd706e22c9a892913bfa",
+    "/private/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtures.app/Contents/MacOS/PlannerFixtures.debug.dylib": "ab27a929e7d6ca2f148fb95f796382705820614f61933f0c66ed47ab58c925be",
+    "/private/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerFixtureUITests-Runner.app/Contents/PlugIns/PlannerFixtureUITests.xctest/Contents/MacOS/PlannerFixtureUITests": "63702636af3fc9743e7a0eca8d076ffc345b621fa160fe36c0f5cec33ada6066"
+  },
+  "reviews": {
+    "standards": "Clear source standards and all ten original targeted captures.",
+    "spec": "Clear. Twelve source/document, six product and 72 artifact hashes, all 13 stage counts, complete targeted manifests and the exact phone Back fallback delta verified. Qualified scope and remaining limits match execution."
+  },
+  "limits": [
+    "No byte-for-byte equality of every portable field or original backup association/Schedule ID comparison credited at this native seam",
+    "No new original Schedule endpoint comparison/deletion-history/proposal/unavailable-store/export-delivery qualification",
+    "Mac compile only; physical account/cutoff/CloudKit/Share and broader adaptive/accessibility/scale/polish remain open",
+    "Earlier functional failures are test-interaction/expected-value diagnostics, not product red/green proof; no production repair required"
+  ],
+  "artifacts": {
+    "before-back-phone-summary.json": "854881f2d3b37fd91684f2e5783d2d4b0c54f06e81dfc95af7d125c822d74656",
+    "before-back-phone-tests.json": "2e292ad100b4c37fdebcf54b551a36f8f25606ddaab31a37d8f96bf6de245277",
+    "before-back-phone.log.gz": "bad96aad8f8c2f859e7542d7e52a695fdf8595436fccf43b768826a6cbb3fa8d",
+    "before-gutter-product-hashes.json": "db636e62537ae51c45b53626bde79a745470328fa7f8fd77d7e219857cc7512c",
+    "before-gutter-source-hashes.json": "4d408c782df4920c0724dbcb58420b9f368bced887783c924c9200112bbc6272",
+    "before-gutter-test.swift": "5b3f99ccde44f5884183dcf041ded7febf1dab5c9ce84b20f69fb4acaa833c90",
+    "before-schedule-recheck-test.swift": "f70fddc2ebffcf9ca840db178b59056e3469465c2fde260f7f72e522d8f1bbc9",
+    "commands.json": "dc853e147fc45fb4d228c43e1b78d83520f2221b43e4f88646659e0bbe04b03f",
+    "diagnostic-map-scroll.png": "a32dd5bbdc8c99d418048c561cb479d9e35ea4d64380edf54952918c0ef42e46",
+    "diagnostic-offscreen-references.png": "8ac2fac7adccac643d8102f60d75b5004e73c8f53ac1d5105abf3012f62bb8c1",
+    "gutter-phone-summary.json": "365b29aac4be3be002babc96851eda060d5e26baa8f11eec03627d0c85c1cbea",
+    "gutter-phone-tests.json": "9e293dba464a820fca5e1029331c39ff9a996fd1e1525b79c63b3ca88a69baaa",
+    "gutter-phone.log.gz": "19ded8899b54015ba95b32770246ade00f73c58c34000e38341e9c223f921a6b",
+    "gutter-tablet-summary.json": "01f58cf473a787feff58c7ba40655618f75150ed122b9424546766bf5ab349c3",
+    "gutter-tablet-tests.json": "62086f6fc73fece479917f026140332e904eb490576e5cd5e3c12ca1d8e12e02",
+    "gutter-tablet.log.gz": "3b835d57530a0662e989c7fe246de2c03e31a5dcc9cc62b4b060d1517504d8b5",
+    "initial-summary.json": "07d42214ffc169e8f4f7565c7096e94bbdda503ddfb22f990f9005f7c1468d07",
+    "initial-tests.json": "947635177b8b7c671ce27d9e620d48467c8eb9a48dbe09644709590e91ef4dd3",
+    "initial.log.gz": "a74ecfe187defa293815ea0990669c7d6457ee5e658b51ec6513b66b79e402e5",
+    "ios-build.log.gz": "bf3df349e743c0cc0850ba9e26ddf26aba1880cde42a142e85dadf7c179018ed",
+    "mac-build.log.gz": "7a2cc041cfafc9f389147c4227d6d74b61998f4ec7a9057b74c6b3cc7168f41e",
+    "markdown-lint.log": "1f804a565a7ac6478fc78169ebb6afab5f4d342002529cbdc87832ebd7def2f5",
+    "markdownlint.jsonc": "b53810b0dcf52ee0d16c73be6bbe5822ac21ad2a9294b628f934ed11164d9d41",
+    "owner-count-summary.json": "c35ca10efc8e77ab5cb6baed1022f454cc2a2fbdd067854945abff28b90f200f",
+    "owner-count-tests.json": "68ff565556a5fe6a078ec7fb171de8e1d5f448df9a3f3648ccc58e72602054ec",
+    "owner-count.log.gz": "9a35048fc04a5ad14a498f7d05111cb6e4aeecedcb208b5f636bd1c0490de3f6",
+    "phone/01D0C0F6-9F42-42CA-8D0E-E3505B38B0F5.png": "0e90a9174376758903432c8ceaa573e66c33ce4db6bd03d86e41e0ad9e22dbb9",
+    "phone/35D3EEE5-D6E3-4F4C-B8FC-F0F7EC2B7636.png": "3b99002e0db7a365360fa4152a0776535c6c36045ab19e9306623c790fd3ea44",
+    "phone/CCC977F7-B92A-4BEF-9CB9-172B26B7DA4D.png": "cf12a165a8dcb5e65f03d87a1f811930e6774948a08b1579c1905b4f8238dd33",
+    "phone/CD9FFFD1-4CF6-4932-8338-CD1450A64CBB.png": "7aa51421ee625ea7e35025b1b979be638e3c90241436fc2526855fa690740246",
+    "phone/F938B25E-AFEC-4F3E-BEE8-670DB98ABA89.png": "698a4dd587131d68047aaf7483bc4ed49696f38e6c45e0bb845498ff0eae4660",
+    "phone/manifest.json": "8492460b641f3c35032c458e42e9059b7b8dce11a33cf1c6e9286ff9267d60dc",
+    "phone-summary.json": "c8ac163a932f5aafdf00efc434ee4cd71a6d2046e905abf18741349d3ae0876c",
+    "phone-tests.json": "40b7aa99499035f217a65835a626e59fe71b3b43b262b8c12c684180c1754340",
+    "phone.log.gz": "345451edbad4c1ec0b5c60fdf40a8a0260627f80bf62f10af0af8a77edd3d7c8",
+    "product-hashes.json": "fa3c1cab572ed91e4f53fba94dfa902543ea11afcf580e0883a5d68868dcb9a7",
+    "references-diagnostic-summary.json": "6d9e60bc765979b4c1da5a015cf658b19c9c613904f9aef6cec9ddc26b9102f0",
+    "references-diagnostic-tests.json": "ddbd26043aeebb206d35ffcfe63d0be717b0703d010bef1bc9897208322e19a6",
+    "references-diagnostic.log.gz": "6587643ab30d6e3c8234c28829b830e5ebb8565dc6bf75581716185fefd196d0",
+    "regression-phone-summary.json": "08f470e729c846c607a5572da1feaf52870c86db0cc54fa5b6ac87be80e90dd9",
+    "regression-phone-tests.json": "5b5f5d2c35ae7a05d0d3d0fdc8b133dc9f2bc66070ac94ac10c36c1bb246824f",
+    "regression-phone.log.gz": "8aea4aff81bd636eee64df0f8cca5365991e8cc0c75ad99a840690159cb3e56f",
+    "regression-product-hashes.json": "4088ee4de29c6115af9e011d6b1d209485f4ff4b9fc58e90d1f33ab1b223cd4a",
+    "regression-source-hashes.json": "363b9807cd3d00d1befb3675a1106ab0dfdec93ed41f9e0383efe72b9409a071",
+    "regression-tablet-summary.json": "30dbb769e4e950a18dd925f1e4c30d9252c5301640803135054b468ffa9b55e0",
+    "regression-tablet-tests.json": "c46c7634a227bbb0534b27cfafb4d6766ae81bbf60e5e52919d88ff6ed37748d",
+    "regression-tablet.log.gz": "a50a06e30da757a3d3711823fcf58ae269c8f436c73944d672c8c0e6f5a16e26",
+    "result-commands.json": "b1dcb49890888a1458fbee677d12180d6c4d6b3718e283223258df1d37e35c53",
+    "review-diagnostic-summary.json": "9a7916dc792093a4cdca37014cfa687a89f2519b306540c8740a3dbd0f2aa723",
+    "review-diagnostic-tests.json": "7a80533bbe0e797355773cf6a46b25d9bb502abc251e3622e78889219b037834",
+    "review-diagnostic.log.gz": "49cbdfc4b9922224058efe75c69f1d0afde934adf3e5971ecb24dc6118c7e966",
+    "schedule-type-summary.json": "0b9ef88a006a21d96ba12891b60883f774a733cad7712a441d86b3b32dccc84c",
+    "schedule-type-tests.json": "6439b5cd083f1d484ef5cc0ebd67aeb2609179ecd41b887ad4db802390774731",
+    "schedule-type.log.gz": "219ab9ff59c300604e61e73c00c017223329527a8d970e00afa843f3b6942ae3",
+    "source-hashes.json": "f4bcea22cbd6409b92bf3d1bddd5ff23c7b35d96a79c376af2466526357641ab",
+    "swift-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tablet/1F677B75-B251-4B14-A63C-7779ABB3B71C.png": "5e4ac486173b535a16776de425c8c02a2e0437dc14d8e54d37a57fff9eb97720",
+    "tablet/2484B728-A302-4D6F-A867-0E183D541DF2.png": "260ee6632a72c9e70e7d323b9d902a5150d056a379c7c86d53afd78f711b5d53",
+    "tablet/533098D1-35F6-445D-8C0E-1969BD615236.png": "22649ba11e8489f5a05c3acc63c1aa811abe384b4be6ea1ba6adefb511cae5f4",
+    "tablet/82B54536-B82F-4B3C-812D-A032158CA2BE.png": "25ee6ef1c82fcc697155ded14a79ee84ef84975d65000be228179c9c36a9f8b1",
+    "tablet/9FD1F6E2-9C66-495E-B15C-70426E21EC55.png": "617eba6048434528df8648f274aef3752ce29686be1da05386f4cd3411cf160a",
+    "tablet/manifest.json": "8d12827da2b2303b2e43e12ee7f26d3d21bc6923f82693f4db82213b5e22405c",
+    "tablet-product-hashes.json": "7d2b01803605b8294f8c9e8dbbbc539d4a3898caeec910bc52ff8dcce4d7affc",
+    "tablet-qualified-test.swift": "00088ccfccca97f94ec3103d6b223e0ce646471143b71911a3469a9f8cfc4e7d",
+    "tablet-source-hashes.json": "9e33cae10438eac2df02a2f5fa610f28d8002fbf4686b9c1fa9f46409eeb2c3d",
+    "tablet-summary.json": "395e8087b6c2b9f1f2f0d61f32f3a23536a55cb50d4c6c6a0c3a21bbc9d03cbb",
+    "tablet-tests.json": "5c1ddfb0ade97955bcb5d8734c6fab627394fc5791c267275762eed111384246",
+    "tablet.log.gz": "85872284d79656240a70a311c126dab7e69d98eaf56ed0b6c450d0dd68bf282c",
+    "unsupported-helper.log.gz": "ad13f92e3635a144395ae66b845431517b8549c79974cb09bc540c126faab6d1",
+    "visible-summary.json": "7b2893841727c498f838ff38febd7b62c19808351453e30a0e7423b8197381df",
+    "visible-tests.json": "742e876ec98fcea686a2f96cfdc7315f35a30a7a6804e1a6169e08a2844501e9",
+    "visible.log.gz": "51c3ae136f807a96672f8f19374c94599119b6188b24da7dec0c13dcde4b1e45"
+  }
+}

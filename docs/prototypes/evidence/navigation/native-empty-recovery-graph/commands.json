@@ -1,0 +1,456 @@
+{
+  "initial": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "-project",
+      "Planner.xcodeproj",
+      "-scheme",
+      "PlannerFixtures",
+      "-destination",
+      "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "-derivedDataPath",
+      "/private/tmp/PlannerCalendarTemporalDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/private/tmp/PlannerCalendarMonthSourcePackages",
+      "-disableAutomaticPackageResolution",
+      "-parallel-testing-enabled",
+      "NO",
+      "-only-testing:PlannerFixtureUITests/RecoveryGraphJourneyTests",
+      "-resultBundlePath",
+      "/private/tmp/PlannerRecoveryGraphPhone.xcresult",
+      "CODE_SIGNING_ALLOWED=NO",
+      "test"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphPhone.log"
+  },
+  "references-diagnostic": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "-project",
+      "Planner.xcodeproj",
+      "-scheme",
+      "PlannerFixtures",
+      "-destination",
+      "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "-derivedDataPath",
+      "/private/tmp/PlannerCalendarTemporalDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/private/tmp/PlannerCalendarMonthSourcePackages",
+      "-disableAutomaticPackageResolution",
+      "-parallel-testing-enabled",
+      "NO",
+      "-only-testing:PlannerFixtureUITests/RecoveryGraphJourneyTests",
+      "-resultBundlePath",
+      "/private/tmp/PlannerRecoveryGraphPhoneDiagnostic.xcresult",
+      "CODE_SIGNING_ALLOWED=NO",
+      "test"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphPhoneDiagnostic.log"
+  },
+  "visible": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "-project",
+      "Planner.xcodeproj",
+      "-scheme",
+      "PlannerFixtures",
+      "-destination",
+      "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "-derivedDataPath",
+      "/private/tmp/PlannerCalendarTemporalDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/private/tmp/PlannerCalendarMonthSourcePackages",
+      "-disableAutomaticPackageResolution",
+      "-parallel-testing-enabled",
+      "NO",
+      "-only-testing:PlannerFixtureUITests/RecoveryGraphJourneyTests",
+      "-resultBundlePath",
+      "/private/tmp/PlannerRecoveryGraphPhoneVisible.xcresult",
+      "CODE_SIGNING_ALLOWED=NO",
+      "test"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphPhoneVisible.log"
+  },
+  "review-diagnostic": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "-project",
+      "Planner.xcodeproj",
+      "-scheme",
+      "PlannerFixtures",
+      "-destination",
+      "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "-derivedDataPath",
+      "/private/tmp/PlannerCalendarTemporalDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/private/tmp/PlannerCalendarMonthSourcePackages",
+      "-disableAutomaticPackageResolution",
+      "-parallel-testing-enabled",
+      "NO",
+      "-only-testing:PlannerFixtureUITests/RecoveryGraphJourneyTests",
+      "-resultBundlePath",
+      "/private/tmp/PlannerRecoveryGraphPhoneReviewDiagnostic.xcresult",
+      "CODE_SIGNING_ALLOWED=NO",
+      "test"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphPhoneReviewDiagnostic.log"
+  },
+  "unsupported-helper": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "-project",
+      "Planner.xcodeproj",
+      "-scheme",
+      "PlannerFixtures",
+      "-destination",
+      "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "-derivedDataPath",
+      "/private/tmp/PlannerCalendarTemporalDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/private/tmp/PlannerCalendarMonthSourcePackages",
+      "-disableAutomaticPackageResolution",
+      "-parallel-testing-enabled",
+      "NO",
+      "-only-testing:PlannerFixtureUITests/RecoveryGraphJourneyTests",
+      "-resultBundlePath",
+      "/private/tmp/PlannerRecoveryGraphPhoneControls.xcresult",
+      "CODE_SIGNING_ALLOWED=NO",
+      "test"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphPhoneControls.log"
+  },
+  "owner-count": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "-project",
+      "Planner.xcodeproj",
+      "-scheme",
+      "PlannerFixtures",
+      "-destination",
+      "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "-derivedDataPath",
+      "/private/tmp/PlannerCalendarTemporalDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/private/tmp/PlannerCalendarMonthSourcePackages",
+      "-disableAutomaticPackageResolution",
+      "-parallel-testing-enabled",
+      "NO",
+      "-only-testing:PlannerFixtureUITests/RecoveryGraphJourneyTests",
+      "-resultBundlePath",
+      "/private/tmp/PlannerRecoveryGraphPhoneRendered.xcresult",
+      "CODE_SIGNING_ALLOWED=NO",
+      "test"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphPhoneRendered.log"
+  },
+  "schedule-type": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "-project",
+      "Planner.xcodeproj",
+      "-scheme",
+      "PlannerFixtures",
+      "-destination",
+      "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "-derivedDataPath",
+      "/private/tmp/PlannerCalendarTemporalDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/private/tmp/PlannerCalendarMonthSourcePackages",
+      "-disableAutomaticPackageResolution",
+      "-parallel-testing-enabled",
+      "NO",
+      "-only-testing:PlannerFixtureUITests/RecoveryGraphJourneyTests",
+      "-resultBundlePath",
+      "/private/tmp/PlannerRecoveryGraphPhoneOwners.xcresult",
+      "CODE_SIGNING_ALLOWED=NO",
+      "test"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphPhoneOwners.log"
+  },
+  "gutter-phone": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "-project",
+      "Planner.xcodeproj",
+      "-scheme",
+      "PlannerFixtures",
+      "-destination",
+      "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "-derivedDataPath",
+      "/private/tmp/PlannerCalendarTemporalDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/private/tmp/PlannerCalendarMonthSourcePackages",
+      "-disableAutomaticPackageResolution",
+      "-parallel-testing-enabled",
+      "NO",
+      "-only-testing:PlannerFixtureUITests/RecoveryGraphJourneyTests",
+      "-resultBundlePath",
+      "/private/tmp/PlannerRecoveryGraphPhoneSources.xcresult",
+      "CODE_SIGNING_ALLOWED=NO",
+      "test"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphPhoneSources.log"
+  },
+  "gutter-tablet": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "-project",
+      "Planner.xcodeproj",
+      "-scheme",
+      "PlannerFixtures",
+      "-destination",
+      "platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "-derivedDataPath",
+      "/private/tmp/PlannerCalendarTemporalDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/private/tmp/PlannerCalendarMonthSourcePackages",
+      "-disableAutomaticPackageResolution",
+      "-parallel-testing-enabled",
+      "NO",
+      "-only-testing:PlannerFixtureUITests/RecoveryGraphJourneyTests",
+      "-only-testing:PlannerFixtureUITests/RetainedRecoveryJourneyTests/testReviewCancelAndRestoreRetainedCopyPreservesIdentitiesAfterRelaunch",
+      "-resultBundlePath",
+      "/private/tmp/PlannerRecoveryGraphTabletSources.xcresult",
+      "CODE_SIGNING_ALLOWED=NO",
+      "test-without-building"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphTabletSources.log"
+  },
+  "regression-phone": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "-project",
+      "Planner.xcodeproj",
+      "-scheme",
+      "PlannerFixtures",
+      "-destination",
+      "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "-derivedDataPath",
+      "/private/tmp/PlannerCalendarTemporalDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/private/tmp/PlannerCalendarMonthSourcePackages",
+      "-disableAutomaticPackageResolution",
+      "-parallel-testing-enabled",
+      "NO",
+      "-only-testing:PlannerFixtureUITests/RecoveryGraphJourneyTests",
+      "-only-testing:PlannerFixtureUITests/RetainedRecoveryJourneyTests/testReviewCancelAndRestoreRetainedCopyPreservesIdentitiesAfterRelaunch",
+      "-resultBundlePath",
+      "/private/tmp/PlannerRecoveryGraphPhoneFinal.xcresult",
+      "CODE_SIGNING_ALLOWED=NO",
+      "test-without-building"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphPhoneFinal.log"
+  },
+  "regression-tablet": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "-project",
+      "Planner.xcodeproj",
+      "-scheme",
+      "PlannerFixtures",
+      "-destination",
+      "platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "-derivedDataPath",
+      "/private/tmp/PlannerCalendarTemporalDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/private/tmp/PlannerCalendarMonthSourcePackages",
+      "-disableAutomaticPackageResolution",
+      "-parallel-testing-enabled",
+      "NO",
+      "-only-testing:PlannerFixtureUITests/RecoveryGraphJourneyTests",
+      "-only-testing:PlannerFixtureUITests/RetainedRecoveryJourneyTests/testReviewCancelAndRestoreRetainedCopyPreservesIdentitiesAfterRelaunch",
+      "-resultBundlePath",
+      "/private/tmp/PlannerRecoveryGraphTabletFinal.xcresult",
+      "CODE_SIGNING_ALLOWED=NO",
+      "test-without-building"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphTabletFinal.log"
+  },
+  "before-back-phone": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "-project",
+      "Planner.xcodeproj",
+      "-scheme",
+      "PlannerFixtures",
+      "-destination",
+      "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "-derivedDataPath",
+      "/private/tmp/PlannerCalendarTemporalDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/private/tmp/PlannerCalendarMonthSourcePackages",
+      "-disableAutomaticPackageResolution",
+      "-parallel-testing-enabled",
+      "NO",
+      "-only-testing:PlannerFixtureUITests/RecoveryGraphJourneyTests",
+      "-resultBundlePath",
+      "/private/tmp/PlannerRecoveryGraphPhoneQualified.xcresult",
+      "CODE_SIGNING_ALLOWED=NO",
+      "test"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphPhoneQualified.log"
+  },
+  "phone": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "-project",
+      "Planner.xcodeproj",
+      "-scheme",
+      "PlannerFixtures",
+      "-destination",
+      "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "-derivedDataPath",
+      "/private/tmp/PlannerCalendarTemporalDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/private/tmp/PlannerCalendarMonthSourcePackages",
+      "-disableAutomaticPackageResolution",
+      "-parallel-testing-enabled",
+      "NO",
+      "-only-testing:PlannerFixtureUITests/RecoveryGraphJourneyTests",
+      "-resultBundlePath",
+      "/private/tmp/PlannerRecoveryGraphPhoneComplete.xcresult",
+      "CODE_SIGNING_ALLOWED=NO",
+      "test"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphPhoneComplete.log"
+  },
+  "tablet": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "-project",
+      "Planner.xcodeproj",
+      "-scheme",
+      "PlannerFixtures",
+      "-destination",
+      "platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "-derivedDataPath",
+      "/private/tmp/PlannerCalendarTemporalDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/private/tmp/PlannerCalendarMonthSourcePackages",
+      "-disableAutomaticPackageResolution",
+      "-parallel-testing-enabled",
+      "NO",
+      "-only-testing:PlannerFixtureUITests/RecoveryGraphJourneyTests",
+      "-resultBundlePath",
+      "/private/tmp/PlannerRecoveryGraphTabletQualified.xcresult",
+      "CODE_SIGNING_ALLOWED=NO",
+      "test-without-building"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphTabletQualified.log"
+  },
+  "ios-build": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "-project",
+      "Planner.xcodeproj",
+      "-scheme",
+      "PlannerFixtures",
+      "-destination",
+      "platform=iOS Simulator,id=2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "-derivedDataPath",
+      "/private/tmp/PlannerCalendarTemporalDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/private/tmp/PlannerCalendarMonthSourcePackages",
+      "-disableAutomaticPackageResolution",
+      "CODE_SIGNING_ALLOWED=NO",
+      "build-for-testing"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphIOSFinalBuild.log",
+    "note": "Earlier successful build. Final iOS compilation is in phone/PhoneComplete test command."
+  },
+  "mac-build": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "-project",
+      "Planner.xcodeproj",
+      "-scheme",
+      "PlannerFixtures",
+      "-destination",
+      "platform=macOS",
+      "-derivedDataPath",
+      "/private/tmp/PlannerRetainedRecoveryMacDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/private/tmp/PlannerCalendarMonthSourcePackages",
+      "-disableAutomaticPackageResolution",
+      "CODE_SIGNING_ALLOWED=NO",
+      "build-for-testing"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphMacCompleteBuild.log"
+  },
+  "swift-lint": {
+    "environment": {
+      "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer"
+    },
+    "argv": [
+      "xcrun",
+      "swift-format",
+      "lint",
+      "--strict",
+      "PlannerFixtures/PlannerFixtureDataset.swift",
+      "PlannerFixtures/PlannerRecoveryGraphFixture.swift",
+      "PlannerFixtureUITests/RecoveryGraphJourneyTests.swift"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphSwiftLint.log"
+  },
+  "markdown-lint": {
+    "argv": [
+      "/opt/homebrew/bin/pnpm",
+      "dlx",
+      "markdownlint-cli2",
+      "--config",
+      "/private/tmp/PlannerRecoveryMarkdownLint.jsonc",
+      "docs/prototypes/native-empty-recovery-graph.md",
+      "docs/prototypes/native-reviewed-recovery-restoration.md",
+      "docs/portable-data-contract.md"
+    ],
+    "log": "/private/tmp/PlannerRecoveryGraphMarkdownLint.log"
+  }
+}

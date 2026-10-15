@@ -1,0 +1,53 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "35D3EEE5-D6E3-4F4C-B8FC-F0F7EC2B7636.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Restored shared labels retain their original source identities_0_F2EDFD6B-C00D-408A-B08F-A10DD0B73684.png",
+        "timestamp" : 1792026383.652
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "01D0C0F6-9F42-42CA-8D0E-E3505B38B0F5.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Restored List identity, order and local completion remain after another relaunch_0_6B0F2192-A0F3-4473-92AC-180E4C502D46.png",
+        "timestamp" : 1792026358.187
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "CD9FFFD1-4CF6-4932-8338-CD1450A64CBB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Restored route retains repeated Items, independent local completion and archived children_0_B6FE81CF-2188-491C-9A09-7E78CA9B1562.png",
+        "timestamp" : 1792026319.025
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "CCC977F7-B92A-4BEF-9CB9-172B26B7DA4D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Recovery review includes six sources and their saved Schedules for the empty Planner_0_6EC6FA96-8E3D-4948-9659-09E2A1D1FE5F.png",
+        "timestamp" : 1792026190.03
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "F938B25E-AFEC-4F3E-BEE8-670DB98ABA89.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Retained recovery graph includes memberships, entries, labels, bookmarks and Schedules_0_CD74B7B7-C68B-472C-9C36-8DC4B33287D3.png",
+        "timestamp" : 1792026183.624
+      }
+    ],
+    "testIdentifier" : "RecoveryGraphJourneyTests/testReviewedRecoveryRestoresAnEmptyPlannerWithRepeatedReferencesAndSavedState()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RecoveryGraphJourneyTests/testReviewedRecoveryRestoresAnEmptyPlannerWithRepeatedReferencesAndSavedState"
+  }
+]

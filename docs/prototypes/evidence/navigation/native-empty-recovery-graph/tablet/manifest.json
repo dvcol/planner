@@ -1,0 +1,53 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "9FD1F6E2-9C66-495E-B15C-70426E21EC55.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Restored shared labels retain their original source identities_0_2994CAE8-F3C5-4E5E-9C5F-6988CCE93E01.png",
+        "timestamp" : 1792026056.14
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "82B54536-B82F-4B3C-812D-A032158CA2BE.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Restored List identity, order and local completion remain after another relaunch_0_532B4F40-6051-44B8-9C41-5A4004E39838.png",
+        "timestamp" : 1792026031.799
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "2484B728-A302-4D6F-A867-0E183D541DF2.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Restored route retains repeated Items, independent local completion and archived children_0_BFD9A92B-7B66-4674-B756-6D42C135435E.png",
+        "timestamp" : 1792025994.184
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "1F677B75-B251-4B14-A63C-7779ABB3B71C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Recovery review includes six sources and their saved Schedules for the empty Planner_0_201EADDC-8CDA-45B6-9FDA-B323BA81CAFF.png",
+        "timestamp" : 1792025854.786
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "533098D1-35F6-445D-8C0E-1969BD615236.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Retained recovery graph includes memberships, entries, labels, bookmarks and Schedules_0_A3D38275-0588-428E-8DC0-5ACDE8BD8769.png",
+        "timestamp" : 1792025848.427
+      }
+    ],
+    "testIdentifier" : "RecoveryGraphJourneyTests/testReviewedRecoveryRestoresAnEmptyPlannerWithRepeatedReferencesAndSavedState()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/RecoveryGraphJourneyTests/testReviewedRecoveryRestoresAnEmptyPlannerWithRepeatedReferencesAndSavedState"
+  }
+]
