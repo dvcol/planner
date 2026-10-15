@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "68C92222-4D1F-4989-B8A9-C3FC6845E192.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Two hundred List identities observed in both traversal directions_0_7505924A-55EC-4A46-AFC6-F313C620A787.txt",
+        "timestamp" : 1792069484.928
+      }
+    ],
+    "testIdentifier" : "LargeListTraversalJourneyTests/testEveryListCanBeTraversedInBothDirectionsWithoutChangingItsIdentity()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LargeListTraversalJourneyTests/testEveryListCanBeTraversedInBothDirectionsWithoutChangingItsIdentity"
+  }
+]

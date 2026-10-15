@@ -1,0 +1,53 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "B4B210FE-64B4-4A11-8E28-4392C31B725D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Scale List 001 reopens its expected live children after traversal_0_AE64E29F-FA93-4AA1-B41C-7D8584E90529.png",
+        "timestamp" : 1792069485.104
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "4456B317-BA6C-40C6-8242-E12C51F45C5A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Returning through every List retains all two hundred source identities_0_D1ACF507-5C78-4685-A9C9-E9049BEE8461.png",
+        "timestamp" : 1792069479.619
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "58D6C728-4162-4568-A14B-EB362424B8AC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Scale List 200 opens its expected live children_0_C59EF2F2-A6CC-4E46-8AC9-316E4D69644D.png",
+        "timestamp" : 1792069059.267
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "67984F5F-85DC-4056-ABD2-8E6A0CC8E726.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Every List identity has been observed while reaching Scale List 200_0_9EADF29D-F135-4851-8CB2-B09BF62D88F5.png",
+        "timestamp" : 1792069054.948
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "9498AE4A-273B-4F58-A4BC-F5F3389E51CD.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The two-hundred-List catalog begins at Scale List 001_0_D0A1E04E-03F6-48BB-ADCD-48511DD28943.png",
+        "timestamp" : 1792068654.981
+      }
+    ],
+    "testIdentifier" : "LargeListTraversalJourneyTests/testEveryListCanBeTraversedInBothDirectionsWithoutChangingItsIdentity()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LargeListTraversalJourneyTests/testEveryListCanBeTraversedInBothDirectionsWithoutChangingItsIdentity"
+  }
+]

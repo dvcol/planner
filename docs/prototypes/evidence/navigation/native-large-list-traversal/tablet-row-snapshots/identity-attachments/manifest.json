@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "05BA79F4-753B-4E05-8306-D915F39864C7.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Two hundred List identities observed in both traversal directions_0_4E6E6977-553F-408D-B4E5-61A65C10401A.txt",
+        "timestamp" : 1792069976.784
+      }
+    ],
+    "testIdentifier" : "LargeListTraversalJourneyTests/testEveryListCanBeTraversedInBothDirectionsWithoutChangingItsIdentity()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LargeListTraversalJourneyTests/testEveryListCanBeTraversedInBothDirectionsWithoutChangingItsIdentity"
+  }
+]

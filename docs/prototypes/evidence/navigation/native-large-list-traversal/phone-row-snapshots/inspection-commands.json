@@ -1,0 +1,35 @@
+{
+  "summary": [
+    "xcrun",
+    "xcresulttool",
+    "get",
+    "test-results",
+    "summary",
+    "--path",
+    "/private/tmp/PlannerLargeListTraversal-phone-row-snapshots.xcresult"
+  ],
+  "attachments": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerLargeListTraversal-phone-row-snapshots.xcresult",
+    "--output-path",
+    "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-large-list-traversal/phone-row-snapshots/attachments",
+    "--filter",
+    "*.png"
+  ],
+  "identities": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "/private/tmp/PlannerLargeListTraversal-phone-row-snapshots.xcresult",
+    "--output-path",
+    "/Users/dinh-van.colomban/Workspace/private/planner/docs/prototypes/evidence/navigation/native-large-list-traversal/phone-row-snapshots/identity-attachments",
+    "--filter",
+    "*.txt"
+  ]
+}

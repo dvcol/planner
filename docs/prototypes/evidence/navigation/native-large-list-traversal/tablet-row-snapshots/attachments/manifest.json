@@ -1,0 +1,53 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "3E55F2A0-D5B8-4800-ABE6-B1107CC45A82.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Scale List 001 reopens its expected live children after traversal_0_9111B481-FA78-4DD4-85BC-A1C0A22FB945.png",
+        "timestamp" : 1792069976.964
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "420286A4-833E-411B-A176-A078F23743C3.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Returning through every List retains all two hundred source identities_0_E8B6547A-07B7-4C90-BCCC-A0A13F0EF9D6.png",
+        "timestamp" : 1792069972.273
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "E80D482B-25B2-448B-A00B-FC8DED00FFD2.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Scale List 200 opens its expected live children_0_ADADCE44-25C4-4252-A227-2E991A9BABDD.png",
+        "timestamp" : 1792069256.901
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "4F50A0A1-0026-4DE2-8CD5-5749BF04A20C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Every List identity has been observed while reaching Scale List 200_0_FA815A61-1318-4B05-9BDA-9F8BAF6BADE2.png",
+        "timestamp" : 1792069252.385
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "47ECC5A9-5028-46C5-B43D-4796E1470006.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The two-hundred-List catalog begins at Scale List 001_0_024EB003-394A-4280-9BC1-2DA02D241032.png",
+        "timestamp" : 1792068733.507
+      }
+    ],
+    "testIdentifier" : "LargeListTraversalJourneyTests/testEveryListCanBeTraversedInBothDirectionsWithoutChangingItsIdentity()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LargeListTraversalJourneyTests/testEveryListCanBeTraversedInBothDirectionsWithoutChangingItsIdentity"
+  }
+]

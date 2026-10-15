@@ -1,0 +1,57 @@
+{
+  "phone-initial/attachments/DCB3C8FF-56FC-4074-97F5-2DA5F848C314.png": {
+    "sha256": "91129281fd87be4b8a7cc31bbd8b1747b7fc9d90d24cdd27cd8c3250598feed3",
+    "individuallyViewed": true,
+    "scope": "Exact original simulator PNG; no cropping, stitching or recompression."
+  },
+  "phone-row-snapshots/attachments/4456B317-BA6C-40C6-8242-E12C51F45C5A.png": {
+    "sha256": "d76a0952731b7c715fc6a4e8233ace41bfd58e5dbbe3638eb19547026c4977be",
+    "individuallyViewed": true,
+    "scope": "Exact original simulator PNG; no cropping, stitching or recompression."
+  },
+  "phone-row-snapshots/attachments/58D6C728-4162-4568-A14B-EB362424B8AC.png": {
+    "sha256": "3044b485514857ab3669b88b48c2d056621ef39d6757336ef79f37274b14f799",
+    "individuallyViewed": true,
+    "scope": "Exact original simulator PNG; no cropping, stitching or recompression."
+  },
+  "phone-row-snapshots/attachments/67984F5F-85DC-4056-ABD2-8E6A0CC8E726.png": {
+    "sha256": "67ac8838ffdd4db5d22184a3d64f846ace71f2c94bb7625fc8178da3ef2f8aa5",
+    "individuallyViewed": true,
+    "scope": "Exact original simulator PNG; no cropping, stitching or recompression."
+  },
+  "phone-row-snapshots/attachments/9498AE4A-273B-4F58-A4BC-F5F3389E51CD.png": {
+    "sha256": "70354724a70a41c9b73e090867bdcebfcfc3c9bd85b95f1ff4aed65a8d6a1906",
+    "individuallyViewed": true,
+    "scope": "Exact original simulator PNG; no cropping, stitching or recompression."
+  },
+  "phone-row-snapshots/attachments/B4B210FE-64B4-4A11-8E28-4392C31B725D.png": {
+    "sha256": "6254c4510dace352498c5e7ce37d2b9e831b27349ab68a8963ae64706ee36e8e",
+    "individuallyViewed": true,
+    "scope": "Exact original simulator PNG; no cropping, stitching or recompression."
+  },
+  "tablet-row-snapshots/attachments/3E55F2A0-D5B8-4800-ABE6-B1107CC45A82.png": {
+    "sha256": "d9775f244e620125a074302bb1be3e6288453c60b1748f1d14af73c9895e4379",
+    "individuallyViewed": true,
+    "scope": "Exact original simulator PNG; no cropping, stitching or recompression."
+  },
+  "tablet-row-snapshots/attachments/420286A4-833E-411B-A176-A078F23743C3.png": {
+    "sha256": "c33e9e89acadbd1ae80706e46d595ef8d2ca7f6b6a65279014163c5dda375431",
+    "individuallyViewed": true,
+    "scope": "Exact original simulator PNG; no cropping, stitching or recompression."
+  },
+  "tablet-row-snapshots/attachments/47ECC5A9-5028-46C5-B43D-4796E1470006.png": {
+    "sha256": "de0294029c9a2a082f6d628d7d695f9deffa11609ef8de160623b683f1afda73",
+    "individuallyViewed": true,
+    "scope": "Exact original simulator PNG; no cropping, stitching or recompression."
+  },
+  "tablet-row-snapshots/attachments/4F50A0A1-0026-4DE2-8CD5-5749BF04A20C.png": {
+    "sha256": "b2cc2bf56706fe1ad36d999509033dbf96a58eb31aed07aeae71b97f8aa70077",
+    "individuallyViewed": true,
+    "scope": "Exact original simulator PNG; no cropping, stitching or recompression."
+  },
+  "tablet-row-snapshots/attachments/E80D482B-25B2-448B-A00B-FC8DED00FFD2.png": {
+    "sha256": "dac1d08154db1abf806bbb4ba17435c72f1dc924537bcfc381cc9fdf51a95d58",
+    "individuallyViewed": true,
+    "scope": "Exact original simulator PNG; no cropping, stitching or recompression."
+  }
+}

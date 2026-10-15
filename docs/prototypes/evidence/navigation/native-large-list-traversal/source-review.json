@@ -1,0 +1,19 @@
+{
+  "testSourceSHA256": "dc8b97a51f3a588f50e877a72ee14e8eeff9a7eadcccd67f8156c358a1e331cf",
+  "standards": {
+    "initialFinding": "Return from List 200 handled only Back; iPad can instead hide its catalog behind Show Sidebar.",
+    "resolution": "Use native Back or Show Sidebar, then assert catalog and far-end row visibility. Row attributes are captured once before value sorting.",
+    "remainingConfirmedFindings": 0
+  },
+  "spec": {
+    "confirmedFindings": 0,
+    "scope": "All 200 visible source identities, both directions, native alphabetical order and both endpoint child reads; no production, performance, physical or Mac runtime claim."
+  },
+  "runtimeQualification": {
+    "phonePassed": 1,
+    "tabletPassed": 1,
+    "failures": 0,
+    "skips": 0,
+    "macRuntimeTests": 0
+  }
+}
