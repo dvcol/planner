@@ -1,0 +1,247 @@
+import PlannerCore
+import PlannerPreviews
+import SwiftUI
+
+enum SavedItemCatalogScope: String {
+  case items, inbox
+
+  var title: String { self == .inbox ? "Inbox" : "Items" }
+  var searchPrompt: String { self == .inbox ? "Search Inbox" : "Search Items" }
+  var identifierPrefix: String { "saved.\(rawValue)" }
+  var queryValue: PlannerItemQuery.Scope { self == .inbox ? .inbox : .global }
+}
+
+struct SavedItemCatalog: View {
+  #if os(iOS)
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+  #endif
+
+  private var captureToolbarPlacement: ToolbarItemPlacement {
+    #if os(iOS)
+      if horizontalSizeClass == .regular { return .bottomBar }
+    #endif
+    return .automatic
+  }
+
+  let scope: SavedItemCatalogScope
+  let items: [SavedPlannerItem]
+  @Binding var selection: UUID?
+  @Binding var filters: SavedItemFilters
+  @Binding var searchText: String
+  @Binding var sort: SavedItemSort
+  let canCreate: Bool
+  let create: () -> Void
+  let capture: () -> Void
+
+  var body: some View {
+    List(selection: $selection) {
+      ForEach(items) { item in
+        NavigationLink(value: item.id) {
+          HStack(alignment: .top) {
+            Image(systemName: item.row.globalDone == true ? "checkmark.circle.fill" : "circle")
+              .foregroundStyle(.secondary)
+              .accessibilityHidden(true)
+            if item.row.archived == true {
+              Image(systemName: "archivebox").accessibilityLabel("Archived")
+            }
+            SavedItemRowContent(row: item.row, rowPresentation: item.rowPresentation)
+          }
+        }
+        .accessibilityLabel(item.row.title)
+        .accessibilityValue(item.row.metadataDescription(presentation: item.rowPresentation))
+        .accessibilityIdentifier("saved.item.\(item.id.uuidString)")
+      }
+    }
+    .overlay {
+      if items.isEmpty {
+        if !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+          ContentUnavailableView.search(text: searchText)
+        } else {
+          ContentUnavailableView(
+            filters.summary == "All" ? "No Items yet" : "No matching items",
+            systemImage: "square.stack",
+            description: Text("Change the filters or create an Item to start planning."))
+        }
+      }
+    }
+    .navigationTitle(scope.title)
+    .searchable(text: $searchText, prompt: Text(scope.searchPrompt))
+    .searchPresentationToolbarBehavior(.avoidHidingContent)
+    .toolbar {
+      ToolbarItem(placement: captureToolbarPlacement) {
+        Button("Capture Text or Link", systemImage: "text.badge.plus", action: capture)
+          .disabled(!canCreate)
+          .accessibilityIdentifier("saved.capture.new")
+      }
+      ToolbarItem {
+        SavedItemFilterControl(
+          filters: $filters, accessibilityIdentifier: "\(scope.identifierPrefix).filters")
+      }
+      ToolbarItem {
+        SavedItemSortMenu(sort: $sort, accessibilityIdentifier: "\(scope.identifierPrefix).sort")
+      }
+      ToolbarItem {
+        Button("New Item", systemImage: "plus", action: create)
+          .disabled(!canCreate)
+          .accessibilityIdentifier("saved.item.new")
+      }
+    }
+  }
+}
+
+struct SavedItemDetail: View {
+  @Environment(SavedPlannerStore.self) private var store
+  let item: PlannerItemSourceRead
+  let canChange: Bool
+  let isSaving: Bool
+  let addToList: () -> Void
+  let editItem: () -> Void
+  let deleteItem: () -> Void
+  let setCompletion: @MainActor @Sendable (Bool) -> Void
+  let setArchive: @MainActor @Sendable (Bool) -> Void
+  @State private var showNewSchedule = false
+  @State private var scheduleToEdit: PlannerScheduleSourceRead?
+
+  var body: some View {
+    Form {
+      Section {
+        Text(item.content.title).font(.title2).fontWeight(.semibold)
+        if let subtitle = item.content.subtitle, !subtitle.isEmpty {
+          Text(subtitle).foregroundStyle(.secondary)
+        }
+        if item.state.archived == true {
+          Label("Archived", systemImage: "archivebox").foregroundStyle(.secondary)
+        }
+        Toggle(
+          "Completed",
+          isOn: Binding(get: { item.state.globalDone == true }, set: setCompletion)
+        )
+        .disabled(!canChange)
+        .accessibilityIdentifier("saved.item.completion")
+      } footer: {
+        Text("Completing this Item shows it as done in every List and Itinerary.")
+      }
+      if let notes = item.content.notes, !notes.isEmpty {
+        Section("Notes") { Text(notes).textSelection(.enabled) }
+      }
+      SavedItemEstimateSection(estimate: item.content.estimate)
+      SavedSchedulesSection(source: item.source, references: item.references, canChange: canChange)
+      {
+        scheduleToEdit = $0
+      }
+      ItemLabelsSection(labels: item.labels)
+      ItemLocationSection(
+        title: item.content.title, location: item.content.location, previewSource: previewSource)
+      ItemLinksSection(
+        links: item.content.links, sourceId: item.source.id,
+        sourceLifetimeId: item.sourceLifetimeId)
+    }
+    .formStyle(.grouped)
+    .navigationTitle(item.content.title)
+    .toolbar {
+      ToolbarItem(placement: .primaryAction) {
+        Menu {
+          Button("Edit Item", action: editItem)
+            .disabled(!canChange)
+          Button("Add to List", action: addToList)
+            .disabled(!canChange)
+          Button("Schedule Item") { showNewSchedule = true }
+            .disabled(!canChange)
+          Button(item.state.archived == true ? "Unarchive Item" : "Archive Item") {
+            setArchive(item.state.archived != true)
+          }
+          .disabled(!canChange)
+          Divider()
+          Button("Delete Item", role: .destructive, action: deleteItem)
+            .disabled(!canChange)
+            .accessibilityIdentifier("saved.item.delete")
+        } label: {
+          Label("Item actions", systemImage: "ellipsis")
+        }
+        .help("Item actions")
+        .accessibilityIdentifier("saved.item.actions")
+      }
+    }
+    .overlay {
+      if isSaving { ProgressView("Saving change") }
+    }
+    .sheet(
+      isPresented: Binding(
+        get: { showNewSchedule || scheduleToEdit != nil },
+        set: {
+          if !$0 {
+            showNewSchedule = false
+            scheduleToEdit = nil
+          }
+        })
+    ) {
+      SavedScheduleForm(
+        store: store, source: item.source, sourceTitle: item.content.title, schedule: scheduleToEdit
+      )
+    }
+  }
+
+  private var previewSource: PlannerPreviewSource? {
+    guard let namespace = store.devicePreferenceNamespace else { return nil }
+    return .init(
+      namespace: namespace, sourceId: item.source.id, sourceLifetimeId: item.sourceLifetimeId)
+  }
+}
+
+struct SavedNewItemForm: View {
+  @Environment(\.dismiss) private var dismiss
+  let store: SavedPlannerStore
+  let didCreate: (PlannerEntityReference) -> Void
+  @State private var title = ""
+  @State private var notes = ""
+  @State private var estimate: PlannerEstimate?
+  @State private var operationId = UUID()
+
+  var body: some View {
+    NavigationStack {
+      Form {
+        TextField("Title", text: $title)
+          .accessibilityIdentifier("saved.item.title")
+        TextField("Notes", text: $notes, axis: .vertical)
+          .lineLimit(3...8)
+          .accessibilityIdentifier("saved.item.notes")
+        SavedActivityEstimateEditor(
+          estimate: $estimate, accessibilityIdentifierPrefix: "saved.item.estimate")
+      }
+      .formStyle(.grouped)
+      .navigationTitle("New Item")
+      .toolbar {
+        ToolbarItem(placement: .cancellationAction) {
+          Button("Cancel") { dismiss() }
+            .disabled(store.isSaving)
+            .keyboardShortcut(.cancelAction)
+            .accessibilityIdentifier("saved.item.cancel")
+        }
+        ToolbarItem(placement: .confirmationAction) {
+          Button("Save") {
+            Task {
+              if let source = await store.createItem(
+                title: title, notes: notes, estimate: estimate, operationId: operationId)
+              {
+                didCreate(source)
+                dismiss()
+              }
+            }
+          }
+          .disabled(
+            !store.canCreate || title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+          )
+          .keyboardShortcut(.defaultAction)
+          .accessibilityIdentifier("saved.item.save")
+        }
+      }
+      .overlay {
+        if store.isSaving { ProgressView("Saving Item") }
+      }
+    }
+    .interactiveDismissDisabled(store.isSaving)
+    #if os(macOS)
+      .frame(minWidth: 400, minHeight: 280)
+    #endif
+  }
+}

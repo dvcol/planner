@@ -1,0 +1,26 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "54FB36EC-AD86-4193-A890-F853BFCDBA9C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Reviewed native capture saves owned notes and original link_0_377286BB-3969-422B-BE74-479270658144.png",
+        "timestamp" : 1792043863.544
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "902899AD-AB4F-4FAC-BD9D-05F42E7FC1C6.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Reviewed native capture saves owned notes and original link_0_0B9329BC-04B7-4AFF-9045-023F3561A42B.png",
+        "timestamp" : 1792043913.686
+      }
+    ],
+    "testIdentifier" : "SavedCaptureJourneyTests/testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerNavigationUITests/SavedCaptureJourneyTests/testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem"
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "baseCommit": "de1d95b789ea45cf291141a7dce1f17e214d8b4b",
+  "standards": {
+    "sourceFindings": 0,
+    "evidenceFindings": 0,
+    "originalImagesInspected": 11,
+    "distinctOriginalImageHashes": 11,
+    "aggregateAudit": "complete",
+    "artifactHashesVerified": 86,
+    "rawLogsMatchOriginalBytes": true
+  },
+  "spec": {
+    "sourceFindings": 0,
+    "evidenceFindings": 0,
+    "finalAggregateAudit": "complete",
+    "conclusion": "Calibrated failing baseline, final native title/Capture counts, source/product hashes and build-only Mac evidence are accurate. Broader layout and whole-app gates remain open."
+  },
+  "calibrationCorrection": "Expected native text width uses its unrounded platform measurement. The corrected test fails on original production code before final qualification."
+}

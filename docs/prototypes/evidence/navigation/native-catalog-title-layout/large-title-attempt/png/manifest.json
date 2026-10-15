@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "3E0E5F44-D79A-44AB-A3FE-590591EAECCC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Items title beside native catalog actions_0_1B35DF02-89BC-48AB-98A4-171253E22B51.png",
+        "timestamp" : 1792043472.505
+      }
+    ],
+    "testIdentifier" : "CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions"
+  }
+]

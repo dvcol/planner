@@ -1,0 +1,77 @@
+{
+  "baseCommit": "de1d95b789ea45cf291141a7dce1f17e214d8b4b",
+  "functionalBaseline": {
+    "directory": "calibrated-red",
+    "device": "iPad Air 11-inch M4",
+    "functions": 1,
+    "failures": 1,
+    "skips": 0,
+    "measuredTitleWidth": 6.5,
+    "requiredUnroundedWidth": 44.40960121154785
+  },
+  "historicalAttempts": {
+    "red": "Initial title-width assertion reproduced 6.5 points; expected width was rounded up to 45.",
+    "large-title-attempt": "Native large-title display mode did not relieve clipping; 6.5-point width remained.",
+    "capture-placement-attempt": "Catalog-local size-class placement left Capture in the top bar; 6.5-point width remained.",
+    "root-placement-attempt": "Full 44.5-point title visible with root-based Capture bottom placement. Rounded 45-point expectation was a test calibration error, not a product defect."
+  },
+  "finalLayout": {
+    "directory": "final",
+    "devices": [
+      "iPhone 18 Pro",
+      "iPad Air 11-inch M4"
+    ],
+    "operatingSystem": "iOS 27.0 simulator",
+    "distinctFunctions": 1,
+    "invocations": 2,
+    "failures": 0,
+    "skips": 0,
+    "originalPngs": 4,
+    "ipadWidths": {
+      "Items": 44.5,
+      "Inbox": 44.0
+    },
+    "phoneWidths": {
+      "Items": 88.66666666666669,
+      "Inbox": 87.0
+    },
+    "nativeButtonOverlap": false
+  },
+  "captureRegression": {
+    "directory": "capture-regression",
+    "devices": [
+      "iPhone 18 Pro",
+      "iPad Air 11-inch M4"
+    ],
+    "distinctFunctions": 1,
+    "invocations": 2,
+    "failures": 0,
+    "skips": 0,
+    "originalPngs": 2
+  },
+  "totalFinal": {
+    "distinctFunctions": 2,
+    "distinctSuites": 2,
+    "invocations": 4,
+    "failures": 0,
+    "skips": 0
+  },
+  "mac": {
+    "fixtureBuildForTesting": "passed",
+    "ordinaryAppBuild": "passed",
+    "signing": "disabled",
+    "runtimeInvocations": 0
+  },
+  "checks": {
+    "affectedSwiftFilesStrictLint": 3,
+    "markdownReportsLinted": 1,
+    "temporaryLargeTitleModeRemoved": true,
+    "temporaryCatalogLocalSizeClassRemoved": true
+  },
+  "limits": [
+    "Not every orientation, compact multiwindow layout or accessibility setting is qualified.",
+    "Whole-app native polish remains open.",
+    "No Core, HTTP, physical-device or Mac runtime checks are claimed.",
+    "Q84 C retention unchanged; Q85 catalog sorting remains pending."
+  ]
+}

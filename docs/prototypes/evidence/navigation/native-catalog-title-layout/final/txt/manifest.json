@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "36EF9490-058E-40C9-8749-116342ADB823.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Inbox native navigation frames_0_5D93828F-E06B-4413-8F46-A91153720B46.txt",
+        "timestamp" : 1792043758.05
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "9CB49329-D3FB-462D-A91E-74AF6889853B.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Items native navigation frames_0_29697666-8FBB-4283-8298-BA44B21EC458.txt",
+        "timestamp" : 1792043751.133
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "37D97E66-3AC2-49A3-BA81-4E540AB277F1.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Inbox native navigation frames_0_705134E3-8227-44DB-A930-3A351E1BF544.txt",
+        "timestamp" : 1792043782.057
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "29236F4C-9701-456D-AD23-931DDA6B86F5.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Items native navigation frames_0_61F92C81-0E0D-4710-A6E0-940878F2CD27.txt",
+        "timestamp" : 1792043775.265
+      }
+    ],
+    "testIdentifier" : "CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions"
+  }
+]

@@ -1,0 +1,11 @@
+Title: (16.0, 117.5, 6.5, 21.0)
+Minimum untruncated headline width: 44.40960121154785
+Find: Target Application 'org.example.PlannerFixtures'
+  Output: {
+    Application, 0x107238a00, pid: 28900, label: 'Planner fixtures'
+  }
+  ↪︎Find: Descendants matching type NavigationBar
+    Output: {
+      NavigationBar, 0x107231040, {{0.0, 106.0}, {320.0, 108.0}}, identifier: 'Items'
+      NavigationBar, 0x107232a80, {{0.0, 106.0}, {820.0, 54.0}}, identifier: '_TtGC7SwiftUI32NavigationStackHosting'
+    }

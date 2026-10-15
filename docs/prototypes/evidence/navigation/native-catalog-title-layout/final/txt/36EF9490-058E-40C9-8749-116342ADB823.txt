@@ -1,0 +1,10 @@
+Title: (15.999999999999993, 119.66666666666667, 87.0, 40.66666666666667)
+Minimum untruncated headline width: 43.57524907588959
+Find: Target Application 'org.example.PlannerFixtures'
+  Output: {
+    Application, 0x109612bc0, pid: 29437, label: 'Planner fixtures'
+  }
+  ↪︎Find: Descendants matching type NavigationBar
+    Output: {
+      NavigationBar, 0x109605a40, {{0.0, 62.0}, {402.0, 160.0}}, identifier: 'Inbox'
+    }

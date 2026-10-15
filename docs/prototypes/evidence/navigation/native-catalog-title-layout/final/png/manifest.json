@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "95D12F91-370B-4E81-82B0-0620895BAF6C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Inbox title beside native catalog actions_0_C9FA3185-F502-4B0E-A8AC-0F0F849117B5.png",
+        "timestamp" : 1792043757.753
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "20744BEF-2043-4BA9-9524-616B19151C7D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Items title beside native catalog actions_0_F9101258-A6D0-41CC-A8F7-1CFDDC2A3662.png",
+        "timestamp" : 1792043750.848
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "C2FA0CEB-1B4E-4FF8-A210-CD154784E62C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Inbox title beside native catalog actions_0_D112609E-F83C-4336-A403-34E14F9063EA.png",
+        "timestamp" : 1792043781.735
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "FD88BCDE-7C9C-4594-B671-CF4099924DEF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Items title beside native catalog actions_0_F441E10E-7648-43D7-AF7A-3C994C70A608.png",
+        "timestamp" : 1792043774.919
+      }
+    ],
+    "testIdentifier" : "CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/CatalogTitleLayoutJourneyTests/testItemCatalogTitlesRemainReadableBesideNativeToolbarActions"
+  }
+]
