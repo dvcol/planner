@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "2B461936-249C-4A44-B468-AF94557DFDD0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Items explains why an exact search has no filtered results_0_79FDC298-1AB8-4EE6-9A5A-5C877183A62C.png",
+        "timestamp" : 1792049550.752
+      }
+    ],
+    "testIdentifier" : "FilteredSearchGuidanceJourneyTests/testItemsAndInboxExplainFilteredSearchWithoutChangingTheSource()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/FilteredSearchGuidanceJourneyTests/testItemsAndInboxExplainFilteredSearchWithoutChangingTheSource"
+  }
+]

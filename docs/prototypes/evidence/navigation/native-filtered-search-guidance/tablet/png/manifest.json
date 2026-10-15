@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "1ABEB7F5-766D-43ED-8B76-1EF83D09DA99.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Inbox keeps native search guidance when filters are unrestricted_0_DCDDA777-7348-41D8-AB11-C73A4D143193.png",
+        "timestamp" : 1792050084.034
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "33EC381A-AE00-475C-8352-0BAAB4DF03A9.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Inbox explains why an exact search has no filtered results_0_2A2E9EE9-3731-445F-985A-FD9EA985CFEB.png",
+        "timestamp" : 1792050043.782
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "592F4A8B-79BB-47E1-861C-A1241AAF377E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Items keeps native search guidance when filters are unrestricted_0_4522DA6E-0E3B-43D5-B35D-47734B245808.png",
+        "timestamp" : 1792050013.209
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "3A568B93-42C9-4526-82BB-9A6FA3986F5B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Items explains why an exact search has no filtered results_0_2EBDB731-12FF-4A06-90AA-DC888583DF9D.png",
+        "timestamp" : 1792049971.483
+      }
+    ],
+    "testIdentifier" : "FilteredSearchGuidanceJourneyTests/testItemsAndInboxExplainFilteredSearchWithoutChangingTheSource()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/FilteredSearchGuidanceJourneyTests/testItemsAndInboxExplainFilteredSearchWithoutChangingTheSource"
+  }
+]

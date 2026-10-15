@@ -1,0 +1,23 @@
+{
+  "baseCommit": "73109b8a556a388c6d69683251a4481831eefd9f",
+  "standards": {
+    "sourceFindings": 0,
+    "evidenceFindings": 0,
+    "evidenceAudit": "complete",
+    "artifactHashesVerified": 64,
+    "currentSourceHashesPerSimulator": 6,
+    "currentProductsVerified": true,
+    "historicalSourceRevisionsVerified": 2,
+    "historicalRunsHaveFinalQualificationCredit": false
+  },
+  "spec": {
+    "sourceFindings": 0,
+    "evidenceFindings": 0,
+    "evidenceAudit": "complete",
+    "artifactHashesVerified": 64,
+    "currentSourceHashesPerSimulator": 6,
+    "currentProductsVerified": true,
+    "historicalSourceRevisionsVerified": 2,
+    "historicalRunsHaveFinalQualificationCredit": false
+  }
+}

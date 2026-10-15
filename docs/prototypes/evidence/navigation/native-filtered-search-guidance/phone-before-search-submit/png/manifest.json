@@ -1,0 +1,26 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "0F447A90-B4DF-4FF1-A341-49A523E7A3BC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Items keeps native search guidance when filters are unrestricted_0_3318E314-C57C-4C2E-89DD-E87E27867E4C.png",
+        "timestamp" : 1792049698.86
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "29629E0D-560E-49D5-B067-9C0D8A683A6D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Items explains why an exact search has no filtered results_0_BBC1C7FE-493B-4590-8929-B32B3B0FFF76.png",
+        "timestamp" : 1792049661.145
+      }
+    ],
+    "testIdentifier" : "FilteredSearchGuidanceJourneyTests/testItemsAndInboxExplainFilteredSearchWithoutChangingTheSource()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/FilteredSearchGuidanceJourneyTests/testItemsAndInboxExplainFilteredSearchWithoutChangingTheSource"
+  }
+]

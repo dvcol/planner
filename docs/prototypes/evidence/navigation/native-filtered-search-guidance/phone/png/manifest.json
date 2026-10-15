@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "16E77136-1C61-46CC-94FC-E60CB393EEFF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Inbox keeps native search guidance when filters are unrestricted_0_EC5D5A95-1677-41A1-A8DF-A5688674EF69.png",
+        "timestamp" : 1792049918.32
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "E634E5A2-49B5-4275-AFE8-CC45C2485402.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Inbox explains why an exact search has no filtered results_0_4BEA0384-7E7F-4A15-A129-06D80742F72A.png",
+        "timestamp" : 1792049880.622
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "D777D30E-4EEE-44CA-9549-E09D3F578051.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Items keeps native search guidance when filters are unrestricted_0_08909250-3B79-4B49-B5E4-A707122476FE.png",
+        "timestamp" : 1792049850.224
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "8AD1029B-B6D1-46BB-BF14-720BC7F9B8B0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Items explains why an exact search has no filtered results_0_87F6998A-C6E6-4C1E-88A8-E649A7AA75A0.png",
+        "timestamp" : 1792049811.801
+      }
+    ],
+    "testIdentifier" : "FilteredSearchGuidanceJourneyTests/testItemsAndInboxExplainFilteredSearchWithoutChangingTheSource()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/FilteredSearchGuidanceJourneyTests/testItemsAndInboxExplainFilteredSearchWithoutChangingTheSource"
+  }
+]
