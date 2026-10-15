@@ -1,0 +1,3 @@
+Near-end source: saved.item.0204CF82-7618-4591-ABD5-24B781F6AD4B
+Far-end source: saved.item.6F9DB7E9-B5F5-440D-90F5-47536268EEB2
+Simultaneous detail layout: false

@@ -1,0 +1,53 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "DB579CD7-873E-45F0-AD6C-A99AB3434160.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The far-end search restores its original source and unchanged Todo state_0_D40A30D0-0EC5-4DFC-85D5-2A52C70884A2.png",
+        "timestamp" : 1792048083.497
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "EBB0A835-8884-4FC1-8B3B-ABED7FC8E708.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Title ascending restores the filtered source order after changing native sort_0_5D81B515-A6AB-48B3-9F97-60A750EED3BE.png",
+        "timestamp" : 1792048072.989
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "1D3045F6-A1CC-4792-B21C-931A350B6ED7.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Created descending orders the filtered near-end sources in the large dataset_0_38421325-40AF-4A9E-B3F5-FFD82DB27659.png",
+        "timestamp" : 1792048052.749
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "FA336DF6-F486-4ED3-B54C-31E34D78B6A5.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The Done filter hides a valid selected Todo source_0_DDCCB022-8BFD-4ED5-830C-98CB49DEBBC0.png",
+        "timestamp" : 1792048019.496
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "74F9A275-D48A-46A0-AFEA-C2F0FD23FFD2.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The replacement search opens the correct near-end source_0_D96CA4AF-71D4-4CDD-BA5A-E06F3E335DED.png",
+        "timestamp" : 1792047984.083
+      }
+    ],
+    "testIdentifier" : "LargeCollectionJourneyTests/testSearchAndSortChangesRevisitStableSourcesInLargeNativeCatalog()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LargeCollectionJourneyTests/testSearchAndSortChangesRevisitStableSourcesInLargeNativeCatalog"
+  }
+]

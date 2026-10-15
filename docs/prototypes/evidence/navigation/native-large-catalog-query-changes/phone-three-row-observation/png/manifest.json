@@ -1,0 +1,26 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "0E0CC56C-FF4B-438E-882E-9F9FCF134F64.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The Done filter hides a valid selected Todo source_0_D0F947D3-43B4-429E-B428-55ED8345764E.png",
+        "timestamp" : 1792047547.682
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "deviceName" : "iPhone 18 Pro",
+        "exportedFileName" : "740EBA52-766D-4548-BB11-E9399C29FC3F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The replacement search opens the correct near-end source_0_D751C7F5-4BB9-4AE3-B2B9-9D4EE117AF0D.png",
+        "timestamp" : 1792047512.409
+      }
+    ],
+    "testIdentifier" : "LargeCollectionJourneyTests/testSearchAndSortChangesRevisitStableSourcesInLargeNativeCatalog()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LargeCollectionJourneyTests/testSearchAndSortChangesRevisitStableSourcesInLargeNativeCatalog"
+  }
+]

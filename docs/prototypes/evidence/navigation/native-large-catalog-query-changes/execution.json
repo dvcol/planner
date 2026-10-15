@@ -1,0 +1,84 @@
+{
+  "baseCommit": "3f034c44d56e3d54771ceb799edd9dee3c5b00d9",
+  "productionChanges": false,
+  "fixtureChange": "Item04999 creation offset4997; its existing update date, content/state and graph layout are unchanged.",
+  "history": {
+    "controller-role-failure": {
+      "classification": "Controller queried native Toggle as Button",
+      "seconds": 66.756,
+      "finalQualification": false
+    },
+    "phone-before-title-oracle": {
+      "classification": "Superseded pair-only pass",
+      "seconds": 140.51,
+      "finalQualification": false
+    },
+    "phone-before-transition-oracle": {
+      "classification": "Superseded pair-only pass",
+      "seconds": 146.601,
+      "finalQualification": false
+    },
+    "phone-interrupted-reveal-controller": {
+      "classification": "Deliberately interrupted superseded reveal controller",
+      "reportedFailure": "Testing was canceled",
+      "completedQualification": false
+    },
+    "phone-three-row-observation": {
+      "classification": "Controller tried to reopen an already-open native menu",
+      "seconds": 112.129,
+      "finalQualification": false
+    },
+    "phone-before-search-refocus": {
+      "classification": "Passing earlier source, before explicit native search refocus",
+      "seconds": 153.609,
+      "finalQualification": false
+    },
+    "tablet-menu-observation": {
+      "classification": "Typing after native Clear lacked keyboard focus",
+      "seconds": 54.883,
+      "finalQualification": false
+    }
+  },
+  "final": {
+    "tablet": {
+      "functions": 1,
+      "invocations": 1,
+      "seconds": 163.062,
+      "failures": 0,
+      "skips": 0,
+      "originalPNGs": 5,
+      "observedIdentities": "observed-identities.txt",
+      "simultaneousDetail": true
+    },
+    "phone": {
+      "functions": 1,
+      "invocations": 1,
+      "seconds": 171.116,
+      "failures": 0,
+      "skips": 0,
+      "originalPNGs": 5,
+      "observedIdentities": "observed-identities.txt",
+      "simultaneousDetail": false
+    }
+  },
+  "finalCounting": {
+    "distinctFunctions": 1,
+    "invocations": 2,
+    "failures": 0,
+    "skips": 0,
+    "individuallyInspectedOriginalPNGs": 10
+  },
+  "checks": {
+    "strictSwiftFiles": 2,
+    "markdownReports": 1,
+    "macFixtureBuildForTesting": "passed",
+    "macUIExecution": false
+  },
+  "limits": [
+    "No deterministic overlapping-query or in-flight cancellation proof.",
+    "No full native5000-row traversal, bounded row-data memory, hitches or physical300ms latency qualification.",
+    "No new Core/HTTP, CloudKit, signing or physical-device execution.",
+    "Native Clear focus continuity and whole-app keyboard/layout/empty-state polish remain open.",
+    "Q84C unchanged; Q86 remains pending."
+  ]
+}

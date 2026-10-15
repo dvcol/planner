@@ -1,0 +1,52 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "modelName" : "iPad Air 11-inch (M4)",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "PlannerFixtures · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1792048157.2,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1792048085.65,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Failed to synthesize event: Neither element nor any descendant has keyboard focus. Event dispatch snapshot: SearchField, {{16.0, 160.0}, {288.0, 44.0}}, label: 'Search Items', placeholderValue: 'Search Items'\nElement debug description:\nAttributes: SearchField, 0x106c34640, {{16.0, 160.0}, {288.0, 44.0}}, label: 'Search Items', placeholderValue: 'Search Items'\nElement subtree:\n →SearchField, 0x106c34640, {{16.0, 160.0}, {288.0, 44.0}}, label: 'Search Items', placeholderValue: 'Search Items'\n    Image, 0x106c357c0, {{28.0, 171.5}, {20.5, 20.0}}, identifier: 'magnifyingglass', label: 'Search'\nPath to element:\n →Application, 0x10767f480, pid: 67899, label: 'Planner fixtures'\n  ↳Window (Main), 0x10767e440, {{0.0, 0.0}, {820.0, 1180.0}}\n   ↳Other, 0x10767f200, {{0.0, 0.0}, {820.0, 1180.0}}\n    ↳Other, 0x10767ef80, {{0.0, 0.0}, {820.0, 1180.0}}\n     ↳Other, 0x10767ee40, {{0.0, 0.0}, {820.0, 1180.0}}\n      ↳Other, 0x10767f340, {{0.0, 0.0}, {820.0, 1180.0}}\n       ↳Other, 0x10767f5c0, {{0.0, 0.0}, {820.0, 1180.0}}\n        ↳Other, 0x10767d400, {{0.0, 0.0}, {820.0, 1180.0}}\n         ↳Other, 0x10767cb40, {{0.0, 0.0}, {820.0, 1180.0}}\n          ↳Other, 0x10767c780, {{0.0, 0.0}, {820.0, 1180.0}}\n           ↳Other, 0x10767d2c0, {{0.0, 0.0}, {820.0, 1180.0}}\n            ↳Other, 0x10767c8c0, {{0.0, 96.0}, {820.0, 1084.0}}\n             ↳Other, 0x10767e080, {{0.0, 96.0}, {820.0, 1084.0}}\n              ↳Other, 0x10767fac0, {{0.0, 96.0}, {820.0, 1084.0}}\n               ↳Other, 0x10767e580, {{0.0, 96.0}, {820.0, 1084.0}}\n                ↳Other, 0x10767cf00, {{0.0, 96.0}, {320.0, 1084.0}}\n                 ↳Other, 0x10767d180, {{0.0, 96.0}, {320.0, 1084.0}}\n                  ↳NavigationBar, 0x106c34000, {{0.0, 106.0}, {320.0, 108.0}}, identifier: 'Items'\n                   ↳SearchField, 0x106c34640, {{16.0, 160.0}, {288.0, 44.0}}, label: 'Search Items', placeholderValue: 'Search Items'\nQuery chain:\n →Find: Target Application 'org.example.PlannerFixtures'\n  Output: {\n    Application, 0x106c57480, pid: 67899, label: 'Planner fixtures'\n  }\n  ↪︎Find: Descendants matching type SearchField\n    Output: {\n      SearchField, 0x106c0f5c0, {{16.0, 160.0}, {288.0, 44.0}}, label: 'Search Items', placeholderValue: 'Search Items'\n    }\n    ↪︎Find: Elements matching predicate '\"Search Items\" IN identifiers'\n      Output: {\n        SearchField, 0x1076675c0, {{16.0, 160.0}, {288.0, 44.0}}, label: 'Search Items', placeholderValue: 'Search Items'\n      }\n",
+      "targetName" : "PlannerFixtureUITests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "LargeCollectionJourneyTests/testSearchAndSortChangesRevisitStableSourcesInLargeNativeCatalog()",
+      "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LargeCollectionJourneyTests/testSearchAndSortChangesRevisitStableSourcesInLargeNativeCatalog",
+      "testName" : "testSearchAndSortChangesRevisitStableSourcesInLargeNativeCatalog()"
+    }
+  ],
+  "title" : "Test - PlannerFixtures",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 1
+}

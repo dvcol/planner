@@ -1,0 +1,21 @@
+{
+  "baseCommit": "3f034c44d56e3d54771ceb799edd9dee3c5b00d9",
+  "standards": {
+    "sourceFindings": 0,
+    "evidenceFindings": 0,
+    "finalEvidenceAudit": "complete",
+    "artifactHashesVerified": 133,
+    "finalSourceHashesPerDevice": 7,
+    "currentProductsVerified": true,
+    "historicalSourceRevisionsVerified": 7
+  },
+  "spec": {
+    "sourceFindings": 0,
+    "evidenceFindings": 0,
+    "finalEvidenceAudit": "complete",
+    "artifactHashesVerified": 133,
+    "finalCounting": "One function, two final simulator invocations, zero failures/skips, ten inspected original PNGs.",
+    "historicalQualificationCredit": false,
+    "limitsReviewed": true
+  }
+}

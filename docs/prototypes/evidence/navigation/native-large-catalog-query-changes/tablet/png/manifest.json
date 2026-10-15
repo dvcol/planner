@@ -1,0 +1,53 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "6B92F46B-3C82-4A4A-A9F8-5FEDBD27D40B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The far-end search restores its original source and unchanged Todo state_0_21D6EBAE-70CD-4DC0-9F60-134620B05C53.png",
+        "timestamp" : 1792048559.99
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "9A690685-5FFF-470A-8E0F-881BFCD15B76.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Title ascending restores the filtered source order after changing native sort_0_CAE16098-2B95-461C-8079-1A972C79D2C7.png",
+        "timestamp" : 1792048548.418
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "A1DEB0C2-D224-4014-A175-474B1416B267.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Created descending orders the filtered near-end sources in the large dataset_0_67565F3A-0BC5-483C-ABA2-F7C0034C4714.png",
+        "timestamp" : 1792048528.279
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "9B5087F3-372F-43D1-8DD2-8C3F43CD1A90.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The Done filter hides a valid selected Todo source_0_0BAAE300-451F-4DAD-82C0-77957BDAD0A5.png",
+        "timestamp" : 1792048487.83
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "deviceName" : "iPad Air 11-inch (M4)",
+        "exportedFileName" : "F51D5B51-8CD0-40B4-AB10-41BDD21C4A3B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "The replacement search opens the correct near-end source_0_057A2281-A8E2-4BAA-996B-DAB26311D5BB.png",
+        "timestamp" : 1792048454.02
+      }
+    ],
+    "testIdentifier" : "LargeCollectionJourneyTests/testSearchAndSortChangesRevisitStableSourcesInLargeNativeCatalog()",
+    "testIdentifierURL" : "test://com.apple.xcode/Planner/PlannerFixtureUITests/LargeCollectionJourneyTests/testSearchAndSortChangesRevisitStableSourcesInLargeNativeCatalog"
+  }
+]
