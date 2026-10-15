@@ -7,6 +7,7 @@ struct PlannerFixtureApp: App {
   @State private var failure: String?
   @State private var previews = PlannerPreviews(provider: FixturePreviewProvider())
   @State private var addressPreviews = PlannerAddressPreviews(provider: FixturePreviewProvider())
+  @State private var mapsPreviews = PlannerMapsPreviews(provider: NativeMapsPreviewProvider())
 
   var body: some Scene {
     WindowGroup {
@@ -16,6 +17,7 @@ struct PlannerFixtureApp: App {
             .environment(store)
             .environment(previews)
             .environment(addressPreviews)
+            .environment(mapsPreviews)
         } else if let failure {
           ContentUnavailableView(
             "Fixture unavailable", systemImage: "exclamationmark.triangle",

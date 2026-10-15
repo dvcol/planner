@@ -128,7 +128,7 @@ struct SavedItineraryItemDetail: View {
           ItemLabelsSection(labels: item.labels)
           ItemLocationSection(
             title: item.content.title, location: item.content.location,
-            previewSource: previewSource(item))
+            previewSource: previewSource(item), links: item.content.links)
           ItemLinksSection(
             links: item.content.links, sourceId: item.source.id,
             sourceLifetimeId: item.sourceLifetimeId)

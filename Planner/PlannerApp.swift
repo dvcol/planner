@@ -9,6 +9,7 @@ struct PlannerApp: App {
   @State private var previews = PlannerPreviews(provider: AppleLinkPreviewProvider())
   @State private var addressPreviews = PlannerAddressPreviews(
     provider: AppleAddressPreviewProvider())
+  @State private var mapsPreviews = PlannerMapsPreviews(provider: NativeMapsPreviewProvider())
   #if os(macOS)
     @Environment(\.openWindow) private var openWindow
     @FocusedBinding(\.navigationPrototypeLayout) private var prototypeLayout:
@@ -26,6 +27,7 @@ struct PlannerApp: App {
           .environment(savedPlanner)
           .environment(previews)
           .environment(addressPreviews)
+          .environment(mapsPreviews)
       }
     }
     #if os(macOS)

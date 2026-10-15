@@ -2,6 +2,133 @@ import XCTest
 
 @MainActor
 final class SavedCaptureJourneyTests: XCTestCase {
+  func testAppleMapsPreviewYieldsToAnOwnedAddressWithoutChangingTheBookmark() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    let originalURL = "https://maps.apple.com/place?name=Museum&coordinate=35,139#retained"
+    openCapture(application, input: originalURL)
+    let title = application.textFields["saved.capture.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 10))
+    replace(title, with: "Apple Maps bookmark")
+    application.plannerElement("saved.capture.add").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
+    let map = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.maps.preview.map").firstMatch
+    revealSavedMap(map, application: application)
+    XCTAssertTrue(map.waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      application.staticTexts["Values supplied by the Maps link; not independently verified."]
+        .exists)
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Edit Item").activateForPlannerJourney()
+    let address = application.textFields["saved.item.edit.location.address"]
+    revealSavedMap(address, application: application)
+    XCTAssertTrue(address.waitForExistence(timeout: 5))
+    XCTAssertEqual(address.value as? String, address.placeholderValue)
+    replace(address, with: "1 Apple Park Way, Cupertino, CA")
+    application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+    let savedAddress = application.staticTexts["1 Apple Park Way, Cupertino, CA"]
+    revealSavedMap(savedAddress, application: application)
+    XCTAssertTrue(savedAddress.waitForExistence(timeout: 10))
+    XCTAssertFalse(map.exists)
+    let attachment = XCTAttachment(screenshot: application.screenshot())
+    attachment.name = "Owned address takes precedence over the saved Apple Maps bookmark"
+    attachment.lifetime = .keepAlways
+    add(attachment)
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    let row = application.savedPlannerItemRows("Apple Maps bookmark").firstMatch
+    XCTAssertTrue(row.waitForExistence(timeout: 10))
+    row.activateForPlannerJourney()
+    revealSavedMap(savedAddress, application: application)
+    XCTAssertTrue(savedAddress.waitForExistence(timeout: 10))
+    XCTAssertFalse(map.exists)
+    let link = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    revealSavedMap(link, application: application)
+    XCTAssertEqual(link.value as? String, originalURL)
+  }
+
+  func testGoogleTextSearchRetainsAUsefulFallbackWithoutInventingAMapPin() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    let originalURL = "https://www.google.com/maps/search/?api=1&query=museums+near+Tokyo"
+    openCapture(application, input: originalURL)
+    let title = application.textFields["saved.capture.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 10))
+    replace(title, with: "Museum search")
+    application.plannerElement("saved.capture.add").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
+    let fallback = application.descendants(matching: .any)
+      .matching(NSPredicate(format: "label == %@", "Open saved Maps link")).firstMatch
+    revealSavedMap(fallback, application: application)
+    XCTAssertTrue(fallback.waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["museums near Tokyo"].exists)
+    XCTAssertFalse(
+      application.descendants(matching: .any)
+        .matching(identifier: "saved.item.maps.preview.map").firstMatch.exists)
+    let attachment = XCTAttachment(screenshot: application.screenshot())
+    attachment.name = "Google text search stays a search with a useful saved-link fallback"
+    attachment.lifetime = .keepAlways
+    add(attachment)
+  }
+
+  func testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    let originalURL =
+      "https://www.google.com/maps/search/?api=1&query=35.6804%2C139.7690#original-fragment"
+    openCapture(application, input: originalURL)
+    let title = application.textFields["saved.capture.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 10))
+    replace(title, with: "Tokyo search location")
+    application.plannerElement("saved.capture.add").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
+    let map = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.maps.preview.map").firstMatch
+    revealSavedMap(map, application: application)
+    XCTAssertTrue(map.waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Search location"].firstMatch.exists)
+    XCTAssertTrue(
+      application.staticTexts["Search intent supplied by the Maps link; not a resolved place."]
+        .exists)
+    let attachment = XCTAttachment(screenshot: application.screenshot())
+    attachment.name = "Saved Google Maps search location uses the native map"
+    attachment.lifetime = .keepAlways
+    add(attachment)
+    let link = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
+    ).firstMatch
+    revealSavedMap(link, application: application)
+    XCTAssertTrue(link.waitForExistence(timeout: 5))
+    XCTAssertEqual(link.value as? String, originalURL)
+    let linkIdentifier = link.identifier
+
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    let row = application.savedPlannerItemRows("Tokyo search location").firstMatch
+    XCTAssertTrue(row.waitForExistence(timeout: 10))
+    row.activateForPlannerJourney()
+    revealSavedMap(map, application: application)
+    XCTAssertTrue(map.waitForExistence(timeout: 10))
+    let restoredLink = application.descendants(matching: .any)
+      .matching(identifier: linkIdentifier).firstMatch
+    revealSavedMap(restoredLink, application: application)
+    XCTAssertEqual(restoredLink.value as? String, originalURL)
+  }
+
   func testUntouchedSavedLinkDraftCanBeAddedWithoutAnEmptyEdit() {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -195,5 +322,28 @@ final class SavedCaptureJourneyTests: XCTestCase {
     let existing = field.value as? String ?? ""
     field.typeText(
       String(repeating: XCUIKeyboardKey.delete.rawValue, count: existing.count) + value)
+  }
+
+  private func revealSavedMap(_ element: XCUIElement, application: XCUIApplication) {
+    for _ in 0..<6 where !element.exists || !element.isHittable {
+      #if os(macOS)
+        let form =
+          application.scrollViews.allElementsBoundByIndex.last
+          ?? application.scrollViews.firstMatch
+        form.swipeUp()
+      #else
+        let editorForm = application.collectionViews.containing(
+          .any, identifier: "saved.item.edit.title"
+        ).firstMatch
+        let detailsForm = application.collectionViews.containing(
+          .any, identifier: "saved.item.completion"
+        ).firstMatch
+        let form = editorForm.exists ? editorForm : detailsForm
+        XCTAssertTrue(form.waitForExistence(timeout: 5))
+        let start = form.coordinate(withNormalizedOffset: .init(dx: 0.97, dy: 0.8))
+        let end = form.coordinate(withNormalizedOffset: .init(dx: 0.97, dy: 0.25))
+        start.press(forDuration: 0.05, thenDragTo: end)
+      #endif
+    }
   }
 }
