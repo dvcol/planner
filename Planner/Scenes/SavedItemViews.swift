@@ -18,6 +18,7 @@ struct SavedItemCatalog: View {
   @Binding var filters: SavedItemFilters
   @Binding var searchText: String
   @Binding var sort: SavedItemSort
+  let captureToolbarPlacement: ToolbarItemPlacement
   let canCreate: Bool
   let create: () -> Void
   let capture: () -> Void
@@ -57,7 +58,7 @@ struct SavedItemCatalog: View {
     .searchable(text: $searchText, prompt: Text(scope.searchPrompt))
     .searchPresentationToolbarBehavior(.avoidHidingContent)
     .toolbar {
-      ToolbarItem {
+      ToolbarItem(placement: captureToolbarPlacement) {
         Button("Capture Text or Link", systemImage: "text.badge.plus", action: capture)
           .disabled(!canCreate)
           .accessibilityIdentifier("saved.capture.new")

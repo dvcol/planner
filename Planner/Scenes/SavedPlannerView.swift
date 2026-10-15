@@ -15,7 +15,7 @@ struct SavedPlannerView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   #endif
 
-  private var categoryToolbarPlacement: ToolbarItemPlacement {
+  private var secondaryToolbarPlacement: ToolbarItemPlacement {
     #if os(macOS)
       return .automatic
     #else
@@ -524,6 +524,7 @@ struct SavedPlannerView: View {
       SavedItemCatalog(
         scope: catalogScope, items: catalogItems, selection: $selectedItemId,
         filters: catalogFilters, searchText: catalogSearchText, sort: itemSort,
+        captureToolbarPlacement: secondaryToolbarPlacement,
         canCreate: store.canCreate, create: { showNewItem = true },
         capture: { captureEntryPoint = .global }
       )
@@ -1022,13 +1023,13 @@ struct SavedPlannerView: View {
     .navigationTitle("Planner")
     .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
     .toolbar {
-      ToolbarItem(placement: categoryToolbarPlacement) {
+      ToolbarItem(placement: secondaryToolbarPlacement) {
         Button("Manage Labels", systemImage: "square.grid.2x2") { showLabels = true }
           .disabled(!store.isReady)
           .accessibilityIdentifier("saved.categories.manage")
       }
       #if os(iOS)
-        ToolbarItem(placement: categoryToolbarPlacement) {
+        ToolbarItem(placement: secondaryToolbarPlacement) {
           Button("Settings", systemImage: "gearshape") { showSettings = true }
             .disabled(!store.isReady)
             .accessibilityIdentifier("saved.settings.open")
