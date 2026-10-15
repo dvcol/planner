@@ -16,6 +16,7 @@ struct SavedSourceDeletionForm: View {
   @State private var review: PlannerReview
   @State private var operationIdentifier = UUID()
   @State private var reviewChanged = false
+  @State private var deletionApplied = false
 
   init(
     store: SavedPlannerStore, draft: SavedSourceDeletionDraft,
@@ -95,14 +96,14 @@ struct SavedSourceDeletionForm: View {
       #endif
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {
-          Button("Cancel") { dismiss() }
+          Button(deletionApplied ? "Close" : "Cancel") { dismiss() }
             .disabled(store.isSaving)
             .keyboardShortcut(.cancelAction)
             .accessibilityIdentifier("\(identifierPrefix).cancel")
         }
         ToolbarItem(placement: .confirmationAction) {
           Button("Delete", role: .destructive) { Task { await confirmDeletion() } }
-            .disabled(!store.canCreate)
+            .disabled(!store.canCreate || deletionApplied)
             .accessibilityIdentifier("\(identifierPrefix).confirm")
         }
       }
@@ -127,8 +128,10 @@ struct SavedSourceDeletionForm: View {
   }
 
   private func confirmDeletion() async {
+    guard !deletionApplied else { return }
     switch await store.applyReviewedChange(review, operationIdentifier: operationIdentifier) {
     case .applied:
+      deletionApplied = true
       onDeleted(review)
       if store.alertMessage == nil {
         dismiss()

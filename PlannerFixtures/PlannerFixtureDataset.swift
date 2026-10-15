@@ -34,6 +34,7 @@ enum PlannerFixtureDataset {
     case savedMapsDelay = "saved-maps-delay"
     case savedMapsRetry = "saved-maps-retry"
     case deletionEmptyResults = "deletion-empty-results"
+    case deletionRecovery = "deletion-recovery"
 
     var isMapsCapture: Bool {
       switch self {
@@ -69,6 +70,9 @@ enum PlannerFixtureDataset {
       .appendingPathComponent(identifier.uuidString, isDirectory: true)
     if scenario == .unavailableStore {
       return try await PlannerUnavailableStoreFixture.makeStore(directory: directory)
+    }
+    if scenario == .deletionRecovery {
+      return try await PlannerDeletionRecoveryFixture.makeStore(directory: directory)
     }
     if scenario == .largeCollection {
       return try await PlannerLargeCollectionFixture.makeStore(directory: directory)

@@ -64,7 +64,7 @@ enum PlannerRecoveryFixture {
   }
 }
 
-private final class FixtureRecoverySaveObstruction: @unchecked Sendable {
+final class FixtureRecoverySaveObstruction: @unchecked Sendable {
   private let lock = NSLock()
   private let storeURL: URL
   private let recoveryURL: URL
