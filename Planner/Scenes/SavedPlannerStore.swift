@@ -999,7 +999,7 @@ final class SavedPlannerStore {
   }
 
   func createItinerary(
-    title: String, notes: String, links: [PlannerLinkInput],
+    title: String, notes: String, location: PlannerOwnedLocation?, links: [PlannerLinkInput],
     categoryIdentifiers: Set<UUID>, tagIdentifiers: Set<UUID>, manualEstimate: PlannerEstimate?,
     operationIdentifier: UUID
   ) async -> PlannerEntityReference? {
@@ -1007,7 +1007,7 @@ final class SavedPlannerStore {
       .createItinerary(
         content: .init(
           title: title, notes: notes.isEmpty ? nil : notes,
-          links: links,
+          location: location, links: links,
           categoryIds: categoryIdentifiers, tagIds: tagIdentifiers, manualEstimate: manualEstimate)),
       operationId: operationIdentifier)
     return result?.generated.first { $0.kind == .itinerary }
@@ -1015,7 +1015,7 @@ final class SavedPlannerStore {
 
   func editItinerary(
     _ itinerary: PlannerItinerarySourceRead, title: String, notes: String,
-    links: [PlannerLinkInput],
+    location: PlannerOwnedLocation?, links: [PlannerLinkInput],
     categoryIdentifiers: Set<UUID>, tagIdentifiers: Set<UUID>, manualEstimate: PlannerEstimate?,
     operationIdentifier: UUID
   ) async -> Bool {
@@ -1039,6 +1039,14 @@ final class SavedPlannerStore {
     } else {
       tagChange = .set(tagIdentifiers)
     }
+    let locationChange: PlannerFieldChange<PlannerOwnedLocation>
+    if location == itinerary.content.location {
+      locationChange = .unchanged
+    } else if let location {
+      locationChange = .set(location)
+    } else {
+      locationChange = .clear
+    }
     let linksChange: PlannerFieldChange<[PlannerLinkInput]>
     if links == itinerary.content.links.map(\.editInput) {
       linksChange = .unchanged
@@ -1057,7 +1065,7 @@ final class SavedPlannerStore {
       .editItinerary(
         sourceId: itinerary.source.id,
         changes: .init(
-          title: titleChange, notes: notesChange, links: linksChange,
+          title: titleChange, notes: notesChange, location: locationChange, links: linksChange,
           categoryIds: categoryChange, tagIds: tagChange, manualEstimate: estimateChange),
         expectedFieldHashes: itinerary.fieldHashes), operationId: operationIdentifier) != nil
   }

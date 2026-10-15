@@ -1,4 +1,3 @@
-import MapKit
 import PlannerCore
 import SwiftUI
 
@@ -15,9 +14,7 @@ struct SavedEditItemForm: View {
   @State private var subtitle: String
   @State private var notes: String
   @State private var estimate: PlannerEstimate?
-  @State private var locationName: String
-  @State private var locationAddress: String
-  @State private var keepsSavedPin: Bool
+  @State private var locationDraft: SavedOwnedLocationDraft
   @State private var links: [SavedOwnedLinkDraft]
   @State private var categoryIdentifiers: Set<UUID>
   @State private var tagIdentifiers: Set<UUID>
@@ -30,9 +27,7 @@ struct SavedEditItemForm: View {
     _subtitle = State(initialValue: item.content.subtitle ?? "")
     _notes = State(initialValue: item.content.notes ?? "")
     _estimate = State(initialValue: item.content.estimate)
-    _locationName = State(initialValue: item.content.location?.displayName ?? "")
-    _locationAddress = State(initialValue: item.content.location?.formattedAddress ?? "")
-    _keepsSavedPin = State(initialValue: item.content.location?.coordinate != nil)
+    _locationDraft = State(initialValue: SavedOwnedLocationDraft(item.content.location))
     _links = State(initialValue: item.content.links.map(SavedOwnedLinkDraft.init))
     _categoryIdentifiers = State(initialValue: item.content.categoryIds)
     _tagIdentifiers = State(initialValue: item.content.tagIds)
@@ -47,19 +42,7 @@ struct SavedEditItemForm: View {
       || categoryIdentifiers != item.content.categoryIds || tagIdentifiers != item.content.tagIds
   }
 
-  private var location: PlannerOwnedLocation? {
-    let coordinate = keepsSavedPin ? item.content.location?.coordinate : nil
-    let name = locationText(locationName, original: item.content.location?.displayName)
-    let address = locationText(locationAddress, original: item.content.location?.formattedAddress)
-    if coordinate == nil && name == nil && address == nil { return nil }
-    return PlannerOwnedLocation(
-      displayName: name, formattedAddress: address, coordinate: coordinate)
-  }
-
-  private func locationText(_ text: String, original: String?) -> String? {
-    if text == (original ?? "") { return original }
-    return text.isEmpty ? nil : text
-  }
+  private var location: PlannerOwnedLocation? { locationDraft.value }
 
   var body: some View {
     NavigationStack {
@@ -91,37 +74,9 @@ struct SavedEditItemForm: View {
           }
           .accessibilityIdentifier("saved.item.edit.tags")
         }
-        Section {
-          TextField("Place name", text: $locationName)
-            .accessibilityIdentifier("saved.item.edit.location.name")
-          TextField("Address", text: $locationAddress)
-            .accessibilityIdentifier("saved.item.edit.location.address")
-          if item.content.location?.coordinate != nil {
-            Picker("Saved pin", selection: $keepsSavedPin) {
-              Text("Keep saved pin").tag(true)
-              Text("Remove saved pin").tag(false)
-            }
-            .pickerStyle(.menu)
-            .accessibilityIdentifier("saved.item.edit.location.pin")
-          }
-          if let coordinate = location?.coordinate {
-            ItemLocationMap(
-              title: title,
-              coordinate: .init(latitude: coordinate.latitude, longitude: coordinate.longitude),
-              accessibilityIdentifier: "saved.item.edit.location.map")
-          }
-        } header: {
-          Text("Location")
-        } footer: {
-          if item.content.location?.coordinate != nil {
-            if keepsSavedPin {
-              Text(
-                "Place name and address changes keep this pin until you choose Remove saved pin.")
-            } else {
-              Text("Removing the pin keeps the place name and address. Save applies the change.")
-            }
-          }
-        }
+        SavedOwnedLocationEditor(
+          draft: $locationDraft, title: title,
+          accessibilityIdentifierPrefix: "saved.item.edit.location")
         SavedOwnedLinksEditor(
           links: $links, accessibilityIdentifierPrefix: "saved.item.edit.link")
       }

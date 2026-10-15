@@ -18,6 +18,7 @@ enum PlannerFixtureDataset {
     case graphRecovery = "graph-recovery"
     case pinnedAddress = "pinned-address"
     case pinnedEmptyName = "pinned-empty-name"
+    case pinnedItinerary = "pinned-itinerary"
     case linkImage = "link-image"
     case linkOutcomes = "link-outcomes"
     case linkDelay = "link-delay"
@@ -215,6 +216,24 @@ enum PlannerFixtureDataset {
               location: .init(
                 displayName: "Saved location", formattedAddress: address, coordinate: nil))))
       }
+      return SavedPlannerStore(configuration: configuration)
+    }
+    if scenario == .pinnedItinerary {
+      guard
+        let item = try await save(.createItem(content: .init(title: "Route child"))).generated
+          .first,
+        let itinerary = try await save(
+          .createItinerary(
+            content: .init(
+              title: "Museum route", notes: "Keep these route notes",
+              location: .init(
+                displayName: "Museum entrance", formattedAddress: "Original address",
+                coordinate: .init(latitude: 35.662, longitude: 139.717))))
+        )
+        .generated.first
+      else { throw CancellationError() }
+      _ = try await save(
+        .addItineraryEntry(itineraryId: itinerary.id, source: item, placement: .last))
       return SavedPlannerStore(configuration: configuration)
     }
     if scenario == .pinnedAddress || scenario == .pinnedEmptyName {
