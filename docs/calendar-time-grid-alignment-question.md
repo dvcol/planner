@@ -1,6 +1,6 @@
 # Calendar hour alignment decision
 
-Status: the human accepted Q83 A on 15 October 2026. Day/Week must align local clock times. Implementation and native qualification remain open.
+Status: the human accepted Q83 A on 15 October 2026. Day/Week must align local clock times. The [native alignment slice](prototypes/native-clock-alignment.md) records implementation and focused phone/tablet qualification. Broader Calendar gates remain open.
 
 ## Context and goal
 
