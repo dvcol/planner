@@ -1,0 +1,14 @@
+{
+  "title": "Test - PlannerFixtures",
+  "environmentDescription": "PlannerFixtures \u00b7 Built with macOS 27.0.1",
+  "totalTestCount": 2,
+  "passedTests": 0,
+  "failedTests": 2,
+  "skippedTests": 0,
+  "startTime": 1792065961.695,
+  "finishTime": 1792066041.033,
+  "failureHeadlines": [
+    "XCTAssertTrue failed - Attributes: Application, 0x769f1b4f00, pid: 40401, title: 'PlannerFixtures', Disabled",
+    "XCTAssertTrue failed - Attributes: Application, 0x769f6ddf40, pid: 40546, title: 'PlannerFixtures', Disabled"
+  ]
+}

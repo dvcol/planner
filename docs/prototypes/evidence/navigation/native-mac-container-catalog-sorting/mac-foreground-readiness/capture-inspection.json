@@ -1,0 +1,7 @@
+{
+  "originalExportPath": "/private/tmp/PlannerMacCatalogSortForegroundImages/A5EF3734-D7F2-47D7-B071-60A2EAEAE247.png",
+  "sharedPath": "partial-list-estimate-descending.png",
+  "sha256": "9c00a7c118c67640599c951b25441154c6a8601c7b67ad4fc1351c4297b33895",
+  "captureScope": "XCUIApplication().windows.firstMatch.screenshot(); exact original PNG, no cropping or recompression",
+  "inspection": "Individually viewed. Fixture window only; Manual plan, Zulu plan, Alpha plan, Missing plan in expected descending estimate order. Incomplete plan last. Native sidebar/overflow present. Some sidebar duration text truncates at this width. This partial diagnostic capture does not make the full failed journey a pass."
+}

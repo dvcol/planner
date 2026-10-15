@@ -1,0 +1,8 @@
+{
+  "originalCompressedLocalPath": "/private/tmp/PlannerMacCatalogSort-mac-native-probe.original.log.gz",
+  "originalCompressedSha256": "4c9715bf1bc38f26c14e225209091c6b24d88afc550c60cf7e98f4709f4dcac2",
+  "originalDecodedSha256": "2e9a89e6378afb4b35e6bcf9a133b1d788116886795e4a7a01e3a7e73012ae38",
+  "sharedDerivative": "test-app-window-scope.log.gz",
+  "omittedFullApplicationHierarchies": 2,
+  "reason": "Full Mac application debug descriptions include the unrelated system menu and recent-document names. Shared derivative preserves build/test activity, assertion headlines and outcomes. Original bytes remain local and unmodified."
+}

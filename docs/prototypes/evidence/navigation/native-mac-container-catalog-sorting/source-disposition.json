@@ -1,0 +1,7 @@
+{
+  "baselineCommit": "ee78a7a3809736c5bb1593f2bc1b9739ec42e056",
+  "canonicalSource": "PlannerFixtureUITests/ContainerCatalogSortJourneyTests.swift",
+  "canonicalSourceSHA256": "381cd62027331b8eacdccfa31ab1b8a13f5bbe56aa8fde3a46a982dd93fb8527",
+  "draftSourceSHA256": "9e8669ebbcbeb6c70ffb7d1ce29155dd5bc23fe86931a6587902e1fc5b5a8ffd",
+  "disposition": "Canonical test remains unchanged and iOS-only. Unqualified Mac adapter is preserved as an exact patch and compressed source; do not enable its Mac journeys until both pass on an available unlocked desktop. Phone compatibility run passes both functions, without qualifying Mac behavior."
+}

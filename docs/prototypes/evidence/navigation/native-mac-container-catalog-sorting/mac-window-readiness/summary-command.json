@@ -1,0 +1,9 @@
+[
+  "xcrun",
+  "xcresulttool",
+  "get",
+  "test-results",
+  "summary",
+  "--path",
+  "/private/tmp/PlannerMacCatalogSort-mac-window-readiness.xcresult"
+]
