@@ -1,0 +1,37 @@
+{
+  "baseCommit": "5536cef47b9fa923d3870b36d8b23399d08e6583",
+  "command": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild test -project Planner.xcodeproj -scheme PlannerNavigation -destination 'platform=macOS,arch=arm64' -derivedDataPath /private/tmp/PlannerMCPDerivedData -clonedSourcePackagesDirPath /private/tmp/PlannerCalendarMonthSourcePackages -disableAutomaticPackageResolution -parallel-testing-enabled NO -only-testing:PlannerNavigationUITests/SavedListMembershipJourneyTests/testExistingItemCanBeAddedToAListWithoutDuplicatingItsSourceAfterRelaunch -resultBundlePath /private/tmp/PlannerMacMembershipBaseline.xcresult CODE_SIGNING_ALLOWED=NO",
+  "resultBundle": "/private/tmp/PlannerMacMembershipBaseline.xcresult",
+  "exitCode": 75,
+  "disposition": "Interrupted by the agent after a bounded startup observation, not a naturally observed timeout.",
+  "rawSummary": {
+    "passedTests": 0,
+    "failedTests": 1,
+    "skippedTests": 0
+  },
+  "executedJourneyFunctions": 0,
+  "qualificationCredit": {
+    "nativeMacFunctions": 0,
+    "coreFunctions": 0,
+    "httpFunctions": 0
+  },
+  "cause": "Not established. Developer mode disabled is a read-only observation, not a proved cause.",
+  "notes": [
+    "The stop observation says not a test failure or pass in reference to the intended journey; the raw synthetic runner cancellation failure is retained explicitly.",
+    "No native UI capture or successful runtime claim. No source or system setting changed for this probe."
+  ],
+  "productHashes": {
+    "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner": "d929b79328326f1f18bfc8f4d3ef81075a0e5f88a76dec8419068b44b15fa1d5",
+    "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/Planner.app/Contents/MacOS/Planner.debug.dylib": "3b902141d7a9e6bac1c243eaef4fe6723bc34da3822fb61e33f00b082b5cc89a",
+    "/private/tmp/PlannerMCPDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/PlugIns/PlannerNavigationUITests.xctest/Contents/MacOS/PlannerNavigationUITests": "9571ee0b5c12f11634aada89c7b1fbf7a9cfd04d234fc6dcbfa50d1727ddcbef"
+  },
+  "reportHash": "8fbf4186cb12ac446b43bd71a9718a1ec6bfb8217e5864aba688b1d083aee703",
+  "artifactHashes": {
+    "before.json": "e5a41d0e61800b4a74e9b734e131a38831862879c46f73ee049b9a88260f6736",
+    "runner-errors.log": "9f56fca152030dba9e8ee76dee4fc8967ab667507b5878f0f9ab819d55b6b9a6",
+    "stop-observation.json": "c80dbd332f9038811ed66165e945298f97666b4cc0f73cbdd097d26e96837978",
+    "summary.json": "79c32ca98890739090c3a16f1e09b15d3e8a05df7505c0dfd87e46201c0dcd1b",
+    "test.log.gz": "36ab56894d186040de0372e3c95551a0f666499b2b6521cf792c7b17907b964f",
+    "tests.json": "f5572a2fe5a1649c4bc85208bfc57f9cc79b03b245ed6ebbd55c0e31ea9d8939"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "action": "Agent-requested SIGINT after more than five minutes without observed test discovery or assertion. Not a test failure or pass.",
+  "processes": "16831  3888 Ss      05:49 /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild\n17038     1 S       05:38 /usr/libexec/testmanagerd\n17045     1 S       05:37 /private/tmp/PlannerMCPDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app/Contents/MacOS/PlannerNavigationUITests-Runner",
+  "developerStatus": "Developer mode is currently disabled.\n",
+  "cause": "Not established by the retained observations."
+}
