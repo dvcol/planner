@@ -1,6 +1,6 @@
 # Q85, sorting the List and Itinerary catalogs
 
-Status: the human accepted Q85 A and Q86 A on 15 October 2026. Shared Core/native sorting and its uncertainty groups are settled. The concrete public contract remains ready for Q87 review before implementation.
+Status: the human accepted Q85 A, Q86 A and Q87 A on 15 October 2026. Shared Core/native sorting, uncertainty groups and the concrete public contract are settled for implementation. Runtime qualification remains required.
 
 ## Context, before and goal
 
@@ -50,4 +50,4 @@ For exact 180-minute and 300-minute plans, a plan of at least 120 minutes with o
 - B: mix exact totals and numeric lower bounds in the selected direction, then unavailable. Ascending gives at least 120, 180, 300, unavailable, despite the incomplete plan potentially taking longer.
 - C: exact totals in the selected direction, then all incomplete/unavailable plans in title order. Known incomplete subtotals do not affect their order.
 
-Q86 supplies the uncertainty policy. Readiness now requires the [concrete-contract review](container-catalog-sort-contract-review.md) in Q87. The draft declares supported public values, defaults, fixed title/identity ties, native preference scope, errors and generation-bound reads. Required public Core/HTTP tests must cover both container kinds, both directions, multiple lower bounds, unavailable totals, numeric ties, exact manual budgets with incomplete calculations and empty automatic zero totals. Native rows must retain their uncertainty warnings, and selecting this sort must preserve remaining totals, completion, route order and bookings. No catalog sort is implemented by this decision record.
+Q86 supplies the uncertainty policy. Q87 A approves the [concrete contract](container-catalog-sort-contract-review.md), including supported public values, defaults, fixed title/identity ties, native preference scope, errors and generation-bound reads. Required public Core/HTTP tests must cover both container kinds, both directions, multiple lower bounds, unavailable totals, numeric ties, exact manual budgets with incomplete calculations and empty automatic zero totals. Native rows must retain their uncertainty warnings, and selecting this sort must preserve remaining totals, completion, route order and bookings. No catalog sort is implemented by this decision record.
