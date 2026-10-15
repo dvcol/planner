@@ -1,0 +1,23 @@
+[
+  "xcodebuild",
+  "-project",
+  "Planner.xcodeproj",
+  "-scheme",
+  "Planner",
+  "-destination",
+  "platform=macOS,arch=arm64",
+  "-derivedDataPath",
+  "/private/tmp/PlannerMCPDerivedData",
+  "-clonedSourcePackagesDirPath",
+  "/private/tmp/PlannerMCPSourcePackages",
+  "-disableAutomaticPackageResolution",
+  "-parallel-testing-enabled",
+  "NO",
+  "-jobs",
+  "1",
+  "-only-testing:PlannerMCPTests/ContainerCatalogSortRoutingTests",
+  "-resultBundlePath",
+  "/private/tmp/PlannerCatalogSortHTTP-admission-red.xcresult",
+  "CODE_SIGNING_ALLOWED=NO",
+  "test"
+]

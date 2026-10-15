@@ -1,0 +1,54 @@
+{
+  "baseCommit": "628316d8e7ee88faee7f7555ceeb8d86188eec61",
+  "final": {
+    "phase": "qualified",
+    "functions": 2,
+    "suites": 1,
+    "failures": 0,
+    "skips": 0,
+    "suiteSeconds": 3.56,
+    "routeSeconds": 3.343,
+    "admissionSeconds": 0.216,
+    "namedFixturesRemovedAfterExit": 2,
+    "productHashCount": 3
+  },
+  "red": {
+    "routesInitial": {
+      "seconds": 3.704,
+      "issues": 6,
+      "secondaryHelperError": true
+    },
+    "routesClean": {
+      "seconds": 2.515,
+      "issues": 6
+    },
+    "admission": {
+      "seconds": 0.214,
+      "issues": 6
+    }
+  },
+  "sourceReviews": {
+    "standards": "No confirmed violations or material smells",
+    "spec": "No confirmed source findings"
+  },
+  "artifactAudit": {
+    "standards": "One collector finding corrected and verified; zero remaining confirmed findings",
+    "spec": "No confirmed source/specification findings; reviewed evidence consistent before collector correction"
+  },
+  "limitations": [
+    "Native sort controls/preferences and runtime pending",
+    "No Mac UI, physical performance or signed iCloud/account/Share claim"
+  ],
+  "priorAdmissionGreen": {
+    "phase": "admission-green",
+    "functions": 2,
+    "suites": 1,
+    "failures": 0,
+    "skips": 0,
+    "suiteSeconds": 5.564,
+    "routeSeconds": 5.35,
+    "admissionSeconds": 0.213,
+    "namedFixturesRemovedAfterExit": 2
+  },
+  "evidenceCorrection": "Historical collector recorded launcher only; corrected collector requires nested test executable and production debug dylib; qualified rerun supplies all three hashes"
+}

@@ -154,6 +154,23 @@
       ),
     ])
 
+    private static let catalogSortSchema: Value = .object([
+      "type": .string("object"), "additionalProperties": .bool(false),
+      "required": .array([.string("mode"), .string("direction")]),
+      "properties": .object([
+        "mode": .object([
+          "type": .string("string"),
+          "enum": .array([
+            .string("title"), .string("created"), .string("lastUpdated"), .string("fullEstimate"),
+          ]),
+        ]),
+        "direction": .object([
+          "type": .string("string"),
+          "enum": .array([.string("ascending"), .string("descending")]),
+        ]),
+      ]),
+    ])
+
     private static let catalogQuerySchema: Value = .object([
       "type": .string("object"), "additionalProperties": .bool(false),
       "required": .array([.string("kind"), .string("sourceKind")]),
@@ -162,6 +179,7 @@
         "sourceKind": .object([
           "type": .string("string"), "enum": .array([.string("list"), .string("itinerary")]),
         ]),
+        "sort": catalogSortSchema,
         "text": .object(["type": .string("string")]),
         "archive": .object([
           "type": .string("string"),
@@ -197,7 +215,7 @@
     static let definition = Tool(
       name: "planner_query",
       description:
-        "Discover Item or exact List/Itinerary appearance identities, List/Itinerary title catalogs, shared labels and source-bound Schedule identities in the local Planner prototype. Calendar queries use inclusive Gregorian days and a display timezone, returning matching Schedule identities in UUID order; read their forms/live owners with calendarRows. Schedule catalogs require empty text and archive all; their order is UUID ascending. Filters narrow cumulatively; contextual progress includes hidden/archived appearances. Explicit ascending Manual preserves saved List/Itinerary order; omitted sort is alphabetical. Read rows through their issued generation.",
+        "Discover Item or exact List/Itinerary appearance identities, List/Itinerary catalogs with optional Title, Created, Last updated or Full estimate sorting, shared labels and source-bound Schedule identities in the local Planner prototype. Calendar queries use inclusive Gregorian days and a display timezone, returning matching Schedule identities in UUID order; read their forms/live owners with calendarRows. Schedule catalogs require empty text and archive all; their order is UUID ascending. Filters narrow cumulatively; contextual progress includes hidden/archived appearances. Explicit ascending Manual preserves saved List/Itinerary order; omitted sort is alphabetical. Read rows through their issued generation.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("query")]),
@@ -432,7 +450,7 @@
 
     private static func catalog(_ value: Value?) throws -> PlannerCatalogQuery {
       let fields = try object(
-        value, allowed: ["kind", "sourceKind", "text", "archive"],
+        value, allowed: ["kind", "sourceKind", "text", "archive", "sort"],
         required: ["kind", "sourceKind"], path: "/query")
       guard case .string(let encodedKind) = fields["sourceKind"],
         let sourceKind = PlannerEntityKind(rawValue: encodedKind), sourceKind != .item
@@ -440,6 +458,11 @@
         throw AdmissionFailure(
           code: "invalidInput", path: "/query/sourceKind",
           message: "Expected a declared catalog source kind.")
+      }
+      if fields["sort"] != nil, sourceKind != .list, sourceKind != .itinerary {
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/sort",
+          message: "Explicit catalog sorting supports Lists and Itineraries only.")
       }
       let text: String
       switch fields["text"] {
@@ -459,7 +482,29 @@
           code: "invalidInput", path: "/query/archive", message: "Expected active, archived or all."
         )
       }
-      return PlannerCatalogQuery(sourceKind: sourceKind, text: text, archive: archive)
+      return PlannerCatalogQuery(
+        sourceKind: sourceKind, text: text, archive: archive, sort: try catalogSort(fields["sort"]))
+    }
+
+    private static func catalogSort(_ value: Value?) throws -> PlannerCatalogQuery.Sort? {
+      guard let value else { return nil }
+      let fields = try object(
+        value, allowed: ["mode", "direction"], required: ["mode", "direction"], path: "/query/sort")
+      guard case .string(let encodedMode) = fields["mode"],
+        let mode = PlannerCatalogQuery.Sort.Mode(rawValue: encodedMode)
+      else {
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/sort/mode",
+          message: "Expected a declared catalog sort mode.")
+      }
+      guard case .string(let encodedDirection) = fields["direction"],
+        let direction = PlannerCatalogQuery.Sort.Direction(rawValue: encodedDirection)
+      else {
+        throw AdmissionFailure(
+          code: "invalidInput", path: "/query/sort/direction",
+          message: "Expected ascending or descending.")
+      }
+      return PlannerCatalogQuery.Sort(mode: mode, direction: direction)
     }
 
     private static func scope(_ value: Value?) throws -> PlannerItemQuery.Scope {

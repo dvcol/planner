@@ -1,0 +1,6 @@
+{
+  "Planner/AgentControl/PlannerMCPQueryTool.swift": "2c3def57248d6abf8d754991ea9129e0d9ea9250330cd304225753e9a782a54a",
+  "PlannerMCPTests/ContainerCatalogSortRoutingTests.swift": "fb8065da14af023d53ed6193799ca11820a5aa0b529829cc1b6136a8c257b20f",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "9d3dd24a770cfcd3358fb62be0a7f262a5b194bda9bfb3122b71a7f7934fe146",
+  "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "6685a8834fb6d4cd6b86b60fea0a8b5e9b417f6839e9537635f0af2f0c4f69a7"
+}
