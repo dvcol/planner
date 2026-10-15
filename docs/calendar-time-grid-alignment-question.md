@@ -1,6 +1,6 @@
 # Calendar hour alignment decision
 
-Status: Q83 asked through the question tool on 15 October 2026; awaiting the human's choice. No alignment policy change is implemented.
+Status: the human accepted Q83 A on 15 October 2026. Day/Week must align local clock times. Implementation and native qualification remain open.
 
 ## Context and goal
 
@@ -16,11 +16,11 @@ B. Keep repeated hours as separate rows and align Week through a common row set.
 
 C. Retain elapsed-time columns. Repeated appointments remain vertically separated and each day shows its actual length. This requires less work, but equal clock times do not align across the week after a change.
 
-Recommendation: A for comparison across a week. The recommendation is not an accepted decision.
+Accepted: A. Repeated clock times use separate lanes with explicit timezone names. Saved instants, planning zones, Schedule identities and all-day dates stay unchanged.
 
 ## Definition of ready
 
-The human selects or revises Q83. Document the resulting presentation rules for repeated/skipped hours, spans crossing a change, half-hour transitions and overnight clipping before implementing that choice. Core date-window matching and saved Schedule forms remain governed by Q81/Q82; this question does not approve a scheduling-data change.
+Q83 A is accepted. Use the same midnight-to-midnight civil-clock scale for every day. Skipped clock times do not shift later appointments; repeated times share their clock position and use separate collision lanes. Clip spans to the displayed day, and use their covered local-clock range when a backward transition reverses the displayed endpoints. Retain both actual endpoints and timezone names in the caption and accessibility description. Apply the actual offset change, including half-hour transitions, without assuming every change is one hour. An end at the next midnight reaches the bottom of the day. Keep the final start-only card scrollable in full. Core date-window matching and saved Schedule forms remain governed by Q81/Q82; this question does not approve a scheduling-data change.
 
 ## Required TDD and definition of done
 
