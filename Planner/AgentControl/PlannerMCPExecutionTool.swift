@@ -7,7 +7,7 @@
     static let definition = Tool(
       name: "planner_execute",
       description:
-        "Create/edit Items, Lists, Itineraries and labels; organize live references and repeated entries. Set global Item or exact appearance completion. Bulk completion and capture require a Core-issued review token. Bulk includes hidden/archived appearances and retains global flags; capture applies the exact create/reuse proposal without overwriting reused content or state. Global Done overrides display; global Reopen reveals retained local flags. Entry removal/archive preserves source data. Edit direct Schedules through the local Planner prototype.",
+        "Create/edit Items, Lists, Itineraries and labels; organize live references and repeated entries. Optional Item listId creates its List entry atomically; a creation review binds that destination and content. Set global Item or exact appearance completion. Bulk completion and capture require a Core-issued review token. Bulk includes hidden/archived appearances and retains global flags; capture applies the exact create/reuse proposal without overwriting reused content or state. Global Done overrides display; global Reopen reveals retained local flags. Entry removal/archive preserves source data. Edit direct Schedules through the local Planner prototype.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("operationId"), .string("command")]),
@@ -16,7 +16,8 @@
           "operationId": .object(["type": .string("string"), "format": .string("uuid")]),
           "command": .object([
             "oneOf": .array([
-              creationSchema, itineraryCreationSchema, listCreationSchema, categoryCreationSchema,
+              creationSchema(requiresDestination: false), itineraryCreationSchema,
+              listCreationSchema, categoryCreationSchema,
               tagCreationSchema,
               membershipCreationSchema,
               membershipReorderingSchema, membershipRemovalSchema, membershipMoveSchema,
@@ -97,25 +98,40 @@
       ]),
     ])
 
-    private static let creationSchema = Value.object([
-      "type": .string("object"), "additionalProperties": .bool(false),
-      "required": .array([.string("type"), .string("content")]),
-      "properties": .object([
-        "type": .object(["type": .string("string"), "const": .string("createItem")]),
-        "content": .object([
-          "type": .string("object"), "additionalProperties": .bool(false),
-          "required": .array([.string("title")]),
-          "properties": .object([
-            "title": .object(["type": .string("string")]),
-            "notes": .object(["type": .array([.string("string"), .string("null")])]),
-            "location": locationSchema,
-            "links": linksSchema,
-            "categoryIds": labelSelectionSchema,
-            "tagIds": labelSelectionSchema,
+    static func creationSchema(requiresDestination: Bool) -> Value {
+      let destinationType: Value
+      if requiresDestination {
+        destinationType = .string("string")
+      } else {
+        destinationType = .array([.string("string"), .string("null")])
+      }
+      return .object([
+        "type": .string("object"), "additionalProperties": .bool(false),
+        "required": .array(
+          [.string("type"), .string("content")] + (requiresDestination ? [.string("listId")] : [])),
+        "properties": .object([
+          "type": .object(["type": .string("string"), "const": .string("createItem")]),
+          "listId": .object([
+            "type": destinationType,
+            "format": .string("uuid"),
+            "description": .string(
+              "Active List destination; saved with the new Item atomically."),
+          ]),
+          "content": .object([
+            "type": .string("object"), "additionalProperties": .bool(false),
+            "required": .array([.string("title")]),
+            "properties": .object([
+              "title": .object(["type": .string("string")]),
+              "notes": .object(["type": .array([.string("string"), .string("null")])]),
+              "location": locationSchema,
+              "links": linksSchema,
+              "categoryIds": labelSelectionSchema,
+              "tagIds": labelSelectionSchema,
+            ]),
           ]),
         ]),
-      ]),
-    ])
+      ])
+    }
 
     private static let labelSelectionSchema = Value.object([
       "type": .string("array"),
@@ -656,7 +672,7 @@
             "forbiddenOperation", "/command/type",
             "Permanent deletion, import and recovery administration are native Planner actions.")
         }
-        if !["setBulkCompletion", "applyCapture"].contains(commandType),
+        if !["setBulkCompletion", "applyCapture", "createItem"].contains(commandType),
           let token = arguments["reviewToken"], token != .null
         {
           throw AdmissionFailure(
@@ -1320,9 +1336,9 @@
       return .setCompletion(scope: completionScope, done: done)
     }
 
-    private static func creationCommand(_ value: Value?) throws -> PlannerCommand {
+    static func creationCommand(_ value: Value?) throws -> PlannerCommand {
       let command = try object(
-        value, allowed: ["type", "content"], required: ["type", "content"],
+        value, allowed: ["type", "content", "listId"], required: ["type", "content"],
         path: "/command")
       let content = try object(
         command["content"],
@@ -1356,13 +1372,25 @@
       case .set(let value): location = value
       case .clear, .unchanged: location = nil
       }
+      let listIdentifier: UUID?
+      switch command["listId"] {
+      case nil, .null: listIdentifier = nil
+      case .string(let spelling):
+        guard let identifier = UUID(uuidString: spelling) else {
+          throw AdmissionFailure("invalidInput", "/command/listId", "Expected a List UUID or null.")
+        }
+        listIdentifier = identifier
+      default:
+        throw AdmissionFailure("invalidInput", "/command/listId", "Expected a List UUID or null.")
+      }
       return .createItem(
         content: PlannerItemContentInput(
           title: title, notes: notes, location: location,
           links: try linksInput(content["links"], path: "/command/content/links"),
           categoryIds: try labelSelection(
             content["categoryIds"], path: "/command/content/categoryIds"),
-          tagIds: try labelSelection(content["tagIds"], path: "/command/content/tagIds")))
+          tagIds: try labelSelection(content["tagIds"], path: "/command/content/tagIds")),
+        listId: listIdentifier)
     }
 
     private static func labelSelection(_ value: Value?, path: String) throws -> Set<UUID> {
