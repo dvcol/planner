@@ -1,0 +1,30 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerReviewValues.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationAdmissionTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationFailureTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationRecoveryTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift"
+  ],
+  "exitCode": 0,
+  "output": "",
+  "sourceSHA256": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "ddde8c040ac4cd56d3dfb89480dd5bc3e38a71650602407a12845757a624ba65",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "488188ff114e83ed74fa6ffc121d25546d2e05b3b2319a8da3c6af9f97d4450d",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "318628925cd35721a5b3872dbf3297361093f1ae3d2b0f2a63882691eb2d59b7",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerReviewValues.swift": "5b32629b64df7818bb43b174276f8b4122d34fcbd086fc6f26cbe38e58db64dc",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationAdmissionTests.swift": "2b4c00c33dceadf9a5df9b41b084b3b7306452ebf60556a760f9e24bcdede384",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationFailureTests.swift": "e47d1c54338912a3a05a77f04e11435ce71fc83a10a9a417cb9677cf1576fb3d",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationRecoveryTests.swift": "abf28c50cd8c09028fa1fb3c718c79fea84570641f9c206d4be4493c4181634c",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationTests.swift": "53b36e68c171abd529d5f1348187509a2c78fd71b8863d81968575dff0657441",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift": "cfb0c4bc0bf80c7c3ead6bf6e8be47d4f1f10d183ac4f36ad08eeaffbb6604a0"
+  }
+}

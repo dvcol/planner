@@ -1,0 +1,17 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2@0.23.3",
+    "--config",
+    "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+    "docs/adapter-contract.md",
+    "docs/prototypes/core-item-in-list-creation.md"
+  ],
+  "exitCode": 0,
+  "output": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/adapter-contract.md docs/prototypes/core-item-in-list-creation.md\nLinting: 2 files\nSummary: 0 issues in 0 files\nDone in 309ms using pnpm v12.10.1\n",
+  "sourceSHA256": {
+    "docs/adapter-contract.md": "27551e38b15b25a7053c86c8030ee424c330c666509a4ccb4cea0fa7237e0980",
+    "docs/prototypes/core-item-in-list-creation.md": "3a21346e398ab0b1f280c9a812b0244563da00689cfc2e818f6277e2f462178e"
+  }
+}

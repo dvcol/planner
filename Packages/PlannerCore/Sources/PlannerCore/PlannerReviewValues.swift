@@ -14,7 +14,7 @@ public enum PlannerReviewTarget: Sendable, Equatable {
 
 public struct PlannerReviewImpact: Sendable {
   public enum Kind: String, Sendable {
-    case bulkCompletion, capture, deleteSource
+    case bulkCompletion, capture, deleteSource, itemCreation
     case importData = "import"
   }
   public let kind: Kind

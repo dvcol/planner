@@ -1,0 +1,13 @@
+[
+  "xcrun",
+  "swift",
+  "test",
+  "--package-path",
+  "Packages/PlannerCore",
+  "--scratch-path",
+  "/private/tmp/PlannerQ93CoreBuild",
+  "--jobs",
+  "1",
+  "--filter",
+  "ItemInListCreationRecoveryTests"
+]

@@ -1,0 +1,15 @@
+{
+  "qualifiedPhase": "core-review-qualified",
+  "functions": 28,
+  "suites": 9,
+  "seconds": 2.03,
+  "failures": 0,
+  "skips": 0,
+  "coreOnly": true,
+  "review": {
+    "standards": "fixture unlink finding corrected; recheck clear",
+    "spec": "precommit throwing fetch corrected; recheck clear"
+  },
+  "fixtureLifecycle": "New Q93 SQLite directories retained until external cleanup after test process exit.",
+  "earlierEpochs": "Retained unchanged; only final qualified epoch has complete compatibility credit."
+}

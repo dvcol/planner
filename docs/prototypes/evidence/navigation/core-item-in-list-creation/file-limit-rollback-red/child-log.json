@@ -1,0 +1,5 @@
+{
+  "originalPath": "/var/folders/4y/5mvy0qfx6yd8z1lllg4_n5340000gp/T/PlannerQ93WriteFailure-497C4D22-9EED-4C85-9590-9310F546E086/child.log",
+  "sha256": "46e3d83d500ff0463f564c6754f524fdc777b849bb1a082306b5685e334e1baf",
+  "symptom": "Actual save I/O error 778; transaction rollback checks pass, but prepared operation evidence remains unverified."
+}

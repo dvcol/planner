@@ -1,0 +1,28 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerReviewValues.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationAdmissionTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationFailureTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationRecoveryTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationTests.swift"
+  ],
+  "exitCode": 0,
+  "output": "",
+  "sourceSHA256": {
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift": "ddde8c040ac4cd56d3dfb89480dd5bc3e38a71650602407a12845757a624ba65",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerEncoding.swift": "488188ff114e83ed74fa6ffc121d25546d2e05b3b2319a8da3c6af9f97d4450d",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift": "9e7e2f44fad71560bcfd9790824e3a5f1e401c3e6764f504479b0b9314b58016",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerReviewValues.swift": "5b32629b64df7818bb43b174276f8b4122d34fcbd086fc6f26cbe38e58db64dc",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationAdmissionTests.swift": "6ea59a812faa9015841978c869edf8bbbba4c0ae62b304d7c0da5478f72b0b18",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationFailureTests.swift": "dd8d08cbb515e89dcac936abe4d16463fdddc0e359ba47c69c276f0d82762231",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationRecoveryTests.swift": "3f5b6aefae19200c007bfc71f167d93251ac5e9bd848b2ed14fddbc342269208",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationTests.swift": "23e64c63e1b1f61b32e371d2b216e3f2b8dc1f6bae84e4fa01327bc0cbe48a88"
+  }
+}

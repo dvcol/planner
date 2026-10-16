@@ -708,6 +708,51 @@ public actor Planner {
     }
   }
 
+  private func resolveItemCreation(
+    content: PlannerItemContentInput, listId: UUID?, context: ModelContext
+  ) throws -> (
+    destination: PlannerSchemaV18.List?, categories: [PlannerSchemaV18.Category],
+    tags: [PlannerSchemaV18.Tag], bindings: [PlannerBoundIdentity]
+  ) {
+    let categories = try selectedCategoryRecords(content.categoryIds, context: context)
+    let tags = try selectedTagRecords(content.tagIds, context: context)
+    var bindings =
+      try categories.map { record in
+        let snapshot = try record.value()
+        return PlannerBoundIdentity(
+          kind: "category", id: snapshot.id, lifetimeId: snapshot.lifetimeId)
+      }
+      + tags.map { record in
+        let snapshot = try record.value()
+        return PlannerBoundIdentity(kind: "tag", id: snapshot.id, lifetimeId: snapshot.lifetimeId)
+      }
+    guard let listId else { return (nil, categories, tags, bindings) }
+    var descriptor = FetchDescriptor<PlannerSchemaV18.List>(
+      predicate: #Predicate { $0.id == listId })
+    descriptor.fetchLimit = 2
+    let matches = try context.fetch(descriptor)
+    guard matches.count == 1, let destination = matches.first, !destination.archived else {
+      throw PlannerFailure(
+        "missingReference", "The destination List is unavailable or archived.",
+        propertyPath: "/command/listId")
+    }
+    let owner = try destination.value()
+    bindings.append(.init(kind: "list", id: owner.id, lifetimeId: owner.lifetimeId))
+    return (destination, categories, tags, bindings)
+  }
+
+  private func itemCreationReviewDigest(
+    operationDigest: String, destination: ListSnapshot, identity: PlannerStoreIdentity
+  ) throws -> String {
+    guard let nameHash = destination.fieldHashes(datasetId: identity.datasetId)[.name] else {
+      throw PlannerFailure("readUnavailable", "The destination List's name binding is unresolved.")
+    }
+    let value = PlannerCanonicalValue.record([
+      "operationDigest": .string(operationDigest), "destinationNameHash": .string(nameHash.value),
+    ])
+    return plannerDigest(value.encoded(), prefix: "sha256-item-creation-review-v1:")
+  }
+
   public func prepareReview(session: PlannerDatasetSession, command: PlannerCommand)
     -> PlannerReviewResult
   {
@@ -720,6 +765,22 @@ public actor Planner {
         let impact: PlannerReviewImpact
         let digest: String
         switch command {
+        case .createItem(let content, let listId?):
+          try content.validate()
+          let selection = try resolveItemCreation(
+            content: content, listId: listId, context: context)
+          guard let destination = selection.destination else {
+            throw PlannerFailure("missingReference", "The destination List is unavailable.")
+          }
+          let owner = try destination.value()
+          targets = [.source(owner.reference)]
+          impact = .init(
+            kind: .itemCreation, targetCount: 1, globalFlagsChanged: false,
+            sourceDeletes: [], referenceRemovals: [])
+          digest = try itemCreationReviewDigest(
+            operationDigest: content.payloadDigest(
+              datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
+              bindings: selection.bindings, listId: listId), destination: owner, identity: identity)
         case .applyCapture(let draftId, let draftGeneration, let choice, let listIds):
           let resolution = try resolveCapture(
             session: session, draftId: draftId, draftGeneration: draftGeneration,
@@ -995,13 +1056,13 @@ public actor Planner {
             operation, scheduleId: scheduleId, change: .remove, hashes: [:],
             identity: identity, context: context, archive: archive, receipts: receipts,
             envelope: envelope)
-        case .createItem(let content):
+        case .createItem(let content, let listId):
           try content.validate()
           if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
             let stored = try receipt.evidence()
             let digest = content.payloadDigest(
               datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
-              bindings: stored.bindings)
+              bindings: stored.bindings, listId: listId)
             guard receipt.payloadDigest == digest else {
               throw PlannerFailure(
                 "operationPayloadMismatch",
@@ -1011,23 +1072,15 @@ public actor Planner {
             return appliedResult(
               operationId: operation.operationId, evidence: evidence, envelope: envelope)
           }
-          let selectedCategories = try selectedCategoryRecords(
-            content.categoryIds, context: context)
-          let selectedTags = try selectedTagRecords(content.tagIds, context: context)
-          let bindings =
-            try selectedCategories.map { record in
-              let snapshot = try record.value()
-              return PlannerBoundIdentity(
-                kind: "category", id: snapshot.id, lifetimeId: snapshot.lifetimeId)
-            }
-            + selectedTags.map { record in
-              let snapshot = try record.value()
-              return PlannerBoundIdentity(
-                kind: "tag", id: snapshot.id, lifetimeId: snapshot.lifetimeId)
-            }
+          let selection = try resolveItemCreation(
+            content: content, listId: listId, context: context)
+          let destination = selection.destination
+          let selectedCategories = selection.categories
+          let selectedTags = selection.tags
+          let bindings = selection.bindings
           let digest = content.payloadDigest(
             datasetId: identity.datasetId,
-            ownershipBinding: identity.ownershipBinding, bindings: bindings)
+            ownershipBinding: identity.ownershipBinding, bindings: bindings, listId: listId)
           let completedIds = Set(envelope?.receipts.map(\.operationId) ?? [])
           guard
             receipts.allSatisfy({ receipt in
@@ -1036,6 +1089,18 @@ public actor Planner {
           else {
             throw PlannerFailure(
               "mutationBlocked", "A prior applied action still needs independent recovery.")
+          }
+          if let token = operation.reviewToken {
+            guard let destination, let review = reviews[token.reviewId],
+              review.session == operation.session,
+              try review.payloadDigest
+                == itemCreationReviewDigest(
+                  operationDigest: digest, destination: destination.value(), identity: identity)
+            else {
+              throw PlannerFailure(
+                "staleReview", "The destination or content changed; review creation again.",
+                propertyPath: "/reviewToken", details: .staleReview)
+            }
           }
           if let proposal = try archive.proposals().first(where: {
             $0.originalOperationId == operation.operationId
@@ -1057,12 +1122,53 @@ public actor Planner {
               PlannerSchemaV18.LabelAssociation(item: item, category: $0)
             } + selectedTags.map { PlannerSchemaV18.LabelAssociation(item: item, tag: $0) }
           let snapshot = try item.value()
-          let generatedReferences = snapshot.labelAssociations.sorted {
+          var memberships = try membershipSnapshots(context)
+          var addedMembership: MembershipSnapshot?
+          if let destination {
+            let owner = try destination.value()
+            let ordered = memberships.filter { $0.list.id == owner.id }.sorted {
+              if $0.rank != $1.rank { return $0.rank < $1.rank }
+              return $0.id.uuidString < $1.id.uuidString
+            }
+            let rank = try associationInsertionRank(
+              at: ordered.count, ordered: ordered, associations: &memberships)
+            let identifier = UUID()
+            let membership = MembershipSnapshot(
+              id: identifier, lifetimeId: identifier,
+              list: .init(kind: "list", id: owner.id, lifetimeId: owner.lifetimeId),
+              item: .init(kind: "item", id: snapshot.id, lifetimeId: snapshot.lifetimeId),
+              rank: rank, localDone: false)
+            addedMembership = membership
+            memberships.append(membership)
+          }
+          let updatedAt = Date()
+          let lists = try listSnapshots(context).map { owner in
+            guard owner.id == listId else { return owner }
+            return ListSnapshot(
+              id: owner.id, lifetimeId: owner.lifetimeId, createdAt: owner.createdAt,
+              updatedAt: updatedAt, content: owner.content, archived: owner.archived,
+              contentOrigins: owner.contentOrigins)
+          }
+          var generatedReferences = snapshot.labelAssociations.sorted {
             $0.id.uuidString < $1.id.uuidString
           }.map { PlannerAppliedIdentity.reference($0.reference) }
+          if let addedMembership {
+            generatedReferences.append(.reference(addedMembership.reference))
+          }
+          var affectedIdentities: [PlannerAppliedIdentity] =
+            [.source(snapshot.reference)] + generatedReferences
+          if let listId { affectedIdentities.append(.source(.init(kind: .list, id: listId))) }
           let result = PlannerAppliedResult(
             generatedIdentities: [.source(snapshot.reference)] + generatedReferences,
-            affectedIdentities: [.source(snapshot.reference)] + generatedReferences)
+            affectedIdentities: affectedIdentities)
+          let membershipRecords: [PlannerSchemaV18.Membership]
+          if destination != nil {
+            membershipRecords = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
+          } else {
+            membershipRecords = []
+          }
+          let receipt = try PlannerSchemaV1.Receipt(
+            operation: operation, digest: digest, result: result, bindings: bindings)
           let proposal = RecoveryPreparedProposal(
             proposalId: UUID(), originalOperationId: operation.operationId,
             datasetId: identity.datasetId,
@@ -1071,19 +1177,33 @@ public actor Planner {
               itineraries: try itinerarySnapshots(context),
               labelAssociations: existingAssociations + snapshot.labelAssociations,
               tags: try tagSnapshots(context), categories: try categorySnapshots(context),
-              items: existingItems + [snapshot], lists: try listSnapshots(context),
-              memberships: try membershipSnapshots(context),
+              items: existingItems + [snapshot], lists: lists, memberships: memberships,
               deletionMarkers: try deletionMarkers(context)),
             payloadDigest: digest, evidence: "preparedUnverified"
           )
           try archive.prepare(proposal)
-          let receipt = try PlannerSchemaV1.Receipt(
-            operation: operation, digest: digest, result: result, bindings: bindings)
           context.insert(item)
           for association in item.labelAssociations ?? [] { context.insert(association) }
+          if let destination, let addedMembership {
+            context.insert(
+              PlannerSchemaV18.Membership(snapshot: addedMembership, list: destination, item: item))
+            destination.updatedAt = updatedAt
+            let ranks = Dictionary(uniqueKeysWithValues: memberships.map { ($0.id, $0.rank) })
+            for record in membershipRecords {
+              if let identifier = record.id, let rank = ranks[identifier], record.rank != rank {
+                record.rank = rank
+              }
+            }
+          }
           context.insert(receipt)
           do { try context.save() } catch {
             context.rollback()
+            do { try archive.discardPreparedProposal(proposal.proposalId) } catch {
+              throw PlannerFailure(
+                "persistenceFailure",
+                "The Item save failed and its prepared evidence could not be cleared. Resolve operation status before retrying."
+              )
+            }
             throw PlannerFailure(
               "persistenceFailure",
               "The complete Item action was not committed: \(error.localizedDescription)")
@@ -1093,8 +1213,7 @@ public actor Planner {
               itineraries: try itinerarySnapshots(context),
               labelAssociations: existingAssociations + snapshot.labelAssociations,
               tags: try tagSnapshots(context), categories: try categorySnapshots(context),
-              items: existingItems + [snapshot], lists: try listSnapshots(context),
-              memberships: try membershipSnapshots(context),
+              items: existingItems + [snapshot], lists: lists, memberships: memberships,
               deletionMarkers: try deletionMarkers(context),
               receipts: receipts + [receipt])
             return PlannerOperationResult(
