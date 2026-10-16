@@ -1,0 +1,16 @@
+{
+  "base-green/MembershipCreationTests.swift.gz": "a2bc1cb2dd38d0dce183108269e59b7c19cde5023e10b72b7c0739c52c25da0e",
+  "base-green/command.json": "2b2f5ef41507b7ccfea643077f6e0976b664c78bec42092b995750b960e3b07e",
+  "base-green/exit.json": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+  "base-green/product-sha256.json": "5ef4bbd72224681c47f361ced40ff9254cdf1572344e8d633671ba40c213f4f2",
+  "base-green/source-root.json": "0da33f0cc60c2028184d3dbf54ca3f1fbf43fdea4e470415a2c3350dd2356c0c",
+  "base-green/source-sha256.json": "30cc1a06afbb64b6500588e52ded1b5a64feed66c479a7e547580d0c22b4314d",
+  "base-green/test.log.gz": "9997a723f0f1fe9de31951d32adfa769ad1dcaaf3b16477cc439611e8c64fc12",
+  "base-red/MembershipCreationTests.swift.gz": "1a9d4a9da3aa2102eaa8d3ed909359b5d1078359eefc49ff6ae070473cc3c800",
+  "base-red/command.json": "2b2f5ef41507b7ccfea643077f6e0976b664c78bec42092b995750b960e3b07e",
+  "base-red/exit.json": "01614b0e7bf86220a2287c6fd76f9b3a5c06913c2e0762c9eb3958c397f0bbee",
+  "base-red/source-root.json": "2137760ab420a2d6f8d2b1a0c9482d5abd834f525d752d55088760774c34afde",
+  "base-red/source-sha256.json": "95d7146460524603aa22c541abebcfe76ce60d603f03c3739c4e7b058cada9b9",
+  "base-red/test.log.gz": "a01901275d184c73f416742411d5ad1c0cecbd7bacd4b1da217fa7537912e760",
+  "verification.json": "32093dad7c2500d73910854d7f8d98ba70d3125b4efac8bb6108110828f22da2"
+}

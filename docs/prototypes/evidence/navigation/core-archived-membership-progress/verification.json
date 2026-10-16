@@ -1,0 +1,36 @@
+{
+  "baseCommit": "ebcca9d0cd170aa6367482a5db17bc0e8e7f799a",
+  "sourceInputCount": 713,
+  "onlyChangedInput": "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift",
+  "baseFailure": "One function, two partial-state assertion issues, 0.333 s.",
+  "correctedBaseResult": "One function, zero failures/skips, 0.335 s.",
+  "productionSourceOrResourceChanges": false,
+  "workingTreeTestMatchesTestedOverlay": true,
+  "lint": {
+    "swift": {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift"
+      ],
+      "exitCode": 0
+    },
+    "markdown": {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2@0.23.3",
+        "--config",
+        "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+        "docs/prototypes/core-archived-membership-progress.md"
+      ],
+      "exitCode": 0
+    }
+  },
+  "fileSHA256": {
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift": "cfb0c4bc0bf80c7c3ead6bf6e8be47d4f1f10d183ac4f36ad08eeaffbb6604a0",
+    "docs/prototypes/core-archived-membership-progress.md": "eea22a8b89551e67c7cebae34c6989377b21eaff97a1fae678045e7c7d3fb75a"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "root": "/private/tmp/PlannerQ93BaseMembership",
+  "baseCommit": "ebcca9d0cd170aa6367482a5db17bc0e8e7f799a",
+  "onlyOverlay": [
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipCreationTests.swift"
+  ]
+}

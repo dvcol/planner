@@ -430,7 +430,8 @@ struct MembershipCreationTests {
         return
       }
       #expect(reopened.references == [references[index]])
-      #expect(reopened.progress.state == .partial)
+      #expect(reopened.progress.state == .complete)
+      #expect(reopened.progress.archivedCount == 1)
       #expect(reopened.progress.doneCount == 0)
       #expect(reopened.progress.totalCount == 1)
     }
