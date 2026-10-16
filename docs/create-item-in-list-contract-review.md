@@ -1,6 +1,6 @@
 # Atomic ordinary Item creation in a List
 
-Status: proposed Q93 contract. Q88 approves the behavior; this public command extension still needs review before its /tdd implementation.
+Status: Q93 A approved by the human on 16 October 2026. Q88 approves the behavior; the concrete public command extension and tests below are now approved for /tdd implementation. Implementation and runtime qualification remain required.
 
 ## Context and starting state
 
@@ -20,7 +20,7 @@ Expose the same optional `listId` in the existing MCP createItem command and its
 
 ## Definition of ready
 
-- User approves this concrete public contract after Q88's accepted native behavior.
+- The human approved this concrete public contract after Q88's accepted native behavior.
 - Existing ordinary creation, membership ordering/lifetimes, operation receipts, independent recovery and Capture deduplication are inspected together.
 - Tests use the already approved public Planner command/read, real persistence I/O failure and MCP HTTP boundaries. Native UI tests use actual production forms and local datasets. No test-only production parameter is added.
 
