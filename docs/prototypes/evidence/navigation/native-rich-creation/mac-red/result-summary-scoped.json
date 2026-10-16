@@ -1,0 +1,13 @@
+{
+  "title": "Test - PlannerNavigation",
+  "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+  "totalTestCount": 1,
+  "passedTests": 0,
+  "failedTests": 1,
+  "skippedTests": 0,
+  "startTime": 1792074323.603,
+  "finishTime": 1792074363.56,
+  "failureHeadlines": [
+    "XCTAssertTrue failed"
+  ]
+}

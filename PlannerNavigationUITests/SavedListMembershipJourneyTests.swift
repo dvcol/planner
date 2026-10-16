@@ -31,6 +31,7 @@ final class SavedListMembershipJourneyTests: XCTestCase {
     application.plannerElement("saved.list.save").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
 
+    application.openSavedPlannerListAddMenu()
     let addItem = application.plannerElement("saved.list.add")
     XCTAssertTrue(addItem.waitForExistence(timeout: 5))
     addItem.activateForPlannerJourney()
@@ -46,6 +47,7 @@ final class SavedListMembershipJourneyTests: XCTestCase {
     XCTAssertTrue(retained.waitForExistence(timeout: 10))
     retained.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    application.openSavedPlannerListAddMenu()
     addItem.activateForPlannerJourney()
     XCTAssertTrue(candidate.waitForExistence(timeout: 5))
     candidate.activateForPlannerJourney()
@@ -58,6 +60,7 @@ final class SavedListMembershipJourneyTests: XCTestCase {
     XCTAssertFalse(application.staticTexts["No items"].exists)
     XCTAssertEqual(application.savedPlannerItemRows("Nezu Museum").count, 1)
 
+    application.openSavedPlannerListAddMenu()
     addItem.activateForPlannerJourney()
     XCTAssertTrue(candidate.waitForExistence(timeout: 5))
     candidate.activateForPlannerJourney()

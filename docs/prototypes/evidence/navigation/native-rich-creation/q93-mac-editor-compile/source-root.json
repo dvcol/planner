@@ -1,0 +1,27 @@
+{
+  "root": "/private/tmp/PlannerQ93NativeSource",
+  "base": "e3426aa",
+  "overlays": [
+    "Planner/Scenes/SavedItemViews.swift",
+    "Planner/Scenes/SavedPlannerStore.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "Planner/Scenes/SavedSourceDeletionForm.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift",
+    "PlannerNavigationUITests/SavedContainerEstimateJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItemDeletionJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryBulkJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryDeletionJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryEntriesJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryFilterJourneyTests.swift",
+    "PlannerNavigationUITests/SavedLabelsJourneyTests.swift",
+    "PlannerNavigationUITests/SavedListCaptureJourneyTests.swift",
+    "PlannerNavigationUITests/SavedListDeletionJourneyTests.swift",
+    "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift",
+    "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift",
+    "PlannerNavigationUITests/SavedLoadingJourneyTests.swift",
+    "Planner/Scenes/SavedNewItemForm.swift",
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift",
+    "Planner/AgentControl/PlannerMCPReviewTool.swift"
+  ]
+}

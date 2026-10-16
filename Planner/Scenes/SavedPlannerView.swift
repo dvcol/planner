@@ -10,6 +10,18 @@ private enum SavedPlannerSidebarSelection: Hashable {
   case list(UUID)
 }
 
+private enum SavedDeletionReplacementContext: Equatable {
+  case items(SavedItemCatalogScope)
+  case lists
+  case listItems(UUID)
+}
+
+private struct SavedDeletionReplacement {
+  let namespace: String
+  let context: SavedDeletionReplacementContext
+  let selectionGeneration: UUID
+}
+
 struct SavedPlannerView: View {
   #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -45,11 +57,17 @@ struct SavedPlannerView: View {
   @State private var listCatalog: [SavedPlannerList]?
   @State private var listCatalogArchive = SavedItemFilters.Archive.active
   @State private var isOpeningListCatalog = false
-  @State private var showNewItem = false
+  @State private var newItemDraft: SavedNewItemDraft?
+  @State private var isSavingNewItem = false
+  @State private var showDraftNavigationReview = false
+  @State private var pendingDraftNavigation: (() -> Void)?
+  @State private var preferredCompactColumn: NavigationSplitViewColumn = .sidebar
   @State private var captureEntryPoint: SavedCaptureEntryPoint?
   @State private var showAddItem = false
   @State private var bulkCompletionDraft: SavedBulkCompletionDraft?
   @State private var isPreparingBulkCompletion = false
+  @State private var selectionGeneration = UUID()
+  @State private var deletionReplacement: SavedDeletionReplacement?
   @State private var selectedItemId: UUID?
   @State private var selectedItem: PlannerItemSourceRead?
   @State private var isOpeningItem = false
@@ -151,7 +169,13 @@ struct SavedPlannerView: View {
         selectedItineraryIdentifier = selection.source.id
       }
     }
-    .onChange(of: store.devicePreferenceNamespace) { calendarSelection = nil }
+    .onChange(of: store.devicePreferenceNamespace) {
+      calendarSelection = nil
+      recordSelectionChange()
+    }
+    .onReceive(store.sourceDeletions) { notice in
+      receiveSourceDeletion(notice)
+    }
     .task(id: selectedAppearanceIdentity) { await loadSelectedAppearance() }
     .task(id: store.changeRevision) {
       if itemDeletionDraft == nil { await loadSelectedItem() }
@@ -178,9 +202,6 @@ struct SavedPlannerView: View {
     .sheet(item: $listEditDraft) { draft in
       SavedListForm(store: store, list: draft.list) { _ in }
     }
-    .sheet(isPresented: $showNewItem) {
-      SavedNewItemForm(store: store) { source in selectedItemId = source.id }
-    }
     .sheet(item: $captureEntryPoint) { entryPoint in
       SavedCaptureForm(store: store, entryPoint: entryPoint) { source in
         if case .global = entryPoint { selectedItemId = source.id }
@@ -205,19 +226,13 @@ struct SavedPlannerView: View {
       SavedEditItemForm(store: store, item: draft.item)
     }
     .sheet(item: $itemDeletionDraft, onDismiss: refreshAfterDeletionReview) { draft in
-      SavedSourceDeletionForm(store: store, draft: draft) { review in
-        clearDeletedItemSelection(draft, review: review)
-      }
+      SavedSourceDeletionForm(store: store, draft: draft)
     }
     .sheet(item: $listDeletionDraft, onDismiss: refreshAfterDeletionReview) { draft in
-      SavedSourceDeletionForm(store: store, draft: draft) { review in
-        clearDeletedListSelection(draft, review: review)
-      }
+      SavedSourceDeletionForm(store: store, draft: draft)
     }
     .sheet(item: $itineraryDeletionDraft, onDismiss: refreshAfterDeletionReview) { draft in
-      SavedSourceDeletionForm(store: store, draft: draft) { _ in
-        clearDeletedItinerarySelection(draft)
-      }
+      SavedSourceDeletionForm(store: store, draft: draft)
     }
     .sheet(item: $bulkCompletionDraft) { draft in
       SavedBulkCompletionForm(store: store, draft: draft)
@@ -231,14 +246,22 @@ struct SavedPlannerView: View {
             && bulkCompletionDraft == nil
             && !showLabels
             && !showSettings
+            && newItemDraft == nil
             && captureEntryPoint == nil
-            && (selectedSection != .itineraries || showNewList || showNewItem)
+            && (selectedSection != .itineraries || showNewList || newItemDraft != nil)
         },
         set: { if !$0 { store.alertMessage = nil } })
     ) {
       Button("OK") { store.alertMessage = nil }
     } message: {
       Text(store.alertMessage ?? "")
+    }
+    .confirmationDialog("Save changes to this Item?", isPresented: $showDraftNavigationReview) {
+      Button("Save") { Task { await saveNewItem(continuingNavigation: true) } }
+      Button("Discard", role: .destructive) { finishDraftNavigation() }
+      Button("Keep Editing") { pendingDraftNavigation = nil }
+    } message: {
+      Text("Save this Item, discard the draft, or keep editing before leaving.")
     }
     #if os(macOS)
       .frame(minWidth: 820, minHeight: 540)
@@ -279,7 +302,7 @@ struct SavedPlannerView: View {
         plannerColumns
       }
     #else
-      TabView(selection: $selectedSection) {
+      TabView(selection: sectionSelection) {
         Tab("Lists", systemImage: "list.bullet", value: .lists) { plannerColumns }
         Tab("Items", systemImage: "square.stack", value: .items) { catalogColumns }
         Tab("Inbox", systemImage: "tray", value: .inbox) { catalogColumns }
@@ -303,10 +326,10 @@ struct SavedPlannerView: View {
   }
 
   private var catalogColumns: some View {
-    NavigationSplitView {
+    NavigationSplitView(preferredCompactColumn: compactColumnSelection) {
       itemCatalog
     } detail: {
-      itemDetail
+      if let newItemDraft { newItemEditor(newItemDraft) } else { itemDetail }
     }
   }
 
@@ -420,21 +443,25 @@ struct SavedPlannerView: View {
         #endif
       },
       set: { selection in
-        switch selection {
-        case .items: selectedSection = .items
-        case .inbox: selectedSection = .inbox
-        case .itineraries: selectedSection = .itineraries
-        case .calendar: selectedSection = .calendar
-        case .list(let identifier):
-          selectedSection = .lists
-          selectedListId = identifier
-          #if os(iOS)
-            columnVisibility = .doubleColumn
-          #endif
-        case .lists:
-          selectedSection = .lists
-          selectedListId = nil
-        case nil: break
+        guard selection != nil else { return }
+        requestDraftNavigation {
+          recordSelectionChange()
+          switch selection {
+          case .items: selectedSection = .items
+          case .inbox: selectedSection = .inbox
+          case .itineraries: selectedSection = .itineraries
+          case .calendar: selectedSection = .calendar
+          case .list(let identifier):
+            selectedSection = .lists
+            selectedListId = identifier
+            #if os(iOS)
+              columnVisibility = .doubleColumn
+            #endif
+          case .lists:
+            selectedSection = .lists
+            selectedListId = nil
+          case nil: break
+          }
         }
       })
   }
@@ -519,16 +546,31 @@ struct SavedPlannerView: View {
     else { return }
     listCatalog = loaded
     isOpeningListCatalog = false
+    guard let replacement = deletionReplacement, let loaded,
+      replacement.namespace == namespace, replacement.context == .lists,
+      replacement.selectionGeneration == selectionGeneration,
+      selectedSection == .lists, selectedListId == nil
+    else { return }
+    deletionReplacement = nil
+    guard usesAutomaticDeletionSelection else {
+      preferredCompactColumn = .sidebar
+      return
+    }
+    guard let firstList = loaded.first else { return }
+    deletionReplacement = .init(
+      namespace: replacement.namespace, context: .listItems(firstList.id),
+      selectionGeneration: replacement.selectionGeneration)
+    selectedListId = firstList.id
   }
 
   @ViewBuilder
   private var itemCatalog: some View {
     if let catalogItems {
       SavedItemCatalog(
-        scope: catalogScope, items: catalogItems, selection: $selectedItemId,
+        scope: catalogScope, items: catalogItems, selection: itemSelection,
         filters: catalogFilters, searchText: catalogSearchText, sort: itemSort,
         captureToolbarPlacement: secondaryToolbarPlacement,
-        canCreate: store.canCreate, create: { showNewItem = true },
+        canCreate: store.canCreate, create: { beginNewItem(listIdentifier: nil) },
         capture: { captureEntryPoint = .global }
       )
       .overlay(alignment: .topTrailing) {
@@ -570,6 +612,19 @@ struct SavedPlannerView: View {
     }
     catalogItems = loaded
     isOpeningCatalog = false
+    if let replacement = deletionReplacement, let loaded,
+      replacement.namespace == namespace, replacement.context == .items(scope),
+      replacement.selectionGeneration == selectionGeneration,
+      selectedSection == .items || selectedSection == .inbox,
+      selectedItemId == nil
+    {
+      deletionReplacement = nil
+      if usesAutomaticDeletionSelection {
+        selectedItemId = loaded.first?.id
+      } else {
+        preferredCompactColumn = .sidebar
+      }
+    }
   }
 
   private var catalogScope: SavedItemCatalogScope {
@@ -661,6 +716,33 @@ struct SavedPlannerView: View {
     }
   }
 
+  private func receiveSourceDeletion(_ notice: SavedSourceDeletionNotice) {
+    guard notice.namespace == store.devicePreferenceNamespace else { return }
+    let name: String
+    switch notice.source.kind {
+    case .item:
+      if let selectedItem, selectedItem.source == notice.source {
+        name = selectedItem.content.title
+      } else if let selectedAppearance, selectedAppearance.source == notice.source {
+        name = selectedAppearance.content.title
+      } else {
+        name = "Item"
+      }
+    case .list: name = selectedList?.content.name ?? "List"
+    case .itinerary: name = itineraryDeletionDraft?.name ?? "Itinerary"
+    default: return
+    }
+    let draft = SavedSourceDeletionDraft(
+      source: notice.source, name: name, review: notice.review)
+    switch notice.source.kind {
+    case .item: clearDeletedItemSelection(draft, review: notice.review)
+    case .list: clearDeletedListSelection(draft, review: notice.review)
+    case .itinerary: clearDeletedItinerarySelection(draft)
+    default: return
+    }
+    refreshAfterDeletionReview()
+  }
+
   private func clearDeletedItemSelection(_ draft: SavedSourceDeletionDraft, review: PlannerReview) {
     if calendarSelection?.source == draft.source { calendarSelection = nil }
     if selectedItemId == draft.source.id {
@@ -668,6 +750,15 @@ struct SavedPlannerView: View {
       selectedItem = nil
       isOpeningItem = false
       itemDeletionMessage = "\(draft.name) and its references were removed."
+      if newItemDraft == nil, selectedSection == .items || selectedSection == .inbox {
+        if usesAutomaticDeletionSelection, let namespace = store.devicePreferenceNamespace {
+          deletionReplacement = .init(
+            namespace: namespace, context: .items(catalogScope),
+            selectionGeneration: selectionGeneration)
+        } else {
+          preferredCompactColumn = .sidebar
+        }
+      }
     }
     let removedMembershipIdentifiers = Set(
       review.impact.referenceRemovals.compactMap { reference -> UUID? in
@@ -679,11 +770,24 @@ struct SavedPlannerView: View {
       membershipSelectionRemoved = removedMembershipIdentifiers.contains(identifier)
     }
     if membershipSelectionRemoved || selectedAppearance?.source == draft.source {
+      let removedAppearance = selectedAppearanceIdentity
       selectedAppearanceIdentity = nil
       selectedAppearance = nil
       isOpeningAppearance = false
       appearanceChangeTitle = "Item deleted"
-      appearanceChangeMessage = itemDeletionMessage
+      appearanceChangeMessage = "\(draft.name) and its references were removed."
+      if newItemDraft == nil, selectedSection == .lists,
+        case .listMembership(let listIdentifier, _) = removedAppearance,
+        selectedListId == listIdentifier
+      {
+        if usesAutomaticDeletionSelection, let namespace = store.devicePreferenceNamespace {
+          deletionReplacement = .init(
+            namespace: namespace, context: .listItems(listIdentifier),
+            selectionGeneration: selectionGeneration)
+        } else {
+          preferredCompactColumn = .content
+        }
+      }
     }
     guard let selectedItineraryRow else { return }
     let selectedWasRemoved = review.impact.referenceRemovals.contains { reference in
@@ -700,6 +804,8 @@ struct SavedPlannerView: View {
 
   private func refreshAfterDeletionReview() {
     Task {
+      await loadCatalogItems()
+      await loadListCatalog()
       await loadSelectedList()
       await loadSelectedItem()
       await loadSelectedAppearance()
@@ -743,6 +849,14 @@ struct SavedPlannerView: View {
       selectedAppearance = nil
       isOpeningAppearance = false
       listDeletionMessage = "\(draft.name) was deleted. Its Items remain available."
+      if newItemDraft == nil, selectedSection == .lists {
+        if usesAutomaticDeletionSelection, let namespace = store.devicePreferenceNamespace {
+          deletionReplacement = .init(
+            namespace: namespace, context: .lists, selectionGeneration: selectionGeneration)
+        } else {
+          preferredCompactColumn = .sidebar
+        }
+      }
     }
     guard let selectedItineraryRow else { return }
     let selectedWasRemoved = review.impact.referenceRemovals.contains { reference in
@@ -815,6 +929,18 @@ struct SavedPlannerView: View {
     selectedList = loaded
     listItems = loadedItems
     isOpeningList = false
+    guard let replacement = deletionReplacement, let loadedItems,
+      replacement.namespace == namespace, replacement.context == .listItems(identifier),
+      replacement.selectionGeneration == selectionGeneration,
+      selectedSection == .lists, selectedAppearanceIdentity == nil
+    else { return }
+    deletionReplacement = nil
+    guard usesAutomaticDeletionSelection else {
+      preferredCompactColumn = .content
+      return
+    }
+    guard case .appearance(_, let appearance) = loadedItems.first?.row.identity else { return }
+    selectedAppearanceIdentity = appearance
   }
 
   private var membershipSelection: Binding<UUID?> {
@@ -827,11 +953,14 @@ struct SavedPlannerView: View {
       },
       set: { identifier in
         guard let listId = selectedListId, let identifier else {
-          selectedAppearanceIdentity = nil
+          if newItemDraft == nil { selectedAppearanceIdentity = nil }
           return
         }
-        appearanceChangeMessage = nil
-        selectedAppearanceIdentity = .listMembership(listId: listId, membershipId: identifier)
+        requestDraftNavigation {
+          recordSelectionChange()
+          appearanceChangeMessage = nil
+          selectedAppearanceIdentity = .listMembership(listId: listId, membershipId: identifier)
+        }
       })
   }
 
@@ -1054,15 +1183,19 @@ struct SavedPlannerView: View {
           accessibilityIdentifier: "saved.lists.archive")
       }
       ToolbarItem {
-        Button("New List", systemImage: "plus") { showNewList = true }
-          .disabled(!store.canCreate)
-          .accessibilityIdentifier("saved.list.new")
+        Button("New List", systemImage: "plus") {
+          requestDraftNavigation { showNewList = true }
+        }
+        .disabled(!store.canCreate)
+        .accessibilityIdentifier("saved.list.new")
       }
     }
   }
 
   private var plannerColumns: some View {
-    NavigationSplitView(columnVisibility: $columnVisibility) {
+    NavigationSplitView(
+      columnVisibility: $columnVisibility, preferredCompactColumn: compactColumnSelection
+    ) {
       plannerSidebar
     } content: {
       if usesItineraryColumns {
@@ -1205,18 +1338,27 @@ struct SavedPlannerView: View {
             }
           #endif
           ToolbarItem {
-            Button("Add existing Item", systemImage: "plus") { showAddItem = true }
-              .disabled(!store.canCreate)
+            Menu {
+              Button("New Item", systemImage: "square.and.pencil") {
+                beginNewItem(listIdentifier: selectedList.source.id)
+              }
+              .accessibilityIdentifier("saved.list.createItem")
+              Button("Add existing Item", systemImage: "plus") {
+                requestDraftNavigation { showAddItem = true }
+              }
               .accessibilityIdentifier("saved.list.add")
+              Button("From Link or Text", systemImage: "text.badge.plus") {
+                requestDraftNavigation { captureEntryPoint = .list(selectedList.source.id) }
+              }
+              .accessibilityIdentifier("saved.list.capture")
+            } label: {
+              Label("Add", systemImage: "plus")
+            }
+            .disabled(!store.canCreate || selectedList.state.archived == true || isSavingNewItem)
+            .accessibilityIdentifier("saved.list.addMenu")
           }
           ToolbarItem(placement: .primaryAction) {
             Menu {
-              Button("Capture Text or Link", systemImage: "text.badge.plus") {
-                captureEntryPoint = .list(selectedList.source.id)
-              }
-              .disabled(selectedList.state.archived == true)
-              .accessibilityIdentifier("saved.list.capture")
-              Divider()
               Button("Edit estimate", systemImage: "clock") {
                 listEditDraft = .init(list: selectedList)
               }
@@ -1264,7 +1406,9 @@ struct SavedPlannerView: View {
         ContentUnavailableView("Choose a List", systemImage: "list.bullet.rectangle")
       }
     } detail: {
-      if usesItineraryColumns {
+      if let newItemDraft {
+        newItemEditor(newItemDraft)
+      } else if usesItineraryColumns {
         itineraryAppearanceDetail
       } else if isItemSection {
         itemDetail
@@ -1274,13 +1418,150 @@ struct SavedPlannerView: View {
     }
     .navigationSplitViewStyle(.balanced)
     .onChange(of: selectedListId) { _, identifier in
-      selectedAppearanceIdentity = nil
-      selectedAppearance = nil
       appearanceChangeMessage = nil
       if identifier != nil { listDeletionMessage = nil }
       #if os(iOS)
         if identifier != nil { columnVisibility = .doubleColumn }
       #endif
+      if case .listMembership(let listIdentifier, _) = selectedAppearanceIdentity,
+        listIdentifier == identifier
+      {
+        return
+      }
+      selectedAppearanceIdentity = nil
+      selectedAppearance = nil
+    }
+  }
+
+  private var usesAutomaticDeletionSelection: Bool {
+    #if os(macOS)
+      true
+    #else
+      horizontalSizeClass == .regular
+    #endif
+  }
+
+  private func recordSelectionChange() {
+    selectionGeneration = UUID()
+    deletionReplacement = nil
+  }
+
+  private var sectionSelection: Binding<SavedPlannerSection> {
+    Binding(
+      get: { selectedSection },
+      set: { section in
+        guard section != selectedSection else { return }
+        requestDraftNavigation {
+          recordSelectionChange()
+          selectedSection = section
+        }
+      })
+  }
+
+  private var itemSelection: Binding<UUID?> {
+    Binding(
+      get: { selectedItemId },
+      set: { identifier in
+        guard identifier != selectedItemId else { return }
+        if identifier == nil && newItemDraft != nil { return }
+        requestDraftNavigation {
+          recordSelectionChange()
+          selectedItemId = identifier
+        }
+      })
+  }
+
+  private var compactColumnSelection: Binding<NavigationSplitViewColumn> {
+    Binding(
+      get: { preferredCompactColumn },
+      set: { column in
+        if newItemDraft != nil && column != .detail {
+          requestDraftNavigation { preferredCompactColumn = column }
+        } else {
+          preferredCompactColumn = column
+        }
+      })
+  }
+
+  private func beginNewItem(listIdentifier: UUID?) {
+    requestDraftNavigation {
+      guard let namespace = store.devicePreferenceNamespace else { return }
+      recordSelectionChange()
+      store.alertMessage = nil
+      if let listIdentifier {
+        guard let selectedList, selectedList.source.id == listIdentifier else { return }
+        newItemDraft = .init(destination: selectedList, namespace: namespace)
+      } else {
+        newItemDraft = .init(destination: nil, namespace: namespace)
+      }
+      preferredCompactColumn = .detail
+    }
+  }
+
+  private func newItemEditor(_ draft: SavedNewItemDraft) -> some View {
+    SavedNewItemForm(
+      store: store, draft: draft, isSaving: isSavingNewItem,
+      cancel: { requestDraftNavigation {} },
+      save: { Task { await saveNewItem(continuingNavigation: false) } })
+  }
+
+  private func requestDraftNavigation(_ navigation: @escaping () -> Void) {
+    guard !isSavingNewItem else { return }
+    guard let newItemDraft, newItemDraft.hasChanges else {
+      if self.newItemDraft != nil {
+        self.newItemDraft = nil
+        preferredCompactColumn = selectedSection == .lists ? .content : .sidebar
+      }
+      navigation()
+      return
+    }
+    pendingDraftNavigation = navigation
+    showDraftNavigationReview = true
+  }
+
+  private func finishDraftNavigation() {
+    let navigation = pendingDraftNavigation
+    pendingDraftNavigation = nil
+    newItemDraft = nil
+    preferredCompactColumn = selectedSection == .lists ? .content : .sidebar
+    navigation?()
+  }
+
+  private func saveNewItem(continuingNavigation: Bool) async {
+    guard let draft = newItemDraft, !isSavingNewItem else { return }
+    guard !draft.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+      store.alertMessage = "An Item title must contain text."
+      return
+    }
+    isSavingNewItem = true
+    defer { isSavingNewItem = false }
+    guard let result = await store.createItem(draft),
+      let source = result.generated.first(where: { $0.kind == .item })
+    else { return }
+    newItemDraft = nil
+    guard store.devicePreferenceNamespace == draft.namespace else {
+      pendingDraftNavigation = nil
+      return
+    }
+    if continuingNavigation {
+      finishDraftNavigation()
+      return
+    }
+    pendingDraftNavigation = nil
+    if let listIdentifier = draft.listIdentifier {
+      for reference in result.generatedReferences {
+        if case .membership(let identifier, let list, let item) = reference,
+          list.id == listIdentifier, item == source
+        {
+          selectedAppearanceIdentity = .listMembership(
+            listId: listIdentifier, membershipId: identifier)
+          break
+        }
+      }
+      await loadSelectedList()
+      await loadSelectedAppearance()
+    } else {
+      selectedItemId = source.id
     }
   }
 

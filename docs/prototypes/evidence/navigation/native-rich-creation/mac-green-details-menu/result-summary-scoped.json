@@ -1,0 +1,13 @@
+{
+  "title": "Test - PlannerNavigation",
+  "environmentDescription": "PlannerNavigation \u00b7 Built with macOS 27.0.1",
+  "totalTestCount": 1,
+  "passedTests": 0,
+  "failedTests": 1,
+  "skippedTests": 0,
+  "startTime": 1792074737.805,
+  "finishTime": 1792074831.725,
+  "failureHeadlines": [
+    "Failed to click \"saved.item.edit\" Any: No matches found for Elements matching predicate '\"saved.item.edit\" IN identifiers' from input {("
+  ]
+}

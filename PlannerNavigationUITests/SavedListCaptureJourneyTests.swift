@@ -70,8 +70,7 @@ final class SavedListCaptureJourneyTests: XCTestCase {
     application.plannerElement("saved.lists.archive").activateForPlannerJourney()
     application.plannerElement("All Lists").activateForPlannerJourney()
     openList("South", application: application)
-    openListActions(application)
-    let disabledCapture = application.plannerElement("saved.list.capture")
+    let disabledCapture = application.plannerElement("saved.list.addMenu")
     XCTAssertTrue(disabledCapture.waitForExistence(timeout: 5))
     XCTAssertFalse(disabledCapture.isEnabled)
     application.terminate()
@@ -195,7 +194,7 @@ final class SavedListCaptureJourneyTests: XCTestCase {
   }
 
   private func openListCapture(_ application: XCUIApplication) {
-    openListActions(application)
+    application.openSavedPlannerListAddMenu()
     let capture = application.plannerElement("saved.list.capture")
     XCTAssertTrue(capture.waitForExistence(timeout: 5))
     capture.activateForPlannerJourney()

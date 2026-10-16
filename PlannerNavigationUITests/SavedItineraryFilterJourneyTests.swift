@@ -25,6 +25,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
     name.typeText("Food stops")
     application.plannerElement("saved.list.save").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    application.openSavedPlannerListAddMenu()
     let addItem = application.plannerElement("saved.list.add")
     if addItem.exists {
       addItem.activateForPlannerJourney()

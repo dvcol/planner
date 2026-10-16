@@ -2321,10 +2321,27 @@ final class SavedAppearanceJourneyTests: XCTestCase {
   private func chooseSort(
     _ title: String, menu: XCUIElement, application: XCUIApplication
   ) {
-    menu.activateForPlannerJourney()
+    var control = menu
+    #if os(macOS)
+      if !control.exists || !control.isHittable {
+        let overflow = application.windows.firstMatch.popUpButtons["more toolbar items"]
+        XCTAssertTrue(overflow.waitForExistence(timeout: 5))
+        overflow.activateForPlannerJourney()
+        control =
+          overflow.menuItems.matching(
+            NSPredicate(format: "title MATCHES %@", "^Sort:.*")
+          ).firstMatch
+        XCTAssertTrue(control.waitForExistence(timeout: 5))
+      }
+    #endif
+    control.activateForPlannerJourney()
     let option = application.plannerElement(title)
     XCTAssertTrue(option.waitForExistence(timeout: 5))
     option.activateForPlannerJourney()
+    #if os(macOS)
+      application.typeKey(.escape, modifierFlags: [])
+      application.typeKey(.escape, modifierFlags: [])
+    #endif
   }
 
   private func waitForRenderedPreviewImage(_ card: XCUIElement, application: XCUIApplication) {
@@ -2345,16 +2362,16 @@ final class SavedAppearanceJourneyTests: XCTestCase {
 
   private func addBookmark(
     _ originalURL: String, label: String, existingURLIdentifiers: [String] = [],
-    application: XCUIApplication
+    application: XCUIApplication, accessibilityIdentifierPrefix: String = "saved.item.edit.link"
   ) -> String {
-    let add = application.plannerElement("saved.item.edit.link.add")
+    let add = application.plannerElement("\(accessibilityIdentifierPrefix).add")
     revealEditorElement(add, application: application)
     XCTAssertTrue(add.waitForExistence(timeout: 5))
     add.activateForPlannerJourney()
     let newURL = application.textFields.matching(
       NSPredicate(
         format: "identifier BEGINSWITH %@ AND NOT (identifier IN %@)",
-        "saved.item.edit.link.url.", existingURLIdentifiers)
+        "\(accessibilityIdentifierPrefix).url.", existingURLIdentifiers)
     ).firstMatch
     revealEditorElement(newURL, application: application)
     XCTAssertTrue(newURL.waitForExistence(timeout: 5))
@@ -2362,7 +2379,8 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     newURL.typeText(originalURL)
     let labelField = application.textFields[
       newURL.identifier.replacingOccurrences(
-        of: "saved.item.edit.link.url.", with: "saved.item.edit.link.label.")]
+        of: "\(accessibilityIdentifierPrefix).url.",
+        with: "\(accessibilityIdentifierPrefix).label.")]
     revealEditorElement(labelField, application: application)
     labelField.activateForPlannerJourney()
     labelField.typeText(label)
@@ -2436,19 +2454,417 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     }
   }
 
-  private func createItem(_ application: XCUIApplication, title: String = "Nezu Museum") {
+  func testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createList("Origin", application: application)
+    openNewItemInList(application)
+    let title = application.textFields["saved.item.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    XCTAssertEqual(application.sheets.count, 0)
+    title.activateForPlannerJourney()
+    title.typeText("Discarded draft")
+    closeNewItemEditor(application)
+    application.windows.firstMatch.buttons["Discard"].firstMatch.activateForPlannerJourney()
+    XCTAssertTrue(title.waitForNonExistence(timeout: 5))
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    openCatalogSection("Items", application: application)
+    XCTAssertEqual(application.savedPlannerItemRows("Discarded draft").count, 0)
+    openSection("Lists", application: application)
+    let origin = application.savedPlannerListRow("Origin")
+    revealSidebarIfNeeded(application, element: origin)
+    origin.activateForPlannerJourney()
+    openNewItemInList(application)
+    for (identifier, text) in [
+      ("saved.item.title", "Garden visit"),
+      ("saved.item.subtitle", "Bring the sketchbook"),
+      ("saved.item.notes", "Meet at the south entrance"),
+      ("saved.item.location.name", "Hama-rikyu Gardens"),
+      ("saved.item.location.address", "1-1 Hamarikyuteien, Chuo City, Tokyo"),
+    ] {
+      let field = application.textFields[identifier]
+      revealEditorElement(field, application: application)
+      field.activateForPlannerJourney()
+      field.typeText(text)
+    }
+    let firstBookmark = addBookmark(
+      "https://example.com/gardens", label: "Tickets", application: application,
+      accessibilityIdentifierPrefix: "saved.item.link")
+    _ = addBookmark(
+      "https://example.com/gardens", label: "Garden guide",
+      existingURLIdentifiers: [firstBookmark], application: application,
+      accessibilityIdentifierPrefix: "saved.item.link")
+    recordScreenshot(application, name: "Rich New Item draft in the List detail column")
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    #if os(iOS)
+      if application.windows.firstMatch.frame.width < 600 {
+        XCTAssertTrue(
+          application.staticTexts["Meet at the south entrance"].waitForExistence(timeout: 10))
+        application.navigationBars.buttons["BackButton"].firstMatch.activateForPlannerJourney()
+      }
+    #endif
+    let appearance = application.savedPlannerItemRows("Garden visit").firstMatch
+    XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+    let appearanceIdentifier = appearance.identifier
+    let completion = application.plannerElement(
+      appearanceIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion."))
+    XCTAssertTrue(completion.waitForPlannerValue("To do"))
+    appearance.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Meet at the south entrance"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Bring the sketchbook"].exists)
+    let savedLinks = savedBookmarkRows(application)
+    XCTAssertTrue(
+      savedLinks.matching(NSPredicate(format: "label == %@", "Tickets")).firstMatch
+        .waitForExistence(timeout: 10))
+    XCTAssertTrue(
+      savedLinks.matching(NSPredicate(format: "label == %@", "Garden guide")).firstMatch
+        .waitForExistence(timeout: 10))
+    let savedLinkIdentifiers = savedLinks.allElementsBoundByIndex.map(\.identifier)
+    XCTAssertEqual(Set(savedLinkIdentifiers).count, 2)
+    recordScreenshot(application, name: "Created rich Item keeps its Origin List appearance")
+    createList("Other", application: application)
+    XCTAssertEqual(application.savedPlannerItemRows("Garden visit").count, 0)
+    openCatalogSection("Items", application: application)
+    let source = application.savedPlannerItemRows("Garden visit")
+    XCTAssertEqual(source.count, 1)
+    let sourceIdentifier = source.firstMatch.identifier
+    source.firstMatch.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Meet at the south entrance"].waitForExistence(timeout: 10))
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Origin", itemTitle: "Garden visit", application: application)
+    XCTAssertEqual(appearance.identifier, appearanceIdentifier)
+    XCTAssertTrue(completion.waitForPlannerValue("To do"))
+    appearance.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Bring the sketchbook"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Meet at the south entrance"].exists)
+    XCTAssertEqual(
+      savedBookmarkRows(application).allElementsBoundByIndex.map(\.identifier),
+      savedLinkIdentifiers)
+    openCatalogSection("Items", application: application)
+    XCTAssertEqual(source.count, 1)
+    XCTAssertEqual(source.firstMatch.identifier, sourceIdentifier)
+    source.firstMatch.activateForPlannerJourney()
+    openItemEditor(application)
+    let address = application.textFields["saved.item.edit.location.address"]
+    revealEditorElement(address, application: application)
+    XCTAssertEqual(address.value as? String, "1-1 Hamarikyuteien, Chuo City, Tokyo")
+    XCTAssertEqual(
+      application.textFields["saved.item.edit.location.name"].value as? String,
+      "Hama-rikyu Gardens")
+  }
+
+  func testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createList("Origin", application: application)
+    openNewItemInList(application)
+    let title = application.textFields["saved.item.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    closeNewItemEditor(application)
+    XCTAssertTrue(title.waitForNonExistence(timeout: 5))
+    XCTAssertFalse(application.buttons["Keep Editing"].exists)
+    openNewItemInList(application)
+    title.activateForPlannerJourney()
+    title.typeText("Preserved draft")
+    attemptDraftNavigation(application)
+    recordScreenshot(application, name: "Draft navigation choices after guarded Back")
+    let hierarchy = XCTAttachment(string: application.windows.firstMatch.debugDescription)
+    hierarchy.name = "Draft navigation own-window hierarchy"
+    hierarchy.lifetime = .keepAlways
+    add(hierarchy)
+    chooseDraftNavigationAction("Keep Editing", application: application)
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    XCTAssertEqual(title.value as? String, "Preserved draft")
+    replaceText(title, with: "", application: application)
+    let notes = application.textFields["saved.item.notes"]
+    notes.activateForPlannerJourney()
+    notes.typeText("Keep this note while fixing the title")
+    attemptDraftNavigation(application)
+    chooseDraftNavigationAction("Save", application: application)
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    XCTAssertTrue(
+      application.staticTexts["An Item title must contain text."].waitForExistence(timeout: 5))
+    application.windows.firstMatch.buttons["OK"].firstMatch.activateForPlannerJourney()
+    XCTAssertEqual(notes.value as? String, "Keep this note while fixing the title")
+    title.activateForPlannerJourney()
+    title.typeText("Saved while leaving")
+    attemptDraftNavigation(application)
+    chooseDraftNavigationAction("Save", application: application)
+    XCTAssertTrue(title.waitForNonExistence(timeout: 10))
+    openCatalogSection("Items", application: application)
+    let source = application.savedPlannerItemRows("Saved while leaving")
+    XCTAssertTrue(source.firstMatch.waitForExistence(timeout: 10))
+    XCTAssertEqual(source.count, 1)
+    let sourceIdentifier = source.firstMatch.identifier
+    XCTAssertTrue(sourceIdentifier.hasPrefix("saved.item."))
+    recordScreenshot(application, name: "Explicit navigation Save creates the Item before leaving")
+    openList("Origin", itemTitle: "Saved while leaving", application: application)
+    let appearance = application.savedPlannerItemRows("Saved while leaving").firstMatch
+    XCTAssertNotEqual(appearance.identifier, sourceIdentifier)
+  }
+
+  private func attemptDraftNavigation(_ application: XCUIApplication) {
+    #if os(iOS)
+      if application.windows.firstMatch.frame.width < 600 {
+        application.navigationBars["New Item"].buttons.matching(
+          NSPredicate(
+            format: "identifier == %@ OR identifier == %@", "BackButton", "saved.item.back")
+        ).firstMatch.activateForPlannerJourney()
+      } else {
+        application.buttons.matching(identifier: "square.stack").allElementsBoundByIndex
+          .first(where: \.isHittable)?.activateForPlannerJourney()
+      }
+    #else
+      openSection("Items", application: application)
+    #endif
+  }
+
+  private func chooseDraftNavigationAction(_ title: String, application: XCUIApplication) {
+    let action = application.windows.firstMatch.sheets.buttons[title].firstMatch
+    XCTAssertTrue(action.waitForExistence(timeout: 5))
+    XCTAssertTrue(action.isEnabled)
+    action.activateForPlannerJourney()
+  }
+
+  private func closeNewItemEditor(_ application: XCUIApplication) {
+    let control = application.windows.firstMatch.buttons.matching(
+      NSPredicate(
+        format: "identifier == %@ OR identifier == %@", "saved.item.cancel", "saved.item.back")
+    ).firstMatch
+    XCTAssertTrue(control.waitForExistence(timeout: 5))
+    control.activateForPlannerJourney()
+  }
+
+  func testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    for (title, notes) in [
+      ("Zzz archived", "Only archived details"), ("Bravo", "Only Bravo details"),
+      ("Zulu", "Only Zulu details"), ("Delta", "Only Delta details"),
+    ] {
+      createItem(application, title: title, notes: notes)
+    }
+    openCatalogSection("Items", application: application)
+    application.savedPlannerItemRows("Zzz archived").firstMatch.activateForPlannerJourney()
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Archive Item").activateForPlannerJourney()
+    openCatalogSection("Items", application: application)
+    chooseSort(
+      "Descending", menu: application.plannerElement("saved.items.sort"), application: application)
+    XCTAssertFalse(application.savedPlannerItemRows("Zzz archived").firstMatch.exists)
+    let removed = application.savedPlannerItemRows("Delta").firstMatch
+    let surviving = application.savedPlannerItemRows("Zulu").firstMatch
+    let survivingIdentifier = surviving.identifier
+    removed.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Only Delta details"].waitForExistence(timeout: 10))
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("saved.item.delete").activateForPlannerJourney()
+    application.plannerElement("saved.item.delete.cancel").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Only Delta details"].waitForExistence(timeout: 10))
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("saved.item.delete").activateForPlannerJourney()
+    application.plannerElement("saved.item.delete.confirm").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.plannerElement("saved.item.delete.confirm").waitForNonExistence(timeout: 10))
+    #if os(iOS)
+      if application.windows.firstMatch.frame.width < 600 {
+        XCTAssertTrue(surviving.waitForExistence(timeout: 10))
+        XCTAssertFalse(application.staticTexts["Only Zulu details"].exists)
+        XCTAssertFalse(application.plannerElement("saved.item.completion").exists)
+      } else {
+        XCTAssertTrue(application.staticTexts["Only Zulu details"].waitForExistence(timeout: 10))
+      }
+    #else
+      XCTAssertTrue(application.staticTexts["Only Zulu details"].waitForExistence(timeout: 10))
+    #endif
+    recordScreenshot(
+      application, name: "Confirmed Item deletion selects the first visible survivor")
+    openCatalogSection("Items", application: application)
+    XCTAssertFalse(removed.exists)
+    XCTAssertEqual(surviving.identifier, survivingIdentifier)
+    XCTAssertTrue(application.savedPlannerItemRows("Bravo").firstMatch.exists)
+  }
+
+  func testDeletingSelectedListChoosesTheFirstVisibleListAndItsFirstItemOnRegularLayouts() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application, title: "Willow", notes: "Willow stays unselected")
+    createItem(application, title: "Birch", notes: "The first sorted Item keeps its context")
+    createList("Alpha", application: application)
+    createList("Zulu", application: application)
+    addItem(application, title: "Willow")
+    addItem(application, title: "Birch")
+    chooseSort(
+      "Title", menu: application.plannerElement("saved.list.sort"), application: application)
+    for title in ["Extra", "Middle"] { createList(title, application: application) }
+    openCatalogSection("Lists", application: application)
+    chooseSort(
+      "Descending", menu: application.plannerElement("saved.lists.sort"), application: application)
+    application.savedPlannerListRow("Middle").activateForPlannerJourney()
+    #if os(macOS)
+      XCTAssertEqual(application.windows.firstMatch.title, "Middle")
+      deleteSourceInAnotherWindow("Extra", application: application)
+      XCTAssertEqual(application.windows.firstMatch.title, "Middle")
+      XCTAssertTrue(application.staticTexts["No items"].exists)
+    #endif
+    application.openSavedPlannerListActionsMenu()
+    application.plannerElement("saved.list.delete").activateForPlannerJourney()
+    application.plannerElement("saved.list.delete.cancel").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    #if os(macOS)
+      let originalWindowIdentifier = application.windows.firstMatch.identifier
+      let originalWindow = application.windows.matching(
+        NSPredicate(format: "identifier == %@", originalWindowIdentifier)
+      ).firstMatch
+      let deletingWindow = deleteSourceInAnotherWindow(
+        "Middle", application: application, closeAfterDeleting: false)
+      let hierarchy = XCTAttachment(string: originalWindow.debugDescription)
+      hierarchy.name = "Original Planner window after another window deletes its selection"
+      hierarchy.lifetime = .keepAlways
+      add(hierarchy)
+      XCTAssertTrue(originalWindow.staticTexts["In Zulu"].waitForExistence(timeout: 10))
+      XCTAssertTrue(originalWindow.staticTexts["The first sorted Item keeps its context"].exists)
+      XCTAssertFalse(originalWindow.staticTexts["Willow stays unselected"].exists)
+      deletingWindow.buttons["_XCUI:CloseWindow"].click()
+      XCTAssertTrue(deletingWindow.waitForNonExistence(timeout: 10))
+    #else
+      application.openSavedPlannerListActionsMenu()
+      application.plannerElement("saved.list.delete").activateForPlannerJourney()
+      application.plannerElement("saved.list.delete.confirm").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.plannerElement("saved.list.delete.confirm").waitForNonExistence(timeout: 10))
+    #endif
+    #if os(iOS)
+      if application.windows.firstMatch.frame.width < 600 {
+        XCTAssertTrue(application.savedPlannerListRow("Alpha").waitForExistence(timeout: 10))
+        XCTAssertTrue(application.savedPlannerListRow("Zulu").exists)
+        XCTAssertFalse(application.staticTexts["The first sorted Item keeps its context"].exists)
+      } else {
+        XCTAssertTrue(application.staticTexts["In Zulu"].waitForExistence(timeout: 10))
+        XCTAssertTrue(application.staticTexts["The first sorted Item keeps its context"].exists)
+        XCTAssertFalse(application.staticTexts["Willow stays unselected"].exists)
+      }
+    #else
+      XCTAssertTrue(application.staticTexts["In Zulu"].waitForExistence(timeout: 10))
+      XCTAssertTrue(application.staticTexts["The first sorted Item keeps its context"].exists)
+      XCTAssertFalse(application.staticTexts["Willow stays unselected"].exists)
+    #endif
+    recordScreenshot(
+      application, name: "Confirmed List deletion selects the first surviving context")
+  }
+
+  #if os(macOS)
+    func testDeletingASelectedAppearanceInAnotherWindowSelectsItsFirstVisibleSibling() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      createItem(application, title: "Alpha outside", notes: "The global catalog stays separate")
+      createItem(application, title: "Deleted", notes: "Remove this source")
+      createItem(application, title: "Birch", notes: "The surviving contextual Item")
+      createList("Context", application: application)
+      addItem(application, title: "Deleted")
+      addItem(application, title: "Birch")
+      let surviving = application.savedPlannerItemRows("Birch").firstMatch
+      let survivingIdentifier = surviving.identifier
+      application.savedPlannerItemRows("Deleted").firstMatch.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["In Context"].waitForExistence(timeout: 10))
+      XCTAssertTrue(application.staticTexts["Remove this source"].exists)
+      let originalWindowIdentifier = application.windows.firstMatch.identifier
+      let originalWindow = application.windows.matching(
+        NSPredicate(format: "identifier == %@", originalWindowIdentifier)
+      ).firstMatch
+      let deletingWindow = deleteSourceInAnotherWindow(
+        "Deleted", application: application, sourceKind: "item", closeAfterDeleting: false)
+      XCTAssertTrue(originalWindow.staticTexts["In Context"].waitForExistence(timeout: 10))
+      XCTAssertTrue(originalWindow.staticTexts["The surviving contextual Item"].exists)
+      XCTAssertFalse(originalWindow.staticTexts["The global catalog stays separate"].exists)
+      XCTAssertEqual(surviving.identifier, survivingIdentifier)
+      deletingWindow.buttons["_XCUI:CloseWindow"].click()
+      XCTAssertTrue(deletingWindow.waitForNonExistence(timeout: 10))
+      recordScreenshot(
+        application, name: "Item deletion selects the surviving List appearance in its own context")
+    }
+  #endif
+
+  #if os(macOS)
+    @discardableResult
+    private func deleteSourceInAnotherWindow(
+      _ title: String, application: XCUIApplication, sourceKind: String = "list",
+      closeAfterDeleting: Bool = true
+    ) -> XCUIElement {
+      let existingWindowIdentifiers = Set(
+        application.windows.allElementsBoundByIndex.map(\.identifier))
+      application.menuBars.menuBarItems["File"].click()
+      application.menuItems["New Window"].click()
+      guard
+        let newWindow = application.windows.allElementsBoundByIndex.first(where: {
+          !existingWindowIdentifiers.contains($0.identifier)
+        })
+      else {
+        XCTFail("New Window did not create another Planner window")
+        return application.windows.firstMatch
+      }
+      let window = application.windows.matching(
+        NSPredicate(format: "identifier == %@", newWindow.identifier)
+      ).firstMatch
+      if sourceKind == "item" {
+        window.descendants(matching: .any)["saved.section.items"].click()
+      }
+      let row = window.descendants(matching: .any).matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@", "saved.\(sourceKind).", title)
+      ).firstMatch
+      XCTAssertTrue(row.waitForExistence(timeout: 10))
+      row.click()
+      let actions = window.descendants(matching: .any)["saved.\(sourceKind).actions"]
+      XCTAssertTrue(actions.waitForExistence(timeout: 10))
+      actions.click()
+      application.menuItems["Delete \(sourceKind.capitalized)"].click()
+      let confirm = window.sheets.descendants(matching: .any)["saved.\(sourceKind).delete.confirm"]
+      XCTAssertTrue(confirm.waitForExistence(timeout: 5))
+      confirm.click()
+      XCTAssertTrue(confirm.waitForNonExistence(timeout: 10))
+      if closeAfterDeleting {
+        window.buttons["_XCUI:CloseWindow"].click()
+        XCTAssertTrue(window.waitForNonExistence(timeout: 10))
+      }
+      return window
+    }
+  #endif
+
+  private func openNewItemInList(_ application: XCUIApplication) {
+    application.openSavedPlannerListAddMenu()
+    application.plannerElement("saved.list.createItem").activateForPlannerJourney()
+  }
+
+  private func createItem(
+    _ application: XCUIApplication, title: String = "Nezu Museum",
+    notes: String = "Meet at the garden entrance"
+  ) {
     openSection("Items", application: application)
     application.plannerElement("saved.item.new").activateForPlannerJourney()
     let titleField = application.textFields["saved.item.title"]
     XCTAssertTrue(titleField.waitForExistence(timeout: 5))
     titleField.activateForPlannerJourney()
     titleField.typeText(title)
-    let notes = application.textFields["saved.item.notes"]
-    notes.activateForPlannerJourney()
-    notes.typeText("Meet at the garden entrance")
+    let notesField = application.textFields["saved.item.notes"]
+    notesField.activateForPlannerJourney()
+    notesField.typeText(notes)
     application.plannerElement("saved.item.save").activateForPlannerJourney()
-    XCTAssertTrue(
-      application.staticTexts["Meet at the garden entrance"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts[notes].waitForExistence(timeout: 10))
   }
 
   private func createList(_ title: String, application: XCUIApplication) {
@@ -2494,6 +2910,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
   }
 
   private func addItem(_ application: XCUIApplication, title: String = "Nezu Museum") {
+    application.openSavedPlannerListAddMenu()
     let add = application.plannerElement("saved.list.add")
     if add.exists {
       add.activateForPlannerJourney()

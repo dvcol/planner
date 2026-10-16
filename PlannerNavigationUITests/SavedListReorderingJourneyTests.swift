@@ -188,6 +188,7 @@ final class SavedListReorderingJourneyTests: XCTestCase {
   }
 
   private func addItem(_ title: String, application: XCUIApplication) {
+    application.openSavedPlannerListAddMenu()
     let add = application.plannerElement("saved.list.add")
     if add.exists {
       add.activateForPlannerJourney()

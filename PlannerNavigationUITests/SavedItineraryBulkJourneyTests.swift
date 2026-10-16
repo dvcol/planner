@@ -498,6 +498,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
     field.typeText("Food stops")
     application.plannerElement("saved.list.save").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    application.openSavedPlannerListAddMenu()
     let addition = application.plannerElement("saved.list.add")
     if addition.exists {
       addition.activateForPlannerJourney()

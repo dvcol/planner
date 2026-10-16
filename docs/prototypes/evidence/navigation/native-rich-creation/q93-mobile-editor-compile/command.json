@@ -1,0 +1,21 @@
+[
+  "xcodebuild",
+  "build-for-testing",
+  "-project",
+  "Planner.xcodeproj",
+  "-scheme",
+  "PlannerNavigation",
+  "-destination",
+  "generic/platform=iOS Simulator",
+  "-derivedDataPath",
+  "/private/tmp/PlannerQ93NativemobileDerivedData",
+  "-clonedSourcePackagesDirPath",
+  "/private/tmp/PlannerCalendarMonthSourcePackages",
+  "-disableAutomaticPackageResolution",
+  "-parallel-testing-enabled",
+  "NO",
+  "-jobs",
+  "1",
+  "-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList",
+  "CODE_SIGNING_ALLOWED=NO"
+]

@@ -1,0 +1,17 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2@0.23.3",
+    "--config",
+    "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+    "docs/prototypes/native-item-creation.md",
+    "docs/prototypes/native-deletion-selection.md"
+  ],
+  "exitCode": 0,
+  "output": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-item-creation.md docs/prototypes/native-deletion-selection.md\nLinting: 2 files\nSummary: 0 issues in 0 files\nDone in 270ms using pnpm v12.10.1\n",
+  "sourceSHA256": {
+    "docs/prototypes/native-item-creation.md": "1035ad08cf5c8f234779904ec6692921fadb6d5fe9de8ceb5f4d644fa40ca485",
+    "docs/prototypes/native-deletion-selection.md": "b3e539259b7d9610751d920bd574df626306d1e11e983eb51a46334eff975743"
+  }
+}
