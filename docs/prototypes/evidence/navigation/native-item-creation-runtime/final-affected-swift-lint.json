@@ -1,0 +1,20 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift",
+    "PlannerNavigationUITests/SavedCaptureJourneyTests.swift",
+    "PlannerNavigationUITests/SavedListCaptureJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "output": "",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedPlannerView.swift": "30eff615bf588def5415cd9d18596c14f0d9ca40bbd747e327361e1a3d5754d6",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "a4843d22f4a545e5ffe0f24922c4a15a1b5cc15c568816e02c27b82c72ec5163",
+    "PlannerNavigationUITests/SavedCaptureJourneyTests.swift": "12cdefe1997e6be79681bec77f9c1eaefd61a45f7f7381af7835450311c7879d",
+    "PlannerNavigationUITests/SavedListCaptureJourneyTests.swift": "b08ef3a5ddee8b6f42f75c83807a231cf0cf9b053b65bc9210a2ecfbcaa671dd"
+  }
+}

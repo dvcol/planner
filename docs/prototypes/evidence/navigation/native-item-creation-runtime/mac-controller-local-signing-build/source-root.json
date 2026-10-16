@@ -1,0 +1,10 @@
+{
+  "root": "/private/tmp/PlannerQ93NativeSource",
+  "base": "e32d65eceb0e27007f3065a9b25b4ecc392cc457",
+  "overlays": [
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift",
+    "Planner/Scenes/SavedNewItemForm.swift",
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift",
+    "Planner/AgentControl/PlannerMCPReviewTool.swift"
+  ]
+}

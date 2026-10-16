@@ -1,0 +1,27 @@
+{
+  "baseline": "e32d65e",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedPlannerView.swift": "30eff615bf588def5415cd9d18596c14f0d9ca40bbd747e327361e1a3d5754d6",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "a4843d22f4a545e5ffe0f24922c4a15a1b5cc15c568816e02c27b82c72ec5163",
+    "PlannerNavigationUITests/SavedCaptureJourneyTests.swift": "12cdefe1997e6be79681bec77f9c1eaefd61a45f7f7381af7835450311c7879d",
+    "PlannerNavigationUITests/SavedListCaptureJourneyTests.swift": "b08ef3a5ddee8b6f42f75c83807a231cf0cf9b053b65bc9210a2ecfbcaa671dd"
+  },
+  "standards": {
+    "reviewer": "/root/catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "resolved": "Historical malformed title came from the old test text-replacement helper; current Command-A replacement and exact saved-title oracle preserve the requirement.",
+    "finalRecheck": "No remaining confirmed Standards or material smell findings across the four Swift diffs.",
+    "finalScreenshotRecheck": "Mac captures the Planner window; mobile path unchanged and unrelated edit reverted. No actionable finding."
+  },
+  "specification": {
+    "reviewer": "/root/catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "resolved": [
+      "Keep Editing cancellation role is Mac-only so iPad retains its explicit choice.",
+      "Exact captured and saved titles are required; a prefix assertion was rejected and corrected."
+    ],
+    "finalRecheck": "No remaining confirmed Spec/oracle issue. Window-scoped rename, named-row direct Switch and native scroll preserve exact fields, destination scope and relaunch identities.",
+    "finalScreenshotRecheck": "Window-only capture targets Current List journey; all existing data and scope oracles remain unchanged. No remaining finding."
+  },
+  "runtimeQualification": "Independent native runs supply runtime evidence; reviews supply none."
+}

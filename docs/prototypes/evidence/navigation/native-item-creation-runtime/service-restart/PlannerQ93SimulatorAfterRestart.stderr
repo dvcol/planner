@@ -1,0 +1,1 @@
+2026-10-17 00:21:04.627 simctl[12575:11661478] CoreSimulator detected version change.  Framework version (1174.9.2) does not match existing job version (1171.7).  Attempting to remove the stale service in order to add the expected version.

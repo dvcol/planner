@@ -1,0 +1,345 @@
+[
+  {
+    "phase": "mac-choice-red-and-rich-controller",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-choice-red-and-rich-controller.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testDraftNavigationOffersOnlySaveDiscardAndKeepEditing]' failed (21.464 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' passed (97.988 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 2 tests, with 1 failure (0 unexpected) in 119.452 (119.454) seconds"
+    ],
+    "wholeBatchPassed": false
+  },
+  {
+    "phase": "mac-controller-local-signing-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mac-destination-and-capture-controller-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mac-destination-rich-and-capture-qualified",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-destination-rich-and-capture-qualified.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' passed (125.703 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testRenamingTheOriginatingListRequiresReviewBeforeSavingTheRetainedItemDraft]' failed (29.506 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch]' passed (30.097 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch]' failed (38.242 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 2 tests, with 1 failure (0 unexpected) in 155.210 (155.212) seconds"
+    ],
+    "wholeBatchPassed": false
+  },
+  {
+    "phase": "mac-detail-scroll-controller-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mac-draft-cancel-role-build",
+    "exitCode": 74,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mac-draft-cancel-role-green",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-draft-cancel-role-green.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testDraftNavigationOffersOnlySaveDiscardAndKeepEditing]' failed (21.173 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' passed (96.152 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen]' passed (59.980 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 3 tests, with 1 failure (0 unexpected) in 177.305 (177.308) seconds"
+    ],
+    "wholeBatchPassed": false
+  },
+  {
+    "phase": "mac-draft-cancel-role-qualified-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mac-draft-choice-red-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mac-exact-title-and-window-capture-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mac-explicit-draft-choices-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mac-final-creation-navigation",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-final-creation-navigation.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' passed (148.941 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen]' passed (61.890 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 2 tests, with 0 failures (0 unexpected) in 210.831 (210.835) seconds"
+    ],
+    "wholeBatchPassed": true
+  },
+  {
+    "phase": "mac-final-draft-choices-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mac-list-window-evidence-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mac-list-window-evidence-qualified",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-list-window-evidence-qualified.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch]' passed (56.868 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 56.868 (56.869) seconds"
+    ],
+    "wholeBatchPassed": true
+  },
+  {
+    "phase": "mac-maps-and-list-capture",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-maps-and-list-capture.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch]' failed (55.816 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch]' failed (24.155 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 1 failure (0 unexpected) in 55.816 (55.820) seconds"
+    ],
+    "wholeBatchPassed": false
+  },
+  {
+    "phase": "mac-native-capture-destination-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mac-native-list-capture-qualified",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-native-list-capture-qualified.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch]' passed (57.251 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 57.251 (57.253) seconds"
+    ],
+    "wholeBatchPassed": true
+  },
+  {
+    "phase": "mac-navigation-after-restart",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-navigation-after-restart.xcresult",
+    "functionResults": [],
+    "executionSummary": [],
+    "wholeBatchPassed": false
+  },
+  {
+    "phase": "mac-navigation-unlocked-retry",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-navigation-unlocked-retry.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen]' passed (105.246 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 105.246 (105.249) seconds"
+    ],
+    "wholeBatchPassed": true
+  },
+  {
+    "phase": "mac-rich-qualified",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-rich-qualified.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' failed (67.307 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 1 failure (0 unexpected) in 67.307 (67.309) seconds"
+    ],
+    "wholeBatchPassed": false
+  },
+  {
+    "phase": "mac-rich-scroll-retry",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-rich-scroll-retry.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' failed (36.166 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 1 failure (0 unexpected) in 36.166 (36.168) seconds"
+    ],
+    "wholeBatchPassed": false
+  },
+  {
+    "phase": "mac-window-scoped-review",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-window-scoped-review.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testRenamingTheOriginatingListRequiresReviewBeforeSavingTheRetainedItemDraft]' passed (97.776 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch]' failed (40.071 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 97.776 (97.777) seconds"
+    ],
+    "wholeBatchPassed": false
+  },
+  {
+    "phase": "mac-window-scoped-review-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mobile-bookmark-visibility-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mobile-current-controller-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mobile-draft-cancel-role-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mobile-explicit-draft-choices-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mobile-final-draft-choices-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mobile-mac-only-capture-compile",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "mobile-visibility-and-exact-title-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "phase": "phone-current-rich-creation",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-phone-current-rich-creation.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' passed (141.295 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 141.295 (141.336) seconds"
+    ],
+    "wholeBatchPassed": true
+  },
+  {
+    "phase": "phone-final-creation-navigation",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-phone-final-creation-navigation.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' passed (142.843 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen]' passed (87.210 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 2 tests, with 0 failures (0 unexpected) in 230.053 (230.091) seconds"
+    ],
+    "wholeBatchPassed": true
+  },
+  {
+    "phase": "phone-navigation-qualified",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-phone-navigation-qualified.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen]' passed (74.170 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 74.170 (74.183) seconds"
+    ],
+    "wholeBatchPassed": true
+  },
+  {
+    "phase": "phone-rich-after-restart",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-phone-rich-after-restart.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' failed (92.678 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 1 failure (0 unexpected) in 92.678 (92.699) seconds"
+    ],
+    "wholeBatchPassed": false
+  },
+  {
+    "phase": "phone-rich-scroll-retry",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-phone-rich-scroll-retry.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' passed (138.650 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 138.650 (138.891) seconds"
+    ],
+    "wholeBatchPassed": true
+  },
+  {
+    "phase": "tablet-bookmark-visibility-qualified",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-tablet-bookmark-visibility-qualified.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' passed (158.634 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 1 test, with 0 failures (0 unexpected) in 158.634 (158.643) seconds"
+    ],
+    "wholeBatchPassed": true
+  },
+  {
+    "phase": "tablet-creation-navigation-qualified",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-tablet-creation-navigation-qualified.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' passed (174.210 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen]' passed (87.198 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 2 tests, with 0 failures (0 unexpected) in 261.407 (261.548) seconds"
+    ],
+    "wholeBatchPassed": true
+  },
+  {
+    "phase": "tablet-final-creation-navigation",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerQ93NativeRuntime-tablet-final-creation-navigation.xcresult",
+    "functionResults": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' failed (116.851 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen]' passed (113.573 seconds)."
+    ],
+    "executionSummary": [
+      "Executed 2 tests, with 1 failure (0 unexpected) in 230.424 (230.441) seconds"
+    ],
+    "wholeBatchPassed": false
+  }
+]

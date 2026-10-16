@@ -1,0 +1,29 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "4AD2165E-B25B-4DED-AAF4-BCD02B05B2FF.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Created rich Item keeps its Origin List appearance_0_6EC1F2BB-6925-447E-B801-0B961CADB570.png",
+    "timestamp": 1792167126.244
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "D587D0C7-A5C6-42BA-ACAB-381E4A26AF58.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Rich New Item draft in the List detail column_0_C3FEB473-CE46-413D-90FE-1D7FCF70208A.png",
+    "timestamp": 1792167116.776
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "A8112A32-0A23-4990-A8B8-3A94110D9422.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved Google Maps search location uses the native map_0_1D2E8D4D-B5F8-4298-B7F8-A2F5BBCDDCDE.png",
+    "timestamp": 1792167210.761
+  }
+]

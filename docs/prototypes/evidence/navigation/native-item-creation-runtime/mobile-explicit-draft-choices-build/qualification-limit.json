@@ -1,0 +1,4 @@
+{
+  "runtimeCredit": false,
+  "reason": "Overlapping compiler invocations shared a temporary export. Sequential final builds replace them for runtime qualification."
+}

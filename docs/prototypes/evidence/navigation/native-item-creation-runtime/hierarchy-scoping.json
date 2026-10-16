@@ -1,0 +1,26 @@
+[
+  {
+    "path": "mac-rich-scroll-retry/D67995ED-CEDB-4E71-B190-2BCC3788DA0B.txt.gz",
+    "originalAttachmentSHA256": "5a4b4d56dc6eb0cc7b509058d976c11c75b09c350a1666215a4de167fdefa7d7",
+    "retainedWindowSHA256": "2a6023f64e08bed2b6ef0a11174a21f7770420a33b760efd3965a37ed2bbf823",
+    "scope": "Planner window hierarchy only; system menu inventory omitted"
+  },
+  {
+    "path": "mac-rich-qualified/5290D9CE-0F00-4EE9-B3E0-E3D238C03719.txt.gz",
+    "originalAttachmentSHA256": "f5f162a75eb0abfe64ea17a15559a322f7a201a4c9ff0106b9cd60f472c1e511",
+    "retainedWindowSHA256": "533802b548e4c5d7276aca8c71be8d94b860fec6d27657594908a31af5a2c80c",
+    "scope": "Planner window hierarchy only; system menu inventory omitted"
+  },
+  {
+    "path": "mac-rich-qualified/39564E37-49B8-4409-935F-2D92940EA0BB.txt.gz",
+    "originalAttachmentSHA256": "85d908c4bab44658413980c6aa95bbb201e464906fe1be0714c9c6d631f591d4",
+    "retainedWindowSHA256": "efcc7137da74e6fa1e607da0c73b8ddb065fde635a7348889b20c229370e5039",
+    "scope": "Planner window hierarchy only; system menu inventory omitted"
+  },
+  {
+    "path": "mac-rich-qualified/F081BC1B-0A62-44B3-AC94-9CD1528E7F6A.txt.gz",
+    "originalAttachmentSHA256": "75c4322eb7a795d95eba69cc4b07b3a2e9b22098f1e17d1be47b4bb9ebd38a4f",
+    "retainedWindowSHA256": "83fa46f0e947f6f9e94f136a07e3e34a77dab91c17d90fb81ac4c653844f4677",
+    "scope": "Planner window hierarchy only; system menu inventory omitted"
+  }
+]

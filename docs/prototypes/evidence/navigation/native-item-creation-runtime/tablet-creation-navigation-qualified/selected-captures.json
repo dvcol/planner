@@ -1,0 +1,47 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "43F0E31C-FDE6-4D16-BE5D-094FE306CF68.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Created rich Item keeps its Origin List appearance_0_76DBD468-8152-4BA9-AF23-E7D8815893E5.png",
+    "timestamp": 1792165107.291
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "4364FA76-0096-4949-A521-1FE6D64404D0.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Rich New Item draft in the List detail column_0_C4B38BF9-9968-4BB9-9F94-005CEB7BA631.png",
+    "timestamp": 1792165093.022
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "37145526-C8CB-45F8-9D4C-715BCE33B04E.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Explicit navigation Save creates the Item before leaving_0_B8CD7AB1-0F4B-46F2-B70A-781EA2565029.png",
+    "timestamp": 1792165237.696
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "04D19825-4D45-446E-95CC-3925829A8849.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Draft navigation own-window hierarchy_0_218AA3D7-AD82-4224-AE80-8F552685A241.txt",
+    "timestamp": 1792165205.865
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "FF393C55-11E1-4F00-B0E9-EFCF106190A4.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Draft navigation choices after guarded Back_0_31157586-5534-467D-9DD3-DE0BA7767541.png",
+    "timestamp": 1792165204.847
+  }
+]

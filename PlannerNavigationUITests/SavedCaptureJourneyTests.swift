@@ -103,7 +103,12 @@ final class SavedCaptureJourneyTests: XCTestCase {
     XCTAssertTrue(
       application.staticTexts["Search intent supplied by the Maps link; not a resolved place."]
         .exists)
-    let attachment = XCTAttachment(screenshot: application.screenshot())
+    #if os(macOS)
+      let snapshot = application.windows.firstMatch.screenshot()
+    #else
+      let snapshot = application.screenshot()
+    #endif
+    let attachment = XCTAttachment(screenshot: snapshot)
     attachment.name = "Saved Google Maps search location uses the native map"
     attachment.lifetime = .keepAlways
     add(attachment)
@@ -114,12 +119,23 @@ final class SavedCaptureJourneyTests: XCTestCase {
     XCTAssertTrue(link.waitForExistence(timeout: 5))
     XCTAssertEqual(link.value as? String, originalURL)
     let linkIdentifier = link.identifier
+    #if os(macOS)
+      let sourceRows = application.buttons.matching(
+        NSPredicate(format: "identifier MATCHES %@", "saved[.]item[.][0-9A-Fa-f-]{36}"))
+      XCTAssertEqual(sourceRows.count, 1)
+      let sourceIdentifier = sourceRows.firstMatch.identifier
+    #endif
 
     application.terminate()
     application.launchSavedPlannerJourney()
     openItems(application)
-    let row = application.savedPlannerItemRows("Tokyo search location").firstMatch
+    #if os(macOS)
+      let row = application.buttons.matching(identifier: sourceIdentifier).firstMatch
+    #else
+      let row = application.savedPlannerItemRows("Tokyo search location").firstMatch
+    #endif
     XCTAssertTrue(row.waitForExistence(timeout: 10))
+    XCTAssertEqual(row.label, "Tokyo search location")
     row.activateForPlannerJourney()
     revealSavedMap(map, application: application)
     XCTAssertTrue(map.waitForExistence(timeout: 10))
@@ -319,9 +335,15 @@ final class SavedCaptureJourneyTests: XCTestCase {
 
   private func replace(_ field: XCUIElement, with value: String) {
     field.activateForPlannerJourney()
-    let existing = field.value as? String ?? ""
-    field.typeText(
-      String(repeating: XCUIKeyboardKey.delete.rawValue, count: existing.count) + value)
+    #if os(macOS)
+      field.typeKey("a", modifierFlags: .command)
+      field.typeText(value)
+    #else
+      let existing = field.value as? String ?? ""
+      field.typeText(
+        String(repeating: XCUIKeyboardKey.delete.rawValue, count: existing.count) + value)
+    #endif
+    XCTAssertEqual(field.value as? String, value)
   }
 
   private func revealSavedMap(_ element: XCUIElement, application: XCUIApplication) {

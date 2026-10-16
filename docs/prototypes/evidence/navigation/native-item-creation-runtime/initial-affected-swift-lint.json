@@ -1,0 +1,16 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "output": "",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedPlannerView.swift": "be173ea7e03df1a54592fcb7ad184e8c5b7abdfb78782342e20f329e496b6245",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "13f02680611693c6bee97e6d4bf58dc561a2d9f2e30b9d9a7d304e267b14084a"
+  }
+}

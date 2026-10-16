@@ -1,0 +1,171 @@
+{
+  "method": "Production input hashes and shared native UI helper are identical. For a changed test file, compare the full recorded test function and all locally defined functions it calls transitively. Recorded invocation and batch result remain separate; no new run is inferred.",
+  "invocations": [
+    {
+      "phase": "mac-destination-rich-and-capture-qualified",
+      "function": "SavedAppearanceJourneyTests/testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList",
+      "passedInvocation": "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' passed (125.703 seconds).",
+      "wholeBatchPassed": false,
+      "unchangedProductionInputs": 160,
+      "productionInputSHA256": "aa2294ba281e1737396d8fd1dcc469cd3afaf385eabc4832500f2756e8d61926",
+      "sharedNativeUIHelperUnchanged": true,
+      "testFileUnchanged": false,
+      "unchangedTestAndLocalHelpers": {
+        "addBookmark": "c3c2350838cec6bb00c9b1878ff051a547032846a54b5d3a2d509479d880fbab",
+        "closeNewItemEditor": "920145e602663ebf06a648d3bb38954cc7f60ea9ae789e073d6c86feb52ac40b",
+        "createList": "336989356ba011cdf0ecee50b8227b86c33fe1135ac68c557361b85d962f4b99",
+        "openCatalogSection": "73bd74384e6c3a0498fec62e68af5a5b9529b3a653cdd3b17d5af431273e2369",
+        "openItemEditor": "abe6ae36437d72baaaaebef1fb05b9975818ae48c0b7f99e5d9c35250b694fcf",
+        "openList": "318b7902779ce9db3a179923e5f72476a666c305b813cecabfb0bff33a486c38",
+        "openNewItemInList": "9b7f842af5854508b0af1784b7e8b7678d1640c8945c3526a7891cfae13db180",
+        "openSection": "e19832329ff4324d6d5619ed734e414ad7601cddcc3afce61d8d8e84e01adf83",
+        "recordScreenshot": "85dbc73f52635079f00d1a8d55052ec84c2a5642956b8cb78bb478218850e13a",
+        "revealEditorElement": "d598dea6b6b4b8902ba3bf870fddb98b0a72a4463f892ef3deaf855b0fee7f97",
+        "revealSavedBookmark": "105e31f44bee13795d1cd2eda646e13e33074985de54482e2ed131d35f00935b",
+        "revealSidebarIfNeeded": "8a4ac891dae3a68a61c07f7537cfb38cb7bead32b17c52cef98376f4903e2403",
+        "savedBookmarkRows": "15bd4ea99b3bf9d2a27ce28f9dc1d47933c9874522dec8bd5398ddfd150e7c39",
+        "scrollItemDetail": "3b11ef7d72fc80573193625930e919404b652257cbf7698b10e66b06f74b0b22",
+        "testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList": "a61bf377ceb248ac7eb44b810587f3b3030550e539632e867506e73ed4243d49"
+      }
+    },
+    {
+      "phase": "mac-final-creation-navigation",
+      "function": "SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen",
+      "passedInvocation": "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen]' passed (61.890 seconds).",
+      "wholeBatchPassed": true,
+      "unchangedProductionInputs": 160,
+      "productionInputSHA256": "aa2294ba281e1737396d8fd1dcc469cd3afaf385eabc4832500f2756e8d61926",
+      "sharedNativeUIHelperUnchanged": true,
+      "testFileUnchanged": false,
+      "unchangedTestAndLocalHelpers": {
+        "attemptDraftNavigation": "862161f59bdca655debf21e477f33057a85800035e5bce17ad583f0ebb7e5654",
+        "chooseDraftNavigationAction": "88328bec42a41bfce7336fd6f642111bce6f108176a21641a90103a58d9c60cc",
+        "closeNewItemEditor": "920145e602663ebf06a648d3bb38954cc7f60ea9ae789e073d6c86feb52ac40b",
+        "createList": "336989356ba011cdf0ecee50b8227b86c33fe1135ac68c557361b85d962f4b99",
+        "openCatalogSection": "73bd74384e6c3a0498fec62e68af5a5b9529b3a653cdd3b17d5af431273e2369",
+        "openList": "318b7902779ce9db3a179923e5f72476a666c305b813cecabfb0bff33a486c38",
+        "openNewItemInList": "9b7f842af5854508b0af1784b7e8b7678d1640c8945c3526a7891cfae13db180",
+        "openSection": "e19832329ff4324d6d5619ed734e414ad7601cddcc3afce61d8d8e84e01adf83",
+        "recordScreenshot": "85dbc73f52635079f00d1a8d55052ec84c2a5642956b8cb78bb478218850e13a",
+        "replaceText": "e9f383f1789588432b48a7b41f3b838ebe22f53880caad5f78485d3bad8755b2",
+        "revealSidebarIfNeeded": "8a4ac891dae3a68a61c07f7537cfb38cb7bead32b17c52cef98376f4903e2403",
+        "testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen": "b7ba165308c8993e26e1b0559f2a4860bffd97126536faa448e83d198519be0b"
+      }
+    },
+    {
+      "phase": "phone-current-rich-creation",
+      "function": "SavedAppearanceJourneyTests/testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList",
+      "passedInvocation": "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' passed (141.295 seconds).",
+      "wholeBatchPassed": true,
+      "unchangedProductionInputs": 160,
+      "productionInputSHA256": "aa2294ba281e1737396d8fd1dcc469cd3afaf385eabc4832500f2756e8d61926",
+      "sharedNativeUIHelperUnchanged": true,
+      "testFileUnchanged": true
+    },
+    {
+      "phase": "phone-final-creation-navigation",
+      "function": "SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen",
+      "passedInvocation": "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen]' passed (87.210 seconds).",
+      "wholeBatchPassed": true,
+      "unchangedProductionInputs": 160,
+      "productionInputSHA256": "aa2294ba281e1737396d8fd1dcc469cd3afaf385eabc4832500f2756e8d61926",
+      "sharedNativeUIHelperUnchanged": true,
+      "testFileUnchanged": false,
+      "unchangedTestAndLocalHelpers": {
+        "attemptDraftNavigation": "862161f59bdca655debf21e477f33057a85800035e5bce17ad583f0ebb7e5654",
+        "chooseDraftNavigationAction": "88328bec42a41bfce7336fd6f642111bce6f108176a21641a90103a58d9c60cc",
+        "closeNewItemEditor": "920145e602663ebf06a648d3bb38954cc7f60ea9ae789e073d6c86feb52ac40b",
+        "createList": "336989356ba011cdf0ecee50b8227b86c33fe1135ac68c557361b85d962f4b99",
+        "openCatalogSection": "73bd74384e6c3a0498fec62e68af5a5b9529b3a653cdd3b17d5af431273e2369",
+        "openList": "318b7902779ce9db3a179923e5f72476a666c305b813cecabfb0bff33a486c38",
+        "openNewItemInList": "9b7f842af5854508b0af1784b7e8b7678d1640c8945c3526a7891cfae13db180",
+        "openSection": "e19832329ff4324d6d5619ed734e414ad7601cddcc3afce61d8d8e84e01adf83",
+        "recordScreenshot": "85dbc73f52635079f00d1a8d55052ec84c2a5642956b8cb78bb478218850e13a",
+        "replaceText": "e9f383f1789588432b48a7b41f3b838ebe22f53880caad5f78485d3bad8755b2",
+        "revealSidebarIfNeeded": "8a4ac891dae3a68a61c07f7537cfb38cb7bead32b17c52cef98376f4903e2403",
+        "testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen": "b7ba165308c8993e26e1b0559f2a4860bffd97126536faa448e83d198519be0b"
+      }
+    },
+    {
+      "phase": "tablet-bookmark-visibility-qualified",
+      "function": "SavedAppearanceJourneyTests/testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList",
+      "passedInvocation": "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' passed (158.634 seconds).",
+      "wholeBatchPassed": true,
+      "unchangedProductionInputs": 160,
+      "productionInputSHA256": "aa2294ba281e1737396d8fd1dcc469cd3afaf385eabc4832500f2756e8d61926",
+      "sharedNativeUIHelperUnchanged": true,
+      "testFileUnchanged": false,
+      "unchangedTestAndLocalHelpers": {
+        "addBookmark": "c3c2350838cec6bb00c9b1878ff051a547032846a54b5d3a2d509479d880fbab",
+        "closeNewItemEditor": "920145e602663ebf06a648d3bb38954cc7f60ea9ae789e073d6c86feb52ac40b",
+        "createList": "336989356ba011cdf0ecee50b8227b86c33fe1135ac68c557361b85d962f4b99",
+        "openCatalogSection": "73bd74384e6c3a0498fec62e68af5a5b9529b3a653cdd3b17d5af431273e2369",
+        "openItemEditor": "abe6ae36437d72baaaaebef1fb05b9975818ae48c0b7f99e5d9c35250b694fcf",
+        "openList": "318b7902779ce9db3a179923e5f72476a666c305b813cecabfb0bff33a486c38",
+        "openNewItemInList": "9b7f842af5854508b0af1784b7e8b7678d1640c8945c3526a7891cfae13db180",
+        "openSection": "e19832329ff4324d6d5619ed734e414ad7601cddcc3afce61d8d8e84e01adf83",
+        "recordScreenshot": "85dbc73f52635079f00d1a8d55052ec84c2a5642956b8cb78bb478218850e13a",
+        "revealEditorElement": "d598dea6b6b4b8902ba3bf870fddb98b0a72a4463f892ef3deaf855b0fee7f97",
+        "revealSavedBookmark": "105e31f44bee13795d1cd2eda646e13e33074985de54482e2ed131d35f00935b",
+        "revealSidebarIfNeeded": "8a4ac891dae3a68a61c07f7537cfb38cb7bead32b17c52cef98376f4903e2403",
+        "savedBookmarkRows": "15bd4ea99b3bf9d2a27ce28f9dc1d47933c9874522dec8bd5398ddfd150e7c39",
+        "scrollItemDetail": "3b11ef7d72fc80573193625930e919404b652257cbf7698b10e66b06f74b0b22",
+        "testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList": "a61bf377ceb248ac7eb44b810587f3b3030550e539632e867506e73ed4243d49"
+      }
+    },
+    {
+      "phase": "tablet-final-creation-navigation",
+      "function": "SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen",
+      "passedInvocation": "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen]' passed (113.573 seconds).",
+      "wholeBatchPassed": false,
+      "unchangedProductionInputs": 160,
+      "productionInputSHA256": "aa2294ba281e1737396d8fd1dcc469cd3afaf385eabc4832500f2756e8d61926",
+      "sharedNativeUIHelperUnchanged": true,
+      "testFileUnchanged": false,
+      "unchangedTestAndLocalHelpers": {
+        "attemptDraftNavigation": "862161f59bdca655debf21e477f33057a85800035e5bce17ad583f0ebb7e5654",
+        "chooseDraftNavigationAction": "88328bec42a41bfce7336fd6f642111bce6f108176a21641a90103a58d9c60cc",
+        "closeNewItemEditor": "920145e602663ebf06a648d3bb38954cc7f60ea9ae789e073d6c86feb52ac40b",
+        "createList": "336989356ba011cdf0ecee50b8227b86c33fe1135ac68c557361b85d962f4b99",
+        "openCatalogSection": "73bd74384e6c3a0498fec62e68af5a5b9529b3a653cdd3b17d5af431273e2369",
+        "openList": "318b7902779ce9db3a179923e5f72476a666c305b813cecabfb0bff33a486c38",
+        "openNewItemInList": "9b7f842af5854508b0af1784b7e8b7678d1640c8945c3526a7891cfae13db180",
+        "openSection": "e19832329ff4324d6d5619ed734e414ad7601cddcc3afce61d8d8e84e01adf83",
+        "recordScreenshot": "85dbc73f52635079f00d1a8d55052ec84c2a5642956b8cb78bb478218850e13a",
+        "replaceText": "e9f383f1789588432b48a7b41f3b838ebe22f53880caad5f78485d3bad8755b2",
+        "revealSidebarIfNeeded": "8a4ac891dae3a68a61c07f7537cfb38cb7bead32b17c52cef98376f4903e2403",
+        "testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen": "b7ba165308c8993e26e1b0559f2a4860bffd97126536faa448e83d198519be0b"
+      }
+    },
+    {
+      "phase": "mac-window-scoped-review",
+      "function": "SavedAppearanceJourneyTests/testRenamingTheOriginatingListRequiresReviewBeforeSavingTheRetainedItemDraft",
+      "passedInvocation": "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testRenamingTheOriginatingListRequiresReviewBeforeSavingTheRetainedItemDraft]' passed (97.776 seconds).",
+      "wholeBatchPassed": false,
+      "unchangedProductionInputs": 160,
+      "productionInputSHA256": "aa2294ba281e1737396d8fd1dcc469cd3afaf385eabc4832500f2756e8d61926",
+      "sharedNativeUIHelperUnchanged": true,
+      "testFileUnchanged": true
+    },
+    {
+      "phase": "mac-destination-rich-and-capture-qualified",
+      "function": "SavedCaptureJourneyTests/testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch",
+      "passedInvocation": "Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch]' passed (30.097 seconds).",
+      "wholeBatchPassed": false,
+      "unchangedProductionInputs": 160,
+      "productionInputSHA256": "aa2294ba281e1737396d8fd1dcc469cd3afaf385eabc4832500f2756e8d61926",
+      "sharedNativeUIHelperUnchanged": true,
+      "testFileUnchanged": true
+    },
+    {
+      "phase": "mac-list-window-evidence-qualified",
+      "function": "SavedListCaptureJourneyTests/testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch",
+      "passedInvocation": "Test Case '-[PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch]' passed (56.868 seconds).",
+      "wholeBatchPassed": true,
+      "unchangedProductionInputs": 160,
+      "productionInputSHA256": "aa2294ba281e1737396d8fd1dcc469cd3afaf385eabc4832500f2756e8d61926",
+      "sharedNativeUIHelperUnchanged": true,
+      "testFileUnchanged": true
+    }
+  ]
+}

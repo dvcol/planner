@@ -1,0 +1,6 @@
+{
+  "assertion": "Saved Tickets bookmark must exist in details.",
+  "observed": "Saved Item notes and local Todo membership already present. Own-app hierarchy places resolved address map below viewport, Form scroll0%,2pages; Links not yet instantiated.",
+  "probe": "Scroll the detail Form gutter outside interactive Map; no production changes.",
+  "visualInspection": "Original named Rich New Item draft capture inspected; it contains both identical URLs with different labels."
+}

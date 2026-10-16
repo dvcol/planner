@@ -1,0 +1,9 @@
+{
+  "compiledEpoch": "docs/prototypes/evidence/navigation/native-rich-creation/q93-mobile-editor-qualified",
+  "currentCommit": "e32d65eceb0e27007f3065a9b25b4ecc392cc457",
+  "inactiveMacOnlyDifferences": [
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift",
+    "Planner/AgentControl/PlannerMCPReviewTool.swift"
+  ],
+  "runtimeOnly": true
+}

@@ -1,0 +1,29 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "72C1910D-A909-4F8D-A479-5D709A2C9086.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Draft navigation has three explicit choices_0_2F377632-124A-4502-814C-8ABB23444DE1.png",
+    "timestamp": 1792165533.155
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "4F62FCB9-E898-4984-9602-1348008C81AA.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Created rich Item keeps its Origin List appearance_0_238145AA-DC94-4B7F-8C2F-9FF3B22B68C2.png",
+    "timestamp": 1792165597.493
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "A152AC64-4549-44AD-9D29-38D3E680DD3C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Rich New Item draft in the List detail column_0_392E1911-7F6D-4E85-B986-E6EDA089344C.png",
+    "timestamp": 1792165589.241
+  }
+]

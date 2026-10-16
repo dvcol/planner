@@ -1,0 +1,47 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "17BC4B42-1A37-4E53-AF61-67C3E1BAD221.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Created rich Item keeps its Origin List appearance_0_98D53556-A95A-4843-94A1-940AAD2F7040.png",
+    "timestamp": 1792166246.558
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "30CF901C-0328-4BA1-BD7A-D50620F47DFE.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Rich New Item draft in the List detail column_0_08B52A5E-6E49-412F-AB4A-156BFC1D482F.png",
+    "timestamp": 1792166237.889
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "C5D3F748-EFC3-44F4-B53A-B9105635BCBE.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Explicit navigation Save creates the Item before leaving_0_9B261583-9A17-45AC-AA23-2504FD5AC859.png",
+    "timestamp": 1792166341.915
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "F6AAFC54-9B21-4896-9EE4-E6F835FF0579.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Draft navigation own-window hierarchy_0_E2B1FCC4-01ED-47BA-996E-8F0027B13F60.txt",
+    "timestamp": 1792166317.468
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "BAD9CFC1-C8D7-4380-A201-C8F13E5D6443.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Draft navigation choices after guarded Back_0_ECE945FD-4E46-435B-BD88-C1FB4A768C66.png",
+    "timestamp": 1792166316.947
+  }
+]

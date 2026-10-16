@@ -124,7 +124,12 @@ final class SavedListCaptureJourneyTests: XCTestCase {
     XCTAssertTrue(link.waitForExistence(timeout: 5))
     XCTAssertEqual(link.value as? String, "https://example.com/list-capture?keep=%41")
     let linkIdentifier = link.identifier
-    let screenshot = XCTAttachment(screenshot: application.screenshot())
+    #if os(macOS)
+      let snapshot = application.windows.firstMatch.screenshot()
+    #else
+      let snapshot = application.screenshot()
+    #endif
+    let screenshot = XCTAttachment(screenshot: snapshot)
     screenshot.name = "Native List capture keeps membership detail scope"
     screenshot.lifetime = .keepAlways
     add(screenshot)
@@ -143,9 +148,25 @@ final class SavedListCaptureJourneyTests: XCTestCase {
 
   private func createList(_ name: String, application: XCUIApplication) {
     let create = application.plannerElement("saved.list.new")
-    if !create.waitForExistence(timeout: 3) || !create.isHittable { showListsSidebar(application) }
-    XCTAssertTrue(create.waitForExistence(timeout: 5))
-    create.activateForPlannerJourney()
+    #if os(macOS)
+      application.plannerElement("saved.section.lists").activateForPlannerJourney()
+      if create.exists && create.isHittable {
+        create.activateForPlannerJourney()
+      } else {
+        let overflow = application.windows.firstMatch.popUpButtons["more toolbar items"]
+        XCTAssertTrue(overflow.waitForExistence(timeout: 5))
+        overflow.activateForPlannerJourney()
+        let nativeCreate = overflow.menuItems["New List"]
+        XCTAssertTrue(nativeCreate.waitForExistence(timeout: 5))
+        nativeCreate.activateForPlannerJourney()
+      }
+    #else
+      if !create.waitForExistence(timeout: 3) || !create.isHittable {
+        showListsSidebar(application)
+      }
+      XCTAssertTrue(create.waitForExistence(timeout: 5))
+      create.activateForPlannerJourney()
+    #endif
     let field = application.textFields["saved.list.name"]
     XCTAssertTrue(field.waitForExistence(timeout: 5))
     field.activateForPlannerJourney()
@@ -164,9 +185,13 @@ final class SavedListCaptureJourneyTests: XCTestCase {
     if !list.waitForExistence(timeout: 3) || !list.isHittable { showListsSidebar(application) }
     XCTAssertTrue(list.waitForExistence(timeout: 5))
     list.activateForPlannerJourney()
-    let toolbar = application.buttons.matching(
-      NSPredicate(format: "identifier IN %@", ["saved.list.actions", "OverflowBarButtonItem"]))
-    XCTAssertTrue(toolbar.firstMatch.waitForExistence(timeout: 5))
+    #if os(macOS)
+      XCTAssertTrue(application.plannerElement("saved.list.actions").waitForExistence(timeout: 5))
+    #else
+      let toolbar = application.buttons.matching(
+        NSPredicate(format: "identifier IN %@", ["saved.list.actions", "OverflowBarButtonItem"]))
+      XCTAssertTrue(toolbar.firstMatch.waitForExistence(timeout: 5))
+    #endif
   }
 
   private func showListsSidebar(_ application: XCUIApplication) {
@@ -225,9 +250,15 @@ final class SavedListCaptureJourneyTests: XCTestCase {
     let field = application.textFields["saved.capture.title"]
     XCTAssertTrue(field.waitForExistence(timeout: 5))
     field.activateForPlannerJourney()
-    let original = field.value as? String ?? ""
-    field.typeText(
-      String(repeating: XCUIKeyboardKey.delete.rawValue, count: original.count) + title)
+    #if os(macOS)
+      field.typeKey("a", modifierFlags: .command)
+      field.typeText(title)
+    #else
+      let original = field.value as? String ?? ""
+      field.typeText(
+        String(repeating: XCUIKeyboardKey.delete.rawValue, count: original.count) + title)
+    #endif
+    XCTAssertEqual(field.value as? String, title)
     #if os(iOS)
       field.typeText("\n")
     #endif
@@ -246,9 +277,16 @@ final class SavedListCaptureJourneyTests: XCTestCase {
   }
 
   private func destination(_ name: String, application: XCUIApplication) -> XCUIElement {
-    application.descendants(matching: .any).matching(
-      NSPredicate(format: "identifier BEGINSWITH %@ AND label == %@", "saved.capture.list.", name)
-    ).firstMatch
+    #if os(macOS)
+      return application.groups.containing(.staticText, identifier: name)
+        .children(matching: .switch).matching(
+          NSPredicate(format: "identifier BEGINSWITH %@", "saved.capture.list.")
+        ).firstMatch
+    #else
+      return application.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@ AND label == %@", "saved.capture.list.", name)
+      ).firstMatch
+    #endif
   }
 
   private func setDestination(_ element: XCUIElement, selected: Bool) {
@@ -264,14 +302,17 @@ final class SavedListCaptureJourneyTests: XCTestCase {
     for _ in 0..<5 {
       if isVisible(element, application: application) { return }
       #if os(macOS)
-        let form = application.scrollViews.allElementsBoundByIndex.last
+        let form = application.windows.firstMatch.sheets.scrollViews.firstMatch
+        XCTAssertTrue(form.exists)
+        form.scroll(byDeltaX: 0, deltaY: -350)
       #else
         let form = application.collectionViews.allElementsBoundByIndex.last
+        XCTAssertNotNil(form)
+        form?.swipeUp()
       #endif
-      XCTAssertNotNil(form)
-      form?.swipeUp()
     }
-    XCTAssertTrue(isVisible(element, application: application))
+    XCTAssertTrue(
+      isVisible(element, application: application), application.windows.firstMatch.debugDescription)
   }
 
   private func isVisible(_ element: XCUIElement, application: XCUIApplication) -> Bool {

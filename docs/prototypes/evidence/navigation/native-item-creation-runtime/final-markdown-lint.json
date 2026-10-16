@@ -1,0 +1,15 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2@0.23.3",
+    "--config",
+    "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+    "docs/prototypes/native-item-creation.md"
+  ],
+  "exitCode": 0,
+  "output": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-item-creation.md\nLinting: 1 file\nSummary: 0 issues in 0 files\nDone in 293ms using pnpm v12.10.1\n",
+  "sourceSHA256": {
+    "docs/prototypes/native-item-creation.md": "407eb0505425f2d3b7176e839f7b73a22546a9c931f2d837e765e474d1aaf4c5"
+  }
+}

@@ -1,0 +1,29 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "CB44B0DA-423B-468E-8F23-1F4568CAAA7C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Explicit navigation Save creates the Item before leaving_0_D5D142EC-E5AA-401C-B994-A155932F1C54.png",
+    "timestamp": 1792164847.8
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "3071D1EF-0730-4D62-AE94-BDED1ADCBD69.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Draft navigation own-window hierarchy_0_0036EF0A-CF98-4D41-B9D0-9977EB6C9BC5.txt",
+    "timestamp": 1792164821.664
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "D685887B-A70A-4032-A44F-D0435DA802C6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Draft navigation choices after guarded Back_0_191EEF49-EE60-4D28-B006-32DB7E3D6EB6.png",
+    "timestamp": 1792164820.998
+  }
+]

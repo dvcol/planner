@@ -1,0 +1,7 @@
+{
+  "authorization": "Human approved restarting the Simulator service on 17 October 2026.",
+  "action": "SIGTERM only the current-user CoreSimulator service; root service not changed.",
+  "result": "Device inventory exits0 after native launcher removes stale service; both task simulators available.",
+  "xcode": "Xcode 27.1\nBuild version 27A9275",
+  "runtimeCredit": false
+}

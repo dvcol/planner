@@ -1,0 +1,29 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "27D0CF48-9F2C-4A36-8FF3-8D94A413E3A6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Explicit navigation Save creates the Item before leaving_0_40AD049C-D27E-46A8-97CF-173F2A841D86.png",
+    "timestamp": 1792164953.71
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "5864C034-F131-43A5-A4C9-09DCE22FB1C6.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Draft navigation own-window hierarchy_0_3C168F19-847B-4414-8511-4AAE8F43B96B.txt",
+    "timestamp": 1792164899.26
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "62782102-FD19-4520-A825-4E7086EB614F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Draft navigation choices after guarded Back_0_98A0042D-D75F-47FB-B97E-1704DAF0DB62.png",
+    "timestamp": 1792164898.79
+  }
+]
