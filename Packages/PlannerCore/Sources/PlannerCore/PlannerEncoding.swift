@@ -127,10 +127,14 @@ extension PlannerItemContentInput {
 
   func payloadDigest(
     datasetId: UUID, ownershipBinding: String,
-    bindings: [PlannerBoundIdentity] = []
+    bindings: [PlannerBoundIdentity] = [], listId: UUID? = nil
   ) -> String {
+    var command: [String: PlannerCanonicalValue] = [
+      "type": .string("createItem"), "content": canonicalContent,
+    ]
+    if let listId { command["listId"] = .identity(listId) }
     let value = PlannerCanonicalValue.record([
-      "command": .record(["type": .string("createItem"), "content": canonicalContent]),
+      "command": .record(command),
       "datasetId": .identity(datasetId), "ownershipBinding": .string(ownershipBinding),
       "resolvedBindings": .identitySet(bindings.map(\.canonicalValue)),
     ])

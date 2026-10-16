@@ -192,7 +192,7 @@ public enum PlannerCommand: Sendable {
     backup: PlannerDecodedBackup, mode: PlannerImportMode = .skip, restoreDeletedData: Bool = false)
   case restoreRecovery(selection: PlannerRecoverySelection, mode: PlannerImportMode = .skip)
   case deleteSource(source: PlannerEntityReference)
-  case createItem(content: PlannerItemContentInput)
+  case createItem(content: PlannerItemContentInput, listId: UUID? = nil)
   case createList(content: PlannerListContentInput)
   case createItinerary(content: PlannerItineraryContentInput)
   case addItineraryEntry(
