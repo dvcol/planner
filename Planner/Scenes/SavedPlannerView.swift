@@ -259,7 +259,11 @@ struct SavedPlannerView: View {
     .confirmationDialog("Save changes to this Item?", isPresented: $showDraftNavigationReview) {
       Button("Save") { Task { await saveNewItem(continuingNavigation: true) } }
       Button("Discard", role: .destructive) { finishDraftNavigation() }
-      Button("Keep Editing") { pendingDraftNavigation = nil }
+      #if os(macOS)
+        Button("Keep Editing", role: .cancel) { pendingDraftNavigation = nil }
+      #else
+        Button("Keep Editing") { pendingDraftNavigation = nil }
+      #endif
     } message: {
       Text("Save this Item, discard the draft, or keep editing before leaving.")
     }

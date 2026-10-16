@@ -2390,7 +2390,11 @@ final class SavedAppearanceJourneyTests: XCTestCase {
   private func revealEditorElement(_ element: XCUIElement, application: XCUIApplication) {
     if element.isHittable { return }
     for _ in 0..<3 {
-      application.swipeUp()
+      #if os(macOS)
+        scrollItemDetail(application)
+      #else
+        application.swipeUp()
+      #endif
       if element.isHittable { return }
     }
     XCTAssertTrue(element.waitForPlannerHittability())
@@ -2400,6 +2404,36 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     application.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link."))
   }
+
+  private func revealSavedBookmark(_ label: String, application: XCUIApplication) -> XCUIElement {
+    let bookmark = savedBookmarkRows(application).matching(
+      NSPredicate(format: "label == %@", label)
+    ).firstMatch
+    for _ in 0..<6 {
+      if bookmark.exists && bookmark.isHittable { return bookmark }
+      #if os(iOS)
+        let window = application.windows.firstMatch
+        let start = window.coordinate(withNormalizedOffset: .init(dx: 0.96, dy: 0.74))
+        let end = window.coordinate(withNormalizedOffset: .init(dx: 0.96, dy: 0.50))
+        start.press(forDuration: 0.01, thenDragTo: end)
+      #else
+        scrollItemDetail(application)
+      #endif
+    }
+    XCTAssertTrue(bookmark.waitForExistence(timeout: 5))
+    return bookmark
+  }
+
+  #if os(macOS)
+    private func scrollItemDetail(_ application: XCUIApplication) {
+      let scrollViews = application.windows.firstMatch.scrollViews
+      guard scrollViews.count > 0 else {
+        XCTFail("The Item detail scroll view is unavailable")
+        return
+      }
+      scrollViews.element(boundBy: scrollViews.count - 1).scroll(byDeltaX: 0, deltaY: -400)
+    }
+  #endif
 
   private func removeBookmark(_ identity: String, application: XCUIApplication) {
     let actions = application.plannerElement("saved.item.edit.link.actions.\(identity)")
@@ -2476,6 +2510,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     let origin = application.savedPlannerListRow("Origin")
     revealSidebarIfNeeded(application, element: origin)
     origin.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
     openNewItemInList(application)
     for (identifier, text) in [
       ("saved.item.title", "Garden visit"),
@@ -2517,12 +2552,10 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       application.staticTexts["Meet at the south entrance"].waitForExistence(timeout: 10))
     XCTAssertTrue(application.staticTexts["Bring the sketchbook"].exists)
     let savedLinks = savedBookmarkRows(application)
-    XCTAssertTrue(
-      savedLinks.matching(NSPredicate(format: "label == %@", "Tickets")).firstMatch
-        .waitForExistence(timeout: 10))
-    XCTAssertTrue(
-      savedLinks.matching(NSPredicate(format: "label == %@", "Garden guide")).firstMatch
-        .waitForExistence(timeout: 10))
+    let tickets = revealSavedBookmark("Tickets", application: application)
+    XCTAssertTrue(tickets.waitForPlannerValue("https://example.com/gardens"))
+    let guide = revealSavedBookmark("Garden guide", application: application)
+    XCTAssertTrue(guide.waitForPlannerValue("https://example.com/gardens"))
     let savedLinkIdentifiers = savedLinks.allElementsBoundByIndex.map(\.identifier)
     XCTAssertEqual(Set(savedLinkIdentifiers).count, 2)
     recordScreenshot(application, name: "Created rich Item keeps its Origin List appearance")
@@ -2543,6 +2576,8 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     appearance.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Bring the sketchbook"].waitForExistence(timeout: 10))
     XCTAssertTrue(application.staticTexts["Meet at the south entrance"].exists)
+    _ = revealSavedBookmark("Tickets", application: application)
+    _ = revealSavedBookmark("Garden guide", application: application)
     XCTAssertEqual(
       savedBookmarkRows(application).allElementsBoundByIndex.map(\.identifier),
       savedLinkIdentifiers)
@@ -2575,6 +2610,14 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     title.activateForPlannerJourney()
     title.typeText("Preserved draft")
     attemptDraftNavigation(application)
+    let dialog = application.windows.firstMatch.sheets.firstMatch
+    XCTAssertTrue(dialog.waitForExistence(timeout: 5))
+    for choice in ["Save", "Discard", "Keep Editing"] {
+      XCTAssertTrue(dialog.buttons[choice].exists)
+    }
+    #if os(macOS)
+      XCTAssertEqual(dialog.buttons.count, 3)
+    #endif
     recordScreenshot(application, name: "Draft navigation choices after guarded Back")
     let hierarchy = XCTAttachment(string: application.windows.firstMatch.debugDescription)
     hierarchy.name = "Draft navigation own-window hierarchy"
@@ -2766,6 +2809,99 @@ final class SavedAppearanceJourneyTests: XCTestCase {
   }
 
   #if os(macOS)
+    func testRenamingTheOriginatingListRequiresReviewBeforeSavingTheRetainedItemDraft() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      createList("Origin", application: application)
+      let listIdentifier = application.savedPlannerListRow("Origin").identifier
+      openNewItemInList(application)
+      let title = application.textFields["saved.item.title"]
+      XCTAssertTrue(title.waitForExistence(timeout: 5))
+      title.activateForPlannerJourney()
+      title.typeText("Retained visit")
+      let notes = application.textFields["saved.item.notes"]
+      notes.activateForPlannerJourney()
+      notes.typeText("Keep these notes through destination review")
+      let existingWindowIdentifiers = Set(
+        application.windows.allElementsBoundByIndex.map(\.identifier))
+      application.menuBars.menuBarItems["File"].click()
+      application.menuItems["New Window"].click()
+      guard
+        let newWindow = application.windows.allElementsBoundByIndex.first(where: {
+          !existingWindowIdentifiers.contains($0.identifier)
+        })
+      else {
+        XCTFail("New Window did not create another Planner window")
+        return
+      }
+      let editingWindow = application.windows.matching(
+        NSPredicate(format: "identifier == %@", newWindow.identifier)
+      ).firstMatch
+      let origin = editingWindow.buttons.matching(identifier: listIdentifier).firstMatch
+      XCTAssertTrue(origin.waitForExistence(timeout: 10))
+      origin.click()
+      XCTAssertTrue(editingWindow.staticTexts["No items"].waitForExistence(timeout: 10))
+      let actions = editingWindow.descendants(matching: .any)
+        .matching(identifier: "saved.list.actions").firstMatch
+      XCTAssertTrue(actions.waitForExistence(timeout: 5))
+      actions.click()
+      application.menuItems["saved.list.estimate.edit"].click()
+      let name = editingWindow.sheets.textFields["saved.list.name"]
+      XCTAssertTrue(name.waitForExistence(timeout: 5))
+      replaceText(name, with: "Renamed origin", application: application)
+      editingWindow.sheets.buttons["saved.list.save"].click()
+      XCTAssertTrue(name.waitForNonExistence(timeout: 10))
+      XCTAssertEqual(application.savedPlannerListRow("Renamed origin").identifier, listIdentifier)
+      editingWindow.buttons["_XCUI:CloseWindow"].click()
+      XCTAssertTrue(editingWindow.waitForNonExistence(timeout: 10))
+      XCTAssertEqual(title.value as? String, "Retained visit")
+      XCTAssertEqual(notes.value as? String, "Keep these notes through destination review")
+      application.plannerElement("saved.item.save").click()
+      let review = application.windows.firstMatch.sheets.firstMatch
+      XCTAssertTrue(review.buttons["Use This List"].waitForExistence(timeout: 10))
+      XCTAssertTrue(
+        review.staticTexts[
+          "The original List changed. Save to Renamed origin instead? Your draft is preserved."
+        ].exists)
+      recordScreenshot(application, name: "Renamed List requires explicit Item destination review")
+      review.buttons["Keep Editing"].click()
+      XCTAssertEqual(title.value as? String, "Retained visit")
+      XCTAssertEqual(notes.value as? String, "Keep these notes through destination review")
+      XCTAssertTrue(application.staticTexts["No items"].exists)
+      application.plannerElement("saved.item.save").click()
+      XCTAssertTrue(review.buttons["Use This List"].waitForExistence(timeout: 10))
+      review.buttons["Use This List"].click()
+      XCTAssertTrue(review.waitForNonExistence(timeout: 5))
+      XCTAssertTrue(title.exists)
+      XCTAssertTrue(application.staticTexts["No items"].exists)
+      application.plannerElement("saved.item.save").click()
+      XCTAssertTrue(title.waitForNonExistence(timeout: 10))
+      let appearance = application.savedPlannerItemRows("Retained visit").firstMatch
+      XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+      let appearanceIdentifier = appearance.identifier
+      XCTAssertTrue(appearanceIdentifier.hasPrefix("saved.appearance."))
+      let completion = application.plannerElement(
+        appearanceIdentifier.replacingOccurrences(
+          of: "saved.appearance.", with: "saved.appearance.completion."))
+      XCTAssertTrue(completion.waitForPlannerValue("To do"))
+      appearance.click()
+      XCTAssertTrue(application.staticTexts["In Renamed origin"].waitForExistence(timeout: 10))
+      XCTAssertTrue(
+        application.staticTexts["Keep these notes through destination review"].exists)
+      recordScreenshot(
+        application, name: "Reviewed destination creates one retained List appearance")
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openList("Renamed origin", itemTitle: "Retained visit", application: application)
+      XCTAssertEqual(application.savedPlannerListRow("Renamed origin").identifier, listIdentifier)
+      XCTAssertEqual(appearance.identifier, appearanceIdentifier)
+      XCTAssertTrue(completion.waitForPlannerValue("To do"))
+      openCatalogSection("Items", application: application)
+      XCTAssertEqual(application.savedPlannerItemRows("Retained visit").count, 1)
+    }
+
     func testDeletingASelectedAppearanceInAnotherWindowSelectsItsFirstVisibleSibling() {
       continueAfterFailure = false
       let application = XCUIApplication()

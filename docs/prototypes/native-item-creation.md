@@ -1,6 +1,6 @@
 # Native Item creation and contextual navigation
 
-Status: implementation is compiled and source-reviewed. Final native runtime qualification is pending; Q88–Q91/Q93 and the Navigation prototype remain open.
+Status: rich creation and guarded navigation have native runtime evidence on Mac, iPhone and iPad, including the platform-specific dialog fix. Mac renamed-destination review, Google Maps capture and originating-List capture also have passing native invocations. Adaptive-layout and wider compatibility checks still keep Q88–Q91/Q93 and the Navigation prototype open.
 
 ## Context and expected state
 
@@ -18,19 +18,50 @@ Edited drafts require Save, Discard or Keep Editing before navigation. An untouc
 
 The human approved the creation/navigation decisions and the public Core, HTTP and native UI boundaries. Core and HTTP qualification are recorded in their [Core report](core-item-in-list-creation.md) and [MCP report](mcp-item-in-list-creation.md).
 
-The rich-content and dirty-navigation journeys have been extended. Destination-race and resize/collapse journeys still need executable fixtures and qualification. The production native journeys must pass on the final source:
+Rich-content, dirty-navigation and Mac renamed-destination journeys now have executable native fixtures and passing invocations. Restored/unavailable destination and resize/collapse journeys still need native qualification. The production native journeys must pass on the final source:
 
 - Cancel a changed List draft without creating a source or membership. Save full content, two separately labeled identical URLs and a local Todo membership; preserve their identities after relaunch and leave another List unchanged.
 - Keep Editing, reject an invalid navigation Save, then save successfully before leaving. Preserve fields and destination through column resizing/collapse.
 - Rename or restore the originating List while a draft is open. Require explicit refreshed destination review and retain the authored content. Reject an unavailable destination without fallback.
 - Retain Add existing and From Link or Text behavior, rich saved details/maps and the affected deletion-survivor journeys.
 
-## Evidence and current limit
+## Native runtime and dialog correction
 
-The [packet](evidence/navigation/native-rich-creation/) retains historical and current epochs separately. Earlier Mac/phone rich-creation and dirty-navigation journeys passed with the provisional Capture-backed adapter. They establish only those recorded prototype epochs. They do not qualify the final ordinary command or its duplicate-bookmark test.
+The user approved restarting the stale current-user CoreSimulator service, then confirmed that the Mac was unlocked and idle. The task iPhone and iPad simulators became available, and Mac UI automation subsequently started tests. No account signing or physical-device qualification is inferred.
 
-The new `phone-q93-bookmarks-red` attempt exits 70 before building or starting a test. Xcode reports running CoreSimulator 1171.7.0 versus required 1174.9.2, disables Simulator support and cannot resolve the task iPhone destination. A separate device-list probe hangs and is terminated without restarting the service. This is infrastructure failure, not a behavioral red or native test result. Restarting that service awaits human approval because it can interrupt other open simulators.
+The [runtime packet](evidence/navigation/native-item-creation-runtime/) retains source snapshots, commands, compiler links, binary hashes, results and named Planner-only captures for each attempt. Its [run index](evidence/navigation/native-item-creation-runtime/historical-run-index.json) separates whole passing batches from individual passes inside failed batches. The [earlier packet](evidence/navigation/native-rich-creation/) retains provisional Capture-backed and compiler-only epochs; they do not replace ordinary-command runtime checks.
 
-`q93-mobile-editor-qualified` and `q93-mac-editor-compile` both complete build-for-testing successfully. They compile the app and native UI test target, with signing disabled, and supply no runtime credit. Their isolated source exports and overlays are recorded. The Mac export also contains the final committed MCP adapter; the earlier mobile export retains the base's inactive Mac-only adapter files. Both contain the same final native editor and Core sources. Strict lint passes all 19 affected native Swift files. Independent Standards and Spec reviews report no confirmed source findings.
+The rich journey starts with Origin, an empty second List and no matching Item. Discard creates neither source nor membership. Saving creates one source and one local Todo appearance in Origin, with subtitle, notes, owned address/place name and two separately labeled identical URLs. It verifies exact URL values, distinct ordered bookmark identities, the untouched second List and retained source/membership/bookmark identities after relaunch. Native Form content is lazy: the test scrolls the actual detail column to reveal links instead of treating offscreen rows as missing data. Named saved-detail captures also show the native address map and pin; live provider availability remains separate from deterministic data assertions.
 
-The native runtime checks above, current Mac automation availability, physical sync/account/Share, accessibility, performance and whole-app polish remain open. No feature or map completion is inferred from compilation.
+The navigation journey closes an untouched draft directly, offers all three explicit choices for an edited draft, retains fields after Keep Editing, rejects a blank-title navigation Save without losing notes, then creates the source and originating List appearance before leaving after valid Save.
+
+Runtime inspection exposed an extra default OK button on Mac. A native UI regression witnessed four buttons instead of the required three. Keep Editing now has the cancel role on Mac, replacing that default dismiss action. iOS retains its ordinary explicit button because Apple's regular-width confirmation dialog may omit a cancel-role action. See [Apple's confirmation dialog documentation](https://developer.apple.com/documentation/swiftui/view/confirmationDialog%28_%3AisPresented%3AtitleVisibility%3Aactions%3A%29). The same navigation journey asserts all three labels on every platform and exactly three buttons on Mac.
+
+| Platform | Passing rich creation | Passing guarded navigation | Recorded runs |
+| --- | --- | --- | --- |
+| Mac, local ad hoc signing | 125.703 s | 61.890 s | `mac-destination-rich-and-capture-qualified`, `mac-final-creation-navigation` |
+| iPhone simulator | 141.295 s | 87.210 s | `phone-current-rich-creation`, `phone-final-creation-navigation` |
+| iPad simulator | 158.634 s | 113.573 s | `tablet-bookmark-visibility-qualified`, `tablet-final-creation-navigation` |
+
+These are passing individual invocations with zero skipped functions. The Mac destination/capture batch and the first final iPad batch contain failures in other invocations and remain recorded as failed. The [source comparison](evidence/navigation/native-item-creation-runtime/runtime-source-equivalence.json) verifies that current production inputs and each selected test's executed functions and helpers match its recorded passing invocation. Changes elsewhere in a test file do not imply another runtime pass. Original source and binary hashes remain attached to every invocation.
+
+The Mac two-window rename journey passes in 97.776 s in `mac-window-scoped-review`. It retains the original List identity and authored fields, requires refreshed destination review after another window renames the List, preserves an unsaved draft after Keep Editing, and makes Use This List update only the reviewed destination. A subsequent explicit Save creates one local Todo appearance; relaunch preserves the List/appearance identities and one source Item.
+
+The Mac Google Maps journey passes in 30.097 s in `mac-destination-rich-and-capture-qualified`. It renders a native saved-link map labeled Search location rather than a resolved business, retains the exact original URL and fragment, and reopens the same source and bookmark after relaunch. That four-function batch also contains two controller failures and is not a wholly passing batch.
+
+The Mac originating-List capture journey passes in 56.868 s in `mac-list-window-evidence-qualified`. It changes a selected destination and cancels without creating an Item, reopens capture with the originating List selected again, then saves one source and contextual appearance. The appearance remains local Todo, retains its original URL/bookmark identity after relaunch, and opens contextual rather than global actions. Its test uses the actual native switch row and scroll wheel. The earlier 57.251 s pass remains recorded, but its desktop-wide screenshot is excluded; the final run captures only the Planner window.
+
+## Failed attempts and limits
+
+- Initial simulator attempts could not start with the stale service. The approved restart resolved that setup failure.
+- The first Mac automation retry timed out before starting any function. The unlocked/idle retry subsequently passed navigation.
+- Initial rich-content failures exposed test-controller issues: lazy Links below the map, an invalid Mac application-wide swipe and opening a toolbar before the reselected List finished loading. The corrected controller retains the original data assertions and adds exact URL checks.
+- The standalone dialog regression first failed at the intended four-versus-three assertion. Its first fixed batch later passed rich creation and the existing navigation journey, but that standalone setup failed before finding the editor. The failed batch is retained as failed, without inventing a cause or full-batch pass. The exact-count oracle is now integrated into the existing navigation journey.
+- A later iPad rich run scrolled Tickets out of the lazy hierarchy while revealing Garden guide, before checking Tickets. Smaller steps, visible-row checks and reading each exact URL immediately resolve that controller failure; the corrected rich run passes.
+- The first Mac Google Maps run rendered its map, then failed its title lookup after relaunch. Inspection showed that the legacy text helper prepended the desired title to Saved link. Native Command-A replacement now asserts the exact field value before Save, and the journey follows the source identity and exact saved title across relaunch. It passes without a production change. Its old desktop-wide screenshot is excluded from committed evidence; current captures use the Planner window.
+- The new two-window journey initially used an application-wide actions query, which matched both windows. Its actions query is now scoped to the editing window. Mac List-capture also needed native toolbar overflow, exact field replacement and the actual named-row Switch hierarchy. The corrected native destination-control journey subsequently passes.
+- A sandboxed compiler attempt could not write normal Xcode caches. An authorized build with normal cache access succeeded. Two overlapping compiler-only attempts shared a temporary export; sequential final builds replace them for runtime qualification.
+
+Strict lint passes all four affected Swift files. Both final app/UI-target builds succeed. Independent Standards and Spec rechecks cleared the platform-specific fix after raising and resolving the iPad cancellation-role concern. Production Core and HTTP behavior is unchanged in this slice; their focused qualification remains in the linked reports.
+
+Restored/unavailable native destinations, native label/estimate creation, resize/collapse, affected Add-existing/Capture and deletion compatibility, broader Mac Maps journeys, physical sync/account/Share, accessibility, performance and whole-app polish remain open. This evidence does not close the overall feature or map gates.
