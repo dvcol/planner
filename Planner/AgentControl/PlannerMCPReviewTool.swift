@@ -7,14 +7,17 @@
     static let definition = Tool(
       name: "planner_prepare_review",
       description:
-        "Review a full-context local completion action or exact capture create/reuse proposal before applying it. Capture lists proposed new content or only missing links and memberships on reuse. Includes every independent appearance, including hidden/archived children. Global Item flags stay unchanged. Preparation saves no domain data. The token has no time-only expiry; changed payload, session or target lifetimes require a fresh review.",
+        "Review List-bound ordinary Item creation, a full-context local completion action or exact capture create/reuse proposal before applying it. Capture lists proposed new content or only missing links and memberships on reuse. Includes every independent appearance, including hidden/archived children. Global Item flags stay unchanged. Preparation saves no domain data. The token has no time-only expiry; changed payload, session or target lifetimes require a fresh review.",
       inputSchema: .object([
         "type": .string("object"), "additionalProperties": .bool(false),
         "required": .array([.string("formatVersion"), .string("command")]),
         "properties": .object([
           "formatVersion": .object(["type": .string("integer"), "const": .int(1)]),
           "command": .object([
-            "oneOf": .array([PlannerMCPBulkCompletion.schema, PlannerMCPCaptureTool.commandSchema])
+            "oneOf": .array([
+              PlannerMCPBulkCompletion.schema, PlannerMCPCaptureTool.commandSchema,
+              PlannerMCPExecutionTool.creationSchema(requiresDestination: true),
+            ])
           ]),
         ]),
       ]))
@@ -46,13 +49,20 @@
             message: "Deletion, import and recovery administration are native Planner actions.",
             path: "/command/type")
         }
-        guard ["setBulkCompletion", "applyCapture"].contains(kind) else {
+        guard ["setBulkCompletion", "applyCapture", "createItem"].contains(kind) else {
           return PlannerMCPSourceTool.failure(
             code: "invalidInput", message: "This command has no reviewable impact.",
             path: "/command/type")
         }
         let command: PlannerCommand
-        if kind == "applyCapture" {
+        if kind == "createItem" {
+          command = try PlannerMCPExecutionTool.creationCommand(fields["command"])
+          guard case .createItem(_, .some) = command else {
+            return PlannerMCPSourceTool.failure(
+              code: "invalidInput", message: "Creation review requires an active List destination.",
+              path: "/command/listId")
+          }
+        } else if kind == "applyCapture" {
           command = try PlannerMCPCaptureTool.command(fields["command"])
         } else {
           command = try PlannerMCPBulkCompletion.command(fields["command"])
@@ -109,6 +119,9 @@
             content: [.text(text: text, annotations: nil, _meta: nil)], structuredContent: value,
             isError: false)
         }
+      } catch let failure as PlannerMCPExecutionTool.AdmissionFailure {
+        return PlannerMCPSourceTool.failure(
+          code: failure.code, message: failure.message, path: failure.path)
       } catch let failure as PlannerMCPBulkCompletion.Failure {
         return PlannerMCPSourceTool.failure(
           code: failure.code, message: failure.message, path: failure.path)
@@ -119,6 +132,19 @@
     }
 
     private static func commandValue(_ command: PlannerCommand) throws -> Value {
+      if case .createItem(let content, let listIdentifier?) = command {
+        guard case .object(var fields) = PlannerMCPCaptureTool.contentValue(content) else {
+          throw PlannerMCPBulkCompletion.Failure(
+            code: "invalidInput", path: "/command/content",
+            message: "Expected ordinary Item content.")
+        }
+        fields.removeValue(forKey: "subtitle")
+        fields.removeValue(forKey: "estimate")
+        return .object([
+          "type": .string("createItem"), "listId": .string(listIdentifier.uuidString),
+          "content": .object(fields),
+        ])
+      }
       if case .applyCapture = command { return try PlannerMCPCaptureTool.commandValue(command) }
       return try PlannerMCPBulkCompletion.commandValue(command)
     }

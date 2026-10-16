@@ -1,0 +1,23 @@
+[
+  "xcodebuild",
+  "-project",
+  "Planner.xcodeproj",
+  "-scheme",
+  "Planner",
+  "-destination",
+  "platform=macOS,arch=arm64",
+  "-derivedDataPath",
+  "/private/tmp/PlannerQ93HTTPDerivedData",
+  "-clonedSourcePackagesDirPath",
+  "/private/tmp/PlannerMCPSourcePackages",
+  "-disableAutomaticPackageResolution",
+  "-parallel-testing-enabled",
+  "NO",
+  "-jobs",
+  "1",
+  "-only-testing:PlannerMCPTests/ItemInListCreationRoutingTests",
+  "-resultBundlePath",
+  "/private/tmp/PlannerQ93HTTP-review-red.xcresult",
+  "CODE_SIGNING_ALLOWED=NO",
+  "test"
+]

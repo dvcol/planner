@@ -1,0 +1,9 @@
+{
+  "root": "/private/tmp/PlannerQ93HTTPSource",
+  "base": "e3426aa650b9430e2e775909fc1d7addf35c9719",
+  "overlays": [
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift",
+    "Planner/AgentControl/PlannerMCPReviewTool.swift",
+    "PlannerMCPTests/ItemInListCreationRoutingTests.swift"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "qualifiedPhase": "http-review-qualified",
+  "functions": 12,
+  "suites": 5,
+  "seconds": 1.572,
+  "failures": 0,
+  "skips": 0,
+  "boundaries": "Real authenticated loopback HTTP and public Planner reads; no foreground UI credit",
+  "review": {
+    "standards": "multiline ternary corrected; recheck clear",
+    "spec": "no confirmed findings"
+  },
+  "sourceRoot": "Isolated e3426aa export with exactly three overlays; native WIP excluded"
+}

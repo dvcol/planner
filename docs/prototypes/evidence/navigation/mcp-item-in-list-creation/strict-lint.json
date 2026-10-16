@@ -1,0 +1,18 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift",
+    "Planner/AgentControl/PlannerMCPReviewTool.swift",
+    "PlannerMCPTests/ItemInListCreationRoutingTests.swift"
+  ],
+  "exitCode": 0,
+  "output": "",
+  "sourceSHA256": {
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift": "933fa5bf66c6d8fcf666a2be1408a77b3c3fe70f4d203f588622613f7f64c2dd",
+    "Planner/AgentControl/PlannerMCPReviewTool.swift": "351f5d8d53390692a3b0a8bdf006c569fbb43bf83667da8bad98191cd7461953",
+    "PlannerMCPTests/ItemInListCreationRoutingTests.swift": "558cca12371a49937e736dbca387e58e90f28c68a962658d35d29d9b6d772dad"
+  }
+}
