@@ -1,6 +1,6 @@
 # Native deletion selection
 
-Status: Q89 implementation is present in the working tree. Represented phone/tablet paths pass; final Mac qualification remains open. This is partial evidence, not completion of Navigation prototype or the map.
+Status: Q89 implementation is present in the native navigation slice. Represented historical phone/tablet paths pass; final source runtime qualification remains open. This is partial evidence, not completion of Navigation prototype or the map.
 
 ## Context and starting state
 
@@ -50,4 +50,4 @@ Mac's combined qualification first fails local ad hoc signing with an internal C
 
 Independent Standards and Spec source reviews report no remaining confirmed Q89 findings after the contextual correction. Final strict lint passes for all 19 affected native Swift files, including the tablet controller correction. Report Markdown lint also passes. Native compilation succeeds for both platforms; Mac test initialization remains an independent missing runtime gate.
 
-Creation UI in these working-tree epochs still uses a provisional Capture adapter. It must not be released or credited as Q88 completion: ordinary repeated bookmarks require the pending [Q93 ordinary creation contract](../create-item-in-list-contract-review.md). Q92 saved-link maps are separate work. Signing, physical sync/account/Share, accessibility, performance and final whole-app polish remain open.
+Creation UI in these historical epochs uses a provisional Capture adapter. Those runs must not be credited as Q88 completion. The current [native creation slice](native-item-creation.md) replaces it with the approved Q93 ordinary command and has compiler/source-review evidence only; final native runtime remains pending. Q92 saved-link maps are separate work. Signing, physical sync/account/Share, accessibility, performance and final whole-app polish remain open.

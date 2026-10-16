@@ -38,6 +38,10 @@ extension XCUIApplication {
     return coloredPixels > 256
   }
 
+  func openSavedPlannerListAddMenu() {
+    openSavedPlannerListMenu(identifier: "saved.list.addMenu", title: "Add")
+  }
+
   func openSavedPlannerListActionsMenu() {
     openSavedPlannerListMenu(identifier: "saved.list.actions", title: "List actions")
   }
@@ -75,6 +79,14 @@ extension XCUIApplication {
         menuBars.menuBarItems["File"].click()
         menuItems["New Window"].click()
         XCTAssertTrue(windows.firstMatch.waitForExistence(timeout: 5))
+      }
+      let restoredWindowCount = windows.count
+      for _ in 1..<max(1, restoredWindowCount) {
+        let identifier = windows.firstMatch.identifier
+        let window = windows.matching(NSPredicate(format: "identifier == %@", identifier))
+          .firstMatch
+        window.buttons["_XCUI:CloseWindow"].click()
+        XCTAssertTrue(window.waitForNonExistence(timeout: 5))
       }
     #endif
   }

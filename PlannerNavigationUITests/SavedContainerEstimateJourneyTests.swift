@@ -429,6 +429,10 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
   }
 
   private func toolbarAction(_ identifier: String, application: XCUIApplication) -> XCUIElement {
+    if identifier == "saved.list.add" {
+      application.openSavedPlannerListAddMenu()
+      return application.plannerElement(identifier)
+    }
     let title: String
     switch identifier {
     case "saved.list.add": title = "Add existing Item"

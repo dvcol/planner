@@ -835,6 +835,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
     application.plannerElement("saved.list.save").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
     for itemTitle in itemTitles {
+      application.openSavedPlannerListAddMenu()
       let add = application.plannerElement("saved.list.add")
       if add.exists {
         add.activateForPlannerJourney()

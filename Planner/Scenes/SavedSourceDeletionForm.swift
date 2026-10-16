@@ -20,7 +20,7 @@ struct SavedSourceDeletionForm: View {
 
   init(
     store: SavedPlannerStore, draft: SavedSourceDeletionDraft,
-    onDeleted: @escaping (PlannerReview) -> Void
+    onDeleted: @escaping (PlannerReview) -> Void = { _ in }
   ) {
     self.store = store
     self.draft = draft

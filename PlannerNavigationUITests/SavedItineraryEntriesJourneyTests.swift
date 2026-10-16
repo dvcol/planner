@@ -314,6 +314,7 @@ final class SavedItineraryEntriesJourneyTests: XCTestCase {
   }
 
   private func openListAddition(_ application: XCUIApplication) {
+    application.openSavedPlannerListAddMenu()
     let addItem = application.plannerElement("saved.list.add")
     if addItem.exists {
       addItem.activateForPlannerJourney()

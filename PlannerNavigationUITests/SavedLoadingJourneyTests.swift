@@ -122,6 +122,7 @@ final class SavedLoadingJourneyTests: XCTestCase {
   }
 
   private func addFirstItem(_ title: String, application: XCUIApplication) {
+    application.openSavedPlannerListAddMenu()
     let addItem = application.plannerElement("saved.list.add")
     if addItem.waitForExistence(timeout: 5) {
       addItem.activateForPlannerJourney()

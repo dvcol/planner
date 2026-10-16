@@ -1,3 +1,4 @@
+import Combine
 import CryptoKit
 import Foundation
 import Observation
@@ -33,6 +34,12 @@ struct SavedPlannerItinerary: Identifiable {
   var id: UUID { source.id }
 }
 
+struct SavedSourceDeletionNotice {
+  let namespace: String
+  let source: PlannerEntityReference
+  let review: PlannerReview
+}
+
 enum SavedReviewedChangeResult {
   case applied(PlannerAppliedResult)
   case reviewChanged(PlannerReview)
@@ -55,6 +62,7 @@ final class SavedPlannerStore {
   private(set) var incompleteRecoveryOperationIdentifiers: [UUID] = []
   private var requiresRecoveryReview = false
   private(set) var changeRevision = UUID()
+  @ObservationIgnored let sourceDeletions = PassthroughSubject<SavedSourceDeletionNotice, Never>()
   private(set) var openingFailure: String?
   var alertMessage: String?
   var isReady: Bool { session != nil && !isOpening }
@@ -713,17 +721,46 @@ final class SavedPlannerStore {
     return nil
   }
 
-  func createItem(title: String, notes: String, estimate: PlannerEstimate?, operationId: UUID) async
-    -> PlannerEntityReference?
-  {
-    guard
-      let applied = await executeChange(
-        .createItem(
-          content: .init(title: title, notes: notes.isEmpty ? nil : notes, estimate: estimate)),
-        operationId: operationId)
-    else { return nil }
-    await refreshItems()
-    return applied.generated.first { $0.kind == .item }
+  func createItem(_ draft: SavedNewItemDraft) async -> PlannerAppliedResult? {
+    guard devicePreferenceNamespace == draft.namespace else {
+      alertMessage = "This draft belongs to another dataset. Discard it to create an Item here."
+      return nil
+    }
+    guard let planner, let session, canCreate else { return nil }
+    let command = PlannerCommand.createItem(content: draft.content, listId: draft.listIdentifier)
+    let applied: PlannerAppliedResult?
+    if let listIdentifier = draft.listIdentifier {
+      let review: PlannerReview
+      switch await planner.prepareReview(session: session, command: command) {
+      case .reviewed(let prepared): review = prepared
+      case .failed(let reason):
+        alertMessage = reason.message
+        return nil
+      }
+      guard let destination = await readList(listIdentifier),
+        devicePreferenceNamespace == draft.namespace
+      else { return nil }
+      guard let originalNameHash = draft.destination?.fieldHashes[.name],
+        destination.fieldHashes[.name] == originalNameHash
+      else {
+        draft.proposedDestination = destination
+        return nil
+      }
+      switch await applyReviewedChange(review, operationIdentifier: draft.id) {
+      case .applied(let result): applied = result
+      case .reviewChanged:
+        guard let destination = await readList(listIdentifier),
+          devicePreferenceNamespace == draft.namespace
+        else { return nil }
+        draft.proposedDestination = destination
+        return nil
+      case .failed: return nil
+      }
+    } else {
+      applied = await executeChange(command, operationId: draft.id)
+    }
+    if applied != nil { await refreshItems() }
+    return applied
   }
 
   func editItem(
@@ -894,6 +931,7 @@ final class SavedPlannerStore {
     -> SavedReviewedChangeResult
   {
     guard let planner, let session, canCreate else { return .failed }
+    let namespace = devicePreferenceNamespace
     isSaving = true
     alertMessage = nil
     defer { isSaving = false }
@@ -908,6 +946,11 @@ final class SavedPlannerStore {
         alertMessage = failure.message
         return .failed
       }
+    }
+    if case .applied = result.outcome, case .deleteSource(let source) = review.command,
+      let namespace
+    {
+      sourceDeletions.send(.init(namespace: namespace, source: source, review: review))
     }
     guard let applied = await handleChangeResult(result) else { return .failed }
     return .applied(applied)

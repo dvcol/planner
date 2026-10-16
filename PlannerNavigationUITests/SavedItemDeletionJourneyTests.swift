@@ -299,6 +299,7 @@ final class SavedItemDeletionJourneyTests: XCTestCase {
   }
 
   private func addListItem(_ title: String, application: XCUIApplication) {
+    application.openSavedPlannerListAddMenu()
     let add = application.plannerElement("saved.list.add")
     if add.exists {
       add.activateForPlannerJourney()
