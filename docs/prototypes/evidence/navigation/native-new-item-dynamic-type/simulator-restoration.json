@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "ui",
+      "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+      "content_size"
+    ],
+    "exitCode": 0,
+    "value": "large"
+  },
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "ui",
+      "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+      "content_size"
+    ],
+    "exitCode": 0,
+    "value": "large"
+  },
+  {
+    "command": [
+      "xcrun",
+      "simctl",
+      "shutdown",
+      "2A49C66C-C8A4-435F-B98A-9A90706780DE"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "phoneFinalState": "Shutdown"
+  }
+]

@@ -1,0 +1,109 @@
+{
+  "images": [
+    {
+      "path": "tablet-large/F5FD4C41-26CA-4172-87AE-203DDFB12182.png",
+      "name": "Created rich Item keeps its Origin List appearance_0_8B4B25BD-50DE-4603-A685-C269ABC64ED1.png",
+      "sha256": "b734b4f91074651f6a8cd110c1f299cb927dcfba937cd88312f3b305276af9bb",
+      "individuallyInspected": true
+    },
+    {
+      "path": "tablet-large/F1A123A9-E0CB-4CD0-9DAF-7B8C488F1EC0.png",
+      "name": "Rich New Item draft in the List detail column_0_A3EA3E63-1A15-4F47-9C31-8BAB207ADD28.png",
+      "sha256": "aff47d48243df7822d88be33dcc849663423a50c0334fa8f1c1a9802ef6e2fc2",
+      "individuallyInspected": true
+    },
+    {
+      "path": "tablet-large/D1173CBB-D255-4205-AF15-30E47A8C1619.png",
+      "name": "Authored New Item address fields_0_3858C23C-682A-46AA-B275-5C40BAB8868F.png",
+      "sha256": "23ac454631e7a1440113beb27c730bdccb818aa9aa14e02ba950ae2aef54b3e9",
+      "individuallyInspected": true
+    },
+    {
+      "path": "tablet-large/E6C84634-AB83-49D1-A9F7-60F3DE56EDB9.png",
+      "name": "New Item fields before authoring_0_A8C99064-90E8-435D-84D6-AEB23C645A6A.png",
+      "sha256": "b606bf1d01e89706f3f8f012466ef9ef4b4d8c2021abc7a6834e2110502fc06b",
+      "individuallyInspected": true
+    },
+    {
+      "path": "tablet-accessibility-maximum/2A5B1BE6-E42B-448E-B17B-23D01112B7AE.png",
+      "name": "Created rich Item keeps its Origin List appearance_0_660AD619-2545-46B0-9C6F-2AACB8E201BA.png",
+      "sha256": "04b24efe194c00408c260115e9a39a736de0b3162a5898c59b0e5234a1b9ace1",
+      "individuallyInspected": true
+    },
+    {
+      "path": "tablet-accessibility-maximum/AD4FDEF5-5AB8-4F4E-8A55-12802FEDF075.png",
+      "name": "Rich New Item draft in the List detail column_0_B51231E2-059B-4933-A723-ABD686CCB1A7.png",
+      "sha256": "bc07525a198bec560528a54d37e0655b30a2e2420a3f6cfe3bef9c476935ae90",
+      "individuallyInspected": true
+    },
+    {
+      "path": "tablet-accessibility-maximum/34B6E896-6B46-4111-B0FB-C98841082C6D.png",
+      "name": "Authored New Item address fields_0_6FCD23EB-2F06-4CD7-AD80-DA595FB79871.png",
+      "sha256": "2352a7207f066a9d331a9b0d369c72c538ea09fa59d772318053ba5f6df732a9",
+      "individuallyInspected": true
+    },
+    {
+      "path": "tablet-accessibility-maximum/21DDA6A6-F09E-4327-AA19-C9A6047CA5EF.png",
+      "name": "New Item fields before authoring_0_146053C5-B6C4-45FF-B7BC-8FC7CF0B0F1A.png",
+      "sha256": "614c2419e932bde85eed190bb88310718678102567fc76d17cad15bec503031d",
+      "individuallyInspected": true
+    },
+    {
+      "path": "phone-large/A0491F15-ADD8-4447-B107-B4F9BE564D79.png",
+      "name": "Created rich Item keeps its Origin List appearance_0_374AF2FB-DF21-481F-AD2E-1820DFC1E204.png",
+      "sha256": "331d8bcc4c1215044261054e8657414ed8fe1bd11e69dc8df6aec9f23846deec",
+      "individuallyInspected": true
+    },
+    {
+      "path": "phone-large/99253552-154D-4D14-998F-3585FB6E896C.png",
+      "name": "Rich New Item draft in the List detail column_0_92DBEBF9-64BA-4FCA-89E0-96D789850D01.png",
+      "sha256": "8852877941684bb121b6a43c17647e564c08fd8f219e846683865a7be101a2ce",
+      "individuallyInspected": true
+    },
+    {
+      "path": "phone-large/CBD42208-4B72-46C7-8F98-4CB32BFF8FF5.png",
+      "name": "Authored New Item address fields_0_6792237D-7947-4449-8CE7-C0F6F79BF883.png",
+      "sha256": "58e2c37a4959c3d25921d171d1efc9393d74500318c93548d4ab0c59faff3f99",
+      "individuallyInspected": true
+    },
+    {
+      "path": "phone-large/E5F2879D-B8B4-42C3-9A8E-A1A3202DCE8B.png",
+      "name": "New Item fields before authoring_0_A9ADE219-2D12-4A52-A03E-46FE9F817101.png",
+      "sha256": "ce6db918c60c364ba6d8cb595759003d7ace4db98da7f334aa4dc8eba6911951",
+      "individuallyInspected": true
+    },
+    {
+      "path": "phone-accessibility-maximum/69C79D02-9793-418F-866B-0FF4E1568E62.png",
+      "name": "Created rich Item keeps its Origin List appearance_0_0F757CBC-8770-448D-B98C-CB9B58457291.png",
+      "sha256": "4115bb46043e92141d28a8f11d6a4f8e54546e0929b4d25bbb75c1a9431d0e57",
+      "individuallyInspected": true
+    },
+    {
+      "path": "phone-accessibility-maximum/8FD0F85E-81B4-4BAD-81C0-ABE297BAB916.png",
+      "name": "Rich New Item draft in the List detail column_0_0405464E-DD30-42D5-B262-51AC1626FF0F.png",
+      "sha256": "8a874553a664b2c1c42ef0eb8c4fbd6645459014dabce56564b4ae90f275c8db",
+      "individuallyInspected": true
+    },
+    {
+      "path": "phone-accessibility-maximum/C8C0646D-357E-4E4C-BCE2-12031FE882B2.png",
+      "name": "Authored New Item address fields_0_36BB1015-C06C-4CF9-B02A-6A1E22F9ED31.png",
+      "sha256": "c2e4abe2330a226ae12d58c79aaf8bf2e1e7bccc100f0a34245e9268044270f5",
+      "individuallyInspected": true
+    },
+    {
+      "path": "phone-accessibility-maximum/401EA56F-6E9D-4FA7-86DD-4FE6A7BB85CB.png",
+      "name": "New Item fields before authoring_0_BB434A26-03A3-4B8A-B4E7-8A9CC7ACE8AF.png",
+      "sha256": "ae14359f1397a18a354aa2b62b622e2be64bc0b37bbbc17824520a72dc1ce867",
+      "individuallyInspected": true
+    }
+  ],
+  "observations": [
+    "All sixteen original PNGs individually inspected.",
+    "Native form text visibly scales. Inputs and scrolling remain usable in the represented interaction journey.",
+    "At maximum size, single-line place, address and URL fields show truncation or a horizontally scrolled portion. Exact complete values are verified through UI values and saved reads in the journey.",
+    "Maximum-size iPad summaries break words and the selected Item row truncates secondary metadata. This remains final-polish work.",
+    "The native phone TabView overlays scrolled content, which remains reachable by further scrolling in the represented journey. Final scene readability remains open.",
+    "Address maps are visible. Website cards show unavailable/Retry, without a provider-success claim."
+  ],
+  "wholeAppVisualAcceptance": false
+}

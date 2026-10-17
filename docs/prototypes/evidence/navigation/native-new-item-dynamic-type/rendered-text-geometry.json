@@ -1,0 +1,53 @@
+{
+  "observations": [
+    {
+      "epoch": "tablet-large",
+      "hierarchy": "tablet-large/62DBEC16-CCDD-4993-9F44-6CB6A5AE8D54.txt.gz",
+      "titleFieldFrame": [
+        381.0,
+        242.0,
+        399.0,
+        22.0
+      ],
+      "titleFieldLine": "TextField, 0x10770e800, {{381.0, 242.0}, {399.0, 22.0}}, identifier: 'saved.item.title', placeholderValue: 'Title'",
+      "windowLine": "Window, 0x107732a80, {{0.0, 0.0}, {820.0, 1180.0}}"
+    },
+    {
+      "epoch": "tablet-accessibility-maximum",
+      "hierarchy": "tablet-accessibility-maximum/2AFF106A-EA77-4B94-820F-774716E780E6.txt.gz",
+      "titleFieldFrame": [
+        381.0,
+        288.5,
+        399.0,
+        64.0
+      ],
+      "titleFieldLine": "TextField, 0x107f12580, {{381.0, 288.5}, {399.0, 64.0}}, identifier: 'saved.item.title', placeholderValue: 'Title'",
+      "windowLine": "Window, 0x107f29540, {{0.0, 0.0}, {820.0, 1180.0}}"
+    },
+    {
+      "epoch": "phone-large",
+      "hierarchy": "phone-large/C081977D-93F0-46D5-B6CD-E08924A668B7.txt.gz",
+      "titleFieldFrame": [
+        32.0,
+        270.0,
+        338.0,
+        22.0
+      ],
+      "titleFieldLine": "TextField, 0x106473480, {{32.0, 270.0}, {338.0, 22.0}}, identifier: 'saved.item.title', placeholderValue: 'Title'",
+      "windowLine": "Window, 0x107ec1180, {{0.0, 0.0}, {402.0, 874.0}}"
+    },
+    {
+      "epoch": "phone-accessibility-maximum",
+      "hierarchy": "phone-accessibility-maximum/F76DD571-13C3-4FF4-8C6B-5413AE17A01A.txt.gz",
+      "titleFieldFrame": [
+        32.0,
+        399.7,
+        338.0,
+        64.0
+      ],
+      "titleFieldLine": "TextField, 0x109659540, {{32.0, 399.7}, {338.0, 64.0}}, identifier: 'saved.item.title', placeholderValue: 'Title'",
+      "windowLine": "Window, 0x109672e40, {{0.0, 0.0}, {402.0, 874.0}}"
+    }
+  ],
+  "interpretation": "At the same portrait window size on each device, the title TextField height grows from 22 to 64 points. This is observed UI geometry, not a padding or screenshot assertion."
+}

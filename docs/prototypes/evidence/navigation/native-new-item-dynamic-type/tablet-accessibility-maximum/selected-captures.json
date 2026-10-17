@@ -1,0 +1,52 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "2A5B1BE6-E42B-448E-B17B-23D01112B7AE.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Created rich Item keeps its Origin List appearance_0_660AD619-2545-46B0-9C6F-2AACB8E201BA.png",
+    "timestamp": 1792224210.922,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "AD4FDEF5-5AB8-4F4E-8A55-12802FEDF075.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Rich New Item draft in the List detail column_0_B51231E2-059B-4933-A723-ABD686CCB1A7.png",
+    "timestamp": 1792224194.113,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "34B6E896-6B46-4111-B0FB-C98841082C6D.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Authored New Item address fields_0_6FCD23EB-2F06-4CD7-AD80-DA595FB79871.png",
+    "timestamp": 1792224172.874,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "21DDA6A6-F09E-4327-AA19-C9A6047CA5EF.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "New Item fields before authoring_0_146053C5-B6C4-45FF-B7BC-8FC7CF0B0F1A.png",
+    "timestamp": 1792224126.934,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "2AFF106A-EA77-4B94-820F-774716E780E6.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "New Item initial native form hierarchy_0_B74FE12A-551F-4728-9187-32F5C5D471CD.txt",
+    "timestamp": 1792224126.82,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList()"
+  }
+]

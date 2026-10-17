@@ -1,0 +1,20 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2@0.23.3",
+    "--config",
+    "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+    "docs/prototypes/native-new-item-dynamic-type.md",
+    "docs/native-ui-polish.md",
+    "docs/open-decisions.md"
+  ],
+  "exitCode": 0,
+  "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-new-item-dynamic-type.md docs/native-ui-polish.md docs/open-decisions.md\nLinting: 3 files\nSummary: 0 issues in 0 files\n",
+  "stderr": "Done in 198ms using pnpm v12.10.1\n",
+  "sourceSHA256": {
+    "docs/prototypes/native-new-item-dynamic-type.md": "f5edc7c60a2a43e7d94b5256e624128f8043cf670f3e8db48a375d961825c8a7",
+    "docs/native-ui-polish.md": "320075a8213abe440db8ba5c84c39d26060cfb8866ad07d6efd12c0ad5cad8b8",
+    "docs/open-decisions.md": "236155eabd278b606889c5f50339ae33f149eaea5c04d90dfebb92346b567fcd"
+  }
+}

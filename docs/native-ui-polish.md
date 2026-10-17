@@ -44,3 +44,7 @@ Run affected Swift formatting/lint, compiler checks and focused native UI journe
 ## Dependencies and completion boundary
 
 Depends on the finished saved feature work and qualification tracked by [Navigation prototype](https://github.com/dvcol/planner/issues/14), [Sync and Share prototype](https://github.com/dvcol/planner/issues/15), [MCP prototype](https://github.com/dvcol/planner/issues/16) and [Specification handoff](https://github.com/dvcol/planner/issues/17). The map remains open until its release gates are met. This ticket is complete only after the whole final application has passed the review above; completing a prototype screenshot correction does not complete it.
+
+## Observations retained from compatibility checks
+
+The [New Item Dynamic Type slice](prototypes/native-new-item-dynamic-type.md) supplies sixteen inspected ordinary/maximum-size phone/tablet captures and passing interaction/persistence journeys. At maximum size, review the tablet's broken-word Estimate/Remaining summaries, truncated Item-row metadata and long single-line place/address/URL inputs. Review the phone's content around its floating native TabView while scrolling. The fields remain operable in the represented journey, but these captures do not establish full readability, accessible scene hierarchy or visual acceptance. Revisit these concrete states during this pass using native adaptive layouts, without reducing the user's selected text size.

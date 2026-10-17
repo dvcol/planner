@@ -1,0 +1,17 @@
+{
+  "nativeInvocations": 4,
+  "passingFunctions": 4,
+  "failedFunctions": 0,
+  "mobileCompilerInputs": 945,
+  "macCompilerInputs": 945,
+  "frozenRuntimeInputsPerInvocation": 469,
+  "productsRecheckedPerPlatform": 6,
+  "inspectedOriginalPNGs": 16,
+  "originalTextSizeRestored": true,
+  "phoneReturnedToShutdown": true,
+  "productionChanged": false,
+  "macRuntimeExecuted": false,
+  "newUnitSeamIntroduced": false,
+  "overallMapGateClosed": false,
+  "scope": "Existing rich New Item creation at large and maximum accessibility text sizes in portrait iPhone/iPad simulator layouts. Visual readability, whole-app accessibility, pending Q94-Q96, signing and physical gates remain open."
+}

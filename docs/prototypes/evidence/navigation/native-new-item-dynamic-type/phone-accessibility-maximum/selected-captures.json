@@ -1,0 +1,52 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "69C79D02-9793-418F-866B-0FF4E1568E62.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Created rich Item keeps its Origin List appearance_0_0F757CBC-8770-448D-B98C-CB9B58457291.png",
+    "timestamp": 1792224617.221,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "8FD0F85E-81B4-4BAD-81C0-ABE297BAB916.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Rich New Item draft in the List detail column_0_0405464E-DD30-42D5-B262-51AC1626FF0F.png",
+    "timestamp": 1792224596.55,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "C8C0646D-357E-4E4C-BCE2-12031FE882B2.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Authored New Item address fields_0_36BB1015-C06C-4CF9-B02A-6A1E22F9ED31.png",
+    "timestamp": 1792224577.275,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "401EA56F-6E9D-4FA7-86DD-4FE6A7BB85CB.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "New Item fields before authoring_0_BB434A26-03A3-4B8A-B4E7-8A9CC7ACE8AF.png",
+    "timestamp": 1792224520.425,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "F76DD571-13C3-4FF4-8C6B-5413AE17A01A.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "New Item initial native form hierarchy_0_83610428-269F-46A9-BC4F-83B473495FCB.txt",
+    "timestamp": 1792224520.323,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList()"
+  }
+]

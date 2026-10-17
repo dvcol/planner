@@ -1,0 +1,56 @@
+{
+  "runs": [
+    {
+      "epoch": "tablet-large",
+      "exitCode": 0,
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList",
+          "outcome": "passed",
+          "seconds": 150.873
+        }
+      ],
+      "contentSize": "large",
+      "errors": []
+    },
+    {
+      "epoch": "tablet-accessibility-maximum",
+      "exitCode": 0,
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList",
+          "outcome": "passed",
+          "seconds": 183.275
+        }
+      ],
+      "contentSize": "accessibility-extra-extra-extra-large",
+      "errors": []
+    },
+    {
+      "epoch": "phone-large",
+      "exitCode": 0,
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList",
+          "outcome": "passed",
+          "seconds": 149.099
+        }
+      ],
+      "contentSize": "large",
+      "errors": []
+    },
+    {
+      "epoch": "phone-accessibility-maximum",
+      "exitCode": 0,
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList",
+          "outcome": "passed",
+          "seconds": 192.84
+        }
+      ],
+      "contentSize": "accessibility-extra-extra-extra-large",
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "fixedBaseCommit": "a199b438899f901e39dbae1ddfd4b657b557b10d",
+  "sourceSHA256": {
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "e7240d971b8130bfa2e1341d9537ff242b56bc4a1b97705c20e1b090f587cc85",
+    "docs/prototypes/native-new-item-dynamic-type.md": "f5edc7c60a2a43e7d94b5256e624128f8043cf670f3e8db48a375d961825c8a7",
+    "docs/native-ui-polish.md": "320075a8213abe440db8ba5c84c39d26060cfb8866ad07d6efd12c0ad5cad8b8",
+    "docs/open-decisions.md": "236155eabd278b606889c5f50339ae33f149eaea5c04d90dfebb92346b567fcd"
+  },
+  "standards": {
+    "reviewer": "/root/catalog_standards_review",
+    "initialReportingDiscrepancies": 1,
+    "remainingConfirmedFindings": 0,
+    "result": "The correction separates exact URL checks before termination from identity, label and content checks after relaunch. Refreshed Markdown lint passes and all document hashes match. No remaining confirmed Standards/evidence findings."
+  },
+  "specification": {
+    "reviewer": "/root/catalog_spec_review",
+    "initialReportingDiscrepancies": 1,
+    "remainingConfirmedFindings": 0,
+    "result": "The sentence now matches the exact pre-termination and post-relaunch assertions. Refreshed Markdown lint records exit 0 and current hashes match. No remaining confirmed finding."
+  },
+  "correction": "Narrowed one sentence only; no production, UI test or product change and no additional native run.",
+  "reviewIsNotRuntimeEvidence": true
+}

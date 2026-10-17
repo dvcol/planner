@@ -1,0 +1,20 @@
+{
+  "device": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+  "platform": "phone",
+  "requestedSize": "large",
+  "observedSize": "large",
+  "originalSize": "large",
+  "command": [
+    "python3",
+    "/private/tmp/run-planner-new-item-dynamic-type-runtime.py",
+    "phone-large",
+    "phone",
+    "SavedAppearanceJourneyTests/testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList",
+    "docs/prototypes/evidence/navigation/native-new-item-dynamic-type/mobile-form-build",
+    "360"
+  ],
+  "runnerExitCode": 0,
+  "restoreExitCode": 0,
+  "restoreOutput": "",
+  "restoredSize": "large"
+}
