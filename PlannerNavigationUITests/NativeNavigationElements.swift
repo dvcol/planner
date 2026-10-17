@@ -2,6 +2,10 @@ import CoreGraphics
 import ImageIO
 import XCTest
 
+#if os(iOS)
+  import UIKit
+#endif
+
 extension XCUIApplication {
   /// Check the colorful fixture pixels inside the preview rather than its availability label.
   func hasPaintedPlannerPreview(_ card: XCUIElement) -> Bool {
@@ -214,6 +218,18 @@ extension XCUIApplication {
   }
 
   func openPlannerSection(_ title: String) {
+    let savedSection = plannerElement("saved.section.\(title.lowercased())")
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .pad, !savedSection.exists {
+        let sidebar = buttons["Show Sidebar"].firstMatch
+        if sidebar.exists { sidebar.activateForPlannerJourney() }
+      }
+    #endif
+    if savedSection.exists {
+      XCTAssertTrue(savedSection.waitForPlannerHittability())
+      savedSection.activateForPlannerJourney()
+      return
+    }
     #if os(iOS)
       let identifier: String?
       switch title {

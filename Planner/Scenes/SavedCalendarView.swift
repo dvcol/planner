@@ -215,6 +215,7 @@ struct SavedCalendarView: View {
     .accessibilityIdentifier("saved.calendar.canvas")
     .environment(\.timeZone, displayTimeZone)
     .navigationTitle("Calendar")
+    .toolbarTitleDisplayMode(.inline)
     .toolbar {
       Button("Display Time Zone", systemImage: "globe") {
         showsTimeZonePreferences = true

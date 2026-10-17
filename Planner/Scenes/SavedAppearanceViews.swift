@@ -87,6 +87,7 @@ struct SavedAppearanceDetail: View {
     }
     .formStyle(.grouped)
     .navigationTitle(item.content.title)
+    .toolbarTitleDisplayMode(.inline)
     .toolbar {
       ToolbarItem(placement: .primaryAction) {
         Menu {
