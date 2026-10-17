@@ -1,0 +1,19 @@
+{
+  "xcodeVersion": "Xcode 27.1\nBuild version 27A9275\n",
+  "device": {
+    "com.apple.CoreSimulator.SimRuntime.iOS-27-0": [
+      {
+        "dataPath": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data",
+        "dataPathSize": 12147572736,
+        "logPath": "/Users/dinh-van.colomban/Library/Logs/CoreSimulator/FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "udid": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "lastUsedAt": "2026-10-17T05:31:53Z",
+        "isAvailable": true,
+        "logPathSize": 684032,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Air-11-inch-M4",
+        "state": "Booted",
+        "name": "iPad Air 11-inch (M4)"
+      }
+    ]
+  }
+}

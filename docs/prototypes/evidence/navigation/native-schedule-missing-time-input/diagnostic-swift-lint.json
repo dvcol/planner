@@ -1,0 +1,14 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "PlannerNavigationUITests/SavedItemJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "sourceSHA256": "d713aa0323780cb53cd7ea60fe95cb2eb3d6431cbd6c730cf5ecaed530106374",
+  "diagnosticOnly": true
+}

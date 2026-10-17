@@ -1,0 +1,23 @@
+{
+  "compiler": {
+    "epoch": "mobile-missing-time-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  "native": {
+    "epoch": "tablet-missing-time",
+    "exitCode": 65,
+    "functions": [
+      {
+        "function": "PlannerNavigationUITests.SavedItemJourneyTests testNonexistentStartMustNotSilentlyMoveToAnotherHour",
+        "outcome": "failed",
+        "seconds": 46.157
+      }
+    ],
+    "errors": [
+      "/tmp/PlannerNativeLayoutSource/PlannerNavigationUITests/SavedItemJourneyTests.swift:64: error: -[PlannerNavigationUITests.SavedItemJourneyTests testNonexistentStartMustNotSilentlyMoveToAnotherHour] : XCTAssertTrue failed - A nonexistent entered local time must not silently move to another hour.",
+      " xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH"
+    ],
+    "result": "Observed silent conversion from requested missing02:30 to03:30; Q10 assertion fails. ScheduleSave not submitted."
+  }
+}

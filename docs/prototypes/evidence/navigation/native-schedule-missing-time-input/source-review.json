@@ -1,0 +1,18 @@
+{
+  "fixedBaseCommit": "978d8c9fecf0a855f5d6d24a6818be8c0e0959f4",
+  "sourceSHA256": {
+    "docs/prototypes/native-schedule-missing-time-input.md": "e3526ed8ff0416879afa4d99149481e4cc065c2b7625a79d862b9d07650573ec",
+    "docs/open-decisions.md": "c923d368cec0c5ab0a0a009993c5ca8e4708df49c8cf0e421eb077209fa924b0"
+  },
+  "standards": {
+    "reviewer": "/root/catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "result": "No confirmed Standards or reporting discrepancies. Verified literal failure, numeric wheel inputs,03:30/date/zone, manifests/products, lint, image hash and exact source restoration. Scope separates the unexecuted Save assertion and cleanup warning."
+  },
+  "specification": {
+    "reviewer": "/root/catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "result": "No confirmed Spec or evidence finding. Actual date/zone/wheel input and silent substitution match the Q10 failure. Save-enabled remains visual only and no saved outcome is claimed. Q96 stays unapproved and unimplemented."
+  },
+  "reviewIsNotRuntimeEvidence": true
+}

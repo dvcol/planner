@@ -1,0 +1,15 @@
+{
+  "images": [
+    {
+      "path": "tablet-missing-time/5A2D97A1-0B96-4073-BDA7-90071A8D093C.png",
+      "sha256": "832eb7fca893462992d0053dd785aab3908228fbf8e268658bc6b1e2377dbca5",
+      "individuallyInspected": true
+    }
+  ],
+  "observations": [
+    "Native Schedule form shows8Mar2026,03:30 andAmerica/New_York after numeric hour02/minute30 adjustments.",
+    "Save appears enabled and no missing-time validation message is visible.",
+    "The failing assertion concerns silent substitution; the later Save-disabled assertion does not execute after that failure.",
+    "NoScheduleSave submitted; no saved-outcome or existing-edit preservation claim."
+  ]
+}
