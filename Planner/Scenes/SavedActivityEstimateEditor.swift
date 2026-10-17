@@ -19,6 +19,16 @@ struct SavedActivityEstimateEditor: View {
 
   var body: some View {
     Section(isContainerEstimate ? "Overall estimate" : "Activity estimate") {
+      Menu {
+        Button("Half-day (12 hours)") { setEstimate(minutes: 720, unit: .hour) }
+        Button("Full-day (24 hours)") { setEstimate(minutes: 1_440, unit: .day) }
+        Button("Weekend (48 hours)") { setEstimate(minutes: 2_880, unit: .day) }
+      } label: {
+        Label("Quick estimate", systemImage: "clock")
+          .frame(maxWidth: .infinity, alignment: .leading)
+          .contentShape(Rectangle())
+      }
+      .accessibilityIdentifier(accessibilityIdentifierPrefix + ".shortcuts")
       Toggle(
         isContainerEstimate ? "Use manual estimate" : "Include estimate",
         isOn: Binding(
@@ -41,7 +51,8 @@ struct SavedActivityEstimateEditor: View {
         .pickerStyle(.menu)
         .accessibilityIdentifier(accessibilityIdentifierPrefix + ".unit")
         .onChange(of: selectedUnit) {
-          self.estimate = .init(minutes: estimate.minutes, displayUnit: selectedUnit)
+          guard let currentEstimate = self.estimate else { return }
+          self.estimate = .init(minutes: currentEstimate.minutes, displayUnit: selectedUnit)
         }
         quantityControl(selectedUnit, identifier: accessibilityIdentifierPrefix + ".quantity")
         ForEach(selectedUnit.remainderUnits.filter { quantity($0) > 0 }, id: \.rawValue) { unit in
@@ -55,6 +66,11 @@ struct SavedActivityEstimateEditor: View {
           .foregroundStyle(.secondary)
       }
     }
+  }
+
+  private func setEstimate(minutes: Int64, unit: PlannerEstimateUnit) {
+    selectedUnit = unit
+    estimate = .init(minutes: minutes, displayUnit: unit)
   }
 
   private func quantity(_ unit: PlannerEstimateUnit) -> Int64 {
