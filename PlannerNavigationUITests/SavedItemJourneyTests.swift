@@ -1,7 +1,227 @@
 import XCTest
 
+#if os(iOS)
+  import UIKit
+#endif
+
 @MainActor
 final class SavedItemJourneyTests: XCTestCase {
+  func testAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations() throws {
+    try qualifyAdaptiveNavigation()
+  }
+
+  func testDarkAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations() throws {
+    try qualifyAdaptiveNavigation(appearance: "Dark")
+  }
+
+  private func qualifyAdaptiveNavigation(appearance: String? = nil) throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    if let appearance { application.launchArguments += ["-AppleInterfaceStyle", appearance] }
+    #if os(iOS)
+      XCUIDevice.shared.orientation = .portrait
+      addTeardownBlock {
+        await MainActor.run { XCUIDevice.shared.orientation = .portrait }
+      }
+    #endif
+    application.launchSavedPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No Lists yet"].firstMatch.waitForExistence(timeout: 10))
+    let showSidebar = application.windows.firstMatch.buttons["Show Sidebar"].firstMatch
+    if showSidebar.exists { showSidebar.activateForPlannerJourney() }
+    recordScreenshot(application, name: "Native design initial navigation")
+    recordHierarchy(application, name: "Native design initial navigation hierarchy")
+    #if os(iOS)
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        XCTAssertTrue(
+          application.plannerElement("saved.section.items").waitForExistence(timeout: 10))
+      }
+    #endif
+    openDesignSection("Items", in: application)
+    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    let title = application.textFields["saved.item.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Museum morning")
+    let notes = application.textFields["saved.item.notes"]
+    notes.activateForPlannerJourney()
+    notes.typeText("Meet by the garden entrance")
+    recordScreenshot(application, name: "Native design New Item editor")
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Meet by the garden entrance"].waitForExistence(timeout: 10))
+    let completion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+    recordScreenshot(application, name: "Native design selected Item details")
+    for section in ["Lists", "Inbox", "Itineraries", "Calendar"] {
+      openDesignSection(section, in: application)
+      switch section {
+      case "Lists":
+        #if os(iOS)
+          if UIDevice.current.userInterfaceIdiom == .phone {
+            let tab = application.buttons.matching(identifier: "list.bullet").firstMatch
+            XCTAssertTrue(tab.exists)
+            XCTAssertTrue(tab.isSelected)
+          } else {
+            XCTAssertTrue(
+              application.descendants(matching: .any).matching(identifier: "saved.lists.empty")
+                .firstMatch.waitForExistence(timeout: 5))
+          }
+        #else
+          XCTAssertTrue(
+            application.descendants(matching: .any).matching(identifier: "saved.lists.empty")
+              .firstMatch.waitForExistence(timeout: 5))
+        #endif
+      case "Inbox":
+        #if os(iOS)
+          if UIDevice.current.userInterfaceIdiom == .phone {
+            let back = application.navigationBars.buttons["Inbox"].firstMatch
+            if back.exists { back.activateForPlannerJourney() }
+          }
+        #endif
+        XCTAssertTrue(
+          application.descendants(matching: .any).matching(identifier: "saved.inbox.catalog")
+            .firstMatch.waitForExistence(timeout: 5))
+        XCTAssertTrue(
+          application.savedPlannerItemRows("Museum morning").firstMatch.waitForExistence(
+            timeout: 10))
+      case "Itineraries":
+        XCTAssertTrue(application.staticTexts["No Itineraries yet"].waitForExistence(timeout: 5))
+      case "Calendar":
+        XCTAssertTrue(
+          application.descendants(matching: .any).matching(identifier: "saved.calendar.canvas")
+            .firstMatch.waitForExistence(timeout: 5))
+      default: XCTFail("Unexpected design-review destination")
+      }
+      recordScreenshot(application, name: "Native design \(section) destination")
+    }
+    openDesignSection("Items", in: application)
+    let row = application.savedPlannerItemRows("Museum morning").firstMatch
+    #if os(iOS)
+      if !row.waitForExistence(timeout: 3) {
+        application.navigationBars.buttons["Items"].firstMatch.activateForPlannerJourney()
+      }
+    #endif
+    XCTAssertTrue(row.waitForExistence(timeout: 10))
+    row.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Meet by the garden entrance"].waitForExistence(timeout: 10))
+    XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+    recordScreenshot(application, name: "Native design retained Item selection")
+    #if os(iOS)
+      XCUIDevice.shared.orientation = .landscapeLeft
+      let landscape = NSPredicate { _, _ in
+        let frame = application.windows.firstMatch.frame
+        return frame.width > frame.height
+      }
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [XCTNSPredicateExpectation(predicate: landscape, object: application)], timeout: 5),
+        .completed)
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        let sidebar = application.windows.firstMatch.buttons["Show Sidebar"].firstMatch
+        if sidebar.exists { sidebar.activateForPlannerJourney() }
+      } else {
+        XCTAssertTrue(application.buttons["Items"].firstMatch.exists)
+        XCTAssertFalse(application.plannerElement("saved.section.items").exists)
+      }
+      XCTAssertTrue(
+        application.staticTexts["Meet by the garden entrance"].waitForExistence(timeout: 5))
+      XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+      activateCompletion(completion)
+      XCTAssertTrue(completion.waitForPlannerBooleanState(true))
+      activateCompletion(completion)
+      XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+      recordScreenshot(application, name: "Native design landscape retains selected Item")
+    #endif
+  }
+
+  func testItineraryCatalogRetainsArchiveFilterAfterOpeningAndReturning() throws {
+    #if os(iOS)
+      guard UIDevice.current.userInterfaceIdiom == .pad else {
+        throw XCTSkip("This journey qualifies the shared sidebar's catalog/detail transition.")
+      }
+    #endif
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openDesignSection("Itineraries", in: application)
+    application.plannerElement("saved.itinerary.new").activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Museum route")
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    let back = application.plannerElement("saved.itineraries.back")
+    XCTAssertTrue(back.waitForExistence(timeout: 10))
+    back.activateForPlannerJourney()
+    let archive = application.plannerElement("saved.itineraries.archive")
+    XCTAssertTrue(archive.waitForExistence(timeout: 5))
+    archive.activateForPlannerJourney()
+    application.plannerElement("All Itineraries").activateForPlannerJourney()
+    XCTAssertEqual(archive.label, "All Itineraries")
+    let route = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.", "Museum route")
+    ).firstMatch
+    XCTAssertTrue(route.waitForExistence(timeout: 10))
+    recordScreenshot(application, name: "Native design Itinerary catalog before selection")
+    route.activateForPlannerJourney()
+    XCTAssertTrue(back.waitForExistence(timeout: 5))
+    back.activateForPlannerJourney()
+    XCTAssertTrue(archive.waitForExistence(timeout: 5))
+    recordScreenshot(application, name: "Native design Itinerary catalog after returning")
+    XCTAssertEqual(archive.label, "All Itineraries")
+    XCTAssertTrue(route.exists)
+  }
+
+  func testItinerarySearchSurvivesSwitchingDestinations() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openDesignSection("Itineraries", in: application)
+    application.plannerElement("saved.itinerary.new").activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Afternoon route")
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    let search = application.searchFields.firstMatch
+    #if os(iOS)
+      if !search.exists { application.swipeDown() }
+    #endif
+    XCTAssertTrue(search.waitForExistence(timeout: 10))
+    search.activateForPlannerJourney()
+    search.typeText("garden")
+    XCTAssertTrue(search.waitForPlannerValue("garden"))
+    recordScreenshot(application, name: "Native design Itinerary search before leaving")
+    openDesignSection("Items", in: application)
+    openDesignSection("Itineraries", in: application)
+    #if os(iOS)
+      if !search.exists { application.swipeDown() }
+    #endif
+    XCTAssertTrue(search.waitForExistence(timeout: 10))
+    recordScreenshot(application, name: "Native design Itinerary search after returning")
+    XCTAssertTrue(search.waitForPlannerValue("garden"))
+  }
+
+  private func openDesignSection(_ name: String, in application: XCUIApplication) {
+    let sidebarDestination = application.plannerElement("saved.section.\(name.lowercased())")
+    #if os(macOS)
+      if !sidebarDestination.isHittable {
+        application.windows.firstMatch.buttons["Show Sidebar"].firstMatch
+          .activateForPlannerJourney()
+      }
+      XCTAssertTrue(sidebarDestination.waitForExistence(timeout: 5))
+      sidebarDestination.activateForPlannerJourney()
+    #else
+      application.openPlannerSection(name)
+    #endif
+  }
+
   #if !os(macOS)
     func testNonexistentStartStaysEnteredDisablesSaveAndCancelCreatesNoSchedule() throws {
       continueAfterFailure = false
@@ -1108,7 +1328,7 @@ final class SavedItemJourneyTests: XCTestCase {
     #if os(macOS)
       let screenshot = application.windows.firstMatch.screenshot()
     #else
-      let screenshot = application.screenshot()
+      let screenshot = XCUIScreen.main.screenshot()
     #endif
     let attachment = XCTAttachment(screenshot: screenshot)
     attachment.name = name

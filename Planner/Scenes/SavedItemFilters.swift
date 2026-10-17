@@ -348,6 +348,7 @@ struct SavedCatalogArchiveFilterMenu: View {
 }
 
 struct SavedListProgress: View {
+  let listName: String
   let progress: PlannerContainerProgress
   let estimates: PlannerContainerEstimates
   let manualEstimate: PlannerEstimate?
@@ -356,6 +357,8 @@ struct SavedListProgress: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 6) {
+      Text(listName).font(.title2).fontWeight(.semibold)
+        .accessibilityAddTraits(.isHeader)
       if isArchived {
         Label("Archived List", systemImage: "archivebox").foregroundStyle(.secondary)
       }

@@ -62,6 +62,7 @@ struct SavedItemCatalog: View {
         }
       }
     }
+    .accessibilityIdentifier("\(scope.identifierPrefix).catalog")
     .overlay { catalogStatus }
     .task(id: request) { await reload() }
     .task(id: visibleIdentifiers) {
@@ -77,6 +78,7 @@ struct SavedItemCatalog: View {
       visibleIdentifiers = []
     }
     .navigationTitle(scope.title)
+    .toolbarTitleDisplayMode(.inline)
     .searchable(text: $searchText, prompt: Text(scope.searchPrompt))
     .searchPresentationToolbarBehavior(.avoidHidingContent)
     .toolbar {
@@ -244,6 +246,7 @@ struct SavedItemDetail: View {
     }
     .formStyle(.grouped)
     .navigationTitle(item.content.title)
+    .toolbarTitleDisplayMode(.inline)
     .toolbar {
       ToolbarItem(placement: .primaryAction) {
         Menu {

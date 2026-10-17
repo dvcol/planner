@@ -1,0 +1,16 @@
+{
+  "root": "/private/tmp/PlannerItemWindowCompatibilitySource",
+  "base": "ad4be0de3a8fd7a1bd37a3420f14e9ba404234ea",
+  "overlays": [
+    "Planner/Scenes/SavedAppearanceViews.swift",
+    "Planner/Scenes/SavedCalendarView.swift",
+    "Planner/Scenes/SavedItemFilters.swift",
+    "Planner/Scenes/SavedItemViews.swift",
+    "Planner/Scenes/SavedItineraryViews.swift",
+    "Planner/Scenes/SavedMacMembershipTable.swift",
+    "Planner/Scenes/SavedNewItemForm.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift",
+    "PlannerNavigationUITests/SavedItemJourneyTests.swift"
+  ]
+}

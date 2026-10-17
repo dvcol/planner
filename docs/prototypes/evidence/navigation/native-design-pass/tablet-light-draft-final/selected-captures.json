@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "85F7B952-E66F-492F-84A3-014DEB72A8B6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives expanded layout_0_E8F26A05-5E47-4E5E-9938-C8DA7FC8C472.png",
+    "timestamp": 1792252839.401,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "2FB6A1D5-F338-4524-B85E-309ACF21FF9E.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives portrait navigation layout_0_F7CB45B7-32A1-4B67-98C8-8FC228487B16.png",
+    "timestamp": 1792252821.559,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "6C3C2DDB-3C0D-4FE2-A9C8-A4CADF1582EB.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native design Itinerary search after returning_0_C404885D-315F-4C49-A9FA-908ECDD17271.png",
+    "timestamp": 1792252933.1,
+    "testIdentifier": "SavedItemJourneyTests/testItinerarySearchSurvivesSwitchingDestinations()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "D23A1318-5FDB-4682-ACF3-90C143619BCF.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native design Itinerary search before leaving_0_55581D4D-DF49-456B-8D57-4A595EB5C999.png",
+    "timestamp": 1792252924.814,
+    "testIdentifier": "SavedItemJourneyTests/testItinerarySearchSurvivesSwitchingDestinations()"
+  }
+]

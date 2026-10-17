@@ -1,0 +1,25 @@
+{
+  "scope": "Current native navigation/appearance Swift diff; independent Standards and Spec reviews, including final List header and phone Inbox Back correction.",
+  "standards": {
+    "agent": "/root/catalog_standards_review",
+    "result": "No confirmed remaining findings. Final three List-progress callers, native heading and phone Inbox arrival checked."
+  },
+  "spec": {
+    "agent": "/root/catalog_spec_review",
+    "result": "No confirmed remaining findings. Owning List names, unchanged counts/estimates/scope and retained catalog/Item assertions checked."
+  },
+  "runtimeQualification": "Recorded independently; source review is not runtime or visual proof.",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedAppearanceViews.swift": "ac3b0ff1c7a2994f7378d2e8b1caa09f0ef322f4b6761d547b128a5f29e453ab",
+    "Planner/Scenes/SavedCalendarView.swift": "e1e16f456323ba06bc70c29bb23b9bb6e3163e2f84db98a2b456b8ff0b8a0c13",
+    "Planner/Scenes/SavedItemFilters.swift": "bbc97701d4357edb557dde170794579d0b77311084a4b3b2d10c24bce53fc3d7",
+    "Planner/Scenes/SavedItemViews.swift": "7158f641f19bfce588a09a6692895bc522c6cf347ff892ebc8d2c7446af3da1e",
+    "Planner/Scenes/SavedItineraryViews.swift": "989b4ad81599275f3cbbaac694b79fcd29d6976b95bcdefcfe40b4c06753c881",
+    "Planner/Scenes/SavedMacMembershipTable.swift": "82f67e796face9523cb5342a15970fb57acc9b9431b02947595cb5a2b5b41320",
+    "Planner/Scenes/SavedNewItemForm.swift": "003ea49e591cecb4cf2aedf3322f359c246a743cef70f0c9564b84f969a32c51",
+    "Planner/Scenes/SavedPlannerView.swift": "a785bde9342519f62046aec1dba5e0920fadf04af2f582ce9e0a60f87a2c4cd2",
+    "PlannerNavigationUITests/NativeNavigationElements.swift": "611a586dc630563e33d1c84a6190d7297f77c41508d3ce068582f8299ce0d8ab",
+    "PlannerNavigationUITests/SavedItemJourneyTests.swift": "2244e195814094d6581817088c3de8159d3ae1a1f91ffcffdbe7ab4e7e68e06a"
+  },
+  "additionalManualReview": "Phone search revelation follows the existing SavedItineraryFilterJourneyTests native swipeDown pattern before typing and after destination return; the entered-value assertions remain unchanged."
+}

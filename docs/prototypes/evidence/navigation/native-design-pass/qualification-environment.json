@@ -1,0 +1,6 @@
+{
+  "compiler": "Xcode 27.1 (27A9275), Swift 6.4; builds target PlannerNavigation and its app/test dependencies with one job.",
+  "mobile": "iOS 27.0 simulators: iPhone 18 Pro and iPad Air 11-inch (M4), compiled with iOS Simulator 27.1 SDK.",
+  "mac": "macOS 27.0.1 host; native macOS build, local ad hoc signing only. Native UI runtime recorded separately.",
+  "appearance": "Mobile wrapper sets light/dark, records and restores the original simulator appearance. Dark Item navigation also passes AppleInterfaceStyle as a process-scoped launch argument; the product adds no forced appearance."
+}

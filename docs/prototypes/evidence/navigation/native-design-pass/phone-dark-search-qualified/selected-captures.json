@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "8E239705-C4BF-4885-B846-447814A58AE1.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native design Itinerary search after returning_0_64A858FB-1198-4467-911F-5C8E96C23CB1.png",
+    "timestamp": 1792252595.133,
+    "testIdentifier": "SavedItemJourneyTests/testItinerarySearchSurvivesSwitchingDestinations()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "B2F6A692-8B8C-403A-B99D-E5EB276B9C13.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native design Itinerary search before leaving_0_435D73EE-BA86-45B4-A1D4-36C8A53B2CE3.png",
+    "timestamp": 1792252586.198,
+    "testIdentifier": "SavedItemJourneyTests/testItinerarySearchSurvivesSwitchingDestinations()"
+  }
+]

@@ -1,0 +1,67 @@
+{
+  "swiftLint": {
+    "command": [
+      "xcrun",
+      "swift-format",
+      "lint",
+      "--strict",
+      "Planner/Scenes/SavedAppearanceViews.swift",
+      "Planner/Scenes/SavedCalendarView.swift",
+      "Planner/Scenes/SavedItemFilters.swift",
+      "Planner/Scenes/SavedItemViews.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "Planner/Scenes/SavedMacMembershipTable.swift",
+      "Planner/Scenes/SavedNewItemForm.swift",
+      "Planner/Scenes/SavedPlannerView.swift",
+      "PlannerNavigationUITests/NativeNavigationElements.swift",
+      "PlannerNavigationUITests/SavedItemJourneyTests.swift"
+    ],
+    "exitCode": 0
+  },
+  "whitespace": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0
+  },
+  "sourceSHA256": {
+    "Planner/Scenes/SavedAppearanceViews.swift": "ac3b0ff1c7a2994f7378d2e8b1caa09f0ef322f4b6761d547b128a5f29e453ab",
+    "Planner/Scenes/SavedCalendarView.swift": "e1e16f456323ba06bc70c29bb23b9bb6e3163e2f84db98a2b456b8ff0b8a0c13",
+    "Planner/Scenes/SavedItemFilters.swift": "bbc97701d4357edb557dde170794579d0b77311084a4b3b2d10c24bce53fc3d7",
+    "Planner/Scenes/SavedItemViews.swift": "7158f641f19bfce588a09a6692895bc522c6cf347ff892ebc8d2c7446af3da1e",
+    "Planner/Scenes/SavedItineraryViews.swift": "989b4ad81599275f3cbbaac694b79fcd29d6976b95bcdefcfe40b4c06753c881",
+    "Planner/Scenes/SavedMacMembershipTable.swift": "82f67e796face9523cb5342a15970fb57acc9b9431b02947595cb5a2b5b41320",
+    "Planner/Scenes/SavedNewItemForm.swift": "003ea49e591cecb4cf2aedf3322f359c246a743cef70f0c9564b84f969a32c51",
+    "Planner/Scenes/SavedPlannerView.swift": "a785bde9342519f62046aec1dba5e0920fadf04af2f582ce9e0a60f87a2c4cd2",
+    "PlannerNavigationUITests/NativeNavigationElements.swift": "611a586dc630563e33d1c84a6190d7297f77c41508d3ce068582f8299ce0d8ab",
+    "PlannerNavigationUITests/SavedItemJourneyTests.swift": "2244e195814094d6581817088c3de8159d3ae1a1f91ffcffdbe7ab4e7e68e06a"
+  },
+  "markdownLint": {
+    "command": [
+      "pnpm",
+      "dlx",
+      "markdownlint-cli2",
+      "--config",
+      "/private/tmp/PlannerItemWindowMarkdownlint.json",
+      "docs/prototypes/native-design-pass.md",
+      "docs/native-ui-polish.md",
+      "docs/native-list-window-contract-review.md",
+      "docs/open-decisions.md"
+    ],
+    "exitCode": 0,
+    "issues": 0
+  },
+  "documentationSHA256": {
+    "docs/prototypes/native-design-pass.md": "974c223bc22e8562ba8670825eadcad4f57ce3a4592d52522f9e883d0a6f112c",
+    "docs/native-ui-polish.md": "9f8ba7c60eec9b549b3a84ca947d1dd214f755623e1f769bfc961770003bcaad",
+    "docs/native-list-window-contract-review.md": "65d7fe1cd33b7e3667c1c42f0c05b87a3cf6c54ff8239dfae31a5ba0a9220f08",
+    "docs/open-decisions.md": "f4dee1abdda5bee2ee56ce5a68122962a8aa1f44e375c52bf720de4c804fffd3"
+  },
+  "macBaseComparison": {
+    "baseCommit": "ad4be0d",
+    "file": "docs/prototypes/native-new-item-dynamic-type.md",
+    "verifiedStatement": "Mac runtime is not rerun after its repeated pre-discovery automation failures."
+  }
+}

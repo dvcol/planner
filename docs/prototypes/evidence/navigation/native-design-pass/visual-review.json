@@ -1,0 +1,96 @@
+{
+  "method": "Visual inspection of original native test captures; no pixel transformation or screenshot comparison assertions.",
+  "captures": [
+    {
+      "phase": "tablet-final-light",
+      "file": "30156C50-37DF-40A9-B626-D82C84372033.png",
+      "observation": "Native inline editor title, grouped Form and address/link inputs readable at represented size; source baseline predates final inspector/List-sidebar fixes."
+    },
+    {
+      "phase": "tablet-final-light",
+      "file": "2C05B9B9-12D0-4A7E-8BFE-32707EEE16B7.png",
+      "observation": "Search remains garden after destination return; crowded toolbar omitted plan title in this earlier capture; current source adds a content heading."
+    },
+    {
+      "phase": "tablet-compatibility-dark-qualified",
+      "file": "EFCDED10-6A9F-444B-8B10-BE483CA13A65.png",
+      "observation": "Native sidebar replaces floating tab tier; portrait sidebar overlays empty middle-pane guidance, using standard split-view adaptation."
+    },
+    {
+      "phase": "tablet-compatibility-dark-qualified",
+      "file": "990409B2-29E3-4486-9420-480F2B868D2F.png",
+      "observation": "Dark native editor grouped surfaces, controls, text, address fields and Add Link remain visible; no forced light surface."
+    },
+    {
+      "phase": "tablet-compatibility-dark-qualified",
+      "file": "E062DB7C-9CB1-4309-9C9A-8F81DC668FA2.png",
+      "observation": "Dark selected Item detail and catalog are readable with native toolbar/search and completion switch."
+    },
+    {
+      "phase": "tablet-compatibility-dark-qualified",
+      "file": "9F701DC3-493A-4DA1-B742-A08E39077F1B.png",
+      "observation": "Screen capture shows complete landscape sidebar/catalog/detail panes. Earlier application screenshot crop problem is absent."
+    },
+    {
+      "phase": "tablet-compatibility-dark-qualified",
+      "file": "DA7C8BA6-17A4-4688-B372-9DC78EB3E6E9.png",
+      "observation": "Native mobile month uses dark appearance, clear selected day and empty agenda; sidebar does not add a floating tab tier."
+    },
+    {
+      "phase": "tablet-compatibility-dark-qualified",
+      "file": "C7AFA966-E224-4BDB-A33D-9B101F9BE20A.png",
+      "observation": "Dark Calendar Week keeps selected Item inspector after narrowing. Grid scrolls horizontally beside readable details."
+    },
+    {
+      "phase": "tablet-compatibility-dark-qualified",
+      "file": "5F7A6BE4-7042-4B5B-947C-4AB05CD9ED52.png",
+      "observation": "Rich dark draft retains notes, duration, address and link after rotation. List name is absent from crowded toolbar; adding a content heading is the remaining local correction."
+    },
+    {
+      "phase": "phone-dark-qualified",
+      "file": "21734B4A-0A41-4A86-8766-DDC2776844B8.png",
+      "observation": "Dark phone editor uses native grouped Form, readable entered notes and system bottom tabs. Location continues beneath the floating bar and is reachable by scrolling; the rich draft journey passes its field/relaunch checks. Full large-text/scroll visual acceptance remains separate."
+    },
+    {
+      "phase": "phone-dark-qualified",
+      "file": "FF32B5AE-6CDD-4AC9-95E9-13FC447525AB.png",
+      "observation": "Dark phone selected details show readable notes, completion and estimate, with native bottom tabs and pushed-page Back navigation."
+    },
+    {
+      "phase": "phone-dark-navigation-final",
+      "file": "80430AF5-4B3B-4A4B-8B6E-71F6453ED52E.png",
+      "observation": "Dark landscape phone retains native bottom tabs centered within its content width, readable selected details and working completion. The native bar overlays scrolling content; this is not final large-text/scroll acceptance."
+    },
+    {
+      "phase": "phone-dark-search-qualified",
+      "file": "8E239705-C4BF-4885-B846-447814A58AE1.png",
+      "observation": "Dark phone Itinerary shows retained garden search, readable route heading and native bottom tabs after destination return."
+    },
+    {
+      "phase": "phone-light-qualified",
+      "file": "0C334826-CD6A-4F90-9097-F78B10DDC474.png",
+      "observation": "Light phone editor follows system grouped Form, readable entered text and native bottom tabs; lower address content requires scrolling past the floating bar."
+    },
+    {
+      "phase": "phone-light-qualified",
+      "file": "88CD514A-2E12-416C-9C37-F4567E40A593.png",
+      "observation": "Light phone selected detail has readable notes and native completion control; matching dark capture retains the same hierarchy."
+    },
+    {
+      "phase": "phone-light-qualified",
+      "file": "752F48A5-9F70-4E62-A7A5-3B3831151F80.png",
+      "observation": "Light phone month uses native date selection and segmented modes. Initial empty-agenda description extends behind the floating bottom bar within the scroll view; complete scroll/large-text review remains open."
+    },
+    {
+      "phase": "tablet-light-draft-final",
+      "file": "2FB6A1D5-F338-4524-B85E-309ACF21FF9E.png",
+      "observation": "Final light tablet capture shows Origin List heading above estimates while rich draft notes, duration, address and link remain visible after rotation; crowded toolbar no longer hides List context."
+    },
+    {
+      "phase": "tablet-light-draft-final",
+      "file": "6C3C2DDB-3C0D-4FE2-A9C8-A4CADF1582EB.png",
+      "observation": "Final light tablet Itinerary retains garden search and readable Afternoon route heading after destination switch."
+    }
+  ],
+  "limits": "Representative navigation/editor/Calendar captures only. Full scene/state, accessibility, physical-device and final polish review remain open."
+}

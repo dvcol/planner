@@ -1,0 +1,377 @@
+[
+  {
+    "phase": "itinerary-filter-red-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "itinerary-search-red-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "mac-dark-qualified",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-mac-dark-qualified.xcresult",
+    "tests": []
+  },
+  {
+    "phase": "native-design-compatibility-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "native-design-final-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "native-design-heading-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "native-design-heading-final-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "native-design-inspector-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "native-design-mac-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "native-design-mobile-qualification-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "native-design-qualified-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "navigation-appearance-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "phone-dark-navigation-final",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-phone-dark-navigation-final.xcresult",
+    "tests": [
+      {
+        "name": "SavedItemJourneyTests testDarkAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations",
+        "status": "passed",
+        "seconds": 58.913
+      },
+      {
+        "name": "SavedItemJourneyTests testItinerarySearchSurvivesSwitchingDestinations",
+        "status": "failed",
+        "seconds": 24.045
+      }
+    ]
+  },
+  {
+    "phase": "phone-dark-qualified",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-phone-dark-qualified.xcresult",
+    "tests": [
+      {
+        "name": "SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+        "status": "passed",
+        "seconds": 252.664
+      },
+      {
+        "name": "SavedItemJourneyTests testDarkAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations",
+        "status": "failed",
+        "seconds": 31.543
+      }
+    ]
+  },
+  {
+    "phase": "phone-dark-search-qualified",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-phone-dark-search-qualified.xcresult",
+    "tests": [
+      {
+        "name": "SavedItemJourneyTests testItinerarySearchSurvivesSwitchingDestinations",
+        "status": "passed",
+        "seconds": 28.604
+      }
+    ]
+  },
+  {
+    "phase": "phone-light-qualified",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-phone-light-qualified.xcresult",
+    "tests": [
+      {
+        "name": "SavedItemJourneyTests testAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations",
+        "status": "passed",
+        "seconds": 58.765
+      }
+    ]
+  },
+  {
+    "phase": "reviewed-sidebar-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "sidebar-baseline-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "sidebar-corrected-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "sidebar-green-build",
+    "exitCode": 65,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "sidebar-red-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "sidebar-red-qualified-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "tests": []
+  },
+  {
+    "phase": "tablet-compatibility-dark-qualified",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-tablet-compatibility-dark-qualified.xcresult",
+    "tests": [
+      {
+        "name": "SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+        "status": "passed",
+        "seconds": 195.958
+      },
+      {
+        "name": "SavedCalendarInspectorJourneyTests testWeekDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+        "status": "passed",
+        "seconds": 75.49
+      },
+      {
+        "name": "SavedItemJourneyTests testDarkAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations",
+        "status": "passed",
+        "seconds": 58.852
+      },
+      {
+        "name": "SavedItemJourneyTests testItineraryCatalogRetainsArchiveFilterAfterOpeningAndReturning",
+        "status": "passed",
+        "seconds": 23.161
+      },
+      {
+        "name": "SavedItemJourneyTests testItinerarySearchSurvivesSwitchingDestinations",
+        "status": "passed",
+        "seconds": 26.056
+      }
+    ]
+  },
+  {
+    "phase": "tablet-final-dark",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-tablet-final-dark.xcresult",
+    "tests": [
+      {
+        "name": "SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+        "status": "failed",
+        "seconds": 21.512
+      },
+      {
+        "name": "SavedCalendarInspectorJourneyTests testWeekDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+        "status": "failed",
+        "seconds": 64.882
+      },
+      {
+        "name": "SavedItemJourneyTests testDarkAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations",
+        "status": "passed",
+        "seconds": 60.968
+      },
+      {
+        "name": "SavedItemJourneyTests testItineraryCatalogRetainsArchiveFilterAfterOpeningAndReturning",
+        "status": "passed",
+        "seconds": 23.603
+      },
+      {
+        "name": "SavedItemJourneyTests testItinerarySearchSurvivesSwitchingDestinations",
+        "status": "passed",
+        "seconds": 26.693
+      }
+    ]
+  },
+  {
+    "phase": "tablet-final-light",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-tablet-final-light.xcresult",
+    "tests": [
+      {
+        "name": "SavedItemJourneyTests testAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations",
+        "status": "passed",
+        "seconds": 61.751
+      },
+      {
+        "name": "SavedItemJourneyTests testItineraryCatalogRetainsArchiveFilterAfterOpeningAndReturning",
+        "status": "passed",
+        "seconds": 23.971
+      },
+      {
+        "name": "SavedItemJourneyTests testItinerarySearchSurvivesSwitchingDestinations",
+        "status": "passed",
+        "seconds": 27.109
+      }
+    ]
+  },
+  {
+    "phase": "tablet-inspector-and-draft-dark",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-tablet-inspector-and-draft-dark.xcresult",
+    "tests": [
+      {
+        "name": "SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+        "status": "failed",
+        "seconds": 20.723
+      },
+      {
+        "name": "SavedCalendarInspectorJourneyTests testWeekDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+        "status": "passed",
+        "seconds": 74.792
+      }
+    ]
+  },
+  {
+    "phase": "tablet-itinerary-filter-red",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-tablet-itinerary-filter-red.xcresult",
+    "tests": [
+      {
+        "name": "SavedItemJourneyTests testItineraryCatalogRetainsArchiveFilterAfterOpeningAndReturning",
+        "status": "failed",
+        "seconds": 24.428
+      }
+    ]
+  },
+  {
+    "phase": "tablet-itinerary-search-red",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-tablet-itinerary-search-red.xcresult",
+    "tests": [
+      {
+        "name": "SavedItemJourneyTests testItinerarySearchSurvivesSwitchingDestinations",
+        "status": "failed",
+        "seconds": 31.832
+      }
+    ]
+  },
+  {
+    "phase": "tablet-light-draft-final",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-tablet-light-draft-final.xcresult",
+    "tests": [
+      {
+        "name": "SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+        "status": "passed",
+        "seconds": 196.356
+      },
+      {
+        "name": "SavedItemJourneyTests testItinerarySearchSurvivesSwitchingDestinations",
+        "status": "passed",
+        "seconds": 26.56
+      }
+    ]
+  },
+  {
+    "phase": "tablet-light-qualified",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-tablet-light-qualified.xcresult",
+    "tests": [
+      {
+        "name": "SavedItemJourneyTests testAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations",
+        "status": "passed",
+        "seconds": 53.619
+      },
+      {
+        "name": "SavedItemJourneyTests testItineraryCatalogRetainsArchiveFilterAfterOpeningAndReturning",
+        "status": "passed",
+        "seconds": 23.868
+      }
+    ]
+  },
+  {
+    "phase": "tablet-sidebar-baseline",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-tablet-sidebar-baseline.xcresult",
+    "tests": [
+      {
+        "name": "SavedItemJourneyTests testAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations",
+        "status": "failed",
+        "seconds": 20.207
+      }
+    ]
+  },
+  {
+    "phase": "tablet-sidebar-light",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-tablet-sidebar-light.xcresult",
+    "tests": [
+      {
+        "name": "SavedItemJourneyTests testAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations",
+        "status": "failed",
+        "seconds": 25.435
+      }
+    ]
+  },
+  {
+    "phase": "tablet-sidebar-red",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-tablet-sidebar-red.xcresult",
+    "tests": [
+      {
+        "name": "SavedItemJourneyTests testAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations",
+        "status": "failed",
+        "seconds": 17.071
+      }
+    ]
+  },
+  {
+    "phase": "tablet-sidebar-red-qualified",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItemWindowCompatibilityRuntime-tablet-sidebar-red-qualified.xcresult",
+    "tests": [
+      {
+        "name": "SavedItemJourneyTests testAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations",
+        "status": "failed",
+        "seconds": 18.183
+      }
+    ]
+  }
+]

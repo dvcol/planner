@@ -93,6 +93,7 @@ struct SavedNewItemForm: View {
       .disabled(isSaving)
       .formStyle(.grouped)
       .navigationTitle("New Item")
+      .toolbarTitleDisplayMode(.inline)
       #if os(iOS)
         .navigationBarBackButtonHidden(horizontalSizeClass == .compact)
       #endif

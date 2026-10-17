@@ -1,0 +1,72 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "0B407975-2D85-4FF3-9409-DC6BA0EB9CA4.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives expanded layout_0_4C59D59A-31A6-4286-B1C1-C476A6D7CC1D.png",
+    "timestamp": 1792252134.361,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "097B4A7D-899B-4504-9907-4CF98373EF45.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives portrait navigation layout_0_FAD3A3A0-DFB2-4635-AEE1-3F75501EB104.png",
+    "timestamp": 1792252104.728,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "064E8985-5B5F-4A83-AE5A-6815BC3323FA.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native design Lists destination_0_70E87223-A072-45B9-8B5C-BA39B81B0604.png",
+    "timestamp": 1792252255.771,
+    "testIdentifier": "SavedItemJourneyTests/testDarkAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "FF32B5AE-6CDD-4AC9-95E9-13FC447525AB.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native design selected Item details_0_FFDB652A-1F98-45A8-AC32-A16AC2189702.png",
+    "timestamp": 1792252252.325,
+    "testIdentifier": "SavedItemJourneyTests/testDarkAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "21734B4A-0A41-4A86-8766-DDC2776844B8.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native design New Item editor_0_A3EF3ACD-FF3D-41C3-8EC6-6B4BDB1FEE58.png",
+    "timestamp": 1792252249.27,
+    "testIdentifier": "SavedItemJourneyTests/testDarkAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "4B9EDC5F-79BC-4DD2-96EA-EE3EE8A3DDF8.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native design initial navigation hierarchy_0_140CCFA7-D8C5-4982-A7AD-806795C34E25.txt",
+    "timestamp": 1792252240.999,
+    "testIdentifier": "SavedItemJourneyTests/testDarkAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "60BEDB6F-6FF3-426B-88D9-5567E31C6535.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native design initial navigation_0_E4005F8B-AD1D-4AD5-AEB2-2B32A400277F.png",
+    "timestamp": 1792252240.72,
+    "testIdentifier": "SavedItemJourneyTests/testDarkAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations()"
+  }
+]

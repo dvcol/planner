@@ -1,6 +1,6 @@
 # Native UI polish after feature completion
 
-Status: planned in [ticket 23](https://github.com/dvcol/planner/issues/23). This pass follows feature implementation and does not replace the behavior, persistence, sync or recovery gates in the [decision map](https://github.com/dvcol/planner/issues/1).
+Status: final review planned in [ticket 23](https://github.com/dvcol/planner/issues/23). The human brought forward a [navigation and appearance slice](prototypes/native-design-pass.md) on 18 October; its findings and evidence do not close the final review. This pass follows feature implementation and does not replace the behavior, persistence, sync or recovery gates in the [decision map](https://github.com/dvcol/planner/issues/1).
 
 ## Context and goal
 
@@ -60,3 +60,9 @@ The [phone draft layout capture](prototypes/evidence/navigation/native-schedule-
 The [native clock-input captures](prototypes/native-schedule-time-input.md) also retain raw planning-zone identifiers, a technical "resolved time" footer and duplicated Item titles. Review their wording and hierarchy in the final pass while retaining the date-specific occurrence abbreviations and UTC offsets needed to distinguish repeated times.
 
 The final iPad compatibility run makes the spacing difference visible across destinations: compare [Itinerary content](prototypes/evidence/navigation/native-schedule-time-input/tablet-clock-itinerary-and-catalog-compatibility/045D3E2C-4C55-4847-84F5-D8ED91067A37.png) with [Item details](prototypes/evidence/navigation/native-schedule-time-input/tablet-clock-itinerary-and-catalog-compatibility/1C293DE8-3C58-43E0-B506-E46B2886E28F.png). The Itinerary toolbar starts farther below the floating tabs. Review the scene's navigation/toolbar hierarchy before applying manual spacing. This records the observed difference; its cause and correction still need qualification.
+
+## Navigation and appearance correction brought forward
+
+The [18 October native design review](prototypes/native-design-pass.md) replaces the regular iPad's floating-tab/per-destination-sidebar stack with one Notes-style native sidebar and panes, retaining system bottom tabs on iPhone. Native inline toolbar titles and readable List/Itinerary content headings remove the extra title tier and retain context when controls crowd the toolbar. Native Form/List surfaces follow device appearance. The review also repairs lost Itinerary presentation state, hidden List-catalog navigation and Calendar inspector dismissal during rotation. Its report links the executed light/dark mobile journeys, original representative captures, source reviews and compiler/runtime limitations.
+
+These observations supersede the earlier unresolved layout candidate for that specific tablet shell. They do not close the phone scroll/large-text observations, all scene/state visual review, accessibility, Mac runtime or physical qualification. The original requirements and historical captures remain available above; final ticket 23 acceptance still follows the full inventory and gates.

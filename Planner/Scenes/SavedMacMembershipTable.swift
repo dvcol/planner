@@ -29,7 +29,7 @@ import UniformTypeIdentifiers
     var body: some View {
       VStack(alignment: .leading, spacing: 0) {
         SavedListProgress(
-          progress: list.progress, estimates: list.estimates,
+          listName: list.content.name, progress: list.progress, estimates: list.estimates,
           manualEstimate: list.content.manualEstimate, matchingCount: items.count,
           isArchived: list.state.archived == true
         ).padding()

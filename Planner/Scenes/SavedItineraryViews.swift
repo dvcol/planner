@@ -11,12 +11,12 @@ private struct SavedItineraryCatalogReadInputs: Equatable {
 
 struct SavedItineraryCatalog: View {
   let store: SavedPlannerStore
+  @Binding var archive: SavedItemFilters.Archive
   @Binding var selection: UUID?
   @State private var itineraries: [SavedPlannerItinerary]?
   @State private var isLoading = false
   @State private var loadingFailure: String?
   @State private var showNewItinerary = false
-  @State private var archive = SavedItemFilters.Archive.active
   @State private var sortPreferences = SavedCatalogSortPreferences()
 
   var body: some View {
@@ -64,6 +64,7 @@ struct SavedItineraryCatalog: View {
       }
     }
     .navigationTitle("Itineraries")
+    .toolbarTitleDisplayMode(.inline)
     .navigationSplitViewColumnWidth(min: 240, ideal: 320, max: 480)
     .toolbar {
       ToolbarItem(placement: .primaryAction) {
@@ -135,10 +136,19 @@ private struct SavedItineraryReadInputs: Equatable {
   let filters: SavedItemFilters
 }
 
+struct SavedItineraryPresentation {
+  var searchText = ""
+  var filters = SavedItemFilters()
+  var collapsedEntries: Set<UUID> = []
+}
+
 struct SavedItineraryDetail: View {
   let store: SavedPlannerStore
   let identifier: UUID
   @Binding var selection: SavedItineraryRowSelection?
+  @Binding var searchText: String
+  @Binding var filters: SavedItemFilters
+  @Binding var collapsedEntries: Set<UUID>
   let isPreparingDeletion: Bool
   let isReviewingDeletion: Bool
   let prepareDeletion: (PlannerItinerarySourceRead) -> Void
@@ -148,12 +158,9 @@ struct SavedItineraryDetail: View {
   @State private var showAddEntry = false
   @State private var showNewSchedule = false
   @State private var scheduleToEdit: PlannerScheduleSourceRead?
-  @State private var collapsedEntries: Set<UUID> = []
   @State private var bulkCompletionDraft: SavedBulkCompletionDraft?
   @State private var isPreparingBulkCompletion = false
   @State private var removedSelectionMessage: String?
-  @State private var searchText = ""
-  @State private var filters = SavedItemFilters()
   @State private var isLoading = false
   #if os(iOS)
     @State private var entryEditMode: EditMode = .inactive
@@ -165,6 +172,8 @@ struct SavedItineraryDetail: View {
         let itinerary = contents.itinerary
         List(selection: $selection) {
           Section {
+            Text(itinerary.content.title).font(.title2).fontWeight(.semibold)
+              .accessibilityAddTraits(.isHeader)
             if itinerary.state.archived == true {
               Label("Archived Itinerary", systemImage: "archivebox").foregroundStyle(.secondary)
             }
@@ -305,6 +314,7 @@ struct SavedItineraryDetail: View {
           .environment(\.editMode, $entryEditMode)
         #endif
         .navigationTitle(itinerary.content.title)
+        .toolbarTitleDisplayMode(.inline)
         .searchable(text: $searchText, prompt: "Search this Itinerary")
         .searchPresentationToolbarBehavior(.avoidHidingContent)
         .navigationSplitViewColumnWidth(min: 260, ideal: 400, max: 600)
@@ -660,9 +670,7 @@ private struct SavedItineraryForm: View {
       .disabled(store.isSaving)
       .formStyle(.grouped)
       .navigationTitle(itinerary == nil ? "New Itinerary" : "Edit Itinerary")
-      #if os(iOS)
-        .navigationBarTitleDisplayMode(.inline)
-      #endif
+      .toolbarTitleDisplayMode(.inline)
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {
           Button("Cancel") { dismiss() }

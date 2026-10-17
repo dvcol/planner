@@ -1,6 +1,6 @@
 # Native List row-window contract
 
-Status: proposed follow-up to Q95, awaiting Q97. No implementation or tests for this expanded interface have been written. The current phone clock-input and draft-layout qualifications continue independently.
+Status: approved by the human as Q97 A. Implementation and qualification remain required. The navigation/appearance review requested on 18 October is the current slice.
 
 ## Context and starting state
 
