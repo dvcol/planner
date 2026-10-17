@@ -1,0 +1,74 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "631779A9-8860-4E7F-B813-E45DB9D69071.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Calendar layout observed Schedule_0_11F5244A-B94F-488B-8717-2C0CDCF3F6B0.txt",
+    "timestamp": 1792221117.971
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A580FD09-DE04-489C-A68B-1569A5DE7D6E.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Calendar reopens the same Schedule after both layout changes_0_22E82013-62B7-4726-8B34-E258F1C9C4E5.png",
+    "timestamp": 1792221117.97
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "DE315EE1-8DBB-42E3-B37D-A84524F61CDE.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Calendar keeps its inspector hidden after widening the layout_0_4526C6F8-BF3D-441A-8BA5-1C55D970B806.png",
+    "timestamp": 1792221111.979
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "8EF1CB08-85B9-4C2F-995A-39C83B993A7C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Selected Calendar details remain after narrowing the layout_0_0E287810-C684-42EB-8B9C-5C5BAAC395C3.png",
+    "timestamp": 1792221104.687
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "5BF58A60-529D-4176-9A1D-D41279D55CFC.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Calendar inspector retains the selected Schedule and Item_0_B784BFA9-EEE2-491F-ADE8-B498D344A5DB.png",
+    "timestamp": 1792221098.535
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "98CEA59F-169E-43A7-AFFA-0CA3FA7DD032.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Calendar uses the main width with its inspector hidden_0_688E67BA-1AEF-423F-A3DF-5A9DC042DE9C.png",
+    "timestamp": 1792221091.84
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "BA96918E-5FF5-4424-97B3-066BAD9713E6.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Calendar inspector layout observations_0_0B29715F-E0A9-4AC9-987B-17BE4CC41AB3.txt",
+    "timestamp": 1792221090.348
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "6097B942-6F83-49F8-8D6B-FB0B0E079D38.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Calendar inspector presentation before closing_0_5053D68B-B8CB-4706-A43E-B2CFD97AE953.png",
+    "timestamp": 1792221087.422
+  }
+]

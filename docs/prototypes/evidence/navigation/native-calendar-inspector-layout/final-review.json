@@ -1,0 +1,14 @@
+{
+  "baseline": "3f4d0a48ac3465856e3d957658020f4d74974a17",
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "Raw exits, source/product/lint hashes and all12 capture records agree. Six usable final captures; widths724 both; Month-only iPad runtime. No production or Mac/phone runtime credit."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "report": "Final62.434s pass distinct from62.416s diagnostic. Retained Schedule/caption and visible notes support accepted Q79. Scope and width limitations correctly recorded."
+  },
+  "scope": "Read-only final artifact reviews. Reviewers performed no edits, builds or test runs."
+}

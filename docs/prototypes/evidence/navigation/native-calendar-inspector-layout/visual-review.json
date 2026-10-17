@@ -1,0 +1,113 @@
+{
+  "method": "All12 original PNGs individually opened with view_image. Six final Simulator-screen images are complete. Five earlier landscape application captures are clipped; the earlier portrait is usable but historical. Actual Schedule/caption and width attachments read separately.",
+  "images": [
+    {
+      "path": "tablet-calendar-screen/062F72DB-DEEA-4283-8917-47441FB1CB6E.png",
+      "title": "Calendar reopens the same Schedule after both layout changes_0_48EB0244-2677-433E-93DD-C522B9CC349B.png",
+      "sha256": "8a657d73d40ffd4036e74517dfc47aa7f936340a7380cb175a03d130307f6234",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "usableForVisualQualification": true,
+      "scope": "Complete original Simulator-screen capture, used with actual viewport/identity assertions."
+    },
+    {
+      "path": "tablet-calendar-screen/F545B697-50AE-41D7-B761-C3E164198994.png",
+      "title": "Calendar keeps its inspector hidden after widening the layout_0_C6CEE4A6-9AFA-4703-AC57-F9C51C451855.png",
+      "sha256": "f9e9c37520f082f8de8886cee10cbfa8b51c97a7c1f635dacd2255f5cccb2608",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "usableForVisualQualification": true,
+      "scope": "Complete original Simulator-screen capture, used with actual viewport/identity assertions."
+    },
+    {
+      "path": "tablet-calendar-screen/49177584-80ED-4F3C-95EF-4B91DD4D39E3.png",
+      "title": "Selected Calendar details remain after narrowing the layout_0_4B7B83C7-E3BA-4DE5-A3EB-88B8CC925608.png",
+      "sha256": "5e93a71c1db04d31d31545eb3f62846ffebfe540fd3e2fbce808b197a647176e",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "usableForVisualQualification": true,
+      "scope": "Complete original Simulator-screen capture, used with actual viewport/identity assertions."
+    },
+    {
+      "path": "tablet-calendar-screen/8A1203DE-F305-4C66-94C9-48B25896C6CA.png",
+      "title": "Calendar inspector retains the selected Schedule and Item_0_2E0B5314-7057-441D-BC11-CA5AE9D1DE19.png",
+      "sha256": "36d5d378a195dd4a4a5ee26247abae9c693f00a46b0f3a0c0ab2ccb9c72da018",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "usableForVisualQualification": true,
+      "scope": "Complete original Simulator-screen capture, used with actual viewport/identity assertions."
+    },
+    {
+      "path": "tablet-calendar-screen/87B28B6A-56DB-433D-A62E-F028E557BD9D.png",
+      "title": "Calendar uses the main width with its inspector hidden_0_EDE644D8-BCDE-4509-B852-D8CAE08B91AF.png",
+      "sha256": "c2e23f8d998df76b63f03b8d6639fd54f9b928f849163066146b2b14a73d895a",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "usableForVisualQualification": true,
+      "scope": "Complete original Simulator-screen capture, used with actual viewport/identity assertions."
+    },
+    {
+      "path": "tablet-calendar-screen/60C49425-60D7-4FAC-ADFE-AD1F5125176B.png",
+      "title": "Native Calendar inspector presentation before closing_0_C51C4FD4-040D-4696-90D7-D923D1EC1491.png",
+      "sha256": "36d5d378a195dd4a4a5ee26247abae9c693f00a46b0f3a0c0ab2ccb9c72da018",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "usableForVisualQualification": true,
+      "scope": "Complete original Simulator-screen capture, used with actual viewport/identity assertions."
+    },
+    {
+      "path": "tablet-calendar-visible/A580FD09-DE04-489C-A68B-1569A5DE7D6E.png",
+      "title": "Calendar reopens the same Schedule after both layout changes_0_22E82013-62B7-4726-8B34-E258F1C9C4E5.png",
+      "sha256": "11ce9f945da54250cee930412196a7f5862a3bcc81e7bc8bbd855d99eeda51ca",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "usableForVisualQualification": false,
+      "scope": "Historical application-screenshot capture. Portrait usable; five landscape exports clipped and excluded from visual qualification. No final-source credit."
+    },
+    {
+      "path": "tablet-calendar-visible/DE315EE1-8DBB-42E3-B37D-A84524F61CDE.png",
+      "title": "Calendar keeps its inspector hidden after widening the layout_0_4526C6F8-BF3D-441A-8BA5-1C55D970B806.png",
+      "sha256": "2920c01196300dbc9a95cadd35efd4463e78c2d4da8943b602463d71cf4ee24a",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "usableForVisualQualification": false,
+      "scope": "Historical application-screenshot capture. Portrait usable; five landscape exports clipped and excluded from visual qualification. No final-source credit."
+    },
+    {
+      "path": "tablet-calendar-visible/8EF1CB08-85B9-4C2F-995A-39C83B993A7C.png",
+      "title": "Selected Calendar details remain after narrowing the layout_0_0E287810-C684-42EB-8B9C-5C5BAAC395C3.png",
+      "sha256": "fe73a5b98e5d1f47d7e922f08fda52426b61b1ff24ed14b884b5f4091bc2e029",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "usableForVisualQualification": true,
+      "scope": "Historical application-screenshot capture. Portrait usable; five landscape exports clipped and excluded from visual qualification. No final-source credit."
+    },
+    {
+      "path": "tablet-calendar-visible/5BF58A60-529D-4176-9A1D-D41279D55CFC.png",
+      "title": "Calendar inspector retains the selected Schedule and Item_0_B784BFA9-EEE2-491F-ADE8-B498D344A5DB.png",
+      "sha256": "1362c5f6934f2e2b81e8f6c68d4632ce6ba655120d8914f67439f070b3d3583c",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "usableForVisualQualification": false,
+      "scope": "Historical application-screenshot capture. Portrait usable; five landscape exports clipped and excluded from visual qualification. No final-source credit."
+    },
+    {
+      "path": "tablet-calendar-visible/98CEA59F-169E-43A7-AFFA-0CA3FA7DD032.png",
+      "title": "Calendar uses the main width with its inspector hidden_0_688E67BA-1AEF-423F-A3DF-5A9DC042DE9C.png",
+      "sha256": "90054d4d1a8c463252b8d275ceef951b02933d5d1656ef907d0d52e0323b474a",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "usableForVisualQualification": false,
+      "scope": "Historical application-screenshot capture. Portrait usable; five landscape exports clipped and excluded from visual qualification. No final-source credit."
+    },
+    {
+      "path": "tablet-calendar-visible/6097B942-6F83-49F8-8D6B-FB0B0E079D38.png",
+      "title": "Native Calendar inspector presentation before closing_0_5053D68B-B8CB-4706-A43E-B2CFD97AE953.png",
+      "sha256": "1362c5f6934f2e2b81e8f6c68d4632ce6ba655120d8914f67439f070b3d3583c",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "usableForVisualQualification": false,
+      "scope": "Historical application-screenshot capture. Portrait usable; five landscape exports clipped and excluded from visual qualification. No final-source credit."
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "diagnosticOnly": true,
+  "finalSourceInvocation": false,
+  "capturedScreenshotsClipped": true,
+  "reason": "The function passes62.416s, but five landscape application.screenshot exports are clipped. Preserve literal pass and original capture diagnostics; no final-source or complete visual qualification. Restore original iOS XCUIScreen capture while retaining own-window Mac capture."
+}

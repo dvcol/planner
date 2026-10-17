@@ -1,0 +1,83 @@
+{
+  "policy": "Literal recorded function outcomes and whole invocation exits are separate. Compiler-only and setup failures supply no native runtime pass credit. Final qualified epochs are named in the report.",
+  "runs": [
+    {
+      "epoch": "mac-calendar-layout-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-calendar-screen-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-calendar-visible-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-calendar-layout-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-calendar-screen-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-calendar-visible-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "tablet-calendar-screen",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerCalendarInspectorLayoutRuntime-tablet-calendar-screen.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedCalendarInspectorJourneyTests testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule",
+          "outcome": "passed",
+          "seconds": 62.434
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-calendar-visible",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerCalendarInspectorLayoutRuntime-tablet-calendar-visible.xcresult",
+      "diagnosticOnly": true,
+      "correctedSourcePassCredit": false,
+      "sourceVariant": {
+        "diagnosticOnly": true,
+        "finalSourceInvocation": false,
+        "capturedScreenshotsClipped": true,
+        "reason": "The function passes62.416s, but five landscape application.screenshot exports are clipped. Preserve literal pass and original capture diagnostics; no final-source or complete visual qualification. Restore original iOS XCUIScreen capture while retaining own-window Mac capture."
+      },
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedCalendarInspectorJourneyTests testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule",
+          "outcome": "passed",
+          "seconds": 62.416
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    }
+  ]
+}

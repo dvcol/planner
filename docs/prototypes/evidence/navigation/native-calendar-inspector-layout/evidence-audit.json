@@ -1,0 +1,14 @@
+{
+  "compilerInputsPerPlatform": 945,
+  "frozenRuntimeInputs": 469,
+  "productsPerPlatform": 6,
+  "passingFunctions": {
+    "tablet": 1,
+    "phone": 0,
+    "mac": 0
+  },
+  "individuallyInspectedPNGs": 12,
+  "usableFinalSourcePNGs": 6,
+  "productionChanged": false,
+  "scope": "Existing Calendar inspector and same selected Schedule/caption/notes through actual iPad landscape/portrait changes, hidden state after widening and visible same details after reopening. Native phone pushed navigation not qualified by this regular-width journey. Mac compiler-only; no signing, physical/account/CloudKit/Share, accessibility, performance or whole-app polish credit."
+}

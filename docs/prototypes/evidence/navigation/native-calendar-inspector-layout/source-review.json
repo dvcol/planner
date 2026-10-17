@@ -1,0 +1,18 @@
+{
+  "baseline": "3f4d0a48ac3465856e3d957658020f4d74974a17",
+  "sourceSHA256": {
+    "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift": "0a956901ee1e70c9f8ebd79a79e6dddfc2d7832c51a57955668cb8c7c0075433"
+  },
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "Both initial test-quality findings resolved: guarded XCTest teardown restores Mac width after assertion abort, and own-window viewport/hittability/nonempty checks establish visible notes and Schedule after narrowing/reopening. Exact identity/caption checks retained."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "report": "Both findings resolved. Native orientation/width predicates, visible retained details, hidden state after widening and same selected Schedule after reopen match the scope. No production change. Phone skip and Mac compilation do not provide runtime credit."
+  },
+  "scope": "Source-only reviews before native runtime; initial compiler-only epochs precede controller visibility/cleanup fixes and provide no revised runtime qualification.",
+  "captureFollowup": "Both reviewers cleared restoration of original iOS XCUIScreen capture, preserving Mac own-window capture and all viewport/identity/caption/Hide/Show assertions. The62.416s functional observation and five clipped landscape PNGs remain separate from final-source visual qualification."
+}
