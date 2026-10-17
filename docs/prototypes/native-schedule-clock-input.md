@@ -1,6 +1,6 @@
 # Native schedule clock input investigation
 
-Status: the native Q11 regression is reproduced. Q96's production module and new unit-test seam remain proposed. No production scheduling fix is implemented.
+Status: historical pre-Q96 diagnostic evidence. The human approved Q96 A on 17 October 2026. The [implementation report](native-schedule-time-input.md) now records the value module, real-Core qualification and native form integration in progress. Statements below about the then-proposed interface and old form describe that diagnostic epoch; they are not current pending approvals.
 
 ## Context and goal
 
