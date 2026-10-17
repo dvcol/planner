@@ -2,6 +2,99 @@ import XCTest
 
 @MainActor
 final class SavedContainerEstimateJourneyTests: XCTestCase {
+  func testListEstimateShortcutsStageCancelSaveAndResetAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openSection("Lists", application: application)
+    reveal("saved.list.new", application: application).activateForPlannerJourney()
+    let name = application.textFields["saved.list.name"]
+    XCTAssertTrue(name.waitForExistence(timeout: 5))
+    name.activateForPlannerJourney()
+    name.typeText("Preset plan")
+    #if os(iOS)
+      name.typeText("\n")
+    #endif
+    XCTAssertTrue(name.waitForPlannerValue("Preset plan"))
+    chooseListShortcut("Half-day (12 hours)", application: application)
+    let quantity = application.descendants(matching: .any).matching(
+      identifier: "saved.list.estimate.quantity"
+    ).firstMatch
+    XCTAssertTrue(quantity.waitForPlannerValue("12"))
+    XCTAssertTrue(application.plannerElement("saved.list.estimate.unit").label.contains("Hours"))
+    application.plannerElement("saved.list.save").activateForPlannerJourney()
+    let full = estimate("full", application: application)
+    XCTAssertTrue(full.waitForPlannerValue("720 minutes"))
+    XCTAssertTrue(full.label.contains("Manual"))
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    openEditor(application)
+    chooseListShortcut("Full-day (24 hours)", application: application)
+    XCTAssertTrue(quantity.waitForPlannerValue("1"))
+    XCTAssertTrue(application.plannerElement("saved.list.estimate.unit").label.contains("Days"))
+    application.plannerElement("saved.list.cancel").activateForPlannerJourney()
+    XCTAssertTrue(full.waitForPlannerValue("720 minutes"))
+    openEditor(application)
+    chooseListShortcut("Weekend (48 hours)", application: application)
+    XCTAssertTrue(quantity.waitForPlannerValue("2"))
+    XCTAssertTrue(application.plannerElement("saved.list.estimate.unit").label.contains("Days"))
+    application.plannerElement("saved.list.save").activateForPlannerJourney()
+    assertWeekendEstimate(full)
+    recordScreenshot(application, name: "List Weekend shortcut saves a manual two-day estimate")
+    let retained = revealCatalogRow(
+      prefix: "saved.list.", title: "Preset plan", application: application)
+    let identifier = retained.identifier
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Lists", application: application)
+    revealSidebarIfNeeded(application, element: retained)
+    XCTAssertTrue(retained.waitForExistence(timeout: 10))
+    XCTAssertEqual(retained.identifier, identifier)
+    retained.activateForPlannerJourney()
+    assertWeekendEstimate(full)
+    openEditor(application)
+    XCTAssertTrue(quantity.waitForPlannerValue("2"))
+    XCTAssertTrue(application.plannerElement("saved.list.estimate.unit").label.contains("Days"))
+    let enabled = application.descendants(matching: .any).matching(
+      identifier: "saved.list.estimate.enabled"
+    ).firstMatch
+    toggle(enabled)
+    application.plannerElement("saved.list.save").activateForPlannerJourney()
+    XCTAssertTrue(full.waitForPlannerValue("0 minutes"))
+    XCTAssertFalse(full.label.contains("Manual"))
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    recordScreenshot(application, name: "List estimate shortcut clears back to calculation")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Lists", application: application)
+    revealSidebarIfNeeded(application, element: retained)
+    XCTAssertTrue(retained.waitForExistence(timeout: 10))
+    XCTAssertEqual(retained.identifier, identifier)
+    retained.activateForPlannerJourney()
+    XCTAssertTrue(full.waitForPlannerValue("0 minutes"))
+    XCTAssertFalse(full.label.contains("Manual"))
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+  }
+
+  private func chooseListShortcut(_ title: String, application: XCUIApplication) {
+    let shortcuts = application.plannerElement("saved.list.estimate.shortcuts")
+    XCTAssertTrue(shortcuts.waitForExistence(timeout: 5))
+    shortcuts.activateForPlannerJourney()
+    let shortcut = application.plannerElement(title)
+    XCTAssertTrue(shortcut.waitForExistence(timeout: 5))
+    shortcut.activateForPlannerJourney()
+  }
+
+  private func assertWeekendEstimate(_ estimate: XCUIElement) {
+    XCTAssertTrue(
+      XCTWaiter.wait(
+        for: [
+          XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value MATCHES %@", "2[\\s,]?880 minutes"),
+            object: estimate)
+        ], timeout: 5) == .completed)
+  }
+
   func testRepeatedListPreviewsKeepIndependentItineraryBudgetsThroughHeaderFilteringAndRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -393,7 +486,9 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
           for: [XCTNSPredicateExpectation(predicate: selected, object: tab)], timeout: 5),
         .completed)
     #else
-      application.openPlannerSection(title)
+      let section = application.plannerElement("saved.section." + title.lowercased())
+      XCTAssertTrue(section.waitForExistence(timeout: 5))
+      section.activateForPlannerJourney()
     #endif
   }
 
@@ -455,21 +550,8 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
   }
 
   private func openEditor(_ application: XCUIApplication) {
-    let actions = application.buttons.matching(
-      NSPredicate(
-        format: "identifier == %@ OR label == %@", "saved.list.actions", "List actions")
-    ).firstMatch
-    if !actions.waitForExistence(timeout: 2) {
-      let overflow = application.plannerElement("More")
-      XCTAssertTrue(overflow.waitForExistence(timeout: 5))
-      overflow.activateForPlannerJourney()
-    }
-    XCTAssertTrue(actions.waitForExistence(timeout: 5))
-    actions.activateForPlannerJourney()
-    let edit = application.buttons.matching(
-      NSPredicate(
-        format: "identifier == %@ OR label == %@", "saved.list.estimate.edit", "Edit estimate")
-    ).firstMatch
+    application.openSavedPlannerListActionsMenu()
+    let edit = application.plannerElement("saved.list.estimate.edit")
     XCTAssertTrue(edit.waitForExistence(timeout: 5))
     edit.activateForPlannerJourney()
   }
@@ -521,8 +603,19 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
   }
 
   private func reveal(_ identifier: String, application: XCUIApplication) -> XCUIElement {
-    let element = application.plannerElement(identifier)
+    var element = application.plannerElement(identifier)
     revealSidebarIfNeeded(application, element: element)
+    #if os(iOS)
+      if !element.waitForExistence(timeout: 2),
+        let overflow = application.buttons.matching(identifier: "OverflowBarButtonItem")
+          .allElementsBoundByIndex.first(where: \.isHittable)
+      {
+        overflow.activateForPlannerJourney()
+        if !element.exists && identifier == "saved.list.new" {
+          element = application.collectionViews.buttons["New List"].firstMatch
+        }
+      }
+    #endif
     XCTAssertTrue(element.waitForExistence(timeout: 10))
     return element
   }
@@ -533,7 +626,7 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
   }
 
   private func recordScreenshot(_ application: XCUIApplication, name: String) {
-    let attachment = XCTAttachment(screenshot: application.screenshot())
+    let attachment = XCTAttachment(screenshot: application.windows.firstMatch.screenshot())
     attachment.name = name
     attachment.lifetime = .keepAlways
     add(attachment)
