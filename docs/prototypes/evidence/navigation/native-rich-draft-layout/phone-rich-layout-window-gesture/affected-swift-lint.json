@@ -1,0 +1,17 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "sourceSHA256": {
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "cad1ef1d031160bea31d679535428a9dd775644cd6f7c6a9cf2c091f505fc9d2"
+  },
+  "historicalOnly": true,
+  "epoch": "phone-rich-layout-window-gesture"
+}

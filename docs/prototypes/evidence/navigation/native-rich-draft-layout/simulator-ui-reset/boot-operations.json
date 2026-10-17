@@ -1,0 +1,28 @@
+{
+  "scope": "Boot the identified test iPad from verified Shutdown without erasing data. No native journey credit.",
+  "operations": [
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "boot",
+        "FBD72DAB-1D40-4E64-912D-7F9763E00446"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "bootstatus",
+        "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "-b"
+      ],
+      "exitCode": 0,
+      "stdout": "Monitoring boot status for iPad Air 11-inch (M4) (FBD72DAB-1D40-4E64-912D-7F9763E00446).\n[2026-10-17 05:31:55 +0000] Status=2, isTerminal=NO, Elapsed=00:01.\n\tWaiting on Data Migration\n\t\tReason:(null)\n\t\tMigration Elapsed:00:00 seconds\n\n[2026-10-17 05:31:56 +0000] Status=4, isTerminal=NO, Elapsed=00:02.\n\tWaiting on System App\n\n[2026-10-17 05:31:56 +0000] Status=4, isTerminal=NO, Elapsed=00:02.\n\tWaiting on System App\n\n[2026-10-17 05:31:57 +0000] Status=4, isTerminal=NO, Elapsed=00:03.\n\tWaiting on System App\n\n[2026-10-17 05:31:58 +0000] Status=4, isTerminal=NO, Elapsed=00:04.\n\tWaiting on System App\n\n[2026-10-17 05:32:00 +0000] Status=4294967295, isTerminal=YES, Elapsed=00:06.\n\tFinished\n\n",
+      "stderr": ""
+    }
+  ]
+}

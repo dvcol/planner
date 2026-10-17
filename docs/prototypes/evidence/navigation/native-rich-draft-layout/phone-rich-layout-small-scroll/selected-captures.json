@@ -1,0 +1,20 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "5F34FA1D-1667-4E76-8147-CE5F98F87EAE.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives expanded layout_0_96F44084-BF61-4B88-B63F-9361F0EF3C03.png",
+    "timestamp": 1792212835.923
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "286D305F-8392-45EC-94B7-D2D4A92EBDE1.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives portrait navigation layout_0_87C83278-6801-4C5A-9EAF-E4F1C5B213BF.png",
+    "timestamp": 1792212806.5
+  }
+]

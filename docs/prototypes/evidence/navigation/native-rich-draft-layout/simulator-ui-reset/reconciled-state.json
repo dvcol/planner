@@ -1,0 +1,4 @@
+{
+  "state": "Shutdown",
+  "note": "After the timeout the runner had already shut down this device before the attempted shutdown. Original failed operation retained."
+}

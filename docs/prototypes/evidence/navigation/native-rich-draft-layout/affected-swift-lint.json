@@ -1,0 +1,17 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/Scenes/SavedEditItemForm.swift",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedEditItemForm.swift": "31206080ceb821e2c33b91292b3ae032f06a0208e45659bc6595a43c8b9652a7",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "4dd4d24d2cf9732e71dd94c95193bc08fb6cb628fdabe5f59b93b7611efb0f2c"
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "method": "Each retained original named PNG was individually opened with view_image. Final-source passing invocations are distinguished from historical passes and diagnostics.",
+  "images": [
+    {
+      "path": "phone-rich-layout-identified-form/FCF3132A-DB40-4C4C-A523-269605A69D07.png",
+      "title": "Edited Item draft survives expanded layout_0_7CC023B4-F416-4AB5-87C1-A21D1A26192D.png",
+      "sha256": "c42ceac37a881a80174f7edc3f9f461a09a99f9b27cece0d02ff2435db3a3eea",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": true,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    },
+    {
+      "path": "phone-rich-layout-identified-form/87281B20-823E-42D7-8AB8-4C6E6E03920F.png",
+      "title": "Edited Item draft survives portrait navigation layout_0_955DBE07-176B-45CA-9A0A-AE5EE4AA3B1B.png",
+      "sha256": "fc02dcc04deada82b328e717d55248e7807b10ef91067383e2cd4a3c4d790e95",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": true,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    },
+    {
+      "path": "phone-rich-layout-identified-form/97A74529-4AA3-43D4-9A59-BE2F20D1E8D2.png",
+      "title": "Created rich Item keeps its Origin List appearance_0_9EE9D7D5-D22D-4E40-8D50-64C10D7F29EC.png",
+      "sha256": "de71b62105b26235eb9e2a96c08ac1a29d5de8bab663ad49e076c2a70b72521a",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": true,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    },
+    {
+      "path": "phone-rich-layout-identified-form/FF18EFA1-4B9F-4EFF-B3C0-8D9B0C8299E8.png",
+      "title": "Rich New Item draft in the List detail column_0_29DEFFFC-5BDA-456F-8B30-8CF6C8837CC2.png",
+      "sha256": "842aa8329fd3611a1e4be8dc8992e4baf01df9a38a5017ddb0e203870093b1b4",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": true,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    },
+    {
+      "path": "phone-rich-layout-small-scroll/5F34FA1D-1667-4E76-8147-CE5F98F87EAE.png",
+      "title": "Edited Item draft survives expanded layout_0_96F44084-BF61-4B88-B63F-9361F0EF3C03.png",
+      "sha256": "d288be810335331c478c189ff28faa3c8889c401cc6dccba075613927260d13a",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": false,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    },
+    {
+      "path": "phone-rich-layout-small-scroll/286D305F-8392-45EC-94B7-D2D4A92EBDE1.png",
+      "title": "Edited Item draft survives portrait navigation layout_0_87C83278-6801-4C5A-9EAF-E4F1C5B213BF.png",
+      "sha256": "1561bdefe3a58d620ebf997ace1e0b3a3ac6256a5e406a644b8df0594f2f93ad",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": false,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    },
+    {
+      "path": "phone-rich-layout-window-gesture/A7354B35-930E-4EFA-B617-42457D32BE29.png",
+      "title": "Item editor window before visibility failure_0_05FC2486-11D5-402D-9325-D709B7EE0B90.png",
+      "sha256": "aa065e1a404a3f56e0ce4ca4c70342ebc2cee477be05b6543bc7307748df29db",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": false,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    },
+    {
+      "path": "tablet-rich-creation-identified-form/087D6A6A-C762-4F49-A606-D183F19CBF8D.png",
+      "title": "Created rich Item keeps its Origin List appearance_0_BB77F8A3-74F2-4005-A992-9B08853AFC84.png",
+      "sha256": "4ddf1532736e7b246bceb13adaca3859cc196115d9fce27474f99b6120dcfc2a",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": true,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    },
+    {
+      "path": "tablet-rich-creation-identified-form/AFE821F2-988B-436E-B597-B6EA9F0A5E98.png",
+      "title": "Rich New Item draft in the List detail column_0_A5B233D1-7338-4F1D-A3CF-93EDE2698F4E.png",
+      "sha256": "07947eb4e3c75dcae1129aff1ccb7a421097cabb3e3bfcd2f5397e8321d342c8",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": true,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    },
+    {
+      "path": "tablet-rich-layout-and-creation/49028D23-C482-48C1-AB51-12FAC8845258.png",
+      "title": "Item editor window before visibility failure_0_F0DE703C-B1BA-46E8-BD2F-8EA9071130FC.png",
+      "sha256": "524f6618e32470da4a3b88139575b7cb557f98ec35a79cca0c53dd853f4ebff2",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": false,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    },
+    {
+      "path": "tablet-rich-layout-and-creation/EA2C699F-EAC0-4450-BC67-DE79F8E8E816.png",
+      "title": "Item editor window before visibility failure_0_E8937568-6D97-4B4E-A7EF-9ACD1845BDCC.png",
+      "sha256": "f5d445996c87d1d31dd919d8f65ab6572d1dbdca5808632d5981965e751965ad",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": false,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    },
+    {
+      "path": "tablet-rich-layout-form/DC591DEB-C55B-4CD2-AE21-C4EB477A9F83.png",
+      "title": "Item editor window before visibility failure_0_42DF8BE5-36CF-44A1-B06B-FD15B162DB6A.png",
+      "sha256": "09e49a1495c7ccf20d7e861b682c1ac1a07dfda0cdf4ad595b044ac9199d7f2f",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": false,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    },
+    {
+      "path": "tablet-rich-layout-identified-form-retry/24F960AC-AE17-40BC-AA27-1874CD60BF74.png",
+      "title": "Edited Item draft survives expanded layout_0_5CAB6B66-706F-49D3-8804-D786BAFCAACA.png",
+      "sha256": "454bd9cbef84faeba81bafb9984b4908814a0269c6005643ed4228f46a79e894",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": true,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    },
+    {
+      "path": "tablet-rich-layout-identified-form-retry/5CFBF128-EA02-496B-BEB9-77EA4E258275.png",
+      "title": "Edited Item draft survives portrait navigation layout_0_BB32D979-1BFD-4BD7-A868-7FB46402578B.png",
+      "sha256": "64809dd7bc744519744ad132d4d0d6235a00f03602714a9db6672d6035208278",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": true,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    },
+    {
+      "path": "tablet-rich-layout-keyboard-frame/4DEA3688-09E5-4F86-83C2-D80EA1DA2D83.png",
+      "title": "Item editor window before visibility failure_0_B6D1DEB3-1C75-46D8-BAEE-4F860EF68BDC.png",
+      "sha256": "e4d39438b5f578928cd217c0eb5e9396a805c5148f56d64b8fd85cdc5968a31d",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": false,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    },
+    {
+      "path": "tablet-rich-layout-keyboard-frame/AE7D3875-2660-4A0A-923E-17D1D8AF5752.png",
+      "title": "Edited Item draft survives expanded layout_0_4E7EB1A9-0A58-4F27-B118-695D768F695A.png",
+      "sha256": "aa82b7de381c411a682fa82982a4038b329a5d4a27284cc8a51ace84ebd3399e",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": false,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    },
+    {
+      "path": "tablet-rich-layout-keyboard-frame/88192766-F35C-4607-8909-18FDE5933E05.png",
+      "title": "Edited Item draft survives portrait navigation layout_0_B9A1EE6F-44E2-45AB-9C6D-3DD6A8B4262F.png",
+      "sha256": "1396d54e6c345aa1ed8a58010e298c5d8f2286bd9c15b3263af9f575720b222e",
+      "individuallyInspected": true,
+      "finalSourcePassingInvocation": false,
+      "scope": "Original named Planner-window capture. Earlier source epochs and failed invocations give no final-source pass credit; no physical, accessibility or whole-app polish qualification."
+    }
+  ]
+}

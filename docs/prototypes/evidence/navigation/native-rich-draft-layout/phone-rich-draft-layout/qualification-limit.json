@@ -1,0 +1,5 @@
+{
+  "scope": "Initial rich-field layout observation.",
+  "finalQualification": false,
+  "reason": "Source review requires explicit local Todo assertions after Save and relaunch before final qualification."
+}

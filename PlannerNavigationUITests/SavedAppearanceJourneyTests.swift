@@ -2389,13 +2389,16 @@ final class SavedAppearanceJourneyTests: XCTestCase {
 
   private func revealEditorElement(_ element: XCUIElement, application: XCUIApplication) {
     if element.isHittable { return }
-    for _ in 0..<3 {
-      #if os(macOS)
-        scrollItemDetail(application)
-      #else
-        application.swipeUp()
-      #endif
+    for _ in 0..<8 {
+      scrollItemDetail(application)
       if element.isHittable { return }
+    }
+    if !element.isHittable {
+      let hierarchy = XCTAttachment(string: application.debugDescription)
+      hierarchy.name = "Item editor own-app hierarchy before visibility failure"
+      hierarchy.lifetime = .keepAlways
+      add(hierarchy)
+      recordScreenshot(application, name: "Item editor window before visibility failure")
     }
     XCTAssertTrue(element.waitForPlannerHittability())
   }
@@ -2411,29 +2414,40 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     ).firstMatch
     for _ in 0..<6 {
       if bookmark.exists && bookmark.isHittable { return bookmark }
-      #if os(iOS)
-        let window = application.windows.firstMatch
-        let start = window.coordinate(withNormalizedOffset: .init(dx: 0.96, dy: 0.74))
-        let end = window.coordinate(withNormalizedOffset: .init(dx: 0.96, dy: 0.50))
-        start.press(forDuration: 0.01, thenDragTo: end)
-      #else
-        scrollItemDetail(application)
-      #endif
+      scrollItemDetail(application)
     }
     XCTAssertTrue(bookmark.waitForExistence(timeout: 5))
     return bookmark
   }
 
-  #if os(macOS)
-    private func scrollItemDetail(_ application: XCUIApplication) {
+  private func scrollItemDetail(_ application: XCUIApplication) {
+    #if os(macOS)
       let scrollViews = application.windows.firstMatch.scrollViews
       guard scrollViews.count > 0 else {
         XCTFail("The Item detail scroll view is unavailable")
         return
       }
       scrollViews.element(boundBy: scrollViews.count - 1).scroll(byDeltaX: 0, deltaY: -400)
-    }
-  #endif
+    #else
+      let hideKeyboard = application.keyboards.buttons["Hide keyboard"]
+      if hideKeyboard.exists && hideKeyboard.isHittable {
+        hideKeyboard.tap()
+        let keyboard = application.keyboards.firstMatch
+        let dismissed = NSPredicate { _, _ in
+          !keyboard.exists || keyboard.frame.isEmpty
+        }
+        XCTAssertEqual(
+          XCTWaiter.wait(
+            for: [XCTNSPredicateExpectation(predicate: dismissed, object: keyboard)], timeout: 5),
+          .completed, "The software keyboard must stop covering the Item editor.")
+      }
+      let editForm = application.collectionViews["saved.item.edit.form"]
+      let scrollContainer = editForm.exists ? editForm : application.windows.firstMatch
+      let start = scrollContainer.coordinate(withNormalizedOffset: .init(dx: 0.96, dy: 0.74))
+      let end = scrollContainer.coordinate(withNormalizedOffset: .init(dx: 0.96, dy: 0.50))
+      start.press(forDuration: 0.01, thenDragTo: end)
+    #endif
+  }
 
   private func removeBookmark(_ identity: String, application: XCUIApplication) {
     let actions = application.plannerElement("saved.item.edit.link.actions.\(identity)")
@@ -2684,6 +2698,32 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       field.activateForPlannerJourney()
       field.typeText(value)
     }
+    let estimateShortcuts = application.plannerElement("saved.item.estimate.shortcuts")
+    revealEditorElement(estimateShortcuts, application: application)
+    estimateShortcuts.activateForPlannerJourney()
+    application.plannerElement("Half-day (12 hours)").activateForPlannerJourney()
+    let locationFields = [
+      ("saved.item.location.name", "Hama-rikyu Gardens"),
+      ("saved.item.location.address", "1-1 Hamarikyuteien, Chuo City, Tokyo"),
+    ]
+    for (identifier, value) in locationFields {
+      let field = application.textFields[identifier]
+      revealEditorElement(field, application: application)
+      field.activateForPlannerJourney()
+      field.typeText(value)
+    }
+    let bookmarkURL = "https://example.com/resizable-visit"
+    let bookmarkDraftIdentifier = addBookmark(
+      bookmarkURL, label: "Visit guide", application: application,
+      accessibilityIdentifierPrefix: "saved.item.link")
+    let richFields =
+      fields + locationFields + [
+        (bookmarkDraftIdentifier, bookmarkURL),
+        (
+          bookmarkDraftIdentifier.replacingOccurrences(
+            of: "saved.item.link.url.", with: "saved.item.link.label."), "Visit guide"
+        ),
+      ]
     #if os(macOS)
       let window = application.windows.firstMatch
       let originalWidth = window.frame.width
@@ -2694,27 +2734,27 @@ final class SavedAppearanceJourneyTests: XCTestCase {
         }
       }
       Self.resizePlannerWindow(window, width: 860)
-      assertNewItemFields(fields, application: application)
+      assertNewItemFields(richFields, application: application)
       recordScreenshot(application, name: "Edited Item draft survives a narrow Mac window")
       let hideSidebar = window.buttons["Hide Sidebar"]
       XCTAssertTrue(hideSidebar.waitForExistence(timeout: 5))
       hideSidebar.click()
-      assertNewItemFields(fields, application: application)
+      assertNewItemFields(richFields, application: application)
       let showSidebar = window.buttons["Show Sidebar"]
       XCTAssertTrue(showSidebar.waitForExistence(timeout: 5))
       showSidebar.click()
       Self.resizePlannerWindow(window, width: 1200)
     #else
       waitForPlannerWindowOrientation(application, landscape: true)
-      assertNewItemFields(fields, application: application)
+      assertNewItemFields(richFields, application: application)
       XCUIDevice.shared.orientation = .portrait
       waitForPlannerWindowOrientation(application, landscape: false)
-      assertNewItemFields(fields, application: application)
+      assertNewItemFields(richFields, application: application)
       recordScreenshot(application, name: "Edited Item draft survives portrait navigation layout")
       XCUIDevice.shared.orientation = .landscapeLeft
       waitForPlannerWindowOrientation(application, landscape: true)
     #endif
-    assertNewItemFields(fields, application: application)
+    assertNewItemFields(richFields, application: application)
     XCTAssertFalse(application.windows.firstMatch.sheets.buttons["Keep Editing"].exists)
     recordScreenshot(application, name: "Edited Item draft survives expanded layout")
     application.plannerElement("saved.item.save").activateForPlannerJourney()
@@ -2725,10 +2765,22 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     let appearance = appearances.firstMatch
     let appearanceIdentifier = appearance.identifier
     XCTAssertTrue(appearanceIdentifier.hasPrefix("saved.appearance."))
+    let completion = application.plannerElement(
+      appearanceIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion."))
+    XCTAssertTrue(completion.waitForPlannerValue("To do"))
     appearance.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["In Origin"].waitForExistence(timeout: 10))
     XCTAssertTrue(application.staticTexts["Keep the original destination"].exists)
     XCTAssertTrue(application.staticTexts["Preserve these notes through layout changes"].exists)
+    let estimate = application.descendants(matching: .any).matching(
+      identifier: "saved.item.estimate"
+    ).firstMatch
+    revealEditorElement(estimate, application: application)
+    XCTAssertTrue(estimate.waitForPlannerValue("720 minutes"))
+    let bookmark = revealSavedBookmark("Visit guide", application: application)
+    XCTAssertTrue(bookmark.waitForPlannerValue(bookmarkURL))
+    let bookmarkIdentifier = bookmark.identifier
     application.terminate()
     application.launchSavedPlannerJourney()
     openList("Origin", itemTitle: "Resizable visit", application: application)
@@ -2736,6 +2788,14 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     XCTAssertEqual(
       application.savedPlannerItemRows("Resizable visit").firstMatch.identifier,
       appearanceIdentifier)
+    XCTAssertTrue(completion.waitForPlannerValue("To do"))
+    appearance.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["In Origin"].waitForExistence(timeout: 10))
+    revealEditorElement(estimate, application: application)
+    XCTAssertTrue(estimate.waitForPlannerValue("720 minutes"))
+    let retainedBookmark = revealSavedBookmark("Visit guide", application: application)
+    XCTAssertTrue(retainedBookmark.waitForPlannerValue(bookmarkURL))
+    XCTAssertEqual(retainedBookmark.identifier, bookmarkIdentifier)
     openCatalogSection("Items", application: application)
     XCTAssertEqual(application.savedPlannerItemRows("Resizable visit").count, 1)
     openSection("Lists", application: application)
@@ -2744,15 +2804,49 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     XCTAssertEqual(application.savedPlannerListRow("Origin").identifier, listIdentifier)
     other.activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    openCatalogSection("Items", application: application)
+    application.savedPlannerItemRows("Resizable visit").firstMatch.activateForPlannerJourney()
+    openItemEditor(application)
+    for (identifier, value) in locationFields {
+      let savedIdentifier = identifier.replacingOccurrences(
+        of: "saved.item.location.", with: "saved.item.edit.location.")
+      let field = application.textFields[savedIdentifier]
+      revealEditorElement(field, application: application)
+      XCTAssertTrue(field.waitForPlannerValue(value))
+    }
+    application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
   }
 
   private func assertNewItemFields(
     _ fields: [(String, String)], application: XCUIApplication
   ) {
     XCTAssertTrue(application.plannerElement("saved.item.save").waitForPlannerHittability())
-    XCTAssertTrue(application.textFields["saved.item.notes"].waitForPlannerHittability())
+    let title = application.textFields["saved.item.title"]
+    for _ in 0..<8 {
+      if title.isHittable { break }
+      #if os(macOS)
+        let scrollViews = application.windows.firstMatch.scrollViews
+        XCTAssertGreaterThan(scrollViews.count, 0)
+        scrollViews.element(boundBy: scrollViews.count - 1).scroll(byDeltaX: 0, deltaY: 400)
+      #else
+        application.windows.firstMatch.swipeDown()
+      #endif
+    }
+    XCTAssertTrue(title.waitForPlannerHittability())
     for (identifier, value) in fields {
-      XCTAssertTrue(application.textFields[identifier].waitForPlannerValue(value))
+      let field = application.textFields[identifier]
+      revealEditorElement(field, application: application)
+      XCTAssertTrue(field.waitForPlannerValue(value))
+      if identifier == "saved.item.notes" {
+        let unit = application.plannerElement("saved.item.estimate.unit")
+        revealEditorElement(unit, application: application)
+        XCTAssertTrue(unit.label.contains("Hours"))
+        let quantity = application.descendants(matching: .any).matching(
+          identifier: "saved.item.estimate.quantity"
+        ).firstMatch
+        revealEditorElement(quantity, application: application)
+        XCTAssertTrue(quantity.waitForPlannerValue("12"))
+      }
     }
   }
 

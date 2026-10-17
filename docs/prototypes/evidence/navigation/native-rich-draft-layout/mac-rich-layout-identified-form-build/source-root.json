@@ -1,0 +1,11 @@
+{
+  "root": "/private/tmp/PlannerContainerShortcutMacSource",
+  "base": "109dfdbf0c2e4517eb4fe2666c3dc98830940f01",
+  "overlays": [
+    "Planner/Scenes/SavedEditItemForm.swift",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift",
+    "Planner/Scenes/SavedNewItemForm.swift",
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift",
+    "Planner/AgentControl/PlannerMCPReviewTool.swift"
+  ]
+}

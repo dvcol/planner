@@ -1,0 +1,38 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "FCF3132A-DB40-4C4C-A523-269605A69D07.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives expanded layout_0_7CC023B4-F416-4AB5-87C1-A21D1A26192D.png",
+    "timestamp": 1792215713.071
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "87281B20-823E-42D7-8AB8-4C6E6E03920F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives portrait navigation layout_0_955DBE07-176B-45CA-9A0A-AE5EE4AA3B1B.png",
+    "timestamp": 1792215684.401
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "97A74529-4AA3-43D4-9A59-BE2F20D1E8D2.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Created rich Item keeps its Origin List appearance_0_9EE9D7D5-D22D-4E40-8D50-64C10D7F29EC.png",
+    "timestamp": 1792215898.156
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "FF18EFA1-4B9F-4EFF-B3C0-8D9B0C8299E8.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Rich New Item draft in the List detail column_0_29DEFFFC-5BDA-456F-8B30-8CF6C8837CC2.png",
+    "timestamp": 1792215884.994
+  }
+]

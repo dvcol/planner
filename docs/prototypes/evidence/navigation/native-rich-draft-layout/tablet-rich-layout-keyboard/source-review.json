@@ -1,0 +1,17 @@
+{
+  "baseline": "109dfdbf0c2e4517eb4fe2666c3dc98830940f01",
+  "sourceSHA256": {
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "a6d1550991c75a4165e7869e4ed6a1b1cf7f78bbb2d34eb74428a7208ad40be1"
+  },
+  "runtimeQualification": "Pending corrected native keyboard interaction. Source reviews alone give no runtime credit.",
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "Use only the observed hittable native Hide keyboard control, wait for disappearance, then use the existing bounded drag. Mac behavior, final hittability and failure evidence remain intact."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "report": "Exact rich fields, draft and saved bookmark identities, original List/appearance identities, both Todo assertions and relaunch checks remain. Other callers need their own runtime qualification."
+  }
+}

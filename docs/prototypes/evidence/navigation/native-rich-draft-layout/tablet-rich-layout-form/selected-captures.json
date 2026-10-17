@@ -1,0 +1,20 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "DC591DEB-C55B-4CD2-AE21-C4EB477A9F83.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item editor window before visibility failure_0_42DF8BE5-36CF-44A1-B06B-FD15B162DB6A.png",
+    "timestamp": 1792214556.113
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "114F75BD-7841-498C-B75A-D2F7179B6547.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item editor own-app hierarchy before visibility failure_0_26A85C02-338E-4B18-AD1C-A435960493BD.txt",
+    "timestamp": 1792214555.98
+  }
+]

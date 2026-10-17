@@ -1,0 +1,15 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "sourceSHA256": {
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "46e7a923938ca4796632b0262aae1b05b8408b1921acc60c76fe71b179ebb9b4"
+  }
+}

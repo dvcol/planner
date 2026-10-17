@@ -1,0 +1,20 @@
+{
+  "baseline": "109dfdbf0c2e4517eb4fe2666c3dc98830940f01",
+  "sourceSHA256": {
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "cad1ef1d031160bea31d679535428a9dd775644cd6f7c6a9cf2c091f505fc9d2"
+  },
+  "runtimeQualification": "Pending own-window probe; no cause established.",
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "Window-scoped bounded scrolling, final hittability assertion, immediate own-app/window failure capture and exact membership Todo checks preserve the approved boundary."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "resolved": "Assert the exact original appearance completion control is To do after Save and relaunch.",
+    "report": "Rich field, draft/saved bookmark identity and original destination assertions remain. No production interface or cause claim."
+  },
+  "historicalOnly": true,
+  "epoch": "phone-rich-layout-window-gesture"
+}

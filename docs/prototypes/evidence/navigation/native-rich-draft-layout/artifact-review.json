@@ -1,0 +1,18 @@
+{
+  "baseline": "109dfdbf0c2e4517eb4fe2666c3dc98830940f01",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedEditItemForm.swift": "31206080ceb821e2c33b91292b3ae032f06a0208e45659bc6595a43c8b9652a7",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "4dd4d24d2cf9732e71dd94c95193bc08fb6cb628fdabe5f59b93b7611efb0f2c"
+  },
+  "reportSHA256": "d6699fdb758b5b9ee52b78bd5e710e2a81592871fc21f4d270dc05921a5ef5f5",
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "No confirmed Standards, provenance or report findings remain. Raw final logs, 945 compiler inputs, 469 runtime inputs, six products, archived changed sources and lint/review hashes reconcile. All 17 PNG hashes reconcile; eight belong to final passing invocations. Local report links resolve. Historical failures/timeouts remain uncredited and Mac receives compiler-only credit."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "report": "No confirmed Spec or evidence discrepancy. Raw logs support the final phone two-function pass and two separate tablet passes with the recorded durations. Compiler/runtime/product manifests and all 17 images reconcile. Mac runtime, Q94, other adaptive layouts and broader map gates remain explicit."
+  }
+}

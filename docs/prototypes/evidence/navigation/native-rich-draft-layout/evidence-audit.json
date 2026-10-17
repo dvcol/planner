@@ -1,0 +1,12 @@
+{
+  "finalCompilerInputsPerPlatform": 945,
+  "frozenRuntimeInputsPerInvocation": 469,
+  "verifiedProductsPerPlatform": 6,
+  "passingFunctionsPerPlatform": {
+    "phone": 2,
+    "tablet": 2,
+    "mac": 0
+  },
+  "retainedIndividuallyInspectedPNGs": 17,
+  "scope": "Rich New Item draft values and original List through simulator orientation changes, explicit Save and relaunch, plus existing rich-creation compatibility. Test/controller corrections plus an accessibility identity on the existing Edit Form. No authoring or persistence behavior changes. Mac compiler-only. Other layouts, labels Q94, physical/signing/CloudKit/Share, accessibility, performance and whole-app polish remain open."
+}

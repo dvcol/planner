@@ -1,0 +1,17 @@
+{
+  "baseline": "109dfdbf0c2e4517eb4fe2666c3dc98830940f01",
+  "sourceSHA256": {
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "46e7a923938ca4796632b0262aae1b05b8408b1921acc60c76fe71b179ebb9b4"
+  },
+  "runtimeQualification": "Outcomes are recorded per source epoch; source review gives no runtime credit.",
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "The bounded predicate accepts keyboard removal or its recorded empty frame and rejects an existing nonempty frame. Original bounded scroll, Mac behavior and failure evidence remain intact."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "report": "The observed native keyboard control and visible-frame predicate preserve exact rich values, minutes, both Todo checks and original draft/saved identities through relaunch. No production changes."
+  }
+}

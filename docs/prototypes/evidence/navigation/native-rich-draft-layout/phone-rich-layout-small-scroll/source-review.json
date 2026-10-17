@@ -1,0 +1,18 @@
+{
+  "baseline": "109dfdbf0c2e4517eb4fe2666c3dc98830940f01",
+  "sourceSHA256": {
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "0748c49421ef4f183a24a0cdb9f06ce90e924593d28a810dc9cdf46f00c852e4"
+  },
+  "runtimeQualification": "Pending smaller-drag probe; no product cause or runtime pass claimed.",
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "Both reveal helpers share the existing short trailing-edge drag. Editor searches remain bounded at eight attempts, with final hittability and failure attachments. Mac wheel behavior is unchanged."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "resolved": "Exact original appearance completion is To do after Save and relaunch.",
+    "report": "Exact rich fields, draft and saved bookmark identities, original List/appearance identity and relaunch checks remain. No production interface change."
+  }
+}

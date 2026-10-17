@@ -1,0 +1,17 @@
+{
+  "baseline": "109dfdbf0c2e4517eb4fe2666c3dc98830940f01",
+  "sourceSHA256": {
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "e75bb3be929f9ab2235d9c640f0f19a8ba9657e23555e5eb0022a067e9b2dea3"
+  },
+  "runtimeQualification": "Literal per-epoch native outcomes are independent of this source review.",
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "The native keyboard frame predicate and Form-relative drag address recorded geometry. Missing collection views fail explicitly; retry bounds, failure evidence, existing callers and Mac behavior remain intact."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "report": "The controller retains all rich values, exact minutes, both Todo assertions and original draft/saved identities through relaunch. It changes no production presentation and gives no runtime credit alone."
+  }
+}

@@ -1,0 +1,282 @@
+{
+  "policy": "Literal recorded function outcomes and whole invocation exits are separate. Compiler-only and setup failures supply no native runtime pass credit. Final qualified epochs are named in the report.",
+  "runs": [
+    {
+      "epoch": "mac-rich-layout-form-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-rich-layout-identified-form-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-rich-layout-initial-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-rich-layout-keyboard-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-rich-layout-keyboard-frame-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-rich-layout-small-scroll-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-rich-layout-form-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-rich-layout-identified-form-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-rich-layout-initial-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-rich-layout-keyboard-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-rich-layout-keyboard-frame-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-rich-layout-small-scroll-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-rich-layout-window-gesture-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "phone-rich-draft-layout",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerRichDraftLayoutRuntime-phone-rich-draft-layout.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "failed",
+          "seconds": 64.133
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-rich-layout-identified-form",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerRichDraftLayoutRuntime-phone-rich-layout-identified-form.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "passed",
+          "seconds": 256.366
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList",
+          "outcome": "passed",
+          "seconds": 129.555
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-rich-layout-small-scroll",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerRichDraftLayoutRuntime-phone-rich-layout-small-scroll.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "passed",
+          "seconds": 244.859
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-rich-layout-window-gesture",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerRichDraftLayoutRuntime-phone-rich-layout-window-gesture.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "failed",
+          "seconds": 67.491
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-rich-creation-identified-form",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerRichDraftLayoutRuntime-tablet-rich-creation-identified-form.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList",
+          "outcome": "passed",
+          "seconds": 142.368
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-rich-layout-and-creation",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerRichDraftLayoutRuntime-tablet-rich-layout-and-creation.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "failed",
+          "seconds": 72.655
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList",
+          "outcome": "failed",
+          "seconds": 70.756
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-rich-layout-form",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerRichDraftLayoutRuntime-tablet-rich-layout-form.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "failed",
+          "seconds": 247.081
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-rich-layout-identified-form",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerRichDraftLayoutRuntime-tablet-rich-layout-identified-form.xcresult",
+      "type": "native-runtime",
+      "functions": [],
+      "startedWithoutCompletedOutcome": [
+        "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges"
+      ],
+      "timedOutFunctions": [
+        "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges"
+      ],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-rich-layout-identified-form-retry",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerRichDraftLayoutRuntime-tablet-rich-layout-identified-form-retry.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "passed",
+          "seconds": 210.364
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-rich-layout-keyboard",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerRichDraftLayoutRuntime-tablet-rich-layout-keyboard.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "failed",
+          "seconds": 87.352
+        }
+      ],
+      "startedWithoutCompletedOutcome": [
+        "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList"
+      ],
+      "timedOutFunctions": [
+        "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList"
+      ],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-rich-layout-keyboard-frame",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerRichDraftLayoutRuntime-tablet-rich-layout-keyboard-frame.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "failed",
+          "seconds": 238.139
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    }
+  ]
+}

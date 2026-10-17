@@ -1,0 +1,18 @@
+{
+  "baseline": "109dfdbf0c2e4517eb4fe2666c3dc98830940f01",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedEditItemForm.swift": "31206080ceb821e2c33b91292b3ae032f06a0208e45659bc6595a43c8b9652a7",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "4dd4d24d2cf9732e71dd94c95193bc08fb6cb628fdabe5f59b93b7611efb0f2c"
+  },
+  "runtimeQualification": "Literal per-epoch native outcomes are independent of this source review.",
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "The Form accessibility identity follows existing native patterns without state or testing injection. The iOS helper targets that exact Edit form, preserves New Item/detail window gestures and Mac behavior, and retains bounded retries and exact oracles."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "report": "The identity is attached to the existing Edit Form, avoiding accessibility-order assumptions without presentation, navigation or persistence changes. Rich values, exact minutes, both Todo checks and draft/saved identities remain intact."
+  }
+}
