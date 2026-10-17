@@ -1,0 +1,534 @@
+{
+  "policy": "Literal recorded function outcomes and whole invocation exits are separate. Compiler-only and setup failures supply no native runtime pass credit. Final qualified epochs are named in the report.",
+  "runs": [
+    {
+      "epoch": "mac-capture-overflow-compile",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-context-deletion-diagnostic",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-context-deletion-diagnostic.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingASelectedAppearanceInAnotherWindowSelectsItsFirstVisibleSibling",
+          "outcome": "failed",
+          "seconds": 67.618
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "mac-context-environment-regression",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-context-environment-regression.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingASelectedAppearanceInAnotherWindowSelectsItsFirstVisibleSibling",
+          "outcome": "failed",
+          "seconds": 73.346
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "mac-context-window-oracle-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-deletion-diagnostic-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-detail-environment-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-explicit-detail-build",
+      "exitCode": 65,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-layout-and-deletion-compatibility",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-layout-and-deletion-compatibility.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingASelectedAppearanceInAnotherWindowSelectsItsFirstVisibleSibling",
+          "outcome": "failed",
+          "seconds": 87.991
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingSelectedListChoosesTheFirstVisibleListAndItsFirstItemOnRegularLayouts",
+          "outcome": "passed",
+          "seconds": 126.524
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "passed",
+          "seconds": 88.994
+        }
+      ],
+      "startedWithoutCompletedOutcome": [
+        "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort"
+      ],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "mac-layout-compatibility-final",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-layout-compatibility-final.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testAddingFromListDetailAndRowMenuKeepsTheOriginalContextAndExistingDestination",
+          "outcome": "passed",
+          "seconds": 144.474
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingASelectedAppearanceInAnotherWindowSelectsItsFirstVisibleSibling",
+          "outcome": "passed",
+          "seconds": 72.958
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort",
+          "outcome": "passed",
+          "seconds": 58.741
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingSelectedListChoosesTheFirstVisibleListAndItsFirstItemOnRegularLayouts",
+          "outcome": "passed",
+          "seconds": 126.246
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "passed",
+          "seconds": 88.969
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 56.843
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "mac-layout-compatibility-final-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-layout-initial-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-layout-observed",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-layout-observed.xcresult",
+      "type": "native-runtime",
+      "functions": [],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "mac-layout-oracles-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-layout-startup-retry",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-layout-startup-retry.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "passed",
+          "seconds": 99.868
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "mac-layout-visible-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-static-cleanup-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-table-dependencies-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-table-dependencies-regression",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-table-dependencies-regression.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingASelectedAppearanceInAnotherWindowSelectsItsFirstVisibleSibling",
+          "outcome": "failed",
+          "seconds": 71.163
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "mac-table-environment-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-table-environment-regression",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-table-environment-regression.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingASelectedAppearanceInAnotherWindowSelectsItsFirstVisibleSibling",
+          "outcome": "failed",
+          "seconds": 31.197
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "mac-table-environment-retry",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-mac-table-environment-retry.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingASelectedAppearanceInAnotherWindowSelectsItsFirstVisibleSibling",
+          "outcome": "failed",
+          "seconds": 80.132
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "mobile-capture-overflow-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-compact-selection-control-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "diagnosticOnly": true,
+      "correctedSourcePassCredit": false,
+      "sourceVariant": {
+        "variant": "Control without the compact membership-selection correction",
+        "difference": "Remove only preferredCompactColumn = .detail from the nonnil membership selection setter. All test functions/helpers and other production sources are identical to the current source."
+      },
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-detail-environment-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-explicit-detail-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-final-layout-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-layout-cleanup-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-layout-compatibility-final-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-layout-oracles-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-layout-visible-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-table-dependencies-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-table-environment-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "phone-add-compatibility-qualified",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-phone-add-compatibility-qualified.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testAddingFromListDetailAndRowMenuKeepsTheOriginalContextAndExistingDestination",
+          "outcome": "passed",
+          "seconds": 299.612
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-capture-overflow-qualified",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-phone-capture-overflow-qualified.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 70.591
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-compact-selection-control",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-phone-compact-selection-control.xcresult",
+      "diagnosticOnly": true,
+      "correctedSourcePassCredit": false,
+      "sourceVariant": {
+        "variant": "Control without the compact membership-selection correction",
+        "difference": "Remove only preferredCompactColumn = .detail from the nonnil membership selection setter. All test functions/helpers and other production sources are identical to the current source."
+      },
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testAddingFromListDetailAndRowMenuKeepsTheOriginalContextAndExistingDestination",
+          "outcome": "passed",
+          "seconds": 298.406
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-layout-and-compatibility",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-phone-layout-and-compatibility.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort",
+          "outcome": "passed",
+          "seconds": 71.701
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingSelectedListChoosesTheFirstVisibleListAndItsFirstItemOnRegularLayouts",
+          "outcome": "passed",
+          "seconds": 113.942
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "failed",
+          "seconds": 87.633
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 77.132
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-layout-compatibility-final",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-phone-layout-compatibility-final.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort",
+          "outcome": "passed",
+          "seconds": 66.342
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingSelectedListChoosesTheFirstVisibleListAndItsFirstItemOnRegularLayouts",
+          "outcome": "passed",
+          "seconds": 113.009
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "passed",
+          "seconds": 107.901
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 68.797
+        }
+      ],
+      "startedWithoutCompletedOutcome": [
+        "PlannerNavigationUITests.SavedAppearanceJourneyTests testAddingFromListDetailAndRowMenuKeepsTheOriginalContextAndExistingDestination"
+      ],
+      "timedOutFunctions": [
+        "PlannerNavigationUITests.SavedAppearanceJourneyTests testAddingFromListDetailAndRowMenuKeepsTheOriginalContextAndExistingDestination"
+      ],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-layout-detail-regression",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-phone-layout-detail-regression.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "passed",
+          "seconds": 111.601
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 69.945
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-capture-overflow-qualified",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-tablet-capture-overflow-qualified.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 92.929
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-layout-compatibility-final",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerQ93NativeRuntime-tablet-layout-compatibility-final.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testAddingFromListDetailAndRowMenuKeepsTheOriginalContextAndExistingDestination",
+          "outcome": "passed",
+          "seconds": 322.632
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort",
+          "outcome": "passed",
+          "seconds": 79.054
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingSelectedListChoosesTheFirstVisibleListAndItsFirstItemOnRegularLayouts",
+          "outcome": "passed",
+          "seconds": 141.021
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "passed",
+          "seconds": 117.635
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 14.929
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    }
+  ]
+}

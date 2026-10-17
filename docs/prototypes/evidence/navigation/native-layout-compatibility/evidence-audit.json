@@ -1,0 +1,157 @@
+{
+  "finalBuildInputsPerPlatform": 945,
+  "frozenRuntimeInputsPerInvocation": 469,
+  "finalCompilerProductsVerifiedPerPlatform": 6,
+  "qualifiedFunctionInvocations": 16,
+  "selectedInvocations": [
+    {
+      "epoch": "mac-layout-compatibility-final",
+      "wholeInvocationPassed": true,
+      "sourceDifferencesFromFinalInputs": [
+        "PlannerNavigationUITests/SavedListCaptureJourneyTests.swift"
+      ],
+      "selectedFunctions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testAddingFromListDetailAndRowMenuKeepsTheOriginalContextAndExistingDestination",
+          "outcome": "passed",
+          "seconds": 144.474
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingASelectedAppearanceInAnotherWindowSelectsItsFirstVisibleSibling",
+          "outcome": "passed",
+          "seconds": 72.958
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort",
+          "outcome": "passed",
+          "seconds": 58.741
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingSelectedListChoosesTheFirstVisibleListAndItsFirstItemOnRegularLayouts",
+          "outcome": "passed",
+          "seconds": 126.246
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "passed",
+          "seconds": 88.969
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 56.843
+        }
+      ],
+      "historicalProductHashesRetained": 6,
+      "scope": "Runtime wrapper verified frozen source and product hashes before/after this invocation. Historical products were superseded by the final compiler checks; active-source equivalence is recorded separately."
+    },
+    {
+      "epoch": "phone-layout-compatibility-final",
+      "wholeInvocationPassed": false,
+      "sourceDifferencesFromFinalInputs": [
+        "PlannerNavigationUITests/SavedListCaptureJourneyTests.swift"
+      ],
+      "selectedFunctions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort",
+          "outcome": "passed",
+          "seconds": 66.342
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingSelectedListChoosesTheFirstVisibleListAndItsFirstItemOnRegularLayouts",
+          "outcome": "passed",
+          "seconds": 113.009
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "passed",
+          "seconds": 107.901
+        }
+      ],
+      "historicalProductHashesRetained": 6,
+      "scope": "Runtime wrapper verified frozen source and product hashes before/after this invocation. Historical products were superseded by the final compiler checks; active-source equivalence is recorded separately."
+    },
+    {
+      "epoch": "phone-add-compatibility-qualified",
+      "wholeInvocationPassed": true,
+      "sourceDifferencesFromFinalInputs": [
+        "PlannerNavigationUITests/SavedListCaptureJourneyTests.swift"
+      ],
+      "selectedFunctions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testAddingFromListDetailAndRowMenuKeepsTheOriginalContextAndExistingDestination",
+          "outcome": "passed",
+          "seconds": 299.612
+        }
+      ],
+      "historicalProductHashesRetained": 6,
+      "scope": "Runtime wrapper verified frozen source and product hashes before/after this invocation. Historical products were superseded by the final compiler checks; active-source equivalence is recorded separately."
+    },
+    {
+      "epoch": "phone-capture-overflow-qualified",
+      "wholeInvocationPassed": true,
+      "sourceDifferencesFromFinalInputs": [],
+      "selectedFunctions": [
+        {
+          "function": "PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 70.591
+        }
+      ],
+      "historicalProductHashesRetained": 6,
+      "scope": "Runtime wrapper verified frozen source and product hashes before/after this invocation. Historical products were superseded by the final compiler checks; active-source equivalence is recorded separately."
+    },
+    {
+      "epoch": "tablet-layout-compatibility-final",
+      "wholeInvocationPassed": false,
+      "sourceDifferencesFromFinalInputs": [
+        "PlannerNavigationUITests/SavedListCaptureJourneyTests.swift"
+      ],
+      "selectedFunctions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testAddingFromListDetailAndRowMenuKeepsTheOriginalContextAndExistingDestination",
+          "outcome": "passed",
+          "seconds": 322.632
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort",
+          "outcome": "passed",
+          "seconds": 79.054
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testDeletingSelectedListChoosesTheFirstVisibleListAndItsFirstItemOnRegularLayouts",
+          "outcome": "passed",
+          "seconds": 141.021
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "outcome": "passed",
+          "seconds": 117.635
+        }
+      ],
+      "historicalProductHashesRetained": 6,
+      "scope": "Runtime wrapper verified frozen source and product hashes before/after this invocation. Historical products were superseded by the final compiler checks; active-source equivalence is recorded separately."
+    },
+    {
+      "epoch": "tablet-capture-overflow-qualified",
+      "wholeInvocationPassed": true,
+      "sourceDifferencesFromFinalInputs": [],
+      "selectedFunctions": [
+        {
+          "function": "PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 92.929
+        }
+      ],
+      "historicalProductHashesRetained": 6,
+      "scope": "Runtime wrapper verified frozen source and product hashes before/after this invocation. Historical products were superseded by the final compiler checks; active-source equivalence is recorded separately."
+    }
+  ],
+  "diagnosticControlInvocations": 1,
+  "retainedInspectedPNGs": 40,
+  "selectedPassingFunctionPNGs": 22,
+  "failedPhoneAndTabletBatchesPreserved": true,
+  "controlHasNoCorrectedSourceCredit": true,
+  "sourceAndLintHashesMatch": true,
+  "scope": "Functional native layout/compatibility only. No physical, account, provider-success, accessibility or responsiveness qualification."
+}

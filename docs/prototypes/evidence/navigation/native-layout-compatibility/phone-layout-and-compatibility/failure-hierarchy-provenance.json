@@ -1,0 +1,8 @@
+{
+  "attachment": "3C6C6FC7-F301-427B-96A6-4AE97E3BB17F.txt",
+  "sha256": "f6bd1a93b8d3c155be84b0522c0f7bfd971b14fec6fa1c527b2f676535b9390b",
+  "scope": "Automatic failure hierarchy for the disposable iPhone Planner application. Its selected appearance remains in the Origin contents view after tapping; no contextual detail is present.",
+  "layoutFunctionSeconds": 87.633,
+  "captureFunctionSeconds": 77.132,
+  "captureFailure": "The next test inherited landscape after the failed function. Its context detail is present; the Links row is below the short viewport."
+}

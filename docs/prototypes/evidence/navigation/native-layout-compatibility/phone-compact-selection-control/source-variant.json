@@ -1,0 +1,4 @@
+{
+  "variant": "Control without the compact membership-selection correction",
+  "difference": "Remove only preferredCompactColumn = .detail from the nonnil membership selection setter. All test functions/helpers and other production sources are identical to the current source."
+}

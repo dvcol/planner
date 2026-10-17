@@ -1,0 +1,570 @@
+{
+  "method": "Each listed retained PNG was individually opened with view_image. Original files and hashes are retained; desktop captures and video are excluded.",
+  "images": [
+    {
+      "path": "mac-layout-and-deletion-compatibility/00B9C7A6-F7B2-438E-9760-8BAD70F20128.png",
+      "title": "Confirmed Item deletion selects the first visible survivor_0_D1C29618-5228-4B8F-A93D-C3C20A4D7714.png",
+      "sha256": "bdf312dc8b6bc3526b3155bf15f1e3db7aceb8a1d5809537ac07691043e008de",
+      "rawPNGExtent": [
+        1720,
+        1600
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": false,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "mac-layout-and-deletion-compatibility/15BFBD34-0CD7-49B8-A2F6-BF9F162C1EB2.png",
+      "title": "Edited Item draft survives a narrow Mac window_0_DD3EA072-C92D-4AD9-BA13-C452D44ABB43.png",
+      "sha256": "00b325e68ec453b4a08ea8931f1071c7d249b040a253e60317ec3f00134102bf",
+      "rawPNGExtent": [
+        1720,
+        1600
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": false,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "mac-layout-and-deletion-compatibility/358F67D9-A25A-45C9-9F3D-F44AB9D7C37D.png",
+      "title": "Edited Item draft survives expanded layout_0_D3AF9718-0B9C-4130-81B6-24485D89A758.png",
+      "sha256": "54f3c1ef1f124bf029842d29d700f9bdd6e02b93e603cf8936f5755542b19e8d",
+      "rawPNGExtent": [
+        2400,
+        1600
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": false,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "mac-layout-and-deletion-compatibility/4EFDED7D-1BAE-490A-A092-4EB56D5C0A9D.png",
+      "title": "Confirmed List deletion selects the first surviving context_0_D30D941B-CF4C-4AD2-BF03-F91301ABA56C.png",
+      "sha256": "27879946ee159ff2a9085fcd4439b44a38ed3c6a8adc5760828a580f4abfd992",
+      "rawPNGExtent": [
+        1720,
+        1600
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": false,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "mac-layout-compatibility-final/26D6F8DA-D0F5-47BC-9AD4-D4588F2776E3.png",
+      "title": "Confirmed Item deletion selects the first visible survivor_0_5422D9C4-1FCD-4D47-B7D3-A39E2FAA2DF9.png",
+      "sha256": "fc208f5b111965e70ae8d8116e05a0ff10024b2d860140ec12e51cedbb836b5a",
+      "rawPNGExtent": [
+        2400,
+        1600
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "mac-layout-compatibility-final/43C04108-955A-45CF-BAB5-8966091DAB40.png",
+      "title": "Row-menu addition preserves existing destination after relaunch_0_6B6FD77F-0501-4BC1-8BA1-A81F2C456E34.png",
+      "sha256": "bb7b67a74484597b03caa6111f2bd4adf8e0d32f0432f03b8d866abef26b4faf",
+      "rawPNGExtent": [
+        2400,
+        1600
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "mac-layout-compatibility-final/48FDBBCE-D2EE-4413-9950-7EB4F4955E01.png",
+      "title": "Item deletion selects the surviving List appearance in its own context_0_70874541-1671-46B9-8052-D275FDE43C36.png",
+      "sha256": "5e6c061eaa93d499985940c8b046674fc78b87e5f5a4a60590ec6cb7eb15aca1",
+      "rawPNGExtent": [
+        2400,
+        1600
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "mac-layout-compatibility-final/7CC020C8-EC02-4476-B116-E214B54B8A83.png",
+      "title": "Edited Item draft survives a narrow Mac window_0_9CC2A5E5-2C88-4261-ACF1-A0A962F7E699.png",
+      "sha256": "2811c26dfd2316d24b539a19144ab5da4ff1924a067ec760d16381e7b07886fb",
+      "rawPNGExtent": [
+        1720,
+        1600
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "mac-layout-compatibility-final/7E218B54-3F87-481A-AF9E-D9A89A557FD6.png",
+      "title": "Adding elsewhere retains the selected List detail_0_FD3E3536-F546-429A-9358-E6DEF4E07125.png",
+      "sha256": "1f7743696fb6fb5127e59e2fc208aa0c5ebd463cd1f27fec5cf4a001eeba59f3",
+      "rawPNGExtent": [
+        2400,
+        1600
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "mac-layout-compatibility-final/8A56AF25-5A62-4B41-9231-8990AA8BBDF1.png",
+      "title": "Edited Item draft survives expanded layout_0_D60D5771-ADF9-4AFD-B2F5-A6D8C3DC8679.png",
+      "sha256": "0e4bf90b806f353a0ec5398fc5b247acfd8e0605008529a1bcf1f42a6f91b034",
+      "rawPNGExtent": [
+        2400,
+        1600
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "mac-layout-compatibility-final/9459CA5F-91C3-4CE1-A5A9-079337C0FC9F.png",
+      "title": "Native List capture keeps membership detail scope_0_9336C8B0-2180-4EB6-9CAE-9B68BED1F074.png",
+      "sha256": "674659b1146769cb399ba7ff54fdaa13067f8b5364aaadd05afe9533bd80c7a1",
+      "rawPNGExtent": [
+        2400,
+        1600
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "mac-layout-compatibility-final/F258A9F3-46B5-4850-92BE-73A9511525F5.png",
+      "title": "Confirmed List deletion selects the first surviving context_0_554A0BFD-B781-439A-B36E-2CB858FF5CF1.png",
+      "sha256": "73d7ee0cc9f80f0c3d853f99f6ca1122d3fb1cd8d635dcdd870a6742662478fe",
+      "rawPNGExtent": [
+        2400,
+        1600
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "mac-layout-startup-retry/8352B87F-B93C-49AC-BF72-5235000DF4E6.png",
+      "title": "Edited Item draft survives a narrow Mac window_0_F721994A-DC93-42D7-8533-A6B84AD8D511.png",
+      "sha256": "3ec0cb2fd57475665bdfe58900a04300fc85127f0c55adb1f929b75d01bd6849",
+      "rawPNGExtent": [
+        1720,
+        1600
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": false,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "mac-layout-startup-retry/C81EC693-751B-4C2B-833C-9D2DA9654234.png",
+      "title": "Edited Item draft survives expanded layout_0_3FB41060-5C40-41C1-8659-F21E5276EB20.png",
+      "sha256": "10c6239c0758f14953caa48fea8f637fb2c5f4d6e8f9fa2552d2d68eb77a02d8",
+      "rawPNGExtent": [
+        2400,
+        1600
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": false,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-add-compatibility-qualified/4423F8C0-63D4-4FC7-865D-54D8001EC6E2.png",
+      "title": "Row-menu addition preserves existing destination after relaunch_0_AC453AAF-5850-43A1-9E55-A849F838E50A.png",
+      "sha256": "49ea1d637878514ac91d37c671d80d56fac592b98b068541b80a92369598560a",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-add-compatibility-qualified/9B2E872D-26AC-419E-8AFD-1326DA904A45.png",
+      "title": "Adding elsewhere retains the selected List detail_0_AEF86027-0FD6-4CDA-9707-F39AB4C5DC62.png",
+      "sha256": "7f4bc3c6f76310fe3fa7b1c769bd7bbcef88e26a4c4ffc9e5d15abc5a5fc8ad3",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-capture-overflow-qualified/E65C02EB-A3BD-4B0D-8735-41E25D44B445.png",
+      "title": "Native List capture keeps membership detail scope_0_74DBAE7C-1829-4A5D-9A93-DDE104E3FF21.png",
+      "sha256": "1d1e5ff795c896a059706a3a442d119b85cf78c71bc78fb759234715cd3f9e52",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-compact-selection-control/55900C25-88B0-4493-AC2C-B113E2B3732E.png",
+      "title": "Row-menu addition preserves existing destination after relaunch_0_F371447D-6611-49D4-B8C0-0729199CACBF.png",
+      "sha256": "e1290d9980351a2d281b633f4aa58679917666001de30ef2afe88444ad960d45",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": false,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-compact-selection-control/8D74E43E-8533-4C71-AC90-C2DFB150C464.png",
+      "title": "Adding elsewhere retains the selected List detail_0_ED0C9612-B7AD-4D56-AB0D-B75B876407B5.png",
+      "sha256": "68798cf05cfb8cc5a9bcceba83754823add24b562292522233efcca9ca5aad88",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": false,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-layout-and-compatibility/1F8C61EF-DF45-439D-A362-DB8D3FE735B7.png",
+      "title": "Confirmed List deletion selects the first surviving context_0_9F408F8F-83F7-4B8E-ADAD-D31B6AF5919A.png",
+      "sha256": "463605efb73f4fe0a38f4d7a3ccb6251b8d633e251635389667d00a0babb9911",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": false,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-layout-and-compatibility/A1BC40C0-E4D3-4C48-AE28-343C77E5D657.png",
+      "title": "Edited Item draft survives portrait navigation layout_0_1961CB3A-710A-4036-9DB5-E88A09574A66.png",
+      "sha256": "7308a3c953f3032b02d77c26d970e6a59ab0ba187750b072ebb8aac1030a40d4",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": false,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-layout-and-compatibility/A607DC68-12F0-432D-961F-F98718965034.png",
+      "title": "Edited Item draft survives expanded layout_0_48009CE5-742E-44E3-9B4E-713A1CE4C3A8.png",
+      "sha256": "cf1ab7a44cd74c1e1c30907e6d2425243ca58b2fe2d2cffb58e6ef15cdb7ccc3",
+      "rawPNGExtent": [
+        2622,
+        1206
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": false,
+      "functionPassCredit": false,
+      "assessment": "Clipped application-wide landscape capture; no visual qualification.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-layout-and-compatibility/D0568702-3C33-44A6-ADF1-1F4F1C2BF6E4.png",
+      "title": "Confirmed Item deletion selects the first visible survivor_0_6CDD7ACB-0994-4EEE-AA51-5A090DCE148A.png",
+      "sha256": "0f625f819bc24697db7c393aa37d07f2f4540740e4e8e65099045a24bd43136f",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": false,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-layout-compatibility-final/3CBF20C8-601B-414B-A827-75F9D59A8726.png",
+      "title": "Row-menu addition preserves existing destination after relaunch_0_27970FF9-472A-499F-AEE5-DB52066F7FAA.png",
+      "sha256": "3a5c23b5c0575cbfef4cbf5122d8c1aa80a58944832e113167a9df0f64c38a0d",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-layout-compatibility-final/3D4D1D8C-6B6E-4CE4-80F4-2AA15034F905.png",
+      "title": "Edited Item draft survives expanded layout_0_9BB6D0A4-522C-4784-8FF8-BFFB6F99ABCD.png",
+      "sha256": "d94af8fc0fd11561666a4e7661931d9913de3df6b44d3e7a96b6799fcbcf74f4",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-layout-compatibility-final/8507CC3A-9A71-4C86-AD80-CDE40F595CA4.png",
+      "title": "Native List capture keeps membership detail scope_0_135F7B29-9FBE-4CF8-8435-5CCBBBFA6A2E.png",
+      "sha256": "3a1e433a1a1b0001c9cfac19768e11d521c92cef9a3dba567056ff45acffa59b",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-layout-compatibility-final/9806AB0D-1944-4185-BB92-AEDD7EEFD83D.png",
+      "title": "Edited Item draft survives portrait navigation layout_0_DFF7034F-23B9-4BB0-9F7C-EEE9D9CF304D.png",
+      "sha256": "ff3bb14d83c7252b4a2ecc0e34560f2c0a4de8e3b9c82a0b5e1bb4e7e04a536d",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-layout-compatibility-final/D61CC3B9-BB93-4C1A-B537-3CAFDFE9E33B.png",
+      "title": "Confirmed Item deletion selects the first visible survivor_0_732F90D5-000D-4400-97EB-37856FC68130.png",
+      "sha256": "388fef28af1d402c35a8e376b35416456333b5a8c779562c5da8d4d7aaf1ac56",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-layout-compatibility-final/D9709670-A678-4401-BA5D-AEE545563FDD.png",
+      "title": "Confirmed List deletion selects the first surviving context_0_E0989878-1A10-41F5-8D57-51BA942D47D6.png",
+      "sha256": "f949b1de11af4dce77d467a72641944f5f953b50f96addbac7ff962e6edf85de",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-layout-compatibility-final/F38F24FD-E487-455E-81FF-29AEAF3A4B10.png",
+      "title": "Adding elsewhere retains the selected List detail_0_7DC2BFDB-9FC7-400F-879E-9DE602673BA2.png",
+      "sha256": "1037ecd2f72f2f6eb82a71776859d38426e561fac79fd2f726bbd45d42b50786",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-layout-detail-regression/6401A6F7-FCEC-4C6B-9671-79E18D16A15B.png",
+      "title": "Edited Item draft survives expanded layout_0_01C8A68F-8911-4547-9291-B14FFB349720.png",
+      "sha256": "d94af8fc0fd11561666a4e7661931d9913de3df6b44d3e7a96b6799fcbcf74f4",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": false,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-layout-detail-regression/CA239C8D-951E-4F37-A0FB-02E8BE1BBD8C.png",
+      "title": "Edited Item draft survives portrait navigation layout_0_2272CA65-96DA-4D8A-AB3C-1A113CE6149A.png",
+      "sha256": "c110ee03c8d0781075e9062bd3ca4f19383ebb504061c331bc9876836037cf9e",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": false,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "phone-layout-detail-regression/CB0CBDBA-E50C-4AEA-B3D5-9BD549AFE230.png",
+      "title": "Native List capture keeps membership detail scope_0_518E0321-3B79-4198-A340-6B78CAAC2EAB.png",
+      "sha256": "b048fa5be77952bf0ac6d70e392b5c0ce07d7ad4999461c38cb18c110b9f80b0",
+      "rawPNGExtent": [
+        1206,
+        2622
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": false,
+      "functionPassCredit": false,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "tablet-capture-overflow-qualified/BFC2450F-F02C-4914-A5E6-C9BA479348BD.png",
+      "title": "Native List capture keeps membership detail scope_0_FB2B6DC2-7BC4-4507-9A79-126EC7B19A8B.png",
+      "sha256": "801c16b97a5325996970080dddb6893f50ebf4dfc9ee9ece4824427b7e984dc0",
+      "rawPNGExtent": [
+        1640,
+        2360
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "tablet-layout-compatibility-final/090AF439-8CD5-4E66-AD66-C3520B6C9E44.png",
+      "title": "Edited Item draft survives expanded layout_0_F81E451A-A1DE-47DA-AEC5-C2DBD81F0FAA.png",
+      "sha256": "2177c41467837fcd0cf5d76f189848e49ff3f84c3f725006dc9f06b1bca5ca04",
+      "rawPNGExtent": [
+        1640,
+        2360
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "tablet-layout-compatibility-final/09A4B170-D6E5-463E-8388-2686B652F874.png",
+      "title": "Adding elsewhere retains the selected List detail_0_46F4B1BE-FD80-48FF-AC62-8697E91BB863.png",
+      "sha256": "d8f93309ac98cd44a642eaea06db17da72b35e402e2b5bd89d50e492fac321e4",
+      "rawPNGExtent": [
+        1640,
+        2360
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "tablet-layout-compatibility-final/A6C39409-3D13-4F72-AA3C-34C9A93FB280.png",
+      "title": "Row-menu addition preserves existing destination after relaunch_0_BD1E2371-8E9B-444B-9144-45DF152D9792.png",
+      "sha256": "7638258156940271c0cfc662b1d2724b1b5101f2288591d34be1cba646ad615c",
+      "rawPNGExtent": [
+        1640,
+        2360
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "tablet-layout-compatibility-final/B2D1B611-FC0D-4DC1-B756-F396C7D39BEA.png",
+      "title": "Confirmed List deletion selects the first surviving context_0_B102DA5B-EF04-4A2B-B8C8-91F8272A8099.png",
+      "sha256": "356d3c71ca407a73ec391ce01b5b7fae22b9d14e5f558bb5447d3e144d0860ef",
+      "rawPNGExtent": [
+        1640,
+        2360
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "tablet-layout-compatibility-final/DE1F32CB-F834-4B2E-B1C0-FFB398C7EE48.png",
+      "title": "Confirmed Item deletion selects the first visible survivor_0_34D168C1-A1EB-4FF4-9AFF-99DED60EEC5B.png",
+      "sha256": "fe74f5888113eb3e8df6f2f28db54b93d743904aee7b7a2c35e9d7f0e325aca9",
+      "rawPNGExtent": [
+        1640,
+        2360
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    },
+    {
+      "path": "tablet-layout-compatibility-final/E879F11A-BBCD-4903-9821-BA27C73BFF64.png",
+      "title": "Edited Item draft survives portrait navigation layout_0_2AE871CC-E6D8-4EB5-9B00-8FD5859F9224.png",
+      "sha256": "a60ecd043d618b3d724f71024dea4677e3d0a0e8d3cda30a702ed0bcd801b75d",
+      "rawPNGExtent": [
+        1640,
+        2360
+      ],
+      "individuallyInspected": true,
+      "capturedOnEquivalentActiveProductionSource": true,
+      "functionPassCredit": true,
+      "assessment": "Own Planner-window state inspected; the represented controls and content are readable. Earlier captures retain their source epochs; only selected passing functions receive qualification credit.",
+      "scope": "Visual inspection does not establish function success, accessibility, physical performance or provider availability."
+    }
+  ],
+  "notes": [
+    "The first phone application-wide landscape image is clipped; final captures use the actual Planner window.",
+    "Mac sidebar estimate summaries truncate at the recorded widths. Whole-app polish remains pending.",
+    "Current Mac Capture shows provider-unavailable Retry fallback; no live-provider success is claimed."
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "baseline": "54926940a7305c629f79c8147c326fcfd6ac1d18",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedPlannerView.swift": "b093011fb4403e1d418b74e9a297d309e9484c7c1b685f3457e5d9c9152f0f73",
+    "Planner/Scenes/SavedMacMembershipTable.swift": "c7b2171781f0016de9c49d6471678ff28f7c63214d1b962a60d1dd1b4a19313a",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "a62f2d49d01e88a83d96c3644796575fcbc45592952101cdb205b56c1541c78c",
+    "PlannerNavigationUITests/SavedListCaptureJourneyTests.swift": "dc15d76f1bae3dfcd8380e100d7c24cf1fb6aed570274fad9d5d33e7057d8719"
+  },
+  "standards": {
+    "reviewer": "/root/catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "scope": "All four Swift diffs, including the iOS-only Capture toolbar overflow controller; existing store/previews at Table cell and compact selection/window oracles."
+  },
+  "specification": {
+    "reviewer": "/root/catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "scope": "Accepted draft identity/destination, Q89 original-window membership replacement, unchanged service/data scopes and unchanged Capture review/cancel/bookmark/relaunch assertions."
+  },
+  "runtimeQualification": "Source reviews supply no runtime credit."
+}

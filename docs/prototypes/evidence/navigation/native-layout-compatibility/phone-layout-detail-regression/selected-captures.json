@@ -1,0 +1,29 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "6401A6F7-FCEC-4C6B-9671-79E18D16A15B.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives expanded layout_0_01C8A68F-8911-4547-9291-B14FFB349720.png",
+    "timestamp": 1792200479.534
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "CA239C8D-951E-4F37-A0FB-02E8BE1BBD8C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives portrait navigation layout_0_2272CA65-96DA-4D8A-AB3C-1A113CE6149A.png",
+    "timestamp": 1792200472.542
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "CB0CBDBA-E50C-4AEA-B3D5-9BD549AFE230.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native List capture keeps membership detail scope_0_518E0321-3B79-4198-A340-6B78CAAC2EAB.png",
+    "timestamp": 1792200575.88
+  }
+]

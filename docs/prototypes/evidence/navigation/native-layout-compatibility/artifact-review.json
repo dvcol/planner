@@ -1,0 +1,18 @@
+{
+  "standards": {
+    "reviewer": "/root/catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "scope": "Four Swift diffs and final report/evidence consistency; independently checked selected16 runtime results, final compiler inputs/products, source/lint hashes and capture hashes."
+  },
+  "specification": {
+    "reviewer": "/root/catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "scope": "Accepted draft/destination and selection scope; final reports, raw log results, failed-batch accounting, source/product epochs and retained qualification limits."
+  },
+  "reportSHA256": {
+    "docs/prototypes/native-layout-compatibility.md": "2c302807961474bcb4f14c202642e323a52efd0eb387245e1a07f9734eaf42db",
+    "docs/prototypes/native-item-creation.md": "590481148db9b14415f2ae89d9931d58b3c4bbda4dc43efca9642900133947b7",
+    "docs/prototypes/native-deletion-selection.md": "e3d259b3eccbc79b465f88aafda22e4c93203958130fa62113b9f8de0b7af673"
+  },
+  "runtimeQualification": "Source and artifact reviews supply no additional runtime credit."
+}

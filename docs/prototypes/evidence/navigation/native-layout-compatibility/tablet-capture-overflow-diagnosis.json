@@ -1,0 +1,14 @@
+{
+  "epoch": "tablet-layout-compatibility-final",
+  "sourceExport": "524602ED-28EC-4734-B4CD-F62F88294469.txt",
+  "sourceSHA256": "cfa0641faf080040d0f2941443981bdb7c0f2bd53144dc7ce30e1c46b4cc59b1",
+  "scope": "Only the disposable Planner test app hierarchy, not desktop or unrelated applications.",
+  "stage": "Capture fixture createList, before capture review/save.",
+  "windowPoints": [
+    820,
+    1180
+  ],
+  "observed": "Planner sidebar is visible with No Lists yet. Its toolbar exposes saved.lists.sort, OverflowBarButtonItem (More), and Hide Sidebar. New List is not directly exposed.",
+  "correction": "Use the native overflow New List action when the direct toolbar button is unavailable. Application source and all data assertions stay unchanged.",
+  "runtime": "Focused corrected-controller qualification pending."
+}

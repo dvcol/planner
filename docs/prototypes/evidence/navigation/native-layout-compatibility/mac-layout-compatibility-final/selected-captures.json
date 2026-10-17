@@ -1,0 +1,101 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "43C04108-955A-45CF-BAB5-8966091DAB40.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Row-menu addition preserves existing destination after relaunch_0_6B6FD77F-0501-4BC1-8BA1-A81F2C456E34.png",
+    "timestamp": 1792202196.239
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "7E218B54-3F87-481A-AF9E-D9A89A557FD6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Adding elsewhere retains the selected List detail_0_FD3E3536-F546-429A-9358-E6DEF4E07125.png",
+    "timestamp": 1792202126.411
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "48FDBBCE-D2EE-4413-9950-7EB4F4955E01.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item deletion selects the surviving List appearance in its own context_0_70874541-1671-46B9-8052-D275FDE43C36.png",
+    "timestamp": 1792202276.726
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "4FE70938-E3EA-4CB2-BC77-BF5F3DE35655.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Original List window after source Item deletion_0_20A1025C-456A-40BB-A2F9-59EEA4902BDA.txt",
+    "timestamp": 1792202274.9
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "31C6FAD0-1A53-4912-A4AF-6EA87BB635AB.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Planner window identities after source Item deletion_0_635C5FF2-7B51-43CF-8BE5-C2C9103B24B3.txt",
+    "timestamp": 1792202271.538
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "26D6F8DA-D0F5-47BC-9AD4-D4588F2776E3.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Confirmed Item deletion selects the first visible survivor_0_5422D9C4-1FCD-4D47-B7D3-A39E2FAA2DF9.png",
+    "timestamp": 1792202332.524
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "F258A9F3-46B5-4850-92BE-73A9511525F5.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Confirmed List deletion selects the first surviving context_0_554A0BFD-B781-439A-B36E-2CB858FF5CF1.png",
+    "timestamp": 1792202461.637
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "6FAE43BA-EE8A-49C7-BCC4-EC828013B75B.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Original Planner window after another window deletes its selection_0_B763BECF-29BB-4196-AC97-6753233C2ABF.txt",
+    "timestamp": 1792202457.437
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "8A56AF25-5A62-4B41-9231-8990AA8BBDF1.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives expanded layout_0_D60D5771-ADF9-4AFD-B2F5-A6D8C3DC8679.png",
+    "timestamp": 1792202522.827
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "7CC020C8-EC02-4476-B116-E214B54B8A83.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives a narrow Mac window_0_9CC2A5E5-2C88-4261-ACF1-A0A962F7E699.png",
+    "timestamp": 1792202505.982
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "9459CA5F-91C3-4CE1-A5A9-079337C0FC9F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native List capture keeps membership detail scope_0_9336C8B0-2180-4EB6-9CAE-9B68BED1F074.png",
+    "timestamp": 1792202595.74
+  }
+]

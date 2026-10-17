@@ -1,0 +1,12 @@
+{
+  "comparedBuildInputs": 945,
+  "changedInputs": [
+    "PlannerNavigationUITests/SavedListCaptureJourneyTests.swift"
+  ],
+  "productionAndOtherTestInputsIdentical": 944,
+  "previousInputSHA256": "b08ef3a5ddee8b6f42f75c83807a231cf0cf9b053b65bc9210a2ecfbcaa671dd",
+  "currentInputSHA256": "dc15d76f1bae3dfcd8380e100d7c24cf1fb6aed570274fad9d5d33e7057d8719",
+  "macOSActiveCaptureSourceIdentical": true,
+  "macOSActiveCaptureSourceSHA256": "1eff29321a68ba786239a66d6f0587e352360bb14c51cda75762823ab9e296b2",
+  "scope": "The change only adds the native iOS toolbar-overflow path to Capture fixture List creation. SavedAppearanceJourneyTests and its shared helpers are identical. Earlier Mac functions and simulator SavedAppearance functions retain their actual source/product epochs; focused Capture invocations qualify the changed iOS controller. Historical products were verified by each runtime wrapper before and after its invocation and were later superseded on disk by compiler checks."
+}

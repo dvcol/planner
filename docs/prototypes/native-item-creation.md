@@ -18,7 +18,7 @@ Edited drafts require Save, Discard or Keep Editing before navigation. An untouc
 
 The human approved the creation/navigation decisions and the public Core, HTTP and native UI boundaries. Core and HTTP qualification are recorded in their [Core report](core-item-in-list-creation.md) and [MCP report](mcp-item-in-list-creation.md).
 
-Rich-content, dirty-navigation and Mac renamed-destination journeys now have executable native fixtures and passing invocations. Restored/unavailable destination and resize/collapse journeys still need native qualification. The production native journeys must pass on the final source:
+Rich-content, dirty-navigation and Mac renamed-destination journeys have executable native fixtures and passing invocations. The [layout and compatibility continuation](native-layout-compatibility.md) records the later source, resizing checks and deletion crash correction. Restored/unavailable destinations remain separate native gates. Required production native journeys include:
 
 - Cancel a changed List draft without creating a source or membership. Save full content, two separately labeled identical URLs and a local Todo membership; preserve their identities after relaunch and leave another List unchanged.
 - Keep Editing, reject an invalid navigation Save, then save successfully before leaving. Preserve fields and destination through column resizing/collapse.
@@ -43,7 +43,7 @@ Runtime inspection exposed an extra default OK button on Mac. A native UI regres
 | iPhone simulator | 141.295 s | 87.210 s | `phone-current-rich-creation`, `phone-final-creation-navigation` |
 | iPad simulator | 158.634 s | 113.573 s | `tablet-bookmark-visibility-qualified`, `tablet-final-creation-navigation` |
 
-These are passing individual invocations with zero skipped functions. The Mac destination/capture batch and the first final iPad batch contain failures in other invocations and remain recorded as failed. The [source comparison](evidence/navigation/native-item-creation-runtime/runtime-source-equivalence.json) verifies that current production inputs and each selected test's executed functions and helpers match its recorded passing invocation. Changes elsewhere in a test file do not imply another runtime pass. Original source and binary hashes remain attached to every invocation.
+These are passing individual invocations with zero skipped functions. The Mac destination/capture batch and the first final iPad batch contain failures in other invocations and remain recorded as failed. The [source comparison](evidence/navigation/native-item-creation-runtime/runtime-source-equivalence.json) verifies that production inputs and each selected test's executed functions and helpers matched its recorded passing invocation at that qualification epoch. Changes elsewhere in a test file do not imply another runtime pass. Original source and binary hashes remain attached to every invocation.
 
 The Mac two-window rename journey passes in 97.776 s in `mac-window-scoped-review`. It retains the original List identity and authored fields, requires refreshed destination review after another window renames the List, preserves an unsaved draft after Keep Editing, and makes Use This List update only the reviewed destination. A subsequent explicit Save creates one local Todo appearance; relaunch preserves the List/appearance identities and one source Item.
 
@@ -64,4 +64,4 @@ The Mac originating-List capture journey passes in 56.868 s in `mac-list-window-
 
 Strict lint passes all four affected Swift files. Both final app/UI-target builds succeed. Independent Standards and Spec rechecks cleared the platform-specific fix after raising and resolving the iPad cancellation-role concern. Production Core and HTTP behavior is unchanged in this slice; their focused qualification remains in the linked reports.
 
-Restored/unavailable native destinations, native label/estimate creation, resize/collapse, affected Add-existing/Capture and deletion compatibility, broader Mac Maps journeys, physical sync/account/Share, accessibility, performance and whole-app polish remain open. This evidence does not close the overall feature or map gates.
+The [layout and compatibility continuation](native-layout-compatibility.md) supersedes the resize and represented Add/Capture/deletion runtime gaps for its recorded source and tests. Restored/unavailable native destinations, native label/estimate creation, other adaptive layouts, broader Mac Maps journeys, physical sync/account/Share, accessibility, performance and whole-app polish remain open. These reports do not close the overall feature or map gates.

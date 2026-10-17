@@ -1,0 +1,20 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "632EA4B5-C062-418F-BB1F-3796A8F88406.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Original List window after source Item deletion_0_86FCBCF2-EDFF-4685-8933-9B71D4EF8A9C.txt",
+    "timestamp": 1792201979.128
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "8B1097C8-74D1-40DB-A61D-96C3ACD98C47.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Planner window identities after source Item deletion_0_3F3984A7-D53B-4463-A68A-E5C9DF78F606.txt",
+    "timestamp": 1792201977.955
+  }
+]

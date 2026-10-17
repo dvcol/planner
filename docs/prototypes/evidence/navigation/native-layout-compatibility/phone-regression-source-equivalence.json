@@ -1,0 +1,13 @@
+{
+  "method": "Every current production input and unchanged shared native helper matches the recorded passing batch. The complete active iOS test file is byte-identical after removing only explicit os(iOS)/os(macOS) conditional directives and inactive branches. Unsupported conditions reject verification. The later change makes only the inactive Mac resize helper static and calls it through its type. This is source equivalence, not another runtime invocation.",
+  "recordedPhase": "phone-layout-detail-regression",
+  "recordedPassedInvocations": [
+    "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges]' passed (111.601 seconds).",
+    "Test Case '-[PlannerNavigationUITests.SavedListCaptureJourneyTests testCurrentListCaptureStagesDestinationAndRetainsMembershipScopeAfterRelaunch]' passed (69.945 seconds)."
+  ],
+  "unchangedProductionInputCount": 160,
+  "activeMobileTestSHA256": "d23515afb09561de56f98af138222bd364e9c12318c1e32ca34a032e799ad6d9",
+  "recordedTestSHA256": "92e9a4ac2035374a75e9f2a4a2b9e8cdbaf23ed3a3755aefb3be568b43890929",
+  "currentTestSHA256": "159dd48ad5bc460a61adb5f9f5b04da4553964106d7baa541fb30f530457f638",
+  "scopeNote": "Historical comparison from the earlier phone regression epoch. Later Mac Table dependency changes and final test diagnostics are not covered by this comparison. Final compatibility invocations use their own exact frozen source and product hashes."
+}

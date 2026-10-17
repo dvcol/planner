@@ -1,0 +1,17 @@
+{
+  "xcode": "Xcode 27.1\nBuild version 27A9275",
+  "macOS": "27.0.1",
+  "simulators": [
+    {
+      "name": "iPhone 18 Pro",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+      "available": true
+    },
+    {
+      "name": "iPad Air 11-inch (M4)",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+      "available": true
+    }
+  ],
+  "signing": "Simulator signing disabled; Mac Sign to Run Locally only. No developer-account qualification."
+}

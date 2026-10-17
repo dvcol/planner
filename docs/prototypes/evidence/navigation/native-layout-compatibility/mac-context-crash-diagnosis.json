@@ -1,0 +1,222 @@
+{
+  "reports": [
+    {
+      "filename": "Planner-2026-10-17-103157.ips",
+      "sourceSHA256": "4101c6f44c5caea09cccedb77fdfb576f19dc733ed6087e4bcfa1d0d32a9baf4",
+      "process": "Planner",
+      "processIdentifier": 19178,
+      "captureTime": "2026-10-17 10:31:44.6297 +0900",
+      "exception": {
+        "codes": "0x0000000000000001, 0x00000001aa3c8d4c",
+        "rawCodes": [
+          1,
+          7151062348
+        ],
+        "type": "EXC_BREAKPOINT",
+        "signal": "SIGTRAP"
+      },
+      "termination": {
+        "flags": 0,
+        "code": 5,
+        "namespace": "SIGNAL",
+        "indicator": "Trace/BPT trap: 5",
+        "byProc": "exc handler",
+        "byPid": 19178
+      },
+      "mainThreadSymbols": [
+        "_assertionFailure(_:_:file:line:flags:)",
+        "specialized EnvironmentValues.subscript.getter",
+        null,
+        "KeyPath._projectReadOnly(from:)",
+        "swift_getAtKeyPath",
+        "closure #1 in EnvironmentBox.update(property:phase:)",
+        "EnvironmentBox.update(property:phase:)",
+        "static BoxVTable.update(elt:property:phase:)",
+        "_DynamicPropertyBuffer.update(container:phase:)",
+        "closure #1 in closure #1 in DynamicBody.updateValue()",
+        "closure #1 in DynamicBody.updateValue()",
+        "DynamicBody.updateValue()",
+        "partial apply for implicit closure #1 in closure #1 in closure #1 in Attribute.init<A>(_:)",
+        "AG::Graph::UpdateStack::update()",
+        "AG::Subgraph::update(unsigned int)",
+        "GraphHost.flushTransactions()",
+        "closure #1 in closure #1 in closure #1 in NSHostingView.beginTransaction()",
+        "partial apply for closure #1 in ViewGraphRootValueUpdater.updateGraph<A>(body:)",
+        "ViewGraphRootValueUpdater._updateViewGraph<A>(body:)",
+        "ViewGraphRootValueUpdater.updateGraph<A>(body:)",
+        "closure #1 in closure #1 in NSHostingView.beginTransaction()",
+        "<deduplicated_symbol>"
+      ]
+    },
+    {
+      "filename": "Planner-2026-10-17-104022.ips",
+      "sourceSHA256": "07f76baeabb3e828e9e21e4c14de67ecbbd459abc2f45becfc5f152b50cb5982",
+      "process": "Planner",
+      "processIdentifier": 25679,
+      "captureTime": "2026-10-17 10:40:20.6939 +0900",
+      "exception": {
+        "codes": "0x0000000000000001, 0x00000001aa3c8d4c",
+        "rawCodes": [
+          1,
+          7151062348
+        ],
+        "type": "EXC_BREAKPOINT",
+        "signal": "SIGTRAP"
+      },
+      "termination": {
+        "flags": 0,
+        "code": 5,
+        "namespace": "SIGNAL",
+        "indicator": "Trace/BPT trap: 5",
+        "byProc": "exc handler",
+        "byPid": 25679
+      },
+      "mainThreadSymbols": [
+        "_assertionFailure(_:_:file:line:flags:)",
+        "specialized EnvironmentValues.subscript.getter",
+        null,
+        "KeyPath._projectReadOnly(from:)",
+        "swift_getAtKeyPath",
+        "closure #1 in EnvironmentBox.update(property:phase:)",
+        "EnvironmentBox.update(property:phase:)",
+        "static BoxVTable.update(elt:property:phase:)",
+        "_DynamicPropertyBuffer.update(container:phase:)",
+        "closure #1 in closure #1 in DynamicBody.updateValue()",
+        "closure #1 in DynamicBody.updateValue()",
+        "DynamicBody.updateValue()",
+        "partial apply for implicit closure #1 in closure #1 in closure #1 in Attribute.init<A>(_:)",
+        "AG::Graph::UpdateStack::update()",
+        "AG::Subgraph::update(unsigned int)",
+        "GraphHost.flushTransactions()",
+        "closure #1 in closure #1 in closure #1 in NSHostingView.beginTransaction()",
+        "partial apply for closure #1 in ViewGraphRootValueUpdater.updateGraph<A>(body:)",
+        "ViewGraphRootValueUpdater._updateViewGraph<A>(body:)",
+        "ViewGraphRootValueUpdater.updateGraph<A>(body:)",
+        "closure #1 in closure #1 in NSHostingView.beginTransaction()",
+        "<deduplicated_symbol>"
+      ]
+    },
+    {
+      "filename": "Planner-2026-10-17-104627.ips",
+      "sourceSHA256": "935b5698060435e9bdf93fdd1105d665ad838c16b3d135685eb5cbb549cf6a6a",
+      "process": "Planner",
+      "processIdentifier": 33631,
+      "captureTime": "2026-10-17 10:46:23.6478 +0900",
+      "exception": {
+        "codes": "0x0000000000000001, 0x00000001aa3c8d4c",
+        "rawCodes": [
+          1,
+          7151062348
+        ],
+        "type": "EXC_BREAKPOINT",
+        "signal": "SIGTRAP"
+      },
+      "termination": {
+        "flags": 0,
+        "code": 5,
+        "namespace": "SIGNAL",
+        "indicator": "Trace/BPT trap: 5",
+        "byProc": "exc handler",
+        "byPid": 33631
+      },
+      "mainThreadSymbols": [
+        "_assertionFailure(_:_:file:line:flags:)",
+        "specialized EnvironmentValues.subscript.getter",
+        null,
+        "KeyPath._projectReadOnly(from:)",
+        "swift_getAtKeyPath",
+        "closure #1 in EnvironmentBox.update(property:phase:)",
+        "EnvironmentBox.update(property:phase:)",
+        "static BoxVTable.update(elt:property:phase:)",
+        "_DynamicPropertyBuffer.update(container:phase:)",
+        "closure #1 in closure #1 in DynamicBody.updateValue()",
+        "closure #1 in DynamicBody.updateValue()",
+        "DynamicBody.updateValue()",
+        "partial apply for implicit closure #1 in closure #1 in closure #1 in Attribute.init<A>(_:)",
+        "AG::Graph::UpdateStack::update()",
+        "AG::Subgraph::update(unsigned int)",
+        "GraphHost.flushTransactions()",
+        "closure #1 in closure #1 in closure #1 in NSHostingView.beginTransaction()",
+        "partial apply for closure #1 in ViewGraphRootValueUpdater.updateGraph<A>(body:)",
+        "ViewGraphRootValueUpdater._updateViewGraph<A>(body:)",
+        "ViewGraphRootValueUpdater.updateGraph<A>(body:)",
+        "closure #1 in closure #1 in NSHostingView.beginTransaction()",
+        "<deduplicated_symbol>"
+      ]
+    },
+    {
+      "filename": "Planner-2026-10-17-105034.ips",
+      "sourceSHA256": "f4cf02bb577905c57b037b767f4509befe33a3bf94c417bbeae7f1a91ce92411",
+      "process": "Planner",
+      "processIdentifier": 37400,
+      "captureTime": "2026-10-17 10:50:28.4061 +0900",
+      "exception": {
+        "codes": "0x0000000000000001, 0x00000001aa3c8d4c",
+        "rawCodes": [
+          1,
+          7151062348
+        ],
+        "type": "EXC_BREAKPOINT",
+        "signal": "SIGTRAP"
+      },
+      "termination": {
+        "flags": 0,
+        "code": 5,
+        "namespace": "SIGNAL",
+        "indicator": "Trace/BPT trap: 5",
+        "byProc": "exc handler",
+        "byPid": 37400
+      },
+      "mainThreadSymbols": [
+        "_assertionFailure(_:_:file:line:flags:)",
+        "specialized EnvironmentValues.subscript.getter",
+        null,
+        "KeyPath._projectReadOnly(from:)",
+        "swift_getAtKeyPath",
+        "closure #1 in EnvironmentBox.update(property:phase:)",
+        "EnvironmentBox.update(property:phase:)",
+        "static BoxVTable.update(elt:property:phase:)",
+        "_DynamicPropertyBuffer.update(container:phase:)",
+        "closure #1 in closure #1 in DynamicBody.updateValue()",
+        "closure #1 in DynamicBody.updateValue()",
+        "DynamicBody.updateValue()",
+        "partial apply for implicit closure #1 in closure #1 in closure #1 in Attribute.init<A>(_:)",
+        "AG::Graph::UpdateStack::update()",
+        "AG::Subgraph::update(unsigned int)",
+        "GraphHost.flushTransactions()",
+        "closure #1 in closure #1 in closure #1 in NSHostingView.beginTransaction()",
+        "partial apply for closure #1 in ViewGraphRootValueUpdater.updateGraph<A>(body:)",
+        "ViewGraphRootValueUpdater._updateViewGraph<A>(body:)",
+        "ViewGraphRootValueUpdater.updateGraph<A>(body:)",
+        "closure #1 in closure #1 in NSHostingView.beginTransaction()",
+        "<deduplicated_symbol>"
+      ]
+    }
+  ],
+  "fatalMessage": "2026-10-17 10:40:20.567 Df Planner[25679:c7a380] (libswiftCore.dylib) SwiftUICore/Environment+Objects.swift:34: Fatal error: No Observable object of type SavedPlannerStore found. A View.environmentObject(_:) for SavedPlannerStore may be missing as an ancestor of this view.",
+  "source": "Scoped Apple unified log query for the Planner process in the isolated reproduction. Only the fatal message and Planner crash stack facts are retained; machine identity and unrelated log events are omitted.",
+  "observations": [
+    {
+      "epoch": "mac-context-environment-regression",
+      "result": "Planner crashes with missing SavedPlannerStore after both detail-host injections. Candidate removed."
+    },
+    {
+      "epoch": "mac-table-environment-regression",
+      "result": "Fixture fails before deletion. No crash-fix qualification."
+    },
+    {
+      "epoch": "mac-table-environment-retry",
+      "result": "Store-only Table cell injection moves the fatal to missing PlannerPreviews. Planner still crashes.",
+      "fatalMessage": "2026-10-17 10:50:28.292 Df Planner[37400:c84e1c] (libswiftCore.dylib) SwiftUICore/Environment+Objects.swift:34: Fatal error: No Observable object of type PlannerPreviews found. A View.environmentObject(_:) for PlannerPreviews may be missing as an ancestor of this view."
+    }
+  ],
+  "finalCorrection": "Provide the native Table cell with the same existing SavedPlannerStore and PlannerPreviews instances required by SavedItemRowContent.",
+  "finalNativeRegression": {
+    "epoch": "mac-layout-compatibility-final",
+    "outcome": "passed",
+    "seconds": 72.958,
+    "wholeBatchExitCode": 0,
+    "scope": "Original window keeps contextual details and exact surviving membership identity. No framework-wide guarantee is inferred."
+  },
+  "historicalHypothesis": "Provide the native Table cell with the existing data store and preview service used by its row content. The changed fatal identifies both dependencies at this boundary; runtime regression remains required."
+}

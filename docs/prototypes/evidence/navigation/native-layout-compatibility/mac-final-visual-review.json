@@ -1,0 +1,59 @@
+{
+  "inspected": [
+    {
+      "path": "mac-layout-compatibility-final/F258A9F3-46B5-4850-92BE-73A9511525F5.png",
+      "sha256": "73d7ee0cc9f80f0c3d853f99f6ca1122d3fb1cd8d635dcdd870a6742662478fe",
+      "review": "Individually inspected via view_image. Own Planner window; labels and represented state readable.",
+      "limits": "Whole-app style, accessibility and provider availability are separate gates."
+    },
+    {
+      "path": "mac-layout-compatibility-final/8A56AF25-5A62-4B41-9231-8990AA8BBDF1.png",
+      "sha256": "0e4bf90b806f353a0ec5398fc5b247acfd8e0605008529a1bcf1f42a6f91b034",
+      "review": "Individually inspected via view_image. Own Planner window; labels and represented state readable.",
+      "limits": "Whole-app style, accessibility and provider availability are separate gates."
+    },
+    {
+      "path": "mac-layout-compatibility-final/9459CA5F-91C3-4CE1-A5A9-079337C0FC9F.png",
+      "sha256": "674659b1146769cb399ba7ff54fdaa13067f8b5364aaadd05afe9533bd80c7a1",
+      "review": "Individually inspected via view_image. Own Planner window; labels and represented state readable.",
+      "limits": "Whole-app style, accessibility and provider availability are separate gates."
+    },
+    {
+      "path": "mac-layout-compatibility-final/26D6F8DA-D0F5-47BC-9AD4-D4588F2776E3.png",
+      "sha256": "fc208f5b111965e70ae8d8116e05a0ff10024b2d860140ec12e51cedbb836b5a",
+      "review": "Individually inspected via view_image. Own Planner window; labels and represented state readable.",
+      "limits": "Whole-app style, accessibility and provider availability are separate gates."
+    },
+    {
+      "path": "mac-layout-compatibility-final/7E218B54-3F87-481A-AF9E-D9A89A557FD6.png",
+      "sha256": "1f7743696fb6fb5127e59e2fc208aa0c5ebd463cd1f27fec5cf4a001eeba59f3",
+      "review": "Individually inspected via view_image. Own Planner window; labels and represented state readable.",
+      "limits": "Whole-app style, accessibility and provider availability are separate gates."
+    },
+    {
+      "path": "mac-layout-compatibility-final/43C04108-955A-45CF-BAB5-8966091DAB40.png",
+      "sha256": "bb7b67a74484597b03caa6111f2bd4adf8e0d32f0432f03b8d866abef26b4faf",
+      "review": "Individually inspected via view_image. Own Planner window; labels and represented state readable.",
+      "limits": "Whole-app style, accessibility and provider availability are separate gates."
+    },
+    {
+      "path": "mac-layout-compatibility-final/7CC020C8-EC02-4476-B116-E214B54B8A83.png",
+      "sha256": "2811c26dfd2316d24b539a19144ab5da4ff1924a067ec760d16381e7b07886fb",
+      "review": "Individually inspected via view_image. Own Planner window; labels and represented state readable.",
+      "limits": "Whole-app style, accessibility and provider availability are separate gates."
+    },
+    {
+      "path": "mac-layout-compatibility-final/48FDBBCE-D2EE-4413-9950-7EB4F4955E01.png",
+      "sha256": "5e6c061eaa93d499985940c8b046674fc78b87e5f5a4a60590ec6cb7eb15aca1",
+      "review": "Individually inspected via view_image. Own Planner window; labels and represented state readable.",
+      "limits": "Whole-app style, accessibility and provider availability are separate gates."
+    }
+  ],
+  "notes": [
+    "Narrow and expanded draft fields retain authored content and destination. Native toolbar overflow remains usable.",
+    "Context/List deletion captures show the expected Birch appearance in its own List; global deletion shows Zulu.",
+    "Add compatibility shows retained contextual completion and saved order.",
+    "Capture shows the saved bookmark with a provider-unavailable fallback; this supplies no live-preview provider success claim.",
+    "Sidebar estimate summaries truncate at these widths; whole-app polish remains pending."
+  ]
+}

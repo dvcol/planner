@@ -1,0 +1,20 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "4423F8C0-63D4-4FC7-865D-54D8001EC6E2.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Row-menu addition preserves existing destination after relaunch_0_AC453AAF-5850-43A1-9E55-A849F838E50A.png",
+    "timestamp": 1792204062.87
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "9B2E872D-26AC-419E-8AFD-1326DA904A45.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Adding elsewhere retains the selected List detail_0_AEF86027-0FD6-4CDA-9707-F39AB4C5DC62.png",
+    "timestamp": 1792203854.992
+  }
+]

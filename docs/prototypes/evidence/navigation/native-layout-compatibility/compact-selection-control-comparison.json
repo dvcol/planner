@@ -1,0 +1,48 @@
+{
+  "finalBuild": "mobile-layout-compatibility-final-build",
+  "controlBuild": "mobile-compact-selection-control-build",
+  "comparedInputs": 945,
+  "differences": [
+    "Planner/Scenes/SavedPlannerView.swift"
+  ],
+  "testSourceIdentical": true,
+  "literalDifference": [
+    "--- current/SavedPlannerView.swift",
+    "+++ control/SavedPlannerView.swift",
+    "@@ -964,7 +964,6 @@",
+    "           recordSelectionChange()",
+    "           appearanceChangeMessage = nil",
+    "           selectedAppearanceIdentity = .listMembership(listId: listId, membershipId: identifier)",
+    "-          preferredCompactColumn = .detail",
+    "         }",
+    "       })",
+    "   }"
+  ],
+  "allowanceNote": "Original current-source batch uses300s; control uses360s only to finish the diagnostic journey. Compare notification waits before300s, not pass/fail alone.",
+  "runtimeConclusion": "Control passes in 298.406 s and corrected source passes in 299.612 s, each with the same two 60 s notification waits. The new compact-selection line does not sufficiently explain the waits. Retain the native fix and explicitly record the longer test allowance. Neither invocation supplies responsiveness credit.",
+  "currentTimeoutNotifications": [
+    183.94,
+    245.11
+  ],
+  "controlNotifications": [
+    182.7,
+    243.86
+  ],
+  "controlResult": {
+    "epoch": "phone-compact-selection-control",
+    "exitCode": 0,
+    "seconds": 298.406,
+    "allowanceSeconds": 360,
+    "correctedSourcePassCredit": false
+  },
+  "correctedSourceNotifications": [
+    183.78,
+    245.0
+  ],
+  "correctedSourceResult": {
+    "epoch": "phone-add-compatibility-qualified",
+    "exitCode": 0,
+    "seconds": 299.612,
+    "allowanceSeconds": 360
+  }
+}

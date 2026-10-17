@@ -1,0 +1,20 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "C81EC693-751B-4C2B-833C-9D2DA9654234.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives expanded layout_0_3FB41060-5C40-41C1-8659-F21E5276EB20.png",
+    "timestamp": 1792199702.245
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "8352B87F-B93C-49AC-BF72-5235000DF4E6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives a narrow Mac window_0_F721994A-DC93-42D7-8533-A6B84AD8D511.png",
+    "timestamp": 1792199685.358
+  }
+]

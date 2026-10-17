@@ -1,0 +1,23 @@
+[
+  "xcodebuild",
+  "test-without-building",
+  "-xctestrun",
+  "/private/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/PlannerNavigation_macosx27.0-arm64.xctestrun",
+  "-destination",
+  "platform=macOS,arch=arm64",
+  "-destination-timeout",
+  "20",
+  "-parallel-testing-enabled",
+  "NO",
+  "-jobs",
+  "1",
+  "-test-timeouts-enabled",
+  "YES",
+  "-default-test-execution-time-allowance",
+  "300",
+  "-maximum-test-execution-time-allowance",
+  "300",
+  "-only-testing:PlannerNavigationUITests/SavedAppearanceJourneyTests/testDeletingASelectedAppearanceInAnotherWindowSelectsItsFirstVisibleSibling",
+  "-resultBundlePath",
+  "/private/tmp/PlannerQ93NativeRuntime-mac-context-deletion-diagnostic.xcresult"
+]
