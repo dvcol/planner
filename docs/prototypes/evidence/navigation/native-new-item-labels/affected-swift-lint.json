@@ -1,0 +1,20 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "output": "",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedPlannerView.swift": "82de60d7a97ef6734e075c4ac38e9b087a40226d32898e2a69e6fafa7c4a7b82",
+    "PlannerNavigationUITests/SavedLabelsJourneyTests.swift": "8fa0893637534a8f7153a16288cceae17a850bd5008123861af6f74d0a029334"
+  },
+  "epoch": "phone-labels-navigation-fix",
+  "historicalOnly": true,
+  "currentRestoredSourceQualification": false,
+  "provenance": "Review/lint of a subsequently reverted candidate. Its full native lifecycle failed; these results do not qualify the current restored source or a product fix."
+}

@@ -1,0 +1,18 @@
+{
+  "baseline": "16e0c665bb0ffc6c0bcc094e9487995265483885",
+  "restoredBaselineSourceSHA256": {
+    "Planner/Scenes/SavedNewItemForm.swift": "f062cd19f86f8d99598b934259e44db9f08597b2b55561e037a23b00ea4e16a0",
+    "Planner/Scenes/SavedPlannerView.swift": "b093011fb4403e1d418b74e9a297d309e9484c7c1b685f3457e5d9c9152f0f73",
+    "PlannerNavigationUITests/SavedLabelsJourneyTests.swift": "2fd1e3f249c1c5f925e4098a9e7f82a60c7f9d7d7ef9738167ed3779469dd582"
+  },
+  "failedFullLabelLifecycleInvocations": 8,
+  "isolatedNoLabelDiscardPasses": 1,
+  "isolatedPassScope": "Intermediate diagnostic source, not current-source qualification.",
+  "qualifiedFullLabelLifecyclePasses": 0,
+  "pendingDecision": "Q94",
+  "historicalCompilerProductsMayHaveBeenReplaced": true,
+  "restoredProductionNavigation": true,
+  "retainedPendingRegressionSource": true,
+  "retainedIndividuallyInspectedDiagnosticPNGs": 3,
+  "scope": "Diagnosis retained for the selected presentation. No product fix, full-label runtime, Mac runtime or map completion is claimed."
+}

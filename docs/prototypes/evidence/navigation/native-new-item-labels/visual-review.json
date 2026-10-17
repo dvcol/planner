@@ -1,0 +1,26 @@
+{
+  "method": "Each of the three named original Planner-window PNGs was individually opened with view_image.",
+  "images": [
+    {
+      "path": "phone-labels-leaving-prompt-red/01FD84E7-7AFF-457B-B3E9-DA83AA2B00DB.png",
+      "sha256": "a6555ab297d4341e1e22f3b3cee1e4ddde5623dc9a3db710d4ab62af010c37bb",
+      "individuallyInspected": true,
+      "functionPassCredit": false,
+      "scope": "Named Planner-window diagnostic capture from a failed full-label lifecycle invocation. No feature qualification."
+    },
+    {
+      "path": "phone-labels-native-binding/962CD51B-C663-49E2-A7B0-D338BF46EBB0.png",
+      "sha256": "1bc57caa7e0680a1b7c24697b36a433f7e24996cc65dbdf0e1efece06eb04e0c",
+      "individuallyInspected": true,
+      "functionPassCredit": false,
+      "scope": "Named Planner-window diagnostic capture from a failed full-label lifecycle invocation. No feature qualification."
+    },
+    {
+      "path": "phone-labels-navigation-fix/E9557847-290D-4C3A-90FD-20A6FD060B3E.png",
+      "sha256": "65907d2bfab8fe946cec64230d7c2d20ad351f666e9339a28549463e55219756",
+      "individuallyInspected": true,
+      "functionPassCredit": false,
+      "scope": "Named Planner-window diagnostic capture from a failed full-label lifecycle invocation. No feature qualification."
+    }
+  ]
+}

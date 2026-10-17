@@ -1,0 +1,14 @@
+{
+  "scope": "Pending diagnosis report, historical result/visual records and baseline restoration. No product fix or lifecycle qualification.",
+  "reportSHA256": "4a401fb826fbd6364d0d7e0b24e0184217f7f2fd8952482d92f78f7c1475e1fd",
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "resolved": "Mark old candidate source review and Swift lint as historical, with explicit epoch and no restored-source qualification."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "resolved": "Describe the label-free minimized observation and omitted Settings/label setup without claiming a necessary cause."
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "question": "Q94",
+  "status": "Awaiting human presentation choice; no production fix qualified",
+  "pendingTestSourceSHA256": "db48e6795521656cc28e2c2842bb34f431374a74eb46b96ced583c4d6295709f",
+  "temporarySource": "/private/tmp/PlannerPendingNewItemLabelJourney.swift",
+  "restoredBaseline": "16e0c665bb0ffc6c0bcc094e9487995265483885",
+  "options": {
+    "A": "Adaptive native label picker, popover with compact sheet adaptation",
+    "B": "Inline disclosure groups",
+    "C": "Continue pushed label-page repair"
+  },
+  "recommended": "A"
+}

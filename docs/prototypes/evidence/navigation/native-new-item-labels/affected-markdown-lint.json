@@ -1,0 +1,16 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2@0.23.3",
+    "--config",
+    "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+    "docs/prototypes/native-new-item-labels.md"
+  ],
+  "exitCode": 0,
+  "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-new-item-labels.md\nLinting: 1 file\nSummary: 0 issues in 0 files\n",
+  "stderr": "Done in 205ms using pnpm v12.10.1\n",
+  "sourceSHA256": {
+    "docs/prototypes/native-new-item-labels.md": "4a401fb826fbd6364d0d7e0b24e0184217f7f2fd8952482d92f78f7c1475e1fd"
+  }
+}

@@ -1,0 +1,260 @@
+{
+  "policy": "Literal recorded function outcomes and whole invocation exits are separate. Compiler-only and setup failures supply no native runtime pass credit. Final qualified epochs are named in the report.",
+  "runs": [
+    {
+      "epoch": "mac-labels-controller-qualified-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-labels-initial-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-labels-native-binding-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-labels-navigation-fix-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-labels-stable-column-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-labels-stable-draft-column-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-labels-typed-navigation-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-global-discard-isolation-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-labels-controller-qualified-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-labels-initial-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-labels-leaving-prompt-red-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-labels-native-binding-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-labels-native-controller-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-labels-navigation-fix-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-labels-stable-column-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-labels-stable-draft-column-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-labels-typed-navigation-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "phone-global-discard-isolation",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerNewItemLabelsRuntime-phone-global-discard-isolation.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedLabelsJourneyTests testGlobalNewItemDiscardReturnsToCatalogWithoutCreatingAnItem",
+          "outcome": "passed",
+          "seconds": 22.309
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-labels-controller",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerNewItemLabelsRuntime-phone-labels-controller.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedLabelsJourneyTests testNewItemLabelsRemainDraftUntilSaveAndRetainSharedIdentitiesAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 58.224
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-labels-leaving-prompt-red",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerNewItemLabelsRuntime-phone-labels-leaving-prompt-red.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedLabelsJourneyTests testNewItemLabelsRemainDraftUntilSaveAndRetainSharedIdentitiesAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 47.578
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-labels-native-binding",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerNewItemLabelsRuntime-phone-labels-native-binding.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedLabelsJourneyTests testNewItemLabelsRemainDraftUntilSaveAndRetainSharedIdentitiesAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 62.699
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-labels-navigation-fix",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerNewItemLabelsRuntime-phone-labels-navigation-fix.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedLabelsJourneyTests testNewItemLabelsRemainDraftUntilSaveAndRetainSharedIdentitiesAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 62.028
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-labels-stable-column",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerNewItemLabelsRuntime-phone-labels-stable-column.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedLabelsJourneyTests testNewItemLabelsRemainDraftUntilSaveAndRetainSharedIdentitiesAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 60.311
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-labels-stable-draft-column",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerNewItemLabelsRuntime-phone-labels-stable-draft-column.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedLabelsJourneyTests testNewItemLabelsRemainDraftUntilSaveAndRetainSharedIdentitiesAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 63.652
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-labels-typed-navigation",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerNewItemLabelsRuntime-phone-labels-typed-navigation.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedLabelsJourneyTests testNewItemLabelsRemainDraftUntilSaveAndRetainSharedIdentitiesAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 62.999
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-new-item-labels",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerNewItemLabelsRuntime-phone-new-item-labels.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedLabelsJourneyTests testNewItemLabelsRemainDraftUntilSaveAndRetainSharedIdentitiesAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 55.425
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    }
+  ]
+}
