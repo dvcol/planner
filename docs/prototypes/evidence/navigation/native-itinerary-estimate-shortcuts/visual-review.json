@@ -1,0 +1,37 @@
+{
+  "method": "Each of four original named Planner-window PNGs was individually opened with view_image after the corresponding final-source passing invocation.",
+  "images": [
+    {
+      "path": "phone-itinerary-shortcuts/EC0E5DFC-D938-4A6B-A9CF-3DE750C6D9A3.png",
+      "title": "Itinerary shortcut resets to calculation and keeps notes_0_E39AC995-BED4-405D-9FD1-A1E3FD48BDEF.png",
+      "sha256": "e2a574bef3df39d5fab8d1da6cc527e9f8b98fdc7cb771455303ce66eee5d374",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "scope": "Original named Planner-window capture from the passing Itinerary function. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "phone-itinerary-shortcuts/E3889651-F3A5-4923-86F0-3117A79DA637.png",
+      "title": "Itinerary Weekend shortcut saves a manual two-day estimate_0_2669B58D-4853-4FE6-A2A8-B2D4CCEF8AAC.png",
+      "sha256": "ececfaf9dec8911e808eafe4e4862606774146cbb78fe8c30e1b9a6a4b44ca08",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "scope": "Original named Planner-window capture from the passing Itinerary function. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "tablet-itinerary-shortcuts/9DA1889F-2C1A-4B89-BE90-8ECA8206AF99.png",
+      "title": "Itinerary shortcut resets to calculation and keeps notes_0_2A086269-9E2D-4BCF-B5A9-02E940CA3AC6.png",
+      "sha256": "2d1ce9edea0887c61b37041b7663e9ea174e46b8950531cbebd79cdfd94eda48",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "scope": "Original named Planner-window capture from the passing Itinerary function. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "tablet-itinerary-shortcuts/64DA6B1D-07FC-4E68-A4AD-782591ED260D.png",
+      "title": "Itinerary Weekend shortcut saves a manual two-day estimate_0_DDD4D0F2-F100-47B8-9A69-D774816374E7.png",
+      "sha256": "2e83d3abd6d7e9fc6e613d51c7baff5cc0ee71a99a79c021c0259477a4e73599",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "scope": "Original named Planner-window capture from the passing Itinerary function. No physical, accessibility or performance qualification."
+    }
+  ]
+}

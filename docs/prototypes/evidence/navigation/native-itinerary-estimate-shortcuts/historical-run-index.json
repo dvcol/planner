@@ -1,0 +1,51 @@
+{
+  "policy": "Literal recorded function outcomes and whole invocation exits are separate. Compiler-only and setup failures supply no native runtime pass credit. Final qualified epochs are named in the report.",
+  "runs": [
+    {
+      "epoch": "mac-itinerary-shortcuts-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-itinerary-shortcuts-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "phone-itinerary-shortcuts",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryShortcutRuntime-phone-itinerary-shortcuts.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedContainerEstimateJourneyTests testItineraryEstimateShortcutsStageCancelSaveAndResetAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 107.4
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-itinerary-shortcuts",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryShortcutRuntime-tablet-itinerary-shortcuts.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedContainerEstimateJourneyTests testItineraryEstimateShortcutsStageCancelSaveAndResetAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 110.22
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    }
+  ]
+}

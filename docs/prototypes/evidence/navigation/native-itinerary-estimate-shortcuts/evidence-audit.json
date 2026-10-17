@@ -1,0 +1,13 @@
+{
+  "finalCompilerInputsPerPlatform": 945,
+  "frozenRuntimeInputsPerInvocation": 469,
+  "verifiedProductsPerPlatform": 6,
+  "passingFunctionsPerPlatform": {
+    "phone": 1,
+    "tablet": 1,
+    "mac": 0
+  },
+  "passingNativeFunctionInvocations": 2,
+  "retainedIndividuallyInspectedPNGs": 4,
+  "scope": "Itinerary native estimate shortcuts, literal full/remaining saved minutes, Cancel, units, Itinerary identity, retained notes and reset through two relaunches. Production code unchanged. Mac compiler-only; no new Mac runtime, physical/account/CloudKit, accessibility or performance qualification."
+}

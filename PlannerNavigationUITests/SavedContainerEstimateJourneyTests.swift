@@ -17,7 +17,7 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
       name.typeText("\n")
     #endif
     XCTAssertTrue(name.waitForPlannerValue("Preset plan"))
-    chooseListShortcut("Half-day (12 hours)", application: application)
+    chooseShortcut("Half-day (12 hours)", application: application)
     let quantity = application.descendants(matching: .any).matching(
       identifier: "saved.list.estimate.quantity"
     ).firstMatch
@@ -29,13 +29,13 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     XCTAssertTrue(full.label.contains("Manual"))
     XCTAssertTrue(application.staticTexts["No items"].exists)
     openEditor(application)
-    chooseListShortcut("Full-day (24 hours)", application: application)
+    chooseShortcut("Full-day (24 hours)", application: application)
     XCTAssertTrue(quantity.waitForPlannerValue("1"))
     XCTAssertTrue(application.plannerElement("saved.list.estimate.unit").label.contains("Days"))
     application.plannerElement("saved.list.cancel").activateForPlannerJourney()
     XCTAssertTrue(full.waitForPlannerValue("720 minutes"))
     openEditor(application)
-    chooseListShortcut("Weekend (48 hours)", application: application)
+    chooseShortcut("Weekend (48 hours)", application: application)
     XCTAssertTrue(quantity.waitForPlannerValue("2"))
     XCTAssertTrue(application.plannerElement("saved.list.estimate.unit").label.contains("Days"))
     application.plannerElement("saved.list.save").activateForPlannerJourney()
@@ -76,8 +76,112 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     XCTAssertTrue(application.staticTexts["No items"].exists)
   }
 
-  private func chooseListShortcut(_ title: String, application: XCUIApplication) {
-    let shortcuts = application.plannerElement("saved.list.estimate.shortcuts")
+  func testItineraryEstimateShortcutsStageCancelSaveAndResetAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openSection("Itineraries", application: application)
+    reveal("saved.itinerary.new", application: application).activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Preset itinerary")
+    #if os(iOS)
+      title.typeText("\n")
+    #endif
+    XCTAssertTrue(title.waitForPlannerValue("Preset itinerary"))
+    chooseShortcut(
+      "Half-day (12 hours)", accessibilityIdentifierPrefix: "saved.itinerary.estimate",
+      application: application)
+    let quantity = application.descendants(matching: .any).matching(
+      identifier: "saved.itinerary.estimate.quantity"
+    ).firstMatch
+    let unit = application.plannerElement("saved.itinerary.estimate.unit")
+    XCTAssertTrue(quantity.waitForPlannerValue("12"))
+    XCTAssertTrue(unit.label.contains("Hours"))
+    let notes = application.textFields["saved.itinerary.notes"]
+    notes.activateForPlannerJourney()
+    notes.typeText("Keep the meeting point")
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    let full = application.descendants(matching: .any).matching(
+      identifier: "saved.itinerary.estimate.full"
+    ).firstMatch
+    let remaining = application.descendants(matching: .any).matching(
+      identifier: "saved.itinerary.estimate.remaining"
+    ).firstMatch
+    XCTAssertTrue(full.waitForPlannerValue("720 minutes"))
+    XCTAssertTrue(remaining.waitForPlannerValue("720 minutes"))
+    XCTAssertTrue(full.label.contains("Manual"))
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    let retained = revealCatalogRow(
+      prefix: "saved.itinerary.", title: "Preset itinerary", application: application)
+    let itineraryIdentifier = retained.identifier
+    retained.activateForPlannerJourney()
+    toolbarAction("saved.itinerary.edit", application: application).activateForPlannerJourney()
+    chooseShortcut(
+      "Full-day (24 hours)", accessibilityIdentifierPrefix: "saved.itinerary.estimate",
+      application: application)
+    XCTAssertTrue(quantity.waitForPlannerValue("1"))
+    XCTAssertTrue(unit.label.contains("Days"))
+    application.plannerElement("saved.itinerary.cancel").activateForPlannerJourney()
+    XCTAssertTrue(full.waitForPlannerValue("720 minutes"))
+    XCTAssertTrue(remaining.waitForPlannerValue("720 minutes"))
+    XCTAssertTrue(application.staticTexts["Keep the meeting point"].exists)
+    toolbarAction("saved.itinerary.edit", application: application).activateForPlannerJourney()
+    chooseShortcut(
+      "Weekend (48 hours)", accessibilityIdentifierPrefix: "saved.itinerary.estimate",
+      application: application)
+    XCTAssertTrue(quantity.waitForPlannerValue("2"))
+    XCTAssertTrue(unit.label.contains("Days"))
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    assertWeekendEstimate(full)
+    assertWeekendEstimate(remaining)
+    XCTAssertTrue(full.label.contains("Manual"))
+    recordScreenshot(
+      application, name: "Itinerary Weekend shortcut saves a manual two-day estimate")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Itineraries", application: application)
+    revealSidebarIfNeeded(application, element: retained)
+    XCTAssertTrue(retained.waitForExistence(timeout: 10))
+    XCTAssertEqual(retained.identifier, itineraryIdentifier)
+    retained.activateForPlannerJourney()
+    assertWeekendEstimate(full)
+    assertWeekendEstimate(remaining)
+    toolbarAction("saved.itinerary.edit", application: application).activateForPlannerJourney()
+    XCTAssertTrue(quantity.waitForPlannerValue("2"))
+    XCTAssertTrue(unit.label.contains("Days"))
+    let enabled = application.descendants(matching: .any).matching(
+      identifier: "saved.itinerary.estimate.enabled"
+    ).firstMatch
+    toggle(enabled)
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    XCTAssertTrue(full.waitForPlannerValue("0 minutes"))
+    XCTAssertTrue(remaining.waitForPlannerValue("0 minutes"))
+    XCTAssertFalse(full.label.contains("Manual"))
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    XCTAssertTrue(application.staticTexts["Keep the meeting point"].exists)
+    recordScreenshot(application, name: "Itinerary shortcut resets to calculation and keeps notes")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Itineraries", application: application)
+    revealSidebarIfNeeded(application, element: retained)
+    XCTAssertTrue(retained.waitForExistence(timeout: 10))
+    XCTAssertEqual(retained.identifier, itineraryIdentifier)
+    retained.activateForPlannerJourney()
+    XCTAssertTrue(full.waitForPlannerValue("0 minutes"))
+    XCTAssertTrue(remaining.waitForPlannerValue("0 minutes"))
+    XCTAssertFalse(full.label.contains("Manual"))
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+    XCTAssertTrue(application.staticTexts["Keep the meeting point"].exists)
+  }
+
+  private func chooseShortcut(
+    _ title: String, accessibilityIdentifierPrefix: String = "saved.list.estimate",
+    application: XCUIApplication
+  ) {
+    let shortcuts = application.plannerElement(accessibilityIdentifierPrefix + ".shortcuts")
     XCTAssertTrue(shortcuts.waitForExistence(timeout: 5))
     shortcuts.activateForPlannerJourney()
     let shortcut = application.plannerElement(title)

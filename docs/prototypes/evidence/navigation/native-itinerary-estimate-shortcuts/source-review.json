@@ -1,0 +1,17 @@
+{
+  "baseline": "42952579d09a010916405aad39d60e9cf84f62ab",
+  "sourceSHA256": {
+    "PlannerNavigationUITests/SavedContainerEstimateJourneyTests.swift": "5ac7d040b51ce72d3e42d64f76cdbc37a5b90fbf840ed91e2f8b118c1eb2dccd"
+  },
+  "runtimeQualification": "Pending native execution; source reviews supply no runtime credit.",
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "The shared helper preserves List selectors through its same default prefix. Native Itinerary interactions remain bounded and window captures retain scope. No production change."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "report": "Literal full/remaining minutes, Cancel720, stable Itinerary identity, two-day representation, persisted reset, notes and No items are checked. List helper defaults and contract scope remain unchanged."
+  }
+}
