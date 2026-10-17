@@ -1,6 +1,6 @@
 # Native Item catalog window contract
 
-Status: proposed for Q95 review. No implementation or tests at the proposed new seam have been written.
+Status: Q95 A approved by the human on 17 October 2026. The production interface and test seam below are accepted for implementation; no loader or tests at this seam exist at this approval epoch.
 
 ## Context and starting state
 
@@ -41,7 +41,7 @@ Only those operations and observable results form the proposed test seam. The ca
 
 ## Proposed tests and definition of ready
 
-TDD requires confirming this new seam before tests are written. The existing macOS app-hosted `PlannerMCPTests` target can import the app and execute the loader's production interface against a disposable real local-only Core dataset. It already supports app-internal production interfaces through `@testable import Planner`; no signing account or new test target is needed.
+Q95 A confirms this production seam before its TDD tests. The existing macOS app-hosted `PlannerMCPTests` target can import the app and execute the loader's production interface against a disposable real local-only Core dataset. It already supports app-internal production interfaces through `@testable import Planner`; no signing account or new test target is needed.
 
 Use literal expected identities and titles created through Core commands. Through the loader's own interface, verify the first page, crossing and revisiting page boundaries, filtered/sorted results, observable presentation retention, replacement query results and stale-generation recovery after real saved mutations. Tests must not query private storage or assert on private cache/task structures.
 
@@ -59,4 +59,4 @@ Items and Inbox no longer accumulate all row presentations before display. Their
 
 ## Review choice
 
-Q95 A approves this native interface, retention behavior and real-Core app-hosted test seam alongside the existing native UI seam. Q95 B revises the proposal before implementation. Q84 remains settled under either choice.
+The human selected Q95 A, approving this native interface, retention behavior and real-Core app-hosted test seam alongside the existing native UI seam. The unselected alternative was revising the contract first. Q84 remains settled.
