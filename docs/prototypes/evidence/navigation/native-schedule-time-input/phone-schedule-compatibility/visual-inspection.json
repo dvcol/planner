@@ -1,0 +1,25 @@
+{
+  "inspectedIndividually": [
+    "25D6BCF7-07AB-456A-8568-0996AA8FD6B9.png",
+    "E15CBFB2-580B-4EC1-9972-8CDF488522F0.png",
+    "0F2C4E03-91E3-4894-9C73-B9B5C3B1E8A9.png",
+    "EA7CD3EE-B82D-4611-A392-75A0996465CD.png",
+    "B2909959-3215-4620-8044-C3A6A43CCE5A.png",
+    "6DC4FBFD-7ED7-4E5C-91A7-8132D1733D3C.png",
+    "4989B5F4-2688-427A-A721-4DB42F647612.png",
+    "C8856E26-7117-48D1-9514-BCC5251CC125.png",
+    "2C6B898A-DF17-4B14-B671-87B7C7E82686.png",
+    "DE0D7EF7-BBF0-46F5-A083-7A6F78C9F079.png",
+    "4EAA7AEF-76F1-4FB0-A880-459795FF1AEC.png"
+  ],
+  "observations": [
+    "All eleven retained original PNGs were individually inspected.",
+    "All-day End before Start shows its warning with disabled Save; October 9 through 11 is inclusive and persists after relaunch.",
+    "Optional-end and timezone journeys retain saved native schedule rows after cancel/save/relaunch.",
+    "Timezone controls use native selection and searchable choices for Tokyo, New York and Paris.",
+    "Repeated Item titles and technical timezone/footer presentation remain polish review items."
+  ],
+  "limits": [
+    "Assertions and captures qualify these phone workflows only; exact fractional authority is covered separately at the Foundation/Core seam."
+  ]
+}

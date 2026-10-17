@@ -1,0 +1,272 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "1C293DE8-3C58-43E0-B506-E46B2886E28F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Confirmed Item deletion selects the first visible survivor_0_394A7BD6-C8B4-4975-9BB4-E141322BB24C.png",
+    "timestamp": 1792246422.731,
+    "testIdentifier": "SavedAppearanceJourneyTests/testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "36ADD4AE-C8A2-41CB-9116-CA0CF10A5EC2.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Relaunched Inbox retains sort and last-membership removal_0_866F1E8B-E864-4614-85EB-388F47F10CD5.png",
+    "timestamp": 1792246735.866,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "3F4EB522-8EB5-4614-A819-A9F64E373CF1.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Inbox includes archived completed Items through cumulative filters_0_15B07AEF-FD35-4108-A74B-853AB6FEBE0F.png",
+    "timestamp": 1792246543.024,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "CD486396-7C6A-45EF-BE38-414303A05975.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Inbox excludes listed Items_0_ABC36267-169B-4BE8-AE09-F5B82187B0EF.png",
+    "timestamp": 1792246505.642,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "BA5B8C90-8998-4F26-9FF9-55492B3A9A74.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule Start UTC+1030 after relaunch_0_926929A3-B921-4F98-BA94-5FD9BA7CFEB8.png",
+    "timestamp": 1792246835.065,
+    "testIdentifier": "SavedItemJourneyTests/testLordHoweStartRetainsBothHalfHourOccurrencesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "6C542A10-566A-44FA-9B95-34B3121D9B5B.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule explicit Start UTC+1030_0_F88C39C4-A17D-437E-90AF-4B07B93C53A2.png",
+    "timestamp": 1792246821.196,
+    "testIdentifier": "SavedItemJourneyTests/testLordHoweStartRetainsBothHalfHourOccurrencesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "B6281F4D-F4B0-4BE5-9033-2105109577E8.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule Start UTC+1100 after relaunch_0_30351D12-1455-4D7A-A226-4F80A97A821A.png",
+    "timestamp": 1792246811.531,
+    "testIdentifier": "SavedItemJourneyTests/testLordHoweStartRetainsBothHalfHourOccurrencesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A008CBA2-431D-4257-ACE9-8AEBF6D0E475.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule explicit Start UTC+1100_0_0DCED605-1884-46EE-8EC7-2D6225A0F19A.png",
+    "timestamp": 1792246797.455,
+    "testIdentifier": "SavedItemJourneyTests/testLordHoweStartRetainsBothHalfHourOccurrencesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "D23E1D52-EFE1-4C2D-8E8C-BDED42A72D19.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule repeated Start requires a choice_0_2A835CC9-1313-4B9C-9195-914966996D47.png",
+    "timestamp": 1792246791.39,
+    "testIdentifier": "SavedItemJourneyTests/testLordHoweStartRetainsBothHalfHourOccurrencesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "918C0740-7382-488C-9AE8-1BDCD376F52F.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule date control before opening_0_7E9ABC53-3755-4522-B01A-E4BB9500864D.txt",
+    "timestamp": 1792246767.596,
+    "testIdentifier": "SavedItemJourneyTests/testLordHoweStartRetainsBothHalfHourOccurrencesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "F815D389-E3FC-4D1E-B2C1-51CFD51BC6BE.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native time zone search choices for AustraliaLord_Howe_0_CFA47F08-3BA2-455E-AA18-5AC0143339FA.png",
+    "timestamp": 1792246763.462,
+    "testIdentifier": "SavedItemJourneyTests/testLordHoweStartRetainsBothHalfHourOccurrencesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "177FC6AE-85D5-4BC4-ADDF-9FE27937D576.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule valid span survives invalid draft and relaunch_0_545AB280-D7D7-4A0E-B5B3-E2C1D38A4461.png",
+    "timestamp": 1792246995.97,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedEndComparesInstantsAndMissingEndEditLeavesSavedScheduleUnchanged()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "5D5BF496-E567-425F-A303-1B1DD4D3EA8C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule missing End edit cannot Save_0_92B9EB68-A5A4-40FE-AE9D-1E4AB0562B08.png",
+    "timestamp": 1792246982.689,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedEndComparesInstantsAndMissingEndEditLeavesSavedScheduleUnchanged()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "C6A35C0E-C4ED-4E06-9122-A051C209CDF0.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule date control before opening_0_C387217A-88B8-4B6A-9A63-483BB415E535.txt",
+    "timestamp": 1792246958.487,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedEndComparesInstantsAndMissingEndEditLeavesSavedScheduleUnchanged()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "BAEF498F-2C9C-4334-A841-8E51D449ED35.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule date control before opening_0_61364B27-A469-475A-B215-A45C43239A0B.txt",
+    "timestamp": 1792246932.732,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedEndComparesInstantsAndMissingEndEditLeavesSavedScheduleUnchanged()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "33BB0749-7599-42CC-B7A1-CAD3D6FCA2B4.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule later End occurrence is valid_0_7808637D-014F-4E51-866C-C185283E3D4E.png",
+    "timestamp": 1792246924.976,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedEndComparesInstantsAndMissingEndEditLeavesSavedScheduleUnchanged()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "D3D17B2D-21DD-4016-8267-ABDAED5817AB.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule earlier End occurrence is invalid_0_5FD5A0B6-1A4F-4559-AE9B-0CAA84CF725F.png",
+    "timestamp": 1792246918.765,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedEndComparesInstantsAndMissingEndEditLeavesSavedScheduleUnchanged()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "812C8D60-98FF-4BF4-9B79-4EB971A7F4BF.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule date control before opening_0_8A45AC85-010C-4269-AA10-019FC0513260.txt",
+    "timestamp": 1792246892.656,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedEndComparesInstantsAndMissingEndEditLeavesSavedScheduleUnchanged()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "AE683FBD-2E38-4AA3-89D9-6F46E62BF04E.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule date control before opening_0_006F00FC-A328-4035-80B4-ADB23F0C9376.txt",
+    "timestamp": 1792246862.042,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedEndComparesInstantsAndMissingEndEditLeavesSavedScheduleUnchanged()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "AF1964E7-FFD9-4CF8-9FB2-7DDED39B500D.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native time zone search choices for AmericaNew_York_0_D333BC40-F7D0-4E3C-A9AB-8A3FEE879584.png",
+    "timestamp": 1792246858.009,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedEndComparesInstantsAndMissingEndEditLeavesSavedScheduleUnchanged()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "DF6C0BAC-254D-49B9-951C-8D6819827C23.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary planning timezone survives relaunch_0_54841540-9498-49BE-9E64-A4DF167D9DBE.png",
+    "timestamp": 1792247085.529,
+    "testIdentifier": "SavedItineraryJourneyTests/testItineraryPlanningTimeZoneSelectionPreservesInstantAndOwnerAfterCancelAndRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "045D3E2C-4C55-4847-84F5-D8ED91067A37.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary timezone edit retains its owner and instant_0_4CEBD481-46DD-4C92-BF3F-19823732D97E.png",
+    "timestamp": 1792247057.754,
+    "testIdentifier": "SavedItineraryJourneyTests/testItineraryPlanningTimeZoneSelectionPreservesInstantAndOwnerAfterCancelAndRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "BCCCA18E-1F83-4240-A441-AE68214848BC.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary planning zone stages the original appointment_0_6DC109A3-445D-4B09-BA77-CE3A60ED0166.png",
+    "timestamp": 1792247054.936,
+    "testIdentifier": "SavedItineraryJourneyTests/testItineraryPlanningTimeZoneSelectionPreservesInstantAndOwnerAfterCancelAndRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "08858240-DB1E-4E1C-AAD2-B666DC33D3CB.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Itinerary schedule removal survives relaunch_0_E67D693B-4EBB-405F-8B5B-2A0919BCC21E.png",
+    "timestamp": 1792247205.705,
+    "testIdentifier": "SavedItineraryJourneyTests/testItineraryScheduleConversionAndConfirmedRemovalRetainOwnerAndOtherAssignment()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "CD0DC869-4D8F-459E-BEC1-E75923AED9A3.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Itinerary removal retains its other appointment_0_CFCFF9D3-874E-4E25-A607-8558D8A5E8DB.png",
+    "timestamp": 1792247187.669,
+    "testIdentifier": "SavedItineraryJourneyTests/testItineraryScheduleConversionAndConfirmedRemovalRetainOwnerAndOtherAssignment()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "EDDB5820-9D7D-4A13-9A0D-726BC84B9990.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Itinerary schedule removal explains its scope_0_A3E1C673-BE14-44B8-ADA6-3CDDEFC25943.png",
+    "timestamp": 1792247178.128,
+    "testIdentifier": "SavedItineraryJourneyTests/testItineraryScheduleConversionAndConfirmedRemovalRetainOwnerAndOtherAssignment()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "422BDB0E-CDA8-44BA-A31A-B92B5824C8B5.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Itinerary edit reloads its converted all-day form_0_C99DD1F6-A8EC-4539-B89D-0252D77246A2.png",
+    "timestamp": 1792247152.942,
+    "testIdentifier": "SavedItineraryJourneyTests/testItineraryScheduleConversionAndConfirmedRemovalRetainOwnerAndOtherAssignment()"
+  }
+]

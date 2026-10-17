@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "F9E5AB6C-20C7-4095-95E8-CF3B36D9F134.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives expanded layout_0_A80C8ADB-89FC-474A-90EC-E6CB1CC9E502.png",
+    "timestamp": 1792243807.629,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "105DD4DA-8F56-4F94-AC38-0F0608E6E1E2.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives portrait navigation layout_0_022C9A08-5BFB-4E26-9FEF-84D6B10F6FA7.png",
+    "timestamp": 1792243778.915,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "CA40C4B7-98DF-40EA-8B24-655A8F8996FA.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule date control before opening_0_37B2DB15-2F5C-4154-941A-13958355EF77.txt",
+    "timestamp": 1792244054.472,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedEndComparesInstantsAndMissingEndEditLeavesSavedScheduleUnchanged()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "B7A048FB-27FE-4134-A5C7-6551593C6FE7.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native time zone search choices for AmericaNew_York_0_2F108CEA-232F-4E7D-B37D-430B4A4A8BDB.png",
+    "timestamp": 1792244050.916,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedEndComparesInstantsAndMissingEndEditLeavesSavedScheduleUnchanged()"
+  }
+]

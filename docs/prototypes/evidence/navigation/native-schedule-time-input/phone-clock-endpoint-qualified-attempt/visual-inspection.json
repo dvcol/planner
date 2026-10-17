@@ -1,0 +1,29 @@
+{
+  "inspectedIndividually": [
+    "59495FDE-21CD-4737-A43A-5C4778D196E2.png",
+    "4F41BAB5-566B-4EC1-ADB9-AE4262F39C1F.png",
+    "CD80B496-9AAF-4950-8ED3-0E474245DA34.png",
+    "ECCF9EA8-75DE-4754-98DC-47A90E204F6C.png",
+    "3707FFF5-E811-4F9C-A707-9BB8716E4189.png",
+    "F1D889BC-2AA5-4715-8E6D-C8C93892C099.png",
+    "BD6740CC-7DFA-4C8D-919B-CB9C6B614927.png",
+    "B9D22050-7630-4610-83E6-48696EC3855B.png",
+    "39022FC1-1648-488F-9027-3DBC433E680C.png",
+    "4DB977ED-C6B0-470A-B2DF-84D30DB0C086.png",
+    "B1606A3B-1C1B-4F6D-9567-3D297F5519E4.png",
+    "FA0191D0-D98D-4AA6-8E53-23CB840F1E60.png",
+    "227E8465-2B76-44E4-9B6D-CFDB5A91C4F7.png"
+  ],
+  "observations": [
+    "All thirteen retained original PNGs were individually inspected.",
+    "Repeated Lord Howe Start requires an explicit occurrence with disabled Save until chosen; UTC+11:00 and UTC+10:30 remain readable and reopen with their selected offsets.",
+    "Repeated End rejects the earlier occurrence and accepts the later occurrence after the earlier Start.",
+    "March 8 Start 01:30 is staged valid before entering nonexistent End 02:30; the retained warning and disabled Save are independent of date ordering.",
+    "Cancel and relaunch preserve the original November span.",
+    "Draft portrait and landscape retain the entered fields; landscape floating tabs overlap the Add Link area and remain polish work.",
+    "Native timezone search returns Lord Howe and New York choices."
+  ],
+  "limits": [
+    "Focused phone input, persistence and draft-layout evidence only; no Mac, physical, full accessibility or whole-app visual acceptance."
+  ]
+}

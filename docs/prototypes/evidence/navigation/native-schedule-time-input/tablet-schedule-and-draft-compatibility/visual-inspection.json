@@ -1,0 +1,26 @@
+{
+  "inspectedIndividually": [
+    "2DE7410C-D7FE-4236-8B3D-4703D6B49945.png",
+    "D28B2226-D3FF-45C3-BE38-795D4241773B.png",
+    "61925D68-DEBD-4969-BA33-7CAF5411BCB3.png",
+    "3DF1C39B-AF57-47CD-8683-2D36D0A8C014.png",
+    "DD19E48D-490D-43B6-9C99-B82338A9C08B.png",
+    "B3C31A7B-9B61-4FEE-836E-13C5A1868312.png",
+    "42A89191-5B48-473F-A5D4-396AEA1ED56B.png",
+    "2EE8E769-693F-4C7E-81EC-3A8C59A12DF7.png",
+    "BAD84612-CB20-48E7-9F80-EDFA4BC80371.png",
+    "1DA11B54-89E1-410B-AA53-7DF437EA3EE9.png",
+    "8DC5E547-824A-481B-8A60-5BBD2A2E9753.png",
+    "0B97C5B2-10E0-430C-9A12-11604C9D6BDD.png",
+    "4EDFF868-F97C-4CAE-92F4-B9E617D790D9.png"
+  ],
+  "observations": [
+    "Draft fields remain readable in the retained portrait/landscape states; the List origin and editor stay separate.",
+    "All-day invalid and inclusive ranges show their native warning/Save states and persist in the saved row.",
+    "Optional-end and timezone changes retain saved details and source selection after relaunch.",
+    "Stacked floating tabs/toolbar/search, duplicate titles and technical footer wording remain whole-app polish items."
+  ],
+  "limits": [
+    "Focused ordinary-size iPad workflows; no Mac, physical, full accessibility or whole-app visual acceptance."
+  ]
+}

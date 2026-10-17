@@ -1,0 +1,34 @@
+{
+  "scope": "Supplied-End native qualification test; production code unchanged from a71f902",
+  "initialSnapshot": "/private/tmp/PlannerClockEndpointReview",
+  "correctedSnapshot": "/private/tmp/PlannerClockEndpointCorrectedReview",
+  "initialSourceHashes": {
+    "Planner/Scenes/SavedScheduleTimeInput.swift": "b52f7588034587dbbca55462b2f843f183bed3bc1596414caa3efcea1d639fe1",
+    "Planner/Scenes/SavedItemScheduleViews.swift": "d68ce610813961f32c96a18730d4cbdb922307230ea1d2b26a650689effe5089",
+    "PlannerMCPTests/SavedScheduleTimeInputTests.swift": "44311eb58bea604283eb0e1fcfd55a9adc9b5579e09e0ce14ecc475f9800bacd",
+    "PlannerNavigationUITests/SavedItemJourneyTests.swift": "beefd418451acbdda7d4b029441be21bc380e5dc44fca8d77250ca697e26f445",
+    "docs/native-schedule-time-input-contract-review.md": "c5a96a6f5e8831216027947b3624fe796a5423e5af63e0663967ecec46a64a06"
+  },
+  "correctedSourceHashes": {
+    "Planner/Scenes/SavedScheduleTimeInput.swift": "b52f7588034587dbbca55462b2f843f183bed3bc1596414caa3efcea1d639fe1",
+    "Planner/Scenes/SavedItemScheduleViews.swift": "d68ce610813961f32c96a18730d4cbdb922307230ea1d2b26a650689effe5089",
+    "PlannerMCPTests/SavedScheduleTimeInputTests.swift": "44311eb58bea604283eb0e1fcfd55a9adc9b5579e09e0ce14ecc475f9800bacd",
+    "PlannerNavigationUITests/SavedItemJourneyTests.swift": "3216ab433d484bbd34f1c4644d1ae7b901a4739dd278a5071dd6aee3886b4b82",
+    "docs/native-schedule-time-input-contract-review.md": "c5a96a6f5e8831216027947b3624fe796a5423e5af63e0663967ecec46a64a06"
+  },
+  "standards": {
+    "finding": "Button-only selector cannot find the Include end Toggle",
+    "correction": "Use the established any-role identifier query",
+    "followup": "Resolved; no remaining confirmed findings"
+  },
+  "spec": {
+    "finding": "Missing End before November Start could hide behind endpoint ordering",
+    "correction": "Set valid March8 01:30 Start, assert Save enabled, then enter missing March8 02:30 End",
+    "followup": "Resolved; all five prepared snapshot hashes match; runtime remains pending"
+  },
+  "limits": [
+    "Later shared New York/Lord Howe native test helper is outside these snapshots",
+    "Formatting after preparation changes only the test file; compiled epoch hashes remain authoritative",
+    "No supplied-End runtime success inferred"
+  ]
+}

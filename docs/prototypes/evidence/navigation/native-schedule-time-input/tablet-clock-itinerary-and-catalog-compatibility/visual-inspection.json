@@ -1,0 +1,38 @@
+{
+  "inspectedIndividually": [
+    "1C293DE8-3C58-43E0-B506-E46B2886E28F.png",
+    "36ADD4AE-C8A2-41CB-9116-CA0CF10A5EC2.png",
+    "3F4EB522-8EB5-4614-A819-A9F64E373CF1.png",
+    "CD486396-7C6A-45EF-BE38-414303A05975.png",
+    "BA5B8C90-8998-4F26-9FF9-55492B3A9A74.png",
+    "6C542A10-566A-44FA-9B95-34B3121D9B5B.png",
+    "B6281F4D-F4B0-4BE5-9033-2105109577E8.png",
+    "A008CBA2-431D-4257-ACE9-8AEBF6D0E475.png",
+    "D23E1D52-EFE1-4C2D-8E8C-BDED42A72D19.png",
+    "F815D389-E3FC-4D1E-B2C1-51CFD51BC6BE.png",
+    "177FC6AE-85D5-4BC4-ADDF-9FE27937D576.png",
+    "5D5BF496-E567-425F-A303-1B1DD4D3EA8C.png",
+    "33BB0749-7599-42CC-B7A1-CAD3D6FCA2B4.png",
+    "D3D17B2D-21DD-4016-8267-ABDAED5817AB.png",
+    "AF1964E7-FFD9-4CF8-9FB2-7DDED39B500D.png",
+    "DF6C0BAC-254D-49B9-951C-8D6819827C23.png",
+    "045D3E2C-4C55-4847-84F5-D8ED91067A37.png",
+    "BCCCA18E-1F83-4240-A441-AE68214848BC.png",
+    "08858240-DB1E-4E1C-AAD2-B666DC33D3CB.png",
+    "CD0DC869-4D8F-459E-BEC1-E75923AED9A3.png",
+    "EDDB5820-9D7D-4A13-9A0D-726BC84B9990.png",
+    "422BDB0E-CDA8-44BA-A31A-B92B5824C8B5.png"
+  ],
+  "observations": [
+    "Confirmed Item deletion selects Zulu details automatically on the regular layout, preserving the chosen descending sort.",
+    "Inbox retains cumulative completion/archive visibility and restores Todo source state after final-membership removal and relaunch.",
+    "Lord Howe requires explicit occurrence and retains GMT+11 or GMT+10:30 after relaunch, with its row reflecting device display time.",
+    "Repeated End rejects EDT 01:15 after EDT 01:45, accepts EST 01:15, and retains the original saved span after canceling a nonexistent March End.",
+    "Itinerary zone-only editing retains the source and booked instant; converted all-day forms reopen with inclusive dates.",
+    "Schedule removal explains its scope and leaves the Itinerary and its other appointment intact after relaunch.",
+    "The Itinerary content toolbar has a larger gap below the floating tabs than the Item catalog in these portrait captures; duplicate titles, technical clock footer and truncated Itinerary title remain polish work."
+  ],
+  "limits": [
+    "Represented ordinary-size iPad workflows only; no phone Itinerary caller, Mac, physical, full accessibility or whole-app acceptance is inferred."
+  ]
+}

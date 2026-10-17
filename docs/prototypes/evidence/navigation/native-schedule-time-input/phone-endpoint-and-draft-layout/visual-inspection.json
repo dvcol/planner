@@ -1,0 +1,16 @@
+{
+  "inspectedIndividually": [
+    "F9E5AB6C-20C7-4095-95E8-CF3B36D9F134.png",
+    "105DD4DA-8F56-4F94-AC38-0F0608E6E1E2.png",
+    "B7A048FB-27FE-4134-A5C7-6551593C6FE7.png"
+  ],
+  "observations": [
+    "Draft location, bookmark and native duration controls are present in portrait and landscape captures",
+    "Landscape floating TabView overlaps the Add Link area; retain this for native polish",
+    "Timezone search capture supplies no endpoint validation credit"
+  ],
+  "limits": [
+    "Draft case timed out during teardown; no formal pass",
+    "End case failed in test Toggle lookup before End was entered"
+  ]
+}

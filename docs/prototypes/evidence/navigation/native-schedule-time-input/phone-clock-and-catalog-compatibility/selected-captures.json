@@ -1,0 +1,162 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "55030CD4-B574-44F1-B8F5-6B86EBFF4ADF.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Confirmed Item deletion selects the first visible survivor_0_FD975132-C311-466C-BFFB-AAC066C4AF2C.png",
+    "timestamp": 1792245825.402,
+    "testIdentifier": "SavedAppearanceJourneyTests/testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "B8DC6D45-7EDE-401A-BC58-1280BC91E2EE.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Relaunched Inbox retains sort and last-membership removal_0_E325AF8B-E1F8-49D6-82D2-8BBF30732BF5.png",
+    "timestamp": 1792246142.106,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "08D1D17F-4B78-4642-9350-FFD6C7D675A1.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Inbox includes archived completed Items through cumulative filters_0_B44489CB-D889-4C02-B6B4-F03C20749CE3.png",
+    "timestamp": 1792245945.008,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "7A353425-02F6-4CD8-BE57-1523FDE17FE1.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Inbox excludes listed Items_0_1D41906F-A685-4C15-8844-DA4861855C42.png",
+    "timestamp": 1792245908.633,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeInboxRetainsUnlistedItemsAndIndependentFiltersSortAndSourceStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "ACCF2EC7-74CE-4C75-90AC-098BE903BAB7.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule missing Start Cancel retains unscheduled Item_0_3EDA0652-2488-4F3D-8C44-667AFB6C1CFF.png",
+    "timestamp": 1792246207.972,
+    "testIdentifier": "SavedItemJourneyTests/testNonexistentStartStaysEnteredDisablesSaveAndCancelCreatesNoSchedule()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "3F6BF4F6-061C-4305-B4F2-74561D719581.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule missing Start remains entered_0_2E784DF1-BD82-4D40-91F3-113B2CAFFB3E.png",
+    "timestamp": 1792246195.469,
+    "testIdentifier": "SavedItemJourneyTests/testNonexistentStartStaysEnteredDisablesSaveAndCancelCreatesNoSchedule()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "7B4B71F2-3E27-4A7B-9FD6-F8B0E0A01C47.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule missing Start remains entered_0_B9E1CF9C-385E-4535-BE45-291D917DB16C.txt",
+    "timestamp": 1792246195.34,
+    "testIdentifier": "SavedItemJourneyTests/testNonexistentStartStaysEnteredDisablesSaveAndCancelCreatesNoSchedule()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "5CF02A77-3FB0-4004-B26C-39F6CF0551B3.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule date control before opening_0_1F9EC070-E109-4495-96D7-5460F9A34A13.txt",
+    "timestamp": 1792246173.919,
+    "testIdentifier": "SavedItemJourneyTests/testNonexistentStartStaysEnteredDisablesSaveAndCancelCreatesNoSchedule()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "A99F19F2-E70A-4F62-AB8B-4FCE80F5F8DA.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native time zone search choices for AmericaNew_York_0_EBD7F792-114B-492E-86EB-09E602317C77.png",
+    "timestamp": 1792246170.329,
+    "testIdentifier": "SavedItemJourneyTests/testNonexistentStartStaysEnteredDisablesSaveAndCancelCreatesNoSchedule()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "D471E6E4-A34A-41E7-8942-B8B76D226837.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule Start UTC-0500 after relaunch_0_B7C13F92-A708-4D28-A016-DE9BB72E139F.png",
+    "timestamp": 1792246295.921,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedStartRequiresChoiceAndRetainsEachOccurrenceAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "0247DB9F-F742-4567-9498-DB523ADB3A4F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule explicit Start UTC-0500_0_95A16254-A435-4E20-A4CD-6C9F115FD3E3.png",
+    "timestamp": 1792246281.798,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedStartRequiresChoiceAndRetainsEachOccurrenceAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "79255CF2-26F8-49A5-8B93-D05D0A989774.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule Start UTC-0400 after relaunch_0_E8B8DAD6-C34E-4704-8F13-EA4BC3CE6C14.png",
+    "timestamp": 1792246272.49,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedStartRequiresChoiceAndRetainsEachOccurrenceAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "7CA54C72-8244-4224-8A75-4BBB9CC06F62.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule explicit Start UTC-0400_0_05FF2B67-B2B4-4438-8BAF-1A90BBED5C2C.png",
+    "timestamp": 1792246258.596,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedStartRequiresChoiceAndRetainsEachOccurrenceAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "90823186-3513-4EEA-B51A-CB485637B484.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule repeated Start requires a choice_0_0E16645E-B3FD-422D-B52B-4B259B6145CE.png",
+    "timestamp": 1792246252.748,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedStartRequiresChoiceAndRetainsEachOccurrenceAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "FE327CAF-2600-4A13-8894-7E48B758C281.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Civil schedule date control before opening_0_D90F7E5A-0288-4407-8B71-4ECE955B1148.txt",
+    "timestamp": 1792246233.277,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedStartRequiresChoiceAndRetainsEachOccurrenceAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "661DAA9F-4C3B-4858-98B6-592EECC74812.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native time zone search choices for AmericaNew_York_0_871DE5BF-CFF2-493D-BE57-267B9D584498.png",
+    "timestamp": 1792246229.676,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedStartRequiresChoiceAndRetainsEachOccurrenceAfterRelaunch()"
+  }
+]
