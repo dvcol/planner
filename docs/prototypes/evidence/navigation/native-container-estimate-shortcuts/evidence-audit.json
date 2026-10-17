@@ -1,0 +1,15 @@
+{
+  "finalCompilerInputsPerPlatform": 945,
+  "frozenRuntimeInputsPerInvocation": 469,
+  "verifiedProductsPerPlatform": 6,
+  "passingFunctionsPerPlatform": {
+    "phone": 1,
+    "tablet": 1,
+    "mac": 0
+  },
+  "passingNativeFunctionInvocations": 2,
+  "retainedIndividuallyInspectedPNGs": 6,
+  "historicalPassingPhoneInvocation": 1,
+  "failedIPadSetupInvocations": 2,
+  "scope": "List native estimate shortcuts, literal saved minutes, Cancel, units, List identity and reset through relaunch. Production code unchanged. Mac compiler-only; no new Mac runtime, physical/account/CloudKit, accessibility or performance qualification."
+}

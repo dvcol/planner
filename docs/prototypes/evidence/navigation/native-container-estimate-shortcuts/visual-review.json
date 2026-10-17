@@ -1,0 +1,53 @@
+{
+  "method": "Each of six original named Planner-window PNGs was individually opened with view_image. Four belong to final-source invocations; two retain the original phone source epoch.",
+  "images": [
+    {
+      "path": "phone-list-shortcuts/1D3DFC09-BC22-4598-B2CB-A06AFE8017FE.png",
+      "title": "List estimate shortcut clears back to calculation_0_84A02A99-38C5-4C7A-BD06-BBDF352DC2D6.png",
+      "sha256": "79e47d3e3fb83627db21deac4e8318121a4c61af5e694af92dfefc9b3ae7c38f",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "scope": "Original named Planner-window capture from a passing function. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "phone-list-shortcuts/A8AABDA5-BFBB-471F-993E-FC84B66EDEDF.png",
+      "title": "List Weekend shortcut saves a manual two-day estimate_0_AD1DC1F1-A4F0-48A0-AF14-FE283A206A08.png",
+      "sha256": "864ff263c5ecc4892cd1746df045dc8b1bd6ecfebcb4754880d9917153541bfb",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "scope": "Original named Planner-window capture from a passing function. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "phone-list-shortcuts-final/A0BA0263-99A7-4672-9143-20F6AA8E1FE7.png",
+      "title": "List estimate shortcut clears back to calculation_0_3D13E78C-9167-48EE-87E7-0DA0B37125E4.png",
+      "sha256": "1199198e18f6376c43d83d8d7ee271b1cd58b373519e84f383edd3ecad1cec68",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "scope": "Original named Planner-window capture from a passing function. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "phone-list-shortcuts-final/A7223747-D637-4F2D-9CA4-178A4D7D0F30.png",
+      "title": "List Weekend shortcut saves a manual two-day estimate_0_B15E35FB-19CA-49BF-A48C-BDB9081D7197.png",
+      "sha256": "38ec578d472863b5d70900bad4da6988006343e2cf79137cca5caf98cae0c509",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "scope": "Original named Planner-window capture from a passing function. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "tablet-list-shortcuts-menu-label/DAFD4036-1A9B-4266-A849-1305F0E1F72C.png",
+      "title": "List estimate shortcut clears back to calculation_0_17F54ACC-8BBF-4A2C-894B-19B0CD917DBD.png",
+      "sha256": "f8af1bb995a9a75d7f64aa98dc884ed4c420fb2b00d5dc122a599d4635068dcf",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "scope": "Original named Planner-window capture from a passing function. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "tablet-list-shortcuts-menu-label/892F772F-E8D1-46A4-88EA-E24D45E07EB3.png",
+      "title": "List Weekend shortcut saves a manual two-day estimate_0_FD6B665F-950A-4331-AD88-668ED4D310E6.png",
+      "sha256": "5f998fb7618b112fb9e1bfa52dc4b33195f294c50388ab805918558abdaba233",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "scope": "Original named Planner-window capture from a passing function. No physical, accessibility or performance qualification."
+    }
+  ]
+}

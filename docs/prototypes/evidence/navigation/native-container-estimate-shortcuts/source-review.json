@@ -1,0 +1,23 @@
+{
+  "baseline": "16e0c665bb0ffc6c0bcc094e9487995265483885",
+  "scope": "Container shortcut test and native controller compatibility only; pending labels investigation excluded.",
+  "sourceSHA256": {
+    "PlannerNavigationUITests/SavedContainerEstimateJourneyTests.swift": "19dc55af5dd20ca69c730b75422478550d6dca3f3f48cdd8e38422dbf762e4c7"
+  },
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "resolved": "Use the platform-aware MenuItem query for Edit estimate.",
+    "report": "No remaining confirmed Standards or material source findings. The shared assertion checks exactly 2,880 minutes after Save and relaunch, allowing only native grouping. Identity, Cancel preservation, displayed units and persisted reset checks remain intact.",
+    "controllerRecheck": "No confirmed Standards or material controller findings. The iOS fallback runs only after sidebar reveal and continued absence of the requested control, opens a hittable native overflow, then still requires the exact target identifier. Mac behavior and production sources remain unchanged.",
+    "nativeMenuLabelRecheck": "No confirmed findings. The iOS-only fallback substitutes the observed CollectionView button only for saved.list.new after opening overflow when its identifier is absent. The final existence assertion remains."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "resolved": "Assert exact 2,880 saved minutes after relaunch before reset.",
+    "report": "The role-independent native menu query preserves the intended action. No remaining confirmed Spec or oracle finding; runtime qualification remains pending.",
+    "controllerRecheck": "No confirmed oracle bypass or scope issue. The fallback opens a hittable native overflow only when the requested control remains absent, then still requires that exact control. Other journeys using the helper receive no runtime credit.",
+    "nativeMenuLabelRecheck": "No confirmed issue. The native New List label fallback retains the existence assertion and every lifecycle check."
+  }
+}

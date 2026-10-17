@@ -1,0 +1,138 @@
+{
+  "policy": "Literal recorded function outcomes and whole invocation exits are separate. Compiler-only and setup failures supply no native runtime pass credit. Final qualified epochs are named in the report.",
+  "runs": [
+    {
+      "epoch": "mac-list-shortcuts-menu-label-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-list-shortcuts-overflow-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-list-shortcuts-reviewed-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-list-shortcuts-initial-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-list-shortcuts-menu-label-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-list-shortcuts-overflow-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-list-shortcuts-reviewed-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-list-shortcuts-unit-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "phone-list-shortcuts",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerContainerShortcutRuntime-phone-list-shortcuts.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedContainerEstimateJourneyTests testListEstimateShortcutsStageCancelSaveAndResetAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 104.123
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-list-shortcuts-final",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerContainerShortcutRuntime-phone-list-shortcuts-final.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedContainerEstimateJourneyTests testListEstimateShortcutsStageCancelSaveAndResetAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 101.08
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-list-shortcuts",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerContainerShortcutRuntime-tablet-list-shortcuts.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedContainerEstimateJourneyTests testListEstimateShortcutsStageCancelSaveAndResetAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 26.213
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-list-shortcuts-menu-label",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerContainerShortcutRuntime-tablet-list-shortcuts-menu-label.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedContainerEstimateJourneyTests testListEstimateShortcutsStageCancelSaveAndResetAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 128.726
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-list-shortcuts-overflow",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerContainerShortcutRuntime-tablet-list-shortcuts-overflow.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedContainerEstimateJourneyTests testListEstimateShortcutsStageCancelSaveAndResetAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 29.468
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    }
+  ]
+}
