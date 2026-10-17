@@ -1,0 +1,2 @@
+Sidebar | (0.0, 32.0, 320.0, 788.0) | hittable: false
+ | (0.0, 32.0, 1180.0, 788.0) | hittable: true

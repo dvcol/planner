@@ -1,0 +1,57 @@
+{
+  "individuallyInspectedOriginalPNGs": [
+    {
+      "file": "E08F6907-6CCA-47C9-A36B-725871C7DD0E.png",
+      "sha256": "c7c7f98a88b936c985a066ab3baffd4e284011692dde155cd53577985c702726",
+      "caption": "The far-end search restores its original source and unchanged Todo state_0_EFA72B77-AD1C-449B-8258-F8BD2779A6A4.png"
+    },
+    {
+      "file": "A049B1DA-03DC-4F1B-918B-8E4A2EB163AA.png",
+      "sha256": "99ce561b239b2e8ee29ca8493ec5054566c4fdee5681a0429a53fe54fac91f52",
+      "caption": "Title ascending restores the filtered source order after changing native sort_0_F509F33F-4B2A-41E9-99F7-E7F089284ABE.png"
+    },
+    {
+      "file": "F103AC40-2E6D-4EA2-A09C-262682BCE177.png",
+      "sha256": "f8963e2b88abb48e71c40ccf9d67bb3be486b3cc1623d9c3266b80c4aa60097b",
+      "caption": "Created descending orders the filtered near-end sources in the large dataset_0_5F711E79-FCA3-452A-8A00-5548D17B65DA.png"
+    },
+    {
+      "file": "A511C81C-C58E-4EE4-A6B7-B917057C1A21.png",
+      "sha256": "a905b406130dc178e091b6bab0be2c4330c853c26d46d574c7a4da75dc5c10e7",
+      "caption": "The Done filter hides a valid selected Todo source_0_B2D89B8F-DBEA-44D0-8D2A-67C9398EF3C8.png"
+    },
+    {
+      "file": "3FD05ECD-15EE-437C-81B5-A60003DE56C0.png",
+      "sha256": "91b77f5e67938906aac5904746ba6aac36e32bdd702bdd32304ea797483a559f",
+      "caption": "The replacement search opens the correct near-end source_0_A4572B85-C304-4C2A-BB53-5B7119D8C9AD.png"
+    },
+    {
+      "file": "E07A20D0-113F-4F85-9738-43FA75665C4F.png",
+      "sha256": "140ce1e652478eae8ba2913858b4afb677aa2b0142e4f5bb205569f7ad4ba5a7",
+      "caption": "Released first page reopens its original source after rotation_0_ACF02569-690A-4316-8587-76E2A097F2B5.png"
+    },
+    {
+      "file": "26C2A899-682A-46D0-82DA-2BE022E282A8.png",
+      "sha256": "29f56e86d9848605b597b3475c7488931d13e0d82bb4450c15c7269dcd84356c",
+      "caption": "Windowed native catalog selects its visible source in landscape_0_DCBD107B-E310-47B3-96C7-BDC5B3FBF761.png"
+    },
+    {
+      "file": "15D21843-8D2B-480A-B262-55776EB7DDA9.png",
+      "sha256": "a7725f9576d82f8c066b2e3f071e2f0dddbca430c5624c1166683586b7ff7b3a",
+      "caption": "Native catalog crosses the page boundary at Scale Item 00129_0_82D2C4DF-E3E1-472E-94AF-CD34CB954A74.png"
+    },
+    {
+      "file": "4A7182AE-E514-484C-8C11-6D0B7AC380C4.png",
+      "sha256": "7266292716bcd912d27a7b27527382439ee43236de9b26c50b41bd947168a19b",
+      "caption": "Native catalog crosses the page boundary at Scale Item 00065_0_987709D3-05C8-4F05-97FC-D7D0DE71928C.png"
+    }
+  ],
+  "observations": [
+    "Items 65 and 129 are visible while the original first source detail remains selected.",
+    "The landscape capture shows Item 118 selected and its corresponding notes with Todo state.",
+    "The returned first page shows the original first Item selected again.",
+    "Filtered-out valid source details remain visible; Created and Title sorts produce the captured ordered rows.",
+    "The final search reopens the far-end source with its marker and Todo state."
+  ],
+  "limits": "Visual inspection does not close whole-app polish, floating-navbar spacing, physical responsiveness, full unfiltered endpoint requalification or Mac runtime."
+}

@@ -1,0 +1,66 @@
+{
+  "swiftLint": {
+    "command": [
+      "xcrun",
+      "swift-format",
+      "lint",
+      "--strict",
+      "Planner/Scenes/SavedItemWindow.swift",
+      "Planner/Scenes/SavedItemViews.swift",
+      "Planner/Scenes/SavedPlannerStore.swift",
+      "Planner/Scenes/SavedPlannerView.swift",
+      "PlannerMCPTests/SavedItemWindowTests.swift",
+      "PlannerFixtureUITests/LargeCollectionScrollJourneyTests.swift"
+    ],
+    "exitCode": 0
+  },
+  "markdownLint": {
+    "command": [
+      "pnpm",
+      "dlx",
+      "markdownlint-cli2",
+      "--config",
+      "/private/tmp/PlannerItemWindowMarkdownlint.json",
+      "docs/prototypes/native-item-windows.md",
+      "docs/native-schedule-time-input-contract-review.md",
+      "docs/open-decisions.md",
+      "docs/native-ui-polish.md"
+    ],
+    "exitCode": 0,
+    "issues": 0
+  },
+  "whitespace": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0
+  },
+  "sourceSHA256": {
+    "Planner/Scenes/SavedItemWindow.swift": "4e60cbe54000acd64ff7f6f6bd1e5a9d6f322ee4e1f7d06a28cbce0df869d5d4",
+    "Planner/Scenes/SavedItemViews.swift": "3fe593771195ee6613e1b4660b8869b86ca8acfae263d00d92009a4d63df017a",
+    "Planner/Scenes/SavedPlannerStore.swift": "c73b7da5d875ee75bfdc9973f02928a529c43a2175d6f6ff3f6aaec82ae2aa28",
+    "Planner/Scenes/SavedPlannerView.swift": "499eb7a98631a3b42b4beb136b6390639284044def89d2c7fbcf6a351945c7da",
+    "PlannerMCPTests/SavedItemWindowTests.swift": "6906c64cc7165fdd32d6abc655f59512689895be86b63822d73d78ee2729e2ae",
+    "PlannerFixtureUITests/LargeCollectionScrollJourneyTests.swift": "0f6a32bb955b1e0acb7cdd3de1a106b333c9626209f8a5bd253c11073168ed70",
+    "docs/prototypes/native-item-windows.md": "bf39e065810ee7a5d8cf5c3b5ba7cae153dac821f093cd7a7cd90c418f57a2d4",
+    "docs/native-schedule-time-input-contract-review.md": "c5a96a6f5e8831216027947b3624fe796a5423e5af63e0663967ecec46a64a06",
+    "docs/open-decisions.md": "3fbbd2f9c39c73a5d742cb55ba605a22b3c201385f229b5222c05638ae82fda8",
+    "docs/native-ui-polish.md": "2170682fd359d92e7264c4376328599ef418e8d0d430e16869e00ba6928acdb7"
+  },
+  "unchangedMacCompilerAndUnitProductionSources": [
+    "Planner/Scenes/SavedItemWindow.swift",
+    "Planner/Scenes/SavedItemViews.swift",
+    "Planner/Scenes/SavedPlannerStore.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerMCPTests/SavedItemWindowTests.swift"
+  ],
+  "unchangedEarlierPhoneQueryProductionSources": [
+    "Planner/Scenes/SavedItemWindow.swift",
+    "Planner/Scenes/SavedItemViews.swift",
+    "Planner/Scenes/SavedPlannerStore.swift",
+    "Planner/Scenes/SavedPlannerView.swift"
+  ],
+  "remaining": "Inbox/deletion/draft compatibility, full unfiltered endpoint rerun, other collection windows, Mac UI runtime, physical performance, signing and final native polish remain open."
+}

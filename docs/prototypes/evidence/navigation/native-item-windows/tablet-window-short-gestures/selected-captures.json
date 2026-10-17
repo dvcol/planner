@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "5A5E05B4-8F21-4777-8381-823E73458E57.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native catalog crosses the page boundary at Scale Item 00129_0_DC4D3607-BD59-4537-8D54-91B5F1A24546.png",
+    "timestamp": 1792237785.668,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A3936364-DE94-4D1C-BAA0-D067D6F6DA1F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native catalog crosses the page boundary at Scale Item 00065_0_4D2984B4-6F70-4F36-BC4F-7FE1FC8CE361.png",
+    "timestamp": 1792237752.244,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  }
+]

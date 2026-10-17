@@ -1,0 +1,4 @@
+{
+  "reason": "Fixed-direction fast scrolling overshot intermediate Item 129 and continued beyond Item 292. Stopped only task-owned xcodebuild with SIGTERM; no completed test or production-failure credit. Correct the test helper to approach an accessible target slowly in its actual direction.",
+  "runtimeCredit": "Observed Item 65 boundary only; full journey incomplete."
+}

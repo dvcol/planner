@@ -1,0 +1,4 @@
+{
+  "exportExitCode": 1,
+  "reason": "Stopped Xcode bundle has no Info.plist, so xcresulttool cannot export attachments. Completed query function retains its formal pass and source-bound log only; original native captures unavailable. Rerun only this query journey for a finalized result bundle and visual evidence."
+}

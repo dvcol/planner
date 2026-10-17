@@ -1,0 +1,6 @@
+{
+  "executedAssertions": 0,
+  "result": "Stopped stalled startup with SIGTERM after SIGINT did not finish",
+  "hostWait": "XCTestDriver._prepareTestConfigurationAndIDESession",
+  "redCredit": false
+}

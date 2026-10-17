@@ -12,8 +12,20 @@ enum SavedItemCatalogScope: String {
 }
 
 struct SavedItemCatalog: View {
+  private struct Request: Equatable {
+    let scope: SavedItemCatalogScope
+    let filters: SavedItemFilters
+    let searchText: String
+    let sort: SavedItemSort
+    let namespace: String?
+    let revision: UUID
+    let isActive: Bool
+    let retryIdentifier: UUID
+  }
+
+  let store: SavedPlannerStore
   let scope: SavedItemCatalogScope
-  let items: [SavedPlannerItem]
+  let isActive: Bool
   @Binding var selection: UUID?
   @Binding var filters: SavedItemFilters
   @Binding var searchText: String
@@ -22,43 +34,47 @@ struct SavedItemCatalog: View {
   let canCreate: Bool
   let create: () -> Void
   let capture: () -> Void
+  let didLoad: (SavedItemCatalogScope, SavedItemWindowIdentity, UUID?) -> Void
+  @State private var window: SavedItemWindow?
+  @State private var windowNamespace: String?
+  @State private var visibleIdentifiers: Set<UUID> = []
+  @State private var retryIdentifier = UUID()
+
+  private var request: Request {
+    .init(
+      scope: scope, filters: filters, searchText: searchText, sort: sort,
+      namespace: store.devicePreferenceNamespace, revision: store.changeRevision,
+      isActive: isActive, retryIdentifier: retryIdentifier)
+  }
 
   var body: some View {
     List(selection: $selection) {
-      ForEach(items) { item in
-        NavigationLink(value: item.id) {
-          HStack(alignment: .top) {
-            Image(systemName: item.row.globalDone == true ? "checkmark.circle.fill" : "circle")
-              .foregroundStyle(.secondary)
-              .accessibilityHidden(true)
-            if item.row.archived == true {
-              Image(systemName: "archivebox").accessibilityLabel("Archived")
+      if let window {
+        ForEach(Array(window.sourceIdentifiers.enumerated()), id: \.element) { index, identifier in
+          row(window.presentation(at: index), index: index)
+            .onScrollVisibilityChange { visible in
+              if visible {
+                visibleIdentifiers.insert(identifier)
+              } else {
+                visibleIdentifiers.remove(identifier)
+              }
             }
-            SavedItemRowContent(row: item.row, rowPresentation: item.rowPresentation)
-          }
         }
-        .accessibilityLabel(item.row.title)
-        .accessibilityValue(item.row.metadataDescription(presentation: item.rowPresentation))
-        .accessibilityIdentifier("saved.item.\(item.id.uuidString)")
       }
     }
-    .overlay {
-      if items.isEmpty {
-        if !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-          if filters.summary == "All" {
-            ContentUnavailableView.search(text: searchText)
-          } else {
-            ContentUnavailableView(
-              "No matching items", systemImage: "magnifyingglass",
-              description: Text("Change the filters or try a different search."))
-          }
-        } else {
-          ContentUnavailableView(
-            filters.summary == "All" ? "No Items yet" : "No matching items",
-            systemImage: "square.stack",
-            description: Text("Change the filters or create an Item to start planning."))
-        }
-      }
+    .overlay { catalogStatus }
+    .task(id: request) { await reload() }
+    .task(id: visibleIdentifiers) {
+      guard let window, !visibleIdentifiers.isEmpty else { return }
+      let indices = Set(
+        window.sourceIdentifiers.indices.filter {
+          visibleIdentifiers.contains(window.sourceIdentifiers[$0])
+        })
+      await window.requestRows(at: indices)
+    }
+    .onDisappear {
+      window?.cancel()
+      visibleIdentifiers = []
     }
     .navigationTitle(scope.title)
     .searchable(text: $searchText, prompt: Text(scope.searchPrompt))
@@ -83,6 +99,99 @@ struct SavedItemCatalog: View {
       }
     }
   }
+
+  @ViewBuilder
+  private func row(_ presentation: SavedItemWindowPresentation, index: Int) -> some View {
+    switch presentation {
+    case .loaded(let item):
+      NavigationLink(value: item.id) {
+        HStack(alignment: .top) {
+          Image(systemName: item.row.globalDone == true ? "checkmark.circle.fill" : "circle")
+            .foregroundStyle(.secondary)
+            .accessibilityHidden(true)
+          if item.row.archived == true {
+            Image(systemName: "archivebox").accessibilityLabel("Archived")
+          }
+          SavedItemRowContent(row: item.row, rowPresentation: item.rowPresentation)
+        }
+      }
+      .accessibilityLabel(item.row.title)
+      .accessibilityValue(item.row.metadataDescription(presentation: item.rowPresentation))
+      .accessibilityIdentifier("saved.item.\(item.id.uuidString)")
+    case .loading:
+      ProgressView("Loading Item")
+        .selectionDisabled()
+    case .failed(let reason):
+      VStack(alignment: .leading) {
+        Text(reason).foregroundStyle(.secondary)
+        Button("Try Again") { Task { await window?.requestRows(at: [index]) } }
+      }
+      .selectionDisabled()
+    }
+  }
+
+  @ViewBuilder
+  private var catalogStatus: some View {
+    switch window?.state ?? .idle {
+    case .idle, .loading: ProgressView("Opening Items")
+    case .failed(let reason):
+      ContentUnavailableView {
+        Label("Items unavailable", systemImage: "exclamationmark.triangle")
+      } description: {
+        Text(reason)
+      } actions: {
+        Button("Try Again") { retryIdentifier = UUID() }
+      }
+    case .ready:
+      if window?.matchingCount == 0 {
+        if !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+          if filters.summary == "All" {
+            ContentUnavailableView.search(text: searchText)
+          } else {
+            ContentUnavailableView(
+              "No matching items", systemImage: "magnifyingglass",
+              description: Text("Change the filters or try a different search."))
+          }
+        } else {
+          ContentUnavailableView(
+            filters.summary == "All" ? "No Items yet" : "No matching items",
+            systemImage: "square.stack",
+            description: Text("Change the filters or create an Item to start planning."))
+        }
+      }
+    }
+  }
+
+  private func reload() async {
+    guard !Task.isCancelled else { return }
+    let request = request
+    guard request.isActive, let namespace = request.namespace else {
+      window?.cancel()
+      visibleIdentifiers = []
+      return
+    }
+    if window == nil || windowNamespace != namespace {
+      window?.cancel()
+      window = store.makeItemWindow()
+      windowNamespace = namespace
+    }
+    guard let window else { return }
+    visibleIdentifiers = []
+    let identity = SavedItemWindowIdentity(namespace: namespace, savedRevision: request.revision)
+    await window.reload(
+      query: .init(
+        scope: request.scope.queryValue, text: request.searchText,
+        completion: request.filters.completion.queryValue,
+        archive: request.filters.archive.queryValue,
+        categories: request.filters.categoryQuery, tags: request.filters.tagQuery,
+        lists: request.filters.listQuery, hasAddress: request.filters.hasAddress,
+        hasLinks: request.filters.hasLinks, scheduled: request.filters.scheduled,
+        sort: request.sort.queryValue),
+      identity: identity)
+    guard !Task.isCancelled, self.request == request, window.state == .ready else { return }
+    didLoad(request.scope, identity, window.sourceIdentifiers.first)
+  }
+
 }
 
 struct SavedItemDetail: View {

@@ -1,0 +1,90 @@
+# Native Items and Inbox loading windows
+
+Status: Q95 Items/Inbox loader and native integration implemented, with seven passing loader tests and focused query/boundary/rotation journeys on phone and tablet. Broader compatibility and performance qualification remain open. Q94 is committed; Q96 clock input follows. Signing and whole-app polish remain deferred.
+
+## Context and starting state
+
+The native Items/Inbox List currently waits for `SavedPlannerStore.readItems` to accumulate every matching 64-row page. Lazy row rendering does not limit retained native presentations. The [approved contract](../native-item-window-contract-review.md) keeps Core's complete ordered identity snapshot and Q84 generation lifetime, while bounding the native presentation window.
+
+## Goal and end state
+
+Display the initial page before reading the full catalog. Use actual visible native List rows to load their pages and at most one neighboring page per side. Release offscreen presentations, reread released pages when revisited, and preserve selected source identity independently. Filters, sorts, Inbox membership, deletion replacement and command scope retain their accepted behavior.
+
+## Definition of ready
+
+Q95 A approves one app-internal production loader and its real-Core test seam in the existing app-hosted target. It adds no public Core/wire interface, package, target, test-only input or generation cap. Ordinary native UI and the existing real-store large-collection fixture supply compatibility qualification.
+
+## Required tests and definition of done
+
+- Establish a failing first-page behavior at the approved loader interface, then implement only that slice before extending its tests.
+- Verify ordered identities/count, first-page readiness, crossing/revisiting boundaries, observable retention, filtered/sorted query replacement, cancellation and stale-generation recovery through real saved changes.
+- Exercise native intermediate/far-end/backward scrolling, selected details after presentation release, live query changes and layout changes on both mobile form factors.
+- Preserve actual failures, source/product bindings and original captures. Run affected strict formatting, compiler checks and separate source/specification reviews.
+
+Core captures and the full identity sequence remain resident. This slice cannot establish bounded total RAM, the physical-device 300 ms target, absence of scrolling hitches, Mac UI runtime, signing or final whole-app acceptance. Other collection and picker clients retain their follow-up gates.
+
+## Execution in progress
+
+The first app-hosted invocation compiled the new test but Xcode's method selector executed zero tests. Its exit 0 supplies compiler evidence only and receives no test or red credit. The unchanged one-test suite is rerun with its suite selector before implementing the first page.
+
+The Swift Testing suite then stalled before execution; a process sample places its host in `XCTestDriver._prepareTestConfigurationAndIDESession`. A discovery-only attempt timed out after 60 seconds. Re-expressing the same behavior as XCTest in the existing target also stalled before test execution. Both stopped invocations retain their separate logs and receive no red credit. macOS rejected restarting the current user's idle test-manager service under System Integrity Protection; no protection or signing setting was changed.
+
+Direct `xctest` execution loads the exact compiled app debug library and embedded test bundle with a sanitized environment, using the same production loader interface and disposable real Core. It executes the single XCTest in 5.465 seconds and reports four expected assertions: no ready state, identities, count or first page. This is the genuine first-page red result. It adds no repository target, dependency injection or alternate implementation. Direct module-test execution does not qualify the stalled Xcode IDE-session workflow or Mac UI runtime.
+
+## Loader boundary results
+
+The production module now reads the first 64 presentations, retains visible pages plus at most one preceding/following page, releases distant presentations and rereads them. It shares pending page tasks, binds publications to reload/visibility identities, refreshes stale Core generations and follows visible source identities through index changes. Cancellation releases its temporary result; pre-canceled reload and visibility requests do not clear a valid result.
+
+The first page passes its original command-seeded 65-Item test in 5.467 seconds. The four-page command-seeded fixture reaches its expected unloaded-page failure in 114.855 seconds. Setup then switches to the already approved public portable-data decoder, reviewed import and durable command path. With the same page assertions and unchanged production, the first-page test passes and traversal still fails at its expected missing page, together in 0.536 seconds. This is a fixture improvement, not a production performance claim.
+
+| Behavior | Genuine failing result | Subsequent result |
+| --- | --- | --- |
+| First page | 1 function, 4 assertions, 5.465 s | 1 function passes, 5.467 s |
+| Load/release/revisit | 1 function, 1 assertion, 114.855 s; import-fixture repeat fails the same assertion | Both functions pass, 0.484 s |
+| Stale generation after saved completion | 1 function, 3 assertions, 0.495 s | All 3 functions pass, 0.833 s |
+| Cancel and reopen | 1 function, 4 assertions, 0.502 s | Corrected query oracle: all 4 pass, 1.098 s |
+| Failure/empty/corrected query | Existing behavior qualified; no invented red | All 5 pass, 1.382 s |
+| Concurrent identical page requests | Existing behavior qualified; no invented red | All 6 pass, 1.422 s |
+| Pre-canceled visibility request | 1 function, 1 assertion, 0.492 s | All 7 pass, 1.628 s |
+
+The first cancellation green attempt reaches reopening and exposes a test expectation error: Core searches each term as a case/diacritic-insensitive substring, so “Activity 11” also matches “Activity 011.” That attempt retains its three failed assertions separately. The corrected oracle includes the eleventh matching source and its sorted position; production query behavior is unchanged.
+
+Tests use only the agreed loader operations and observable presentation/state, plus public Core setup/mutations. The concurrent test checks a consistent result from two real requests. It does not measure I/O call counts, force a particular internal interleaving or prove an arbitrary delayed-response race. Separate Standards/Spec reviews found that a pre-canceled visibility request could evict valid rows before the loop checked cancellation. Its new regression fails on that behavior, then passes after adding an admission guard. The latest seven-function run passes in 1.628 seconds. Review also found that fixture directories were removed while Core still owned their SQLite stores. Tests now print directories under a dedicated temporary root, and the runner removes only those validated paths after its process exits; the retained cleanup record lists all seven removals. Core identity snapshots/captures remain resident; no RAM, hitch or physical latency result is inferred from these function durations.
+
+The native catalogs are now connected to this module in the working tree, with explicit Items/Inbox scope, a query/revision/session-bound reload task, per-row native visibility callbacks and independent parent detail selection. The first mobile integration build and its actual scrolling, selection, query refresh and layout journeys remain required before Q95's native slice can be complete. Q96, broader collection/picker windows, Mac hosted-runner/UI startup, signing and whole-app polish remain open.
+
+## Integration review and compiler checks
+
+Both review axes identified a stale-refresh ownership problem in the first native integration. A visibility task could cancel the replacement query after it cleared the old identities. Stale recovery now runs in a catalog-owned task, independent of visibility changes. Explicit query reload and cancellation cancel that task. The private reload entry and the refresh task both reject canceled work before mutating state; the refresh also checks its original reload identity. Separate follow-up Standards and Spec reviews confirm those findings resolved. The final seven-function direct module run passes in 1.721 seconds. It does not force an arbitrary delayed-response interleaving.
+
+The first mobile integration and the page-boundary journey compile successfully. Strict Swift formatting passes for the affected source and tests. One initial runtime wrapper failed its packet-path preflight before invoking Xcode; its record explicitly has no runtime credit. The corrected wrapper binds current sources and products to the compiled epoch. A final mobile rebuild includes the reviewed refresh changes before any native journey starts.
+
+The first iPhone attempt starts after a slow Xcode handshake and loads the native first page and Item 65 across its boundary. Its fast fixed-direction helper then overshoots intermediate Item 129 and continues beyond Item 292. The task-owned run is stopped with SIGTERM, preserving its log, sample and original diagnostic Simulator capture. This is an incomplete journey, not a completed native test or production paging failure. The test helper now slows down and chooses the actual direction once its target has an accessible frame. Production is unchanged for that retry.
+
+## First native compatibility results
+
+The corrected iPhone run formally passes both functions: search/filter/sort replacement in 265.009 seconds and page traversal/reopening in 197.980 seconds, 462.989 seconds together. The original nine captures are exported and individually inspected. Earlier attempts retain the overshooting helper and incorrect button-only completion query as test defects; the correct native Toggle query passes without a production change.
+
+Inspection also finds that the rotation capture was taken before the window settled. That passing function is not counted as completed landscape-layout qualification. The test now uses the existing draft-journey window-aspect expectation, waits for the native catalog to be hittable, and resets orientation during teardown. The queued iPad run was stopped before any Test Case started so it can use that correction. The next native epoch must qualify settled rotation. Full unfiltered endpoint traversal, deletion/new-draft/Inbox compatibility, Mac UI runtime and physical performance remain open.
+
+The iPad search/filter/sort function formally passes in 264.985 seconds. Its paired boundary function is stopped after fast swipes pass Item 65 while the virtualized accessibility query has not exposed that target, continuing beyond Item 501. The retained record distinguishes the completed query function from the incomplete boundary function. Intermediate checkpoints now use short native coordinate touch drags; endpoint traversal retains fast swipes. Separate source/specification reviews confirm that controller change and the added post-rotation unique-notes/Todo assertions. The observed-layout attachment records whether simultaneous detail coverage applies. Neither review supplies runtime credit.
+
+## Settled iPad rotation investigation
+
+The short-touch iPad boundary journey reaches Items 65 and 129 and retains the first selected source details at both checkpoints. Its settled landscape assertion then fails because the first matching `Sidebar` collection is not hittable. The function formally fails in 217.006 seconds with one assertion; the finalized result bundle and exported original attachments are retained. The observed-layout attachment confirms simultaneous detail coverage was active.
+
+The original recording at 87 seconds shows a populated native catalog beside the same first source details in landscape. The failing query's debug description instead identifies a Sidebar whose ancestors have infinite frames and whose only child is the offscreen selected first row. This distinguishes the failing accessibility lookup from a demonstrated loss of catalog data. It does not establish the cause. A minimized native reproduction removes scrolling while preserving selection and settled rotation, captures the complete hierarchy before asserting, and leaves production unchanged. Existing test-start/teardown delays prevent a seconds-only native loop; the test body and selected function are kept narrow.
+
+The no-scroll reproduction formally fails in 151.026 seconds with the same unhittable first-match collection. Its original landscape capture shows the first selected source and populated catalog. A second probe changes only the query to enumerate descendant-matching collections and require a hittable match; it also fails, in 145.004 seconds. This rejects the assumption that enumerating that query alone resolves the problem. Its original capture is inspected too. A subsequent probe records unfiltered collection observations and requires an actual visible second-row tap to open its unique notes. This distinguishes an accessibility-container/query artifact from failed product interaction. No production change is made on the basis of the container assertion.
+
+The actual-row probe formally passes in 151.070 seconds. Its two original captures are inspected: the first source remains selected after rotation, and tapping the visible second row opens Scale notes 2. The collection observations report Sidebar `hittable: false` while the detail Form reports true. This is a misleading container oracle, not demonstrated loss of user interaction. The full journey now checks the original details after landscape rotation where applicable, selects an actual central hittable row and verifies its corresponding fixture notes/Todo state, retains that source through portrait, then returns to the original first identity. The temporary diagnostic is removed from build sources, with exact historical snapshots retained. Separate Standards and Spec follow-up reviews find no remaining test-source issue; the corrected full runtime is still required.
+
+The corrected iPad batch formally passes both functions: query replacement in 265.028 seconds and the full boundary/selection/settled-rotation journey in 245.959 seconds, together 510.987 seconds without failures. All nine original PNGs are individually inspected. The simultaneous-detail attachment is true; captures show Items 65 and 129 with the retained first source details, actual landscape selection of Item 118 with its own notes, and return to the original first source. Query captures retain valid filtered-out details and restore the far-end source's marker/Todo state. These are functional results; XCTest startup/teardown dominates the durations and supplies no physical responsiveness claim. The same updated boundary journey is running on phone. Inbox, deletion and draft compatibility remain separate focused checks.
+
+The updated phone boundary/rotation journey formally passes in 244.140 seconds. All four original captures are inspected. It selects Item 123 in landscape, retains that source after portrait rotation and reopens the original first identity with its own notes/Todo state. The boundary-65 capture has a row partly beneath the floating tab bar, so it cannot establish full-row readability even though the test requires hittability. The existing phone query-replacement pass uses the identical production file hashes; only the subsequently corrected journey source differs. The final production and seven-test source also match the qualified Mac compiler/unit epoch.
+
+## Implementation checkpoint and remaining work
+
+This commit delivers Items/Inbox presentation windows and their focused loader, query, page-release and rotation checks. It does not close Q95's broader compatibility or the Navigation ticket. Rerun selected-deletion replacement, Inbox membership/filter state and New Item draft/layout compatibility with the upcoming native clock-input integration. Full unfiltered 5,000-Item endpoint traversal after windowing, broader collection/picker windows, Mac UI startup, keyboard/accessibility review, measured retention/hitches/physical latency, signing and final native polish remain open. Existing pre-windowing endpoint evidence is not reclassified as a windowed-catalog pass.
+
+The user's new floating-navbar top-spacing observation is recorded in [the whole-app polish requirements](../native-ui-polish.md). It remains a correction to perform after feature completion, together with duplicate title hierarchy, native floating controls and content readability. No visual acceptance is inferred from functional test passes.

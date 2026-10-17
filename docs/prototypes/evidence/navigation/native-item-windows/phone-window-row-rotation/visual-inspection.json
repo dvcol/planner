@@ -1,0 +1,31 @@
+{
+  "individuallyInspectedOriginalPNGs": [
+    {
+      "file": "863BA118-CE16-4ECA-8C12-6955401C2E34.png",
+      "sha256": "ba0dbf06729bacdc2ee6fc8f3156700a47d609b7254c276130a6d327144120cb",
+      "caption": "Released first page reopens its original source after rotation_0_07A90B2F-F222-4598-A23D-96F9D3AFD797.png"
+    },
+    {
+      "file": "0A9D521F-AE02-4195-A721-7337CFC23341.png",
+      "sha256": "8c92fee96548fcd3d86f643b5891c51e601f95d069c1d136af489c87e529dd39",
+      "caption": "Windowed native catalog selects its visible source in landscape_0_A22D1A95-9ADD-4DBF-B085-235895A173B4.png"
+    },
+    {
+      "file": "8A22E517-2191-4D43-AF6E-07CB95CEA8F0.png",
+      "sha256": "9e66bd752b0fda2db1ebdb4a7a955116705fbb20ada08d0b188136299c052e4a",
+      "caption": "Native catalog crosses the page boundary at Scale Item 00129_0_BEEE16D8-CEBD-4A7B-A538-987F50DC128A.png"
+    },
+    {
+      "file": "140EE4C0-6C84-45E3-9FAE-2583E472E53C.png",
+      "sha256": "c06c60a5f65334a9b7963725a6620c698c0dab7d6c461114acd99b2e519f38e7",
+      "caption": "Native catalog crosses the page boundary at Scale Item 00065_0_BB34173A-3DD5-4744-B27A-0D43EACA7230.png"
+    }
+  ],
+  "observations": [
+    "Boundary 65 is partly beneath the native floating tab bar; the journey separately requires the row to be hittable. This is not a full-row visual-readability claim.",
+    "Boundary 129 and neighboring rows have their loaded metadata.",
+    "Landscape shows the selected Item 123 and its corresponding notes/Todo state.",
+    "Portrait reopening shows the original first source notes and Todo state."
+  ],
+  "limits": "Whole-app polish, floating-bar spacing and content overlap, physical responsiveness and full unfiltered endpoint requalification remain open."
+}

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "/private/tmp/PlannerItemWindowMarkdownlint.json",
+    "docs/prototypes/native-item-windows.md",
+    "docs/native-schedule-time-input-contract-review.md"
+  ],
+  "exitCode": 0,
+  "sourceSHA256": {
+    "docs/prototypes/native-item-windows.md": "f957cb6e4bbb47ac2946191d1e422e40f4fca8dcaa8d6af91ceebbbccc55bd85",
+    "docs/native-schedule-time-input-contract-review.md": "c5a96a6f5e8831216027947b3624fe796a5423e5af63e0663967ecec46a64a06"
+  }
+}

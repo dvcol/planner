@@ -1,0 +1,330 @@
+Attributes: Application, 0x109634c80, pid: 92325, label: 'Planner fixtures'
+Element subtree:
+ →Application, 0x109634c80, pid: 92325, label: 'Planner fixtures'
+    Window (Main), 0x109634dc0, {{0.0, 0.0}, {1180.0, 820.0}}
+      Other, 0x109634f00, {{0.0, 0.0}, {1180.0, 820.0}}
+      Other, 0x109635040, {{0.0, 0.0}, {1180.0, 820.0}}
+        Other, 0x109635180, {{0.0, 0.0}, {1180.0, 820.0}}
+          Other, 0x1096352c0, {{0.0, 0.0}, {1180.0, 820.0}}
+            Other, 0x109635400, {{0.0, 0.0}, {1180.0, 820.0}}
+              Other, 0x109635540, {{0.0, 0.0}, {1180.0, 820.0}}
+                Other, 0x109635680, {{0.0, 0.0}, {1180.0, 820.0}}
+                  Other, 0x1096357c0, {{0.0, 0.0}, {1180.0, 820.0}}
+                    Other, 0x109635900, {{0.0, 0.0}, {1180.0, 820.0}}
+                      Other, 0x109635a40, {{0.0, 0.0}, {1180.0, 820.0}}
+                        Other, 0x109635b80, {{0.0, 32.0}, {1180.0, 788.0}}
+                          Other, 0x109635cc0, {{0.0, 32.0}, {1180.0, 788.0}}
+                            Other, 0x109635e00, {{0.0, 32.0}, {1180.0, 788.0}}
+                              Other, 0x109635f40, {{0.0, 32.0}, {1180.0, 788.0}}
+                                Other, 0x109636080, {{0.0, 32.0}, {320.0, 788.0}}
+                                  Other, 0x1096361c0, {{0.0, 32.0}, {320.0, 788.0}}
+                                    Other, 0x109636300, {{0.0, 32.0}, {320.0, 788.0}}
+                                      Other, 0x109636440, {{0.0, 32.0}, {320.0, 788.0}}
+                                        Other, 0x109636580, {{0.0, 32.0}, {320.0, 788.0}}
+                                          Other, 0x1096366c0, {{0.0, 32.0}, {320.0, 788.0}}
+                                            CollectionView, 0x109636800, {{0.0, 32.0}, {320.0, 788.0}}, label: 'Sidebar'
+                                              Other, 0x109636940, {{-16.0, -2102.0}, {352.0, 264755.0}}
+                                              Other, 0x109636a80, {{0.0, 32.0}, {320.0, 788.0}}
+                                                Other, 0x109636bc0, {{0.0, 32.0}, {320.0, 202.0}}
+                                                Other, 0x109636d00, {{0.0, 706.0}, {320.0, 114.0}}
+                                              Other, 0x109636e40, {{0.0, 32.0}, {320.0, 788.0}}
+                                                Other, 0x109636f80, {{0.0, 706.0}, {320.0, 114.0}}
+                                              Cell, 0x1096370c0, {{16.0, 194.0}, {288.0, 61.0}}, Focused, Selected
+                                                Other, 0x109637200, {{16.0, 194.0}, {288.0, 61.0}}
+                                                  Other, 0x109637340, {{16.0, 194.0}, {288.0, 61.0}}
+                                                    Other, 0x109637480, {{16.0, 194.0}, {288.0, 61.0}}
+                                                Other, 0x1096375c0, {{16.0, 194.0}, {288.0, 61.0}}
+                                                  Other, 0x109637700, {{16.0, 194.0}, {288.0, 61.0}}
+                                                    Other, 0x109637840, {{16.0, 194.0}, {288.0, 61.0}}
+                                                      Button, 0x109637980, {{16.0, 194.0}, {288.0, 61.0}}, identifier: 'saved.item.6D7633B6-AA4C-4C93-AB99-C3F6FDA17CA3', label: 'Scale Item 00001', value: Estimate: 2 minutes, Selected
+                                                        Image, 0x109637ac0, {{33.5, 206.5}, {17.5, 17.5}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x109637c00, {{60.5, 205.0}, {136.0, 20.5}}, label: 'Scale Item 00001'
+                                                        Image, 0x109637d40, {{65.0, 229.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x109637e80, {{65.0, 229.0}, {86.5, 15.5}}, label: '2 minutes'
+                                              Cell, 0x1084c0a00, {{16.0, 255.0}, {288.0, 61.0}}
+                                                Other, 0x1084c35c0, {{16.0, 255.0}, {288.0, 61.0}}
+                                                Other, 0x1084c2e40, {{16.0, 255.0}, {288.0, 61.0}}
+                                                  Other, 0x1084c3700, {{16.0, 255.0}, {288.0, 61.0}}
+                                                    Other, 0x1084c3980, {{16.0, 255.0}, {288.0, 61.0}}
+                                                      Button, 0x1084c3ac0, {{16.0, 255.0}, {288.0, 61.0}}, identifier: 'saved.item.2DD49ECD-1935-4BDE-A7AC-103EFC0A2E75', label: 'Scale Item 00002', value: Estimate: 3 minutes
+                                                        Image, 0x1084c3840, {{33.5, 267.5}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x1084c3c00, {{60.0, 266.0}, {135.0, 20.5}}, label: 'Scale Item 00002'
+                                                        Image, 0x1084c3e80, {{64.5, 290.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x1084c3d40, {{64.5, 290.0}, {85.5, 15.5}}, label: '3 minutes'
+                                              Cell, 0x1084c0b40, {{16.0, 316.0}, {288.0, 61.0}}
+                                                Other, 0x10960c000, {{16.0, 316.0}, {288.0, 61.0}}
+                                                Other, 0x10960c140, {{16.0, 316.0}, {288.0, 61.0}}
+                                                  Other, 0x10960c280, {{16.0, 316.0}, {288.0, 61.0}}
+                                                    Other, 0x10960c3c0, {{16.0, 316.0}, {288.0, 61.0}}
+                                                      Button, 0x10960c500, {{16.0, 316.0}, {288.0, 61.0}}, identifier: 'saved.item.84866484-F949-4569-8D2F-99FBDA933AFB', label: 'Scale Item 00003', value: Estimate: 4 minutes
+                                                        Image, 0x10960c640, {{33.5, 328.5}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x10960ea80, {{60.0, 327.0}, {135.0, 20.5}}, label: 'Scale Item 00003'
+                                                        Image, 0x10960c780, {{64.5, 351.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x10960ebc0, {{64.5, 351.0}, {85.5, 15.5}}, label: '4 minutes'
+                                              Cell, 0x10960ed00, {{16.0, 377.0}, {288.0, 61.0}}
+                                                Other, 0x10960ee40, {{16.0, 377.0}, {288.0, 61.0}}
+                                                Other, 0x10960ef80, {{16.0, 377.0}, {288.0, 61.0}}
+                                                  Other, 0x10960f0c0, {{16.0, 377.0}, {288.0, 61.0}}
+                                                    Other, 0x10960f200, {{16.0, 377.0}, {288.0, 61.0}}
+                                                      Button, 0x10960f340, {{16.0, 377.0}, {288.0, 61.0}}, identifier: 'saved.item.7C5658E6-E033-4B62-BB0C-82E95DBFF277', label: 'Scale Item 00004', value: Estimate: 5 minutes
+                                                        Image, 0x10960f480, {{33.5, 389.5}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x10964c000, {{60.0, 388.0}, {135.5, 20.5}}, label: 'Scale Item 00004'
+                                                        Image, 0x10964c140, {{64.5, 412.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x10964c280, {{64.5, 412.0}, {85.5, 15.5}}, label: '5 minutes'
+                                              Cell, 0x10964c3c0, {{16.0, 438.0}, {288.0, 61.0}}
+                                                Other, 0x10964c500, {{16.0, 438.0}, {288.0, 61.0}}
+                                                Other, 0x10964c640, {{16.0, 438.0}, {288.0, 61.0}}
+                                                  Other, 0x10964c780, {{16.0, 438.0}, {288.0, 61.0}}
+                                                    Other, 0x10964c8c0, {{16.0, 438.0}, {288.0, 61.0}}
+                                                      Button, 0x10964ca00, {{16.0, 438.0}, {288.0, 61.0}}, identifier: 'saved.item.B59FDCAE-1D6C-49A1-BFBC-1D73F493BAE2', label: 'Scale Item 00005', value: Estimate: 6 minutes
+                                                        Image, 0x10964cb40, {{33.5, 450.5}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x10964cc80, {{60.0, 449.0}, {135.0, 20.5}}, label: 'Scale Item 00005'
+                                                        Image, 0x10964cdc0, {{64.5, 473.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x10964cf00, {{64.5, 473.0}, {85.5, 15.5}}, label: '6 minutes'
+                                              Cell, 0x10964d040, {{16.0, 499.0}, {288.0, 61.0}}
+                                                Other, 0x10964d180, {{16.0, 499.0}, {288.0, 61.0}}
+                                                Other, 0x10964d2c0, {{16.0, 499.0}, {288.0, 61.0}}
+                                                  Other, 0x10964d400, {{16.0, 499.0}, {288.0, 61.0}}
+                                                    Other, 0x10964d540, {{16.0, 499.0}, {288.0, 61.0}}
+                                                      Button, 0x10964d680, {{16.0, 499.0}, {288.0, 61.0}}, identifier: 'saved.item.B7117C7E-00A3-4F21-AF9F-DE9869D371F8', label: 'Scale Item 00006', value: Estimate: 7 minutes
+                                                        Image, 0x10964d7c0, {{33.5, 511.5}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x10964d900, {{60.0, 510.0}, {135.5, 20.5}}, label: 'Scale Item 00006'
+                                                        Image, 0x10964da40, {{64.5, 534.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x10964db80, {{64.5, 534.0}, {85.0, 15.5}}, label: '7 minutes'
+                                              Cell, 0x10964dcc0, {{16.0, 560.0}, {288.0, 61.0}}
+                                                Other, 0x10964de00, {{16.0, 560.0}, {288.0, 61.0}}
+                                                Other, 0x10964df40, {{16.0, 560.0}, {288.0, 61.0}}
+                                                  Other, 0x10964e080, {{16.0, 560.0}, {288.0, 61.0}}
+                                                    Other, 0x10964e1c0, {{16.0, 560.0}, {288.0, 61.0}}
+                                                      Button, 0x10964e300, {{16.0, 560.0}, {288.0, 61.0}}, identifier: 'saved.item.63F581F7-BD37-42FD-B2DD-CC2E447F49F7', label: 'Scale Item 00007', value: Estimate: 8 minutes
+                                                        Image, 0x10964e440, {{33.5, 572.5}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x10964e580, {{60.0, 571.0}, {134.0, 20.5}}, label: 'Scale Item 00007'
+                                                        Image, 0x10964e6c0, {{64.5, 595.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x10964e800, {{64.5, 595.0}, {85.5, 15.5}}, label: '8 minutes'
+                                              Cell, 0x10964e940, {{16.0, 621.0}, {288.0, 61.0}}
+                                                Other, 0x10964ea80, {{16.0, 621.0}, {288.0, 61.0}}
+                                                Other, 0x10964ebc0, {{16.0, 621.0}, {288.0, 61.0}}
+                                                  Other, 0x10964ed00, {{16.0, 621.0}, {288.0, 61.0}}
+                                                    Other, 0x10964ee40, {{16.0, 621.0}, {288.0, 61.0}}
+                                                      Button, 0x10964ef80, {{16.0, 621.0}, {288.0, 61.0}}, identifier: 'saved.item.13145F69-ABC5-476B-9219-E4048CDB13F6', label: 'Scale Item 00008', value: Estimate: 9 minutes
+                                                        Image, 0x10964f0c0, {{33.5, 633.5}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x10964f200, {{60.0, 632.0}, {135.5, 20.5}}, label: 'Scale Item 00008'
+                                                        Image, 0x10964f340, {{64.5, 656.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x10964f480, {{64.5, 656.0}, {85.5, 15.5}}, label: '9 minutes'
+                                              Cell, 0x10964f5c0, {{16.0, 682.0}, {288.0, 61.0}}
+                                                Other, 0x10964f700, {{16.0, 682.0}, {288.0, 61.0}}
+                                                Other, 0x10964f840, {{16.0, 682.0}, {288.0, 61.0}}
+                                                  Other, 0x10964f980, {{16.0, 682.0}, {288.0, 61.0}}
+                                                    Other, 0x10964fac0, {{16.0, 682.0}, {288.0, 61.0}}
+                                                      Button, 0x10964fc00, {{16.0, 682.0}, {288.0, 61.0}}, identifier: 'saved.item.1670A669-D3D5-4AF0-84D7-352928A8A6DF', label: 'Scale Item 00009', value: Estimate: 10 minutes
+                                                        Image, 0x10964fd40, {{33.5, 694.5}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x10964fe80, {{60.0, 693.0}, {135.5, 20.5}}, label: 'Scale Item 00009'
+                                                        Image, 0x109650000, {{64.5, 717.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x109650140, {{64.5, 717.0}, {91.0, 15.5}}, label: '10 minutes'
+                                              Cell, 0x109650280, {{16.0, 743.0}, {288.0, 61.0}}
+                                                Other, 0x1096503c0, {{16.0, 743.0}, {288.0, 61.0}}
+                                                Other, 0x109650500, {{16.0, 743.0}, {288.0, 61.0}}
+                                                  Other, 0x109650640, {{16.0, 743.0}, {288.0, 61.0}}
+                                                    Other, 0x109650780, {{16.0, 743.0}, {288.0, 61.0}}
+                                                      Button, 0x1096508c0, {{16.0, 743.0}, {288.0, 61.0}}, identifier: 'saved.item.2E0A50CB-2BEA-4FEF-B93E-BED4F2894013', label: 'Scale Item 00010', value: Estimate: 11 minutes
+                                                        Image, 0x109650a00, {{33.5, 755.5}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x109650b40, {{60.0, 754.0}, {132.5, 20.5}}, label: 'Scale Item 00010'
+                                                        Image, 0x109650c80, {{64.5, 778.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x109650dc0, {{64.5, 778.0}, {89.0, 15.5}}, label: '11 minutes'
+                                              Cell, 0x109650f00, {{16.0, 804.0}, {288.0, 61.0}}
+                                                Other, 0x109651040, {{16.0, 804.0}, {288.0, 61.0}}
+                                                Other, 0x109651180, {{16.0, 804.0}, {288.0, 61.0}}
+                                                  Other, 0x1096512c0, {{16.0, 804.0}, {288.0, 61.0}}
+                                                    Other, 0x109651400, {{16.0, 804.0}, {288.0, 61.0}}
+                                                      Button, 0x109651540, {{16.0, 804.0}, {288.0, 61.0}}, identifier: 'saved.item.8183C56C-92BB-4355-82E8-F24201FE7859', label: 'Scale Item 00011', value: Estimate: 12 minutes
+                                                        Image, 0x109651680, {{33.5, 816.5}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x1096517c0, {{60.0, 815.0}, {129.5, 20.5}}, label: 'Scale Item 00011'
+                                                        Image, 0x109651900, {{64.5, 839.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x109651a40, {{64.5, 839.0}, {91.0, 15.5}}, label: '12 minutes'
+                                              Cell, 0x109651b80, {{16.0, 865.0}, {288.0, 61.0}}
+                                                Other, 0x109651cc0, {{16.0, 865.0}, {288.0, 61.0}}
+                                                Other, 0x109651e00, {{16.0, 865.0}, {288.0, 61.0}}
+                                                  Other, 0x109651f40, {{16.0, 865.0}, {288.0, 61.0}}
+                                                    Other, 0x109652080, {{16.0, 865.0}, {288.0, 61.0}}
+                                                      Button, 0x1096521c0, {{16.0, 865.0}, {288.0, 61.0}}, identifier: 'saved.item.775BABA6-EB0A-424A-9737-A1F39B38FFF8', label: 'Scale Item 00012', value: Estimate: 13 minutes
+                                                        Image, 0x109652300, {{33.5, 877.5}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x109652440, {{60.0, 876.0}, {132.0, 20.5}}, label: 'Scale Item 00012'
+                                                        Image, 0x109652580, {{64.5, 900.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x1096526c0, {{64.5, 900.0}, {91.0, 15.5}}, label: '13 minutes'
+                                              Cell, 0x109652800, {{16.0, 926.0}, {288.0, 61.0}}
+                                                Other, 0x109652940, {{16.0, 926.0}, {288.0, 61.0}}
+                                                Other, 0x109652a80, {{16.0, 926.0}, {288.0, 61.0}}
+                                                  Other, 0x109652bc0, {{16.0, 926.0}, {288.0, 61.0}}
+                                                    Other, 0x109652d00, {{16.0, 926.0}, {288.0, 61.0}}
+                                                      Button, 0x109652e40, {{16.0, 926.0}, {288.0, 61.0}}, identifier: 'saved.item.3CD61583-ED53-4C83-A544-3636EEFFE0D6', label: 'Scale Item 00013', value: Estimate: 14 minutes
+                                                        Image, 0x109652f80, {{33.5, 938.5}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x1096530c0, {{60.0, 937.0}, {132.5, 20.5}}, label: 'Scale Item 00013'
+                                                        Image, 0x109653200, {{64.5, 961.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x109653340, {{64.5, 961.0}, {91.0, 15.5}}, label: '14 minutes'
+                                              Cell, 0x109653480, {{16.0, 987.0}, {288.0, 61.0}}
+                                                Other, 0x1096535c0, {{16.0, 987.0}, {288.0, 61.0}}
+                                                Other, 0x109653700, {{16.0, 987.0}, {288.0, 61.0}}
+                                                  Other, 0x109653840, {{16.0, 987.0}, {288.0, 61.0}}
+                                                    Other, 0x109653980, {{16.0, 987.0}, {288.0, 61.0}}
+                                                      Button, 0x109653ac0, {{16.0, 987.0}, {288.0, 61.0}}, identifier: 'saved.item.67BACC0B-19EC-4D06-8925-E40CEAFD89DF', label: 'Scale Item 00014', value: Estimate: 15 minutes
+                                                        Image, 0x109653c00, {{33.5, 999.5}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x109653d40, {{60.0, 998.0}, {132.5, 20.5}}, label: 'Scale Item 00014'
+                                                        Image, 0x109653e80, {{64.5, 1022.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x10965c000, {{64.5, 1022.0}, {91.0, 15.5}}, label: '15 minutes'
+                                              Cell, 0x10965c140, {{16.0, 1048.0}, {288.0, 61.0}}
+                                                Other, 0x10965c280, {{16.0, 1048.0}, {288.0, 61.0}}
+                                                Other, 0x10965c3c0, {{16.0, 1048.0}, {288.0, 61.0}}
+                                                  Other, 0x10965c500, {{16.0, 1048.0}, {288.0, 61.0}}
+                                                    Other, 0x10965c640, {{16.0, 1048.0}, {288.0, 61.0}}
+                                                      Button, 0x10965c780, {{16.0, 1048.0}, {288.0, 61.0}}, identifier: 'saved.item.A5225D1F-9659-45D6-BCD6-A029D36A01E6', label: 'Scale Item 00015', value: Estimate: 16 minutes
+                                                        Image, 0x10965c8c0, {{33.5, 1060.5}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x10965ca00, {{60.0, 1059.0}, {132.5, 20.5}}, label: 'Scale Item 00015'
+                                                        Image, 0x10965cb40, {{64.5, 1083.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x10965cc80, {{64.5, 1083.0}, {91.0, 15.5}}, label: '16 minutes'
+                                              Cell, 0x10965cdc0, {{16.0, 1109.0}, {288.0, 61.0}}
+                                                Other, 0x10965cf00, {{16.0, 1109.0}, {288.0, 61.0}}
+                                                Other, 0x10965d040, {{16.0, 1109.0}, {288.0, 61.0}}
+                                                  Other, 0x10965d180, {{16.0, 1109.0}, {288.0, 61.0}}
+                                                    Other, 0x10965d2c0, {{16.0, 1109.0}, {288.0, 61.0}}
+                                                      Button, 0x10965d400, {{16.0, 1109.0}, {288.0, 61.0}}, identifier: 'saved.item.E9827308-6646-41D5-A506-B028F15F1768', label: 'Scale Item 00016', value: Estimate: 17 minutes
+                                                        Image, 0x10965d540, {{33.5, 1121.5}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x10965d680, {{60.0, 1120.0}, {132.5, 20.5}}, label: 'Scale Item 00016'
+                                                        Image, 0x10965d7c0, {{64.5, 1144.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x10965d900, {{64.5, 1144.0}, {90.5, 15.5}}, label: '17 minutes'
+                                              Cell, 0x10965da40, {{16.0, 1170.0}, {288.0, 61.0}}
+                                                Other, 0x10965db80, {{16.0, 1170.0}, {288.0, 61.0}}
+                                                Other, 0x10965dcc0, {{16.0, 1170.0}, {288.0, 61.0}}
+                                                  Other, 0x10965de00, {{16.0, 1170.0}, {288.0, 61.0}}
+                                                    Other, 0x10965df40, {{16.0, 1170.0}, {288.0, 61.0}}
+                                                      Button, 0x10965e080, {{16.0, 1170.0}, {288.0, 61.0}}, identifier: 'saved.item.3FC864B4-4A72-451F-9E0C-CC3B722DCDA4', label: 'Scale Item 00017', value: Estimate: 18 minutes
+                                                        Image, 0x10965e1c0, {{33.5, 1182.5}, {17.0, 17.0}}, identifier: 'circle', label: 'Circle'
+                                                        StaticText, 0x10965e300, {{60.0, 1181.0}, {131.5, 20.5}}, label: 'Scale Item 00017'
+                                                        Image, 0x10965e440, {{64.5, 1205.0}, {15.5, 15.5}}, identifier: 'clock', label: 'Clock'
+                                                        StaticText, 0x10965e580, {{64.5, 1205.0}, {91.0, 15.5}}, label: '18 minutes'
+                                              Other, 0x10965e6c0, {{287.0, 194.0}, {30.0, 626.0}}, label: 'Vertical scroll bar, 472 pages', value: 0 %
+                                                Other, 0x10965e800, {{314.0, 197.0}, {3.0, 36.0}}
+                                              Other, 0x10965e940, {{287.0, 194.0}, {30.0, 626.0}}, label: 'Vertical scroll bar, 472 pages', value: 0 %
+                                                Other, 0x10965ea80, {{314.0, 197.0}, {3.0, 36.0}}
+                                    NavigationBar, 0x10965ebc0, {{0.0, 86.0}, {320.0, 108.0}}, identifier: 'Items'
+                                      StaticText, 0x10965ed00, {{16.0, 97.5}, {44.5, 21.0}}, label: 'Items'
+                                      Button, 0x10965ee40, {{95.5, 90.0}, {41.0, 36.0}}, identifier: 'saved.items.filters', label: 'Active'
+                                      Button, 0x10965ef80, {{152.5, 90.0}, {44.5, 36.0}}, identifier: 'saved.items.sort', label: 'Sort: Title · Ascending'
+                                      Button, 0x10965f0c0, {{213.0, 90.0}, {37.0, 36.0}}, identifier: 'saved.item.new', label: 'New Item'
+                                      Button, 0x10965f200, {{270.0, 90.0}, {36.0, 36.0}}, label: 'Hide Sidebar'
+                                      SearchField, 0x10965f340, {{16.0, 140.0}, {288.0, 44.0}}, label: 'Search Items', placeholderValue: 'Search Items'
+                                        Image, 0x10965f480, {{28.0, 151.5}, {20.5, 20.0}}, identifier: 'magnifyingglass', label: 'Search'
+                                    Toolbar, 0x10965f5c0, {{0.0, 32.0}, {320.0, 788.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                      Other, 0x10965f700, {{0.0, 32.0}, {320.0, 788.0}}
+                                  Other, 0x10965f840, {{0.0, 32.0}, {320.0, 788.0}}
+                                    Other, 0x10965f980, {{0.0, 32.0}, {320.0, 788.0}}
+                                      Other, 0x10965fac0, {{0.0, 32.0}, {320.0, 788.0}}
+                                        Other, 0x10965fc00, {{0.0, 32.0}, {320.0, 788.0}}
+                                          Other, 0x10965fd40, {{0.0, 32.0}, {320.0, 788.0}}
+                                            Other, 0x10965fe80, {{0.0, 32.0}, {320.0, 1084.0}}
+                                        Other, 0x109668000, {{0.0, 32.0}, {320.0, 788.0}}
+                                          Other, 0x109668140, {{0.0, 32.0}, {320.0, 1084.0}}
+                                Other, 0x109668280, {{0.0, 32.0}, {1180.0, 788.0}}
+                                  Other, 0x1096683c0, {{0.0, 32.0}, {1180.0, 788.0}}
+                                    NavigationBar, 0x109668500, {{0.0, 86.0}, {1180.0, 106.0}}, identifier: 'Scale Item 00001'
+                                      Button, 0x109668640, {{1130.0, 90.0}, {36.0, 36.0}}, identifier: 'saved.item.actions', label: 'Item actions'
+                                      StaticText, 0x109668780, {{340.0, 143.5}, {280.0, 41.0}}, label: 'Scale Item 00001'
+                                    Other, 0x1096688c0, {{0.0, 32.0}, {1180.0, 788.0}}
+                                      Other, 0x109668a00, {{0.0, 32.0}, {1180.0, 788.0}}
+                                        Other, 0x109668b40, {{0.0, 32.0}, {1180.0, 788.0}}
+                                          Other, 0x109668c80, {{0.0, 32.0}, {1180.0, 788.0}}
+                                            CollectionView, 0x109668dc0, {{0.0, 32.0}, {1180.0, 788.0}}
+                                              Other, 0x109668f00, {{-340.0, -1384.0}, {1540.0, 1714.5}}
+                                              Other, 0x109669040, {{0.0, 32.0}, {1180.0, 788.0}}
+                                                Other, 0x109669180, {{0.0, 32.0}, {1180.0, 148.0}}
+                                                Other, 0x1096692c0, {{0.0, 706.0}, {1180.0, 114.0}}
+                                              Other, 0x109669400, {{0.0, 32.0}, {1180.0, 788.0}}
+                                              Cell, 0x109669540, {{340.0, 192.0}, {820.0, 56.5}}
+                                                Other, 0x109669680, {{340.0, 192.0}, {820.0, 56.5}}
+                                                  Other, 0x1096697c0, {{340.0, 192.0}, {820.0, 56.5}}
+                                                Other, 0x109669900, {{340.0, 192.0}, {820.0, 56.5}}
+                                                  Other, 0x109669a40, {{340.0, 192.0}, {820.0, 56.5}}
+                                                    Other, 0x109669b80, {{340.0, 192.0}, {820.0, 56.5}}
+                                                      StaticText, 0x109669cc0, {{340.0, 192.0}, {820.0, 56.5}}, label: 'Scale Item 00001'
+                                              Cell, 0x109669e00, {{340.0, 248.5}, {820.0, 52.0}}
+                                                Other, 0x109669f40, {{340.0, 248.5}, {820.0, 52.0}}
+                                                  Other, 0x10966a080, {{340.0, 248.5}, {820.0, 52.0}}
+                                                Other, 0x10966a1c0, {{340.0, 248.5}, {820.0, 52.0}}
+                                                  Other, 0x10966a300, {{340.0, 248.5}, {820.0, 52.0}}
+                                                    Other, 0x10966a440, {{340.0, 248.5}, {820.0, 52.0}}
+                                                      Switch, 0x10966a580, {{340.0, 248.5}, {820.0, 52.0}}, identifier: 'saved.item.completion', label: 'Completed', value: 0
+                                                        StaticText, 0x10966a6c0, {{360.0, 264.2}, {84.0, 20.5}}, label: 'Completed'
+                                                        Switch, 0x10966a800, {{1079.0, 260.5}, {63.0, 28.0}}, value: 0
+                                              Other, 0x10966a940, {{360.0, 247.5}, {780.0, 1.0}}
+                                              Cell, 0x10966aa80, {{340.0, 300.5}, {820.0, 30.0}}
+                                                Other, 0x10966abc0, {{340.0, 300.5}, {820.0, 30.0}}
+                                                Other, 0x10966ad00, {{340.0, 300.5}, {820.0, 30.0}}
+                                                  Other, 0x10966ae40, {{340.0, 300.5}, {820.0, 30.0}}
+                                                    Other, 0x10966af80, {{340.0, 300.5}, {820.0, 30.0}}
+                                                      StaticText, 0x10966b0c0, {{340.0, 300.5}, {820.0, 30.0}}, label: 'Completing this Item shows it as done in every List and Itinerary.'
+                                              Other, 0x10966b200, {{-340.0, 330.5}, {1540.0, 110.0}}
+                                              Cell, 0x10966b340, {{340.0, 330.5}, {820.0, 40.5}}
+                                                Other, 0x10966b480, {{340.0, 330.5}, {820.0, 40.5}}
+                                                Other, 0x10966b5c0, {{340.0, 330.5}, {820.0, 40.5}}
+                                                  Other, 0x10966b700, {{340.0, 330.5}, {820.0, 40.5}}
+                                                    Other, 0x10966b840, {{340.0, 330.5}, {820.0, 40.5}}
+                                                      StaticText, 0x10966b980, {{340.0, 330.5}, {820.0, 40.5}}, label: 'Notes'
+                                              Cell, 0x10966bac0, {{340.0, 371.0}, {820.0, 52.0}}
+                                                Other, 0x10966bc00, {{340.0, 371.0}, {820.0, 52.0}}
+                                                  Other, 0x10966bd40, {{340.0, 371.0}, {820.0, 52.0}}
+                                                Other, 0x10966be80, {{340.0, 371.0}, {820.0, 52.0}}
+                                                  Other, 0x10967c000, {{340.0, 371.0}, {820.0, 52.0}}
+                                                    Other, 0x10967c140, {{340.0, 371.0}, {820.0, 52.0}}
+                                                      StaticText, 0x10967c280, {{340.0, 371.0}, {820.0, 52.0}}, label: 'Scale notes 1'
+                                              Other, 0x10967c3c0, {{-340.0, 440.5}, {1540.0, 1688.5}}
+                                              Cell, 0x10967c500, {{340.0, 440.5}, {820.0, 40.5}}
+                                                Other, 0x10967c640, {{340.0, 440.5}, {820.0, 40.5}}
+                                                Other, 0x10967c780, {{340.0, 440.5}, {820.0, 40.5}}
+                                                  Other, 0x10967c8c0, {{340.0, 440.5}, {820.0, 40.5}}
+                                                    Other, 0x10967ca00, {{340.0, 440.5}, {820.0, 40.5}}
+                                                      StaticText, 0x10967cb40, {{340.0, 440.5}, {820.0, 40.5}}, label: 'Activity estimate'
+                                              Cell, 0x10967cc80, {{340.0, 481.0}, {820.0, 52.0}}
+                                                Other, 0x10967cdc0, {{340.0, 481.0}, {820.0, 52.0}}
+                                                  Other, 0x10967cf00, {{340.0, 481.0}, {820.0, 52.0}}
+                                                Other, 0x10967d040, {{340.0, 481.0}, {820.0, 52.0}}
+                                                  Other, 0x10967d180, {{340.0, 481.0}, {820.0, 52.0}}
+                                                    Other, 0x10967d2c0, {{340.0, 481.0}, {820.0, 52.0}}
+                                                      Other, 0x10967d400, {{340.0, 481.0}, {820.0, 52.0}}, identifier: 'saved.item.estimate', label: 'Activity estimate', value: 2 minutes
+                                                        StaticText, 0x10967d540, {{360.0, 496.8}, {65.5, 20.5}}, label: 'Duration'
+                                                        StaticText, 0x10967d680, {{360.0, 496.8}, {780.0, 20.5}}, label: 'Duration, 2 minutes'
+                                              Other, 0x10967d7c0, {{1147.0, 140.0}, {30.0, 662.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+                                                Other, 0x10967d900, {{1174.0, 1111.0}, {3.0, 52.5}}
+                                              Other, 0x10967da40, {{1147.0, 140.0}, {30.0, 662.0}}, label: 'Vertical scroll bar, 1 page', value: 0 %
+                                                Other, 0x10967db80, {{1174.0, 1111.0}, {3.0, 52.5}}
+                                    Toolbar, 0x10967dcc0, {{0.0, 32.0}, {1180.0, 788.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                      Other, 0x10967de00, {{0.0, 32.0}, {1180.0, 788.0}}
+                                Toolbar, 0x10967df40, {{0.0, 32.0}, {1180.0, 788.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                  Other, 0x10967e080, {{0.0, 32.0}, {1180.0, 788.0}}
+                                    Other, 0x10967e1c0, {{0.0, 32.0}, {1180.0, 788.0}}
+                                      Other, 0x10967e300, {{0.0, 32.0}, {1180.0, 788.0}}
+                                        Other, 0x10967e440, {{0.0, 32.0}, {0.0, 0.0}}
+                                          Other, 0x10967e580, {{138.0, 756.0}, {44.0, 44.0}}
+                                            Other, 0x10967e6c0, {{138.0, 756.0}, {44.0, 44.0}}
+                                              Other, 0x10967e800, {{142.0, 760.0}, {36.0, 36.0}}
+                                                Other, 0x10967e940, {{142.0, 760.0}, {36.0, 36.0}}
+                                                  Button, 0x10967ea80, {{142.0, 760.0}, {36.0, 36.0}}, identifier: 'saved.capture.new', label: 'Capture Text or Link'
+                            Other, 0x10967ebc0, {{0.0, 32.0}, {1180.0, 788.0}}
+                              Other, 0x10967ed00, {{0.0, 32.0}, {1180.0, 788.0}}
+                Other, 0x10967ee40, {{0.0, 0.0}, {1180.0, 820.0}}
+                  Other, 0x10967ef80, {{0.0, 32.0}, {1180.0, 44.0}}
+                    Button, 0x10967f0c0, {{374.0, 36.0}, {69.0, 36.0}}, identifier: 'list.bullet', label: 'Lists'
+                      Button, 0x10967f200, {{374.0, 36.0}, {69.0, 36.0}}, identifier: 'list.bullet', label: 'Lists'
+                    Button, 0x10967f340, {{443.0, 36.0}, {75.5, 36.0}}, identifier: 'square.stack', label: 'Items', Selected
+                      Button, 0x10967f480, {{443.0, 36.0}, {75.5, 36.0}}, identifier: 'square.stack', label: 'Items', Selected
+                    Button, 0x10967f5c0, {{518.5, 36.0}, {75.0, 36.0}}, identifier: 'tray', label: 'Inbox'
+                      Button, 0x10967f700, {{518.5, 36.0}, {75.0, 36.0}}, identifier: 'tray', label: 'Inbox'
+                    Button, 0x10967f840, {{593.5, 36.0}, {102.5, 36.0}}, identifier: 'calendar', label: 'Calendar'
+                      Button, 0x10967f980, {{593.5, 36.0}, {102.5, 36.0}}, identifier: 'calendar', label: 'Calendar'
+                    Button, 0x10967fac0, {{696.0, 36.0}, {110.0, 36.0}}, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries'
+                      Button, 0x10967fc00, {{696.0, 36.0}, {110.0, 36.0}}, identifier: 'point.topleft.down.to.point.bottomright.curvepath', label: 'Itineraries'
+Path to element:
+ →Application, 0x109634c80, pid: 92325, label: 'Planner fixtures'
+Query chain:
+ →Find: Target Application 'org.example.PlannerFixtures'
+  Output: {
+    Application, 0x10967fd40, pid: 92325, label: 'Planner fixtures'
+  }

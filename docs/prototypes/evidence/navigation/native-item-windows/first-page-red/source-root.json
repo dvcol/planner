@@ -1,0 +1,8 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "260ee5bd3b6f4278ee9e2dca93f41d604792df8c",
+  "overlays": [
+    "Planner/Scenes/SavedItemWindow.swift",
+    "PlannerMCPTests/SavedItemWindowTests.swift"
+  ]
+}

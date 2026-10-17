@@ -1,0 +1,4 @@
+{
+  "reason": "Search/sort function formally passes in 264.985 seconds. The boundary function fast-swipes past Item65 while that row is not exposed to the native accessibility query, continuing beyond Item501. Stop only task-owned invocation and use gentle gestures for intermediate checkpoints, fast gestures for endpoints. No production change or completed boundary-test credit.",
+  "completedFunction": "testSearchAndSortChangesRevisitStableSourcesInLargeNativeCatalog"
+}

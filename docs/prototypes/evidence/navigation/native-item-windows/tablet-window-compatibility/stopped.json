@@ -1,0 +1,3 @@
+{
+  "reason": "Stopped queued Xcode invocation before any Test Case started, so its rotation journey can include a native window-orientation wait. No test or failure credit."
+}

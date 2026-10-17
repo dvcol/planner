@@ -1,0 +1,36 @@
+Attributes: CollectionView, 0x111af6300, {{0.0, 32.0}, {320.0, 788.0}}, label: 'Sidebar'
+Element subtree:
+ →CollectionView, 0x111af6300, {{0.0, 32.0}, {320.0, 788.0}}, label: 'Sidebar'
+    Cell, 0x111af6440, {{16.0, 194.0}, {288.0, 61.0}}
+      Other, 0x111af6580, {{16.0, 194.0}, {288.0, 61.0}}
+        Other, 0x111af66c0, {{16.0, 194.0}, {288.0, 61.0}}
+          Other, 0x111af6800, {{16.0, 194.0}, {288.0, 61.0}}
+            Button, 0x111af6940, {{16.0, 194.0}, {288.0, 61.0}}, identifier: 'saved.item.6D7633B6-AA4C-4C93-AB99-C3F6FDA17CA3', label: 'Scale Item 00001'
+Path to element:
+ →Application, 0x111af48c0, pid: 92325, label: 'Planner fixtures'
+  ↳Window, 0x111af4a00, {{0.0, 0.0}, {1180.0, 820.0}}
+   ↳Other, 0x111af4b40, {{0.0, 0.0}, {1180.0, 820.0}}
+    ↳Other, 0x111af4c80, {{0.0, 0.0}, {1180.0, 820.0}}
+     ↳Other, 0x111af4dc0, {{0.0, 0.0}, {1180.0, 820.0}}
+      ↳Other, 0x111af4f00, {{inf, inf}, {0.0, 0.0}}
+       ↳Other, 0x111af5040, {{inf, inf}, {0.0, 0.0}}
+        ↳Other, 0x111af5180, {{inf, inf}, {0.0, 0.0}}
+         ↳Other, 0x111af52c0, {{inf, inf}, {0.0, 0.0}}
+          ↳Other, 0x111af5400, {{inf, inf}, {0.0, 0.0}}
+           ↳Other, 0x111af5540, {{inf, inf}, {0.0, 0.0}}
+            ↳Other, 0x111af5680, {{inf, inf}, {0.0, 0.0}}
+             ↳Other, 0x111af57c0, {{inf, inf}, {0.0, 0.0}}
+              ↳Other, 0x111af5900, {{inf, inf}, {0.0, 0.0}}
+               ↳Other, 0x111af5a40, {{inf, inf}, {0.0, 0.0}}
+                ↳Other, 0x111af5b80, {{inf, inf}, {0.0, 0.0}}
+                 ↳Other, 0x111af5cc0, {{inf, inf}, {0.0, 0.0}}
+                  ↳Other, 0x111af5e00, {{inf, inf}, {0.0, 0.0}}
+                   ↳Other, 0x111af5f40, {{inf, inf}, {0.0, 0.0}}
+                    ↳Other, 0x111af6080, {{inf, inf}, {0.0, 0.0}}
+                     ↳Other, 0x111af61c0, {{inf, inf}, {0.0, 0.0}}
+                      ↳CollectionView, 0x111af6300, {{0.0, 32.0}, {320.0, 788.0}}, label: 'Sidebar'
+Query chain:
+ →Find: Target Application 'org.example.PlannerFixtures'
+  ↪︎Find: Descendants matching type CollectionView
+    ↪︎Find: Elements containing elements matching predicate 'identifier BEGINSWITH "saved.item." AND label BEGINSWITH "Scale Item "'
+      ↪︎Find: First Match

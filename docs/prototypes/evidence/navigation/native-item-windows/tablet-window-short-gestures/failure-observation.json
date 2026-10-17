@@ -1,0 +1,6 @@
+{
+  "originalScreenRecording": "908B4D23-CA55-4FE2-A910-ED7F79324A61.mp4",
+  "sha256": "01e155df252db022e4fec573a1276b77ef8bbcf954f8bf5112d5d0fda2b57fd8",
+  "extractedFrameSeconds": 87,
+  "observed": "Recording shows the native catalog and first source details visible in landscape. The queried Sidebar has infinite-frame ancestors and contains only the offscreen selected first row. This does not establish a production paging failure."
+}

@@ -1,0 +1,4 @@
+{
+  "reason": "Both boundaries, rotation, first-source identity and notes passed. Final Boolean assertion queried buttons via plannerElement, although the existing journey uses descendants(any) for the native Toggle. Original diagnostic capture shows Completed off. Recorded failure retained; stopped only own xcodebuild during stalled teardown. Fix the test query, no production change.",
+  "runtimeCredit": "Incomplete journey with one recorded assertion failure."
+}

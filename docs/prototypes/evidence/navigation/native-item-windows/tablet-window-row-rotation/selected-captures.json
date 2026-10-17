@@ -1,0 +1,102 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "E08F6907-6CCA-47C9-A36B-725871C7DD0E.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "The far-end search restores its original source and unchanged Todo state_0_EFA72B77-AD1C-449B-8258-F8BD2779A6A4.png",
+    "timestamp": 1792239575.469,
+    "testIdentifier": "LargeCollectionJourneyTests/testSearchAndSortChangesRevisitStableSourcesInLargeNativeCatalog()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A049B1DA-03DC-4F1B-918B-8E4A2EB163AA.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Title ascending restores the filtered source order after changing native sort_0_F509F33F-4B2A-41E9-99F7-E7F089284ABE.png",
+    "timestamp": 1792239562.958,
+    "testIdentifier": "LargeCollectionJourneyTests/testSearchAndSortChangesRevisitStableSourcesInLargeNativeCatalog()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "F103AC40-2E6D-4EA2-A09C-262682BCE177.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Created descending orders the filtered near-end sources in the large dataset_0_5F711E79-FCA3-452A-8A00-5548D17B65DA.png",
+    "timestamp": 1792239543.486,
+    "testIdentifier": "LargeCollectionJourneyTests/testSearchAndSortChangesRevisitStableSourcesInLargeNativeCatalog()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A511C81C-C58E-4EE4-A6B7-B917057C1A21.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "The Done filter hides a valid selected Todo source_0_B2D89B8F-DBEA-44D0-8D2A-67C9398EF3C8.png",
+    "timestamp": 1792239506.442,
+    "testIdentifier": "LargeCollectionJourneyTests/testSearchAndSortChangesRevisitStableSourcesInLargeNativeCatalog()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "3FD05ECD-15EE-437C-81B5-A60003DE56C0.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "The replacement search opens the correct near-end source_0_A4572B85-C304-4C2A-BB53-5B7119D8C9AD.png",
+    "timestamp": 1792239472.486,
+    "testIdentifier": "LargeCollectionJourneyTests/testSearchAndSortChangesRevisitStableSourcesInLargeNativeCatalog()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "E07A20D0-113F-4F85-9738-43FA75665C4F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Released first page reopens its original source after rotation_0_ACF02569-690A-4316-8587-76E2A097F2B5.png",
+    "timestamp": 1792239820.789,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "26C2A899-682A-46D0-82DA-2BE022E282A8.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed native catalog selects its visible source in landscape_0_DCBD107B-E310-47B3-96C7-BDC5B3FBF761.png",
+    "timestamp": 1792239794.326,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "15D21843-8D2B-480A-B262-55776EB7DDA9.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native catalog crosses the page boundary at Scale Item 00129_0_82D2C4DF-E3E1-472E-94AF-CD34CB954A74.png",
+    "timestamp": 1792239783.081,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "4A7182AE-E514-484C-8C11-6D0B7AC380C4.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native catalog crosses the page boundary at Scale Item 00065_0_987709D3-05C8-4F05-97FC-D7D0DE71928C.png",
+    "timestamp": 1792239750.161,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "779B3F36-23D4-4E34-8916-186F24B5DCD8.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Item window observed source and layout_0_A79C15F2-09FC-44F9-B748-7C82B1DC11CF.txt",
+    "timestamp": 1792239719.315,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testCatalogCrossesPageBoundariesAndKeepsSelectionAcrossRotation()"
+  }
+]

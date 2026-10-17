@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "F57C27DC-48EB-48B2-B3C6-D03C11FE7AF6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native catalog minimal rotation before hittability assertion_0_78DDFE00-EAE6-48F8-8B21-7E5E62188E2C.png",
+    "timestamp": 1792238328.86,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testSelectedCatalogRemainsHittableAfterRotationWithoutScrolling()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "E618CD65-4233-4035-A8BC-444F6F275F17.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native catalog minimal rotation hierarchy_0_9C1AC4DD-13D2-4E70-9B27-F74E1D86B898.txt",
+    "timestamp": 1792238328.751,
+    "testIdentifier": "LargeCollectionScrollJourneyTests/testSelectedCatalogRemainsHittableAfterRotationWithoutScrolling()"
+  }
+]

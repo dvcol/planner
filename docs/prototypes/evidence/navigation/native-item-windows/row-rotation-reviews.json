@@ -1,0 +1,17 @@
+{
+  "baseline": "260ee5b",
+  "scope": "Follow-up review of the native page-window journey oracle only; earlier loader/integration reviews remain recorded in the report.",
+  "source": "PlannerFixtureUITests/LargeCollectionScrollJourneyTests.swift",
+  "sha256": "0f6a32bb955b1e0acb7cdd3de1a106b333c9626209f8a5bd253c11073168ed70",
+  "runtimeCredit": false,
+  "standards": {
+    "reviewer": "/root/catalog_standards_review",
+    "findings": [],
+    "assessment": "Visible-row tap with unique notes and Todo checks replaces the unreliable container assertion. Portrait retention precedes reselecting the original first row; original identity checks remain intact."
+  },
+  "spec": {
+    "reviewer": "/root/catalog_spec_review",
+    "findings": [],
+    "assessment": "The revised journey retains original selection checks after page release and landscape where simultaneous detail applies, then tests actual visible-row selection and portrait retention. Removing container hittability does not weaken those behavior checks."
+  }
+}
