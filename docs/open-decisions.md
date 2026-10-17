@@ -1,6 +1,6 @@
 # Decision register
 
-Current frontier: Q94 and Q95 await human answers. Statements that an earlier question batch is settled apply to that batch, not to these later choices.
+Current frontier: Q94, Q95 and the proposed Q96 need human answers. Statements that an earlier question batch is settled apply to that batch, not to these later choices.
 
 The human settled this batch on 12 October 2026. None of the nine questions below remains unanswered. Accepted behavior is a requirement, not evidence that its implementation or native qualification is complete. Earlier execution records that describe these choices as pending are historical.
 
@@ -94,3 +94,7 @@ This presentation choice is unanswered. The [native diagnosis and pending option
 ## Q95, native Item catalog windows and test seam
 
 This choice is unanswered. The [concrete proposal](native-item-window-contract-review.md) covers first-page display, visible-page loading and temporary native row retention, stable selection, stale-result handling, and tests through the production interface against real Core data in the existing app-hosted target. It introduces no new package or test-only control. No loader implementation or tests at that proposed seam have been written. Q84's accepted Core query-generation lifetime remains unchanged. The already implemented on-demand candidate picker is a separate change and still reads all active candidates while open.
+
+## Q96, native schedule clock input and unit seam
+
+The [concrete proposal](native-schedule-time-input-contract-review.md) is unapproved. Accepted Q10/Q11 require nonexistent-time rejection and explicit repeated-time choices; Q13 protects unchanged stored instants. The current native form has no separate civil-time input module. The proposal keeps native controls and adds one app-internal production value module with tests through its actual interface in the existing app-hosted target. No implementation or tests at this new seam have been written. New or explicitly rescheduled input requires a choice when changing zones produces a repeated minute; an unchanged saved endpoint retains its exact instant and occurrence. Same-minute picker normalization must preserve saved fractions. This does not change Core/MCP schedule forms or reopen the accepted product policies. The [native investigation](prototypes/native-schedule-clock-input.md) distinguishes control diagnostics and Foundation observations from product qualification.
