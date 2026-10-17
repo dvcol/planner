@@ -44,6 +44,29 @@ final class SavedItemJourneyTests: XCTestCase {
     }
 
     func testRepeatedStartRequiresChoiceAndRetainsEachOccurrenceAfterRelaunch() throws {
+      try verifyRepeatedStart(
+        itemTitle: "Repeated clock time", date: "1 Nov 2026", minute: 30,
+        planningTimeZone: "America/New_York", timeZoneSearch: "New York",
+        expectedOccurrences: [
+          ("UTC-04:00", "2026-11-01T05:30:00Z"),
+          ("UTC-05:00", "2026-11-01T06:30:00Z"),
+        ])
+    }
+
+    func testLordHoweStartRetainsBothHalfHourOccurrencesAfterRelaunch() throws {
+      try verifyRepeatedStart(
+        itemTitle: "Half-hour repeat", date: "5 Apr 2026", minute: 45,
+        planningTimeZone: "Australia/Lord_Howe", timeZoneSearch: "Lord Howe",
+        expectedOccurrences: [
+          ("UTC+11:00", "2026-04-04T14:45:00Z"),
+          ("UTC+10:30", "2026-04-04T15:15:00Z"),
+        ])
+    }
+
+    private func verifyRepeatedStart(
+      itemTitle: String, date: String, minute: Int, planningTimeZone: String,
+      timeZoneSearch: String, expectedOccurrences: [(offset: String, instant: String)]
+    ) throws {
       continueAfterFailure = false
       let application = XCUIApplication()
       application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
@@ -53,29 +76,22 @@ final class SavedItemJourneyTests: XCTestCase {
       let title = application.textFields["saved.item.title"]
       XCTAssertTrue(title.waitForExistence(timeout: 5))
       title.activateForPlannerJourney()
-      title.typeText("Repeated clock time")
+      title.typeText(itemTitle)
       application.plannerElement("saved.item.save").activateForPlannerJourney()
       application.plannerElement("saved.item.actions").activateForPlannerJourney()
       application.plannerElement("Schedule Item").activateForPlannerJourney()
-      selectPlanningTimeZone("America/New_York", search: "New York", application: application)
+      selectPlanningTimeZone(planningTimeZone, search: timeZoneSearch, application: application)
       try enterScheduleClock(
-        application, identifier: "saved.schedule.start", date: "1 Nov 2026", hour: 1, minute: 30)
+        application, identifier: "saved.schedule.start", date: date, hour: 1, minute: minute,
+        planningTimeZone: planningTimeZone)
       XCTAssertFalse(application.plannerElement("saved.schedule.save").isEnabled)
       let occurrence = application.plannerElement("saved.schedule.start.occurrence")
       XCTAssertTrue(occurrence.waitForExistence(timeout: 5))
       recordScreenshot(application, name: "Civil schedule repeated Start requires a choice")
       let formatter = ISO8601DateFormatter()
       var scheduleIdentifier: String?
-      for (offset, expected) in [
-        ("UTC-04:00", "2026-11-01T05:30:00Z"),
-        ("UTC-05:00", "2026-11-01T06:30:00Z"),
-      ] {
-        occurrence.activateForPlannerJourney()
-        let option = application.buttons.matching(
-          NSPredicate(format: "label ENDSWITH %@", offset)
-        ).firstMatch
-        XCTAssertTrue(option.waitForExistence(timeout: 5))
-        option.activateForPlannerJourney()
+      for (offset, expected) in expectedOccurrences {
+        selectScheduleOccurrence(application, identifier: "saved.schedule.start", offset: offset)
         XCTAssertTrue(application.plannerElement("saved.schedule.save").isEnabled)
         recordScreenshot(application, name: "Civil schedule explicit Start \(offset)")
         application.plannerElement("saved.schedule.save").activateForPlannerJourney()
@@ -91,19 +107,114 @@ final class SavedItemJourneyTests: XCTestCase {
         application.terminate()
         application.launchSavedPlannerJourney()
         openItems(application)
-        let row = application.savedPlannerItemRows("Repeated clock time").firstMatch
+        let row = application.savedPlannerItemRows(itemTitle).firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 10))
         row.activateForPlannerJourney()
         XCTAssertTrue(schedule.waitForPlannerValue(description))
         XCTAssertEqual(schedule.identifier, scheduleIdentifier)
         XCTAssertEqual(schedules.count, 1)
         recordScreenshot(application, name: "Civil schedule Start \(offset) after relaunch")
-        if offset == "UTC-04:00" {
+        if offset == expectedOccurrences.first?.offset {
           openScheduleMenu(schedule)
           application.plannerElement("Edit Schedule").activateForPlannerJourney()
           XCTAssertTrue(application.plannerElement("saved.schedule.save").isEnabled)
         }
       }
+    }
+
+    func testRepeatedEndComparesInstantsAndMissingEndEditLeavesSavedScheduleUnchanged() throws {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      openItems(application)
+      application.plannerElement("saved.item.new").activateForPlannerJourney()
+      let title = application.textFields["saved.item.title"]
+      XCTAssertTrue(title.waitForExistence(timeout: 5))
+      title.activateForPlannerJourney()
+      title.typeText("Clock change span")
+      application.plannerElement("saved.item.save").activateForPlannerJourney()
+      application.plannerElement("saved.item.actions").activateForPlannerJourney()
+      application.plannerElement("Schedule Item").activateForPlannerJourney()
+      selectPlanningTimeZone("America/New_York", search: "New York", application: application)
+      try enterScheduleClock(
+        application, identifier: "saved.schedule.start", date: "1 Nov 2026", hour: 1, minute: 45)
+      selectScheduleOccurrence(application, identifier: "saved.schedule.start", offset: "UTC-04:00")
+      let includesEnd = application.descendants(matching: .any).matching(
+        identifier: "saved.schedule.hasEnd"
+      ).firstMatch
+      XCTAssertTrue(includesEnd.waitForPlannerBooleanState(false))
+      activateCompletion(includesEnd)
+      try enterScheduleClock(
+        application, identifier: "saved.schedule.end", date: "1 Nov 2026", hour: 1, minute: 15)
+      XCTAssertFalse(application.plannerElement("saved.schedule.save").isEnabled)
+      selectScheduleOccurrence(application, identifier: "saved.schedule.end", offset: "UTC-04:00")
+      XCTAssertFalse(application.plannerElement("saved.schedule.save").isEnabled)
+      XCTAssertTrue(application.staticTexts["End must be later than Start."].exists)
+      recordScreenshot(application, name: "Civil schedule earlier End occurrence is invalid")
+      selectScheduleOccurrence(application, identifier: "saved.schedule.end", offset: "UTC-05:00")
+      XCTAssertTrue(application.plannerElement("saved.schedule.save").isEnabled)
+      recordScreenshot(application, name: "Civil schedule later End occurrence is valid")
+      application.plannerElement("saved.schedule.save").activateForPlannerJourney()
+      let schedules = application.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule."))
+      let schedule = schedules.firstMatch
+      XCTAssertTrue(schedule.waitForExistence(timeout: 10))
+      XCTAssertEqual(schedules.count, 1)
+      let identity = schedule.identifier
+      let description = try XCTUnwrap(schedule.value as? String)
+      let components = description.components(separatedBy: " · ")
+      XCTAssertEqual(components.count, 2)
+      let endpoints = components[0].components(separatedBy: " – ")
+      XCTAssertEqual(endpoints.count, 2)
+      let formatter = ISO8601DateFormatter()
+      XCTAssertEqual(
+        try displayedClockChangeInstant(endpoints[0] + " · " + components[1]),
+        formatter.date(from: "2026-11-01T05:45:00Z"))
+      XCTAssertEqual(
+        try displayedClockChangeInstant(endpoints[1] + " · " + components[1]),
+        formatter.date(from: "2026-11-01T06:15:00Z"))
+      openScheduleMenu(schedule)
+      application.plannerElement("Edit Schedule").activateForPlannerJourney()
+      XCTAssertTrue(application.plannerElement("saved.schedule.save").isEnabled)
+      try enterScheduleClock(
+        application, identifier: "saved.schedule.start", date: "8 Mar 2026", hour: 1, minute: 30)
+      XCTAssertTrue(application.plannerElement("saved.schedule.save").isEnabled)
+      try enterScheduleClock(
+        application, identifier: "saved.schedule.end", date: "8 Mar 2026", hour: 2, minute: 30)
+      XCTAssertTrue(
+        application.staticTexts[
+          "End does not exist in this time zone. Choose another time."
+        ].exists)
+      XCTAssertFalse(application.plannerElement("saved.schedule.save").isEnabled)
+      recordScreenshot(application, name: "Civil schedule missing End edit cannot Save")
+      application.plannerElement("saved.schedule.cancel").activateForPlannerJourney()
+      XCTAssertTrue(schedule.waitForPlannerValue(description))
+      XCTAssertEqual(schedule.identifier, identity)
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openItems(application)
+      let row = application.savedPlannerItemRows("Clock change span").firstMatch
+      XCTAssertTrue(row.waitForExistence(timeout: 10))
+      row.activateForPlannerJourney()
+      XCTAssertTrue(schedule.waitForPlannerValue(description))
+      XCTAssertEqual(schedule.identifier, identity)
+      XCTAssertEqual(schedules.count, 1)
+      recordScreenshot(
+        application, name: "Civil schedule valid span survives invalid draft and relaunch")
+    }
+
+    private func selectScheduleOccurrence(
+      _ application: XCUIApplication, identifier: String, offset: String
+    ) {
+      let occurrence = application.plannerElement(identifier + ".occurrence")
+      XCTAssertTrue(occurrence.waitForExistence(timeout: 5))
+      occurrence.activateForPlannerJourney()
+      let option = application.buttons.matching(
+        NSPredicate(format: "label ENDSWITH %@", offset)
+      ).firstMatch
+      XCTAssertTrue(option.waitForExistence(timeout: 5))
+      option.activateForPlannerJourney()
     }
 
     private func displayedClockChangeInstant(_ description: String) throws -> Date {
@@ -116,7 +227,8 @@ final class SavedItemJourneyTests: XCTestCase {
     }
 
     private func enterScheduleClock(
-      _ application: XCUIApplication, identifier: String, date: String, hour: Int, minute: Int
+      _ application: XCUIApplication, identifier: String, date: String, hour: Int, minute: Int,
+      planningTimeZone: String = "America/New_York"
     ) throws {
       let picker = application.descendants(matching: .any).matching(identifier: identifier)
         .firstMatch
@@ -169,7 +281,7 @@ final class SavedItemJourneyTests: XCTestCase {
       XCTAssertTrue(picker.buttons[String(format: "%02d:%02d", hour, minute)].firstMatch.exists)
       XCTAssertEqual(
         application.plannerElement("saved.schedule.zone").label,
-        "Time zone, America/New_York")
+        "Time zone, \(planningTimeZone)")
     }
 
     private func dismissScheduleClockPopover(_ application: XCUIApplication) {
