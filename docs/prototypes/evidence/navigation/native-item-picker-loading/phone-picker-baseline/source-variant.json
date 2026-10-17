@@ -1,0 +1,5 @@
+{
+  "reason": "Original controller requires Show Sidebar and does not follow native compact Back navigation. Failure before picker opens; no product loading change is present.",
+  "productCommit": "f724eaa1d638e90b77c0207942a9e6028f4ef3c3",
+  "correctedControllerPassCredit": false
+}

@@ -1,0 +1,5 @@
+{
+  "baselineEvidence": true,
+  "diagnosticOnly": false,
+  "reason": "Passing original membership assertions with corrected native controller and unchanged production cache. Subsequent identity assertions and on-demand implementation receive separate qualification."
+}

@@ -1,0 +1,21 @@
+{
+  "baseline": "f724eaa1d638e90b77c0207942a9e6028f4ef3c3",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedAddItemForm.swift": "de0474d788eb20213ecd243fe1aeec56ee46f056d810f9a94c03bcdd1391f95d",
+    "Planner/Scenes/SavedPlannerStore.swift": "071fafdab250a1e354f49442d83334437931af79347a21e5a09ab0c68c07417d",
+    "Planner/Scenes/SavedBackupImportForm.swift": "054d7fabd8ccfbc5d94b2b062ca18683024b6d20a3babf7a02c19f5f89804137",
+    "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "148d5185ad981e520f1160b3fc4fab4f8dbe5d63610dc1d1bb22156845167a9b"
+  },
+  "runtimeQualification": "Source-only review. Completed native runtime evidence and limits are recorded separately in the report and run index.",
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "Applied cache/refresh removal preserves saved mutation results, recovery handling and changeRevision. Form cancellation/identity/error/Retry guards and strengthened source/membership assertions are proportionate. No remaining findings."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "report": "No confirmed Spec/oracle finding. All five refresh callers and shared cache removed; independent catalog refresh intact. Form retains active/title query, publication guards and surviving-selection checks. Test preserves source/membership identities and no-duplication. Delayed/error/Retry/archive filtering and memory branches remain outside current runtime qualification."
+  },
+  "controllerFollowup": "Both reviewers found no remaining confirmed findings in the explicit native iPad New List overflow handling. The three production files remain unchanged."
+}

@@ -1,0 +1,113 @@
+{
+  "method": "All twelve original named Planner-window PNGs opened individually with view_image. Epoch labels distinguish the pre-optimization baseline, prior membership test controller, production-identical state regressions and final-source membership runs.",
+  "images": [
+    {
+      "path": "phone-picker-compatible-membership/45226D20-400B-4D0E-80B8-ABF300DA64FC.png",
+      "title": "Saved List with one shared Item after relaunch_0_9B7C1206-C401-42A2-88BF-3FF592A009B6.png",
+      "sha256": "11eaac08c0116bdf6b226afdaff0e7e7f121db1e5a37efdf57aacf3401262c5a",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "productionIdenticalInvocation": true,
+      "scope": "Original named Planner-window capture. Historical baseline and prior test-controller epochs retain separate credit; this image alone does not prove persistence, latency or accessibility."
+    },
+    {
+      "path": "phone-picker-controller-baseline/EAB2A232-A411-4B43-98A0-F56A34808935.png",
+      "title": "Saved List with one shared Item after relaunch_0_2AA1EBE1-9018-45B7-AF0D-01CF8A30CAFF.png",
+      "sha256": "84c36d7a1b4acf38dfd9b45e86383aba2784040dc6ef7d7fe6af75b8d35222bf",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "productionIdenticalInvocation": false,
+      "scope": "Original named Planner-window capture. Historical baseline and prior test-controller epochs retain separate credit; this image alone does not prove persistence, latency or accessibility."
+    },
+    {
+      "path": "phone-picker-on-demand/00DE27F9-AD2E-4413-A0BF-0AC961941BD5.png",
+      "title": "Saved List with one shared Item after relaunch_0_9A629944-716D-414B-A551-8FE43CD42C1A.png",
+      "sha256": "6d04a2b3574b1e44fa6f7248347fad78c859b794b2cfcd05fcb2bd507e1d21a6",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "productionIdenticalInvocation": true,
+      "scope": "Original named Planner-window capture. Historical baseline and prior test-controller epochs retain separate credit; this image alone does not prove persistence, latency or accessibility."
+    },
+    {
+      "path": "phone-picker-state-regressions/E73C990B-153B-452E-9ABD-4129E76B705B.png",
+      "title": "Unlisted archived Item restored through the Items catalog_0_99944C6F-DDF8-4997-B823-46CAEB06880A.png",
+      "sha256": "385f27657cab1740b286dfbc2e1ab431db04e112acd8767c34dbfc8319ad9fed",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "productionIdenticalInvocation": true,
+      "scope": "Original named Planner-window capture. Historical baseline and prior test-controller epochs retain separate credit; this image alone does not prove persistence, latency or accessibility."
+    },
+    {
+      "path": "phone-picker-state-regressions/CD1DC0E5-6542-429D-A762-8FB7B5DD0108.png",
+      "title": "Global completion overrides both saved List appearances_0_8986208C-0A02-47E1-98BB-43AB0C485648.png",
+      "sha256": "9580cd495eec67fdb9976e0a4df6d8a2fbe93d0106c99fedf402e4bbb2c53cc6",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "productionIdenticalInvocation": true,
+      "scope": "Original named Planner-window capture. Historical baseline and prior test-controller epochs retain separate credit; this image alone does not prove persistence, latency or accessibility."
+    },
+    {
+      "path": "phone-picker-state-regressions/BA179692-6BD2-46AB-86DD-B7388272594C.png",
+      "title": "Saved List with globally completed Item_0_7C3EC85C-5530-4BBC-80B0-DF0DE7133567.png",
+      "sha256": "d6192b2f858f6aaf9b0dbce34d606fee76de0b4fbb6dc6d97c6e2b59b12b4306",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "productionIdenticalInvocation": true,
+      "scope": "Original named Planner-window capture. Historical baseline and prior test-controller epochs retain separate credit; this image alone does not prove persistence, latency or accessibility."
+    },
+    {
+      "path": "phone-picker-state-regressions/C2982FC9-593B-4CED-B683-7225CD9A543D.png",
+      "title": "Saved List with contextual completion and details_0_E97502CE-D72A-4442-BF7A-B56A3C575A64.png",
+      "sha256": "6ef3fd35eb1e20615ff8728edfc21cb1a536e69a637d7c41f8f1e713c9020305",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "productionIdenticalInvocation": true,
+      "scope": "Original named Planner-window capture. Historical baseline and prior test-controller epochs retain separate credit; this image alone does not prove persistence, latency or accessibility."
+    },
+    {
+      "path": "tablet-picker-compatible-membership/866E0695-922E-4BC7-B10B-C10994AE336C.png",
+      "title": "Saved List with one shared Item after relaunch_0_002958C3-775C-4A31-AC33-CBC09DD92A4E.png",
+      "sha256": "688384b73308f7c95fff74ca58a5311e941016852a57aec5fe7da7b497e0c2b0",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "productionIdenticalInvocation": true,
+      "scope": "Original named Planner-window capture. Historical baseline and prior test-controller epochs retain separate credit; this image alone does not prove persistence, latency or accessibility."
+    },
+    {
+      "path": "tablet-picker-on-demand/C344D69A-A8AE-4D28-81D9-53DA4C8C55B4.png",
+      "title": "Unlisted archived Item restored through the Items catalog_0_2047EB47-70C1-45C6-BA70-BFA40AE7CC12.png",
+      "sha256": "68e013c9a85dfa7e61bd517a0140353afa10bf55f3bf5e8babb802439da65bde",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "productionIdenticalInvocation": true,
+      "scope": "Original named Planner-window capture. Historical baseline and prior test-controller epochs retain separate credit; this image alone does not prove persistence, latency or accessibility."
+    },
+    {
+      "path": "tablet-picker-on-demand/8C6E31AD-4E38-4AF8-BE10-1C0DD6C6DE24.png",
+      "title": "Global completion overrides both saved List appearances_0_36D4FE0E-E712-4A8F-8041-56859745B495.png",
+      "sha256": "4f65fb374cbdc96d3e2c75334725dc757ff6acba80270644c1e5a84792a8b840",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "productionIdenticalInvocation": true,
+      "scope": "Original named Planner-window capture. Historical baseline and prior test-controller epochs retain separate credit; this image alone does not prove persistence, latency or accessibility."
+    },
+    {
+      "path": "tablet-picker-on-demand/59FF4655-9B1E-4374-B388-4651EA0C4DA8.png",
+      "title": "Saved List with globally completed Item_0_0803E372-B5F5-4CC8-8F7B-E65D6A2E69E2.png",
+      "sha256": "623b73c5f0a99d6539c713abe0a1e2f7e30607d2bf446fd084693cdf8400a335",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "productionIdenticalInvocation": true,
+      "scope": "Original named Planner-window capture. Historical baseline and prior test-controller epochs retain separate credit; this image alone does not prove persistence, latency or accessibility."
+    },
+    {
+      "path": "tablet-picker-on-demand/75D6FFCF-DDFA-4161-A263-F5137BFDC63D.png",
+      "title": "Saved List with contextual completion and details_0_C1D23A0E-7485-4A1D-8A31-924C1D8AA0C6.png",
+      "sha256": "e4e191db98c7dc904f4ab4cfa417b01f747dfac902fd5732e4d736b81d8ec2af",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "productionIdenticalInvocation": true,
+      "scope": "Original named Planner-window capture. Historical baseline and prior test-controller epochs retain separate credit; this image alone does not prove persistence, latency or accessibility."
+    }
+  ]
+}

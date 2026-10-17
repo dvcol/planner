@@ -1,0 +1,20 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "E4268EBC-DBD4-42CE-9EAC-E678047EF659.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Existing Item picker observed identities_0_CC4CFE35-3F5C-4750-A78E-56C18B92E382.txt",
+    "timestamp": 1792219500.578
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "45226D20-400B-4D0E-80B8-ABF300DA64FC.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List with one shared Item after relaunch_0_9B7C1206-C401-42A2-88BF-3FF592A009B6.png",
+    "timestamp": 1792219493.948
+  }
+]

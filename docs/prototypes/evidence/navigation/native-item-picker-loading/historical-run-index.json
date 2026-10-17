@@ -1,0 +1,210 @@
+{
+  "policy": "Literal recorded function outcomes and whole invocation exits are separate. Compiler-only and setup failures supply no native runtime pass credit. Final qualified epochs are named in the report.",
+  "runs": [
+    {
+      "epoch": "mac-picker-compatible-controller-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-picker-on-demand-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-picker-compatible-controller-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-picker-controller-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-picker-on-demand-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "phone-picker-baseline",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItemPickerRuntime-phone-picker-baseline.xcresult",
+      "diagnosticOnly": true,
+      "correctedSourcePassCredit": false,
+      "sourceVariant": {
+        "reason": "Original controller requires Show Sidebar and does not follow native compact Back navigation. Failure before picker opens; no product loading change is present.",
+        "productCommit": "f724eaa1d638e90b77c0207942a9e6028f4ef3c3",
+        "correctedControllerPassCredit": false
+      },
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedListMembershipJourneyTests testExistingItemCanBeAddedToAListWithoutDuplicatingItsSourceAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 27.982
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-picker-compatible-membership",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItemPickerRuntime-phone-picker-compatible-membership.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedListMembershipJourneyTests testExistingItemCanBeAddedToAListWithoutDuplicatingItsSourceAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 90.875
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-picker-controller-baseline",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItemPickerRuntime-phone-picker-controller-baseline.xcresult",
+      "diagnosticOnly": false,
+      "correctedSourcePassCredit": false,
+      "sourceVariant": {
+        "baselineEvidence": true,
+        "diagnosticOnly": false,
+        "reason": "Passing original membership assertions with corrected native controller and unchanged production cache. Subsequent identity assertions and on-demand implementation receive separate qualification."
+      },
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedListMembershipJourneyTests testExistingItemCanBeAddedToAListWithoutDuplicatingItsSourceAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 90.343
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-picker-on-demand",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItemPickerRuntime-phone-picker-on-demand.xcresult",
+      "diagnosticOnly": false,
+      "correctedSourcePassCredit": false,
+      "sourceVariant": {
+        "testControllerVariant": true,
+        "diagnosticOnly": false,
+        "qualifiesProductionImplementation": true,
+        "finalTestControllerCredit": false,
+        "reason": "Production matches final change exactly. Membership controller predates explicit iPad New List overflow handling. Per-function literal outcomes retained; failed whole iPad invocation is not an all-pass batch."
+      },
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedListMembershipJourneyTests testExistingItemCanBeAddedToAListWithoutDuplicatingItsSourceAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 87.04
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-picker-state-regressions",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItemPickerRuntime-phone-picker-state-regressions.xcresult",
+      "diagnosticOnly": false,
+      "correctedSourcePassCredit": false,
+      "sourceVariant": {
+        "testControllerVariant": true,
+        "diagnosticOnly": false,
+        "qualifiesProductionImplementation": true,
+        "finalTestControllerCredit": false,
+        "reason": "Production matches final change exactly. Membership controller predates explicit iPad New List overflow handling. Per-function literal outcomes retained; failed whole iPad invocation is not an all-pass batch."
+      },
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testArchivedItemWithoutAListCanBeFoundAndUnarchivedInTheItemsCatalog",
+          "outcome": "passed",
+          "seconds": 60.185
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt",
+          "outcome": "passed",
+          "seconds": 206.163
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-picker-compatible-membership",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItemPickerRuntime-tablet-picker-compatible-membership.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedListMembershipJourneyTests testExistingItemCanBeAddedToAListWithoutDuplicatingItsSourceAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 104.442
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-picker-on-demand",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItemPickerRuntime-tablet-picker-on-demand.xcresult",
+      "diagnosticOnly": false,
+      "correctedSourcePassCredit": false,
+      "sourceVariant": {
+        "testControllerVariant": true,
+        "diagnosticOnly": false,
+        "qualifiesProductionImplementation": true,
+        "finalTestControllerCredit": false,
+        "reason": "Production matches final change exactly. Membership controller predates explicit iPad New List overflow handling. Per-function literal outcomes retained; failed whole iPad invocation is not an all-pass batch."
+      },
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testArchivedItemWithoutAListCanBeFoundAndUnarchivedInTheItemsCatalog",
+          "outcome": "passed",
+          "seconds": 57.771
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt",
+          "outcome": "passed",
+          "seconds": 198.576
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedListMembershipJourneyTests testExistingItemCanBeAddedToAListWithoutDuplicatingItsSourceAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 33.653
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    }
+  ]
+}

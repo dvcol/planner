@@ -1,0 +1,38 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "E73C990B-153B-452E-9ABD-4129E76B705B.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Unlisted archived Item restored through the Items catalog_0_99944C6F-DDF8-4997-B823-46CAEB06880A.png",
+    "timestamp": 1792218476.157
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "CD1DC0E5-6542-429D-A762-8FB7B5DD0108.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Global completion overrides both saved List appearances_0_8986208C-0A02-47E1-98BB-43AB0C485648.png",
+    "timestamp": 1792218609.007
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "BA179692-6BD2-46AB-86DD-B7388272594C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List with globally completed Item_0_7C3EC85C-5530-4BBC-80B0-DF0DE7133567.png",
+    "timestamp": 1792218598.67
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "C2982FC9-593B-4CED-B683-7225CD9A543D.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved List with contextual completion and details_0_E97502CE-D72A-4442-BF7A-B56A3C575A64.png",
+    "timestamp": 1792218543.512
+  }
+]

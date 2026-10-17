@@ -1,0 +1,18 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2@0.23.3",
+    "--config",
+    "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+    "docs/prototypes/native-item-picker-loading.md",
+    "docs/native-item-window-contract-review.md"
+  ],
+  "exitCode": 0,
+  "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-item-picker-loading.md docs/native-item-window-contract-review.md\nLinting: 2 files\nSummary: 0 issues in 0 files\n",
+  "stderr": "Done in 253ms using pnpm v12.10.1\n",
+  "sourceSHA256": {
+    "docs/prototypes/native-item-picker-loading.md": "4f46c9cd605e2d197dd6f9b0700bfbab734e43a36e2d0739dd3b4e8371d240b5",
+    "docs/native-item-window-contract-review.md": "1dea1bd7fe8f45be6c9cf501e09381f3e612f56d47e8d9e9579ec6f6f4068146"
+  }
+}

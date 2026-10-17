@@ -1,0 +1,15 @@
+{
+  "finalCompilerInputsPerPlatform": 945,
+  "frozenRuntimeInputsPerInvocation": 469,
+  "verifiedFinalProductsPerPlatform": 6,
+  "passingBehaviorFunctionsPerPlatform": {
+    "phone": 3,
+    "tablet": 3,
+    "mac": 0
+  },
+  "finalControllerPassingFunctionInvocations": 2,
+  "productionIdenticalRegressionPassingFunctionInvocations": 4,
+  "regressionSourceDifference": "Only SavedListMembershipJourneyTests helper changed; both production and executed SavedAppearanceJourneyTests are byte-identical. Initial iPad batch exit 65 retains two literal state-test passes and one controller failure; never credited as an all-pass batch.",
+  "retainedIndividuallyInspectedPNGs": 12,
+  "scope": "Form-owned on-demand existing-Item selection; Cancel, repeated Add, stable source and membership identities through relaunch; global/contextual completion and Archive/Unarchive catalog regressions. Core commands and query-generation lifetime unchanged. Mac compiler-only; no measured RAM/latency gain, full moving-window, delayed-failure/retry, signing, physical/account/CloudKit, accessibility or polish qualification."
+}

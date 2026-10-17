@@ -1,0 +1,21 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/Scenes/SavedAddItemForm.swift",
+    "Planner/Scenes/SavedPlannerStore.swift",
+    "Planner/Scenes/SavedBackupImportForm.swift",
+    "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedAddItemForm.swift": "de0474d788eb20213ecd243fe1aeec56ee46f056d810f9a94c03bcdd1391f95d",
+    "Planner/Scenes/SavedPlannerStore.swift": "071fafdab250a1e354f49442d83334437931af79347a21e5a09ab0c68c07417d",
+    "Planner/Scenes/SavedBackupImportForm.swift": "054d7fabd8ccfbc5d94b2b062ca18683024b6d20a3babf7a02c19f5f89804137",
+    "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "148d5185ad981e520f1160b3fc4fab4f8dbe5d63610dc1d1bb22156845167a9b"
+  }
+}

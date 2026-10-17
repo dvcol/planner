@@ -1,0 +1,7 @@
+{
+  "testControllerVariant": true,
+  "diagnosticOnly": false,
+  "qualifiesProductionImplementation": true,
+  "finalTestControllerCredit": false,
+  "reason": "Production matches final change exactly. Membership controller predates explicit iPad New List overflow handling. Per-function literal outcomes retained; failed whole iPad invocation is not an all-pass batch."
+}
