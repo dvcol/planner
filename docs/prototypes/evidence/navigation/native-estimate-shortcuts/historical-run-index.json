@@ -1,0 +1,232 @@
+{
+  "policy": "Literal recorded function outcomes and whole invocation exits are separate. Compiler-only and setup failures supply no native runtime pass credit. Final qualified epochs are named in the report.",
+  "runs": [
+    {
+      "epoch": "mac-shortcuts-green-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-shortcuts-label-activation-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-shortcuts-native-controller-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-shortcuts-qualification-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-shortcuts-qualified",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerEstimateShortcutRuntime-mac-shortcuts-qualified.xcresult",
+      "type": "native-runtime",
+      "functions": [],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "mac-shortcuts-startup-retry",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerEstimateShortcutRuntime-mac-shortcuts-startup-retry.xcresult",
+      "type": "native-runtime",
+      "functions": [],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "mobile-shortcuts-full-row-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-shortcuts-green-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-shortcuts-label-activation-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-shortcuts-leading-label-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-shortcuts-native-controller-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-shortcuts-qualification-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-shortcuts-red-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "phone-shortcuts-green",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerEstimateShortcutRuntime-phone-shortcuts-green.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedItemEstimateJourneyTests testEstimateShortcutsStageExactDurationsAndRetainOnlySavedChangesAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 21.734
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-shortcuts-label-activation",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerEstimateShortcutRuntime-phone-shortcuts-label-activation.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedItemEstimateJourneyTests testEstimateShortcutsStageExactDurationsAndRetainOnlySavedChangesAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 22.939
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-shortcuts-leading-label",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerEstimateShortcutRuntime-phone-shortcuts-leading-label.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedItemEstimateJourneyTests testEstimateShortcutsStageExactDurationsAndRetainOnlySavedChangesAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 55.352
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-shortcuts-native-controller",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerEstimateShortcutRuntime-phone-shortcuts-native-controller.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedItemEstimateJourneyTests testEstimateShortcutsStageExactDurationsAndRetainOnlySavedChangesAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 22.026
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-shortcuts-qualified",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerEstimateShortcutRuntime-phone-shortcuts-qualified.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedItemEstimateJourneyTests testEstimateShortcutsStageExactDurationsAndRetainOnlySavedChangesAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 106.989
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedItemEstimateJourneyTests testInlineEstimatePreservesRemainderThroughUnitChangesCancelSaveAndRelaunch",
+          "outcome": "passed",
+          "seconds": 105.269
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedItemEstimateJourneyTests testYearEstimateShowsTwelveMonthsFiveDaysAndClearsOnlyAfterSave",
+          "outcome": "passed",
+          "seconds": 77.886
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-shortcuts-red",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerEstimateShortcutRuntime-phone-shortcuts-red.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedItemEstimateJourneyTests testEstimateShortcutsStageExactDurationsAndRetainOnlySavedChangesAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 22.399
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-shortcuts-qualified",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerEstimateShortcutRuntime-tablet-shortcuts-qualified.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedItemEstimateJourneyTests testEstimateShortcutsStageExactDurationsAndRetainOnlySavedChangesAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 113.483
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedItemEstimateJourneyTests testInlineEstimatePreservesRemainderThroughUnitChangesCancelSaveAndRelaunch",
+          "outcome": "passed",
+          "seconds": 105.602
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedItemEstimateJourneyTests testYearEstimateShowsTwelveMonthsFiveDaysAndClearsOnlyAfterSave",
+          "outcome": "passed",
+          "seconds": 80.095
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    }
+  ]
+}

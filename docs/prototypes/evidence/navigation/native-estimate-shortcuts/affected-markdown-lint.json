@@ -1,0 +1,18 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2@0.23.3",
+    "--config",
+    "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+    "docs/prototypes/native-estimate-shortcuts.md",
+    "docs/prototypes/native-item-estimate-editor.md"
+  ],
+  "exitCode": 0,
+  "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-estimate-shortcuts.md docs/prototypes/native-item-estimate-editor.md\nLinting: 2 files\nSummary: 0 issues in 0 files\n",
+  "stderr": "Done in 457ms using pnpm v12.10.1\n",
+  "sourceSHA256": {
+    "docs/prototypes/native-estimate-shortcuts.md": "f433d8ed82a90571b2fe25a363ab1abb94778ce31db2aca7f10e8acf48a5b8d1",
+    "docs/prototypes/native-item-estimate-editor.md": "788ff81693ca1c8fa7aef485d7a6f07f32a4850c97de7ff87beb218c774c2d05"
+  }
+}

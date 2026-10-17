@@ -1,0 +1,93 @@
+{
+  "method": "Each retained named PNG was individually opened with view_image. Only Planner-window captures are published.",
+  "images": [
+    {
+      "path": "phone-shortcuts-leading-label/583FA024-0C63-4E0E-BD25-223443337798.png",
+      "title": "Native Half-day shortcut stages twelve hours_0_3F9A03E4-CC35-462B-8A31-1A0B2F35990E.png",
+      "sha256": "e37e577d0d3043a1d6e235e905b6c5115055514cdbaefe8f6b16b98b9fc06512",
+      "individuallyInspected": true,
+      "functionPassCredit": false,
+      "scope": "Planner-window visual observation; a diagnostic function failure has no pass credit. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "phone-shortcuts-qualified/C89A987E-2506-411B-8C23-53CE00A1B464.png",
+      "title": "Saved Weekend estimate is forty-eight hours_0_C563ECCF-A4E3-46BA-89D2-C21360FB54F2.png",
+      "sha256": "45aa1f8dce2a1da46b68c2bc386cba56e05d6385c54fc1ba95c59cf31bfb3919",
+      "individuallyInspected": true,
+      "functionPassCredit": true,
+      "scope": "Planner-window visual observation; a diagnostic function failure has no pass credit. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "phone-shortcuts-qualified/2F5967C2-F6BF-486F-A303-CCDF0DF46C5A.png",
+      "title": "Native Half-day shortcut stages twelve hours_0_01451533-ACE2-4ED2-A042-DE624DA1ACEB.png",
+      "sha256": "e3431436d75ce5aefb01245536fd8e4d2d90c46a1c76cbdd5d7a62fd454c3d1c",
+      "individuallyInspected": true,
+      "functionPassCredit": true,
+      "scope": "Planner-window visual observation; a diagnostic function failure has no pass credit. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "phone-shortcuts-qualified/276204BE-1F7D-4DE7-A4D3-9C83875D4806.png",
+      "title": "Native inline estimate retains two hours and five minutes_0_A9004F81-E24A-4631-B2C8-421F937E3E1A.png",
+      "sha256": "968c50a972f3f319f24efcf894e252df9efd68283e321258fccc95cc33362d94",
+      "individuallyInspected": true,
+      "functionPassCredit": true,
+      "scope": "Planner-window visual observation; a diagnostic function failure has no pass credit. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "phone-shortcuts-qualified/8B6A24A0-333C-4442-8774-58B1EAE04706.png",
+      "title": "Native inline estimate retains two hours and five minutes_0_7132C38C-D6CD-46FB-B80E-59263E8C9D3D.png",
+      "sha256": "968c50a972f3f319f24efcf894e252df9efd68283e321258fccc95cc33362d94",
+      "individuallyInspected": true,
+      "functionPassCredit": true,
+      "scope": "Planner-window visual observation; a diagnostic function failure has no pass credit. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "phone-shortcuts-qualified/880DD741-BBFB-45EB-AC2D-D11214ADEC49.png",
+      "title": "One year retains twelve months and five days_0_5A8831CD-EB0C-48CB-ABC2-AB79C4B890B3.png",
+      "sha256": "0988cb625bc65f1d2d1f1bad6e1fd264ffbb6b2b828d4e4eeebf3293652eee55",
+      "individuallyInspected": true,
+      "functionPassCredit": true,
+      "scope": "Planner-window visual observation; a diagnostic function failure has no pass credit. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "tablet-shortcuts-qualified/55D020DC-7D5C-4702-8189-F37AA64DE62A.png",
+      "title": "Saved Weekend estimate is forty-eight hours_0_779A2B4C-8C9A-48F1-A4CC-6D6B6A54B656.png",
+      "sha256": "660bbb0d934dcc7fb1e34bc11872d9a6b2b643a97666d58d38797d5aefc023e0",
+      "individuallyInspected": true,
+      "functionPassCredit": true,
+      "scope": "Planner-window visual observation; a diagnostic function failure has no pass credit. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "tablet-shortcuts-qualified/7327F491-F8BD-454A-940A-17D77DDBC1B3.png",
+      "title": "Native Half-day shortcut stages twelve hours_0_5823381B-C8BC-4502-9E97-70267956DE07.png",
+      "sha256": "c87381345ce595f7261017d40a6b364e01299572a82bdb2cf51a7231f40ced5c",
+      "individuallyInspected": true,
+      "functionPassCredit": true,
+      "scope": "Planner-window visual observation; a diagnostic function failure has no pass credit. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "tablet-shortcuts-qualified/7B66B399-3B25-4FBF-A595-B300200AD898.png",
+      "title": "Native inline estimate retains two hours and five minutes_0_1DBA9596-1216-46F3-9FE5-8DA749F29B94.png",
+      "sha256": "720024971c09bf6aa72a53b922cd39385d9075edc2183e76d046558f6916da92",
+      "individuallyInspected": true,
+      "functionPassCredit": true,
+      "scope": "Planner-window visual observation; a diagnostic function failure has no pass credit. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "tablet-shortcuts-qualified/53AD247B-86AD-485F-8318-5F01F281C6DF.png",
+      "title": "Native inline estimate retains two hours and five minutes_0_6741911B-AC64-48F0-852A-7369D82A9DCC.png",
+      "sha256": "5df14bcaf540fd5c8d33cb8c27b87ad37dddd862701e4737c3764ab751cfe242",
+      "individuallyInspected": true,
+      "functionPassCredit": true,
+      "scope": "Planner-window visual observation; a diagnostic function failure has no pass credit. No physical, accessibility or performance qualification."
+    },
+    {
+      "path": "tablet-shortcuts-qualified/F66F92E1-FD35-47AD-A697-B928AC7D3194.png",
+      "title": "One year retains twelve months and five days_0_4AEB92E0-E846-4830-BA06-97BED78AA66E.png",
+      "sha256": "1ba962f536b88060c2ca2d8a50d3109d66e7118c7932a44df4facc4f9d121e14",
+      "individuallyInspected": true,
+      "functionPassCredit": true,
+      "scope": "Planner-window visual observation; a diagnostic function failure has no pass credit. No physical, accessibility or performance qualification."
+    }
+  ]
+}

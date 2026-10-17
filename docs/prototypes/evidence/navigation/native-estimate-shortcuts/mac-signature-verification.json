@@ -1,0 +1,29 @@
+{
+  "verifications": [
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--deep",
+        "--strict",
+        "/private/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/Planner.app"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--deep",
+        "--strict",
+        "/private/tmp/PlannerRetainedRecoveryMacDerivedData/Build/Products/Debug/PlannerNavigationUITests-Runner.app"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "scope": "Read-only verification of existing local ad hoc signatures; no developer-account signing or permission change."
+}

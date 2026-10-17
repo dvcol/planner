@@ -1,0 +1,16 @@
+{
+  "finalCompilerInputsPerPlatform": 945,
+  "frozenRuntimeInputsPerInvocation": 469,
+  "verifiedProductsPerPlatform": 6,
+  "passingFunctionsPerPlatform": {
+    "phone": 3,
+    "tablet": 3,
+    "mac": 0
+  },
+  "passingNativeFunctionInvocations": 6,
+  "macSetupFailuresWithoutExecutedFunctions": 2,
+  "retainedIndividuallyInspectedPNGs": 11,
+  "passingFunctionPNGs": 10,
+  "redAndIntermediateFailuresPreserved": true,
+  "scope": "Item creation/edit estimate shortcuts, exact values, Cancel, unit/remainder/year compatibility, clearing and relaunch. Mac runtime remains open after two initialization failures. No physical/account/CloudKit, accessibility or performance qualification. List/Itinerary/Capture share the compiled component but receive no new runtime credit."
+}

@@ -1,0 +1,17 @@
+{
+  "standards": {
+    "reviewer": "/root/catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "scope": "Final report, raw six mobile function outcomes, zero Mac functions in two automation startup failures, final compiler/runtime input and product hashes, lint/source hashes and all eleven inspected image hashes."
+  },
+  "specification": {
+    "reviewer": "/root/catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "scope": "Accepted native shortcuts, exact saved values, cancellation and relaunch; final reports and evidence reconcile six mobile passes and zero Mac functions with qualification gates retained."
+  },
+  "reportSHA256": {
+    "docs/prototypes/native-estimate-shortcuts.md": "f433d8ed82a90571b2fe25a363ab1abb94778ce31db2aca7f10e8acf48a5b8d1",
+    "docs/prototypes/native-item-estimate-editor.md": "788ff81693ca1c8fa7aef485d7a6f07f32a4850c97de7ff87beb218c774c2d05"
+  },
+  "runtimeQualification": "Source and artifact reviews supply no additional runtime credit."
+}

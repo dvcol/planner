@@ -1,0 +1,19 @@
+{
+  "baseline": "164d8a3d15672aebb7ea32242499ed3b51da94dd",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedActivityEstimateEditor.swift": "ef95537cb0533e34af47ae6fa5fe0d090f8de6a217e68057d581dfead5ee83bf",
+    "PlannerNavigationUITests/SavedItemEstimateJourneyTests.swift": "f046f5678c40aed6269ad731fa8f45654ac397b2b192e148927c88249bfd4246"
+  },
+  "standards": {
+    "reviewer": "/root/catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "resolvedFinding": "Use saved.section.items for Mac saved-data journeys instead of the prototype nav.items identifier.",
+    "scope": "Two Swift diffs; native Menu hit area, current bound estimate during representation changes and real native controller/value/identity assertions."
+  },
+  "specification": {
+    "reviewer": "/root/catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "scope": "Accepted720/1440/2880-minute shortcuts, native controls, draft-only changes before Save, Cancel, clearing, remainder/unit compatibility and relaunch."
+  },
+  "runtimeQualification": "Source reviews supply no runtime credit; runtime outcomes remain separately recorded."
+}

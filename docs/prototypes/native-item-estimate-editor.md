@@ -1,5 +1,7 @@
 # Native Item estimate editor
 
+This report retains its original source epoch. The [shortcut continuation](native-estimate-shortcuts.md) adds the accepted named presets and requalifies the represented Item estimate journeys on the current phone/tablet source. Its Mac runtime gate remains open separately from compilation.
+
 ## Context, before and goal
 
 At `0c4ea3a`, Core supports guarded Item estimate edits and exact minute/display-unit data, but the native creation/edit forms have no estimate controls or detail summary. Q48 A, Q49 A and Q74 A require an inline native editor that preserves duration when changing units and exposes exact smaller-unit remainders. An estimate remains separate from a booked Schedule.

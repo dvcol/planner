@@ -1,0 +1,5 @@
+{
+  "observed": "Quick estimate Button exists and receives a tap; the following hierarchy has no shortcut choice and retains title keyboard focus. No cause is inferred from this alone.",
+  "controllerCorrections": "Submit the single-line title through native Return and verify the exact value; select Stepper, summary and Toggle through their real accessibility type rather than Button-only queries. Saved-data Mac navigation uses saved.section.items.",
+  "productionChangeAfterAttempt": false
+}

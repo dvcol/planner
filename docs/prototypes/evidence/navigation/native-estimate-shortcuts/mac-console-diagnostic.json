@@ -1,0 +1,18 @@
+{
+  "command": [
+    "ioreg",
+    "-a",
+    "-d",
+    "1",
+    "-n",
+    "Root"
+  ],
+  "exitCode": 0,
+  "sessions": [
+    {
+      "kCGSSessionOnConsoleKey": true,
+      "kCGSessionLoginDoneKey": true
+    }
+  ],
+  "scope": "Read-only console registry diagnostic. Missing lock fields do not prove an unlocked screen. No settings or permissions were changed."
+}
