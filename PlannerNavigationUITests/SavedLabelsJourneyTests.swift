@@ -2,6 +2,121 @@ import XCTest
 
 @MainActor
 final class SavedLabelsJourneyTests: XCTestCase {
+  func testNewItemLabelsRemainDraftUntilSaveAndRetainSharedIdentitiesAfterRelaunch() {
+    continueAfterFailure = false
+    #if os(iOS)
+      XCUIDevice.shared.orientation = .portrait
+      addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+    #endif
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openSettings(application)
+    application.plannerElement("saved.settings.labels").activateForPlannerJourney()
+    createLabel("Category", name: "Culture", application: application)
+    let categoryIdentifier = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@ AND label == %@", "saved.category.", "Culture")
+    ).firstMatch.identifier
+    createLabel("Tag", name: "Rain", application: application)
+    let tagIdentifier = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier BEGINSWITH %@ AND label == %@", "saved.tag.", "Rain")
+    ).firstMatch.identifier
+    application.plannerElement("saved.categories.done").activateForPlannerJourney()
+    closeSettings(application)
+    openItems(application)
+    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    enterNewItemTitle("Discarded label draft", application: application)
+    selectLabels(
+      "Categories", names: ["Culture"], identifierPrefix: "saved.item", application: application)
+    recordLabelsScreenshot(application, name: "Returning from New Item Category selection")
+    XCTAssertTrue(application.windows.firstMatch.sheets.firstMatch.waitForNonExistence(timeout: 5))
+    selectLabels(
+      "Tags", names: ["Rain"], identifierPrefix: "saved.item", application: application)
+    let cancel = application.windows.firstMatch.buttons.matching(
+      NSPredicate(
+        format: "identifier == %@ OR identifier == %@", "saved.item.cancel", "saved.item.back")
+    ).firstMatch
+    XCTAssertTrue(cancel.waitForExistence(timeout: 5))
+    cancel.activateForPlannerJourney()
+    let discard = application.windows.firstMatch.buttons["Discard"].firstMatch
+    XCTAssertTrue(discard.waitForExistence(timeout: 5))
+    discard.activateForPlannerJourney()
+    XCTAssertTrue(application.textFields["saved.item.title"].waitForNonExistence(timeout: 5))
+    XCTAssertTrue(application.plannerElement("saved.item.new").waitForExistence(timeout: 5))
+    XCTAssertEqual(application.savedPlannerItemRows("Discarded label draft").count, 0)
+    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    enterNewItemTitle("Rainy museum", application: application)
+    selectLabels(
+      "Categories", names: ["Culture"], identifierPrefix: "saved.item", application: application)
+    selectLabels(
+      "Tags", names: ["Rain"], identifierPrefix: "saved.item", application: application)
+    recordLabelsScreenshot(application, name: "New Item stages shared Category and Tag selections")
+    #if os(iOS)
+      for orientation in [UIDeviceOrientation.landscapeLeft, .portrait] {
+        XCUIDevice.shared.orientation = orientation
+        let window = application.windows.firstMatch
+        let expectedLayout = NSPredicate { _, _ in
+          let frame = window.frame
+          return (frame.width > frame.height) == orientation.isLandscape
+        }
+        XCTAssertEqual(
+          XCTWaiter.wait(
+            for: [XCTNSPredicateExpectation(predicate: expectedLayout, object: window)], timeout: 10
+          ),
+          .completed)
+        XCTAssertTrue(application.plannerElement("saved.item.save").waitForPlannerHittability())
+        XCTAssertFalse(application.windows.firstMatch.buttons["Discard"].firstMatch.exists)
+        recordLabelsScreenshot(
+          application,
+          name:
+            "New Item shared labels through \(orientation.isLandscape ? "landscape" : "portrait")")
+      }
+    #endif
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    for name in ["Culture", "Rain"] {
+      XCTAssertTrue(application.staticTexts[name].firstMatch.waitForExistence(timeout: 10))
+    }
+    openItems(application)
+    let item = application.savedPlannerItemRows("Rainy museum").firstMatch
+    XCTAssertTrue(item.waitForExistence(timeout: 10))
+    XCTAssertEqual(application.savedPlannerItemRows("Rainy museum").count, 1)
+    XCTAssertTrue(item.waitForPlannerValue("Categories: Culture, Tags: Rain"))
+    let itemIdentifier = item.identifier
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    XCTAssertTrue(application.plannerElement(itemIdentifier).waitForExistence(timeout: 10))
+    XCTAssertEqual(application.savedPlannerItemRows("Rainy museum").count, 1)
+    XCTAssertEqual(application.savedPlannerItemRows("Discarded label draft").count, 0)
+    XCTAssertTrue(item.waitForPlannerValue("Categories: Culture, Tags: Rain"))
+    item.activateForPlannerJourney()
+    openItemEditor(application)
+    for (kind, sourceIdentifier) in [("categories", categoryIdentifier), ("tags", tagIdentifier)] {
+      let picker = application.plannerElement("saved.item.edit.\(kind)")
+      picker.activateForPlannerJourney()
+      let selectionIdentifier = sourceIdentifier.replacingOccurrences(
+        of: "saved.", with: "saved.item.label.")
+      XCTAssertTrue(
+        application.descendants(matching: .any).matching(identifier: selectionIdentifier).firstMatch
+          .waitForPlannerBooleanState(true))
+      recordLabelsScreenshot(
+        application, name: "New Item retains shared \(kind) identity after relaunch")
+      application.plannerElement("saved.item.labels.done").activateForPlannerJourney()
+    }
+    application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
+  }
+
+  private func enterNewItemTitle(_ value: String, application: XCUIApplication) {
+    let title = application.textFields["saved.item.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText(value)
+    #if os(iOS)
+      title.typeText("\n")
+    #endif
+    XCTAssertTrue(title.waitForPlannerValue(value))
+  }
+
   func testCategoryDeletionReviewsItemAndItineraryUsesAndPreservesOwnersAfterCancelAndRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -578,7 +693,12 @@ final class SavedLabelsJourneyTests: XCTestCase {
     XCTAssertEqual(application.plannerElement(identifier).label, "Wet weather")
     XCTAssertFalse(application.staticTexts["Canceled Tag"].exists)
     XCTAssertFalse(application.staticTexts["Canceled rename"].exists)
-    let attachment = XCTAttachment(screenshot: application.screenshot())
+    #if os(iOS)
+      let screenshot = XCUIScreen.main.screenshot()
+    #else
+      let screenshot = application.windows.firstMatch.screenshot()
+    #endif
+    let attachment = XCTAttachment(screenshot: screenshot)
     attachment.name = "Manage Labels with saved Tag after relaunch"
     attachment.lifetime = .keepAlways
     add(attachment)
@@ -914,11 +1034,19 @@ final class SavedLabelsJourneyTests: XCTestCase {
       #endif
       XCTAssertTrue(toggle.waitForPlannerBooleanState(selected))
     }
+    if identifierPrefix == "saved.item" {
+      recordLabelsScreenshot(application, name: "New Item native \(kind) picker")
+    }
     application.plannerElement("saved.item.labels.done").activateForPlannerJourney()
   }
 
   private func recordLabelsScreenshot(_ application: XCUIApplication, name: String) {
-    let attachment = XCTAttachment(screenshot: application.screenshot())
+    #if os(iOS)
+      let screenshot = XCUIScreen.main.screenshot()
+    #else
+      let screenshot = application.windows.firstMatch.screenshot()
+    #endif
+    let attachment = XCTAttachment(screenshot: screenshot)
     attachment.name = name
     attachment.lifetime = .keepAlways
     add(attachment)

@@ -49,6 +49,7 @@ struct SavedNewItemForm: View {
   let isSaving: Bool
   let cancel: () -> Void
   let save: () -> Void
+  @State private var presentedLabelKind: SavedLabelKind?
 
   var body: some View {
     NavigationStack {
@@ -71,15 +72,14 @@ struct SavedNewItemForm: View {
         SavedActivityEstimateEditor(
           estimate: $draft.estimate, accessibilityIdentifierPrefix: "saved.item.estimate")
         Section("Labels") {
-          NavigationLink {
-            SavedItemLabelPicker(
-              store: store, kind: .category, selection: $draft.categoryIdentifiers)
+          Button {
+            presentedLabelKind = .category
           } label: {
             LabeledContent("Categories", value: labelSummary(draft.categoryIdentifiers))
           }
           .accessibilityIdentifier("saved.item.categories")
-          NavigationLink {
-            SavedItemLabelPicker(store: store, kind: .tag, selection: $draft.tagIdentifiers)
+          Button {
+            presentedLabelKind = .tag
           } label: {
             LabeledContent("Tags", value: labelSummary(draft.tagIdentifiers))
           }
@@ -115,6 +115,17 @@ struct SavedNewItemForm: View {
       .overlay {
         if isSaving { ProgressView("Saving Item") }
       }
+    }
+    .popover(item: $presentedLabelKind) { kind in
+      let selection = kind == .category ? $draft.categoryIdentifiers : $draft.tagIdentifiers
+      NavigationStack {
+        SavedItemLabelPicker(store: store, kind: kind, selection: selection)
+      }
+      .frame(minWidth: 320, idealWidth: 360, minHeight: 420)
+      #if os(iOS)
+        .presentationCompactAdaptation(.sheet)
+        .presentationDetents([.large])
+      #endif
     }
     .confirmationDialog(
       "Review Item destination",
