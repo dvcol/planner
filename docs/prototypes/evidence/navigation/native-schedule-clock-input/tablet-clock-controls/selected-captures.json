@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "46B5CA71-276B-4E92-8EFC-4524BC539C5C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native timed input time control_0_61DCE3EF-6CBA-4A99-87B1-9442F25CC5DE.png",
+    "timestamp": 1792222759.243,
+    "testIdentifier": "SavedItemJourneyTests/testRecordNativeTimedScheduleInputControls()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "BF95DF0E-2867-412A-8F07-486BDDA6CF15.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native timed input time control hierarchy_0_85D1187C-778D-44AB-8F20-754A764C8A6C.txt",
+    "timestamp": 1792222759.134,
+    "testIdentifier": "SavedItemJourneyTests/testRecordNativeTimedScheduleInputControls()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "5F8694EB-0231-4208-8915-CC76C75D40D5.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native repeated-date input before opening time_0_B2240DB5-B409-4F72-A55B-83C8757FC2AF.txt",
+    "timestamp": 1792222756.675,
+    "testIdentifier": "SavedItemJourneyTests/testRecordNativeTimedScheduleInputControls()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "6575CBB8-27C1-405C-AF7C-26EA38CC4EFE.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native timed input before choosing the repeated date_0_113F4ABF-77A2-4E7B-8733-C6F373A1D863.txt",
+    "timestamp": 1792222748.194,
+    "testIdentifier": "SavedItemJourneyTests/testRecordNativeTimedScheduleInputControls()"
+  }
+]

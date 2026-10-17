@@ -1,0 +1,5 @@
+{
+  "diagnosticOnly": true,
+  "controllerFailure": true,
+  "scope": "Wheel AX speech value includes o\u2019clock/minutes, but adjust requires numeric option values. Failed before entering01:30; supplies no Q11 product-red credit."
+}

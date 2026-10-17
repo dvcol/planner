@@ -1,0 +1,20 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2@0.23.3",
+    "--config",
+    "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+    "docs/native-schedule-time-input-contract-review.md",
+    "docs/prototypes/native-schedule-clock-input.md",
+    "docs/open-decisions.md"
+  ],
+  "exitCode": 0,
+  "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/native-schedule-time-input-contract-review.md docs/prototypes/native-schedule-clock-input.md docs/open-decisions.md\nLinting: 3 files\nSummary: 0 issues in 0 files\n",
+  "stderr": "Done in 317ms using pnpm v12.10.1\n",
+  "sourceSHA256": {
+    "docs/native-schedule-time-input-contract-review.md": "12d80ac6d6ea28d4275b9b6eee0142e0c20022b368bced0780f7847b0df1f428",
+    "docs/prototypes/native-schedule-clock-input.md": "dc6459c3a06ee5f0281d716318e0f8fc85e00d54df91873a129be3d2fa04236c",
+    "docs/open-decisions.md": "a57ba52c48c0346f65bc5c1d5496b6d1c0ee4558582a9e56b6d7d07e30078cae"
+  }
+}

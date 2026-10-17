@@ -1,0 +1,52 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "59603441-587D-4AB8-B39F-D6F8D5B61AC1.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native repeated-time input before Save_0_FCBFADCB-11E3-422C-A50B-9B0B0CE50E49.png",
+    "timestamp": 1792223285.31,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedStartRequiresAnExplicitOccurrenceBeforeSave()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A93F4AF1-4A41-4A0E-A747-F67FA73CA707.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native repeated-time input before Save_0_B9A398FA-C751-4E09-98A7-6F3955B4F6AC.txt",
+    "timestamp": 1792223285.203,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedStartRequiresAnExplicitOccurrenceBeforeSave()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "3FDC8B6B-D34E-4D3F-9E88-A899DD0378CF.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native timed input time control hierarchy_0_0A89C672-3356-4D9A-8191-419D4D422D50.txt",
+    "timestamp": 1792223277.574,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedStartRequiresAnExplicitOccurrenceBeforeSave()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "7F1B911E-60F3-4B7C-8F96-9894C6B9AE65.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native repeated-date input before opening time_0_89FAEA41-5436-4DA3-B3EB-F6B631898F1C.txt",
+    "timestamp": 1792223274.199,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedStartRequiresAnExplicitOccurrenceBeforeSave()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A28EE850-6BEF-4A44-B942-70A0873E5869.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native timed input before choosing the repeated date_0_7EF2284E-0B22-41F2-946C-6CD4F0960C74.txt",
+    "timestamp": 1792223265.77,
+    "testIdentifier": "SavedItemJourneyTests/testRepeatedStartRequiresAnExplicitOccurrenceBeforeSave()"
+  }
+]

@@ -1,0 +1,102 @@
+{
+  "runs": [
+    {
+      "epoch": "mobile-clock-controls-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "scope": "compiler only"
+    },
+    {
+      "epoch": "mobile-clock-occurrence-numeric-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "scope": "compiler only"
+    },
+    {
+      "epoch": "mobile-clock-occurrence-red-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "scope": "compiler only"
+    },
+    {
+      "epoch": "mobile-clock-time-controls-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "scope": "compiler only"
+    },
+    {
+      "epoch": "tablet-clock-controls",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerScheduleClockInputRuntime-tablet-clock-controls.xcresult",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedItemJourneyTests testRecordNativeTimedScheduleInputControls",
+          "outcome": "passed",
+          "seconds": 35.905
+        }
+      ],
+      "errors": [],
+      "scope": "native UI diagnostic or expected regression failure; no passing DST implementation credit",
+      "sourceVariant": {
+        "diagnosticOnly": true,
+        "scope": "Selects New York and1November, but array-indexed button then reopened Date instead of Time because the native DatePicker has a wrapping Button. No repeated-time input or DST correctness established.",
+        "productionChanged": false
+      }
+    },
+    {
+      "epoch": "tablet-clock-occurrence-numeric",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerScheduleClockInputRuntime-tablet-clock-occurrence-numeric.xcresult",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedItemJourneyTests testRepeatedStartRequiresAnExplicitOccurrenceBeforeSave",
+          "outcome": "failed",
+          "seconds": 44.581
+        }
+      ],
+      "errors": [
+        "/tmp/PlannerNativeLayoutSource/PlannerNavigationUITests/SavedItemJourneyTests.swift:64: error: -[PlannerNavigationUITests.SavedItemJourneyTests testRepeatedStartRequiresAnExplicitOccurrenceBeforeSave] : XCTAssertFalse failed - A new repeated start must remain unresolved until an explicit occurrence is chosen.",
+        " xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH"
+      ],
+      "scope": "native UI diagnostic or expected regression failure; no passing DST implementation credit"
+    },
+    {
+      "epoch": "tablet-clock-occurrence-red",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerScheduleClockInputRuntime-tablet-clock-occurrence-red.xcresult",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedItemJourneyTests testRepeatedStartRequiresAnExplicitOccurrenceBeforeSave",
+          "outcome": "failed",
+          "seconds": 40.831
+        }
+      ],
+      "errors": [
+        "/tmp/PlannerNativeLayoutSource/PlannerNavigationUITests/SavedItemJourneyTests.swift:48: error: -[PlannerNavigationUITests.SavedItemJourneyTests testRepeatedStartRequiresAnExplicitOccurrenceBeforeSave] : Requested adjust to value '01 o\u2019clock' which is not one of the possible values 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 00 for the picker wheel \"03 o\u2019clock\" PickerWheel",
+        " xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH"
+      ],
+      "scope": "native UI diagnostic or expected regression failure; no passing DST implementation credit",
+      "sourceVariant": {
+        "diagnosticOnly": true,
+        "controllerFailure": true,
+        "scope": "Wheel AX speech value includes o\u2019clock/minutes, but adjust requires numeric option values. Failed before entering01:30; supplies no Q11 product-red credit."
+      }
+    },
+    {
+      "epoch": "tablet-clock-time-controls",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerScheduleClockInputRuntime-tablet-clock-time-controls.xcresult",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedItemJourneyTests testRecordNativeTimedScheduleInputControls",
+          "outcome": "passed",
+          "seconds": 36.568
+        }
+      ],
+      "errors": [],
+      "scope": "native UI diagnostic or expected regression failure; no passing DST implementation credit"
+    }
+  ],
+  "productionChanged": false,
+  "unitSeamTestsWritten": false
+}

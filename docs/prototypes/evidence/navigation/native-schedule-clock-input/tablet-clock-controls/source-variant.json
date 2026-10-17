@@ -1,0 +1,5 @@
+{
+  "diagnosticOnly": true,
+  "scope": "Selects New York and1November, but array-indexed button then reopened Date instead of Time because the native DatePicker has a wrapping Button. No repeated-time input or DST correctness established.",
+  "productionChanged": false
+}

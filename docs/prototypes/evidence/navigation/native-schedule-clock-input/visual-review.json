@@ -1,0 +1,22 @@
+{
+  "images": [
+    {
+      "path": "tablet-clock-controls/46B5CA71-276B-4E92-8EFC-4524BC539C5C.png",
+      "sha256": "c804080ab1d6408adb9b0428d1f4ef1cb7361a3ed1a12b093268eab21678c6bb",
+      "individuallyInspected": true,
+      "scope": "Date calendar popup only; wrong supposed Time selector."
+    },
+    {
+      "path": "tablet-clock-time-controls/A2F0260B-825C-41C4-B3AD-078DB3D927E4.png",
+      "sha256": "ffe5c0cf93bf9bc755d5902c8fbe33c122a65c7ed44818baa3dbd48e6c1736d8",
+      "individuallyInspected": true,
+      "scope": "Actual native Time wheels."
+    },
+    {
+      "path": "tablet-clock-occurrence-numeric/59603441-587D-4AB8-B39F-D6F8D5B61AC1.png",
+      "sha256": "609edf12d635f4fcf22fd3674a88d5ad7cade81510cccca0c6c93795a987afd3",
+      "individuallyInspected": true,
+      "scope": "Final actual repeated01:30 NewYork1November2026 form, enabledSave and no occurrence choice."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "historicalEpochs": 8,
+  "nativeControlDiagnosticPasses": 2,
+  "controllerFailures": 1,
+  "reproducedNativeRequirementFailures": 1,
+  "passingDSTImplementationTests": 0,
+  "productionChanged": false,
+  "newUnitSeamTestsWritten": false,
+  "restoredCommittedUITestSource": true,
+  "finalCompilerInputs": 945,
+  "finalFrozenRuntimeInputs": 469,
+  "productsRechecked": 6,
+  "individuallyInspectedPNGs": 3,
+  "scope": "Current iPad native form enablesSave on observed NewYork1November202601:30 without explicit occurrence choice. NoSchedule submitted. MacFoundation observations separate. No production fix, gap-native proof, new model, phone/MacUI, signing, physical or whole-app polish qualification."
+}

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "/private/tmp/PlannerSavedItemClockOccurrenceDiagnostic.swift"
+  ],
+  "exitCode": 0,
+  "sourceSHA256": "69e158898772abd2b7ab5d1542a6e54c3dd22b82a7c89884957f59c7d5c5a7fe",
+  "stdout": "",
+  "stderr": ""
+}

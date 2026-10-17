@@ -1,0 +1,15 @@
+{
+  "baseline": "7832898c1ac7bb93be1796ad061560c868631f19",
+  "contractSHA256": "12d80ac6d6ea28d4275b9b6eee0142e0c20022b368bced0780f7847b0df1f428",
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "Normalized civil-minute equality and unchanged stored versus new/rescheduled zone-transition rules resolve both contract findings."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "report": "Q6/Q10/Q11/Q13 scope and exact stored values retained; new ambiguous zone conversion requires choice; same-minute normalization preserves fractions."
+  },
+  "scope": "Read-only source/interface reviews. Q96 proposed; no implementation or tests at new unit seam."
+}

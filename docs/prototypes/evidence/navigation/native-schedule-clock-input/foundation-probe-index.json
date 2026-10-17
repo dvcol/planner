@@ -1,0 +1,41 @@
+{
+  "scope": "Throwaway Mac Foundation API observations, not Planner production-interface tests or iOS runtime evidence. Final probes exit0 while explicitly preserving the Lord Howe expected-last mismatch. Initial asserting source stopped at that assertion; its exact exit is not independently retained here. No correction algorithm is implemented.",
+  "files": [
+    {
+      "originalPath": "/private/tmp/PlannerNativeScheduleTimeFacts.md",
+      "packetPath": "PlannerNativeScheduleTimeFacts.md.gz",
+      "sourceSHA256": "964b3d0cb8fd8b5cf4df636d9f9c9e68875873cb29487f8bb3f744a57d8a2177",
+      "bytes": 13555
+    },
+    {
+      "originalPath": "/private/tmp/PlannerNativeScheduleTimeProbe.initial.swift",
+      "packetPath": "PlannerNativeScheduleTimeProbe.initial.swift.gz",
+      "sourceSHA256": "a1ed205ff19bc83aa7d19c54ce5452ccfa6912b2f2f4d624ca4a245e66df29ed",
+      "bytes": 6422
+    },
+    {
+      "originalPath": "/private/tmp/PlannerNativeScheduleTimeProbe.swift",
+      "packetPath": "PlannerNativeScheduleTimeProbe.swift.gz",
+      "sourceSHA256": "3fdb46a5e52272d2c4fa98a42b88bc54fad72634324473f0736233990b372212",
+      "bytes": 8199
+    },
+    {
+      "originalPath": "/private/tmp/PlannerNativeScheduleTimeProbe.log",
+      "packetPath": "PlannerNativeScheduleTimeProbe.log.gz",
+      "sourceSHA256": "00f15c64c1a997ebe41ae15ec6b06392569161c47771788085e35d6595e5585b",
+      "bytes": 4627
+    },
+    {
+      "originalPath": "/private/tmp/PlannerNativeScheduleRepeatSupplement.swift",
+      "packetPath": "PlannerNativeScheduleRepeatSupplement.swift.gz",
+      "sourceSHA256": "7319aac6061f320b9eab6494a532bd8ea8d584d12264a49fd0e96a36b8d63bf1",
+      "bytes": 3768
+    },
+    {
+      "originalPath": "/private/tmp/PlannerNativeScheduleRepeatSupplement.log",
+      "packetPath": "PlannerNativeScheduleRepeatSupplement.log.gz",
+      "sourceSHA256": "139dae00e41d7a400017bb22ae1febbf749438cf93cbb4db81a83414c024572d",
+      "bytes": 1650
+    }
+  ]
+}

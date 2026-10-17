@@ -1,0 +1,14 @@
+{
+  "baseline": "7832898c1ac7bb93be1796ad061560c868631f19",
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "Eight epochs, exact outcomes, final945/469inputs,6products,3captures,Foundationsource/loghashes and exact testrestoration verified. Stale archivedauditor corrected to retain cleanupwarning alongside actualQ11failure."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "report": "Finalcapture verifiesNewYork1November202601:30 and enabledSave without explicitoccurrence. NoSchedule submitted. Q96unanswered; native-gap/iOSFoundation/modelqualification notclaimed. Contractnew/saved authority and fractionalretention rules coherent."
+  },
+  "scope": "Read-only final artifact reviews. No edits, builds or tests by reviewers. Q96 approval is not inferred."
+}
