@@ -1,0 +1,13 @@
+{
+  "compilerInputsPerPlatform": 945,
+  "frozenRuntimeInputs": 469,
+  "productsPerPlatform": 6,
+  "passingFunctions": {
+    "tablet": 3,
+    "phone": 0,
+    "mac": 0
+  },
+  "individuallyInspectedPNGs": 18,
+  "productionChanged": false,
+  "scope": "Month/Day/Week native inspector selected Schedule and captions retained across actual iPad rotations, hidden state after widening and usable selected entry when inspector is hidden. Mac compiler-only. No phone, Mac runtime, midnight/month-boundary execution, physical, signing, accessibility, measured performance or whole-app polish credit."
+}

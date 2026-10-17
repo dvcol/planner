@@ -1,0 +1,60 @@
+{
+  "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+  "observations": [
+    {
+      "command": [
+        "sw_vers"
+      ],
+      "exitCode": 0,
+      "observation": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434"
+    },
+    {
+      "command": [
+        "xcodebuild",
+        "-version"
+      ],
+      "exitCode": 0,
+      "observation": "Xcode 27.1\nBuild version 27A9275"
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "list",
+        "devices",
+        "available",
+        "--json"
+      ],
+      "exitCode": 0,
+      "observation": {
+        "com.apple.CoreSimulator.SimRuntime.iOS-27-0": [
+          {
+            "dataPath": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/2A49C66C-C8A4-435F-B98A-9A90706780DE/data",
+            "dataPathSize": 12518993920,
+            "logPath": "/Users/dinh-van.colomban/Library/Logs/CoreSimulator/2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "udid": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+            "lastUsedAt": "2026-10-17T06:57:36Z",
+            "isAvailable": true,
+            "logPathSize": 962560,
+            "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro",
+            "state": "Shutdown",
+            "name": "iPhone 18 Pro"
+          },
+          {
+            "dataPath": "/Users/dinh-van.colomban/Library/Developer/CoreSimulator/Devices/FBD72DAB-1D40-4E64-912D-7F9763E00446/data",
+            "dataPathSize": 12123987968,
+            "logPath": "/Users/dinh-van.colomban/Library/Logs/CoreSimulator/FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "udid": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+            "lastUsedAt": "2026-10-17T05:31:53Z",
+            "isAvailable": true,
+            "logPathSize": 884736,
+            "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Air-11-inch-M4",
+            "state": "Booted",
+            "name": "iPad Air 11-inch (M4)"
+          }
+        ]
+      }
+    }
+  ],
+  "deployment": "Configuration/Base.xcconfig requires iOS27.0 and macOS27.0; this is not an execution on every minimum-version device."
+}

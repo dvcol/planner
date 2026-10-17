@@ -1,0 +1,17 @@
+{
+  "baseline": "53622e55b455d0fa14d19b4dacfff64b24d77501",
+  "sourceSHA256": {
+    "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift": "39979e29bc3deb7070b1cfdf9062a592b229e1885d3a9d92019e668a589c680b"
+  },
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "Any-role containers, observed saved civil date and bounded grid reveal correct both setup findings. Cleanup and identity/caption comparisons preserved."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "report": "Observed one-Schedule Month marker anchors native date selection. Exact timedSchedule lookup and viewport assertions preserve scope. Actual midnight/month-rollover runtime not implied."
+  },
+  "scope": "Read-only source review before execution. No production edits or new seam."
+}

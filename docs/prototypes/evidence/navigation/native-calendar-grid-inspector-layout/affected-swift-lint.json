@@ -1,0 +1,15 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "sourceSHA256": {
+    "PlannerNavigationUITests/SavedCalendarInspectorJourneyTests.swift": "39979e29bc3deb7070b1cfdf9062a592b229e1885d3a9d92019e668a589c680b"
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "scope": "Every retained original was inspected individually. Visible inspector content and hidden-inspector Calendar states are qualified; no claim that underlying content remains uncovered while the native inspector is open.",
+  "images": [
+    {
+      "path": "tablet-grid-inspector-qualified/4FD3EA9D-5002-439C-8006-F553993275A7.png",
+      "mode": "Month",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+      "phase": "Calendar reopens the same Schedule after both layout changes",
+      "sha256": "878ccd3d440a8a7302fdcef547f40dbb76029486899ce9ae223a2da00df36471",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete landscape capture; selected inspector notes and saved Schedule caption are readable. Native inspector overlays part of the Calendar."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/F4C38BEF-445D-4667-895E-FBF9DF134764.png",
+      "mode": "Month",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+      "phase": "Calendar keeps its inspector hidden after widening the layout",
+      "sha256": "ff8a12241ceefa292b6d1b054f21d662d2acbae2aa3341d01f3ddc3f22e379b0",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete landscape capture with inspector hidden; Calendar entry and native toolbar are visible. Timed modes retain the selected-day card; Week uses horizontal columns."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/C2DF07CC-F1E1-4B93-BC6C-0182ECC52419.png",
+      "mode": "Month",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+      "phase": "Selected Calendar details remain after narrowing the layout",
+      "sha256": "2acdc1b67910eaf50b443cfda9e4c014f8a63f3f3a83a4243975af08394d248b",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete portrait capture; native inspector retains readable notes and original saved Schedule caption. Calendar remains behind the inspector overlay."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/651399CA-E87D-450B-BCBE-D28A3809CA27.png",
+      "mode": "Month",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+      "phase": "Calendar inspector retains the selected Schedule and Item",
+      "sha256": "1ae766496d8d8a12f20f71f9051d547b6cbf53f80e5ba6e005b012315fb9b582",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete landscape capture; selected inspector notes and saved Schedule caption are readable. Native inspector overlays part of the Calendar."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/DFB74715-7335-43B7-B389-32CB54E0864A.png",
+      "mode": "Month",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+      "phase": "Calendar uses the main width with its inspector hidden",
+      "sha256": "9b967261c12de4a8e8c08b393c46e73a9e1557da29470f5c09bced07dfaaf601",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete landscape capture with inspector hidden; Calendar entry and native toolbar are visible. Timed modes retain the selected-day card; Week uses horizontal columns."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/FD578AE5-2D4D-4DD9-994F-C01B5B7B3CE4.png",
+      "mode": "Month",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule()",
+      "phase": "Native Calendar inspector presentation before closing",
+      "sha256": "1ae766496d8d8a12f20f71f9051d547b6cbf53f80e5ba6e005b012315fb9b582",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete landscape capture; selected inspector notes and saved Schedule caption are readable. Native inspector overlays part of the Calendar."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/23F7D027-E291-40CB-AF83-F2CF58C811F3.png",
+      "mode": "Day",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+      "phase": "Calendar reopens the same Schedule after both layout changes",
+      "sha256": "06fd857127fc6e47a395813785641404aa99e54fc08896d90506ffa6fbff5239",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete landscape capture; selected inspector notes and saved Schedule caption are readable. Native inspector overlays part of the Calendar."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/B1B15CD5-67DF-47BC-BD41-BAF826C5FD47.png",
+      "mode": "Day",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+      "phase": "Calendar keeps its inspector hidden after widening the layout",
+      "sha256": "133c4608922ece4d7a5aae4ab4ed7d9abdee44a20d8e3a8ea076ef7ec4372ddc",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete landscape capture with inspector hidden; Calendar entry and native toolbar are visible. Timed modes retain the selected-day card; Week uses horizontal columns."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/2B77DCF9-EEE3-4E76-BA2D-552776E32852.png",
+      "mode": "Day",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+      "phase": "Selected Calendar details remain after narrowing the layout",
+      "sha256": "4beb45876af089d2688ce84b63549b548235db16db530c8d0c63ea47a883eb51",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete portrait capture; native inspector retains readable notes and original saved Schedule caption. Calendar remains behind the inspector overlay."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/7797FB98-7E4B-4BEC-8918-5E193993ED00.png",
+      "mode": "Day",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+      "phase": "Calendar inspector retains the selected Schedule and Item",
+      "sha256": "c8340bcd082fa7e5836a75bc5a90b79a2d312b77f6d65cf5ccebec00ab651ce4",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete landscape capture; selected inspector notes and saved Schedule caption are readable. Native inspector overlays part of the Calendar."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/20781400-434F-4EE2-A064-974ECA110A15.png",
+      "mode": "Day",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+      "phase": "Calendar uses the main width with its inspector hidden",
+      "sha256": "50285ee7b481424bdccaeda01bd5c5ad5cbd20a22b5b81a22e4cd75fe4ffc933",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete landscape capture with inspector hidden; Calendar entry and native toolbar are visible. Timed modes retain the selected-day card; Week uses horizontal columns."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/98687A2E-CDE7-46B6-8DC3-E363777EB6EB.png",
+      "mode": "Day",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+      "phase": "Native Calendar inspector presentation before closing",
+      "sha256": "c8340bcd082fa7e5836a75bc5a90b79a2d312b77f6d65cf5ccebec00ab651ce4",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete landscape capture; selected inspector notes and saved Schedule caption are readable. Native inspector overlays part of the Calendar."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/E6AE3776-EE37-4D1D-9BE6-2A00801071FB.png",
+      "mode": "Week",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testWeekDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+      "phase": "Calendar reopens the same Schedule after both layout changes",
+      "sha256": "b62732ca45aac9fb473301a401e3d3a8009cc7cbfee2bc57955340b9e83e8bb6",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete landscape capture; selected inspector notes and saved Schedule caption are readable. Native inspector overlays part of the Calendar."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/9B2118B2-7848-4976-98A4-DDD2317517E3.png",
+      "mode": "Week",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testWeekDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+      "phase": "Calendar keeps its inspector hidden after widening the layout",
+      "sha256": "97df1a2a50fe931880d8b64dd676c671f083d7f5348b23b64ffef3cec1034758",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete landscape capture with inspector hidden; Calendar entry and native toolbar are visible. Timed modes retain the selected-day card; Week uses horizontal columns."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/A60FF980-DC73-434E-AF3C-9C4C0DA8C683.png",
+      "mode": "Week",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testWeekDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+      "phase": "Selected Calendar details remain after narrowing the layout",
+      "sha256": "a0c77c718ccfaa617ed1f87dcf4350a621e2411451e6b4832af6f28424e18e85",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete portrait capture; native inspector retains readable notes and original saved Schedule caption. Calendar remains behind the inspector overlay."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/13F08086-7F60-4399-A578-423610A7E578.png",
+      "mode": "Week",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testWeekDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+      "phase": "Calendar inspector retains the selected Schedule and Item",
+      "sha256": "1bb886392fd30c86176d5eee01bfd4dd1edc5e0f98c6e568094073286ab873ac",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete landscape capture; selected inspector notes and saved Schedule caption are readable. Native inspector overlays part of the Calendar."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/B0365521-E743-4845-AD41-81C45C351932.png",
+      "mode": "Week",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testWeekDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+      "phase": "Calendar uses the main width with its inspector hidden",
+      "sha256": "367f7a5819ebcab7db938013c30d7dd7883f73c6432a4e61c8c575d4e8d69a8b",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete landscape capture with inspector hidden; Calendar entry and native toolbar are visible. Timed modes retain the selected-day card; Week uses horizontal columns."
+    },
+    {
+      "path": "tablet-grid-inspector-qualified/DE853D51-118A-4CDE-93FE-F38BC44641DC.png",
+      "mode": "Week",
+      "testIdentifier": "SavedCalendarInspectorJourneyTests/testWeekDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule()",
+      "phase": "Native Calendar inspector presentation before closing",
+      "sha256": "1bb886392fd30c86176d5eee01bfd4dd1edc5e0f98c6e568094073286ab873ac",
+      "individuallyInspected": true,
+      "usableForVisualQualification": true,
+      "observation": "Complete landscape capture; selected inspector notes and saved Schedule caption are readable. Native inspector overlays part of the Calendar."
+    }
+  ]
+}

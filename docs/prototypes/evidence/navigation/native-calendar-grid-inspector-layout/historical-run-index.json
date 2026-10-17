@@ -1,0 +1,63 @@
+{
+  "policy": "Literal recorded function outcomes and whole invocation exits are separate. Compiler-only and setup failures supply no native runtime pass credit. Final qualified epochs are named in the report.",
+  "runs": [
+    {
+      "epoch": "mac-grid-inspector-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-grid-inspector-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "tablet-grid-inspector",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerCalendarGridInspectorLayoutRuntime-tablet-grid-inspector.xcresult",
+      "diagnosticOnly": true,
+      "correctedSourcePassCredit": false,
+      "sourceVariant": {
+        "diagnosticOnly": true,
+        "setupOnly": true,
+        "executedFunctions": 0,
+        "reason": "Runner argument accepted function paths; class-only input was routed to the wrong class. Exit0 selected no functions and supplies no runtime credit. Corrected explicit function paths use identical source and products."
+      },
+      "type": "native-runtime",
+      "functions": [],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-grid-inspector-qualified",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerCalendarGridInspectorLayoutRuntime-tablet-grid-inspector-qualified.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedCalendarInspectorJourneyTests testCalendarDetailsCanHideAndReopenWithoutChangingTheSelectedSchedule",
+          "outcome": "passed",
+          "seconds": 71.166
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedCalendarInspectorJourneyTests testDayDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+          "outcome": "passed",
+          "seconds": 72.903
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedCalendarInspectorJourneyTests testWeekDetailsSurviveLayoutChangesWithoutChangingTheSelectedSchedule",
+          "outcome": "passed",
+          "seconds": 75.397
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    }
+  ]
+}

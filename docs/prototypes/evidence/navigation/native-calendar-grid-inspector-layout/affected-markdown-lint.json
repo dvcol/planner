@@ -1,0 +1,16 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2@0.23.3",
+    "--config",
+    "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+    "docs/prototypes/native-calendar-grid-inspector-layout.md"
+  ],
+  "exitCode": 0,
+  "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-calendar-grid-inspector-layout.md\nLinting: 1 file\nSummary: 0 issues in 0 files\n",
+  "stderr": "Done in 344ms using pnpm v12.10.1\n",
+  "sourceSHA256": {
+    "docs/prototypes/native-calendar-grid-inspector-layout.md": "a60b561799682c775fb3e6d2dc3ebf90d3dbd78a74d4a0869ec30eef3c5f1923"
+  }
+}

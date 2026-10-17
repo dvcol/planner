@@ -1,0 +1,6 @@
+{
+  "diagnosticOnly": true,
+  "setupOnly": true,
+  "executedFunctions": 0,
+  "reason": "Runner argument accepted function paths; class-only input was routed to the wrong class. Exit0 selected no functions and supplies no runtime credit. Corrected explicit function paths use identical source and products."
+}
