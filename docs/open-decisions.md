@@ -1,5 +1,7 @@
 # Decision register
 
+Current frontier: Q94 and Q95 await human answers. Statements that an earlier question batch is settled apply to that batch, not to these later choices.
+
 The human settled this batch on 12 October 2026. None of the nine questions below remains unanswered. Accepted behavior is a requirement, not evidence that its implementation or native qualification is complete. Earlier execution records that describe these choices as pending are historical.
 
 Earlier prompts reused Q48/Q49 and changed Q51's option lettering. This register keeps one meaning per number. Q74 is the duration-layout choice previously restated as Q48; Q49 retains its original editor-placement meaning.
@@ -69,3 +71,26 @@ The human accepted A on 15 October 2026. Sort exact full estimates first, incomp
 ## Q87, concrete container catalog sort contract
 
 The human accepted A on 15 October 2026 after Q85 A and Q86 A. The [approved contract](container-catalog-sort-contract-review.md) declares the optional Core/MCP sort values, omitted-sort compatibility, deterministic ties, accepted uncertainty groups, strict errors, generation-bound paging, native preference scope and required public Core/HTTP/native tests. The existing read boundary remains in use; no new testing seam is proposed. Implementation and qualification remain required. Earlier records describing Q87 as pending are historical; this recorded decision frontier has no unanswered question.
+
+## Q88 through Q93, accepted creation and selection behavior
+
+The human accepted A for Q88 through Q92 and approved Q93's concrete ordinary-creation contract. These are settled product choices. Their implementation and platform qualification retain the limits in the linked reports.
+
+| Question | Accepted behavior | Contract or evidence |
+| --- | --- | --- |
+| Q88, List creation actions | One native Add menu offers New Item, Add existing Item and From Link or Text. New Item creates its shared source and originating List appearance together; Cancel creates neither. | [Native creation](prototypes/native-item-creation.md), [ordinary creation contract](create-item-in-list-contract-review.md) |
+| Q89, selection after deletion | When confirmed entity deletion removes the selected identity, select the first visible survivor in the same context on Mac and regular iPad, including its first visible child when replacing a List. Compact iPhone returns to its containing list. Deleting an unselected row preserves valid selection. Ordinary reference removal clears invalid selection and explains why under A3. Truly empty results retain an empty state; filtering a valid selection out does not replace it. | [Creation and selection contract](native-creation-and-selection.md), [selection and layout checks](prototypes/native-layout-compatibility.md) |
+| Q90, full New Item editor | Use the detail column on Mac and wide iPad, and a native pushed page in compact layouts, with explicit Save and Cancel. Keep the original destination and draft through layout changes. | [Rich-draft layout checks](prototypes/native-rich-draft-layout.md) |
+| Q91, edited-draft navigation | Offer Save, Discard and Keep Editing before leaving an edited draft. Invalid Save retains the draft and errors. Discard creates nothing; Keep Editing cancels navigation. An untouched blank draft can close directly. | [Native creation and guarded navigation](prototypes/native-item-creation.md) |
+| Q92, saved Maps links | Show a live temporary map card from the original saved Maps link. Owned address/pin data takes precedence. Unavailable or ambiguous lookup keeps a useful fallback; temporary provider results stay outside saved content and backups. | [Saved Maps lifecycle](prototypes/native-saved-maps-lifecycle.md) |
+| Q93, atomic ordinary creation | Extend createItem with an optional active List destination. Create the source and one local Todo membership together, preserving ordinary authored bookmarks and replay behavior. Capture retains its separate deduplication policy. | [Approved concrete contract](create-item-in-list-contract-review.md) |
+
+[The current picker qualification](prototypes/native-item-picker-loading.md) links earlier creation, duration and layout evidence. Individual passing journeys do not close the complete native, physical, signing, accessibility, performance or final-polish gates.
+
+## Q94, label selection during a New Item draft
+
+This presentation choice is unanswered. The [native diagnosis and pending options](prototypes/native-new-item-labels.md) records an unwanted leaving prompt after returning from a pushed Category page. The options are an adaptive native popover/compact sheet, inline disclosure groups, or continued repair of pushed pages. A is recommended, but no alternative presentation is authorized or implemented by the recommendation. Full New Item column/page placement remains accepted under Q90.
+
+## Q95, native Item catalog windows and test seam
+
+This choice is unanswered. The [concrete proposal](native-item-window-contract-review.md) covers first-page display, visible-page loading and temporary native row retention, stable selection, stale-result handling, and tests through the production interface against real Core data in the existing app-hosted target. It introduces no new package or test-only control. No loader implementation or tests at that proposed seam have been written. Q84's accepted Core query-generation lifetime remains unchanged. The already implemented on-demand candidate picker is a separate change and still reads all active candidates while open.

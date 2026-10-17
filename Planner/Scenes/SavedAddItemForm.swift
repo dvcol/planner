@@ -52,8 +52,9 @@ struct SavedAddItemForm: View {
           ProgressView("Loading Items")
         } else if items?.isEmpty == true {
           ContentUnavailableView(
-            "No Items yet", systemImage: "square.stack",
-            description: Text("Create an Item in Items, then add it to this List."))
+            "No active Items", systemImage: "square.stack",
+            description: Text("Create an Item or unarchive one in Items, then add it to this List.")
+          )
         }
       }
       .navigationTitle("Add to \(list.content.name)")

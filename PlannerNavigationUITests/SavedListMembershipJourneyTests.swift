@@ -2,6 +2,118 @@ import XCTest
 
 @MainActor
 final class SavedListMembershipJourneyTests: XCTestCase {
+  func testExistingItemPickerExcludesArchivedSourcesAndReloadsAfterUnarchiving() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openSection("Items", application: application)
+    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    let title = application.textFields["saved.item.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Nezu Museum")
+    let notes = application.textFields["saved.item.notes"]
+    notes.activateForPlannerJourney()
+    notes.typeText("Keep the garden entrance notes")
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Keep the garden entrance notes"].waitForExistence(timeout: 10))
+    openSection("Items", application: application)
+    let source = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    revealSidebarIfNeeded(application, element: source)
+    XCTAssertTrue(source.waitForExistence(timeout: 10))
+    let sourceIdentifier = source.identifier
+    source.activateForPlannerJourney()
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Archive Item").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
+
+    openSection("Lists", application: application)
+    revealNewList(application).activateForPlannerJourney()
+    let name = application.textFields["saved.list.name"]
+    XCTAssertTrue(name.waitForExistence(timeout: 5))
+    name.activateForPlannerJourney()
+    name.typeText("Garden visits")
+    application.plannerElement("saved.list.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    application.openSavedPlannerListAddMenu()
+    application.plannerElement("saved.list.add").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Create an Item or unarchive one in Items, then add it to this List."]
+        .waitForExistence(timeout: 10))
+    let confirm = application.plannerElement("saved.membership.add")
+    XCTAssertTrue(confirm.exists)
+    XCTAssertFalse(confirm.isEnabled)
+    XCTAssertFalse(application.staticTexts["Nezu Museum"].exists)
+    recordScreenshot(application, name: "Archived source is absent from the loaded Item picker")
+    application.plannerElement("saved.membership.cancel").activateForPlannerJourney()
+    XCTAssertTrue(confirm.waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["No items"].exists)
+
+    openSection("Items", application: application)
+    let filters = application.plannerElement("saved.items.filters")
+    revealSidebarIfNeeded(application, element: filters)
+    XCTAssertTrue(filters.waitForExistence(timeout: 5))
+    application.chooseSavedPlannerStateFilter("Archived", control: filters)
+    let archivedSource = application.plannerElement(sourceIdentifier)
+    XCTAssertTrue(archivedSource.waitForExistence(timeout: 10))
+    archivedSource.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Archived"].waitForExistence(timeout: 10))
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Unarchive Item").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Keep the garden entrance notes"].exists)
+
+    openSection("Lists", application: application)
+    let retainedList = application.savedPlannerListRow("Garden visits")
+    revealSidebarIfNeeded(application, element: retainedList)
+    XCTAssertTrue(retainedList.waitForExistence(timeout: 10))
+    let listIdentifier = retainedList.identifier
+    retainedList.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    application.openSavedPlannerListAddMenu()
+    application.plannerElement("saved.list.add").activateForPlannerJourney()
+    let candidate = application.staticTexts["Nezu Museum"].firstMatch
+    XCTAssertTrue(candidate.waitForExistence(timeout: 10))
+    XCTAssertFalse(confirm.isEnabled)
+    recordScreenshot(
+      application, name: "Unarchived source becomes selectable in the reopened picker")
+    candidate.activateForPlannerJourney()
+    XCTAssertTrue(confirm.isEnabled)
+    confirm.activateForPlannerJourney()
+    XCTAssertTrue(confirm.waitForNonExistence(timeout: 10))
+    let appearance = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+    XCTAssertEqual(application.savedPlannerItemRows("Nezu Museum").count, 1)
+    let appearanceIdentifier = appearance.identifier
+
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Lists", application: application)
+    revealSidebarIfNeeded(application, element: retainedList)
+    XCTAssertTrue(retainedList.waitForExistence(timeout: 10))
+    XCTAssertEqual(retainedList.identifier, listIdentifier)
+    retainedList.activateForPlannerJourney()
+    XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+    XCTAssertEqual(application.savedPlannerItemRows("Nezu Museum").count, 1)
+    XCTAssertEqual(appearance.identifier, appearanceIdentifier)
+    appearance.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Keep the garden entrance notes"].waitForExistence(timeout: 10))
+    recordScreenshot(application, name: "Unarchived source membership and notes survive relaunch")
+    openSection("Items", application: application)
+    revealSidebarIfNeeded(application, element: source)
+    XCTAssertTrue(source.waitForExistence(timeout: 10))
+    XCTAssertEqual(application.savedPlannerItemRows("Nezu Museum").count, 1)
+    XCTAssertEqual(source.identifier, sourceIdentifier)
+    let identities = XCTAttachment(
+      string:
+        "Source: \(sourceIdentifier)\nList: \(listIdentifier)\nMembership: \(appearanceIdentifier)")
+    identities.name = "Archive picker observed identities"
+    identities.lifetime = .keepAlways
+    add(identities)
+  }
+
   func testExistingItemCanBeAddedToAListWithoutDuplicatingItsSourceAfterRelaunch() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
