@@ -51,7 +51,6 @@ final class SavedPlannerStore {
   private let planner: PlannerCore.Planner?
   private var session: PlannerDatasetSession?
   private(set) var lists: [SavedPlannerList] = []
-  private(set) var items: [SavedPlannerItem] = []
   private(set) var isOpening = false
   private(set) var isSaving = false
   private(set) var recoveryBlocked = false
@@ -131,7 +130,6 @@ final class SavedPlannerStore {
       session = ready
       await refreshRecoveryStatus()
       await refreshLists()
-      await refreshItems()
     case .unavailable(let reason): openingFailure = reason.message
     case .mainAppSetupRequired, .mainAppMigrationRequired:
       openingFailure = "Planner could not initialize its local data."
@@ -403,12 +401,6 @@ final class SavedPlannerStore {
     default: alertMessage = "Planner could not open this Itinerary."
     }
     return nil
-  }
-
-  func refreshItems() async {
-    if let loaded = await readItems(completion: .all, archive: .active) {
-      items = loaded
-    }
   }
 
   func readSchedule(_ identifier: UUID) async -> PlannerReadResult? {
@@ -759,7 +751,6 @@ final class SavedPlannerStore {
     } else {
       applied = await executeChange(command, operationId: draft.id)
     }
-    if applied != nil { await refreshItems() }
     return applied
   }
 
@@ -844,7 +835,6 @@ final class SavedPlannerStore {
         .setCompletion(scope: .globalItem(itemId: identifier), done: done), operationId: UUID())
         != nil
     else { return false }
-    await refreshItems()
     return true
   }
 
@@ -854,7 +844,6 @@ final class SavedPlannerStore {
         .setArchive(source: .init(kind: .item, id: identifier), archived: archived),
         operationId: UUID()) != nil
     else { return false }
-    await refreshItems()
     return true
   }
 
