@@ -85,7 +85,7 @@ The human accepted A for Q88 through Q92 and approved Q93's concrete ordinary-cr
 | Q92, saved Maps links | Show a live temporary map card from the original saved Maps link. Owned address/pin data takes precedence. Unavailable or ambiguous lookup keeps a useful fallback; temporary provider results stay outside saved content and backups. | [Saved Maps lifecycle](prototypes/native-saved-maps-lifecycle.md) |
 | Q93, atomic ordinary creation | Extend createItem with an optional active List destination. Create the source and one local Todo membership together, preserving ordinary authored bookmarks and replay behavior. Capture retains its separate deduplication policy. | [Approved concrete contract](create-item-in-list-contract-review.md) |
 
-[The current picker qualification](prototypes/native-item-picker-loading.md) links earlier creation, duration and layout evidence. Individual passing journeys do not close the complete native, physical, signing, accessibility, performance or final-polish gates.
+[The current creation compatibility checks](prototypes/native-new-item-dynamic-type.md) link earlier creation, duration and layout evidence and qualify ordinary/maximum-size phone and tablet rich creation. Individual passing journeys do not close the complete native, physical, signing, accessibility, performance or final-polish gates.
 
 ## Q94, label selection during a New Item draft
 

@@ -2512,6 +2512,12 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     XCTAssertEqual(application.sheets.count, 0)
+    XCTAssertTrue(title.waitForPlannerHittability())
+    let initialForm = XCTAttachment(string: application.debugDescription)
+    initialForm.name = "New Item initial native form hierarchy"
+    initialForm.lifetime = .keepAlways
+    add(initialForm)
+    recordScreenshot(application, name: "New Item fields before authoring")
     title.activateForPlannerJourney()
     title.typeText("Discarded draft")
     closeNewItemEditor(application)
@@ -2537,7 +2543,9 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       revealEditorElement(field, application: application)
       field.activateForPlannerJourney()
       field.typeText(text)
+      XCTAssertTrue(field.waitForPlannerValue(text))
     }
+    recordScreenshot(application, name: "Authored New Item address fields")
     let firstBookmark = addBookmark(
       "https://example.com/gardens", label: "Tickets", application: application,
       accessibilityIdentifierPrefix: "saved.item.link")
