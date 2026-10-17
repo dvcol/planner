@@ -1,6 +1,6 @@
 # Native schedule time input contract
 
-Status: proposed for Q96 review. No production implementation or tests at the proposed module interface have been written. Temporary native-control and Foundation probes are diagnostic evidence only.
+Status: Q96 A approved by the human on 17 October 2026. The production module interface and real-Foundation unit seam below are accepted for implementation. No module or tests at this seam exist at this approval epoch. Temporary native-control and Foundation probes retain their separate diagnostic scope.
 
 ## Context and starting state
 
@@ -59,7 +59,7 @@ Only these production operations and their observable results form the proposed 
 
 ## Proposed tests and definition of ready
 
-Confirm this interface before writing its unit tests. The existing macOS app-hosted `PlannerMCPTests` target imports the app through `@testable import Planner`. It can exercise this production value module against real Foundation, without a new target or test-only initializer. Public Core persistence and native UI journeys remain existing approved seams.
+Q96 A confirms this interface before writing its unit tests. The existing macOS app-hosted `PlannerMCPTests` target imports the app through `@testable import Planner`. It can exercise this production value module against real Foundation, without a new target or test-only initializer. Public Core persistence and native UI journeys remain existing approved seams.
 
 Use literal civil inputs and independently specified UTC expectations:
 
@@ -81,4 +81,4 @@ Mac UI runtime, physical sync/account/Share, signing, performance and whole-app 
 
 ## Review choice
 
-Q96 A approves this app-internal production module interface and its real-Foundation unit seam alongside the existing Core/native UI seams. It changes no accepted scheduling policy or wire contract. Q96 B revises the proposed interface or testing scope before implementation. No recommendation is treated as approval.
+The human selected Q96 A, approving this app-internal production module interface and its real-Foundation unit seam alongside the existing Core/native UI seams. It changes no accepted scheduling policy or wire contract. The unselected alternative was revising the interface or testing scope first.

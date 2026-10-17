@@ -1,6 +1,6 @@
 # Native labels during Item creation
 
-Status: Q94 presentation choice pending. No production navigation fix is qualified. Signing remains deferred.
+Status: the human approved Q94 A on 17 October 2026, choosing adaptive native popover/compact-sheet selection. The failures below predate that approval; no production fix is qualified at this approval epoch. Signing remains deferred.
 
 ## Context and starting state
 
@@ -12,7 +12,7 @@ Choose existing shared labels in an ordinary New Item draft without a leaving pr
 
 ## Definition of ready
 
-The accepted shared-label model and approved production native UI test boundary define this check. It uses a disposable local dataset, real Settings and label management, native selection controls, Save, Discard and relaunch. It introduces no public API, persistence schema or test-only production seam. Changing the picker presentation requires the pending Q94 decision first.
+The accepted shared-label model and approved production native UI test boundary define this check. It uses a disposable local dataset, real Settings and label management, native selection controls, Save, Discard and relaunch. It introduces no public API, persistence schema or test-only production seam. Q94 A now authorizes adaptive native popover/compact-sheet presentation; the existing native UI seam remains unchanged.
 
 ## Required tests and definition of done
 
