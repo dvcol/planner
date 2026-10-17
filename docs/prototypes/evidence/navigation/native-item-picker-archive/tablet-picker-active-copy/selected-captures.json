@@ -1,0 +1,38 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A21BFAAC-E782-49BA-B1E5-259EE8CAE353.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Archive picker observed identities_0_FDCE9C2F-E727-4DD2-BA06-010AD5CC7015.txt",
+    "timestamp": 1792220543.5
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "8A27C647-D71D-4386-9067-19D477339FC4.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Unarchived source membership and notes survive relaunch_0_5ADA9DF6-312F-4E41-81D4-18AAAC7EEAC0.png",
+    "timestamp": 1792220538.001
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "5A5FB908-FBEB-4E27-8092-EDE846E7C5D8.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Unarchived source becomes selectable in the reopened picker_0_23712F53-79EE-45AC-A8B9-878EC2573A0A.png",
+    "timestamp": 1792220518.145
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "2211998C-5757-40BF-BAD6-841516BF5877.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Archived source is absent from the loaded Item picker_0_EBE4ED58-CD2E-4564-BED6-1507857146C1.png",
+    "timestamp": 1792220477.711
+  }
+]

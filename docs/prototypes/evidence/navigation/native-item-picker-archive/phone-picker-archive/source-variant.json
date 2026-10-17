@@ -1,0 +1,6 @@
+{
+  "historicalPreCopyEvidence": true,
+  "diagnosticOnly": false,
+  "finalSourceInvocation": false,
+  "reason": "Passing workflow before correcting the misleading No Items yet empty-state copy. Two native strings and the test ready-state text differ from final source. Original results are not final-source qualification."
+}

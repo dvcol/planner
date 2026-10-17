@@ -1,0 +1,38 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "EA7B8BE7-359E-4CA1-8AC8-6F2FA5F648C4.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Archive picker observed identities_0_3415F63C-EA01-4B0C-A867-C5196A1AEDE7.txt",
+    "timestamp": 1792220011.972
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "4D72A9C7-8BB0-4241-B0A6-1DD3D7768AAE.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Unarchived source membership and notes survive relaunch_0_AA018C53-393E-47A3-ACF8-6A88D41D875C.png",
+    "timestamp": 1792220001.15
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "D7965455-807E-4EAC-9E7D-ADDFAF90FEA6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Unarchived source becomes selectable in the reopened picker_0_D2EE2D55-1568-4C63-B8DB-BCD4C64D28FC.png",
+    "timestamp": 1792219973.135
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "01482221-8438-488C-B65F-390FA00B7839.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Archived source is absent from the loaded Item picker_0_E2C76E06-4FF6-42C3-89EE-BDB0B6760450.png",
+    "timestamp": 1792219926.883
+  }
+]

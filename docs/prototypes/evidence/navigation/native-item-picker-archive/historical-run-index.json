@@ -1,0 +1,113 @@
+{
+  "policy": "Literal recorded function outcomes and whole invocation exits are separate. Compiler-only and setup failures supply no native runtime pass credit. Final qualified epochs are named in the report.",
+  "runs": [
+    {
+      "epoch": "mac-picker-active-copy-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-picker-archive-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-picker-active-copy-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-picker-archive-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "phone-picker-active-copy",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItemPickerArchiveRuntime-phone-picker-active-copy.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedListMembershipJourneyTests testExistingItemPickerExcludesArchivedSourcesAndReloadsAfterUnarchiving",
+          "outcome": "passed",
+          "seconds": 120.747
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-picker-archive",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItemPickerArchiveRuntime-phone-picker-archive.xcresult",
+      "diagnosticOnly": false,
+      "correctedSourcePassCredit": false,
+      "sourceVariant": {
+        "historicalPreCopyEvidence": true,
+        "diagnosticOnly": false,
+        "finalSourceInvocation": false,
+        "reason": "Passing workflow before correcting the misleading No Items yet empty-state copy. Two native strings and the test ready-state text differ from final source. Original results are not final-source qualification."
+      },
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedListMembershipJourneyTests testExistingItemPickerExcludesArchivedSourcesAndReloadsAfterUnarchiving",
+          "outcome": "passed",
+          "seconds": 127.596
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-picker-active-copy",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItemPickerArchiveRuntime-tablet-picker-active-copy.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedListMembershipJourneyTests testExistingItemPickerExcludesArchivedSourcesAndReloadsAfterUnarchiving",
+          "outcome": "passed",
+          "seconds": 115.698
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-picker-archive",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItemPickerArchiveRuntime-tablet-picker-archive.xcresult",
+      "diagnosticOnly": false,
+      "correctedSourcePassCredit": false,
+      "sourceVariant": {
+        "historicalPreCopyEvidence": true,
+        "diagnosticOnly": false,
+        "finalSourceInvocation": false,
+        "reason": "Passing workflow before correcting the misleading No Items yet empty-state copy. Two native strings and the test ready-state text differ from final source. Original results are not final-source qualification."
+      },
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedListMembershipJourneyTests testExistingItemPickerExcludesArchivedSourcesAndReloadsAfterUnarchiving",
+          "outcome": "passed",
+          "seconds": 115.624
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    }
+  ]
+}

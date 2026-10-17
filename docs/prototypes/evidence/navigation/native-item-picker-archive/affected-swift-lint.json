@@ -1,0 +1,17 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/Scenes/SavedAddItemForm.swift",
+    "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedAddItemForm.swift": "9553188a491132c27a283bcb068d8a1d6667413dd630219a64f4e67ca6a15f20",
+    "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "03a187e5c09dae5d506866ce1d5ee05bb9f3d1bec730a50dd27919881605d1ae"
+  }
+}

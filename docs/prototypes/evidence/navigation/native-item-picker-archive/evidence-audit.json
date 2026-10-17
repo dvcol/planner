@@ -1,0 +1,14 @@
+{
+  "compilerInputsPerPlatform": 945,
+  "frozenRuntimeInputsPerInvocation": 469,
+  "productsPerPlatform": 6,
+  "finalSourcePassingFunctionsPerPlatform": {
+    "phone": 1,
+    "tablet": 1,
+    "mac": 0
+  },
+  "preCopyWorkflowPasses": 2,
+  "individuallyInspectedPNGs": 12,
+  "productionChanged": "Two native empty-state strings; commands, filtering, persistence and loading unchanged",
+  "scope": "Existing active-only picker excludes archived source after loaded-empty state; Add disabled until explicit selection; Cancel retains empty List; same source becomes selectable after Unarchive without relaunch; source/List/membership identities and notes retained through relaunch. No adversarial delay/Retry, performance, accessibility, signing or Mac runtime credit. Q94/Q95 remain unanswered."
+}

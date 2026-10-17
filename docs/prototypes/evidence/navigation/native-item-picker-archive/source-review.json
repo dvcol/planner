@@ -1,0 +1,28 @@
+{
+  "baseline": "2e13f4b590d99c5e09ed6ba5a5f206e1c34e12e7",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedAddItemForm.swift": "9553188a491132c27a283bcb068d8a1d6667413dd630219a64f4e67ca6a15f20",
+    "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "03a187e5c09dae5d506866ce1d5ee05bb9f3d1bec730a50dd27919881605d1ae"
+  },
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "No confirmed findings. The revised native empty state accurately describes the active-only query and offers Unarchive as a useful next step. The journey waits for loaded-empty state before checking exclusion and disabled Add, and preserves source/List/membership/notes through relaunch. Only the two production display strings changed."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "report": "No remaining source/test finding. No active Items and Unarchive guidance match the active-only picker, and the loaded-empty assertion remains meaningful. Q89 register qualifiers were corrected and verified; Q88/Q90-Q93 and pending Q94/Q95 match their contracts. Final runtime qualification is recorded separately."
+  },
+  "scope": "Source-only review; runtime qualification recorded independently. Q94/Q95 and broader adversarial/performance/platform gates stay open.",
+  "copyFollowup": "Both reviewers cleared the two-string active-only empty-state correction and matching loaded-state marker; commands, filtering, persistence and loading unchanged.",
+  "decisionRegisterFollowup": "Spec review identified omitted Q89 qualifiers. Register now limits replacement to confirmed selected-entity deletion, preserves valid selection for unselected deletion, and retains A3 clearing/explanation for ordinary reference removal. Reviewer verified resolved, no remaining finding.",
+  "beforeCopySourceReview": {
+    "sourceSHA256": {
+      "PlannerNavigationUITests/SavedListMembershipJourneyTests.swift": "ca4e8e1435197871667272c05a3a2c5eadb81d6bed887f7d48847e194539a06d"
+    },
+    "standardsReport": "No confirmed Standards or material controller/oracle findings. Loaded-empty wait, original archived source identity, live reopened picker and explicit selection checks preserve truthful outcomes. Existing helpers unchanged; no production change.",
+    "specificationReport": "No confirmed Spec or oracle finding. Exclusion after loaded state, disabled Add, Cancel, original-ID unarchive, fresh picker without relaunch, and stable source/List/membership/notes/uniqueness checks match the scoped requirements. Active default after relaunch is established behavior.",
+    "scope": "Historical workflow-only review before the two-string copy correction; not a claim that final production source is unchanged."
+  }
+}

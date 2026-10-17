@@ -1,0 +1,101 @@
+{
+  "method": "All twelve original named PNGs opened individually with view_image, six before the wording correction and six from final-source passing runs. Observed identity text attachments read separately.",
+  "images": [
+    {
+      "path": "phone-picker-active-copy/E9BF2E7E-7071-4C4B-BECD-70C536C17B50.png",
+      "title": "Unarchived source membership and notes survive relaunch_0_E9CD3B6C-9DB3-44B6-9F7C-1BD4AF54A4E4.png",
+      "sha256": "a0a1d8c9f2a3a0dea4c13805cb2d01c2b7663e94758734910d472dfa788230d3",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "scope": "Original named Planner-window capture: loaded empty picker, reopened candidate before selection, or retained contextual notes after relaunch. Pre-correction and final source are explicitly separate."
+    },
+    {
+      "path": "phone-picker-active-copy/0D2F2F29-477D-4E2E-A597-C08F531FCB5D.png",
+      "title": "Unarchived source becomes selectable in the reopened picker_0_CEA86F05-0347-48B6-B4D8-B86FB3E90AF6.png",
+      "sha256": "776b5951ac1c1e9bfb549d9259934634117328eefa90601577dc1efea12e40f7",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "scope": "Original named Planner-window capture: loaded empty picker, reopened candidate before selection, or retained contextual notes after relaunch. Pre-correction and final source are explicitly separate."
+    },
+    {
+      "path": "phone-picker-active-copy/F81AF2F9-C11D-4CF1-8C0D-4D76AA8B03E4.png",
+      "title": "Archived source is absent from the loaded Item picker_0_2863A084-492B-48ED-8526-A93BB5C15AFD.png",
+      "sha256": "7be8ee4d1d4347bb57d56c2f13ab7c38ad009e46670a792636f92e779fcd59b1",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "scope": "Original named Planner-window capture: loaded empty picker, reopened candidate before selection, or retained contextual notes after relaunch. Pre-correction and final source are explicitly separate."
+    },
+    {
+      "path": "phone-picker-archive/4D72A9C7-8BB0-4241-B0A6-1DD3D7768AAE.png",
+      "title": "Unarchived source membership and notes survive relaunch_0_AA018C53-393E-47A3-ACF8-6A88D41D875C.png",
+      "sha256": "da0cb2a95bbd6018f20e3a446364a057faa02cb5653e6d21b731908528b0e3ad",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "scope": "Original named Planner-window capture: loaded empty picker, reopened candidate before selection, or retained contextual notes after relaunch. Pre-correction and final source are explicitly separate."
+    },
+    {
+      "path": "phone-picker-archive/D7965455-807E-4EAC-9E7D-ADDFAF90FEA6.png",
+      "title": "Unarchived source becomes selectable in the reopened picker_0_D2EE2D55-1568-4C63-B8DB-BCD4C64D28FC.png",
+      "sha256": "75f140973839720fa5e01eab0e90b833f9fe2bb9acb318d18cf7316c1093a9bb",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "scope": "Original named Planner-window capture: loaded empty picker, reopened candidate before selection, or retained contextual notes after relaunch. Pre-correction and final source are explicitly separate."
+    },
+    {
+      "path": "phone-picker-archive/01482221-8438-488C-B65F-390FA00B7839.png",
+      "title": "Archived source is absent from the loaded Item picker_0_E2C76E06-4FF6-42C3-89EE-BDB0B6760450.png",
+      "sha256": "7aa65efe8f0a0da34b6189137e63f6383b1a99a4dec614e8318d759679f92e41",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "scope": "Original named Planner-window capture: loaded empty picker, reopened candidate before selection, or retained contextual notes after relaunch. Pre-correction and final source are explicitly separate."
+    },
+    {
+      "path": "tablet-picker-active-copy/8A27C647-D71D-4386-9067-19D477339FC4.png",
+      "title": "Unarchived source membership and notes survive relaunch_0_5ADA9DF6-312F-4E41-81D4-18AAAC7EEAC0.png",
+      "sha256": "fe7aee6875ff16b7b0acf44fab9941ad949ae7d251bc3a4ee0fc76c5b6d50980",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "scope": "Original named Planner-window capture: loaded empty picker, reopened candidate before selection, or retained contextual notes after relaunch. Pre-correction and final source are explicitly separate."
+    },
+    {
+      "path": "tablet-picker-active-copy/5A5FB908-FBEB-4E27-8092-EDE846E7C5D8.png",
+      "title": "Unarchived source becomes selectable in the reopened picker_0_23712F53-79EE-45AC-A8B9-878EC2573A0A.png",
+      "sha256": "edb41d298559318c57acd799bb135b4b7802f27c44eb7409ffd37aedcf070ce8",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "scope": "Original named Planner-window capture: loaded empty picker, reopened candidate before selection, or retained contextual notes after relaunch. Pre-correction and final source are explicitly separate."
+    },
+    {
+      "path": "tablet-picker-active-copy/2211998C-5757-40BF-BAD6-841516BF5877.png",
+      "title": "Archived source is absent from the loaded Item picker_0_EBE4ED58-CD2E-4564-BED6-1507857146C1.png",
+      "sha256": "9a45b62dabf4a6054dc693febe5c4c9f5c0d8a9b69064f1e0da94c1f34489343",
+      "individuallyInspected": true,
+      "finalSourceInvocation": true,
+      "scope": "Original named Planner-window capture: loaded empty picker, reopened candidate before selection, or retained contextual notes after relaunch. Pre-correction and final source are explicitly separate."
+    },
+    {
+      "path": "tablet-picker-archive/DCCBECD0-A90E-4CC3-8D68-09D319B35D76.png",
+      "title": "Unarchived source membership and notes survive relaunch_0_1D6D9807-31B5-4775-A732-E0B07F98751F.png",
+      "sha256": "6b281da9eb52d0109ecce0bee7a7db307d8d6eaef80aa42ba7fe2eb6222fbab4",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "scope": "Original named Planner-window capture: loaded empty picker, reopened candidate before selection, or retained contextual notes after relaunch. Pre-correction and final source are explicitly separate."
+    },
+    {
+      "path": "tablet-picker-archive/31812FD7-0E84-44BA-9036-C65B0D2F7E13.png",
+      "title": "Unarchived source becomes selectable in the reopened picker_0_C86E9B33-DF58-4CCF-AA1A-63EEEB790A70.png",
+      "sha256": "699a2b1780b8fb11a4b50a8dd7ed4baa98057a5efda13964aed3812dd8e9baae",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "scope": "Original named Planner-window capture: loaded empty picker, reopened candidate before selection, or retained contextual notes after relaunch. Pre-correction and final source are explicitly separate."
+    },
+    {
+      "path": "tablet-picker-archive/AE9D7A87-4D38-4344-AF12-60C600A1F034.png",
+      "title": "Archived source is absent from the loaded Item picker_0_814243C9-DA93-4C95-B70C-71F142550042.png",
+      "sha256": "1d0423878b44c7cfaa8f816651ba32cb96425940d55bbf668251e6880c0cf622",
+      "individuallyInspected": true,
+      "finalSourceInvocation": false,
+      "scope": "Original named Planner-window capture: loaded empty picker, reopened candidate before selection, or retained contextual notes after relaunch. Pre-correction and final source are explicitly separate."
+    }
+  ]
+}
