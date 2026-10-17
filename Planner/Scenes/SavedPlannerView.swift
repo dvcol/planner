@@ -71,12 +71,10 @@ struct SavedPlannerView: View {
   @State private var selectedItemId: UUID?
   @State private var selectedItem: PlannerItemSourceRead?
   @State private var isOpeningItem = false
-  @State private var catalogItems: [SavedPlannerItem]?
   @State private var itemFilters = SavedItemFilters(archive: .active)
   @State private var itemSearchText = ""
   @State private var inboxFilters = SavedItemFilters(completion: .todo, archive: .active)
   @State private var inboxSearchText = ""
-  @State private var isOpeningCatalog = false
   @State private var sortPreferences = SavedItemSortPreferences()
   @State private var catalogSortPreferences = SavedCatalogSortPreferences()
   @State private var selectedAppearanceIdentity: PlannerAppearance?
@@ -122,17 +120,11 @@ struct SavedPlannerView: View {
       }
     }
     .task { await store.open() }
-    .task(id: store.isReady) { await loadCatalogItems() }
     .task(id: store.isReady) { await loadListCatalog() }
     .task(id: listCatalogArchive) { await loadListCatalog() }
     .task(id: listCatalogSort.wrappedValue) { await loadListCatalog() }
-    .task(id: catalogScope) { await loadCatalogItems() }
-    .task(id: catalogFilters.wrappedValue) { await loadCatalogItems() }
-    .task(id: catalogSearchText.wrappedValue) { await loadCatalogItems() }
-    .task(id: itemSort.wrappedValue) { await loadCatalogItems() }
     .task(id: store.devicePreferenceNamespace) {
       await loadListCatalog()
-      await loadCatalogItems()
       await loadSelectedList()
     }
     .task(id: selectedListId) { await loadSelectedList() }
@@ -181,7 +173,6 @@ struct SavedPlannerView: View {
       if itemDeletionDraft == nil { await loadSelectedItem() }
       await loadListCatalog()
       await loadSelectedList()
-      await loadCatalogItems()
       if itemDeletionDraft == nil || itemDeletionDraft?.source.id != selectedAppearance?.source.id {
         await loadSelectedAppearance()
       }
@@ -308,8 +299,8 @@ struct SavedPlannerView: View {
     #else
       TabView(selection: sectionSelection) {
         Tab("Lists", systemImage: "list.bullet", value: .lists) { plannerColumns }
-        Tab("Items", systemImage: "square.stack", value: .items) { catalogColumns }
-        Tab("Inbox", systemImage: "tray", value: .inbox) { catalogColumns }
+        Tab("Items", systemImage: "square.stack", value: .items) { catalogColumns(scope: .items) }
+        Tab("Inbox", systemImage: "tray", value: .inbox) { catalogColumns(scope: .inbox) }
         Tab("Calendar", systemImage: "calendar", value: .calendar) {
           calendarColumns
         }
@@ -329,9 +320,9 @@ struct SavedPlannerView: View {
     #endif
   }
 
-  private var catalogColumns: some View {
+  private func catalogColumns(scope: SavedItemCatalogScope) -> some View {
     NavigationSplitView(preferredCompactColumn: compactColumnSelection) {
-      itemCatalog
+      itemCatalog(scope: scope)
     } detail: {
       if let newItemDraft { newItemEditor(newItemDraft) } else { itemDetail }
     }
@@ -567,80 +558,40 @@ struct SavedPlannerView: View {
     selectedListId = firstList.id
   }
 
-  @ViewBuilder
-  private var itemCatalog: some View {
-    if let catalogItems {
-      SavedItemCatalog(
-        scope: catalogScope, items: catalogItems, selection: itemSelection,
-        filters: catalogFilters, searchText: catalogSearchText, sort: itemSort,
-        captureToolbarPlacement: secondaryToolbarPlacement,
-        canCreate: store.canCreate, create: { beginNewItem(listIdentifier: nil) },
-        capture: { captureEntryPoint = .global }
-      )
-      .overlay(alignment: .topTrailing) {
-        if isOpeningCatalog { ProgressView("Updating Items").controlSize(.small).padding() }
-      }
-      .safeAreaInset(edge: .top) { recoveryNotice }
-    } else if isOpeningCatalog {
-      ProgressView("Opening Items")
-    } else {
-      ContentUnavailableView {
-        Label("Items unavailable", systemImage: "exclamationmark.triangle")
-      } actions: {
-        Button("Try Again") { Task { await loadCatalogItems() } }
-      }
-    }
+  private func itemCatalog(scope: SavedItemCatalogScope) -> some View {
+    SavedItemCatalog(
+      store: store, scope: scope, isActive: selectedSection == (scope == .inbox ? .inbox : .items),
+      selection: itemSelection,
+      filters: scope == .inbox ? $inboxFilters : $itemFilters,
+      searchText: scope == .inbox ? $inboxSearchText : $itemSearchText,
+      sort: itemSort(scope: scope), captureToolbarPlacement: secondaryToolbarPlacement,
+      canCreate: store.canCreate, create: { beginNewItem(listIdentifier: nil) },
+      capture: { captureEntryPoint = .global }, didLoad: replaceDeletedCatalogSelection
+    )
+    .safeAreaInset(edge: .top) { recoveryNotice }
   }
 
-  private func loadCatalogItems() async {
-    guard store.isReady else { return }
-    isOpeningCatalog = true
-    let scope = catalogScope
-    let filters = catalogFilters.wrappedValue
-    let searchText = catalogSearchText.wrappedValue
-    let revision = store.changeRevision
-    let namespace = store.devicePreferenceNamespace
-    let sort = itemSort.wrappedValue
-    let loaded = await store.readItems(
-      scope: scope.queryValue, text: searchText, completion: filters.completion.queryValue,
-      archive: filters.archive.queryValue, categories: filters.categoryQuery,
-      tags: filters.tagQuery, lists: filters.listQuery,
-      hasAddress: filters.hasAddress, hasLinks: filters.hasLinks, scheduled: filters.scheduled,
-      sort: sort.queryValue)
-    guard !Task.isCancelled, catalogScope == scope, catalogFilters.wrappedValue == filters,
-      catalogSearchText.wrappedValue == searchText,
-      store.changeRevision == revision, store.devicePreferenceNamespace == namespace,
-      itemSort.wrappedValue == sort
-    else {
-      return
-    }
-    catalogItems = loaded
-    isOpeningCatalog = false
-    if let replacement = deletionReplacement, let loaded,
-      replacement.namespace == namespace, replacement.context == .items(scope),
+  private func replaceDeletedCatalogSelection(
+    scope: SavedItemCatalogScope, identity: SavedItemWindowIdentity, firstIdentifier: UUID?
+  ) {
+    guard let replacement = deletionReplacement,
+      replacement.namespace == identity.namespace, replacement.context == .items(scope),
+      identity.namespace == store.devicePreferenceNamespace,
+      identity.savedRevision == store.changeRevision,
       replacement.selectionGeneration == selectionGeneration,
       selectedSection == .items || selectedSection == .inbox,
-      selectedItemId == nil
-    {
-      deletionReplacement = nil
-      if usesAutomaticDeletionSelection {
-        selectedItemId = loaded.first?.id
-      } else {
-        preferredCompactColumn = .sidebar
-      }
+      catalogScope == scope, selectedItemId == nil
+    else { return }
+    deletionReplacement = nil
+    if usesAutomaticDeletionSelection {
+      selectedItemId = firstIdentifier
+    } else {
+      preferredCompactColumn = .sidebar
     }
   }
 
   private var catalogScope: SavedItemCatalogScope {
     selectedSection == .inbox ? .inbox : .items
-  }
-
-  private var catalogFilters: Binding<SavedItemFilters> {
-    catalogScope == .inbox ? $inboxFilters : $itemFilters
-  }
-
-  private var catalogSearchText: Binding<String> {
-    catalogScope == .inbox ? $inboxSearchText : $itemSearchText
   }
 
   private var listCatalogSort: Binding<SavedCatalogSort> {
@@ -650,8 +601,8 @@ struct SavedPlannerView: View {
       set: { catalogSortPreferences.select($0, for: key) })
   }
 
-  private var itemSort: Binding<SavedItemSort> {
-    let key = store.devicePreferenceNamespace.map { "planner.sort.\($0).\(catalogScope.rawValue)" }
+  private func itemSort(scope: SavedItemCatalogScope) -> Binding<SavedItemSort> {
+    let key = store.devicePreferenceNamespace.map { "planner.sort.\($0).\(scope.rawValue)" }
     return Binding(
       get: { sortPreferences.selection(for: key, default: SavedItemSort()) },
       set: { sortPreferences.select($0, for: key) })
@@ -808,7 +759,6 @@ struct SavedPlannerView: View {
 
   private func refreshAfterDeletionReview() {
     Task {
-      await loadCatalogItems()
       await loadListCatalog()
       await loadSelectedList()
       await loadSelectedItem()
@@ -1217,7 +1167,7 @@ struct SavedPlannerView: View {
           itineraryCatalog
         }
       } else if isItemSection {
-        itemCatalog
+        itemCatalog(scope: catalogScope)
       } else if let selectedList {
         Group {
           if let listItems {

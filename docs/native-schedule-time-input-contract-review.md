@@ -77,7 +77,7 @@ Start with one failing behavior at this agreed production interface, implement o
 
 The native form implements accepted Q10/Q11/Q13 for both endpoints. Module tests, real Core persistence checks and focused native journeys pass with exact source/product provenance. Existing scheduling/all-day/zone-only regressions and affected strict Swift/compiler checks pass. Inspect original captures and review Standards/Spec separately.
 
-Mac UI runtime, physical sync/account/Share, signing, performance and whole-app native polish retain their existing gates. Q94 label presentation and Q95 Item windows remain independent pending decisions. This contract review cannot close any of those gates.
+Mac UI runtime, physical sync/account/Share, signing, performance and whole-app native polish retain their existing gates. Q94 label presentation and Q95 Item windows retain their independent implementation and qualification gates; both choices are approved. This contract review cannot close any of those gates.
 
 ## Review choice
 

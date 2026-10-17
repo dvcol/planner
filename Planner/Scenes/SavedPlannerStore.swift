@@ -622,6 +622,11 @@ final class SavedPlannerStore {
       operationId: UUID()) != nil
   }
 
+  func makeItemWindow() -> SavedItemWindow? {
+    guard let planner, let session else { return nil }
+    return SavedItemWindow(planner: planner, session: session)
+  }
+
   func readItems(
     scope: PlannerItemQuery.Scope = .global, text: String = "",
     completion: PlannerItemQuery.Completion, archive: PlannerItemQuery.Archive,
