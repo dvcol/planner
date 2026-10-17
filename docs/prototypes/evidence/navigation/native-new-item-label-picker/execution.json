@@ -1,0 +1,202 @@
+{
+  "checks": [
+    {
+      "command": [
+        "xcrun",
+        "swift-format",
+        "lint",
+        "--strict",
+        "Planner/Scenes/SavedNewItemForm.swift",
+        "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "pnpm",
+        "dlx",
+        "markdownlint-cli2@0.23.3",
+        "--config",
+        "docs/prototypes/evidence/navigation/native-empty-recovery-graph/markdownlint.jsonc",
+        "docs/prototypes/native-new-item-label-picker.md"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "greenNativeFunctions": 6,
+  "greenFailures": 0,
+  "greenSkips": 0,
+  "sourceReviews": {
+    "standards": "no confirmed findings",
+    "spec": "no confirmed findings"
+  },
+  "originalCaptures": {
+    "phone-label-red": [
+      {
+        "filename": "A9CD7973-1EF0-42FE-9062-AA65569859C1.png",
+        "sha256": "a1aa9ddcd1b77bf65dd6c010d15b40d79cd7666e3e56471f09546def023e5b83",
+        "inspected": true
+      }
+    ],
+    "phone-label-green": [
+      {
+        "filename": "EB5DF9D1-0D2E-405E-A756-F7B3C78A95FF.png",
+        "sha256": "23c561f0c570b5233b48e18671b41180af5fda89f9df23074c6bed9c6602cc8a",
+        "inspected": true
+      },
+      {
+        "filename": "7D7F8F21-F5C5-4EE5-81D5-6FD282004EED.png",
+        "sha256": "d1d771a0df314df68ecd2041662f2db329247dd191e6f708607099bc4974b315",
+        "inspected": true
+      },
+      {
+        "filename": "5BE5746F-BEDA-449E-A162-7CB42ECC6BE4.png",
+        "sha256": "de05af1148d5106203e9b380c63efd153102005560bf1d33f9a87eb970ecaab2",
+        "inspected": true
+      },
+      {
+        "filename": "3452E4B9-849D-46E8-ACBC-7086A5C632FA.png",
+        "sha256": "6a6361ae7da6490f8eb6520f6b219f9c10adcab8d1fe3374a972b8e8c432cdb7",
+        "inspected": true
+      },
+      {
+        "filename": "54E21160-E0C9-4663-B270-C4ADF883C6C9.png",
+        "sha256": "55f96bd620232a79b07a89c68748b8d17a8dab168b1892e52c717835992cd588",
+        "inspected": true
+      },
+      {
+        "filename": "CBA04729-050B-4C9B-92CB-2979D193559E.png",
+        "sha256": "3de4d8afc2fc2ee341450e417c8d328fdab48be4c8d4623e5bd91a68b7a3cd76",
+        "inspected": true
+      },
+      {
+        "filename": "37EB049A-FAD5-46AA-B86F-F0E5B9CE3A62.png",
+        "sha256": "26e5d04953b671e25c880d0cec6e96159edeaf590ae030cdfaab4425eee8b513",
+        "inspected": true
+      },
+      {
+        "filename": "08FF2EC0-0AA0-4E2F-98DA-4DA5530A68E4.png",
+        "sha256": "3de4d8afc2fc2ee341450e417c8d328fdab48be4c8d4623e5bd91a68b7a3cd76",
+        "inspected": true
+      },
+      {
+        "filename": "D1C4F343-7FBE-46E2-BC52-ED1E66F5C8FE.png",
+        "sha256": "b78d537d9b0a5c65d87dc195d417354300a6582dd48bb4c17ed462eec2403612",
+        "inspected": true
+      },
+      {
+        "filename": "A3A32D09-9827-4412-93A7-EF59CBB9BEC5.png",
+        "sha256": "26e5d04953b671e25c880d0cec6e96159edeaf590ae030cdfaab4425eee8b513",
+        "inspected": true
+      }
+    ],
+    "tablet-label-compatibility": [
+      {
+        "filename": "887204B3-3899-4AE4-ADEA-2754EF48C9D6.png",
+        "sha256": "de4e0e20c510b6ab07c7048148fd0c3173440019d5868a578d3c766c96d97575",
+        "inspected": true
+      },
+      {
+        "filename": "51429EA2-5D66-4EE9-89D2-2B03D0353241.png",
+        "sha256": "edefa97f23e85d173f215608f290f7c2ba9baa85b06ae65bcc2a1b7e63a31b8e",
+        "inspected": true
+      },
+      {
+        "filename": "F64F981B-C09B-4A94-B8EA-C0BEBF1B81EC.png",
+        "sha256": "f8282ea47e5df9fda208ed619989102b79eba2a8ad46dc6c751e107b6a64e8dd",
+        "inspected": true
+      },
+      {
+        "filename": "A77DB3D1-E296-4824-A87F-AC8BC5074040.png",
+        "sha256": "b40c7af67e290038c5ee6277c644e085e319a0eb78a80d43b0b715117b67bc69",
+        "inspected": true
+      },
+      {
+        "filename": "91A3207E-6A79-4AB9-B289-277C64A6CE9A.png",
+        "sha256": "01b2d64a39814b631919cc6ecd0e048ff0e437ab6a12d6f79fa22fc58fa0cbf4",
+        "inspected": true
+      },
+      {
+        "filename": "2C61ACA7-DF8E-45A2-B18F-31E6D9CE67EB.png",
+        "sha256": "a924316fd62374b632f068f74406f4525cb598754b7dac5fa10d61b0b6616867",
+        "inspected": true
+      },
+      {
+        "filename": "B5C95867-CF47-4C20-81E5-EFE3032B8479.png",
+        "sha256": "6da73234d1190f2f18d853e80025ddd2beb951692bb769c5299272dc2e6c1d9d",
+        "inspected": true
+      },
+      {
+        "filename": "A7B0E488-6F43-474E-B594-4F27DA08FBFE.png",
+        "sha256": "1ac5197e2a15e7a5c7ea62a3dad5c8c55b9382b222d3f39f4f38f29c56544e0c",
+        "inspected": true
+      },
+      {
+        "filename": "F8E0D6C7-3514-4D5B-AF59-A4B6CD23A342.png",
+        "sha256": "6da73234d1190f2f18d853e80025ddd2beb951692bb769c5299272dc2e6c1d9d",
+        "inspected": true
+      },
+      {
+        "filename": "792DA437-FD93-410F-97B4-DF574293B126.png",
+        "sha256": "549ac46dafa9f29b0146fb9dd3a7ddbda89bed64a0647538825fbfeaf170f19b",
+        "inspected": true
+      },
+      {
+        "filename": "9E172A7C-49A4-43BB-8F68-616D67126980.png",
+        "sha256": "28b0b75fb5fffa7e54d04c3b919a797adcbf2f4edc9abbebb42b3825a6358e67",
+        "inspected": true
+      },
+      {
+        "filename": "74DF521E-5D7B-4F24-9700-6C44A66E10AE.png",
+        "sha256": "2efcd3f9feebe0c6998b520e96bede052f411ece07789528e883ce334ca2c056",
+        "inspected": true
+      },
+      {
+        "filename": "AFB49BC5-7A8C-4D3F-9305-01A5F575A50E.png",
+        "sha256": "d70068627d00eb7ea6caa3b69d58351f5c93425304914e4b0aff04ab3cadf63f",
+        "inspected": true
+      },
+      {
+        "filename": "1D88955E-42B3-482A-AD6A-EFD11ED25FE1.png",
+        "sha256": "938aee6074c04f1aae91b801d092cbf59c7c342e0676629d58972a1d328b5e78",
+        "inspected": true
+      }
+    ],
+    "phone-label-compatibility": [
+      {
+        "filename": "0E75DBE0-DA54-435B-AE2C-D6A4EEC3CC88.png",
+        "sha256": "855b659b23309e575516c9c1c3973899691e718557fc32ffea2840ef88179265",
+        "inspected": true
+      },
+      {
+        "filename": "C9E880A0-CCE0-4871-8211-E6F240128DAA.png",
+        "sha256": "5f27ce55b917f6c42d12867c64a5607a253356b61a418cad0c06ab042b033c18",
+        "inspected": true
+      },
+      {
+        "filename": "481DF602-0C17-4FF0-82B6-F6A19C3F70CB.png",
+        "sha256": "e0ab140cfa6d5bacc87f89bb931205c88078d04a48d83c7d103d6e59d9602c9e",
+        "inspected": true
+      },
+      {
+        "filename": "B4782ADD-0DF9-4468-A290-2E8E676263AA.png",
+        "sha256": "cf7ec48c8e315799adb71ec71f194ee3e9994c23fb9325959afa8569683b508c",
+        "inspected": true
+      }
+    ]
+  },
+  "limits": [
+    "Mac compiler only; no Mac runtime",
+    "No signing account or physical sync/Share credit",
+    "List-origin label selection follow-up",
+    "Whole-app polish remains open"
+  ]
+}

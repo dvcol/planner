@@ -1,0 +1,23 @@
+[
+  "xcodebuild",
+  "build-for-testing",
+  "-project",
+  "Planner.xcodeproj",
+  "-scheme",
+  "PlannerNavigation",
+  "-destination",
+  "generic/platform=iOS Simulator",
+  "-derivedDataPath",
+  "/private/tmp/PlannerQ93NativemobileDerivedData",
+  "-clonedSourcePackagesDirPath",
+  "/private/tmp/PlannerCalendarMonthSourcePackages",
+  "-disableAutomaticPackageResolution",
+  "-parallel-testing-enabled",
+  "NO",
+  "-jobs",
+  "1",
+  "-only-testing:PlannerNavigationUITests/SavedLabelsJourneyTests",
+  "CODE_SIGNING_ALLOWED=NO",
+  "ARCHS=arm64",
+  "ONLY_ACTIVE_ARCH=YES"
+]

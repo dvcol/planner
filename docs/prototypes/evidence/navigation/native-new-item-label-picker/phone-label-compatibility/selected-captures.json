@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "0E75DBE0-DA54-435B-AE2C-D6A4EEC3CC88.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives expanded layout_0_7057AB55-05B8-4CF5-B111-464449373F65.png",
+    "timestamp": 1792231840.736,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "C9E880A0-CCE0-4871-8211-E6F240128DAA.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Edited Item draft survives portrait navigation layout_0_074A09E8-6C04-44D9-9E30-5563DBCA880C.png",
+    "timestamp": 1792231812.117,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "481DF602-0C17-4FF0-82B6-F6A19C3F70CB.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Explicit navigation Save creates the Item before leaving_0_B16AE23A-6762-4CA5-AC1E-335AF36A3F5B.png",
+    "timestamp": 1792231994.105,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "B4782ADD-0DF9-4468-A290-2E8E676263AA.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Draft navigation choices after guarded Back_0_82FF1DAC-F678-4C06-BBC5-2060C38E3870.png",
+    "timestamp": 1792231968.358,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemNavigationRequiresExplicitChoiceAndKeepsInvalidDraftsOpen()"
+  }
+]

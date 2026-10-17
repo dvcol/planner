@@ -1,0 +1,12 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "A9CD7973-1EF0-42FE-9062-AA65569859C1.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Returning from New Item Category selection_0_26305CD4-DC81-4CE8-A3ED-D6680C00E9B2.png",
+    "timestamp": 1792230920.127,
+    "testIdentifier": "SavedLabelsJourneyTests/testNewItemLabelsRemainDraftUntilSaveAndRetainSharedIdentitiesAfterRelaunch()"
+  }
+]
