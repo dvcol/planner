@@ -1,0 +1,87 @@
+{
+  "policy": "Literal recorded function outcomes and whole invocation exits are separate. Compiler-only and setup failures supply no native runtime pass credit. Final qualified epochs are named in the report.",
+  "runs": [
+    {
+      "epoch": "mac-capture-shortcuts-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mac-capture-shortcuts-format-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-capture-shortcuts-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "mobile-capture-shortcuts-format-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "type": "compiler-only"
+    },
+    {
+      "epoch": "phone-capture-shortcuts",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerCaptureShortcutRuntime-phone-capture-shortcuts.xcresult",
+      "diagnosticOnly": true,
+      "correctedSourcePassCredit": false,
+      "sourceVariant": {
+        "reason": "Initial native-duration assertions reject optional grouping separators. Corrected-source native qualification remains required.",
+        "sourceSHA256": "d679e85efab4532fc9e4aa34c2e236855370074ee1e368922a5d526acf064ec1",
+        "remainingConfirmedControllerFindings": 1
+      },
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem",
+          "outcome": "failed",
+          "seconds": 59.215
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": false,
+      "skippedLines": []
+    },
+    {
+      "epoch": "phone-capture-shortcuts-format",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerCaptureShortcutRuntime-phone-capture-shortcuts-format.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem",
+          "outcome": "passed",
+          "seconds": 75.044
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    },
+    {
+      "epoch": "tablet-capture-shortcuts-format",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerCaptureShortcutRuntime-tablet-capture-shortcuts-format.xcresult",
+      "type": "native-runtime",
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem",
+          "outcome": "passed",
+          "seconds": 72.908
+        }
+      ],
+      "startedWithoutCompletedOutcome": [],
+      "timedOutFunctions": [],
+      "wholeInvocationPassed": true,
+      "skippedLines": []
+    }
+  ]
+}

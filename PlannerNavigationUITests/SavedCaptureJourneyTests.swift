@@ -262,7 +262,7 @@ final class SavedCaptureJourneyTests: XCTestCase {
         .matching(identifier: originalLinkIdentifier).firstMatch.waitForExistence(timeout: 5))
   }
 
-  func testReviewedTextAndLinkCaptureCancelsWithoutSavingAndPersistsOneInboxItem() throws {
+  func testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
@@ -273,25 +273,46 @@ final class SavedCaptureJourneyTests: XCTestCase {
     XCTAssertTrue(title.waitForExistence(timeout: 10))
     XCTAssertEqual(title.value as? String, "Saved link")
     replace(title, with: "Cancelled capture")
+    #if os(iOS)
+      title.typeText("\n")
+    #endif
+    chooseCaptureEstimateShortcut("Half-day (12 hours)", application: application)
+    assertCaptureEstimateQuantity("12", unit: "Hours", application: application)
     application.plannerElement("saved.capture.cancel").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["No matching items"].waitForExistence(timeout: 10))
 
     openCapture(application, input: "https://example.com/visit?source=original")
     XCTAssertTrue(title.waitForExistence(timeout: 10))
     replace(title, with: "Museum capture")
+    #if os(iOS)
+      title.typeText("\n")
+    #endif
+    chooseCaptureEstimateShortcut("Full-day (24 hours)", application: application)
+    assertCaptureEstimateQuantity("1", unit: "Days", application: application)
+    chooseCaptureEstimateShortcut("Weekend (48 hours)", application: application)
+    assertCaptureEstimateQuantity("2", unit: "Days", application: application)
     let notes = application.textFields["saved.capture.notes"]
     notes.activateForPlannerJourney()
     notes.typeText("Bring the museum pass")
     application.plannerElement("saved.capture.add").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Bring the museum pass"].waitForExistence(timeout: 10))
+    let estimate = application.descendants(matching: .any).matching(
+      identifier: "saved.item.estimate"
+    ).firstMatch
+    assertWeekendEstimate(estimate)
     let link = application.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.link.")
     ).firstMatch
     XCTAssertTrue(link.waitForExistence(timeout: 5))
     XCTAssertEqual(link.value as? String, "https://example.com/visit?source=original")
     let retainedLinkIdentifier = link.identifier
-    let attachment = XCTAttachment(screenshot: application.screenshot())
-    attachment.name = "Reviewed native capture saves owned notes and original link"
+    #if os(macOS)
+      let snapshot = application.windows.firstMatch.screenshot()
+    #else
+      let snapshot = application.screenshot()
+    #endif
+    let attachment = XCTAttachment(screenshot: snapshot)
+    attachment.name = "Reviewed native capture saves Weekend estimate notes and original link"
     attachment.lifetime = .keepAlways
     add(attachment)
 
@@ -312,6 +333,48 @@ final class SavedCaptureJourneyTests: XCTestCase {
       .matching(identifier: retainedLinkIdentifier).firstMatch
     XCTAssertTrue(restoredLink.waitForExistence(timeout: 5))
     XCTAssertEqual(restoredLink.value as? String, "https://example.com/visit?source=original")
+    assertWeekendEstimate(estimate)
+    XCTAssertEqual(
+      application.descendants(matching: .any).matching(
+        NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.schedule.")
+      ).count, 0)
+    application.plannerElement("saved.item.actions").activateForPlannerJourney()
+    application.plannerElement("Edit Item").activateForPlannerJourney()
+    let quantity = application.descendants(matching: .any).matching(
+      identifier: "saved.item.edit.estimate.quantity"
+    ).firstMatch
+    XCTAssertTrue(quantity.waitForPlannerValue("2"))
+    XCTAssertTrue(
+      application.plannerElement("saved.item.edit.estimate.unit").label.contains("Days"))
+    application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
+    assertWeekendEstimate(estimate)
+  }
+
+  private func assertWeekendEstimate(_ estimate: XCUIElement) {
+    let expected = NSPredicate(format: "value MATCHES %@", "2[\\s,]?880 minutes")
+    XCTAssertTrue(
+      XCTWaiter.wait(
+        for: [XCTNSPredicateExpectation(predicate: expected, object: estimate)], timeout: 5)
+        == .completed)
+  }
+
+  private func chooseCaptureEstimateShortcut(_ title: String, application: XCUIApplication) {
+    let shortcuts = application.plannerElement("saved.capture.estimate.shortcuts")
+    XCTAssertTrue(shortcuts.waitForPlannerHittability())
+    shortcuts.activateForPlannerJourney()
+    let choice = application.plannerElement(title)
+    XCTAssertTrue(choice.waitForExistence(timeout: 5))
+    choice.activateForPlannerJourney()
+  }
+
+  private func assertCaptureEstimateQuantity(
+    _ quantity: String, unit: String, application: XCUIApplication
+  ) {
+    let control = application.descendants(matching: .any).matching(
+      identifier: "saved.capture.estimate.quantity"
+    ).firstMatch
+    XCTAssertTrue(control.waitForPlannerValue(quantity))
+    XCTAssertTrue(application.plannerElement("saved.capture.estimate.unit").label.contains(unit))
   }
 
   private func openItems(_ application: XCUIApplication) {

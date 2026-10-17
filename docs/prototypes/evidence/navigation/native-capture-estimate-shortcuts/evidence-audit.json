@@ -1,0 +1,13 @@
+{
+  "finalCompilerInputsPerPlatform": 945,
+  "frozenRuntimeInputsPerInvocation": 469,
+  "verifiedProductsPerPlatform": 6,
+  "passingFunctionsPerPlatform": {
+    "phone": 1,
+    "tablet": 1,
+    "mac": 0
+  },
+  "passingNativeFunctionInvocations": 2,
+  "retainedIndividuallyInspectedPNGs": 2,
+  "scope": "Capture native estimate shortcuts, cancellation without saving, exact saved minutes and display unit through relaunch, retained notes/bookmark identity and one Inbox Item. Production code unchanged. Mac compiler-only; no new Mac runtime, physical/account/CloudKit, accessibility or performance qualification."
+}

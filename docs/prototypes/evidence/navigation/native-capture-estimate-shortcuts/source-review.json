@@ -1,0 +1,18 @@
+{
+  "baseline": "f95b2fc780c8c78a346836f244e94894f959b3c9",
+  "sourceSHA256": {
+    "PlannerNavigationUITests/SavedCaptureJourneyTests.swift": "07e7e0c8ce4188352f254d3e5e18cec249bad393ff2e5ddb5d49802a913a5fcc"
+  },
+  "runtimeQualification": "Corrected-source runtime pending; source reviews supply no runtime credit.",
+  "resolvedFinding": "Initial exact ungrouped minute comparisons rejected native separators; all three now use the existing full-match literal pattern with optional grouping.",
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "No remaining Standards/controller finding after grouping-only recheck. Original cancellation, one Inbox Item, notes, bookmark identity, display unit and no-Schedule assertions remain intact."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "report": "All three saved-minute checks require full match of2880 minutes with optional native grouping. No remaining finding; runtime pending."
+  }
+}

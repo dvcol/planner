@@ -1,0 +1,5 @@
+{
+  "reason": "Initial native-duration assertions reject optional grouping separators. Corrected-source native qualification remains required.",
+  "sourceSHA256": "d679e85efab4532fc9e4aa34c2e236855370074ee1e368922a5d526acf064ec1",
+  "remainingConfirmedControllerFindings": 1
+}

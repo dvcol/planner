@@ -1,0 +1,16 @@
+{
+  "baseline": "f95b2fc780c8c78a346836f244e94894f959b3c9",
+  "sourceSHA256": {
+    "PlannerNavigationUITests/SavedCaptureJourneyTests.swift": "07e7e0c8ce4188352f254d3e5e18cec249bad393ff2e5ddb5d49802a913a5fcc"
+  },
+  "standards": {
+    "reviewer": "catalog_standards_review",
+    "remainingConfirmedFindings": 0,
+    "report": "No remaining confirmed Standards or evidence findings. Raw phone75.044/tablet72.908s passes and diagnostic59.215s failure, compiler/runtime source and product hashes, lint records and two captures verified. Mac compilation-only and report links correct. Manifest assembled and checked subsequently by primary agent."
+  },
+  "specification": {
+    "reviewer": "catalog_spec_review",
+    "remainingConfirmedFindings": 0,
+    "report": "No remaining confirmed Spec, oracle or evidence finding. Current source/product/lint/capture hashes and literal outcomes support Capture-only qualification. No new Core, HTTP, physical, Mac runtime or whole-app credit. Manifest assembled and checked subsequently by primary agent."
+  }
+}
