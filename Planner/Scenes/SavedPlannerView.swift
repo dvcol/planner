@@ -964,6 +964,7 @@ struct SavedPlannerView: View {
           recordSelectionChange()
           appearanceChangeMessage = nil
           selectedAppearanceIdentity = .listMembership(listId: listId, membershipId: identifier)
+          preferredCompactColumn = .detail
         }
       })
   }

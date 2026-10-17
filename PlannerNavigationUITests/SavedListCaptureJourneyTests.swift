@@ -164,8 +164,17 @@ final class SavedListCaptureJourneyTests: XCTestCase {
       if !create.waitForExistence(timeout: 3) || !create.isHittable {
         showListsSidebar(application)
       }
-      XCTAssertTrue(create.waitForExistence(timeout: 5))
-      create.activateForPlannerJourney()
+      if create.exists && create.isHittable {
+        create.activateForPlannerJourney()
+      } else {
+        let overflow = application.navigationBars["Planner"].buttons["OverflowBarButtonItem"]
+          .firstMatch
+        XCTAssertTrue(overflow.waitForPlannerHittability())
+        overflow.activateForPlannerJourney()
+        let nativeCreate = application.plannerElement("New List")
+        XCTAssertTrue(nativeCreate.waitForExistence(timeout: 5))
+        nativeCreate.activateForPlannerJourney()
+      }
     #endif
     let field = application.textFields["saved.list.name"]
     XCTAssertTrue(field.waitForExistence(timeout: 5))

@@ -1,5 +1,6 @@
 import CoreTransferable
 import PlannerCore
+import PlannerPreviews
 import SwiftUI
 import UniformTypeIdentifiers
 
@@ -15,6 +16,7 @@ import UniformTypeIdentifiers
   }
 
   struct SavedMacMembershipTable: View {
+    @Environment(PlannerPreviews.self) private var previews
     let store: SavedPlannerStore
     let list: PlannerListSourceRead
     let items: [SavedPlannerItem]
@@ -40,6 +42,8 @@ import UniformTypeIdentifiers
                   appearance, done: item.row.effectiveDone != true)
               }
             }
+            .environment(store)
+            .environment(previews)
             .contextMenu {
               Button("Move to Beginning") { reorder(item.id, placement: .first) }
                 .disabled(!canReorderMemberships || items.first?.id == item.id)

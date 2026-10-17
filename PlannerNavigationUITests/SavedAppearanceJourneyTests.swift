@@ -2654,6 +2654,137 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     XCTAssertNotEqual(appearance.identifier, sourceIdentifier)
   }
 
+  func testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    #if os(iOS)
+      addTeardownBlock {
+        await MainActor.run { XCUIDevice.shared.orientation = .portrait }
+      }
+      XCUIDevice.shared.orientation = .landscapeLeft
+    #endif
+    application.launchSavedPlannerJourney()
+    createList("Other", application: application)
+    createList("Origin", application: application)
+    let origin = application.savedPlannerListRow("Origin")
+    revealSidebarIfNeeded(application, element: origin)
+    let listIdentifier = origin.identifier
+    origin.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    openNewItemInList(application)
+    let fields = [
+      ("saved.item.title", "Resizable visit"),
+      ("saved.item.subtitle", "Keep the original destination"),
+      ("saved.item.notes", "Preserve these notes through layout changes"),
+    ]
+    for (identifier, value) in fields {
+      let field = application.textFields[identifier]
+      XCTAssertTrue(field.waitForExistence(timeout: 5))
+      field.activateForPlannerJourney()
+      field.typeText(value)
+    }
+    #if os(macOS)
+      let window = application.windows.firstMatch
+      let originalWidth = window.frame.width
+      addTeardownBlock {
+        await MainActor.run {
+          guard window.exists else { return }
+          SavedAppearanceJourneyTests.resizePlannerWindow(window, width: originalWidth)
+        }
+      }
+      Self.resizePlannerWindow(window, width: 860)
+      assertNewItemFields(fields, application: application)
+      recordScreenshot(application, name: "Edited Item draft survives a narrow Mac window")
+      let hideSidebar = window.buttons["Hide Sidebar"]
+      XCTAssertTrue(hideSidebar.waitForExistence(timeout: 5))
+      hideSidebar.click()
+      assertNewItemFields(fields, application: application)
+      let showSidebar = window.buttons["Show Sidebar"]
+      XCTAssertTrue(showSidebar.waitForExistence(timeout: 5))
+      showSidebar.click()
+      Self.resizePlannerWindow(window, width: 1200)
+    #else
+      waitForPlannerWindowOrientation(application, landscape: true)
+      assertNewItemFields(fields, application: application)
+      XCUIDevice.shared.orientation = .portrait
+      waitForPlannerWindowOrientation(application, landscape: false)
+      assertNewItemFields(fields, application: application)
+      recordScreenshot(application, name: "Edited Item draft survives portrait navigation layout")
+      XCUIDevice.shared.orientation = .landscapeLeft
+      waitForPlannerWindowOrientation(application, landscape: true)
+    #endif
+    assertNewItemFields(fields, application: application)
+    XCTAssertFalse(application.windows.firstMatch.sheets.buttons["Keep Editing"].exists)
+    recordScreenshot(application, name: "Edited Item draft survives expanded layout")
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    XCTAssertTrue(application.textFields["saved.item.title"].waitForNonExistence(timeout: 10))
+    openList("Origin", itemTitle: "Resizable visit", application: application)
+    let appearances = application.savedPlannerItemRows("Resizable visit")
+    XCTAssertEqual(appearances.count, 1)
+    let appearance = appearances.firstMatch
+    let appearanceIdentifier = appearance.identifier
+    XCTAssertTrue(appearanceIdentifier.hasPrefix("saved.appearance."))
+    appearance.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["In Origin"].waitForExistence(timeout: 10))
+    XCTAssertTrue(application.staticTexts["Keep the original destination"].exists)
+    XCTAssertTrue(application.staticTexts["Preserve these notes through layout changes"].exists)
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Origin", itemTitle: "Resizable visit", application: application)
+    XCTAssertEqual(appearances.count, 1)
+    XCTAssertEqual(
+      application.savedPlannerItemRows("Resizable visit").firstMatch.identifier,
+      appearanceIdentifier)
+    openCatalogSection("Items", application: application)
+    XCTAssertEqual(application.savedPlannerItemRows("Resizable visit").count, 1)
+    openSection("Lists", application: application)
+    let other = application.savedPlannerListRow("Other")
+    revealSidebarIfNeeded(application, element: other)
+    XCTAssertEqual(application.savedPlannerListRow("Origin").identifier, listIdentifier)
+    other.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+  }
+
+  private func assertNewItemFields(
+    _ fields: [(String, String)], application: XCUIApplication
+  ) {
+    XCTAssertTrue(application.plannerElement("saved.item.save").waitForPlannerHittability())
+    XCTAssertTrue(application.textFields["saved.item.notes"].waitForPlannerHittability())
+    for (identifier, value) in fields {
+      XCTAssertTrue(application.textFields[identifier].waitForPlannerValue(value))
+    }
+  }
+
+  #if os(iOS)
+    private func waitForPlannerWindowOrientation(
+      _ application: XCUIApplication, landscape: Bool
+    ) {
+      let rotated = NSPredicate { _, _ in
+        let frame = application.windows.firstMatch.frame
+        return landscape ? frame.width > frame.height : frame.height > frame.width
+      }
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [XCTNSPredicateExpectation(predicate: rotated, object: application)], timeout: 5),
+        .completed, "Planner's window must actually reach the requested orientation.")
+    }
+  #endif
+
+  #if os(macOS)
+    private static func resizePlannerWindow(_ window: XCUIElement, width: CGFloat) {
+      let edge = window.coordinate(withNormalizedOffset: .init(dx: 1, dy: 0.8))
+        .withOffset(.init(dx: -1, dy: 0))
+      let target = edge.withOffset(.init(dx: width - window.frame.width, dy: 0))
+      edge.click(forDuration: 0.1, thenDragTo: target)
+      let resized = NSPredicate { _, _ in abs(window.frame.width - width) < 8 }
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [XCTNSPredicateExpectation(predicate: resized, object: window)], timeout: 5),
+        .completed, "Planner's own window must actually reach the requested width.")
+    }
+  #endif
+
   private func attemptDraftNavigation(_ application: XCUIApplication) {
     #if os(iOS)
       if application.windows.firstMatch.frame.width < 600 {
@@ -2733,6 +2864,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     recordScreenshot(
       application, name: "Confirmed Item deletion selects the first visible survivor")
     openCatalogSection("Items", application: application)
+    XCTAssertTrue(surviving.waitForExistence(timeout: 10))
     XCTAssertFalse(removed.exists)
     XCTAssertEqual(surviving.identifier, survivingIdentifier)
     XCTAssertTrue(application.savedPlannerItemRows("Bravo").firstMatch.exists)
@@ -2924,10 +3056,27 @@ final class SavedAppearanceJourneyTests: XCTestCase {
       ).firstMatch
       let deletingWindow = deleteSourceInAnotherWindow(
         "Deleted", application: application, sourceKind: "item", closeAfterDeleting: false)
+      let windowDescriptions = application.windows.allElementsBoundByIndex.map {
+        "\($0.identifier): \($0.title)"
+      }.joined(separator: "\n")
+      let windows = XCTAttachment(string: windowDescriptions)
+      windows.name = "Planner window identities after source Item deletion"
+      windows.lifetime = .keepAlways
+      add(windows)
+      XCTAssertTrue(originalWindow.waitForExistence(timeout: 5), windowDescriptions)
       XCTAssertTrue(originalWindow.staticTexts["In Context"].waitForExistence(timeout: 10))
       XCTAssertTrue(originalWindow.staticTexts["The surviving contextual Item"].exists)
       XCTAssertFalse(originalWindow.staticTexts["The global catalog stays separate"].exists)
-      XCTAssertEqual(surviving.identifier, survivingIdentifier)
+      let replacement = originalWindow.descendants(matching: .any).matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@", "saved.appearance.", "Birch")
+      ).firstMatch
+      XCTAssertTrue(replacement.waitForExistence(timeout: 5))
+      XCTAssertEqual(replacement.identifier, survivingIdentifier)
+      let hierarchy = XCTAttachment(string: originalWindow.debugDescription)
+      hierarchy.name = "Original List window after source Item deletion"
+      hierarchy.lifetime = .keepAlways
+      add(hierarchy)
       deletingWindow.buttons["_XCUI:CloseWindow"].click()
       XCTAssertTrue(deletingWindow.waitForNonExistence(timeout: 10))
       recordScreenshot(
@@ -3172,11 +3321,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
   }
 
   private func recordScreenshot(_ application: XCUIApplication, name: String) {
-    #if os(macOS)
-      let screenshot = application.windows.firstMatch.screenshot()
-    #else
-      let screenshot = application.screenshot()
-    #endif
+    let screenshot = application.windows.firstMatch.screenshot()
     let attachment = XCTAttachment(screenshot: screenshot)
     attachment.name = name
     attachment.lifetime = .keepAlways
