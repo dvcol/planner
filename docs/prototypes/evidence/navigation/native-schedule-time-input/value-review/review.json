@@ -1,0 +1,26 @@
+{
+  "scope": "Immutable eight-test real-Foundation value module, before native form integration",
+  "snapshot": "/private/tmp/PlannerClockInputValueReview",
+  "sourceHashes": {
+    "Planner/Scenes/SavedScheduleTimeInput.swift": "b52f7588034587dbbca55462b2f843f183bed3bc1596414caa3efcea1d639fe1",
+    "PlannerMCPTests/SavedScheduleTimeInputTests.swift": "b3f285fcf1cad75410ad90fc05c5646bd581634d2953b547044159579799d395",
+    "docs/native-schedule-time-input-contract-review.md": "c5a96a6f5e8831216027947b3624fe796a5423e5af63e0663967ecec46a64a06"
+  },
+  "standards": {
+    "agent": "/root/catalog_standards_review",
+    "confirmedFindings": []
+  },
+  "spec": {
+    "agent": "/root/catalog_spec_review",
+    "confirmedFindings": [],
+    "snapshotHashesVerified": true
+  },
+  "excluded": [
+    "Core persistence qualification",
+    "Native form integration",
+    "Native UI qualification",
+    "Mac UI runtime",
+    "Physical devices"
+  ],
+  "qualificationBoundary": "Value-only snapshot; later integrated snapshot review is recorded separately."
+}

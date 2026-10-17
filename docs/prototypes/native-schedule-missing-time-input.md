@@ -1,6 +1,6 @@
 # Native nonexistent-time input
 
-Status: native Q10 silent substitution is reproduced on the represented iPad Simulator. Q96 remains unanswered and no replacement input model or new unit seam is implemented.
+Status: historical pre-Q96 diagnostic evidence. The human approved Q96 A on 17 October 2026. The [implementation report](native-schedule-time-input.md) now records the value module, real-Core qualification and native form integration in progress. Statements below about the then-proposed interface and old form describe that diagnostic epoch; they are not current pending approvals.
 
 ## Context and starting state
 

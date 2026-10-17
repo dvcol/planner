@@ -1,0 +1,8 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "3bfd1840f75146056d45012de5d9d03c82831b94",
+  "overlays": [
+    "Planner/Scenes/SavedScheduleTimeInput.swift",
+    "PlannerMCPTests/SavedScheduleTimeInputTests.swift"
+  ]
+}

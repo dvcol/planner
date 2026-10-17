@@ -1,0 +1,24 @@
+{
+  "inspectedIndividually": [
+    "D1DACFF5-E533-4B35-A725-FC5F76CFD0F2.png",
+    "2C8478A5-B315-4888-99C2-03D8AD116573.png",
+    "A68BA375-4CDB-40F0-A347-136BC7DDD974.png",
+    "5ED4B194-4E8A-4CA2-9816-97C1D565EFDB.png",
+    "D0E26496-5146-41B2-8939-F136A7AC94EB.png",
+    "C9C26FCC-452B-4D0F-B7D5-9A45970246EB.png",
+    "AEB57EEF-FEFE-4094-AD4F-26A9D4641168.png",
+    "9D1C959F-10B4-4D97-9C45-76FF2EE62BAA.png",
+    "F0DB8983-6467-4CDD-8B79-126ADCE78C5F.png"
+  ],
+  "observations": [
+    "Missing Start retains 8 March 2026 02:30, shows its warning and disabled Save.",
+    "Repeated Start shows Choose occurrence with disabled Save, then EDT UTC-04:00 or EST UTC-05:00 with enabled Save.",
+    "Reopened details retain the selected occurrence; row summaries use device display time.",
+    "Cancel keeps the Item unscheduled.",
+    "Top tabs, toolbar/search and repeated large detail title remain polish work."
+  ],
+  "limits": [
+    "Represented iPad portrait states only.",
+    "No supplied-end, phone, Mac UI, physical or whole-app acceptance inferred."
+  ]
+}

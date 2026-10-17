@@ -1,0 +1,6 @@
+[
+  "/Applications/Xcode.app/Contents/Developer/usr/bin/xctest",
+  "-XCTest",
+  "PlannerMCPTests.SavedScheduleTimeInputTests",
+  "/private/tmp/PlannerNativeItemWindowDerivedData/Build/Products/Debug/Planner.app/Contents/PlugIns/PlannerMCPTests.xctest"
+]

@@ -184,8 +184,10 @@ struct SavedScheduleForm: View {
   let sourceTitle: String
   let schedule: PlannerScheduleSourceRead?
   private let initialDatesAvailable: Bool
-  @State private var startInstant: Date
-  @State private var endInstant: Date
+  @State private var startCivilDate: Date
+  @State private var endCivilDate: Date
+  @State private var startTimeInput: SavedScheduleTimeInput
+  @State private var endTimeInput: SavedScheduleTimeInput
   @State private var isAllDay = false
   @State private var includesEnd = false
   @State private var planningTimeZone = TimeZone.current.identifier
@@ -202,8 +204,19 @@ struct SavedScheduleForm: View {
     let initialStart = Calendar.current.dateInterval(of: .minute, for: Date())?.start ?? Date()
     switch schedule?.content.form {
     case .timed(let start, let end, let planningTimeZone):
-      _startInstant = State(initialValue: start)
-      _endInstant = State(initialValue: end ?? start.addingTimeInterval(3600))
+      let timeZone = TimeZone(identifier: planningTimeZone) ?? .current
+      let startInput = SavedScheduleTimeInput(savedInstant: start, planningTimeZone: timeZone)
+      let endInput: SavedScheduleTimeInput
+      if let end {
+        endInput = SavedScheduleTimeInput(savedInstant: end, planningTimeZone: timeZone)
+      } else {
+        endInput = SavedScheduleTimeInput(
+          proposedInstant: start.addingTimeInterval(3600), planningTimeZone: timeZone)
+      }
+      _startTimeInput = State(initialValue: startInput)
+      _endTimeInput = State(initialValue: endInput)
+      _startCivilDate = State(initialValue: startInput.pickerValue)
+      _endCivilDate = State(initialValue: endInput.pickerValue)
       _includesEnd = State(initialValue: end != nil)
       _planningTimeZone = State(initialValue: planningTimeZone)
       initialDatesAvailable = true
@@ -216,47 +229,71 @@ struct SavedScheduleForm: View {
       let endDate = calendar.date(
         from: DateComponents(
           year: finalDate.year, month: finalDate.month, day: finalDate.day, hour: 12))
-      _startInstant = State(initialValue: startDate ?? initialStart)
-      _endInstant = State(initialValue: endDate ?? initialStart)
+      _startCivilDate = State(initialValue: startDate ?? initialStart)
+      _endCivilDate = State(initialValue: endDate ?? initialStart)
+      _startTimeInput = State(
+        initialValue: SavedScheduleTimeInput(
+          proposedInstant: startDate ?? initialStart, planningTimeZone: .gmt))
+      _endTimeInput = State(
+        initialValue: SavedScheduleTimeInput(
+          proposedInstant: endDate ?? initialStart, planningTimeZone: .gmt))
       _isAllDay = State(initialValue: true)
       _includesEnd = State(initialValue: end != nil)
       _planningTimeZone = State(initialValue: TimeZone.gmt.identifier)
       initialDatesAvailable = startDate != nil && endDate != nil
     case nil:
-      _startInstant = State(initialValue: initialStart)
-      _endInstant = State(initialValue: initialStart.addingTimeInterval(3600))
+      let startInput = SavedScheduleTimeInput(
+        proposedInstant: initialStart, planningTimeZone: .current)
+      let endInput = SavedScheduleTimeInput(
+        proposedInstant: initialStart.addingTimeInterval(3600), planningTimeZone: .current)
+      _startTimeInput = State(initialValue: startInput)
+      _endTimeInput = State(initialValue: endInput)
+      _startCivilDate = State(initialValue: startInput.pickerValue)
+      _endCivilDate = State(initialValue: endInput.pickerValue)
       initialDatesAvailable = true
     }
   }
 
-  private var planningCalendar: Calendar {
+  private var pickerCalendar: Calendar {
     var calendar = Calendar(identifier: .gregorian)
-    calendar.timeZone = TimeZone(identifier: planningTimeZone) ?? .current
+    calendar.timeZone = .gmt
     return calendar
   }
 
-  private var isValid: Bool {
-    guard initialDatesAvailable else { return false }
-    guard includesEnd else { return true }
-    guard isAllDay else { return endInstant > startInstant }
-    return planningCalendar.startOfDay(for: endInstant)
-      >= planningCalendar.startOfDay(for: startInstant)
-  }
+  private var isValid: Bool { scheduleForm != nil }
 
-  private var scheduleForm: PlannerScheduleForm {
+  private var scheduleForm: PlannerScheduleForm? {
+    guard initialDatesAvailable else { return nil }
     if isAllDay {
+      guard
+        !includesEnd
+          || pickerCalendar.startOfDay(for: endCivilDate)
+            >= pickerCalendar.startOfDay(for: startCivilDate)
+      else { return nil }
       return .allDay(
-        start: civilDate(for: startInstant), end: includesEnd ? civilDate(for: endInstant) : nil)
+        start: civilDate(for: startCivilDate), end: includesEnd ? civilDate(for: endCivilDate) : nil
+      )
     }
-    return .timed(
-      start: startInstant, end: includesEnd ? endInstant : nil, planningTimeZone: planningTimeZone)
+    guard let start = startTimeInput.resolvedInstant else { return nil }
+    guard includesEnd else {
+      return .timed(start: start, end: nil, planningTimeZone: planningTimeZone)
+    }
+    guard let end = endTimeInput.resolvedInstant, end > start else { return nil }
+    return .timed(start: start, end: end, planningTimeZone: planningTimeZone)
   }
 
-  private func civilDate(for instant: Date) -> PlannerCivilDate {
+  private func civilDate(for value: Date) -> PlannerCivilDate {
     .init(
-      year: planningCalendar.component(.year, from: instant),
-      month: planningCalendar.component(.month, from: instant),
-      day: planningCalendar.component(.day, from: instant))
+      year: pickerCalendar.component(.year, from: value),
+      month: pickerCalendar.component(.month, from: value),
+      day: pickerCalendar.component(.day, from: value))
+  }
+
+  private func civilMinute(date: Date, clock: Date) -> Date? {
+    var components = pickerCalendar.dateComponents([.era, .year, .month, .day], from: date)
+    components.hour = pickerCalendar.component(.hour, from: clock)
+    components.minute = pickerCalendar.component(.minute, from: clock)
+    return pickerCalendar.date(from: components)
   }
 
   var body: some View {
@@ -266,19 +303,25 @@ struct SavedScheduleForm: View {
           Text(sourceTitle).font(.headline)
           Toggle("All day", isOn: $isAllDay)
             .accessibilityIdentifier("saved.schedule.allDay")
-          DatePicker(
-            "Start", selection: $startInstant,
-            displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute]
-          )
-          .accessibilityIdentifier("saved.schedule.start")
+          if isAllDay {
+            DatePicker("Start", selection: $startCivilDate, displayedComponents: [.date])
+              .accessibilityIdentifier("saved.schedule.start")
+          } else {
+            SavedScheduleClockPicker(
+              title: "Start", input: $startTimeInput, planningTimeZone: planningTimeZone,
+              identifier: "saved.schedule.start")
+          }
           Toggle(isAllDay ? "Include end date" : "Include end time", isOn: $includesEnd)
             .accessibilityIdentifier("saved.schedule.hasEnd")
           if includesEnd {
-            DatePicker(
-              "End", selection: $endInstant,
-              displayedComponents: isAllDay ? [.date] : [.date, .hourAndMinute]
-            )
-            .accessibilityIdentifier("saved.schedule.end")
+            if isAllDay {
+              DatePicker("End", selection: $endCivilDate, displayedComponents: [.date])
+                .accessibilityIdentifier("saved.schedule.end")
+            } else {
+              SavedScheduleClockPicker(
+                title: "End", input: $endTimeInput, planningTimeZone: planningTimeZone,
+                identifier: "saved.schedule.end")
+            }
           }
           if !isAllDay {
             NavigationLink {
@@ -292,24 +335,45 @@ struct SavedScheduleForm: View {
           VStack(alignment: .leading, spacing: 4) {
             if !initialDatesAvailable {
               Text("This schedule's dates could not be opened.")
-            } else if !isValid {
-              Text(isAllDay ? "End date cannot precede Start." : "End must be later than Start.")
+            } else if isAllDay && !isValid {
+              Text("End date cannot precede Start.")
+            } else if !isAllDay, includesEnd,
+              let start = startTimeInput.resolvedInstant, let end = endTimeInput.resolvedInstant,
+              end <= start
+            {
+              Text("End must be later than Start.")
             } else if isAllDay {
               Text(includesEnd ? "Includes both selected dates." : "Covers the selected day.")
             } else if !includesEnd {
               Text("This schedule has no end time.")
             }
             if !isAllDay {
-              Text("Changing the time zone keeps the same moment.")
+              Text("Times use the selected planning time zone.")
+              Text("Changing the time zone keeps a resolved time's moment.")
             }
           }
         }
       }
       .formStyle(.grouped)
-      .environment(\.calendar, planningCalendar)
-      .environment(\.timeZone, TimeZone(identifier: planningTimeZone) ?? .current)
+      .environment(\.calendar, pickerCalendar)
+      .environment(\.timeZone, .gmt)
+      .onChange(of: planningTimeZone) { _, identifier in
+        guard let timeZone = TimeZone(identifier: identifier) else { return }
+        startTimeInput.changePlanningTimeZone(timeZone)
+        endTimeInput.changePlanningTimeZone(timeZone)
+      }
       .onChange(of: isAllDay) { _, allDay in
-        if allDay { endInstant = startInstant }
+        if allDay {
+          startCivilDate = startTimeInput.pickerValue
+          endCivilDate = startCivilDate
+        } else {
+          if let value = civilMinute(date: startCivilDate, clock: startTimeInput.pickerValue) {
+            startTimeInput.setPickerValue(value)
+          }
+          if let value = civilMinute(date: endCivilDate, clock: endTimeInput.pickerValue) {
+            endTimeInput.setPickerValue(value)
+          }
+        }
       }
       .disabled(store.isSaving)
       .navigationTitle(
@@ -324,6 +388,7 @@ struct SavedScheduleForm: View {
         }
         ToolbarItem(placement: .confirmationAction) {
           Button("Save") {
+            guard let scheduleForm else { return }
             Task {
               let saved: Bool
               if let schedule {
@@ -359,5 +424,55 @@ struct SavedScheduleForm: View {
     #if os(macOS)
       .frame(minWidth: 440, minHeight: 300)
     #endif
+  }
+}
+
+private struct SavedScheduleClockPicker: View {
+  let title: String
+  @Binding var input: SavedScheduleTimeInput
+  let planningTimeZone: String
+  let identifier: String
+
+  var body: some View {
+    DatePicker(
+      title,
+      selection: Binding(get: { input.pickerValue }, set: { input.setPickerValue($0) }),
+      displayedComponents: [.date, .hourAndMinute]
+    )
+    .accessibilityIdentifier(identifier)
+    switch input.resolution {
+    case .unavailable:
+      Text("\(title) could not be resolved. Choose another date and time.")
+        .foregroundStyle(.red)
+    case .nonexistent:
+      Text("\(title) does not exist in this time zone. Choose another time.")
+        .foregroundStyle(.red)
+    case .repeated(let candidates):
+      Picker(
+        "\(title) occurrence",
+        selection: Binding<Date?>(
+          get: { input.selectedOccurrence },
+          set: { if let candidate = $0 { _ = input.selectOccurrence(candidate) } })
+      ) {
+        Text("Choose occurrence").tag(Optional<Date>.none)
+        ForEach(candidates, id: \.self) { candidate in
+          Text(occurrenceLabel(candidate)).tag(Optional(candidate))
+        }
+      }
+      .accessibilityIdentifier(identifier + ".occurrence")
+      if input.resolvedInstant == nil {
+        Text("\(title) occurs more than once. Choose its time-zone offset.")
+          .foregroundStyle(.secondary)
+      }
+    case .unique:
+      EmptyView()
+    }
+  }
+
+  private func occurrenceLabel(_ candidate: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.timeZone = TimeZone(identifier: planningTimeZone)
+    formatter.dateFormat = "zzz '· UTC'xxx"
+    return formatter.string(from: candidate)
   }
 }

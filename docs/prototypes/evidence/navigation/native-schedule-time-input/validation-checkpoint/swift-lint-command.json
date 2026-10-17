@@ -1,0 +1,10 @@
+[
+  "xcrun",
+  "swift-format",
+  "lint",
+  "--strict",
+  "Planner/Scenes/SavedScheduleTimeInput.swift",
+  "Planner/Scenes/SavedItemScheduleViews.swift",
+  "PlannerMCPTests/SavedScheduleTimeInputTests.swift",
+  "PlannerNavigationUITests/SavedItemJourneyTests.swift"
+]
