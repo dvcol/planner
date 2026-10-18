@@ -349,7 +349,7 @@ struct SavedScheduleForm: View {
             }
             if !isAllDay {
               Text("Times use the selected planning time zone.")
-              Text("Changing the time zone keeps a resolved time's moment.")
+              Text("Changing the time zone keeps the appointment at the same moment.")
             }
           }
         }

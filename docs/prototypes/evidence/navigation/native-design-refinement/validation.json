@@ -1,0 +1,10 @@
+{
+  "swiftLint": "swift-lint.json",
+  "markdownLint": "markdown-lint.json",
+  "whitespaceExit": 0,
+  "mobileCompiler": "native-refinement-final-appearance-build/exit.json",
+  "macCompiler": "native-refinement-final-mac-build/exit.json",
+  "passingNativeExecutions": 10,
+  "macRuntimeCredit": false,
+  "signingAccountChanges": false
+}

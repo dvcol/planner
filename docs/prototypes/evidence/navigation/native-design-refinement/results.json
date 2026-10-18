@@ -1,0 +1,82 @@
+[
+  {
+    "phase": "phone-refinement-light",
+    "tests": [
+      {
+        "name": "PlannerNavigationUITests.SavedItemJourneyTests testAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations",
+        "outcome": "passed",
+        "seconds": 55.865
+      },
+      {
+        "name": "PlannerNavigationUITests.SavedItemJourneyTests testCatalogCompletionWorksWithoutOpeningDetailsAndSurvivesRelaunch",
+        "outcome": "passed",
+        "seconds": 30.256
+      }
+    ],
+    "exitCode": 0
+  },
+  {
+    "phase": "tablet-refinement-dark",
+    "tests": [
+      {
+        "name": "PlannerNavigationUITests.SavedAppearanceJourneyTests testListCompletionStaysLocalWhileGlobalCompletionOverridesAndReopeningRestoresIt",
+        "outcome": "passed",
+        "seconds": 184.614
+      },
+      {
+        "name": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+        "outcome": "passed",
+        "seconds": 193.671
+      },
+      {
+        "name": "PlannerNavigationUITests.SavedItemJourneyTests testCatalogCompletionWorksWithoutOpeningDetailsAndSurvivesRelaunch",
+        "outcome": "passed",
+        "seconds": 29.479
+      },
+      {
+        "name": "PlannerNavigationUITests.SavedItemJourneyTests testDarkAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations",
+        "outcome": "passed",
+        "seconds": 56.858
+      }
+    ],
+    "exitCode": 0
+  },
+  {
+    "phase": "tablet-refinement-light-final",
+    "tests": [
+      {
+        "name": "PlannerNavigationUITests.SavedAppearanceJourneyTests testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation",
+        "outcome": "passed",
+        "seconds": 61.015
+      }
+    ],
+    "exitCode": 0
+  },
+  {
+    "phase": "tablet-refinement-contrast-final",
+    "tests": [
+      {
+        "name": "PlannerNavigationUITests.SavedAppearanceJourneyTests testListSelectionShowsContextualDetailsAndExplicitGlobalItemNavigation",
+        "outcome": "passed",
+        "seconds": 60.92
+      }
+    ],
+    "exitCode": 0
+  },
+  {
+    "phase": "phone-refinement-dark-final",
+    "tests": [
+      {
+        "name": "PlannerNavigationUITests.SavedItemJourneyTests testCatalogCompletionWorksWithoutOpeningDetailsAndSurvivesRelaunch",
+        "outcome": "passed",
+        "seconds": 30.802
+      },
+      {
+        "name": "PlannerNavigationUITests.SavedItemJourneyTests testDarkAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations",
+        "outcome": "passed",
+        "seconds": 56.298
+      }
+    ],
+    "exitCode": 0
+  }
+]

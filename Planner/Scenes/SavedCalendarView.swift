@@ -284,9 +284,14 @@ struct SavedCalendarView: View {
       } else if let entries {
         let matchingEntries = entries.filter { occurs($0, on: selectedDate) }.sorted(by: precedes)
         if matchingEntries.isEmpty {
-          ContentUnavailableView(
-            "No scheduled entries", systemImage: "calendar",
-            description: Text("Choose another date or schedule an Item or Itinerary."))
+          GroupBox {
+            Text("Choose another date or schedule an Item or Itinerary.")
+              .font(.subheadline)
+              .foregroundStyle(.secondary)
+              .frame(maxWidth: .infinity, alignment: .leading)
+          } label: {
+            Label("No scheduled entries", systemImage: "calendar")
+          }
         } else {
           Text(selectedDate, format: .dateTime.weekday().month().day()).font(.headline)
           ForEach(matchingEntries, id: \.schedule.id) { entry in

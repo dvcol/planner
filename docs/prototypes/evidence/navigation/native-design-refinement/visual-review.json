@@ -1,0 +1,66 @@
+{
+  "method": "Visual inspection of original native XCTest screen captures. No transformed pixels or assertion-only visual credit.",
+  "captures": [
+    {
+      "phase": "phone-refinement-light",
+      "file": "205F60FC-5C91-4770-BC68-CD99A741F49C.png",
+      "observation": "Compact native empty-agenda GroupBox and its entire description are visible above the system bottom tabs at the initial month position."
+    },
+    {
+      "phase": "phone-refinement-light",
+      "file": "5DE9451B-1ED7-43A7-AE80-7894D0C3F4D6.png",
+      "observation": "Plain native Item row has a distinct blue checked circle, struck-through title and separate navigation disclosure. No oversized rounded row card."
+    },
+    {
+      "phase": "phone-refinement-light",
+      "file": "B3A12422-867A-4800-9266-8312EEF35134.png",
+      "observation": "Landscape phone keeps native bottom tabs and readable selected notes. The scrolling Form continues beneath the translucent bar; full large-text/scroll acceptance is not established."
+    },
+    {
+      "phase": "tablet-refinement-dark",
+      "file": "0E1885D4-01F2-41FB-A7E2-5AFCFB32C9A7.png",
+      "observation": "Shared sidebar no longer repeats Planner below the toolbar; the collection uses plain selected rows while details remain grouped. All three panes are readable in dark landscape."
+    },
+    {
+      "phase": "tablet-refinement-dark",
+      "file": "F3326A2F-D713-4CC5-8575-B8B5ACCE1C17.png",
+      "observation": "Local Done row, native progress, notes and contextual details remain visible. The populated List title still inherits secondary Section-header styling; this observation prompted the explicit Color.primary correction."
+    },
+    {
+      "phase": "tablet-refinement-dark",
+      "file": "D89064FB-48B4-4D96-BA7C-73CD1C143858.png",
+      "observation": "Expanded rich draft retains readable dark grouped controls, labels, owned address and link fields. Origin heading remains visible in the adjoining content pane."
+    },
+    {
+      "phase": "tablet-refinement-dark",
+      "file": "A643909F-4E6F-439B-A802-E97384A5B2B2.png",
+      "observation": "Native mobile month selection and compact empty-agenda card are readable in dark mode beside the shared sidebar."
+    },
+    {
+      "phase": "tablet-refinement-light-final",
+      "file": "60ED948C-0146-4ECE-89DC-E1551F87FD54.png",
+      "observation": "Explicit Color.primary restores the populated List title to black in light mode. The orange missing-estimate message is low contrast here, prompting the subsequent primary-text/orange-icon correction."
+    },
+    {
+      "phase": "tablet-refinement-contrast-final",
+      "file": "1C65358D-8A8D-403B-B617-67B098D70CE8.png",
+      "observation": "Final light List heading and warning message use readable primary text; the warning symbol remains orange. Native progress, selected local row and grouped details remain clear."
+    },
+    {
+      "phase": "phone-refinement-dark-final",
+      "file": "1C992C4C-5853-47F2-8888-482C0039647C.png",
+      "observation": "Final dark Item catalog uses readable plain rows, explicit checked state and completed-title strike-through beside native bottom tabs."
+    },
+    {
+      "phase": "phone-refinement-dark-final",
+      "file": "EA9E231A-7CA1-454B-91B1-E8B781D2C00F.png",
+      "observation": "Final dark month agenda keeps its compact card and full guidance above the bottom tabs."
+    },
+    {
+      "phase": "phone-refinement-dark-final",
+      "file": "72756AAA-DC2B-47C9-BA20-AC08FFE6043D.png",
+      "observation": "Native dark New Item Form uses readable semantic surfaces and controls. Location extends beneath the translucent tab bar in this initial scroll position; large-text/complete scroll acceptance remains open."
+    }
+  ],
+  "limits": "Only named original captures have visual credit. Earlier tablet epochs precede final color corrections. Mac runtime, physical devices and full accessibility/scene-state acceptance remain open."
+}

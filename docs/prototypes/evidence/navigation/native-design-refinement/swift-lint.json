@@ -1,0 +1,28 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/Scenes/SavedCalendarView.swift",
+    "Planner/Scenes/SavedContainerEstimates.swift",
+    "Planner/Scenes/SavedItemFilters.swift",
+    "Planner/Scenes/SavedItemRowContent.swift",
+    "Planner/Scenes/SavedItemScheduleViews.swift",
+    "Planner/Scenes/SavedItemViews.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerNavigationUITests/SavedItemJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "output": "",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedCalendarView.swift": "326a8a60196369e3e18e45f944dbc3fae1b89a0a9042d2b153ae1291c5152cbd",
+    "Planner/Scenes/SavedContainerEstimates.swift": "a47649adcde55c8e4d5f9a2f72e6ee4d9b18ad92f7a1b6d8c41aa942767a71bc",
+    "Planner/Scenes/SavedItemFilters.swift": "03cfaae42496cf174888fd66582c7a5fc2befd5577353fd9e298497ca1224df0",
+    "Planner/Scenes/SavedItemRowContent.swift": "4627df1376361c9fea9a14050e2a9be35f6da73623cec0509beb5b6e14f87a2a",
+    "Planner/Scenes/SavedItemScheduleViews.swift": "a72111ba1e8f1165a901b66663eb5496edbb62bd4b6978dd650870488552c8e3",
+    "Planner/Scenes/SavedItemViews.swift": "63b45735187fe046a8e3bf375106dd351d1e9dbc088b2418f33ad1625cbe1cc5",
+    "Planner/Scenes/SavedPlannerView.swift": "1dccd8ab8ba3e850db64796dd75b5e752ad192d8ffc2a097808351b94d02bf58",
+    "PlannerNavigationUITests/SavedItemJourneyTests.swift": "025eb17bb74c69683e7e78d9ce2774beffdc6dd735c6e965a7354f74e1521773"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "/private/tmp/PlannerItemWindowMarkdownlint.json",
+    "docs/prototypes/native-design-refinement.md",
+    "docs/native-ui-polish.md"
+  ],
+  "exitCode": 0,
+  "output": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-design-refinement.md docs/native-ui-polish.md\nLinting: 2 files\nSummary: 0 issues in 0 files\nDone in 288ms using pnpm v12.10.1\n"
+}

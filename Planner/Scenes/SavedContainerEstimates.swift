@@ -51,11 +51,14 @@ struct SavedContainerEstimates: View {
   }
 
   private func warning(_ message: String, identifier: String) -> some View {
-    Label(message, systemImage: "exclamationmark.triangle")
-      .foregroundStyle(.orange)
-      .accessibilityElement(children: .ignore)
-      .accessibilityLabel(message)
-      .accessibilityIdentifier(accessibilityIdentifierPrefix + ".warning." + identifier)
+    Label {
+      Text(message).foregroundStyle(Color.primary)
+    } icon: {
+      Image(systemName: "exclamationmark.triangle").foregroundStyle(.orange)
+    }
+    .accessibilityElement(children: .ignore)
+    .accessibilityLabel(message)
+    .accessibilityIdentifier(accessibilityIdentifierPrefix + ".warning." + identifier)
   }
 
 }

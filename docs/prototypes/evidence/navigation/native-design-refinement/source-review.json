@@ -1,0 +1,5 @@
+{
+  "method": "Primary-agent source review against the user coding conventions and native UI request; not a new independent code-review run.",
+  "standards": "No new dependencies, test-only seams, fixed page colors or custom bar layers. Descriptive names, existing real-store commands, narrow checks.",
+  "spec": "Global catalog actions use source IDs and say everywhere; contextual List/Itinerary commands are unchanged. Existing selection/draft guards remain intact. Q97 native adoption and final release gates remain open."
+}

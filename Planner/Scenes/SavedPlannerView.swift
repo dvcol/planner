@@ -1061,7 +1061,7 @@ struct SavedPlannerView: View {
   private var plannerSidebar: some View {
     List(selection: sidebarSelection) {
       if usesSidebarNavigation {
-        Section("Planner") {
+        Section {
           NavigationLink(value: SavedPlannerSidebarSelection.lists) {
             Label("Lists", systemImage: "list.bullet")
           }
@@ -1285,6 +1285,7 @@ struct SavedPlannerView: View {
                     ).textCase(nil)
                   }
                 }
+                .listStyle(.plain)
                 .environment(\.editMode, $listEditMode)
               #endif
             }
