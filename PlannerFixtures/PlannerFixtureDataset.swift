@@ -18,6 +18,7 @@ enum PlannerFixtureDataset {
     case unavailableRecovery = "unavailable-recovery"
     case unavailableStore = "unavailable-store"
     case largeCollection = "large-collection"
+    case listWindows = "list-windows"
     case graphRecovery = "graph-recovery"
     case pinnedAddress = "pinned-address"
     case pinnedEmptyName = "pinned-empty-name"
@@ -73,6 +74,9 @@ enum PlannerFixtureDataset {
     }
     if scenario == .deletionRecovery {
       return try await PlannerDeletionRecoveryFixture.makeStore(directory: directory)
+    }
+    if scenario == .listWindows {
+      return try await PlannerListWindowFixture.makeStore(directory: directory)
     }
     if scenario == .largeCollection {
       return try await PlannerLargeCollectionFixture.makeStore(directory: directory)

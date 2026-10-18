@@ -1,0 +1,6 @@
+{
+  "method": "Read-only xcrun simctl io screenshot of the active test Simulator; no interaction.",
+  "file": "simulator-live-traversal.png",
+  "inspected": true,
+  "observation": "The eager-reader baseline retains Window Item 193 details and full 193-item progress while scrolling the List around Item 172."
+}

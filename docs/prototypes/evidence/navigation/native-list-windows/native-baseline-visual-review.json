@@ -1,0 +1,10 @@
+{
+  "source": "Eager native reader baseline; no moving-window or performance credit.",
+  "phase": "list-native-tablet-qualified-baseline",
+  "inspected": [
+    "5E72F68C-E159-4D3F-BD2D-381899DFA83B.png",
+    "155631D3-2CDC-47FE-8FD1-22CA0836E0F4.png",
+    "58779A9B-2916-43A6-8970-9D017F5960D1.png",
+    "simulator-live-traversal.png"
+  ]
+}
