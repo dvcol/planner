@@ -3,6 +3,120 @@ import XCTest
 @MainActor
 final class SavedBackupImportJourneyTests: XCTestCase {
   #if os(iOS)
+    func testRestoredOriginatingListRequiresFreshReviewBeforeSavingItsRetainedItemDraft() throws {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      guard application.windows.firstMatch.frame.width >= 600 else {
+        throw XCTSkip("The originating List must remain beside its unsaved editor.")
+      }
+      application.beginPlannerListCreation()
+      let name = application.textFields["saved.list.name"]
+      XCTAssertTrue(name.waitForExistence(timeout: 5))
+      name.activateForPlannerJourney()
+      name.typeText("Restored origin")
+      application.plannerElement("saved.list.save").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+      let origin = application.savedPlannerListRow("Restored origin")
+      if !origin.exists || !origin.isHittable {
+        application.plannerElement("Show Sidebar").activateForPlannerJourney()
+      }
+      XCTAssertTrue(origin.waitForExistence(timeout: 10))
+      let originalListIdentifier = origin.identifier
+      let backup = createAndExportTagBackup(application)
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      XCTAssertTrue(origin.waitForExistence(timeout: 10))
+      origin.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+      application.openSavedPlannerListAddMenu()
+      application.plannerElement("saved.list.createItem").activateForPlannerJourney()
+      let title = application.textFields["saved.item.title"]
+      let notes = application.textFields["saved.item.notes"]
+      XCTAssertTrue(title.waitForExistence(timeout: 5))
+      title.activateForPlannerJourney()
+      title.typeText("Retained restored visit")
+      notes.activateForPlannerJourney()
+      notes.typeText("Preserve these fields across explicit List restoration")
+      application.openSavedPlannerListActionsMenu()
+      application.plannerElement("saved.list.delete").activateForPlannerJourney()
+      let confirmation = application.plannerElement("saved.list.delete.confirm")
+      XCTAssertTrue(confirmation.waitForExistence(timeout: 10))
+      confirmation.activateForPlannerJourney()
+      XCTAssertTrue(confirmation.waitForNonExistence(timeout: 10))
+      XCTAssertEqual(title.value as? String, "Retained restored visit")
+      XCTAssertEqual(
+        notes.value as? String, "Preserve these fields across explicit List restoration")
+      openSettings(application)
+      selectBackup(backup.filename, application: application)
+      application.plannerElement("saved.import.mode").activateForPlannerJourney()
+      application.plannerElement("Overwrite").activateForPlannerJourney()
+      let restore = application.descendants(matching: .any).matching(
+        identifier: "saved.import.restore"
+      ).firstMatch
+      revealImportElement(restore, application: application)
+      restore.switches.firstMatch.activateForPlannerJourney()
+      let restorations = application.staticTexts["saved.import.summary.restorations"]
+      revealImportElement(restorations, application: application)
+      XCTAssertEqual(
+        XCTWaiter.wait(
+          for: [
+            XCTNSPredicateExpectation(
+              predicate: NSPredicate(format: "label == %@", "Restorations, 1"),
+              object: restorations)
+          ], timeout: 15), .completed)
+      recordImport(
+        application, name: "Manual backup explicitly reviews one restored originating List")
+      application.plannerElement("saved.import.confirm").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.descendants(matching: .any)["saved.import.applied"].waitForExistence(
+          timeout: 15))
+      application.plannerElement("saved.import.close").activateForPlannerJourney()
+      application.plannerElement("saved.settings.done").activateForPlannerJourney()
+      XCTAssertEqual(title.value as? String, "Retained restored visit")
+      XCTAssertEqual(
+        notes.value as? String, "Preserve these fields across explicit List restoration")
+      application.navigationBars["New Item"].staticTexts["New Item"].tap()
+      application.plannerElement("saved.item.save").activateForPlannerJourney()
+      let review = application.plannerElement("Use This List")
+      XCTAssertTrue(review.waitForExistence(timeout: 10))
+      XCTAssertTrue(
+        application.staticTexts[
+          "The original List changed. Save to Restored origin instead? Your draft is preserved."
+        ].exists)
+      recordImport(
+        application, name: "Restored List requires fresh destination review despite unchanged name")
+      review.activateForPlannerJourney()
+      XCTAssertTrue(title.exists)
+      XCTAssertEqual(title.value as? String, "Retained restored visit")
+      application.plannerElement("saved.item.save").activateForPlannerJourney()
+      XCTAssertTrue(title.waitForNonExistence(timeout: 10))
+      let appearance = application.savedPlannerItemRows("Retained restored visit").firstMatch
+      XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+      let appearanceIdentifier = appearance.identifier
+      XCTAssertTrue(appearanceIdentifier.hasPrefix("saved.appearance."))
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Lists")
+      XCTAssertTrue(origin.waitForExistence(timeout: 10))
+      XCTAssertEqual(origin.identifier, originalListIdentifier)
+      origin.activateForPlannerJourney()
+      XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+      XCTAssertEqual(appearance.identifier, appearanceIdentifier)
+      XCTAssertTrue(
+        application.plannerElement(
+          appearanceIdentifier.replacingOccurrences(
+            of: "saved.appearance.", with: "saved.appearance.completion.")
+        ).waitForPlannerValue("To do"))
+      appearance.activateForPlannerJourney()
+      XCTAssertTrue(
+        application.staticTexts["Preserve these fields across explicit List restoration"]
+          .waitForExistence(timeout: 10))
+      recordImport(
+        application,
+        name: "Restored originating List retains the reviewed Item and local Todo after relaunch")
+    }
+
     func testRealBackupSkipAndOverwriteKeepTagIdentityAfterRelaunch() throws {
       continueAfterFailure = false
       let application = XCUIApplication()
@@ -335,7 +449,7 @@ final class SavedBackupImportJourneyTests: XCTestCase {
       application.typeKey(",", modifierFlags: .command)
     #else
       let settings = application.plannerElement("saved.settings.open")
-      if !settings.waitForExistence(timeout: 2) {
+      if !settings.waitForExistence(timeout: 2) || !settings.isHittable {
         let sidebar = application.plannerElement("Show Sidebar")
         if sidebar.exists { sidebar.activateForPlannerJourney() }
       }

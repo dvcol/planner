@@ -1764,6 +1764,7 @@ struct SavedPlannerView: View {
     }
     pendingDraftNavigation = nil
     if let listIdentifier = draft.listIdentifier {
+      selectedListId = listIdentifier
       for reference in result.generatedReferences {
         if case .membership(let identifier, let list, let item) = reference,
           list.id == listIdentifier, item == source
