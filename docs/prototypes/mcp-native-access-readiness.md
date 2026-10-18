@@ -1,12 +1,12 @@
 # Native Agent Control readiness
 
-Refreshed on 18 October 2026 against `prototype/navigation`. Existing HTTP/Core tests establish transport and domain behavior; they do not establish an enabled native product or a selected-client connection.
+Refreshed on 18 October 2026 against `prototype/navigation`. Subsequent decision: Q100 B defers native Agent Control implementation until signing and native Mac automation are available. The controlled credential-I/O boundary in option A is not approved. Existing HTTP/Core tests establish transport and domain behavior; they do not establish an enabled native product or a selected-client connection.
 
 ## Current source and next step
 
 `PlannerApp` starts SwiftUI and owns `SavedPlannerStore`. The store owns its real Core facade/session. Production startup does not construct the existing request handler or loopback listener. There is no native Agent Control owner, menu-bar status/control or non-UI `--mcp-headers` branch. The accepted signed Keychain/App Group reader remains unimplemented.
 
-The [Q100 proposal](../native-agent-control-contract-review.md) declares the missing lifecycle owner and shared production credential I/O interface before tests. It reuses the current authorized Core context, handler/listener and accepted reader/security policy. Q100 approval is required at this new seam. Q98 itinerary windows and Q99 selected-row styling are independent pending decisions.
+The [Q100 proposal](../native-agent-control-contract-review.md) declares the missing lifecycle owner and shared production credential I/O interface before tests. It reuses the current authorized Core context, handler/listener and accepted reader/security policy. The human selected Q100 B, so this implementation waits for signing and working native Mac automation. Q98 A and Q99 A are approved independent work.
 
 Local app-hosted controller tests can use controlled results at the actual credential I/O boundary while exercising real Core and loopback HTTP. Actual signed storage/reader behavior remains required separately. This is the proposed staging, not a claim that the controller exists or signed access works. No plaintext or volatile production fallback is proposed.
 
@@ -30,11 +30,11 @@ This is no native UI, map, interaction or visual credit. No permission or signin
 
 | Requirement | Current evidence | Next dependency |
 | --- | --- | --- |
-| Native manual Enable/Stop and shared lifecycle owner | Absent from production source | Q100 interface confirmation, then TDD implementation |
+| Native manual Enable/Stop and shared lifecycle owner | Absent from production source | Q100 B: signing and working native Mac automation, then real signed/native TDD |
 | Menu-bar On/Off/Stop and last-window behavior | Absent from production source | Same owner and actual native qualification |
 | Same-executable protected credential reader | Approved declaration, no implementation | Shared credential boundary, then signed/runtime proof |
 | Four selected client routes | CLI availability and Codex config recognition only | Working native owner/reader and actual client calls |
 | Native Mac UI behavior | Current attempt starts zero Test Cases | Working XCTest automation environment |
 | App Group, protected Keychain, account/sync/Share and physical gates | Not established by this check | User-deferred signing/device setup and their required scenarios |
 
-[Source hashes, factual review and evidence hashes](evidence/mcp/native-access-readiness/) distinguish source inspection, configuration recognition and runtime failure. The proposal adds no tests or production implementation before Q100. This check closes no map ticket; all remaining acceptance gates stay in place.
+[Source hashes, factual review and evidence hashes](evidence/mcp/native-access-readiness/) distinguish source inspection, configuration recognition and runtime failure. Q100 B leaves this implementation deferred until signing and native Mac automation are available. This check closes no map ticket; all remaining acceptance gates stay in place.

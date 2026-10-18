@@ -1,6 +1,6 @@
 # Native itinerary presentation-window contract
 
-Status: proposed for Q98. No tests or implementation at the expanded interface are authorized by this proposal alone. Q95 and Q97 remain accepted for their existing Item, Inbox and standalone List behavior.
+Status: accepted Q98 A on 18 October 2026. The shared-loader expansion and its existing real-Core/native test boundaries are approved. Implementation and qualification remain required; Q95/Q97 behavior stays in force.
 
 ## Context and starting state
 
@@ -47,9 +47,9 @@ Items/Inbox, standalone List contents and both Item picker callers must migrate 
 
 ## Definition of ready and required TDD
 
-The pending decision confirms this expanded production interface and its existing real-Core app-hosted seam before any new tests. Use the existing `PlannerMCPTests` target with a disposable real local-only dataset. Native UI and public Core remain the other accepted seams. No private page/task inspection, database side channel, test-only delay, callback or initializer is added.
+The human accepted this expanded production interface and its existing real-Core app-hosted seam under Q98 A. Use the existing `PlannerMCPTests` target with a disposable real local-only dataset. Native UI and public Core remain the other accepted seams. No private page/task inspection, database side channel, test-only delay, callback or initializer is added.
 
-After confirmation, work one failing behavior at a time:
+Work one failing behavior at a time:
 
 - Migrate existing Item/Inbox/List tests to the typed presentation output without dropping behavior assertions, and requalify both Item pickers with offscreen selection and the existing mixed Item/List journey.
 - Open a repeated-entry itinerary with more than 64 children. Verify complete literal identities and route order, first-page hydration, full metadata and independent contextual summaries.
