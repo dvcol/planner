@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A8B3BCDA-A1E8-436F-9036-C0E90BA31BD8.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Released-page completion result viewport_0_D6EFAC56-1AB5-4863-A935-D508E3737939.png",
+    "timestamp": 1792291683.793,
+    "testIdentifier": "ListWindowJourneyTests/testCompletingALaterPageItemKeepsItsControlVisibleAfterRefresh()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "606704E9-071B-4EA6-9537-D6A085AF2C07.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Released-page completion result hierarchy_0_4FCE41FB-016F-4B8C-B08E-D2C7D78C188E.txt",
+    "timestamp": 1792291683.7,
+    "testIdentifier": "ListWindowJourneyTests/testCompletingALaterPageItemKeepsItsControlVisibleAfterRefresh()"
+  }
+]

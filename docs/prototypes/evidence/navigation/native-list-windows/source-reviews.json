@@ -1,5 +1,11 @@
 {
   "scope": "Shared loader checkpoint only; native List/Table adoption remains open.",
   "standards": "No confirmed hard standards breaches or material smell findings.",
-  "spec": "No confirmed Spec findings; typed identities, coherent header publication and cancellation guards match Q97."
+  "spec": "No confirmed Spec findings; typed identities, coherent header publication and cancellation guards match Q97.",
+  "nativeAdoption": {
+    "comparison": "Working changes since 90ce54f, reviewed separately from the loader checkpoint.",
+    "standards": "Self-review found no remaining material naming, test-boundary or speculative-interface violation. The private view extraction is needed to keep the SwiftUI modifier chain within compiler constraints.",
+    "spec": "Full typed membership identities drive native rows, matching counts and manual anchors; ready source metadata drives full progress and estimates. Selected details remain independent of presentation pages. Review caught a mobile restoration guard affecting Mac requests; it is now conditional on iOS.",
+    "limits": "This source review is not an independent agent review or Mac runtime proof. Phone and ordinary action regressions remain open."
+  }
 }

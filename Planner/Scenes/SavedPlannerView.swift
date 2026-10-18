@@ -26,6 +26,17 @@ private struct SavedDeletionReplacement {
   let selectionGeneration: UUID
 }
 
+private struct SavedListWindowInputs: Equatable {
+  let listIdentifier: UUID?
+  let namespace: String?
+  let revision: UUID
+  let filters: SavedItemFilters
+  let searchText: String
+  let sort: SavedItemSort
+  let isActive: Bool
+  let isReviewingDeletion: Bool
+}
+
 struct SavedPlannerView: View {
   #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -50,8 +61,12 @@ struct SavedPlannerView: View {
   @State private var itineraryPresentations: [UUID: SavedItineraryPresentation] = [:]
   @State private var itineraryColumnVisibility: NavigationSplitViewVisibility = .all
   @State private var selectedListId: UUID?
-  @State private var selectedList: PlannerListSourceRead?
-  @State private var listItems: [SavedPlannerItem]?
+  @State private var retainedListSource: PlannerListSourceRead?
+  @State private var listWindow: SavedItemWindow?
+  @State private var listWindowNamespace: String?
+  @State private var visibleMembershipIdentifiers: Set<UUID> = []
+  @State private var listScrollAnchor: UUID?
+  @State private var pendingListScrollAnchor: UUID?
   @State private var listFilters = SavedItemFilters()
   @State private var listSearchText = ""
   @State private var isOpeningList = false
@@ -105,7 +120,7 @@ struct SavedPlannerView: View {
     @State private var listEditMode: EditMode = .inactive
   #endif
 
-  var body: some View {
+  private var listLifecycleContent: some View {
     Group {
       if store.isReady {
         nativeLayout
@@ -129,145 +144,160 @@ struct SavedPlannerView: View {
     .task(id: store.isReady) { await loadListCatalog() }
     .task(id: listCatalogArchive) { await loadListCatalog() }
     .task(id: listCatalogSort.wrappedValue) { await loadListCatalog() }
-    .task(id: store.devicePreferenceNamespace) {
-      await loadListCatalog()
-      await loadSelectedList()
+    .task(id: store.devicePreferenceNamespace) { await loadListCatalog() }
+    .task(id: listWindowInputs) { await loadSelectedList() }
+    .task(id: visibleMembershipIdentifiers) {
+      guard let window = listWindow, window.state == .ready else { return }
+      #if os(iOS)
+        guard pendingListScrollAnchor == nil else { return }
+      #endif
+      let indices = Set(
+        listRows.filter { visibleMembershipIdentifiers.contains($0.id) }.map(\.index))
+      guard !indices.isEmpty else { return }
+      await window.requestRows(at: indices)
     }
-    .task(id: selectedListId) { await loadSelectedList() }
-    .task(id: listFilters) { await loadSelectedList() }
-    .task(id: listSearchText) { await loadSelectedList() }
-    .task(id: listSort.wrappedValue) { await loadSelectedList() }
+    .onChange(of: listWindow?.state) { _, state in
+      if state == .loading { pendingListScrollAnchor = listScrollAnchor }
+    }
+    .onDisappear {
+      listWindow?.cancel()
+      visibleMembershipIdentifiers = []
+    }
     #if os(iOS)
       .onChange(of: listSort.wrappedValue) {
         if listSort.wrappedValue.mode != .manual { listEditMode = .inactive }
       }
       .onChange(of: selectedListId) { listEditMode = .inactive }
     #endif
-    .task(id: selectedItemId) { await loadSelectedItem() }
-    .onChange(of: selectedItemId) {
-      if selectedItemId != nil { itemDeletionMessage = nil }
-    }
-    .onChange(of: selectedItineraryIdentifier) {
-      selectedItineraryRow = nil
-      if selectedItineraryIdentifier != nil { itineraryDeletionMessage = nil }
-    }
-    .onChange(of: calendarSelection) {
-      guard let selection = calendarSelection else {
-        calendarInspectorPresented = false
-        return
+  }
+
+  var body: some View {
+    listLifecycleContent
+      .task(id: selectedItemId) { await loadSelectedItem() }
+      .onChange(of: selectedItemId) {
+        if selectedItemId != nil { itemDeletionMessage = nil }
       }
-      calendarInspectorPresented = true
-      if selection.source.kind == .item {
-        if selectedItemId != selection.source.id {
-          selectedItem = nil
-          isOpeningItem = true
-          selectedItemId = selection.source.id
+      .onChange(of: selectedItineraryIdentifier) {
+        selectedItineraryRow = nil
+        if selectedItineraryIdentifier != nil { itineraryDeletionMessage = nil }
+      }
+      .onChange(of: calendarSelection) {
+        guard let selection = calendarSelection else {
+          calendarInspectorPresented = false
+          return
         }
-      } else if selection.source.kind == .itinerary {
-        selectedItineraryIdentifier = selection.source.id
+        calendarInspectorPresented = true
+        if selection.source.kind == .item {
+          if selectedItemId != selection.source.id {
+            selectedItem = nil
+            isOpeningItem = true
+            selectedItemId = selection.source.id
+          }
+        } else if selection.source.kind == .itinerary {
+          selectedItineraryIdentifier = selection.source.id
+        }
       }
-    }
-    .onChange(of: store.devicePreferenceNamespace) {
-      itineraryPresentations = [:]
-      calendarSelection = nil
-      recordSelectionChange()
-    }
-    .onReceive(store.sourceDeletions) { notice in
-      receiveSourceDeletion(notice)
-    }
-    .task(id: selectedAppearanceIdentity) { await loadSelectedAppearance() }
-    .task(id: store.changeRevision) {
-      if itemDeletionDraft == nil { await loadSelectedItem() }
-      await loadListCatalog()
-      await loadSelectedList()
-      if itemDeletionDraft == nil || itemDeletionDraft?.source.id != selectedAppearance?.source.id {
-        await loadSelectedAppearance()
+      .onChange(of: store.devicePreferenceNamespace) {
+        itineraryPresentations = [:]
+        calendarSelection = nil
+        recordSelectionChange()
       }
-    }
-    .sheet(isPresented: $showLabels) {
-      SavedLabelsView(store: store)
-    }
-    .sheet(isPresented: $showRecovery) { SavedRecoveryCopiesView(store: store) }
-    #if os(iOS)
-      .sheet(isPresented: $showSettings) { SavedPlannerSettingsView(store: store) }
-    #endif
-    .sheet(isPresented: $showNewList) {
-      SavedListForm(store: store) { source in
-        selectedSection = .lists
-        selectedListId = source.id
+      .onReceive(store.sourceDeletions) { notice in
+        receiveSourceDeletion(notice)
       }
-    }
-    .sheet(item: $listEditDraft) { draft in
-      SavedListForm(store: store, list: draft.list) { _ in }
-    }
-    .sheet(item: $captureEntryPoint) { entryPoint in
-      SavedCaptureForm(store: store, entryPoint: entryPoint) { source in
-        if case .global = entryPoint { selectedItemId = source.id }
+      .task(id: selectedAppearanceIdentity) { await loadSelectedAppearance() }
+      .task(id: store.changeRevision) {
+        if itemDeletionDraft == nil { await loadSelectedItem() }
+        await loadListCatalog()
+        if itemDeletionDraft == nil || itemDeletionDraft?.source.id != selectedAppearance?.source.id
+        {
+          await loadSelectedAppearance()
+        }
       }
-    }
-    .sheet(isPresented: $showAddItem) {
-      if let selectedList {
-        SavedAddItemForm(store: store, list: selectedList) {}
+      .sheet(isPresented: $showLabels) {
+        SavedLabelsView(store: store)
       }
-    }
-    .sheet(item: $membershipMoveDraft) { draft in
-      SavedMoveItemForm(store: store, draft: draft) { destination in
-        clearRemovedMembershipSelection(
-          draft.membershipIdentifier, listIdentifier: draft.sourceListIdentifier,
-          explanation: "The Item is now in \(destination.name).", detailTitle: "Item moved")
-      }
-    }
-    .sheet(item: $listAdditionDraft) { draft in
-      SavedAddToListForm(store: store, draft: draft)
-    }
-    .sheet(item: $itemEditDraft) { draft in
-      SavedEditItemForm(store: store, item: draft.item)
-    }
-    .sheet(item: $itemDeletionDraft, onDismiss: refreshAfterDeletionReview) { draft in
-      SavedSourceDeletionForm(store: store, draft: draft)
-    }
-    .sheet(item: $listDeletionDraft, onDismiss: refreshAfterDeletionReview) { draft in
-      SavedSourceDeletionForm(store: store, draft: draft)
-    }
-    .sheet(item: $itineraryDeletionDraft, onDismiss: refreshAfterDeletionReview) { draft in
-      SavedSourceDeletionForm(store: store, draft: draft)
-    }
-    .sheet(item: $bulkCompletionDraft) { draft in
-      SavedBulkCompletionForm(store: store, draft: draft)
-    }
-    .alert(
-      "Planner",
-      isPresented: Binding(
-        get: {
-          store.alertMessage != nil && itemEditDraft == nil && itemDeletionDraft == nil
-            && listDeletionDraft == nil && itineraryDeletionDraft == nil
-            && bulkCompletionDraft == nil
-            && !showLabels
-            && !showSettings
-            && newItemDraft == nil
-            && captureEntryPoint == nil
-            && (selectedSection != .itineraries || showNewList || newItemDraft != nil)
-        },
-        set: { if !$0 { store.alertMessage = nil } })
-    ) {
-      Button("OK") { store.alertMessage = nil }
-    } message: {
-      Text(store.alertMessage ?? "")
-    }
-    .confirmationDialog("Save changes to this Item?", isPresented: $showDraftNavigationReview) {
-      Button("Save") { Task { await saveNewItem(continuingNavigation: true) } }
-      Button("Discard", role: .destructive) { finishDraftNavigation() }
-      #if os(macOS)
-        Button("Keep Editing", role: .cancel) { pendingDraftNavigation = nil }
-      #else
-        Button("Keep Editing") { pendingDraftNavigation = nil }
+      .sheet(isPresented: $showRecovery) { SavedRecoveryCopiesView(store: store) }
+      #if os(iOS)
+        .sheet(isPresented: $showSettings) { SavedPlannerSettingsView(store: store) }
       #endif
-    } message: {
-      Text("Save this Item, discard the draft, or keep editing before leaving.")
-    }
-    #if os(macOS)
-      .frame(minWidth: 820, minHeight: 540)
-    #endif
+      .sheet(isPresented: $showNewList) {
+        SavedListForm(store: store) { source in
+          selectedSection = .lists
+          selectedListId = source.id
+        }
+      }
+      .sheet(item: $listEditDraft) { draft in
+        SavedListForm(store: store, list: draft.list) { _ in }
+      }
+      .sheet(item: $captureEntryPoint) { entryPoint in
+        SavedCaptureForm(store: store, entryPoint: entryPoint) { source in
+          if case .global = entryPoint { selectedItemId = source.id }
+        }
+      }
+      .sheet(isPresented: $showAddItem) {
+        if let selectedList {
+          SavedAddItemForm(store: store, list: selectedList) {}
+        }
+      }
+      .sheet(item: $membershipMoveDraft) { draft in
+        SavedMoveItemForm(store: store, draft: draft) { destination in
+          clearRemovedMembershipSelection(
+            draft.membershipIdentifier, listIdentifier: draft.sourceListIdentifier,
+            explanation: "The Item is now in \(destination.name).", detailTitle: "Item moved")
+        }
+      }
+      .sheet(item: $listAdditionDraft) { draft in
+        SavedAddToListForm(store: store, draft: draft)
+      }
+      .sheet(item: $itemEditDraft) { draft in
+        SavedEditItemForm(store: store, item: draft.item)
+      }
+      .sheet(item: $itemDeletionDraft, onDismiss: refreshAfterDeletionReview) { draft in
+        SavedSourceDeletionForm(store: store, draft: draft)
+      }
+      .sheet(item: $listDeletionDraft, onDismiss: refreshAfterDeletionReview) { draft in
+        SavedSourceDeletionForm(store: store, draft: draft)
+      }
+      .sheet(item: $itineraryDeletionDraft, onDismiss: refreshAfterDeletionReview) { draft in
+        SavedSourceDeletionForm(store: store, draft: draft)
+      }
+      .sheet(item: $bulkCompletionDraft) { draft in
+        SavedBulkCompletionForm(store: store, draft: draft)
+      }
+      .alert(
+        "Planner",
+        isPresented: Binding(
+          get: {
+            store.alertMessage != nil && itemEditDraft == nil && itemDeletionDraft == nil
+              && listDeletionDraft == nil && itineraryDeletionDraft == nil
+              && bulkCompletionDraft == nil
+              && !showLabels
+              && !showSettings
+              && newItemDraft == nil
+              && captureEntryPoint == nil
+              && (selectedSection != .itineraries || showNewList || newItemDraft != nil)
+          },
+          set: { if !$0 { store.alertMessage = nil } })
+      ) {
+        Button("OK") { store.alertMessage = nil }
+      } message: {
+        Text(store.alertMessage ?? "")
+      }
+      .confirmationDialog("Save changes to this Item?", isPresented: $showDraftNavigationReview) {
+        Button("Save") { Task { await saveNewItem(continuingNavigation: true) } }
+        Button("Discard", role: .destructive) { finishDraftNavigation() }
+        #if os(macOS)
+          Button("Keep Editing", role: .cancel) { pendingDraftNavigation = nil }
+        #else
+          Button("Keep Editing") { pendingDraftNavigation = nil }
+        #endif
+      } message: {
+        Text("Save this Item, discard the draft, or keep editing before leaving.")
+      }
+      #if os(macOS)
+        .frame(minWidth: 820, minHeight: 540)
+      #endif
   }
 
   @ViewBuilder
@@ -646,6 +676,7 @@ struct SavedPlannerView: View {
 
   private var canReorderMemberships: Bool {
     store.canCreate && selectedListId != nil && listSort.wrappedValue.mode == .manual
+      && listWindow?.state == .ready
   }
 
   @ViewBuilder
@@ -821,8 +852,11 @@ struct SavedPlannerView: View {
   private func clearDeletedListSelection(_ draft: SavedSourceDeletionDraft, review: PlannerReview) {
     if selectedListId == draft.source.id {
       selectedListId = nil
-      selectedList = nil
-      listItems = nil
+      retainedListSource = nil
+      listWindow?.cancel()
+      visibleMembershipIdentifiers = []
+      listScrollAnchor = nil
+      pendingListScrollAnchor = nil
       isOpeningList = false
       selectedAppearanceIdentity = nil
       selectedAppearance = nil
@@ -869,46 +903,93 @@ struct SavedPlannerView: View {
     isOpeningItem = false
   }
 
+  private var listWindowInputs: SavedListWindowInputs {
+    .init(
+      listIdentifier: selectedListId, namespace: store.devicePreferenceNamespace,
+      revision: store.changeRevision, filters: listFilters, searchText: listSearchText,
+      sort: listSort.wrappedValue, isActive: store.isReady && selectedSection == .lists,
+      isReviewingDeletion: selectedListId != nil && listDeletionDraft?.source.id == selectedListId)
+  }
+
+  /// Keep valid detail context during loading; ready metadata comes from the validated window.
+  private var selectedList: PlannerListSourceRead? {
+    guard let identifier = selectedListId,
+      listWindowNamespace == store.devicePreferenceNamespace
+    else { return nil }
+    if let window = listWindow, window.state == .ready,
+      let source = window.listSource, source.source.id == identifier
+    {
+      return source
+    }
+    guard retainedListSource?.source.id == identifier else { return nil }
+    return retainedListSource
+  }
+
+  private var listRows: [SavedMembershipWindowRow] {
+    guard let identifier = selectedListId, let window = listWindow, window.state == .ready,
+      listWindowNamespace == store.devicePreferenceNamespace
+    else { return [] }
+    return window.rowIdentities.enumerated().compactMap { index, identity in
+      guard case .appearance(let source, .listMembership(let owner, let membership)) = identity,
+        source.kind == .item, owner == identifier
+      else { return nil }
+      return .init(id: membership, index: index)
+    }
+  }
+
   private func loadSelectedList() async {
-    guard let identifier = selectedListId else {
-      selectedList = nil
-      listItems = nil
+    guard !Task.isCancelled else { return }
+    let inputs = listWindowInputs
+    guard inputs.isActive, let identifier = inputs.listIdentifier, let namespace = inputs.namespace
+    else {
+      listWindow?.cancel()
+      visibleMembershipIdentifiers = []
+      isOpeningList = false
+      if inputs.listIdentifier == nil || listWindowNamespace != inputs.namespace {
+        retainedListSource = nil
+        listScrollAnchor = nil
+        pendingListScrollAnchor = nil
+      }
+      return
+    }
+    if inputs.isReviewingDeletion {
       isOpeningList = false
       return
     }
-    if listDeletionDraft?.source.id == identifier { return }
     isOpeningList = true
-    let revision = store.changeRevision
-    let filters = listFilters
-    let searchText = listSearchText
-    let namespace = store.devicePreferenceNamespace
-    let sort = listSort.wrappedValue
-    if selectedList?.source.id != identifier {
-      selectedList = nil
-      listItems = nil
+    if listWindowNamespace != namespace || listWindow == nil {
+      listWindow?.cancel()
+      listWindow = store.makeItemWindow()
+      listWindowNamespace = namespace
+      retainedListSource = nil
     }
-    let loaded = await store.readList(identifier)
-    let loadedItems: [SavedPlannerItem]?
-    if loaded != nil {
-      loadedItems = await store.readListItems(
-        identifier, text: searchText, completion: filters.completion.queryValue,
-        archive: filters.archive.queryValue, categories: filters.categoryQuery,
-        tags: filters.tagQuery, lists: filters.listQuery,
-        hasAddress: filters.hasAddress, hasLinks: filters.hasLinks, scheduled: filters.scheduled,
-        sort: sort.queryValue)
+    if retainedListSource?.source.id != identifier {
+      retainedListSource = nil
+      listScrollAnchor = nil
+      pendingListScrollAnchor = nil
     } else {
-      loadedItems = nil
+      pendingListScrollAnchor = listScrollAnchor
     }
-    guard !Task.isCancelled, selectedListId == identifier, store.changeRevision == revision,
-      listFilters == filters, listSearchText == searchText,
-      store.devicePreferenceNamespace == namespace, listSort.wrappedValue == sort
-    else {
+    visibleMembershipIdentifiers = []
+    guard let window = listWindow else {
+      isOpeningList = false
       return
     }
-    selectedList = loaded
-    listItems = loadedItems
+    await window.reload(
+      query: .init(
+        scope: .list(identifier), text: inputs.searchText,
+        completion: inputs.filters.completion.queryValue,
+        archive: inputs.filters.archive.queryValue,
+        categories: inputs.filters.categoryQuery, tags: inputs.filters.tagQuery,
+        lists: inputs.filters.listQuery, hasAddress: inputs.filters.hasAddress,
+        hasLinks: inputs.filters.hasLinks, scheduled: inputs.filters.scheduled,
+        sort: inputs.sort.queryValue),
+      identity: .init(namespace: namespace, savedRevision: inputs.revision))
+    guard !Task.isCancelled, listWindowInputs == inputs, listWindow === window else { return }
     isOpeningList = false
-    guard let replacement = deletionReplacement, let loadedItems,
+    guard window.state == .ready, let source = window.listSource else { return }
+    retainedListSource = source
+    guard let replacement = deletionReplacement,
       replacement.namespace == namespace, replacement.context == .listItems(identifier),
       replacement.selectionGeneration == selectionGeneration,
       selectedSection == .lists, selectedAppearanceIdentity == nil
@@ -918,7 +999,7 @@ struct SavedPlannerView: View {
       preferredCompactColumn = .content
       return
     }
-    guard case .appearance(_, let appearance) = loadedItems.first?.row.identity else { return }
+    guard case .appearance(_, let appearance) = window.rowIdentities.first else { return }
     selectedAppearanceIdentity = appearance
   }
 
@@ -932,7 +1013,7 @@ struct SavedPlannerView: View {
       },
       set: { identifier in
         guard let listId = selectedListId, let identifier else {
-          if newItemDraft == nil { selectedAppearanceIdentity = nil }
+          if newItemDraft == nil, listWindow?.state == .ready { selectedAppearanceIdentity = nil }
           return
         }
         requestDraftNavigation {
@@ -1177,6 +1258,171 @@ struct SavedPlannerView: View {
     }
   }
 
+  @ViewBuilder
+  private func listContents(_ list: PlannerListSourceRead) -> some View {
+    if let window = listWindow {
+      switch window.state {
+      case .ready:
+        let rows = listRows
+        if rows.isEmpty {
+          VStack(spacing: 0) {
+            SavedListProgress(
+              listName: list.content.name, progress: list.progress, estimates: list.estimates,
+              manualEstimate: list.content.manualEstimate, matchingCount: 0,
+              isArchived: list.state.archived == true
+            ).padding()
+            ContentUnavailableView(
+              list.progress.totalCount == 0 ? "No items" : "No matching items",
+              systemImage: "checklist", description: appearanceChangeMessage.map { Text($0) })
+          }
+        } else {
+          #if os(macOS)
+            SavedMacMembershipTable(
+              store: store, list: list, window: window, rows: rows,
+              selection: membershipSelection, canReorderMemberships: canReorderMemberships,
+              visibilityChanged: setMembershipVisibility, retryMembership: retryMembership,
+              addToList: proposeListAddition,
+              moveMembership: { item in
+                proposeMembershipMove(item.id, itemTitle: item.row.title, list: list)
+              },
+              removeMembership: { membership in
+                removeMembership(membership, listIdentifier: list.source.id)
+              })
+          #else
+            ScrollViewReader { proxy in
+              List(selection: membershipSelection) {
+                Section {
+                  ForEach(rows) { row in
+                    membershipRow(row, list: list, window: window)
+                      .id(row.id)
+                      .onScrollVisibilityChange { visible in
+                        setMembershipVisibility(row.id, visible)
+                      }
+                  }
+                  .onMove { offsets, destination in
+                    moveMembership(from: offsets, to: destination, in: rows, listId: list.source.id)
+                  }
+                } header: {
+                  SavedListProgress(
+                    listName: list.content.name, progress: list.progress, estimates: list.estimates,
+                    manualEstimate: list.content.manualEstimate, matchingCount: rows.count,
+                    isArchived: list.state.archived == true
+                  ).textCase(nil)
+                }
+              }
+              .listStyle(.plain)
+              .accessibilityIdentifier("saved.list.contents")
+              .environment(\.editMode, $listEditMode)
+              .task(id: pendingListScrollAnchor) {
+                guard let anchor = pendingListScrollAnchor,
+                  let row = rows.first(where: { $0.id == anchor })
+                else {
+                  pendingListScrollAnchor = nil
+                  return
+                }
+                /** Resolve the anchor page before restoring variable-height native rows. */
+                await window.requestRows(at: [row.index])
+                guard !Task.isCancelled, pendingListScrollAnchor == anchor,
+                  listWindow === window, window.state == .ready,
+                  listRows.contains(where: { $0.id == anchor })
+                else { return }
+                proxy.scrollTo(anchor, anchor: .center)
+                pendingListScrollAnchor = nil
+              }
+            }
+          #endif
+        }
+      case .failed(let reason):
+        ContentUnavailableView {
+          Label("Items unavailable", systemImage: "exclamationmark.triangle")
+        } description: {
+          Text(reason)
+        } actions: {
+          Button("Try Again") { Task { await loadSelectedList() } }
+        }
+      case .idle, .loading:
+        ProgressView("Opening List")
+      }
+    } else {
+      ProgressView("Opening List")
+    }
+  }
+
+  private func retryMembership(_ row: SavedMembershipWindowRow) {
+    guard let window = listWindow, window.state == .ready,
+      let current = listRows.first(where: { $0.id == row.id })
+    else { return }
+    var indices = Set(
+      listRows.filter { visibleMembershipIdentifiers.contains($0.id) }.map(\.index))
+    indices.insert(current.index)
+    Task { await window.requestRows(at: indices) }
+  }
+
+  private func setMembershipVisibility(_ identifier: UUID, _ visible: Bool) {
+    if visible {
+      visibleMembershipIdentifiers.insert(identifier)
+    } else {
+      visibleMembershipIdentifiers.remove(identifier)
+    }
+    #if os(iOS)
+      guard pendingListScrollAnchor == nil else { return }
+    #endif
+    guard let first = listRows.first(where: { visibleMembershipIdentifiers.contains($0.id) })
+    else { return }
+    listScrollAnchor = first.id
+  }
+
+  #if os(iOS)
+    @ViewBuilder
+    private func membershipRow(
+      _ row: SavedMembershipWindowRow, list: PlannerListSourceRead, window: SavedItemWindow
+    ) -> some View {
+      switch window.presentation(at: row.index) {
+      case .loaded(let item) where item.id == row.id:
+        SavedMembershipRow(item: item, canChange: store.canCreate) {
+          guard case .appearance(_, let appearance) = item.row.identity else { return }
+          listScrollAnchor = item.id
+          pendingListScrollAnchor = item.id
+          Task {
+            _ = await store.setAppearanceCompletion(
+              appearance, done: item.row.effectiveDone != true)
+          }
+        }
+        .contextMenu {
+          Button("Move to Beginning") {
+            Task {
+              _ = await store.reorderMembership(item.id, listId: list.source.id, placement: .first)
+            }
+          }
+          .disabled(!canReorderMemberships || listRows.first?.id == item.id)
+          Button("Move to End") {
+            Task {
+              _ = await store.reorderMembership(item.id, listId: list.source.id, placement: .last)
+            }
+          }
+          .disabled(!canReorderMemberships || listRows.last?.id == item.id)
+          Divider()
+          Button("Add to List") { proposeListAddition(item) }.disabled(!store.canCreate)
+          Button("Move to List") {
+            proposeMembershipMove(item.id, itemTitle: item.row.title, list: list)
+          }.disabled(!store.canCreate)
+          Button("Remove from List", role: .destructive) {
+            removeMembership(item.id, listIdentifier: list.source.id)
+          }.disabled(!store.canCreate)
+        }
+        .moveDisabled(!canReorderMemberships)
+      case .loading, .loaded:
+        ProgressView("Loading Item").selectionDisabled().moveDisabled(true)
+      case .failed(let reason):
+        VStack(alignment: .leading) {
+          Text(reason).foregroundStyle(.secondary)
+          Button("Try Again") { retryMembership(row) }
+        }
+        .selectionDisabled().moveDisabled(true)
+      }
+    }
+  #endif
+
   private var plannerColumns: some View {
     NavigationSplitView(
       columnVisibility: $columnVisibility, preferredCompactColumn: compactColumnSelection
@@ -1200,187 +1446,99 @@ struct SavedPlannerView: View {
       } else if isItemSection {
         itemCatalog(scope: catalogScope)
       } else if let selectedList {
-        Group {
-          if let listItems {
-            if listItems.isEmpty {
-              VStack(spacing: 0) {
-                SavedListProgress(
-                  listName: selectedList.content.name,
-                  progress: selectedList.progress, estimates: selectedList.estimates,
-                  manualEstimate: selectedList.content.manualEstimate, matchingCount: 0,
-                  isArchived: selectedList.state.archived == true
-                ).padding()
-                ContentUnavailableView(
-                  selectedList.progress.totalCount == 0 ? "No items" : "No matching items",
-                  systemImage: "checklist",
-                  description: appearanceChangeMessage.map { Text($0) })
-              }
-            } else {
-              #if os(macOS)
-                SavedMacMembershipTable(
-                  store: store, list: selectedList, items: listItems,
-                  selection: membershipSelection, canReorderMemberships: canReorderMemberships,
-                  addToList: proposeListAddition,
-                  moveMembership: { item in
-                    proposeMembershipMove(item.id, itemTitle: item.row.title, list: selectedList)
-                  },
-                  removeMembership: { membershipIdentifier in
-                    removeMembership(membershipIdentifier, listIdentifier: selectedList.source.id)
-                  })
-              #else
-                List(selection: membershipSelection) {
-                  Section {
-                    ForEach(listItems) { item in
-                      SavedMembershipRow(item: item, canChange: store.canCreate) {
-                        guard case .appearance(_, let appearance) = item.row.identity else {
-                          return
-                        }
-                        Task {
-                          _ = await store.setAppearanceCompletion(
-                            appearance, done: item.row.effectiveDone != true)
-                        }
-                      }
-                      .contextMenu {
-                        Button("Move to Beginning") {
-                          Task {
-                            _ = await store.reorderMembership(
-                              item.id, listId: selectedList.source.id, placement: .first)
-                          }
-                        }
-                        .disabled(!canReorderMemberships || listItems.first?.id == item.id)
-                        Button("Move to End") {
-                          Task {
-                            _ = await store.reorderMembership(
-                              item.id, listId: selectedList.source.id, placement: .last)
-                          }
-                        }
-                        .disabled(!canReorderMemberships || listItems.last?.id == item.id)
-                        Divider()
-                        Button("Add to List") { proposeListAddition(item) }
-                          .disabled(!store.canCreate)
-                        Button("Move to List") {
-                          proposeMembershipMove(
-                            item.id, itemTitle: item.row.title, list: selectedList)
-                        }
-                        .disabled(!store.canCreate)
-                        Button("Remove from List", role: .destructive) {
-                          removeMembership(item.id, listIdentifier: selectedList.source.id)
-                        }
-                        .disabled(!store.canCreate)
-                      }
-                      .moveDisabled(!canReorderMemberships)
-                    }
-                    .onMove { offsets, destination in
-                      moveMembership(
-                        from: offsets, to: destination, in: listItems,
-                        listId: selectedList.source.id)
-                    }
-                  } header: {
-                    SavedListProgress(
-                      listName: selectedList.content.name,
-                      progress: selectedList.progress, estimates: selectedList.estimates,
-                      manualEstimate: selectedList.content.manualEstimate,
-                      matchingCount: listItems.count,
-                      isArchived: selectedList.state.archived == true
-                    ).textCase(nil)
-                  }
-                }
-                .listStyle(.plain)
-                .environment(\.editMode, $listEditMode)
-              #endif
+        listContents(selectedList)
+          .navigationTitle(selectedList.content.name)
+          .toolbarTitleDisplayMode(.inline)
+          .searchable(text: $listSearchText, prompt: "Search this List")
+          .searchPresentationToolbarBehavior(.avoidHidingContent)
+          .overlay(alignment: .topTrailing) {
+            if isOpeningList || listWindow?.state == .loading {
+              ProgressView("Updating List").controlSize(.small).padding()
             }
-          } else {
-            ContentUnavailableView {
-              Label("Items unavailable", systemImage: "exclamationmark.triangle")
-            } actions: {
-              Button("Try Again") { Task { await loadSelectedList() } }
+            if isPreparingBulkCompletion {
+              ProgressView("Preparing review").controlSize(.small).padding()
+            }
+            if isPreparingListDeletion {
+              ProgressView("Reviewing deletion").controlSize(.small).padding()
             }
           }
-        }
-        .navigationTitle(selectedList.content.name)
-        .toolbarTitleDisplayMode(.inline)
-        .searchable(text: $listSearchText, prompt: "Search this List")
-        .searchPresentationToolbarBehavior(.avoidHidingContent)
-        .overlay(alignment: .topTrailing) {
-          if isOpeningList { ProgressView("Updating List").controlSize(.small).padding() }
-          if isPreparingBulkCompletion {
-            ProgressView("Preparing review").controlSize(.small).padding()
-          }
-          if isPreparingListDeletion {
-            ProgressView("Reviewing deletion").controlSize(.small).padding()
-          }
-        }
-        .toolbar {
-          ToolbarItem {
-            SavedItemFilterControl(
-              filters: $listFilters, accessibilityIdentifier: "saved.list.filters")
-          }
-          ToolbarItem {
-            SavedItemSortMenu(
-              sort: listSort, allowsManual: true, accessibilityIdentifier: "saved.list.sort")
-          }
-          #if os(iOS)
+          .toolbar {
             ToolbarItem {
-              EditButton()
-                .environment(\.editMode, $listEditMode)
-                .disabled(!canReorderMemberships || (listItems?.count ?? 0) < 2)
-                .accessibilityIdentifier("saved.list.edit")
+              SavedItemFilterControl(
+                filters: $listFilters, accessibilityIdentifier: "saved.list.filters")
             }
-          #endif
-          ToolbarItem {
-            Menu {
-              Button("New Item", systemImage: "square.and.pencil") {
-                beginNewItem(listIdentifier: selectedList.source.id)
-              }
-              .accessibilityIdentifier("saved.list.createItem")
-              Button("Add existing Item", systemImage: "plus") {
-                requestDraftNavigation { showAddItem = true }
-              }
-              .accessibilityIdentifier("saved.list.add")
-              Button("From Link or Text", systemImage: "text.badge.plus") {
-                requestDraftNavigation { captureEntryPoint = .list(selectedList.source.id) }
-              }
-              .accessibilityIdentifier("saved.list.capture")
-            } label: {
-              Label("Add", systemImage: "plus")
+            ToolbarItem {
+              SavedItemSortMenu(
+                sort: listSort, allowsManual: true, accessibilityIdentifier: "saved.list.sort")
             }
-            .disabled(!store.canCreate || selectedList.state.archived == true || isSavingNewItem)
-            .accessibilityIdentifier("saved.list.addMenu")
+            #if os(iOS)
+              ToolbarItem {
+                EditButton()
+                  .environment(\.editMode, $listEditMode)
+                  .disabled(!canReorderMemberships || listRows.count < 2)
+                  .accessibilityIdentifier("saved.list.edit")
+              }
+            #endif
+            ToolbarItem {
+              Menu {
+                Button("New Item", systemImage: "square.and.pencil") {
+                  beginNewItem(listIdentifier: selectedList.source.id)
+                }
+                .accessibilityIdentifier("saved.list.createItem")
+                Button("Add existing Item", systemImage: "plus") {
+                  requestDraftNavigation { showAddItem = true }
+                }
+                .accessibilityIdentifier("saved.list.add")
+                Button("From Link or Text", systemImage: "text.badge.plus") {
+                  requestDraftNavigation { captureEntryPoint = .list(selectedList.source.id) }
+                }
+                .accessibilityIdentifier("saved.list.capture")
+              } label: {
+                Label("Add", systemImage: "plus")
+              }
+              .disabled(!store.canCreate || selectedList.state.archived == true || isSavingNewItem)
+              .accessibilityIdentifier("saved.list.addMenu")
+            }
+            ToolbarItem(placement: .primaryAction) {
+              Menu {
+                Button("Edit estimate", systemImage: "clock") {
+                  listEditDraft = .init(list: selectedList)
+                }
+                .accessibilityIdentifier("saved.list.estimate.edit")
+                Divider()
+                Group {
+                  Button("Mark all Done") { prepareListBulkCompletion(selectedList, done: true) }
+                  Button("Mark all Undone") { prepareListBulkCompletion(selectedList, done: false) }
+                }
+                .disabled(selectedList.progress.totalCount == 0)
+                Divider()
+                Button("Delete List", role: .destructive) {
+                  Task { await prepareListDeletion(selectedList) }
+                }
+                .accessibilityIdentifier("saved.list.delete")
+              } label: {
+                Label("List actions", systemImage: "ellipsis")
+              }
+              .disabled(
+                !store.canCreate || isPreparingBulkCompletion || isPreparingListDeletion
+              )
+              .help("List actions")
+              .accessibilityIdentifier("saved.list.actions")
+            }
           }
-          ToolbarItem(placement: .primaryAction) {
-            Menu {
-              Button("Edit estimate", systemImage: "clock") {
-                listEditDraft = .init(list: selectedList)
-              }
-              .accessibilityIdentifier("saved.list.estimate.edit")
-              Divider()
-              Group {
-                Button("Mark all Done") { prepareListBulkCompletion(selectedList, done: true) }
-                Button("Mark all Undone") { prepareListBulkCompletion(selectedList, done: false) }
-              }
-              .disabled(selectedList.progress.totalCount == 0)
-              Divider()
-              Button("Delete List", role: .destructive) {
-                Task { await prepareListDeletion(selectedList) }
-              }
-              .accessibilityIdentifier("saved.list.delete")
-            } label: {
-              Label("List actions", systemImage: "ellipsis")
-            }
-            .disabled(
-              !store.canCreate || isPreparingBulkCompletion || isPreparingListDeletion
-            )
-            .help("List actions")
-            .accessibilityIdentifier("saved.list.actions")
-          }
-        }
       } else if isOpeningList {
         ProgressView("Opening List")
       } else if selectedListId != nil {
         ContentUnavailableView {
           Label("List unavailable", systemImage: "exclamationmark.triangle")
         } description: {
-          Text("Planner could not open the selected List.")
+          if listWindowNamespace == store.devicePreferenceNamespace,
+            case .failed(let reason) = listWindow?.state
+          {
+            Text(reason)
+          } else {
+            Text("Planner could not open the selected List.")
+          }
         } actions: {
           Button("Try Again") { Task { await loadSelectedList() } }
         }
@@ -1573,7 +1731,8 @@ struct SavedPlannerView: View {
 
   #if os(iOS)
     private func moveMembership(
-      from offsets: IndexSet, to destination: Int, in items: [SavedPlannerItem], listId: UUID
+      from offsets: IndexSet, to destination: Int, in items: [SavedMembershipWindowRow],
+      listId: UUID
     ) {
       guard canReorderMemberships else { return }
       guard offsets.count == 1, let source = offsets.first, items.indices.contains(source),

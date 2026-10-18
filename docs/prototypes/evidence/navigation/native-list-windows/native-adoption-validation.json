@@ -1,0 +1,24 @@
+{
+  "swiftLint": "native-adoption-swift-lint.json",
+  "markdownLint": {
+    "paths": [
+      "docs/prototypes/native-list-windows.md",
+      "docs/native-list-window-contract-review.md"
+    ],
+    "exitCode": 0
+  },
+  "nativePasses": [
+    "list-native-hydrated-anchor/exit.json",
+    "list-native-tablet-hydrated-traversal/exit.json"
+  ],
+  "macCompiler": "list-native-platform-guard-mac-build/exit.json",
+  "macRuntimeCredit": false,
+  "signingAccountChanges": false,
+  "remaining": [
+    "Phone traversal",
+    "Ordinary List action compatibility",
+    "Mac native UI runtime",
+    "Physical performance",
+    "Final whole-app accessibility and visual acceptance"
+  ]
+}

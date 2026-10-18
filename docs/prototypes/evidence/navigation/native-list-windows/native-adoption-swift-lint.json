@@ -1,0 +1,22 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/Scenes/SavedAppearanceViews.swift",
+    "Planner/Scenes/SavedMacMembershipTable.swift",
+    "Planner/Scenes/SavedPlannerStore.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerFixtureUITests/ListWindowJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "output": "",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedAppearanceViews.swift": "02d56ffab47fe0a3149801994ff1852865f7e24c1d7c08e484dbb07c54332216",
+    "Planner/Scenes/SavedMacMembershipTable.swift": "e7dbb7af845de7878d8da74240d6196e54efdf1163683c8ea13079715d41330d",
+    "Planner/Scenes/SavedPlannerStore.swift": "6f334c4ae41ab7d38e7bb0553804ab158b757c5131c1e78e63fadbb345baca46",
+    "Planner/Scenes/SavedPlannerView.swift": "6957eb49c2866cf1db5860103e2b92f674615ce5e86bbb9bf6a2f8667fa93b83",
+    "PlannerFixtureUITests/ListWindowJourneyTests.swift": "625b48a601ce1a3de2fee13fcc4cd369e2259c1f680972e3f411f41e76bca451"
+  }
+}

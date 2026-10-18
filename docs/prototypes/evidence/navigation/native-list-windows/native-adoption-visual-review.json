@@ -1,0 +1,10 @@
+{
+  "inspectedOriginalCaptures": [
+    "list-native-interaction-visible/5940F726-00ED-4A4F-B4E1-1367CA114E0A.png",
+    "list-native-hydrated-anchor/045C3380-14B3-4809-9C97-54E2705A3EBF.png",
+    "list-native-tablet-hydrated-traversal/418F8E7A-D650-4833-816C-1C59FAC73F4A.png",
+    "list-native-tablet-hydrated-traversal/E4E51EBA-EC33-4C05-921E-599B2BB8FA48.png"
+  ],
+  "observed": "The failed control moved below the viewport. Hydrate-then-restore keeps it visible. Full progress and selected contextual details survive traversal and relaunch.",
+  "limits": "No physical performance, complete accessibility or Mac runtime acceptance."
+}

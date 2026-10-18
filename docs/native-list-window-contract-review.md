@@ -1,6 +1,6 @@
 # Native List row-window contract
 
-Status: approved as Q97 A. The shared typed loader is implemented and qualified in `6f2ce0b`; native List/Table adoption is now underway after the UI pass in `2001e47`. Native integration and qualification remain required.
+Status: approved as Q97 A. The shared typed loader is implemented and qualified in `6f2ce0b`; native List/Table adoption is implemented after the UI pass in `2001e47`. The full iPad traversal and Mac compiler checks pass; phone, ordinary action compatibility and Mac runtime qualification remain open.
 
 ## Context and starting state
 
