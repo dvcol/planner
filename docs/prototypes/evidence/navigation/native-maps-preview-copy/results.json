@@ -1,0 +1,21 @@
+{
+  "filteredTests": {
+    "exitCode": 0,
+    "suite": "MapsLinkPreviewResolverTests",
+    "testFunctions": 4,
+    "parameterizedCases": 2,
+    "durationSeconds": 0.001
+  },
+  "strictSwiftLint": {
+    "command": [
+      "xcrun",
+      "swift-format",
+      "lint",
+      "--strict",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCaptureLookup.swift",
+      "Packages/PlannerCore/Tests/PlannerCoreTests/MapsLinkPreviewResolverTests.swift"
+    ],
+    "exitCode": 0
+  },
+  "nativeRuntimeCredit": false
+}

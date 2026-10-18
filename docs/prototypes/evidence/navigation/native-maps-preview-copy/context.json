@@ -1,0 +1,13 @@
+{
+  "goal": "Replace technical Maps preview warnings with plain language without changing provider data or verification semantics.",
+  "commands": [
+    "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun swift test --package-path Packages/PlannerCore --filter MapsLinkPreviewResolverTests --jobs 1",
+    "xcrun swift-format lint --strict Packages/PlannerCore/Sources/PlannerCore/PlannerCaptureLookup.swift Packages/PlannerCore/Tests/PlannerCoreTests/MapsLinkPreviewResolverTests.swift"
+  ],
+  "initialAttempt": {
+    "exitCode": 1,
+    "reason": "Sandbox denied the Clang module cache before test execution.",
+    "runtimeCredit": false
+  },
+  "testBoundary": "Existing Core MapsLinkPreviewResolverTests with controlled production HTTP transport. Copy-only change; no behavior-red claim."
+}

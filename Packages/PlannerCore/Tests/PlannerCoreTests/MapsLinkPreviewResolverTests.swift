@@ -14,7 +14,7 @@ struct MapsLinkPreviewResolverTests {
     #expect(candidate.coordinate?.longitude == 139)
     #expect(
       candidate.uncertaintyReasons == [
-        "Values supplied by the Maps link; not independently verified."
+        "Place details come from this Maps link and haven't been verified."
       ])
     #expect(
       await transport.requestedURLs == [
@@ -60,7 +60,7 @@ struct MapsLinkPreviewResolverTests {
     #expect(candidate.attributionText == "Google Maps")
     #expect(
       candidate.uncertaintyReasons == [
-        "Search intent supplied by the Maps link; not a resolved place."
+        "Place details haven't been verified for this search link."
       ])
     #expect(await transport.requestedURLs.isEmpty)
   }
