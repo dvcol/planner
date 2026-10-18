@@ -17,8 +17,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
     selectLabels("tags", names: ["Rain"], prefix: "saved.item.edit", application: application)
     application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["Culture"].firstMatch.waitForExistence(timeout: 10))
-    application.openPlannerSection("Lists")
-    reveal("saved.list.new", application: application).activateForPlannerJourney()
+    application.beginPlannerListCreation()
     let name = application.textFields["saved.list.name"]
     XCTAssertTrue(name.waitForExistence(timeout: 5))
     name.activateForPlannerJourney()
@@ -61,6 +60,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
         application.plannerElement("saved.itinerary.entry.new").waitForExistence(timeout: 10))
     }
     let rows = itineraryRows(application)
+    revealFixtureRows(3, application: application)
     XCTAssertEqual(rows.count, 3)
     let originalIdentifiers = rows.allElementsBoundByIndex.map(\.identifier)
     let entries = originalIdentifiers.map { identifier in
@@ -149,6 +149,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
     }
     XCTAssertTrue(firstMatchingRow.waitForExistence(timeout: 10))
     XCTAssertTrue(rows.firstMatch.waitForExistence(timeout: 10))
+    revealFixtureRows(2, application: application)
     XCTAssertEqual(
       rows.allElementsBoundByIndex.map(\.identifier), Array(originalIdentifiers.dropFirst()))
     XCTAssertTrue(entries[0].waitForNonExistence(timeout: 5))
@@ -164,6 +165,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
     selectLabels(
       "tags", names: ["Rain", "Indoor"], prefix: "saved.filters", application: application)
     application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    revealFixtureRows(2, application: application)
     XCTAssertEqual(rows.count, 2)
     assertFullProgress(application)
     filters.activateForPlannerJourney()
@@ -192,6 +194,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
     assertFullProgress(application)
     replaceText(search, with: "", application: application)
     XCTAssertTrue(rows.firstMatch.waitForExistence(timeout: 10))
+    revealFixtureRows(3, application: application)
     XCTAssertEqual(rows.allElementsBoundByIndex.map(\.identifier), originalIdentifiers)
     XCTAssertTrue(firstCompletion.waitForPlannerValue("Completed"))
     XCTAssertTrue(secondCompletion.waitForPlannerValue("To do"))
@@ -208,6 +211,7 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
     XCTAssertTrue(retained.waitForExistence(timeout: 10))
     retained.activateForPlannerJourney()
     XCTAssertTrue(rows.firstMatch.waitForExistence(timeout: 10))
+    revealFixtureRows(3, application: application)
     XCTAssertEqual(rows.allElementsBoundByIndex.map(\.identifier), originalIdentifiers)
     XCTAssertTrue(firstCompletion.waitForPlannerValue("Completed"))
     XCTAssertTrue(secondCompletion.waitForPlannerValue("To do"))
@@ -292,6 +296,35 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
   private func itineraryRows(_ application: XCUIApplication) -> XCUIElementQuery {
     application.buttons.matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.appearance."))
+  }
+
+  private func revealFixtureRows(_ expectedCount: Int, application: XCUIApplication) {
+    let rows = itineraryRows(application)
+    let container = application.descendants(matching: .any).matching(
+      identifier: "saved.itinerary.contents"
+    ).firstMatch
+    for _ in 0..<3 {
+      if rows.count == expectedCount { return }
+      #if os(macOS)
+        container.scroll(byDeltaX: 0, deltaY: -200)
+      #else
+        let start = container.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.7))
+        let end = container.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.45))
+        start.press(forDuration: 0.1, thenDragTo: end)
+      #endif
+      let ready = XCTWaiter.wait(
+        for: [
+          XCTNSPredicateExpectation(
+            predicate: NSPredicate { _, _ in rows.count == expectedCount }, object: nil)
+        ], timeout: 3)
+      if ready == .completed { return }
+    }
+    recordScreenshot(application, name: "Itinerary filter fixture row availability")
+    let hierarchy = XCTAttachment(string: application.debugDescription)
+    hierarchy.name = "Itinerary filter fixture native hierarchy"
+    hierarchy.lifetime = .keepAlways
+    add(hierarchy)
+    XCTAssertEqual(rows.count, expectedCount)
   }
 
   private func completion(_ rowIdentifier: String, application: XCUIApplication) -> XCUIElement {

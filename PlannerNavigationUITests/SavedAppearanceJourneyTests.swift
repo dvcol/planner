@@ -3,6 +3,171 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testNewItemDraftRetainsFieldsAndRejectsSaveAfterOriginatingListDeletion() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    #if os(iOS)
+      guard application.windows.firstMatch.frame.width >= 600 else {
+        throw XCTSkip("The originating List must remain beside its unsaved editor.")
+      }
+    #endif
+    createList("Surviving destination", application: application)
+    createList("Deleted origin", application: application)
+    openNewItemInList(application)
+    let title = application.textFields["saved.item.title"]
+    let notes = application.textFields["saved.item.notes"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Unsaved visit")
+    notes.activateForPlannerJourney()
+    notes.typeText("Keep these fields when the originating List is deleted")
+    application.openSavedPlannerListActionsMenu()
+    application.plannerElement("saved.list.delete").activateForPlannerJourney()
+    let confirmation = application.plannerElement("saved.list.delete.confirm")
+    XCTAssertTrue(confirmation.waitForExistence(timeout: 10))
+    confirmation.activateForPlannerJourney()
+    XCTAssertTrue(confirmation.waitForNonExistence(timeout: 10))
+    XCTAssertEqual(title.value as? String, "Unsaved visit")
+    XCTAssertEqual(notes.value as? String, "Keep these fields when the originating List is deleted")
+    #if os(iOS)
+      application.navigationBars["New Item"].staticTexts["New Item"].tap()
+    #endif
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["The destination List is unavailable or archived."]
+        .waitForExistence(timeout: 10))
+    application.plannerElement("OK").activateForPlannerJourney()
+    XCTAssertEqual(title.value as? String, "Unsaved visit")
+    XCTAssertEqual(notes.value as? String, "Keep these fields when the originating List is deleted")
+    recordScreenshot(application, name: "Deleted originating List preserves the unsaved Item draft")
+    closeNewItemEditor(application)
+    application.windows.firstMatch.buttons["Discard"].firstMatch.activateForPlannerJourney()
+    XCTAssertTrue(title.waitForNonExistence(timeout: 5))
+    openCatalogSection("Items", application: application)
+    application.plannerElement("saved.items.filters").activateForPlannerJourney()
+    application.plannerElement("saved.filters.clear").activateForPlannerJourney()
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No Items yet"].waitForExistence(timeout: 10))
+    XCTAssertEqual(application.savedPlannerItemRows("Unsaved visit").count, 0)
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openCatalogSection("Items", application: application)
+    application.plannerElement("saved.items.filters").activateForPlannerJourney()
+    application.plannerElement("saved.filters.clear").activateForPlannerJourney()
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No Items yet"].waitForExistence(timeout: 10))
+    openSection("Lists", application: application)
+    let survivor = application.savedPlannerListRow("Surviving destination")
+    revealSidebarIfNeeded(application, element: survivor)
+    XCTAssertFalse(application.savedPlannerListRow("Deleted origin").exists)
+    survivor.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    recordScreenshot(
+      application, name: "Deleted origin draft creates no fallback Item after relaunch")
+  }
+
+  func testNewItemDraftRetainsFieldsAndDestinationAcrossOriginatingListArchive() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    #if os(iOS)
+      guard application.windows.firstMatch.frame.width >= 600 else {
+        throw XCTSkip("The originating List must remain beside its unsaved editor.")
+      }
+    #endif
+    createList("Other destination", application: application)
+    createList("Draft origin", application: application)
+    let origin = application.savedPlannerListRow("Draft origin")
+    revealSidebarIfNeeded(application, element: origin)
+    let originalListIdentifier = origin.identifier
+    origin.activateForPlannerJourney()
+    openNewItemInList(application)
+    let title = application.textFields["saved.item.title"]
+    let notes = application.textFields["saved.item.notes"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Retained visit")
+    notes.activateForPlannerJourney()
+    notes.typeText("Preserve this draft and its original destination")
+    #if os(iOS)
+      let sidebar = application.buttons["Show Sidebar"].firstMatch
+      if sidebar.exists && sidebar.isHittable { sidebar.activateForPlannerJourney() }
+    #endif
+    openListContextMenu(origin)
+    application.plannerElement("Archive List").activateForPlannerJourney()
+    XCTAssertTrue(origin.waitForNonExistence(timeout: 10))
+    XCTAssertEqual(title.value as? String, "Retained visit")
+    XCTAssertEqual(notes.value as? String, "Preserve this draft and its original destination")
+    #if os(iOS)
+      application.navigationBars["New Item"].staticTexts["New Item"].tap()
+    #endif
+    recordScreenshot(application, name: "Archived origin draft before explicit Save")
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["The destination List is unavailable or archived."]
+        .waitForExistence(timeout: 10))
+    application.plannerElement("OK").activateForPlannerJourney()
+    XCTAssertEqual(title.value as? String, "Retained visit")
+    XCTAssertEqual(notes.value as? String, "Preserve this draft and its original destination")
+    recordScreenshot(application, name: "Archived originating List retains the unsaved Item draft")
+    var filter = application.plannerElement("saved.lists.archive")
+    #if os(iOS)
+      let showSidebar = application.buttons["Show Sidebar"].firstMatch
+      if showSidebar.exists && showSidebar.isHittable {
+        showSidebar.activateForPlannerJourney()
+      }
+      if !filter.exists || !filter.isHittable {
+        let overflow = application.navigationBars["Planner"].buttons["OverflowBarButtonItem"]
+          .firstMatch
+        XCTAssertTrue(overflow.waitForPlannerHittability())
+        overflow.activateForPlannerJourney()
+        if !filter.exists { filter = application.collectionViews.buttons["Active"].firstMatch }
+      }
+    #endif
+    XCTAssertTrue(filter.waitForExistence(timeout: 5))
+    filter.activateForPlannerJourney()
+    application.plannerElement("All Lists").activateForPlannerJourney()
+    XCTAssertTrue(origin.waitForExistence(timeout: 10))
+    XCTAssertEqual(origin.identifier, originalListIdentifier)
+    openListContextMenu(origin)
+    application.plannerElement("Unarchive List").activateForPlannerJourney()
+    XCTAssertEqual(title.value as? String, "Retained visit")
+    XCTAssertEqual(notes.value as? String, "Preserve this draft and its original destination")
+    #if os(iOS)
+      application.navigationBars["New Item"].staticTexts["New Item"].tap()
+    #endif
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    XCTAssertTrue(title.waitForNonExistence(timeout: 10))
+    let appearance = application.savedPlannerItemRows("Retained visit").firstMatch
+    XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+    let appearanceIdentifier = appearance.identifier
+    XCTAssertTrue(appearanceIdentifier.hasPrefix("saved.appearance."))
+    XCTAssertTrue(
+      application.plannerElement(
+        appearanceIdentifier.replacingOccurrences(
+          of: "saved.appearance.", with: "saved.appearance.completion.")
+      ).waitForPlannerValue("To do"))
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Draft origin", itemTitle: "Retained visit", application: application)
+    XCTAssertEqual(appearance.identifier, appearanceIdentifier)
+    appearance.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Preserve this draft and its original destination"]
+        .waitForExistence(timeout: 10))
+    recordScreenshot(application, name: "Unarchived original List receives its retained Item once")
+    openCatalogSection("Items", application: application)
+    XCTAssertEqual(application.savedPlannerItemRows("Retained visit").count, 1)
+    openSection("Lists", application: application)
+    let other = application.savedPlannerListRow("Other destination")
+    revealSidebarIfNeeded(application, element: other)
+    other.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+  }
+
   func testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
