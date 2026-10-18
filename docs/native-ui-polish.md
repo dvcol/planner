@@ -80,3 +80,5 @@ The [focused scene review](prototypes/native-scene-appearance.md) adds dark phon
 ## Selected-row contrast finding
 
 The [native selected-row diagnosis](prototypes/native-selected-row-accessibility.md) adds a reproducible dark iPad contrast failure and a minimal stock-row comparison. It retains original findings, unsuccessful typography/tint/style probes and restored production source. Q99 asks whether to allow a controlled selected-row contrast treatment while preserving native List/navigation controls. No successful contrast correction is claimed. The [Maps wording correction](prototypes/native-maps-preview-copy.md) separately replaces technical warnings with plain language without changing provider-data semantics.
+
+The [current native access review](prototypes/mcp-native-access-readiness.md) records a further bounded Mac attempt against the current compiled source. XCTest again fails before any Test Case starts, so it adds no Mac UI credit. It also confirms that native Agent Control/menu-bar scenes remain unimplemented; their Q100 lifecycle interface review belongs to feature work before final whole-app polish.
