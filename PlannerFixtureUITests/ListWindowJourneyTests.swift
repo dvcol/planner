@@ -5,6 +5,67 @@ import XCTest
 
   @MainActor
   final class ListWindowJourneyTests: XCTestCase {
+    func testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch() {
+      continueAfterFailure = false
+      XCUIDevice.shared.orientation = .portrait
+      addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "list-windows", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      openItinerary(application)
+      XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 15))
+      application.plannerElement("saved.itinerary.entry.new").activateForPlannerJourney()
+      let choices = application.collectionViews["saved.itinerary.entry.choices"]
+      XCTAssertTrue(choices.waitForExistence(timeout: 10))
+      let navigationBar = application.navigationBars["Add to Itinerary"]
+      XCTAssertTrue(navigationBar.waitForExistence(timeout: 5))
+      let topBoundary = navigationBar.frame.maxY
+      let itemChoiceIdentifierPrefix = "saved.itinerary.entry.choice.item."
+      for title in ["Window Item 065", "Window Item 129"] {
+        scrollPicker(
+          choices, to: title, topBoundary: topBoundary,
+          choiceIdentifierPrefix: itemChoiceIdentifierPrefix)
+      }
+      let selected = choices.staticTexts["Window Item 129"].firstMatch
+      capture("Itinerary Item picker source is fully visible before selection")
+      selected.activateForPlannerJourney()
+      let add = application.plannerElement("saved.itinerary.entry.add")
+      let enabled = XCTNSPredicateExpectation(
+        predicate: NSPredicate(format: "enabled == true"), object: add)
+      XCTAssertEqual(XCTWaiter.wait(for: [enabled], timeout: 5), .completed)
+      scrollPicker(
+        choices, to: "Window Item 001", topBoundary: topBoundary,
+        choiceIdentifierPrefix: itemChoiceIdentifierPrefix)
+      XCTAssertTrue(add.isEnabled)
+      capture("Itinerary Item picker retains an offscreen selected source")
+      add.activateForPlannerJourney()
+      XCTAssertTrue(choices.waitForNonExistence(timeout: 10))
+      XCTAssertTrue(application.staticTexts["0 of 1 item done"].waitForExistence(timeout: 10))
+      let appearance = application.buttons.matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.appearance.",
+          "Window Item 129")
+      ).firstMatch
+      XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+      let identifier = appearance.identifier
+      let completion = application.buttons[
+        identifier.replacingOccurrences(
+          of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")]
+      XCTAssertTrue(completion.waitForPlannerValue("To do"))
+      appearance.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Window notes 129"].waitForExistence(timeout: 10))
+      capture("Itinerary Item picker adds its exact source into the original plan")
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openItinerary(application)
+      XCTAssertTrue(application.staticTexts["0 of 1 item done"].waitForExistence(timeout: 10))
+      XCTAssertEqual(appearance.identifier, identifier)
+      XCTAssertTrue(completion.waitForPlannerValue("To do"))
+      capture("Itinerary Item picker preserves its entry after relaunch")
+    }
+
     func testAddingAnOffscreenPickerSelectionKeepsItsSourceAndOriginalListAfterRelaunch() {
       continueAfterFailure = false
       XCUIDevice.shared.orientation = .portrait
@@ -179,6 +240,17 @@ import XCTest
       route.activateForPlannerJourney()
     }
 
+    private func openItinerary(_ application: XCUIApplication) {
+      application.openPlannerSection("Itineraries")
+      let itinerary = application.buttons.matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.", "Picker Route"
+        )
+      ).firstMatch
+      XCTAssertTrue(itinerary.waitForExistence(timeout: 15))
+      itinerary.activateForPlannerJourney()
+    }
+
     private func revealContents(_ application: XCUIApplication, contents: XCUIElement) {
       if contents.exists {
         let rows = contents.buttons.matching(
@@ -193,8 +265,10 @@ import XCTest
       XCTAssertTrue(contents.waitForExistence(timeout: 10))
     }
 
+    /// Use visible fixture ordinals to recover when a native fling overshoots an unmaterialized row.
     private func scrollPicker(
-      _ choices: XCUIElement, to title: String, topBoundary: CGFloat
+      _ choices: XCUIElement, to title: String, topBoundary: CGFloat,
+      choiceIdentifierPrefix: String = "saved.membership.choice.item."
     ) {
       guard let targetOrdinal = Int(title.suffix(3)) else {
         XCTFail("The fixture choice must have an Item ordinal.")
@@ -221,7 +295,7 @@ import XCTest
           }
         }
         let visibleOrdinals = choices.staticTexts.matching(
-          NSPredicate(format: "identifier BEGINSWITH %@", "saved.membership.choice.item.")
+          NSPredicate(format: "identifier BEGINSWITH %@", choiceIdentifierPrefix)
         ).allElementsBoundByIndex.compactMap { element -> Int? in
           let frame = element.frame
           guard frame.minY >= visibleTop, frame.maxY <= viewport.maxY else { return nil }

@@ -216,6 +216,7 @@ struct SavedAddItineraryEntryForm: View {
           }
         }
       }
+      .accessibilityIdentifier("saved.itinerary.entry.choices")
       .disabled(store.isSaving)
       .overlay {
         if let failure {
