@@ -1,0 +1,12 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "/private/tmp/PlannerItemWindowMarkdownlint.json",
+    "docs/prototypes/native-container-catalog-windows.md",
+    "docs/prototypes/native-item-creation.md"
+  ],
+  "exitCode": 0
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryFilterJourneyTests.swift"
+  ],
+  "exitCode": 0
+}

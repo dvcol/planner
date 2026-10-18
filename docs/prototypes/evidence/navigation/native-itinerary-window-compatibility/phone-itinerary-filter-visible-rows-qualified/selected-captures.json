@@ -1,0 +1,62 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "EAF928B3-D6F2-4965-AB91-648BD4BF0ADB.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Cumulative label All hides rows without changing progress or valid details_0_E359A9AC-BC3A-4885-9F67-CFAF8981C2EF.png",
+    "timestamp": 1792346635.153,
+    "testIdentifier": "SavedItineraryFilterJourneyTests/testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "86A78209-4C57-4E0C-8C53-8D1DEF3C7AD0.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Matching children retain both independent List appearances_0_F900948E-7B85-482A-804A-F0E223DF05E9.png",
+    "timestamp": 1792346595.938,
+    "testIdentifier": "SavedItineraryFilterJourneyTests/testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "C43B239C-8362-4FBF-A4B3-94CBC164B897.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item-only restrictions cannot retain a matching List header_0_47501C47-35FB-4C1A-8589-DB7BC55861AF.png",
+    "timestamp": 1792346520.92,
+    "testIdentifier": "SavedItineraryFilterJourneyTests/testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "4202F006-F867-4675-A587-95479D985674.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item-only restrictions cannot retain a matching List header_0_B49F24E6-E793-4B47-97D5-82955B764B70.png",
+    "timestamp": 1792346503.967,
+    "testIdentifier": "SavedItineraryFilterJourneyTests/testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "30369764-F1B1-4BD9-AF98-7CB594589197.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Matching List headers retain full progress with no matching children_0_2DE6D359-4A97-4F50-8DA8-966A7316E9E8.png",
+    "timestamp": 1792346491.652,
+    "testIdentifier": "SavedItineraryFilterJourneyTests/testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "5108D0F9-B26F-46FD-ADE6-3EDBC3F1421F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Matching List headers and selected appearance after search_0_F3D24DF3-AD41-4D59-A63B-B4886DBE603C.png",
+    "timestamp": 1792346491.342,
+    "testIdentifier": "SavedItineraryFilterJourneyTests/testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch()"
+  }
+]

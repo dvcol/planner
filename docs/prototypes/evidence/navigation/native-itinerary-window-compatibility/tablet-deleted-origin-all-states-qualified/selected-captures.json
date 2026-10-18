@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "CFB22678-D6F0-4786-A21A-499E64E0D7E7.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Deleted origin draft creates no fallback Item after relaunch_0_B652A6A7-61C4-4E76-9A82-F92DD7B0632A.png",
+    "timestamp": 1792347190.241,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemDraftRetainsFieldsAndRejectsSaveAfterOriginatingListDeletion()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "233804D6-6310-4452-A7DA-99F99B804C95.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Deleted originating List preserves the unsaved Item draft_0_1FD9DD49-0703-4897-A3F3-F067C5F90305.png",
+    "timestamp": 1792347156.797,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemDraftRetainsFieldsAndRejectsSaveAfterOriginatingListDeletion()"
+  }
+]

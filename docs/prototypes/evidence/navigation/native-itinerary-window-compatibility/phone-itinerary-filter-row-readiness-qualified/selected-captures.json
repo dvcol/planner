@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "68C3C66C-88EC-4065-B352-50DB54D52738.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary filter setup native hierarchy_0_BD10A2A1-0362-4585-B9D8-EB95362E0607.txt",
+    "timestamp": 1792346154.499,
+    "testIdentifier": "SavedItineraryFilterJourneyTests/testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "3F0F0A41-7B59-45B5-9080-25879FA18D1F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary filter setup row availability_0_9A62D398-70C3-4351-BAC5-13FE78C7A4DE.png",
+    "timestamp": 1792346154.059,
+    "testIdentifier": "SavedItineraryFilterJourneyTests/testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch()"
+  }
+]

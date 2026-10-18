@@ -65,3 +65,19 @@ The Mac originating-List capture journey passes in 56.868 s in `mac-list-window-
 Strict lint passes all four affected Swift files. Both final app/UI-target builds succeed. Independent Standards and Spec rechecks cleared the platform-specific fix after raising and resolving the iPad cancellation-role concern. Production Core and HTTP behavior is unchanged in this slice; their focused qualification remains in the linked reports.
 
 The [layout and compatibility continuation](native-layout-compatibility.md) supersedes the resize and represented Add/Capture/deletion runtime gaps for its recorded source and tests. Restored/unavailable native destinations, native label/estimate creation, other adaptive layouts, broader Mac Maps journeys, physical sync/account/Share, accessibility, performance and whole-app polish remain open. These reports do not close the overall feature or map gates.
+
+## Archived originating List continuation
+
+The native `testNewItemDraftRetainsFieldsAndDestinationAcrossOriginatingListArchive` passes on regular-width iPad in dark mode with Increase Contrast in `tablet-origin-draft-dismisses-sidebar-qualified`, 106.046 s. Archiving the original List preserves the unsaved title and notes. Save reports the unavailable/archived destination and creates no fallback. After unarchiving the same List identity, explicit Save creates one local Todo appearance there. Relaunch retains the appearance and notes; the Items catalog contains one source and the other List stays empty.
+
+Two earlier invocations fail at error observation because touching Save dismisses the native sidebar overlay. The original pre-Save capture confirms the dimmed editor behind that overlay. The corrected controller dismisses it through the detail heading before Save. No production correction is credited. Original after-error and saved-detail captures were inspected for readable fields and stable destination context.
+
+The archive/unarchive journey does not establish restoration under a new lifetime, Mac interaction, physical synchronization or final whole-app acceptance. Deletion is qualified separately below.
+
+## Deleted originating List continuation
+
+`tablet-deleted-origin-all-states-qualified` passes in 88.515 s on regular-width iPad, dark mode with Increase Contrast. Confirmed List deletion preserves the title and notes of its unsaved Item draft. Save rejects the unavailable destination. Discard creates no Item, the unrestricted Items catalog remains empty after relaunch, the deleted List stays absent, and the surviving List stays empty.
+
+The first invocation passes deletion, preserved fields and rejection, then fails an empty-state text expectation: the catalog's default Active filter reports No matching items. The corrected controller explicitly clears every filter before requiring No Items yet, so its empty-catalog proof includes all completion/archive states. Production behavior is unchanged. Restoration under a fresh lifetime remains a separate required native journey.
+
+The [caller/draft checkpoint index](evidence/navigation/native-itinerary-window-compatibility/origin-draft-and-caller-checkpoint-validation/observed-results.json) preserves individual passing functions, failed attempts and compiler-only epochs. Final mobile and Mac app/UI targets compile; strict lint passes both affected Swift files and both reports. Recorded production Swift inputs match this checkpoint. This continuation changes native test observations and adds qualification; production behavior remains unchanged.

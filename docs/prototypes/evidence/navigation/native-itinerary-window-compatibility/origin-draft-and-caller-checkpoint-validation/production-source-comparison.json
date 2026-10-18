@@ -1,0 +1,47 @@
+[
+  {
+    "epoch": "association-undo-phone-catalog-caller-regressions",
+    "productionInputs": 149,
+    "differences": []
+  },
+  {
+    "epoch": "phone-itinerary-filter-row-readiness-qualified",
+    "productionInputs": 149,
+    "differences": []
+  },
+  {
+    "epoch": "phone-itinerary-filter-shared-creation-qualified",
+    "productionInputs": 149,
+    "differences": []
+  },
+  {
+    "epoch": "phone-itinerary-filter-visible-rows-qualified",
+    "productionInputs": 149,
+    "differences": []
+  },
+  {
+    "epoch": "tablet-archived-origin-explicit-save",
+    "productionInputs": 149,
+    "differences": []
+  },
+  {
+    "epoch": "tablet-archived-origin-retained-draft",
+    "productionInputs": 149,
+    "differences": []
+  },
+  {
+    "epoch": "tablet-deleted-origin-all-states-qualified",
+    "productionInputs": 149,
+    "differences": []
+  },
+  {
+    "epoch": "tablet-deleted-origin-retained-draft",
+    "productionInputs": 149,
+    "differences": []
+  },
+  {
+    "epoch": "tablet-origin-draft-dismisses-sidebar-qualified",
+    "productionInputs": 149,
+    "differences": []
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A68885BB-98DA-4933-87E3-50DC40AC3999.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Unarchived original List receives its retained Item once_0_DBA591A6-36A2-4A38-9DEF-0D67109AEA87.png",
+    "timestamp": 1792346449.113,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemDraftRetainsFieldsAndDestinationAcrossOriginatingListArchive()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "7E1663EC-F6C4-49C6-8FA2-51183CA09BD7.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Archived originating List retains the unsaved Item draft_0_267F73F5-A088-4C8E-9216-4B628873A3B4.png",
+    "timestamp": 1792346413.629,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemDraftRetainsFieldsAndDestinationAcrossOriginatingListArchive()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "07E54FE3-4596-44A2-BAC0-41380960C2F7.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Archived origin draft before explicit Save_0_3FF74CDE-5F8D-4B37-92EB-7C61DDF11250.png",
+    "timestamp": 1792346410.311,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNewItemDraftRetainsFieldsAndDestinationAcrossOriginatingListArchive()"
+  }
+]
