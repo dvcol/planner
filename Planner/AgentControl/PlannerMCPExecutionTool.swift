@@ -667,10 +667,12 @@
         else {
           throw AdmissionFailure("invalidInput", "/command/type", "Expected a command type.")
         }
-        if ["deleteSource", "applyImport", "restoreRecovery"].contains(commandType) {
+        if ["deleteSource", "applyImport", "restoreRecovery", "restoreAssociation"].contains(
+          commandType)
+        {
           throw AdmissionFailure(
             "forbiddenOperation", "/command/type",
-            "Permanent deletion, import and recovery administration are native Planner actions.")
+            "Deletion, import, recovery and association Undo are native Planner actions.")
         }
         if !["setBulkCompletion", "applyCapture", "createItem"].contains(commandType),
           let token = arguments["reviewToken"], token != .null

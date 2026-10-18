@@ -144,17 +144,19 @@ import SwiftData
   }
 
   /// The resource limit is armed at the real save boundary inside an isolated child process only.
-  private final class NativeSaveFileSizeObstruction: @unchecked Sendable {
+  final class NativeSaveFileSizeObstruction: @unchecked Sendable {
     private let lock = NSLock()
     private let storeURL: URL
+    private let maximumFileSize: rlim_t
     private var attempted = false
     private var originalLimit: rlimit?
     private var originalSignal: (@convention(c) (Int32) -> Void)?
     private var obstructed = false
     private var message: String?
 
-    init(configuration: PlannerStorageConfiguration) {
+    init(configuration: PlannerStorageConfiguration, maximumFileSize: rlim_t = 1_048_576) {
       storeURL = configuration.storeURL.standardizedFileURL
+      self.maximumFileSize = maximumFileSize
     }
 
     var didObstruct: Bool { lock.withLock { obstructed } }
@@ -173,7 +175,7 @@ import SwiftData
           return
         }
         let previousSignal = signal(SIGXFSZ, SIG_IGN)
-        var limited = rlimit(rlim_cur: 1_048_576, rlim_max: previousLimit.rlim_max)
+        var limited = rlimit(rlim_cur: maximumFileSize, rlim_max: previousLimit.rlim_max)
         guard setrlimit(RLIMIT_FSIZE, &limited) == 0 else {
           signal(SIGXFSZ, previousSignal)
           message = "Could not lower the isolated process file limit."

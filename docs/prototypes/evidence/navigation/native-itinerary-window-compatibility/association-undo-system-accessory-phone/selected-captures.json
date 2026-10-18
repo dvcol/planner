@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "27EFF53C-263B-47A0-A6A0-A8AE57F40F0C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Undo restores one independent repeated List entry_0_D4B46113-011A-4E39-8748-4BCADA9A79E9.png",
+    "timestamp": 1792343010.167,
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "6DAFB703-A2A5-495A-A574-551B2F5614C8.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Itinerary removal offers scoped Undo_0_6B6A6563-CE08-404D-A5DF-22781E129352.png",
+    "timestamp": 1792343006.567,
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry()"
+  }
+]

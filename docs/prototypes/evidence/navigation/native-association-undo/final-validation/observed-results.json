@@ -1,0 +1,604 @@
+[
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/association-recovery-qualification",
+    "result": {
+      "exitCode": 0,
+      "filter": "AssociationUndoRecoveryTests"
+    },
+    "observedSummary": [
+      "\u2714 Test run with 2 tests in 1 suite passed after 0.137 seconds."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/deleted-original-bindings-qualification",
+    "result": {
+      "exitCode": 0,
+      "filter": "AssociationUndoHistoryTests/deletedOriginalBindingsRejectUndoWithoutChangingSurvivors"
+    },
+    "observedSummary": [
+      "\u2714 Test run with 1 test in 1 suite passed after 0.089 seconds."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/final-affected-core-regressions",
+    "result": {
+      "exitCode": 0,
+      "filter": "MembershipRemovalTests|ItineraryEntryRemovalTests|ExpandedCompletionMembershipTests|AssociationUndoHistoryTests|AssociationUndoRecoveryTests|AssociationUndoSaveFailureTests|ItemInListCreationFailureTests"
+    },
+    "observedSummary": [
+      "\u2714 Test run with 18 tests in 7 suites passed after 0.910 seconds."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/foreign-dataset-issuance-qualification",
+    "result": {
+      "exitCode": 0,
+      "filter": "AssociationUndoHistoryTests/anotherDatasetCannotConsumeTheIssuedUndoCapability"
+    },
+    "observedSummary": [
+      "\u2714 Test run with 1 test in 1 suite passed after 0.170 seconds."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/genuine-removal-save-failure-first-green",
+    "result": {
+      "exitCode": 0,
+      "filter": "AssociationUndoSaveFailureTests/failedNativeRemovalSaveIssuesNoUndoAndRetainsOriginalAssociations"
+    },
+    "observedSummary": [
+      "\u2714 Test run with 1 test in 1 suite passed after 0.261 seconds."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/genuine-removal-save-failure-red",
+    "result": {
+      "exitCode": 1,
+      "filter": "AssociationUndoSaveFailureTests/failedNativeRemovalSaveIssuesNoUndoAndRetainsOriginalAssociations"
+    },
+    "observedSummary": [
+      "\u2718 Test run with 1 test in 1 suite failed after 0.082 seconds with 1 issue.",
+      "\u2718 Test run with 1 test in 1 suite failed after 0.166 seconds with 1 issue."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/genuine-restoration-save-failure-first-green",
+    "result": {
+      "exitCode": 0,
+      "filter": "AssociationUndoSaveFailureTests"
+    },
+    "observedSummary": [
+      "\u2714 Test run with 1 test in 1 suite passed after 0.181 seconds."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/genuine-restoration-save-failure-red",
+    "result": {
+      "exitCode": 1,
+      "filter": "AssociationUndoSaveFailureTests"
+    },
+    "observedSummary": [
+      "\u2718 Test run with 1 test in 1 suite failed after 0.098 seconds with 1 issue.",
+      "\u2718 Test run with 1 test in 1 suite failed after 0.188 seconds with 1 issue."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/issuance-and-replay-qualification",
+    "result": {
+      "exitCode": 0,
+      "filter": "AssociationUndoHistoryTests/issuanceEndsOnReopenButAppliedRestorationReplayPreservesLaterEdits"
+    },
+    "observedSummary": [
+      "\u2714 Test run with 1 test in 1 suite passed after 0.133 seconds."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/itinerary-independent-context-first-green",
+    "result": {
+      "exitCode": 0,
+      "filter": "ItineraryEntryRemovalTests/undoRestoresOneRepeatedEntryAndItsIndependentCompletion"
+    },
+    "observedSummary": [
+      "\u2714 Test run with 1 test in 1 suite passed after 0.171 seconds."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/itinerary-independent-context-red",
+    "result": {
+      "exitCode": 1,
+      "filter": "ItineraryEntryRemovalTests/undoRestoresOneRepeatedEntryAndItsIndependentCompletion"
+    },
+    "observedSummary": [
+      "\u2718 Test run with 1 test in 1 suite failed after 0.135 seconds with 2 issues."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/membership-expanded-contexts-first-green",
+    "result": {
+      "exitCode": 0,
+      "filter": "ExpandedCompletionMembershipTests/undoRestoresMembershipContextsAcrossRepeatedEntriesAndItineraries"
+    },
+    "observedSummary": [
+      "\u2714 Test run with 1 test in 1 suite passed after 0.317 seconds."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/membership-expanded-contexts-red",
+    "result": {
+      "exitCode": 1,
+      "filter": "ExpandedCompletionMembershipTests/undoRestoresMembershipContextsAcrossRepeatedEntriesAndItineraries"
+    },
+    "observedSummary": [
+      "\u2718 Test run with 1 test in 1 suite failed after 0.296 seconds with 1 issue."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/membership-original-state-first-green",
+    "result": {
+      "exitCode": 0,
+      "filter": "MembershipRemovalTests/undoRestoresTheOriginalMembershipIdentityOrderAndLocalCompletion"
+    },
+    "observedSummary": [
+      "\u2714 Test run with 1 test in 1 suite passed after 0.150 seconds."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/membership-original-state-qualified-red",
+    "result": {
+      "exitCode": 1,
+      "filter": "MembershipRemovalTests/undoRestoresTheOriginalMembershipIdentityOrderAndLocalCompletion"
+    },
+    "observedSummary": []
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/membership-original-state-red",
+    "result": {
+      "exitCode": 1,
+      "filter": "MembershipRemovalTests/undoRestoresTheOriginalMembershipIdentityOrderAndLocalCompletion"
+    },
+    "observedSummary": []
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/newer-membership-history-qualification",
+    "result": {
+      "exitCode": 0,
+      "filter": "AssociationUndoHistoryTests/newerMembershipRejectsOldUndoWithoutReplacingLocalState"
+    },
+    "observedSummary": [
+      "\u2714 Test run with 1 test in 1 suite passed after 0.083 seconds."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/recreated-expanded-counterparts-qualification",
+    "result": {
+      "exitCode": 0,
+      "filter": "AssociationUndoHistoryTests/recreatedExpandedCounterpartsRejectTheWholeUndo"
+    },
+    "observedSummary": [
+      "\u2714 Test run with 1 test in 1 suite passed after 0.175 seconds."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/superseded-restoration-history-qualification",
+    "result": {
+      "exitCode": 0,
+      "filter": "AssociationUndoHistoryTests/anotherRemovalRestoresOnlyItsOwnFreshLifetimeAndClosesOlderHistory"
+    },
+    "observedSummary": [
+      "\u2714 Test run with 1 test in 1 suite passed after 0.144 seconds."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-current-native-mac-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-current-native-mobile-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-final-native-mac-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-itinerary-missing-registration-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-itinerary-missing-registration-phone",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-association-undo-itinerary-missing-registration-phone.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedItineraryBulkJourneyTests testNativeUndoRestoresOneRepeatedItineraryEntry]' failed (66.766 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-itinerary-native-first-green-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-itinerary-native-header-red-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-itinerary-native-header-red-phone",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-association-undo-itinerary-native-header-red-phone.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedItineraryBulkJourneyTests testNativeUndoRestoresOneRepeatedItineraryEntry]' failed (79.873 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-itinerary-phone-first-green",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-association-undo-itinerary-phone-first-green.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedItineraryBulkJourneyTests testNativeUndoRestoresOneRepeatedItineraryEntry]' passed (89.686 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-itinerary-qualified-red-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-itinerary-qualified-red-phone",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-association-undo-itinerary-qualified-red-phone.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedItineraryBulkJourneyTests testNativeUndoRestoresOneRepeatedItineraryEntry]' failed (70.626 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-mac-native-window-text-retry",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-association-undo-mac-native-window-text-retry.xcresult"
+    },
+    "observedSummary": [
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-mcp-admission-final-green",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItemWindow-association-undo-mcp-admission-final-green.xcresult"
+    },
+    "observedSummary": [
+      "\u2714 Test run with 13 tests in 2 suites passed after 1.173 seconds."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-mcp-admission-qualified-green",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItemWindow-association-undo-mcp-admission-qualified-green.xcresult"
+    },
+    "observedSummary": [
+      "\u2718 Test run with 13 tests in 2 suites failed after 1.203 seconds with 1 issue."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-mcp-admission-red",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItemWindow-association-undo-mcp-admission-red.xcresult"
+    },
+    "observedSummary": []
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-mcp-committed-baseline",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItemWindow-association-undo-mcp-committed-baseline.xcresult"
+    },
+    "observedSummary": [
+      "\u2718 Test run with 1 test in 1 suite failed after 0.137 seconds with 1 issue."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-mcp-review-path-diagnostic",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItemWindow-association-undo-mcp-review-path-diagnostic.xcresult"
+    },
+    "observedSummary": [
+      "\u2718 Test run with 1 test in 1 suite failed after 0.148 seconds with 1 issue."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-mcp-suite-admission-first-green",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItemWindow-association-undo-mcp-suite-admission-first-green.xcresult"
+    },
+    "observedSummary": [
+      "\u2718 Test run with 13 tests in 2 suites failed after 1.184 seconds with 1 issue."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-mcp-suite-admission-red",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItemWindow-association-undo-mcp-suite-admission-red.xcresult"
+    },
+    "observedSummary": [
+      "\u2718 Test run with 13 tests in 2 suites failed after 1.249 seconds with 3 issues."
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-membership-native-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-membership-phone-first-green",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-association-undo-membership-phone-first-green.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion]' passed (186.658 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-missing-affordance-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-missing-affordance-phone",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-association-undo-missing-affordance-phone.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion]' failed (173.523 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-native-history-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-native-observation-final-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-retained-content-role-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-system-accessory-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-system-accessory-phone",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-association-undo-system-accessory-phone.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedItineraryBulkJourneyTests testNativeUndoRestoresOneRepeatedItineraryEntry]' passed (107.792 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-tab-overlap-red-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-tab-overlap-red-phone",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-association-undo-tab-overlap-red-phone.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedItineraryBulkJourneyTests testNativeUndoRestoresOneRepeatedItineraryEntry]' failed (75.995 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-tablet-creation-helper-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-tablet-dark-increased",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-association-undo-tablet-dark-increased.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion]' passed (191.521 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedItineraryBulkJourneyTests testNativeUndoRestoresOneRepeatedItineraryEntry]' failed (15.948 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-tablet-history-qualified",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-association-undo-tablet-history-qualified.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeUndoRejectsNewerMembershipWithoutReplacingItsIdentityOrCompletion]' passed (204.703 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedItineraryBulkJourneyTests testNativeUndoRestoresOneRepeatedItineraryEntry]' failed (87.809 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-tablet-itinerary-creation-qualified",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-association-undo-tablet-itinerary-creation-qualified.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedItineraryBulkJourneyTests testNativeUndoRestoresOneRepeatedItineraryEntry]' failed (97.186 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-tablet-itinerary-final",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-association-undo-tablet-itinerary-final.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedItineraryBulkJourneyTests testNativeUndoRestoresOneRepeatedItineraryEntry]' failed (98.228 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-tablet-itinerary-qualified",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-association-undo-tablet-itinerary-qualified.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedItineraryBulkJourneyTests testNativeUndoRestoresOneRepeatedItineraryEntry]' failed (33.706 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-tablet-retained-itinerary-qualified",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-association-undo-tablet-retained-itinerary-qualified.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedItineraryBulkJourneyTests testNativeUndoRestoresOneRepeatedItineraryEntry]' passed (98.740 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-tablet-retained-route-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-tablet-sidebar-helper-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/association-undo-window-history-mac-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  }
+]

@@ -186,6 +186,7 @@ struct SavedItineraryDetail: View {
   let isPreparingDeletion: Bool
   let isReviewingDeletion: Bool
   let prepareDeletion: (PlannerItinerarySourceRead) -> Void
+  let recordRemoval: (PlannerOperationResult) -> Void
   @State private var window: SavedItemWindow?
   @State private var windowNamespace: String?
   @State private var windowItineraryIdentifier: UUID?
@@ -652,9 +653,13 @@ struct SavedItineraryDetail: View {
 
   private func removeEntry(_ entry: SavedItineraryWindowEntry) {
     Task {
-      guard await store.removeItineraryEntry(entry.id, itineraryIdentifier: identifier),
-        let selection
+      let namespace = store.devicePreferenceNamespace
+      guard
+        let result = await store.removeItineraryEntry(entry.id, itineraryIdentifier: identifier),
+        case .applied = result.outcome, store.devicePreferenceNamespace == namespace
       else { return }
+      recordRemoval(result)
+      guard let selection else { return }
       let selectedEntryIdentifier: UUID
       switch selection {
       case .direct(let entryIdentifier): selectedEntryIdentifier = entryIdentifier

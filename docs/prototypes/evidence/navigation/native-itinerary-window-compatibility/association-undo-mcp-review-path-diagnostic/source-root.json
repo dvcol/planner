@@ -1,0 +1,28 @@
+{
+  "root": "/private/tmp/PlannerItemWindowCompatibilitySource",
+  "base": "96bf986870efa08c04590a8d8d34eb6e84a8270d",
+  "overlays": [
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerAssociationUndoValues.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerCore.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerImportRestoration.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerNativeImportStorage.swift",
+    "Packages/PlannerCore/Sources/PlannerCore/PlannerValues.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AssociationUndoHistoryTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AssociationUndoRecoveryTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/AssociationUndoSaveFailureTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ExpandedCompletionMembershipTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItemInListCreationFailureTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/ItineraryEntryRemovalTests.swift",
+    "Packages/PlannerCore/Tests/PlannerCoreStoreTests/MembershipRemovalTests.swift",
+    "Planner/AgentControl/PlannerMCPExecutionTool.swift",
+    "Planner/AgentControl/PlannerMCPReviewTool.swift",
+    "Planner/Scenes/SavedAssociationUndoHistory.swift",
+    "Planner/Scenes/SavedItineraryViews.swift",
+    "Planner/Scenes/SavedPlannerStore.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerMCPTests/BulkCompletionAdmissionRoutingTests.swift",
+    "PlannerMCPTests/CommandRoutingTests.swift",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryBulkJourneyTests.swift"
+  ]
+}

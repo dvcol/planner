@@ -467,7 +467,7 @@ func plannerInsertImportedGraph(
   }
 }
 
-private func plannerStageLineageRecord<Value: Encodable>(
+func plannerStageLineageRecord<Value: Encodable>(
   _ value: Value, identifier: UUID, kind: String,
   records: [PlannerSchemaV16.LineageRecord], context: ModelContext
 ) throws {

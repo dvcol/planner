@@ -154,8 +154,7 @@ struct PlannerImportRestoration {
   }
 }
 
-private func plannerRestorationFamilyIdentifier(_ predecessor: PlannerPortableBoundIdentity) -> UUID
-{
+func plannerRestorationFamilyIdentifier(_ predecessor: PlannerPortableBoundIdentity) -> UUID {
   let bytes = Data("PlannerRestorationFamily-v1".utf8) + predecessor.importCanonicalValue.encoded()
   var digest = Array(SHA256.hash(data: bytes))
   digest[6] = (digest[6] & 0x0f) | 0x80

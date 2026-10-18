@@ -171,4 +171,124 @@ struct ItineraryEntryRemovalTests {
     #expect(Set(target.keys) == ["kind", "id", "lifetimeId"])
     #expect(target["kind"] as? String == "itineraryEntry")
   }
+
+  @Test(arguments: ["item", "list"])
+  func undoRestoresOneRepeatedEntryAndItsIndependentCompletion(sourceKind: String) async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = Planner(
+      configuration: .init(
+        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+        controlURL: directory.appendingPathComponent("control/writer"),
+        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+        processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
+      guard
+        case .applied(let result, .complete) = await planner.execute(
+          .init(operationId: UUID(), session: session, command: command)
+        ).outcome
+      else { throw CancellationError() }
+      return result
+    }
+    let item = try #require(
+      try await save(.createItem(content: .init(title: "Hotel", notes: "Keep shared notes")))
+        .generated.first)
+    let list = try #require(
+      try await save(.createList(content: .init(name: "Tokyo Food"))).generated.first)
+    let itinerary = try #require(
+      try await save(.createItinerary(content: .init(title: "Route"))).generated.first)
+    guard
+      case .membership(let membershipIdentifier, _, _)? = try await save(
+        .addMembership(itemId: item.id, listId: list.id, placement: .last)
+      ).generatedReferences.first
+    else { throw CancellationError() }
+    _ = try await save(
+      .setCompletion(
+        scope: .appearance(.listMembership(listId: list.id, membershipId: membershipIdentifier)),
+        done: true))
+    let source = sourceKind == "item" ? item : list
+    var entryIdentifiers: [UUID] = []
+    var references: [PlannerReferenceRead] = []
+    for _ in 0..<2 {
+      let reference = try #require(
+        try await save(
+          .addItineraryEntry(itineraryId: itinerary.id, source: source, placement: .last)
+        )
+        .generatedReferences.first)
+      guard case .itineraryEntry(let identifier, _, _) = reference else {
+        throw CancellationError()
+      }
+      entryIdentifiers.append(identifier)
+      references.append(reference)
+    }
+    func appearance(_ entryIdentifier: UUID) -> PlannerAppearance {
+      if sourceKind == "item" {
+        return .directItineraryItem(itineraryId: itinerary.id, entryId: entryIdentifier)
+      }
+      return .expandedListItem(
+        itineraryId: itinerary.id, listEntryId: entryIdentifier,
+        membershipId: membershipIdentifier)
+    }
+    _ = try await save(
+      .setCompletion(
+        scope: .appearance(appearance(entryIdentifiers[0])), done: true))
+    guard case .exported(let originalData) = await planner.exportData(session: session),
+      case .decoded(let original) = planner.decodeImport(originalData),
+      case .source(.list(let originalList)) = await planner.read(
+        session: session, request: .source(list))
+    else { throw CancellationError() }
+    let originalMembership = try #require(
+      original.backup.memberships.first {
+        $0.id == membershipIdentifier
+      })
+    let originalEntry = try #require(
+      original.backup.itineraryEntries.first {
+        $0.id == entryIdentifiers[0]
+      })
+    let removal = await planner.execute(
+      .init(
+        operationId: UUID(), session: session,
+        command: .removeItineraryEntry(itineraryId: itinerary.id, entryId: entryIdentifiers[0])))
+    guard case .applied(_, .complete) = removal.outcome else { throw CancellationError() }
+    let snapshot = try #require(removal.associationUndoSnapshot)
+    _ = try await save(.restoreAssociation(snapshot: snapshot))
+    guard
+      case .appearance(let restored) = await planner.read(
+        session: session, request: .appearance(appearance(entryIdentifiers[0]))),
+      case .appearance(let other) = await planner.read(
+        session: session, request: .appearance(appearance(entryIdentifiers[1]))),
+      case .source(.list(let retainedList)) = await planner.read(
+        session: session, request: .source(list)),
+      case .source(.itinerary(let restoredItinerary)) = await planner.read(
+        session: session, request: .source(itinerary)),
+      case .exported(let restoredData) = await planner.exportData(session: session),
+      case .decoded(let restoredBackup) = planner.decodeImport(restoredData)
+    else { throw CancellationError() }
+    let restoredEntry = try #require(
+      restoredBackup.backup.itineraryEntries.first {
+        $0.id == entryIdentifiers[0]
+      })
+    #expect(restoredEntry.lifetimeId != originalEntry.lifetimeId)
+    #expect(restoredEntry.rank == originalEntry.rank)
+    #expect(restored.localDone && restored.effectiveDone)
+    #expect(!other.localDone && !other.effectiveDone)
+    #expect(retainedList.progress.doneCount == 1)
+    #expect(retainedList.updatedAt == originalList.updatedAt)
+    #expect(restoredItinerary.progress.doneCount == 1 && restoredItinerary.progress.totalCount == 2)
+    #expect(
+      restoredItinerary.references.filter {
+        if case .itineraryEntry = $0 { return true }
+        return false
+      } == references)
+    if sourceKind == "list" {
+      let expanded = try #require(
+        restoredBackup.backup.expandedCompletions.first {
+          $0.context.listEntryId == entryIdentifiers[0]
+        })
+      #expect(expanded.context.listEntryLifetimeId == restoredEntry.lifetimeId)
+      #expect(expanded.context.membershipLifetimeId == originalMembership.lifetimeId)
+      #expect(expanded.localDone)
+    }
+  }
 }

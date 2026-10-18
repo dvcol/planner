@@ -43,10 +43,10 @@
           return PlannerMCPSourceTool.failure(
             code: "invalidInput", message: "Expected a command type.", path: "/command/type")
         }
-        if ["deleteSource", "applyImport", "restoreRecovery"].contains(kind) {
+        if ["deleteSource", "applyImport", "restoreRecovery", "restoreAssociation"].contains(kind) {
           return PlannerMCPSourceTool.failure(
             code: "forbiddenOperation",
-            message: "Deletion, import and recovery administration are native Planner actions.",
+            message: "Deletion, import, recovery and association Undo are native Planner actions.",
             path: "/command/type")
         }
         guard ["setBulkCompletion", "applyCapture", "createItem"].contains(kind) else {

@@ -80,7 +80,7 @@ struct BulkCompletionAdmissionRoutingTests {
           [
             "formatVersion": 1,
             "command": ["type": "createItem", "content": ["title": "Not saved"]],
-          ], "invalidInput", "/command/type"
+          ], "invalidInput", "/command/listId"
         ),
         (
           ["formatVersion": 1, "command": ["type": "deleteSource"]], "forbiddenOperation",
@@ -92,6 +92,10 @@ struct BulkCompletionAdmissionRoutingTests {
         ),
         (
           ["formatVersion": 1, "command": ["type": "restoreRecovery"]], "forbiddenOperation",
+          "/command/type"
+        ),
+        (
+          ["formatVersion": 1, "command": ["type": "restoreAssociation"]], "forbiddenOperation",
           "/command/type"
         ),
         (
@@ -168,8 +172,11 @@ struct BulkCompletionAdmissionRoutingTests {
         #expect(rejected["state"] as? String == "failed")
         let reason = try #require(rejected["reason"] as? [String: Any])
         #expect(
-          reason["code"] as? String == testCase.code
-            && reason["propertyPath"] as? String == testCase.path)
+          reason["code"] as? String == testCase.code,
+          Comment(rawValue: String(describing: testCase.arguments)))
+        #expect(
+          reason["propertyPath"] as? String == testCase.path,
+          Comment(rawValue: String(describing: testCase.arguments)))
       }
       for (suppliedToken, code) in [
         ("bad" as Any, "staleReview"), (UUID().uuidString as Any, "staleReview"),

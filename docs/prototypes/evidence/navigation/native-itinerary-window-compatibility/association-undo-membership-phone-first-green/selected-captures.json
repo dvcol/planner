@@ -1,0 +1,12 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "EC2E08C4-4636-4C2E-950F-06E0D3656C07.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Undo restores original completed List appearance_0_7D318356-3FAB-4874-885F-549BAA015E42.png",
+    "timestamp": 1792340538.635,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion()"
+  }
+]

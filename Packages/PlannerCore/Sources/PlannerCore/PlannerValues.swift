@@ -212,6 +212,7 @@ public enum PlannerCommand: Sendable {
     expectedFieldHashes: [PlannerTagField: PlannerFieldHash])
   case addMembership(itemId: UUID, listId: UUID, placement: PlannerPlacement)
   case removeMembership(listId: UUID, membershipId: UUID)
+  case restoreAssociation(snapshot: PlannerAssociationUndoSnapshot)
   case moveMembership(
     listId: UUID, membershipId: UUID, destinationListId: UUID, placement: PlannerPlacement)
   case reorderMembership(listId: UUID, membershipId: UUID, placement: PlannerPlacement)
@@ -320,6 +321,16 @@ public struct PlannerOperationResult: Sendable {
 
   public let operationId: UUID
   public let outcome: Outcome
+  public let associationUndoSnapshot: PlannerAssociationUndoSnapshot?
+
+  init(
+    operationId: UUID, outcome: Outcome,
+    associationUndoSnapshot: PlannerAssociationUndoSnapshot? = nil
+  ) {
+    self.operationId = operationId
+    self.outcome = outcome
+    self.associationUndoSnapshot = associationUndoSnapshot
+  }
 }
 
 public enum PlannerOperationStatus: Sendable {
