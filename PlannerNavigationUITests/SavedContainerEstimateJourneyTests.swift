@@ -2,6 +2,159 @@ import XCTest
 
 @MainActor
 final class SavedContainerEstimateJourneyTests: XCTestCase {
+  func testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem("Museum", includeEstimate: true, application: application)
+    createItem("Lunch", includeEstimate: false, application: application)
+    application.beginPlannerListCreation()
+    let name = application.textFields["saved.list.name"]
+    XCTAssertTrue(name.waitForExistence(timeout: 5))
+    name.activateForPlannerJourney()
+    name.typeText("Morning")
+    let enabled = application.descendants(matching: .any).matching(
+      identifier: "saved.list.estimate.enabled"
+    ).firstMatch
+    XCTAssertTrue(enabled.waitForExistence(timeout: 5))
+    toggle(enabled)
+    let quantity = application.descendants(matching: .any).matching(
+      identifier: "saved.list.estimate.quantity"
+    ).firstMatch
+    XCTAssertTrue(quantity.waitForPlannerValue("1"))
+    for _ in 0..<3 { increment(quantity) }
+    application.plannerElement("saved.list.save").activateForPlannerJourney()
+    for title in ["Museum", "Lunch"] {
+      toolbarAction("saved.list.add", application: application).activateForPlannerJourney()
+      let candidate = application.staticTexts[title].firstMatch
+      XCTAssertTrue(candidate.waitForExistence(timeout: 5))
+      candidate.activateForPlannerJourney()
+      application.plannerElement("saved.membership.add").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.savedPlannerItemRows(title).firstMatch.waitForExistence(timeout: 10))
+    }
+    XCTAssertTrue(estimate("full", application: application).waitForPlannerValue("240 minutes"))
+    openSection("Itineraries", application: application)
+    reveal("saved.itinerary.new", application: application).activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Budget route")
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    for source in ["Morning", "Museum"] {
+      toolbarAction("saved.itinerary.entry.new", application: application)
+        .activateForPlannerJourney()
+      let choice = application.descendants(matching: .any).matching(
+        NSPredicate(
+          format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.entry.choice.",
+          source)
+      ).firstMatch
+      XCTAssertTrue(choice.waitForExistence(timeout: 5))
+      choice.activateForPlannerJourney()
+      application.plannerElement("saved.itinerary.entry.add").activateForPlannerJourney()
+    }
+    let rows = application.buttons.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.appearance."))
+    let originalIdentifiers = rows.allElementsBoundByIndex.map(\.identifier)
+    XCTAssertEqual(rows.allElementsBoundByIndex.map(\.label), ["Museum", "Lunch", "Museum"])
+    XCTAssertEqual(originalIdentifiers.count, 3)
+    let full = application.descendants(matching: .any).matching(
+      identifier: "saved.itinerary.estimate.full"
+    ).firstMatch
+    let remaining = application.descendants(matching: .any).matching(
+      identifier: "saved.itinerary.estimate.remaining"
+    ).firstMatch
+    let branchRemaining = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND identifier ENDSWITH %@",
+        "saved.itinerary.entry.estimate.", ".remaining")
+    ).firstMatch
+    XCTAssertTrue(full.waitForPlannerValue("360 minutes"))
+    XCTAssertTrue(remaining.waitForPlannerValue("360 minutes"))
+    XCTAssertTrue(branchRemaining.waitForPlannerValue("240 minutes"))
+    let originalBranchIdentifier = branchRemaining.identifier
+    application.chooseSavedPlannerStateFilter(
+      "Active", control: reveal("saved.itinerary.filters", application: application))
+    openSection("Items", application: application)
+    let lunch = revealCatalogRow(prefix: "saved.item.", title: "Lunch", application: application)
+    lunch.activateForPlannerJourney()
+    toolbarAction("saved.item.actions", application: application).activateForPlannerJourney()
+    application.plannerElement("Archive Item").activateForPlannerJourney()
+    let globalCompletion = application.descendants(matching: .any).matching(
+      identifier: "saved.item.completion"
+    ).firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    openSection("Itineraries", application: application)
+    revealCatalogRow(
+      prefix: "saved.itinerary.row.", title: "Budget route", application: application
+    )
+    .activateForPlannerJourney()
+    XCTAssertTrue(full.waitForPlannerValue("360 minutes"))
+    XCTAssertTrue(
+      remaining.waitForPlannerValue("Up to 360 minutes; 1 finished estimate missing"))
+    XCTAssertTrue(
+      branchRemaining.waitForPlannerValue("Up to 240 minutes; 1 finished estimate missing"))
+    XCTAssertTrue(application.staticTexts["1 of 3 items finished"].exists)
+    XCTAssertTrue(application.staticTexts["0 done · 1 archived"].exists)
+    XCTAssertEqual(
+      rows.allElementsBoundByIndex.map(\.identifier),
+      [originalIdentifiers[0], originalIdentifiers[2]])
+    recordScreenshot(
+      application, name: "Archived unknown estimate keeps the partial manual branch upper bound")
+    let branchCompletion = application.plannerElement(
+      originalIdentifiers[0].replacingOccurrences(
+        of: "saved.itinerary.appearance.", with: "saved.itinerary.completion."))
+    branchCompletion.activateForPlannerJourney()
+    XCTAssertTrue(branchCompletion.waitForPlannerValue("Completed"))
+    XCTAssertTrue(branchRemaining.waitForPlannerValue("0 minutes"))
+    XCTAssertTrue(remaining.waitForPlannerValue("120 minutes"))
+    XCTAssertTrue(full.waitForPlannerValue("360 minutes"))
+    XCTAssertTrue(application.staticTexts["2 of 3 items finished"].exists)
+    recordScreenshot(
+      application,
+      name: "Finished manual branch releases its whole budget while direct Item remains")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Itineraries", application: application)
+    revealCatalogRow(
+      prefix: "saved.itinerary.row.", title: "Budget route", application: application
+    )
+    .activateForPlannerJourney()
+    XCTAssertEqual(branchRemaining.identifier, originalBranchIdentifier)
+    XCTAssertTrue(branchRemaining.waitForPlannerValue("0 minutes"))
+    XCTAssertTrue(remaining.waitForPlannerValue("120 minutes"))
+    XCTAssertTrue(branchCompletion.waitForPlannerValue("Completed"))
+    openSection("Items", application: application)
+    application.chooseSavedPlannerStateFilter(
+      "All archive states", control: reveal("saved.items.filters", application: application))
+    XCTAssertTrue(lunch.waitForExistence(timeout: 10))
+    lunch.activateForPlannerJourney()
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    toolbarAction("saved.item.actions", application: application).activateForPlannerJourney()
+    application.plannerElement("Unarchive Item").activateForPlannerJourney()
+    openSection("Itineraries", application: application)
+    revealCatalogRow(
+      prefix: "saved.itinerary.row.", title: "Budget route", application: application
+    )
+    .activateForPlannerJourney()
+    XCTAssertEqual(rows.allElementsBoundByIndex.map(\.identifier), originalIdentifiers)
+    XCTAssertEqual(branchRemaining.identifier, originalBranchIdentifier)
+    XCTAssertTrue(branchRemaining.waitForPlannerValue("120 minutes"))
+    XCTAssertTrue(remaining.waitForPlannerValue("240 minutes"))
+    XCTAssertTrue(full.waitForPlannerValue("360 minutes"))
+    XCTAssertTrue(application.staticTexts["1 of 3 items done"].exists)
+    for (identifier, state) in zip(originalIdentifiers, ["Completed", "To do", "To do"]) {
+      let completion = application.plannerElement(
+        identifier.replacingOccurrences(
+          of: "saved.itinerary.appearance.", with: "saved.itinerary.completion."))
+      XCTAssertTrue(completion.waitForPlannerValue(state))
+    }
+    recordScreenshot(
+      application,
+      name: "Unarchive restores the same local appearances and independent direct budget")
+  }
+
   func testListEstimateShortcutsStageCancelSaveAndResetAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -568,27 +721,7 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
 
   private func openSection(_ title: String, application: XCUIApplication) {
     #if os(iOS)
-      let identifier: String
-      switch title {
-      case "Lists": identifier = "list.bullet"
-      case "Items": identifier = "square.stack"
-      case "Itineraries": identifier = "point.topleft.down.to.point.bottomright.curvepath"
-      default:
-        XCTFail("Unknown Planner destination: " + title)
-        return
-      }
-      let candidates = application.buttons.matching(identifier: identifier)
-      XCTAssertTrue(candidates.firstMatch.waitForExistence(timeout: 5))
-      guard let tab = candidates.allElementsBoundByIndex.first(where: \.isHittable) else {
-        XCTFail("The native tab is not visible: " + title)
-        return
-      }
-      tab.activateForPlannerJourney()
-      let selected = NSPredicate(format: "selected == true")
-      XCTAssertEqual(
-        XCTWaiter.wait(
-          for: [XCTNSPredicateExpectation(predicate: selected, object: tab)], timeout: 5),
-        .completed)
+      application.openPlannerSection(title)
     #else
       let section = application.plannerElement("saved.section." + title.lowercased())
       XCTAssertTrue(section.waitForExistence(timeout: 5))
@@ -689,7 +822,9 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
     ).firstMatch
     for _ in 0..<3 {
       if row.exists && row.isHittable { return row }
-      if let back = application.buttons.matching(identifier: "BackButton").allElementsBoundByIndex
+      if let back = application.buttons.matching(
+        NSPredicate(format: "identifier IN %@", ["BackButton", "saved.itineraries.back"])
+      ).allElementsBoundByIndex
         .first(where: \.isHittable)
       {
         back.activateForPlannerJourney()
@@ -725,8 +860,21 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
   }
 
   private func revealSidebarIfNeeded(_ application: XCUIApplication, element: XCUIElement) {
-    if element.waitForExistence(timeout: 3) { return }
-    application.plannerElement("Show Sidebar").activateForPlannerJourney()
+    for _ in 0..<3 {
+      if element.waitForExistence(timeout: 2) { return }
+      let back = application.buttons.matching(
+        NSPredicate(format: "identifier IN %@", ["BackButton", "saved.itineraries.back"])
+      ).allElementsBoundByIndex.first(where: \.isHittable)
+      if let back {
+        back.activateForPlannerJourney()
+      } else if let sidebar = application.buttons.matching(identifier: "Show Sidebar")
+        .allElementsBoundByIndex.first(where: \.isHittable)
+      {
+        sidebar.activateForPlannerJourney()
+      } else {
+        return
+      }
+    }
   }
 
   private func recordScreenshot(_ application: XCUIApplication, name: String) {
