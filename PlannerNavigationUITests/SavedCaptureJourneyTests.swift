@@ -20,7 +20,7 @@ final class SavedCaptureJourneyTests: XCTestCase {
     revealSavedMap(map, application: application)
     XCTAssertTrue(map.waitForExistence(timeout: 10))
     XCTAssertTrue(
-      application.staticTexts["Values supplied by the Maps link; not independently verified."]
+      application.staticTexts["Place details come from this Maps link and haven't been verified."]
         .exists)
     application.plannerElement("saved.item.actions").activateForPlannerJourney()
     application.plannerElement("Edit Item").activateForPlannerJourney()
@@ -101,7 +101,7 @@ final class SavedCaptureJourneyTests: XCTestCase {
     XCTAssertTrue(map.waitForExistence(timeout: 10))
     XCTAssertTrue(application.staticTexts["Search location"].firstMatch.exists)
     XCTAssertTrue(
-      application.staticTexts["Search intent supplied by the Maps link; not a resolved place."]
+      application.staticTexts["Place details haven't been verified for this search link."]
         .exists)
     #if os(macOS)
       let snapshot = application.windows.firstMatch.screenshot()
