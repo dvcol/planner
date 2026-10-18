@@ -1,6 +1,6 @@
 # Native original-association Undo
 
-Status: Q106 A and Q107 A implementation checkpoint in progress. All 18 affected Core tests and 13 real HTTP admission functions pass. Represented iPhone restoration, iPad membership restoration and stale-history rejection pass. iPad itinerary restoration also passes. Mac history interactions, retry feedback and broader native-history acceptance remain open. This does not close the Navigation prototype or whole-app UI acceptance.
+Status: Q106 A and Q107 A implementation checkpoint in progress. All 18 affected Core tests and 13 real HTTP admission functions pass. Represented phone/iPad restoration, stale-history rejection and filter/valid-selection follow-up pass. Mac history interactions, retry feedback and broader native-history acceptance remain open. This does not close the Navigation prototype or whole-app UI acceptance.
 
 ## Context, goal and starting state
 
@@ -52,11 +52,28 @@ The [Core packet](evidence/navigation/native-association-undo/) retains exact so
 | `association-undo-itinerary-missing-registration-phone` / `association-undo-itinerary-qualified-red-phone` | These runs fail before Undo because of row-refresh timing and a header locator. They supply no missing-Undo qualification. Corrected observations wait for row identities and use the established native header. |
 | `association-undo-itinerary-native-header-red-phone` / `association-undo-itinerary-phone-first-green` | The corrected journey fails at missing Undo, then passes in 89.686 s. It restores one repeated List entry and its independent Done state through relaunch. Placement remains defective in its screenshot. |
 
-The [observed run index](evidence/navigation/native-association-undo/final-validation/observed-results.json) retains successful and failed invocations separately. Production-source comparisons confirm that all 149 recorded production Swift inputs in the passing phone and tablet Undo epochs match this checkpoint. Later changes to those UI test files correct native queries and add qualification; they do not change the product.
+The [observed run index](evidence/navigation/native-association-undo/final-validation/observed-results.json) retains successful and failed invocations separately. Production-source comparisons confirm that all 149 recorded production Swift inputs in those passing phone and tablet Undo epochs match the initial `b042022e` checkpoint. Later changes to those UI test files correct native queries and add qualification; they do not change that checkpoint's product.
 
 The final affected Core invocation passes 18 tests across seven suites in 0.910 s, including the original creation save-failure regression. Those are test-run durations, not a performance claim.
 
 Original passing screenshots were reviewed. The final dark iPad before/after frames show the bottom Undo bar, restored completed branch, independent unfinished branch and 1-of-2 progress without covering the content. Completed rows, independent states and dark-mode text are readable. This supplies no final spacing, toolbar or whole-app design acceptance, and no performance claim from test elapsed times.
+
+## Filter and valid-selection follow-up
+
+The current saved application's native UI boundary also qualifies Undo under active completion filters. A new List journey completes Museum locally, selects Hotel, removes Museum, enables Todo, and invokes Undo. Full progress returns to 1 of 2 while Museum stays hidden. Hotel keeps its original appearance identity; on wide iPad its detail and unique notes stay selected. Compact iPhone stays on the List rather than being pushed into the restored Item. Clearing completion filtering reveals the original completed Museum identity. Relaunch preserves both identities/local states and expires the old Undo action.
+
+The repeated-Itinerary journey now enables Todo before its Calendar round-trip and Undo. The restored completed branch remains filtered out, its independent unfinished branch remains visible, and full progress returns to 1 of 2. Clearing completion filtering reveals both original independent appearances, with their Done/Todo states preserved through relaunch.
+
+| Run | Executed result |
+| --- | --- |
+| `tablet-native-undo-filter-selection` | Passes in 241.651 s with dark mode and Increase Contrast. Both presentation settings are restored. |
+| `phone-native-undo-list-filter-selection` | Passes in 233.706 s in dark mode, with compact navigation retained. Appearance is restored. |
+| `phone-native-undo-itinerary-filters` | Passes in 120.402 s in dark mode, including Calendar/return and relaunch. Appearance is restored. |
+| `native-undo-filter-selection-build` / `native-undo-filter-selection-mac-build` | Both final affected targets compile. Mac compilation supplies no runtime credit. |
+
+This follow-up changes tests and reporting only. No production correction, new interface or direct history-controller test is introduced. Its [run index](evidence/navigation/native-association-undo/filter-selection-validation/observed-results.json) and [production comparison](evidence/navigation/native-association-undo/filter-selection-validation/production-source-comparison.json) retain the exact current production epoch, which includes the subsequent native duration-filter work. Earlier Core/HTTP results retain their original source epochs.
+
+The List journeys each encounter two previously observed 60-second XCTest animation-notification waits around the native context menu. They still complete within their recorded allowance. These waits supply no responsiveness acceptance and are not attributed to a new Undo product defect. Four [inspected originals](evidence/navigation/native-association-undo/filter-selection-validation/visual-review.json) show retained filters/full counts and the wide Hotel selection. Faint composition captions and scrolled content beneath floating bars remain final-polish findings.
 
 ## HTTP admission qualification
 
@@ -70,10 +87,10 @@ The review suite also exposes an Item-creation expectation mismatch. Its request
 
 - Core qualification is recorded for restored identity/order/local state, recreated expanded counterparts, stale bindings, issuance/replay, recovery and genuine save failures. Keep its final source hashes and 18-test affected regression result attached.
 - HTTP qualification passes all 13 actual functions with native Undo excluded and existing data operations retained. Keep snapshots outside adapter/backup/receipt encodings; App Intents expose no Undo administration.
-- Phone tab placement and iPad destination-change/relaunch restoration pass. Broader filter/valid-selection checks remain; retain original appearance identities.
+- Phone tab placement, destination-change/relaunch restoration and the represented phone/iPad filter/valid-selection checks pass. Retain their original appearance identities and exact source epochs; broader scene/layout/accessibility acceptance remains separate.
 - Native stale-history rejection passes on iPad. Qualify retry/in-flight feedback, ordinary text Undo and per-window isolation. Record unavailable actual Mac runtime separately rather than substituting compilation.
 - Strict lint passes all 22 affected Swift files and the report; final mobile and Mac targets compile. Publish exact evidence, diff/credential checks and map updates after committing and pushing the checkpoint. These checks do not substitute for the unavailable Mac runtime.
 
 The [Q108 proposal](../native-association-history-test-contract-review.md) is pending. It would supplement real UI journeys with actual Foundation/native-history controller tests in the existing app-hosted target, without production test hooks. It does not change Q106/Q107 behavior or establish Mac UI acceptance.
 
-Other association kinds, Move and Redo remain outside this first removal-Undo slice. Signed storage, physical-device CloudKit/account transitions and final whole-app UI polish remain explicit owning-map work.
+Owned bookmark/label associations remain required current-map work outside this first removal-Undo slice. The [Q109/Q110 proposal](../native-owned-association-undo-proposal.md) asks how to handle Move and compound owned-association removals before their concrete contract/tests. Association Redo remains deferred. Signed storage, physical-device CloudKit/account transitions and final whole-app UI polish remain explicit owning-map work.

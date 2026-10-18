@@ -3,6 +3,85 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testNativeUndoPreservesFiltersAndAnotherSelectedListAppearance() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    createItem(application, title: "Hotel", notes: "Keep this Hotel selected")
+    createList("Undo selection", application: application)
+    addItem(application)
+    addItem(application, title: "Hotel")
+    let museum = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    let hotel = application.savedPlannerItemRows("Hotel").firstMatch
+    let museumIdentifier = museum.identifier
+    let hotelIdentifier = hotel.identifier
+    let museumCompletion = application.plannerElement(
+      museumIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion."))
+    museumCompletion.activateForPlannerJourney()
+    XCTAssertTrue(museumCompletion.waitForPlannerValue("Completed"))
+    hotel.activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["Keep this Hotel selected"].waitForExistence(timeout: 10))
+    let filters = application.plannerElement("saved.list.filters")
+    let keepsDetailVisible = filters.isHittable
+    #if os(iOS)
+      if !keepsDetailVisible {
+        application.plannerElement("BackButton").activateForPlannerJourney()
+      }
+    #endif
+    #if os(macOS)
+      museum.rightClick()
+    #else
+      museum.press(forDuration: 1)
+    #endif
+    application.plannerElement("Remove from List").activateForPlannerJourney()
+    XCTAssertTrue(museum.waitForNonExistence(timeout: 10))
+    XCTAssertTrue(hotel.waitForExistence(timeout: 10))
+    application.chooseSavedPlannerStateFilter("Todo", control: filters)
+    let originalFilterTitle = filters.plannerControlTitle
+    XCTAssertTrue(originalFilterTitle.contains("Todo"))
+    #if os(macOS)
+      application.typeKey("z", modifierFlags: .command)
+    #else
+      let undo = application.plannerElement("saved.association.undo")
+      XCTAssertTrue(undo.waitForExistence(timeout: 5))
+      undo.activateForPlannerJourney()
+    #endif
+    let progress = application.progressIndicators["saved.list.progress"]
+    let restoredProgress = XCTNSPredicateExpectation(
+      predicate: NSPredicate(format: "label == %@", "1 of 2 items done"), object: progress)
+    XCTAssertEqual(XCTWaiter.wait(for: [restoredProgress], timeout: 10), .completed)
+    XCTAssertFalse(museum.exists)
+    XCTAssertEqual(filters.plannerControlTitle, originalFilterTitle)
+    XCTAssertTrue(application.staticTexts["Showing 1 of 2 items"].exists)
+    XCTAssertEqual(hotel.identifier, hotelIdentifier)
+    XCTAssertTrue(filters.isHittable)
+    if keepsDetailVisible {
+      XCTAssertTrue(application.staticTexts["Keep this Hotel selected"].exists)
+      XCTAssertFalse(application.staticTexts["Meet at the garden entrance"].exists)
+    }
+    recordScreenshot(
+      application, name: "Undo retains Todo filtering and the other selected appearance")
+    application.chooseSavedPlannerStateFilter("All completion states", control: filters)
+    XCTAssertTrue(museum.waitForExistence(timeout: 10))
+    XCTAssertEqual(museum.identifier, museumIdentifier)
+    XCTAssertTrue(museumCompletion.waitForPlannerValue("Completed"))
+    XCTAssertEqual(hotel.identifier, hotelIdentifier)
+    if keepsDetailVisible {
+      XCTAssertTrue(application.staticTexts["Keep this Hotel selected"].exists)
+    }
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Undo selection", application: application)
+    XCTAssertEqual(museum.identifier, museumIdentifier)
+    XCTAssertEqual(hotel.identifier, hotelIdentifier)
+    XCTAssertTrue(museumCompletion.waitForPlannerValue("Completed"))
+    XCTAssertEqual(progress.label, "1 of 2 items done")
+    XCTAssertFalse(application.plannerElement("saved.association.undo").exists)
+  }
+
   func testNewItemDraftRetainsFieldsAndRejectsSaveAfterOriginatingListDeletion() throws {
     continueAfterFailure = false
     let application = XCUIApplication()

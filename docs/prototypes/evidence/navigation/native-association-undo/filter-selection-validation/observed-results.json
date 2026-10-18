@@ -1,0 +1,55 @@
+[
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-undo-filter-selection-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-undo-filter-selection-mac-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-undo-itinerary-filters",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-native-undo-itinerary-filters.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedItineraryBulkJourneyTests testNativeUndoRestoresOneRepeatedItineraryEntry]' passed (120.402 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-undo-list-filter-selection",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-native-undo-list-filter-selection.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeUndoPreservesFiltersAndAnotherSelectedListAppearance]' passed (233.706 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-native-undo-filter-selection",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-native-undo-filter-selection.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeUndoPreservesFiltersAndAnotherSelectedListAppearance]' passed (241.651 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  }
+]

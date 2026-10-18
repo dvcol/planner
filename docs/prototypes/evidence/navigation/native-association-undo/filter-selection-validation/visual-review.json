@@ -1,0 +1,29 @@
+{
+  "scope": "Original pixels inspected directly; native tests establish identity, filters and persistence. No whole-app visual/accessibility acceptance.",
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-undo-itinerary-filters/7BE20015-702A-4CB6-B207-A011E9D60D71.png",
+      "sha256": "52c9aa9d910ecea845ed41a919b4eca250969c8651f0bfa49d9c097ba17a2de3",
+      "reviewer": "primary agent",
+      "observation": "Restored completed branch remains hidden under Todo. The independent unfinished branch is visible and full 1-of-2 progress is retained. Secondary composition counts remain faint and belong to final polish."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-undo-itinerary-filters/85604799-1EFC-4F42-9945-EDE6391ECBA1.png",
+      "sha256": "862064ef30a84ee4c878d5db27e1b397800ae3fcbacd0e1b9969eb698403b5de",
+      "reviewer": "primary agent",
+      "observation": "Clearing completion filtering shows the original completed branch and independent unfinished branch. Scrolled content under the floating toolbar and bottom-edge readability remain final UI review findings."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-native-undo-filter-selection/876B8EE6-7152-4F57-8F38-DC731619BD6A.png",
+      "sha256": "4a89ef9d4acf705e96105e07098151b9c0074b929a392b277a5aa3db966733b3",
+      "reviewer": "primary agent",
+      "observation": "Dark/increased-contrast split view preserves selected Hotel detail and its unique notes. Only Hotel is shown under Todo while full 1-of-2 progress includes restored completed Museum. No selection switch to the restored appearance."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-undo-list-filter-selection/20C2320D-9D8C-46F7-B070-BCE5F47BE6D4.png",
+      "sha256": "0fde1202d21bacd4afe63b0300ed1f05cf735ef34b25b4ab5b2699aed7338c35",
+      "reviewer": "primary agent",
+      "observation": "Compact phone remains on filtered List content after Undo, with Hotel visible, Showing 1 of 2 and full 1-of-2 progress. Native bottom tabs remain visible; details are not forced open."
+    }
+  ]
+}

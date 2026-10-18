@@ -1,0 +1,12 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "876B8EE6-7152-4F57-8F38-DC731619BD6A.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Undo retains Todo filtering and the other selected appearance_0_8D9CF795-4B92-491E-A4A6-3751BF055D7E.png",
+    "timestamp": 1792351049.931,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeUndoPreservesFiltersAndAnotherSelectedListAppearance()"
+  }
+]

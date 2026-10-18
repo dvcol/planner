@@ -28,6 +28,10 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
     application.plannerElement("Remove from Itinerary").activateForPlannerJourney()
     XCTAssertTrue(
       waitForItineraryOrder([originalIdentifiers[1]], application: application))
+    let filters = application.plannerElement("saved.itinerary.filters")
+    application.chooseSavedPlannerStateFilter("Todo", control: filters)
+    let originalFilterTitle = filters.plannerControlTitle
+    XCTAssertTrue(originalFilterTitle.contains("Todo"))
     #if os(macOS)
       application.typeKey("z", modifierFlags: .command)
     #else
@@ -47,6 +51,15 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
       recordScreenshot(application, name: "Native Itinerary removal offers scoped Undo")
       undo.activateForPlannerJourney()
     #endif
+    let progress = application.progressIndicators["saved.itinerary.progress"]
+    let restoredProgress = XCTNSPredicateExpectation(
+      predicate: NSPredicate(format: "label == %@", "1 of 2 items done"), object: progress)
+    XCTAssertEqual(XCTWaiter.wait(for: [restoredProgress], timeout: 10), .completed)
+    XCTAssertTrue(waitForItineraryOrder([originalIdentifiers[1]], application: application))
+    XCTAssertEqual(filters.plannerControlTitle, originalFilterTitle)
+    recordScreenshot(
+      application, name: "Native Itinerary Undo preserves Todo filtering and full progress")
+    application.chooseSavedPlannerStateFilter("All completion states", control: filters)
     XCTAssertTrue(waitForItineraryOrder(originalIdentifiers, application: application))
     assertChecks(["Completed", "To do"], application: application)
     assertProgress("1 of 2 items done", application: application)

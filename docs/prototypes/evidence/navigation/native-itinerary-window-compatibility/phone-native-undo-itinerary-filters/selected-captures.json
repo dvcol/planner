@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "85604799-1EFC-4F42-9945-EDE6391ECBA1.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Undo restores one independent repeated List entry_0_1ACA282A-8B29-4C9B-963D-F7A7A2ED9E21.png",
+    "timestamp": 1792350943.088,
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "7BE20015-702A-4CB6-B207-A011E9D60D71.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Itinerary Undo preserves Todo filtering and full progress_0_C912F7B1-67D2-4D42-B1EC-78C769D17E56.png",
+    "timestamp": 1792350930.559,
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "EB4FF7C3-7877-4CA5-976A-D45DE3409F23.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Itinerary removal offers scoped Undo_0_45F45FD9-D32C-4011-9A97-B41190DBEC2B.png",
+    "timestamp": 1792350927.363,
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testNativeUndoRestoresOneRepeatedItineraryEntry()"
+  }
+]

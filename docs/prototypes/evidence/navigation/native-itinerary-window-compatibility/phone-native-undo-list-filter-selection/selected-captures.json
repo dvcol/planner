@@ -1,0 +1,12 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "20C2320D-9D8C-46F7-B070-BCE5F47BE6D4.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Undo retains Todo filtering and the other selected appearance_0_ED71BF23-DBD7-410E-BAD9-F3C5319FCFE0.png",
+    "timestamp": 1792351202.061,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeUndoPreservesFiltersAndAnotherSelectedListAppearance()"
+  }
+]
