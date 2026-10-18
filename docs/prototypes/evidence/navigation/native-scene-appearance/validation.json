@@ -1,0 +1,29 @@
+{
+  "sourceBase": "1fbfd14d6e5e1067f8de254fb024b8ed7bc03e50",
+  "productionChanges": false,
+  "results": "results.json",
+  "reviews": [
+    "source-review.json",
+    "visual-review.json",
+    "capture-navigation-review.json"
+  ],
+  "lint": [
+    "swift-lint.json",
+    "markdown-lint.json"
+  ],
+  "compilers": [
+    "capture-navigation-mobile-build/exit.json",
+    "capture-navigation-mac-build/exit.json"
+  ],
+  "newProductionInterfaceOrTestSeam": false,
+  "macRuntimeCredit": false,
+  "signingAccountChanges": false,
+  "permissionSettingsChanges": false,
+  "remaining": [
+    "Q98 itinerary loader decision",
+    "Technical Maps caption review",
+    "Selected metadata contrast audit",
+    "Other scene/state and full accessibility acceptance",
+    "Mac runtime and physical/signing gates"
+  ]
+}

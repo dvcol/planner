@@ -1,0 +1,82 @@
+[
+  {
+    "packet": "phone-settings-capture-dark",
+    "exitCode": 0,
+    "functions": [
+      {
+        "class": "PlannerNavigationUITests.SavedCaptureJourneyTests",
+        "function": "testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem",
+        "outcome": "passed",
+        "seconds": 73.849
+      },
+      {
+        "class": "PlannerNavigationUITests.SavedLabelsJourneyTests",
+        "function": "testSettingsManageLabelsSharesSavedIdentityWithTheToolbarAfterRelaunch",
+        "outcome": "passed",
+        "seconds": 63.904
+      }
+    ],
+    "sourceAndProductFreezeAssertedByRunner": true,
+    "appearanceRestoredAndVerified": true
+  },
+  {
+    "packet": "tablet-settings-capture-dark",
+    "exitCode": 65,
+    "functions": [
+      {
+        "class": "PlannerNavigationUITests.SavedCaptureJourneyTests",
+        "function": "testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem",
+        "outcome": "failed",
+        "seconds": 6.938
+      },
+      {
+        "class": "PlannerNavigationUITests.SavedLabelsJourneyTests",
+        "function": "testSettingsManageLabelsSharesSavedIdentityWithTheToolbarAfterRelaunch",
+        "outcome": "passed",
+        "seconds": 67.978
+      }
+    ],
+    "sourceAndProductFreezeAssertedByRunner": true,
+    "appearanceRestoredAndVerified": true
+  },
+  {
+    "packet": "tablet-capture-adaptive-dark",
+    "exitCode": 0,
+    "functions": [
+      {
+        "class": "PlannerNavigationUITests.SavedCaptureJourneyTests",
+        "function": "testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch",
+        "outcome": "passed",
+        "seconds": 41.447
+      },
+      {
+        "class": "PlannerNavigationUITests.SavedCaptureJourneyTests",
+        "function": "testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem",
+        "outcome": "passed",
+        "seconds": 75.968
+      }
+    ],
+    "sourceAndProductFreezeAssertedByRunner": true,
+    "appearanceRestoredAndVerified": true
+  },
+  {
+    "packet": "phone-capture-adaptive-dark",
+    "exitCode": 0,
+    "functions": [
+      {
+        "class": "PlannerNavigationUITests.SavedCaptureJourneyTests",
+        "function": "testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch",
+        "outcome": "passed",
+        "seconds": 47.413
+      },
+      {
+        "class": "PlannerNavigationUITests.SavedCaptureJourneyTests",
+        "function": "testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem",
+        "outcome": "passed",
+        "seconds": 75.996
+      }
+    ],
+    "sourceAndProductFreezeAssertedByRunner": true,
+    "appearanceRestoredAndVerified": true
+  }
+]

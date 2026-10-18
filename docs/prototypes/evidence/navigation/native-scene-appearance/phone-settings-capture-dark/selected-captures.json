@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "1828A01C-0521-4EB9-ABFC-70C7FC5A6B80.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Reviewed native capture saves Weekend estimate notes and original link_0_D32ABF6A-6A26-455D-B3BB-4FC15A723A7A.png",
+    "timestamp": 1792302635.832,
+    "testIdentifier": "SavedCaptureJourneyTests/testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "EFA1456A-5536-417E-A0E5-736F8F387173.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Manage Labels through Settings after relaunch_0_719444E6-5B6F-4B41-BE34-DE847F093CF2.png",
+    "timestamp": 1792302719.339,
+    "testIdentifier": "SavedLabelsJourneyTests/testSettingsManageLabelsSharesSavedIdentityWithTheToolbarAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "E3A96FD5-1FF6-40BD-AF1E-EED1AA6EF056.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Settings and toolbar use the same saved Tag_0_1FF7BB8D-7F04-4C87-A327-FF84CDF5E216.png",
+    "timestamp": 1792302707.68,
+    "testIdentifier": "SavedLabelsJourneyTests/testSettingsManageLabelsSharesSavedIdentityWithTheToolbarAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "EAEA0BCD-0EC7-431E-B9EB-101D1AA78991.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Settings entry for Manage Labels_0_419A5C55-7202-45C4-97D4-8EF221A8CF34.png",
+    "timestamp": 1792302665.16,
+    "testIdentifier": "SavedLabelsJourneyTests/testSettingsManageLabelsSharesSavedIdentityWithTheToolbarAfterRelaunch()"
+  }
+]

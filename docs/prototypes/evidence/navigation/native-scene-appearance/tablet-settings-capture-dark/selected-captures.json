@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "EFB3BBA8-8838-4488-9B52-A4D3D04B64DC.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Manage Labels through Settings after relaunch_0_6EAA3507-435F-4DF6-AB5A-F69A28AAA599.png",
+    "timestamp": 1792302835.185,
+    "testIdentifier": "SavedLabelsJourneyTests/testSettingsManageLabelsSharesSavedIdentityWithTheToolbarAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "C8A5B6C2-DF1B-4313-B141-0817D94D3AB8.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Settings and toolbar use the same saved Tag_0_14E9C449-5113-4021-84F7-8109557BDF9A.png",
+    "timestamp": 1792302821.462,
+    "testIdentifier": "SavedLabelsJourneyTests/testSettingsManageLabelsSharesSavedIdentityWithTheToolbarAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "23E19E79-CE80-4F80-AA5F-41020B1B3DEB.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Settings entry for Manage Labels_0_14380470-4DD1-4435-B2FA-AD60F9B60E6E.png",
+    "timestamp": 1792302779.111,
+    "testIdentifier": "SavedLabelsJourneyTests/testSettingsManageLabelsSharesSavedIdentityWithTheToolbarAfterRelaunch()"
+  }
+]

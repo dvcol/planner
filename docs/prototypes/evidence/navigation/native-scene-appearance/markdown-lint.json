@@ -1,0 +1,18 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "/private/tmp/PlannerItemWindowMarkdownlint.json",
+    "docs/prototypes/native-scene-appearance.md",
+    "docs/native-ui-polish.md"
+  ],
+  "exitCode": 0,
+  "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-scene-appearance.md docs/native-ui-polish.md\nLinting: 2 files\nSummary: 0 issues in 0 files\n",
+  "stderr": "Done in 243ms using pnpm v12.10.1\n",
+  "sourceSHA256": {
+    "docs/prototypes/native-scene-appearance.md": "43d60d51bafb4798cc3cea747b04d98973ad0c1504cdc36aa8859ca8e1b85e73",
+    "docs/native-ui-polish.md": "b2e73ce2df13ffc6c72637e5b4ab59974cb0576b8dacbfebb8e9961ff8c73e98"
+  }
+}

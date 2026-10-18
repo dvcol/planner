@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "94EE1D0F-3EDB-48E7-898A-F156A577614B.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved Google Maps search location uses the native map_0_C3A6795B-6A31-4995-883B-A18C222C34E7.png",
+    "timestamp": 1792303148.413,
+    "testIdentifier": "SavedCaptureJourneyTests/testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "9A95BC36-FFD5-4FD3-8BFC-5EF06760C1AC.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Reviewed native capture saves Weekend estimate notes and original link_0_AA550415-2D41-4A2C-A9DC-941974D89124.png",
+    "timestamp": 1792303228.55,
+    "testIdentifier": "SavedCaptureJourneyTests/testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "014E0C7B-21AD-4E0D-990D-B9840924A01D.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native capture review keeps the staged estimate before Cancel_0_F6D33ED3-90BE-48C4-8C87-09AE78123075.png",
+    "timestamp": 1792303197.808,
+    "testIdentifier": "SavedCaptureJourneyTests/testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem()"
+  }
+]

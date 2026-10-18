@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "0DEC90C7-8270-46D6-9178-3E1505347C44.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved Google Maps search location uses the native map_0_E26957CE-7A69-4BA9-A061-502D7BED050D.png",
+    "timestamp": 1792302998.469,
+    "testIdentifier": "SavedCaptureJourneyTests/testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "63E08D13-593E-4E6C-836D-ACA2C43F0BD6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Reviewed native capture saves Weekend estimate notes and original link_0_AA55F831-F191-4D3D-B33E-AA3E925294CD.png",
+    "timestamp": 1792303072.028,
+    "testIdentifier": "SavedCaptureJourneyTests/testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "02D8C439-CEF8-483F-B836-759EB049EC34.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native capture review keeps the staged estimate before Cancel_0_CFAAD59C-4428-42BE-9929-9C69B373E4B2.png",
+    "timestamp": 1792303041.375,
+    "testIdentifier": "SavedCaptureJourneyTests/testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem()"
+  }
+]

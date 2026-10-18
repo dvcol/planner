@@ -1,0 +1,16 @@
+{
+  "classification": "Controller failure before capture, not a product behavior red.",
+  "failure": "The old iOS helper queried the phone-only Items tab without using the existing adaptive navigation path. The relaunch path made the same assumption for Inbox.",
+  "evidence": "The executed failure names the missing Items Button. Source contains both direct tab queries. The retained near-end recording frame is black; it does not independently establish the exact UI state at the failed query. The automatically attached hierarchy is a startup snapshot and is not treated as the failure-point hierarchy.",
+  "recording": {
+    "exportedFileName": "7D0A22C4-6604-4084-A3FC-E40198B067BD.mp4",
+    "sha256": "b88cdcb2200868711a100fafba2039747917371857e40bf7e8fbf49bc2236cec",
+    "frame": "capture-navigation-recording-frame.png",
+    "frameOffset": "one second before recording end"
+  },
+  "change": "Use the existing openPlannerSection helper for Items and Inbox. Keep content, count, estimate, schedule, identity and relaunch assertions.",
+  "newCapture": "Record the actual native Review Capture scene before Cancel, using the screen on mobile and the own window on Mac.",
+  "verifiedTabletRetry": "tablet-capture-adaptive-dark/exit.json",
+  "productChanges": false,
+  "otherMethod": "Settings/Manage Labels passed independently in this aggregate failed attempt; the capture method did not."
+}

@@ -1,0 +1,57 @@
+{
+  "reviewer": "Primary agent visual inspection of original native captures, except the explicitly identified recording frame.",
+  "captures": [
+    {
+      "path": "phone-settings-capture-dark/EAEA0BCD-0EC7-431E-B9EB-101D1AA78991.png",
+      "sha256": "8354aaab9bbe356d5934af148e4854075ac1c8dd85f2e8dfaaef1353d13338c8"
+    },
+    {
+      "path": "phone-settings-capture-dark/EFA1456A-5536-417E-A0E5-736F8F387173.png",
+      "sha256": "7a2106e7f9fc244a3eab8be0c310cac7ad66fd3238671b207ffda55c2886fadf"
+    },
+    {
+      "path": "phone-settings-capture-dark/1828A01C-0521-4EB9-ABFC-70C7FC5A6B80.png",
+      "sha256": "228adccab45f1057fd3f3187a088ccb827311f93ba515c0e7b48c1d58933620c"
+    },
+    {
+      "path": "tablet-settings-capture-dark/23E19E79-CE80-4F80-AA5F-41020B1B3DEB.png",
+      "sha256": "1f9adf9cfca36e3bbce6821f5917bb44165415e5de43d7f749f6fc953f620bc6"
+    },
+    {
+      "path": "tablet-settings-capture-dark/EFB3BBA8-8838-4488-9B52-A4D3D04B64DC.png",
+      "sha256": "1c9ca283e46a407180077dc0d313ed2b55dd1326d72882f0659542f95fd180fa"
+    },
+    {
+      "path": "tablet-capture-adaptive-dark/02D8C439-CEF8-483F-B836-759EB049EC34.png",
+      "sha256": "31892e8dfc47de86ac3304a240e2958754cef7db34001e01e125998c4725a2fe"
+    },
+    {
+      "path": "tablet-capture-adaptive-dark/0DEC90C7-8270-46D6-9178-3E1505347C44.png",
+      "sha256": "e4a03572265bc2d7e04083ee827e1bf6c320cc58e5264af9646c63f84ffe27c6"
+    },
+    {
+      "path": "phone-capture-adaptive-dark/014E0C7B-21AD-4E0D-990D-B9840924A01D.png",
+      "sha256": "c26ade99510f4ea17a9d4772e7770497cca2b1e4ac68ea9b9c172485c9a04b3a"
+    },
+    {
+      "path": "phone-capture-adaptive-dark/94EE1D0F-3EDB-48E7-898A-F156A577614B.png",
+      "sha256": "30bf51f073e24fb20d6f8bca65b4d092f291c1ff2a595db1e8c48be477d2d0ea"
+    }
+  ],
+  "observations": [
+    "Phone and tablet Settings use readable semantic dark Form surfaces, labeled actions and native Done controls.",
+    "Manage Labels retains clear Categories/Tags sections, an empty Category state and the renamed Tag. The tablet keeps its underlying sidebar rather than a floating top-level tab tier.",
+    "The tablet Review Capture sheet retains Cancel/Add, staged user text, native estimate controls and the chosen 12-hour value before cancellation.",
+    "Saved Google Maps details show a native dark map card with a search-location pin and the retained link. This is a link-supplied search location, not evidence of a resolved business.",
+    "Phone saved capture details retain notes, 2-day estimate, the original link and a native Preview unavailable/Retry fallback. This is an observed live fallback, not a controlled provider-error test.",
+    "The final phone captures show the staged 12-hour native estimate controls before Cancel and the saved native dark map card. Its caption is partly behind the floating bar at this scroll position; the journey separately scrolls to and verifies the original link."
+  ],
+  "remainingObservations": [
+    "The Maps card caption uses technical intent/resolution wording; review plain user-facing copy in the next polish slice.",
+    "Selected Item-row secondary metadata appears pale over the blue selection. Automated contrast evidence is still needed before classifying it as a defect."
+  ],
+  "limits": [
+    "No numeric contrast, hit-target audit, VoiceOver, maximum text, landscape/split-width, Mac runtime, Share host or physical-device acceptance is supplied by these captures.",
+    "The original Settings journeys predate the capture-test controller change. Production source and that Settings function are unchanged."
+  ]
+}
