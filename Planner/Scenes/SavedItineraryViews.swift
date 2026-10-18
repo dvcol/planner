@@ -238,12 +238,12 @@ struct SavedItineraryDetail: View {
               Text(
                 "\(directCount) direct \(directCount == 1 ? "item" : "items") · \(listCount) \(listCount == 1 ? "list" : "lists")"
               )
-              .font(.caption).foregroundStyle(.secondary)
+              .font(.caption).foregroundStyle(Color.primary)
               if let total = itinerary.progress.totalCount,
                 (window?.matchingCount ?? 0) != total
               {
                 Text("Matching \(window?.matchingCount ?? 0) of \(total) items")
-                  .font(.caption).foregroundStyle(.secondary)
+                  .font(.caption).foregroundStyle(Color.primary)
               }
             }
             if let notes = itinerary.content.notes, !notes.isEmpty {
@@ -259,7 +259,7 @@ struct SavedItineraryDetail: View {
             SavedSchedulesSection(
               source: itinerary.source, references: itinerary.references, canChange: store.canCreate
             ) { scheduleToEdit = $0 }
-            Section("Entries") {
+            Section {
               if contents.visibleEntries.isEmpty && !contents.entries.isEmpty {
                 Text("No matching entries").foregroundStyle(.secondary)
               }
@@ -269,6 +269,8 @@ struct SavedItineraryDetail: View {
               .onMove { offsets, destination in
                 moveEntry(from: offsets, to: destination, in: contents.visibleEntries)
               }
+            } header: {
+              Text("Entries").foregroundStyle(Color.primary)
             }
           }
           .accessibilityIdentifier("saved.itinerary.contents")
@@ -523,7 +525,7 @@ struct SavedItineraryDetail: View {
             }
             if matchingRows.count != entry.rowIdentities.count {
               Text("Matching \(matchingRows.count) of \(entry.rowIdentities.count) items")
-                .font(.caption).foregroundStyle(.secondary)
+                .font(.caption).foregroundStyle(Color.primary)
             }
           }
           .padding(.vertical, 8)
