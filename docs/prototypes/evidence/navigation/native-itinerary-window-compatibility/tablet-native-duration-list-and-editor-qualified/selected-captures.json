@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "068CB1FC-7AFB-49C6-BD51-2D2285F532A9.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Unfiltered List retains contextual completion after relaunch_0_9B202706-8277-4A29-8C23-ECFFA1B2A9EB.png",
+    "timestamp": 1792350258.059,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationPreservesListProgressOrderAndIndependentCompletionAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "55679085-06A4-43A6-8B07-BD5A8A2E4F0D.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Duration filters preserve full List progress and completed appearance_0_F29EF1FD-D53A-42BE-9087-58F26AF9B509.png",
+    "timestamp": 1792350216.671,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationPreservesListProgressOrderAndIndependentCompletionAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "CC09CF99-4224-43E6-ACC5-91E805956758.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native maximum-duration picker and explicit unknown choice_0_BF5D2FD1-4297-4796-B615-30B66D424AFB.png",
+    "timestamp": 1792350212.636,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationPreservesListProgressOrderAndIndependentCompletionAfterRelaunch()"
+  }
+]

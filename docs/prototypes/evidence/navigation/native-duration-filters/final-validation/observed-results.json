@@ -1,0 +1,140 @@
+[
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-duration-contextual-final-mac-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-duration-contextual-qualification-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-duration-filter-first-implementation-build",
+    "result": {
+      "exitCode": 65,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-duration-filter-mac-compile",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-duration-filter-qualified-red-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-duration-filter-query-arguments-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-duration-filter-red-build",
+    "result": {
+      "exitCode": 74,
+      "runtimeCredit": false
+    },
+    "observedSummary": []
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-duration-order-qualification-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-duration-catalog-and-itinerary-qualified",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-native-duration-catalog-and-itinerary-qualified.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedItemEstimateJourneyTests testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates]' passed (200.007 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedItineraryFilterJourneyTests testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch]' passed (356.113 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-duration-control-red",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-native-duration-control-red.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedItemEstimateJourneyTests testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates]' failed (16.723 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-duration-first-journey",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-native-duration-first-journey.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedItemEstimateJourneyTests testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates]' failed (144.542 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-native-duration-list-and-editor-qualified",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-native-duration-list-and-editor-qualified.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedItemEstimateJourneyTests testInlineEstimatePreservesRemainderThroughUnitChangesCancelSaveAndRelaunch]' passed (112.281 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedItemEstimateJourneyTests testMaximumDurationPreservesListProgressOrderAndIndependentCompletionAfterRelaunch]' passed (180.006 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-association-undo/native-duration-existing-query-regression",
+    "result": {
+      "exitCode": 0,
+      "filter": "ItemDurationQueryTests"
+    },
+    "observedSummary": [
+      "\u2714 Test maximumDurationIsInclusiveAndUnknownEstimatesAreAnExplicitChoice() passed after 0.098 seconds.",
+      "\u2714 Test invalidDurationBoundsRejectTogetherAndExactIntegerQueriesKeepIssuedRowsReadable() passed after 0.103 seconds.",
+      "\u2714 Test listDurationRangeNarrowsCumulativelyWithoutChangingFullProgressOrManualOrder() passed after 0.301 seconds.",
+      "\u2714 Suite ItemDurationQueryTests passed after 0.301 seconds.",
+      "\u2714 Test run with 3 tests in 1 suite passed after 0.302 seconds."
+    ]
+  }
+]

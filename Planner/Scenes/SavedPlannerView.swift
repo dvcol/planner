@@ -1016,7 +1016,8 @@ struct SavedPlannerView: View {
         completion: inputs.filters.completion.queryValue,
         archive: inputs.filters.archive.queryValue,
         categories: inputs.filters.categoryQuery, tags: inputs.filters.tagQuery,
-        lists: inputs.filters.listQuery, hasAddress: inputs.filters.hasAddress,
+        lists: inputs.filters.listQuery, duration: inputs.filters.durationQuery,
+        hasAddress: inputs.filters.hasAddress,
         hasLinks: inputs.filters.hasLinks, scheduled: inputs.filters.scheduled,
         sort: inputs.sort.queryValue),
       identity: .init(namespace: namespace, savedRevision: inputs.revision))
@@ -1861,7 +1862,7 @@ private struct SavedListForm: View {
           .accessibilityIdentifier("saved.list.name")
         SavedActivityEstimateEditor(
           estimate: $manualEstimate,
-          accessibilityIdentifierPrefix: "saved.list.estimate", isContainerEstimate: true)
+          accessibilityIdentifierPrefix: "saved.list.estimate", purpose: .overall)
       }
       .disabled(store.isSaving)
       .formStyle(.grouped)

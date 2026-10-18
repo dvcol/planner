@@ -1,0 +1,72 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "AC1ADDD0-E155-4582-AE0B-8696A6D52B80.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native Filters is missing maximum duration_0_BDBB4CDA-FFDD-4EA8-9329-84A9787180B5.png",
+    "timestamp": 1792349531.131,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "C4BD9577-AF89-432C-A65B-84846AA3A1E0.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_2A8681CA-D47C-44F7-A79A-42BCD53F700C.PlannerMCPPrototype",
+    "timestamp": 1792349531.005,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "76BF7E31-AEB4-427D-88C3-DF3540CB45D6.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.filters.duration.enabled\" Any`_0_616BD99D-F85D-47BA-9EE5-161CA2BDC7A2.txt",
+    "timestamp": 1792349530.687,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "90A08D31-1748-4B5C-8261-72F0CC208AD6.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.filters.duration.enabled\" Any`_0_1AB0AB80-C43F-4BA8-B511-7567FBB4BEFB.txt",
+    "timestamp": 1792349529.705,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "7D631655-9CB3-445B-8B8A-6F2CC1708622.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.filters.duration.enabled\" Any`_0_EB5CCA84-2A0B-4090-954F-1D493E2E9D93.txt",
+    "timestamp": 1792349528.711,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "1E6C7E07-0B56-492F-84CA-28BEF79AE804.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.filters.duration.enabled\" Any`_0_E09416EA-C0EB-4060-953D-AAEE1D6AC1FE.txt",
+    "timestamp": 1792349527.717,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "E1450CF9-581F-4245-A2A6-CC547355E417.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.filters.duration.enabled\" Any`_0_1C202C6A-6A7C-4AA7-8BA1-049E56F04D39.txt",
+    "timestamp": 1792349526.73,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  }
+]

@@ -1,0 +1,89 @@
+[
+  {
+    "epoch": "native-duration-contextual-final-mac-build",
+    "productionInputs": 149,
+    "differentProductionPaths": []
+  },
+  {
+    "epoch": "native-duration-contextual-qualification-build",
+    "productionInputs": 149,
+    "differentProductionPaths": []
+  },
+  {
+    "epoch": "native-duration-filter-first-implementation-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [
+      "Planner/Scenes/SavedItemViews.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "Planner/Scenes/SavedPlannerView.swift"
+    ]
+  },
+  {
+    "epoch": "native-duration-filter-mac-compile",
+    "productionInputs": 149,
+    "differentProductionPaths": []
+  },
+  {
+    "epoch": "native-duration-filter-qualified-red-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [
+      "Planner/Scenes/SavedActivityEstimateEditor.swift",
+      "Planner/Scenes/SavedItemFilters.swift",
+      "Planner/Scenes/SavedItemViews.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "Planner/Scenes/SavedPlannerView.swift"
+    ]
+  },
+  {
+    "epoch": "native-duration-filter-query-arguments-build",
+    "productionInputs": 149,
+    "differentProductionPaths": []
+  },
+  {
+    "epoch": "native-duration-filter-red-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [
+      "Planner/Scenes/SavedActivityEstimateEditor.swift",
+      "Planner/Scenes/SavedItemFilters.swift",
+      "Planner/Scenes/SavedItemViews.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "Planner/Scenes/SavedPlannerView.swift"
+    ]
+  },
+  {
+    "epoch": "native-duration-order-qualification-build",
+    "productionInputs": 149,
+    "differentProductionPaths": []
+  },
+  {
+    "epoch": "phone-native-duration-catalog-and-itinerary-qualified",
+    "productionInputs": 149,
+    "differentProductionPaths": []
+  },
+  {
+    "epoch": "phone-native-duration-control-red",
+    "productionInputs": 149,
+    "differentProductionPaths": [
+      "Planner/Scenes/SavedActivityEstimateEditor.swift",
+      "Planner/Scenes/SavedItemFilters.swift",
+      "Planner/Scenes/SavedItemViews.swift",
+      "Planner/Scenes/SavedItineraryViews.swift",
+      "Planner/Scenes/SavedPlannerView.swift"
+    ]
+  },
+  {
+    "epoch": "phone-native-duration-first-journey",
+    "productionInputs": 149,
+    "differentProductionPaths": []
+  },
+  {
+    "epoch": "tablet-native-duration-list-and-editor-qualified",
+    "productionInputs": 149,
+    "differentProductionPaths": []
+  },
+  {
+    "epoch": "native-duration-existing-query-regression",
+    "productionInputs": 79,
+    "differentProductionPaths": []
+  }
+]

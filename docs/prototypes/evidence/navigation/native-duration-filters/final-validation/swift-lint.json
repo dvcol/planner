@@ -1,0 +1,16 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/Scenes/SavedActivityEstimateEditor.swift",
+    "Planner/Scenes/SavedItemFilters.swift",
+    "Planner/Scenes/SavedItemViews.swift",
+    "Planner/Scenes/SavedItineraryViews.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerNavigationUITests/SavedItemEstimateJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryFilterJourneyTests.swift"
+  ],
+  "exitCode": 0
+}

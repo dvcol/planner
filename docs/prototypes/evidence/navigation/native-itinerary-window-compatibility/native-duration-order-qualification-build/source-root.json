@@ -1,0 +1,13 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "7286a0dbf5c5f3652d75aeaf04b5ca62a98d820e",
+  "overlays": [
+    "Planner/Scenes/SavedActivityEstimateEditor.swift",
+    "Planner/Scenes/SavedItemFilters.swift",
+    "Planner/Scenes/SavedItemViews.swift",
+    "Planner/Scenes/SavedItineraryViews.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerNavigationUITests/SavedItemEstimateJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryFilterJourneyTests.swift"
+  ]
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "4473F685-E2E4-4624-9117-031A681FDA72.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_194CAEA6-1685-4005-8F04-BC8B651905BA.PlannerMCPPrototype",
+    "timestamp": 1792349780.97,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "A80471D3-A8CF-4C47-8AEA-4C1A441953C4.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `SearchField (First Match)`_0_1D50C82C-BB92-4AF8-AAF2-77CFFAE31E5A.txt",
+    "timestamp": 1792349780.805,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "0715C8A2-242D-4D83-9CC7-6A3C8AA4B505.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `SearchField (First Match)`_0_E04855FE-8BDE-413B-BF45-6346DEA3D22E.txt",
+    "timestamp": 1792349779.841,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "8A1EAA18-ED10-4079-B0CE-D32BC6F8D818.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `SearchField (First Match)`_0_7A057C43-1F84-4EE0-B948-183D364D79C6.txt",
+    "timestamp": 1792349778.821,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "E0150D85-7864-4588-AE93-DDE813DE212A.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `SearchField (First Match)`_0_07035749-AEED-450C-8B50-A5A2D98F95C1.txt",
+    "timestamp": 1792349777.861,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "936F916D-31F9-4644-881E-1054352935CC.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `SearchField (First Match)`_0_DC5B61B9-238C-4646-B071-FAAA873B7950.txt",
+    "timestamp": 1792349776.799,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "DBB50114-A92E-4DE5-945F-0795AE4EE1D8.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Inclusive two-hour maximum excludes long and unknown estimates_0_7A628219-35EF-4E82-B624-4A0BD5ED64E3.png",
+    "timestamp": 1792349766.874,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "B0272E7A-4041-48AA-91DD-6AE9F6131981.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native maximum-duration picker and explicit unknown choice_0_BB1ABF1E-7060-4D14-941D-73E9BA04C370.png",
+    "timestamp": 1792349764.146,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  }
+]

@@ -1,0 +1,65 @@
+{
+  "scope": "Original pixels inspected directly. Interaction and identity claims belong to executed tests; no whole-app visual/accessibility acceptance.",
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-duration-control-red/AC1ADDD0-E155-4582-AE0B-8696A6D52B80.png",
+      "sha256": "0b5405d4b91b677c032e4bd76b53da689bb8bfb9ac319a08e2a369435635c544",
+      "reviewer": "primary agent",
+      "observation": "Original Filters form has state, labels, Lists and content controls but no duration section."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-duration-first-journey/DBB50114-A92E-4DE5-945F-0795AE4EE1D8.png",
+      "sha256": "bc7b9385df460041036798405d8de6586494c48671effc3767efb8e1cc8688a4",
+      "reviewer": "primary agent",
+      "observation": "Partial failed journey: 119/120-minute and Park 60 rows are visible; long/unknown rows are absent. The overall function later fails at its collapsed Search observation."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-duration-first-journey/B0272E7A-4041-48AA-91DD-6AE9F6131981.png",
+      "sha256": "ec5f060606d2f9ff8c56abfce0c9a305ba81e3901119a8cd6836af673888eb30",
+      "reviewer": "primary agent",
+      "observation": "Partial failed journey: dark native filter controls show a two-hour maximum and an off unknown-estimate Toggle. This does not qualify the whole journey."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-native-duration-list-and-editor-qualified/CC09CF99-4224-43E6-ACC5-91E805956758.png",
+      "sha256": "283502c8f0ebaa3686785789891f01b1c0b11f3df8eb9b08c819aa2ec58eda63",
+      "reviewer": "primary agent",
+      "observation": "Dark/increased-contrast native popover has legible quantity/unit controls at this scroll position. Section heading and lower unknown Toggle are partly outside the unobscured viewport; the test separately reveals the Toggle. No full-popover readability verdict."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-native-duration-list-and-editor-qualified/55679085-06A4-43A6-8B07-BD5A8A2E4F0D.png",
+      "sha256": "2d80094536bb58641fb438e577675cf3326fdf80e3c8a57e0c5142f30e6a5f3d",
+      "reviewer": "primary agent",
+      "observation": "Filtered List shows one completed 120-minute appearance, full 1-of-3 progress, Showing 1 of 3, and full estimate/remaining warnings. Native detail pane is empty because no detail was selected."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-native-duration-list-and-editor-qualified/068CB1FC-7AFB-49C6-BD51-2D2285F532A9.png",
+      "sha256": "4f8dad870733afecfef6663b54a0c63937987d02114e0b0e162d4b3ac2636ad8",
+      "reviewer": "primary agent",
+      "observation": "Relaunched unfiltered List has all three readable rows with one completed appearance, two unfinished appearances, and full progress/estimate metadata."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-duration-catalog-and-itinerary-qualified/1F5FD6A2-7A50-4D38-B454-53A28A274895.png",
+      "sha256": "d14f6cfd0e681897c5a22d8a61e9bea29b22bf1c73e097f52383749088acdce9",
+      "reviewer": "primary agent",
+      "observation": "Passing journey: duration cleared while Museum text search stays active; all four Museum rows return and Park remains excluded. Native bottom tabs are visible."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-duration-catalog-and-itinerary-qualified/89FB3997-3116-495B-A056-0C04A7F1AB77.png",
+      "sha256": "933caae3aa143cb1f14791a57c8a261e3df8004bafe690d2dc7aca6211c34256",
+      "reviewer": "primary agent",
+      "observation": "Passing journey: readable 119/120-minute and 60-minute rows under the inclusive maximum; long/unknown estimates are absent."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-duration-catalog-and-itinerary-qualified/EAFDB7BB-8F6A-4095-8A95-6660B641AA0C.png",
+      "sha256": "c6785ca6dc5d52cfa447ee2b3340133045b2fa5d809bc317e8a6b812c5d959b5",
+      "reviewer": "primary agent",
+      "observation": "Passing affected Itinerary journey, first Item-only restriction: matching List title does not keep an unmatched branch; full 1-of-3 progress and missing-estimate warnings remain. Composition/empty-state secondary text remains a final-polish finding."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-native-duration-catalog-and-itinerary-qualified/8688B06E-06E2-4DD3-89AA-A60C3C2F5F67.png",
+      "sha256": "94ce8c64032158443f4b8e2420850f3daf1123a391ccccdb69df53e93a862528",
+      "reviewer": "primary agent",
+      "observation": "Passing affected Itinerary journey, latest restriction capture: loop order plus original timestamps identify maximum duration. Matching List title does not retain its unmatched unknown children; full progress remains. Secondary composition text remains faint."
+    }
+  ]
+}

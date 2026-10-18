@@ -1,0 +1,112 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "7D5D41E0-2C1E-47D6-BDC1-2402723A360C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native maximum-duration picker and explicit unknown choice_0_EC3B4B09-1477-4274-8403-A8934E2B19CF.png",
+    "timestamp": 1792350139.402,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "1F5FD6A2-7A50-4D38-B454-53A28A274895.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Clearing only duration retains cumulative text search_0_3C497F24-6C26-4D07-996A-6F842F2C1BB0.png",
+    "timestamp": 1792350119.446,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "89FB3997-3116-495B-A056-0C04A7F1AB77.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Inclusive two-hour maximum excludes long and unknown estimates_0_8E3D9A28-BFEB-48C3-A25F-FA7DF28CCEE0.png",
+    "timestamp": 1792350095.769,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "508606BF-8A89-4113-8741-609FC7FB4B8D.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native maximum-duration picker and explicit unknown choice_0_6C97C47D-9F1E-491B-865B-17C7089B6F1E.png",
+    "timestamp": 1792350093.024,
+    "testIdentifier": "SavedItemEstimateJourneyTests/testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "8D7054FB-1CC7-4F70-92AF-AB023A69B8ED.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Cumulative label All hides rows without changing progress or valid details_0_5CE46168-7AD6-4B59-810F-48401CDAE228.png",
+    "timestamp": 1792350474.843,
+    "testIdentifier": "SavedItineraryFilterJourneyTests/testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "189C3A71-987D-499B-829B-2ACAA9A8A89A.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Matching children retain both independent List appearances_0_717CC235-ED48-48CC-8D24-7F8FDBCBFACA.png",
+    "timestamp": 1792350431.724,
+    "testIdentifier": "SavedItineraryFilterJourneyTests/testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "8688B06E-06E2-4DD3-89AA-A60C3C2F5F67.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item-only restrictions cannot retain a matching List header_0_8544D43F-414B-41AB-88F2-21E42AACA4AD.png",
+    "timestamp": 1792350356.574,
+    "testIdentifier": "SavedItineraryFilterJourneyTests/testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "3819A868-805E-4FD5-83CF-174F5930D7BD.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item-only restrictions cannot retain a matching List header_0_5EE171E2-22C8-4379-BBE5-B5E79964EAD3.png",
+    "timestamp": 1792350339.581,
+    "testIdentifier": "SavedItineraryFilterJourneyTests/testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "EAFDB7BB-8F6A-4095-8A95-6660B641AA0C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item-only restrictions cannot retain a matching List header_0_61F82854-F260-4AE5-A76D-414B57965794.png",
+    "timestamp": 1792350319.832,
+    "testIdentifier": "SavedItineraryFilterJourneyTests/testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "C05B23A9-A755-4F67-81AD-332F67CEC24B.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Matching List headers retain full progress with no matching children_0_BD7EB9BE-05A3-44BC-A1DF-0FFFD07EA41E.png",
+    "timestamp": 1792350304.755,
+    "testIdentifier": "SavedItineraryFilterJourneyTests/testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "4CF56330-B3AE-4A12-8CFD-8D652920FD34.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Matching List headers and selected appearance after search_0_1A246901-9C56-4597-A119-97E549161CF1.png",
+    "timestamp": 1792350304.449,
+    "testIdentifier": "SavedItineraryFilterJourneyTests/testSearchKeepsMatchingHeadersOrChildrenAndPreservesFullRepeatedProgressAfterRelaunch()"
+  }
+]

@@ -218,7 +218,8 @@ struct SavedItemCatalog: View {
         completion: request.filters.completion.queryValue,
         archive: request.filters.archive.queryValue,
         categories: request.filters.categoryQuery, tags: request.filters.tagQuery,
-        lists: request.filters.listQuery, hasAddress: request.filters.hasAddress,
+        lists: request.filters.listQuery, duration: request.filters.durationQuery,
+        hasAddress: request.filters.hasAddress,
         hasLinks: request.filters.hasLinks, scheduled: request.filters.scheduled,
         sort: request.sort.queryValue),
       identity: identity)
