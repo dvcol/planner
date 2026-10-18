@@ -278,6 +278,15 @@ final class SavedCaptureJourneyTests: XCTestCase {
     #endif
     chooseCaptureEstimateShortcut("Half-day (12 hours)", application: application)
     assertCaptureEstimateQuantity("12", unit: "Hours", application: application)
+    #if os(iOS)
+      let reviewScreenshot = XCUIScreen.main.screenshot()
+    #else
+      let reviewScreenshot = application.windows.firstMatch.screenshot()
+    #endif
+    let reviewAttachment = XCTAttachment(screenshot: reviewScreenshot)
+    reviewAttachment.name = "Native capture review keeps the staged estimate before Cancel"
+    reviewAttachment.lifetime = .keepAlways
+    add(reviewAttachment)
     application.plannerElement("saved.capture.cancel").activateForPlannerJourney()
     XCTAssertTrue(application.staticTexts["No matching items"].waitForExistence(timeout: 10))
 
@@ -318,11 +327,7 @@ final class SavedCaptureJourneyTests: XCTestCase {
 
     application.terminate()
     application.launchSavedPlannerJourney()
-    #if os(macOS)
-      application.plannerElement("saved.section.inbox").activateForPlannerJourney()
-    #else
-      application.buttons["Inbox"].firstMatch.activateForPlannerJourney()
-    #endif
+    application.openPlannerSection("Inbox")
     let row = application.savedPlannerItemRows("Museum capture").firstMatch
     XCTAssertTrue(row.waitForExistence(timeout: 10))
     XCTAssertEqual(application.savedPlannerItemRows("Museum capture").count, 1)
@@ -378,11 +383,7 @@ final class SavedCaptureJourneyTests: XCTestCase {
   }
 
   private func openItems(_ application: XCUIApplication) {
-    #if os(macOS)
-      application.plannerElement("saved.section.items").activateForPlannerJourney()
-    #else
-      application.buttons["Items"].firstMatch.activateForPlannerJourney()
-    #endif
+    application.openPlannerSection("Items")
   }
 
   private func openCapture(_ application: XCUIApplication, input: String) {
