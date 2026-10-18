@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "5041B538-C0A3-4293-9D80-1F5FC997BA0F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "All archive states and cleared search restore both rows_0_091817D1-22CF-4ED8-95D8-1531CFD46209.png",
+    "timestamp": 1792293927.001,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "21D59E2C-0884-4D80-A3C2-EB47B11C9F70.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Active search hides the row and retains valid detail_0_48339DE7-E1C2-4B51-A319-A78AD0A4DF5E.png",
+    "timestamp": 1792293904.787,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "89E26D84-88AC-45D1-9996-E372D65D5074.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "List search shows one match and full archived progress_0_BF087745-B1E0-4AEB-98E1-6E7C957777E9.png",
+    "timestamp": 1792293892.289,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters()"
+  }
+]

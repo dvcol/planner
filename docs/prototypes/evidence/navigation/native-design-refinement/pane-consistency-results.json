@@ -1,0 +1,128 @@
+{
+  "runs": [
+    {
+      "epoch": "tablet-pane-consistency-dark",
+      "exitCode": 65,
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedItemJourneyTests testDarkAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations",
+          "outcome": "passed",
+          "seconds": 58.47
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedItineraryEntriesJourneyTests testOrderedItemAndListEntriesKeepIndependentChecksAndDetailsAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 15.504
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedListReorderingJourneyTests testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 15.356
+        }
+      ],
+      "sourceEpoch": "docs/prototypes/evidence/navigation/native-design-refinement/native-pane-consistency-mobile-build"
+    },
+    {
+      "epoch": "tablet-pane-consistency-adaptive-dark",
+      "exitCode": 65,
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedItineraryEntriesJourneyTests testOrderedItemAndListEntriesKeepIndependentChecksAndDetailsAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 45.005
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedListReorderingJourneyTests testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch",
+          "outcome": "failed",
+          "seconds": 45.06
+        }
+      ],
+      "sourceEpoch": "docs/prototypes/evidence/navigation/native-design-refinement/native-pane-consistency-adaptive-mobile-build"
+    },
+    {
+      "epoch": "tablet-pane-consistency-overflow-dark",
+      "exitCode": 0,
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedItineraryEntriesJourneyTests testOrderedItemAndListEntriesKeepIndependentChecksAndDetailsAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 101.497
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedListReorderingJourneyTests testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch",
+          "outcome": "passed",
+          "seconds": 136.571
+        }
+      ],
+      "sourceEpoch": "docs/prototypes/evidence/navigation/native-design-refinement/native-pane-consistency-overflow-mobile-build"
+    },
+    {
+      "epoch": "phone-pane-consistency-dark",
+      "exitCode": 0,
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedItemJourneyTests testCatalogCompletionWorksWithoutOpeningDetailsAndSurvivesRelaunch",
+          "outcome": "passed",
+          "seconds": 31.286
+        },
+        {
+          "function": "PlannerNavigationUITests.SavedItemJourneyTests testDarkAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations",
+          "outcome": "passed",
+          "seconds": 56.664
+        }
+      ],
+      "sourceEpoch": "docs/prototypes/evidence/navigation/native-design-refinement/native-pane-consistency-overflow-mobile-build"
+    },
+    {
+      "epoch": "tablet-pane-consistency-accessibility-maximum",
+      "exitCode": 0,
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList",
+          "outcome": "passed",
+          "seconds": 172.865
+        }
+      ],
+      "sourceEpoch": "docs/prototypes/evidence/navigation/native-design-refinement/native-pane-consistency-final-mobile-build"
+    },
+    {
+      "epoch": "tablet-pane-consistency-stacked-accessibility-maximum",
+      "exitCode": 0,
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList",
+          "outcome": "passed",
+          "seconds": 171.554
+        }
+      ],
+      "sourceEpoch": "docs/prototypes/evidence/navigation/native-design-refinement/native-pane-consistency-accessible-mobile-build"
+    },
+    {
+      "epoch": "phone-pane-count-contrast-dark",
+      "exitCode": 0,
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeListSearchKeepsArchivedCompletionProgressAndValidDetailAcrossCumulativeFilters",
+          "outcome": "passed",
+          "seconds": 134.072
+        }
+      ],
+      "sourceEpoch": "docs/prototypes/evidence/navigation/native-design-refinement/native-pane-consistency-accessible-mobile-build"
+    },
+    {
+      "epoch": "tablet-pane-consistency-wrapped-warning-maximum",
+      "exitCode": 0,
+      "functions": [
+        {
+          "function": "PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList",
+          "outcome": "passed",
+          "seconds": 171.87
+        }
+      ],
+      "sourceEpoch": "docs/prototypes/evidence/navigation/native-design-refinement/native-pane-consistency-wrapped-warning-mobile-build"
+    }
+  ],
+  "passingExecutions": 9,
+  "failedControllerExecutions": 4,
+  "scope": "Selected mobile journeys; successful execution alone is not visual acceptance. Earlier large-text captures expose the recorded wrapping findings."
+}

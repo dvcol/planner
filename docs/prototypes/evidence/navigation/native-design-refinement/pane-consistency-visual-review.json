@@ -1,0 +1,56 @@
+{
+  "images": [
+    {
+      "path": "tablet-pane-consistency-dark/5A11C3E3-B8DE-4F34-AC4B-583CAD471C4A.png",
+      "individuallyInspected": true,
+      "sha256": "3d54fe01e32cf32d3011507ea8d33508fa9f9df3afaa01662c68d8930e3a8fec"
+    },
+    {
+      "path": "tablet-pane-consistency-overflow-dark/80780CBB-1B95-47FE-9155-B1FF188E3D20.png",
+      "individuallyInspected": true,
+      "sha256": "f74a5c1d57d94a1b35d5eacd30040ce3ee5da79aa80dac54fac9240df433c93b"
+    },
+    {
+      "path": "tablet-pane-consistency-overflow-dark/AC5A604F-B150-42BD-A866-2A8ECD70EA6A.png",
+      "individuallyInspected": true,
+      "sha256": "13ed7115803fca9f04b63b1206f6325032230992c3c9c92c77e03a6223c0f624"
+    },
+    {
+      "path": "phone-pane-consistency-dark/C8383104-5EDF-4A70-898D-6C3C496B18EF.png",
+      "individuallyInspected": true,
+      "sha256": "509ab99af676f6349d3252b55bf61ba4e8464942199fd48fe7846cbe0a63b155"
+    },
+    {
+      "path": "phone-pane-consistency-dark/E1D71243-07A5-4919-865F-D028E08CD85E.png",
+      "individuallyInspected": true,
+      "sha256": "769862b6d9023613891c8f6dd011967df0ad4e6cca0dba454e16b50a45c10517"
+    },
+    {
+      "path": "tablet-pane-consistency-accessibility-maximum/metric-wrapping-before.png",
+      "individuallyInspected": true,
+      "sha256": "c40ebcdf40821991d2d67549c4151b9291ca8b0ea2117a0d443e2b9b3b09f7c8"
+    },
+    {
+      "path": "tablet-pane-consistency-accessibility-maximum/BEE09F99-D5DE-4515-B20E-21BAAB8BD4DE.png",
+      "individuallyInspected": true,
+      "sha256": "612e637461e9b56f7f7080963845dc515220260f153b1f9eb127c3b80b0a902a"
+    },
+    {
+      "path": "tablet-pane-consistency-stacked-accessibility-maximum/D80A35FF-B423-4B9C-8A6E-C11694BD3932.png",
+      "individuallyInspected": true,
+      "sha256": "70fd5e310912cd10fe982edac262c8f5085dd1de208c66ea9febfc87a4330072"
+    },
+    {
+      "path": "tablet-pane-consistency-wrapped-warning-maximum/260B73D4-F8E8-4BBE-B138-D3D5F83B7FE3.png",
+      "individuallyInspected": true,
+      "sha256": "489b9d57856ac7e3ccc4230e133f95c850f029ae5da26baba7c8db45e59daec6"
+    },
+    {
+      "path": "phone-pane-count-contrast-dark/89E26D84-88AC-45D1-9996-E372D65D5074.png",
+      "individuallyInspected": true,
+      "sha256": "e17f47526beab76b38da2f8a90e584a715e30051788d92b77c35fa0c7b3566d4"
+    }
+  ],
+  "findings": "Native dark panes, phone tabs, inline itinerary details and full filtered counts remain readable in the represented states. Large-text metrics use full-width stacked labels/values; the final warning is fully visible. Saved maps remain in details.",
+  "limits": "Selected original captures only. Long addresses may wrap within a word and compact row metadata can truncate; complete scene/state, VoiceOver, keyboard, contrast and physical/Mac runtime acceptance remain open."
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "80780CBB-1B95-47FE-9155-B1FF188E3D20.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native itinerary appearance details_0_FEEA8EDF-7E15-40A1-B85C-03EB432F3511.png",
+    "timestamp": 1792292873.382,
+    "testIdentifier": "SavedItineraryEntriesJourneyTests/testOrderedItemAndListEntriesKeepIndependentChecksAndDetailsAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "BFDD996C-A031-46FD-9948-BE97B6217F81.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native ordered itinerary with a List group_0_DB511029-DD06-4899-9B6D-F620109B693D.png",
+    "timestamp": 1792292871.506,
+    "testIdentifier": "SavedItineraryEntriesJourneyTests/testOrderedItemAndListEntriesKeepIndependentChecksAndDetailsAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "AC5A604F-B150-42BD-A866-2A8ECD70EA6A.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Filtered Manual drag keeps full List progress_0_0B8D7E36-6A14-455A-99EE-F0A5C15E649D.png",
+    "timestamp": 1792292993.234,
+    "testIdentifier": "SavedListReorderingJourneyTests/testFilteredManualDragRetainsHiddenMembershipCompletionAndOrderAfterRelaunch()"
+  }
+]

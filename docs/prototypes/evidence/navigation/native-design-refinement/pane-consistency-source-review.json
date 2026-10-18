@@ -1,0 +1,16 @@
+{
+  "comparison": "Working changes since 3489c26; native List adoption is committed separately.",
+  "standards": {
+    "reviewer": "Primary agent self-review",
+    "findings": "No remaining material naming or test-boundary violation. Uses native SwiftUI controls and semantic colors, preserves native Mac selection colors, and reuses real native navigation in tests. No new package, public contract or test-only production option."
+  },
+  "spec": {
+    "reviewer": "Primary agent self-review",
+    "findings": "Completion scope, full-scope counts, saved identities, manual order, draft origin and native platform shell remain unchanged. Contextual touch targets match the catalog; itinerary details use inline titles. Actual native journeys protect state and navigation rather than asserting layout constants. Actual maximum-size inspection exposed split duration words and a truncated warning; the final source stacks metrics at accessibility sizes and permits warning text to wrap without shrinking the selected text size."
+  },
+  "remaining": [
+    "Mac native runtime",
+    "Signing and physical-device qualification",
+    "Complete scene/state, VoiceOver, keyboard, contrast and accessibility acceptance"
+  ]
+}

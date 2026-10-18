@@ -3255,39 +3255,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
   }
 
   private func createList(_ title: String, application: XCUIApplication) {
-    openSection("Lists", application: application)
-    let create = application.plannerElement("saved.list.new")
-    #if os(macOS)
-      if create.exists && create.isHittable {
-        create.activateForPlannerJourney()
-      } else {
-        let overflow = application.windows.firstMatch.popUpButtons["more toolbar items"]
-        XCTAssertTrue(
-          overflow.waitForExistence(timeout: 5), application.windows.firstMatch.debugDescription)
-        overflow.activateForPlannerJourney()
-        let nativeCreate = overflow.menuItems["New List"]
-        XCTAssertTrue(
-          nativeCreate.waitForExistence(timeout: 5),
-          application.windows.firstMatch.debugDescription)
-        nativeCreate.activateForPlannerJourney()
-      }
-    #else
-      if application.windows.firstMatch.frame.width > 600, !create.exists,
-        let overflow = application.navigationBars["Planner"].buttons.matching(
-          identifier: "OverflowBarButtonItem"
-        ).allElementsBoundByIndex.first(where: \.isHittable)
-      {
-        overflow.activateForPlannerJourney()
-        let nativeCreate = application.plannerElement("New List")
-        XCTAssertTrue(
-          nativeCreate.waitForExistence(timeout: 5),
-          application.windows.firstMatch.debugDescription)
-        nativeCreate.activateForPlannerJourney()
-      } else {
-        revealSidebarIfNeeded(application, element: create)
-        create.activateForPlannerJourney()
-      }
-    #endif
+    application.beginPlannerListCreation()
     let name = application.textFields["saved.list.name"]
     XCTAssertTrue(name.waitForExistence(timeout: 5))
     name.activateForPlannerJourney()

@@ -1,0 +1,11 @@
+{
+  "mobileCompiler": "native-pane-consistency-wrapped-warning-mobile-build/exit.json",
+  "macCompiler": "native-pane-consistency-final-mac-build/exit.json",
+  "swiftLint": "pane-consistency-swift-lint.json",
+  "markdownLint": "pane-consistency-markdown-lint.json",
+  "runtimeResults": "pane-consistency-results.json",
+  "visualReview": "pane-consistency-visual-review.json",
+  "macRuntimeCredit": false,
+  "signingAccountChanges": false,
+  "finalWholeAppGateClosed": false
+}

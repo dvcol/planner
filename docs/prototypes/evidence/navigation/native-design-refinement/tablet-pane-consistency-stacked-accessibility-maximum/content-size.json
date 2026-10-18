@@ -1,0 +1,20 @@
+{
+  "device": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+  "platform": "tablet",
+  "requestedSize": "accessibility-extra-extra-extra-large",
+  "observedSize": "accessibility-extra-extra-extra-large",
+  "originalSize": "large",
+  "command": [
+    "python3",
+    "/private/tmp/run-planner-design-refinement.py",
+    "tablet-pane-consistency-stacked-accessibility-maximum",
+    "tablet",
+    "SavedAppearanceJourneyTests/testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList",
+    "docs/prototypes/evidence/navigation/native-design-refinement/native-pane-consistency-accessible-mobile-build",
+    "360"
+  ],
+  "runnerExitCode": 0,
+  "restoreExitCode": 0,
+  "restoreOutput": "",
+  "restoredSize": "large"
+}

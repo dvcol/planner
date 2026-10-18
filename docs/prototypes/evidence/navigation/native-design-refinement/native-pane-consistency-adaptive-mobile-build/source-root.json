@@ -1,0 +1,12 @@
+{
+  "root": "/private/tmp/PlannerItemWindowCompatibilitySource",
+  "base": "3489c2603e38c6e637efc6b9995ebe600aad8200",
+  "overlays": [
+    "Planner/Scenes/SavedAppearanceViews.swift",
+    "Planner/Scenes/SavedContainerEstimates.swift",
+    "Planner/Scenes/SavedItemFilters.swift",
+    "Planner/Scenes/SavedItineraryContentViews.swift",
+    "PlannerNavigationUITests/SavedItineraryEntriesJourneyTests.swift",
+    "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift"
+  ]
+}

@@ -70,3 +70,5 @@ These observations supersede the earlier unresolved layout candidate for that sp
 ## Follow-up native refinement
 
 The requested [native UI refinement](prototypes/native-design-refinement.md) removes redundant sidebar hierarchy, uses plain collection rows beside grouped detail Forms, adds direct global completion to Item/Inbox rows and compacts the empty Calendar agenda with a native GroupBox. It also improves title wrapping, completed-title treatment and List-heading contrast using semantic styles. Its report distinguishes executed mobile checks and inspected captures from source-only review and deferred Mac/physical/accessibility acceptance.
+
+The same refinement report now includes a native pane consistency follow-up. It aligns contextual touch targets, uses inline itinerary detail titles, corrects inherited faint header text and stacks estimate metrics at accessibility sizes. Selected dark phone/tablet, filtered drag/drop, independent completion and maximum-text creation/relaunch checks supply focused evidence. Complete scene/state review, Mac runtime, physical devices and the remaining accessibility checks still gate final ticket 23 acceptance.

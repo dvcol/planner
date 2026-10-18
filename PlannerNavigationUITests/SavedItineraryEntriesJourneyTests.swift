@@ -53,7 +53,7 @@ final class SavedItineraryEntriesJourneyTests: XCTestCase {
     XCTAssertEqual(inboxFilters.plannerControlTitle, "Todo · Active · Unscheduled")
     recordScreenshot(application, name: "Native Unscheduled Inbox filter")
     openSection("Lists", application: application)
-    reveal(application, identifier: "saved.list.new").activateForPlannerJourney()
+    application.beginPlannerListCreation()
     let name = application.textFields["saved.list.name"]
     XCTAssertTrue(name.waitForExistence(timeout: 5))
     name.activateForPlannerJourney()
@@ -215,7 +215,7 @@ final class SavedItineraryEntriesJourneyTests: XCTestCase {
     createItem("Zulu Hotel", notes: "Meet in the lobby", application: application)
     createItem("Beta Museum", notes: "Garden entrance", application: application)
     openSection("Lists", application: application)
-    reveal(application, identifier: "saved.list.new").activateForPlannerJourney()
+    application.beginPlannerListCreation()
     let name = application.textFields["saved.list.name"]
     XCTAssertTrue(name.waitForExistence(timeout: 5))
     name.activateForPlannerJourney()
@@ -329,13 +329,7 @@ final class SavedItineraryEntriesJourneyTests: XCTestCase {
   }
 
   private func openSection(_ title: String, application: XCUIApplication) {
-    #if os(macOS)
-      let section = application.plannerElement("saved.section.\(title.lowercased())")
-    #else
-      let section = application.buttons[title].firstMatch
-    #endif
-    XCTAssertTrue(section.waitForExistence(timeout: 10))
-    section.activateForPlannerJourney()
+    application.openPlannerSection(title)
   }
 
   private func reveal(_ application: XCUIApplication, identifier: String) -> XCUIElement {

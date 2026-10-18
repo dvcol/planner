@@ -1,0 +1,28 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/Scenes/SavedAppearanceViews.swift",
+    "Planner/Scenes/SavedContainerEstimates.swift",
+    "Planner/Scenes/SavedItemFilters.swift",
+    "Planner/Scenes/SavedItineraryContentViews.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift",
+    "PlannerNavigationUITests/SavedItineraryEntriesJourneyTests.swift",
+    "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "output": "",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedAppearanceViews.swift": "f5ef2661dad93bf3562c5450ac32476dd9911b32057605b022c08c5395cf90eb",
+    "Planner/Scenes/SavedContainerEstimates.swift": "96dd446a7bf858f685ed69be793123700b9c5a30a34f759caacb714c4b04b351",
+    "Planner/Scenes/SavedItemFilters.swift": "00d7bafe72dea787490e5d5c7f20d6ebdaf5366eb7e895ddd8325e28e4f79340",
+    "Planner/Scenes/SavedItineraryContentViews.swift": "535a83cdab1f04c3e843ef5be81dabeef7ea661a505040180f6c8cd06263bdd0",
+    "PlannerNavigationUITests/NativeNavigationElements.swift": "8120bdc87729f77689fc255136ca390437cab7cd06421d4faad046c5efabf0a0",
+    "PlannerNavigationUITests/SavedAppearanceJourneyTests.swift": "016297f5a59549ff0ddc6cf1e02c3d08cedce111503569cb996eb05af472db91",
+    "PlannerNavigationUITests/SavedItineraryEntriesJourneyTests.swift": "8de65a06c8e78f2aca7ff864531aa19d11cc6906fb7416f68e81999f31da7c9a",
+    "PlannerNavigationUITests/SavedListReorderingJourneyTests.swift": "7e2b700cbc1d75de8a16e13a3105b5fe2c57d2cbbb01980064c5ae75f19e33a9"
+  }
+}
