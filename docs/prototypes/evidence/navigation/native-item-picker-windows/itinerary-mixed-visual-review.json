@@ -1,0 +1,16 @@
+{
+  "reviewer": "Primary agent visual inspection of original exported native capture.",
+  "captures": [
+    {
+      "path": "picker-itinerary-tablet-mixed-regression/2A6EF14B-51A0-4367-B52A-9C1CAD2C4802.png",
+      "sha256": "0ffce7db229ea0848a02b5277128edb76c322ad58ed1591475a04537216e7959"
+    }
+  ],
+  "observations": [
+    "The route retains two Hotel appearances around a roomy List group. Only the first Hotel is checked; the group child and later Hotel are unchecked.",
+    "Native progress is 1 of 3 with 2 direct items and 1 List. Missing-estimate warnings remain separate from completion."
+  ],
+  "limits": [
+    "This light iPad capture alone does not qualify Mac, dark-mode nested groups, every accessibility setting or performance."
+  ]
+}

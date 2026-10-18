@@ -1,0 +1,8 @@
+{
+  "comparison": "Production picker/store and fixture navigation changes since 56f7ba4.",
+  "reviewer": "Primary agent self-review, not an independent agent review.",
+  "standards": "Reuses the accepted loader and native List/Label/ProgressView controls. No package, target, public query, new loader interface, duplicated pager or test-only production controls. The unused eager Item reader is removed after both callers migrate.",
+  "spec": "Complete Item source identities validate offscreen selection. Native Item row identities match the String selection binding; loading/failed rows disallow new selection. Combined read readiness and namespace/revision/retry guards prevent obsolete work from enabling Add. Disappearance cancels the window. Original itinerary identity, source UUID, domain command and local Todo initialization remain unchanged. Separate List choices and repeated-entry local state pass the production journey.",
+  "controller": "The isolated large-fixture iPad helper waits for the native Itineraries section and opens the sidebar only when absent. This repairs a retained startup overlay failure without weakening selection, notes, progress or relaunch assertions.",
+  "limits": "Source guards and selected native runs do not prove every external-edit interleaving, Mac runtime, physical performance or whole-app accessibility. Separate List choice metadata remains eager. Q98 is still pending."
+}

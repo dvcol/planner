@@ -180,18 +180,59 @@ struct SavedItineraryItemDetail: View {
 }
 
 struct SavedAddItineraryEntryForm: View {
+  private struct LoadIdentity: Equatable {
+    let namespace: String?
+    let revision: UUID
+    let itineraryIdentifier: UUID
+    let retryIdentifier: UUID
+  }
+
+  private struct VisibleReadIdentity: Equatable {
+    let loadIdentity: LoadIdentity
+    let sourcesAreReady: Bool
+    let visibleIdentifiers: Set<UUID>
+  }
+
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
   let itineraryId: UUID
-  @State private var items: [SavedPlannerItem]?
+  @State private var window: SavedItemWindow?
+  @State private var visibleIdentifiers: Set<UUID> = []
   @State private var lists: [SavedPlannerList]?
   @State private var selection: String?
   @State private var failure: String?
+  @State private var retryIdentifier = UUID()
+  @State private var loadedIdentity: LoadIdentity?
   @State private var operationIdentifier = UUID()
 
+  private var loadIdentity: LoadIdentity {
+    .init(
+      namespace: store.devicePreferenceNamespace, revision: store.changeRevision,
+      itineraryIdentifier: itineraryId, retryIdentifier: retryIdentifier)
+  }
+
+  private var sourcesAreReady: Bool {
+    loadedIdentity == loadIdentity && window?.state == .ready && lists != nil && failure == nil
+  }
+
+  private var visibleReadIdentity: VisibleReadIdentity {
+    .init(
+      loadIdentity: loadIdentity, sourcesAreReady: sourcesAreReady,
+      visibleIdentifiers: visibleIdentifiers)
+  }
+
+  private var sourceRows: [(index: Int, identifier: UUID, selectionTag: String)] {
+    guard let window else { return [] }
+    return window.rowIdentities.enumerated().compactMap { index, identity in
+      guard case .source(let source) = identity, source.kind == .item else { return nil }
+      return (index, source.id, "item.\(source.id.uuidString)")
+    }
+  }
+
   private var selectedSource: PlannerEntityReference? {
-    if let item = items?.first(where: { selection == "item.\($0.id.uuidString)" }) {
-      return .init(kind: .item, id: item.id)
+    guard sourcesAreReady else { return nil }
+    if let item = sourceRows.first(where: { selection == "item.\($0.identifier.uuidString)" }) {
+      return .init(kind: .item, id: item.identifier)
     }
     return lists?.first { selection == "list.\($0.id.uuidString)" }?.source
   }
@@ -200,11 +241,25 @@ struct SavedAddItineraryEntryForm: View {
     NavigationStack {
       List(selection: $selection) {
         Section("Items") {
-          ForEach(items ?? []) { item in
-            Label(item.row.title, systemImage: "square.stack")
-              .tag("item.\(item.id.uuidString)")
-              .accessibilityLabel(item.row.title)
-              .accessibilityIdentifier("saved.itinerary.entry.choice.item.\(item.id.uuidString)")
+          if let window {
+            ForEach(sourceRows, id: \.selectionTag) { index, identifier, selectionTag in
+              let presentation = window.presentation(at: index)
+              let hasLoadedPresentation =
+                switch presentation {
+                case .loaded: true
+                case .loading, .failed: false
+                }
+              itemChoice(presentation, index: index)
+                .tag(selectionTag)
+                .selectionDisabled(!hasLoadedPresentation)
+                .onScrollVisibilityChange { visible in
+                  if visible {
+                    visibleIdentifiers.insert(identifier)
+                  } else {
+                    visibleIdentifiers.remove(identifier)
+                  }
+                }
+            }
           }
         }
         Section("Lists") {
@@ -218,23 +273,7 @@ struct SavedAddItineraryEntryForm: View {
       }
       .accessibilityIdentifier("saved.itinerary.entry.choices")
       .disabled(store.isSaving)
-      .overlay {
-        if let failure {
-          ContentUnavailableView {
-            Label("Entries unavailable", systemImage: "exclamationmark.triangle")
-          } description: {
-            Text(failure)
-          } actions: {
-            Button("Try Again") { Task { await loadSources() } }
-          }
-        } else if items == nil || lists == nil {
-          ProgressView("Loading Items and Lists")
-        } else if items?.isEmpty == true && lists?.isEmpty == true {
-          ContentUnavailableView("No Items or Lists yet", systemImage: "square.stack")
-        } else if store.isSaving {
-          ProgressView("Adding entry")
-        }
-      }
+      .overlay { pickerStatus }
       .navigationTitle("Add to Itinerary")
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {
@@ -253,13 +292,23 @@ struct SavedAddItineraryEntryForm: View {
               if saved && store.alertMessage == nil { dismiss() }
             }
           }
-          .disabled(!store.canCreate || selectedSource == nil || failure != nil)
+          .disabled(!store.canCreate || selectedSource == nil)
           .keyboardShortcut(.defaultAction)
           .accessibilityIdentifier("saved.itinerary.entry.add")
         }
       }
     }
-    .task { await loadSources() }
+    .task(id: loadIdentity) { await loadSources(identity: loadIdentity) }
+    .task(id: visibleReadIdentity) {
+      guard sourcesAreReady, let window, !visibleIdentifiers.isEmpty else { return }
+      let indices = Set(
+        sourceRows.filter { visibleIdentifiers.contains($0.identifier) }.map(\.index))
+      await window.requestRows(at: indices)
+    }
+    .onDisappear {
+      window?.cancel()
+      visibleIdentifiers = []
+    }
     .interactiveDismissDisabled(store.isSaving)
     .alert(
       "Planner",
@@ -275,17 +324,83 @@ struct SavedAddItineraryEntryForm: View {
     #endif
   }
 
-  private func loadSources() async {
-    failure = nil
-    let availableItems = await store.readItems(completion: .all, archive: .active)
-    guard !Task.isCancelled else { return }
-    let availableLists = await store.readLists(archive: .active)
-    guard !Task.isCancelled else { return }
-    items = availableItems
-    lists = availableLists
-    if items == nil || lists == nil {
-      failure = store.alertMessage ?? "Planner could not load entries."
-      store.alertMessage = nil
+  @ViewBuilder
+  private func itemChoice(_ presentation: SavedItemWindowPresentation, index: Int) -> some View {
+    switch presentation {
+    case .loaded(let item):
+      Label(item.row.title, systemImage: "square.stack")
+        .accessibilityLabel(item.row.title)
+        .accessibilityIdentifier("saved.itinerary.entry.choice.item.\(item.id.uuidString)")
+    case .loading:
+      ProgressView("Loading Item")
+    case .failed(let reason):
+      VStack(alignment: .leading) {
+        Text(reason).foregroundStyle(.secondary)
+        Button("Try Again") { Task { await window?.requestRows(at: [index]) } }
+      }
     }
   }
+
+  @ViewBuilder
+  private var pickerStatus: some View {
+    if let failure {
+      failureContent(failure)
+    } else {
+      switch window?.state ?? .idle {
+      case .idle, .loading: ProgressView("Loading Items and Lists")
+      case .failed(let reason): failureContent(reason)
+      case .ready:
+        if !sourcesAreReady {
+          ProgressView("Loading Items and Lists")
+        } else if window?.matchingCount == 0 && lists?.isEmpty == true {
+          ContentUnavailableView("No Items or Lists yet", systemImage: "square.stack")
+        } else if store.isSaving {
+          ProgressView("Adding entry")
+        }
+      }
+    }
+  }
+
+  private func failureContent(_ reason: String) -> some View {
+    ContentUnavailableView {
+      Label("Entries unavailable", systemImage: "exclamationmark.triangle")
+    } description: {
+      Text(reason)
+    } actions: {
+      Button("Try Again") { retryIdentifier = UUID() }
+        .accessibilityIdentifier("saved.itinerary.entry.retry")
+    }
+  }
+
+  private func loadSources(identity: LoadIdentity) async {
+    guard !Task.isCancelled else { return }
+    window?.cancel()
+    visibleIdentifiers = []
+    lists = nil
+    failure = nil
+    loadedIdentity = nil
+    guard let namespace = identity.namespace, let window = store.makeItemWindow() else {
+      self.window = nil
+      failure = "Planner is not ready to load its entries."
+      return
+    }
+    self.window = window
+    await window.reload(
+      query: .init(completion: .all, archive: .active),
+      identity: .init(namespace: namespace, savedRevision: identity.revision))
+    guard !Task.isCancelled, loadIdentity == identity, window.state == .ready else { return }
+    let availableLists = await store.readLists(archive: .active)
+    guard !Task.isCancelled, loadIdentity == identity, window.state == .ready else { return }
+    lists = availableLists
+    guard lists != nil else {
+      failure = store.alertMessage ?? "Planner could not load entries."
+      store.alertMessage = nil
+      return
+    }
+    loadedIdentity = identity
+    if selection != nil, selectedSource == nil {
+      selection = nil
+    }
+  }
+
 }

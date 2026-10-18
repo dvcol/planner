@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "8B058224-E015-4387-8489-966D491196E6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary Item picker preserves its entry after relaunch_0_A501BD4F-F1B5-40C3-BC04-A12D0215078E.png",
+    "timestamp": 1792301465.007,
+    "testIdentifier": "ListWindowJourneyTests/testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "1078632E-2BC2-4BC8-A24A-9FB8A8F55734.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary Item picker adds its exact source into the original plan_0_0E559ED5-4371-4067-B829-A8C39783D6A3.png",
+    "timestamp": 1792301449.747,
+    "testIdentifier": "ListWindowJourneyTests/testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "8065F0C1-889E-48B5-AA2C-4D35728C7A6A.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary Item picker retains an offscreen selected source_0_44DF2F1C-822D-4142-A00F-CFDD8EDA8DD2.png",
+    "timestamp": 1792301442.419,
+    "testIdentifier": "ListWindowJourneyTests/testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "8E9EBC8B-7212-4FFF-947A-7E59BACF1837.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary Item picker source is fully visible before selection_0_A3484D2D-A1E3-4C33-83A1-9C755E96D19A.png",
+    "timestamp": 1792301366.457,
+    "testIdentifier": "ListWindowJourneyTests/testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch()"
+  }
+]

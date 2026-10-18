@@ -1,0 +1,22 @@
+{
+  "reviewer": "Primary agent visual inspection of original exported native captures.",
+  "platform": "iPhone Simulator, dark appearance",
+  "captures": [
+    {
+      "path": "picker-itinerary-phone-clean-dark/8A23AE42-B39D-4FA2-93C4-C587079C8FF8.png",
+      "sha256": "7e4798eece50dd21f243874800375bfc1e1e86e225180c1914809c8d06b77f75"
+    },
+    {
+      "path": "picker-itinerary-phone-clean-dark/AC8D95EE-EEC9-4F82-8C6F-1DD4BA91607A.png",
+      "sha256": "147ccf5b9992e9dfdaef4ca8cf6fed681b45b00181b7f9def1b337b77ab0ee3b"
+    }
+  ],
+  "observations": [
+    "Native dark List/Label controls remain readable on semantic dark surfaces. Add stays enabled on the first page after selecting offscreen Item 129.",
+    "The saved contextual detail retains its Todo control, exact source notes and 5-minute estimate. Native tabs remain at the bottom within phone content."
+  ],
+  "appearanceRestoration": "picker-itinerary-phone-clean-dark/appearance.json",
+  "limits": [
+    "These captures do not qualify every whole-app scene, keyboard, VoiceOver, physical devices or quantitative contrast."
+  ]
+}

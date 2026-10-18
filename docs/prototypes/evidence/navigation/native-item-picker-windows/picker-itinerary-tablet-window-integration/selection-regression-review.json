@@ -1,0 +1,23 @@
+{
+  "classification": "Native selection regression in the itinerary picker adoption; the same public UI journey passes against its eager baseline.",
+  "namedBeforeTapCapture": "8EF0B804-100C-4091-9E6C-1EF904D4D5DE.png",
+  "recordingFrame": "selection-failure-recording-frame.png",
+  "recordingFile": "D27E4423-7C1E-45F5-9869-372DA81A92DA.mp4",
+  "recordingSHA256": "4e17ba934263584f8b1fca27263c41c0116ec1cb121f8d23e292e2db7985c4ae",
+  "frameCommand": [
+    "ffmpeg",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-sseof",
+    "-1",
+    "-i",
+    "/private/tmp/PlannerScheduleTimeAttachments-picker-itinerary-tablet-window-integration/D27E4423-7C1E-45F5-9869-372DA81A92DA.mp4",
+    "-frames:v",
+    "1",
+    "/private/tmp/PlannerItineraryPickerSelectionFailure.png"
+  ],
+  "observation": "Inspected the named capture before selection and a recording frame one second before the end. Item 129 is fully visible below the native navigation bar; after its tap no selection is shown and Add remains disabled.",
+  "hypothesis": "The explicit String tag inside the conditional presentation helper is not serving as the List row tag; the ForEach identity is a UUID. Move the matching String tag and loaded-state selection restriction to the actual row, then rerun the unchanged journey.",
+  "hypothesisVerified": false
+}

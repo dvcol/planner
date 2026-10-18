@@ -1,0 +1,6 @@
+{
+  "observed": "Loaded and readiness logs both show ready, identity and window true, 193 Items and two Lists. No selection change is recorded after the native tap.",
+  "rejected": "Moving only the String row tag did not fix selection.",
+  "nextHypothesis": "The newly added loading-based disabled condition on the whole native List is suppressing selection after initial readiness. Restore the previous disabled-while-saving behavior; keep Add guarded by sourcesAreReady.",
+  "testBoundary": "The unchanged test observes only native controls and saved outcomes; temporary logs are diagnostic evidence, not assertions against private state."
+}

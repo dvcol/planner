@@ -1,0 +1,28 @@
+{
+  "symptom": "A fully visible later-page Item did not update native List selection; Add stayed disabled.",
+  "baseline": "picker-itinerary-tablet-eager-baseline/exit.json",
+  "productFailures": [
+    "picker-itinerary-tablet-window-integration/exit.json",
+    "picker-itinerary-tablet-row-tag-integration/exit.json",
+    "picker-itinerary-tablet-selection-diagnostic/exit.json",
+    "picker-itinerary-tablet-list-enabled-retry/exit.json"
+  ],
+  "controllerOnlyFailure": "picker-itinerary-tablet-list-enabled-diagnostic/startup-controller-review.json",
+  "rejectedHypotheses": [
+    "Moving only the explicit tag to the row root did not restore selection.",
+    "Restoring the native List enabled state did not restore selection."
+  ],
+  "verifiedChange": "Use the complete String selection tag as the Item ForEach identity, matching the native List String selection binding.",
+  "passingDiagnostic": "picker-itinerary-tablet-string-identity-diagnostic/exit.json",
+  "passingDiagnosticSeconds": 188.231,
+  "diagnostics": "picker-itinerary-tablet-string-identity-diagnostic/selection-diagnostics.log.gz",
+  "observedDiagnostics": "The successful native tap updated selection with matching Item source, ready query, current identity, enabled create and no save in progress.",
+  "instrumentationRemoved": true,
+  "cleanSourceQualification": [
+    "picker-itinerary-tablet-clean-integration/exit.json",
+    "picker-itinerary-phone-clean-dark/exit.json",
+    "picker-itinerary-tablet-mixed-regression/exit.json"
+  ],
+  "newProductionInterfaceOrTestSeam": false,
+  "sourceIdentityAndDestination": "The selected UUID and original itinerary identity still feed the existing domain command; no manual tap handler was added."
+}

@@ -1,0 +1,18 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "/private/tmp/PlannerItemWindowMarkdownlint.json",
+    "docs/prototypes/native-item-picker-windows.md",
+    "docs/native-itinerary-window-contract-review.md"
+  ],
+  "exitCode": 0,
+  "stdout": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-item-picker-windows.md docs/native-itinerary-window-contract-review.md\nLinting: 2 files\nSummary: 0 issues in 0 files\n",
+  "stderr": "Done in 394ms using pnpm v12.10.1\n",
+  "sourceSHA256": {
+    "docs/prototypes/native-item-picker-windows.md": "bcedda1c3a444539192e460e0bd949db4b2779bb7c8bc6f8537a557529211b61",
+    "docs/native-itinerary-window-contract-review.md": "0b169d56f171227fb0a1cc7f44c0037e903d77c83ba2c635b2c61a38efca204f"
+  }
+}

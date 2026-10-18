@@ -1,0 +1,12 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "8EF0B804-100C-4091-9E6C-1EF904D4D5DE.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary Item picker source is fully visible before selection_0_3E008098-652F-4C40-9784-B9CD2D547909.png",
+    "timestamp": 1792299490.859,
+    "testIdentifier": "ListWindowJourneyTests/testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch()"
+  }
+]

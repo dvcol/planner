@@ -1,0 +1,73 @@
+{
+  "baseline": "picker-itinerary-tablet-eager-baseline/exit.json",
+  "nativeResults": [
+    {
+      "platform": "tablet",
+      "packet": "picker-itinerary-tablet-clean-integration",
+      "exitCode": 0,
+      "functions": [
+        {
+          "class": "PlannerFixtureUITests.ListWindowJourneyTests",
+          "function": "testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch",
+          "seconds": 188.249
+        }
+      ],
+      "sourceAndProductFreezeAssertedByRunner": true
+    },
+    {
+      "platform": "phone",
+      "packet": "picker-itinerary-phone-clean-dark",
+      "exitCode": 0,
+      "functions": [
+        {
+          "class": "PlannerFixtureUITests.ListWindowJourneyTests",
+          "function": "testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch",
+          "seconds": 185.28
+        }
+      ],
+      "sourceAndProductFreezeAssertedByRunner": true
+    },
+    {
+      "platform": "tablet",
+      "packet": "picker-itinerary-tablet-mixed-regression",
+      "exitCode": 0,
+      "functions": [
+        {
+          "class": "PlannerNavigationUITests.SavedItineraryEntriesJourneyTests",
+          "function": "testOrderedItemAndListEntriesKeepIndependentChecksAndDetailsAfterRelaunch",
+          "seconds": 102.727
+        }
+      ],
+      "sourceAndProductFreezeAssertedByRunner": true
+    }
+  ],
+  "compilers": [
+    "picker-itinerary-clean-mobile-build/exit.json",
+    "picker-itinerary-ordinary-mobile-build/exit.json",
+    "picker-itinerary-clean-mac-build/exit.json"
+  ],
+  "unchangedApprovedLoaderAndTestsSince": "6f2ce0b",
+  "existingLoaderTestResult": "../native-list-windows/q97-loader-suite/exit.json",
+  "newProductionInterfaceOrTestSeam": false,
+  "lint": [
+    "itinerary-adoption-swift-lint.json",
+    "itinerary-adoption-markdown-lint.json"
+  ],
+  "reviews": [
+    "itinerary-adoption-source-review.json",
+    "itinerary-selection-regression-review.json",
+    "itinerary-window-tablet-visual-review.json",
+    "itinerary-window-phone-visual-review.json",
+    "itinerary-mixed-visual-review.json"
+  ],
+  "macRuntimeCredit": false,
+  "signingAccountChanges": false,
+  "permissionSettingsChanges": false,
+  "remaining": [
+    "Q98 itinerary-contents window decision and implementation",
+    "Separate List choice and broader catalog windowing",
+    "Mac native UI runtime",
+    "Physical performance and signing",
+    "Final whole-app visual/accessibility acceptance"
+  ]
+}

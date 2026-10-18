@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "E29405BE-BA0F-4578-9C34-43AE9423D161.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary Item picker preserves its entry after relaunch_0_D51916E2-2479-45F8-9BB2-70670084F55B.png",
+    "timestamp": 1792302015.063,
+    "testIdentifier": "ListWindowJourneyTests/testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "AC8D95EE-EEC9-4F82-8C6F-1DD4BA91607A.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary Item picker adds its exact source into the original plan_0_9F5F570E-2FBA-4E8F-96E4-8522193C8A90.png",
+    "timestamp": 1792302002.206,
+    "testIdentifier": "ListWindowJourneyTests/testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "8A23AE42-B39D-4FA2-93C4-C587079C8FF8.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary Item picker retains an offscreen selected source_0_B1C4E873-572B-46F2-A336-B4D53107F904.png",
+    "timestamp": 1792301994.643,
+    "testIdentifier": "ListWindowJourneyTests/testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "67563B69-B9DD-40DF-BDF3-AAD0B05F0957.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary Item picker source is fully visible before selection_0_0C3031BD-84ED-44EE-8E26-72985F719A59.png",
+    "timestamp": 1792301919.164,
+    "testIdentifier": "ListWindowJourneyTests/testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch()"
+  }
+]

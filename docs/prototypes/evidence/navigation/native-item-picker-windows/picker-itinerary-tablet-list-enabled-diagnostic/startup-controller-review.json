@@ -1,0 +1,7 @@
+{
+  "classification": "Controller startup failure before opening the picker; no selection-hypothesis credit.",
+  "capture": "startup-overlay-recording-frame.png",
+  "recording": "B1261F6B-0DE7-43B0-9578-C82EE84155B4.mp4",
+  "observation": "The recording frame one second before the end shows the primary sidebar overlay covering the itinerary catalog. The shared section helper reopened Show Sidebar after choosing Itineraries, and the subsequent itinerary-row tap did not select it.",
+  "correction": "This Saved-UI fixture waits for and uses the real saved.section.itineraries control on iPad, opening the sidebar only when that control is absent. Phone keeps the existing adaptive tab helper."
+}

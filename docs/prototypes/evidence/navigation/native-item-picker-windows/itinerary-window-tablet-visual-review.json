@@ -1,0 +1,22 @@
+{
+  "reviewer": "Primary agent visual inspection of original exported native captures.",
+  "platform": "iPad Simulator, light appearance",
+  "captures": [
+    {
+      "path": "picker-itinerary-tablet-clean-integration/35F2A3DF-8F1E-48F9-BF0C-E3D5AE50661A.png",
+      "sha256": "79bfbfba5b00bc3c5d8b7c76011e19baaa553456e537bdd69286d2dd88ef7e75"
+    },
+    {
+      "path": "picker-itinerary-tablet-clean-integration/FB2796AD-BF8E-4455-9D83-AF2340A6F141.png",
+      "sha256": "5204a4c95a1576b448d24e43f9baa3f4f2780f55178a517ebb5d2929bbcd6681"
+    }
+  ],
+  "observations": [
+    "Native Add to Itinerary sheet shows initial Item choices with Add enabled after selecting the offscreen Item 129.",
+    "Relaunch keeps Picker Route, its one Todo Item 129, full 0 of 1 progress and 5-minute full/remaining estimates. Native detail empty state awaits a selection."
+  ],
+  "limits": [
+    "These two captures do not qualify Mac runtime, every whole-app scene, keyboard, VoiceOver or quantitative contrast.",
+    "Exact source notes and identity are native test assertions, not inferred from the empty detail capture."
+  ]
+}
