@@ -1,6 +1,6 @@
 # Native original-association Undo
 
-Status: concrete proposal for Q106 and Q107. Q104 A accepts current-app-run history. Q105 A accepts preserving a newer relationship and rejecting conflicting old Undo. Q33 already declares native-only association restoration and the snapshot's data fields.
+Status: approved under Q106 A and Q107 A on 18 October 2026. Native UndoManager integration and explicit mobile Undo are accepted; Redo remains outside this slice. Q104 A accepts current-app-run history. Q105 A accepts preserving a newer relationship and rejecting conflicting old Undo. Q33 already declares native-only association restoration and the snapshot's data fields.
 
 ## Context, goal and starting state
 
@@ -38,7 +38,7 @@ The snapshot retains the accepted `datasetId`, `ownershipBinding`, bound `identi
 
 Keep history per window in the `SavedPlannerView` lifecycle, rather than in the shared store. Register named removal actions only after an applied result supplies its snapshot. Scope history to its originating dataset/ownership binding, and clear invalid history on a namespace change or window destruction. Quit clears every window's history.
 
-Q107 selects the affordance. The recommended first slice uses the window's native UndoManager, retains normal text-field Undo, and adds an explicit native Undo action after removal on mobile. Association restoration supplies Undo only; it does not advertise an unimplemented Redo. While restoration runs, prevent another association-history action in that window. A retryable local failure retains the action for Retry; an ineligible stale action explains why it cannot restore and leaves current data intact. Recovery-incomplete outcomes follow the existing checkpoint workflow.
+Q107 A selects the affordance. The accepted first slice uses the window's native UndoManager, retains normal text-field Undo, and adds an explicit native Undo action after removal on mobile. Association restoration supplies Undo only; it does not advertise an unimplemented Redo. While restoration runs, prevent another association-history action in that window. A retryable local failure retains the action for Retry; an ineligible stale action explains why it cannot restore and leaves current data intact. Recovery-incomplete outcomes follow the existing checkpoint workflow.
 
 Apple's [closure registration method](https://developer.apple.com/documentation/foundation/undomanager/registerundo%28withtarget%3Ahandler%3A%29) uses a MainActor handler returning `Void`. Core operations await durable persistence and recovery. Native integration must therefore qualify the asynchronous completion/failure behavior explicitly; registering a closure alone does not establish correct Undo or Redo.
 
@@ -46,7 +46,7 @@ Restoration preserves any current valid selection. Restored rows return accordin
 
 ## Definition of ready and required tests
 
-Q106 must approve the concrete companion/command contract and the existing public Core/native UI test boundaries before implementation. Q107 must settle the native affordance and Redo scope. The Core operation, removal, lineage and recovery seams already exist. No injected production callback, fabricated snapshot or private database inspection is added for testing.
+Q106 A approves the concrete companion/command contract and existing public Core/native UI boundaries. Q107 A approves native UndoManager integration, explicit mobile Undo and no association Redo for this slice. The Core operation, removal, lineage and recovery seams already exist. No injected production callback, fabricated snapshot or private database inspection is added for testing.
 
 Extend the real disposable-store operation tests one behavior at a time:
 

@@ -2,6 +2,28 @@ import XCTest
 
 @MainActor
 final class SavedListCaptureJourneyTests: XCTestCase {
+  func testArchivedListCreationActionsRemainDisabledInNativeOverflow() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createList("Archived destination", application: application)
+    let list = application.savedPlannerListRow("Archived destination")
+    if !list.exists || !list.isHittable { showListsSidebar(application) }
+    XCTAssertTrue(list.waitForExistence(timeout: 5))
+    #if os(macOS)
+      list.rightClick()
+    #else
+      list.press(forDuration: 1)
+    #endif
+    application.plannerElement("Archive List").activateForPlannerJourney()
+    XCTAssertTrue(list.waitForNonExistence(timeout: 10))
+    openListArchiveFilter(application)
+    application.plannerElement("All Lists").activateForPlannerJourney()
+    openList("Archived destination", application: application)
+    assertArchivedListCreationIsUnavailable(application)
+  }
+
   func testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack() {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -67,12 +89,10 @@ final class SavedListCaptureJourneyTests: XCTestCase {
     #endif
     application.plannerElement("Archive List").activateForPlannerJourney()
     XCTAssertTrue(archivedList.waitForNonExistence(timeout: 10))
-    application.plannerElement("saved.lists.archive").activateForPlannerJourney()
+    openListArchiveFilter(application)
     application.plannerElement("All Lists").activateForPlannerJourney()
     openList("South", application: application)
-    let disabledCapture = application.plannerElement("saved.list.addMenu")
-    XCTAssertTrue(disabledCapture.waitForExistence(timeout: 5))
-    XCTAssertFalse(disabledCapture.isEnabled)
+    assertArchivedListCreationIsUnavailable(application)
     application.terminate()
     application.launchSavedPlannerJourney()
     openList("North", application: application)
@@ -185,11 +205,7 @@ final class SavedListCaptureJourneyTests: XCTestCase {
   }
 
   private func openList(_ name: String, application: XCUIApplication) {
-    #if os(macOS)
-      application.plannerElement("saved.section.lists").activateForPlannerJourney()
-    #else
-      application.buttons["Lists"].firstMatch.activateForPlannerJourney()
-    #endif
+    application.openPlannerSection("Lists")
     let list = application.savedPlannerListRow(name)
     if !list.waitForExistence(timeout: 3) || !list.isHittable { showListsSidebar(application) }
     XCTAssertTrue(list.waitForExistence(timeout: 5))
@@ -215,17 +231,46 @@ final class SavedListCaptureJourneyTests: XCTestCase {
   }
 
   private func openGlobalCapture(_ application: XCUIApplication) {
-    #if os(macOS)
-      application.plannerElement("saved.section.items").activateForPlannerJourney()
-    #else
-      application.buttons["Items"].firstMatch.activateForPlannerJourney()
-    #endif
+    application.openPlannerSection("Items")
     let back = application.navigationBars.buttons["Items"].firstMatch
     if back.exists { back.activateForPlannerJourney() }
     application.openSavedPlannerCatalogAddMenu()
     let capture = application.plannerElement("saved.capture.new")
     XCTAssertTrue(capture.waitForExistence(timeout: 10))
     capture.activateForPlannerJourney()
+  }
+
+  private func assertArchivedListCreationIsUnavailable(_ application: XCUIApplication) {
+    let creationControl = application.savedPlannerListAddControl()
+    XCTAssertTrue(creationControl.waitForExistence(timeout: 5))
+    guard creationControl.isEnabled else { return }
+    creationControl.activateForPlannerJourney()
+    let hierarchy = XCTAttachment(string: application.debugDescription)
+    hierarchy.name = "Archived List native creation actions hierarchy"
+    hierarchy.lifetime = .keepAlways
+    add(hierarchy)
+    for identifier in ["saved.list.createItem", "saved.list.add", "saved.list.capture"] {
+      let action = application.plannerElement(identifier)
+      XCTAssertTrue(action.waitForExistence(timeout: 5))
+      XCTAssertFalse(action.isEnabled)
+    }
+  }
+
+  private func openListArchiveFilter(_ application: XCUIApplication) {
+    var filter = application.plannerElement("saved.lists.archive")
+    #if os(iOS)
+      if !filter.exists || !filter.isHittable {
+        let overflow = application.navigationBars["Planner"].buttons["OverflowBarButtonItem"]
+          .firstMatch
+        XCTAssertTrue(overflow.waitForPlannerHittability())
+        overflow.activateForPlannerJourney()
+        if !filter.exists {
+          filter = application.collectionViews.buttons["Active"].firstMatch
+        }
+      }
+    #endif
+    XCTAssertTrue(filter.waitForExistence(timeout: 5))
+    filter.activateForPlannerJourney()
   }
 
   private func openListCapture(_ application: XCUIApplication) {

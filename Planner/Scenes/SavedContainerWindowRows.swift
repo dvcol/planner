@@ -1,7 +1,7 @@
 import PlannerCore
 import SwiftUI
 
-struct SavedContainerWindowRows<RowContent: View>: View {
+struct SavedContainerWindowRows<SelectionValue: Hashable, RowContent: View>: View {
   private struct VisibleReadIdentity: Equatable {
     let window: ObjectIdentifier
     let state: SavedItemWindowState
@@ -11,22 +11,27 @@ struct SavedContainerWindowRows<RowContent: View>: View {
   let window: SavedItemWindow
   let sourceKind: PlannerEntityKind
   var excludedIdentifiers: Set<UUID> = []
+  let selectionTag: (PlannerEntityReference) -> SelectionValue
   @ViewBuilder let content: (PlannerRowRead) -> RowContent
   @State private var visibleIdentifiers: Set<UUID> = []
   @State private var hasDisplayedRows = false
 
-  private var sourceRows: [(index: Int, source: PlannerEntityReference)] {
+  private var sourceRows:
+    [(index: Int, source: PlannerEntityReference, selectionValue: SelectionValue)]
+  {
     window.rowIdentities.enumerated().compactMap { index, identity in
       guard case .source(let source) = identity, source.kind == sourceKind,
         !excludedIdentifiers.contains(source.id)
       else { return nil }
-      return (index, source)
+      return (index, source, selectionTag(source))
     }
   }
 
   var body: some View {
-    ForEach(sourceRows, id: \.source.id) { index, source in
+    ForEach(sourceRows, id: \.selectionValue) { index, source, selectionValue in
       row(at: index, source: source)
+        .tag(selectionValue)
+        .selectionDisabled(!hasPresentation(at: index, source: source))
         .onScrollVisibilityChange { visible in
           if visible {
             hasDisplayedRows = true
@@ -48,6 +53,11 @@ struct SavedContainerWindowRows<RowContent: View>: View {
     .onChange(of: ObjectIdentifier(window)) {
       hasDisplayedRows = false
     }
+  }
+
+  private func hasPresentation(at index: Int, source: PlannerEntityReference) -> Bool {
+    guard case .loaded(let presentation) = window.presentation(at: index) else { return false }
+    return presentation.row.identity == .source(source)
   }
 
   @ViewBuilder

@@ -226,7 +226,6 @@ struct SavedBackupImportForm: View {
     {
     case .applied(let result):
       appliedResult = result
-      await store.refreshLists()
     case .reviewChanged(let refreshed):
       review = refreshed
       operationIdentifier = UUID()

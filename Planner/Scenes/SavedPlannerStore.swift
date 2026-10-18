@@ -50,7 +50,6 @@ enum SavedReviewedChangeResult {
 final class SavedPlannerStore {
   private let planner: PlannerCore.Planner?
   private var session: PlannerDatasetSession?
-  private(set) var lists: [SavedPlannerList] = []
   private(set) var isOpening = false
   private(set) var isSaving = false
   private(set) var recoveryBlocked = false
@@ -129,7 +128,6 @@ final class SavedPlannerStore {
     case .ready(let ready):
       session = ready
       await refreshRecoveryStatus()
-      await refreshLists()
     case .unavailable(let reason): openingFailure = reason.message
     case .mainAppSetupRequired, .mainAppMigrationRequired:
       openingFailure = "Planner could not initialize its local data."
@@ -193,10 +191,6 @@ final class SavedPlannerStore {
     recoveryBlocked = true
     recoveryStatusTitle = "Recovery status unavailable"
     recoveryStatusFailure = message
-  }
-
-  func refreshLists() async {
-    if let loaded = await readLists(archive: .active) { lists = loaded }
   }
 
   func exportBackup() async throws -> Data {
@@ -264,44 +258,6 @@ final class SavedPlannerStore {
     }
   }
 
-  func readLists(
-    archive: PlannerItemQuery.Archive, text: String = "", sort: PlannerCatalogQuery.Sort? = nil
-  ) async -> [SavedPlannerList]? {
-    guard let planner, let session else { return nil }
-    switch await planner.query(
-      PlannerQuery(
-        session: session,
-        request: .catalog(.init(sourceKind: .list, text: text, archive: archive, sort: sort)))
-    )
-    {
-    case .failed(let reason): alertMessage = reason.message
-    case .snapshot(let snapshot):
-      switch await planner.read(
-        session: session,
-        request: .rows(generation: snapshot.generation, offset: 0, limit: Int64.max))
-      {
-      case .rows(let window):
-        var lists: [SavedPlannerList] = []
-        for row in window.rows {
-          guard case .source(let source) = row.identity, source.kind == .list,
-            let estimates = row.containerEstimates
-          else {
-            alertMessage = "Planner could not read its List estimates."
-            return nil
-          }
-          lists.append(
-            .init(
-              source: source, name: row.title, archived: row.archived == true,
-              manualEstimate: row.manualEstimate, estimates: estimates))
-        }
-        return lists
-      case .failed(let reason): alertMessage = reason.message
-      default: alertMessage = "Planner could not read its Lists."
-      }
-    }
-    return nil
-  }
-
   func readList(_ identifier: UUID) async -> PlannerListSourceRead? {
     guard let planner, let session else { return nil }
     switch await planner.read(
@@ -350,43 +306,6 @@ final class SavedPlannerStore {
     case .source(.tag(let tag)): return .tag(tag)
     case .failed(let reason): alertMessage = reason.message
     default: alertMessage = "Planner could not open this \(selection.kind.title)."
-    }
-    return nil
-  }
-
-  func readItineraries(
-    archive: PlannerItemQuery.Archive, sort: PlannerCatalogQuery.Sort? = nil
-  ) async -> [SavedPlannerItinerary]? {
-    guard let planner, let session else { return nil }
-    switch await planner.query(
-      .init(
-        session: session,
-        request: .catalog(.init(sourceKind: .itinerary, archive: archive, sort: sort))))
-    {
-    case .snapshot(let snapshot):
-      switch await planner.read(
-        session: session,
-        request: .rows(generation: snapshot.generation, offset: 0, limit: Int64.max))
-      {
-      case .rows(let window):
-        var itineraries: [SavedPlannerItinerary] = []
-        for row in window.rows {
-          guard case .source(let source) = row.identity, source.kind == .itinerary,
-            let estimates = row.containerEstimates
-          else {
-            alertMessage = "Planner could not read its Itinerary estimates."
-            return nil
-          }
-          itineraries.append(
-            .init(
-              source: source, title: row.title, archived: row.archived == true,
-              manualEstimate: row.manualEstimate, estimates: estimates))
-        }
-        return itineraries
-      case .failed(let reason): alertMessage = reason.message
-      default: alertMessage = "Planner could not read its Itineraries."
-      }
-    case .failed(let reason): alertMessage = reason.message
     }
     return nil
   }
@@ -668,7 +587,6 @@ final class SavedPlannerStore {
         .setArchive(source: .init(kind: .list, id: identifier), archived: archived),
         operationId: UUID()) != nil
     else { return false }
-    await refreshLists()
     return true
   }
 
@@ -983,7 +901,6 @@ final class SavedPlannerStore {
         command: .createList(content: .init(name: name, manualEstimate: manualEstimate))
       ))
     guard let applied = await handleChangeResult(result) else { return nil }
-    await refreshLists()
     return applied.generated.first { $0.kind == .list }
   }
 
