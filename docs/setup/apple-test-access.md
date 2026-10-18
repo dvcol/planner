@@ -69,6 +69,10 @@ Device listings may contain personal device names and identifiers. Record only t
 
 ## Human inputs and actions
 
+On 18 October 2026 the user returned to the unlocked Mac and declined a paid Developer Program subscription for this personal app. A fresh unsandboxed read-only identity check still reports zero valid code-signing identities. Current ad hoc Mac compilation succeeds, and the Q101 native retry now starts and operates Capture. Its workflow failures and subsequent qualification belong to the [catalog Add review](../prototypes/native-catalog-add-menu.md); automation availability supplies no provisioned signing or Keychain evidence.
+
+Signing and paid membership are separate requirements. Apple's [current Personal Team guidance](https://developer.apple.com/help/account/basics/about-your-developer-account) permits free personal-device testing with seven-day provisioning. Its [CloudKit setup](https://developer.apple.com/documentation/cloudkit/enabling-cloudkit-in-your-app) requires active Program membership. Continue no-fee local development and verify the actual free signing/capability route for Q100. No account enrollment or capability changes have occurred. The original CloudKit sync gate remains unmet; a subscription-free replacement needs its own reviewed sync design rather than an assumed equivalent.
+
 - Before physical provisioning, choose the Apple Account/Personal Team or enrolled team used for the particular build. Before CloudKit setup, confirm access to an active Program team and its required capabilities. This selection can wait during domain/local work; do not post passwords, keys, or certificates.
 - Make the available iPhone and iPad discoverable to Xcode: connect and trust the selected devices, and enable Developer Mode where required. Confirm both may use the same private test iCloud account. Record model and OS version after successful discovery.
 - The macOS 27 host prerequisite is now satisfied. Complete native Mac signing and launch checks once the disposable project and selected team are available.
