@@ -1,0 +1,14 @@
+{
+  "root": "/private/tmp/PlannerItemWindowCompatibilitySource",
+  "base": "bc86c1178a99fd0e041a2e148ce5a4198fe9b2a3",
+  "overlays": [
+    "Planner/Scenes/SavedAddItemForm.swift",
+    "Planner/Scenes/SavedAppearanceViews.swift",
+    "Planner/Scenes/SavedItemViews.swift",
+    "Planner/Scenes/SavedItemWindow.swift",
+    "Planner/Scenes/SavedItineraryContentViews.swift",
+    "Planner/Scenes/SavedMacMembershipTable.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerMCPTests/SavedItemWindowTests.swift"
+  ]
+}

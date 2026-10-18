@@ -1,0 +1,11 @@
+{
+  "runtimeCredit": false,
+  "compiledEpoch": "q98-itinerary-native-mobile-qualified-build",
+  "invocation": "simctl launch --terminate-running-process --console-pty FBD72DAB-1D40-4E64-912D-7F9763E00446 org.example.PlannerFixtures --fixture itinerary-windows --fixture-dataset 90440CA6-5D3A-436C-9010-0A2EBB1E27ED",
+  "observations": [
+    "Initial Simulator capture showed Preparing fixture.",
+    "Later capture showed saved-app panes, after the 130-command seeding path.",
+    "The isolated fixture app was terminated before source edits."
+  ],
+  "limitations": "No scripted itinerary navigation or paging credit; this isolates slow fixture preparation from native-window behavior."
+}

@@ -933,7 +933,7 @@ struct SavedPlannerView: View {
       guard case .appearance(let source, .listMembership(let owner, let membership)) = identity,
         source.kind == .item, owner == identifier
       else { return nil }
-      return .init(id: membership, index: index)
+      return .init(id: membership, index: index, identity: identity)
     }
   }
 
@@ -1385,7 +1385,9 @@ struct SavedPlannerView: View {
       _ row: SavedMembershipWindowRow, list: PlannerListSourceRead, window: SavedItemWindow
     ) -> some View {
       switch window.presentation(at: row.index) {
-      case .loaded(let item) where item.id == row.id:
+      case .loaded(let presentation) where presentation.row.identity == row.identity:
+        let item = SavedPlannerItem(
+          id: row.id, row: presentation.row, rowPresentation: presentation.rowPresentation)
         SavedMembershipRow(item: item, canChange: store.canCreate) {
           guard case .appearance(_, let appearance) = item.row.identity else { return }
           listScrollAnchor = item.id

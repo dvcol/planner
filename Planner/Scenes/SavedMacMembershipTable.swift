@@ -45,12 +45,13 @@ import UniformTypeIdentifiers
           }
         } rows: {
           ForEach(rows) { row in
-            if canReorderMemberships, case .loaded(let item) = window.presentation(at: row.index),
-              item.id == row.id
+            if canReorderMemberships,
+              case .loaded(let presentation) = window.presentation(at: row.index),
+              presentation.row.identity == row.identity
             {
               TableRow(row)
                 .draggable(
-                  SavedMembershipDragReference(listId: list.source.id, membershipId: item.id))
+                  SavedMembershipDragReference(listId: list.source.id, membershipId: row.id))
             } else {
               TableRow(row)
             }
@@ -76,7 +77,9 @@ import UniformTypeIdentifiers
     @ViewBuilder
     private func cell(_ row: SavedMembershipWindowRow) -> some View {
       switch window.presentation(at: row.index) {
-      case .loaded(let item) where item.id == row.id:
+      case .loaded(let presentation) where presentation.row.identity == row.identity:
+        let item = SavedPlannerItem(
+          id: row.id, row: presentation.row, rowPresentation: presentation.rowPresentation)
         SavedMembershipRow(item: item, canChange: store.canCreate) {
           guard case .appearance(_, let appearance) = item.row.identity else { return }
           Task {

@@ -1,0 +1,52 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "3C03A140-14B3-4513-AB06-7B0E321AFF34.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Repeated itinerary pages retain exact independent appearances after relaunch_0_7C315871-A52D-47CA-BFAE-84A167113A25.png",
+    "timestamp": 1792318035.644,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A9343422-C8E3-4D24-B584-5BE56A47881E.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Selected itinerary appearance keeps details while its page is offscreen_0_6DB9CFB2-0D49-4268-8805-C36502BFF1BE.png",
+    "timestamp": 1792317980.958,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "72275799-C0B5-4580-8E39-7AB7115CECF9.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "First repeated List appearance stays visible after local completion_0_2AC6D725-47FB-4916-A866-33FD32A09BC7.png",
+    "timestamp": 1792317920.421,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "134E487E-AB42-4941-98D1-B2122109F843.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary boundary appearance before local completion_0_04F59AEE-A265-40D9-BE00-18E643404BE5.png",
+    "timestamp": 1792317918.463,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "5C5F43A9-B2EC-458A-A038-6EDC031639BD.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed itinerary starts with full progress and repeated List headers_0_A22038F7-F905-4E88-88A0-CDD9D9096194.png",
+    "timestamp": 1792317897.73,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "/private/tmp/PlannerItemWindowMarkdownlint.json",
+    "docs/prototypes/native-itinerary-windows.md",
+    "docs/native-itinerary-window-contract-review.md"
+  ],
+  "exitCode": 0
+}

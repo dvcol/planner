@@ -1,0 +1,888 @@
+{
+  "status": "Partial Q98 checkpoint. Final real-Core class: 17 pass. iPad native: pass before later phone parent-context correction. Final phone native: pass. Remaining native regressions and whole-map gates stay open. A phase name is not a passing result.",
+  "phases": [
+    {
+      "phase": "q98-final-mac-core-checkpoint",
+      "exit": {
+        "exitCode": 0,
+        "bundle": "/private/tmp/PlannerItemWindow-q98-final-mac-core-checkpoint.xcresult"
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 19:19:52.712.",
+        "Test Suite 'PlannerMCPTests.xctest' started at 2026-10-18 19:19:52.713.",
+        "Test Suite 'SavedItemWindowTests' started at 2026-10-18 19:19:52.713.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testCancelsReleasesRowsAndReopensWithTheReplacementInboxQuery]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testCancelsReleasesRowsAndReopensWithTheReplacementInboxQuery]' passed (0.310 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testConcurrentIdenticalVisibilityRequestsKeepOneConsistentWindow]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testConcurrentIdenticalVisibilityRequestsKeepOneConsistentWindow]' passed (0.277 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testDistinguishesQueryFailureFromEmptyResultsAndAcceptsAValidRetry]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testDistinguishesQueryFailureFromEmptyResultsAndAcceptsAValidRetry]' passed (0.072 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testEmptyAndFilteredListsKeepTheirOwnHeaderAndCancelClearsIt]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testEmptyAndFilteredListsKeepTheirOwnHeaderAndCancelClearsIt]' passed (0.253 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testEmptyItineraryAndEmptyListPublishTheirHeadersAndCancelClearsThem]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testEmptyItineraryAndEmptyListPublishTheirHeadersAndCancelClearsThem]' passed (0.052 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryHeaderAndChildMatchesKeepFullProgressAndUnloadedIdentities]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryHeaderAndChildMatchesKeepFullProgressAndUnloadedIdentities]' passed (0.176 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct]' passed (0.641 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListCumulativeFiltersAndSortKeepFullProgressAndEstimateMetadata]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListCumulativeFiltersAndSortKeepFullProgressAndEstimateMetadata]' passed (0.157 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListOpensOnePageWithEveryMembershipIdentityAndItsFullHeader]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListOpensOnePageWithEveryMembershipIdentityAndItsFullHeader]' passed (0.219 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListReleasesAndRevisitsMembershipPagesWhileKeepingItsFullHeader]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListReleasesAndRevisitsMembershipPagesWhileKeepingItsFullHeader]' passed (0.785 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testLoadsVisibleAndNeighborPagesReleasesDistantRowsAndRevisitsTheirIdentities]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testLoadsVisibleAndNeighborPagesReleasesDistantRowsAndRevisitsTheirIdentities]' passed (0.421 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testOpensWithOnePageAndKeepsEveryOrderedSourceIdentity]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testOpensWithOnePageAndKeepsEveryOrderedSourceIdentity]' passed (0.109 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testPreCanceledVisibilityRequestPreservesTheCurrentWindow]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testPreCanceledVisibilityRequestPreservesTheCurrentWindow]' passed (0.324 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRefreshesAStaleGenerationWithoutMixingItsRowsAndKeepsTheVisibleSource]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRefreshesAStaleGenerationWithoutMixingItsRowsAndKeepsTheVisibleSource]' passed (0.397 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRepeatedItineraryPagesRefreshIndependentCompletionAndArchivedBranches]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRepeatedItineraryPagesRefreshIndependentCompletionAndArchivedBranches]' passed (2.530 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testSwitchingListsKeepsSharedItemMembershipsAndLocalCompletionIndependent]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testSwitchingListsKeepsSharedItemMembershipsAndLocalCompletionIndependent]' passed (0.672 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testUnloadedListPageRefreshesManualOrderAndRemovedMembershipsWithItsHeader]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testUnloadedListPageRefreshesManualOrderAndRemovedMembershipsWithItsHeader]' passed (1.294 seconds).",
+        "Test Suite 'SavedItemWindowTests' passed at 2026-10-18 19:20:01.408.",
+        "Executed 17 tests, with 0 failures (0 unexpected) in 8.691 (8.695) seconds",
+        "Test Suite 'PlannerMCPTests.xctest' passed at 2026-10-18 19:20:01.408.",
+        "Executed 17 tests, with 0 failures (0 unexpected) in 8.691 (8.696) seconds",
+        "Test Suite 'Selected tests' passed at 2026-10-18 19:20:01.409.",
+        "Executed 17 tests, with 0 failures (0 unexpected) in 8.691 (8.696) seconds",
+        "** TEST SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-completion-archive-qualified",
+      "exit": {
+        "exitCode": 0,
+        "bundle": "/private/tmp/PlannerItemWindow-q98-itinerary-completion-archive-qualified.xcresult"
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 18:18:26.957.",
+        "Test Suite 'PlannerMCPTests.xctest' started at 2026-10-18 18:18:26.957.",
+        "Test Suite 'SavedItemWindowTests' started at 2026-10-18 18:18:26.958.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRepeatedItineraryPagesRefreshIndependentCompletionAndArchivedBranches]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRepeatedItineraryPagesRefreshIndependentCompletionAndArchivedBranches]' passed (2.324 seconds).",
+        "Test Suite 'SavedItemWindowTests' passed at 2026-10-18 18:18:29.283.",
+        "Executed 1 test, with 0 failures (0 unexpected) in 2.324 (2.325) seconds",
+        "Test Suite 'PlannerMCPTests.xctest' passed at 2026-10-18 18:18:29.283.",
+        "Executed 1 test, with 0 failures (0 unexpected) in 2.324 (2.325) seconds",
+        "Test Suite 'Selected tests' passed at 2026-10-18 18:18:29.283.",
+        "Executed 1 test, with 0 failures (0 unexpected) in 2.324 (2.326) seconds",
+        "** TEST SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-filter-qualification",
+      "exit": {
+        "exitCode": 65,
+        "bundle": "/private/tmp/PlannerItemWindow-q98-itinerary-filter-qualification.xcresult"
+      },
+      "summaries": [
+        "/tmp/PlannerItemWindowCompatibilitySource/PlannerMCPTests/SavedItemWindowTests.swift:29:30: error: type 'PlannerCompletionScope' has no member 'item'",
+        "** TEST FAILED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-filter-qualified",
+      "exit": {
+        "exitCode": 0,
+        "bundle": "/private/tmp/PlannerItemWindow-q98-itinerary-filter-qualified.xcresult"
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 18:14:14.419.",
+        "Test Suite 'PlannerMCPTests.xctest' started at 2026-10-18 18:14:14.420.",
+        "Test Suite 'SavedItemWindowTests' started at 2026-10-18 18:14:14.420.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryHeaderAndChildMatchesKeepFullProgressAndUnloadedIdentities]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryHeaderAndChildMatchesKeepFullProgressAndUnloadedIdentities]' passed (0.313 seconds).",
+        "Test Suite 'SavedItemWindowTests' passed at 2026-10-18 18:14:14.734.",
+        "Executed 1 test, with 0 failures (0 unexpected) in 0.313 (0.314) seconds",
+        "Test Suite 'PlannerMCPTests.xctest' passed at 2026-10-18 18:14:14.734.",
+        "Executed 1 test, with 0 failures (0 unexpected) in 0.313 (0.314) seconds",
+        "Test Suite 'Selected tests' passed at 2026-10-18 18:14:14.734.",
+        "Executed 1 test, with 0 failures (0 unexpected) in 0.313 (0.315) seconds",
+        "** TEST SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-metadata-edge-qualification",
+      "exit": {
+        "exitCode": 65,
+        "bundle": "/private/tmp/PlannerItemWindow-q98-itinerary-metadata-edge-qualification.xcresult"
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 18:17:33.060.",
+        "Test Suite 'PlannerMCPTests.xctest' started at 2026-10-18 18:17:33.060.",
+        "Test Suite 'SavedItemWindowTests' started at 2026-10-18 18:17:33.061.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testCancelsReleasesRowsAndReopensWithTheReplacementInboxQuery]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testCancelsReleasesRowsAndReopensWithTheReplacementInboxQuery]' passed (0.317 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testConcurrentIdenticalVisibilityRequestsKeepOneConsistentWindow]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testConcurrentIdenticalVisibilityRequestsKeepOneConsistentWindow]' passed (0.253 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testDistinguishesQueryFailureFromEmptyResultsAndAcceptsAValidRetry]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testDistinguishesQueryFailureFromEmptyResultsAndAcceptsAValidRetry]' passed (0.067 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testEmptyAndFilteredListsKeepTheirOwnHeaderAndCancelClearsIt]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testEmptyAndFilteredListsKeepTheirOwnHeaderAndCancelClearsIt]' passed (0.238 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testEmptyItineraryAndEmptyListPublishTheirHeadersAndCancelClearsThem]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testEmptyItineraryAndEmptyListPublishTheirHeadersAndCancelClearsThem]' passed (0.051 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryHeaderAndChildMatchesKeepFullProgressAndUnloadedIdentities]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryHeaderAndChildMatchesKeepFullProgressAndUnloadedIdentities]' passed (0.170 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct]' passed (0.551 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListCumulativeFiltersAndSortKeepFullProgressAndEstimateMetadata]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListCumulativeFiltersAndSortKeepFullProgressAndEstimateMetadata]' passed (0.132 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListOpensOnePageWithEveryMembershipIdentityAndItsFullHeader]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListOpensOnePageWithEveryMembershipIdentityAndItsFullHeader]' passed (0.190 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListReleasesAndRevisitsMembershipPagesWhileKeepingItsFullHeader]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListReleasesAndRevisitsMembershipPagesWhileKeepingItsFullHeader]' passed (0.725 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testLoadsVisibleAndNeighborPagesReleasesDistantRowsAndRevisitsTheirIdentities]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testLoadsVisibleAndNeighborPagesReleasesDistantRowsAndRevisitsTheirIdentities]' passed (0.407 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testOpensWithOnePageAndKeepsEveryOrderedSourceIdentity]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testOpensWithOnePageAndKeepsEveryOrderedSourceIdentity]' passed (0.109 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testPreCanceledVisibilityRequestPreservesTheCurrentWindow]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testPreCanceledVisibilityRequestPreservesTheCurrentWindow]' passed (0.317 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRefreshesAStaleGenerationWithoutMixingItsRowsAndKeepsTheVisibleSource]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRefreshesAStaleGenerationWithoutMixingItsRowsAndKeepsTheVisibleSource]' passed (0.358 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRepeatedItineraryPagesRefreshIndependentCompletionAndArchivedBranches]' started.",
+        "/tmp/PlannerItemWindowCompatibilitySource/PlannerMCPTests/SavedItemWindowTests.swift:142: error: -[PlannerMCPTests.SavedItemWindowTests testRepeatedItineraryPagesRefreshIndependentCompletionAndArchivedBranches] : XCTAssertEqual failed: (\"Optional(129)\") is not equal to (\"Optional(130)\")",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRepeatedItineraryPagesRefreshIndependentCompletionAndArchivedBranches]' failed (2.499 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testSwitchingListsKeepsSharedItemMembershipsAndLocalCompletionIndependent]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testSwitchingListsKeepsSharedItemMembershipsAndLocalCompletionIndependent]' passed (0.564 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testUnloadedListPageRefreshesManualOrderAndRemovedMembershipsWithItsHeader]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testUnloadedListPageRefreshesManualOrderAndRemovedMembershipsWithItsHeader]' passed (1.103 seconds).",
+        "Test Suite 'SavedItemWindowTests' failed at 2026-10-18 18:17:41.116.",
+        "Executed 17 tests, with 1 failure (0 unexpected) in 8.052 (8.056) seconds",
+        "Test Suite 'PlannerMCPTests.xctest' failed at 2026-10-18 18:17:41.117.",
+        "Executed 17 tests, with 1 failure (0 unexpected) in 8.052 (8.056) seconds",
+        "Test Suite 'Selected tests' failed at 2026-10-18 18:17:41.117.",
+        "Executed 17 tests, with 1 failure (0 unexpected) in 8.052 (8.057) seconds",
+        "** TEST FAILED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-metadata-green",
+      "exit": {
+        "exitCode": 65,
+        "bundle": "/private/tmp/PlannerItemWindow-q98-itinerary-metadata-green.xcresult"
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 18:09:50.971.",
+        "Test Suite 'PlannerMCPTests.xctest' started at 2026-10-18 18:09:50.971.",
+        "Test Suite 'SavedItemWindowTests' started at 2026-10-18 18:09:50.971.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct]' started.",
+        "/tmp/PlannerItemWindowCompatibilitySource/PlannerMCPTests/SavedItemWindowTests.swift:83: error: -[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct] : XCTAssertEqual failed: (\"Optional(67)\") is not equal to (\"Optional(65)\")",
+        "/tmp/PlannerItemWindowCompatibilitySource/PlannerMCPTests/SavedItemWindowTests.swift:83: error: -[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct] : XCTAssertEqual failed: (\"Optional(67)\") is not equal to (\"Optional(65)\")",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct]' failed (0.647 seconds).",
+        "Test Suite 'SavedItemWindowTests' failed at 2026-10-18 18:09:51.619.",
+        "Executed 1 test, with 2 failures (0 unexpected) in 0.647 (0.648) seconds",
+        "Test Suite 'PlannerMCPTests.xctest' failed at 2026-10-18 18:09:51.620.",
+        "Executed 1 test, with 2 failures (0 unexpected) in 0.647 (0.648) seconds",
+        "Test Suite 'Selected tests' failed at 2026-10-18 18:09:51.620.",
+        "Executed 1 test, with 2 failures (0 unexpected) in 0.647 (0.649) seconds",
+        "** TEST FAILED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-metadata-qualified",
+      "exit": {
+        "exitCode": 0,
+        "bundle": "/private/tmp/PlannerItemWindow-q98-itinerary-metadata-qualified.xcresult"
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 18:11:10.606.",
+        "Test Suite 'PlannerMCPTests.xctest' started at 2026-10-18 18:11:10.606.",
+        "Test Suite 'SavedItemWindowTests' started at 2026-10-18 18:11:10.606.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testCancelsReleasesRowsAndReopensWithTheReplacementInboxQuery]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testCancelsReleasesRowsAndReopensWithTheReplacementInboxQuery]' passed (0.398 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testConcurrentIdenticalVisibilityRequestsKeepOneConsistentWindow]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testConcurrentIdenticalVisibilityRequestsKeepOneConsistentWindow]' passed (0.269 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testDistinguishesQueryFailureFromEmptyResultsAndAcceptsAValidRetry]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testDistinguishesQueryFailureFromEmptyResultsAndAcceptsAValidRetry]' passed (0.070 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testEmptyAndFilteredListsKeepTheirOwnHeaderAndCancelClearsIt]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testEmptyAndFilteredListsKeepTheirOwnHeaderAndCancelClearsIt]' passed (0.236 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct]' passed (0.558 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListCumulativeFiltersAndSortKeepFullProgressAndEstimateMetadata]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListCumulativeFiltersAndSortKeepFullProgressAndEstimateMetadata]' passed (0.131 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListOpensOnePageWithEveryMembershipIdentityAndItsFullHeader]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListOpensOnePageWithEveryMembershipIdentityAndItsFullHeader]' passed (0.188 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListReleasesAndRevisitsMembershipPagesWhileKeepingItsFullHeader]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListReleasesAndRevisitsMembershipPagesWhileKeepingItsFullHeader]' passed (0.732 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testLoadsVisibleAndNeighborPagesReleasesDistantRowsAndRevisitsTheirIdentities]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testLoadsVisibleAndNeighborPagesReleasesDistantRowsAndRevisitsTheirIdentities]' passed (0.436 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testOpensWithOnePageAndKeepsEveryOrderedSourceIdentity]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testOpensWithOnePageAndKeepsEveryOrderedSourceIdentity]' passed (0.111 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testPreCanceledVisibilityRequestPreservesTheCurrentWindow]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testPreCanceledVisibilityRequestPreservesTheCurrentWindow]' passed (0.337 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRefreshesAStaleGenerationWithoutMixingItsRowsAndKeepsTheVisibleSource]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRefreshesAStaleGenerationWithoutMixingItsRowsAndKeepsTheVisibleSource]' passed (0.377 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testSwitchingListsKeepsSharedItemMembershipsAndLocalCompletionIndependent]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testSwitchingListsKeepsSharedItemMembershipsAndLocalCompletionIndependent]' passed (0.568 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testUnloadedListPageRefreshesManualOrderAndRemovedMembershipsWithItsHeader]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testUnloadedListPageRefreshesManualOrderAndRemovedMembershipsWithItsHeader]' passed (1.133 seconds).",
+        "Test Suite 'SavedItemWindowTests' passed at 2026-10-18 18:11:16.155.",
+        "Executed 14 tests, with 0 failures (0 unexpected) in 5.544 (5.548) seconds",
+        "Test Suite 'PlannerMCPTests.xctest' passed at 2026-10-18 18:11:16.155.",
+        "Executed 14 tests, with 0 failures (0 unexpected) in 5.544 (5.549) seconds",
+        "Test Suite 'Selected tests' passed at 2026-10-18 18:11:16.155.",
+        "Executed 14 tests, with 0 failures (0 unexpected) in 5.544 (5.549) seconds",
+        "** TEST SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-metadata-red",
+      "exit": {
+        "exitCode": 65,
+        "bundle": "/private/tmp/PlannerItemWindow-q98-itinerary-metadata-red.xcresult"
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 18:05:53.128.",
+        "Test Suite 'PlannerMCPTests.xctest' started at 2026-10-18 18:05:53.128.",
+        "Test Suite 'SavedItemWindowTests' started at 2026-10-18 18:05:53.128.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct]' started.",
+        "/tmp/PlannerItemWindowCompatibilitySource/PlannerMCPTests/SavedItemWindowTests.swift:65: error: -[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct] : XCTUnwrap failed: expected non-nil value of type \"SavedItineraryWindowMetadata\"",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct]' failed (0.736 seconds).",
+        "Test Suite 'SavedItemWindowTests' failed at 2026-10-18 18:05:53.865.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 0.736 (0.737) seconds",
+        "Test Suite 'PlannerMCPTests.xctest' failed at 2026-10-18 18:05:53.865.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 0.736 (0.737) seconds",
+        "Test Suite 'Selected tests' failed at 2026-10-18 18:05:53.865.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 0.736 (0.738) seconds",
+        "** TEST FAILED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-native-anchor-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "summaries": [
+        "** TEST BUILD SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-native-compact-controller-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "summaries": [
+        "** TEST BUILD SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-native-detail-controller-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "summaries": [
+        "** TEST BUILD SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-native-import-fixture-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "summaries": [
+        "** TEST BUILD SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-native-lint-qualified-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "summaries": [
+        "** TEST BUILD SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-native-mobile-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "summaries": [
+        "** TEST BUILD SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-native-mobile-qualified-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "summaries": [
+        "** TEST BUILD SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-native-parent-context-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "summaries": [
+        "** TEST BUILD SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-native-progress-controller-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "summaries": [
+        "** TEST BUILD SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-native-refresh-diagnostic-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "summaries": [
+        "** TEST BUILD SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-itinerary-native-return-wait-build",
+      "exit": {
+        "exitCode": 0,
+        "runtimeCredit": false
+      },
+      "summaries": [
+        "** TEST BUILD SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-native-integration-mac-core-compile",
+      "exit": {
+        "exitCode": 65,
+        "bundle": "/private/tmp/PlannerItemWindow-q98-native-integration-mac-core-compile.xcresult"
+      },
+      "summaries": [
+        "/tmp/PlannerItemWindowCompatibilitySource/Planner/Scenes/SavedItineraryViews.swift:442:85: error: cannot convert value of type '[Any]' to closure result type 'SavedItineraryWindowRow'",
+        "** TEST FAILED **"
+      ]
+    },
+    {
+      "phase": "q98-native-integration-mac-core-qualified",
+      "exit": {
+        "exitCode": 0,
+        "bundle": "/private/tmp/PlannerItemWindow-q98-native-integration-mac-core-qualified.xcresult"
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 18:28:15.703.",
+        "Test Suite 'PlannerMCPTests.xctest' started at 2026-10-18 18:28:15.703.",
+        "Test Suite 'SavedItemWindowTests' started at 2026-10-18 18:28:15.703.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testCancelsReleasesRowsAndReopensWithTheReplacementInboxQuery]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testCancelsReleasesRowsAndReopensWithTheReplacementInboxQuery]' passed (0.309 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testConcurrentIdenticalVisibilityRequestsKeepOneConsistentWindow]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testConcurrentIdenticalVisibilityRequestsKeepOneConsistentWindow]' passed (0.261 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testDistinguishesQueryFailureFromEmptyResultsAndAcceptsAValidRetry]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testDistinguishesQueryFailureFromEmptyResultsAndAcceptsAValidRetry]' passed (0.068 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testEmptyAndFilteredListsKeepTheirOwnHeaderAndCancelClearsIt]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testEmptyAndFilteredListsKeepTheirOwnHeaderAndCancelClearsIt]' passed (0.238 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testEmptyItineraryAndEmptyListPublishTheirHeadersAndCancelClearsThem]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testEmptyItineraryAndEmptyListPublishTheirHeadersAndCancelClearsThem]' passed (0.050 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryHeaderAndChildMatchesKeepFullProgressAndUnloadedIdentities]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryHeaderAndChildMatchesKeepFullProgressAndUnloadedIdentities]' passed (0.171 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct]' passed (0.554 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListCumulativeFiltersAndSortKeepFullProgressAndEstimateMetadata]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListCumulativeFiltersAndSortKeepFullProgressAndEstimateMetadata]' passed (0.125 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListOpensOnePageWithEveryMembershipIdentityAndItsFullHeader]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListOpensOnePageWithEveryMembershipIdentityAndItsFullHeader]' passed (0.191 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListReleasesAndRevisitsMembershipPagesWhileKeepingItsFullHeader]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListReleasesAndRevisitsMembershipPagesWhileKeepingItsFullHeader]' passed (0.779 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testLoadsVisibleAndNeighborPagesReleasesDistantRowsAndRevisitsTheirIdentities]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testLoadsVisibleAndNeighborPagesReleasesDistantRowsAndRevisitsTheirIdentities]' passed (0.305 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testOpensWithOnePageAndKeepsEveryOrderedSourceIdentity]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testOpensWithOnePageAndKeepsEveryOrderedSourceIdentity]' passed (0.099 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testPreCanceledVisibilityRequestPreservesTheCurrentWindow]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testPreCanceledVisibilityRequestPreservesTheCurrentWindow]' passed (0.338 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRefreshesAStaleGenerationWithoutMixingItsRowsAndKeepsTheVisibleSource]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRefreshesAStaleGenerationWithoutMixingItsRowsAndKeepsTheVisibleSource]' passed (0.387 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRepeatedItineraryPagesRefreshIndependentCompletionAndArchivedBranches]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRepeatedItineraryPagesRefreshIndependentCompletionAndArchivedBranches]' passed (2.351 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testSwitchingListsKeepsSharedItemMembershipsAndLocalCompletionIndependent]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testSwitchingListsKeepsSharedItemMembershipsAndLocalCompletionIndependent]' passed (0.654 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testUnloadedListPageRefreshesManualOrderAndRemovedMembershipsWithItsHeader]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testUnloadedListPageRefreshesManualOrderAndRemovedMembershipsWithItsHeader]' passed (1.126 seconds).",
+        "Test Suite 'SavedItemWindowTests' passed at 2026-10-18 18:28:23.714.",
+        "Executed 17 tests, with 0 failures (0 unexpected) in 8.006 (8.010) seconds",
+        "Test Suite 'PlannerMCPTests.xctest' passed at 2026-10-18 18:28:23.714.",
+        "Executed 17 tests, with 0 failures (0 unexpected) in 8.006 (8.011) seconds",
+        "Test Suite 'Selected tests' passed at 2026-10-18 18:28:23.714.",
+        "Executed 17 tests, with 0 failures (0 unexpected) in 8.006 (8.011) seconds",
+        "** TEST SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-phone-parent-context-qualified",
+      "exit": {
+        "exitCode": 0,
+        "bundle": "/private/tmp/PlannerItineraryWindowNativeRuntime-q98-phone-parent-context-qualified.xcresult"
+      },
+      "appearance": {
+        "device": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "requested": "light",
+        "original": "light",
+        "restored": "light",
+        "contrastRequested": "disabled",
+        "contrastOriginal": "disabled",
+        "contrastRestored": "disabled"
+      },
+      "build-link": {
+        "compiledEpoch": "docs/prototypes/evidence/navigation/native-itinerary-windows/q98-itinerary-native-parent-context-build",
+        "currentCommit": "bc86c1178a99fd0e041a2e148ce5a4198fe9b2a3",
+        "inactiveMacOnlyDifferences": [],
+        "runtimeOnly": true
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 19:16:54.476.",
+        "Test Suite 'PlannerFixtureUITests.xctest' started at 2026-10-18 19:16:54.477.",
+        "Test Suite 'ItineraryWindowJourneyTests' started at 2026-10-18 19:16:54.477.",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' started.",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' passed (152.223 seconds).",
+        "Test Suite 'ItineraryWindowJourneyTests' passed at 2026-10-18 19:19:26.705.",
+        "Executed 1 test, with 0 failures (0 unexpected) in 152.223 (152.228) seconds",
+        "Test Suite 'PlannerFixtureUITests.xctest' passed at 2026-10-18 19:19:26.705.",
+        "Executed 1 test, with 0 failures (0 unexpected) in 152.223 (152.228) seconds",
+        "Test Suite 'Selected tests' passed at 2026-10-18 19:19:26.706.",
+        "Executed 1 test, with 0 failures (0 unexpected) in 152.223 (152.229) seconds",
+        "** TEST EXECUTE SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-phone-repeated-pages-qualified",
+      "exit": {
+        "exitCode": 65,
+        "bundle": "/private/tmp/PlannerItineraryWindowNativeRuntime-q98-phone-repeated-pages-qualified.xcresult"
+      },
+      "appearance": {
+        "device": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "requested": "light",
+        "original": "light",
+        "restored": "light",
+        "contrastRequested": "disabled",
+        "contrastOriginal": "disabled",
+        "contrastRestored": "disabled"
+      },
+      "build-link": {
+        "compiledEpoch": "docs/prototypes/evidence/navigation/native-itinerary-windows/q98-itinerary-native-lint-qualified-build",
+        "currentCommit": "bc86c1178a99fd0e041a2e148ce5a4198fe9b2a3",
+        "inactiveMacOnlyDifferences": [],
+        "runtimeOnly": true
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 19:07:57.170.",
+        "Test Suite 'PlannerFixtureUITests.xctest' started at 2026-10-18 19:07:57.170.",
+        "Test Suite 'ItineraryWindowJourneyTests' started at 2026-10-18 19:07:57.170.",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerFixtureUITests/ItineraryWindowJourneyTests.swift:152: error: -[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch] : Failed to swipe down \"saved.itinerary.contents\" CollectionView: No matches found for first query match sequence: `Descendants matching type Any` -> `Elements matching predicate '\"saved.itinerary.contents\" IN identifiers'`, given input App element pid: 83419",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' failed (70.433 seconds).",
+        "Test Suite 'ItineraryWindowJourneyTests' failed at 2026-10-18 19:09:07.610.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 70.433 (70.439) seconds",
+        "Test Suite 'PlannerFixtureUITests.xctest' failed at 2026-10-18 19:09:07.611.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 70.433 (70.440) seconds",
+        "Test Suite 'Selected tests' failed at 2026-10-18 19:09:07.611.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 70.433 (70.442) seconds",
+        "** TEST EXECUTE FAILED **"
+      ]
+    },
+    {
+      "phase": "q98-phone-repeated-pages-qualified-final",
+      "exit": {
+        "exitCode": 65,
+        "bundle": "/private/tmp/PlannerItineraryWindowNativeRuntime-q98-phone-repeated-pages-qualified-final.xcresult"
+      },
+      "appearance": {
+        "device": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "requested": "light",
+        "original": "light",
+        "restored": "light",
+        "contrastRequested": "disabled",
+        "contrastOriginal": "disabled",
+        "contrastRestored": "disabled"
+      },
+      "build-link": {
+        "compiledEpoch": "docs/prototypes/evidence/navigation/native-itinerary-windows/q98-itinerary-native-compact-controller-build",
+        "currentCommit": "bc86c1178a99fd0e041a2e148ce5a4198fe9b2a3",
+        "inactiveMacOnlyDifferences": [],
+        "runtimeOnly": true
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 19:10:19.669.",
+        "Test Suite 'PlannerFixtureUITests.xctest' started at 2026-10-18 19:10:19.670.",
+        "Test Suite 'ItineraryWindowJourneyTests' started at 2026-10-18 19:10:19.670.",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerFixtureUITests/ItineraryWindowJourneyTests.swift:157: error: -[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch] : Failed to swipe down \"saved.itinerary.contents\" CollectionView: No matches found for first query match sequence: `Descendants matching type Any` -> `Elements matching predicate '\"saved.itinerary.contents\" IN identifiers'`, given input App element pid: 83841",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' failed (69.242 seconds).",
+        "Test Suite 'ItineraryWindowJourneyTests' failed at 2026-10-18 19:11:28.918.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 69.242 (69.248) seconds",
+        "Test Suite 'PlannerFixtureUITests.xctest' failed at 2026-10-18 19:11:28.919.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 69.242 (69.249) seconds",
+        "Test Suite 'Selected tests' failed at 2026-10-18 19:11:28.920.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 69.242 (69.250) seconds",
+        "** TEST EXECUTE FAILED **"
+      ]
+    },
+    {
+      "phase": "q98-phone-return-and-relaunch",
+      "exit": {
+        "exitCode": 65,
+        "bundle": "/private/tmp/PlannerItineraryWindowNativeRuntime-q98-phone-return-and-relaunch.xcresult"
+      },
+      "appearance": {
+        "device": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+        "requested": "light",
+        "original": "light",
+        "restored": "light",
+        "contrastRequested": "disabled",
+        "contrastOriginal": "disabled",
+        "contrastRestored": "disabled"
+      },
+      "build-link": {
+        "compiledEpoch": "docs/prototypes/evidence/navigation/native-itinerary-windows/q98-itinerary-native-return-wait-build",
+        "currentCommit": "bc86c1178a99fd0e041a2e148ce5a4198fe9b2a3",
+        "inactiveMacOnlyDifferences": [],
+        "runtimeOnly": true
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 19:13:12.073.",
+        "Test Suite 'PlannerFixtureUITests.xctest' started at 2026-10-18 19:13:12.073.",
+        "Test Suite 'ItineraryWindowJourneyTests' started at 2026-10-18 19:13:12.074.",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerFixtureUITests/ItineraryWindowJourneyTests.swift:148: error: -[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch] : XCTAssertTrue failed",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' failed (81.921 seconds).",
+        "Test Suite 'ItineraryWindowJourneyTests' failed at 2026-10-18 19:14:34.000.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 81.921 (81.926) seconds",
+        "Test Suite 'PlannerFixtureUITests.xctest' failed at 2026-10-18 19:14:34.000.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 81.921 (81.927) seconds",
+        "Test Suite 'Selected tests' failed at 2026-10-18 19:14:34.001.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 81.921 (81.928) seconds",
+        "** TEST EXECUTE FAILED **"
+      ]
+    },
+    {
+      "phase": "q98-repeated-itinerary-red",
+      "exit": {
+        "exitCode": 65,
+        "bundle": "/private/tmp/PlannerItemWindow-q98-repeated-itinerary-red.xcresult"
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 17:30:52.559.",
+        "Test Suite 'PlannerMCPTests.xctest' started at 2026-10-18 17:30:52.560.",
+        "Test Suite 'SavedItemWindowTests' started at 2026-10-18 17:30:52.560.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerMCPTests/SavedItemWindowTests.swift:61: error: -[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct] : XCTAssertEqual failed: (\"failed(\"Planner could not resolve its Items.\")\") is not equal to (\"ready\")",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct]' failed (0.960 seconds).",
+        "Test Suite 'SavedItemWindowTests' failed at 2026-10-18 17:30:53.521.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 0.960 (0.961) seconds",
+        "Test Suite 'PlannerMCPTests.xctest' failed at 2026-10-18 17:30:53.521.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 0.960 (0.961) seconds",
+        "Test Suite 'Selected tests' failed at 2026-10-18 17:30:53.521.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 0.960 (0.962) seconds",
+        "** TEST FAILED **"
+      ]
+    },
+    {
+      "phase": "q98-tablet-captured-anchor",
+      "exit": {
+        "exitCode": 65,
+        "bundle": "/private/tmp/PlannerItineraryWindowNativeRuntime-q98-tablet-captured-anchor.xcresult"
+      },
+      "appearance": {
+        "device": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "requested": "dark",
+        "original": "light",
+        "restored": "light",
+        "contrastRequested": "disabled",
+        "contrastOriginal": "disabled",
+        "contrastRestored": "disabled"
+      },
+      "build-link": {
+        "compiledEpoch": "docs/prototypes/evidence/navigation/native-itinerary-windows/q98-itinerary-native-anchor-build",
+        "currentCommit": "bc86c1178a99fd0e041a2e148ce5a4198fe9b2a3",
+        "inactiveMacOnlyDifferences": [],
+        "runtimeOnly": true
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 18:58:09.976.",
+        "Test Suite 'PlannerFixtureUITests.xctest' started at 2026-10-18 18:58:09.977.",
+        "Test Suite 'ItineraryWindowJourneyTests' started at 2026-10-18 18:58:09.977.",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerNavigationUITests/NativeNavigationElements.swift:404: error: -[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch] : Failed to tap \"BackButton\" Button: No matches found for Elements matching predicate '\"BackButton\" IN identifiers' from input {(",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' failed (60.153 seconds).",
+        "Test Suite 'ItineraryWindowJourneyTests' failed at 2026-10-18 18:59:10.135.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 60.153 (60.158) seconds",
+        "Test Suite 'PlannerFixtureUITests.xctest' failed at 2026-10-18 18:59:10.135.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 60.153 (60.158) seconds",
+        "Test Suite 'Selected tests' failed at 2026-10-18 18:59:10.136.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 60.153 (60.159) seconds",
+        "** TEST EXECUTE FAILED **"
+      ]
+    },
+    {
+      "phase": "q98-tablet-completion-refresh-diagnostic",
+      "exit": {
+        "exitCode": 65,
+        "bundle": "/private/tmp/PlannerItineraryWindowNativeRuntime-q98-tablet-completion-refresh-diagnostic.xcresult"
+      },
+      "appearance": {
+        "device": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "requested": "dark",
+        "original": "light",
+        "restored": "light",
+        "contrastRequested": "disabled",
+        "contrastOriginal": "disabled",
+        "contrastRestored": "disabled"
+      },
+      "build-link": {
+        "compiledEpoch": "docs/prototypes/evidence/navigation/native-itinerary-windows/q98-itinerary-native-refresh-diagnostic-build",
+        "currentCommit": "bc86c1178a99fd0e041a2e148ce5a4198fe9b2a3",
+        "inactiveMacOnlyDifferences": [],
+        "runtimeOnly": true
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 18:55:50.496.",
+        "Test Suite 'PlannerFixtureUITests.xctest' started at 2026-10-18 18:55:50.496.",
+        "Test Suite 'ItineraryWindowJourneyTests' started at 2026-10-18 18:55:50.496.",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerFixtureUITests/ItineraryWindowJourneyTests.swift:40: error: -[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch] : XCTAssertTrue failed",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' failed (50.127 seconds).",
+        "Test Suite 'ItineraryWindowJourneyTests' failed at 2026-10-18 18:56:40.628.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 50.127 (50.132) seconds",
+        "Test Suite 'PlannerFixtureUITests.xctest' failed at 2026-10-18 18:56:40.630.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 50.127 (50.134) seconds",
+        "Test Suite 'Selected tests' failed at 2026-10-18 18:56:40.631.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 50.127 (50.135) seconds",
+        "** TEST EXECUTE FAILED **"
+      ]
+    },
+    {
+      "phase": "q98-tablet-fixture-startup-diagnostic"
+    },
+    {
+      "phase": "q98-tablet-imported-repeated-pages",
+      "exit": {
+        "exitCode": 65,
+        "bundle": "/private/tmp/PlannerItineraryWindowNativeRuntime-q98-tablet-imported-repeated-pages.xcresult"
+      },
+      "appearance": {
+        "device": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "requested": "dark",
+        "original": "light",
+        "restored": "light",
+        "contrastRequested": "disabled",
+        "contrastOriginal": "disabled",
+        "contrastRestored": "disabled"
+      },
+      "build-link": {
+        "compiledEpoch": "docs/prototypes/evidence/navigation/native-itinerary-windows/q98-itinerary-native-import-fixture-build",
+        "currentCommit": "bc86c1178a99fd0e041a2e148ce5a4198fe9b2a3",
+        "inactiveMacOnlyDifferences": [],
+        "runtimeOnly": true
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 18:47:30.245.",
+        "Test Suite 'PlannerFixtureUITests.xctest' started at 2026-10-18 18:47:30.245.",
+        "Test Suite 'ItineraryWindowJourneyTests' started at 2026-10-18 18:47:30.245.",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerFixtureUITests/ItineraryWindowJourneyTests.swift:31: error: -[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch] : XCTAssertTrue failed",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' failed (49.484 seconds).",
+        "Test Suite 'ItineraryWindowJourneyTests' failed at 2026-10-18 18:48:19.735.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 49.484 (49.490) seconds",
+        "Test Suite 'PlannerFixtureUITests.xctest' failed at 2026-10-18 18:48:19.736.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 49.484 (49.491) seconds",
+        "Test Suite 'Selected tests' failed at 2026-10-18 18:48:19.737.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 49.484 (49.493) seconds",
+        "** TEST EXECUTE FAILED **"
+      ]
+    },
+    {
+      "phase": "q98-tablet-repeated-pages",
+      "exit": {
+        "exitCode": 1,
+        "runtimeCredit": false,
+        "preflightFailure": "The reused runner rejected the requested 480-second allowance before invoking Xcode."
+      },
+      "appearance": {
+        "device": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "requested": "dark",
+        "original": "light",
+        "restored": "light",
+        "contrastRequested": "disabled",
+        "contrastOriginal": "disabled",
+        "contrastRestored": "disabled"
+      }
+    },
+    {
+      "phase": "q98-tablet-repeated-pages-detail-qualified",
+      "exit": {
+        "exitCode": 65,
+        "bundle": "/private/tmp/PlannerItineraryWindowNativeRuntime-q98-tablet-repeated-pages-detail-qualified.xcresult"
+      },
+      "appearance": {
+        "device": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "requested": "dark",
+        "original": "light",
+        "restored": "light",
+        "contrastRequested": "disabled",
+        "contrastOriginal": "disabled",
+        "contrastRestored": "disabled"
+      },
+      "build-link": {
+        "compiledEpoch": "docs/prototypes/evidence/navigation/native-itinerary-windows/q98-itinerary-native-detail-controller-build",
+        "currentCommit": "bc86c1178a99fd0e041a2e148ce5a4198fe9b2a3",
+        "inactiveMacOnlyDifferences": [],
+        "runtimeOnly": true
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 19:00:17.781.",
+        "Test Suite 'PlannerFixtureUITests.xctest' started at 2026-10-18 19:00:17.782.",
+        "Test Suite 'ItineraryWindowJourneyTests' started at 2026-10-18 19:00:17.782.",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerFixtureUITests/ItineraryWindowJourneyTests.swift:153: error: -[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch] : failed - The direct first appearance and full itinerary progress did not return.",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' failed (164.252 seconds).",
+        "Test Suite 'ItineraryWindowJourneyTests' failed at 2026-10-18 19:03:02.039.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 164.252 (164.257) seconds",
+        "Test Suite 'PlannerFixtureUITests.xctest' failed at 2026-10-18 19:03:02.039.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 164.252 (164.258) seconds",
+        "Test Suite 'Selected tests' failed at 2026-10-18 19:03:02.040.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 164.252 (164.259) seconds",
+        "** TEST EXECUTE FAILED **"
+      ]
+    },
+    {
+      "phase": "q98-tablet-repeated-pages-qualified",
+      "exit": {
+        "exitCode": 65,
+        "bundle": "/private/tmp/PlannerItineraryWindowNativeRuntime-q98-tablet-repeated-pages-qualified.xcresult"
+      },
+      "appearance": {
+        "device": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "requested": "dark",
+        "original": "light",
+        "restored": "light",
+        "contrastRequested": "disabled",
+        "contrastOriginal": "disabled",
+        "contrastRestored": "disabled"
+      },
+      "build-link": {
+        "compiledEpoch": "docs/prototypes/evidence/navigation/native-itinerary-windows/q98-itinerary-native-mobile-qualified-build",
+        "currentCommit": "bc86c1178a99fd0e041a2e148ce5a4198fe9b2a3",
+        "inactiveMacOnlyDifferences": [],
+        "runtimeOnly": true
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 18:39:47.362.",
+        "Test Suite 'PlannerFixtureUITests.xctest' started at 2026-10-18 18:39:47.362.",
+        "Test Suite 'ItineraryWindowJourneyTests' started at 2026-10-18 18:39:47.362.",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerFixtureUITests/ItineraryWindowJourneyTests.swift:84: error: -[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch] : XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\")",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' failed (50.697 seconds).",
+        "Test Suite 'ItineraryWindowJourneyTests' failed at 2026-10-18 18:40:38.063.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 50.697 (50.701) seconds",
+        "Test Suite 'PlannerFixtureUITests.xctest' failed at 2026-10-18 18:40:38.063.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 50.697 (50.701) seconds",
+        "Test Suite 'Selected tests' failed at 2026-10-18 18:40:38.064.",
+        "Executed 1 test, with 1 failure (0 unexpected) in 50.697 (50.702) seconds",
+        "** TEST EXECUTE FAILED **"
+      ]
+    },
+    {
+      "phase": "q98-tablet-repeated-pages-qualified-final",
+      "exit": {
+        "exitCode": 0,
+        "bundle": "/private/tmp/PlannerItineraryWindowNativeRuntime-q98-tablet-repeated-pages-qualified-final.xcresult"
+      },
+      "appearance": {
+        "device": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+        "requested": "dark",
+        "original": "light",
+        "restored": "light",
+        "contrastRequested": "disabled",
+        "contrastOriginal": "disabled",
+        "contrastRestored": "disabled"
+      },
+      "build-link": {
+        "compiledEpoch": "docs/prototypes/evidence/navigation/native-itinerary-windows/q98-itinerary-native-lint-qualified-build",
+        "currentCommit": "bc86c1178a99fd0e041a2e148ce5a4198fe9b2a3",
+        "inactiveMacOnlyDifferences": [],
+        "runtimeOnly": true
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 19:04:45.024.",
+        "Test Suite 'PlannerFixtureUITests.xctest' started at 2026-10-18 19:04:45.024.",
+        "Test Suite 'ItineraryWindowJourneyTests' started at 2026-10-18 19:04:45.024.",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' started.",
+        "Test Case '-[PlannerFixtureUITests.ItineraryWindowJourneyTests testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch]' passed (151.071 seconds).",
+        "Test Suite 'ItineraryWindowJourneyTests' passed at 2026-10-18 19:07:16.100.",
+        "Executed 1 test, with 0 failures (0 unexpected) in 151.071 (151.076) seconds",
+        "Test Suite 'PlannerFixtureUITests.xctest' passed at 2026-10-18 19:07:16.101.",
+        "Executed 1 test, with 0 failures (0 unexpected) in 151.071 (151.077) seconds",
+        "Test Suite 'Selected tests' passed at 2026-10-18 19:07:16.102.",
+        "Executed 1 test, with 0 failures (0 unexpected) in 151.071 (151.079) seconds",
+        "** TEST EXECUTE SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q98-typed-row-window-green",
+      "exit": {
+        "exitCode": 0,
+        "bundle": "/private/tmp/PlannerItemWindow-q98-typed-row-window-green.xcresult"
+      },
+      "summaries": [
+        "Test Suite 'Selected tests' started at 2026-10-18 18:03:18.090.",
+        "Test Suite 'PlannerMCPTests.xctest' started at 2026-10-18 18:03:18.091.",
+        "Test Suite 'SavedItemWindowTests' started at 2026-10-18 18:03:18.091.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testCancelsReleasesRowsAndReopensWithTheReplacementInboxQuery]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testCancelsReleasesRowsAndReopensWithTheReplacementInboxQuery]' passed (0.310 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testConcurrentIdenticalVisibilityRequestsKeepOneConsistentWindow]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testConcurrentIdenticalVisibilityRequestsKeepOneConsistentWindow]' passed (0.266 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testDistinguishesQueryFailureFromEmptyResultsAndAcceptsAValidRetry]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testDistinguishesQueryFailureFromEmptyResultsAndAcceptsAValidRetry]' passed (0.070 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testEmptyAndFilteredListsKeepTheirOwnHeaderAndCancelClearsIt]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testEmptyAndFilteredListsKeepTheirOwnHeaderAndCancelClearsIt]' passed (0.244 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct]' passed (0.502 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListCumulativeFiltersAndSortKeepFullProgressAndEstimateMetadata]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListCumulativeFiltersAndSortKeepFullProgressAndEstimateMetadata]' passed (0.128 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListOpensOnePageWithEveryMembershipIdentityAndItsFullHeader]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListOpensOnePageWithEveryMembershipIdentityAndItsFullHeader]' passed (0.203 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListReleasesAndRevisitsMembershipPagesWhileKeepingItsFullHeader]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testListReleasesAndRevisitsMembershipPagesWhileKeepingItsFullHeader]' passed (0.751 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testLoadsVisibleAndNeighborPagesReleasesDistantRowsAndRevisitsTheirIdentities]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testLoadsVisibleAndNeighborPagesReleasesDistantRowsAndRevisitsTheirIdentities]' passed (0.415 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testOpensWithOnePageAndKeepsEveryOrderedSourceIdentity]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testOpensWithOnePageAndKeepsEveryOrderedSourceIdentity]' passed (0.109 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testPreCanceledVisibilityRequestPreservesTheCurrentWindow]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testPreCanceledVisibilityRequestPreservesTheCurrentWindow]' passed (0.234 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRefreshesAStaleGenerationWithoutMixingItsRowsAndKeepsTheVisibleSource]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testRefreshesAStaleGenerationWithoutMixingItsRowsAndKeepsTheVisibleSource]' passed (0.354 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testSwitchingListsKeepsSharedItemMembershipsAndLocalCompletionIndependent]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testSwitchingListsKeepsSharedItemMembershipsAndLocalCompletionIndependent]' passed (0.673 seconds).",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testUnloadedListPageRefreshesManualOrderAndRemovedMembershipsWithItsHeader]' started.",
+        "Test Case '-[PlannerMCPTests.SavedItemWindowTests testUnloadedListPageRefreshesManualOrderAndRemovedMembershipsWithItsHeader]' passed (1.228 seconds).",
+        "Test Suite 'SavedItemWindowTests' passed at 2026-10-18 18:03:23.583.",
+        "Executed 14 tests, with 0 failures (0 unexpected) in 5.488 (5.493) seconds",
+        "Test Suite 'PlannerMCPTests.xctest' passed at 2026-10-18 18:03:23.584.",
+        "Executed 14 tests, with 0 failures (0 unexpected) in 5.488 (5.493) seconds",
+        "Test Suite 'Selected tests' passed at 2026-10-18 18:03:23.584.",
+        "Executed 14 tests, with 0 failures (0 unexpected) in 5.488 (5.494) seconds",
+        "** TEST SUCCEEDED **"
+      ]
+    }
+  ]
+}

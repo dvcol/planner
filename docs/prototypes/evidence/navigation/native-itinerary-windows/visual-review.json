@@ -1,0 +1,45 @@
+{
+  "scope": "Original Simulator captures inspected by the primary agent; no Mac or physical-device visual credit.",
+  "captures": [
+    {
+      "path": "q98-tablet-completion-refresh-diagnostic/8D7783E7-B3E0-4C43-8AE3-9B228166CB24.png",
+      "finding": "Before completion, the first branch activity 065 is fully visible with a Todo checkbox."
+    },
+    {
+      "path": "q98-tablet-completion-refresh-diagnostic/4C11902F-D1B2-4B19-A0A8-E2A29A731D6A.png",
+      "finding": "Before the anchor correction, refreshing jumps to activities 048 through 063 and loses the changed row from view."
+    },
+    {
+      "path": "q98-tablet-captured-anchor/3C3EED37-3C6B-40C5-9A0B-4EA840CC1954.png",
+      "finding": "With the captured pre-refresh anchor, activity 065 remains visible and completed; the repeated branch remains unfinished."
+    },
+    {
+      "path": "q98-tablet-repeated-pages-detail-qualified/simulator-top-with-retained-details.png",
+      "finding": "The full 1-of-132 progress and direct first activity are visible while the second 065 appearance details remain selected. The controller still incorrectly required the read-only progress text to be hittable."
+    },
+    {
+      "path": "q98-tablet-repeated-pages-qualified-final/5C5F43A9-B2EC-458A-A038-6EDC031639BD.png",
+      "finding": "Full progress, direct/List composition, estimates and the roomy native DisclosureGroup header are visible in dark appearance."
+    },
+    {
+      "path": "q98-tablet-repeated-pages-qualified-final/A9343422-C8E3-4D24-B584-5BE56A47881E.png",
+      "finding": "The second appearance remains Todo in the detail pane while the first branch records 1-of-65 done and the full route records 1-of-132. Selected notes survive scrolling to the first page."
+    },
+    {
+      "path": "q98-tablet-repeated-pages-qualified-final/3C03A140-14B3-4513-AB06-7B0E321AFF34.png",
+      "finding": "The second 065 appearance is still Todo after relaunch. The test separately verifies the first occurrence remains Done with its exact composite identity."
+    },
+    {
+      "path": "q98-phone-return-and-relaunch/A940B8AE-11E1-4190-9C83-B36D7147B333.png",
+      "finding": "After selecting the second appearance and pressing native Back, the app returns to the Itineraries catalog instead of the route. The extended readiness wait confirms a production parent-navigation defect, not only controller timing."
+    },
+    {
+      "path": "q98-phone-parent-context-qualified/9C9C6C85-7997-46DE-AEB0-B95DE83609E9.png",
+      "finding": "The light phone appearance keeps the checked first 065 row visible with the repeated List header still showing zero completed children. Other rows extend under the native floating TabView; whole-app scroll and accessibility review remain open."
+    },
+    {
+      "path": "q98-phone-parent-context-qualified/70B965A2-E02C-4389-B712-9CDF8E8F5F08.png",
+      "finding": "After relaunch, the second 065 remains Todo with the direct final occurrence following it in route order. The test separately verifies the exact first and second composite identities and first-occurrence Done."
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "6CB97AC8-9CDC-4802-9FDE-7E050DF0AECD.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary boundary completion refresh hierarchy_0_4D216F4B-B3AE-40C5-AC74-67B427AF5189.txt",
+    "timestamp": 1792317400.251,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "4C11902F-D1B2-4B19-A0A8-E2A29A731D6A.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary boundary completion refresh failure_0_5E1C4E9B-211B-4C09-BADB-DF034E75ABA0.png",
+    "timestamp": 1792317399.693,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "8D7783E7-B3E0-4C43-8AE3-9B228166CB24.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary boundary appearance before local completion_0_4ECC408D-3212-4398-B757-992FEFFDFF7F.png",
+    "timestamp": 1792317383.832,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "ED179E3C-39C1-42B7-9753-A945811FF01C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed itinerary starts with full progress and repeated List headers_0_AA6C49BF-C0D5-4D8C-B347-1FCADA01E9D0.png",
+    "timestamp": 1792317363.112,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  }
+]

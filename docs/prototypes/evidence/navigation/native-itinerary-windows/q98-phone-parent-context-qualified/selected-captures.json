@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "70B965A2-E02C-4389-B712-9CDF8E8F5F08.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Repeated itinerary pages retain exact independent appearances after relaunch_0_666A3EA1-7B1C-4BD4-933C-B93DF5270F23.png",
+    "timestamp": 1792318766.208,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "9C9C6C85-7997-46DE-AEB0-B95DE83609E9.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "First repeated List appearance stays visible after local completion_0_054D79A0-2642-46C1-877D-2D70AF7D82AC.png",
+    "timestamp": 1792318654.912,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "991DAD78-51CE-4681-A7B3-8F931BF18C2B.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary boundary appearance before local completion_0_E53EFBC1-CFDD-4270-8DC8-952CEA6C287C.png",
+    "timestamp": 1792318653.092,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "42EE9720-7B53-4A1B-97BF-8EC32B02A632.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed itinerary starts with full progress and repeated List headers_0_85C8404F-77A6-418F-8136-A489B863455F.png",
+    "timestamp": 1792318629.647,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  }
+]

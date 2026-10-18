@@ -12,14 +12,45 @@ enum SavedItemWindowState: Equatable {
   case failed(String)
 }
 
+struct SavedItemWindowRow {
+  let row: PlannerRowRead
+  let rowPresentation: PlannerRowPresentationContext?
+}
+
+struct SavedItineraryWindowEntry: Identifiable {
+  let id: UUID
+  let source: PlannerEntityReference
+  let rowIdentities: [PlannerRowIdentity]
+  let matchingRowIndices: [Int]
+  let list: PlannerListSourceRead?
+  let listSummary: PlannerItineraryListEntrySummary?
+  let matchesHeader: Bool
+}
+
+struct SavedItineraryWindowMetadata {
+  let itinerary: PlannerItinerarySourceRead
+  let entries: [SavedItineraryWindowEntry]
+
+  var visibleEntries: [SavedItineraryWindowEntry] {
+    entries.filter { $0.matchesHeader || !$0.matchingRowIndices.isEmpty }
+  }
+}
+
 enum SavedItemWindowPresentation {
   case loading
-  case loaded(SavedPlannerItem)
+  case loaded(SavedItemWindowRow)
   case failed(String)
 }
 
 @MainActor @Observable
 final class SavedItemWindow {
+  private enum RowKey: Hashable {
+    case source(UUID)
+    case membership(listId: UUID, membershipId: UUID)
+    case direct(itineraryId: UUID, entryId: UUID)
+    case expanded(itineraryId: UUID, listEntryId: UUID, membershipId: UUID)
+  }
+
   private struct PendingPage {
     let identifier: UUID
     let task: Task<PlannerReadResult, Never>
@@ -29,6 +60,7 @@ final class SavedItemWindow {
   private let session: PlannerDatasetSession
   private(set) var rowIdentities: [PlannerRowIdentity] = []
   private(set) var listSource: PlannerListSourceRead?
+  private(set) var itineraryMetadata: SavedItineraryWindowMetadata?
   private(set) var matchingCount: Int64 = 0
   private(set) var state = SavedItemWindowState.idle
   private var reloadIdentifier = UUID()
@@ -36,7 +68,7 @@ final class SavedItemWindow {
   private var query: PlannerItemQuery?
   private var lifecycleIdentity: SavedItemWindowIdentity?
   private var generation: UUID?
-  private var pages: [Int: [SavedPlannerItem]] = [:]
+  private var pages: [Int: [SavedItemWindowRow]] = [:]
   private var pageFailures: [Int: String] = [:]
   private var retainedPages: Set<Int> = []
   @ObservationIgnored private var pendingPages: [Int: PendingPage] = [:]
@@ -70,6 +102,7 @@ final class SavedItemWindow {
     retainedPages = []
     rowIdentities = []
     listSource = nil
+    itineraryMetadata = nil
     matchingCount = 0
     state = .idle
   }
@@ -78,6 +111,14 @@ final class SavedItemWindow {
     query: PlannerItemQuery, identity: SavedItemWindowIdentity, requestIdentifier: UUID
   ) async {
     guard !Task.isCancelled else { return }
+    let preservesItineraryRows: Bool
+    if case .itinerary(let identifier) = query.scope {
+      preservesItineraryRows =
+        itineraryMetadata?.itinerary.source.id == identifier
+        && lifecycleIdentity?.namespace == identity.namespace
+    } else {
+      preservesItineraryRows = false
+    }
     self.query = query
     lifecycleIdentity = identity
     reloadIdentifier = requestIdentifier
@@ -85,9 +126,12 @@ final class SavedItemWindow {
     pendingPages = [:]
     generation = nil
     state = .loading
-    rowIdentities = []
     listSource = nil
-    matchingCount = 0
+    if !preservesItineraryRows {
+      rowIdentities = []
+      itineraryMetadata = nil
+      matchingCount = 0
+    }
     pages = [:]
     pageFailures = [:]
     retainedPages = []
@@ -98,9 +142,9 @@ final class SavedItemWindow {
         if case .failed(let reason) = result { state = .failed(reason.message) }
         return
       }
-      var identifiers: Set<UUID> = []
+      var identifiers: Set<RowKey> = []
       for rowIdentity in snapshot.rows {
-        guard let identifier = nativeIdentifier(for: rowIdentity, scope: query.scope),
+        guard let identifier = rowKey(for: rowIdentity, scope: query.scope),
           identifiers.insert(identifier).inserted
         else {
           state = .failed("Planner could not resolve its Items.")
@@ -117,6 +161,21 @@ final class SavedItemWindow {
           session: session, request: .source(.init(kind: .list, id: identifier)))
         guard !Task.isCancelled, reloadIdentifier == requestIdentifier else { return }
       }
+      var metadataResult: Result<SavedItineraryWindowMetadata, MetadataReadError>?
+      if case .itinerary(let identifier) = query.scope {
+        do {
+          metadataResult = .success(
+            try await readItineraryMetadata(
+              identifier: identifier, query: query, matchingSnapshot: snapshot,
+              requestIdentifier: requestIdentifier))
+        } catch let reason as MetadataReadError {
+          metadataResult = .failure(reason)
+        } catch {
+          metadataResult = .failure(.unavailable("Planner could not open this Itinerary."))
+        }
+        guard !Task.isCancelled, reloadIdentifier == requestIdentifier else { return }
+      }
+      // Validate the matching generation last, including failures from earlier source reads.
       let read = await planner.read(
         session: session, request: .rows(generation: snapshot.generation, offset: 0, limit: 64))
       guard !Task.isCancelled, reloadIdentifier == requestIdentifier else { return }
@@ -129,16 +188,25 @@ final class SavedItemWindow {
           state = .failed("Planner could not read its complete Item page.")
           return
         }
-        var items: [SavedPlannerItem] = []
+        if case .failure(let reason) = metadataResult {
+          switch reason {
+          case .stale: continue
+          case .superseded: return
+          case .unavailable(let message):
+            state = .failed(message)
+            return
+          }
+        }
+        var items: [SavedItemWindowRow] = []
         for (index, row) in window.rows.enumerated() {
           guard row.identity == snapshot.rows[index],
-            let identifier = nativeIdentifier(for: row.identity, scope: query.scope)
+            rowKey(for: row.identity, scope: query.scope) != nil
           else {
             state = .failed("Planner could not resolve its Item page.")
             return
           }
           items.append(
-            .init(id: identifier, row: row, rowPresentation: window.rowPresentation))
+            .init(row: row, rowPresentation: window.rowPresentation))
         }
         if case .list(let identifier) = query.scope {
           guard case .source(.list(let list)) = headerRead,
@@ -153,6 +221,7 @@ final class SavedItemWindow {
           }
           listSource = list
         }
+        if case .success(let metadata) = metadataResult { itineraryMetadata = metadata }
         rowIdentities = snapshot.rows
         matchingCount = snapshot.matchingCount
         generation = snapshot.generation
@@ -170,19 +239,245 @@ final class SavedItemWindow {
     }
   }
 
-  private func nativeIdentifier(for identity: PlannerRowIdentity, scope: PlannerItemQuery.Scope)
-    -> UUID?
-  {
+  private func rowKey(for identity: PlannerRowIdentity, scope: PlannerItemQuery.Scope) -> RowKey? {
     switch (scope, identity) {
     case (.global, .source(let source)), (.inbox, .source(let source)):
-      return source.kind == .item ? source.id : nil
+      guard source.kind == .item else { return nil }
+      return .source(source.id)
+    case (.list(let owner), .appearance(let source, .listMembership(let list, let membership))):
+      guard source.kind == .item, list == owner else { return nil }
+      return .membership(listId: list, membershipId: membership)
     case (
-      .list(let expectedList), .appearance(let source, .listMembership(let list, let membership))
+      .itinerary(let owner), .appearance(let source, .directItineraryItem(let itinerary, let entry))
     ):
-      guard source.kind == .item, list == expectedList else { return nil }
-      return membership
+      guard source.kind == .item, itinerary == owner else { return nil }
+      return .direct(itineraryId: itinerary, entryId: entry)
+    case (
+      .itinerary(let owner),
+      .appearance(let source, .expandedListItem(let itinerary, let entry, let membership))
+    ):
+      guard source.kind == .item, itinerary == owner else { return nil }
+      return .expanded(itineraryId: itinerary, listEntryId: entry, membershipId: membership)
     default: return nil
     }
+  }
+
+  private enum MetadataReadError: Error {
+    case stale, superseded
+    case unavailable(String)
+  }
+
+  private func checkMetadataRequest(_ identifier: UUID) throws {
+    guard !Task.isCancelled, reloadIdentifier == identifier else {
+      throw MetadataReadError.superseded
+    }
+  }
+
+  private func metadataReadError(_ result: PlannerReadResult, message: String) -> MetadataReadError
+  {
+    guard case .failed(let reason) = result else { return .unavailable(message) }
+    if reason.code == "staleSnapshot" { return .stale }
+    return .unavailable(reason.message)
+  }
+
+  private func validateMetadataSnapshot(_ snapshot: PlannerQuerySnapshot, requestIdentifier: UUID)
+    async throws
+  {
+    let result = await planner.read(
+      session: session, request: .rows(generation: snapshot.generation, offset: 0, limit: 1))
+    try checkMetadataRequest(requestIdentifier)
+    guard case .rows(let page) = result else {
+      throw metadataReadError(result, message: "Planner could not verify this Itinerary.")
+    }
+    guard page.generation == snapshot.generation, page.offset == 0,
+      page.matchingCount == snapshot.matchingCount,
+      page.rows.count == min(1, snapshot.rows.count),
+      page.rows.first?.identity == snapshot.rows.first
+    else {
+      throw MetadataReadError.unavailable(
+        "Planner could not verify its complete Itinerary metadata.")
+    }
+  }
+
+  private func readItineraryMetadata(
+    identifier: UUID, query: PlannerItemQuery, matchingSnapshot: PlannerQuerySnapshot,
+    requestIdentifier: UUID
+  ) async throws -> SavedItineraryWindowMetadata {
+    let fullQuery = await planner.query(
+      .init(
+        session: session,
+        request: .items(
+          .init(
+            scope: .itinerary(identifier), completion: .all, archive: .all,
+            sort: .init(mode: .manual), rowPresentation: matchingSnapshot.rowPresentation))))
+    try checkMetadataRequest(requestIdentifier)
+    guard case .snapshot(let fullSnapshot) = fullQuery else {
+      if case .failed(let reason) = fullQuery {
+        throw MetadataReadError.unavailable(reason.message)
+      }
+      throw MetadataReadError.unavailable("Planner could not read this Itinerary's entries.")
+    }
+    let itineraryRead = await planner.read(
+      session: session, request: .source(.init(kind: .itinerary, id: identifier)))
+    try checkMetadataRequest(requestIdentifier)
+    guard case .source(.itinerary(let itinerary)) = itineraryRead,
+      itinerary.source == .init(kind: .itinerary, id: identifier)
+    else {
+      throw metadataReadError(itineraryRead, message: "Planner could not read this Itinerary.")
+    }
+    var lists: [UUID: PlannerListSourceRead] = [:]
+    for reference in itinerary.references {
+      guard case .itineraryEntry(_, _, let source) = reference, source.kind == .list,
+        lists[source.id] == nil
+      else { continue }
+      let listRead = await planner.read(session: session, request: .source(source))
+      try checkMetadataRequest(requestIdentifier)
+      guard case .source(.list(let list)) = listRead, list.source == source else {
+        throw metadataReadError(listRead, message: "Planner could not read an Itinerary List.")
+      }
+      lists[source.id] = list
+    }
+    let hasItemRestrictions =
+      query.categories?.ids.isEmpty == false || query.tags?.ids.isEmpty == false
+      || query.lists?.ids.isEmpty == false || query.duration != nil
+      || query.hasAddress || query.hasLinks || query.scheduled != .all
+    var matchingLists: Set<UUID> = []
+    var listSnapshot: PlannerQuerySnapshot?
+    if !lists.isEmpty && !hasItemRestrictions {
+      let result = await planner.query(
+        .init(
+          session: session,
+          request: .catalog(.init(sourceKind: .list, text: query.text, archive: query.archive))))
+      try checkMetadataRequest(requestIdentifier)
+      guard case .snapshot(let snapshot) = result else {
+        if case .failed(let reason) = result { throw MetadataReadError.unavailable(reason.message) }
+        throw MetadataReadError.unavailable("Planner could not filter its Itinerary Lists.")
+      }
+      for identity in snapshot.rows {
+        guard case .source(let source) = identity, source.kind == .list,
+          matchingLists.insert(source.id).inserted
+        else { throw MetadataReadError.unavailable("Planner could not resolve its List headers.") }
+      }
+      guard Int64(matchingLists.count) == snapshot.matchingCount else {
+        throw MetadataReadError.unavailable("Planner could not resolve its complete List headers.")
+      }
+      listSnapshot = snapshot
+    }
+    try await validateMetadataSnapshot(fullSnapshot, requestIdentifier: requestIdentifier)
+    if let listSnapshot {
+      try await validateMetadataSnapshot(listSnapshot, requestIdentifier: requestIdentifier)
+    }
+    return try assembleItineraryMetadata(
+      itinerary: itinerary, lists: lists, fullSnapshot: fullSnapshot,
+      matchingSnapshot: matchingSnapshot, matchingLists: matchingLists, query: query)
+  }
+
+  private func assembleItineraryMetadata(
+    itinerary: PlannerItinerarySourceRead, lists: [UUID: PlannerListSourceRead],
+    fullSnapshot: PlannerQuerySnapshot, matchingSnapshot: PlannerQuerySnapshot,
+    matchingLists: Set<UUID>, query: PlannerItemQuery
+  ) throws -> SavedItineraryWindowMetadata {
+    let invalidMetadata = MetadataReadError.unavailable(
+      "Planner could not resolve this Itinerary's complete entries.")
+    var matchingPositions: [RowKey: Int] = [:]
+    for (index, identity) in matchingSnapshot.rows.enumerated() {
+      guard let key = rowKey(for: identity, scope: query.scope), matchingPositions[key] == nil
+      else { throw invalidMetadata }
+      matchingPositions[key] = index
+    }
+    var summaries: [UUID: PlannerItineraryListEntrySummary] = [:]
+    for summary in itinerary.listEntrySummaries {
+      guard summaries[summary.entryId] == nil else { throw invalidMetadata }
+      summaries[summary.entryId] = summary
+    }
+    var entries: [SavedItineraryWindowEntry] = []
+    var entryIdentifiers: Set<UUID> = []
+    var listEntryIdentifiers: Set<UUID> = []
+    var completeIdentities: [PlannerRowIdentity] = []
+    var consumedMatches: Set<RowKey> = []
+    for reference in itinerary.references {
+      guard case .itineraryEntry(let entryIdentifier, let owner, let source) = reference else {
+        continue
+      }
+      guard owner == itinerary.source, entryIdentifiers.insert(entryIdentifier).inserted else {
+        throw invalidMetadata
+      }
+      let identities: [PlannerRowIdentity]
+      let list: PlannerListSourceRead?
+      let summary: PlannerItineraryListEntrySummary?
+      let matchesHeader: Bool
+      switch source.kind {
+      case .item:
+        list = nil
+        summary = nil
+        matchesHeader = false
+        identities = [
+          .appearance(
+            source: source,
+            appearance: .directItineraryItem(
+              itineraryId: itinerary.source.id, entryId: entryIdentifier))
+        ]
+      case .list:
+        guard let savedList = lists[source.id], let savedSummary = summaries[entryIdentifier],
+          savedSummary.source == source
+        else { throw invalidMetadata }
+        list = savedList
+        summary = savedSummary
+        listEntryIdentifiers.insert(entryIdentifier)
+        var membershipIdentities: [PlannerRowIdentity] = []
+        var membershipIdentifiers: Set<UUID> = []
+        for reference in savedList.references {
+          guard case .membership(let membership, let listOwner, let item) = reference else {
+            continue
+          }
+          guard listOwner == source, item.kind == .item,
+            membershipIdentifiers.insert(membership).inserted
+          else { throw invalidMetadata }
+          membershipIdentities.append(
+            .appearance(
+              source: item,
+              appearance: .expandedListItem(
+                itineraryId: itinerary.source.id, listEntryId: entryIdentifier,
+                membershipId: membership)))
+        }
+        identities = membershipIdentities
+        guard savedSummary.progress.totalCount == Int64(identities.count) else {
+          throw invalidMetadata
+        }
+        let matchesCompletion =
+          switch query.completion {
+          case .all: true
+          case .todo: savedSummary.progress.state != .complete
+          case .done: savedSummary.progress.state == .complete
+          }
+        matchesHeader = matchingLists.contains(source.id) && matchesCompletion
+      default: throw invalidMetadata
+      }
+      var indices: [Int] = []
+      for identity in identities {
+        guard let key = rowKey(for: identity, scope: query.scope) else { throw invalidMetadata }
+        if let index = matchingPositions[key] {
+          guard matchingSnapshot.rows[index] == identity, consumedMatches.insert(key).inserted
+          else {
+            throw invalidMetadata
+          }
+          indices.append(index)
+        }
+      }
+      completeIdentities.append(contentsOf: identities)
+      entries.append(
+        .init(
+          id: entryIdentifier, source: source, rowIdentities: identities,
+          matchingRowIndices: indices, list: list, listSummary: summary,
+          matchesHeader: matchesHeader))
+    }
+    guard completeIdentities == fullSnapshot.rows,
+      Int64(completeIdentities.count) == fullSnapshot.matchingCount,
+      itinerary.progress.totalCount == Int64(completeIdentities.count),
+      consumedMatches.count == matchingSnapshot.rows.count,
+      Set(summaries.keys) == listEntryIdentifiers
+    else { throw invalidMetadata }
+    return .init(itinerary: itinerary, entries: entries)
   }
 
   func presentation(at index: Int) -> SavedItemWindowPresentation {
@@ -245,12 +540,12 @@ final class SavedItemWindow {
           pageFailures[page] = "Planner could not read its complete Item page."
           continue
         }
-        var items: [SavedPlannerItem] = []
+        var items: [SavedItemWindowRow] = []
         for (rowIndex, row) in window.rows.enumerated() {
           guard row.identity == rowIdentities[offset + rowIndex],
-            let identifier = nativeIdentifier(for: row.identity, scope: query.scope)
+            rowKey(for: row.identity, scope: query.scope) != nil
           else { break }
-          items.append(.init(id: identifier, row: row, rowPresentation: window.rowPresentation))
+          items.append(.init(row: row, rowPresentation: window.rowPresentation))
         }
         guard items.count == window.rows.count else {
           pageFailures[page] = "Planner could not resolve its Item page."
