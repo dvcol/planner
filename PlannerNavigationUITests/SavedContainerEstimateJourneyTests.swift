@@ -2,6 +2,179 @@ import XCTest
 
 @MainActor
 final class SavedContainerEstimateJourneyTests: XCTestCase {
+  func testGlobalUnknownEstimateKeepsManualBudgetsAndRevealsRetainedLocalStatesAfterReopening() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem("Museum", includeEstimate: true, application: application)
+    createItem("Lunch", includeEstimate: false, application: application)
+    let globalCompletion = application.descendants(matching: .any).matching(
+      identifier: "saved.item.completion"
+    ).firstMatch
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    toggle(globalCompletion)
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+    application.beginPlannerListCreation()
+    let name = application.textFields["saved.list.name"]
+    XCTAssertTrue(name.waitForExistence(timeout: 5))
+    name.activateForPlannerJourney()
+    name.typeText("Morning")
+    let enabled = application.descendants(matching: .any).matching(
+      identifier: "saved.list.estimate.enabled"
+    ).firstMatch
+    XCTAssertTrue(enabled.waitForExistence(timeout: 5))
+    toggle(enabled)
+    let quantity = application.descendants(matching: .any).matching(
+      identifier: "saved.list.estimate.quantity"
+    ).firstMatch
+    XCTAssertTrue(quantity.waitForPlannerValue("1"))
+    for _ in 0..<3 { increment(quantity) }
+    application.plannerElement("saved.list.save").activateForPlannerJourney()
+    for title in ["Museum", "Lunch"] {
+      toolbarAction("saved.list.add", application: application).activateForPlannerJourney()
+      let candidate = application.staticTexts[title].firstMatch
+      XCTAssertTrue(candidate.waitForExistence(timeout: 5))
+      candidate.activateForPlannerJourney()
+      application.plannerElement("saved.membership.add").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.savedPlannerItemRows(title).firstMatch.waitForExistence(timeout: 10))
+    }
+    let membershipIdentifiers = ["Museum", "Lunch"].map { title in
+      application.savedPlannerItemRows(title).firstMatch.identifier
+    }
+    XCTAssertTrue(estimate("full", application: application).waitForPlannerValue("240 minutes"))
+    XCTAssertTrue(
+      estimate("remaining", application: application).waitForPlannerValue(
+        "Up to 240 minutes; 1 finished estimate missing"))
+    openSection("Itineraries", application: application)
+    reveal("saved.itinerary.new", application: application).activateForPlannerJourney()
+    let title = application.textFields["saved.itinerary.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Global morning")
+    application.plannerElement("saved.itinerary.save").activateForPlannerJourney()
+    toolbarAction("saved.itinerary.entry.new", application: application).activateForPlannerJourney()
+    let choice = application.descendants(matching: .any).matching(
+      NSPredicate(
+        format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.entry.choice.list.",
+        "Morning")
+    ).firstMatch
+    XCTAssertTrue(choice.waitForExistence(timeout: 5))
+    choice.activateForPlannerJourney()
+    application.plannerElement("saved.itinerary.entry.add").activateForPlannerJourney()
+    let rows = application.buttons.matching(
+      NSPredicate(format: "identifier BEGINSWITH %@", "saved.itinerary.appearance."))
+    let appearanceIdentifiers = rows.allElementsBoundByIndex.map(\.identifier)
+    XCTAssertEqual(rows.allElementsBoundByIndex.map(\.label), ["Museum", "Lunch"])
+    XCTAssertEqual(appearanceIdentifiers.count, 2)
+    let full = application.descendants(matching: .any).matching(
+      identifier: "saved.itinerary.estimate.full"
+    ).firstMatch
+    let remaining = application.descendants(matching: .any).matching(
+      identifier: "saved.itinerary.estimate.remaining"
+    ).firstMatch
+    let finishedWarning = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier ENDSWITH %@", ".estimate.warning.finished")
+    ).firstMatch
+    XCTAssertTrue(full.waitForPlannerValue("240 minutes"))
+    XCTAssertTrue(remaining.waitForPlannerValue("Up to 240 minutes; 1 finished estimate missing"))
+    XCTAssertTrue(finishedWarning.waitForExistence(timeout: 5))
+    recordScreenshot(
+      application, name: "Global unknown completion supplies the manual branch upper bound")
+    openSection("Items", application: application)
+    revealCatalogRow(prefix: "saved.item.", title: "Lunch", application: application)
+      .activateForPlannerJourney()
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+    toggle(globalCompletion)
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    openSection("Itineraries", application: application)
+    revealCatalogRow(
+      prefix: "saved.itinerary.row.", title: "Global morning", application: application
+    )
+    .activateForPlannerJourney()
+    XCTAssertTrue(remaining.waitForPlannerValue("240 minutes"))
+    XCTAssertTrue(full.waitForPlannerValue("240 minutes"))
+    XCTAssertFalse(finishedWarning.exists)
+    XCTAssertEqual(rows.allElementsBoundByIndex.map(\.identifier), appearanceIdentifiers)
+    for identifier in appearanceIdentifiers {
+      let completion = application.plannerElement(
+        identifier.replacingOccurrences(
+          of: "saved.itinerary.appearance.", with: "saved.itinerary.completion."))
+      XCTAssertTrue(completion.waitForPlannerValue("To do"))
+    }
+    recordScreenshot(
+      application, name: "Global reopen reveals original local Todo states and removes upper bound")
+    openSection("Items", application: application)
+    revealCatalogRow(prefix: "saved.item.", title: "Lunch", application: application)
+      .activateForPlannerJourney()
+    toolbarAction("saved.item.actions", application: application).activateForPlannerJourney()
+    application.plannerElement("Edit Item").activateForPlannerJourney()
+    let itemEstimate = application.descendants(matching: .any).matching(
+      identifier: "saved.item.edit.estimate.enabled"
+    ).firstMatch
+    XCTAssertTrue(itemEstimate.waitForExistence(timeout: 5))
+    toggle(itemEstimate)
+    application.plannerElement("saved.item.edit.save").activateForPlannerJourney()
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(false))
+    toggle(globalCompletion)
+    XCTAssertTrue(globalCompletion.waitForPlannerBooleanState(true))
+    openSection("Lists", application: application)
+    revealCatalogRow(prefix: "saved.list.", title: "Morning", application: application)
+      .activateForPlannerJourney()
+    XCTAssertTrue(
+      estimate("remaining", application: application).waitForPlannerValue("180 minutes"))
+    XCTAssertTrue(estimate("full", application: application).waitForPlannerValue("240 minutes"))
+    openSection("Itineraries", application: application)
+    revealCatalogRow(
+      prefix: "saved.itinerary.row.", title: "Global morning", application: application
+    )
+    .activateForPlannerJourney()
+    XCTAssertTrue(remaining.waitForPlannerValue("180 minutes"))
+    XCTAssertFalse(finishedWarning.exists)
+    let museumCompletion = application.plannerElement(
+      appearanceIdentifiers[0].replacingOccurrences(
+        of: "saved.itinerary.appearance.", with: "saved.itinerary.completion."))
+    museumCompletion.activateForPlannerJourney()
+    XCTAssertTrue(museumCompletion.waitForPlannerValue("Completed"))
+    XCTAssertTrue(remaining.waitForPlannerValue("0 minutes"))
+    XCTAssertTrue(full.waitForPlannerValue("240 minutes"))
+    XCTAssertTrue(application.staticTexts["2 of 2 items done"].exists)
+    recordScreenshot(
+      application, name: "Fully finished itinerary retains its manual List budget at zero remaining"
+    )
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openSection("Itineraries", application: application)
+    revealCatalogRow(
+      prefix: "saved.itinerary.row.", title: "Global morning", application: application
+    )
+    .activateForPlannerJourney()
+    XCTAssertEqual(rows.allElementsBoundByIndex.map(\.identifier), appearanceIdentifiers)
+    XCTAssertTrue(remaining.waitForPlannerValue("0 minutes"))
+    XCTAssertTrue(full.waitForPlannerValue("240 minutes"))
+    XCTAssertTrue(museumCompletion.waitForPlannerValue("Completed"))
+    openSection("Lists", application: application)
+    revealCatalogRow(prefix: "saved.list.", title: "Morning", application: application)
+      .activateForPlannerJourney()
+    XCTAssertTrue(
+      estimate("remaining", application: application).waitForPlannerValue("180 minutes"))
+    XCTAssertTrue(estimate("full", application: application).waitForPlannerValue("240 minutes"))
+    for (identifier, state) in zip(membershipIdentifiers, ["To do", "Completed"]) {
+      let completion = application.plannerElement(
+        identifier.replacingOccurrences(
+          of: "saved.appearance.", with: "saved.appearance.completion."))
+      XCTAssertTrue(completion.waitForPlannerValue(state))
+    }
+    XCTAssertEqual(
+      ["Museum", "Lunch"].map { title in
+        application.savedPlannerItemRows(title).firstMatch.identifier
+      }, membershipIdentifiers)
+    recordScreenshot(
+      application,
+      name: "Relaunch retains independent standalone List budget and original memberships")
+  }
+
   func testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()
