@@ -27,7 +27,8 @@ final class SavedItemWindow {
 
   private let planner: PlannerCore.Planner
   private let session: PlannerDatasetSession
-  private(set) var sourceIdentifiers: [UUID] = []
+  private(set) var rowIdentities: [PlannerRowIdentity] = []
+  private(set) var listSource: PlannerListSourceRead?
   private(set) var matchingCount: Int64 = 0
   private(set) var state = SavedItemWindowState.idle
   private var reloadIdentifier = UUID()
@@ -67,7 +68,8 @@ final class SavedItemWindow {
     pages = [:]
     pageFailures = [:]
     retainedPages = []
-    sourceIdentifiers = []
+    rowIdentities = []
+    listSource = nil
     matchingCount = 0
     state = .idle
   }
@@ -83,7 +85,8 @@ final class SavedItemWindow {
     pendingPages = [:]
     generation = nil
     state = .loading
-    sourceIdentifiers = []
+    rowIdentities = []
+    listSource = nil
     matchingCount = 0
     pages = [:]
     pageFailures = [:]
@@ -95,24 +98,24 @@ final class SavedItemWindow {
         if case .failed(let reason) = result { state = .failed(reason.message) }
         return
       }
-      var identifiers: [UUID] = []
-      for identity in snapshot.rows {
-        guard case .source(let source) = identity, source.kind == .item else {
+      var identifiers: Set<UUID> = []
+      for rowIdentity in snapshot.rows {
+        guard let identifier = nativeIdentifier(for: rowIdentity, scope: query.scope),
+          identifiers.insert(identifier).inserted
+        else {
           state = .failed("Planner could not resolve its Items.")
           return
         }
-        identifiers.append(source.id)
       }
-      guard Int64(identifiers.count) == snapshot.matchingCount,
-        Set(identifiers).count == identifiers.count
-      else {
+      guard Int64(identifiers.count) == snapshot.matchingCount else {
         state = .failed("Planner could not resolve its complete Items.")
         return
       }
-      if identifiers.isEmpty {
-        generation = snapshot.generation
-        state = .ready
-        return
+      var headerRead: PlannerReadResult?
+      if case .list(let identifier) = query.scope {
+        headerRead = await planner.read(
+          session: session, request: .source(.init(kind: .list, id: identifier)))
+        guard !Task.isCancelled, reloadIdentifier == requestIdentifier else { return }
       }
       let read = await planner.read(
         session: session, request: .rows(generation: snapshot.generation, offset: 0, limit: 64))
@@ -121,21 +124,36 @@ final class SavedItemWindow {
       case .rows(let window):
         guard window.generation == snapshot.generation, window.offset == 0,
           window.matchingCount == snapshot.matchingCount,
-          window.rows.count == min(64, identifiers.count)
+          window.rows.count == min(64, snapshot.rows.count)
         else {
           state = .failed("Planner could not read its complete Item page.")
           return
         }
         var items: [SavedPlannerItem] = []
         for (index, row) in window.rows.enumerated() {
-          guard row.identity == .source(.init(kind: .item, id: identifiers[index])) else {
+          guard row.identity == snapshot.rows[index],
+            let identifier = nativeIdentifier(for: row.identity, scope: query.scope)
+          else {
             state = .failed("Planner could not resolve its Item page.")
             return
           }
           items.append(
-            .init(id: identifiers[index], row: row, rowPresentation: window.rowPresentation))
+            .init(id: identifier, row: row, rowPresentation: window.rowPresentation))
         }
-        sourceIdentifiers = identifiers
+        if case .list(let identifier) = query.scope {
+          guard case .source(.list(let list)) = headerRead,
+            list.source == .init(kind: .list, id: identifier)
+          else {
+            if case .failed(let reason) = headerRead {
+              state = .failed(reason.message)
+            } else {
+              state = .failed("Planner could not read this List.")
+            }
+            return
+          }
+          listSource = list
+        }
+        rowIdentities = snapshot.rows
         matchingCount = snapshot.matchingCount
         generation = snapshot.generation
         pages[0] = items
@@ -152,26 +170,40 @@ final class SavedItemWindow {
     }
   }
 
+  private func nativeIdentifier(for identity: PlannerRowIdentity, scope: PlannerItemQuery.Scope)
+    -> UUID?
+  {
+    switch (scope, identity) {
+    case (.global, .source(let source)), (.inbox, .source(let source)):
+      return source.kind == .item ? source.id : nil
+    case (
+      .list(let expectedList), .appearance(let source, .listMembership(let list, let membership))
+    ):
+      guard source.kind == .item, list == expectedList else { return nil }
+      return membership
+    default: return nil
+    }
+  }
+
   func presentation(at index: Int) -> SavedItemWindowPresentation {
     if let failure = pageFailures[index / 64] { return .failed(failure) }
-    guard sourceIdentifiers.indices.contains(index), let page = pages[index / 64],
+    guard rowIdentities.indices.contains(index), let page = pages[index / 64],
       page.indices.contains(index % 64)
     else { return .loading }
     return .loaded(page[index % 64])
   }
 
   func requestRows(at visibleIndices: Set<Int>) async {
-    guard !Task.isCancelled, state == .ready, let generation else { return }
+    guard !Task.isCancelled, state == .ready, let generation, let query else { return }
     let visibilityIdentifier = UUID()
     visibilityRequestIdentifier = visibilityIdentifier
-    let visibleSourceIdentifiers = Set(
-      visibleIndices.filter { sourceIdentifiers.indices.contains($0) }.map { sourceIdentifiers[$0] }
-    )
+    let visibleRowIdentities = visibleIndices.filter { rowIdentities.indices.contains($0) }
+      .map { rowIdentities[$0] }
     let visiblePages = Set(
-      visibleIndices.filter { sourceIdentifiers.indices.contains($0) }.map { $0 / 64 })
+      visibleIndices.filter { rowIdentities.indices.contains($0) }.map { $0 / 64 })
     retainedPages = visiblePages
     if let first = visiblePages.min(), first > 0 { retainedPages.insert(first - 1) }
-    if let last = visiblePages.max(), (last + 1) * 64 < sourceIdentifiers.count {
+    if let last = visiblePages.max(), (last + 1) * 64 < rowIdentities.count {
       retainedPages.insert(last + 1)
     }
     pages = pages.filter { retainedPages.contains($0.key) }
@@ -208,15 +240,16 @@ final class SavedItemWindow {
         let offset = page * 64
         guard window.generation == generation, window.offset == Int64(offset),
           window.matchingCount == matchingCount,
-          window.rows.count == min(64, sourceIdentifiers.count - offset)
+          window.rows.count == min(64, rowIdentities.count - offset)
         else {
           pageFailures[page] = "Planner could not read its complete Item page."
           continue
         }
         var items: [SavedPlannerItem] = []
         for (rowIndex, row) in window.rows.enumerated() {
-          let identifier = sourceIdentifiers[offset + rowIndex]
-          guard row.identity == .source(.init(kind: .item, id: identifier)) else { break }
+          guard row.identity == rowIdentities[offset + rowIndex],
+            let identifier = nativeIdentifier(for: row.identity, scope: query.scope)
+          else { break }
           items.append(.init(id: identifier, row: row, rowPresentation: window.rowPresentation))
         }
         guard items.count == window.rows.count else {
@@ -226,7 +259,7 @@ final class SavedItemWindow {
         pageFailures[page] = nil
         pages[page] = items
       case .failed(let reason):
-        guard reason.code == "staleSnapshot", let query, let lifecycleIdentity else {
+        guard reason.code == "staleSnapshot", let lifecycleIdentity else {
           pageFailures[page] = reason.message
           continue
         }
@@ -241,8 +274,8 @@ final class SavedItemWindow {
             visibilityRequestIdentifier == visibilityIdentifier
           else { return }
           let refreshedIndices = Set(
-            sourceIdentifiers.indices.filter {
-              visibleSourceIdentifiers.contains(sourceIdentifiers[$0])
+            rowIdentities.indices.filter {
+              visibleRowIdentities.contains(rowIdentities[$0])
             }
           )
           await requestRows(at: refreshedIndices)

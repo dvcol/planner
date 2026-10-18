@@ -47,10 +47,18 @@ struct SavedItemCatalog: View {
       isActive: isActive, retryIdentifier: retryIdentifier)
   }
 
+  private var sourceRows: [(index: Int, identifier: UUID)] {
+    guard let window else { return [] }
+    return window.rowIdentities.enumerated().compactMap { index, identity in
+      guard case .source(let source) = identity, source.kind == .item else { return nil }
+      return (index, source.id)
+    }
+  }
+
   var body: some View {
     List(selection: $selection) {
       if let window {
-        ForEach(Array(window.sourceIdentifiers.enumerated()), id: \.element) { index, identifier in
+        ForEach(sourceRows, id: \.identifier) { index, identifier in
           row(window.presentation(at: index), index: index)
             .onScrollVisibilityChange { visible in
               if visible {
@@ -68,9 +76,7 @@ struct SavedItemCatalog: View {
     .task(id: visibleIdentifiers) {
       guard let window, !visibleIdentifiers.isEmpty else { return }
       let indices = Set(
-        window.sourceIdentifiers.indices.filter {
-          visibleIdentifiers.contains(window.sourceIdentifiers[$0])
-        })
+        sourceRows.filter { visibleIdentifiers.contains($0.identifier) }.map(\.index))
       await window.requestRows(at: indices)
     }
     .onDisappear {
@@ -191,7 +197,7 @@ struct SavedItemCatalog: View {
         sort: request.sort.queryValue),
       identity: identity)
     guard !Task.isCancelled, self.request == request, window.state == .ready else { return }
-    didLoad(request.scope, identity, window.sourceIdentifiers.first)
+    didLoad(request.scope, identity, sourceRows.first?.identifier)
   }
 
 }
