@@ -1,6 +1,8 @@
 # Decision register
 
-The human accepted A for Q94, Q95 and Q96 on 17 October 2026. Their concrete presentations, production interfaces and test seams are approved. Implementation and qualification remain required; earlier pending records are historical. The human also accepted A for Q97: extend the shared loader for standalone List windows. Q94–Q97 are settled; implementation and qualification remain required. The 18 October UI-review request brings the navigation and appearance slice forward while Q97 remains next.
+The current unanswered frontier is Q108, Q109 and Q110, recorded below. Accepted choices through Q107 are listed with their implementation evidence; Q102's account/team setup remains deferred. An accepted choice alone does not establish implementation or platform acceptance. The following historical entries retain their original context. Current implementation reports and later status entries supersede their earlier starting-state wording.
+
+The human accepted A for Q94, Q95 and Q96 on 17 October 2026. Their concrete presentations, production interfaces and test seams are approved. The human also accepted A for Q97: extend the shared loader for standalone List windows. The 18 October UI-review request brought the navigation and appearance slice forward. Q94–Q97's local implementation checkpoints are linked below; their broader qualification gates remain open.
 
 The human settled this batch on 12 October 2026. None of the nine questions below remains unanswered. Accepted behavior is a requirement, not evidence that its implementation or native qualification is complete. Earlier execution records that describe these choices as pending are historical.
 
@@ -103,8 +105,35 @@ Q94 implementation evidence: [native New Item label selection](prototypes/native
 
 ## Q97, standalone List presentation windows
 
-The human accepted A. The [approved List window contract](native-list-window-contract-review.md) extends the existing app-internal loader to complete typed row identities and generation-validated List source metadata. Preserve full matching counts, full-scope progress/estimates, membership action scope, selection and manual reorder anchors while releasing offscreen presentations. The expanded production interface and real-Core/native UI seams are approved. Implementation has not started; Itinerary hierarchy and picker adoption remain separate follow-ups.
+The human accepted A. The [approved List window contract](native-list-window-contract-review.md) extends the existing app-internal loader to complete typed row identities and generation-validated List source metadata. Preserve full matching counts, full-scope progress/estimates, membership action scope, selection and manual reorder anchors while releasing offscreen presentations. The expanded production interface and real-Core/native UI seams are approved. The [List-window implementation report](prototypes/native-list-windows.md) records its local qualification; later Q98/Q103 reports cover Itinerary hierarchy and catalog/picker adoption. These checkpoints do not establish physical performance or full navigation acceptance.
 
 ## UI review brought forward
 
 On 18 October the human requested a new UI pass, correct dark mode across devices and a correction to the empty space above sidebar filters. The [native navigation and appearance review](prototypes/native-design-pass.md) records the current slice and its qualification. It uses a Notes-style native sidebar on wide iPad and Mac, phone tabs, compact native pane titles and system appearance. This advances the reported layout correction without marking final whole-app polish, physical devices or signing complete. No new product question is pending.
+
+## Q98 through Q103, accepted windows and native presentation
+
+| Question | Accepted choice and behavior | Implementation or qualification record |
+| --- | --- | --- |
+| Q98, Itinerary presentation windows | A. Extend the shared loader with typed hierarchy and contextual identities, preserving full summaries, saved order and selection while releasing offscreen presentations. | [Approved contract](native-itinerary-window-contract-review.md), [implementation](prototypes/native-itinerary-windows.md), [compatibility](prototypes/native-itinerary-window-compatibility.md). Broader platform/performance acceptance remains open. |
+| Q99, native contrast correction | A. Correct the selected row/detail foregrounds while retaining native controls and readable appearance. | [Foreground correction](prototypes/native-selection-contrast-fix.md). Q101 subsequently resolves the represented Capture overlap. The [later Itinerary caption correction](prototypes/native-itinerary-caption-contrast.md) qualifies its own scenes. No whole-app accessibility acceptance is implied. |
+| Q100, protected Agent Control | B. Retain actual signed-storage and native Mac workflow qualification before implementing/accepting the deferred native access path. | [Native access readiness](prototypes/mcp-native-access-readiness.md). Protected storage, actual Mac runtime and required signing/capability setup remain open. |
+| Q101, Items/Inbox creation controls | A. One native Add menu offers New Item and From Link or Text. Filters and Sort remain separate. | [Add-menu implementation](prototypes/native-catalog-add-menu.md). Its scoped results do not close the whole scene inventory. |
+| Q102, signing setup | The human asked whether a paid membership is necessary and then authorized continuing local work until signing/real-device testing is required. No team, account enrollment or purchase was selected. | [Apple test access](setup/apple-test-access.md). Local implementation continues; gated provisioning still needs the human's setup decision/action. |
+| Q103, container catalogs and pickers | A. Extend the existing loader with the typed catalog overload, preserving identities, counts, sort, archive rules and remembered destinations. | [Approved contract](native-container-window-contract-review.md), [catalog and picker qualification](prototypes/native-container-catalog-windows.md). No bounded total-memory or physical-performance claim is made. |
+
+## Q104 through Q107, original-association Undo
+
+Q104 A keeps removal history in memory for the current app run. Q105 A preserves a newer recreated relationship and rejects the old Undo with an explanation. Neither choice adds Trash or deleted-source recovery.
+
+Q106 A approves the [concrete native-only snapshot/restore contract](native-association-undo-contract-review.md) for explicit List-membership and Itinerary-entry removals. Restore preserves the original public association identity, order and local state under a fresh lifetime, retaining unrelated source edits and rejecting invalid/superseded bindings. Q107 A integrates named window UndoManager actions and explicit mobile Undo, without association Redo in this slice.
+
+The [implementation report](prototypes/native-association-undo.md) records the affected real-store/HTTP results and represented phone/iPad restoration, conflict and filter/selection journeys. Actual Mac history interaction, additional asynchronous-history qualification and the remaining owned-association/Move work are not complete.
+
+## Current unanswered frontier
+
+- Q108 proposes [additional native history-controller tests](native-association-history-test-contract-review.md), using production history, actual Foundation UndoManager and real Planner storage/filesystem failures in the existing app-hosted target. A accepts that additional boundary; B retains the existing Core/native UI seams and waits for actual Mac UI qualification. No controller tests are authorized yet.
+- Q109 asks whether native Undo should reverse a whole Move atomically, restore only its origin membership with truthful naming, or explicitly defer Move Undo. The [worked proposal](native-owned-association-undo-proposal.md) explains the destination-created versus destination-preexisting cases and preservation of newer work.
+- Q110 asks whether several bookmark/label-association removals in one editor Save produce one atomic removal-group history action or individual restoration actions. The same proposal preserves unrelated content edits and distinguishes label association removal from shared-label Delete.
+
+Q109/Q110's concrete capability/result/restore contract and literal fixtures follow their behavior choices. Neither elapsed time nor a preselected recommendation settles these questions. Existing approved work can continue independently; signing, physical sync/account/Share, scale and final whole-app polish retain their separate gates.
