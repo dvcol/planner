@@ -3,6 +3,70 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  #if os(iOS)
+    func testNativeTextUndoPreservesTheSeparateRemovedMembershipAction() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      createItem(application)
+      createList("Text Undo", application: application)
+      addItem(application)
+      let row = application.savedPlannerItemRows("Nezu Museum").firstMatch
+      let originalIdentifier = row.identifier
+      let completion = application.plannerElement(
+        originalIdentifier.replacingOccurrences(
+          of: "saved.appearance.", with: "saved.appearance.completion."))
+      completion.activateForPlannerJourney()
+      XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+      row.press(forDuration: 1)
+      application.plannerElement("Remove from List").activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+      let associationUndo = application.plannerElement("saved.association.undo")
+      XCTAssertTrue(associationUndo.waitForExistence(timeout: 5))
+      openNewItemInList(application)
+      let title = application.textFields["saved.item.title"]
+      XCTAssertTrue(title.waitForExistence(timeout: 5))
+      title.activateForPlannerJourney()
+      title.typeText("Temporary")
+      XCTAssertTrue(title.waitForPlannerValue("Temporary"))
+      title.tap(withNumberOfTaps: 1, numberOfTouches: 3)
+      let editingOverlay = application.otherElements["UIUndoInteractiveHUD"].firstMatch
+      XCTAssertTrue(editingOverlay.waitForExistence(timeout: 5))
+      let textUndo = editingOverlay.descendants(matching: .any).matching(
+        NSPredicate(format: "label == %@", "Undo")
+      ).firstMatch
+      XCTAssertTrue(textUndo.waitForExistence(timeout: 5))
+      recordScreenshot(application, name: "System editing HUD exposes the text Undo action")
+      textUndo.activateForPlannerJourney()
+      let emptyTitle = XCTNSPredicateExpectation(
+        predicate: NSPredicate(
+          format: "value == %@ OR value == %@", "", title.placeholderValue ?? ""), object: title)
+      XCTAssertEqual(XCTWaiter.wait(for: [emptyTitle], timeout: 5), .completed)
+      recordScreenshot(application, name: "System text Undo clears the unsaved title")
+      title.activateForPlannerJourney()
+      XCTAssertTrue(editingOverlay.waitForNonExistence(timeout: 5))
+      closeNewItemEditor(application)
+      XCTAssertTrue(title.waitForNonExistence(timeout: 5))
+      XCTAssertTrue(application.staticTexts["No items"].exists)
+      XCTAssertFalse(row.exists)
+      XCTAssertTrue(associationUndo.waitForExistence(timeout: 5))
+      associationUndo.activateForPlannerJourney()
+      XCTAssertTrue(row.waitForExistence(timeout: 10))
+      XCTAssertEqual(row.identifier, originalIdentifier)
+      XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+      recordScreenshot(
+        application, name: "Association Undo still restores the original completed membership")
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openList("Text Undo", application: application)
+      XCTAssertTrue(row.waitForExistence(timeout: 10))
+      XCTAssertEqual(row.identifier, originalIdentifier)
+      XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+      XCTAssertFalse(associationUndo.exists)
+    }
+  #endif
+
   func testNativeUndoPreservesFiltersAndAnotherSelectedListAppearance() throws {
     continueAfterFailure = false
     let application = XCUIApplication()
