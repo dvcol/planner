@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "FBA3445F-3432-4609-8C40-E7F69793CD80.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Association Undo still restores the original completed membership_0_F9AFE9FF-F2E2-4902-9ECF-7F1A6DC89D09.png",
+    "timestamp": 1792356638.101,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeTextUndoPreservesTheSeparateRemovedMembershipAction()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "415EBF69-E3DE-455F-8126-EF8789665C95.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "System text Undo clears the unsaved title_0_89C9B8E6-982E-4BA5-8CF9-C980C15BD561.png",
+    "timestamp": 1792356628.2,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeTextUndoPreservesTheSeparateRemovedMembershipAction()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "473392F0-E2A3-4F9E-A2A4-87FBEA1C21B1.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "System editing HUD exposes the text Undo action_0_169F920E-04D2-4F54-90A8-F0B34F06C6F0.png",
+    "timestamp": 1792356626.401,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeTextUndoPreservesTheSeparateRemovedMembershipAction()"
+  }
+]

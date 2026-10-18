@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "4F6677B1-6168-4990-8D81-E81351A1550B.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Association Undo still restores the original completed membership_0_66D1B553-D5E9-4422-9B25-FBBE88BBA395.png",
+    "timestamp": 1792356646,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeTextUndoPreservesTheSeparateRemovedMembershipAction()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "F7B422CD-6003-4594-86BD-D7EE8FA83802.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "System text Undo clears the unsaved title_0_94728969-2BFC-4E11-8529-5105FBA5375D.png",
+    "timestamp": 1792356636.495,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeTextUndoPreservesTheSeparateRemovedMembershipAction()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "FFAD1EC5-7953-4901-BCAC-3990864EAA9C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "System editing HUD exposes the text Undo action_0_1E8176BC-3592-455D-90A0-56188292453D.png",
+    "timestamp": 1792356634.607,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeTextUndoPreservesTheSeparateRemovedMembershipAction()"
+  }
+]

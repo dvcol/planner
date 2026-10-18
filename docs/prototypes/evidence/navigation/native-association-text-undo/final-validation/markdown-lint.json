@@ -1,0 +1,12 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "/private/tmp/PlannerItemWindowMarkdownlint.json",
+    "docs/prototypes/native-association-text-undo.md",
+    "docs/prototypes/native-association-undo.md"
+  ],
+  "exitCode": 0
+}

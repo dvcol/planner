@@ -1,0 +1,71 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "EE568CD8-D71E-497F-9018-A63621F233BA.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "System text Undo clears the unsaved title_0_0605EB3D-DD67-4BD9-9CD8-D66EA1706B94.png",
+    "timestamp": 1792356276.422,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeTextUndoPreservesTheSeparateRemovedMembershipAction()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "ADFEC594-E840-45B4-88F6-A39E65CD6A88.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "System editing HUD exposes the text Undo action_0_F75D5AEB-4982-4038-93B3-CDDCE7488F71.png",
+    "timestamp": 1792356274.61,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeTextUndoPreservesTheSeparateRemovedMembershipAction()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "E1A3D0E2-B1C4-4B2A-8408-25D7D3F8220E.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_FAE64FDF-7175-4E8F-8858-F64EE0F3C9EC.PlannerMCPPrototype",
+    "timestamp": 1792356136.602,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeTextUndoPreservesTheSeparateRemovedMembershipAction()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "15CD0D22-B8BA-448B-9309-4B9D3A65C826.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.membership.add\" Button`_0_A075105B-F100-4EE9-9565-31B5FD2C3254.txt",
+    "timestamp": 1792356136.421,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeTextUndoPreservesTheSeparateRemovedMembershipAction()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "56B3D5DA-AAB5-4B7F-898F-15B14269CEE0.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.membership.add\" Button`_0_82D0B9C3-D46A-4A1A-90B4-9021797075E2.txt",
+    "timestamp": 1792356135.479,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeTextUndoPreservesTheSeparateRemovedMembershipAction()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "0AB61535-CE08-4802-9EA9-E697409391D4.txt",
+    "isAssociatedWithFailure": true,
+    "suggestedHumanReadableName": "Complete Issue Description.txt",
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeTextUndoPreservesTheSeparateRemovedMembershipAction()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "5EB896D6-67CC-4B7A-BCE2-879A5B465118.txt",
+    "isAssociatedWithFailure": true,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_D0823E9D-9F1D-454F-B16B-AF8BF7BC1FD2.PlannerMCPPrototype",
+    "timestamp": 1792356278.764,
+    "testIdentifier": "SavedAppearanceJourneyTests/testNativeTextUndoPreservesTheSeparateRemovedMembershipAction()"
+  }
+]

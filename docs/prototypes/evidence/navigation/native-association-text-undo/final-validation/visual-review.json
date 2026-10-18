@@ -1,0 +1,65 @@
+{
+  "scope": "Original pixels inspected directly. Failed and final journeys retain their own executed scopes. No whole-app or actual Mac/physical acceptance.",
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-text-undo-hud/ADFEC594-E840-45B4-88F6-A39E65CD6A88.png",
+      "sha256": "d7af81b8af6a7cc9eaed25b45295e0aa344b2eb6735cc2f70dd1d4e64e61ff5a",
+      "reviewer": "primary agent",
+      "observation": "Intermediate dark phone: system editing overlay shows enabled text Undo above Temporary title; separate Undo Remove from List remains visible near bottom. This run later fails draft exit, not text Undo."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-text-undo-hud/EE568CD8-D71E-497F-9018-A63621F233BA.png",
+      "sha256": "25533e44741657ef705d7fa9ed99873f1a27c5af3a3b4aa7a60437e32bc89bfd",
+      "reviewer": "primary agent",
+      "observation": "Intermediate dark phone: native text Undo leaves an empty Title and enables normal text Redo. Compact Back remains behind the editing overlay; association action remains visible. No completed restoration credit."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-text-undo-hud/692404C1-DD88-4B3A-8945-E97066EE8352.png",
+      "sha256": "4b1c4df8737a82b4038bbd1fea95f0598c2d28a87df852f01c100a61ebf4fbb8",
+      "reviewer": "primary agent",
+      "observation": "Intermediate light iPad: Temporary title, enabled native text Undo and separate association action; underlying List remains No items. Editing overlay covers the Cancel region."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-text-undo-hud/CAF72974-3916-4B90-9F36-BB70DD2E43C4.png",
+      "sha256": "1090583715ef3fc53794f2a8fe93feec976115e87f550fca4af05df46532e65e",
+      "reviewer": "primary agent",
+      "observation": "Intermediate light iPad: text Undo clears title while List remains No items. Persistent system editing overlay covers Cancel, explaining the failed draft-exit assertion. No later association restoration proof."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-text-undo-final/473392F0-E2A3-4F9E-A2A4-87FBEA1C21B1.png",
+      "sha256": "dfaeb96d8422dbe20c8b978a9f475b873e595fca2620cc060c433768d40c4532",
+      "reviewer": "primary agent",
+      "observation": "Final dark phone: Temporary title and native text-editing Undo overlay are visible with the separate association Undo action below. Floating bars obscure some scrolled form content, without whole-app clearance acceptance."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-text-undo-final/FFAD1EC5-7953-4901-BCAC-3990864EAA9C.png",
+      "sha256": "07b8a92d6a00d60e6ae555bd9e81c84c7c04e8bd6d032ef989267515e9cb0a35",
+      "reviewer": "primary agent",
+      "observation": "Final light iPad: native editing overlay has enabled Undo above the typed Temporary title. Underlying List remains No items and separate removal Undo is visible."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-text-undo-final/415EBF69-E3DE-455F-8126-EF8789665C95.png",
+      "sha256": "16ea678e908259d941fc723fa9bfb7de968a5508bec6109edeb78e3f48f997f1",
+      "reviewer": "primary agent",
+      "observation": "Final dark phone: native text Undo leaves an empty title and normal text Redo enabled. Separate removal action remains visible. The subsequent executed checks dismiss this overlay before Back."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-text-undo-final/F7B422CD-6003-4594-86BD-D7EE8FA83802.png",
+      "sha256": "2dcea722ba107a8eb4c23e2b777661230583382244cefcd4d03d92514e923017",
+      "reviewer": "primary agent",
+      "observation": "Final light iPad: empty Title after text Undo, native text Redo enabled, underlying List still No items and removal action retained. Subsequent native field tap dismisses the overlay before Cancel."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-text-undo-final/FBA3445F-3432-4609-8C40-E7F69793CD80.png",
+      "sha256": "d95103b83e055b7a163984f47c42df94e12d2edccfa987b1a354f3cf47ae4140",
+      "reviewer": "primary agent",
+      "observation": "Final dark phone: canceled draft is gone and original completed Nezu Museum membership is restored, with one of one Done and normal tabs. No extra draft row appears."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-text-undo-final/4F6677B1-6168-4990-8D81-E81351A1550B.png",
+      "sha256": "10c3574c2d1335f662c4b225fc68dbd146b2484f75319d45a37264e2aac2124c",
+      "reviewer": "primary agent",
+      "observation": "Final light iPad: original completed membership is restored after draft cancellation and explicit association Undo. Empty detail is intentional because the draft was closed and no Item selected."
+    }
+  ]
+}

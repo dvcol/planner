@@ -1,0 +1,77 @@
+{
+  "checked": 18,
+  "links": [
+    {
+      "report": "docs/prototypes/native-association-text-undo.md",
+      "target": "evidence/navigation/native-association-text-undo/final-validation/observed-results.json"
+    },
+    {
+      "report": "docs/prototypes/native-association-text-undo.md",
+      "target": "evidence/navigation/native-association-text-undo/final-validation/production-source-comparison.json"
+    },
+    {
+      "report": "docs/prototypes/native-association-text-undo.md",
+      "target": "evidence/navigation/native-association-text-undo/final-validation/evidence-sha256.json"
+    },
+    {
+      "report": "docs/prototypes/native-association-text-undo.md",
+      "target": "evidence/navigation/native-association-text-undo/final-validation/visual-review.json"
+    },
+    {
+      "report": "docs/prototypes/native-association-text-undo.md",
+      "target": "evidence/navigation/native-itinerary-window-compatibility/phone-text-undo-final/473392F0-E2A3-4F9E-A2A4-87FBEA1C21B1.png"
+    },
+    {
+      "report": "docs/prototypes/native-association-text-undo.md",
+      "target": "evidence/navigation/native-itinerary-window-compatibility/tablet-text-undo-final/FFAD1EC5-7953-4901-BCAC-3990864EAA9C.png"
+    },
+    {
+      "report": "docs/prototypes/native-association-text-undo.md",
+      "target": "evidence/navigation/native-itinerary-window-compatibility/phone-text-undo-final/FBA3445F-3432-4609-8C40-E7F69793CD80.png"
+    },
+    {
+      "report": "docs/prototypes/native-association-text-undo.md",
+      "target": "evidence/navigation/native-itinerary-window-compatibility/tablet-text-undo-final/4F6677B1-6168-4990-8D81-E81351A1550B.png"
+    },
+    {
+      "report": "docs/prototypes/native-association-undo.md",
+      "target": "../native-association-undo-contract-review.md"
+    },
+    {
+      "report": "docs/prototypes/native-association-undo.md",
+      "target": "evidence/navigation/native-association-undo/"
+    },
+    {
+      "report": "docs/prototypes/native-association-undo.md",
+      "target": "evidence/navigation/native-itinerary-window-compatibility/"
+    },
+    {
+      "report": "docs/prototypes/native-association-undo.md",
+      "target": "evidence/navigation/native-association-undo/final-validation/observed-results.json"
+    },
+    {
+      "report": "docs/prototypes/native-association-undo.md",
+      "target": "evidence/navigation/native-association-undo/filter-selection-validation/observed-results.json"
+    },
+    {
+      "report": "docs/prototypes/native-association-undo.md",
+      "target": "evidence/navigation/native-association-undo/filter-selection-validation/production-source-comparison.json"
+    },
+    {
+      "report": "docs/prototypes/native-association-undo.md",
+      "target": "evidence/navigation/native-association-undo/filter-selection-validation/visual-review.json"
+    },
+    {
+      "report": "docs/prototypes/native-association-undo.md",
+      "target": "../native-association-history-test-contract-review.md"
+    },
+    {
+      "report": "docs/prototypes/native-association-undo.md",
+      "target": "native-association-text-undo.md"
+    },
+    {
+      "report": "docs/prototypes/native-association-undo.md",
+      "target": "../native-owned-association-undo-proposal.md"
+    }
+  ]
+}

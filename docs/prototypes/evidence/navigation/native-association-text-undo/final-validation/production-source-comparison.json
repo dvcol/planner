@@ -1,0 +1,74 @@
+[
+  {
+    "epoch": "native-text-undo-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "appearanceTestMatchesFinalSource": false
+  },
+  {
+    "epoch": "native-text-undo-final-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "appearanceTestMatchesFinalSource": true
+  },
+  {
+    "epoch": "native-text-undo-final-mac-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "appearanceTestMatchesFinalSource": true
+  },
+  {
+    "epoch": "native-text-undo-hud-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "appearanceTestMatchesFinalSource": false
+  },
+  {
+    "epoch": "native-text-undo-mac-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "appearanceTestMatchesFinalSource": false
+  },
+  {
+    "epoch": "native-text-undo-qualified-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "appearanceTestMatchesFinalSource": false
+  },
+  {
+    "epoch": "phone-text-undo-final",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "appearanceTestMatchesFinalSource": true
+  },
+  {
+    "epoch": "phone-text-undo-first",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "appearanceTestMatchesFinalSource": false
+  },
+  {
+    "epoch": "phone-text-undo-hud",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "appearanceTestMatchesFinalSource": false
+  },
+  {
+    "epoch": "tablet-text-undo-final",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "appearanceTestMatchesFinalSource": true
+  },
+  {
+    "epoch": "tablet-text-undo-first",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "appearanceTestMatchesFinalSource": false
+  },
+  {
+    "epoch": "tablet-text-undo-hud",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "appearanceTestMatchesFinalSource": false
+  }
+]

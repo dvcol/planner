@@ -1,0 +1,128 @@
+[
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-text-undo-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-text-undo-final-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-text-undo-final-mac-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-text-undo-hud-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-text-undo-mac-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-text-undo-qualified-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-text-undo-final",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-text-undo-final.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeTextUndoPreservesTheSeparateRemovedMembershipAction]' passed (204.823 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-text-undo-first",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-text-undo-first.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeTextUndoPreservesTheSeparateRemovedMembershipAction]' failed (179.754 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-text-undo-hud",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-text-undo-hud.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeTextUndoPreservesTheSeparateRemovedMembershipAction]' failed (180.959 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-text-undo-final",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-text-undo-final.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeTextUndoPreservesTheSeparateRemovedMembershipAction]' passed (213.377 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-text-undo-first",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-text-undo-first.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeTextUndoPreservesTheSeparateRemovedMembershipAction]' failed (187.797 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-text-undo-hud",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-text-undo-hud.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNativeTextUndoPreservesTheSeparateRemovedMembershipAction]' failed (192.756 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  }
+]
