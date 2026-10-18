@@ -38,6 +38,8 @@ private struct SavedListWindowInputs: Equatable {
 }
 
 struct SavedPlannerView: View {
+  @Environment(\.undoManager) private var undoManager
+  @State private var associationUndo = SavedAssociationUndoHistory()
   #if os(iOS)
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   #endif
@@ -172,7 +174,16 @@ struct SavedPlannerView: View {
   }
 
   var body: some View {
-    listLifecycleContent
+    ZStack { listLifecycleContent }
+      .safeAreaInset(edge: .bottom, spacing: 0) {
+        if usesSidebarNavigation && associationUndo.presentsControl {
+          SavedAssociationUndoControl(history: associationUndo, store: store)
+            .padding(.horizontal)
+            .padding(.vertical, 8)
+            .background(.bar)
+        }
+      }
+      .onDisappear { associationUndo.clear() }
       .task(id: selectedItemId) { await loadSelectedItem() }
       .onChange(of: selectedItemId) {
         if selectedItemId != nil { itemDeletionMessage = nil }
@@ -198,6 +209,7 @@ struct SavedPlannerView: View {
         }
       }
       .onChange(of: store.devicePreferenceNamespace) {
+        associationUndo.clear()
         itineraryPresentations = [:]
         calendarSelection = nil
         recordSelectionChange()
@@ -363,6 +375,10 @@ struct SavedPlannerView: View {
               itineraryAppearanceDetail
             }
           }
+        }
+        .tabViewBottomAccessory(isEnabled: associationUndo.presentsControl) {
+          SavedAssociationUndoControl(history: associationUndo, store: store)
+            .padding(.horizontal)
         }
       #endif
     }
@@ -556,7 +572,11 @@ struct SavedPlannerView: View {
       collapsedEntries: presentation.collapsedEntries,
       isPreparingDeletion: isPreparingItineraryDeletion,
       isReviewingDeletion: itineraryDeletionDraft?.source.id == identifier,
-      prepareDeletion: { itinerary in Task { await prepareItineraryDeletion(itinerary) } }
+      prepareDeletion: { itinerary in Task { await prepareItineraryDeletion(itinerary) } },
+      recordRemoval: { result in
+        associationUndo.record(
+          result, name: "Remove from Itinerary", store: store, manager: undoManager)
+      }
     )
     .id(identifier)
   }
@@ -1124,8 +1144,13 @@ struct SavedPlannerView: View {
 
   private func removeMembership(_ membershipIdentifier: UUID, listIdentifier: UUID) {
     Task {
-      guard await store.removeMembership(membershipIdentifier, listIdentifier: listIdentifier)
+      let namespace = store.devicePreferenceNamespace
+      guard
+        let result = await store.removeMembership(
+          membershipIdentifier, listIdentifier: listIdentifier),
+        case .applied = result.outcome, store.devicePreferenceNamespace == namespace
       else { return }
+      associationUndo.record(result, name: "Remove from List", store: store, manager: undoManager)
       clearRemovedMembershipSelection(
         membershipIdentifier, listIdentifier: listIdentifier,
         explanation: "The Item remains available in Items.", detailTitle: "Item removed from List")

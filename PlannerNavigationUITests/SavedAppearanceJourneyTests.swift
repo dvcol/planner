@@ -3,6 +3,129 @@ import XCTest
 
 @MainActor
 final class SavedAppearanceJourneyTests: XCTestCase {
+  func testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    createList("Tokyo Food", application: application)
+    addItem(application)
+    let row = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    let originalIdentifier = row.identifier
+    let completion = application.buttons[
+      originalIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")]
+    completion.activateForPlannerJourney()
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    #if os(macOS)
+      row.rightClick()
+    #else
+      row.press(forDuration: 1)
+    #endif
+    application.plannerElement("Remove from List").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    #if os(macOS)
+      let originIdentifier = application.windows.firstMatch.identifier
+      application.menuBars.menuBarItems["File"].click()
+      application.menuItems["New Window"].click()
+      let other = application.windows.matching(
+        NSPredicate(format: "identifier != %@", originIdentifier)
+      ).firstMatch
+      XCTAssertTrue(other.waitForExistence(timeout: 10))
+      other.click()
+      application.typeKey("z", modifierFlags: .command)
+      let origin = application.windows.matching(identifier: originIdentifier).firstMatch
+      XCTAssertTrue(origin.staticTexts["No items"].exists)
+      XCTAssertFalse(origin.buttons.matching(identifier: originalIdentifier).firstMatch.exists)
+      other.buttons["_XCUI:CloseWindow"].click()
+      XCTAssertTrue(other.waitForNonExistence(timeout: 10))
+      origin.click()
+      openNewItemInList(application)
+      let draftTitle = application.textFields["saved.item.title"]
+      XCTAssertTrue(draftTitle.waitForExistence(timeout: 5))
+      draftTitle.click()
+      draftTitle.typeText("Temporary draft")
+      application.typeKey("z", modifierFlags: .command)
+      XCTAssertEqual(draftTitle.value as? String, "")
+      XCTAssertTrue(application.staticTexts["No items"].exists)
+      application.plannerElement("saved.item.cancel").click()
+      XCTAssertTrue(draftTitle.waitForNonExistence(timeout: 5))
+      application.typeKey("z", modifierFlags: .command)
+    #else
+      let undo = application.plannerElement("saved.association.undo")
+      XCTAssertTrue(undo.waitForExistence(timeout: 5))
+      recordScreenshot(application, name: "Native removal offers Undo above the system tabs")
+      undo.activateForPlannerJourney()
+    #endif
+    XCTAssertTrue(row.waitForExistence(timeout: 10))
+    XCTAssertEqual(row.identifier, originalIdentifier)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    recordScreenshot(application, name: "Native Undo restores original completed List appearance")
+    row.activateForPlannerJourney()
+    XCTAssertTrue(
+      application.staticTexts["Meet at the garden entrance"].waitForExistence(timeout: 10))
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Tokyo Food", application: application)
+    XCTAssertTrue(row.waitForExistence(timeout: 10))
+    XCTAssertEqual(row.identifier, originalIdentifier)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    XCTAssertFalse(application.plannerElement("saved.association.undo").exists)
+  }
+
+  func testNativeUndoRejectsNewerMembershipWithoutReplacingItsIdentityOrCompletion() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem(application)
+    createList("Tokyo Food", application: application)
+    addItem(application)
+    let original = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    let originalIdentifier = original.identifier
+    let originalCompletion = application.plannerElement(
+      originalIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion."))
+    originalCompletion.activateForPlannerJourney()
+    XCTAssertTrue(originalCompletion.waitForPlannerValue("Completed"))
+    #if os(macOS)
+      original.rightClick()
+    #else
+      original.press(forDuration: 1)
+    #endif
+    application.plannerElement("Remove from List").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    addItem(application)
+    let replacement = application.savedPlannerItemRows("Nezu Museum").firstMatch
+    XCTAssertTrue(replacement.waitForExistence(timeout: 10))
+    let replacementIdentifier = replacement.identifier
+    XCTAssertNotEqual(replacementIdentifier, originalIdentifier)
+    let replacementCompletion = application.plannerElement(
+      replacementIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion."))
+    XCTAssertTrue(replacementCompletion.waitForPlannerValue("To do"))
+    #if os(macOS)
+      application.typeKey("z", modifierFlags: .command)
+    #else
+      application.plannerElement("saved.association.undo").activateForPlannerJourney()
+    #endif
+    XCTAssertTrue(
+      application.staticTexts["A newer membership is already using this Item and List."]
+        .waitForExistence(timeout: 10))
+    application.plannerElement("OK").activateForPlannerJourney()
+    XCTAssertEqual(application.savedPlannerItemRows("Nezu Museum").count, 1)
+    XCTAssertEqual(replacement.identifier, replacementIdentifier)
+    XCTAssertTrue(replacementCompletion.waitForPlannerValue("To do"))
+    recordScreenshot(application, name: "Native stale Undo preserves the newer Todo membership")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openList("Tokyo Food", application: application)
+    XCTAssertTrue(replacement.waitForExistence(timeout: 10))
+    XCTAssertEqual(replacement.identifier, replacementIdentifier)
+    XCTAssertTrue(replacementCompletion.waitForPlannerValue("To do"))
+  }
+
   func testListMembershipFiltersUseAnyAllAndKeepContextualCompletionAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()

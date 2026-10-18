@@ -19,6 +19,7 @@ public actor Planner {
   }
   private var reviews: [UUID: ReviewBinding] = [:]
   private var captureDrafts: [UUID: PlannerPreparedCapture] = [:]
+  private var associationUndoSnapshots: [UUID: PlannerAssociationUndoSnapshot] = [:]
   private var captureInputReloads:
     [UUID: (requestId: UUID, task: Task<[PlannerCaptureRetainedInput], Never>)] = [:]
   private var captureLookups:
@@ -883,7 +884,7 @@ public actor Planner {
 
   public func execute(_ operation: PlannerOperation) -> PlannerOperationResult {
     do {
-      return try coordinated {
+      let result: PlannerOperationResult = try coordinated {
         let identity = try validateSession(operation.session)
         let container = try openContainer()
         let context = ModelContext(container)
@@ -892,6 +893,10 @@ public actor Planner {
         let receipts = try context.fetch(FetchDescriptor<PlannerSchemaV1.Receipt>())
         let envelope = try archive.latest()
         switch operation.command {
+        case .restoreAssociation(let snapshot):
+          return try executeAssociationRestoration(
+            operation, snapshot: snapshot, identity: identity, context: context,
+            archive: archive, receipts: receipts, envelope: envelope)
         case .applyCapture(let draftId, let draftGeneration, let choice, let listIds):
           return try executeCapture(
             operation, draftId: draftId, draftGeneration: draftGeneration, choice: choice,
@@ -1230,6 +1235,12 @@ public actor Planner {
           }
         }
       }
+      guard case .applied = result.outcome,
+        let snapshot = associationUndoSnapshots[result.operationId]
+      else { return result }
+      return .init(
+        operationId: result.operationId, outcome: result.outcome,
+        associationUndoSnapshot: snapshot)
     } catch {
       return PlannerOperationResult(
         operationId: operation.operationId,
@@ -4795,9 +4806,10 @@ public actor Planner {
       generatedIdentities: [],
       affectedIdentities: [.reference(before.reference), .source(ownerSnapshot.reference)]
         + before.expandedCompletions.map { .reference($0.reference) })
+    let removalProposalIdentifier = UUID()
     try archive.prepare(
       .init(
-        proposalId: UUID(), originalOperationId: operation.operationId,
+        proposalId: removalProposalIdentifier, originalOperationId: operation.operationId,
         datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
         proposedBackup: PlannerDataSnapshot(
           itineraries: snapshots, labelAssociations: labels, tags: tags, categories: categories,
@@ -4812,10 +4824,18 @@ public actor Planner {
     context.insert(receipt)
     do { try context.save() } catch {
       context.rollback()
+      do { try archive.discardPreparedProposal(removalProposalIdentifier) } catch {
+        throw PlannerFailure(
+          "persistenceFailure",
+          "The entry removal save failed and its prepared evidence could not be cleared. Resolve operation status before retrying."
+        )
+      }
       throw PlannerFailure(
         "persistenceFailure",
         "The complete entry removal was not committed: \(error.localizedDescription)")
     }
+    associationUndoSnapshots[operation.operationId] = .init(
+      storeIdentity: identity, closingOperationId: operation.operationId, entry: before)
     do {
       let generation = try archive.publish(
         itineraries: snapshots, labelAssociations: labels, tags: tags, categories: categories,
@@ -5263,9 +5283,10 @@ public actor Planner {
       affectedIdentities: [.reference(before.reference), .source(ownerSnapshot.reference)]
         + expandedSnapshots.map { .reference($0.reference) }
         + affectedItineraries.map { .source(.init(kind: .itinerary, id: $0)) })
+    let removalProposalIdentifier = UUID()
     try archive.prepare(
       RecoveryPreparedProposal(
-        proposalId: UUID(), originalOperationId: operation.operationId,
+        proposalId: removalProposalIdentifier, originalOperationId: operation.operationId,
         datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
         proposedBackup: PlannerDataSnapshot(
           itineraries: retainedItineraries,
@@ -5283,10 +5304,19 @@ public actor Planner {
     context.insert(receipt)
     do { try context.save() } catch {
       context.rollback()
+      do { try archive.discardPreparedProposal(removalProposalIdentifier) } catch {
+        throw PlannerFailure(
+          "persistenceFailure",
+          "The membership removal save failed and its prepared evidence could not be cleared. Resolve operation status before retrying."
+        )
+      }
       throw PlannerFailure(
         "persistenceFailure",
         "The complete membership removal was not committed: \(error.localizedDescription)")
     }
+    associationUndoSnapshots[operation.operationId] = .init(
+      storeIdentity: identity, closingOperationId: operation.operationId,
+      membership: before, expandedStates: expandedSnapshots)
     do {
       let generation = try archive.publish(
         itineraries: retainedItineraries,
@@ -5299,6 +5329,266 @@ public actor Planner {
         outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
     } catch {
       return PlannerOperationResult(
+        operationId: operation.operationId,
+        outcome: .applied(
+          result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))
+    }
+  }
+
+  private func executeAssociationRestoration(
+    _ operation: PlannerOperation, snapshot: PlannerAssociationUndoSnapshot,
+    identity: PlannerStoreIdentity, context: ModelContext, archive: PlannerRecoveryArchive,
+    receipts: [PlannerSchemaV1.Receipt], envelope: RecoveryEnvelope?
+  ) throws -> PlannerOperationResult {
+    let digest = snapshot.restorationDigest
+    if let receipt = receipts.first(where: { $0.operationId == operation.operationId }) {
+      let evidence = try RecoveryReceipt(receipt, checkpoint: nil)
+      guard evidence.datasetId == identity.datasetId,
+        evidence.ownershipBinding == identity.ownershipBinding,
+        receipt.payloadDigest == digest
+      else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "This operation identity describes another restoration.")
+      }
+      return appliedResult(
+        operationId: operation.operationId, evidence: evidence, envelope: envelope)
+    }
+    let recoveredIdentifiers = Set(envelope?.receipts.map(\.operationId) ?? [])
+    guard receipts.allSatisfy({ $0.operationId.map { recoveredIdentifiers.contains($0) } ?? false })
+    else {
+      throw PlannerFailure(
+        "mutationBlocked", "A prior applied action still needs independent recovery.")
+    }
+    guard snapshot.datasetId == identity.datasetId,
+      snapshot.ownershipBinding == identity.ownershipBinding,
+      associationUndoSnapshots[snapshot.closingOperationId]?.issuanceIdentifier
+        == snapshot.issuanceIdentifier
+    else {
+      throw PlannerFailure(
+        "associationUndoUnavailable", "This removal can no longer be undone in this app run.")
+    }
+    let current = try importReviewSnapshot(context).backup
+    let graph = PlannerImportGraph(backup: current)
+    guard
+      current.deletionMarkers.contains(where: {
+        $0.operationId == snapshot.closingOperationId
+          && $0.target.importIdentity == snapshot.identity
+      }), graph.liveIdentity(for: snapshot.identity) == nil,
+      !current.restorationFamilies.contains(where: { $0.predecessor == snapshot.identity })
+    else {
+      throw PlannerFailure(
+        "associationUndoUnavailable", "Newer relationship history prevents restoring this removal.")
+    }
+    if let proposal = try archive.proposals().first(where: {
+      $0.originalOperationId == operation.operationId
+    }) {
+      guard proposal.payloadDigest == digest else {
+        throw PlannerFailure(
+          "operationPayloadMismatch", "Prepared evidence describes another restoration.")
+      }
+      return .init(operationId: operation.operationId, outcome: .unverified(proposal.summary))
+    }
+    let lifetimeIdentifier = UUID()
+    let restoredReference: PlannerReferenceRead
+    let ownerReference: PlannerEntityReference
+    let bindings: [PlannerBoundIdentity]
+    var restoredExpandedReferences: [PlannerReferenceRead] = []
+    var restoredItineraryIdentifiers: Set<UUID> = []
+    switch snapshot.originalRecord {
+    case .membership(let original):
+      let memberships = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
+      guard
+        !memberships.contains(where: {
+          $0.id == original.id
+            || ($0.listId == original.list.id && $0.listLifetimeId == original.listLifetimeId
+              && $0.itemId == original.item.id && $0.itemLifetimeId == original.itemLifetimeId)
+        })
+      else {
+        throw PlannerFailure(
+          "associationUndoUnavailable", "A newer membership is already using this Item and List.")
+      }
+      let owners = try context.fetch(FetchDescriptor<PlannerSchemaV18.List>()).filter {
+        $0.id == original.list.id && $0.lifetimeId == original.listLifetimeId
+      }
+      let sources = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).filter {
+        $0.id == original.item.id && $0.lifetimeId == original.itemLifetimeId
+      }
+      guard owners.count == 1, let owner = owners.first,
+        sources.count == 1, let source = sources.first
+      else {
+        throw PlannerFailure(
+          "associationUndoUnavailable", "The original Item or List is no longer available.")
+      }
+      let entries = try context.fetch(FetchDescriptor<PlannerSchemaV18.ItineraryEntry>())
+      var expandedEntries:
+        [(state: PlannerPortableExpandedCompletion, entry: PlannerSchemaV18.ItineraryEntry)] = []
+      for state in snapshot.originalExpandedStates {
+        let matches = entries.filter {
+          $0.id == state.context.listEntryId && $0.lifetimeId == state.context.listEntryLifetimeId
+            && $0.sourceKind == "list" && $0.sourceId == original.list.id
+            && $0.sourceLifetimeId == original.listLifetimeId
+        }
+        guard state.context.membershipId == original.id,
+          state.context.membershipLifetimeId == original.lifetimeId,
+          matches.count == 1, let entry = matches.first
+        else {
+          throw PlannerFailure(
+            "associationUndoUnavailable", "An original Itinerary entry is no longer available.")
+        }
+        _ = try entry.value()
+        expandedEntries.append((state, entry))
+      }
+      let restored = MembershipSnapshot(
+        id: original.id, lifetimeId: lifetimeIdentifier,
+        list: .init(kind: "list", id: original.list.id, lifetimeId: original.listLifetimeId),
+        item: .init(kind: "item", id: original.item.id, lifetimeId: original.itemLifetimeId),
+        rank: original.rank, localDone: original.localDone)
+      let membership = PlannerSchemaV18.Membership(snapshot: restored, list: owner, item: source)
+      context.insert(membership)
+      for (state, entry) in expandedEntries {
+        let entrySnapshot = try entry.value()
+        context.insert(
+          PlannerSchemaV18.ExpandedCompletion(
+            listEntry: entry, membership: membership, localDone: state.localDone))
+        restoredExpandedReferences.append(
+          .expandedCompletion(
+            itineraryId: entrySnapshot.itinerary.id, listEntryId: entrySnapshot.id,
+            membershipId: original.id))
+        restoredItineraryIdentifiers.insert(entrySnapshot.itinerary.id)
+      }
+      owner.updatedAt = Date()
+      restoredReference = restored.reference
+      ownerReference = original.list
+      bindings = [
+        .init(kind: "membership", id: original.id, lifetimeId: original.lifetimeId),
+        restored.list, restored.item,
+      ]
+    case .itineraryEntry(let original):
+      let owners = try context.fetch(FetchDescriptor<PlannerSchemaV18.Itinerary>()).filter {
+        $0.id == original.itinerary.id && $0.lifetimeId == original.itineraryLifetimeId
+      }
+      let items = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).filter {
+        $0.id == original.source.id && $0.lifetimeId == original.sourceLifetimeId
+      }
+      let lists = try context.fetch(FetchDescriptor<PlannerSchemaV18.List>()).filter {
+        $0.id == original.source.id && $0.lifetimeId == original.sourceLifetimeId
+      }
+      guard owners.count == 1, let owner = owners.first,
+        (original.source.kind == .item && items.count == 1)
+          || (original.source.kind == .list && lists.count == 1)
+      else {
+        throw PlannerFailure(
+          "associationUndoUnavailable", "The original Itinerary or source is no longer available.")
+      }
+      let memberships = try context.fetch(FetchDescriptor<PlannerSchemaV18.Membership>())
+      var expandedMemberships:
+        [(state: PlannerPortableExpandedCompletion, membership: PlannerSchemaV18.Membership)] = []
+      for state in snapshot.originalExpandedStates {
+        let matches = memberships.filter {
+          $0.id == state.context.membershipId
+            && $0.lifetimeId == state.context.membershipLifetimeId
+            && $0.listId == original.source.id && $0.listLifetimeId == original.sourceLifetimeId
+        }
+        guard original.source.kind == .list,
+          state.context.listEntryId == original.id,
+          state.context.listEntryLifetimeId == original.lifetimeId,
+          matches.count == 1, let membership = matches.first
+        else {
+          throw PlannerFailure(
+            "associationUndoUnavailable", "An original List membership is no longer available.")
+        }
+        expandedMemberships.append((state, membership))
+      }
+      let restored = ItineraryEntrySnapshot(
+        id: original.id, lifetimeId: lifetimeIdentifier,
+        itinerary: .init(
+          kind: "itinerary", id: original.itinerary.id, lifetimeId: original.itineraryLifetimeId),
+        source: .init(
+          kind: original.source.kind.rawValue, id: original.source.id,
+          lifetimeId: original.sourceLifetimeId), rank: original.rank, localDone: original.localDone
+      )
+      let entry = PlannerSchemaV18.ItineraryEntry(
+        snapshot: restored, itinerary: owner,
+        item: original.source.kind == .item ? items.first : nil,
+        list: original.source.kind == .list ? lists.first : nil)
+      context.insert(entry)
+      for (state, membership) in expandedMemberships {
+        context.insert(
+          PlannerSchemaV18.ExpandedCompletion(
+            listEntry: entry, membership: membership, localDone: state.localDone))
+        restoredExpandedReferences.append(
+          .expandedCompletion(
+            itineraryId: original.itinerary.id, listEntryId: original.id,
+            membershipId: state.context.membershipId))
+      }
+      owner.updatedAt = Date()
+      restoredReference = restored.reference
+      ownerReference = original.itinerary
+      bindings = [
+        .init(kind: "itineraryEntry", id: original.id, lifetimeId: original.lifetimeId),
+        restored.itinerary, restored.source,
+      ]
+    }
+    let family = PlannerPortableRestorationFamily(
+      familyId: plannerRestorationFamilyIdentifier(snapshot.identity),
+      predecessor: snapshot.identity,
+      candidates: [.init(lifetimeId: lifetimeIdentifier, operationId: operation.operationId)])
+    try plannerStageLineageRecord(
+      family, identifier: family.familyId, kind: "restorationFamily",
+      records: context.fetch(FetchDescriptor<PlannerSchemaV16.LineageRecord>()), context: context)
+    let items = try context.fetch(FetchDescriptor<PlannerSchemaV18.Item>()).map { try $0.value() }
+    let lists = try listSnapshots(context)
+    let itineraries = try itinerarySnapshots(context)
+    let labels = try labelAssociationSnapshots(context)
+    let tags = try tagSnapshots(context)
+    let categories = try categorySnapshots(context)
+    let memberships = try membershipSnapshots(context)
+    let markers = try deletionMarkers(context)
+    let lineage = try PlannerNativeLineage(context: context)
+    let restorationProposalIdentifier = UUID()
+    try archive.prepare(
+      .init(
+        proposalId: restorationProposalIdentifier, originalOperationId: operation.operationId,
+        datasetId: identity.datasetId, ownershipBinding: identity.ownershipBinding,
+        proposedBackup: .init(
+          itineraries: itineraries, labelAssociations: labels, tags: tags, categories: categories,
+          items: items, lists: lists, memberships: memberships, deletionMarkers: markers,
+          contextAliases: lineage.contextAliases, completionChanges: lineage.completionChanges,
+          restorationFamilies: lineage.restorationFamilies),
+        payloadDigest: digest, evidence: "preparedUnverified"))
+    let result = PlannerAppliedResult(
+      generatedIdentities: [],
+      affectedIdentities: [.reference(restoredReference), .source(ownerReference)]
+        + restoredExpandedReferences.map { .reference($0) }
+        + restoredItineraryIdentifiers.sorted { $0.uuidString < $1.uuidString }.map {
+          .source(.init(kind: .itinerary, id: $0))
+        })
+    let receipt = try PlannerSchemaV1.Receipt(
+      operation: operation, digest: digest, result: result, bindings: bindings)
+    context.insert(receipt)
+    do { try context.save() } catch {
+      context.rollback()
+      do { try archive.discardPreparedProposal(restorationProposalIdentifier) } catch {
+        throw PlannerFailure(
+          "persistenceFailure",
+          "The restoration save failed and its prepared evidence could not be cleared. Resolve operation status before retrying."
+        )
+      }
+      throw PlannerFailure(
+        "persistenceFailure",
+        "The association restoration was not committed: \(error.localizedDescription)")
+    }
+    do {
+      let generation = try archive.publish(
+        itineraries: itineraries, labelAssociations: labels, tags: tags, categories: categories,
+        items: items, lists: lists, memberships: memberships, deletionMarkers: markers,
+        contextAliases: lineage.contextAliases, completionChanges: lineage.completionChanges,
+        restorationFamilies: lineage.restorationFamilies, receipts: receipts + [receipt])
+      return .init(
+        operationId: operation.operationId,
+        outcome: .applied(result: result, recovery: .complete(checkpointGeneration: generation)))
+    } catch {
+      return .init(
         operationId: operation.operationId,
         outcome: .applied(
           result: result, recovery: .incomplete(failure(error, code: "recoveryIncomplete"))))

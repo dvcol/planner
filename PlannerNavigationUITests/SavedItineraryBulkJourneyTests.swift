@@ -2,6 +2,63 @@ import XCTest
 
 @MainActor
 final class SavedItineraryBulkJourneyTests: XCTestCase {
+  func testNativeUndoRestoresOneRepeatedItineraryEntry() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    createItem("Museum", application: application)
+    createList(application)
+    createItinerary(application)
+    for _ in 0..<2 { addEntry("Food stops", application: application) }
+    let originalIdentifiers = itineraryRows(application).allElementsBoundByIndex.map(\.identifier)
+    XCTAssertEqual(originalIdentifiers.count, 2)
+    application.plannerElement(
+      originalIdentifiers[0].replacingOccurrences(
+        of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")
+    ).activateForPlannerJourney()
+    XCTAssertTrue(waitForItineraryOrder(originalIdentifiers, application: application))
+    XCTAssertTrue(
+      application.plannerElement(
+        originalIdentifiers[0].replacingOccurrences(
+          of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")
+      ).waitForPlannerValue("Completed"))
+    assertChecks(["Completed", "To do"], application: application)
+    openEntryMenu(application.staticTexts["Food stops"].firstMatch)
+    application.plannerElement("Remove from Itinerary").activateForPlannerJourney()
+    XCTAssertTrue(
+      waitForItineraryOrder([originalIdentifiers[1]], application: application))
+    #if os(macOS)
+      application.typeKey("z", modifierFlags: .command)
+    #else
+      let undo = application.plannerElement("saved.association.undo")
+      XCTAssertTrue(undo.waitForExistence(timeout: 5))
+      let tabs = application.tabBars.firstMatch
+      if tabs.exists {
+        let listsTab = tabs.buttons["Lists"]
+        XCTAssertTrue(listsTab.exists)
+        XCTAssertLessThanOrEqual(undo.frame.maxY, listsTab.frame.minY)
+      }
+      openSection("Calendar", application: application)
+      XCTAssertTrue(
+        application.otherElements["saved.calendar.canvas"].waitForExistence(timeout: 10))
+      openItinerary(application)
+      XCTAssertTrue(undo.waitForExistence(timeout: 5))
+      recordScreenshot(application, name: "Native Itinerary removal offers scoped Undo")
+      undo.activateForPlannerJourney()
+    #endif
+    XCTAssertTrue(waitForItineraryOrder(originalIdentifiers, application: application))
+    assertChecks(["Completed", "To do"], application: application)
+    assertProgress("1 of 2 items done", application: application)
+    recordScreenshot(application, name: "Native Undo restores one independent repeated List entry")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItinerary(application)
+    XCTAssertTrue(waitForItineraryOrder(originalIdentifiers, application: application))
+    assertChecks(["Completed", "To do"], application: application)
+    XCTAssertFalse(application.plannerElement("saved.association.undo").exists)
+  }
+
   func testArchivedRepeatedListBranchesFinishProgressWithoutCompletingTheirItems() {
     continueAfterFailure = false
     let application = XCUIApplication()
@@ -490,8 +547,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
   }
 
   private func createList(_ application: XCUIApplication) {
-    openSection("Lists", application: application)
-    reveal("saved.list.new", application: application).activateForPlannerJourney()
+    application.beginPlannerListCreation()
     let field = application.textFields["saved.list.name"]
     XCTAssertTrue(field.waitForExistence(timeout: 5))
     field.activateForPlannerJourney()
@@ -585,6 +641,15 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
 
   private func openItinerary(_ application: XCUIApplication) {
     openSection("Itineraries", application: application)
+    #if os(iOS)
+      if application.navigationBars["Weekend route"].exists,
+        application.collectionViews["saved.itinerary.contents"].exists
+      {
+        let sidebar = application.buttons["Hide Sidebar"].firstMatch
+        if sidebar.exists && sidebar.isHittable { sidebar.activateForPlannerJourney() }
+        return
+      }
+    #endif
     selectContainer(
       prefix: "saved.itinerary.row.", title: "Weekend route", application: application)
   }
@@ -601,11 +666,11 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
   private func openSection(_ title: String, application: XCUIApplication) {
     #if os(macOS)
       let section = application.plannerElement("saved.section.\(title.lowercased())")
+      XCTAssertTrue(section.waitForExistence(timeout: 10))
+      section.activateForPlannerJourney()
     #else
-      let section = application.buttons[title].firstMatch
+      application.openPlannerSection(title)
     #endif
-    XCTAssertTrue(section.waitForExistence(timeout: 10))
-    section.activateForPlannerJourney()
   }
 
   private func reveal(_ identifier: String, application: XCUIApplication) -> XCUIElement {

@@ -220,6 +220,77 @@ struct MembershipRemovalTests {
     #expect(namespaces.first?.preparedProposals.isEmpty == true)
   }
 
+  @Test func undoRestoresTheOriginalMembershipIdentityOrderAndLocalCompletion() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = Planner(
+      configuration: .init(
+        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+        controlURL: directory.appendingPathComponent("control/writer"),
+        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+        processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let session) = await planner.bootstrap() else {
+      throw FixtureFailure.unexpectedOutcome
+    }
+    let item = try await source(
+      planner, session: session,
+      command: .createItem(content: .init(title: "Museum", notes: "Keep shared notes")))
+    let nextItem = try await source(
+      planner, session: session, command: .createItem(content: .init(title: "Lunch")))
+    let list = try await source(
+      planner, session: session, command: .createList(content: .init(name: "Saturday")))
+    let reference = try await membership(planner, session: session, item: item, list: list)
+    _ = try await membership(planner, session: session, item: nextItem, list: list)
+    guard case .membership(let membershipIdentifier, _, _) = reference,
+      case .applied(_, .complete) = await planner.execute(
+        .init(
+          operationId: UUID(), session: session,
+          command: .setCompletion(
+            scope: .appearance(
+              .listMembership(listId: list.id, membershipId: membershipIdentifier)), done: true))
+      ).outcome,
+      case .exported(let beforeData) = await planner.exportData(session: session),
+      case .decoded(let before) = planner.decodeImport(beforeData)
+    else { throw FixtureFailure.unexpectedOutcome }
+    let original = try #require(before.backup.memberships.first { $0.id == membershipIdentifier })
+    let removalIdentifier = UUID()
+    let removal = await planner.execute(
+      .init(
+        operationId: removalIdentifier, session: session,
+        command: .removeMembership(listId: list.id, membershipId: membershipIdentifier)))
+    guard case .applied(_, .complete) = removal.outcome else {
+      throw FixtureFailure.unexpectedOutcome
+    }
+    let snapshot = try #require(removal.associationUndoSnapshot)
+    #expect(snapshot.closingOperationId == removalIdentifier)
+    #expect(snapshot.identity.id == membershipIdentifier)
+    #expect(snapshot.identity.lifetimeId == original.lifetimeId)
+    let restoration = await planner.execute(
+      .init(operationId: UUID(), session: session, command: .restoreAssociation(snapshot: snapshot))
+    )
+    guard case .applied(_, .complete) = restoration.outcome,
+      case .appearance(let restoredAppearance) = await planner.read(
+        session: session,
+        request: .appearance(.listMembership(listId: list.id, membershipId: membershipIdentifier))),
+      case .source(.item(let retainedItem)) = await planner.read(
+        session: session, request: .source(item)),
+      case .exported(let afterData) = await planner.exportData(session: session),
+      case .decoded(let after) = planner.decodeImport(afterData)
+    else {
+      Issue.record("Undo must durably restore the original membership.")
+      return
+    }
+    let restored = try #require(after.backup.memberships.first { $0.id == membershipIdentifier })
+    #expect(restored.lifetimeId != original.lifetimeId)
+    #expect(restored.rank == original.rank)
+    #expect(restored.localDone)
+    #expect(restoredAppearance.localDone && restoredAppearance.effectiveDone)
+    #expect(retainedItem.state.globalDone == false)
+    #expect(retainedItem.content.notes == "Keep shared notes")
+    #expect(after.backup.memberships.count == 2)
+    #expect(after.backup.restorationFamilies.count == 1)
+  }
+
   private func source(
     _ planner: Planner, session: PlannerDatasetSession, command: PlannerCommand
   ) async throws -> PlannerEntityReference {

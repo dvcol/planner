@@ -1408,7 +1408,8 @@ struct CommandRoutingTests {
   }
 
   @Test(arguments: [
-    "deleteSource", "applyImport", "restoreRecovery", "retryRecovery", "exportData", "decodeImport",
+    "deleteSource", "applyImport", "restoreRecovery", "restoreAssociation", "retryRecovery",
+    "exportData", "decodeImport",
   ])
   func nativeAdministrationIsForbiddenWithoutChangingHotel(_ commandType: String) async throws {
     let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)

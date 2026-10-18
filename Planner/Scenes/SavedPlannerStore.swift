@@ -414,10 +414,12 @@ final class SavedPlannerStore {
       operationId: UUID()) != nil
   }
 
-  func removeItineraryEntry(_ entryIdentifier: UUID, itineraryIdentifier: UUID) async -> Bool {
-    await executeChange(
+  func removeItineraryEntry(_ entryIdentifier: UUID, itineraryIdentifier: UUID) async
+    -> PlannerOperationResult?
+  {
+    await executeChangeResponse(
       .removeItineraryEntry(itineraryId: itineraryIdentifier, entryId: entryIdentifier),
-      operationId: UUID()) != nil
+      operationId: UUID())
   }
 
   func makeItemWindow() -> SavedItemWindow? {
@@ -602,10 +604,19 @@ final class SavedPlannerStore {
       != nil
   }
 
-  func removeMembership(_ membershipIdentifier: UUID, listIdentifier: UUID) async -> Bool {
-    await executeChange(
+  func removeMembership(_ membershipIdentifier: UUID, listIdentifier: UUID) async
+    -> PlannerOperationResult?
+  {
+    await executeChangeResponse(
       .removeMembership(listId: listIdentifier, membershipId: membershipIdentifier),
-      operationId: UUID()) != nil
+      operationId: UUID())
+  }
+
+  func restoreAssociation(
+    _ snapshot: PlannerAssociationUndoSnapshot, operationIdentifier: UUID
+  ) async -> PlannerOperationResult? {
+    await executeChangeResponse(
+      .restoreAssociation(snapshot: snapshot), operationId: operationIdentifier)
   }
 
   func moveMembership(
@@ -751,12 +762,22 @@ final class SavedPlannerStore {
   private func executeChange(
     _ command: PlannerCommand, operationId: UUID
   ) async -> PlannerAppliedResult? {
+    guard let result = await executeChangeResponse(command, operationId: operationId),
+      case .applied(let applied, _) = result.outcome
+    else { return nil }
+    return applied
+  }
+
+  private func executeChangeResponse(
+    _ command: PlannerCommand, operationId: UUID
+  ) async -> PlannerOperationResult? {
     guard let planner, let session, canCreate else { return nil }
     isSaving = true
     defer { isSaving = false }
     let result = await planner.execute(
       PlannerOperation(operationId: operationId, session: session, command: command))
-    return await handleChangeResult(result)
+    _ = await handleChangeResult(result)
+    return result
   }
 
   private func handleChangeResult(_ result: PlannerOperationResult) async -> PlannerAppliedResult? {

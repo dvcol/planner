@@ -177,4 +177,134 @@ struct ExpandedCompletionMembershipTests {
       #expect(retained.localDone == (mode == "moveExisting"))
     }
   }
+
+  @Test func undoRestoresMembershipContextsAcrossRepeatedEntriesAndItineraries() async throws {
+    let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at: directory) }
+    let planner = Planner(
+      configuration: .init(
+        storeURL: directory.appendingPathComponent("store/Planner.sqlite"),
+        controlURL: directory.appendingPathComponent("control/writer"),
+        recoveryDirectoryURL: directory.appendingPathComponent("recovery"),
+        processRole: .mainApplication, storageMode: .localOnly))
+    guard case .ready(let session) = await planner.bootstrap() else { throw CancellationError() }
+    func save(_ command: PlannerCommand) async throws -> PlannerAppliedResult {
+      guard
+        case .applied(let result, .complete) = await planner.execute(
+          .init(operationId: UUID(), session: session, command: command)
+        ).outcome
+      else { throw CancellationError() }
+      return result
+    }
+    let item = try #require(
+      try await save(.createItem(content: .init(title: "Hotel"))).generated.first)
+    let list = try #require(
+      try await save(.createList(content: .init(name: "Food"))).generated.first)
+    let otherList = try #require(
+      try await save(.createList(content: .init(name: "Wishlist"))).generated.first)
+    let firstItinerary = try #require(
+      try await save(
+        .createItinerary(content: .init(title: "Saturday"))
+      ).generated.first)
+    let secondItinerary = try #require(
+      try await save(
+        .createItinerary(content: .init(title: "Sunday"))
+      ).generated.first)
+    guard
+      case .membership(let membershipIdentifier, _, _)? = try await save(
+        .addMembership(itemId: item.id, listId: list.id, placement: .last)
+      ).generatedReferences.first,
+      case .membership(let otherMembershipIdentifier, _, _)? = try await save(
+        .addMembership(itemId: item.id, listId: otherList.id, placement: .last)
+      ).generatedReferences.first
+    else { throw CancellationError() }
+    _ = try await save(
+      .setCompletion(
+        scope: .appearance(
+          .listMembership(
+            listId: otherList.id, membershipId: otherMembershipIdentifier)), done: true))
+    var appearances: [PlannerAppearance] = []
+    for itinerary in [firstItinerary, firstItinerary, secondItinerary] {
+      guard
+        case .itineraryEntry(let entryIdentifier, _, _)? = try await save(
+          .addItineraryEntry(itineraryId: itinerary.id, source: list, placement: .last)
+        )
+        .generatedReferences.first
+      else { throw CancellationError() }
+      appearances.append(
+        .expandedListItem(
+          itineraryId: itinerary.id, listEntryId: entryIdentifier,
+          membershipId: membershipIdentifier))
+    }
+    for appearance in appearances {
+      _ = try await save(.setCompletion(scope: .appearance(appearance), done: true))
+    }
+    _ = try await save(.setCompletion(scope: .appearance(appearances[1]), done: false))
+    guard case .exported(let originalData) = await planner.exportData(session: session),
+      case .decoded(let original) = planner.decodeImport(originalData)
+    else { throw CancellationError() }
+    let originalMembership = try #require(
+      original.backup.memberships.first {
+        $0.id == membershipIdentifier
+      })
+    let removal = await planner.execute(
+      .init(
+        operationId: UUID(), session: session,
+        command: .removeMembership(listId: list.id, membershipId: membershipIdentifier)))
+    guard case .applied(_, .complete) = removal.outcome else { throw CancellationError() }
+    let snapshot = try #require(removal.associationUndoSnapshot)
+    let restoration = await planner.execute(
+      .init(
+        operationId: UUID(), session: session,
+        command: .restoreAssociation(snapshot: snapshot)))
+    guard case .applied(_, .complete) = restoration.outcome else {
+      Issue.record("Undo must restore the membership and its captured expanded contexts together.")
+      return
+    }
+    let expectedCompletionStates = [true, false, true]
+    for (index, appearance) in appearances.enumerated() {
+      guard
+        case .appearance(let restored) = await planner.read(
+          session: session, request: .appearance(appearance))
+      else { throw CancellationError() }
+      #expect(restored.localDone == expectedCompletionStates[index])
+      #expect(restored.effectiveDone == expectedCompletionStates[index])
+    }
+    guard
+      case .appearance(let standalone) = await planner.read(
+        session: session,
+        request: .appearance(.listMembership(listId: list.id, membershipId: membershipIdentifier))),
+      case .appearance(let other) = await planner.read(
+        session: session,
+        request: .appearance(
+          .listMembership(listId: otherList.id, membershipId: otherMembershipIdentifier))),
+      case .source(.itinerary(let first)) = await planner.read(
+        session: session, request: .source(firstItinerary)),
+      case .source(.itinerary(let second)) = await planner.read(
+        session: session, request: .source(secondItinerary)),
+      case .exported(let restoredData) = await planner.exportData(session: session),
+      case .decoded(let restoredBackup) = planner.decodeImport(restoredData)
+    else { throw CancellationError() }
+    #expect(!standalone.localDone && other.localDone)
+    #expect(first.progress.doneCount == 1 && first.progress.totalCount == 2)
+    #expect(second.progress.doneCount == 1 && second.progress.totalCount == 1)
+    let restoredMembership = try #require(
+      restoredBackup.backup.memberships.first {
+        $0.id == membershipIdentifier
+      })
+    #expect(restoredMembership.lifetimeId != originalMembership.lifetimeId)
+    #expect(restoredMembership.rank == originalMembership.rank)
+    let restoredContexts = restoredBackup.backup.expandedCompletions.filter {
+      $0.context.membershipId == membershipIdentifier
+    }
+    #expect(restoredContexts.count == snapshot.originalExpandedStates.count)
+    for restored in restoredContexts {
+      let originalEntry = try #require(
+        original.backup.itineraryEntries.first {
+          $0.id == restored.context.listEntryId
+        })
+      #expect(restored.context.listEntryLifetimeId == originalEntry.lifetimeId)
+      #expect(restored.context.membershipLifetimeId == restoredMembership.lifetimeId)
+    }
+  }
 }
