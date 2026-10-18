@@ -36,8 +36,10 @@ struct SavedAddItemForm: View {
         ForEach(items ?? []) { item in
           Label(item.row.title, systemImage: "square.stack")
             .tag(item.id)
+            .accessibilityIdentifier("saved.membership.choice.item.\(item.id.uuidString)")
         }
       }
+      .accessibilityIdentifier("saved.membership.choices")
       .overlay {
         if let loadFailure {
           ContentUnavailableView {

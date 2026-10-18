@@ -1,0 +1,14 @@
+{
+  "classification": "Live native scroll-controller overshoot; no product-red credit.",
+  "capture": "controller-overshoot-live.png",
+  "captureCommand": [
+    "xcrun",
+    "simctl",
+    "io",
+    "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "screenshot",
+    "/private/tmp/PlannerPickerTraversalLive.png"
+  ],
+  "observation": "The live runner is still looking for Item 129 while the Simulator shows the picker at Items 184 through 193. Its forward-only fallback cannot recover after a fling overshoots an unmaterialized target.",
+  "nextController": "Use actual visible fixture-row ordinals to choose swipe direction, recover overshoot and require the full target below the native navigation bar. Leave product behavior unchanged."
+}

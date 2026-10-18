@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "82B9DFCB-FC3A-4C49-BCC6-E53646ECAC16.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item picker preserves its added appearance after relaunch_0_7D228BDD-9060-4533-BA75-6344A3B24BD0.png",
+    "timestamp": 1792297027.937,
+    "testIdentifier": "ListWindowJourneyTests/testAddingAnOffscreenPickerSelectionKeepsItsSourceAndOriginalListAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "BCEF7761-50FD-4E9D-811B-2F3F67BFC90F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item picker adds its selected source to the original List_0_21C8AD6D-9A7C-45F6-A14E-B6F72B00CE65.png",
+    "timestamp": 1792297013.507,
+    "testIdentifier": "ListWindowJourneyTests/testAddingAnOffscreenPickerSelectionKeepsItsSourceAndOriginalListAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "D3692A41-65F6-48FD-A1DB-9195C4CB7254.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item picker retains a selected source after revisiting its first page_0_B50086B1-96D7-474C-96B4-F31BFD7EAF27.png",
+    "timestamp": 1792297006.05,
+    "testIdentifier": "ListWindowJourneyTests/testAddingAnOffscreenPickerSelectionKeepsItsSourceAndOriginalListAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "0261AD61-DBA3-47F1-8BD7-B0491EE5552E.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item picker source is fully visible before selection_0_0F941722-8627-411F-8103-B690E46B40D4.png",
+    "timestamp": 1792296860.893,
+    "testIdentifier": "ListWindowJourneyTests/testAddingAnOffscreenPickerSelectionKeepsItsSourceAndOriginalListAfterRelaunch()"
+  }
+]

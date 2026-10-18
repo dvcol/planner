@@ -1,0 +1,21 @@
+{
+  "scope": "Original passing eager-baseline iPad captures inspected by the primary agent.",
+  "captures": [
+    {
+      "path": "picker-list-tablet-directional-baseline/0261AD61-DBA3-47F1-8BD7-B0491EE5552E.png",
+      "observed": "Item 129 is fully below the native sheet navigation bar before selection."
+    },
+    {
+      "path": "picker-list-tablet-directional-baseline/D3692A41-65F6-48FD-A1DB-9195C4CB7254.png",
+      "observed": "The first page is visible while Add remains enabled for the offscreen selected Item."
+    },
+    {
+      "path": "picker-list-tablet-directional-baseline/82B9DFCB-FC3A-4C49-BCC6-E53646ECAC16.png",
+      "observed": "After relaunch Shared Item List contains Items 193 and 129, both Todo, with a full two-item count and ten-minute estimate."
+    }
+  ],
+  "limits": [
+    "Eager compatibility baseline only, not retention or performance evidence.",
+    "No Mac runtime, whole-app accessibility or physical/signing credit."
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/Scenes/SavedAddItemForm.swift",
+    "PlannerFixtureUITests/ListWindowJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "output": "",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedAddItemForm.swift": "456d70a20360995d6bec739977ad703a7f4c7a1e36e8344700d6f374e8316861",
+    "PlannerFixtureUITests/ListWindowJourneyTests.swift": "77657e893d3897c05cb4163df49165db41ab22eb3dd847eee6c685ca07a9c3ca"
+  }
+}

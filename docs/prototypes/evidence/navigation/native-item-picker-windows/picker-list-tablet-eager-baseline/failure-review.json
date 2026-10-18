@@ -1,0 +1,22 @@
+{
+  "classification": "Native scroll-controller failure; no product-red credit.",
+  "source": "XCTest recording exported from the retained xcresult for this failed attempt.",
+  "recordingFile": "1FE448A0-7BFE-4B2F-AD70-609D39092C6A.mp4",
+  "recordingSHA256": "41a4c80974ada5d634b0792b8c813cafd10d6f9d0e50ee03bae02f4e45f49b8a",
+  "frameCommand": [
+    "ffmpeg",
+    "-hide_banner",
+    "-loglevel",
+    "error",
+    "-sseof",
+    "-1",
+    "-i",
+    "/private/tmp/PlannerPickerBaselineAttachments/1FE448A0-7BFE-4B2F-AD70-609D39092C6A.mp4",
+    "-frames:v",
+    "1",
+    "/private/tmp/PlannerPickerBaselineFailure.png"
+  ],
+  "frame": "selection-tap-recording-frame.png",
+  "observation": "Inspected the frame one second before the recording ends. Item 131 is the first visible row below the sheet navigation bar; the requested Item 129 is above it and Add remains disabled.",
+  "correction": "Require the complete target frame to lie below the actual native navigation bar and within its collection viewport before tapping. The next attempt also captures the visible target before selection."
+}
