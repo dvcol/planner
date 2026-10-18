@@ -1,12 +1,12 @@
 # Selected Item presentation accessibility
 
-Status: a reproducible dark iPad contrast finding remains open for Q99. All temporary production row/style probes have been reverted. No passing contrast result or final UI acceptance is claimed.
+Status: Q99 A accepted on 18 October 2026. A controlled selection palette with native controls is approved; the reproducible dark iPad contrast finding still requires correction and qualification. All temporary production row/style probes have been reverted. No passing contrast result or final UI acceptance is claimed.
 
 ## Context and goal
 
 Selected collection rows must keep compact metadata readable while native selection and details retain their source identity. A recent Maps capture showed pale secondary metadata over a blue selected row. The review uses the existing public native UI seam and isolated `list-windows` fixture, with real saved Items, source identities and five-minute estimates.
 
-Before: selected-row contrast had no automatic audit evidence. The intended outcome is readable selected content, supported by native contrast checks and inspection in light/dark appearance without changing completion, navigation or paging. The current checkpoint establishes the finding and isolates its cause; the correction still needs the Q99 selection-treatment decision.
+Before: selected-row contrast had no automatic audit evidence. The intended outcome is readable selected content, supported by native contrast checks and inspection in light/dark appearance without changing completion, navigation or paging. This diagnostic checkpoint establishes the finding and isolates its cause. Q99 A now authorizes its correction through the existing native UI test boundary.
 
 ## Executed diagnosis
 
@@ -28,11 +28,11 @@ This supports the selected foreground/background combination as the remaining pr
 
 All corresponding mobile compilations pass. The earlier 20.912-second attempt expected the wrong fixture note, `Window notes 001` rather than `Window notes 1`, and failed before the audit. It is a test assertion mistake, not product-red evidence. The [literal results](evidence/navigation/native-selected-row-accessibility/results.json), compressed logs, source/product hashes, diagnostic source and original issue descriptions preserve every attempt. Each runtime verifies frozen source/products and restores Simulator appearance afterward.
 
-## Native design constraint and open choice
+## Native design constraint and accepted choice
 
 Apple's [background prominence](https://developer.apple.com/documentation/swiftui/environmentvalues/backgroundprominence) lets semantic styles adapt to an accent background; it exposes no selection color or contrast ratio. Resolving the accent color does not prove it equals a List's rendered selection. AppKit has [selected-content text color](https://developer.apple.com/documentation/appkit/nscolor/alternateselectedcontroltextcolor), but it supplies no cross-platform contrast policy for arbitrary colors.
 
-Q99 asks whether to retain native List/navigation controls with an app-controlled selected background/foreground treatment, or retain the exact system appearance with this contrast limitation open. The recommendation is controlled contrast, preserving native selection, keyboard, navigation and action semantics. No new Core, provider or test-only interface is proposed. Its actual appearance still needs light/dark and accessibility qualification before acceptance.
+Accepted Q99 A retains native List/navigation controls and permits an app-controlled selected background/foreground treatment where needed, preserving native selection, keyboard, navigation and action semantics. No new Core, provider or test-only interface is proposed. Its actual appearance still needs light/dark and accessibility qualification before acceptance.
 
 The diagnostic function is retained as compressed evidence rather than a permanently failing, filtered, skipped or expected-failure test in the ordinary suite. A correction can reuse the same already accepted native UI boundary. The [visual review](evidence/navigation/native-selected-row-accessibility/visual-review.json) names only inspected originals; additional exported captures have no implied visual acceptance.
 

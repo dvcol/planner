@@ -1,6 +1,6 @@
 # Native Agent Control lifecycle contract review
 
-Status: proposed for Q100. No implementation or tests at the new lifecycle/credential-store interface are authorized by this proposal alone. Existing public Core, HTTP, native UI and reader-process contracts remain accepted.
+Status: Q100 B selected on 18 October 2026. Defer native Agent Control implementation until signing and native Mac automation are available, then qualify actual signed storage/native journeys. The controlled credential-I/O interface in option A is not approved. Existing Core, HTTP, native UI and reader-process contracts remain accepted.
 
 ## Context and goal
 
@@ -13,7 +13,7 @@ The behavior remains governed by [Shared command contracts](shared-command-contr
 ## Definition of ready
 
 - The existing app-owned Core session, stateless official-SDK handler and real loopback start/stop interfaces are available. MCP clients cannot choose a dataset or account.
-- Q100 confirms the concrete lifecycle and credential I/O interfaces below before their tests are written.
+- Q100 B defers this implementation. The lifecycle and controlled credential I/O interfaces below describe unselected option A and are not approved test seams.
 - Local app-hosted tests use disposable real Core stores, temporary control-record directories and controlled credential I/O results. This supplies no signing or production Keychain credit.
 - Actual signed App Group/Keychain and physical work remain deferred by the user. No enrollment, provisioning, permission changes or plaintext fallback are authorized by this proposal.
 
