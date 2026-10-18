@@ -1,0 +1,16 @@
+{
+  "markdownLint": {
+    "files": [
+      "docs/native-agent-control-contract-review.md",
+      "docs/prototypes/mcp-native-access-readiness.md",
+      "docs/prototypes/mcp-native-build.md",
+      "docs/native-ui-polish.md"
+    ],
+    "exitCode": 0
+  },
+  "diffWhitespaceCheck": 0,
+  "productionSwiftOrConfigurationChanges": false,
+  "newSeamTestsWritten": false,
+  "actualClientCompatibilityCredit": false,
+  "nativeUIRuntimeCredit": false
+}

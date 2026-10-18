@@ -1,0 +1,16 @@
+{
+  "command": [
+    "codex",
+    "mcp",
+    "get",
+    "planner_qualification_6eaa5f4e4f814823b0fe0adcf1b380b7",
+    "--json",
+    "-c",
+    "mcp_servers.planner_qualification_6eaa5f4e4f814823b0fe0adcf1b380b7.url=\"http://127.0.0.1:44444/mcp\"",
+    "-c",
+    "mcp_servers.planner_qualification_6eaa5f4e4f814823b0fe0adcf1b380b7.http_headers_helper=\"/usr/bin/false\""
+  ],
+  "exitCode": 0,
+  "stdout": "{\n  \"name\": \"planner_qualification_6eaa5f4e4f814823b0fe0adcf1b380b7\",\n  \"enabled\": true,\n  \"disabled_reason\": null,\n  \"transport\": {\n    \"type\": \"streamable_http\",\n    \"url\": \"http://127.0.0.1:44444/mcp\",\n    \"bearer_token_env_var\": null,\n    \"http_headers\": null,\n    \"env_http_headers\": null,\n    \"http_headers_helper\": \"<redacted>\"\n  },\n  \"enabled_tools\": null,\n  \"disabled_tools\": null,\n  \"startup_timeout_sec\": null,\n  \"tool_timeout_sec\": null\n}\n",
+  "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)\n"
+}

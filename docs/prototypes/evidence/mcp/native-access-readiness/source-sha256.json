@@ -1,0 +1,7 @@
+{
+  "Planner/PlannerApp.swift": "f73a5ec56a1d7b3dbdd5ed5c001a693bfcd7669e5770f1b9a00d09e6c54cce23",
+  "Planner/Scenes/SavedPlannerStore.swift": "b11ae7c7efa6a35bd63a4db9b50d24927d238d14ad38e6a1da8b43938d78bb75",
+  "Planner/AgentControl/PlannerMCPRequestHandler.swift": "d246a58cb832071c71b7d7d062e01f5a5012d98487b4c20cf87f30bd74329f46",
+  "Planner/AgentControl/PlannerMCPLoopbackListener.swift": "56e00b716e0680245e521b9f671e43a7990f1c8103a5bd3f85e2bd14d7756e94",
+  "Configuration/PlannerMacPrototype.entitlements": "a4cc26a66f7c45d3a1cbfb4ea8d9c2fd71dda3f14fcb8d155eedf9b867c24f0b"
+}

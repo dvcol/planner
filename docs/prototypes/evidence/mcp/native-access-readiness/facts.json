@@ -1,0 +1,25 @@
+{
+  "sourceReview": "Primary-agent inspection and delegated read-only Agent Control fact check. No implementation or independent Standards/Spec acceptance claimed.",
+  "productionGap": [
+    "No production Enable/Stop owner constructs the handler/listener.",
+    "No MenuBarExtra agent status/control.",
+    "No same-executable --mcp-headers bootstrap or Keychain/App Group credential implementation."
+  ],
+  "acceptedSeams": [
+    "Real Core facade and app-owned dataset session.",
+    "Existing HTTP handler/listener and their external HTTP observations.",
+    "Native UI and approved same-executable reader process observations."
+  ],
+  "unconfirmedInterface": "Q100 native lifecycle owner and shared production credential-store I/O boundary.",
+  "officialSources": [
+    {
+      "url": "https://learn.chatgpt.com/docs/extend/mcp?surface=cli",
+      "finding": "Local HTTP supports http_headers_helper; helper output is a JSON string-to-string header map. Configuration recognition is not an actual connection."
+    },
+    {
+      "url": "https://code.claude.com/docs/en/mcp",
+      "finding": "headersHelper supplies dynamic connection headers. Project/local trust and reconnect behavior still require real qualification."
+    }
+  ],
+  "noClientQualificationClaim": true
+}

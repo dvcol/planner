@@ -1,0 +1,8 @@
+{
+  "packet": "docs/prototypes/evidence/navigation/native-scene-appearance/mac-maps-current-runtime",
+  "exitCode": 65,
+  "testCasesStarted": 0,
+  "runtimeCredit": false,
+  "reason": "XCTest timed out enabling automation mode before a Test Case started.",
+  "permissionOrSigningSettingsChanged": false
+}

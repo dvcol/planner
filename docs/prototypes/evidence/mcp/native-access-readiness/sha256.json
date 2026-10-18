@@ -1,0 +1,9 @@
+{
+  "codex-header-configuration-probe.json": "b82f36cdbd034ca56e9f3cefcea8a9654ad725467001a1dfd5d64e757e3023e5",
+  "facts.json": "3a70b168c14f8b1727f522e6f5e2da9931d9250e450921ba96e5aff15b66c1a2",
+  "installed-cli.json": "df265b27394dc942a00b0857d3e581d925ee21304912088414f15ed299fbf84b",
+  "mac-runtime-sha256.json": "358429a99a3147a84f5a384c28b22ba51ec972db29b1ffbd0d4f9acd808dee5f",
+  "mac-runtime.json": "9dc2d625e3decd39a584c8492506eae36963e67dec99a344b2dd5de3723eed69",
+  "source-sha256.json": "82d1d6ae011722ea6be2e08ea3c6c1aa43fc9db1778bb7e6786629fac8525fe3",
+  "validation.json": "0df1089a2e166e60e2308fdecf159d210153a77e21cbcf6690c3736be354e8a5"
+}

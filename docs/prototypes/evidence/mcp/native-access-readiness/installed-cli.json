@@ -1,0 +1,22 @@
+[
+  {
+    "command": [
+      "codex",
+      "--version"
+    ],
+    "exitCode": 0,
+    "stdout": "codex-cli 0.162.1",
+    "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Operation not permitted (os error 1)",
+    "clientConnectionCredit": false
+  },
+  {
+    "command": [
+      "claude",
+      "--version"
+    ],
+    "exitCode": 0,
+    "stdout": "2.1.295 (Claude Code)",
+    "stderr": "",
+    "clientConnectionCredit": false
+  }
+]
