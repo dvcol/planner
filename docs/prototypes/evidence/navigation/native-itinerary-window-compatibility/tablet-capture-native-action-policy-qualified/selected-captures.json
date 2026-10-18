@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "F73B20CB-247B-4222-A2C5-85B29FF40B03.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native List capture clears an archived remembered destination_0_4781DF85-990E-450C-B00B-2E90ECEE536E.png",
+    "timestamp": 1792337189.83,
+    "testIdentifier": "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A746416F-24A7-4D51-973A-78DFB91B5AE0.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Archived List native creation actions hierarchy_0_5ABBFCCD-B9E8-4C4A-A50D-AE76E1895E67.txt",
+    "timestamp": 1792337155.371,
+    "testIdentifier": "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+  }
+]

@@ -13,7 +13,7 @@ import XCTest
           "--fixture", "container-windows", "--fixture-dataset", UUID().uuidString,
         ]
         application.launchSavedPlannerJourney()
-        XCTAssertTrue(application.buttons["Lists"].firstMatch.waitForExistence(timeout: 60))
+        requireContainerNavigation(application)
         var lastIdentifiers: [String: String] = [:]
         for (section, kind, titleKind) in [
           ("Lists", "list", "List"), ("Itineraries", "itinerary", "Itinerary"),
@@ -56,6 +56,306 @@ import XCTest
         }
       }
 
+      func testDestinationWindowsKeepOffscreenAddAndMoveSelectionsAndTheirSavedContexts() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+        let application = XCUIApplication()
+        application.launchArguments = [
+          "--fixture", "container-windows", "--fixture-dataset", UUID().uuidString,
+        ]
+        application.launchSavedPlannerJourney()
+        requireContainerNavigation(application)
+        openCatalog("Items", application: application)
+        let source = application.savedPlannerItemRows("Window source").firstMatch
+        XCTAssertTrue(source.waitForExistence(timeout: 15))
+        let sourceIdentifier = source.identifier
+        source.activateForPlannerJourney()
+        application.plannerElement("saved.item.actions").activateForPlannerJourney()
+        application.plannerElement("Add to List").activateForPlannerJourney()
+        let firstDestination = destinationRow("Window List 001", application: application)
+        XCTAssertTrue(firstDestination.waitForExistence(timeout: 15))
+        let firstListIdentifier = firstDestination.identifier
+        firstDestination.activateForPlannerJourney()
+        let choices = application.collectionViews["saved.membership.destinations"]
+        let lastDestination = destinationRow("Window List 193", application: application)
+        scrollCatalog(choices, to: lastDestination, towardEnd: true, application: application)
+        let lastListIdentifier = lastDestination.identifier
+        let add = application.plannerElement("saved.item.list.add")
+        XCTAssertTrue(add.isEnabled)
+        capture("Windowed Add keeps its first destination selected while the last page is visible")
+        add.activateForPlannerJourney()
+        XCTAssertTrue(add.waitForNonExistence(timeout: 15))
+        openCatalog("Lists", application: application)
+        let firstList = application.plannerElement(
+          firstListIdentifier.replacingOccurrences(
+            of: "saved.membership.destination.", with: "saved.list."))
+        XCTAssertTrue(firstList.waitForExistence(timeout: 15))
+        firstList.activateForPlannerJourney()
+        let originalAppearance = application.savedPlannerItemRows("Window source").firstMatch
+        XCTAssertTrue(originalAppearance.waitForExistence(timeout: 15))
+        let originalAppearanceIdentifier = originalAppearance.identifier
+        let completion = application.buttons[
+          originalAppearanceIdentifier.replacingOccurrences(
+            of: "saved.appearance.", with: "saved.appearance.completion.")]
+        completion.activateForPlannerJourney()
+        XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+        originalAppearance.activateForPlannerJourney()
+        application.plannerElement("saved.appearance.actions").activateForPlannerJourney()
+        application.plannerElement("Move to List").activateForPlannerJourney()
+        XCTAssertTrue(choices.waitForExistence(timeout: 15))
+        XCTAssertFalse(firstDestination.exists)
+        scrollCatalog(choices, to: lastDestination, towardEnd: true, application: application)
+        XCTAssertEqual(lastDestination.identifier, lastListIdentifier)
+        lastDestination.activateForPlannerJourney()
+        let earliestMoveDestination = destinationRow("Window List 002", application: application)
+        scrollCatalog(
+          choices, to: earliestMoveDestination, towardEnd: false, application: application)
+        let move = application.plannerElement("saved.membership.move")
+        XCTAssertTrue(move.isEnabled)
+        capture("Windowed Move retains its last destination after revisiting the first page")
+        move.activateForPlannerJourney()
+        XCTAssertTrue(move.waitForNonExistence(timeout: 15))
+        application.terminate()
+        application.launchSavedPlannerJourney()
+        openCatalog("Lists", application: application)
+        let catalog = application.collectionViews["saved.lists.catalog"]
+        let finalList = containerRow("Window List 193", kind: "list", application: application)
+        scrollCatalog(catalog, to: finalList, towardEnd: true, application: application)
+        XCTAssertEqual(
+          finalList.identifier,
+          lastListIdentifier.replacingOccurrences(
+            of: "saved.membership.destination.", with: "saved.list."))
+        finalList.activateForPlannerJourney()
+        let movedAppearance = application.savedPlannerItemRows("Window source").firstMatch
+        XCTAssertTrue(movedAppearance.waitForExistence(timeout: 15))
+        XCTAssertNotEqual(movedAppearance.identifier, originalAppearanceIdentifier)
+        let movedCompletion = application.buttons[
+          movedAppearance.identifier.replacingOccurrences(
+            of: "saved.appearance.", with: "saved.appearance.completion.")]
+        XCTAssertTrue(movedCompletion.waitForPlannerValue("To do"))
+        movedAppearance.activateForPlannerJourney()
+        XCTAssertTrue(
+          application.staticTexts["Window source notes"].firstMatch.waitForExistence(timeout: 10))
+        capture(
+          "Windowed destination operations retain the original source and a new Todo appearance")
+        openCatalog("Items", application: application)
+        XCTAssertTrue(source.waitForExistence(timeout: 15))
+        XCTAssertEqual(source.identifier, sourceIdentifier)
+        XCTAssertEqual(application.savedPlannerItemRows("Window source").count, 1)
+      }
+
+      func testCaptureFilterAndItineraryListWindowsRetainOffscreenChoices() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+        let application = XCUIApplication()
+        application.launchArguments = [
+          "--fixture", "container-windows", "--fixture-dataset", UUID().uuidString,
+        ]
+        application.launchSavedPlannerJourney()
+        requireContainerNavigation(application)
+        openCatalog("Items", application: application)
+        application.openSavedPlannerCaptureEditor()
+        let input = application.textFields["saved.capture.input"]
+        XCTAssertTrue(input.waitForExistence(timeout: 10))
+        input.activateForPlannerJourney()
+        input.typeText("Window capture")
+        application.plannerElement("saved.capture.review").activateForPlannerJourney()
+        let form = application.collectionViews["saved.capture.form"]
+        XCTAssertTrue(form.waitForExistence(timeout: 15))
+        let firstCaptureList = choiceRow(
+          "Window List 001", prefix: "saved.capture.list.", application: application)
+        scrollCatalog(form, to: firstCaptureList, towardEnd: true, application: application)
+        let firstListIdentifier = firstCaptureList.identifier.replacingOccurrences(
+          of: "saved.capture.list.", with: "")
+        XCTAssertTrue(firstCaptureList.waitForPlannerBooleanState(false))
+        firstCaptureList.switches.firstMatch.activateForPlannerJourney()
+        XCTAssertTrue(firstCaptureList.waitForPlannerBooleanState(true))
+        let lastCaptureList = choiceRow(
+          "Window List 193", prefix: "saved.capture.list.", application: application)
+        scrollCatalog(form, to: lastCaptureList, towardEnd: true, application: application)
+        let lastListIdentifier = lastCaptureList.identifier.replacingOccurrences(
+          of: "saved.capture.list.", with: "")
+        let captureAdd = application.plannerElement("saved.capture.add")
+        XCTAssertTrue(captureAdd.isEnabled)
+        capture("Windowed Capture keeps its first destination while showing the final List page")
+        captureAdd.activateForPlannerJourney()
+        XCTAssertTrue(captureAdd.waitForNonExistence(timeout: 15))
+        openCatalog("Items", application: application)
+        let source = application.savedPlannerItemRows("Window capture").firstMatch
+        XCTAssertTrue(source.waitForExistence(timeout: 15))
+        let sourceIdentifier = source.identifier
+        application.plannerElement("saved.items.filters").activateForPlannerJourney()
+        application.revealSavedPlannerFilter("saved.filters.lists")
+        application.plannerElement("saved.filters.lists").activateForPlannerJourney()
+        let filterChoices = application.collectionViews["saved.filters.list.choices"]
+        XCTAssertTrue(filterChoices.waitForExistence(timeout: 15))
+        let filterChoice = choiceRow(
+          "Window List 001", prefix: "saved.filters.list.", application: application)
+        XCTAssertTrue(filterChoice.waitForExistence(timeout: 15))
+        XCTAssertEqual(filterChoice.identifier, "saved.filters.list.\(firstListIdentifier)")
+        XCTAssertTrue(filterChoice.waitForPlannerBooleanState(false))
+        filterChoice.switches.firstMatch.activateForPlannerJourney()
+        XCTAssertTrue(filterChoice.waitForPlannerBooleanState(true))
+        let finalFilterChoice = choiceRow(
+          "Window List 193", prefix: "saved.filters.list.", application: application)
+        scrollCatalog(
+          filterChoices, to: finalFilterChoice, towardEnd: true, application: application)
+        XCTAssertEqual(finalFilterChoice.identifier, "saved.filters.list.\(lastListIdentifier)")
+        capture("Windowed List filters keep the offscreen first List selected")
+        application.plannerElement("saved.filters.lists.done").activateForPlannerJourney()
+        application.plannerElement("saved.filters.done").activateForPlannerJourney()
+        XCTAssertTrue(source.waitForExistence(timeout: 15))
+        XCTAssertEqual(source.identifier, sourceIdentifier)
+        XCTAssertFalse(application.savedPlannerItemRows("Window source").firstMatch.exists)
+        XCTAssertEqual(application.savedPlannerItemRows("Window capture").count, 1)
+        openCatalog("Itineraries", application: application)
+        let itinerary = containerRow(
+          "Window Itinerary 001", kind: "itinerary", application: application)
+        XCTAssertTrue(itinerary.waitForExistence(timeout: 15))
+        let itineraryIdentifier = itinerary.identifier
+        itinerary.activateForPlannerJourney()
+        application.plannerElement("saved.itinerary.entry.new").activateForPlannerJourney()
+        let entryChoices = application.collectionViews["saved.itinerary.entry.choices"]
+        XCTAssertTrue(entryChoices.waitForExistence(timeout: 15))
+        let firstEntryChoice = choiceRow(
+          "Window List 001", prefix: "saved.itinerary.entry.choice.list.", application: application)
+        scrollCatalog(entryChoices, to: firstEntryChoice, towardEnd: true, application: application)
+        XCTAssertEqual(
+          firstEntryChoice.identifier, "saved.itinerary.entry.choice.list.\(firstListIdentifier)")
+        firstEntryChoice.activateForPlannerJourney()
+        let entryAdd = application.plannerElement("saved.itinerary.entry.add")
+        capture("Windowed Itinerary List selection before scrolling offscreen")
+        requireEnabled(entryAdd, application: application)
+        let lastEntryChoice = choiceRow(
+          "Window List 193", prefix: "saved.itinerary.entry.choice.list.", application: application)
+        scrollCatalog(entryChoices, to: lastEntryChoice, towardEnd: true, application: application)
+        XCTAssertEqual(
+          lastEntryChoice.identifier, "saved.itinerary.entry.choice.list.\(lastListIdentifier)")
+        capture("Windowed Itinerary List selection after scrolling offscreen")
+        requireEnabled(entryAdd, application: application)
+        entryAdd.activateForPlannerJourney()
+        XCTAssertTrue(entryAdd.waitForNonExistence(timeout: 15))
+        let appearance = choiceRow(
+          "Window capture", prefix: "saved.itinerary.appearance.", application: application)
+        XCTAssertTrue(appearance.waitForExistence(timeout: 15))
+        let appearanceIdentifier = appearance.identifier
+        let completion = application.buttons[
+          appearanceIdentifier.replacingOccurrences(
+            of: "saved.itinerary.appearance.", with: "saved.itinerary.completion.")]
+        XCTAssertTrue(completion.waitForPlannerValue("To do"))
+        XCTAssertTrue(application.staticTexts["0 of 2 items done"].firstMatch.exists)
+        application.terminate()
+        application.launchSavedPlannerJourney()
+        openCatalog("Itineraries", application: application)
+        XCTAssertTrue(itinerary.waitForExistence(timeout: 15))
+        XCTAssertEqual(itinerary.identifier, itineraryIdentifier)
+        itinerary.activateForPlannerJourney()
+        XCTAssertTrue(appearance.waitForExistence(timeout: 15))
+        XCTAssertEqual(appearance.identifier, appearanceIdentifier)
+        XCTAssertTrue(completion.waitForPlannerValue("To do"))
+        capture("Windowed Capture and Itinerary choices retain their saved contextual identities")
+      }
+
+      func testItineraryListSelectionSurvivesPresentationEviction() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+        let application = XCUIApplication()
+        application.launchArguments = [
+          "--fixture", "container-windows", "--fixture-dataset", UUID().uuidString,
+        ]
+        application.launchSavedPlannerJourney()
+        requireContainerNavigation(application)
+        openCatalog("Itineraries", application: application)
+        let itinerary = containerRow(
+          "Window Itinerary 001", kind: "itinerary", application: application)
+        XCTAssertTrue(itinerary.waitForExistence(timeout: 15))
+        itinerary.activateForPlannerJourney()
+        application.plannerElement("saved.itinerary.entry.new").activateForPlannerJourney()
+        let choices = application.collectionViews["saved.itinerary.entry.choices"]
+        XCTAssertTrue(choices.waitForExistence(timeout: 15))
+        let first = choiceRow(
+          "Window List 001", prefix: "saved.itinerary.entry.choice.list.", application: application)
+        scrollCatalog(choices, to: first, towardEnd: true, application: application)
+        first.activateForPlannerJourney()
+        let add = application.plannerElement("saved.itinerary.entry.add")
+        capture("Windowed isolated Itinerary List selection before eviction")
+        requireEnabled(add, application: application)
+        let last = choiceRow(
+          "Window List 193", prefix: "saved.itinerary.entry.choice.list.", application: application)
+        scrollCatalog(choices, to: last, towardEnd: true, application: application)
+        capture("Windowed isolated Itinerary List selection after eviction")
+        requireEnabled(add, application: application)
+        add.activateForPlannerJourney()
+        XCTAssertTrue(add.waitForNonExistence(timeout: 15))
+        capture("Windowed isolated Itinerary saved List branch")
+        let hierarchy = XCTAttachment(string: application.debugDescription)
+        hierarchy.name = "Windowed Itinerary saved-branch hierarchy"
+        hierarchy.lifetime = .keepAlways
+        self.add(hierarchy)
+        let entry = application.descendants(matching: .any).matching(
+          NSPredicate(
+            format: "identifier MATCHES %@", "saved[.]itinerary[.]entry[.][0-9A-Fa-f-]{36}"
+          )
+        ).containing(.staticText, identifier: "Window List 001").firstMatch
+        XCTAssertTrue(entry.waitForExistence(timeout: 15))
+        let entryIdentifier = entry.identifier
+        application.terminate()
+        application.launchSavedPlannerJourney()
+        openCatalog("Itineraries", application: application)
+        itinerary.activateForPlannerJourney()
+        XCTAssertTrue(entry.waitForExistence(timeout: 15))
+        XCTAssertEqual(entry.identifier, entryIdentifier)
+        capture("Windowed isolated Itinerary preserves its selected source entry after relaunch")
+      }
+
+      private func requireContainerNavigation(_ application: XCUIApplication) {
+        let ready = application.buttons.matching(
+          NSPredicate(
+            format: "identifier IN %@ OR label IN %@",
+            ["saved.section.lists", "list.bullet"], ["Lists", "Show Sidebar"]
+          )
+        ).firstMatch
+        XCTAssertTrue(ready.waitForExistence(timeout: 60))
+        capture("Windowed catalog initial adaptive navigation")
+      }
+
+      private func requireEnabled(_ control: XCUIElement, application: XCUIApplication) {
+        let result = XCTWaiter.wait(
+          for: [
+            XCTNSPredicateExpectation(
+              predicate: NSPredicate(format: "enabled == true"), object: control)
+          ], timeout: 5)
+        if result != .completed {
+          let hierarchy = XCTAttachment(string: application.debugDescription)
+          hierarchy.name = "Windowed Itinerary disabled-action hierarchy"
+          hierarchy.lifetime = .keepAlways
+          add(hierarchy)
+        }
+        XCTAssertEqual(result, .completed)
+      }
+
+      private func choiceRow(_ title: String, prefix: String, application: XCUIApplication)
+        -> XCUIElement
+      {
+        application.descendants(matching: .any).matching(
+          NSPredicate(
+            format: "identifier BEGINSWITH %@ AND label == %@", prefix, title
+          )
+        ).firstMatch
+      }
+
+      private func destinationRow(_ title: String, application: XCUIApplication) -> XCUIElement {
+        application.descendants(matching: .any).matching(
+          NSPredicate(
+            format: "identifier BEGINSWITH %@ AND label == %@", "saved.membership.destination.",
+            title
+          )
+        ).firstMatch
+      }
+
       private func containerRow(_ title: String, kind: String, application: XCUIApplication)
         -> XCUIElement
       {
@@ -73,10 +373,12 @@ import XCTest
           if row.exists, row.isHittable, catalog.frame.contains(row.frame) {
             let topBoundary =
               application.navigationBars.allElementsBoundByIndex
-              .filter { $0.frame.intersects(catalog.frame) }.map(\.frame.maxY).max()
+              .filter { $0.isHittable && $0.frame.intersects(catalog.frame) }.map(\.frame.maxY)
+              .max()
               ?? catalog.frame.minY
             let tabs = application.tabBars.firstMatch
-            let bottomBoundary = tabs.exists ? tabs.frame.minY : catalog.frame.maxY
+            let bottomBoundary =
+              tabs.exists && tabs.isHittable ? tabs.frame.minY : catalog.frame.maxY
             if row.frame.minY >= topBoundary, row.frame.maxY <= bottomBoundary { return }
           }
           if towardEnd {

@@ -1,0 +1,142 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "2E84CEB6-C4FB-406D-85FE-31CABAD1D616.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_76E23261-D72E-468D-B099-612D2400B6D2.PlannerMCPPrototype",
+    "timestamp": 1792335782.665,
+    "testIdentifier": "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "956AD9A9-EF2F-497D-9F62-DF8112DA2FD3.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.list.addMenu\" Button`_0_62471A18-5A58-44E6-9AA6-1196E90DF5D2.txt",
+    "timestamp": 1792335782.543,
+    "testIdentifier": "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "4612CDAD-DD6C-4057-AC1C-4589DBAEDF09.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.list.addMenu\" Button`_0_774C3D1B-A083-4B2B-8F59-F743C5B75C19.txt",
+    "timestamp": 1792335781.587,
+    "testIdentifier": "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "9736FC6E-83DD-40AB-9B19-4222B0DCA71A.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.list.addMenu\" Button`_0_395D76AD-7CDA-4711-B695-C9025FF58ACF.txt",
+    "timestamp": 1792335780.586,
+    "testIdentifier": "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "DDA10B38-B5F9-4505-9C6B-0BD0ABE3135F.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.list.addMenu\" Button`_0_CE6C8BBD-A53B-43D4-AE27-B22CC152E1B8.txt",
+    "timestamp": 1792335779.579,
+    "testIdentifier": "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "9781F59D-D38C-4A5A-A531-274D0726F6A4.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.list.addMenu\" Button`_0_46E53D92-7110-4115-8F8F-34AD21976204.txt",
+    "timestamp": 1792335778.572,
+    "testIdentifier": "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "39EBF2DC-4D89-4D24-8DF3-7CECF29C7B45.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_50CC745A-320C-4649-96E5-45636DA3A663.PlannerMCPPrototype",
+    "timestamp": 1792335561.23,
+    "testIdentifier": "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "B0523226-734F-483F-8893-5924716881C6.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.list.new\" Button`_0_9CF9EC44-6019-4709-AF1D-A8550118D6FE.txt",
+    "timestamp": 1792335561.119,
+    "testIdentifier": "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "6CF32D27-302E-4D57-B385-C167B1DF72EC.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.list.new\" Button`_0_F6A56DC3-A17A-4F34-B4D1-7640A7833BC5.txt",
+    "timestamp": 1792335560.16,
+    "testIdentifier": "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "703C8F49-7E02-4788-A490-24E3C8709C3E.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.list.new\" Button`_0_D9518BCC-F936-4B75-A720-F7712204CBCB.txt",
+    "timestamp": 1792335559.148,
+    "testIdentifier": "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "1EC4E889-BB5D-4C2E-97CD-8176014ECDBC.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_7BC48D1F-7145-4673-BA99-E24AA64FCAD6.PlannerMCPPrototype",
+    "timestamp": 1792335547.104,
+    "testIdentifier": "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "DB8B2822-1715-43D4-97BE-B6817AD49A22.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.list.new\" Button`_0_1534DC82-E169-4170-9E00-8CB5EB40A2EE.txt",
+    "timestamp": 1792335547.065,
+    "testIdentifier": "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "475B5AAE-A7FB-46AA-9A5D-1C0EFCCB2E79.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.list.new\" Button`_0_65228D78-BE36-4908-A7CD-CE480D5DB02A.txt",
+    "timestamp": 1792335546.121,
+    "testIdentifier": "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "914450A4-3558-480E-AA1F-9775E46B4606.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.list.new\" Button`_0_486500D2-23E5-4A8D-842A-778CA26CCC25.txt",
+    "timestamp": 1792335545.226,
+    "testIdentifier": "SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack()"
+  }
+]

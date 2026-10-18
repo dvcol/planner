@@ -1,0 +1,102 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "089DF593-C718-4503-B163-62188FFDBA9D.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Capture and Itinerary choices retain their saved contextual identities_0_C13BBABE-2D58-407C-B014-4F50B657071C.png",
+    "timestamp": 1792333323.982,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCaptureFilterAndItineraryListWindowsRetainOffscreenChoices()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "4493460A-195B-438E-83C5-80B9BCC65D9B.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Itinerary List selection after scrolling offscreen_0_6C99E359-F829-4704-A857-0D3DD6468E1B.png",
+    "timestamp": 1792333304.861,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCaptureFilterAndItineraryListWindowsRetainOffscreenChoices()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "EF6A3438-D714-430B-99D1-3F666CD309AA.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Itinerary List selection before scrolling offscreen_0_E4AA01A7-6C56-4543-87C0-6E0C0B0F2DBF.png",
+    "timestamp": 1792333259.26,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCaptureFilterAndItineraryListWindowsRetainOffscreenChoices()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "4AF9D300-1CC3-47F8-AE2E-E5B8979CE35F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed List filters keep the offscreen first List selected_0_DBFAC14D-51DD-418F-BD2F-A434EBF627FB.png",
+    "timestamp": 1792333245.036,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCaptureFilterAndItineraryListWindowsRetainOffscreenChoices()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "B0018B72-B126-4B70-8463-7247C895DB04.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Capture keeps its first destination while showing the final List page_0_351BDA71-E358-448C-A70B-BC275F6AA9B5.png",
+    "timestamp": 1792333176.529,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCaptureFilterAndItineraryListWindowsRetainOffscreenChoices()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "4AF0CDEE-329B-41C2-A5B9-7918BB32CC72.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed catalog initial adaptive navigation_0_440484D6-C4A5-4AAA-B624-780E5F5608B8.png",
+    "timestamp": 1792333110.769,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCaptureFilterAndItineraryListWindowsRetainOffscreenChoices()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "79E87CCF-3A3D-4400-923F-C31F44075C17.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed destination operations retain the original source and a new Todo appearance_0_004BB471-733D-46D6-9D99-7EF01293C6DA.png",
+    "timestamp": 1792333580.217,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testDestinationWindowsKeepOffscreenAddAndMoveSelectionsAndTheirSavedContexts()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "93C072D2-B0B3-49E3-8445-430B49ABB766.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Move retains its last destination after revisiting the first page_0_DE6A6AD9-BEFF-4787-8B3F-DF7BC233ADE6.png",
+    "timestamp": 1792333489.942,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testDestinationWindowsKeepOffscreenAddAndMoveSelectionsAndTheirSavedContexts()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "04AEF8A8-F2DD-4BF0-83CB-9401CF479927.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Add keeps its first destination selected while the last page is visible_0_456A3866-0DF5-4F89-91A5-9FB8E427B3A7.png",
+    "timestamp": 1792333386.341,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testDestinationWindowsKeepOffscreenAddAndMoveSelectionsAndTheirSavedContexts()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "F767FBC1-F7C9-4401-BDFB-2B4C6CF044DF.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed catalog initial adaptive navigation_0_F2E2E5E7-0748-4A0F-8470-AFFEFE2D8FDA.png",
+    "timestamp": 1792333330.76,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testDestinationWindowsKeepOffscreenAddAndMoveSelectionsAndTheirSavedContexts()"
+  }
+]

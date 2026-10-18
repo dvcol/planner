@@ -41,7 +41,97 @@
       "sha256": "6ae7676635b4a5684770848b1881be8adfe4b4af70a0f4e15f887b471521c81b",
       "reviewer": "primary agent",
       "findings": "Dark iPad portrait/landscape: selected Completed detail remains beside collapsed first branch; full 1-of-132 progress and both independent List branch estimates/progress readable. No blank/error overlay. Pixel review is not a full accessibility or performance qualification."
+    },
+    {
+      "path": "phone-container-picker-add-move/765E843D-BD8B-4E3E-BC09-3DA03FADC2EE.png",
+      "sha256": "22390a6d3dfab2f2c87b8815361cc7639f5959aa911d46d33290e8efe6a5171b",
+      "reviewer": "primary agent",
+      "findings": "Failed controller epoch: Add sheet shows readable Lists 181 through 193, final row above footer and Add enabled. Background tabs are obscured by the sheet. Supports correcting the controller boundary, not saved operation or relaunch acceptance."
+    },
+    {
+      "path": "phone-final-container-picker-regressions/BA03946D-CD4B-4C77-A3C3-F21EE5A9AF17.png",
+      "sha256": "c5137c2d4ae150adc8e6fad28d7f06ffd0efb1587362ad1c3d8315cef5d72428",
+      "reviewer": "primary agent",
+      "findings": "Dark saved itinerary shows readable title, 0-of-2 progress, full/manual/calculated estimates, notes, direct source and List header. Captured child title is partially obscured by bottom tabs at this scroll position; full reachability is not established by this frame.",
+      "limits": "Scoped pixel inspection, separate from runtime identity, accessibility or performance evidence."
+    },
+    {
+      "path": "phone-final-container-picker-regressions/2285F696-805F-47B9-92B6-217DD9537177.png",
+      "sha256": "3b5434cbb041fe9aa5e4f858fa4124a0eeb25e233f1b9df83c04ee90349b8452",
+      "reviewer": "primary agent",
+      "findings": "Dark moved-item details show To do, In Window List193, retained notes and five-minute duration, all readable; bottom native tabs unobscured.",
+      "limits": "Scoped pixel inspection, separate from runtime identity, accessibility or performance evidence."
+    },
+    {
+      "path": "phone-final-container-picker-regressions/93658B39-6A3D-4E23-AFB8-6C4A06EFA5C7.png",
+      "sha256": "a7688e5eda103562b1761f1ffb711c25d70f507cadc2fd72f185f264fbba081b",
+      "reviewer": "primary agent",
+      "findings": "Dark mixed picker shows selected List001 highlighted and undimmed Add; first source and other visible Lists readable.",
+      "limits": "Scoped pixel inspection, separate from runtime identity, accessibility or performance evidence."
+    },
+    {
+      "path": "phone-final-container-picker-regressions/9F8014BA-8E98-4E26-8B2C-881A1B441BB1.png",
+      "sha256": "9d391e02326362c14d6c9aff764cf63c319bc1930becc6cbbf0e295788661f91",
+      "reviewer": "primary agent",
+      "findings": "Dark relaunched itinerary shows readable 0-of-1 progress, direct source, selected List001 branch and No items, above bottom tabs.",
+      "limits": "Scoped pixel inspection, separate from runtime identity, accessibility or performance evidence."
+    },
+    {
+      "path": "phone-itinerary-minimal-selection-red/16614E19-3C41-41B9-B10D-21B311E2E762.png",
+      "sha256": "8b3bc6bf77b59989fdab3755d8d80094d0f71b5b1e452ea3ab2cdf28866c4fe2",
+      "reviewer": "primary agent",
+      "findings": "Minimized red: loaded source and List001 visible without a loading overlay; no row highlight and Add appears dimmed immediately after attempted selection.",
+      "limits": "Scoped pixel inspection, separate from runtime identity, accessibility or performance evidence."
+    },
+    {
+      "path": "phone-itinerary-matching-selection-identities/2A4F7F2E-A508-4766-8216-E2F0C4B68C78.png",
+      "sha256": "6a0ff95474b53d8cd9938e7ca13d1dc915773b672b6694ff64014ab547a858db",
+      "reviewer": "primary agent",
+      "findings": "Candidate source: List001 highlight and undimmed Add now visible. This epoch later fails saved-group controller assertion, so no whole-invocation pass.",
+      "limits": "Scoped pixel inspection, separate from runtime identity, accessibility or performance evidence."
+    },
+    {
+      "path": "tablet-container-picker-controls-qualified/79E87CCF-3A3D-4400-923F-C31F44075C17.png",
+      "sha256": "b22e29828dfa86c618199b384857f218a1b37e9ee75161f5abcbf37cf2f80544",
+      "reviewer": "primary agent",
+      "findings": "Dark iPad with Increase Contrast shows the selected source in List193, its unchecked local state, retained notes and five-minute estimate beside the full List progress. Black row text on the selected blue background and white detail text are readable; no floating bottom bar obscures this represented layout.",
+      "limits": "Scoped original-image inspection, separate from identity/interaction assertions, formal accessibility and physical-device performance."
+    },
+    {
+      "path": "tablet-container-picker-controls-qualified/089DF593-C718-4503-B163-62188FFDBA9D.png",
+      "sha256": "7b2cb7e827cd14549267765163634312011cb36620ab44830d25118cf65eb603",
+      "reviewer": "primary agent",
+      "findings": "Dark iPad with Increase Contrast shows the saved itinerary and both direct and List-contained appearances, full 0-of-2 progress, estimates and missing-estimate warning. Both child titles and the nested branch are visible above the bottom edge; details remain the native Choose an Item placeholder.",
+      "limits": "Scoped original-image inspection, separate from identity/interaction assertions, formal accessibility and physical-device performance."
+    },
+    {
+      "path": "tablet-container-caller-regressions-current/90951B6D-AEEB-478C-B958-788968FD7853.png",
+      "sha256": "2f48659dd570ee716c5203cc8020bb399eb576104e5fb5b12d8ce1c7b8d22ff1",
+      "reviewer": "primary agent",
+      "findings": "Dark iPad Increase Contrast capture shows Zulu with Birch selected, Willow remaining visible, full 0-of-2 progress and missing-estimate warning. Birch details retain To do, In Zulu and the expected source notes. Represented row and detail text are readable.",
+      "limits": "Scoped original-image inspection. The combined invocation later fails a separate Capture navigation controller; pixel review does not establish accessibility or physical performance."
+    },
+    {
+      "path": "tablet-container-caller-regressions-current/E1B14A18-9922-46B7-ABF4-E21DC3895747.png",
+      "sha256": "8dc6655b03343c3ea40e8edbf432917e39cde760748f3562047b649ae0117882",
+      "reviewer": "primary agent",
+      "findings": "Dark iPad Increase Contrast capture shows the native New Item detail-column Form with authored title, subtitle, notes, estimate controls, Categories/Tags, address and two labeled links. Save and Cancel remain visible. The already-scrolled originating-List row extends behind the top toolbar; this image does not establish whole-form scroll reachability.",
+      "limits": "Scoped original-image inspection. The combined invocation later fails a separate Capture navigation controller; pixel review does not establish accessibility or physical performance."
+    },
+    {
+      "path": "tablet-container-caller-regressions-current/13295934-C7A5-4FC3-BA4D-CFCC39872DD5.png",
+      "sha256": "5116666e2a47c7442da6a9828a5447ee9783da208afa205893de41a044c0b194",
+      "reviewer": "primary agent",
+      "findings": "Dark iPad Increase Contrast saved-item capture shows the selected originating-List appearance, native completion control, source notes and owned address. A native Apple Maps address card is visibly painted with its pin and attribution inside details. Links below show a readable Preview unavailable fallback and Retry. No successful website image-provider response is established by this frame.",
+      "limits": "Scoped original-image inspection from a passing rich-creation function within an invocation that later fails a separate Capture controller."
+    },
+    {
+      "path": "tablet-capture-native-action-policy-qualified/F73B20CB-247B-4222-A2C5-85B29FF40B03.png",
+      "sha256": "48f9d07320eceab419ce7d5f21bb82fdd737a8212e1328b37a849dcf577ffd19",
+      "reviewer": "primary agent",
+      "findings": "Passing full dark iPad Increase Contrast Capture journey: North is the only available destination and its Toggle is off after the remembered South destination was archived. Footer explaining Inbox fallback is visible; Cancel and Add remain visible in the native sheet toolbar. Already-scrolled estimate text extends behind the top bar.",
+      "limits": "Scoped original-image inspection. Interaction/identity assertions are recorded separately; no exhaustive form reachability or physical-performance claim."
     }
   ],
-  "limits": "Visual review of the five listed original captures only. No formal contrast ratio, accessibility, other-platform or physical-device qualification follows from these images."
+  "limits": "Scoped review of the listed original captures. No formal contrast ratio, exhaustive scene accessibility or physical-device qualification follows from these images."
 }

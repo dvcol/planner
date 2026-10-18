@@ -1,0 +1,19 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "eec17eba23f26b31c6e2e51f8cab27fa02d868d5",
+  "overlays": [
+    "Planner/Scenes/SavedAddToListForm.swift",
+    "Planner/Scenes/SavedBackupImportForm.swift",
+    "Planner/Scenes/SavedCaptureForm.swift",
+    "Planner/Scenes/SavedContainerWindowRows.swift",
+    "Planner/Scenes/SavedItemFilters.swift",
+    "Planner/Scenes/SavedItineraryContentViews.swift",
+    "Planner/Scenes/SavedItineraryViews.swift",
+    "Planner/Scenes/SavedMoveItemForm.swift",
+    "Planner/Scenes/SavedPlannerStore.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerFixtureUITests/ContainerCatalogSortJourneyTests.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift",
+    "PlannerNavigationUITests/SavedListCaptureJourneyTests.swift"
+  ]
+}

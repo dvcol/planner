@@ -1,0 +1,23 @@
+[
+  "xcodebuild",
+  "test-without-building",
+  "-xctestrun",
+  "/private/tmp/PlannerItemWindowsNativemobileDerivedData/Build/Products/PlannerNavigation_iphonesimulator27.1-arm64.xctestrun",
+  "-destination",
+  "platform=iOS Simulator,id=FBD72DAB-1D40-4E64-912D-7F9763E00446",
+  "-destination-timeout",
+  "20",
+  "-parallel-testing-enabled",
+  "NO",
+  "-jobs",
+  "1",
+  "-test-timeouts-enabled",
+  "YES",
+  "-default-test-execution-time-allowance",
+  "600",
+  "-maximum-test-execution-time-allowance",
+  "600",
+  "-only-testing:PlannerNavigationUITests/SavedListCaptureJourneyTests/testListDestinationsRemainIndependentFromGlobalCaptureAndArchivedChoicesFallBack",
+  "-resultBundlePath",
+  "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-capture-native-action-policy-qualified.xcresult"
+]

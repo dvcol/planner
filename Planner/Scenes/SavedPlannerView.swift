@@ -241,10 +241,10 @@ struct SavedPlannerView: View {
         }
       }
       .sheet(item: $membershipMoveDraft) { draft in
-        SavedMoveItemForm(store: store, draft: draft) { destination in
+        SavedMoveItemForm(store: store, draft: draft) { destinationName in
           clearRemovedMembershipSelection(
             draft.membershipIdentifier, listIdentifier: draft.sourceListIdentifier,
-            explanation: "The Item is now in \(destination.name).", detailTitle: "Item moved")
+            explanation: "The Item is now in \(destinationName).", detailTitle: "Item moved")
         }
       }
       .sheet(item: $listAdditionDraft) { draft in
@@ -1195,7 +1195,10 @@ struct SavedPlannerView: View {
             .foregroundStyle(.secondary)
         }
         if let listCatalogWindow {
-          SavedContainerWindowRows(window: listCatalogWindow, sourceKind: .list) { row in
+          SavedContainerWindowRows(
+            window: listCatalogWindow, sourceKind: .list,
+            selectionTag: { SavedPlannerSidebarSelection.list($0.id) }
+          ) { row in
             if case .source(let source) = row.identity, let estimates = row.containerEstimates {
               let list = SavedPlannerList(
                 source: source, name: row.title, archived: row.archived == true,

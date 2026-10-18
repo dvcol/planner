@@ -1,0 +1,132 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "BA03946D-CD4B-4C77-A3C3-F21EE5A9AF17.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Capture and Itinerary choices retain their saved contextual identities_0_4F5272F9-1F16-43F8-86F4-28613447ECE4.png",
+    "timestamp": 1792331728.061,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCaptureFilterAndItineraryListWindowsRetainOffscreenChoices()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "9C9FA20C-2A91-4FF0-B2A0-F07361F36599.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Itinerary List selection after scrolling offscreen_0_6F5EB14D-9215-4D0F-9EB1-1A7FBF53A54C.png",
+    "timestamp": 1792331708.77,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCaptureFilterAndItineraryListWindowsRetainOffscreenChoices()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "3BE88C59-EFB2-4C41-98FE-D40A8C4D9D17.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Itinerary List selection before scrolling offscreen_0_BFE94300-EF13-4BC3-B573-FC32F810204D.png",
+    "timestamp": 1792331663.568,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCaptureFilterAndItineraryListWindowsRetainOffscreenChoices()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "AF958B95-C5A9-4B01-9B00-B8333C0F8EAE.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed List filters keep the offscreen first List selected_0_63C4F9B9-CA43-4526-906A-8FA4C8091100.png",
+    "timestamp": 1792331650.174,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCaptureFilterAndItineraryListWindowsRetainOffscreenChoices()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "E0DB1B74-2ED0-4D5F-81F0-38B13D0C3F55.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Capture keeps its first destination while showing the final List page_0_0D98ED58-71F1-4589-BC31-C113691009AD.png",
+    "timestamp": 1792331594.809,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCaptureFilterAndItineraryListWindowsRetainOffscreenChoices()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "2285F696-805F-47B9-92B6-217DD9537177.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed destination operations retain the original source and a new Todo appearance_0_A4BFFA0C-3E9E-4649-A2D9-7244AC9BEBBF.png",
+    "timestamp": 1792331974.948,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testDestinationWindowsKeepOffscreenAddAndMoveSelectionsAndTheirSavedContexts()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "E221D24D-A3DF-40E0-94D3-363585BE56F0.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Move retains its last destination after revisiting the first page_0_96FC5B9D-E867-40C2-8C21-B7994B86E69C.png",
+    "timestamp": 1792331890.033,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testDestinationWindowsKeepOffscreenAddAndMoveSelectionsAndTheirSavedContexts()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "72369FB5-AA56-40C2-A7A0-CA332AB3A8F8.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Add keeps its first destination selected while the last page is visible_0_DB3EE83C-EA74-4D18-8AF4-32C51674F39B.png",
+    "timestamp": 1792331789.442,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testDestinationWindowsKeepOffscreenAddAndMoveSelectionsAndTheirSavedContexts()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "9F8014BA-8E98-4E26-8B2C-881A1B441BB1.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed isolated Itinerary preserves its selected source entry after relaunch_0_418AB286-25D7-48D3-B3EA-5E5E65582DEB.png",
+    "timestamp": 1792332058.171,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testItineraryListSelectionSurvivesPresentationEviction()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "2FDDD328-B7DA-467D-ACA6-9557B6ACC9E8.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Itinerary saved-branch hierarchy_0_C8E39A50-043B-4275-BA88-E8FA123A91FB.txt",
+    "timestamp": 1792332045.988,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testItineraryListSelectionSurvivesPresentationEviction()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "9F329EFD-016C-4D91-A3B2-7703C7118271.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed isolated Itinerary saved List branch_0_4330C880-5D96-4787-94AD-486508937188.png",
+    "timestamp": 1792332045.574,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testItineraryListSelectionSurvivesPresentationEviction()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "6C3EE3A0-1793-4008-949F-B86EF4B0C291.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed isolated Itinerary List selection after eviction_0_11CE09A5-A2AA-4FB4-B97C-E3FBF728E847.png",
+    "timestamp": 1792332041.941,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testItineraryListSelectionSurvivesPresentationEviction()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "93658B39-6A3D-4E23-AFB8-6C4A06EFA5C7.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed isolated Itinerary List selection before eviction_0_7FF8C466-B2E2-42A9-8FE6-96651A65FE8E.png",
+    "timestamp": 1792331997.156,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testItineraryListSelectionSurvivesPresentationEviction()"
+  }
+]

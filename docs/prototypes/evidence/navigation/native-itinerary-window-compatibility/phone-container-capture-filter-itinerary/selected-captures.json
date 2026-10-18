@@ -1,0 +1,12 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "5062B128-B0DD-46EA-8609-09FA6BB04F47.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Capture keeps its first destination while showing the final List page_0_E20A3B6A-8B74-45F9-AC44-4A4D6BEF994C.png",
+    "timestamp": 1792330324.696,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCaptureFilterAndItineraryListWindowsRetainOffscreenChoices()"
+  }
+]

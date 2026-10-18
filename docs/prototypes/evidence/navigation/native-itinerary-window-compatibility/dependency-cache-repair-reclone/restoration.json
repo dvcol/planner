@@ -1,0 +1,45 @@
+{
+  "packages": [
+    {
+      "identity": "swift-nio",
+      "version": "2.104.0",
+      "revision": "6db9d9abd92ad7399b8a564cafbb87d3507245fa",
+      "preservedDamagedCheckout": "/private/tmp/PlannerDamaged-swift-nio-a3258d6903c641a8aef62f7c182fd2f3",
+      "manifestSha256": "1e9a640334e938a37668c986d9b789e192755ee5c2ca8f46ab697715cc253e0d",
+      "command": [
+        "git",
+        "clone",
+        "--quiet",
+        "--depth",
+        "1",
+        "--no-checkout",
+        "--branch",
+        "2.104.0",
+        "https://github.com/apple/swift-nio.git",
+        "/private/tmp/PlannerPinned-swift-nio-a3258d6903c641a8aef62f7c182fd2f3"
+      ]
+    },
+    {
+      "identity": "swift-sdk",
+      "version": "0.12.1",
+      "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+      "preservedDamagedCheckout": "/private/tmp/PlannerDamaged-swift-sdk-43aa37a34bd94bd9983ce37f652f9a4c",
+      "manifestSha256": "67fa9b6a0d1f334fd836cabb7af8c36110a6b88c5b49fa5a42a50125b18a056b",
+      "command": [
+        "git",
+        "clone",
+        "--quiet",
+        "--depth",
+        "1",
+        "--no-checkout",
+        "--branch",
+        "0.12.1",
+        "https://github.com/modelcontextprotocol/swift-sdk",
+        "/private/tmp/PlannerPinned-swift-sdk-43aa37a34bd94bd9983ce37f652f9a4c"
+      ]
+    }
+  ],
+  "resolvedSha256": "eb300567b7391995b23e7eab1eec5197269142942f060bf9c0e01cfb72068aeb",
+  "versionsChanged": false,
+  "runtimeCredit": false
+}

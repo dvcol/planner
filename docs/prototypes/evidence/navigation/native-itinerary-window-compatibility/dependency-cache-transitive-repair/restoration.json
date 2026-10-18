@@ -1,0 +1,197 @@
+{
+  "packages": [
+    {
+      "identity": "eventsource",
+      "version": "1.5.1",
+      "revision": "86b5096ac59ab46e66bd1f6377c604bc1dab0bc2",
+      "preservedDamagedCheckout": "/private/tmp/PlannerDamaged-eventsource-5c312fbe195a41b9840b2e346e7f07ae",
+      "commands": [
+        [
+          "git",
+          "init",
+          "--quiet",
+          "/private/tmp/PlannerPinned-eventsource-5c312fbe195a41b9840b2e346e7f07ae"
+        ],
+        [
+          "git",
+          "remote",
+          "add",
+          "origin",
+          "https://github.com/mattt/eventsource.git"
+        ],
+        [
+          "git",
+          "fetch",
+          "--quiet",
+          "--depth",
+          "1",
+          "origin",
+          "86b5096ac59ab46e66bd1f6377c604bc1dab0bc2"
+        ],
+        [
+          "git",
+          "checkout",
+          "--detach",
+          "--quiet",
+          "FETCH_HEAD"
+        ]
+      ],
+      "manifestSha256": "1fdc2c108312c72e60c3a752abef7984a60e585005e32455a7d73b5f3f9dcc20"
+    },
+    {
+      "identity": "swift-atomics",
+      "version": "1.3.1",
+      "revision": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+      "preservedDamagedCheckout": "/private/tmp/PlannerDamaged-swift-atomics-0f463c32b61c42fdbcc66dc7366608d3",
+      "commands": [
+        [
+          "git",
+          "init",
+          "--quiet",
+          "/private/tmp/PlannerPinned-swift-atomics-0f463c32b61c42fdbcc66dc7366608d3"
+        ],
+        [
+          "git",
+          "remote",
+          "add",
+          "origin",
+          "https://github.com/apple/swift-atomics.git"
+        ],
+        [
+          "git",
+          "fetch",
+          "--quiet",
+          "--depth",
+          "1",
+          "origin",
+          "0442cb5a3f98ab802acb777929fdb446bda11a34"
+        ],
+        [
+          "git",
+          "checkout",
+          "--detach",
+          "--quiet",
+          "FETCH_HEAD"
+        ]
+      ],
+      "manifestSha256": "99359621b74cbd0aca68d494716770df91f8f774e11ab3066234009aa54780f0"
+    },
+    {
+      "identity": "swift-collections",
+      "version": "1.7.2",
+      "revision": "3b69cedbaa49957e97c092ae400bb57602ef941f",
+      "preservedDamagedCheckout": "/private/tmp/PlannerDamaged-swift-collections-a19ed97aff5449ef9d7b03d53a6bea5c",
+      "commands": [
+        [
+          "git",
+          "init",
+          "--quiet",
+          "/private/tmp/PlannerPinned-swift-collections-a19ed97aff5449ef9d7b03d53a6bea5c"
+        ],
+        [
+          "git",
+          "remote",
+          "add",
+          "origin",
+          "https://github.com/apple/swift-collections.git"
+        ],
+        [
+          "git",
+          "fetch",
+          "--quiet",
+          "--depth",
+          "1",
+          "origin",
+          "3b69cedbaa49957e97c092ae400bb57602ef941f"
+        ],
+        [
+          "git",
+          "checkout",
+          "--detach",
+          "--quiet",
+          "FETCH_HEAD"
+        ]
+      ],
+      "manifestSha256": "0dc61fc164d8881a3c07d6787d54c687018c0bbcbbc9537d1adc9ffbb946e837"
+    },
+    {
+      "identity": "swift-log",
+      "version": "1.16.1",
+      "revision": "4038b6a4f74a1426f47eb1dd5b4bb5628a15d597",
+      "preservedDamagedCheckout": "/private/tmp/PlannerDamaged-swift-log-317ef1345ac243f6935bb9953be381af",
+      "commands": [
+        [
+          "git",
+          "init",
+          "--quiet",
+          "/private/tmp/PlannerPinned-swift-log-317ef1345ac243f6935bb9953be381af"
+        ],
+        [
+          "git",
+          "remote",
+          "add",
+          "origin",
+          "https://github.com/apple/swift-log.git"
+        ],
+        [
+          "git",
+          "fetch",
+          "--quiet",
+          "--depth",
+          "1",
+          "origin",
+          "4038b6a4f74a1426f47eb1dd5b4bb5628a15d597"
+        ],
+        [
+          "git",
+          "checkout",
+          "--detach",
+          "--quiet",
+          "FETCH_HEAD"
+        ]
+      ],
+      "manifestSha256": "de73b0091349c3d7cfc77a702cd57085fa849769d3f5cfd74134d5ffc530365e"
+    },
+    {
+      "identity": "swift-system",
+      "version": "1.8.1",
+      "revision": "869129b7bf4ecc57b97d0193ad29690ca2134750",
+      "preservedDamagedCheckout": "/private/tmp/PlannerDamaged-swift-system-4912bf2378cf421ab30602f9eae4d53b",
+      "commands": [
+        [
+          "git",
+          "init",
+          "--quiet",
+          "/private/tmp/PlannerPinned-swift-system-4912bf2378cf421ab30602f9eae4d53b"
+        ],
+        [
+          "git",
+          "remote",
+          "add",
+          "origin",
+          "https://github.com/apple/swift-system.git"
+        ],
+        [
+          "git",
+          "fetch",
+          "--quiet",
+          "--depth",
+          "1",
+          "origin",
+          "869129b7bf4ecc57b97d0193ad29690ca2134750"
+        ],
+        [
+          "git",
+          "checkout",
+          "--detach",
+          "--quiet",
+          "FETCH_HEAD"
+        ]
+      ],
+      "manifestSha256": "cdcaeef614db2d5a498c5b23a3c83f57eb4c3d8289206c47028b0e20e5053667"
+    }
+  ],
+  "resolvedSha256": "eb300567b7391995b23e7eab1eec5197269142942f060bf9c0e01cfb72068aeb",
+  "versionsChanged": false,
+  "runtimeCredit": false
+}

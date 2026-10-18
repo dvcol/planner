@@ -251,38 +251,45 @@ private struct SavedFilterListPicker: View {
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
   @Binding var selection: Set<UUID>
-  @State private var lists: [SavedPlannerList]?
+  @State private var window: SavedItemWindow?
+  @State private var loadedIdentity: SavedItemWindowIdentity?
   @State private var loadingFailure: String?
 
   var body: some View {
     List {
-      ForEach(lists ?? []) { list in
-        Toggle(
-          isOn: Binding(
-            get: { selection.contains(list.id) },
-            set: { selected in
-              if selected {
-                selection.insert(list.id)
-              } else {
-                selection.remove(list.id)
+      if let window {
+        SavedContainerWindowRows(window: window, sourceKind: .list, selectionTag: { $0.id }) {
+          row in
+          if case .source(let source) = row.identity {
+            Toggle(
+              isOn: Binding(
+                get: { selection.contains(source.id) },
+                set: { selected in
+                  if selected {
+                    selection.insert(source.id)
+                  } else {
+                    selection.remove(source.id)
+                  }
+                })
+            ) {
+              VStack(alignment: .leading) {
+                Text(row.title)
+                if row.archived == true {
+                  Label("Archived", systemImage: "archivebox")
+                    .font(.caption).foregroundStyle(.secondary)
+                }
               }
-            })
-        ) {
-          VStack(alignment: .leading) {
-            Text(list.name)
-            if list.archived {
-              Label("Archived", systemImage: "archivebox")
-                .font(.caption).foregroundStyle(.secondary)
             }
+            .accessibilityLabel(row.title)
+            .accessibilityHint(row.archived == true ? "Archived List" : "Active List")
+            .accessibilityIdentifier("saved.filters.list.\(source.id.uuidString)")
           }
         }
-        .accessibilityLabel(list.name)
-        .accessibilityHint(list.archived ? "Archived List" : "Active List")
-        .accessibilityIdentifier("saved.filters.list.\(list.id.uuidString)")
       }
     }
+    .accessibilityIdentifier("saved.filters.list.choices")
     .overlay {
-      if let loadingFailure {
+      if let loadingFailure = catalogFailure {
         ContentUnavailableView {
           Label("Lists unavailable", systemImage: "exclamationmark.triangle")
         } description: {
@@ -290,9 +297,9 @@ private struct SavedFilterListPicker: View {
         } actions: {
           Button("Try Again") { Task { await loadLists() } }
         }
-      } else if lists == nil {
+      } else if window?.state != .ready || loadedIdentity != loadIdentity {
         ProgressView("Loading Lists")
-      } else if lists?.isEmpty == true {
+      } else if window?.matchingCount == 0 {
         ContentUnavailableView(
           "No Lists yet", systemImage: "list.bullet.rectangle",
           description: Text("Create a List to filter its Items."))
@@ -305,19 +312,35 @@ private struct SavedFilterListPicker: View {
           .accessibilityIdentifier("saved.filters.lists.done")
       }
     }
-    .task(id: store.changeRevision) { await loadLists() }
+    .task(id: loadIdentity) { await loadLists() }
+    .onDisappear { window?.cancel() }
+  }
+
+  private var loadIdentity: SavedItemWindowIdentity? {
+    guard let namespace = store.devicePreferenceNamespace else { return nil }
+    return .init(namespace: namespace, savedRevision: store.changeRevision)
+  }
+
+  private var catalogFailure: String? {
+    if case .failed(let reason) = window?.state { return reason }
+    return loadingFailure
   }
 
   private func loadLists() async {
-    let revision = store.changeRevision
+    guard !Task.isCancelled else { return }
+    let identity = loadIdentity
+    window?.cancel()
+    loadedIdentity = nil
     loadingFailure = nil
-    let loaded = await store.readLists(archive: .all)
-    guard !Task.isCancelled, revision == store.changeRevision else { return }
-    lists = loaded
-    if loaded == nil {
-      loadingFailure = store.alertMessage ?? "Planner could not load its Lists."
-      store.alertMessage = nil
+    guard let identity, let window = store.makeItemWindow() else {
+      self.window = nil
+      loadingFailure = "Planner is not ready to load its Lists."
+      return
     }
+    self.window = window
+    await window.reload(catalogQuery: .init(sourceKind: .list, archive: .all), identity: identity)
+    guard !Task.isCancelled, loadIdentity == identity, self.window === window else { return }
+    loadedIdentity = identity
   }
 }
 

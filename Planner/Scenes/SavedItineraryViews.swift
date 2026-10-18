@@ -22,7 +22,9 @@ struct SavedItineraryCatalog: View {
   var body: some View {
     List(selection: $selection) {
       if let catalogWindow {
-        SavedContainerWindowRows(window: catalogWindow, sourceKind: .itinerary) { row in
+        SavedContainerWindowRows(
+          window: catalogWindow, sourceKind: .itinerary, selectionTag: { $0.id }
+        ) { row in
           if case .source(let source) = row.identity, let estimates = row.containerEstimates {
             let itinerary = SavedPlannerItinerary(
               source: source, title: row.title, archived: row.archived == true,

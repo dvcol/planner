@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "EED622E0-399D-4731-B3E0-64D825440311.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed destination operations retain the original source and a new Todo appearance_0_F0FE968A-CAAD-470F-A57A-5C80BAB41E0D.png",
+    "timestamp": 1792330087.184,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testDestinationWindowsKeepOffscreenAddAndMoveSelectionsAndTheirSavedContexts()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "4CFD1BC9-EF54-4879-9A7A-005BFDFCE5E2.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Move retains its last destination after revisiting the first page_0_70B9CD49-D70B-409A-BAF3-81D8F9D60059.png",
+    "timestamp": 1792330002.312,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testDestinationWindowsKeepOffscreenAddAndMoveSelectionsAndTheirSavedContexts()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "BCE58127-E39F-437C-B9A6-367A74D7C7DC.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Add keeps its first destination selected while the last page is visible_0_49DDE33D-D8F2-4F83-BC42-F5248C7E11EB.png",
+    "timestamp": 1792329903.839,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testDestinationWindowsKeepOffscreenAddAndMoveSelectionsAndTheirSavedContexts()"
+  }
+]

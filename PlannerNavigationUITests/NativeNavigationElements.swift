@@ -60,11 +60,19 @@ extension XCUIApplication {
     openSavedPlannerMenu(identifier: "saved.list.addMenu", title: "Add")
   }
 
+  func savedPlannerListAddControl() -> XCUIElement {
+    savedPlannerMenu(identifier: "saved.list.addMenu", title: "Add")
+  }
+
   func openSavedPlannerListActionsMenu() {
     openSavedPlannerMenu(identifier: "saved.list.actions", title: "List actions")
   }
 
   private func openSavedPlannerMenu(identifier: String, title: String) {
+    savedPlannerMenu(identifier: identifier, title: title).activateForPlannerJourney()
+  }
+
+  private func savedPlannerMenu(identifier: String, title: String) -> XCUIElement {
     var menu = plannerElement(identifier)
     if !menu.exists || !menu.isHittable {
       #if os(macOS)
@@ -78,7 +86,7 @@ extension XCUIApplication {
         }
         guard let contentBar else {
           XCTFail("The selected catalog's \(title) menu is unavailable")
-          return
+          return menu
         }
         contentBar.buttons["OverflowBarButtonItem"].firstMatch.activateForPlannerJourney()
         if !menu.exists {
@@ -87,7 +95,7 @@ extension XCUIApplication {
       #endif
     }
     XCTAssertTrue(menu.waitForExistence(timeout: 5))
-    menu.activateForPlannerJourney()
+    return menu
   }
 
   func launchSavedPlannerJourney() {
@@ -234,9 +242,18 @@ extension XCUIApplication {
   func openPlannerSection(_ title: String) {
     let savedSection = plannerElement("saved.section.\(title.lowercased())")
     #if os(iOS)
-      if UIDevice.current.userInterfaceIdiom == .pad, !savedSection.exists {
-        let sidebar = buttons["Show Sidebar"].firstMatch
-        if sidebar.exists { sidebar.activateForPlannerJourney() }
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        if !savedSection.exists {
+          let sidebar = buttons["Show Sidebar"].firstMatch
+          if sidebar.exists { sidebar.activateForPlannerJourney() }
+        }
+        let sidebarCatalog = collectionViews["saved.lists.catalog"].firstMatch
+        if sidebarCatalog.exists && sidebarCatalog.isHittable {
+          for _ in 0..<60 {
+            if savedSection.exists && savedSection.isHittable { break }
+            sidebarCatalog.swipeDown()
+          }
+        }
       }
     #endif
     if savedSection.exists {

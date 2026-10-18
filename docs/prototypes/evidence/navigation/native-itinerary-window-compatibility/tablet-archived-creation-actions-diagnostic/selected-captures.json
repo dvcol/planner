@@ -1,0 +1,12 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "32110BF7-A82B-4C51-A050-3CD53C462A3C.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Archived List native creation actions hierarchy_0_C326B69B-6375-43AC-90C5-0CCB97DF8A07.txt",
+    "timestamp": 1792336782.238,
+    "testIdentifier": "SavedListCaptureJourneyTests/testArchivedListCreationActionsRemainDisabledInNativeOverflow()"
+  }
+]

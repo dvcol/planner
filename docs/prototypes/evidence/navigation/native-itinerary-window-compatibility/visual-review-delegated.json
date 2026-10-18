@@ -47,6 +47,83 @@
       "sha256": "37b52f149f58df88a12c079522a281e1a422b3b73af4cb655194dbea5819519b",
       "reviewer": "read-only remaining_local_map_audit sub-agent",
       "finding": "Selected itinerary title, 0-of-1 progress, manual/calculated totals, notes and five-minute Window source row are readable and unobscured."
+    },
+    {
+      "path": "phone-container-picker-qualified-add-move/EED622E0-399D-4731-B3E0-64D825440311.png",
+      "sha256": "75fb592ca13f929fee66a570e7cf3cddc86e0ee14f5bf77af531c849e39bf3f1",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "findings": "Window source details show To do, In Window List 193, notes, five-minute duration and all five tabs without clipping or overlap.",
+      "limits": "Pixels do not establish selection, saved identity, interactions, memory bounds or accessibility compliance."
+    },
+    {
+      "path": "phone-container-picker-qualified-add-move/4CFD1BC9-EF54-4879-9A7A-005BFDFCE5E2.png",
+      "sha256": "9e7fa8586884b848553b51e89115a1abff87a214251d8b7b8f3362fc076358d7",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "findings": "Move Item sheet shows Cancel/Move, source and origin, readable destinations 002\u2013011. Last visible row reaches viewport edge; no control obscures labels.",
+      "limits": "Pixels do not establish selection, saved identity, interactions, memory bounds or accessibility compliance."
+    },
+    {
+      "path": "phone-container-picker-qualified-add-move/BCE58127-E39F-437C-B9A6-367A74D7C7DC.png",
+      "sha256": "05282cd217fec7a18fa688f2467b0f4066be25a88c88d9cf5963e8729175de3c",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "findings": "Add sheet shows readable destinations181\u2013193, Cancel/Add and full two-line footer. No loading placeholders or obscured labels.",
+      "limits": "Pixels do not establish selection, saved identity, interactions, memory bounds or accessibility compliance."
+    },
+    {
+      "path": "phone-container-choice-queries-qualified/9A1AC95C-25D8-4158-9B31-E7DED11FE653.png",
+      "sha256": "ff6cdefd668e73c06da92dd68c0f637f678e800ec6316264d72b5edaa18a5815",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "findings": "Dark List filter: Back/Done and rows180\u2013193 readable, visible switches Off. Row179 blurred under translucent header; other visible labels unobscured.",
+      "limits": "Failed combined source epochs. Selected first row is offscreen. Pixels do not prove selection retention, enablement, saved identity or complete runtime acceptance."
+    },
+    {
+      "path": "phone-container-choice-queries-qualified/C6C44C9E-719E-4D9E-91F8-79C483A5365B.png",
+      "sha256": "16fb9bfe272c1f065f7e57e59da508d4599f014cd5444c76ee26a0b6cb05c5b0",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "findings": "Dark Capture: Cancel/Add, rows181\u2013193 and full footer readable. Visible switches Off. Row181 switch upper outline meets header edge, name remains readable.",
+      "limits": "Failed combined source epochs. Selected first row is offscreen. Pixels do not prove selection retention, enablement, saved identity or complete runtime acceptance."
+    },
+    {
+      "path": "phone-itinerary-matching-selection-identities/B4CBA7E5-661E-4145-8DEA-6F05E1945B33.png",
+      "sha256": "f98edceedc4de6b6be31d7ca4f9807d7b9063560e12868f04dd3ae4857033dfd",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "findings": "Dark Itinerary picker: Cancel/Add and rows181\u2013193 readable, Add undimmed. No visible row selected. Row180 blurred beneath header.",
+      "limits": "Failed combined source epochs. Selected first row is offscreen. Pixels do not prove selection retention, enablement, saved identity or complete runtime acceptance."
+    },
+    {
+      "path": "phone-final-container-picker-regressions/E0DB1B74-2ED0-4D5F-81F0-38B13D0C3F55.png",
+      "sha256": "a928f168aab0335820a5bf5764f482831fe1b76425221681b85bcfef265f9905",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "findings": "Capture: Cancel/Add, Lists181\u2013193 and full footer readable. Visible switches Off, Add undimmed. List181 switch outline meets header edge.",
+      "limits": "Offscreen selections invisible; pixels do not prove saved identity, enablement semantics, performance or accessibility."
+    },
+    {
+      "path": "phone-final-container-picker-regressions/AF958B95-C5A9-4B01-9B00-B8333C0F8EAE.png",
+      "sha256": "ad76280bdc8ba121f89a3ff506e0895bd70df9cc6e80a2271ca2b7fb39603d65",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "findings": "Filters: Back/Done and Lists180\u2013193 readable, visible switches Off. List179 blurred under translucent header.",
+      "limits": "Offscreen selections invisible; pixels do not prove saved identity, enablement semantics, performance or accessibility."
+    },
+    {
+      "path": "phone-final-container-picker-regressions/9C9FA20C-2A91-4FF0-B2A0-F07361F36599.png",
+      "sha256": "ca7b0a838993046ef97bb03b03b64b5cd1ff162c5f00ed8bcfc65353094aea40",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "findings": "Itinerary: Cancel/Add and Lists181\u2013193 readable, Add undimmed, no visible selection marker. List180 under header.",
+      "limits": "Offscreen selections invisible; pixels do not prove saved identity, enablement semantics, performance or accessibility."
+    },
+    {
+      "path": "phone-final-container-picker-regressions/72369FB5-AA56-40C2-A7A0-CA332AB3A8F8.png",
+      "sha256": "a97bc5b8878106b33f0f4c40e17efa1724c3340ca34f13449af9299221080e7c",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "findings": "Add: Cancel/Add, Lists181\u2013193 and full footer readable. Add undimmed, no visible selection marker or loading placeholder.",
+      "limits": "Offscreen selections invisible; pixels do not prove saved identity, enablement semantics, performance or accessibility."
+    },
+    {
+      "path": "phone-final-container-picker-regressions/E221D24D-A3DF-40E0-94D3-363585BE56F0.png",
+      "sha256": "1c89f712e399453ff10ddae52b5d15ede53f3424d090fffebff1296ae69e842e",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "findings": "Move: Cancel/Move, source origin and destinations002\u2013013 readable; row014 cropped below viewport, source title above viewport. Move undimmed.",
+      "limits": "Offscreen selections invisible; pixels do not prove saved identity, enablement semantics, performance or accessibility."
     }
   ],
   "limits": "Pixel inspection of the eight listed originals only. No interaction, memory, reachability, formal accessibility or physical-device acceptance. Earlier misframed landscape capture supplies no whole-layout credit."

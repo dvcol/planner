@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "BF64509B-462C-4D87-B3A6-4E08D11A2800.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Itinerary disabled-action hierarchy_0_E9EC0A3D-DED2-4BBA-89B3-27AD73C3BB95.txt",
+    "timestamp": 1792331147.148,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testItineraryListSelectionSurvivesPresentationEviction()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "AE79DB75-E742-4773-A823-78874E5E18E6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed isolated Itinerary List selection before eviction_0_89133611-74D6-4B11-95E0-B3C688D71BCF.png",
+    "timestamp": 1792331141.017,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testItineraryListSelectionSurvivesPresentationEviction()"
+  }
+]

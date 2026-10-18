@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "9A1AC95C-25D8-4158-9B31-E7DED11FE653.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed List filters keep the offscreen first List selected_0_F6CC4A66-53B8-4764-8283-EDC3E948765E.png",
+    "timestamp": 1792330596.104,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCaptureFilterAndItineraryListWindowsRetainOffscreenChoices()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "C6C44C9E-719E-4D9E-91F8-79C483A5365B.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed Capture keeps its first destination while showing the final List page_0_E23859A3-C9D6-47B5-A073-B8F8582157C9.png",
+    "timestamp": 1792330540.751,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testCaptureFilterAndItineraryListWindowsRetainOffscreenChoices()"
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/Scenes/SavedContainerWindowRows.swift",
+    "Planner/Scenes/SavedAddToListForm.swift",
+    "Planner/Scenes/SavedMoveItemForm.swift",
+    "Planner/Scenes/SavedCaptureForm.swift",
+    "Planner/Scenes/SavedItemFilters.swift",
+    "Planner/Scenes/SavedItineraryContentViews.swift",
+    "Planner/Scenes/SavedPlannerStore.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "Planner/Scenes/SavedItineraryViews.swift",
+    "Planner/Scenes/SavedBackupImportForm.swift",
+    "PlannerFixtureUITests/ContainerCatalogSortJourneyTests.swift",
+    "PlannerNavigationUITests/NativeNavigationElements.swift",
+    "PlannerNavigationUITests/SavedListCaptureJourneyTests.swift"
+  ],
+  "exitCode": 0
+}

@@ -20,6 +20,12 @@ enum SavedCaptureEntryPoint: Identifiable {
 }
 
 struct SavedCaptureForm: View {
+  private struct DestinationLoadIdentity: Equatable {
+    let namespace: String?
+    let revision: UUID
+    let draftIdentifier: UUID?
+  }
+
   @Environment(\.dismiss) private var dismiss
   let store: SavedPlannerStore
   let entryPoint: SavedCaptureEntryPoint
@@ -36,7 +42,11 @@ struct SavedCaptureForm: View {
   @State private var locationAddress = ""
   @State private var links: [SavedOwnedLinkDraft] = []
   @State private var reuseIdentifier: UUID?
-  @State private var destinations: [SavedPlannerList]?
+  @State private var destinationWindow: SavedItemWindow?
+  @State private var loadedDestinationIdentity: DestinationLoadIdentity?
+  @State private var initializedDestinationDraft: UUID?
+  @State private var captureNamespace: String?
+  @State private var destinationFailure: String?
   @State private var selectedListIdentifiers: Set<UUID> = []
   @State private var isWorking = false
   @State private var applied = false
@@ -73,6 +83,7 @@ struct SavedCaptureForm: View {
         }
       }
       .formStyle(.grouped)
+      .accessibilityIdentifier("saved.capture.form")
       .disabled(isWorking || store.isSaving || applied)
       .navigationTitle(draft == nil ? "Capture Text or Link" : "Review Capture")
       #if os(iOS)
@@ -113,12 +124,14 @@ struct SavedCaptureForm: View {
       }
     }
     .interactiveDismissDisabled(isWorking || store.isSaving)
+    .task(id: destinationLoadIdentity) { await loadDestinations(identity: destinationLoadIdentity) }
     .task(id: selectedPreviewLinkIdentifier) { await lookupMaps() }
     .onChange(of: links.map(\.input)) {
       guard let draft, links.map(\.input) != captureLinkInputs(draft) else { return }
       activePreviewRequestIdentifier = nil
     }
     .onDisappear {
+      destinationWindow?.cancel()
       if let draft, !applied { Task { await store.discardCapture(draft) } }
     }
     #if os(macOS)
@@ -180,47 +193,51 @@ struct SavedCaptureForm: View {
     }
     SavedOwnedLinksEditor(links: $links, accessibilityIdentifierPrefix: "saved.capture.link")
     mapsPreviewSection(draft)
-    if let destinations, !destinations.isEmpty {
-      Section {
-        ForEach(destinations) { destination in
-          Toggle(
-            destination.name,
-            isOn: Binding(
-              get: { selectedListIdentifiers.contains(destination.id) },
-              set: { selected in
-                if selected {
-                  selectedListIdentifiers.insert(destination.id)
-                } else {
-                  selectedListIdentifiers.remove(destination.id)
-                }
-              })
-          )
-          .accessibilityIdentifier("saved.capture.list.\(destination.id.uuidString)")
-        }
-      } header: {
-        Text("Add to Lists")
-      } footer: {
-        Text("With no Lists selected, a new Item goes to Inbox. Existing memberships are kept.")
-      }
-    } else if destinations != nil {
-      Section { Text("New Items will be added to Inbox.").foregroundStyle(.secondary) }
-    } else {
-      Section {
-        if isWorking {
-          ProgressView("Loading Lists")
-        } else {
-          Label("Lists unavailable", systemImage: "exclamationmark.triangle")
-          Button("Try Again") {
-            Task {
-              isWorking = true
-              store.alertMessage = nil
-              defer { isWorking = false }
-              await loadDestinations()
-            }
+    Section {
+      if let destinationWindow {
+        SavedContainerWindowRows(
+          window: destinationWindow, sourceKind: .list, selectionTag: { $0.id }
+        ) { row in
+          if case .source(let source) = row.identity {
+            Toggle(
+              row.title,
+              isOn: Binding(
+                get: { selectedListIdentifiers.contains(source.id) },
+                set: { selected in
+                  if selected {
+                    selectedListIdentifiers.insert(source.id)
+                  } else {
+                    selectedListIdentifiers.remove(source.id)
+                  }
+                })
+            )
+            .accessibilityIdentifier("saved.capture.list.\(source.id.uuidString)")
           }
-          .accessibilityIdentifier("saved.capture.destinations.retry")
         }
       }
+      if let reason = destinationLoadingFailure {
+        Label(reason, systemImage: "exclamationmark.triangle")
+        Button("Try Again") {
+          Task { await loadDestinations(identity: destinationLoadIdentity) }
+        }
+        .accessibilityIdentifier("saved.capture.destinations.retry")
+      } else if !destinationsAreReady {
+        ProgressView("Loading Lists")
+      } else if !selectedListIdentifiers.isSubset(of: availableDestinationIdentifiers) {
+        Label(
+          "A selected List is no longer available. Review your destinations before adding.",
+          systemImage: "exclamationmark.triangle")
+        Button("Remove unavailable Lists") {
+          selectedListIdentifiers.formIntersection(availableDestinationIdentifiers)
+        }
+        .accessibilityIdentifier("saved.capture.destinations.removeUnavailable")
+      } else if destinationWindow?.matchingCount == 0 {
+        Text("New Items will be added to Inbox.").foregroundStyle(.secondary)
+      }
+    } header: {
+      Text("Add to Lists")
+    } footer: {
+      Text("With no Lists selected, a new Item goes to Inbox. Existing memberships are kept.")
     }
     ForEach(draft.inputIssues, id: \.inputIndex) { issue in
       Section {
@@ -363,7 +380,10 @@ struct SavedCaptureForm: View {
   }
 
   private var canSave: Bool {
-    guard let draft, destinations != nil, !draft.inputIssues.contains(where: \.blocksSave) else {
+    guard let draft, destinationsAreReady,
+      selectedListIdentifiers.isSubset(of: availableDestinationIdentifiers),
+      !draft.inputIssues.contains(where: \.blocksSave)
+    else {
       return false
     }
     if let reuseIdentifier {
@@ -397,15 +417,43 @@ struct SavedCaptureForm: View {
     return .clear
   }
 
-  private var destinationPreferenceKey: String? {
-    store.devicePreferenceNamespace.map { "Planner.capture.\(entryPoint.id).destinations.\($0)" }
+  private var destinationLoadIdentity: DestinationLoadIdentity {
+    .init(
+      namespace: store.devicePreferenceNamespace, revision: store.changeRevision,
+      draftIdentifier: draft?.draftId)
+  }
+
+  private var destinationsAreReady: Bool {
+    loadedDestinationIdentity == destinationLoadIdentity && destinationWindow?.state == .ready
+      && captureNamespace != nil && captureNamespace == store.devicePreferenceNamespace
+  }
+
+  private var availableDestinationIdentifiers: Set<UUID> {
+    guard destinationsAreReady, let destinationWindow else { return [] }
+    return Set(
+      destinationWindow.rowIdentities.compactMap { identity in
+        guard case .source(let source) = identity, source.kind == .list else { return nil }
+        return source.id
+      })
+  }
+
+  private var destinationLoadingFailure: String? {
+    if case .failed(let reason) = destinationWindow?.state { return reason }
+    return destinationFailure
+  }
+
+  private func destinationPreferenceKey(namespace: String) -> String {
+    "Planner.capture.\(entryPoint.id).destinations.\(namespace)"
   }
 
   private func prepare() async {
-    guard !isWorking else { return }
+    guard !isWorking, let namespace = store.devicePreferenceNamespace else { return }
     isWorking = true
     defer { isWorking = false }
-    guard let prepared = await store.prepareCapture(text: input) else { return }
+    guard let prepared = await store.prepareCapture(text: input), !Task.isCancelled,
+      store.devicePreferenceNamespace == namespace
+    else { return }
+    captureNamespace = namespace
     draft = prepared
     title = prepared.content.title
     subtitle = prepared.content.subtitle ?? ""
@@ -417,35 +465,48 @@ struct SavedCaptureForm: View {
     locationAddress = prepared.content.location?.formattedAddress ?? ""
     links = prepared.links.map(SavedOwnedLinkDraft.init)
     if prepared.reuseCandidates.count == 1 { reuseIdentifier = prepared.reuseCandidates[0].itemId }
-    await loadDestinations()
-    isWorking = false
     selectedPreviewLinkIdentifier = prepared.preview.linkId
   }
 
-  private func loadDestinations() async {
-    destinations = nil
-    guard let loaded = await store.readLists(archive: .active) else { return }
-    destinations = loaded
+  private func loadDestinations(identity: DestinationLoadIdentity) async {
+    guard !Task.isCancelled else { return }
+    destinationWindow?.cancel()
+    destinationWindow = nil
+    loadedDestinationIdentity = nil
+    destinationFailure = nil
+    guard let draftIdentifier = identity.draftIdentifier else { return }
+    guard let namespace = identity.namespace, namespace == captureNamespace,
+      let window = store.makeItemWindow()
+    else {
+      destinationFailure =
+        "This capture is unavailable in the current dataset. Close it and try again."
+      return
+    }
+    destinationWindow = window
+    await window.reload(
+      catalogQuery: .init(sourceKind: .list, archive: .active),
+      identity: .init(namespace: namespace, savedRevision: identity.revision))
+    guard !Task.isCancelled, destinationLoadIdentity == identity, destinationWindow === window,
+      window.state == .ready
+    else { return }
+    loadedDestinationIdentity = identity
+    guard initializedDestinationDraft != draftIdentifier else { return }
+    initializedDestinationDraft = draftIdentifier
     selectedListIdentifiers = []
-    if let identifier = entryPoint.initialListIdentifier,
-      loaded.contains(where: { $0.id == identifier })
-    {
+    let available = availableDestinationIdentifiers
+    if let identifier = entryPoint.initialListIdentifier, available.contains(identifier) {
       selectedListIdentifiers.insert(identifier)
     }
-    if let key = destinationPreferenceKey,
-      let values = UserDefaults.standard.stringArray(forKey: key)
-    {
+    let key = destinationPreferenceKey(namespace: namespace)
+    if let values = UserDefaults.standard.stringArray(forKey: key) {
       let remembered = Set(values.compactMap(UUID.init(uuidString:)))
-      if remembered.isSubset(of: Set(loaded.map(\.id))) {
-        selectedListIdentifiers = remembered
-      } else {
-        selectedListIdentifiers = []
-      }
+      selectedListIdentifiers = remembered.isSubset(of: available) ? remembered : []
     }
   }
 
   private func save() async {
-    guard var draft, !isWorking, !applied else { return }
+    guard var draft, !isWorking, !applied, canSave, let namespace = captureNamespace else { return }
+    let preferenceKey = destinationPreferenceKey(namespace: namespace)
     isWorking = true
     store.alertMessage = nil
     defer { isWorking = false }
@@ -492,12 +553,11 @@ struct SavedCaptureForm: View {
       let prepared = await store.reviewCapture(
         draft, choice: choice, listIdentifiers: selectedListIdentifiers)
     else { return }
+    guard store.devicePreferenceNamespace == namespace else { return }
     switch await store.applyReviewedChange(prepared, operationIdentifier: operationIdentifier) {
     case .applied(let result):
       applied = true
-      if let key = destinationPreferenceKey {
-        UserDefaults.standard.set(selectedListIdentifiers.map(\.uuidString), forKey: key)
-      }
+      UserDefaults.standard.set(selectedListIdentifiers.map(\.uuidString), forKey: preferenceKey)
       let source =
         reuseIdentifier.map { PlannerEntityReference(kind: .item, id: $0) }
         ?? result.generated.first { $0.kind == .item }

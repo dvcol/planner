@@ -1,0 +1,20 @@
+{
+  "Planner/Scenes/SavedContainerWindowRows.swift": "61290b5bf8ddd27eddbc120304a3232166ffe41c6418eb7272b6b43632cea325",
+  "Planner/Scenes/SavedAddToListForm.swift": "84b59c2fab700f654f1c498623e6d6200fb536a21304a0be3dd5b4b44047ad19",
+  "Planner/Scenes/SavedMoveItemForm.swift": "ddae1b495c131e8182126eff1002f9a7502fe9c2d798c286642ccd4cfc6910e6",
+  "Planner/Scenes/SavedCaptureForm.swift": "21e7c5d028e84f61a5a0058109a22cb25b7b5d4b300285e6128eb14962eada01",
+  "Planner/Scenes/SavedItemFilters.swift": "04a6c82837fb1111d0b04065d9198682bb6dafb63cd5e8c920908aef29cca4fa",
+  "Planner/Scenes/SavedItineraryContentViews.swift": "045caaaf222b12fc5b919e24c21d76161ef57e9c8816a617e8ab8e47728e0f3b",
+  "Planner/Scenes/SavedPlannerStore.swift": "c54a082a333ac26985bee79b795b527aa39ee1fd40715ea758c650bd2127e5e0",
+  "Planner/Scenes/SavedPlannerView.swift": "44dced6cd92d919aa0b5531ee85089b8f9506e4372b33303abf6d7eb9368dda6",
+  "Planner/Scenes/SavedItineraryViews.swift": "31c318c31b53356e99b21c2522c44f8f7e912f3a4a1f873a8c806da9938b43c1",
+  "Planner/Scenes/SavedBackupImportForm.swift": "2860f69416fff325a2ed80f8f1b428edfc650cfefc7229f4158f1f242c57a8fd",
+  "PlannerFixtureUITests/ContainerCatalogSortJourneyTests.swift": "47e21c150edc82db88e8d6b9b14ef29dd798e591091be1c6f1c681b04799c5d9",
+  "PlannerNavigationUITests/NativeNavigationElements.swift": "10ce09b9d1d19f07d110172065dd124c77430babd7c4071a5eb7d20244ac578f",
+  "PlannerNavigationUITests/SavedListCaptureJourneyTests.swift": "5139741e32af9b5e3c183d87fd7a703c52b08b461d1e332ce0bc2968780b0a2c",
+  "docs/native-container-window-contract-review.md": "609ef5d1af443f2007b3f46daab132ad405b562f9c1ba87ad0c8bcee40667302",
+  "docs/native-association-undo-contract-review.md": "a8fc7c8282b2ff5bdb35cea0f7c9adbc013220a19e4b1ef2b5f647c64115c741",
+  "docs/prototypes/native-itinerary-window-compatibility.md": "7c6b7c2adc0cbbf920c32d0e0a89c7de1e194b9aa78e9e31fec69fd257c35db2",
+  "docs/prototypes/native-container-catalog-windows.md": "94f74e4a8e60a6ff291bf7b77ba70d240d351377ed81040a6f8eb95549d5477a",
+  "docs/offline-conflicts-and-recovery.md": "1aac2747dbe2de6f9b65fb741620f66d60c4873db55a85eed8ab9fac4f002be6"
+}

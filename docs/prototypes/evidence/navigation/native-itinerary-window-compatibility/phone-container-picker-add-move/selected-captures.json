@@ -1,0 +1,12 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "765E843D-BD8B-4E3E-BC09-3DA03FADC2EE.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed container catalog failed to reveal its requested source_0_9EC93D80-4F60-4F09-BA80-794043C4D050.png",
+    "timestamp": 1792329782.161,
+    "testIdentifier": "ContainerCatalogSortJourneyTests/testDestinationWindowsKeepOffscreenAddAndMoveSelectionsAndTheirSavedContexts()"
+  }
+]
