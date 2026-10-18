@@ -618,7 +618,7 @@ struct SavedPlannerView: View {
       selection: itemSelection,
       filters: scope == .inbox ? $inboxFilters : $itemFilters,
       searchText: scope == .inbox ? $inboxSearchText : $itemSearchText,
-      sort: itemSort(scope: scope), captureToolbarPlacement: secondaryToolbarPlacement,
+      sort: itemSort(scope: scope),
       canCreate: store.canCreate, create: { beginNewItem(listIdentifier: nil) },
       capture: { captureEntryPoint = .global }, didLoad: replaceDeletedCatalogSelection
     )

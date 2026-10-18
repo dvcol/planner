@@ -298,8 +298,8 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
   }
 
   private func createItem(_ title: String, notes: String, application: XCUIApplication) -> String {
-    openCatalog("Items", creationIdentifier: "saved.item.new", application: application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    openCatalog("Items", creationIdentifier: "saved.item.addMenu", application: application)
+    application.openSavedPlannerNewItemEditor()
     let titleField = application.textFields["saved.item.title"]
     XCTAssertTrue(titleField.waitForExistence(timeout: 5))
     titleField.activateForPlannerJourney()
@@ -309,14 +309,14 @@ final class SavedItineraryDeletionJourneyTests: XCTestCase {
     notesField.typeText(notes)
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
-    openCatalog("Items", creationIdentifier: "saved.item.new", application: application)
+    openCatalog("Items", creationIdentifier: "saved.item.addMenu", application: application)
     let row = application.savedPlannerItemRows(title).firstMatch
     XCTAssertTrue(row.waitForExistence(timeout: 10))
     return row.identifier
   }
 
   private func openItem(_ identifier: String, application: XCUIApplication) {
-    openCatalog("Items", creationIdentifier: "saved.item.new", application: application)
+    openCatalog("Items", creationIdentifier: "saved.item.addMenu", application: application)
     let row = application.plannerElement(identifier)
     XCTAssertTrue(row.waitForExistence(timeout: 10))
     row.activateForPlannerJourney()

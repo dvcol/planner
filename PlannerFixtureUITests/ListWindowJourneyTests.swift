@@ -5,6 +5,51 @@ import XCTest
 
   @MainActor
   final class ListWindowJourneyTests: XCTestCase {
+    func testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving() {
+      continueAfterFailure = false
+      XCUIDevice.shared.orientation = .portrait
+      addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "list-windows", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      for section in ["Items", "Inbox"] {
+        application.openPlannerSection(section)
+        let menu = application.plannerElement("saved.item.addMenu")
+        XCTAssertTrue(menu.waitForExistence(timeout: 10))
+        XCTAssertTrue(menu.isHittable)
+        capture("\(section) native Add toolbar")
+        menu.activateForPlannerJourney()
+        let newItem = application.plannerElement("saved.item.new")
+        let captureItem = application.plannerElement("saved.capture.new")
+        XCTAssertTrue(newItem.waitForExistence(timeout: 5))
+        XCTAssertTrue(captureItem.exists)
+        newItem.activateForPlannerJourney()
+        XCTAssertTrue(application.textFields["saved.item.title"].waitForExistence(timeout: 5))
+        let cancel = application.plannerElement("saved.item.cancel")
+        if cancel.exists {
+          cancel.activateForPlannerJourney()
+        } else {
+          application.plannerElement("saved.item.back").activateForPlannerJourney()
+        }
+        XCTAssertTrue(application.textFields["saved.item.title"].waitForNonExistence(timeout: 5))
+        menu.activateForPlannerJourney()
+        captureItem.activateForPlannerJourney()
+        XCTAssertTrue(
+          application.textFields["saved.capture.input"].waitForExistence(timeout: 5))
+        application.plannerElement("saved.capture.cancel").activateForPlannerJourney()
+        XCTAssertTrue(
+          application.textFields["saved.capture.input"].waitForNonExistence(timeout: 5))
+        XCTAssertTrue(menu.isHittable)
+      }
+      application.terminate()
+      application.launchSavedPlannerJourney()
+      openList(application)
+      XCTAssertTrue(application.staticTexts["0 of 193 items done"].waitForExistence(timeout: 10))
+      XCTAssertTrue(application.savedPlannerItemRows("Window Item 001").firstMatch.exists)
+    }
+
     func testSelectedItemPresentationPassesNativeContrastAudit() throws {
       continueAfterFailure = false
       XCUIDevice.shared.orientation = .portrait

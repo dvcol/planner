@@ -12,6 +12,7 @@ final class SavedCaptureTextJourneyTests: XCTestCase {
     #else
       application.buttons["Items"].firstMatch.activateForPlannerJourney()
     #endif
+    application.openSavedPlannerCatalogAddMenu()
     let capture = application.plannerElement("saved.capture.new")
     XCTAssertTrue(capture.waitForExistence(timeout: 10))
     capture.activateForPlannerJourney()

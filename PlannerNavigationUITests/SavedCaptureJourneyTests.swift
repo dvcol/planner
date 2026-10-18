@@ -349,8 +349,13 @@ final class SavedCaptureJourneyTests: XCTestCase {
       identifier: "saved.item.edit.estimate.quantity"
     ).firstMatch
     XCTAssertTrue(quantity.waitForPlannerValue("2"))
-    XCTAssertTrue(
-      application.plannerElement("saved.item.edit.estimate.unit").label.contains("Days"))
+    #if os(macOS)
+      XCTAssertTrue(
+        application.popUpButtons["saved.item.edit.estimate.unit"].waitForPlannerValue("Days"))
+    #else
+      XCTAssertTrue(
+        application.plannerElement("saved.item.edit.estimate.unit").label.contains("Days"))
+    #endif
     application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
     assertWeekendEstimate(estimate)
   }
@@ -360,7 +365,8 @@ final class SavedCaptureJourneyTests: XCTestCase {
     XCTAssertTrue(
       XCTWaiter.wait(
         for: [XCTNSPredicateExpectation(predicate: expected, object: estimate)], timeout: 5)
-        == .completed)
+        == .completed,
+      "Estimate label: \(estimate.label), value: \(String(describing: estimate.value))")
   }
 
   private func chooseCaptureEstimateShortcut(_ title: String, application: XCUIApplication) {
@@ -379,7 +385,15 @@ final class SavedCaptureJourneyTests: XCTestCase {
       identifier: "saved.capture.estimate.quantity"
     ).firstMatch
     XCTAssertTrue(control.waitForPlannerValue(quantity))
-    XCTAssertTrue(application.plannerElement("saved.capture.estimate.unit").label.contains(unit))
+    #if os(macOS)
+      let unitPicker = application.popUpButtons["saved.capture.estimate.unit"]
+      XCTAssertTrue(
+        unitPicker.waitForPlannerValue(unit),
+        "Expected \(unit); label: \(unitPicker.label), value: \(String(describing: unitPicker.value))"
+      )
+    #else
+      XCTAssertTrue(application.plannerElement("saved.capture.estimate.unit").label.contains(unit))
+    #endif
   }
 
   private func openItems(_ application: XCUIApplication) {
@@ -387,6 +401,7 @@ final class SavedCaptureJourneyTests: XCTestCase {
   }
 
   private func openCapture(_ application: XCUIApplication, input: String) {
+    application.openSavedPlannerCatalogAddMenu()
     let capture = application.plannerElement("saved.capture.new")
     XCTAssertTrue(capture.waitForExistence(timeout: 10))
     capture.activateForPlannerJourney()

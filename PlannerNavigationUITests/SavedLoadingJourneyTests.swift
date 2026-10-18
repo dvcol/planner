@@ -111,7 +111,7 @@ final class SavedLoadingJourneyTests: XCTestCase {
 
   private func createItem(_ title: String, application: XCUIApplication) {
     openCatalog("Items", application: application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let field = application.textFields["saved.item.title"]
     XCTAssertTrue(field.waitForExistence(timeout: 5))
     field.activateForPlannerJourney()
@@ -144,7 +144,7 @@ final class SavedLoadingJourneyTests: XCTestCase {
       let back = application.navigationBars.buttons[title].firstMatch
       if back.exists { back.activateForPlannerJourney() }
     #endif
-    let newIdentifier = title == "Items" ? "saved.item.new" : "saved.list.new"
+    let newIdentifier = title == "Items" ? "saved.item.addMenu" : "saved.list.new"
     XCTAssertTrue(application.plannerElement(newIdentifier).waitForExistence(timeout: 10))
   }
 

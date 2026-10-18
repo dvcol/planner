@@ -222,6 +222,7 @@ final class SavedListCaptureJourneyTests: XCTestCase {
     #endif
     let back = application.navigationBars.buttons["Items"].firstMatch
     if back.exists { back.activateForPlannerJourney() }
+    application.openSavedPlannerCatalogAddMenu()
     let capture = application.plannerElement("saved.capture.new")
     XCTAssertTrue(capture.waitForExistence(timeout: 10))
     capture.activateForPlannerJourney()

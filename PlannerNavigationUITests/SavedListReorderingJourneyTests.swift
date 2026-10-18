@@ -169,7 +169,7 @@ final class SavedListReorderingJourneyTests: XCTestCase {
 
   private func createItem(_ title: String, application: XCUIApplication) {
     openSection("Items", application: application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let field = application.textFields["saved.item.title"]
     XCTAssertTrue(field.waitForExistence(timeout: 5))
     field.activateForPlannerJourney()

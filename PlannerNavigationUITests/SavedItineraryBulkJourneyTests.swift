@@ -478,7 +478,7 @@ final class SavedItineraryBulkJourneyTests: XCTestCase {
 
   private func createItem(_ title: String, application: XCUIApplication) {
     openSection("Items", application: application)
-    reveal("saved.item.new", application: application).activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let field = application.textFields["saved.item.title"]
     XCTAssertTrue(field.waitForExistence(timeout: 5))
     field.activateForPlannerJourney()

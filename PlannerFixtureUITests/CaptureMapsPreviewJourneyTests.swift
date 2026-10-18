@@ -10,7 +10,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     ]
     application.launchSavedPlannerJourney()
     application.openPlannerSection("Items")
-    application.plannerElement("saved.capture.new").activateForPlannerJourney()
+    application.openSavedPlannerCaptureEditor()
     let input = application.textFields["saved.capture.input"]
     XCTAssertTrue(input.waitForExistence(timeout: 5))
     input.activateForPlannerJourney()
@@ -53,7 +53,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     ]
     application.launchSavedPlannerJourney()
     application.openPlannerSection("Items")
-    application.plannerElement("saved.capture.new").activateForPlannerJourney()
+    application.openSavedPlannerCaptureEditor()
     let input = application.textFields["saved.capture.input"]
     XCTAssertTrue(input.waitForExistence(timeout: 5))
     input.activateForPlannerJourney()
@@ -122,7 +122,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     ]
     application.launchSavedPlannerJourney()
     application.openPlannerSection("Items")
-    application.plannerElement("saved.capture.new").activateForPlannerJourney()
+    application.openSavedPlannerCaptureEditor()
     let input = application.textFields["saved.capture.input"]
     XCTAssertTrue(input.waitForExistence(timeout: 5))
     input.activateForPlannerJourney()
@@ -172,7 +172,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     ]
     application.launchSavedPlannerJourney()
     application.openPlannerSection("Items")
-    application.plannerElement("saved.capture.new").activateForPlannerJourney()
+    application.openSavedPlannerCaptureEditor()
     let input = application.textFields["saved.capture.input"]
     XCTAssertTrue(input.waitForExistence(timeout: 5))
     input.activateForPlannerJourney()
@@ -210,7 +210,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     ]
     application.launchSavedPlannerJourney()
     application.openPlannerSection("Items")
-    application.plannerElement("saved.capture.new").activateForPlannerJourney()
+    application.openSavedPlannerCaptureEditor()
     let input = application.textFields["saved.capture.input"]
     XCTAssertTrue(input.waitForExistence(timeout: 5))
     input.activateForPlannerJourney()
@@ -251,7 +251,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     ]
     application.launchSavedPlannerJourney()
     application.openPlannerSection("Items")
-    application.plannerElement("saved.capture.new").activateForPlannerJourney()
+    application.openSavedPlannerCaptureEditor()
     let input = application.textFields["saved.capture.input"]
     XCTAssertTrue(input.waitForExistence(timeout: 5))
     input.activateForPlannerJourney()
@@ -288,7 +288,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     ]
     application.launchSavedPlannerJourney()
     application.openPlannerSection("Items")
-    application.plannerElement("saved.capture.new").activateForPlannerJourney()
+    application.openSavedPlannerCaptureEditor()
     let input = application.textFields["saved.capture.input"]
     XCTAssertTrue(input.waitForExistence(timeout: 5))
     input.activateForPlannerJourney()
@@ -348,6 +348,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     ]
     application.launchSavedPlannerJourney()
     application.openPlannerSection("Items")
+    application.openSavedPlannerCatalogAddMenu()
     let capture = application.plannerElement("saved.capture.new")
     XCTAssertTrue(capture.waitForExistence(timeout: 10))
     capture.activateForPlannerJourney()
@@ -400,6 +401,7 @@ final class CaptureMapsPreviewJourneyTests: XCTestCase {
     ]
     application.launchSavedPlannerJourney()
     application.openPlannerSection("Items")
+    application.openSavedPlannerCatalogAddMenu()
     let capture = application.plannerElement("saved.capture.new")
     XCTAssertTrue(capture.waitForExistence(timeout: 10))
     capture.activateForPlannerJourney()

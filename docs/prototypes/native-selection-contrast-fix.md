@@ -1,6 +1,6 @@
 # Native row and detail contrast correction
 
-Status: Q99 A foreground and detail correction qualified on the represented mobile scenes on 18 October 2026. A dark iPad Increase Contrast failure remains at the floating Capture button, pending Q101. This checkpoint does not close Q99 or the final whole-app UI review.
+Status: Q99 A foreground and detail correction qualified on the represented mobile scenes on 18 October 2026. The [subsequent Q101 Add menu](native-catalog-add-menu.md) resolves the recorded dark iPad Increase Contrast overlap. This historical checkpoint retains its failure and discarded probes; final whole-app UI review remains open.
 
 ## Context and goal
 
@@ -36,10 +36,10 @@ The restored checkpoint has exactly the same source hashes as the qualified iPad
 
 The [dark increased-contrast capture](evidence/navigation/native-selection-contrast-fix/q99-tablet-readable-dark-increased/39D4549F-EFDB-4E40-9EA7-445CDBD22DD6.png) shows Capture overlapping Window Item 014 and its duration. Moving Capture to the top removes that audit failure but truncates the Items title. A preferred-column-width probe does not visibly widen that column. A secondary-action probe still crowds the title, and its controller fails while looking for a direct Capture button inside the new native More menu. None of those toolbar probes ships. Original placement and test actions are restored.
 
-Q101 asks whether to use one native Add menu, the title dropdown for Capture, or a combined Filters/Sort control. That choice is pending. It changes access to creation actions, so this checkpoint leaves it independent from the foreground correction and approved Q98 itinerary work.
+Q101 subsequently selects one native Add menu. Its [separate implementation and qualification](native-catalog-add-menu.md) follow this checkpoint and preserve the other choices as discarded alternatives. Approved Q98 itinerary work remains independent.
 
 Literal results, source/product hashes, unsuccessful probes and original captures are retained in the [evidence packet](evidence/navigation/native-selection-contrast-fix/). The [production Mac compiler packet](evidence/navigation/native-scene-appearance/q99-contrast-checkpoint-mac-build/) records the actual app compilation. Runtime freezes source and products and restores Simulator appearance settings. The [visual review](evidence/navigation/native-selection-contrast-fix/visual-review.json) names only inspected originals. Exporting an additional capture does not establish its visual acceptance.
 
 ## Completion limits
 
-These audits cover the represented Item/List presentations, not every scene or text state. Mac UI automation still fails before tests start, so no new Mac runtime credit is available. Signing, physical devices, VoiceOver, keyboard operation, maximum text size, Reduce Motion/Transparency, other scene states and final human visual acceptance remain separate gates. The existing floating-bar scroll observations remain open. Q98 itinerary window implementation is approved independent work; Q100 B defers native Agent Control until signing and working Mac automation are available.
+These audits cover the represented Item/List presentations, not every scene or text state. Mac automation was unavailable at this checkpoint; the later Q101 Capture journey passes and records its own source/products and limits. That supplies no Mac contrast audit or signed-storage credit. Signing, physical devices, VoiceOver, keyboard operation, maximum text size, Reduce Motion/Transparency, other scene states and final human visual acceptance remain separate gates. Broader floating-bar scroll observations remain open. Q98 itinerary window implementation is approved independent work; Q100 B still requires actual signed storage.

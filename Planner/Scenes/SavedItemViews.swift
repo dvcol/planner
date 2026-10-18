@@ -30,7 +30,6 @@ struct SavedItemCatalog: View {
   @Binding var filters: SavedItemFilters
   @Binding var searchText: String
   @Binding var sort: SavedItemSort
-  let captureToolbarPlacement: ToolbarItemPlacement
   let canCreate: Bool
   let create: () -> Void
   let capture: () -> Void
@@ -89,11 +88,6 @@ struct SavedItemCatalog: View {
     .searchable(text: $searchText, prompt: Text(scope.searchPrompt))
     .searchPresentationToolbarBehavior(.avoidHidingContent)
     .toolbar {
-      ToolbarItem(placement: captureToolbarPlacement) {
-        Button("Capture Text or Link", systemImage: "text.badge.plus", action: capture)
-          .disabled(!canCreate)
-          .accessibilityIdentifier("saved.capture.new")
-      }
       ToolbarItem {
         SavedItemFilterControl(
           filters: $filters, accessibilityIdentifier: "\(scope.identifierPrefix).filters")
@@ -102,9 +96,16 @@ struct SavedItemCatalog: View {
         SavedItemSortMenu(sort: $sort, accessibilityIdentifier: "\(scope.identifierPrefix).sort")
       }
       ToolbarItem {
-        Button("New Item", systemImage: "plus", action: create)
-          .disabled(!canCreate)
-          .accessibilityIdentifier("saved.item.new")
+        Menu {
+          Button("New Item", systemImage: "square.and.pencil", action: create)
+            .accessibilityIdentifier("saved.item.new")
+          Button("From Link or Text", systemImage: "text.badge.plus", action: capture)
+            .accessibilityIdentifier("saved.capture.new")
+        } label: {
+          Label("Add", systemImage: "plus")
+        }
+        .disabled(!canCreate)
+        .accessibilityIdentifier("saved.item.addMenu")
       }
     }
   }
