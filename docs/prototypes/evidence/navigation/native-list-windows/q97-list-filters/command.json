@@ -1,0 +1,6 @@
+[
+  "/Applications/Xcode.app/Contents/Developer/usr/bin/xctest",
+  "-XCTest",
+  "PlannerMCPTests.SavedItemWindowTests/testListCumulativeFiltersAndSortKeepFullProgressAndEstimateMetadata",
+  "/private/tmp/PlannerNativeItemWindowDerivedData/Build/Products/Debug/Planner.app/Contents/PlugIns/PlannerMCPTests.xctest"
+]

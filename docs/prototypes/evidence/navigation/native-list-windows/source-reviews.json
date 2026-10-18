@@ -1,0 +1,5 @@
+{
+  "scope": "Shared loader checkpoint only; native List/Table adoption remains open.",
+  "standards": "No confirmed hard standards breaches or material smell findings.",
+  "spec": "No confirmed Spec findings; typed identities, coherent header publication and cancellation guards match Q97."
+}

@@ -1,0 +1,9 @@
+{
+  "root": "/private/tmp/PlannerItemWindowCompatibilitySource",
+  "base": "b1b8d3bbabcacf9cb9ea9833f299d95b38777f9f",
+  "overlays": [
+    "Planner/Scenes/SavedItemViews.swift",
+    "Planner/Scenes/SavedItemWindow.swift",
+    "PlannerMCPTests/SavedItemWindowTests.swift"
+  ]
+}

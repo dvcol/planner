@@ -1,0 +1,21 @@
+{
+  "swiftLint": {
+    "command": [
+      "xcrun",
+      "swift-format",
+      "lint",
+      "--strict",
+      "Planner/Scenes/SavedItemWindow.swift",
+      "Planner/Scenes/SavedItemViews.swift",
+      "PlannerMCPTests/SavedItemWindowTests.swift"
+    ],
+    "exitCode": 0
+  },
+  "runtime": {
+    "packet": "q97-loader-suite",
+    "functions": 13,
+    "failures": 0,
+    "seconds": 4.463
+  },
+  "scope": "App-internal module, no native UI runtime credit."
+}
