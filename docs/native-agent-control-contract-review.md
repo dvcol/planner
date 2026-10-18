@@ -2,6 +2,8 @@
 
 Status: Q100 B selected on 18 October 2026. Defer native Agent Control implementation until signing and native Mac automation are available, then qualify actual signed storage/native journeys. The controlled credential-I/O interface in option A is not approved. Existing Core, HTTP, native UI and reader-process contracts remain accepted.
 
+The user subsequently returned to the unlocked Mac. The [Q101 retry](prototypes/native-catalog-add-menu.md) now starts native tests and reaches Capture, removing the earlier pre-test automation failure for that run. A fresh signing inventory still finds no valid development identity. The user declines paid membership; qualify an available free signing route before treating B's actual signed-storage gate as met. No switch to A's controlled credential boundary, plaintext fallback or CloudKit replacement is implied.
+
 ## Context and goal
 
 The production app owns a real `Planner` facade and dataset session in `SavedPlannerStore`. Hosted tests construct `PlannerMCPRequestHandler` and `PlannerMCPLoopbackListener`, but production startup does not construct them. There is no native Enable/Stop controller, menu-bar status or `--mcp-headers` entry branch. Transport tests and CLI installation cannot establish a usable Agent Control feature.

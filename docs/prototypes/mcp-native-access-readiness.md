@@ -6,9 +6,9 @@ Refreshed on 18 October 2026 against `prototype/navigation`. Subsequent decision
 
 `PlannerApp` starts SwiftUI and owns `SavedPlannerStore`. The store owns its real Core facade/session. Production startup does not construct the existing request handler or loopback listener. There is no native Agent Control owner, menu-bar status/control or non-UI `--mcp-headers` branch. The accepted signed Keychain/App Group reader remains unimplemented.
 
-The [Q100 proposal](../native-agent-control-contract-review.md) declares the missing lifecycle owner and shared production credential I/O interface before tests. It reuses the current authorized Core context, handler/listener and accepted reader/security policy. The human selected Q100 B, so this implementation waits for signing and working native Mac automation. Q98 A and Q99 A are approved independent work.
+The [Q100 proposal](../native-agent-control-contract-review.md) describes the missing lifecycle owner and option A's shared production credential I/O interface. The human selected Q100 B, so the alternative interface and its controlled tests are unapproved. Implementation waits for actual signing/storage qualification. Q98 A and Q99 A are approved independent work.
 
-Local app-hosted controller tests can use controlled results at the actual credential I/O boundary while exercising real Core and loopback HTTP. Actual signed storage/reader behavior remains required separately. This is the proposed staging, not a claim that the controller exists or signed access works. No plaintext or volatile production fallback is proposed.
+After the user returned to the unlocked Mac, the [Q101 native Capture journey](native-catalog-add-menu.md) starts and passes, 68.643 seconds. It removes the previous pre-test automation blocker for that run. The fresh signing inventory still reports no valid development identities. The user declines paid membership; verify the available free signing/capability route before claiming the actual protected-storage gate. This does not approve option A's controlled credential tests or a plaintext/volatile fallback.
 
 ## Refreshed CLI facts
 
@@ -20,21 +20,21 @@ The installed Codex parser recognizes a temporary runtime `http_headers_helper` 
 
 All four selected routes still need separately recorded results: Codex CLI, local Codex desktop, Claude Code CLI and Claude Desktop's local Code tab. Real concurrent-client/native behavior and credential handling remain required. Do not replace those gates with the existing Swift SDK/URLSession tests or a hand-supplied token.
 
-## Current Mac runtime retry
+## Earlier Mac runtime retry
 
 The existing final Mac compiler products were reused after their source/product checks. One bounded ordinary Apple Maps/owned-address UI journey was attempted. [Literal packet](evidence/navigation/native-scene-appearance/mac-maps-current-runtime/exit.json) reports exit 65: XCTest timed out while enabling automation mode. Zero Test Cases started. The [readiness record](evidence/mcp/native-access-readiness/mac-runtime.json) and compressed log retain the failure.
 
-This is no native UI, map, interaction or visual credit. No permission or signing-account setting was changed. Repeating the same startup failure is not another feature test. Signing and physical-device work remain deferred.
+That attempt supplies no native UI, map, interaction or visual credit. No permission or signing-account setting was changed. The later Q101 pass is separately recorded above, with its actual production source/products, failed assertions, correction and window captures. It establishes the selected Capture workflow, not Agent Control or signed storage. Physical and CloudKit qualification remain unmet.
 
 ## Remaining gates
 
 | Requirement | Current evidence | Next dependency |
 | --- | --- | --- |
-| Native manual Enable/Stop and shared lifecycle owner | Absent from production source | Q100 B: signing and working native Mac automation, then real signed/native TDD |
+| Native manual Enable/Stop and shared lifecycle owner | Absent from production source | Q100 B: actual signing/storage, then real signed/native TDD; selected Mac Capture automation now works |
 | Menu-bar On/Off/Stop and last-window behavior | Absent from production source | Same owner and actual native qualification |
-| Same-executable protected credential reader | Approved declaration, no implementation | Shared credential boundary, then signed/runtime proof |
+| Same-executable protected credential reader | Approved declaration, no implementation | Actual signed storage and reader implementation/runtime proof |
 | Four selected client routes | CLI availability and Codex config recognition only | Working native owner/reader and actual client calls |
-| Native Mac UI behavior | Current attempt starts zero Test Cases | Working XCTest automation environment |
-| App Group, protected Keychain, account/sync/Share and physical gates | Not established by this check | User-deferred signing/device setup and their required scenarios |
+| Native Mac UI behavior | Earlier pre-test failure; later Q101 Capture journey passes | Qualify remaining native scenes and Agent Control lifecycle |
+| App Group, protected Keychain, account/sync/Share and physical gates | No valid development identity; actual capabilities unverified | Free signing setup and required scenarios; CloudKit still requires membership or a reviewed replacement |
 
-[Source hashes, factual review and evidence hashes](evidence/mcp/native-access-readiness/) distinguish source inspection, configuration recognition and runtime failure. Q100 B leaves this implementation deferred until signing and native Mac automation are available. This check closes no map ticket; all remaining acceptance gates stay in place.
+[Source hashes, factual review and evidence hashes](evidence/mcp/native-access-readiness/) retain the earlier source inspection, configuration recognition and startup failure. The linked Q101 packet supplies the later native result. Q100 B's signed-storage requirement is still unmet. These checks close no map ticket; all remaining acceptance gates stay in place.
