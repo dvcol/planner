@@ -1,0 +1,7 @@
+{
+  "comparison": "Production SavedAddItemForm changes since c472202.",
+  "reviewer": "Primary agent self-review, not an independent agent review.",
+  "standards": "Reuses the accepted loader and native List/Label/ProgressView controls. No new module, query, package, target, public output, test-only option, private-cache test or duplicated paging implementation.",
+  "spec": "Complete candidate identities validate offscreen selection; only loaded rows expose actual choice tags. Dataset/revision/retry guards reject obsolete ready publication. Disappearance cancels the window. Original List identity and domain Add command are unchanged. Both long native journeys and the existing archive/Cancel/source-identity regressions pass.",
+  "limits": "Real-Core tests do not deterministically pause every await. This review and selected native runs do not establish all external-edit interleavings, total memory, physical performance, whole-app accessibility or Mac runtime."
+}

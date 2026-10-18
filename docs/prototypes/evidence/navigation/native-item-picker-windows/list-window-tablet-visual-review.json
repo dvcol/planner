@@ -1,0 +1,17 @@
+{
+  "scope": "Original windowed-picker iPad captures inspected by the primary agent.",
+  "captures": [
+    {
+      "path": "picker-list-tablet-window-integration/EC976CEE-E9B3-424A-A212-40C6ED13A04E.png",
+      "observed": "The first picker page is visible with Add enabled for the offscreen selected source. Native sheet controls remain intact."
+    },
+    {
+      "path": "picker-list-tablet-window-integration/82BD3D8A-AF95-4C19-A4D2-592D12ACF562.png",
+      "observed": "The original Shared Item List contains Items 193 and 129, with the Item 129 contextual detail showing Window notes 129 and In Shared Item List."
+    }
+  ],
+  "limits": [
+    "Functional selected-screen integration evidence only, not a memory or latency measurement.",
+    "No whole-app accessibility, Mac runtime or physical/signing credit."
+  ]
+}

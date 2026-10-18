@@ -1,0 +1,21 @@
+{
+  "scope": "Original dark iPhone and empty-picker regression captures inspected by the primary agent.",
+  "captures": [
+    {
+      "path": "picker-list-phone-window-dark/72D59D48-A216-4586-AB76-BA93D21F65BC.png",
+      "observed": "Native dark sheet displays the first candidate page with Add still enabled for the offscreen source."
+    },
+    {
+      "path": "picker-list-phone-window-dark/3D4388CC-135D-4D40-B4F7-ACE595F01BEF.png",
+      "observed": "Dark contextual detail displays Item 129, To do, In Shared Item List, exact source notes and five-minute estimate above the native bottom tabs."
+    },
+    {
+      "path": "picker-list-phone-ordinary-regressions/D66EE466-8527-492A-9246-4D6452C5570C.png",
+      "observed": "With its only source archived, the native picker displays No active Items, useful guidance, Cancel and disabled Add."
+    }
+  ],
+  "limits": [
+    "Selected-screen proof, not final whole-app visual/accessibility acceptance.",
+    "No physical performance, Mac runtime or signing credit."
+  ]
+}

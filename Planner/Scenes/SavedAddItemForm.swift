@@ -14,7 +14,8 @@ struct SavedAddItemForm: View {
   let didAdd: () -> Void
   @State private var selectedItemId: UUID?
   @State private var operationId = UUID()
-  @State private var items: [SavedPlannerItem]?
+  @State private var window: SavedItemWindow?
+  @State private var visibleIdentifiers: Set<UUID> = []
   @State private var loadFailure: String?
   @State private var retryIdentifier = UUID()
   @State private var loadedIdentity: LoadIdentity?
@@ -26,39 +27,39 @@ struct SavedAddItemForm: View {
   }
 
   private var canAddSelection: Bool {
-    guard loadedIdentity == loadIdentity, let selectedItemId else { return false }
-    return items?.contains { $0.id == selectedItemId } == true
+    guard loadedIdentity == loadIdentity, window?.state == .ready, let selectedItemId else {
+      return false
+    }
+    return sourceRows.contains { $0.identifier == selectedItemId }
+  }
+
+  private var sourceRows: [(index: Int, identifier: UUID)] {
+    guard let window else { return [] }
+    return window.rowIdentities.enumerated().compactMap { index, identity in
+      guard case .source(let source) = identity, source.kind == .item else { return nil }
+      return (index, source.id)
+    }
   }
 
   var body: some View {
     NavigationStack {
       List(selection: $selectedItemId) {
-        ForEach(items ?? []) { item in
-          Label(item.row.title, systemImage: "square.stack")
-            .tag(item.id)
-            .accessibilityIdentifier("saved.membership.choice.item.\(item.id.uuidString)")
+        if let window {
+          ForEach(sourceRows, id: \.identifier) { index, identifier in
+            choice(window.presentation(at: index), index: index)
+              .onScrollVisibilityChange { visible in
+                if visible {
+                  visibleIdentifiers.insert(identifier)
+                } else {
+                  visibleIdentifiers.remove(identifier)
+                }
+              }
+          }
         }
       }
       .accessibilityIdentifier("saved.membership.choices")
-      .overlay {
-        if let loadFailure {
-          ContentUnavailableView {
-            Label("Items unavailable", systemImage: "exclamationmark.triangle")
-          } description: {
-            Text(loadFailure)
-          } actions: {
-            Button("Try Again") { retryIdentifier = UUID() }
-              .accessibilityIdentifier("saved.membership.retry")
-          }
-        } else if items == nil {
-          ProgressView("Loading Items")
-        } else if items?.isEmpty == true {
-          ContentUnavailableView(
-            "No active Items", systemImage: "square.stack",
-            description: Text("Create an Item or unarchive one in Items, then add it to this List.")
-          )
-        }
-      }
+      .disabled(store.isSaving)
+      .overlay { pickerStatus }
       .navigationTitle("Add to \(list.content.name)")
       .toolbar {
         ToolbarItem(placement: .cancellationAction) {
@@ -89,26 +90,88 @@ struct SavedAddItemForm: View {
       }
     }
     .task(id: loadIdentity) { await loadItems(identity: loadIdentity) }
+    .task(id: visibleIdentifiers) {
+      guard let window, !visibleIdentifiers.isEmpty else { return }
+      let indices = Set(
+        sourceRows.filter { visibleIdentifiers.contains($0.identifier) }.map(\.index))
+      await window.requestRows(at: indices)
+    }
+    .onDisappear {
+      window?.cancel()
+      visibleIdentifiers = []
+    }
     .interactiveDismissDisabled(store.isSaving)
     #if os(macOS)
       .frame(minWidth: 400, minHeight: 320)
     #endif
   }
 
+  @ViewBuilder
+  private func choice(_ presentation: SavedItemWindowPresentation, index: Int) -> some View {
+    switch presentation {
+    case .loaded(let item):
+      Label(item.row.title, systemImage: "square.stack")
+        .tag(item.id)
+        .accessibilityIdentifier("saved.membership.choice.item.\(item.id.uuidString)")
+    case .loading:
+      ProgressView("Loading Item").selectionDisabled()
+    case .failed(let reason):
+      VStack(alignment: .leading) {
+        Text(reason).foregroundStyle(.secondary)
+        Button("Try Again") { Task { await window?.requestRows(at: [index]) } }
+      }
+      .selectionDisabled()
+    }
+  }
+
+  @ViewBuilder
+  private var pickerStatus: some View {
+    if let loadFailure {
+      failureContent(loadFailure)
+    } else {
+      switch window?.state ?? .idle {
+      case .idle, .loading: ProgressView("Loading Items")
+      case .failed(let reason): failureContent(reason)
+      case .ready:
+        if window?.matchingCount == 0 {
+          ContentUnavailableView(
+            "No active Items", systemImage: "square.stack",
+            description: Text("Create an Item or unarchive one in Items, then add it to this List.")
+          )
+        }
+      }
+    }
+  }
+
+  private func failureContent(_ reason: String) -> some View {
+    ContentUnavailableView {
+      Label("Items unavailable", systemImage: "exclamationmark.triangle")
+    } description: {
+      Text(reason)
+    } actions: {
+      Button("Try Again") { retryIdentifier = UUID() }
+        .accessibilityIdentifier("saved.membership.retry")
+    }
+  }
+
   private func loadItems(identity: LoadIdentity) async {
-    items = nil
+    guard !Task.isCancelled else { return }
+    window?.cancel()
+    visibleIdentifiers = []
     loadFailure = nil
     loadedIdentity = nil
-    let candidates = await store.readItems(completion: .all, archive: .active)
-    guard !Task.isCancelled, loadIdentity == identity else { return }
-    guard let candidates else {
-      loadFailure = store.alertMessage ?? "Planner could not load its Items."
-      store.alertMessage = nil
+    guard let namespace = identity.namespace, let window = store.makeItemWindow() else {
+      self.window = nil
+      loadFailure = "Planner is not ready to load its Items."
       return
     }
-    items = candidates
+    self.window = window
+    await window.reload(
+      query: .init(completion: .all, archive: .active),
+      identity: .init(namespace: namespace, savedRevision: identity.revision))
+    guard !Task.isCancelled, loadIdentity == identity, window.state == .ready else { return }
     loadedIdentity = identity
-    if let selectedItemId, !candidates.contains(where: { $0.id == selectedItemId }) {
+    if let selectedItemId, !sourceRows.contains(where: { $0.identifier == selectedItemId }) {
       self.selectedItemId = nil
     }
   }

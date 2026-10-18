@@ -1,6 +1,6 @@
 # Native Item picker presentation windows
 
-Status: the first picker compatibility baseline passes. Production window adoption is next. Q98 remains pending and no itinerary-window interface changes are part of this slice.
+Status: the standalone List Item picker now uses the approved window loader. Its long iPad and dark-mode iPhone journeys, selected ordinary action regressions and mobile/Mac compilation pass. The itinerary Item picker remains eager. Q98 remains pending and no itinerary-window interface changes are part of this slice.
 
 ## Context and starting state
 
@@ -26,7 +26,7 @@ Then adopt and requalify one client at a time. Exercise existing Add/cancel and 
 
 ## Definition of done
 
-Both Item picker clients no longer call the eager Item reader. A selected surviving source remains valid after its presentation page is released. An invalidated or stale candidate cannot be submitted. Save continues to use the original container and accepted domain command; Cancel creates no reference.
+Both Item picker clients no longer call the eager Item reader. A selected surviving source remains valid after its presentation page is released. A superseded dataset/revision cannot enable Add; domain commands retain their normal validation of concurrent source changes. Save continues to use the original container and accepted domain command; Cancel creates no reference.
 
 Affected strict Swift lint and mobile/Mac compiler checks pass. Record exact source/product epochs, baseline/integration results and inspected original captures. Mac runtime, physical performance, signing, itinerary/List-catalog windowing and final whole-app visual/accessibility acceptance remain open until their own evidence passes.
 
@@ -35,3 +35,13 @@ Affected strict Swift lint and mobile/Mac compiler checks pass. Record exact sou
 The [qualified eager iPad baseline](evidence/navigation/native-item-picker-windows/picker-list-tablet-directional-baseline/exit.json) passes in 263.052 seconds. It traverses choices 65 and 129, selects 129, reaches choice 193 and returns to the first page with Add enabled. Save retains the source's exact notes, original List, full two-item progress count and new local Todo appearance. Relaunch preserves that membership identity and state. This establishes compatibility, not moving-window retention or performance.
 
 The first attempt tapped a row that had scrolled beneath the native sheet navigation bar; its [recording-frame review](evidence/navigation/native-item-picker-windows/picker-list-tablet-eager-baseline/failure-review.json) classifies a controller failure. The next attempt added viewport checks but its forward-only fallback overshot the target and kept swiping at the end. A [live Simulator capture](evidence/navigation/native-item-picker-windows/picker-list-tablet-visible-baseline/controller-review.json) proved that condition; the specific diagnosed runner was interrupted and its result retained. Neither attempt supplies product-red credit. The passing controller follows visible fixture-row ordinals through actual gestures, reverses overshoot and requires the complete target below the native navigation bar. Existing ordinary List traversal keeps its original controller.
+
+## Standalone List picker adoption
+
+`SavedAddItemForm` now keeps the loader's complete candidate identity sequence and renders its loaded/loading/failed row states. Native [onScrollVisibilityChange](https://developer.apple.com/documentation/swiftui/view/onscrollvisibilitychange%28threshold%3A_%3A%29) callbacks report rows crossing the viewport threshold and request their pages. Add validates the selected source against all candidate identities, independently of which previews are loaded. Dataset/revision/retry changes replace the query; leaving the picker cancels it. The existing domain Add command and original List identity remain unchanged.
+
+The [windowed iPad journey](evidence/navigation/native-item-picker-windows/picker-list-tablet-window-integration/exit.json) passes in 262.290 seconds, and the [dark-mode iPhone journey](evidence/navigation/native-item-picker-windows/picker-list-phone-window-dark/exit.json) passes in 280.175 seconds. Both cross the intermediate boundaries, preserve an offscreen selection through returning to the first page, add its exact content into the original List and retain the local Todo membership after relaunch. The phone runner restores and verifies the Simulator's original appearance. Inspected original captures retain native sheets, controls, dark Form surfaces and phone bottom tabs.
+
+The [ordinary production iPhone regressions](evidence/navigation/native-item-picker-windows/picker-list-phone-ordinary-regressions/exit.json) pass both functions in 202.682 seconds. They qualify archive exclusion, the truthful empty picker and disabled Add, Cancel without creating a reference, selecting the same Item after unarchive, no duplicated source, stable source/membership identities and relaunch. This complements the large-fixture journeys rather than supplying retention evidence on its own.
+
+The loader and its approved interface/tests are unchanged. Its existing real-Core first-page and release/revisit tests establish presentation retention; these native journeys establish integration behavior. The [production mobile compiler check](evidence/navigation/native-item-picker-windows/picker-list-ordinary-mobile-build/exit.json) and [Mac compiler check](evidence/navigation/native-item-picker-windows/picker-list-window-mac-build/exit.json) pass against the same source. Mac uses local ad hoc signing, with no developer-account changes, and supplies no runtime credit. The [qualification record](evidence/navigation/native-item-picker-windows/list-adoption-validation.json) separates exact executed functions, source/product checks, lint, self-review and inspected captures. No memory, hitch or latency improvement is inferred from journey durations. The itinerary Item picker and List-catalog retention remain open.

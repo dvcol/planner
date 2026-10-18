@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "4B5CD3CC-90D7-45A4-A35A-088686BD14B6.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item picker preserves its added appearance after relaunch_0_CEBC2653-92ED-4951-8CA8-771B20A420EC.png",
+    "timestamp": 1792297819.815,
+    "testIdentifier": "ListWindowJourneyTests/testAddingAnOffscreenPickerSelectionKeepsItsSourceAndOriginalListAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "3D4388CC-135D-4D40-B4F7-ACE595F01BEF.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item picker adds its selected source to the original List_0_5666E22D-A3E3-4220-8E40-FEDCE14EBF3F.png",
+    "timestamp": 1792297809.191,
+    "testIdentifier": "ListWindowJourneyTests/testAddingAnOffscreenPickerSelectionKeepsItsSourceAndOriginalListAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "72D59D48-A216-4586-AB76-BA93D21F65BC.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item picker retains a selected source after revisiting its first page_0_F31D66CE-3E33-404D-88D7-0C9038A650A0.png",
+    "timestamp": 1792297801.646,
+    "testIdentifier": "ListWindowJourneyTests/testAddingAnOffscreenPickerSelectionKeepsItsSourceAndOriginalListAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "1E03C068-6C21-44BD-A201-9990D2D3D36B.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item picker source is fully visible before selection_0_D02AD990-403E-41D0-80F2-2522A1AF4900.png",
+    "timestamp": 1792297639.506,
+    "testIdentifier": "ListWindowJourneyTests/testAddingAnOffscreenPickerSelectionKeepsItsSourceAndOriginalListAfterRelaunch()"
+  }
+]

@@ -1,0 +1,77 @@
+{
+  "baseline": "picker-list-tablet-directional-baseline/exit.json",
+  "nativeResults": [
+    {
+      "platform": "tablet",
+      "packet": "picker-list-tablet-window-integration",
+      "exitCode": 0,
+      "functions": [
+        {
+          "class": "PlannerFixtureUITests.ListWindowJourneyTests",
+          "function": "testAddingAnOffscreenPickerSelectionKeepsItsSourceAndOriginalListAfterRelaunch",
+          "seconds": 262.29
+        }
+      ],
+      "sourceAndProductFreezeAssertedByRunner": true
+    },
+    {
+      "platform": "phone",
+      "packet": "picker-list-phone-window-dark",
+      "exitCode": 0,
+      "functions": [
+        {
+          "class": "PlannerFixtureUITests.ListWindowJourneyTests",
+          "function": "testAddingAnOffscreenPickerSelectionKeepsItsSourceAndOriginalListAfterRelaunch",
+          "seconds": 280.175
+        }
+      ],
+      "sourceAndProductFreezeAssertedByRunner": true
+    },
+    {
+      "platform": "phone",
+      "packet": "picker-list-phone-ordinary-regressions",
+      "exitCode": 0,
+      "functions": [
+        {
+          "class": "PlannerNavigationUITests.SavedListMembershipJourneyTests",
+          "function": "testExistingItemCanBeAddedToAListWithoutDuplicatingItsSourceAfterRelaunch",
+          "seconds": 86.484
+        },
+        {
+          "class": "PlannerNavigationUITests.SavedListMembershipJourneyTests",
+          "function": "testExistingItemPickerExcludesArchivedSourcesAndReloadsAfterUnarchiving",
+          "seconds": 116.199
+        }
+      ],
+      "sourceAndProductFreezeAssertedByRunner": true
+    }
+  ],
+  "compilers": [
+    "picker-list-window-formatted-build/exit.json",
+    "picker-list-ordinary-mobile-build/exit.json",
+    "picker-list-window-mac-build/exit.json"
+  ],
+  "unchangedApprovedLoaderAndTestsSince": "6f2ce0b",
+  "existingLoaderTestResult": "../native-list-windows/q97-loader-suite/exit.json",
+  "newProductionInterfaceOrTestSeam": false,
+  "lint": [
+    "list-adoption-swift-lint.json",
+    "list-adoption-markdown-lint.json"
+  ],
+  "reviews": [
+    "list-adoption-source-review.json",
+    "list-window-tablet-visual-review.json",
+    "list-window-phone-visual-review.json"
+  ],
+  "macRuntimeCredit": false,
+  "signingAccountChanges": false,
+  "permissionSettingsChanges": false,
+  "remaining": [
+    "Itinerary Item picker adoption",
+    "Q98 itinerary-window decision and implementation",
+    "Broader catalog windowing",
+    "Mac native UI runtime",
+    "Physical performance and signing",
+    "Final whole-app visual/accessibility acceptance"
+  ]
+}
