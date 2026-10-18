@@ -753,7 +753,8 @@ struct SavedItineraryDetail: View {
         completion: inputs.filters.completion.queryValue,
         archive: inputs.filters.archive.queryValue,
         categories: inputs.filters.categoryQuery, tags: inputs.filters.tagQuery,
-        lists: inputs.filters.listQuery, hasAddress: inputs.filters.hasAddress,
+        lists: inputs.filters.listQuery, duration: inputs.filters.durationQuery,
+        hasAddress: inputs.filters.hasAddress,
         hasLinks: inputs.filters.hasLinks, scheduled: inputs.filters.scheduled,
         sort: .init(mode: .manual)),
       identity: .init(namespace: namespace, savedRevision: inputs.revision))
@@ -823,7 +824,7 @@ private struct SavedItineraryForm: View {
           .accessibilityIdentifier("saved.itinerary.notes")
         SavedActivityEstimateEditor(
           estimate: $manualEstimate,
-          accessibilityIdentifierPrefix: "saved.itinerary.estimate", isContainerEstimate: true)
+          accessibilityIdentifierPrefix: "saved.itinerary.estimate", purpose: .overall)
         Section("Labels") {
           NavigationLink {
             SavedItemLabelPicker(store: store, kind: .category, selection: $categoryIdentifiers)

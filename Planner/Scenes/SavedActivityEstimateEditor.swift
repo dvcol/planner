@@ -2,35 +2,65 @@ import PlannerCore
 import SwiftUI
 
 struct SavedActivityEstimateEditor: View {
+  enum Purpose {
+    case activity, overall, maximumDuration
+
+    var title: String {
+      switch self {
+      case .activity: "Activity estimate"
+      case .overall: "Overall estimate"
+      case .maximumDuration: "Maximum duration"
+      }
+    }
+
+    var toggleTitle: String {
+      switch self {
+      case .activity: "Include estimate"
+      case .overall: "Use manual estimate"
+      case .maximumDuration: "Limit duration"
+      }
+    }
+
+    var emptyDescription: String {
+      switch self {
+      case .activity: "No estimate"
+      case .overall: "Calculated from items"
+      case .maximumDuration: "Any duration"
+      }
+    }
+  }
+
   @Binding var estimate: PlannerEstimate?
   let accessibilityIdentifierPrefix: String
-  let isContainerEstimate: Bool
+  let purpose: Purpose
   @State private var selectedUnit: PlannerEstimateUnit
 
   init(
     estimate: Binding<PlannerEstimate?>, accessibilityIdentifierPrefix: String,
-    isContainerEstimate: Bool = false
+    purpose: Purpose = .activity
   ) {
     _estimate = estimate
     self.accessibilityIdentifierPrefix = accessibilityIdentifierPrefix
-    self.isContainerEstimate = isContainerEstimate
+    self.purpose = purpose
     _selectedUnit = State(initialValue: estimate.wrappedValue?.displayUnit ?? .hour)
   }
 
   var body: some View {
-    Section(isContainerEstimate ? "Overall estimate" : "Activity estimate") {
+    Section(purpose.title) {
       Menu {
         Button("Half-day (12 hours)") { setEstimate(minutes: 720, unit: .hour) }
         Button("Full-day (24 hours)") { setEstimate(minutes: 1_440, unit: .day) }
         Button("Weekend (48 hours)") { setEstimate(minutes: 2_880, unit: .day) }
       } label: {
-        Label("Quick estimate", systemImage: "clock")
-          .frame(maxWidth: .infinity, alignment: .leading)
-          .contentShape(Rectangle())
+        Label(
+          purpose == .maximumDuration ? "Quick maximum" : "Quick estimate", systemImage: "clock"
+        )
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .contentShape(Rectangle())
       }
       .accessibilityIdentifier(accessibilityIdentifierPrefix + ".shortcuts")
       Toggle(
-        isContainerEstimate ? "Use manual estimate" : "Include estimate",
+        purpose.toggleTitle,
         isOn: Binding(
           get: { estimate != nil },
           set: { enabled in
@@ -62,7 +92,7 @@ struct SavedActivityEstimateEditor: View {
         Text("Changing the display unit keeps the same duration.")
           .font(.footnote).foregroundStyle(.secondary)
       } else {
-        Text(isContainerEstimate ? "Calculated from items" : "No estimate")
+        Text(purpose.emptyDescription)
           .foregroundStyle(.secondary)
       }
     }

@@ -101,7 +101,9 @@ final class SavedItineraryFilterJourneyTests: XCTestCase {
       application, name: "Matching List headers retain full progress with no matching children")
     let filters = application.plannerElement("saved.itinerary.filters")
     XCTAssertTrue(filters.waitForExistence(timeout: 5))
-    for restriction in ["saved.filters.hasAddress", "saved.filters.hasLinks"] {
+    for restriction in [
+      "saved.filters.hasAddress", "saved.filters.hasLinks", "saved.filters.duration.enabled",
+    ] {
       filters.activateForPlannerJourney()
       application.revealSavedPlannerFilter(restriction)
       let toggle = application.descendants(matching: .any).matching(identifier: restriction)

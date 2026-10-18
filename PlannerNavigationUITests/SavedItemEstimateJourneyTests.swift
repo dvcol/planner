@@ -2,6 +2,270 @@ import XCTest
 
 @MainActor
 final class SavedItemEstimateJourneyTests: XCTestCase {
+  func testMaximumDurationFiltersItemsAndInboxInclusivelyWithoutChangingSavedEstimates() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    let filters = application.plannerElement("saved.items.filters")
+    filters.activateForPlannerJourney()
+    let maximumEnabled = application.descendants(matching: .any).matching(
+      identifier: "saved.filters.duration.enabled"
+    ).firstMatch
+    if !maximumEnabled.waitForExistence(timeout: 5) {
+      recordEstimateScreenshot(application, name: "Native Filters is missing maximum duration")
+      XCTFail("Native Filters must expose the accepted maximum-duration constraint")
+      return
+    }
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+
+    for (title, minutes) in [
+      ("Museum 119", 119), ("Museum 120", 120), ("Museum 121", 121),
+      ("Museum unknown", nil), ("Park 60", 60),
+    ] as [(String, Int?)] {
+      createDurationItem(title, minutes: minutes, application: application)
+    }
+    openItems(application)
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Park 60").firstMatch.waitForExistence(timeout: 10))
+    let originalIdentifiers = [
+      "Museum 119", "Museum 120", "Museum 121", "Museum unknown", "Park 60",
+    ]
+    .map { application.savedPlannerItemRows($0).firstMatch.identifier }
+    XCTAssertEqual(Set(originalIdentifiers).count, 5)
+    setTwoHourMaximum(filters, application: application)
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Museum 121").firstMatch.waitForNonExistence(timeout: 10))
+    XCTAssertFalse(application.savedPlannerItemRows("Museum unknown").firstMatch.exists)
+    for title in ["Museum 119", "Museum 120", "Park 60"] {
+      XCTAssertTrue(application.savedPlannerItemRows(title).firstMatch.exists)
+    }
+    recordEstimateScreenshot(
+      application, name: "Inclusive two-hour maximum excludes long and unknown estimates")
+
+    filters.activateForPlannerJourney()
+    application.revealSavedPlannerFilter("saved.filters.duration.includeUnknown")
+    let includeUnknown = application.descendants(matching: .any).matching(
+      identifier: "saved.filters.duration.includeUnknown"
+    ).firstMatch
+    toggle(includeUnknown)
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Museum unknown").firstMatch.waitForExistence(timeout: 10))
+    XCTAssertFalse(application.savedPlannerItemRows("Museum 121").firstMatch.exists)
+    let search = application.searchFields.firstMatch
+    #if os(iOS)
+      if !search.exists { application.swipeDown() }
+    #endif
+    XCTAssertTrue(search.waitForExistence(timeout: 5))
+    search.activateForPlannerJourney()
+    search.typeText("Museum")
+    #if os(iOS)
+      search.typeText("\n")
+    #endif
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Park 60").firstMatch.waitForNonExistence(timeout: 10))
+    XCTAssertTrue(application.savedPlannerItemRows("Museum 120").firstMatch.exists)
+    XCTAssertTrue(application.savedPlannerItemRows("Museum unknown").firstMatch.exists)
+
+    filters.activateForPlannerJourney()
+    application.revealSavedPlannerFilter("saved.filters.duration.enabled")
+    toggle(maximumEnabled)
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Museum 121").firstMatch.waitForExistence(timeout: 10))
+    XCTAssertFalse(application.savedPlannerItemRows("Park 60").firstMatch.exists)
+    XCTAssertEqual(search.value as? String, "Museum")
+    XCTAssertEqual(filters.label, "Active")
+    recordEstimateScreenshot(
+      application, name: "Clearing only duration retains cumulative text search")
+
+    application.openPlannerSection("Inbox")
+    let inboxFilters = application.plannerElement("saved.inbox.filters")
+    XCTAssertTrue(inboxFilters.waitForExistence(timeout: 5))
+    setTwoHourMaximum(inboxFilters, application: application)
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Museum 120").firstMatch.waitForExistence(timeout: 10))
+    XCTAssertFalse(application.savedPlannerItemRows("Museum 121").firstMatch.exists)
+    XCTAssertFalse(application.savedPlannerItemRows("Museum unknown").firstMatch.exists)
+    inboxFilters.activateForPlannerJourney()
+    application.plannerElement("saved.filters.clear").activateForPlannerJourney()
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Museum unknown").firstMatch.waitForExistence(timeout: 10))
+    XCTAssertEqual(inboxFilters.label, "All")
+
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openItems(application)
+    for (index, title) in ["Museum 119", "Museum 120", "Museum 121", "Museum unknown", "Park 60"]
+      .enumerated()
+    {
+      let row = application.savedPlannerItemRows(title).firstMatch
+      XCTAssertTrue(row.waitForExistence(timeout: 10))
+      XCTAssertEqual(row.identifier, originalIdentifiers[index])
+    }
+    application.savedPlannerItemRows("Museum 120").firstMatch.activateForPlannerJourney()
+    let estimate = application.descendants(matching: .any).matching(
+      identifier: "saved.item.estimate"
+    ).firstMatch
+    XCTAssertTrue(estimate.waitForPlannerValue("120 minutes"))
+  }
+
+  func testMaximumDurationPreservesListProgressOrderAndIndependentCompletionAfterRelaunch() {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    for (title, minutes) in [("Museum 120", 120), ("Museum 121", 121), ("Museum unknown", nil)]
+      as [(String, Int?)]
+    {
+      createDurationItem(title, minutes: minutes, application: application)
+    }
+    application.beginPlannerListCreation()
+    let name = application.textFields["saved.list.name"]
+    XCTAssertTrue(name.waitForExistence(timeout: 5))
+    name.activateForPlannerJourney()
+    name.typeText("Duration plan")
+    application.plannerElement("saved.list.save").activateForPlannerJourney()
+    XCTAssertTrue(application.staticTexts["No items"].waitForExistence(timeout: 10))
+    for title in ["Museum 120", "Museum 121", "Museum unknown"] {
+      application.openSavedPlannerListAddMenu()
+      application.plannerElement("saved.list.add").activateForPlannerJourney()
+      let candidate = application.staticTexts[title].firstMatch
+      XCTAssertTrue(candidate.waitForExistence(timeout: 5))
+      candidate.activateForPlannerJourney()
+      application.plannerElement("saved.membership.add").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.savedPlannerItemRows(title).firstMatch.waitForExistence(timeout: 10))
+    }
+    let titles = ["Museum 120", "Museum 121", "Museum unknown"]
+    let originalIdentifiers = titles.map {
+      application.savedPlannerItemRows($0).firstMatch.identifier
+    }
+    assertDurationListOrder(originalIdentifiers, application: application)
+    let completion = application.plannerElement(
+      originalIdentifiers[0].replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion."))
+    completion.activateForPlannerJourney()
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    let filters = application.plannerElement("saved.list.filters")
+    setTwoHourMaximum(filters, application: application)
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Museum 121").firstMatch.waitForNonExistence(timeout: 10))
+    XCTAssertFalse(application.savedPlannerItemRows("Museum unknown").firstMatch.exists)
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    let progress = application.progressIndicators["saved.list.progress"]
+    XCTAssertEqual(progress.label, "1 of 3 items done")
+    XCTAssertTrue(application.staticTexts["Showing 1 of 3 items"].exists)
+    recordEstimateScreenshot(
+      application, name: "Duration filters preserve full List progress and completed appearance")
+    filters.activateForPlannerJourney()
+    application.revealSavedPlannerFilter("saved.filters.duration.includeUnknown")
+    toggle(
+      application.descendants(matching: .any).matching(
+        identifier: "saved.filters.duration.includeUnknown"
+      ).firstMatch)
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Museum unknown").firstMatch.waitForExistence(timeout: 10))
+    XCTAssertFalse(application.savedPlannerItemRows("Museum 121").firstMatch.exists)
+    XCTAssertEqual(progress.label, "1 of 3 items done")
+    filters.activateForPlannerJourney()
+    application.plannerElement("saved.filters.clear").activateForPlannerJourney()
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.savedPlannerItemRows("Museum 121").firstMatch.waitForExistence(timeout: 10))
+    for (index, title) in titles.enumerated() {
+      XCTAssertEqual(
+        application.savedPlannerItemRows(title).firstMatch.identifier, originalIdentifiers[index])
+    }
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    XCTAssertEqual(progress.label, "1 of 3 items done")
+    assertDurationListOrder(originalIdentifiers, application: application)
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    application.openPlannerSection("Lists")
+    let retainedList = application.savedPlannerListRow("Duration plan")
+    if !retainedList.waitForExistence(timeout: 2) {
+      application.plannerElement("Show Sidebar").activateForPlannerJourney()
+    }
+    XCTAssertTrue(retainedList.waitForExistence(timeout: 10))
+    retainedList.activateForPlannerJourney()
+    for (index, title) in titles.enumerated() {
+      let row = application.savedPlannerItemRows(title).firstMatch
+      XCTAssertTrue(row.waitForExistence(timeout: 10))
+      XCTAssertEqual(row.identifier, originalIdentifiers[index])
+    }
+    XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+    XCTAssertEqual(progress.label, "1 of 3 items done")
+    assertDurationListOrder(originalIdentifiers, application: application)
+    recordEstimateScreenshot(
+      application, name: "Unfiltered List retains contextual completion after relaunch")
+  }
+
+  private func assertDurationListOrder(_ identifiers: [String], application: XCUIApplication) {
+    let rows = application.descendants(matching: .any).matching(
+      NSPredicate(format: "identifier IN %@", identifiers))
+    XCTAssertEqual(rows.allElementsBoundByIndex.map(\.identifier), identifiers)
+  }
+
+  private func setTwoHourMaximum(_ filters: XCUIElement, application: XCUIApplication) {
+    filters.activateForPlannerJourney()
+    application.revealSavedPlannerFilter("saved.filters.duration.enabled")
+    let enabled = application.descendants(matching: .any).matching(
+      identifier: "saved.filters.duration.enabled"
+    ).firstMatch
+    XCTAssertTrue(enabled.waitForPlannerBooleanState(false))
+    toggle(enabled)
+    application.revealSavedPlannerFilter("saved.filters.duration.quantity")
+    let quantity = application.descendants(matching: .any).matching(
+      identifier: "saved.filters.duration.quantity"
+    ).firstMatch
+    XCTAssertTrue(quantity.waitForPlannerValue("1"))
+    increment(quantity)
+    XCTAssertTrue(quantity.waitForPlannerValue("2"))
+    recordEstimateScreenshot(
+      application, name: "Native maximum-duration picker and explicit unknown choice")
+    application.plannerElement("saved.filters.done").activateForPlannerJourney()
+  }
+
+  private func createDurationItem(_ title: String, minutes: Int?, application: XCUIApplication) {
+    openItems(application)
+    application.openSavedPlannerNewItemEditor()
+    let titleField = application.textFields["saved.item.title"]
+    XCTAssertTrue(titleField.waitForExistence(timeout: 5))
+    titleField.activateForPlannerJourney()
+    titleField.typeText(title)
+    #if os(iOS)
+      titleField.typeText("\n")
+    #endif
+    if let minutes {
+      let enabled = application.descendants(matching: .any).matching(
+        identifier: "saved.item.estimate.enabled"
+      ).firstMatch
+      XCTAssertTrue(enabled.waitForExistence(timeout: 5))
+      toggle(enabled)
+      let quantity = application.descendants(matching: .any).matching(
+        identifier: "saved.item.estimate.quantity"
+      ).firstMatch
+      if minutes > 60 { increment(quantity) }
+      chooseUnit("Minutes", application: application, prefix: "saved.item.estimate")
+      if minutes == 121 { increment(quantity) }
+      if minutes == 119 {
+        let decrement = quantity.buttons.matching(
+          NSPredicate(format: "identifier ENDSWITH %@", "-Decrement")
+        ).firstMatch
+        XCTAssertTrue(decrement.waitForExistence(timeout: 5))
+        decrement.activateForPlannerJourney()
+      }
+      XCTAssertTrue(quantity.waitForPlannerValue(String(minutes)))
+    }
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
+  }
+
   func testEstimateShortcutsStageExactDurationsAndRetainOnlySavedChangesAfterRelaunch() {
     continueAfterFailure = false
     let application = XCUIApplication()

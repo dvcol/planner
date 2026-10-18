@@ -36,6 +36,8 @@ struct SavedItemFilters: Equatable {
 
   var completion: Completion = .all
   var archive: Archive = .all
+  var maximumDuration: PlannerEstimate?
+  var includeUnknownEstimates = false
   var scheduled: PlannerItemQuery.Scheduling = .all
   var categoryIdentifiers: Set<UUID> = []
   var tagIdentifiers: Set<UUID> = []
@@ -48,7 +50,13 @@ struct SavedItemFilters: Equatable {
 
   var hasItemOnlyRestrictions: Bool {
     !categoryIdentifiers.isEmpty || !tagIdentifiers.isEmpty || !listIdentifiers.isEmpty
-      || hasAddress || hasLinks || scheduled != .all
+      || maximumDuration != nil || hasAddress || hasLinks || scheduled != .all
+  }
+
+  var durationQuery: PlannerItemQuery.Duration? {
+    guard let maximumDuration else { return nil }
+    return .init(
+      maximumMinutes: maximumDuration.minutes, includeUnknown: includeUnknownEstimates)
   }
 
   var categoryQuery: PlannerItemQuery.IdentityGroup? {
@@ -70,6 +78,10 @@ struct SavedItemFilters: Equatable {
     var restrictions = [completion.rawValue, archive.rawValue]
       .filter { $0 != "all" }.map { $0.capitalized }
     if scheduled != .all { restrictions.append(scheduled.rawValue.capitalized) }
+    if let maximumDuration {
+      restrictions.append("Up to \(maximumDuration.nativeEstimateDescription)")
+      if includeUnknownEstimates { restrictions.append("Unknown estimates") }
+    }
     if !categoryIdentifiers.isEmpty {
       if categoryIdentifiers.count == 1 {
         restrictions.append("1 Category")
@@ -160,6 +172,19 @@ private struct SavedItemFilterForm: View {
           }
           .pickerStyle(.menu)
           .accessibilityIdentifier("saved.filters.scheduled")
+        }
+        SavedActivityEstimateEditor(
+          estimate: $filters.maximumDuration,
+          accessibilityIdentifierPrefix: "saved.filters.duration", purpose: .maximumDuration)
+        if filters.maximumDuration != nil {
+          Section {
+            Toggle("Include unknown estimates", isOn: $filters.includeUnknownEstimates)
+              .accessibilityIdentifier("saved.filters.duration.includeUnknown")
+          } footer: {
+            Text(
+              "The maximum includes its exact duration. Items without an estimate are excluded unless included here."
+            )
+          }
         }
         Section("Categories") {
           NavigationLink {
