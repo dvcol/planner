@@ -1,0 +1,30 @@
+{
+  "sourceCheckpoint": "5c5febb82e0929e9e9edb8cfcf5683550f7e2dd8",
+  "scope": "Original iPad action-compatibility captures inspected by the primary agent.",
+  "captures": [
+    {
+      "path": "list-native-tablet-adoption-regressions/DC0C8607-0CD7-4A4E-8EB8-8EEE4E11EF25.png",
+      "observed": "After confirmed selected Item deletion, Zulu is selected in the descending catalog and its own notes appear in the detail pane."
+    },
+    {
+      "path": "list-native-tablet-adoption-regressions/488CEF99-3A5C-4C39-97DC-CCA548F53925.png",
+      "observed": "After confirmed selected List deletion, Zulu contents and its first sorted Birch appearance are selected. Detail retains In Zulu and the contextual notes; full count is two."
+    },
+    {
+      "path": "list-native-tablet-adoption-regressions/8800B2CE-7DEA-4343-B4C1-95C010DC362D.png",
+      "observed": "Manual order shows Zulu, Alpha, Middle. Zulu remains locally checked and full progress is one of three."
+    },
+    {
+      "path": "list-native-tablet-adoption-regressions/BB810718-D4E1-4020-B57C-F0B224A66FCD.png",
+      "observed": "Portrait draft keeps title, subtitle, notes, 12-hour estimate, owned location and link; Origin remains the visible surrounding List."
+    },
+    {
+      "path": "list-native-tablet-adoption-regressions/FE5164A9-4D0A-4C4C-8965-17BD3D479471.png",
+      "observed": "Landscape returns to the same unsaved draft with its duration, owned address and link retained in native Form rows beside Origin. The view is scrolled below the title fields."
+    }
+  ],
+  "limits": [
+    "These light-mode captures qualify selected layouts, not final whole-app visual/accessibility acceptance.",
+    "Rotation supplies no Mac resize, cross-window, physical performance or signing credit."
+  ]
+}

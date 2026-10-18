@@ -1,0 +1,62 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "AD920795-B59F-4A03-A84E-ED1575988B2F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed List preserves membership identity and completion after relaunch_0_2A233AA2-6C02-4054-84BE-043E39770CA9.png",
+    "timestamp": 1792295133.252,
+    "testIdentifier": "ListWindowJourneyTests/testListCrossesPagesRevisitsMembershipsAndKeepsLocalCompletionAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "18D64882-94B3-4175-B7E3-E792ADAC16E4.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed List rereads the same completed final membership_0_737DA17B-BA48-4EDC-A05F-98B6F9E454C5.png",
+    "timestamp": 1792295077.868,
+    "testIdentifier": "ListWindowJourneyTests/testListCrossesPagesRevisitsMembershipsAndKeepsLocalCompletionAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "98A9A840-DD9C-431E-961F-174DE36259E2.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed List revisits its first membership with full progress_0_72709798-9101-4CB1-BF9A-84C1C2C4D7C0.png",
+    "timestamp": 1792295031.134,
+    "testIdentifier": "ListWindowJourneyTests/testListCrossesPagesRevisitsMembershipsAndKeepsLocalCompletionAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "D2DBF7F6-FDAD-4280-99BB-ACAE92948C44.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed List reaches Window Item 193_0_4EFEF468-E8E0-44F8-B0D1-F6F57E667BBF.png",
+    "timestamp": 1792294976.345,
+    "testIdentifier": "ListWindowJourneyTests/testListCrossesPagesRevisitsMembershipsAndKeepsLocalCompletionAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "454D0483-CDF9-4B32-896E-EBD9D187FD68.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed List reaches Window Item 129_0_4C0F2CB1-AEF5-486C-A04D-CAB3E94BAD04.png",
+    "timestamp": 1792294959.996,
+    "testIdentifier": "ListWindowJourneyTests/testListCrossesPagesRevisitsMembershipsAndKeepsLocalCompletionAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "58BBCE5E-D150-4E1D-AF9A-037465CCEC5E.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed List reaches Window Item 065_0_1E90170C-1958-483C-82BF-2E3245CA1AE5.png",
+    "timestamp": 1792294939.675,
+    "testIdentifier": "ListWindowJourneyTests/testListCrossesPagesRevisitsMembershipsAndKeepsLocalCompletionAfterRelaunch()"
+  }
+]

@@ -1,0 +1,18 @@
+{
+  "sourceCheckpoint": "5c5febb82e0929e9e9edb8cfcf5683550f7e2dd8",
+  "scope": "Original iPhone multi-page List captures inspected by the primary agent.",
+  "captures": [
+    {
+      "path": "list-native-phone-final-traversal/98A9A840-DD9C-431E-961F-174DE36259E2.png",
+      "observed": "First membership revisited with one of 193 items done, full estimate and remaining time retained; unchecked first appearance and native bottom tabs visible."
+    },
+    {
+      "path": "list-native-phone-final-traversal/AD920795-B59F-4A03-A84E-ED1575988B2F.png",
+      "observed": "Final membership remains checked and struck through after relaunch; one of 193 items done, estimate and remaining time retained."
+    }
+  ],
+  "limits": [
+    "These light-mode phone captures do not establish whole-app visual acceptance, accessibility or physical performance.",
+    "Native toolbar/search layout at every scroll position remains part of final visual acceptance."
+  ]
+}

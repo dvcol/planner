@@ -1,0 +1,87 @@
+{
+  "sourceCheckpoint": "5c5febb82e0929e9e9edb8cfcf5683550f7e2dd8",
+  "swiftOrConfigurationChangesSinceCheckpoint": [],
+  "nativeRuns": [
+    {
+      "platform": "phone",
+      "packet": "list-native-phone-final-traversal",
+      "exitCode": 0,
+      "functions": [
+        {
+          "class": "PlannerFixtureUITests.ListWindowJourneyTests",
+          "function": "testListCrossesPagesRevisitsMembershipsAndKeepsLocalCompletionAfterRelaunch",
+          "seconds": 224.911
+        }
+      ],
+      "sourceFreezeAssertedByRunner": true,
+      "productFreezeAssertedByRunner": true
+    },
+    {
+      "platform": "tablet",
+      "packet": "list-native-tablet-adoption-regressions",
+      "exitCode": 0,
+      "functions": [
+        {
+          "class": "PlannerNavigationUITests.SavedAppearanceJourneyTests",
+          "function": "testDeletingSelectedItemChoosesTheFirstVisibleSurvivorInTheCurrentSort",
+          "seconds": 76.257
+        },
+        {
+          "class": "PlannerNavigationUITests.SavedAppearanceJourneyTests",
+          "function": "testDeletingSelectedListChoosesTheFirstVisibleListAndItsFirstItemOnRegularLayouts",
+          "seconds": 128.27
+        },
+        {
+          "class": "PlannerNavigationUITests.SavedAppearanceJourneyTests",
+          "function": "testNativeListSortRemembersEachListAndPreservesManualOrderAppearanceCompletionAndProgress",
+          "seconds": 277.705
+        },
+        {
+          "class": "PlannerNavigationUITests.SavedAppearanceJourneyTests",
+          "function": "testNewItemDraftRetainsItsFieldsAndOriginalListThroughLayoutChanges",
+          "seconds": 196.494
+        }
+      ],
+      "sourceFreezeAssertedByRunner": true,
+      "productFreezeAssertedByRunner": true
+    }
+  ],
+  "compilerReferences": [
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-list-windows/list-native-final-phone-qualification-build",
+      "exitCode": 0,
+      "repositorySwiftAndConfigurationStillMatch": true,
+      "runtimeCredit": false
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-design-refinement/native-pane-consistency-wrapped-warning-mobile-build",
+      "exitCode": 0,
+      "repositorySwiftAndConfigurationStillMatch": true,
+      "runtimeCredit": false
+    },
+    {
+      "packet": "docs/prototypes/evidence/navigation/native-design-refinement/native-pane-consistency-final-mac-build",
+      "exitCode": 0,
+      "repositorySwiftAndConfigurationStillMatch": true,
+      "runtimeCredit": false
+    }
+  ],
+  "existingSwiftLintReference": "../native-design-refinement/pane-consistency-swift-lint.json",
+  "markdownLintReference": "native-compatibility-markdown-lint.json",
+  "visualReviews": [
+    "phone-adoption-visual-review.json",
+    "tablet-adoption-visual-review.json"
+  ],
+  "review": "Primary-agent evidence and source consistency review; no new independent agent review or implementation change at this checkpoint.",
+  "newTestsOrProductionSeams": false,
+  "macRuntimeCredit": false,
+  "signingAccountChanges": false,
+  "permissionsChanges": false,
+  "remaining": [
+    "Q98 itinerary interface decision and implementation",
+    "Picker/other collection windowing",
+    "Mac native UI runtime",
+    "Physical performance and signing",
+    "Final whole-app visual/accessibility acceptance"
+  ]
+}

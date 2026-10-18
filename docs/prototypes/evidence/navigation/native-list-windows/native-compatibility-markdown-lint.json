@@ -1,0 +1,19 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "/private/tmp/PlannerItemWindowMarkdownlint.json",
+    "docs/native-list-window-contract-review.md",
+    "docs/prototypes/native-list-windows.md",
+    "docs/native-itinerary-window-contract-review.md"
+  ],
+  "exitCode": 0,
+  "output": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/native-list-window-contract-review.md docs/prototypes/native-list-windows.md docs/native-itinerary-window-contract-review.md\nLinting: 3 files\nSummary: 0 issues in 0 files\nDone in 247ms using pnpm v12.10.1\n",
+  "sourceSHA256": {
+    "docs/native-list-window-contract-review.md": "d3324108ed35a84cdb9dfbeed3097431afc8dc3b35bf160144656de4033058fc",
+    "docs/prototypes/native-list-windows.md": "34031d63ff4f0f6b0b0afdc761fd77574653dfce9515aacb2cc39b7a6a20f71e",
+    "docs/native-itinerary-window-contract-review.md": "492fd24b2f1c04f6786c6802f022c8a0c39f4bd7ec6694d32f40c98d675d8261"
+  }
+}
