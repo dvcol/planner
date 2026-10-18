@@ -1,0 +1,61 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "62246D68-5E64-4959-83E6-708D99D3B7B5.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_7DC143C8-BAE3-4C89-BF09-6A739C2D8ABA.PlannerMCPPrototype",
+    "timestamp": 1792354143.825,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testMissingFinishedEstimateShowsUpperBoundThenResolvesAndFinishesWithoutClearingManualTotal()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "46318F40-9C1F-4D75-9969-020B8A3CBE21.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.list.new\" Button`_0_425D5F5B-E66C-4C0F-AD56-C9C8328A4F47.txt",
+    "timestamp": 1792354143.77,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testMissingFinishedEstimateShowsUpperBoundThenResolvesAndFinishesWithoutClearingManualTotal()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "F2E3A916-54F5-47F3-BDFA-7B2A756E106C.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.list.new\" Button`_0_CD23E401-84B1-4D71-99C4-2BCA18FDF907.txt",
+    "timestamp": 1792354142.787,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testMissingFinishedEstimateShowsUpperBoundThenResolvesAndFinishesWithoutClearingManualTotal()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "C1897574-E54D-4163-8F05-22794291FED8.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `\"saved.list.new\" Button`_0_0CF13503-34FB-4675-81F9-43FACA8D5724.txt",
+    "timestamp": 1792354141.778,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testMissingFinishedEstimateShowsUpperBoundThenResolvesAndFinishesWithoutClearingManualTotal()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "3A726409-D57D-4140-A552-6C2CA86563CF.txt",
+    "isAssociatedWithFailure": true,
+    "suggestedHumanReadableName": "Complete Issue Description.txt",
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testMissingFinishedEstimateShowsUpperBoundThenResolvesAndFinishesWithoutClearingManualTotal()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "275CCFDD-B645-4E7C-BBC3-294F5201399B.txt",
+    "isAssociatedWithFailure": true,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_F23C6B9E-A7F9-4846-87AD-2304F813E161.PlannerMCPPrototype",
+    "timestamp": 1792354145.972,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testMissingFinishedEstimateShowsUpperBoundThenResolvesAndFinishesWithoutClearingManualTotal()"
+  }
+]

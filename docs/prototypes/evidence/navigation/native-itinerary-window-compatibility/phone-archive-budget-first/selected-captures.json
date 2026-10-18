@@ -1,0 +1,112 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "D30F07AD-CFAE-4C3C-A0A1-1318780E6617.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_20D3C48E-B96F-447F-912E-4AB9916CCBDD.PlannerMCPPrototype",
+    "timestamp": 1792353760.912,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "7F216507-CA62-46EC-93E8-D88A52EFF3DA.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_8E04CDE3-38DA-4165-805D-81EC6348BC3B.txt",
+    "timestamp": 1792353760.797,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "0CB10CC0-E268-4680-BEE2-20D83185B8A6.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_46AA6EC5-FEC7-4F93-B029-C0C65F5AB7EC.txt",
+    "timestamp": 1792353759.825,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "25BAE0B2-F6AB-41CC-9114-A68546417DA7.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_32B8AEF9-BBD0-4BB0-9982-D30DC841F20B.txt",
+    "timestamp": 1792353758.835,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "5D571E10-6031-45D3-8899-F83DE25A8A8E.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_6D8D38CF-5AA8-4041-8EB1-D71E5DF7B5E0.txt",
+    "timestamp": 1792353757.778,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "8593EDBA-6332-4A1C-98EE-B1A16CF66B40.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_77FB9FBF-3DB4-442C-B64D-789B447BEBDD.txt",
+    "timestamp": 1792353756.875,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "D5948727-F388-49E0-B462-0350F6A04B24.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_BE6AA465-B1C1-4814-8638-8E3639E528E4.txt",
+    "timestamp": 1792353755.84,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "F0671E84-B2D4-4D1C-9421-733E7E9B1787.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_1A1A8D03-61B1-4D12-AAD0-CE539483946A.txt",
+    "timestamp": 1792353754.826,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "19FFF8FB-9195-4933-B143-227D15129084.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_7FBB5290-D433-45C2-A044-C269DF130EC0.txt",
+    "timestamp": 1792353753.888,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "970A7A4D-7DA0-41DD-86D1-70238D777650.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_D3564785-F8AB-41DC-9EB7-BCF186527E9B.txt",
+    "timestamp": 1792353752.861,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "4ED3D527-D445-47D8-98AB-A7FD1F3CCF14.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Button (First Match)`_0_DC8EEE21-214A-4E6A-813D-B70136A3F0E5.txt",
+    "timestamp": 1792353751.84,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  }
+]

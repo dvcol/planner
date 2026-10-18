@@ -1,0 +1,74 @@
+[
+  {
+    "epoch": "native-archive-budget-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "estimateTestMatchesFinalSource": false
+  },
+  {
+    "epoch": "native-archive-budget-final-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "estimateTestMatchesFinalSource": true
+  },
+  {
+    "epoch": "native-archive-budget-final-mac-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "estimateTestMatchesFinalSource": true
+  },
+  {
+    "epoch": "native-archive-budget-mac-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "estimateTestMatchesFinalSource": false
+  },
+  {
+    "epoch": "native-archive-budget-navigation-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "estimateTestMatchesFinalSource": false
+  },
+  {
+    "epoch": "phone-archive-budget-final",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "estimateTestMatchesFinalSource": true
+  },
+  {
+    "epoch": "phone-archive-budget-first",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "estimateTestMatchesFinalSource": false
+  },
+  {
+    "epoch": "phone-archive-budget-local-regression",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "estimateTestMatchesFinalSource": false
+  },
+  {
+    "epoch": "phone-archive-budget-navigation",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "estimateTestMatchesFinalSource": false
+  },
+  {
+    "epoch": "tablet-archive-budget-final",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "estimateTestMatchesFinalSource": true
+  },
+  {
+    "epoch": "tablet-archive-budget-first",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "estimateTestMatchesFinalSource": false
+  },
+  {
+    "epoch": "tablet-archive-budget-navigation",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "estimateTestMatchesFinalSource": false
+  }
+]

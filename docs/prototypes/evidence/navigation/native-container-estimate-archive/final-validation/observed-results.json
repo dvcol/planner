@@ -1,0 +1,130 @@
+[
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-archive-budget-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-archive-budget-final-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-archive-budget-final-mac-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-archive-budget-mac-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-archive-budget-navigation-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-archive-budget-final",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-archive-budget-final.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedContainerEstimateJourneyTests testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch]' passed (188.823 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedContainerEstimateJourneyTests testMissingFinishedEstimateShowsUpperBoundThenResolvesAndFinishesWithoutClearingManualTotal]' passed (122.749 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-archive-budget-first",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-archive-budget-first.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedContainerEstimateJourneyTests testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch]' failed (113.617 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-archive-budget-local-regression",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-archive-budget-local-regression.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedContainerEstimateJourneyTests testMissingFinishedEstimateShowsUpperBoundThenResolvesAndFinishesWithoutClearingManualTotal]' failed (41.415 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-archive-budget-navigation",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-archive-budget-navigation.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedContainerEstimateJourneyTests testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch]' passed (190.377 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-archive-budget-final",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-archive-budget-final.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedContainerEstimateJourneyTests testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch]' passed (198.330 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-archive-budget-first",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-archive-budget-first.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedContainerEstimateJourneyTests testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch]' failed (136.877 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-archive-budget-navigation",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-archive-budget-navigation.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedContainerEstimateJourneyTests testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch]' passed (198.008 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  }
+]

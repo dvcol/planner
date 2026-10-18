@@ -1,0 +1,112 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "DEFB602B-B7FB-4308-8C89-08D00324771C.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "App UI hierarchy for org.example_0_5B0A3071-00AD-4996-B802-38410C0D8BAD.PlannerMCPPrototype",
+    "timestamp": 1792353784.942,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "795FB39C-B19A-42B5-9347-E0754AA5B7B8.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Any (First Match)`_0_5770118B-B6E5-4F5A-B7BA-346B7C65A7BD.txt",
+    "timestamp": 1792353784.618,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "041EF765-230D-4E7E-84E1-32CC636F4F67.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Any (First Match)`_0_32C75866-D41D-406D-BA29-C65BCF574781.txt",
+    "timestamp": 1792353783.697,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A9F4B113-21C7-4F80-9906-4B8A768F176F.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Any (First Match)`_0_587C3E9A-B8DE-4314-8134-5E40A16085F6.txt",
+    "timestamp": 1792353782.688,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "1F5C4F5B-4E60-4E58-B10A-FE10448D8976.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Any (First Match)`_0_99CE46F1-2D35-4CF2-82FB-E9E7778A4483.txt",
+    "timestamp": 1792353781.681,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "4C105983-D39B-4E35-87D1-E2BD7DC3D527.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Any (First Match)`_0_6B0B20F9-D4FD-4F43-B4F1-4CFFA4D2152D.txt",
+    "timestamp": 1792353780.659,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "31E14F12-6F42-4531-ADDA-A3CFCD2CE5B4.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Any (First Match)`_0_CB0A688B-8BE9-4737-A9CA-AED4EDCCE682.txt",
+    "timestamp": 1792353779.608,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "3F2F5BA5-356F-474D-BA49-8ACB80D0BE2C.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Any (First Match)`_0_48DC6841-CAF4-4E45-ADC6-7FA89800BDFA.txt",
+    "timestamp": 1792353778.587,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "2229118D-6F54-4826-A504-99622ED7D236.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Any (First Match)`_0_BA96D47F-DBD4-421B-BEB1-1EC0FA8D600B.txt",
+    "timestamp": 1792353777.677,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "54F616B9-D29D-4567-B111-138D756B3CA4.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Any (First Match)`_0_54F35FC5-772B-4131-A3DD-CC9C0F915733.txt",
+    "timestamp": 1792353776.638,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "112CACD7-50C1-49A0-856B-89E912E71785.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Debug description for `Any (First Match)`_0_EEBDD3D8-76A1-4B8A-8FCB-2FBC72071224.txt",
+    "timestamp": 1792353775.633,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  }
+]

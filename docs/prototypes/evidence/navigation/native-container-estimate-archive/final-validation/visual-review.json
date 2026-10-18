@@ -1,0 +1,89 @@
+{
+  "scope": "Original archive-journey captures inspected directly, with separate source epochs. Numeric/identity assertions retain their native runtime scope. No whole-app, contrast-audit, physical or Mac UI acceptance.",
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-archive-budget-navigation/AFD80A20-4C5F-4450-A359-14F73AFF305D.png",
+      "sha256": "bdf94091a8f41430aeaf46188faef59179be506037a6c56289c78af6aacffa17",
+      "reviewer": "primary agent",
+      "observation": "Dark phone: full six hours, upper-bound remaining six hours and four-hour manual branch; one archived child remains in full progress while Active hides it. Bottom direct-row content partly passes beneath native tabs."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-archive-budget-navigation/6A9859B7-0418-498B-8FB5-13058726DD15.png",
+      "sha256": "803c9e0e4634b9ac9588638e564e13d309c4f096994c98c65293a6b37b4437ff",
+      "reviewer": "primary agent",
+      "observation": "Dark phone: whole manual branch has zero remaining, root has two hours remaining; completed branch Museum and unchecked direct Museum remain distinct. Scrolled title passes under floating top controls, retaining the existing scroll-edge readability finding."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-archive-budget-navigation/7B7D8E68-1755-4AEF-8BBA-D506BD6E855F.png",
+      "sha256": "7e91e3429e1921187e4a5f2dcad63be1bd31c6a111df5458e597d4b994d2c104",
+      "reviewer": "primary agent",
+      "observation": "Dark phone: unarchive restores Lunch, branch two hours remaining and root four hours; full six hours and independent Museum checks remain. Bottom metadata is near native tabs, not complete scroll-clearance proof."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-archive-budget-navigation/0EADE04A-A8C3-4342-BCD9-E39FB95CCDDE.png",
+      "sha256": "13e0fad6a595174c5da080e8d57cbfc31e8bed2a8c4f3ec34b01f93b8758e357",
+      "reviewer": "primary agent",
+      "observation": "Light iPad: one of three finished, archived breakdown, full six hours, upper bounds and missing-finished warning are visible; List branch and direct Museum are distinct. Empty detail is intentional because no Item was selected."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-archive-budget-navigation/ADFA8323-0337-4115-BE3C-A23545F87A56.png",
+      "sha256": "b3fcef0f43ef623beb4beb033d79498f5de3b9e17269d831088e58fab8e1ce48",
+      "reviewer": "primary agent",
+      "observation": "Light iPad: branch two of two finished with zero remaining; root two of three finished and two hours remaining, preserving the unchecked direct Museum."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-archive-budget-navigation/459D05B9-BEC8-4369-A09E-A4E1EC8EDEA7.png",
+      "sha256": "5d2dfc1cb88ca8fd0db06e1fd03ac531f51cd3c74a19368e7639a38bd690b9c2",
+      "reviewer": "primary agent",
+      "observation": "Light iPad: unarchive restores three appearances with branch Museum checked, Lunch and direct Museum unchecked; branch two hours remaining, root four hours and full six hours. No full accessibility acceptance is inferred."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-archive-budget-final/0654E859-BED1-4F41-956C-D5C551A2CA74.png",
+      "sha256": "630554864199f6d35ebb4e1d81250c7e75f039c135259c7b50a0ad1e1daa1d92",
+      "reviewer": "primary agent",
+      "observation": "Final-source light iPad: root full six hours and up to six hours remaining, manual branch four hours and up to four remaining, one archived child included in progress and excluded by Active filtering. Both Museum appearances are unchecked."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-archive-budget-final/F27FD26B-EB97-437A-9DE9-253FD10DF8EA.png",
+      "sha256": "b729db842353f4155cf7ecf5455d6153c40e6a4e9b8266720dae2b38a48604d0",
+      "reviewer": "primary agent",
+      "observation": "Final-source light iPad: finished manual branch has zero remaining; root has two hours for the unchecked direct Museum. Full six hours and independent branch completion remain visible."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-archive-budget-final/362889F7-4D99-4EC5-B9A5-101A6BF94C92.png",
+      "sha256": "a8d1d61b87e4c8663d441b6b036a4f1970dfca77bafa5d7e7cc38f3a202903da",
+      "reviewer": "primary agent",
+      "observation": "Final-source light iPad: unarchive restores Lunch and the original Done/Todo/Todo states. Branch two hours and root four hours remain, full six hours retained. Empty detail is intentional."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-archive-budget-final/1B0BE78F-B7DD-4DEB-9645-7586EDDF5D14.png",
+      "sha256": "4910824c054b5926ed0dcf4c0862a17e69fde6016d6c90ecf59f6c17ace73204",
+      "reviewer": "primary agent",
+      "observation": "Final-source dark phone: full six hours and upper-bound six hours remaining, branch manual four hours and upper-bound four remaining. Archived child is hidden while progress includes it; bottom direct-row text passes beneath native tabs."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-archive-budget-final/23A0144B-4DBA-443D-8189-BBCD41A2AED7.png",
+      "sha256": "1a3e5696345340f1231cfab1cc2a0a3d755340e418d16a09e8c4683494d7a157",
+      "reviewer": "primary agent",
+      "observation": "Final-source dark phone: branch zero remaining, root two hours remaining; completed branch Museum and unchecked direct Museum remain independent. Scrolled title passes beneath native top controls, retaining the scroll-edge readability finding."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-archive-budget-final/9BA1C0D7-4960-4F86-8887-58B503893582.png",
+      "sha256": "a240b2133fce76112fe6e429b02d9133b9e90fb6edac20d7de7491097892769f",
+      "reviewer": "primary agent",
+      "observation": "Final-source dark phone: unarchive restores Lunch and original Done/Todo/Todo appearances. Branch two hours, root four hours and full six hours remain. Bottom metadata remains near the native tabs."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-archive-budget-final/2280453D-D2A0-4E17-BFED-C2E201BEF59F.png",
+      "sha256": "a9eda08e90276139e5bfd67776ef64e6115e6c40a052a56c5b5060ac07ebb9f1",
+      "reviewer": "primary agent",
+      "observation": "Final existing regression: one-hour manual total has zero remaining with explicit exceeded-total warning while one of two Items remains unfinished. Top inline title is crowded by native controls; whole-app polish remains open."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-archive-budget-final/09CC0D88-0EA5-480A-9A85-9D2B8AE4E4B0.png",
+      "sha256": "d5be353ce30e5220957298b5f9d14e9e18d45c4a52e49fd7ef351beca088e851",
+      "reviewer": "primary agent",
+      "observation": "Final existing regression: four-hour manual total and up-to-four-hour remaining display the missing-finished-estimate warning; Lunch is locally Done and Museum Todo. No global-completion or full accessibility acceptance is inferred."
+    }
+  ]
+}

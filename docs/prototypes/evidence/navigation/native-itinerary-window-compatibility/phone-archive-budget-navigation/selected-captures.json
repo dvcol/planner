@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "7B7D8E68-1755-4AEF-8BBA-D506BD6E855F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Unarchive restores the same local appearances and independent direct budget_0_EC642F6A-2001-4B45-BD99-1460BC126F57.png",
+    "timestamp": 1792354082.828,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "6A9859B7-0418-498B-8FB5-13058726DD15.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Finished manual branch releases its whole budget while direct Item remains_0_A9715146-70D2-4A9E-9C75-6AA6DF621E07.png",
+    "timestamp": 1792354031.804,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "AFD80A20-4C5F-4450-A359-14F73AFF305D.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Archived unknown estimate keeps the partial manual branch upper bound_0_789801C1-EEB9-4885-B7C1-6B4955B36A17.png",
+    "timestamp": 1792354026.341,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  }
+]

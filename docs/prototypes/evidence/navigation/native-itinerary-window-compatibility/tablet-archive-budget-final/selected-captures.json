@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "362889F7-4D99-4EC5-B9A5-101A6BF94C92.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Unarchive restores the same local appearances and independent direct budget_0_62906446-F19C-4D31-81FB-391A4C33AB8F.png",
+    "timestamp": 1792354498.661,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "F27FD26B-EB97-437A-9DE9-253FD10DF8EA.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Finished manual branch releases its whole budget while direct Item remains_0_AA5A942D-BCA1-4B5C-9EB7-38D0D062BE0A.png",
+    "timestamp": 1792354447.463,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "0654E859-BED1-4F41-956C-D5C551A2CA74.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Archived unknown estimate keeps the partial manual branch upper bound_0_99AA1D84-1136-4478-AF12-DEC98DA5209D.png",
+    "timestamp": 1792354442.051,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  }
+]

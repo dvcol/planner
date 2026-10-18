@@ -1,0 +1,72 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "9BA1C0D7-4960-4F86-8887-58B503893582.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Unarchive restores the same local appearances and independent direct budget_0_7997B198-80DA-4AEE-8637-7B5FADDEDD81.png",
+    "timestamp": 1792354487.666,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "23A0144B-4DBA-443D-8189-BBCD41A2AED7.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Finished manual branch releases its whole budget while direct Item remains_0_82272F2A-B27E-4FC7-ADF4-1DE5F04F31A8.png",
+    "timestamp": 1792354436.558,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "1B0BE78F-B7DD-4DEB-9645-7586EDDF5D14.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Archived unknown estimate keeps the partial manual branch upper bound_0_C7651101-36BD-4061-A74A-BBDFD10E4E76.png",
+    "timestamp": 1792354431.029,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testArchivedUnknownEstimateKeepsItsManualBranchBudgetAndRestoresLocalStateAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "D4F54E6A-BBE9-474C-8D74-E2B9880E804E.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native completed plan keeps the manual total and shows zero remaining_0_AE7EDE5F-F18F-4281-9372-55458D72B9F1.png",
+    "timestamp": 1792354610.458,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testMissingFinishedEstimateShowsUpperBoundThenResolvesAndFinishesWithoutClearingManualTotal()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "87B5CB3C-0A2A-4991-904B-D08CAA8A4F63.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "List catalog warns that remaining time is an upper bound_0_7D81FD8B-F440-4D39-B6BC-F3EC49A09F90.png",
+    "timestamp": 1792354586.709,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testMissingFinishedEstimateShowsUpperBoundThenResolvesAndFinishesWithoutClearingManualTotal()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "09CC0D88-0EA5-480A-9A85-9D2B8AE4E4B0.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native remaining upper bound explains the missing finished estimate_0_4831D8E1-C3C1-469D-A679-BB3668089206.png",
+    "timestamp": 1792354584.166,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testMissingFinishedEstimateShowsUpperBoundThenResolvesAndFinishesWithoutClearingManualTotal()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "2280453D-D2A0-4E17-BFED-C2E201BEF59F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native zero remaining warns when the plan is still unfinished_0_B5F07452-745E-465C-B583-E29426F69EDB.png",
+    "timestamp": 1792354562.64,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testMissingFinishedEstimateShowsUpperBoundThenResolvesAndFinishesWithoutClearingManualTotal()"
+  }
+]
