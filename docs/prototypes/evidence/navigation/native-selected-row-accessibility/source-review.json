@@ -1,0 +1,16 @@
+{
+  "kind": "primary-agent source review and delegated SDK facts; not an independent code review",
+  "diagnosticBoundary": "Existing isolated List-window fixture and public native UI interactions. performAccessibilityAudit(for: .contrast), without an issue handler or exclusion filter.",
+  "finalProductionState": "All row, font, tint and List-style probes reverted. The diagnostic function is retained as compressed evidence, not a suppressed or expected-failure test in the ordinary test suite.",
+  "sdkFacts": [
+    {
+      "url": "https://developer.apple.com/documentation/swiftui/environmentvalues/backgroundprominence",
+      "finding": "Standard and increased prominence adapt semantic text styles, but expose no selection RGBA or contrast calculation."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/appkit/nscolor/alternateselectedcontroltextcolor",
+      "finding": "AppKit offers semantic selected-content text, not a cross-platform arbitrary-tint contrast function."
+    }
+  ],
+  "decision": "Q99 pending. No contrast-fix or full UI acceptance claimed."
+}

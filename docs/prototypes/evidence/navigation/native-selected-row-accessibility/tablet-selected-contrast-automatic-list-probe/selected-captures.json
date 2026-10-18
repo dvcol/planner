@@ -1,0 +1,41 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "C75CB8F4-C791-48CC-9075-42DC37F90AA5.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Selected Item presentation before native contrast audit_0_2B0E7FAB-6F1F-496B-A6B5-8EF1C9AA7673.png",
+    "timestamp": 1792304836.065,
+    "testIdentifier": "ListWindowJourneyTests/testSelectedItemPresentationPassesNativeContrastAudit()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "7F525667-94B2-458E-9680-D3BBCF0C8EF5.txt",
+    "isAssociatedWithFailure": true,
+    "suggestedHumanReadableName": "Complete Issue Description.txt",
+    "testIdentifier": "ListWindowJourneyTests/testSelectedItemPresentationPassesNativeContrastAudit()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "E339FEE2-5079-45C8-B17B-C1E84FA01F5C.png",
+    "isAssociatedWithFailure": true,
+    "suggestedHumanReadableName": "App Screenshot_0_7D05146A-0E12-482E-9A4A-A5B079D70C90.png",
+    "timestamp": 1792304836.565,
+    "testIdentifier": "ListWindowJourneyTests/testSelectedItemPresentationPassesNativeContrastAudit()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "59BD5186-7B68-4BBE-8711-73734A2F5720.png",
+    "isAssociatedWithFailure": true,
+    "suggestedHumanReadableName": "Element Screenshot_1_A90213BE-A8D4-43D9-86D1-18FBD8517203.png",
+    "timestamp": 1792304836.565,
+    "testIdentifier": "ListWindowJourneyTests/testSelectedItemPresentationPassesNativeContrastAudit()"
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "packet": "contrast-automatic-list-probe-mobile-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "classification": "compiler evidence only"
+  },
+  {
+    "packet": "contrast-baseline-mobile-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "classification": "compiler evidence only"
+  },
+  {
+    "packet": "contrast-bold-headline-probe-mobile-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "classification": "compiler evidence only"
+  },
+  {
+    "packet": "contrast-fixture-corrected-mobile-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "classification": "compiler evidence only"
+  },
+  {
+    "packet": "contrast-headline-probe-mobile-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "classification": "compiler evidence only"
+  },
+  {
+    "packet": "contrast-indigo-probe-mobile-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "classification": "compiler evidence only"
+  },
+  {
+    "packet": "contrast-stock-row-mobile-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "classification": "compiler evidence only"
+  },
+  {
+    "packet": "contrast-stock-sidebar-mobile-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "classification": "compiler evidence only"
+  },
+  {
+    "packet": "tablet-selected-contrast-automatic-list-probe",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerSelectedRowAccessibilityRuntime-tablet-selected-contrast-automatic-list-probe.xcresult",
+    "literalTestResults": [
+      "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' failed (12.223 seconds)."
+    ],
+    "classification": "diagnostic contrast failure"
+  },
+  {
+    "packet": "tablet-selected-contrast-bold-headline-probe",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerSelectedRowAccessibilityRuntime-tablet-selected-contrast-bold-headline-probe.xcresult",
+    "literalTestResults": [
+      "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' failed (12.330 seconds)."
+    ],
+    "classification": "diagnostic contrast failure"
+  },
+  {
+    "packet": "tablet-selected-contrast-dark",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerSelectedRowAccessibilityRuntime-tablet-selected-contrast-dark.xcresult",
+    "literalTestResults": [
+      "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' failed (20.912 seconds)."
+    ],
+    "classification": "incorrect fixture expectation; audit did not execute"
+  },
+  {
+    "packet": "tablet-selected-contrast-dark-retry",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerSelectedRowAccessibilityRuntime-tablet-selected-contrast-dark-retry.xcresult",
+    "literalTestResults": [
+      "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' failed (12.716 seconds)."
+    ],
+    "classification": "diagnostic contrast failure"
+  },
+  {
+    "packet": "tablet-selected-contrast-headline-probe",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerSelectedRowAccessibilityRuntime-tablet-selected-contrast-headline-probe.xcresult",
+    "literalTestResults": [
+      "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' failed (12.462 seconds)."
+    ],
+    "classification": "diagnostic contrast failure"
+  },
+  {
+    "packet": "tablet-selected-contrast-indigo-probe",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerSelectedRowAccessibilityRuntime-tablet-selected-contrast-indigo-probe.xcresult",
+    "literalTestResults": [
+      "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' failed (12.349 seconds)."
+    ],
+    "classification": "diagnostic contrast failure"
+  },
+  {
+    "packet": "tablet-selected-contrast-stock-row-dark",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerSelectedRowAccessibilityRuntime-tablet-selected-contrast-stock-row-dark.xcresult",
+    "literalTestResults": [
+      "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' failed (13.883 seconds)."
+    ],
+    "classification": "diagnostic contrast failure"
+  },
+  {
+    "packet": "tablet-selected-contrast-stock-sidebar-dark",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerSelectedRowAccessibilityRuntime-tablet-selected-contrast-stock-sidebar-dark.xcresult",
+    "literalTestResults": [
+      "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' failed (12.128 seconds)."
+    ],
+    "classification": "diagnostic contrast failure"
+  }
+]

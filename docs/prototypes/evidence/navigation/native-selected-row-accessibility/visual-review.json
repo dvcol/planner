@@ -1,0 +1,50 @@
+[
+  {
+    "path": "tablet-selected-contrast-dark-retry/A33A8D05-5511-4606-ADA8-F65354266E4D.png",
+    "sha256": "a2f11cada95d3481ad19493cbdc81216921277886e6156ea7b82cafd0e59ed79",
+    "observed": "Real compact metadata is pale on the selected blue background; full saved details remain visible.",
+    "originalCapture": true
+  },
+  {
+    "path": "tablet-selected-contrast-dark-retry/A917C6B7-2387-4399-872D-EDD2B82ADFD0.png",
+    "sha256": "8bfd1f54f51218b37f7c64fc0fe36f4fbd5de284e85999e688df5b97ca3b393e",
+    "observed": "Audit flags the selected title.",
+    "originalCapture": true
+  },
+  {
+    "path": "tablet-selected-contrast-indigo-probe/0BD48B2F-EBC1-4FE4-874B-6D2F1B2F4676.png",
+    "sha256": "f00fe3f2afe432216fbece112cffa5ef567bb2e47c7fe47acbbf557dae4b4b72",
+    "observed": "Native indigo changes the selection color but does not pass the audit.",
+    "originalCapture": true
+  },
+  {
+    "path": "tablet-selected-contrast-headline-probe/E3406254-6FCC-4B41-8F35-F66F1D6716C1.png",
+    "sha256": "44b97092905d1b33e0eabde4a00dd3221afbc717d0bb38f2b389e27976ba5af1",
+    "observed": "Headline title still receives the native selected foreground.",
+    "originalCapture": true
+  },
+  {
+    "path": "tablet-selected-contrast-bold-headline-probe/6C11BD57-65A7-473B-B467-900DD7C31093.png",
+    "sha256": "44b97092905d1b33e0eabde4a00dd3221afbc717d0bb38f2b389e27976ba5af1",
+    "observed": "Bold headline audit still flags the title.",
+    "originalCapture": true
+  },
+  {
+    "path": "tablet-selected-contrast-automatic-list-probe/59BD5186-7B68-4BBE-8711-73734A2F5720.png",
+    "sha256": "6bf0b4e96de656b6d1fd8d7cb0a6f0cee5576f2e44bc4de8049eac020adc10a2",
+    "observed": "Automatic List styling audit still flags the title.",
+    "originalCapture": true
+  },
+  {
+    "path": "tablet-selected-contrast-stock-row-dark/494A5CB6-8767-45BD-95F2-4918B3E94F25.png",
+    "sha256": "690f8a3d4394fa763b7ee27e708292743b5fdd8f9f31eb0050479fa75e07f706",
+    "observed": "Minimal stock NavigationLink title has the same white-on-blue finding.",
+    "originalCapture": true
+  },
+  {
+    "path": "tablet-selected-contrast-stock-sidebar-dark/D9612F09-3D43-4016-851F-02C7C8547796.png",
+    "sha256": "50831000b70e6d00e4e9943a9192ee4d4cdf3d64eccd108821fb9733f73443fe",
+    "observed": "Stock sidebar style uses rounded selected rows and still fails. No Planner row metadata or checkbox is present.",
+    "originalCapture": true
+  }
+]

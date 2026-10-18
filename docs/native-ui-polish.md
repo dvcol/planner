@@ -76,3 +76,7 @@ The same refinement report now includes a native pane consistency follow-up. It 
 ## Settings and capture appearance checkpoint
 
 The [focused scene review](prototypes/native-scene-appearance.md) adds dark phone/tablet Settings, Manage Labels, Review Capture and saved native Maps-card evidence. It fixes an outdated phone-tab assumption in the capture test controller and records the actual staged editor, without changing production behavior. The report preserves the failed iPad attempt, separate passing label results, final capture/map journeys, inspected captures and compiler-only Mac result. Technical Maps wording, selected-row metadata contrast and floating-bar scroll readability remain review candidates; these checks do not close final scene, accessibility, physical or Mac runtime acceptance.
+
+## Selected-row contrast finding
+
+The [native selected-row diagnosis](prototypes/native-selected-row-accessibility.md) adds a reproducible dark iPad contrast failure and a minimal stock-row comparison. It retains original findings, unsuccessful typography/tint/style probes and restored production source. Q99 asks whether to allow a controlled selected-row contrast treatment while preserving native List/navigation controls. No successful contrast correction is claimed. The [Maps wording correction](prototypes/native-maps-preview-copy.md) separately replaces technical warnings with plain language without changing provider-data semantics.

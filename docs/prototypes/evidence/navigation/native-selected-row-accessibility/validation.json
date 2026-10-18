@@ -1,0 +1,16 @@
+{
+  "strictSwiftLint": {
+    "command": [
+      "xcrun",
+      "swift-format",
+      "lint",
+      "--strict",
+      "Planner/Scenes/SavedItemViews.swift",
+      "PlannerFixtureUITests/ListWindowJourneyTests.swift"
+    ],
+    "exitCode": 0
+  },
+  "productionAndOrdinaryTestsRestored": true,
+  "ordinaryTestFunctionAdded": false,
+  "contrastAcceptance": false
+}
