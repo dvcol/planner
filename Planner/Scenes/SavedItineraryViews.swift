@@ -26,7 +26,9 @@ struct SavedItineraryCatalog: View {
           VStack(alignment: .leading, spacing: 4) {
             HStack {
               Label(
-                itinerary.title, systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+                itinerary.title, systemImage: "point.topleft.down.to.point.bottomright.curvepath"
+              )
+              .foregroundStyle(SavedRowForeground())
               if itinerary.archived {
                 Image(systemName: "archivebox").foregroundStyle(.secondary)
                   .accessibilityHidden(true)

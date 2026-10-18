@@ -1,6 +1,6 @@
 # Selected Item presentation accessibility
 
-Status: Q99 A accepted on 18 October 2026. A controlled selection palette with native controls is approved; the reproducible dark iPad contrast finding still requires correction and qualification. All temporary production row/style probes have been reverted. No passing contrast result or final UI acceptance is claimed.
+Status: historical diagnosis, followed by the [Q99 foreground correction](native-selection-contrast-fix.md) on 18 October 2026. Its represented mobile row/detail checks pass except for a separate dark iPad Increase Contrast overlap at Capture, pending Q101. This document retains the original failures and discarded diagnostic probes; it does not claim final UI acceptance.
 
 ## Context and goal
 

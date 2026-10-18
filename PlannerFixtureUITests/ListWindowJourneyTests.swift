@@ -5,6 +5,56 @@ import XCTest
 
   @MainActor
   final class ListWindowJourneyTests: XCTestCase {
+    func testSelectedItemPresentationPassesNativeContrastAudit() throws {
+      continueAfterFailure = false
+      XCUIDevice.shared.orientation = .portrait
+      addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "list-windows", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      application.openPlannerSection("Items")
+      let item = application.savedPlannerItemRows("Window Item 001").firstMatch
+      XCTAssertTrue(item.waitForExistence(timeout: 15))
+      item.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Window notes 1"].waitForExistence(timeout: 10))
+      capture("Selected Item presentation before native contrast audit")
+      try auditContrast(application)
+    }
+
+    func testSelectedListPresentationAndCompletionPassNativeContrastAudit() throws {
+      continueAfterFailure = false
+      XCUIDevice.shared.orientation = .portrait
+      addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "list-windows", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      openList(application)
+      let item = application.savedPlannerItemRows("Window Item 001").firstMatch
+      XCTAssertTrue(item.waitForExistence(timeout: 15))
+      let identifier = item.identifier
+      item.activateForPlannerJourney()
+      XCTAssertTrue(application.staticTexts["Window notes 1"].waitForExistence(timeout: 10))
+      capture("Selected List presentation before native contrast audit")
+      try auditContrast(application)
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        let completion = application.buttons[
+          identifier.replacingOccurrences(
+            of: "saved.appearance.", with: "saved.appearance.completion.")]
+        XCTAssertTrue(completion.waitForPlannerValue("To do"))
+        completion.activateForPlannerJourney()
+        XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+        XCTAssertTrue(application.staticTexts["1 of 193 items done"].waitForExistence(timeout: 10))
+        XCTAssertEqual(item.identifier, identifier)
+        XCTAssertTrue(application.staticTexts["Window notes 1"].exists)
+        capture("Selected List presentation after local completion")
+        try auditContrast(application)
+      }
+    }
+
     func testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch() {
       continueAfterFailure = false
       XCUIDevice.shared.orientation = .portrait
@@ -227,6 +277,13 @@ import XCTest
       XCTAssertEqual(last.identifier, lastIdentifier)
       XCTAssertTrue(completion.waitForPlannerValue("Completed"))
       capture("Windowed List preserves membership identity and completion after relaunch")
+    }
+
+    private func auditContrast(_ application: XCUIApplication) throws {
+      let previousValue = continueAfterFailure
+      continueAfterFailure = true
+      defer { continueAfterFailure = previousValue }
+      try application.performAccessibilityAudit(for: .contrast)
     }
 
     private func openList(_ application: XCUIApplication, title: String = "Window Route") {

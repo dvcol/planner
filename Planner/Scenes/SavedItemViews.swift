@@ -130,7 +130,7 @@ struct SavedItemCatalog: View {
         }
         .labelStyle(.iconOnly)
         .buttonStyle(.plain)
-        .foregroundStyle(item.row.globalDone == true ? Color.accentColor : Color.secondary)
+        .foregroundStyle(SavedRowForeground.completion(isDone: item.row.globalDone == true))
         .disabled(!store.canCreate)
         .accessibilityValue(item.row.globalDone == true ? "Completed" : "To do")
         .accessibilityIdentifier("saved.item.row.completion.\(item.id.uuidString)")
@@ -253,9 +253,14 @@ struct SavedItemDetail: View {
         .accessibilityIdentifier("saved.item.completion")
       } footer: {
         Text("Completing this Item shows it as done in every List and Itinerary.")
+          .foregroundStyle(Color.primary)
       }
       if let notes = item.content.notes, !notes.isEmpty {
-        Section("Notes") { Text(notes).textSelection(.enabled) }
+        Section {
+          Text(notes).textSelection(.enabled)
+        } header: {
+          Text("Notes").foregroundStyle(Color.primary)
+        }
       }
       SavedItemEstimateSection(estimate: item.content.estimate)
       SavedSchedulesSection(source: item.source, references: item.references, canChange: canChange)

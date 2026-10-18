@@ -1,0 +1,358 @@
+{
+  "status": "Partial Q99 checkpoint; toolbar overlap pending Q101",
+  "phases": [
+    {
+      "phase": "q99-content-palette-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": true
+    },
+    {
+      "phase": "q99-contrast-checkpoint-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-detail-contrast-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-foreground-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-full-row-palette-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": true
+    },
+    {
+      "phase": "q99-native-column-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": true
+    },
+    {
+      "phase": "q99-native-column-qualified-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": true
+    },
+    {
+      "phase": "q99-palette-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": true
+    },
+    {
+      "phase": "q99-phone-contrast-dark",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-phone-contrast-dark.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testCompletingAVisibleItemKeepsItsListSelectedDuringRefresh]' passed (13.325 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' passed (12.440 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' passed (11.946 seconds).",
+        "** TEST EXECUTE SUCCEEDED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-phone-contrast-light",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-phone-contrast-light.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testCompletingAVisibleItemKeepsItsListSelectedDuringRefresh]' passed (14.394 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' passed (12.557 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' passed (12.006 seconds).",
+        "** TEST EXECUTE SUCCEEDED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-qualified-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-readable-secondary-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-red-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-root-palette-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": true
+    },
+    {
+      "phase": "q99-secondary-action-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": true
+    },
+    {
+      "phase": "q99-secondary-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-semantic-formatted-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-semantic-text-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-shared-foreground-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-tablet-column-dark-increased",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-column-dark-increased.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' passed (24.516 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' passed (20.957 seconds).",
+        "** TEST EXECUTE SUCCEEDED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": true
+    },
+    {
+      "phase": "q99-tablet-content-palette-dark",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-content-palette-dark.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' passed (11.897 seconds).",
+        "** TEST EXECUTE SUCCEEDED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": true
+    },
+    {
+      "phase": "q99-tablet-dark-red",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-dark-red.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' failed (14.667 seconds).",
+        "** TEST EXECUTE FAILED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-tablet-detail-qualified-light",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-detail-qualified-light.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' failed (12.396 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' failed (16.509 seconds).",
+        "** TEST EXECUTE FAILED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-tablet-final-light",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-final-light.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' passed (17.715 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' passed (21.227 seconds).",
+        "** TEST EXECUTE SUCCEEDED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-tablet-foreground-dark",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-foreground-dark.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' passed (11.846 seconds).",
+        "** TEST EXECUTE SUCCEEDED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-tablet-full-row-palette-dark",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-full-row-palette-dark.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' passed (11.887 seconds).",
+        "** TEST EXECUTE SUCCEEDED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": true
+    },
+    {
+      "phase": "q99-tablet-palette-dark",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-palette-dark.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' failed (12.105 seconds).",
+        "** TEST EXECUTE FAILED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": true
+    },
+    {
+      "phase": "q99-tablet-qualified-light",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-qualified-light.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' failed (12.338 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' failed (16.629 seconds).",
+        "** TEST EXECUTE FAILED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-tablet-readable-dark",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-readable-dark.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' passed (12.364 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' passed (21.271 seconds).",
+        "** TEST EXECUTE SUCCEEDED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-tablet-readable-dark-increased",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-readable-dark-increased.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' failed (12.599 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' passed (21.221 seconds).",
+        "** TEST EXECUTE FAILED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": false,
+      "limitation": "Current-source Item audit fails on bottom-row texts obscured by Capture; List/local-completion audits pass. Q101 pending."
+    },
+    {
+      "phase": "q99-tablet-readable-light",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-readable-light.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' passed (12.046 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' passed (21.505 seconds).",
+        "** TEST EXECUTE SUCCEEDED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-tablet-readable-light-increased",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-readable-light-increased.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' passed (11.796 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' passed (21.093 seconds).",
+        "** TEST EXECUTE SUCCEEDED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-tablet-root-palette-dark",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-root-palette-dark.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' failed (12.274 seconds).",
+        "** TEST EXECUTE FAILED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": true
+    },
+    {
+      "phase": "q99-tablet-secondary-action-dark-increased",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-secondary-action-dark-increased.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' failed (14.646 seconds).",
+        "** TEST EXECUTE FAILED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": true,
+      "limitation": "Audit passed before the controller failed looking for a direct Capture button; native More presentation was not exercised."
+    },
+    {
+      "phase": "q99-tablet-semantic-light",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-semantic-light.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' failed (14.997 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' failed (27.083 seconds).",
+        "** TEST EXECUTE FAILED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": false
+    },
+    {
+      "phase": "q99-tablet-top-capture-dark-increased",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q99-tablet-top-capture-dark-increased.xcresult",
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' passed (17.575 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' passed (21.157 seconds).",
+        "** TEST EXECUTE SUCCEEDED **"
+      ],
+      "compilerOnly": false,
+      "discardedProbe": true
+    },
+    {
+      "phase": "q99-top-capture-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true,
+      "discardedProbe": true
+    }
+  ],
+  "productionMacCompilerPacket": "../native-scene-appearance/q99-contrast-checkpoint-mac-build",
+  "macRuntimeCredit": false
+}

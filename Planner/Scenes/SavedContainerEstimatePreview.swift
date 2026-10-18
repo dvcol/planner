@@ -13,11 +13,12 @@ struct SavedContainerEstimatePreview: View {
         Image(systemName: "clock")
       }
       if estimates.hasNativeEstimateWarning {
-        Image(systemName: "exclamationmark.triangle").foregroundStyle(.orange)
+        Image(systemName: "exclamationmark.triangle")
+          .foregroundStyle(SavedRowForeground(unselectedColor: .orange))
           .accessibilityHidden(true)
       }
     }
-    .font(.caption).foregroundStyle(.secondary)
+    .font(.caption).foregroundStyle(SavedRowForeground.secondary)
     .accessibilityElement(children: .ignore)
     .accessibilityLabel("Estimates")
     .accessibilityValue(

@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "AEB54DE3-E142-4F19-BD1E-3839F4FC0E17.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed List keeps its selected container after first-row completion_0_7221040C-FF87-414E-9330-E5A9F26346CB.png",
+    "timestamp": 1792311665.704,
+    "testIdentifier": "ListWindowJourneyTests/testCompletingAVisibleItemKeepsItsListSelectedDuringRefresh()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "7C590E96-644D-4F3E-9881-0CDE69D69D97.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Selected Item presentation before native contrast audit_0_58328D3D-ECAE-4DAA-A7F0-30AC3F4B598E.png",
+    "timestamp": 1792311677.793,
+    "testIdentifier": "ListWindowJourneyTests/testSelectedItemPresentationPassesNativeContrastAudit()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "64D0301F-C360-427F-B490-952A4D55BC89.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Selected List presentation before native contrast audit_0_D73B69A6-8474-40F7-9435-42CC3D466B90.png",
+    "timestamp": 1792311689.729,
+    "testIdentifier": "ListWindowJourneyTests/testSelectedListPresentationAndCompletionPassNativeContrastAudit()"
+  }
+]

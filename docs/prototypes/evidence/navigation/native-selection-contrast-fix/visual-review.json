@@ -1,0 +1,37 @@
+{
+  "reviewedOriginals": [
+    {
+      "path": "q99-tablet-readable-light/EFC4BB92-18AE-45BF-B227-7385BD9B3BF7.png",
+      "observation": "Selected title and caption readable in black over native blue highlight; ordinary captions stronger."
+    },
+    {
+      "path": "q99-tablet-readable-light/C6B056EA-0D7F-4760-A341-782B8766F2B3.png",
+      "observation": "Inactive selected appearance remains readable after completion; 1 of 193 and same detail."
+    },
+    {
+      "path": "q99-tablet-readable-dark/0C01A709-D726-4749-911A-3FF862214EB5.png",
+      "observation": "Native selected blue surface retained with opaque readable selected foreground."
+    },
+    {
+      "path": "q99-tablet-readable-dark/D29BAF5C-7B49-414B-B0EA-3E6CFC32C1A0.png",
+      "observation": "Retained selected appearance and strong captions after real local completion."
+    },
+    {
+      "path": "q99-tablet-readable-dark-increased/39D4549F-EFDB-4E40-9EA7-445CDBD22DD6.png",
+      "observation": "Open failure: floating Capture obscures Window Item 014 and its duration."
+    },
+    {
+      "path": "q99-phone-contrast-light/0D5DCAED-13AA-42FE-B295-4CD96A72B1F8.png",
+      "observation": "Native light pushed Item form; readable completion guidance, Notes and duration. No persistent selected row."
+    },
+    {
+      "path": "q99-phone-contrast-dark/64D0301F-C360-427F-B490-952A4D55BC89.png",
+      "observation": "Native dark contextual detail; readable In Window Route, Notes and duration. No persistent selected row."
+    },
+    {
+      "path": "q99-tablet-readable-light-increased/F146DCF2-4F02-47D0-A76C-DF0CB4F9ED61.png",
+      "observation": "Increased-contrast light selected title/caption readable; bottom Capture visually overlaps row text despite passing this audit."
+    }
+  ],
+  "scope": "Represented original captures only; other exported captures and discarded probes have no implied visual acceptance."
+}
