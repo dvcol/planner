@@ -361,7 +361,7 @@ struct SavedListProgress: View {
         .foregroundStyle(Color.primary)
         .accessibilityAddTraits(.isHeader)
       if isArchived {
-        Label("Archived List", systemImage: "archivebox").foregroundStyle(.secondary)
+        Label("Archived List", systemImage: "archivebox").foregroundStyle(Color.secondary)
       }
       SavedContainerEstimates(
         estimates: estimates, manualEstimate: manualEstimate,
@@ -375,7 +375,7 @@ struct SavedListProgress: View {
           accessibilityIdentifier: "saved.list.progress")
         if Int64(matchingCount) < total {
           Text("Showing \(matchingCount) of \(total) \(unit)")
-            .font(.caption).foregroundStyle(.secondary)
+            .font(.caption).foregroundStyle(Color.secondary)
         }
       }
     }
@@ -395,14 +395,16 @@ struct SavedCompletionProgress: View {
       ProgressView(value: Double(finishedCount), total: Double(totalCount)) {
         if archivedCount > 0 {
           Text("\(finishedCount) of \(totalCount) \(unit) finished")
+            .foregroundStyle(Color.primary)
         } else {
           Text("\(doneCount) of \(totalCount) \(unit) done")
+            .foregroundStyle(Color.primary)
         }
       }
       .accessibilityIdentifier(accessibilityIdentifier)
       if archivedCount > 0 {
         Text("\(doneCount) done · \(archivedCount) archived")
-          .font(.caption).foregroundStyle(.secondary)
+          .font(.caption).foregroundStyle(Color.secondary)
       }
     }
   }

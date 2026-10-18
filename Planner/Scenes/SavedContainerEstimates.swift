@@ -2,6 +2,7 @@ import PlannerCore
 import SwiftUI
 
 struct SavedContainerEstimates: View {
+  @Environment(\.dynamicTypeSize) private var dynamicTypeSize
   let estimates: PlannerContainerEstimates
   let manualEstimate: PlannerEstimate?
   let accessibilityIdentifierPrefix: String
@@ -33,16 +34,19 @@ struct SavedContainerEstimates: View {
   private func metric(
     _ title: String, total: PlannerDurationTotal, identifier: String, isManual: Bool = false
   ) -> some View {
-    LabeledContent {
-      HStack {
-        Text(
-          total.nativeContainerDurationDescription(
-            displayUnit: manualEstimate?.displayUnit ?? .hour)
-        ).foregroundStyle(Color.primary)
-        if isManual { Text("Manual").foregroundStyle(.secondary) }
+    Group {
+      if dynamicTypeSize.isAccessibilitySize {
+        VStack(alignment: .leading, spacing: 4) {
+          Text(title).foregroundStyle(Color.secondary)
+          durationValue(total, isManual: isManual)
+        }
+      } else {
+        LabeledContent {
+          durationValue(total, isManual: isManual)
+        } label: {
+          Text(title).foregroundStyle(Color.secondary)
+        }
       }
-    } label: {
-      Text(title).foregroundStyle(Color.secondary)
     }
     .accessibilityElement(children: .ignore)
     .accessibilityLabel(isManual ? title + ", Manual" : title)
@@ -50,9 +54,23 @@ struct SavedContainerEstimates: View {
     .accessibilityIdentifier(accessibilityIdentifierPrefix + "." + identifier)
   }
 
+  private func durationValue(_ total: PlannerDurationTotal, isManual: Bool) -> some View {
+    HStack(alignment: .firstTextBaseline) {
+      Text(
+        total.nativeContainerDurationDescription(
+          displayUnit: manualEstimate?.displayUnit ?? .hour)
+      )
+      .foregroundStyle(Color.primary)
+      .fixedSize(horizontal: false, vertical: true)
+      if isManual { Text("Manual").foregroundStyle(Color.secondary) }
+    }
+  }
+
   private func warning(_ message: String, identifier: String) -> some View {
     Label {
       Text(message).foregroundStyle(Color.primary)
+        .lineLimit(nil)
+        .fixedSize(horizontal: false, vertical: true)
     } icon: {
       Image(systemName: "exclamationmark.triangle").foregroundStyle(.orange)
     }

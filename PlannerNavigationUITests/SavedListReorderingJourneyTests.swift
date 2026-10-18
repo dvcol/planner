@@ -10,10 +10,7 @@ final class SavedListReorderingJourneyTests: XCTestCase {
     createItem("Hotel", application: application)
     createItem("Museum", application: application)
     createItem("Cafe", application: application)
-    openSection("Lists", application: application)
-    let create = application.plannerElement("saved.list.new")
-    revealSidebarIfNeeded(application, element: create)
-    create.activateForPlannerJourney()
+    application.beginPlannerListCreation()
     let name = application.textFields["saved.list.name"]
     XCTAssertTrue(name.waitForExistence(timeout: 5))
     name.activateForPlannerJourney()
@@ -83,10 +80,7 @@ final class SavedListReorderingJourneyTests: XCTestCase {
     application.launchSavedPlannerJourney()
     createItem("Hotel", application: application)
     createItem("Museum", application: application)
-    openSection("Lists", application: application)
-    let create = application.plannerElement("saved.list.new")
-    revealSidebarIfNeeded(application, element: create)
-    create.activateForPlannerJourney()
+    application.beginPlannerListCreation()
     let name = application.textFields["saved.list.name"]
     XCTAssertTrue(name.waitForExistence(timeout: 5))
     name.activateForPlannerJourney()
@@ -209,13 +203,7 @@ final class SavedListReorderingJourneyTests: XCTestCase {
   }
 
   private func openSection(_ title: String, application: XCUIApplication) {
-    #if os(macOS)
-      let section = application.plannerElement("saved.section.\(title.lowercased())")
-    #else
-      let section = application.buttons[title].firstMatch
-    #endif
-    XCTAssertTrue(section.waitForExistence(timeout: 10))
-    section.activateForPlannerJourney()
+    application.openPlannerSection(title)
   }
 
   private func revealSidebarIfNeeded(_ application: XCUIApplication, element: XCUIElement) {

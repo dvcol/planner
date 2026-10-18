@@ -13,14 +13,22 @@ struct SavedMembershipRow: View {
   let toggleCompletion: () -> Void
 
   var body: some View {
-    HStack {
+    HStack(alignment: .top) {
       Button(action: toggleCompletion) {
         Label(
           completionLabel,
-          systemImage: item.row.effectiveDone == true ? "checkmark.circle.fill" : "circle")
+          systemImage: item.row.effectiveDone == true ? "checkmark.circle.fill" : "circle"
+        )
+        #if os(iOS)
+          .frame(minWidth: 44, minHeight: 44, alignment: .top)
+          .contentShape(.rect)
+        #endif
       }
       .labelStyle(.iconOnly)
       .buttonStyle(.plain)
+      #if os(iOS)
+        .foregroundStyle(item.row.effectiveDone == true ? Color.accentColor : Color.secondary)
+      #endif
       .disabled(!canChange || item.row.globalDone == true)
       .accessibilityValue(item.row.effectiveDone == true ? "Completed" : "To do")
       .accessibilityIdentifier("saved.appearance.completion.\(item.id.uuidString)")
@@ -41,7 +49,7 @@ struct SavedMembershipRow: View {
         .accessibilityIdentifier("saved.appearance.\(item.id.uuidString)")
       #endif
       if item.row.archived == true {
-        Image(systemName: "archivebox").accessibilityLabel("Archived")
+        Image(systemName: "archivebox").foregroundStyle(.secondary).accessibilityLabel("Archived")
       }
     }
   }

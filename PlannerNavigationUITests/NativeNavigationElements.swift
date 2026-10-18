@@ -274,6 +274,49 @@ extension XCUIApplication {
     #endif
   }
 
+  func beginPlannerListCreation() {
+    openPlannerSection("Lists")
+    let create = plannerElement("saved.list.new")
+    #if os(macOS)
+      if create.exists && create.isHittable {
+        create.activateForPlannerJourney()
+        return
+      }
+      let overflow = windows.firstMatch.popUpButtons["more toolbar items"]
+      XCTAssertTrue(overflow.waitForExistence(timeout: 5), windows.firstMatch.debugDescription)
+      overflow.activateForPlannerJourney()
+      let nativeCreate = overflow.menuItems["New List"]
+      XCTAssertTrue(nativeCreate.waitForExistence(timeout: 5), windows.firstMatch.debugDescription)
+      nativeCreate.activateForPlannerJourney()
+    #else
+      for _ in 0..<3 {
+        if create.exists && create.isHittable {
+          create.activateForPlannerJourney()
+          return
+        }
+        if let overflow = navigationBars["Planner"].buttons.matching(
+          identifier: "OverflowBarButtonItem"
+        ).allElementsBoundByIndex.first(where: \.isHittable) {
+          overflow.activateForPlannerJourney()
+          let nativeCreate = plannerElement("New List")
+          XCTAssertTrue(
+            nativeCreate.waitForExistence(timeout: 5), windows.firstMatch.debugDescription)
+          nativeCreate.activateForPlannerJourney()
+          return
+        }
+        let sidebar = buttons["Show Sidebar"].firstMatch
+        if sidebar.exists && sidebar.isHittable {
+          sidebar.activateForPlannerJourney()
+          continue
+        }
+        let back = buttons["BackButton"].firstMatch
+        guard back.exists && back.isHittable else { break }
+        back.activateForPlannerJourney()
+      }
+      XCTFail("Planner's native New List action is unavailable.")
+    #endif
+  }
+
   func openItemDiagnostics() {
     plannerElement("detail.actions").activateForPlannerJourney()
     plannerElement("Prototype diagnostics").activateForPlannerJourney()
