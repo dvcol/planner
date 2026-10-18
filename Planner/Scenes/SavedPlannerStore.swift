@@ -1196,49 +1196,4 @@ final class SavedPlannerStore {
         expectedFieldHashes: list.fieldHashes), operationId: operationId) != nil
   }
 
-  func readListItems(
-    _ identifier: UUID, text: String = "", completion: PlannerItemQuery.Completion,
-    archive: PlannerItemQuery.Archive,
-    categories: PlannerItemQuery.IdentityGroup? = nil, tags: PlannerItemQuery.IdentityGroup? = nil,
-    lists: PlannerItemQuery.IdentityGroup? = nil,
-    hasAddress: Bool = false, hasLinks: Bool = false,
-    scheduled: PlannerItemQuery.Scheduling = .all,
-    sort: PlannerItemQuery.Sort = .init(mode: .manual)
-  ) async -> [SavedPlannerItem]? {
-    guard let planner, let session else { return nil }
-    switch await planner.query(
-      PlannerQuery(
-        session: session,
-        request: .items(
-          .init(
-            scope: .list(identifier), text: text, completion: completion, archive: archive,
-            categories: categories, tags: tags, lists: lists, hasAddress: hasAddress,
-            hasLinks: hasLinks, scheduled: scheduled,
-            sort: sort))))
-    {
-    case .failed(let reason): alertMessage = reason.message
-    case .snapshot(let snapshot):
-      switch await planner.read(
-        session: session,
-        request: .rows(generation: snapshot.generation, offset: 0, limit: Int64.max))
-      {
-      case .rows(let window):
-        var items: [SavedPlannerItem] = []
-        for row in window.rows {
-          guard case .appearance(_, .listMembership(let listId, let membershipId)) = row.identity,
-            listId == identifier
-          else {
-            alertMessage = "Planner could not resolve this List's Items."
-            return nil
-          }
-          items.append(
-            SavedPlannerItem(id: membershipId, row: row, rowPresentation: window.rowPresentation))
-        }
-        return items
-      case .failed(let reason): alertMessage = reason.message
-      default: alertMessage = "Planner could not read this List's Items."
-      }
-    }
-    return nil
-  }
 }

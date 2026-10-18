@@ -2,6 +2,11 @@ import PlannerCore
 import PlannerPreviews
 import SwiftUI
 
+struct SavedMembershipWindowRow: Identifiable {
+  let id: UUID
+  let index: Int
+}
+
 struct SavedMembershipRow: View {
   let item: SavedPlannerItem
   let canChange: Bool

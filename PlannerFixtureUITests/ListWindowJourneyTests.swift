@@ -5,6 +5,58 @@ import XCTest
 
   @MainActor
   final class ListWindowJourneyTests: XCTestCase {
+    func testCompletingAVisibleItemKeepsItsListSelectedDuringRefresh() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "list-windows", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      openRoute(application)
+      let first = application.savedPlannerItemRows("Window Item 001").firstMatch
+      XCTAssertTrue(first.waitForExistence(timeout: 15))
+      let identifier = first.identifier
+      let completion = application.buttons[
+        identifier.replacingOccurrences(
+          of: "saved.appearance.", with: "saved.appearance.completion.")]
+      XCTAssertTrue(completion.waitForPlannerValue("To do"))
+      completion.activateForPlannerJourney()
+      XCTAssertTrue(completion.waitForPlannerValue("Completed"))
+      XCTAssertEqual(first.identifier, identifier)
+      XCTAssertTrue(application.staticTexts["1 of 193 items done"].waitForExistence(timeout: 10))
+      capture("Windowed List keeps its selected container after first-row completion")
+    }
+
+    func testCompletingALaterPageItemKeepsItsControlVisibleAfterRefresh() {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = [
+        "--fixture", "list-windows", "--fixture-dataset", UUID().uuidString,
+      ]
+      application.launchSavedPlannerJourney()
+      openRoute(application)
+      let contents = application.collectionViews["saved.list.contents"]
+      XCTAssertTrue(contents.waitForExistence(timeout: 10))
+      let item = application.savedPlannerItemRows("Window Item 193").firstMatch
+      scroll(contents, to: item, towardEnd: true)
+      let identifier = item.identifier
+      let completion = application.buttons[
+        identifier.replacingOccurrences(
+          of: "saved.appearance.", with: "saved.appearance.completion.")]
+      XCTAssertTrue(completion.waitForPlannerValue("To do"))
+      completion.activateForPlannerJourney()
+      let completed = completion.waitForPlannerValue("Completed")
+      let hierarchy = XCTAttachment(string: application.debugDescription)
+      hierarchy.name = "Released-page completion result hierarchy"
+      hierarchy.lifetime = .keepAlways
+      add(hierarchy)
+      capture("Released-page completion result viewport")
+      XCTAssertTrue(completed)
+      XCTAssertTrue(completion.waitForPlannerHittability())
+      XCTAssertEqual(item.identifier, identifier)
+      capture("Windowed List keeps its selected container after a released-page completion")
+    }
+
     func testListCrossesPagesRevisitsMembershipsAndKeepsLocalCompletionAfterRelaunch() {
       continueAfterFailure = false
       XCUIDevice.shared.orientation = .portrait
@@ -19,11 +71,7 @@ import XCTest
       let first = application.savedPlannerItemRows("Window Item 001").firstMatch
       XCTAssertTrue(first.waitForExistence(timeout: 15))
       let firstIdentifier = first.identifier
-      let contents = application.collectionViews.containing(
-        NSPredicate(
-          format: "identifier BEGINSWITH %@ AND label BEGINSWITH %@",
-          "saved.appearance.", "Window Item ")
-      ).firstMatch
+      let contents = application.collectionViews["saved.list.contents"]
       XCTAssertTrue(contents.waitForExistence(timeout: 10))
       for title in ["Window Item 065", "Window Item 129", "Window Item 193"] {
         let row = application.savedPlannerItemRows(title).firstMatch
