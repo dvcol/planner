@@ -30,6 +30,11 @@ enum PlannerListWindowFixture {
         operationId: UUID(), session: session, command: review.command,
         reviewToken: review.reviewToken))
     guard case .applied(_, .complete) = result.outcome else { throw CancellationError() }
+    let itineraryCreation = await planner.execute(
+      .init(
+        operationId: UUID(), session: session,
+        command: .createItinerary(content: .init(title: "Picker Route"))))
+    guard case .applied(_, .complete) = itineraryCreation.outcome else { throw CancellationError() }
     return SavedPlannerStore(configuration: configuration)
   }
 

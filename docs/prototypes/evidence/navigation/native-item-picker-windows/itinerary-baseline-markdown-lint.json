@@ -1,0 +1,15 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "/private/tmp/PlannerItemWindowMarkdownlint.json",
+    "docs/prototypes/native-item-picker-windows.md"
+  ],
+  "exitCode": 0,
+  "output": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/prototypes/native-item-picker-windows.md\nLinting: 1 file\nSummary: 0 issues in 0 files\nDone in 221ms using pnpm v12.10.1\n",
+  "sourceSHA256": {
+    "docs/prototypes/native-item-picker-windows.md": "ff52772aad7dbf5305788131c17b30cfd9532a32716d41b721ba6c4ce980536f"
+  }
+}

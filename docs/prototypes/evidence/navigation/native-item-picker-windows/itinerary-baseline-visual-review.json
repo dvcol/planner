@@ -1,0 +1,17 @@
+{
+  "scope": "Original eager itinerary picker iPad captures inspected by the primary agent.",
+  "captures": [
+    {
+      "path": "picker-itinerary-tablet-eager-baseline/3F8DB6CD-17BD-43A6-9137-469A8C75F05B.png",
+      "observed": "First Item choices are visible while Add remains enabled for the selected offscreen Item."
+    },
+    {
+      "path": "picker-itinerary-tablet-eager-baseline/62F0C6CB-5176-4C1E-9D4B-7971A99C639B.png",
+      "observed": "After relaunch Picker Route shows Item 129 with an unchecked local completion control and full one-item progress."
+    }
+  ],
+  "limits": [
+    "Eager compatibility baseline only, not retention or performance evidence.",
+    "No Mac runtime, physical/signing or final whole-app accessibility credit."
+  ]
+}

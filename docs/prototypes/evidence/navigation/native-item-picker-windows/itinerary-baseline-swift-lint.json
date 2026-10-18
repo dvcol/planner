@@ -1,0 +1,18 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/Scenes/SavedItineraryContentViews.swift",
+    "PlannerFixtures/PlannerListWindowFixture.swift",
+    "PlannerFixtureUITests/ListWindowJourneyTests.swift"
+  ],
+  "exitCode": 0,
+  "output": "",
+  "sourceSHA256": {
+    "Planner/Scenes/SavedItineraryContentViews.swift": "f6579e9c2166318c25b0191a186391cd684b4d6c68938bde881bf58ccee2ed99",
+    "PlannerFixtures/PlannerListWindowFixture.swift": "a55a2e88ec85bcc369f5ccfe3888a6454a66e1053847ab00d62d9005a232c730",
+    "PlannerFixtureUITests/ListWindowJourneyTests.swift": "14f2e90cbdb57df3d1f8d8a52bcce5be69b0ec04cf6eb630b469c4c1bac2bdf8"
+  }
+}
