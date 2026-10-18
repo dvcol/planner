@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "CC0C95D1-1B4C-4273-8B76-2333B0074859.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Relaunch retains independent standalone List budget and original memberships_0_C56A97FA-633F-4350-84F5-AE5F0B5FFF4E.png",
+    "timestamp": 1792355129.231,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testGlobalUnknownEstimateKeepsManualBudgetsAndRevealsRetainedLocalStatesAfterReopening()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "4AA3DE13-317B-40FE-8D7C-2F5247C60827.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Fully finished itinerary retains its manual List budget at zero remaining_0_1B4DF347-3CC3-4DEE-A688-BF2FC545B029.png",
+    "timestamp": 1792355106.504,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testGlobalUnknownEstimateKeepsManualBudgetsAndRevealsRetainedLocalStatesAfterReopening()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "4ECCC7AD-029D-4D0B-AC44-F2386033B461.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Global reopen reveals original local Todo states and removes upper bound_0_B86409EC-BBC8-42B1-B9C1-C0924F007C87.png",
+    "timestamp": 1792355068.911,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testGlobalUnknownEstimateKeepsManualBudgetsAndRevealsRetainedLocalStatesAfterReopening()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "1A3D9722-396D-4CE2-B1DD-9F57EACE3058.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Global unknown completion supplies the manual branch upper bound_0_6F281F3F-FD0C-4F3A-9935-638EE056845B.png",
+    "timestamp": 1792355048.788,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testGlobalUnknownEstimateKeepsManualBudgetsAndRevealsRetainedLocalStatesAfterReopening()"
+  }
+]

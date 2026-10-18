@@ -1,0 +1,44 @@
+[
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-global-budget-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-global-budget-mac-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-global-budget-first",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-global-budget-first.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedContainerEstimateJourneyTests testGlobalUnknownEstimateKeepsManualBudgetsAndRevealsRetainedLocalStatesAfterReopening]' passed (178.307 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-global-budget-first",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-global-budget-first.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedContainerEstimateJourneyTests testGlobalUnknownEstimateKeepsManualBudgetsAndRevealsRetainedLocalStatesAfterReopening]' passed (185.473 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  }
+]

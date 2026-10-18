@@ -1,0 +1,13 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "/private/tmp/PlannerItemWindowMarkdownlint.json",
+    "docs/prototypes/native-container-estimate-global.md",
+    "docs/prototypes/native-container-estimates.md",
+    "docs/prototypes/native-container-estimate-archive.md"
+  ],
+  "exitCode": 0
+}

@@ -1,0 +1,53 @@
+{
+  "scope": "All eight original captures from the two represented global-completion budget journeys inspected directly. This is not a contrast audit, whole-app visual/accessibility review or physical/Mac runtime qualification.",
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-global-budget-first/1A3D9722-396D-4CE2-B1DD-9F57EACE3058.png",
+      "sha256": "8f517e8b4633f6734f2fbaee66db146307c8d25c0e7b50e8d91c2c834d20e53d",
+      "reviewer": "primary agent",
+      "observation": "Light phone: full four hours and up-to-four remaining at root and manual branch, complete missing-finished warning, Museum Todo and globally Done Lunch. Disabled controls retain native appearance; no contrast-audit acceptance."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-global-budget-first/05BCA5BB-362E-4F1F-8564-BFADF8B38C26.png",
+      "sha256": "6a82929fd29a4340f23a0b7f58c02e8ea486fa313bc1d372555679a02c645f43",
+      "reviewer": "primary agent",
+      "observation": "Dark increased-contrast iPad: same four-hour upper bound and warning, independent List branch and source-precedence Done tick. Empty detail is intentional because no Item is selected."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-global-budget-first/4ECCC7AD-029D-4D0B-AC44-F2386033B461.png",
+      "sha256": "6ccdfbb028faaa907cc2e9e6c0644fb181847dad8945fcd170dd35fc1bcc10c8",
+      "reviewer": "primary agent",
+      "observation": "Light phone: global reopen reveals both unchecked appearances and four hours exact remaining; missing-finished warning disappears while the manual branch still reports an unknown unfinished estimate."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-global-budget-first/64837AB9-DBDE-41B3-9366-CD75655DBE93.png",
+      "sha256": "c16d0496af6c502033eba3ebd8501525637d072fef4fe576813998d631868c97",
+      "reviewer": "primary agent",
+      "observation": "Dark increased-contrast iPad: global reopen shows zero of two Done and four hours remaining with both local Todo appearances visible."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-global-budget-first/4AA3DE13-317B-40FE-8D7C-2F5247C60827.png",
+      "sha256": "cd5b07589f24cb9e0fa3e110d9db47f997ec0ea6ee2a649c7c57d8dfe65e6ece",
+      "reviewer": "primary agent",
+      "observation": "Light phone: both itinerary appearances completed, full four-hour manual List budget retained and zero remaining; child estimates total three hours. Museum local and Lunch global checkmarks remain visually distinct."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-global-budget-first/39DAE34B-934E-4D69-A3EA-B184FD338F7A.png",
+      "sha256": "669df8691c8ed0b551f2fb4472518dec51dee6bbdb2c4aba753227b824328a13",
+      "reviewer": "primary agent",
+      "observation": "Dark increased-contrast iPad: two of two Done, root and branch zero remaining, full four hours and calculated three-hour child total remain visible."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-global-budget-first/CC0C95D1-1B4C-4273-8B76-2333B0074859.png",
+      "sha256": "47c17525ee7f52e017c319d4d75e8ed64b5fc58804795e0186acc5bd19b4f6a9",
+      "reviewer": "primary agent",
+      "observation": "Light phone after relaunch: standalone Morning List retains four-hour manual full, three-hour remaining, Museum Todo and globally Done Lunch. Crowded inline toolbar title remains a separate polish finding."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-global-budget-first/F56A408D-C84A-48F4-A9BA-1C5854521113.png",
+      "sha256": "74b3b2457d32ce5cc53ac7e999715b404c8e893c80f9c87100914a170d461c78",
+      "reviewer": "primary agent",
+      "observation": "Dark increased-contrast iPad after relaunch: standalone List retains one of two Done, three hours remaining and four-hour manual full. Empty detail remains intentional; no whole-app accessibility claim."
+    }
+  ]
+}

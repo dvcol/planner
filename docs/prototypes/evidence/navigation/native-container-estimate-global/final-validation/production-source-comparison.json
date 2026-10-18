@@ -1,0 +1,26 @@
+[
+  {
+    "epoch": "native-global-budget-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "estimateTestMatchesFinalSource": true
+  },
+  {
+    "epoch": "native-global-budget-mac-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "estimateTestMatchesFinalSource": true
+  },
+  {
+    "epoch": "phone-global-budget-first",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "estimateTestMatchesFinalSource": true
+  },
+  {
+    "epoch": "tablet-global-budget-first",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "estimateTestMatchesFinalSource": true
+  }
+]

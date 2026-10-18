@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "F56A408D-C84A-48F4-A9BA-1C5854521113.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Relaunch retains independent standalone List budget and original memberships_0_1485A7C9-3562-47F3-926B-13D3D865BA41.png",
+    "timestamp": 1792355136.323,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testGlobalUnknownEstimateKeepsManualBudgetsAndRevealsRetainedLocalStatesAfterReopening()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "39DAE34B-934E-4D69-A3EA-B184FD338F7A.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Fully finished itinerary retains its manual List budget at zero remaining_0_A5374B95-D8F8-493B-AD94-9EEB32CD6B77.png",
+    "timestamp": 1792355113.201,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testGlobalUnknownEstimateKeepsManualBudgetsAndRevealsRetainedLocalStatesAfterReopening()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "64837AB9-DBDE-41B3-9366-CD75655DBE93.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Global reopen reveals original local Todo states and removes upper bound_0_3C147179-6031-4862-8D70-BF8F57F2B336.png",
+    "timestamp": 1792355077.692,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testGlobalUnknownEstimateKeepsManualBudgetsAndRevealsRetainedLocalStatesAfterReopening()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "05BCA5BB-362E-4F1F-8564-BFADF8B38C26.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Global unknown completion supplies the manual branch upper bound_0_8A5352E3-FC10-4419-8690-4B8596CEC7A8.png",
+    "timestamp": 1792355058.357,
+    "testIdentifier": "SavedContainerEstimateJourneyTests/testGlobalUnknownEstimateKeepsManualBudgetsAndRevealsRetainedLocalStatesAfterReopening()"
+  }
+]
