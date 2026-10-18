@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "38D0E5A4-1B54-48AD-B37A-92E5F83569B0.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Filtered itinerary drag preserves exact entries and completion after relaunch_0_AD3B081A-A16F-4BE4-B858-BAD917DEEFE6.png",
+    "timestamp": 1792325303.867,
+    "testIdentifier": "ItineraryWindowJourneyTests/testFilteredEntryDragPreservesHiddenCompletionAndFullOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "EF0E50EB-F249-474C-8D55-13A9252CDA0E.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Filtered itinerary native drag keeps hidden completion and full progress_0_3BC539D4-A029-4A68-A986-FAFC6EAB3107.png",
+    "timestamp": 1792325272.405,
+    "testIdentifier": "ItineraryWindowJourneyTests/testFilteredEntryDragPreservesHiddenCompletionAndFullOrderAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A7E91E12-D694-4204-9738-66DC3B681B00.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Filtered itinerary entries before native drag_0_7B496DCA-9BDF-4915-8A73-6B2338582A88.png",
+    "timestamp": 1792325263.599,
+    "testIdentifier": "ItineraryWindowJourneyTests/testFilteredEntryDragPreservesHiddenCompletionAndFullOrderAfterRelaunch()"
+  }
+]

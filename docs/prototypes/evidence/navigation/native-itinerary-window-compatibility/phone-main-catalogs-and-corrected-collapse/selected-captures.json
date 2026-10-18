@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "5088A669-0399-4A0F-98C3-BC92B678398D.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Reopened itinerary branch retains independent repeated completion_0_CF252B23-3177-4255-869D-95DFFD03E75C.png",
+    "timestamp": 1792327313.476,
+    "testIdentifier": "ItineraryWindowJourneyTests/testCollapsingARepeatedListKeepsSelectedDetailsAndCompletionAcrossLayoutChanges()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "173D2917-E22B-4B77-BF18-D5941DCF6A88.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Collapsed itinerary branch keeps its state in landscape_0_DBE55E4B-4FAA-438C-B831-CAC34060A88A.png",
+    "timestamp": 1792327286.069,
+    "testIdentifier": "ItineraryWindowJourneyTests/testCollapsingARepeatedListKeepsSelectedDetailsAndCompletionAcrossLayoutChanges()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "E593B105-13D4-4A37-B928-58A7F06E0396.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Collapsed itinerary branch preserves full progress and selected details_0_479445B9-9E4A-470A-B4B8-7B364ED1A5BB.png",
+    "timestamp": 1792327284.542,
+    "testIdentifier": "ItineraryWindowJourneyTests/testCollapsingARepeatedListKeepsSelectedDetailsAndCompletionAcrossLayoutChanges()"
+  }
+]

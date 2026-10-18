@@ -65,7 +65,7 @@ final class SavedItemWindow {
   private(set) var state = SavedItemWindowState.idle
   private var reloadIdentifier = UUID()
   private var visibilityRequestIdentifier = UUID()
-  private var query: PlannerItemQuery?
+  private var query: PlannerQueryRequest?
   private var lifecycleIdentity: SavedItemWindowIdentity?
   private var generation: UUID?
   private var pages: [Int: [SavedItemWindowRow]] = [:]
@@ -80,6 +80,14 @@ final class SavedItemWindow {
   }
 
   func reload(query: PlannerItemQuery, identity: SavedItemWindowIdentity) async {
+    await replaceQuery(.items(query), identity: identity)
+  }
+
+  func reload(catalogQuery: PlannerCatalogQuery, identity: SavedItemWindowIdentity) async {
+    await replaceQuery(.catalog(catalogQuery), identity: identity)
+  }
+
+  private func replaceQuery(_ query: PlannerQueryRequest, identity: SavedItemWindowIdentity) async {
     guard !Task.isCancelled else { return }
     refreshTask?.cancel()
     refreshTask = nil
@@ -108,11 +116,17 @@ final class SavedItemWindow {
   }
 
   private func reload(
-    query: PlannerItemQuery, identity: SavedItemWindowIdentity, requestIdentifier: UUID
+    query: PlannerQueryRequest, identity: SavedItemWindowIdentity, requestIdentifier: UUID
   ) async {
     guard !Task.isCancelled else { return }
+    let itemQuery: PlannerItemQuery?
+    if case .items(let items) = query {
+      itemQuery = items
+    } else {
+      itemQuery = nil
+    }
     let preservesItineraryRows: Bool
-    if case .itinerary(let identifier) = query.scope {
+    if case .itinerary(let identifier)? = itemQuery?.scope {
       preservesItineraryRows =
         itineraryMetadata?.itinerary.source.id == identifier
         && lifecycleIdentity?.namespace == identity.namespace
@@ -135,8 +149,14 @@ final class SavedItemWindow {
     pages = [:]
     pageFailures = [:]
     retainedPages = []
+    if case .catalog(let catalog) = query,
+      catalog.sourceKind != .list && catalog.sourceKind != .itinerary
+    {
+      state = .failed("Planner can load only List and Itinerary catalogs here.")
+      return
+    }
     while !Task.isCancelled {
-      let result = await planner.query(.init(session: session, request: .items(query)))
+      let result = await planner.query(.init(session: session, request: query))
       guard !Task.isCancelled, reloadIdentifier == requestIdentifier else { return }
       guard case .snapshot(let snapshot) = result else {
         if case .failed(let reason) = result { state = .failed(reason.message) }
@@ -144,7 +164,7 @@ final class SavedItemWindow {
       }
       var identifiers: Set<RowKey> = []
       for rowIdentity in snapshot.rows {
-        guard let identifier = rowKey(for: rowIdentity, scope: query.scope),
+        guard let identifier = rowKey(for: rowIdentity, query: query),
           identifiers.insert(identifier).inserted
         else {
           state = .failed("Planner could not resolve its Items.")
@@ -156,17 +176,17 @@ final class SavedItemWindow {
         return
       }
       var headerRead: PlannerReadResult?
-      if case .list(let identifier) = query.scope {
+      if case .list(let identifier)? = itemQuery?.scope {
         headerRead = await planner.read(
           session: session, request: .source(.init(kind: .list, id: identifier)))
         guard !Task.isCancelled, reloadIdentifier == requestIdentifier else { return }
       }
       var metadataResult: Result<SavedItineraryWindowMetadata, MetadataReadError>?
-      if case .itinerary(let identifier) = query.scope {
+      if let itemQuery, case .itinerary(let identifier) = itemQuery.scope {
         do {
           metadataResult = .success(
             try await readItineraryMetadata(
-              identifier: identifier, query: query, matchingSnapshot: snapshot,
+              identifier: identifier, query: itemQuery, matchingSnapshot: snapshot,
               requestIdentifier: requestIdentifier))
         } catch let reason as MetadataReadError {
           metadataResult = .failure(reason)
@@ -200,7 +220,7 @@ final class SavedItemWindow {
         var items: [SavedItemWindowRow] = []
         for (index, row) in window.rows.enumerated() {
           guard row.identity == snapshot.rows[index],
-            rowKey(for: row.identity, scope: query.scope) != nil
+            isValidRow(row, query: query)
           else {
             state = .failed("Planner could not resolve its Item page.")
             return
@@ -208,7 +228,7 @@ final class SavedItemWindow {
           items.append(
             .init(row: row, rowPresentation: window.rowPresentation))
         }
-        if case .list(let identifier) = query.scope {
+        if case .list(let identifier)? = itemQuery?.scope {
           guard case .source(.list(let list)) = headerRead,
             list.source == .init(kind: .list, id: identifier)
           else {
@@ -237,6 +257,26 @@ final class SavedItemWindow {
         return
       }
     }
+  }
+
+  private func rowKey(for identity: PlannerRowIdentity, query: PlannerQueryRequest) -> RowKey? {
+    switch query {
+    case .items(let items): return rowKey(for: identity, scope: items.scope)
+    case .catalog(let catalog):
+      guard case .source(let source) = identity, source.kind == catalog.sourceKind,
+        source.kind == .list || source.kind == .itinerary
+      else { return nil }
+      return .source(source.id)
+    case .calendar: return nil
+    }
+  }
+
+  private func isValidRow(_ row: PlannerRowRead, query: PlannerQueryRequest) -> Bool {
+    guard rowKey(for: row.identity, query: query) != nil else { return false }
+    if case .catalog = query {
+      return row.containerEstimates != nil && row.archived != nil
+    }
+    return true
   }
 
   private func rowKey(for identity: PlannerRowIdentity, scope: PlannerItemQuery.Scope) -> RowKey? {
@@ -543,7 +583,7 @@ final class SavedItemWindow {
         var items: [SavedItemWindowRow] = []
         for (rowIndex, row) in window.rows.enumerated() {
           guard row.identity == rowIdentities[offset + rowIndex],
-            rowKey(for: row.identity, scope: query.scope) != nil
+            isValidRow(row, query: query)
           else { break }
           items.append(.init(row: row, rowPresentation: window.rowPresentation))
         }

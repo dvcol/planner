@@ -1,0 +1,132 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "3655C149-E89F-4BC8-B05F-79D0DEA643C4.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Repeated itinerary pages retain exact independent appearances after relaunch_0_86677884-011E-4984-B41F-23B63809E1C1.png",
+    "timestamp": 1792323809.821,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "CBCA57C2-F14D-44DE-A10B-58419A27580F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Selected itinerary appearance keeps details while its page is offscreen_0_F97DB902-16CA-42FC-AB05-248894A41E59.png",
+    "timestamp": 1792323754.84,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "26BC9F59-F200-4C13-9090-8581F9217280.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "First repeated List appearance stays visible after local completion_0_C737400C-4045-4FC1-9056-22B84CD8B12B.png",
+    "timestamp": 1792323692.111,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "2C7F80B2-39D9-4D67-857B-78825DD7B7E3.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary boundary appearance before local completion_0_410D3362-6C86-434C-9757-6EF4B5CD1F86.png",
+    "timestamp": 1792323690.155,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "C947C898-0983-4D1A-90F0-A67B4B5532EB.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Windowed itinerary starts with full progress and repeated List headers_0_8011ECB9-7E9F-43E0-A845-EE9539AC5A15.png",
+    "timestamp": 1792323669.294,
+    "testIdentifier": "ItineraryWindowJourneyTests/testRepeatedListPagesKeepIndependentChecksDetailsAndIdentitiesAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "D2FEF9FB-F3FF-4746-849A-D2CA618F362F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item picker preserves its added appearance after relaunch_0_C843AC93-6112-4C6F-A192-BFF99F119D7D.png",
+    "timestamp": 1792324072.612,
+    "testIdentifier": "ListWindowJourneyTests/testAddingAnOffscreenPickerSelectionKeepsItsSourceAndOriginalListAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "E9B78FCB-33BD-40CC-A521-E7F6F152547C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item picker adds its selected source to the original List_0_4DA72C06-DB44-4018-BB3E-349BC9713B06.png",
+    "timestamp": 1792324058.179,
+    "testIdentifier": "ListWindowJourneyTests/testAddingAnOffscreenPickerSelectionKeepsItsSourceAndOriginalListAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "0999A9F6-40B1-4DE3-A20F-4D1AE693CE7F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item picker retains a selected source after revisiting its first page_0_FB853380-5A3B-47A2-BF92-C384A343607E.png",
+    "timestamp": 1792324050.71,
+    "testIdentifier": "ListWindowJourneyTests/testAddingAnOffscreenPickerSelectionKeepsItsSourceAndOriginalListAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "7364464E-BA38-476B-AFF7-CDF8A85EE5F9.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Item picker source is fully visible before selection_0_DB17FFF9-A88E-4692-A495-64873ED44EC2.png",
+    "timestamp": 1792323906.609,
+    "testIdentifier": "ListWindowJourneyTests/testAddingAnOffscreenPickerSelectionKeepsItsSourceAndOriginalListAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "76EAEE2A-8223-49B6-A2F9-8E5317F2563A.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary Item picker preserves its entry after relaunch_0_37FB264A-1109-4BE3-A768-958B23F2902E.png",
+    "timestamp": 1792324261.237,
+    "testIdentifier": "ListWindowJourneyTests/testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "4B91F622-244D-4ADF-BCFE-77417A12DB67.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary Item picker adds its exact source into the original plan_0_FF8B6301-8379-4DC4-93DC-40A2B356AE12.png",
+    "timestamp": 1792324245.453,
+    "testIdentifier": "ListWindowJourneyTests/testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "0CF3676E-B414-4E53-9874-D6567C8FA7B1.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary Item picker retains an offscreen selected source_0_407DFE31-D4C8-443B-A2B4-CE8F3846BFC4.png",
+    "timestamp": 1792324238.225,
+    "testIdentifier": "ListWindowJourneyTests/testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "3A2A4CDF-BFAB-42FC-B8A5-1BD7841A05DB.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary Item picker source is fully visible before selection_0_748B4FE3-9D61-41B4-8306-45334BB00C3F.png",
+    "timestamp": 1792324162.594,
+    "testIdentifier": "ListWindowJourneyTests/testItineraryPickerKeepsAnOffscreenItemSelectionAndItsEntryAfterRelaunch()"
+  }
+]

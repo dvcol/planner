@@ -1,0 +1,53 @@
+{
+  "inspectedOriginals": [
+    {
+      "path": "phone-collapse-and-filtered-drag/56BD4E2C-9C4F-4F2C-9CE1-EFECFBE60740.png",
+      "sha256": "3a212541358191a191458a0bded11a69e1fb3081b55e936b3919e64b464e7eea",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "finding": "Both Route activities headers and their differing progress/remaining values are readable. At this scroll position top-level estimates run behind the translucent toolbar; a lower row is behind the floating tab bar and another is cropped at the viewport bottom."
+    },
+    {
+      "path": "phone-collapse-and-filtered-drag/11B8F512-C9F5-4107-BCBC-5CD514D21116.png",
+      "sha256": "fb3a8ba210e6844c2bb7be35a964928986bee68267fb1687876fb9349fb23b94",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "finding": "Landscape app-wide capture is misframed: large upper black region, app cut off at right and bottom, incomplete title, estimate and navigation. No whole-layout visual credit."
+    },
+    {
+      "path": "phone-collapse-and-filtered-drag/B875BBDC-642F-4C47-9E2F-24AB586C3593.png",
+      "sha256": "f288e7862bd90d0abf76d8773d1674454894d54e58d9c73617d7432ba10cd9c2",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "finding": "Activities 063\u2013065, the next List header and rows 001\u2013003 are readable. A preceding title is beneath the pinned header; row 004 runs behind the bottom tab bar and later content is outside the viewport."
+    },
+    {
+      "path": "phone-collapse-and-filtered-drag/1EFCFE2D-64B9-4FAB-AB96-C42EF21AD76B.png",
+      "sha256": "f5175bb47901956a671d61189ad139693a159d703d2b0e6d50074a14e31a4d24",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "finding": "Clear portrait view of route progress, estimates and order 001,003,002. Only 001 shows checkmark and strikethrough. No overlap obscures these three rows."
+    },
+    {
+      "path": "phone-container-window-stable-catalog/FBB232EC-B4F8-4C71-AE4D-ABC6620F86A8.png",
+      "sha256": "cfa6d8eaaf1e8a6bdd07edefe7ed3d89e22687deff144173ca6854ce2ec73560",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "finding": "Lists 129\u2013135 have readable titles, estimate/remaining captions and Manual labels. Lower metadata for 136 and the next row pass behind the floating tab bar; preceding content is beneath the top toolbar."
+    },
+    {
+      "path": "phone-container-window-stable-catalog/E4186941-49C6-4F2D-9ED2-9ED435EE0C82.png",
+      "sha256": "7b0a95b13c1c20d80d8fe2522582c17a763afa67e8ab266cf173e05d121b55bb",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "finding": "Itineraries 187\u2013193 are readable with complete Manual captions. The final row is above the tabs; the preceding 186 title is partly beneath the top toolbar."
+    },
+    {
+      "path": "phone-container-window-stable-catalog/1269D12D-CFBD-4FF4-91FD-DEDDEAD81F57.png",
+      "sha256": "505ecc9f4f18988a61595dc9e0e7673f26ac2120176f30511d4adc912392b3e4",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "finding": "Selected Window List 193, search, manual estimate/remaining, calculated zero and No items are readable and unobscured. Edit is disabled."
+    },
+    {
+      "path": "phone-container-window-stable-catalog/11EB387E-1B56-499D-93BA-5BEE609AE08B.png",
+      "sha256": "37b52f149f58df88a12c079522a281e1a422b3b73af4cb655194dbea5819519b",
+      "reviewer": "read-only remaining_local_map_audit sub-agent",
+      "finding": "Selected itinerary title, 0-of-1 progress, manual/calculated totals, notes and five-minute Window source row are readable and unobscured."
+    }
+  ],
+  "limits": "Pixel inspection of the eight listed originals only. No interaction, memory, reachability, formal accessibility or physical-device acceptance. Earlier misframed landscape capture supplies no whole-layout credit."
+}

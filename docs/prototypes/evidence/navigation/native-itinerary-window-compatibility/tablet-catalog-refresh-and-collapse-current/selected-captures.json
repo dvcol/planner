@@ -1,0 +1,32 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "F6A227B4-1033-4288-BCB0-63ACD1933C79.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Reopened itinerary branch retains independent repeated completion_0_A201ADD8-91A2-462A-BC38-9469CE32D43D.png",
+    "timestamp": 1792329183.584,
+    "testIdentifier": "ItineraryWindowJourneyTests/testCollapsingARepeatedListKeepsSelectedDetailsAndCompletionAcrossLayoutChanges()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "9A6FA531-F816-4234-87E6-159E4AB7BADB.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Collapsed itinerary branch keeps its state in landscape_0_21FD6E68-AB45-4039-8E7D-7507F13327A7.png",
+    "timestamp": 1792329157.252,
+    "testIdentifier": "ItineraryWindowJourneyTests/testCollapsingARepeatedListKeepsSelectedDetailsAndCompletionAcrossLayoutChanges()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "30137929-2D38-4DE7-B253-D8CD525A0648.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Collapsed itinerary branch preserves full progress and selected details_0_2E2D67EB-88BB-4BBD-9D57-01BDA0E364F9.png",
+    "timestamp": 1792329154.98,
+    "testIdentifier": "ItineraryWindowJourneyTests/testCollapsingARepeatedListKeepsSelectedDetailsAndCompletionAcrossLayoutChanges()"
+  }
+]

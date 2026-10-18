@@ -1,0 +1,16 @@
+{
+  "root": "/private/tmp/PlannerNativeItemWindowSource",
+  "base": "7368db1bdb9d9d2595be3fa9d35bddbcabe36636",
+  "overlays": [
+    "Planner/Scenes/SavedContainerWindowRows.swift",
+    "Planner/Scenes/SavedItemWindow.swift",
+    "Planner/Scenes/SavedItineraryViews.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerFixtureUITests/ContainerCatalogSortJourneyTests.swift",
+    "PlannerFixtureUITests/ItineraryWindowJourneyTests.swift",
+    "PlannerFixtures/PlannerContainerWindowFixture.swift",
+    "PlannerFixtures/PlannerFixtureDataset.swift",
+    "PlannerMCPTests/SavedItemWindowTests.swift",
+    "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+  ]
+}

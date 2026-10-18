@@ -1,0 +1,47 @@
+{
+  "inspectedOriginals": [
+    {
+      "path": "tablet-filtered-drag-diagnostic/A7E91E12-D694-4204-9738-66DC3B681B00.png",
+      "sha256": "3a99f720ed55471e8a9096de50980a3d0730504746d838689d7f657edc04f8de",
+      "reviewer": "primary agent",
+      "finding": "Original dark iPad capture shows Todo-filtered Activities 002 and 003 with native reorder handles, Matching 2 of 3, full 1 of 3 progress, 15-minute estimate and 10-minute remaining. Text and controls are readable without overlap."
+    },
+    {
+      "path": "tablet-filtered-drag-diagnostic/38D0E5A4-1B54-48AD-B37A-92E5F83569B0.png",
+      "sha256": "5935510d9de7a9455c8b55ef3639ffa9ef45ae0548555eb407d60f1b77068387",
+      "reviewer": "primary agent",
+      "finding": "Original dark iPad capture after relaunch shows Activities 001, 003, 002 in that order. Only 001 is checked. Full progress and time metrics remain readable; native toolbar and empty detail placeholder do not obscure rows."
+    },
+    {
+      "path": "phone-list-origin-labels-context-qualified/6487CA54-5E69-4FAA-A134-992535E02BE1.png",
+      "sha256": "fa188565aeab43270e7e3cf349d1ff1d4acf12ef2a9cf9363a3210aa87a20b41",
+      "reviewer": "primary agent",
+      "finding": "Original phone landscape screen capture is fully framed. New Item title, Back, Save, originating List and initial fields are readable. Labels are below the short viewport; this image alone does not establish reachability or all-field readability."
+    },
+    {
+      "path": "phone-list-origin-labels-context-qualified/7CDE3D89-7C8C-431F-AB33-0ED5F34078EC.png",
+      "sha256": "1b8c55d936d316420aaa2511413fde67b9ba799fc04171dfdb6a52fbc7987f9a",
+      "reviewer": "primary agent",
+      "finding": "Original phone portrait capture after relaunch shows Origin, the single unchecked Rainy museum row with Culture and Rain, full 0 of 1 progress and missing-estimate warning. Toolbar has a clipped partial navigation-title glyph behind controls; retain as a polish finding. The row is unobscured."
+    },
+    {
+      "path": "phone-main-catalogs-and-corrected-collapse/173D2917-E22B-4B77-BF18-D5941DCF6A88.png",
+      "sha256": "5decc5593012541a496b86a8364c4f3fb53f4be1bea956d695ac37efa5a1c3b6",
+      "reviewer": "primary agent",
+      "finding": "Corrected original iPhone landscape screen capture is fully framed. Route toolbar, direct Item row, collapsed List header, estimates and independent 1 of 65 progress are readable. Composition is partly scrolled under the top toolbar; the native floating tab bar crosses the bottom progress area. No whole-scene accessibility or reachability claim."
+    },
+    {
+      "path": "tablet-catalog-refresh-and-collapse-current/30137929-2D38-4DE7-B253-D8CD525A0648.png",
+      "sha256": "6d7089e669b519bae39ae407267c4ce69a4d38e1422ca183094edcd0a7a81a24",
+      "reviewer": "primary agent",
+      "findings": "Dark iPad portrait/landscape: selected Completed detail remains beside collapsed first branch; full 1-of-132 progress and both independent List branch estimates/progress readable. No blank/error overlay. Pixel review is not a full accessibility or performance qualification."
+    },
+    {
+      "path": "tablet-catalog-refresh-and-collapse-current/9A6FA531-F816-4234-87E6-159E4AB7BADB.png",
+      "sha256": "6ae7676635b4a5684770848b1881be8adfe4b4af70a0f4e15f887b471521c81b",
+      "reviewer": "primary agent",
+      "findings": "Dark iPad portrait/landscape: selected Completed detail remains beside collapsed first branch; full 1-of-132 progress and both independent List branch estimates/progress readable. No blank/error overlay. Pixel review is not a full accessibility or performance qualification."
+    }
+  ],
+  "limits": "Visual review of the five listed original captures only. No formal contrast ratio, accessibility, other-platform or physical-device qualification follows from these images."
+}

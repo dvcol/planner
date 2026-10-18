@@ -1,0 +1,19 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/Scenes/SavedContainerWindowRows.swift",
+    "Planner/Scenes/SavedItemWindow.swift",
+    "Planner/Scenes/SavedItineraryViews.swift",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerFixtureUITests/ContainerCatalogSortJourneyTests.swift",
+    "PlannerFixtureUITests/ItineraryWindowJourneyTests.swift",
+    "PlannerFixtures/PlannerContainerWindowFixture.swift",
+    "PlannerFixtures/PlannerFixtureDataset.swift",
+    "PlannerMCPTests/SavedItemWindowTests.swift",
+    "PlannerNavigationUITests/SavedLabelsJourneyTests.swift"
+  ],
+  "exitCode": 0
+}

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "pnpm",
+    "dlx",
+    "markdownlint-cli2",
+    "--config",
+    "/private/tmp/PlannerItemWindowMarkdownlint.json",
+    "docs/native-container-window-contract-review.md",
+    "docs/native-association-undo-contract-review.md",
+    "docs/prototypes/native-itinerary-window-compatibility.md",
+    "docs/prototypes/native-container-catalog-windows.md",
+    "docs/offline-conflicts-and-recovery.md"
+  ],
+  "exitCode": 0,
+  "output": "markdownlint-cli2 v0.23.3 (markdownlint v0.41.1)\nFinding: docs/native-container-window-contract-review.md docs/native-association-undo-contract-review.md docs/prototypes/native-itinerary-window-compatibility.md docs/prototypes/native-container-catalog-windows.md docs/offline-conflicts-and-recovery.md\nLinting: 5 files\nSummary: 0 issues in 0 files\nDone in 427ms using pnpm v12.10.1\n"
+}

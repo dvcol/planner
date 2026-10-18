@@ -1,0 +1,177 @@
+[
+  {
+    "epoch": "container-catalog-first-page-green",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerItemWindow-container-catalog-first-page-green.xcresult"
+  },
+  {
+    "epoch": "container-catalog-first-page-red",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItemWindow-container-catalog-first-page-red.xcresult"
+  },
+  {
+    "epoch": "container-catalog-loader-regressions",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItemWindow-container-catalog-loader-regressions.xcresult"
+  },
+  {
+    "epoch": "container-catalog-loader-regressions-qualified",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerItemWindow-container-catalog-loader-regressions-qualified.xcresult"
+  },
+  {
+    "epoch": "container-main-catalog-controller-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "epoch": "container-main-catalog-mac-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "epoch": "container-main-catalog-mobile-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "epoch": "container-native-window-journey-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "epoch": "container-refresh-guards-mac-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "epoch": "container-refresh-guards-mobile-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "epoch": "container-stable-catalog-controller-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "epoch": "itinerary-collapse-controller-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "epoch": "itinerary-collapse-identity-controller-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "epoch": "itinerary-collapse-mobile-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "epoch": "itinerary-drag-diagnostic-build",
+    "exitCode": 74,
+    "runtimeCredit": false
+  },
+  {
+    "epoch": "itinerary-drag-diagnostic-build-retry",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "epoch": "itinerary-filtered-drag-mobile-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "epoch": "itinerary-migrated-navigation-mobile-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "epoch": "itinerary-native-mac-compatibility-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "epoch": "itinerary-navigation-context-controller-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "epoch": "itinerary-order-membership-source-refresh",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerItemWindow-itinerary-order-membership-source-refresh.xcresult"
+  },
+  {
+    "epoch": "mac-current-itinerary-and-catalog-retry",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-mac-current-itinerary-and-catalog-retry.xcresult"
+  },
+  {
+    "epoch": "mac-itinerary-pages-collapse-resize-drag",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-mac-itinerary-pages-collapse-resize-drag.xcresult"
+  },
+  {
+    "epoch": "phone-collapse-and-filtered-drag",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-collapse-and-filtered-drag.xcresult"
+  },
+  {
+    "epoch": "phone-container-window-stable-catalog",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-container-window-stable-catalog.xcresult"
+  },
+  {
+    "epoch": "phone-container-window-traversal-and-estimate-refresh",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-container-window-traversal-and-estimate-refresh.xcresult"
+  },
+  {
+    "epoch": "phone-list-origin-labels",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-list-origin-labels.xcresult"
+  },
+  {
+    "epoch": "phone-list-origin-labels-context-qualified",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-list-origin-labels-context-qualified.xcresult"
+  },
+  {
+    "epoch": "phone-main-catalogs-and-corrected-collapse",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-main-catalogs-and-corrected-collapse.xcresult"
+  },
+  {
+    "epoch": "tablet-catalog-refresh-and-collapse-current",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-catalog-refresh-and-collapse-current.xcresult"
+  },
+  {
+    "epoch": "tablet-collapse-rotation",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-collapse-rotation.xcresult"
+  },
+  {
+    "epoch": "tablet-collapse-rotation-identity-qualified",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-collapse-rotation-identity-qualified.xcresult"
+  },
+  {
+    "epoch": "tablet-filtered-drag-diagnostic",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-filtered-drag-diagnostic.xcresult"
+  },
+  {
+    "epoch": "tablet-filtered-entry-drag",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-filtered-entry-drag.xcresult"
+  },
+  {
+    "epoch": "tablet-repeated-pages-and-both-pickers",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-repeated-pages-and-both-pickers.xcresult"
+  }
+]

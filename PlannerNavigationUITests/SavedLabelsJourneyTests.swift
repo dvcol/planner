@@ -3,6 +3,16 @@ import XCTest
 @MainActor
 final class SavedLabelsJourneyTests: XCTestCase {
   func testNewItemLabelsRemainDraftUntilSaveAndRetainSharedIdentitiesAfterRelaunch() {
+    assertNewItemLabelsRemainDraftUntilSaveAndRetainSharedIdentities(originatingList: nil)
+  }
+
+  func testListNewItemLabelsRemainDraftUntilSaveAndRetainItsAppearanceAfterRelaunch() {
+    assertNewItemLabelsRemainDraftUntilSaveAndRetainSharedIdentities(originatingList: "Origin")
+  }
+
+  private func assertNewItemLabelsRemainDraftUntilSaveAndRetainSharedIdentities(
+    originatingList: String?
+  ) {
     continueAfterFailure = false
     #if os(iOS)
       XCUIDevice.shared.orientation = .portrait
@@ -23,8 +33,12 @@ final class SavedLabelsJourneyTests: XCTestCase {
     ).firstMatch.identifier
     application.plannerElement("saved.categories.done").activateForPlannerJourney()
     closeSettings(application)
-    openItems(application)
-    application.openSavedPlannerNewItemEditor()
+    if let originatingList {
+      createListWithItems(originatingList, itemTitles: [], application: application)
+    } else {
+      openItems(application)
+    }
+    openNewItem(application, originatingList: originatingList)
     enterNewItemTitle("Discarded label draft", application: application)
     selectLabels(
       "Categories", names: ["Culture"], identifierPrefix: "saved.item", application: application)
@@ -42,9 +56,10 @@ final class SavedLabelsJourneyTests: XCTestCase {
     XCTAssertTrue(discard.waitForExistence(timeout: 5))
     discard.activateForPlannerJourney()
     XCTAssertTrue(application.textFields["saved.item.title"].waitForNonExistence(timeout: 5))
-    XCTAssertTrue(application.plannerElement("saved.item.addMenu").waitForExistence(timeout: 5))
+    let addMenuIdentifier = originatingList == nil ? "saved.item.addMenu" : "saved.list.addMenu"
+    XCTAssertTrue(application.plannerElement(addMenuIdentifier).waitForExistence(timeout: 5))
     XCTAssertEqual(application.savedPlannerItemRows("Discarded label draft").count, 0)
-    application.openSavedPlannerNewItemEditor()
+    openNewItem(application, originatingList: originatingList)
     enterNewItemTitle("Rainy museum", application: application)
     selectLabels(
       "Categories", names: ["Culture"], identifierPrefix: "saved.item", application: application)
@@ -76,6 +91,20 @@ final class SavedLabelsJourneyTests: XCTestCase {
     for name in ["Culture", "Rain"] {
       XCTAssertTrue(application.staticTexts[name].firstMatch.waitForExistence(timeout: 10))
     }
+    var appearanceIdentifier: String?
+    if originatingList != nil {
+      #if os(iOS)
+        if application.windows.firstMatch.frame.width < 600 {
+          application.plannerElement("BackButton").activateForPlannerJourney()
+        }
+      #endif
+      let appearance = application.savedPlannerItemRows("Rainy museum").firstMatch
+      XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+      appearanceIdentifier = appearance.identifier
+      XCTAssertTrue(appearance.waitForPlannerValue("Categories: Culture, Tags: Rain"))
+      recordLabelsScreenshot(
+        application, name: "List-origin New Item retains labels and appearance")
+    }
     openItems(application)
     let item = application.savedPlannerItemRows("Rainy museum").firstMatch
     XCTAssertTrue(item.waitForExistence(timeout: 10))
@@ -104,6 +133,35 @@ final class SavedLabelsJourneyTests: XCTestCase {
       application.plannerElement("saved.item.labels.done").activateForPlannerJourney()
     }
     application.plannerElement("saved.item.edit.cancel").activateForPlannerJourney()
+    if let originatingList, let appearanceIdentifier {
+      application.openPlannerSection("Lists")
+      let list = application.savedPlannerListRow(originatingList)
+      if !list.waitForExistence(timeout: 3) {
+        application.plannerElement("BackButton").activateForPlannerJourney()
+      }
+      XCTAssertTrue(list.waitForExistence(timeout: 10))
+      list.activateForPlannerJourney()
+      let appearance = application.plannerElement(appearanceIdentifier)
+      XCTAssertTrue(appearance.waitForExistence(timeout: 10))
+      XCTAssertEqual(application.savedPlannerItemRows("Rainy museum").count, 1)
+      XCTAssertTrue(appearance.waitForPlannerValue("Categories: Culture, Tags: Rain"))
+      let completionIdentifier = appearanceIdentifier.replacingOccurrences(
+        of: "saved.appearance.", with: "saved.appearance.completion.")
+      XCTAssertTrue(
+        application.plannerElement(completionIdentifier).waitForPlannerValue("To do"))
+      XCTAssertTrue(application.staticTexts["0 of 1 item done"].exists)
+      recordLabelsScreenshot(
+        application, name: "List-origin New Item keeps labels and local Todo after relaunch")
+    }
+  }
+
+  private func openNewItem(_ application: XCUIApplication, originatingList: String?) {
+    guard originatingList != nil else {
+      application.openSavedPlannerNewItemEditor()
+      return
+    }
+    application.openSavedPlannerListAddMenu()
+    application.plannerElement("saved.list.createItem").activateForPlannerJourney()
   }
 
   private func enterNewItemTitle(_ value: String, application: XCUIApplication) {
