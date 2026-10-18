@@ -1,6 +1,6 @@
 # Native itinerary presentation-window contract
 
-Status: accepted Q98 A on 18 October 2026. The shared-loader expansion and its existing real-Core/native test boundaries are approved. Implementation and qualification remain required; Q95/Q97 behavior stays in force.
+Status: accepted Q98 A on 18 October 2026. The shared-loader expansion is implemented with partial real-Core and native qualification in the [implementation report](prototypes/native-itinerary-windows.md). Remaining Q98 checks stay open; Q95/Q97 behavior stays in force.
 
 ## Context and starting state
 
@@ -64,7 +64,7 @@ Expected state, order and identities come from literal fixtures created through 
 
 Itinerary views no longer retain complete child-presentation arrays. Approved loader behaviors, existing Item/Inbox/List regressions, affected strict Swift lint and mobile/Mac compiler checks pass. Source and specification review distinguish this integration from earlier checkpoints. Record exact source/product hashes, runtime outcomes and inspected captures.
 
-Native runtime evidence must identify its actual platform. Mac compilation supplies no Mac runtime credit. Signing, physical-device performance, the existing Mac UI automation startup issue, broader collection/picker windowing and final whole-app acceptance remain open. This slice alone cannot close the overall map.
+Native runtime evidence must identify its actual platform. Mac compilation supplies no Mac runtime credit. Signing, physical-device performance, Mac runtime qualification for this integration, broader collection/picker windowing and final whole-app acceptance remain open. This slice alone cannot close the overall map.
 
 ## Review alternatives
 

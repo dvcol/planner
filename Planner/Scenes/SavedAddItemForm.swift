@@ -46,7 +46,7 @@ struct SavedAddItemForm: View {
       List(selection: $selectedItemId) {
         if let window {
           ForEach(sourceRows, id: \.identifier) { index, identifier in
-            choice(window.presentation(at: index), index: index)
+            choice(window.presentation(at: index), index: index, identifier: identifier)
               .onScrollVisibilityChange { visible in
                 if visible {
                   visibleIdentifiers.insert(identifier)
@@ -107,13 +107,18 @@ struct SavedAddItemForm: View {
   }
 
   @ViewBuilder
-  private func choice(_ presentation: SavedItemWindowPresentation, index: Int) -> some View {
+  private func choice(_ presentation: SavedItemWindowPresentation, index: Int, identifier: UUID)
+    -> some View
+  {
     switch presentation {
-    case .loaded(let item):
+    case .loaded(let presentation)
+    where presentation.row.identity == .source(.init(kind: .item, id: identifier)):
+      let item = SavedPlannerItem(
+        id: identifier, row: presentation.row, rowPresentation: presentation.rowPresentation)
       Label(item.row.title, systemImage: "square.stack")
         .tag(item.id)
         .accessibilityIdentifier("saved.membership.choice.item.\(item.id.uuidString)")
-    case .loading:
+    case .loading, .loaded:
       ProgressView("Loading Item").selectionDisabled()
     case .failed(let reason):
       VStack(alignment: .leading) {

@@ -6,6 +6,378 @@ import XCTest
 
 @MainActor
 final class SavedItemWindowTests: XCTestCase {
+  func testEmptyItineraryAndEmptyListPublishTheirHeadersAndCancelClearsThem() async throws {
+    let fixture = try await makeFixture(itemCount: 0, listName: "Empty activities")
+    let listIdentifier = try XCTUnwrap(fixture.listIdentifier)
+    let itinerary = try await createItinerary(title: "Empty route", sources: [], fixture: fixture)
+    let window = SavedItemWindow(planner: fixture.planner, session: fixture.session)
+    let query = PlannerItemQuery(
+      scope: .itinerary(itinerary.source.id), completion: .all, archive: .all,
+      sort: .init(mode: .manual))
+    await window.reload(
+      query: query, identity: .init(namespace: "empty-route", savedRevision: UUID()))
+    XCTAssertEqual(window.state, .ready)
+    XCTAssertTrue(window.rowIdentities.isEmpty)
+    XCTAssertEqual(window.matchingCount, 0)
+    let empty = try XCTUnwrap(window.itineraryMetadata)
+    XCTAssertEqual(empty.itinerary.source, itinerary.source)
+    XCTAssertEqual(empty.itinerary.progress.state, .empty)
+    XCTAssertEqual(empty.itinerary.progress.totalCount, 0)
+    XCTAssertTrue(empty.entries.isEmpty)
+    let added = try await applyFixtureCommand(
+      .addItineraryEntry(
+        itineraryId: itinerary.source.id, source: .init(kind: .list, id: listIdentifier),
+        placement: .last), fixture: fixture)
+    guard case .itineraryEntry(let entryIdentifier, _, _)? = added.generatedReferences.first else {
+      XCTFail("The empty List still needs its own saved itinerary entry.")
+      return
+    }
+    await window.reload(
+      query: query, identity: .init(namespace: "empty-route", savedRevision: UUID()))
+    XCTAssertEqual(window.state, .ready)
+    XCTAssertEqual(window.matchingCount, 0)
+    let metadata = try XCTUnwrap(window.itineraryMetadata)
+    XCTAssertEqual(metadata.itinerary.progress.state, .empty)
+    XCTAssertEqual(metadata.entries.map(\.id), [entryIdentifier])
+    XCTAssertEqual(metadata.visibleEntries.map(\.id), [entryIdentifier])
+    XCTAssertTrue(metadata.entries[0].rowIdentities.isEmpty)
+    XCTAssertTrue(metadata.entries[0].matchingRowIndices.isEmpty)
+    XCTAssertTrue(metadata.entries[0].matchesHeader)
+    XCTAssertEqual(metadata.entries[0].list?.content.name, "Empty activities")
+    XCTAssertEqual(metadata.entries[0].listSummary?.progress.state, .empty)
+    window.cancel()
+    XCTAssertEqual(window.state, .idle)
+    XCTAssertNil(window.itineraryMetadata)
+    await window.reload(
+      query: .init(completion: .all, archive: .all),
+      identity: .init(namespace: "empty-source-catalog", savedRevision: UUID()))
+    XCTAssertEqual(window.state, .ready)
+    XCTAssertNil(window.itineraryMetadata)
+    XCTAssertTrue(window.rowIdentities.isEmpty)
+  }
+
+  func testRepeatedItineraryPagesRefreshIndependentCompletionAndArchivedBranches() async throws {
+    let fixture = try await makeFixture(itemCount: 65, listName: "Repeated activities")
+    let listIdentifier = try XCTUnwrap(fixture.listIdentifier)
+    let list = PlannerEntityReference(kind: .list, id: listIdentifier)
+    let itinerary = try await createItinerary(
+      title: "Repeated route", sources: [list, list], fixture: fixture)
+    let expectedIdentities = itinerary.entryIdentifiers.flatMap { entryIdentifier in
+      fixture.identifiers.enumerated().map { index, identifier in
+        PlannerRowIdentity.appearance(
+          source: .init(kind: .item, id: identifier),
+          appearance: .expandedListItem(
+            itineraryId: itinerary.source.id, listEntryId: entryIdentifier,
+            membershipId: fixture.membershipIdentifiers[index]))
+      }
+    }
+    let window = SavedItemWindow(planner: fixture.planner, session: fixture.session)
+    await window.reload(
+      query: .init(
+        scope: .itinerary(itinerary.source.id), completion: .all, archive: .all,
+        sort: .init(mode: .manual)),
+      identity: .init(namespace: "repeated-completion", savedRevision: UUID()))
+    _ = try await applyFixtureCommand(
+      .setCompletion(
+        scope: .appearance(
+          .expandedListItem(
+            itineraryId: itinerary.source.id, listEntryId: itinerary.entryIdentifiers[0],
+            membershipId: fixture.membershipIdentifiers[64])), done: true), fixture: fixture)
+    await window.requestRows(at: [129])
+    XCTAssertEqual(window.state, .ready)
+    XCTAssertEqual(window.rowIdentities, expectedIdentities)
+    XCTAssertEqual(window.itineraryMetadata?.itinerary.progress.totalCount, 130)
+    XCTAssertEqual(window.itineraryMetadata?.itinerary.progress.doneCount, 1)
+    XCTAssertEqual(window.itineraryMetadata?.entries[0].listSummary?.progress.doneCount, 1)
+    XCTAssertEqual(window.itineraryMetadata?.entries[1].listSummary?.progress.doneCount, 0)
+    XCTAssertEqual(window.itineraryMetadata?.entries[0].list?.progress.doneCount, 0)
+    for (index, done) in [(64, true), (129, false)] {
+      guard case .loaded(let presentation) = window.presentation(at: index) else {
+        XCTFail("Each repeated membership needs its own loaded contextual completion.")
+        return
+      }
+      XCTAssertEqual(presentation.row.identity, expectedIdentities[index])
+      XCTAssertEqual(presentation.row.effectiveDone, done)
+      XCTAssertFalse(presentation.row.globalDone == true)
+    }
+    guard case .loading = window.presentation(at: 0) else {
+      XCTFail(
+        "Refreshing an itinerary must release distant presentations while retaining metadata.")
+      return
+    }
+    _ = try await applyFixtureCommand(
+      .setCompletion(scope: .globalItem(itemId: fixture.identifiers[64]), done: true),
+      fixture: fixture)
+    await window.requestRows(at: [0])
+    await window.requestRows(at: [129])
+    XCTAssertEqual(window.itineraryMetadata?.itinerary.progress.doneCount, 2)
+    XCTAssertEqual(window.itineraryMetadata?.entries[0].list?.progress.doneCount, 1)
+    for index in [64, 129] {
+      guard case .loaded(let presentation) = window.presentation(at: index) else {
+        XCTFail("Global Done must be reflected in both current appearance pages.")
+        return
+      }
+      XCTAssertEqual(presentation.row.identity, expectedIdentities[index])
+      XCTAssertTrue(presentation.row.globalDone == true)
+      XCTAssertTrue(presentation.row.effectiveDone == true)
+    }
+    _ = try await applyFixtureCommand(
+      .setCompletion(scope: .globalItem(itemId: fixture.identifiers[64]), done: false),
+      fixture: fixture)
+    await window.requestRows(at: [0])
+    await window.requestRows(at: [129])
+    XCTAssertEqual(window.itineraryMetadata?.itinerary.progress.doneCount, 1)
+    for (index, done) in [(64, true), (129, false)] {
+      guard case .loaded(let presentation) = window.presentation(at: index) else {
+        XCTFail("Global Reopen must reveal the retained independent local states.")
+        return
+      }
+      XCTAssertEqual(presentation.row.identity, expectedIdentities[index])
+      XCTAssertFalse(presentation.row.globalDone == true)
+      XCTAssertEqual(presentation.row.effectiveDone, done)
+    }
+    _ = try await applyFixtureCommand(.setArchive(source: list, archived: true), fixture: fixture)
+    await window.requestRows(at: [0])
+    XCTAssertEqual(window.itineraryMetadata?.itinerary.progress.state, .complete)
+    XCTAssertEqual(window.itineraryMetadata?.itinerary.progress.doneCount, 1)
+    XCTAssertEqual(window.itineraryMetadata?.itinerary.progress.archivedCount, 129)
+    XCTAssertEqual(window.itineraryMetadata?.itinerary.progress.finishedCount, 130)
+    XCTAssertEqual(window.itineraryMetadata?.entries[0].list?.state.archived, true)
+    _ = try await applyFixtureCommand(.setArchive(source: list, archived: false), fixture: fixture)
+    await window.requestRows(at: [129])
+    XCTAssertEqual(window.itineraryMetadata?.itinerary.progress.doneCount, 1)
+    XCTAssertEqual(window.itineraryMetadata?.itinerary.progress.archivedCount, 0)
+    XCTAssertEqual(window.itineraryMetadata?.entries[0].listSummary?.progress.doneCount, 1)
+    XCTAssertEqual(window.itineraryMetadata?.entries[1].listSummary?.progress.doneCount, 0)
+    XCTAssertEqual(window.itineraryMetadata?.entries[0].list?.progress.doneCount, 0)
+    XCTAssertEqual(window.rowIdentities, expectedIdentities)
+    await window.requestRows(at: [])
+    XCTAssertEqual(window.state, .ready)
+    XCTAssertEqual(window.itineraryMetadata?.itinerary.progress.totalCount, 130)
+    for index in [0, 64, 129] {
+      guard case .loading = window.presentation(at: index) else {
+        XCTFail(
+          "No visible child rows must release presentations without discarding branch metadata.")
+        return
+      }
+    }
+  }
+
+  private func createItinerary(
+    title: String, sources: [PlannerEntityReference], fixture: Fixture
+  ) async throws -> (source: PlannerEntityReference, entryIdentifiers: [UUID]) {
+    let created = try await applyFixtureCommand(
+      .createItinerary(content: .init(title: title)), fixture: fixture)
+    let itinerary = try XCTUnwrap(created.generated.first)
+    var entryIdentifiers: [UUID] = []
+    for source in sources {
+      let result = try await applyFixtureCommand(
+        .addItineraryEntry(itineraryId: itinerary.id, source: source, placement: .last),
+        fixture: fixture)
+      guard
+        case .itineraryEntry(let identifier, let owner, let reference)? =
+          result.generatedReferences.first, owner == itinerary, reference == source
+      else { throw CancellationError() }
+      entryIdentifiers.append(identifier)
+    }
+    return (itinerary, entryIdentifiers)
+  }
+
+  func testItineraryHeaderAndChildMatchesKeepFullProgressAndUnloadedIdentities() async throws {
+    let fixture = try await makeFixture(itemCount: 4, listName: "Museum route")
+    let listIdentifier = try XCTUnwrap(fixture.listIdentifier)
+    let created = try await applyFixtureCommand(
+      .createItinerary(content: .init(title: "Filtered route")), fixture: fixture)
+    let itinerary = try XCTUnwrap(created.generated.first)
+    let item = PlannerEntityReference(kind: .item, id: fixture.identifiers[0])
+    let list = PlannerEntityReference(kind: .list, id: listIdentifier)
+    var entries: [UUID] = []
+    for source in [item, list, item] {
+      let result = try await applyFixtureCommand(
+        .addItineraryEntry(itineraryId: itinerary.id, source: source, placement: .last),
+        fixture: fixture)
+      guard case .itineraryEntry(let identifier, _, _)? = result.generatedReferences.first else {
+        XCTFail("The public add must identify its itinerary entry.")
+        return
+      }
+      entries.append(identifier)
+    }
+    _ = try await applyFixtureCommand(
+      .setCompletion(scope: .globalItem(itemId: fixture.identifiers[1]), done: true),
+      fixture: fixture)
+    _ = try await applyFixtureCommand(
+      .setArchive(source: .init(kind: .item, id: fixture.identifiers[3]), archived: true),
+      fixture: fixture)
+    let children = fixture.identifiers.enumerated().map { index, identifier in
+      PlannerRowIdentity.appearance(
+        source: .init(kind: .item, id: identifier),
+        appearance: .expandedListItem(
+          itineraryId: itinerary.id, listEntryId: entries[1],
+          membershipId: fixture.membershipIdentifiers[index]))
+    }
+    let first = PlannerRowIdentity.appearance(
+      source: item, appearance: .directItineraryItem(itineraryId: itinerary.id, entryId: entries[0])
+    )
+    let last = PlannerRowIdentity.appearance(
+      source: item, appearance: .directItineraryItem(itineraryId: itinerary.id, entryId: entries[2])
+    )
+    let examples: [(text: String, matches: [PlannerRowIdentity], visible: [UUID], header: Bool)] = [
+      ("Museum route", [], [entries[1]], true),
+      ("Activity 002", [children[2]], [entries[1]], false),
+      ("No such activity", [], [], false),
+      ("Activity", [first, children[0], children[2], last], entries, false),
+    ]
+    let window = SavedItemWindow(planner: fixture.planner, session: fixture.session)
+    for example in examples {
+      await window.reload(
+        query: .init(
+          scope: .itinerary(itinerary.id), text: example.text, completion: .todo, archive: .active,
+          sort: .init(mode: .manual)),
+        identity: .init(namespace: "itinerary-matching", savedRevision: UUID()))
+      XCTAssertEqual(window.state, .ready)
+      XCTAssertEqual(window.rowIdentities, example.matches)
+      XCTAssertEqual(window.matchingCount, Int64(example.matches.count))
+      let metadata = try XCTUnwrap(window.itineraryMetadata)
+      XCTAssertEqual(metadata.entries.map(\.id), entries)
+      XCTAssertEqual(metadata.visibleEntries.map(\.id), example.visible)
+      XCTAssertEqual(metadata.itinerary.progress.totalCount, 6)
+      XCTAssertEqual(metadata.itinerary.progress.doneCount, 1)
+      XCTAssertEqual(metadata.itinerary.progress.archivedCount, 1)
+      XCTAssertEqual(
+        metadata.itinerary.estimates.fullEstimate,
+        .lowerBound(minutes: 0, missingEstimateCount: 6))
+      let branch = metadata.entries[1]
+      XCTAssertEqual(branch.rowIdentities, children)
+      XCTAssertEqual(branch.matchesHeader, example.header)
+      XCTAssertEqual(branch.list?.content.name, "Museum route")
+      XCTAssertEqual(branch.listSummary?.progress.totalCount, 4)
+      XCTAssertEqual(branch.listSummary?.progress.doneCount, 1)
+      XCTAssertEqual(branch.listSummary?.progress.archivedCount, 1)
+      for (index, identity) in example.matches.enumerated() {
+        guard case .loaded(let row) = window.presentation(at: index) else {
+          XCTFail("Matching presentations must remain available beside the complete metadata.")
+          return
+        }
+        XCTAssertEqual(row.row.identity, identity)
+        XCTAssertFalse(row.row.effectiveDone == true)
+        XCTAssertFalse(row.row.archived == true)
+      }
+      if example.matches.isEmpty {
+        guard case .loading = window.presentation(at: 0) else {
+          XCTFail("Header matching must not retain presentations for hidden children.")
+          return
+        }
+      }
+    }
+  }
+
+  func testItineraryOpensOnePageAndKeepsRepeatedListMembershipsDistinct() async throws {
+    let fixture = try await makeFixture(itemCount: 65, listName: "Repeated activities")
+    defer { try? FileManager.default.removeItem(at: fixture.directory) }
+    let listIdentifier = try XCTUnwrap(fixture.listIdentifier)
+    let created = try await applyFixtureCommand(
+      .createItinerary(content: .init(title: "Repeated route")), fixture: fixture)
+    let itinerary = try XCTUnwrap(created.generated.first)
+    let item = PlannerEntityReference(kind: .item, id: fixture.identifiers[0])
+    let list = PlannerEntityReference(kind: .list, id: listIdentifier)
+    var entryIdentifiers: [UUID] = []
+    for source in [item, list, list, item] {
+      let added = try await applyFixtureCommand(
+        .addItineraryEntry(itineraryId: itinerary.id, source: source, placement: .last),
+        fixture: fixture)
+      guard
+        case .itineraryEntry(let identifier, let owner, let reference)? =
+          added.generatedReferences.first
+      else {
+        XCTFail("Each public add must return its own itinerary entry.")
+        return
+      }
+      XCTAssertEqual(owner, itinerary)
+      XCTAssertEqual(reference, source)
+      entryIdentifiers.append(identifier)
+    }
+    var expectedIdentities: [PlannerRowIdentity] = [
+      .appearance(
+        source: item,
+        appearance: .directItineraryItem(
+          itineraryId: itinerary.id, entryId: entryIdentifiers[0]))
+    ]
+    for entryIdentifier in [entryIdentifiers[1], entryIdentifiers[2]] {
+      for (index, identifier) in fixture.identifiers.enumerated() {
+        expectedIdentities.append(
+          .appearance(
+            source: .init(kind: .item, id: identifier),
+            appearance: .expandedListItem(
+              itineraryId: itinerary.id, listEntryId: entryIdentifier,
+              membershipId: fixture.membershipIdentifiers[index])))
+      }
+    }
+    expectedIdentities.append(
+      .appearance(
+        source: item,
+        appearance: .directItineraryItem(
+          itineraryId: itinerary.id, entryId: entryIdentifiers[3])))
+    let window = SavedItemWindow(planner: fixture.planner, session: fixture.session)
+    await window.reload(
+      query: .init(
+        scope: .itinerary(itinerary.id), completion: .all, archive: .all,
+        sort: .init(mode: .manual)),
+      identity: .init(namespace: "repeated-itinerary-first-page", savedRevision: UUID()))
+    XCTAssertEqual(window.state, .ready)
+    guard window.state == .ready else { return }
+    XCTAssertEqual(window.matchingCount, 132)
+    XCTAssertEqual(window.rowIdentities, expectedIdentities)
+    let metadata = try XCTUnwrap(window.itineraryMetadata)
+    XCTAssertEqual(metadata.itinerary.source, itinerary)
+    XCTAssertEqual(metadata.itinerary.content.title, "Repeated route")
+    XCTAssertEqual(metadata.itinerary.progress.totalCount, 132)
+    XCTAssertEqual(metadata.itinerary.progress.doneCount, 0)
+    XCTAssertEqual(
+      metadata.itinerary.estimates.fullEstimate,
+      .lowerBound(minutes: 0, missingEstimateCount: 132))
+    XCTAssertEqual(metadata.entries.map(\.id), entryIdentifiers)
+    XCTAssertEqual(metadata.entries.map(\.source), [item, list, list, item])
+    XCTAssertEqual(metadata.visibleEntries.map(\.id), entryIdentifiers)
+    let expectedRanges = [0..<1, 1..<66, 66..<131, 131..<132]
+    for (index, entry) in metadata.entries.enumerated() {
+      XCTAssertEqual(entry.rowIdentities, Array(expectedIdentities[expectedRanges[index]]))
+      XCTAssertEqual(entry.matchingRowIndices, Array(expectedRanges[index]))
+      if index == 1 || index == 2 {
+        XCTAssertEqual(entry.list?.source, list)
+        XCTAssertEqual(entry.list?.content.name, "Repeated activities")
+        /// The shared List includes 65 memberships and its two incoming itinerary entries.
+        XCTAssertEqual(entry.list?.references.count, 67)
+        XCTAssertEqual(entry.listSummary?.entryId, entryIdentifiers[index])
+        XCTAssertEqual(entry.listSummary?.source, list)
+        XCTAssertEqual(entry.listSummary?.progress.totalCount, 65)
+        XCTAssertEqual(entry.listSummary?.progress.doneCount, 0)
+        XCTAssertEqual(
+          entry.listSummary?.estimates.fullEstimate,
+          .lowerBound(minutes: 0, missingEstimateCount: 65))
+        XCTAssertTrue(entry.matchesHeader)
+      } else {
+        XCTAssertNil(entry.list)
+        XCTAssertNil(entry.listSummary)
+        XCTAssertFalse(entry.matchesHeader)
+      }
+    }
+    for (index, title) in [(0, "Activity 000"), (1, "Activity 000"), (63, "Activity 062")] {
+      guard case .loaded(let presentation) = window.presentation(at: index) else {
+        XCTFail("A ready itinerary must expose its first page of exact appearances.")
+        return
+      }
+      XCTAssertEqual(presentation.row.identity, expectedIdentities[index])
+      XCTAssertEqual(presentation.row.title, title)
+      XCTAssertFalse(presentation.row.effectiveDone == true)
+    }
+    for index in [64, 66, 131] {
+      guard case .loading = window.presentation(at: index) else {
+        XCTFail("Opening an itinerary must not hydrate all repeated List appearances.")
+        return
+      }
+    }
+  }
+
   func testListOpensOnePageWithEveryMembershipIdentityAndItsFullHeader() async throws {
     let fixture = try await makeFixture(itemCount: 65, listName: "Museum route")
     let listIdentifier = try XCTUnwrap(fixture.listIdentifier)
@@ -36,7 +408,12 @@ final class SavedItemWindowTests: XCTestCase {
         XCTFail("A ready List must include its first page of contextual Item presentations.")
         return
       }
-      XCTAssertEqual(item.id, fixture.membershipIdentifiers[index])
+      XCTAssertEqual(
+        item.row.identity,
+        .appearance(
+          source: .init(kind: .item, id: fixture.identifiers[index]),
+          appearance: .listMembership(
+            listId: listIdentifier, membershipId: fixture.membershipIdentifiers[index])))
       XCTAssertEqual(item.row.identity, expectedIdentities[index])
       XCTAssertEqual(item.row.title, title)
       XCTAssertFalse(item.row.effectiveDone == true)
@@ -62,7 +439,7 @@ final class SavedItemWindowTests: XCTestCase {
         XCTFail("The initial page must be readable before the catalog is ready.")
         return
       }
-      XCTAssertEqual(item.id, fixture.identifiers[index])
+      XCTAssertEqual(item.row.identity, .source(.init(kind: .item, id: fixture.identifiers[index])))
       XCTAssertEqual(item.row.title, title)
     }
     guard case .loading = window.presentation(at: 64) else {
@@ -95,7 +472,12 @@ final class SavedItemWindowTests: XCTestCase {
         XCTFail("Visible and neighboring List pages must load their contextual memberships.")
         return
       }
-      XCTAssertEqual(item.id, fixture.membershipIdentifiers[index])
+      XCTAssertEqual(
+        item.row.identity,
+        .appearance(
+          source: .init(kind: .item, id: fixture.identifiers[index]),
+          appearance: .listMembership(
+            listId: listIdentifier, membershipId: fixture.membershipIdentifiers[index])))
       XCTAssertEqual(item.row.title, title)
       XCTAssertEqual(
         item.row.identity,
@@ -116,7 +498,12 @@ final class SavedItemWindowTests: XCTestCase {
         XCTFail("Returning to the beginning must reread the same memberships.")
         return
       }
-      XCTAssertEqual(item.id, fixture.membershipIdentifiers[index])
+      XCTAssertEqual(
+        item.row.identity,
+        .appearance(
+          source: .init(kind: .item, id: fixture.identifiers[index]),
+          appearance: .listMembership(
+            listId: listIdentifier, membershipId: fixture.membershipIdentifiers[index])))
       XCTAssertEqual(item.row.title, title)
     }
     for index in [128, 192] {
@@ -144,7 +531,7 @@ final class SavedItemWindowTests: XCTestCase {
         XCTFail("Visible and neighboring pages must load through the same catalog.")
         return
       }
-      XCTAssertEqual(item.id, fixture.identifiers[index])
+      XCTAssertEqual(item.row.identity, .source(.init(kind: .item, id: fixture.identifiers[index])))
       XCTAssertEqual(item.row.title, title)
     }
     for index in [0, 64] {
@@ -159,7 +546,7 @@ final class SavedItemWindowTests: XCTestCase {
         XCTFail("Revisiting a released page must reload its original Items.")
         return
       }
-      XCTAssertEqual(item.id, fixture.identifiers[index])
+      XCTAssertEqual(item.row.identity, .source(.init(kind: .item, id: fixture.identifiers[index])))
       XCTAssertEqual(item.row.title, title)
     }
     for index in [128, 192] {
@@ -244,11 +631,12 @@ final class SavedItemWindowTests: XCTestCase {
       XCTFail("A stale page must refresh and retain the source that was visible before the change.")
       return
     }
-    XCTAssertEqual(lastItem.id, fixture.identifiers[192])
+    XCTAssertEqual(lastItem.row.identity, .source(.init(kind: .item, id: fixture.identifiers[192])))
     XCTAssertEqual(lastItem.row.title, "Activity 192")
     for index in window.rowIdentities.indices {
       if case .loaded(let item) = window.presentation(at: index) {
-        XCTAssertEqual(item.id, fixture.identifiers[index + 1])
+        XCTAssertEqual(
+          item.row.identity, .source(.init(kind: .item, id: fixture.identifiers[index + 1])))
         XCTAssertFalse(item.row.globalDone == true)
       }
     }
@@ -276,7 +664,12 @@ final class SavedItemWindowTests: XCTestCase {
       XCTFail("An unloaded stale page must refresh the List's completion and header together.")
       return
     }
-    XCTAssertEqual(firstAppearance.id, fixture.membershipIdentifiers[64])
+    XCTAssertEqual(
+      firstAppearance.row.identity,
+      .appearance(
+        source: .init(kind: .item, id: fixture.identifiers[64]),
+        appearance: .listMembership(
+          listId: firstListIdentifier, membershipId: fixture.membershipIdentifiers[64])))
     XCTAssertTrue(firstAppearance.row.effectiveDone == true)
     XCTAssertFalse(firstAppearance.row.globalDone == true)
     let secondList = try await applyFixtureCommand(
@@ -315,8 +708,13 @@ final class SavedItemWindowTests: XCTestCase {
       XCTFail("The replacement List must load its own membership of the shared Item.")
       return
     }
-    XCTAssertEqual(secondAppearance.id, secondMembershipIdentifier)
-    XCTAssertNotEqual(secondAppearance.id, firstAppearance.id)
+    XCTAssertEqual(
+      secondAppearance.row.identity,
+      .appearance(
+        source: .init(kind: .item, id: fixture.identifiers[64]),
+        appearance: .listMembership(
+          listId: secondListIdentifier, membershipId: secondMembershipIdentifier)))
+    XCTAssertNotEqual(secondAppearance.row.identity, firstAppearance.row.identity)
     XCTAssertEqual(secondAppearance.row.title, "Activity 064")
     XCTAssertFalse(secondAppearance.row.effectiveDone == true)
     await window.reload(
@@ -332,7 +730,12 @@ final class SavedItemWindowTests: XCTestCase {
       XCTFail("Returning to the first List must retain that membership's local completion.")
       return
     }
-    XCTAssertEqual(revisited.id, fixture.membershipIdentifiers[64])
+    XCTAssertEqual(
+      revisited.row.identity,
+      .appearance(
+        source: .init(kind: .item, id: fixture.identifiers[64]),
+        appearance: .listMembership(
+          listId: firstListIdentifier, membershipId: fixture.membershipIdentifiers[64])))
     XCTAssertTrue(revisited.row.effectiveDone == true)
     XCTAssertFalse(revisited.row.globalDone == true)
   }
@@ -368,7 +771,12 @@ final class SavedItemWindowTests: XCTestCase {
       XCTFail("A moved visible membership must remain loaded at its refreshed position.")
       return
     }
-    XCTAssertEqual(moved.id, fixture.membershipIdentifiers[192])
+    XCTAssertEqual(
+      moved.row.identity,
+      .appearance(
+        source: .init(kind: .item, id: fixture.identifiers[192]),
+        appearance: .listMembership(
+          listId: listIdentifier, membershipId: fixture.membershipIdentifiers[192])))
     XCTAssertEqual(moved.row.title, "Activity 192")
     _ = try await applyFixtureCommand(
       .removeMembership(listId: listIdentifier, membershipId: fixture.membershipIdentifiers[0]),
@@ -394,7 +802,12 @@ final class SavedItemWindowTests: XCTestCase {
       XCTFail("A surviving visible membership must remain loaded after another is removed.")
       return
     }
-    XCTAssertEqual(surviving.id, fixture.membershipIdentifiers[191])
+    XCTAssertEqual(
+      surviving.row.identity,
+      .appearance(
+        source: .init(kind: .item, id: fixture.identifiers[191]),
+        appearance: .listMembership(
+          listId: listIdentifier, membershipId: fixture.membershipIdentifiers[191])))
     XCTAssertEqual(surviving.row.title, "Activity 191")
   }
 
@@ -430,7 +843,7 @@ final class SavedItemWindowTests: XCTestCase {
         XCTFail("Replacement queries must return their own filtered and sorted presentations.")
         return
       }
-      XCTAssertEqual(item.id, expectedIdentifiers[index])
+      XCTAssertEqual(item.row.identity, .source(.init(kind: .item, id: expectedIdentifiers[index])))
       XCTAssertEqual(item.row.title, title)
     }
     let canceledReload = Task { @MainActor in
@@ -487,7 +900,12 @@ final class SavedItemWindowTests: XCTestCase {
           XCTFail("The filtered List must load the complete matching first page in Core order.")
           return
         }
-        XCTAssertEqual(item.id, fixture.membershipIdentifiers[fixtureIndex])
+        XCTAssertEqual(
+          item.row.identity,
+          .appearance(
+            source: .init(kind: .item, id: fixture.identifiers[fixtureIndex]),
+            appearance: .listMembership(
+              listId: listIdentifier, membershipId: fixture.membershipIdentifiers[fixtureIndex])))
         XCTAssertEqual(item.row.identity, expectedIdentities[rowIndex])
         XCTAssertFalse(item.row.effectiveDone == true)
         XCTAssertFalse(item.row.archived == true)
@@ -536,7 +954,7 @@ final class SavedItemWindowTests: XCTestCase {
       XCTFail("A valid retry must show its own filtered Item rather than the prior query's page.")
       return
     }
-    XCTAssertEqual(item.id, fixture.identifiers[64])
+    XCTAssertEqual(item.row.identity, .source(.init(kind: .item, id: fixture.identifiers[64])))
     XCTAssertEqual(item.row.title, "Activity 064")
   }
 
@@ -558,7 +976,7 @@ final class SavedItemWindowTests: XCTestCase {
         XCTFail("Repeated visibility requests must leave one complete current window.")
         return
       }
-      XCTAssertEqual(item.id, fixture.identifiers[index])
+      XCTAssertEqual(item.row.identity, .source(.init(kind: .item, id: fixture.identifiers[index])))
       XCTAssertEqual(item.row.title, title)
     }
     guard case .loading = window.presentation(at: 0) else {
@@ -586,7 +1004,7 @@ final class SavedItemWindowTests: XCTestCase {
         XCTFail("A pre-canceled visibility request must not release the current presentations.")
         return
       }
-      XCTAssertEqual(item.id, fixture.identifiers[index])
+      XCTAssertEqual(item.row.identity, .source(.init(kind: .item, id: fixture.identifiers[index])))
       XCTAssertEqual(item.row.title, title)
     }
     guard case .loading = window.presentation(at: 0) else {

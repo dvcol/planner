@@ -41,28 +41,6 @@ struct SavedItineraryItem: Identifiable {
   let rowPresentation: PlannerRowPresentationContext?
 }
 
-struct SavedItineraryEntryRows: Identifiable {
-  let id: UUID
-  let source: PlannerEntityReference
-  let title: String
-  let items: [SavedItineraryItem]
-  let matchesHeader: Bool
-  let isArchived: Bool
-  let listSummary: PlannerItineraryListEntrySummary?
-}
-
-struct SavedItineraryContents {
-  let itinerary: PlannerItinerarySourceRead
-  let entries: [SavedItineraryEntryRows]
-  let matchingItemIdentifiers: Set<SavedItineraryRowSelection>
-
-  var visibleEntries: [SavedItineraryEntryRows] {
-    entries.filter { entry in
-      entry.matchesHeader || entry.items.contains { matchingItemIdentifiers.contains($0.id) }
-    }
-  }
-}
-
 struct SavedItineraryItemRow: View {
   let item: SavedItineraryItem
   let canChange: Bool
@@ -248,10 +226,11 @@ struct SavedAddItineraryEntryForm: View {
               let presentation = window.presentation(at: index)
               let hasLoadedPresentation =
                 switch presentation {
-                case .loaded: true
-                case .loading, .failed: false
+                case .loaded(let presentation)
+                where presentation.row.identity == .source(.init(kind: .item, id: identifier)): true
+                case .loading, .failed, .loaded: false
                 }
-              itemChoice(presentation, index: index)
+              itemChoice(presentation, index: index, identifier: identifier)
                 .tag(selectionTag)
                 .selectionDisabled(!hasLoadedPresentation)
                 .onScrollVisibilityChange { visible in
@@ -327,13 +306,18 @@ struct SavedAddItineraryEntryForm: View {
   }
 
   @ViewBuilder
-  private func itemChoice(_ presentation: SavedItemWindowPresentation, index: Int) -> some View {
+  private func itemChoice(_ presentation: SavedItemWindowPresentation, index: Int, identifier: UUID)
+    -> some View
+  {
     switch presentation {
-    case .loaded(let item):
+    case .loaded(let presentation)
+    where presentation.row.identity == .source(.init(kind: .item, id: identifier)):
+      let item = SavedPlannerItem(
+        id: identifier, row: presentation.row, rowPresentation: presentation.rowPresentation)
       Label(item.row.title, systemImage: "square.stack")
         .accessibilityLabel(item.row.title)
         .accessibilityIdentifier("saved.itinerary.entry.choice.item.\(item.id.uuidString)")
-    case .loading:
+    case .loading, .loaded:
       ProgressView("Loading Item")
     case .failed(let reason):
       VStack(alignment: .leading) {

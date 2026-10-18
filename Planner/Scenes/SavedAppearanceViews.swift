@@ -5,6 +5,7 @@ import SwiftUI
 struct SavedMembershipWindowRow: Identifiable {
   let id: UUID
   let index: Int
+  let identity: PlannerRowIdentity
 }
 
 struct SavedMembershipRow: View {

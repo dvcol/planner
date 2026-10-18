@@ -58,7 +58,7 @@ struct SavedItemCatalog: View {
     List(selection: $selection) {
       if let window {
         ForEach(sourceRows, id: \.identifier) { index, identifier in
-          row(window.presentation(at: index), index: index)
+          row(window.presentation(at: index), index: index, identifier: identifier)
             .onScrollVisibilityChange { visible in
               if visible {
                 visibleIdentifiers.insert(identifier)
@@ -111,9 +111,14 @@ struct SavedItemCatalog: View {
   }
 
   @ViewBuilder
-  private func row(_ presentation: SavedItemWindowPresentation, index: Int) -> some View {
+  private func row(_ presentation: SavedItemWindowPresentation, index: Int, identifier: UUID)
+    -> some View
+  {
     switch presentation {
-    case .loaded(let item):
+    case .loaded(let presentation)
+    where presentation.row.identity == .source(.init(kind: .item, id: identifier)):
+      let item = SavedPlannerItem(
+        id: identifier, row: presentation.row, rowPresentation: presentation.rowPresentation)
       let completionVerb = item.row.globalDone == true ? "undone" : "done"
       let completionLabel = "Mark \(item.row.title) \(completionVerb) everywhere"
       HStack(alignment: .top) {
@@ -147,7 +152,7 @@ struct SavedItemCatalog: View {
         .accessibilityIdentifier("saved.item.\(item.id.uuidString)")
       }
       .tag(item.id)
-    case .loading:
+    case .loading, .loaded:
       ProgressView("Loading Item")
         .selectionDisabled()
     case .failed(let reason):

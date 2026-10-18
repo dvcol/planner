@@ -136,6 +136,13 @@ private struct SavedItineraryReadInputs: Equatable {
   let revision: UUID
   let text: String
   let filters: SavedItemFilters
+  let namespace: String?
+}
+
+private struct SavedItineraryWindowRow: Identifiable {
+  let id: SavedItineraryRowSelection
+  let index: Int
+  let identity: PlannerRowIdentity
 }
 
 struct SavedItineraryPresentation {
@@ -154,8 +161,13 @@ struct SavedItineraryDetail: View {
   let isPreparingDeletion: Bool
   let isReviewingDeletion: Bool
   let prepareDeletion: (PlannerItinerarySourceRead) -> Void
-  @State private var contents: SavedItineraryContents?
-  @State private var loadingFailure: String?
+  @State private var window: SavedItemWindow?
+  @State private var windowNamespace: String?
+  @State private var windowItineraryIdentifier: UUID?
+  @State private var windowCreationFailure: String?
+  @State private var visibleRows: Set<SavedItineraryRowSelection> = []
+  @State private var scrollAnchor: SavedItineraryRowSelection?
+  @State private var pendingScrollAnchor: SavedItineraryRowSelection?
   @State private var editDraft: SavedItineraryEditDraft?
   @State private var showAddEntry = false
   @State private var showNewSchedule = false
@@ -163,7 +175,6 @@ struct SavedItineraryDetail: View {
   @State private var bulkCompletionDraft: SavedBulkCompletionDraft?
   @State private var isPreparingBulkCompletion = false
   @State private var removedSelectionMessage: String?
-  @State private var isLoading = false
   #if os(iOS)
     @State private var entryEditMode: EditMode = .inactive
   #endif
@@ -172,144 +183,82 @@ struct SavedItineraryDetail: View {
     Group {
       if let contents {
         let itinerary = contents.itinerary
-        List(selection: $selection) {
-          Section {
-            Text(itinerary.content.title).font(.title2).fontWeight(.semibold)
-              .accessibilityAddTraits(.isHeader)
-            if itinerary.state.archived == true {
-              Label("Archived Itinerary", systemImage: "archivebox").foregroundStyle(.secondary)
+        ScrollViewReader { proxy in
+          List(selection: $selection) {
+            Section {
+              Text(itinerary.content.title).font(.title2).fontWeight(.semibold)
+                .accessibilityAddTraits(.isHeader)
+              if itinerary.state.archived == true {
+                Label("Archived Itinerary", systemImage: "archivebox").foregroundStyle(.secondary)
+              }
+              if itinerary.progress.state == .empty {
+                Text("No items").foregroundStyle(.secondary)
+              } else if let done = itinerary.progress.doneCount,
+                let archived = itinerary.progress.archivedCount,
+                let total = itinerary.progress.totalCount, total > 0
+              {
+                SavedCompletionProgress(
+                  doneCount: done, archivedCount: archived, totalCount: total,
+                  accessibilityIdentifier: "saved.itinerary.progress")
+              } else {
+                Text("Progress unavailable").foregroundStyle(.secondary)
+              }
+              SavedContainerEstimates(
+                estimates: itinerary.estimates,
+                manualEstimate: itinerary.content.manualEstimate,
+                accessibilityIdentifierPrefix: "saved.itinerary.estimate")
+              let directCount = contents.entries.filter { $0.source.kind == .item }.count
+              let listCount = contents.entries.filter { $0.source.kind == .list }.count
+              Text(
+                "\(directCount) direct \(directCount == 1 ? "item" : "items") · \(listCount) \(listCount == 1 ? "list" : "lists")"
+              )
+              .font(.caption).foregroundStyle(.secondary)
+              if let total = itinerary.progress.totalCount,
+                (window?.matchingCount ?? 0) != total
+              {
+                Text("Matching \(window?.matchingCount ?? 0) of \(total) items")
+                  .font(.caption).foregroundStyle(.secondary)
+              }
             }
-            if itinerary.progress.state == .empty {
-              Text("No items").foregroundStyle(.secondary)
-            } else if let done = itinerary.progress.doneCount,
-              let archived = itinerary.progress.archivedCount,
-              let total = itinerary.progress.totalCount, total > 0
-            {
-              SavedCompletionProgress(
-                doneCount: done, archivedCount: archived, totalCount: total,
-                accessibilityIdentifier: "saved.itinerary.progress")
-            } else {
-              Text("Progress unavailable").foregroundStyle(.secondary)
+            if let notes = itinerary.content.notes, !notes.isEmpty {
+              Section("Notes") { Text(notes).textSelection(.enabled) }
             }
-            SavedContainerEstimates(
-              estimates: itinerary.estimates,
-              manualEstimate: itinerary.content.manualEstimate,
-              accessibilityIdentifierPrefix: "saved.itinerary.estimate")
-            let directCount = contents.entries.filter { $0.source.kind == .item }.count
-            let listCount = contents.entries.filter { $0.source.kind == .list }.count
-            Text(
-              "\(directCount) direct \(directCount == 1 ? "item" : "items") · \(listCount) \(listCount == 1 ? "list" : "lists")"
-            )
-            .font(.caption).foregroundStyle(.secondary)
-            if let total = itinerary.progress.totalCount,
-              Int64(contents.matchingItemIdentifiers.count) != total
-            {
-              Text("Matching \(contents.matchingItemIdentifiers.count) of \(total) items")
-                .font(.caption).foregroundStyle(.secondary)
+            ItemLabelsSection(labels: itinerary.labels)
+            ItemLocationSection(
+              title: itinerary.content.title, location: itinerary.content.location,
+              previewSource: previewSource(for: itinerary))
+            ItemLinksSection(
+              links: itinerary.content.links, sourceId: itinerary.source.id,
+              sourceLifetimeId: itinerary.sourceLifetimeId)
+            SavedSchedulesSection(
+              source: itinerary.source, references: itinerary.references, canChange: store.canCreate
+            ) { scheduleToEdit = $0 }
+            Section("Entries") {
+              if contents.visibleEntries.isEmpty && !contents.entries.isEmpty {
+                Text("No matching entries").foregroundStyle(.secondary)
+              }
+              ForEach(contents.visibleEntries) { entry in
+                itineraryEntry(entry, in: contents)
+              }
+              .onMove { offsets, destination in
+                moveEntry(from: offsets, to: destination, in: contents.visibleEntries)
+              }
             }
           }
-          if let notes = itinerary.content.notes, !notes.isEmpty {
-            Section("Notes") { Text(notes).textSelection(.enabled) }
-          }
-          ItemLabelsSection(labels: itinerary.labels)
-          ItemLocationSection(
-            title: itinerary.content.title, location: itinerary.content.location,
-            previewSource: previewSource(for: itinerary))
-          ItemLinksSection(
-            links: itinerary.content.links, sourceId: itinerary.source.id,
-            sourceLifetimeId: itinerary.sourceLifetimeId)
-          SavedSchedulesSection(
-            source: itinerary.source, references: itinerary.references, canChange: store.canCreate
-          ) { scheduleToEdit = $0 }
-          Section("Entries") {
-            if contents.visibleEntries.isEmpty && !contents.entries.isEmpty {
-              Text("No matching entries").foregroundStyle(.secondary)
+          .accessibilityIdentifier("saved.itinerary.contents")
+          .task(id: pendingScrollAnchor) {
+            guard let anchor = pendingScrollAnchor, let window,
+              let row = expandedRows.first(where: { $0.id == anchor })
+            else {
+              pendingScrollAnchor = nil
+              return
             }
-            ForEach(contents.visibleEntries) { entry in
-              let matchingItems = entry.items.filter {
-                contents.matchingItemIdentifiers.contains($0.id)
-              }
-              VStack(alignment: .leading) {
-                if entry.source.kind == .list {
-                  DisclosureGroup(
-                    isExpanded: Binding(
-                      get: { !collapsedEntries.contains(entry.id) },
-                      set: { expanded in
-                        if expanded {
-                          collapsedEntries.remove(entry.id)
-                        } else {
-                          collapsedEntries.insert(entry.id)
-                        }
-                      })
-                  ) {
-                    if matchingItems.isEmpty {
-                      Text(entry.items.isEmpty ? "No items" : "No matching items")
-                        .foregroundStyle(.secondary)
-                    } else {
-                      ForEach(matchingItems) { item in itineraryRow(item) }
-                    }
-                  } label: {
-                    VStack(alignment: .leading, spacing: 6) {
-                      Label(entry.title, systemImage: "list.bullet.rectangle")
-                        .font(.headline)
-                      if entry.isArchived {
-                        Label("Archived List", systemImage: "archivebox")
-                          .font(.caption).foregroundStyle(.secondary)
-                      }
-                      if let summary = entry.listSummary {
-                        SavedContainerEstimates(
-                          estimates: summary.estimates,
-                          manualEstimate: summary.manualEstimate,
-                          accessibilityIdentifierPrefix:
-                            "saved.itinerary.entry.estimate.\(entry.id.uuidString)")
-                      }
-                      if let summary = entry.listSummary, let done = summary.progress.doneCount,
-                        let archived = summary.progress.archivedCount,
-                        let total = summary.progress.totalCount, total > 0
-                      {
-                        SavedCompletionProgress(
-                          doneCount: done, archivedCount: archived, totalCount: total,
-                          accessibilityIdentifier: "saved.itinerary.entry.progress.\(entry.id)"
-                        )
-                        .font(.caption).foregroundStyle(.secondary)
-                      }
-                      if matchingItems.count != entry.items.count {
-                        Text("Matching \(matchingItems.count) of \(entry.items.count) items")
-                          .font(.caption).foregroundStyle(.secondary)
-                      }
-                    }
-                    .padding(.vertical, 8)
-                    .contextMenu {
-                      entryActions(entry, in: contents.entries)
-                      Divider()
-                      Group {
-                        Button("Mark all Done") {
-                          prepareBulkCompletion(
-                            .itineraryListEntry(itineraryId: identifier, listEntryId: entry.id),
-                            containerName: entry.title, done: true)
-                        }
-                        Button("Mark all Undone") {
-                          prepareBulkCompletion(
-                            .itineraryListEntry(itineraryId: identifier, listEntryId: entry.id),
-                            containerName: entry.title, done: false)
-                        }
-                      }
-                      .disabled(
-                        !store.canCreate || isPreparingBulkCompletion || entry.items.isEmpty)
-                    }
-                  }
-                } else if let item = matchingItems.first {
-                  itineraryRow(item)
-                    .contextMenu { entryActions(entry, in: contents.entries) }
-                }
-              }
-              .accessibilityElement(children: .contain)
-              .accessibilityIdentifier("saved.itinerary.entry.\(entry.id.uuidString)")
-              .moveDisabled(!canReorderEntries)
-            }
-            .onMove { offsets, destination in
-              moveEntry(from: offsets, to: destination, in: contents.visibleEntries)
-            }
+            await window.requestRows(at: [row.index])
+            guard !Task.isCancelled, pendingScrollAnchor == anchor, self.window === window,
+              window.state == .ready, expandedRows.contains(where: { $0.id == anchor })
+            else { return }
+            proxy.scrollTo(anchor, anchor: .center)
+            pendingScrollAnchor = nil
           }
         }
         #if os(iOS)
@@ -338,20 +287,20 @@ struct SavedItineraryDetail: View {
                 .accessibilityLabel("Reorder entries")
                 .accessibilityIdentifier("saved.itinerary.reorder")
                 .disabled(
-                  !store.canCreate || isPreparingBulkCompletion
+                  !store.canCreate || isLoading || isPreparingBulkCompletion
                     || (contents.entries.count < 2 && !entryEditMode.isEditing))
             }
           #endif
           ToolbarItem(placement: .primaryAction) {
             Button("Add entry", systemImage: "plus") { showAddEntry = true }
-              .disabled(!store.canCreate)
+              .disabled(!store.canCreate || isLoading)
               .accessibilityIdentifier("saved.itinerary.entry.new")
           }
           ToolbarItem(placement: .primaryAction) {
             Button("Edit Itinerary", systemImage: "pencil") {
               editDraft = .init(itinerary: itinerary)
             }
-            .disabled(!store.canCreate)
+            .disabled(!store.canCreate || isLoading)
             .accessibilityIdentifier("saved.itinerary.edit")
           }
           ToolbarItem(placement: .primaryAction) {
@@ -384,7 +333,9 @@ struct SavedItineraryDetail: View {
             } label: {
               Label("Itinerary actions", systemImage: "ellipsis")
             }
-            .disabled(!store.canCreate || isPreparingBulkCompletion || isPreparingDeletion)
+            .disabled(
+              !store.canCreate || isLoading || isPreparingBulkCompletion || isPreparingDeletion
+            )
             .help("Itinerary actions")
             .accessibilityIdentifier("saved.itinerary.actions")
           }
@@ -402,6 +353,13 @@ struct SavedItineraryDetail: View {
       }
     }
     .task(id: readInputs) { await loadItinerary() }
+    .task(id: visibleRows) { await requestVisibleRows() }
+    .task(id: collapsedEntries) { await requestVisibleRows() }
+    .onDisappear {
+      // Compact navigation needs the parent row identities while its Item detail is open.
+      if selection == nil { window?.cancel() }
+      visibleRows = []
+    }
     .onChange(of: isReviewingDeletion) {
       if !isReviewingDeletion { Task { await loadItinerary() } }
     }
@@ -455,6 +413,163 @@ struct SavedItineraryDetail: View {
     }
   }
 
+  private var contents: SavedItineraryWindowMetadata? {
+    guard let window, windowNamespace == store.devicePreferenceNamespace,
+      let metadata = window.itineraryMetadata, metadata.itinerary.source.id == identifier
+    else { return nil }
+    if case .failed = window.state { return nil }
+    return metadata
+  }
+
+  private var isLoading: Bool { window?.state == .loading }
+
+  private var loadingFailure: String? {
+    if let window, case .failed(let message) = window.state { return message }
+    return windowCreationFailure
+  }
+
+  private func rows(in entry: SavedItineraryWindowEntry) -> [SavedItineraryWindowRow] {
+    guard let window else { return [] }
+    return entry.matchingRowIndices.compactMap { index in
+      guard window.rowIdentities.indices.contains(index),
+        case .appearance(_, let appearance) = window.rowIdentities[index],
+        let selection = SavedItineraryRowSelection(appearance, itineraryId: identifier)
+      else { return nil }
+      return .init(id: selection, index: index, identity: window.rowIdentities[index])
+    }
+  }
+
+  private var expandedRows: [SavedItineraryWindowRow] {
+    (contents?.visibleEntries ?? []).flatMap { entry -> [SavedItineraryWindowRow] in
+      if entry.source.kind == .list && collapsedEntries.contains(entry.id) { return [] }
+      return rows(in: entry)
+    }
+  }
+
+  @ViewBuilder
+  private func itineraryEntry(
+    _ entry: SavedItineraryWindowEntry, in contents: SavedItineraryWindowMetadata
+  ) -> some View {
+    let matchingRows = rows(in: entry)
+    Group {
+      if let list = entry.list {
+        DisclosureGroup(
+          isExpanded: Binding(
+            get: { !collapsedEntries.contains(entry.id) },
+            set: { expanded in
+              if expanded {
+                collapsedEntries.remove(entry.id)
+              } else {
+                collapsedEntries.insert(entry.id)
+              }
+            })
+        ) {
+          if matchingRows.isEmpty {
+            Text(entry.rowIdentities.isEmpty ? "No items" : "No matching items")
+              .foregroundStyle(.secondary)
+          } else {
+            ForEach(matchingRows) { row in
+              windowedItineraryRow(row).moveDisabled(true)
+            }
+          }
+        } label: {
+          VStack(alignment: .leading, spacing: 6) {
+            Label(list.content.name, systemImage: "list.bullet.rectangle")
+              .font(.headline)
+            if list.state.archived == true {
+              Label("Archived List", systemImage: "archivebox")
+                .font(.caption).foregroundStyle(.secondary)
+            }
+            if let summary = entry.listSummary {
+              SavedContainerEstimates(
+                estimates: summary.estimates, manualEstimate: summary.manualEstimate,
+                accessibilityIdentifierPrefix:
+                  "saved.itinerary.entry.estimate.\(entry.id.uuidString)")
+              if let done = summary.progress.doneCount,
+                let archived = summary.progress.archivedCount,
+                let total = summary.progress.totalCount, total > 0
+              {
+                SavedCompletionProgress(
+                  doneCount: done, archivedCount: archived, totalCount: total,
+                  accessibilityIdentifier: "saved.itinerary.entry.progress.\(entry.id)"
+                ).font(.caption).foregroundStyle(.secondary)
+              }
+            }
+            if matchingRows.count != entry.rowIdentities.count {
+              Text("Matching \(matchingRows.count) of \(entry.rowIdentities.count) items")
+                .font(.caption).foregroundStyle(.secondary)
+            }
+          }
+          .padding(.vertical, 8)
+          .contextMenu {
+            entryActions(entry, in: contents.entries)
+            Divider()
+            Group {
+              Button("Mark all Done") {
+                prepareBulkCompletion(
+                  .itineraryListEntry(itineraryId: identifier, listEntryId: entry.id),
+                  containerName: list.content.name, done: true)
+              }
+              Button("Mark all Undone") {
+                prepareBulkCompletion(
+                  .itineraryListEntry(itineraryId: identifier, listEntryId: entry.id),
+                  containerName: list.content.name, done: false)
+              }
+            }
+            .disabled(
+              !store.canCreate || isLoading || isPreparingBulkCompletion
+                || entry.rowIdentities.isEmpty)
+          }
+        }
+      } else if let row = matchingRows.first {
+        windowedItineraryRow(row)
+          .contextMenu { entryActions(entry, in: contents.entries) }
+      }
+    }
+    .accessibilityElement(children: .contain)
+    .accessibilityIdentifier("saved.itinerary.entry.\(entry.id.uuidString)")
+    .moveDisabled(!canReorderEntries)
+  }
+
+  @ViewBuilder
+  private func windowedItineraryRow(_ row: SavedItineraryWindowRow) -> some View {
+    if let window {
+      Group {
+        switch window.presentation(at: row.index) {
+        case .loaded(let presentation) where presentation.row.identity == row.identity:
+          itineraryRow(
+            .init(id: row.id, row: presentation.row, rowPresentation: presentation.rowPresentation))
+        case .loading, .loaded:
+          ProgressView("Loading Item").selectionDisabled().moveDisabled(true)
+        case .failed(let message):
+          VStack(alignment: .leading) {
+            Text(message).foregroundStyle(.secondary)
+            Button("Try Again") { Task { await window.requestRows(at: [row.index]) } }
+          }
+          .selectionDisabled().moveDisabled(true)
+        }
+      }
+      .id(row.id)
+      .onScrollVisibilityChange { visible in
+        if visible {
+          visibleRows.insert(row.id)
+        } else {
+          visibleRows.remove(row.id)
+        }
+        guard window.state == .ready,
+          let first = expandedRows.first(where: { visibleRows.contains($0.id) })
+        else { return }
+        scrollAnchor = first.id
+      }
+    }
+  }
+
+  private func requestVisibleRows() async {
+    guard let window, window.state == .ready else { return }
+    let indices = Set(expandedRows.filter { visibleRows.contains($0.id) }.map(\.index))
+    await window.requestRows(at: indices)
+  }
+
   private var alertDescription: String {
     let description = removedSelectionMessage ?? store.alertMessage ?? ""
     guard removedSelectionMessage != nil && store.recoveryBlocked else { return description }
@@ -464,7 +579,8 @@ struct SavedItineraryDetail: View {
 
   private var readInputs: SavedItineraryReadInputs {
     .init(
-      identifier: identifier, revision: store.changeRevision, text: searchText, filters: filters)
+      identifier: identifier, revision: store.changeRevision, text: searchText, filters: filters,
+      namespace: store.devicePreferenceNamespace)
   }
 
   private func previewSource(for itinerary: PlannerItinerarySourceRead) -> PlannerPreviewSource? {
@@ -475,7 +591,8 @@ struct SavedItineraryDetail: View {
   }
 
   private func itineraryRow(_ item: SavedItineraryItem) -> some View {
-    SavedItineraryItemRow(item: item, canChange: store.canCreate) {
+    SavedItineraryItemRow(item: item, canChange: store.canCreate && !isLoading) {
+      scrollAnchor = item.id
       Task {
         _ = await store.setAppearanceCompletion(
           item.id.appearance(itineraryId: identifier), done: item.row.effectiveDone != true)
@@ -485,7 +602,7 @@ struct SavedItineraryDetail: View {
   }
 
   private func entryActions(
-    _ entry: SavedItineraryEntryRows, in entries: [SavedItineraryEntryRows]
+    _ entry: SavedItineraryWindowEntry, in entries: [SavedItineraryWindowEntry]
   ) -> some View {
     Group {
       Button("Move to Beginning") {
@@ -505,10 +622,10 @@ struct SavedItineraryDetail: View {
       Divider()
       Button("Remove from Itinerary", role: .destructive) { removeEntry(entry) }
     }
-    .disabled(!store.canCreate || isPreparingBulkCompletion)
+    .disabled(!store.canCreate || isLoading || isPreparingBulkCompletion)
   }
 
-  private func removeEntry(_ entry: SavedItineraryEntryRows) {
+  private func removeEntry(_ entry: SavedItineraryWindowEntry) {
     Task {
       guard await store.removeItineraryEntry(entry.id, itineraryIdentifier: identifier),
         let selection
@@ -531,7 +648,7 @@ struct SavedItineraryDetail: View {
   }
 
   private var canReorderEntries: Bool {
-    guard store.canCreate, !isPreparingBulkCompletion else { return false }
+    guard store.canCreate, !isLoading, !isPreparingBulkCompletion else { return false }
     #if os(iOS)
       return entryEditMode.isEditing
     #else
@@ -540,7 +657,7 @@ struct SavedItineraryDetail: View {
   }
 
   private func moveEntry(
-    from offsets: IndexSet, to destination: Int, in entries: [SavedItineraryEntryRows]
+    from offsets: IndexSet, to destination: Int, in entries: [SavedItineraryWindowEntry]
   ) {
     guard canReorderEntries else { return }
     guard offsets.count == 1, let source = offsets.first, entries.indices.contains(source),
@@ -577,23 +694,50 @@ struct SavedItineraryDetail: View {
   }
 
   private func loadItinerary() async {
-    guard !isReviewingDeletion else { return }
-    loadingFailure = nil
-    isLoading = true
+    guard !Task.isCancelled, !isReviewingDeletion else { return }
     let inputs = readInputs
-    let loaded = await store.readItineraryContents(
-      inputs.identifier, text: inputs.text, filters: inputs.filters)
-    /** Column transitions can cancel a completed read while retaining this detail's state. */
-    guard !isReviewingDeletion, readInputs == inputs else { return }
-    isLoading = false
-    if let loaded {
-      contents = loaded
-    } else {
-      contents = nil
-      loadingFailure = store.alertMessage ?? "Planner could not open this Itinerary."
-      store.alertMessage = nil
+    windowCreationFailure = nil
+    guard let namespace = inputs.namespace else {
+      window?.cancel()
+      return
+    }
+    if windowNamespace != namespace || windowItineraryIdentifier != inputs.identifier {
+      visibleRows = []
+      scrollAnchor = nil
+      pendingScrollAnchor = nil
+    }
+    if window == nil || windowNamespace != namespace {
+      window?.cancel()
+      window = store.makeItemWindow()
+      windowNamespace = namespace
+    }
+    windowItineraryIdentifier = inputs.identifier
+    guard let window else {
+      windowCreationFailure = "Planner could not open this Itinerary. Try again."
+      return
+    }
+    let previousScrollAnchor = scrollAnchor
+    await window.reload(
+      query: .init(
+        scope: .itinerary(inputs.identifier), text: inputs.text,
+        completion: inputs.filters.completion.queryValue,
+        archive: inputs.filters.archive.queryValue,
+        categories: inputs.filters.categoryQuery, tags: inputs.filters.tagQuery,
+        lists: inputs.filters.listQuery, hasAddress: inputs.filters.hasAddress,
+        hasLinks: inputs.filters.hasLinks, scheduled: inputs.filters.scheduled,
+        sort: .init(mode: .manual)),
+      identity: .init(namespace: namespace, savedRevision: inputs.revision))
+    guard !Task.isCancelled, readInputs == inputs, !isReviewingDeletion, self.window === window,
+      window.state == .ready
+    else { return }
+    if !visibleRows.isEmpty { await requestVisibleRows() }
+    if let previousScrollAnchor,
+      expandedRows.contains(where: { $0.id == previousScrollAnchor })
+    {
+      pendingScrollAnchor = previousScrollAnchor
     }
   }
+
 }
 
 private struct SavedItineraryForm: View {
