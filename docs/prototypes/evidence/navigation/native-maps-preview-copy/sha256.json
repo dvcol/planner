@@ -1,8 +1,14 @@
 {
   "context.json": "1a1a491d71f5500c8732a5c5c3cad929e575820aa189b6f656f2b6a7e1f13f24",
+  "final-lint.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+  "final-source-sha256.json": "e35709ea4a0e2b4a643ea45fece0525b9919f4b6c6fbb5c1bf91727b39019f97",
+  "final-validation.json": "8ee1b418a2d6c92b4e88d7cc93bee30c1bcae8ee814d82faee331e92c930ecef",
   "focused-test.log.gz": "3e7d5b6410ed5d26cf69c1f99bd32d28ba0f57cd78ba97b9d4f164a87084eb11",
   "lint.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+  "native-evidence-sha256.json": "466500a339b20525e1bc278a4ce3d7621e32671ff495394e1f431d76c9cd8523",
+  "native-results.json": "87e82a2d5359823106f514b93566ae5b220c8188cd1c8d5dc4fb2c39c9d2db29",
   "results.json": "8c54e483a98447fb6a5ea66e381c339df09bcc24376319d4b1bb10b3ca5ba7d3",
   "sandbox-test-attempt.log.gz": "e4615b595b22cb2f654bde8be15324598d1be9c95c960793c0ae35263702803e",
-  "source-sha256.json": "d1ffd627f67888a3d2718e66db185be3baa7092791df48957b07ceab87ac19ef"
+  "source-sha256.json": "d1ffd627f67888a3d2718e66db185be3baa7092791df48957b07ceab87ac19ef",
+  "visual-review.json": "3ed55b16ae1f32bd303aa0b7b729e7bdfa66c49ca953fc80ed11c71f0ee6c2c0"
 }

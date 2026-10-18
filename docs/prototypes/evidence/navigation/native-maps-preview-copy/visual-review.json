@@ -1,0 +1,14 @@
+[
+  {
+    "path": "docs/prototypes/evidence/navigation/native-scene-appearance/phone-maps-wording-qualified-dark/32F2DC6E-C9C9-4A6A-8182-BC68E25DFFED.png",
+    "sha256": "0ba8684edbf467792e4a10828cceb262571ce6f9239e0c8e94b2311c28ae2780",
+    "observed": "Native dark MapKit card with search-location pin. New warning begins below attribution, but part of the caption lies under the floating bottom tabs at this captured scroll position. The passing journey subsequently reaches the retained bookmark; this image does not prove full caption readability.",
+    "originalCapture": true
+  },
+  {
+    "path": "docs/prototypes/evidence/navigation/native-scene-appearance/tablet-maps-wording-qualified-light/3710F455-19CA-4A4B-8CAA-11C1AEF553ED.png",
+    "sha256": "aa70db8e87e63c87853cfbd49a5658273234a9517d31a4ae694a9cd281e31fea",
+    "observed": "Native light MapKit card in the selected detail pane, with the revised search-link warning. Main navigation uses sidebar/panes without a floating top tab tier.",
+    "originalCapture": true
+  }
+]

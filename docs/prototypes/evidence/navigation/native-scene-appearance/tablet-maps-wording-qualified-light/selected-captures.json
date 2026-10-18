@@ -1,0 +1,12 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "3710F455-19CA-4A4B-8CAA-11C1AEF553ED.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved Google Maps search location uses the native map_0_21673B06-3A1B-4B1C-B687-6CE9574BBC8C.png",
+    "timestamp": 1792306155.105,
+    "testIdentifier": "SavedCaptureJourneyTests/testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch()"
+  }
+]

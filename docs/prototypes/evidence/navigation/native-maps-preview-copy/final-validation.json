@@ -1,0 +1,27 @@
+{
+  "strictSwiftLint": {
+    "command": [
+      "xcrun",
+      "swift-format",
+      "lint",
+      "--strict",
+      "Packages/PlannerCore/Sources/PlannerCore/PlannerCaptureLookup.swift",
+      "Packages/PlannerCore/Tests/PlannerCoreTests/MapsLinkPreviewResolverTests.swift",
+      "PlannerNavigationUITests/SavedCaptureJourneyTests.swift"
+    ],
+    "exitCode": 0
+  },
+  "mobileCompilation": 0,
+  "macCompilation": 0,
+  "phoneDarkNativeJourneys": {
+    "passed": 2,
+    "durationSeconds": 101.329
+  },
+  "tabletLightNativeJourneys": {
+    "passed": 2,
+    "durationSeconds": 145.387
+  },
+  "macNativeRuntimeCredit": false,
+  "physicalOrSigningCredit": false,
+  "sourceAndProductsStableDuringRuntimes": true
+}

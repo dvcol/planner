@@ -1,0 +1,12 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "32F2DC6E-C9C9-4A6A-8182-BC68E25DFFED.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Saved Google Maps search location uses the native map_0_F099020E-96F9-4024-9987-5E841D92AB4A.png",
+    "timestamp": 1792305973.669,
+    "testIdentifier": "SavedCaptureJourneyTests/testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch()"
+  }
+]

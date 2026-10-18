@@ -1,0 +1,50 @@
+[
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-scene-appearance/maps-copy-qualified-mobile-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-scene-appearance/maps-copy-expectation-qualified-mobile-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-scene-appearance/maps-copy-final-mobile-build",
+    "exitCode": 0,
+    "runtimeCredit": false
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-scene-appearance/phone-maps-wording-dark",
+    "exitCode": 65,
+    "bundle": "/private/tmp/PlannerSceneAppearanceRuntime-phone-maps-wording-dark.xcresult",
+    "literalTests": [
+      "Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch]' failed (24.987 seconds)."
+    ],
+    "classification": "The changed wording exposed a UI expectation missed by the initial copy update. Map presence had passed; old warning expectation failed. Fixed in both Apple and Google journeys, then requalified."
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-scene-appearance/phone-maps-wording-qualified-dark",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerSceneAppearanceRuntime-phone-maps-wording-qualified-dark.xcresult",
+    "literalTests": [
+      "Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testAppleMapsPreviewYieldsToAnOwnedAddressWithoutChangingTheBookmark]' passed (52.903 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch]' passed (48.426 seconds)."
+    ]
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-scene-appearance/tablet-maps-wording-qualified-light",
+    "exitCode": 0,
+    "bundle": "/private/tmp/PlannerSceneAppearanceRuntime-tablet-maps-wording-qualified-light.xcresult",
+    "literalTests": [
+      "Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testAppleMapsPreviewYieldsToAnOwnedAddressWithoutChangingTheBookmark]' passed (103.286 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testGoogleMapsCaptureShowsATemporarySavedMapAndRetainsItsBookmarkAfterRelaunch]' passed (42.101 seconds)."
+    ]
+  },
+  {
+    "packet": "docs/prototypes/evidence/navigation/native-scene-appearance/maps-copy-final-mac-build",
+    "exitCode": 0,
+    "runtimeCredit": false,
+    "classification": "compiler evidence only; local ad hoc signing, no developer account configuration"
+  }
+]
