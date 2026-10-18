@@ -241,7 +241,18 @@ import XCTest
     }
 
     private func openItinerary(_ application: XCUIApplication) {
-      application.openPlannerSection("Itineraries")
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        let section = application.plannerElement("saved.section.itineraries")
+        if !section.waitForExistence(timeout: 2) {
+          let sidebar = application.buttons["Show Sidebar"].firstMatch
+          XCTAssertTrue(sidebar.waitForExistence(timeout: 10))
+          sidebar.activateForPlannerJourney()
+        }
+        XCTAssertTrue(section.waitForExistence(timeout: 10))
+        section.activateForPlannerJourney()
+      } else {
+        application.openPlannerSection("Itineraries")
+      }
       let itinerary = application.buttons.matching(
         NSPredicate(
           format: "identifier BEGINSWITH %@ AND label == %@", "saved.itinerary.row.", "Picker Route"

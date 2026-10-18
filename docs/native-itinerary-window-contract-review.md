@@ -4,7 +4,7 @@ Status: proposed for Q98. No tests or implementation at the expanded interface a
 
 ## Context and starting state
 
-Standalone Lists now use `SavedItemWindow`. It retains complete typed identities and full List metadata while loading only first-page, visible and neighboring row presentations. Its native integration has qualified phone and iPad multi-page traversal. Ordinary action qualification is still in progress.
+Standalone Lists now use `SavedItemWindow`. It retains complete typed identities and full List metadata while loading only first-page, visible and neighboring row presentations. Its native integration has qualified phone and iPad multi-page traversal and selected ordinary actions. The standalone List and itinerary Item pickers now also adopt this unchanged loader; their separate List-choice catalogs remain eager.
 
 Itineraries still use `SavedPlannerStore.readItineraryContents`. That reader hydrates every filtered appearance to discover matching identities, then every unfiltered appearance to assemble entries. It also hydrates the matching List catalog for header matching. A nested List's children are built together inside one outer native row. Lazy outer List rendering therefore does not establish individual child-row laziness.
 
@@ -32,7 +32,7 @@ The proposed view-facing interface is:
 - Optional itinerary metadata containing its source, complete ordered entry descriptors and full child appearance identities/counts per entry. A List descriptor includes its live source header, contextual summary and header-match result. Descriptors contain no complete child-presentation arrays.
 - Presentation lookup and visible requests use the complete matching appearance sequence. Entry descriptors map their children to that sequence without treating a page-relative index as saved route order.
 
-Items/Inbox and standalone List callers and their existing real-Core tests must migrate to the typed loaded-row output. Their query defaults, row identities, selection, retention and action scopes remain unchanged. The two Item pickers are separate adoption work.
+Items/Inbox, standalone List contents and both Item picker callers must migrate to the typed loaded-row output. Their existing real-Core and native UI tests must retain their behavior assertions. Query defaults, row identities, selection, retention and action scopes remain unchanged. The itinerary picker must retain its complete String selection identities while deriving the saved Item UUID from the typed source. The separate List-choice catalogs remain outside this proposal.
 
 ## Coherence and failure rules
 
@@ -51,7 +51,7 @@ The pending decision confirms this expanded production interface and its existin
 
 After confirmation, work one failing behavior at a time:
 
-- Migrate existing Item/Inbox/List tests to the typed presentation output without dropping behavior assertions.
+- Migrate existing Item/Inbox/List tests to the typed presentation output without dropping behavior assertions, and requalify both Item pickers with offscreen selection and the existing mixed Item/List journey.
 - Open a repeated-entry itinerary with more than 64 children. Verify complete literal identities and route order, first-page hydration, full metadata and independent contextual summaries.
 - Cross, release and revisit pages, preserving composite appearance identity and local/global completion precedence across repeated direct and List entries.
 - Cover empty itineraries, empty Lists, header-only matches, child-only matches and cumulative filters. Full progress/estimates must stay independent of the matching pages.
@@ -68,7 +68,7 @@ Native runtime evidence must identify its actual platform. Mac compilation suppl
 
 ## Review alternatives
 
-A extends the shared loader and changes its loaded-row output as described above. It centralizes paging and coherence but requires requalifying the existing Item/Inbox/List clients.
+A extends the shared loader and changes its loaded-row output as described above. It centralizes paging and coherence but requires requalifying the existing Item/Inbox/List clients and both Item pickers.
 
 B keeps those clients unchanged and adds a dedicated app-internal itinerary window with the same typed output, hierarchy/coherence rules and real-Core/native test boundaries. It limits changes to existing clients but duplicates paging, cancellation and retention behavior that must remain consistent.
 
