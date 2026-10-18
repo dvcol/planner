@@ -1,0 +1,11 @@
+{
+  "affectedMarkdown": [
+    "docs/prototypes/native-association-text-undo.md"
+  ],
+  "markdownlintExitCode": 0,
+  "gitDiffCheckExitCode": 0,
+  "productionChanged": false,
+  "testSourceChanged": false,
+  "newBuildRequired": false,
+  "sourceManifestComparison": "validation.json"
+}

@@ -1,0 +1,16 @@
+{
+  "sourceCommit": "ae8c8c637b21c4b8fcdefb249b60a5ffc1d432d6",
+  "compiledAndCurrentInputsMatch": true,
+  "recordedInputs": 484,
+  "productionSwiftInputs": 149,
+  "workspaceSourceMismatches": [],
+  "exitCode": 65,
+  "actualTestFunctionsStarted": 0,
+  "summaryTotalEntries": 1,
+  "summaryFailedEntries": 1,
+  "summaryElapsedSeconds": 71.489,
+  "failure": "Timed out while enabling automation mode.",
+  "runtimeQualification": false,
+  "signingConfigurationChanged": false,
+  "separateValidSigningIdentityCount": 0
+}

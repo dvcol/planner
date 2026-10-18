@@ -54,3 +54,11 @@ Phone form content passes behind the floating removal action and tabs in these c
 ## Remaining acceptance
 
 This proves the represented mobile workflow using actual system text Undo and the explicit association action. It does not prove standard Mac Edit Undo registration after text-editor dismissal, per-window isolation, asynchronous queue/retry outcomes or all native editing controls. Q108 remains a separate proposed test boundary. Actual Mac runtime, physical devices, signing and final whole-app review retain their existing gates. No association Redo or owned-association/Move semantics are added.
+
+## Current Mac retry
+
+On 19 October 2026, the existing `SavedAppearanceJourneyTests.testNativeUndoRestoresRemovedMembershipIdentityAndLocalCompletion` journey was retried against source commit `ae8c8c63` and the final local ad hoc Mac build. That Mac branch includes text Undo and another-window isolation. The compiled and current source manifests match across all 484 recorded inputs.
+
+The invocation exits 65 after 71.489 seconds, before any actual test function starts. XCTest reports "Timed out while enabling automation mode." Its summary records one failed runner entry; that is not an executed behavior test. The [runtime record](evidence/navigation/native-itinerary-window-compatibility/mac-current-association-undo/test-summary.json) and [validation](evidence/navigation/native-itinerary-window-compatibility/mac-current-association-undo/validation.json) retain the failed result and zero-start count. It supplies no Mac text/window or per-window qualification.
+
+A separate read-only signing inventory still reports zero valid identities. This retry changes no account, team or signing configuration, and does not establish signing as the cause of the automation failure. The passing phone/iPad results above retain their original scope. Q108, Q109 and Q110 remain unanswered.
