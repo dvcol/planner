@@ -6,6 +6,241 @@ import XCTest
 
 @MainActor
 final class SavedItemWindowTests: XCTestCase {
+  func testListCatalogOpensOnePageAndKeepsCompleteSourceIdentitiesAndEstimates() async throws {
+    let fixture = try await makeFixture(itemCount: 0)
+    var expectedSources: [PlannerEntityReference] = []
+    for index in 0..<193 {
+      let result = try await applyFixtureCommand(
+        .createList(content: .init(name: String(format: "Plan %03d", index))), fixture: fixture)
+      expectedSources.append(try XCTUnwrap(result.generated.first))
+    }
+    let window = SavedItemWindow(planner: fixture.planner, session: fixture.session)
+    await window.reload(
+      catalogQuery: .init(sourceKind: .list),
+      identity: .init(namespace: "list-catalog", savedRevision: UUID()))
+    XCTAssertEqual(window.state, .ready)
+    XCTAssertEqual(window.matchingCount, 193)
+    XCTAssertEqual(window.rowIdentities, expectedSources.map { .source($0) })
+    XCTAssertNil(window.listSource)
+    XCTAssertNil(window.itineraryMetadata)
+    for (index, expectedTitle) in [(0, "Plan 000"), (63, "Plan 063")] {
+      guard case .loaded(let presentation) = window.presentation(at: index) else {
+        XCTFail("The first catalog page must load before becoming ready.")
+        return
+      }
+      XCTAssertEqual(presentation.row.identity, .source(expectedSources[index]))
+      XCTAssertEqual(presentation.row.title, expectedTitle)
+      XCTAssertEqual(presentation.row.archived, false)
+      XCTAssertEqual(presentation.row.containerEstimates?.fullEstimate, .exact(minutes: 0))
+    }
+    guard case .loading = window.presentation(at: 64) else {
+      XCTFail("The container catalog must retain only its initial page.")
+      return
+    }
+    await window.requestRows(at: [128, 192])
+    for index in [64, 128, 192] {
+      guard case .loaded(let presentation) = window.presentation(at: index) else {
+        XCTFail("Visible catalog pages and their neighbor must load.")
+        return
+      }
+      XCTAssertEqual(presentation.row.identity, .source(expectedSources[index]))
+    }
+    guard case .loading = window.presentation(at: 0) else {
+      XCTFail("Distant container presentations must be released.")
+      return
+    }
+    await window.requestRows(at: [0])
+    guard case .loaded(let revisited) = window.presentation(at: 0),
+      case .loading = window.presentation(at: 192)
+    else {
+      XCTFail("Revisiting a catalog must load its original identities and release distant pages.")
+      return
+    }
+    XCTAssertEqual(revisited.row.identity, .source(expectedSources[0]))
+    XCTAssertEqual(window.rowIdentities, expectedSources.map { .source($0) })
+  }
+
+  func testItineraryCatalogKeepsItsQueryDuringStaleRefreshAndClearsPriorListMetadata()
+    async throws
+  {
+    let fixture = try await makeFixture(itemCount: 1, listName: "Source List")
+    var createdSources: [PlannerEntityReference] = []
+    for index in (0..<65).reversed() {
+      let created = try await applyFixtureCommand(
+        .createItinerary(
+          content: .init(
+            title: String(format: "Route %03d", index),
+            manualEstimate: .init(minutes: Int64(index + 1), displayUnit: .minute))),
+        fixture: fixture)
+      createdSources.append(try XCTUnwrap(created.generated.first))
+    }
+    let window = SavedItemWindow(planner: fixture.planner, session: fixture.session)
+    await window.reload(
+      query: .init(scope: .list(try XCTUnwrap(fixture.listIdentifier))),
+      identity: .init(namespace: "containers", savedRevision: UUID()))
+    XCTAssertNotNil(window.listSource)
+    let expectedSources = Array(createdSources.reversed())
+    await window.reload(
+      catalogQuery: .init(sourceKind: .itinerary),
+      identity: .init(namespace: "containers", savedRevision: UUID()))
+    XCTAssertEqual(window.state, .ready)
+    XCTAssertNil(window.listSource)
+    XCTAssertNil(window.itineraryMetadata)
+    XCTAssertEqual(window.rowIdentities, expectedSources.map { .source($0) })
+    _ = try await applyFixtureCommand(
+      .setArchive(source: expectedSources[0], archived: true), fixture: fixture)
+    await window.requestRows(at: [64])
+    XCTAssertEqual(window.state, .ready)
+    XCTAssertEqual(window.matchingCount, 64)
+    XCTAssertEqual(window.rowIdentities, expectedSources.dropFirst().map { .source($0) })
+    guard case .loaded(let first) = window.presentation(at: 0) else {
+      XCTFail("A stale catalog must refresh its original kind, archive policy and first page.")
+      return
+    }
+    XCTAssertEqual(first.row.title, "Route 001")
+    XCTAssertEqual(first.row.containerEstimates?.fullEstimate, .exact(minutes: 2))
+    let examples: [(PlannerCatalogQuery.Sort, [PlannerEntityReference])] = [
+      (.init(mode: .created), Array(createdSources.dropLast())),
+      (.init(mode: .lastUpdated, direction: .descending), Array(expectedSources.dropFirst())),
+      (.init(mode: .fullEstimate), Array(expectedSources.dropFirst())),
+      (.init(mode: .title, direction: .descending), Array(createdSources.dropLast())),
+    ]
+    for (sort, expected) in examples {
+      await window.reload(
+        catalogQuery: .init(sourceKind: .itinerary, sort: sort),
+        identity: .init(namespace: "sorted-containers", savedRevision: UUID()))
+      XCTAssertEqual(window.state, .ready)
+      XCTAssertEqual(window.rowIdentities, expected.map { .source($0) })
+    }
+    await window.reload(
+      catalogQuery: .init(sourceKind: .itinerary, text: "routé 000", archive: .archived),
+      identity: .init(namespace: "archived-containers", savedRevision: UUID()))
+    XCTAssertEqual(window.rowIdentities, [.source(expectedSources[0])])
+    await window.reload(
+      catalogQuery: .init(sourceKind: .itinerary, text: "No match", archive: .all),
+      identity: .init(namespace: "empty-containers", savedRevision: UUID()))
+    XCTAssertEqual(window.state, .ready)
+    XCTAssertEqual(window.matchingCount, 0)
+    XCTAssertTrue(window.rowIdentities.isEmpty)
+    await window.reload(
+      catalogQuery: .init(sourceKind: .item),
+      identity: .init(namespace: "unsupported-containers", savedRevision: UUID()))
+    guard case .failed = window.state else {
+      XCTFail("Unsupported catalog kinds must not become empty successful catalogs.")
+      return
+    }
+    window.cancel()
+    XCTAssertEqual(window.state, .idle)
+    XCTAssertTrue(window.rowIdentities.isEmpty)
+  }
+
+  func testItineraryRefreshKeepsRepeatedContextsThroughRouteMembershipAndSourceChanges()
+    async throws
+  {
+    let fixture = try await makeFixture(itemCount: 65, listName: "Original activities")
+    let listIdentifier = try XCTUnwrap(fixture.listIdentifier)
+    let list = PlannerEntityReference(kind: .list, id: listIdentifier)
+    let directSource = PlannerEntityReference(kind: .item, id: fixture.identifiers[0])
+    let itinerary = try await createItinerary(
+      title: "Changing route", sources: [list, list, directSource], fixture: fixture)
+    let firstListEntry = itinerary.entryIdentifiers[0]
+    let secondListEntry = itinerary.entryIdentifiers[1]
+    let directEntry = itinerary.entryIdentifiers[2]
+    _ = try await applyFixtureCommand(
+      .setCompletion(
+        scope: .appearance(
+          .expandedListItem(
+            itineraryId: itinerary.source.id, listEntryId: firstListEntry,
+            membershipId: fixture.membershipIdentifiers[64])), done: true), fixture: fixture)
+    let window = SavedItemWindow(planner: fixture.planner, session: fixture.session)
+    await window.reload(
+      query: .init(
+        scope: .itinerary(itinerary.source.id), completion: .all, archive: .all,
+        sort: .init(mode: .manual)),
+      identity: .init(namespace: "changing-itinerary", savedRevision: UUID()))
+    _ = try await applyFixtureCommand(
+      .reorderItineraryEntry(
+        itineraryId: itinerary.source.id, entryId: secondListEntry, placement: .first),
+      fixture: fixture)
+    await window.requestRows(at: [130])
+    XCTAssertEqual(window.state, .ready)
+    XCTAssertEqual(
+      window.itineraryMetadata?.entries.map(\.id), [secondListEntry, firstListEntry, directEntry])
+    XCTAssertEqual(window.matchingCount, 131)
+    XCTAssertEqual(window.itineraryMetadata?.entries[0].listSummary?.progress.doneCount, 0)
+    XCTAssertEqual(window.itineraryMetadata?.entries[1].listSummary?.progress.doneCount, 1)
+    await window.requestRows(at: [])
+    _ = try await applyFixtureCommand(
+      .removeMembership(listId: listIdentifier, membershipId: fixture.membershipIdentifiers[0]),
+      fixture: fixture)
+    await window.requestRows(at: [0])
+    XCTAssertEqual(window.state, .ready)
+    XCTAssertEqual(window.matchingCount, 129)
+    XCTAssertEqual(window.itineraryMetadata?.itinerary.progress.doneCount, 1)
+    XCTAssertEqual(window.itineraryMetadata?.entries[0].rowIdentities.count, 64)
+    XCTAssertEqual(window.itineraryMetadata?.entries[1].rowIdentities.count, 64)
+    await window.requestRows(at: [])
+    _ = try await applyFixtureCommand(
+      .reorderMembership(
+        listId: listIdentifier, membershipId: fixture.membershipIdentifiers[64], placement: .first),
+      fixture: fixture)
+    guard
+      case .source(.list(let currentList)) = await fixture.planner.read(
+        session: fixture.session, request: .source(list)),
+      case .source(.item(let currentItem)) = await fixture.planner.read(
+        session: fixture.session, request: .source(directSource))
+    else { throw CancellationError() }
+    _ = try await applyFixtureCommand(
+      .editList(
+        sourceId: listIdentifier, changes: .init(name: .set("Renamed activities")),
+        expectedFieldHashes: currentList.fieldHashes), fixture: fixture)
+    _ = try await applyFixtureCommand(
+      .editItem(
+        sourceId: directSource.id, changes: .init(title: .set("Retained direct activity")),
+        expectedFieldHashes: currentItem.fieldHashes), fixture: fixture)
+    await window.requestRows(at: [0])
+    await window.requestRows(at: [0, 64, 128])
+    let reorderedIndices = [64] + Array(1...63)
+    let expectedExpanded = [secondListEntry, firstListEntry].flatMap { entryIdentifier in
+      reorderedIndices.map { index in
+        PlannerRowIdentity.appearance(
+          source: .init(kind: .item, id: fixture.identifiers[index]),
+          appearance: .expandedListItem(
+            itineraryId: itinerary.source.id, listEntryId: entryIdentifier,
+            membershipId: fixture.membershipIdentifiers[index]))
+      }
+    }
+    let expectedDirect = PlannerRowIdentity.appearance(
+      source: directSource,
+      appearance: .directItineraryItem(itineraryId: itinerary.source.id, entryId: directEntry))
+    XCTAssertEqual(window.state, .ready)
+    XCTAssertEqual(window.rowIdentities, expectedExpanded + [expectedDirect])
+    XCTAssertEqual(window.itineraryMetadata?.entries[0].list?.content.name, "Renamed activities")
+    XCTAssertEqual(window.itineraryMetadata?.entries[1].list?.content.name, "Renamed activities")
+    XCTAssertEqual(window.itineraryMetadata?.entries[0].list?.progress.doneCount, 0)
+    for (index, expectedDone) in [(0, false), (64, true), (128, false)] {
+      guard case .loaded(let presentation) = window.presentation(at: index) else {
+        XCTFail("Surviving appearances must reload with their own identities and state.")
+        return
+      }
+      XCTAssertEqual(presentation.row.identity, window.rowIdentities[index])
+      XCTAssertEqual(presentation.row.effectiveDone, expectedDone)
+      XCTAssertEqual(presentation.row.globalDone, false)
+      if index == 128 { XCTAssertEqual(presentation.row.title, "Retained direct activity") }
+    }
+    await window.requestRows(at: [])
+    _ = try await applyFixtureCommand(
+      .removeItineraryEntry(itineraryId: itinerary.source.id, entryId: firstListEntry),
+      fixture: fixture)
+    await window.requestRows(at: [0])
+    XCTAssertEqual(window.state, .ready)
+    XCTAssertEqual(window.itineraryMetadata?.entries.map(\.id), [secondListEntry, directEntry])
+    XCTAssertEqual(window.rowIdentities, Array(expectedExpanded.prefix(64)) + [expectedDirect])
+    XCTAssertEqual(window.matchingCount, 65)
+    XCTAssertEqual(window.itineraryMetadata?.itinerary.progress.doneCount, 0)
+    XCTAssertEqual(window.itineraryMetadata?.entries[0].listSummary?.progress.doneCount, 0)
+  }
+
   func testEmptyItineraryAndEmptyListPublishTheirHeadersAndCancelClearsThem() async throws {
     let fixture = try await makeFixture(itemCount: 0, listName: "Empty activities")
     let listIdentifier = try XCTUnwrap(fixture.listIdentifier)

@@ -3,6 +3,93 @@ import XCTest
 #if os(iOS) || os(macOS)
   @MainActor
   final class ContainerCatalogSortJourneyTests: XCTestCase {
+    #if os(iOS)
+      func testBothContainerCatalogsCrossPagesRevisitAndRetainSourceIdentitiesAfterRelaunch() {
+        continueAfterFailure = false
+        XCUIDevice.shared.orientation = .portrait
+        addTeardownBlock { XCUIDevice.shared.orientation = .portrait }
+        let application = XCUIApplication()
+        application.launchArguments = [
+          "--fixture", "container-windows", "--fixture-dataset", UUID().uuidString,
+        ]
+        application.launchSavedPlannerJourney()
+        XCTAssertTrue(application.buttons["Lists"].firstMatch.waitForExistence(timeout: 60))
+        var lastIdentifiers: [String: String] = [:]
+        for (section, kind, titleKind) in [
+          ("Lists", "list", "List"), ("Itineraries", "itinerary", "Itinerary"),
+        ] {
+          openCatalog(section, application: application)
+          let first = containerRow("Window \(titleKind) 001", kind: kind, application: application)
+          XCTAssertTrue(first.waitForExistence(timeout: 15))
+          let firstIdentifier = first.identifier
+          let catalog = application.collectionViews["saved.\(section.lowercased()).catalog"]
+          XCTAssertTrue(catalog.waitForExistence(timeout: 10))
+          for index in [65, 129, 193] {
+            let title = String(format: "Window %@ %03d", titleKind, index)
+            let row = containerRow(title, kind: kind, application: application)
+            scrollCatalog(catalog, to: row, towardEnd: true, application: application)
+            XCTAssertTrue(row.waitForExistence(timeout: 10))
+            XCTAssertTrue(row.isHittable)
+            if index == 193 { lastIdentifiers[kind] = row.identifier }
+            capture("Windowed \(section) catalog reaches \(index)")
+          }
+          scrollCatalog(catalog, to: first, towardEnd: false, application: application)
+          XCTAssertEqual(first.identifier, firstIdentifier)
+          capture("Windowed \(section) catalog revisits its original first source")
+        }
+        application.terminate()
+        application.launchSavedPlannerJourney()
+        for (section, kind, titleKind) in [
+          ("Lists", "list", "List"), ("Itineraries", "itinerary", "Itinerary"),
+        ] {
+          openCatalog(section, application: application)
+          let first = containerRow("Window \(titleKind) 001", kind: kind, application: application)
+          XCTAssertTrue(first.waitForExistence(timeout: 15))
+          let catalog = application.collectionViews["saved.\(section.lowercased()).catalog"]
+          let last = containerRow("Window \(titleKind) 193", kind: kind, application: application)
+          scrollCatalog(catalog, to: last, towardEnd: true, application: application)
+          XCTAssertEqual(last.identifier, lastIdentifiers[kind])
+          last.activateForPlannerJourney()
+          let expected = section == "Lists" ? "No items" : "Container itinerary notes 193"
+          XCTAssertTrue(application.staticTexts[expected].firstMatch.waitForExistence(timeout: 10))
+          capture("Windowed \(section) catalog retains exact final source after relaunch")
+        }
+      }
+
+      private func containerRow(_ title: String, kind: String, application: XCUIApplication)
+        -> XCUIElement
+      {
+        let prefix = kind == "list" ? "saved.list." : "saved.itinerary.row."
+        return application.descendants(matching: .any).matching(
+          NSPredicate(format: "identifier BEGINSWITH %@ AND label == %@", prefix, title)
+        ).firstMatch
+      }
+
+      private func scrollCatalog(
+        _ catalog: XCUIElement, to row: XCUIElement, towardEnd: Bool,
+        application: XCUIApplication
+      ) {
+        for _ in 0..<60 {
+          if row.exists, row.isHittable, catalog.frame.contains(row.frame) {
+            let topBoundary =
+              application.navigationBars.allElementsBoundByIndex
+              .filter { $0.frame.intersects(catalog.frame) }.map(\.frame.maxY).max()
+              ?? catalog.frame.minY
+            let tabs = application.tabBars.firstMatch
+            let bottomBoundary = tabs.exists ? tabs.frame.minY : catalog.frame.maxY
+            if row.frame.minY >= topBoundary, row.frame.maxY <= bottomBoundary { return }
+          }
+          if towardEnd {
+            catalog.swipeUp()
+          } else {
+            catalog.swipeDown()
+          }
+        }
+        capture("Windowed container catalog failed to reveal its requested source")
+        XCTFail("The requested container did not become fully visible.")
+      }
+    #endif
+
     func testCatalogsRememberSeparateNativeSortsAcrossRelaunchAndDatasetChanges() {
       continueAfterFailure = false
       let application = XCUIApplication()
@@ -170,10 +257,15 @@ import XCTest
           application.plannerElement("saved.section.lists").waitForExistence(timeout: 30),
           journeyDescription(application))
       #else
-        XCTAssertTrue(
-          application.buttons.matching(identifier: "list.bullet").firstMatch.waitForExistence(
-            timeout: 30),
-          journeyDescription(application))
+        let ready = NSPredicate { _, _ in
+          application.buttons["Lists"].firstMatch.exists
+            || application.plannerElement("saved.section.lists").exists
+            || application.plannerElement("Show Sidebar").exists
+        }
+        XCTAssertEqual(
+          XCTWaiter.wait(
+            for: [XCTNSPredicateExpectation(predicate: ready, object: application)], timeout: 30),
+          .completed, journeyDescription(application))
       #endif
     }
 

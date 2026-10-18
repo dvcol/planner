@@ -20,6 +20,7 @@ enum PlannerFixtureDataset {
     case largeCollection = "large-collection"
     case listWindows = "list-windows"
     case itineraryWindows = "itinerary-windows"
+    case containerWindows = "container-windows"
     case graphRecovery = "graph-recovery"
     case pinnedAddress = "pinned-address"
     case pinnedEmptyName = "pinned-empty-name"
@@ -78,6 +79,9 @@ enum PlannerFixtureDataset {
     }
     if scenario == .itineraryWindows {
       return try await PlannerItineraryWindowFixture.makeStore(directory: directory)
+    }
+    if scenario == .containerWindows {
+      return try await PlannerContainerWindowFixture.makeStore(directory: directory)
     }
     if scenario == .listWindows {
       return try await PlannerListWindowFixture.makeStore(directory: directory)

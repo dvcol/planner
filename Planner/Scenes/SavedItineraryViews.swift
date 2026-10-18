@@ -13,7 +13,7 @@ struct SavedItineraryCatalog: View {
   let store: SavedPlannerStore
   @Binding var archive: SavedItemFilters.Archive
   @Binding var selection: UUID?
-  @State private var itineraries: [SavedPlannerItinerary]?
+  @State private var catalogWindow: SavedItemWindow?
   @State private var isLoading = false
   @State private var loadingFailure: String?
   @State private var showNewItinerary = false
@@ -21,36 +21,45 @@ struct SavedItineraryCatalog: View {
 
   var body: some View {
     List(selection: $selection) {
-      ForEach(itineraries ?? []) { itinerary in
-        NavigationLink(value: itinerary.id) {
-          VStack(alignment: .leading, spacing: 4) {
-            HStack {
-              Label(
-                itinerary.title, systemImage: "point.topleft.down.to.point.bottomright.curvepath"
-              )
-              .foregroundStyle(SavedRowForeground())
-              if itinerary.archived {
-                Image(systemName: "archivebox").foregroundStyle(.secondary)
-                  .accessibilityHidden(true)
+      if let catalogWindow {
+        SavedContainerWindowRows(window: catalogWindow, sourceKind: .itinerary) { row in
+          if case .source(let source) = row.identity, let estimates = row.containerEstimates {
+            let itinerary = SavedPlannerItinerary(
+              source: source, title: row.title, archived: row.archived == true,
+              manualEstimate: row.manualEstimate, estimates: estimates)
+            NavigationLink(value: itinerary.id) {
+              VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                  Label(
+                    itinerary.title,
+                    systemImage: "point.topleft.down.to.point.bottomright.curvepath"
+                  )
+                  .foregroundStyle(SavedRowForeground())
+                  if itinerary.archived {
+                    Image(systemName: "archivebox").foregroundStyle(.secondary)
+                      .accessibilityHidden(true)
+                  }
+                }
+                SavedContainerEstimatePreview(
+                  estimates: itinerary.estimates, manualEstimate: itinerary.manualEstimate)
               }
             }
-            SavedContainerEstimatePreview(
-              estimates: itinerary.estimates, manualEstimate: itinerary.manualEstimate)
+            .accessibilityLabel(itinerary.title)
+            .accessibilityValue(
+              (itinerary.archived ? "Archived. " : "Active. ")
+                + itinerary.estimates.nativeEstimatePreviewAccessibilityDescription(
+                  manualEstimate: itinerary.manualEstimate)
+            )
+            .accessibilityIdentifier("saved.itinerary.row.\(itinerary.id.uuidString)")
           }
         }
-        .accessibilityLabel(itinerary.title)
-        .accessibilityValue(
-          (itinerary.archived ? "Archived. " : "Active. ")
-            + itinerary.estimates.nativeEstimatePreviewAccessibilityDescription(
-              manualEstimate: itinerary.manualEstimate)
-        )
-        .accessibilityIdentifier("saved.itinerary.row.\(itinerary.id.uuidString)")
       }
     }
+    .accessibilityIdentifier("saved.itineraries.catalog")
     .overlay {
-      if isLoading {
+      if isLoading || catalogWindow?.state == .loading {
         ProgressView("Loading Itineraries")
-      } else if let loadingFailure {
+      } else if let loadingFailure = catalogFailure {
         ContentUnavailableView {
           Label("Itineraries unavailable", systemImage: "exclamationmark.triangle")
         } description: {
@@ -58,7 +67,7 @@ struct SavedItineraryCatalog: View {
         } actions: {
           Button("Try Again") { Task { await loadItineraries() } }
         }
-      } else if itineraries?.isEmpty == true {
+      } else if catalogWindow?.state == .ready, catalogWindow?.matchingCount == 0 {
         ContentUnavailableView(
           archive == .active ? "No Itineraries yet" : "No matching Itineraries",
           systemImage: "point.topleft.down.to.point.bottomright.curvepath",
@@ -102,25 +111,39 @@ struct SavedItineraryCatalog: View {
       set: { sortPreferences.select($0, for: key) })
   }
 
+  private var catalogFailure: String? {
+    if case .failed(let reason) = catalogWindow?.state { return reason }
+    return loadingFailure
+  }
+
   private func loadItineraries() async {
+    guard !Task.isCancelled else { return }
     isLoading = true
     loadingFailure = nil
     let revision = store.changeRevision
     let selectedArchive = archive
     let selectedSort = sort.wrappedValue
     let namespace = store.devicePreferenceNamespace
-    let loaded = await store.readItineraries(
-      archive: selectedArchive.queryValue, sort: selectedSort.queryValue)
+    catalogWindow?.cancel()
+    guard let namespace, let window = store.makeItemWindow() else {
+      catalogWindow = nil
+      loadingFailure = "Planner is not ready to load its Itineraries."
+      isLoading = false
+      return
+    }
+    catalogWindow = window
+    await window.reload(
+      catalogQuery: .init(
+        sourceKind: .itinerary, archive: selectedArchive.queryValue, sort: selectedSort.queryValue),
+      identity: .init(namespace: namespace, savedRevision: revision))
     guard !Task.isCancelled, store.changeRevision == revision, archive == selectedArchive,
-      sort.wrappedValue == selectedSort, store.devicePreferenceNamespace == namespace
+      sort.wrappedValue == selectedSort, store.devicePreferenceNamespace == namespace,
+      catalogWindow === window
     else {
       return
     }
-    if let loaded {
-      itineraries = loaded
-    } else {
-      loadingFailure = store.alertMessage ?? "Planner could not read its Itineraries."
-      store.alertMessage = nil
+    if case .failed(let reason) = window.state {
+      loadingFailure = reason
     }
     isLoading = false
   }

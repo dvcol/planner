@@ -75,7 +75,7 @@ struct SavedPlannerView: View {
   @State private var showLabels = false
   @State private var showSettings = false
   @State private var showRecovery = false
-  @State private var listCatalog: [SavedPlannerList]?
+  @State private var listCatalogWindow: SavedItemWindow?
   @State private var listCatalogArchive = SavedItemFilters.Archive.active
   @State private var isOpeningListCatalog = false
   @State private var newItemDraft: SavedNewItemDraft?
@@ -583,19 +583,34 @@ struct SavedPlannerView: View {
   }
 
   private func loadListCatalog() async {
-    guard store.isReady else { return }
+    guard !Task.isCancelled else { return }
+    guard store.isReady else {
+      listCatalogWindow?.cancel()
+      listCatalogWindow = nil
+      isOpeningListCatalog = false
+      return
+    }
     isOpeningListCatalog = true
     let archive = listCatalogArchive
     let revision = store.changeRevision
     let namespace = store.devicePreferenceNamespace
     let sort = listCatalogSort.wrappedValue
-    let loaded = await store.readLists(archive: archive.queryValue, sort: sort.queryValue)
+    listCatalogWindow?.cancel()
+    guard let namespace, let window = store.makeItemWindow() else {
+      listCatalogWindow = nil
+      isOpeningListCatalog = false
+      return
+    }
+    listCatalogWindow = window
+    await window.reload(
+      catalogQuery: .init(sourceKind: .list, archive: archive.queryValue, sort: sort.queryValue),
+      identity: .init(namespace: namespace, savedRevision: revision))
     guard !Task.isCancelled, listCatalogArchive == archive, store.changeRevision == revision,
-      store.devicePreferenceNamespace == namespace, listCatalogSort.wrappedValue == sort
+      store.devicePreferenceNamespace == namespace, listCatalogSort.wrappedValue == sort,
+      listCatalogWindow === window
     else { return }
-    listCatalog = loaded
     isOpeningListCatalog = false
-    guard let replacement = deletionReplacement, let loaded,
+    guard window.state == .ready, let replacement = deletionReplacement,
       replacement.namespace == namespace, replacement.context == .lists,
       replacement.selectionGeneration == selectionGeneration,
       selectedSection == .lists, selectedListId == nil
@@ -605,7 +620,7 @@ struct SavedPlannerView: View {
       preferredCompactColumn = .sidebar
       return
     }
-    guard let firstList = loaded.first else { return }
+    guard case .source(let firstList)? = window.rowIdentities.first else { return }
     deletionReplacement = .init(
       namespace: replacement.namespace, context: .listItems(firstList.id),
       selectionGeneration: replacement.selectionGeneration)
@@ -1173,54 +1188,67 @@ struct SavedPlannerView: View {
         }
       }
       Section("Lists") {
-        if usesSidebarNavigation, listCatalog?.isEmpty == true {
+        if usesSidebarNavigation, listCatalogWindow?.state == .ready,
+          listCatalogWindow?.matchingCount == 0
+        {
           Text(listCatalogArchive == .active ? "No Lists yet" : "No matching Lists")
             .foregroundStyle(.secondary)
         }
-        ForEach(listCatalog ?? []) { list in
-          NavigationLink(value: SavedPlannerSidebarSelection.list(list.id)) {
-            VStack(alignment: .leading, spacing: 4) {
-              HStack {
-                Label(list.name, systemImage: "list.bullet.rectangle")
-                  .foregroundStyle(SavedRowForeground())
-                if list.archived {
-                  Image(systemName: "archivebox").foregroundStyle(.secondary)
-                    .accessibilityHidden(true)
+        if let listCatalogWindow {
+          SavedContainerWindowRows(window: listCatalogWindow, sourceKind: .list) { row in
+            if case .source(let source) = row.identity, let estimates = row.containerEstimates {
+              let list = SavedPlannerList(
+                source: source, name: row.title, archived: row.archived == true,
+                manualEstimate: row.manualEstimate, estimates: estimates)
+              NavigationLink(value: SavedPlannerSidebarSelection.list(list.id)) {
+                VStack(alignment: .leading, spacing: 4) {
+                  HStack {
+                    Label(list.name, systemImage: "list.bullet.rectangle")
+                      .foregroundStyle(SavedRowForeground())
+                    if list.archived {
+                      Image(systemName: "archivebox").foregroundStyle(.secondary)
+                        .accessibilityHidden(true)
+                    }
+                  }
+                  SavedContainerEstimatePreview(
+                    estimates: list.estimates, manualEstimate: list.manualEstimate)
                 }
               }
-              SavedContainerEstimatePreview(
-                estimates: list.estimates, manualEstimate: list.manualEstimate)
+              .accessibilityLabel(list.name)
+              .accessibilityValue(
+                (list.archived ? "Archived. " : "Active. ")
+                  + list.estimates.nativeEstimatePreviewAccessibilityDescription(
+                    manualEstimate: list.manualEstimate)
+              )
+              .accessibilityIdentifier("saved.list.\(list.id.uuidString)")
+              .contextMenu {
+                Button(list.archived ? "Unarchive List" : "Archive List", systemImage: "archivebox")
+                {
+                  Task { _ = await store.setListArchived(list.id, archived: !list.archived) }
+                }
+                .disabled(!store.canCreate)
+              }
             }
-          }
-          .accessibilityLabel(list.name)
-          .accessibilityValue(
-            (list.archived ? "Archived. " : "Active. ")
-              + list.estimates.nativeEstimatePreviewAccessibilityDescription(
-                manualEstimate: list.manualEstimate)
-          )
-          .accessibilityIdentifier("saved.list.\(list.id.uuidString)")
-          .contextMenu {
-            Button(list.archived ? "Unarchive List" : "Archive List", systemImage: "archivebox") {
-              Task { _ = await store.setListArchived(list.id, archived: !list.archived) }
-            }
-            .disabled(!store.canCreate)
           }
         }
       }
     }
     .listStyle(.sidebar)
+    .accessibilityIdentifier("saved.lists.catalog")
     .overlay {
       #if os(iOS)
-        if !usesSidebarNavigation, listCatalog?.isEmpty == true {
+        if !usesSidebarNavigation, listCatalogWindow?.state == .ready,
+          listCatalogWindow?.matchingCount == 0
+        {
           ContentUnavailableView(
             listCatalogArchive == .active ? "No Lists yet" : "No matching Lists",
             systemImage: "list.bullet.rectangle",
             description: Text("Change the archive filter or create a List to start planning."))
         }
       #endif
-      if isOpeningListCatalog {
+      if isOpeningListCatalog || listCatalogWindow?.state == .loading {
         ProgressView("Updating Lists")
-      } else if listCatalog == nil {
+      } else if listCatalogWindow == nil || listCatalogWindow?.state != .ready {
         ContentUnavailableView {
           Label("Lists unavailable", systemImage: "exclamationmark.triangle")
         } actions: {
@@ -1554,7 +1582,7 @@ struct SavedPlannerView: View {
       } else if let listDeletionMessage {
         ContentUnavailableView(
           "List deleted", systemImage: "trash", description: Text(listDeletionMessage))
-      } else if listCatalog?.isEmpty == true {
+      } else if listCatalogWindow?.state == .ready, listCatalogWindow?.matchingCount == 0 {
         ContentUnavailableView(
           listCatalogArchive == .active ? "No Lists yet" : "No matching Lists",
           systemImage: "list.bullet.rectangle",
