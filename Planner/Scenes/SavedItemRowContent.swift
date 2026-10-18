@@ -124,7 +124,7 @@ struct SavedItemRowContent: View {
 
   var body: some View {
     HStack(alignment: .top) {
-      textContent
+      textContent.frame(maxWidth: .infinity, alignment: .leading)
       if let request = previewRequest,
         case .available(let content) = previews.linkState(for: request),
         let imageData = content.imageData
@@ -155,7 +155,9 @@ struct SavedItemRowContent: View {
 
   private var textContent: some View {
     VStack(alignment: .leading, spacing: 4) {
-      Text(row.title).lineLimit(1)
+      Text(row.title)
+        .strikethrough((row.effectiveDone ?? row.globalDone) == true)
+        .lineLimit(2)
       if let subtitle = row.subtitle, !subtitle.isEmpty {
         Text(subtitle)
           .font(.subheadline)

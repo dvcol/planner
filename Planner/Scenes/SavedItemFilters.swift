@@ -358,6 +358,7 @@ struct SavedListProgress: View {
   var body: some View {
     VStack(alignment: .leading, spacing: 6) {
       Text(listName).font(.title2).fontWeight(.semibold)
+        .foregroundStyle(Color.primary)
         .accessibilityAddTraits(.isHeader)
       if isArchived {
         Label("Archived List", systemImage: "archivebox").foregroundStyle(.secondary)

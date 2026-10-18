@@ -70,6 +70,7 @@ struct SavedItemCatalog: View {
         }
       }
     }
+    .listStyle(.plain)
     .accessibilityIdentifier("\(scope.identifierPrefix).catalog")
     .overlay { catalogStatus }
     .task(id: request) { await reload() }
@@ -112,20 +113,39 @@ struct SavedItemCatalog: View {
   private func row(_ presentation: SavedItemWindowPresentation, index: Int) -> some View {
     switch presentation {
     case .loaded(let item):
-      NavigationLink(value: item.id) {
-        HStack(alignment: .top) {
-          Image(systemName: item.row.globalDone == true ? "checkmark.circle.fill" : "circle")
-            .foregroundStyle(.secondary)
-            .accessibilityHidden(true)
+      let completionVerb = item.row.globalDone == true ? "undone" : "done"
+      let completionLabel = "Mark \(item.row.title) \(completionVerb) everywhere"
+      HStack(alignment: .top) {
+        Button {
+          Task { _ = await store.setItemCompletion(item.id, done: item.row.globalDone != true) }
+        } label: {
+          Label(
+            completionLabel,
+            systemImage: item.row.globalDone == true ? "checkmark.circle.fill" : "circle"
+          )
+          #if os(iOS)
+            .frame(minWidth: 44, minHeight: 44, alignment: .top)
+            .contentShape(.rect)
+          #endif
+        }
+        .labelStyle(.iconOnly)
+        .buttonStyle(.plain)
+        .foregroundStyle(item.row.globalDone == true ? Color.accentColor : Color.secondary)
+        .disabled(!store.canCreate)
+        .accessibilityValue(item.row.globalDone == true ? "Completed" : "To do")
+        .accessibilityIdentifier("saved.item.row.completion.\(item.id.uuidString)")
+        .help(completionLabel)
+        NavigationLink(value: item.id) {
+          SavedItemRowContent(row: item.row, rowPresentation: item.rowPresentation)
           if item.row.archived == true {
             Image(systemName: "archivebox").accessibilityLabel("Archived")
           }
-          SavedItemRowContent(row: item.row, rowPresentation: item.rowPresentation)
         }
+        .accessibilityLabel(item.row.title)
+        .accessibilityValue(item.row.metadataDescription(presentation: item.rowPresentation))
+        .accessibilityIdentifier("saved.item.\(item.id.uuidString)")
       }
-      .accessibilityLabel(item.row.title)
-      .accessibilityValue(item.row.metadataDescription(presentation: item.rowPresentation))
-      .accessibilityIdentifier("saved.item.\(item.id.uuidString)")
+      .tag(item.id)
     case .loading:
       ProgressView("Loading Item")
         .selectionDisabled()

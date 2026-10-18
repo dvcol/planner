@@ -6,6 +6,46 @@ import XCTest
 
 @MainActor
 final class SavedItemJourneyTests: XCTestCase {
+  func testCatalogCompletionWorksWithoutOpeningDetailsAndSurvivesRelaunch() throws {
+    continueAfterFailure = false
+    let application = XCUIApplication()
+    application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+    application.launchSavedPlannerJourney()
+    openDesignSection("Items", in: application)
+    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    let title = application.textFields["saved.item.title"]
+    XCTAssertTrue(title.waitForExistence(timeout: 5))
+    title.activateForPlannerJourney()
+    title.typeText("Garden walk")
+    application.plannerElement("saved.item.save").activateForPlannerJourney()
+    XCTAssertTrue(
+      application.descendants(matching: .any).matching(identifier: "saved.item.completion")
+        .firstMatch.waitForExistence(timeout: 10))
+    #if os(iOS)
+      let back = application.navigationBars.buttons["Items"].firstMatch
+      if back.exists { back.activateForPlannerJourney() }
+    #endif
+    let complete = application.buttons["Mark Garden walk done everywhere"].firstMatch
+    XCTAssertTrue(complete.waitForExistence(timeout: 10))
+    let completionIdentifier = complete.identifier
+    complete.activateForPlannerJourney()
+    let reopen = application.buttons["Mark Garden walk undone everywhere"].firstMatch
+    XCTAssertTrue(reopen.waitForExistence(timeout: 10))
+    recordScreenshot(application, name: "Native row completion in the Item catalog")
+    application.terminate()
+    application.launchSavedPlannerJourney()
+    openDesignSection("Items", in: application)
+    XCTAssertTrue(reopen.waitForExistence(timeout: 10))
+    XCTAssertEqual(reopen.identifier, completionIdentifier)
+    reopen.activateForPlannerJourney()
+    XCTAssertTrue(complete.waitForExistence(timeout: 10))
+    application.savedPlannerItemRows("Garden walk").firstMatch.activateForPlannerJourney()
+    let completion = application.descendants(matching: .any)
+      .matching(identifier: "saved.item.completion").firstMatch
+    XCTAssertTrue(completion.waitForPlannerBooleanState(false))
+    recordScreenshot(application, name: "Native row completion preserves the same saved Item")
+  }
+
   func testAdaptiveNavigationKeepsSavedItemAvailableAcrossDestinations() throws {
     try qualifyAdaptiveNavigation()
   }
