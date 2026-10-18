@@ -1,0 +1,12 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "840AAF15-38ED-4D0A-A12D-CE8EEC9693FC.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary composition and filtered counts before native contrast audit_0_D1F70D5E-750A-48C5-8916-BB10B8C76E71.png",
+    "timestamp": 1792351893.719,
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testItineraryCompositionAndFilteredCountsPassNativeContrastAudit()"
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "DF15D4DF-A62C-4B35-B3F1-B0CB72ABA8AF.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Itinerary composition and filtered counts before native contrast audit_0_464C0A6E-4F0B-4524-8E1E-525B6E5C9A06.png",
+    "timestamp": 1792351779.563,
+    "testIdentifier": "SavedItineraryBulkJourneyTests/testItineraryCompositionAndFilteredCountsPassNativeContrastAudit()"
+  }
+]

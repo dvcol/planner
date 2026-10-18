@@ -2,6 +2,62 @@ import XCTest
 
 @MainActor
 final class SavedItineraryBulkJourneyTests: XCTestCase {
+  #if os(iOS)
+    func testItineraryCompositionAndFilteredCountsPassNativeContrastAudit() throws {
+      continueAfterFailure = false
+      let application = XCUIApplication()
+      application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
+      application.launchSavedPlannerJourney()
+      createItem("Museum", application: application)
+      createItem("Hotel", application: application)
+      createList(application)
+      application.openSavedPlannerListAddMenu()
+      let addition = application.plannerElement("saved.list.add")
+      XCTAssertTrue(addition.waitForExistence(timeout: 5))
+      addition.activateForPlannerJourney()
+      let hotel = application.staticTexts["Hotel"].firstMatch
+      XCTAssertTrue(hotel.waitForExistence(timeout: 5))
+      hotel.activateForPlannerJourney()
+      application.plannerElement("saved.membership.add").activateForPlannerJourney()
+      XCTAssertTrue(
+        application.savedPlannerItemRows("Hotel").firstMatch.waitForExistence(timeout: 10))
+      createItinerary(application)
+      for source in ["Museum", "Food stops"] { addEntry(source, application: application) }
+      let contents = application.descendants(matching: .any).matching(
+        identifier: "saved.itinerary.contents"
+      ).firstMatch
+      for _ in 0..<3 {
+        if itineraryRows(application).count == 3 { break }
+        contents.swipeUp()
+      }
+      let originalIdentifiers = itineraryRows(application).allElementsBoundByIndex.map(\.identifier)
+      XCTAssertEqual(originalIdentifiers.count, 3)
+      XCTAssertEqual(
+        itineraryRows(application).allElementsBoundByIndex.map(\.label),
+        ["Museum", "Museum", "Hotel"])
+      for identifier in originalIdentifiers.prefix(2) {
+        let completedAppearance = application.plannerElement(
+          identifier.replacingOccurrences(
+            of: "saved.itinerary.appearance.", with: "saved.itinerary.completion."))
+        completedAppearance.activateForPlannerJourney()
+        XCTAssertTrue(completedAppearance.waitForPlannerValue("Completed"))
+      }
+      let filters = application.plannerElement("saved.itinerary.filters")
+      application.chooseSavedPlannerStateFilter("Todo", control: filters)
+      XCTAssertTrue(waitForItineraryOrder([originalIdentifiers[2]], application: application))
+      assertProgress("2 of 3 items done", application: application)
+      XCTAssertTrue(application.staticTexts["1 direct item · 1 list"].exists)
+      XCTAssertTrue(application.staticTexts["Matching 1 of 3 items"].exists)
+      XCTAssertTrue(application.staticTexts["Matching 1 of 2 items"].exists)
+      recordScreenshot(
+        application, name: "Itinerary composition and filtered counts before native contrast audit")
+      let previousValue = continueAfterFailure
+      continueAfterFailure = true
+      defer { continueAfterFailure = previousValue }
+      try application.performAccessibilityAudit(for: .contrast)
+    }
+  #endif
+
   func testNativeUndoRestoresOneRepeatedItineraryEntry() {
     continueAfterFailure = false
     let application = XCUIApplication()

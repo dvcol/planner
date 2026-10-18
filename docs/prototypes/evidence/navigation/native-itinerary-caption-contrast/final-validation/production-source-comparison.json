@@ -1,0 +1,110 @@
+[
+  {
+    "epoch": "native-itinerary-caption-audit-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [
+      "Planner/Scenes/SavedItineraryViews.swift"
+    ],
+    "regressionMatchesFinalSource": false
+  },
+  {
+    "epoch": "native-itinerary-caption-audit-mac-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [
+      "Planner/Scenes/SavedItineraryViews.swift"
+    ],
+    "regressionMatchesFinalSource": false
+  },
+  {
+    "epoch": "native-itinerary-caption-nested-audit-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [
+      "Planner/Scenes/SavedItineraryViews.swift"
+    ],
+    "regressionMatchesFinalSource": true
+  },
+  {
+    "epoch": "native-itinerary-caption-primary-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "regressionMatchesFinalSource": true
+  },
+  {
+    "epoch": "native-itinerary-caption-primary-mac-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "regressionMatchesFinalSource": true
+  },
+  {
+    "epoch": "phone-itinerary-caption-native-audit-dark",
+    "productionInputs": 149,
+    "differentProductionPaths": [
+      "Planner/Scenes/SavedItineraryViews.swift"
+    ],
+    "regressionMatchesFinalSource": false
+  },
+  {
+    "epoch": "phone-itinerary-caption-native-audit-light",
+    "productionInputs": 149,
+    "differentProductionPaths": [
+      "Planner/Scenes/SavedItineraryViews.swift"
+    ],
+    "regressionMatchesFinalSource": false
+  },
+  {
+    "epoch": "phone-itinerary-caption-primary-dark",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "regressionMatchesFinalSource": true
+  },
+  {
+    "epoch": "phone-itinerary-caption-primary-light",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "regressionMatchesFinalSource": true
+  },
+  {
+    "epoch": "tablet-itinerary-caption-light-reproduction",
+    "productionInputs": 149,
+    "differentProductionPaths": [
+      "Planner/Scenes/SavedItineraryViews.swift"
+    ],
+    "regressionMatchesFinalSource": false
+  },
+  {
+    "epoch": "tablet-itinerary-caption-native-audit",
+    "productionInputs": 149,
+    "differentProductionPaths": [
+      "Planner/Scenes/SavedItineraryViews.swift"
+    ],
+    "regressionMatchesFinalSource": false
+  },
+  {
+    "epoch": "tablet-itinerary-caption-native-audit-light",
+    "productionInputs": 149,
+    "differentProductionPaths": [
+      "Planner/Scenes/SavedItineraryViews.swift"
+    ],
+    "regressionMatchesFinalSource": false
+  },
+  {
+    "epoch": "tablet-itinerary-caption-nested-red",
+    "productionInputs": 149,
+    "differentProductionPaths": [
+      "Planner/Scenes/SavedItineraryViews.swift"
+    ],
+    "regressionMatchesFinalSource": true
+  },
+  {
+    "epoch": "tablet-itinerary-caption-primary-dark-increased",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "regressionMatchesFinalSource": true
+  },
+  {
+    "epoch": "tablet-itinerary-caption-primary-light",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "regressionMatchesFinalSource": true
+  }
+]

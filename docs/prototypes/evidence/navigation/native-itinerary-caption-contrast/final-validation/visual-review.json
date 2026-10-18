@@ -1,0 +1,107 @@
+{
+  "scope": "Original pixels inspected directly. Native rendered audits and interaction assertions retain their executed scopes. No whole-app or physical accessibility acceptance.",
+  "captures": [
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-native-audit/DF15D4DF-A62C-4B35-B3F1-B0CB72ABA8AF.png",
+      "sha256": "9ad5914c8cfd2ae0e118af7463865c8146279e6885cdc4200a07b88352c10cd9",
+      "reviewer": "primary agent",
+      "observation": "Initial two-appearance dark/increased-contrast scene. Full progress and filtered counts remain correct; captions appear pale despite the passing native audit."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-native-audit-light/26A67E28-BD25-4329-AA21-6D396823258E.png",
+      "sha256": "b39f3ea46155cdebd7044715bc3a3664de8028ceb52fa7dd672a689596125ea7",
+      "reviewer": "primary agent",
+      "observation": "Initial light two-appearance full scene. The three flagged targets are unobscured."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-native-audit-light/4D576348-5A55-4452-A7FF-36D24DEC39C2.png",
+      "sha256": "5d260c76cebdf42817c543041883031a9ee842911ac74d1ff287a82a5dca7d3c",
+      "reviewer": "primary agent",
+      "observation": "Native audit flags the composition caption."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-native-audit-light/5ED9C311-3E45-4950-A070-B93E4E010FF3.png",
+      "sha256": "5448dcce4a4f3cc5489d5322e60e44de31fd5cc5c363efdbaceb911e40724ce5",
+      "reviewer": "primary agent",
+      "observation": "Native audit flags the root Matching 1 of 2 caption."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-native-audit-light/00F4F2C9-7615-429B-8E48-EBAC66A19221.png",
+      "sha256": "a7553e50c2e8508d890d828be3a0f386a42e5b4809399fd824fa10c37906de52",
+      "reviewer": "primary agent",
+      "observation": "Native audit flags the Entries heading."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-nested-red/B65090E5-663E-4AAD-846B-492A85CD3DDE.png",
+      "sha256": "6a5075b605e033927cf7c124f27672f1a9379eb93bb72f417f53e34eb303143f",
+      "reviewer": "primary agent",
+      "observation": "Expanded three-appearance light scene before the correction. Four count/header targets remain fully visible with full 2-of-3 progress and only Hotel shown."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-nested-red/0277BEE8-AD4D-442D-A09A-D18E099177DB.png",
+      "sha256": "5d260c76cebdf42817c543041883031a9ee842911ac74d1ff287a82a5dca7d3c",
+      "reviewer": "primary agent",
+      "observation": "Expanded native failure identifies the composition caption."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-nested-red/6AB370A3-324D-4F2E-83CE-F0D5FE1F2F99.png",
+      "sha256": "f8163a94169158c77ab6822439d77f9395abd9d2e772fc5848877f986e32dafc",
+      "reviewer": "primary agent",
+      "observation": "Expanded native failure identifies the root Matching 1 of 3 caption."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-nested-red/DD59DBA0-CE1C-44D3-AD80-B8EDC5F0E6F8.png",
+      "sha256": "a7553e50c2e8508d890d828be3a0f386a42e5b4809399fd824fa10c37906de52",
+      "reviewer": "primary agent",
+      "observation": "Expanded native failure identifies the Entries heading."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-nested-red/C488CB87-7FB3-4329-A8E6-813ACDE7C24E.png",
+      "sha256": "8496f739019d5fcfc6cfe6bd04b5d90822e5bc620dcea0b546b790ec1a46bf53",
+      "reviewer": "primary agent",
+      "observation": "Expanded native failure identifies the nested List Matching 1 of 2 caption."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-itinerary-caption-native-audit-light/2AD489CD-C709-422B-ADE5-16D002B32D98.png",
+      "sha256": "00509abeec46e893559f0b4e848ce7f3ff79998322ec7233b365f612bf78c142",
+      "reviewer": "primary agent",
+      "observation": "Phone light native failure independently identifies the composition caption."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-itinerary-caption-native-audit-light/0C0DB238-C778-4214-AF63-EDF9477A21B7.png",
+      "sha256": "f168e0d015f73a91ce6fbd6386d9554cf218a25ae413f23dd05c6458896eeae6",
+      "reviewer": "primary agent",
+      "observation": "Phone light native failure independently identifies the root matching caption."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-itinerary-caption-native-audit-light/D493783F-AD69-4321-A906-808C0B5D75C3.png",
+      "sha256": "d94bfd67bc07499d2c73bcfa23d76362791767aea4d34c33ec207ebb82bd0878",
+      "reviewer": "primary agent",
+      "observation": "Phone light native failure independently identifies the Entries heading."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-primary-light/CBBD094D-7E74-433C-9E22-6536967D9D8D.png",
+      "sha256": "a3745829faa62bb22f1ebd3b6ce4904fca94585d2a6c09f62720ba538b91f2c8",
+      "reviewer": "primary agent",
+      "observation": "Corrected light iPad full scene. All four targets are visibly stronger, with the same layout, full 2-of-3 progress, root Matching 1 of 3 and nested Matching 1 of 2."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-itinerary-caption-primary-light/82370377-E23E-409D-A69F-029633019D3E.png",
+      "sha256": "f32ee896b5a60537a073e1608a8b6625c1480d914d52b7ecda4073244ac2ded0",
+      "reviewer": "primary agent",
+      "observation": "Corrected light phone scene. Count/header text is readable and Hotel remains above the native bottom tabs."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-primary-dark-increased/D7DEC4B3-BC4F-490A-B9C7-1F1775F1CD1B.png",
+      "sha256": "cd35772cdca22fa72e9ff1ed44b8903b61024758fbb0a30686e7c76497628d4f",
+      "reviewer": "primary agent",
+      "observation": "Corrected dark/increased-contrast iPad. Full and nested progress/counts remain clear; the empty detail pane has no selected Item by fixture design."
+    },
+    {
+      "path": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-itinerary-caption-primary-dark/7034335F-5CAD-44A9-82E3-329592DD16B9.png",
+      "sha256": "df1e6ca963dc382e94fcfe72fcdf1215087c6a58035ce18a7d092890bf923ed2",
+      "reviewer": "primary agent",
+      "observation": "Corrected dark phone. Four count/header targets remain clear and the native tabs do not obscure the represented Hotel row."
+    }
+  ]
+}

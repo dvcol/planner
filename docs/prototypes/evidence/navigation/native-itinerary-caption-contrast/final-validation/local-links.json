@@ -1,0 +1,113 @@
+{
+  "checked": 27,
+  "links": [
+    {
+      "report": "docs/prototypes/native-itinerary-caption-contrast.md",
+      "target": "../native-ui-scene-inventory.md"
+    },
+    {
+      "report": "docs/prototypes/native-itinerary-caption-contrast.md",
+      "target": "evidence/navigation/native-itinerary-caption-contrast/final-validation/observed-results.json"
+    },
+    {
+      "report": "docs/prototypes/native-itinerary-caption-contrast.md",
+      "target": "evidence/navigation/native-itinerary-caption-contrast/final-validation/production-source-comparison.json"
+    },
+    {
+      "report": "docs/prototypes/native-itinerary-caption-contrast.md",
+      "target": "evidence/navigation/native-itinerary-caption-contrast/final-validation/visual-review.json"
+    },
+    {
+      "report": "docs/prototypes/native-itinerary-caption-contrast.md",
+      "target": "evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-nested-red/B65090E5-663E-4AAD-846B-492A85CD3DDE.png"
+    },
+    {
+      "report": "docs/prototypes/native-itinerary-caption-contrast.md",
+      "target": "evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-primary-light/CBBD094D-7E74-433C-9E22-6536967D9D8D.png"
+    },
+    {
+      "report": "docs/prototypes/native-itinerary-caption-contrast.md",
+      "target": "evidence/navigation/native-itinerary-window-compatibility/phone-itinerary-caption-primary-light/82370377-E23E-409D-A69F-029633019D3E.png"
+    },
+    {
+      "report": "docs/prototypes/native-itinerary-caption-contrast.md",
+      "target": "evidence/navigation/native-itinerary-window-compatibility/tablet-itinerary-caption-primary-dark-increased/D7DEC4B3-BC4F-490A-B9C7-1F1775F1CD1B.png"
+    },
+    {
+      "report": "docs/prototypes/native-itinerary-caption-contrast.md",
+      "target": "evidence/navigation/native-itinerary-window-compatibility/phone-itinerary-caption-primary-dark/7034335F-5CAD-44A9-82E3-329592DD16B9.png"
+    },
+    {
+      "report": "docs/prototypes/native-itinerary-caption-contrast.md",
+      "target": "evidence/navigation/native-itinerary-caption-contrast/final-validation/evidence-sha256.json"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "prototypes/native-design-pass.md"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "native-ui-scene-inventory.md"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "prototypes/native-new-item-dynamic-type.md"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "prototypes/evidence/navigation/native-item-windows/tablet-window-row-rotation/26C2A899-682A-46D0-82DA-2BE022E282A8.png"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "prototypes/evidence/navigation/native-schedule-time-input/phone-clock-endpoint-qualified-attempt/59495FDE-21CD-4737-A43A-5C4778D196E2.png"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "prototypes/native-schedule-time-input.md"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "prototypes/evidence/navigation/native-schedule-time-input/tablet-clock-itinerary-and-catalog-compatibility/045D3E2C-4C55-4847-84F5-D8ED91067A37.png"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "prototypes/evidence/navigation/native-schedule-time-input/tablet-clock-itinerary-and-catalog-compatibility/1C293DE8-3C58-43E0-B506-E46B2886E28F.png"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "prototypes/native-design-pass.md"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "prototypes/native-design-refinement.md"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "prototypes/native-scene-appearance.md"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "prototypes/native-selected-row-accessibility.md"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "prototypes/native-selection-contrast-fix.md"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "prototypes/native-maps-preview-copy.md"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "prototypes/mcp-native-access-readiness.md"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "prototypes/native-catalog-add-menu.md"
+    },
+    {
+      "report": "docs/native-ui-polish.md",
+      "target": "prototypes/native-itinerary-caption-contrast.md"
+    }
+  ]
+}
