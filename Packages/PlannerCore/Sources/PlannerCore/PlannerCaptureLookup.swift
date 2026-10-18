@@ -63,7 +63,7 @@ func plannerCapturePlaceCandidate(_ requestURL: URL) -> PlannerCapturePreviewCan
   return .init(
     provider: .appleMaps, displayName: displayName, formattedAddress: formattedAddress,
     coordinate: coordinate, providerReference: nil,
-    uncertaintyReasons: ["Values supplied by the Maps link; not independently verified."],
+    uncertaintyReasons: ["Place details come from this Maps link and haven't been verified."],
     attributionText: "Apple Maps")
 }
 
@@ -83,7 +83,7 @@ private func plannerCaptureGoogleSearchCandidate(_ requestURL: URL)
   return .init(
     provider: .googleMaps, displayName: coordinate == nil ? query : nil, formattedAddress: nil,
     coordinate: coordinate, providerReference: nil,
-    uncertaintyReasons: ["Search intent supplied by the Maps link; not a resolved place."],
+    uncertaintyReasons: ["Place details haven't been verified for this search link."],
     attributionText: "Google Maps")
 }
 
