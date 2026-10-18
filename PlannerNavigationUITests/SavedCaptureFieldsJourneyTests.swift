@@ -258,6 +258,7 @@ final class SavedCaptureFieldsJourneyTests: XCTestCase {
   }
 
   private func openCapture(_ application: XCUIApplication) {
+    application.openSavedPlannerCatalogAddMenu()
     let capture = application.plannerElement("saved.capture.new")
     XCTAssertTrue(capture.waitForExistence(timeout: 10))
     capture.activateForPlannerJourney()

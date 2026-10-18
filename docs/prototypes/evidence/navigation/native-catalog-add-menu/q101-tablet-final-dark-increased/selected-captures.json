@@ -1,0 +1,52 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "F5AB0208-3ECF-407B-A408-C43C8C9061B1.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Inbox native Add toolbar_0_2F12B70D-C063-493F-BD22-6468FF5327C7.png",
+    "timestamp": 1792313435.62,
+    "testIdentifier": "ListWindowJourneyTests/testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "E26A07AA-64E9-49D6-B489-C86B2E2E5BB5.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Items native Add toolbar_0_B2EC0602-EC0B-421F-B9D6-D64FBF7A3DBF.png",
+    "timestamp": 1792313418.064,
+    "testIdentifier": "ListWindowJourneyTests/testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "36BCACA2-7FC8-4326-84A5-FDA52404D1EE.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Selected Item presentation before native contrast audit_0_1DBFF85E-0384-4323-8F55-E51BF6566532.png",
+    "timestamp": 1792313472.731,
+    "testIdentifier": "ListWindowJourneyTests/testSelectedItemPresentationPassesNativeContrastAudit()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "EA449289-7326-4B9C-B017-BB9AE1E0F7C9.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Selected List presentation after local completion_0_FFF0040D-D32E-4329-9E4B-FFB85C201632.png",
+    "timestamp": 1792313493.559,
+    "testIdentifier": "ListWindowJourneyTests/testSelectedListPresentationAndCompletionPassNativeContrastAudit()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "24B83A51-1DDF-46D9-A0AD-0ECF38DFA91E.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Selected List presentation before native contrast audit_0_BDB67173-017B-4F41-8496-960A09C37492.png",
+    "timestamp": 1792313488.855,
+    "testIdentifier": "ListWindowJourneyTests/testSelectedListPresentationAndCompletionPassNativeContrastAudit()"
+  }
+]

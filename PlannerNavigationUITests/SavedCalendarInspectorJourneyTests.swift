@@ -48,7 +48,7 @@ final class SavedCalendarInspectorJourneyTests: XCTestCase {
       waitForPlannerWindowOrientation(application, landscape: true)
     #endif
     openSection("Items", in: application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()

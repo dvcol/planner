@@ -1,6 +1,6 @@
 # Selected Item presentation accessibility
 
-Status: historical diagnosis, followed by the [Q99 foreground correction](native-selection-contrast-fix.md) on 18 October 2026. Its represented mobile row/detail checks pass except for a separate dark iPad Increase Contrast overlap at Capture, pending Q101. This document retains the original failures and discarded diagnostic probes; it does not claim final UI acceptance.
+Status: historical diagnosis, followed by the [Q99 foreground correction](native-selection-contrast-fix.md) and [Q101 Add menu](native-catalog-add-menu.md) on 18 October 2026. Their represented mobile row/detail checks pass, including the previously failing dark iPad Increase Contrast overlap. This document retains the original failures and discarded diagnostic probes; it does not claim final UI acceptance.
 
 ## Context and goal
 

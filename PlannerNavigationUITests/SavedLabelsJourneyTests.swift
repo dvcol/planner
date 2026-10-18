@@ -24,7 +24,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
     application.plannerElement("saved.categories.done").activateForPlannerJourney()
     closeSettings(application)
     openItems(application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     enterNewItemTitle("Discarded label draft", application: application)
     selectLabels(
       "Categories", names: ["Culture"], identifierPrefix: "saved.item", application: application)
@@ -42,9 +42,9 @@ final class SavedLabelsJourneyTests: XCTestCase {
     XCTAssertTrue(discard.waitForExistence(timeout: 5))
     discard.activateForPlannerJourney()
     XCTAssertTrue(application.textFields["saved.item.title"].waitForNonExistence(timeout: 5))
-    XCTAssertTrue(application.plannerElement("saved.item.new").waitForExistence(timeout: 5))
+    XCTAssertTrue(application.plannerElement("saved.item.addMenu").waitForExistence(timeout: 5))
     XCTAssertEqual(application.savedPlannerItemRows("Discarded label draft").count, 0)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     enterNewItemTitle("Rainy museum", application: application)
     selectLabels(
       "Categories", names: ["Culture"], identifierPrefix: "saved.item", application: application)
@@ -716,7 +716,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
     }
     application.plannerElement("saved.categories.done").activateForPlannerJourney()
     openItems(application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -916,7 +916,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
     _ name: String, categories: [String], tags: [String], application: XCUIApplication
   ) {
     openItems(application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -997,7 +997,7 @@ final class SavedLabelsJourneyTests: XCTestCase {
     items.activateForPlannerJourney()
     let back = application.navigationBars.buttons["Items"].firstMatch
     if back.exists { back.activateForPlannerJourney() }
-    XCTAssertTrue(application.plannerElement("saved.item.new").waitForExistence(timeout: 10))
+    XCTAssertTrue(application.plannerElement("saved.item.addMenu").waitForExistence(timeout: 10))
   }
 
   private func openItemEditor(_ application: XCUIApplication) {

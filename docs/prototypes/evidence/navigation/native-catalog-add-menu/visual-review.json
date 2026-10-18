@@ -1,0 +1,37 @@
+{
+  "reviewedOriginals": [
+    {
+      "path": "q101-tablet-menu-and-contrast-dark-increased/77C160BF-F85F-46D6-9E22-B9356AA1B121.png",
+      "observation": "Full Items title fits alongside native Filters, Sort and Add. Former bottom Capture overlap is gone."
+    },
+    {
+      "path": "q101-tablet-menu-and-contrast-dark-increased/B32F3580-0572-4E33-99B4-4CE01FF21A00.png",
+      "observation": "Selected native blue row has strong black title/caption and readable dark detail. Bottom row is unobscured by Capture."
+    },
+    {
+      "path": "q101-tablet-final-dark-increased/F5AB0208-3ECF-407B-A408-C43C8C9061B1.png",
+      "observation": "Full Inbox title and three toolbar controls fit; native empty collection/detail states remain."
+    },
+    {
+      "path": "q101-mac-saved-estimate-diagnostic/35911062-E390-4C80-A89A-9223FB50CF2E.png",
+      "observation": "Diagnostic original: saved duration visibly 2 days despite missing accessibility value. Window-only capture, no desktop pixels."
+    },
+    {
+      "path": "q101-mac-static-estimate-qualified/299FFCD9-9ED7-4D6A-9E20-E675284A4112.png",
+      "observation": "Passing saved native Mac Item: sidebar/panes, 2-day row preview and detail, notes and retained example.com bookmark. Provider unavailable fallback remains useful."
+    },
+    {
+      "path": "q101-mac-static-estimate-qualified/4CB017AE-045C-43EF-ADBD-3B655D8A9FAD.png",
+      "observation": "Native staged Capture Form, Hours selection, 12-hour stepper and explicit Cancel/Add. Window-only capture."
+    },
+    {
+      "path": "q101-phone-menu-navigation-qualified/B696CF16-A5CF-42BB-BF07-F936DB4B2762.png",
+      "observation": "Light phone Items title and three top actions fit with native bottom tabs. Lower row text still passes behind the floating TabView; broader scroll review remains open."
+    },
+    {
+      "path": "q101-phone-menu-navigation-qualified/82E36C6C-43B5-48D6-8379-5B8024FDE85F.png",
+      "observation": "Light phone Inbox title/actions and native empty state are readable; bottom tabs remain native."
+    }
+  ],
+  "scope": "Only named original own-window captures; no visual credit for other exports or failed test recordings."
+}

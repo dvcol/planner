@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "77C160BF-F85F-46D6-9E22-B9356AA1B121.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Items native Add toolbar_0_7A5C6B44-9969-456C-BA16-60EB43ACAA8A.png",
+    "timestamp": 1792312502.967,
+    "testIdentifier": "ListWindowJourneyTests/testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "B32F3580-0572-4E33-99B4-4CE01FF21A00.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Selected Item presentation before native contrast audit_0_DA9780A9-285E-44EB-A9FA-E980A3F820FE.png",
+    "timestamp": 1792312529.74,
+    "testIdentifier": "ListWindowJourneyTests/testSelectedItemPresentationPassesNativeContrastAudit()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "839D036E-D385-4195-A12B-DAAE275F5E19.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Selected List presentation after local completion_0_9AACE924-DCC6-47C6-99BC-0AF25DC5DE34.png",
+    "timestamp": 1792312550.671,
+    "testIdentifier": "ListWindowJourneyTests/testSelectedListPresentationAndCompletionPassNativeContrastAudit()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "C843DDD6-FE4C-46DF-A139-CEB440299995.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Selected List presentation before native contrast audit_0_0E626BCF-135E-498A-945E-BD8009BF8811.png",
+    "timestamp": 1792312545.933,
+    "testIdentifier": "ListWindowJourneyTests/testSelectedListPresentationAndCompletionPassNativeContrastAudit()"
+  }
+]

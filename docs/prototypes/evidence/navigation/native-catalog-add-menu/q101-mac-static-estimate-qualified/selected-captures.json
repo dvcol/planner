@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "299FFCD9-9ED7-4D6A-9E20-E675284A4112.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Reviewed native capture saves Weekend estimate notes and original link_0_38C527C4-42F1-4D01-9CB9-840601D7B558.png",
+    "timestamp": 1792313304.568,
+    "testIdentifier": "SavedCaptureJourneyTests/testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "00006030-001A586C3EA3001C",
+    "deviceName": "My Mac",
+    "exportedFileName": "4CB017AE-045C-43EF-ADBD-3B655D8A9FAD.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native capture review keeps the staged estimate before Cancel_0_64C8AA23-488B-4C28-B97F-8A47F7DFC23D.png",
+    "timestamp": 1792313273.669,
+    "testIdentifier": "SavedCaptureJourneyTests/testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem()"
+  }
+]

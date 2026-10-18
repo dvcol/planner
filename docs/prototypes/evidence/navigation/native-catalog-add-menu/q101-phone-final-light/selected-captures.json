@@ -1,0 +1,41 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "E7556D04-910C-407D-A14A-DBAD8D03FA7C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Items native Add toolbar_0_2C4EE40F-D7E2-4B9C-B009-49B1BD1F83F0.png",
+    "timestamp": 1792313654.819,
+    "testIdentifier": "ListWindowJourneyTests/testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "3BE03E85-AB36-472A-9ACF-5E8F2CA4438C.txt",
+    "isAssociatedWithFailure": true,
+    "suggestedHumanReadableName": "Complete Issue Description.txt",
+    "testIdentifier": "ListWindowJourneyTests/testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "9CA10654-BD82-4BA9-87B5-65CB4A5C9C8C.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Selected Item presentation before native contrast audit_0_3C8BCB4A-8C9C-4CA0-8841-D08E7CD53BBD.png",
+    "timestamp": 1792313674.986,
+    "testIdentifier": "ListWindowJourneyTests/testSelectedItemPresentationPassesNativeContrastAudit()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "2E5DAE95-150F-427D-B933-A3095D6E1B16.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Selected List presentation before native contrast audit_0_A9A4721F-C545-4ADA-8841-1E22D200CECE.png",
+    "timestamp": 1792313686.746,
+    "testIdentifier": "ListWindowJourneyTests/testSelectedListPresentationAndCompletionPassNativeContrastAudit()"
+  }
+]

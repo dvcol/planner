@@ -1,0 +1,22 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "82E36C6C-43B5-48D6-8379-5B8024FDE85F.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Inbox native Add toolbar_0_D5255761-E074-4709-B32F-55D0C59596E0.png",
+    "timestamp": 1792313812.533,
+    "testIdentifier": "ListWindowJourneyTests/testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "2A49C66C-C8A4-435F-B98A-9A90706780DE",
+    "deviceName": "iPhone 18 Pro",
+    "exportedFileName": "B696CF16-A5CF-42BB-BF07-F936DB4B2762.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Items native Add toolbar_0_129071B0-7846-40C9-952A-E588AD4D7511.png",
+    "timestamp": 1792313794.79,
+    "testIdentifier": "ListWindowJourneyTests/testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving()"
+  }
+]

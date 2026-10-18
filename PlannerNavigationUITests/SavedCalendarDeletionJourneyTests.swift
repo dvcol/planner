@@ -12,7 +12,7 @@ final class SavedCalendarDeletionJourneyTests: XCTestCase {
     #else
       application.buttons["Items"].firstMatch.activateForPlannerJourney()
     #endif
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()

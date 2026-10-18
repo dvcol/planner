@@ -95,7 +95,7 @@ final class SavedItemDeletionJourneyTests: XCTestCase {
     application.plannerElement("saved.item.delete.confirm").activateForPlannerJourney()
     XCTAssertTrue(
       application.plannerElement("saved.item.delete.confirm").waitForNonExistence(timeout: 10))
-    openCatalog("Items", creationIdentifier: "saved.item.new", application: application)
+    openCatalog("Items", creationIdentifier: "saved.item.addMenu", application: application)
     XCTAssertTrue(
       application.plannerElement(removedItemIdentifier).waitForNonExistence(timeout: 10))
     XCTAssertTrue(application.plannerElement(retainedItemIdentifier).exists)
@@ -171,7 +171,7 @@ final class SavedItemDeletionJourneyTests: XCTestCase {
       application.plannerElement("saved.item.delete.confirm").waitForNonExistence(timeout: 10))
     application.terminate()
     application.launchSavedPlannerJourney()
-    openCatalog("Items", creationIdentifier: "saved.item.new", application: application)
+    openCatalog("Items", creationIdentifier: "saved.item.addMenu", application: application)
     XCTAssertFalse(application.plannerElement(removedItemIdentifier).exists)
     XCTAssertTrue(application.plannerElement(retainedItemIdentifier).exists)
     openItem(retainedItemIdentifier, application: application)
@@ -229,13 +229,13 @@ final class SavedItemDeletionJourneyTests: XCTestCase {
     XCTAssertFalse(application.plannerElement(appearanceIdentifier).exists)
     XCTAssertFalse(application.plannerElement("saved.appearance.actions").exists)
     XCTAssertFalse(application.alerts["Planner"].exists)
-    openCatalog("Items", creationIdentifier: "saved.item.new", application: application)
+    openCatalog("Items", creationIdentifier: "saved.item.addMenu", application: application)
     XCTAssertFalse(application.plannerElement(itemIdentifier).exists)
   }
 
   private func createItem(_ title: String, notes: String, application: XCUIApplication) -> String {
-    openCatalog("Items", creationIdentifier: "saved.item.new", application: application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    openCatalog("Items", creationIdentifier: "saved.item.addMenu", application: application)
+    application.openSavedPlannerNewItemEditor()
     let titleField = application.textFields["saved.item.title"]
     XCTAssertTrue(titleField.waitForExistence(timeout: 5))
     titleField.activateForPlannerJourney()
@@ -245,14 +245,14 @@ final class SavedItemDeletionJourneyTests: XCTestCase {
     notesField.typeText(notes)
     application.plannerElement("saved.item.save").activateForPlannerJourney()
     XCTAssertTrue(application.plannerElement("saved.item.actions").waitForExistence(timeout: 10))
-    openCatalog("Items", creationIdentifier: "saved.item.new", application: application)
+    openCatalog("Items", creationIdentifier: "saved.item.addMenu", application: application)
     let row = application.savedPlannerItemRows(title).firstMatch
     XCTAssertTrue(row.waitForExistence(timeout: 10))
     return row.identifier
   }
 
   private func openItem(_ identifier: String, application: XCUIApplication) {
-    openCatalog("Items", creationIdentifier: "saved.item.new", application: application)
+    openCatalog("Items", creationIdentifier: "saved.item.addMenu", application: application)
     let row = application.plannerElement(identifier)
     XCTAssertTrue(row.waitForExistence(timeout: 10))
     row.activateForPlannerJourney()

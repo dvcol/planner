@@ -1945,7 +1945,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     XCTAssertFalse(application.progressIndicators["saved.list.progress"].exists)
     recordScreenshot(application, name: "Native row menu removes an unselected List membership")
     openSection("Items", application: application)
-    revealSidebarIfNeeded(application, element: application.plannerElement("saved.item.new"))
+    revealSidebarIfNeeded(application, element: application.plannerElement("saved.item.addMenu"))
     let retainedItem = application.descendants(matching: .any).matching(
       NSPredicate(format: "identifier BEGINSWITH %@", "saved.item.")
     ).matching(
@@ -2047,7 +2047,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     application.launchSavedPlannerJourney()
     openSection("Items", application: application)
     let filters = application.plannerElement("saved.items.filters")
-    revealSidebarIfNeeded(application, element: application.plannerElement("saved.item.new"))
+    revealSidebarIfNeeded(application, element: application.plannerElement("saved.item.addMenu"))
     XCTAssertTrue(filters.waitForExistence(timeout: 5))
     XCTAssertEqual(filters.plannerControlTitle, "Active")
     application.chooseSavedPlannerStateFilter("Archived", control: filters)
@@ -2074,7 +2074,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     application.terminate()
     application.launchSavedPlannerJourney()
     openSection("Items", application: application)
-    revealSidebarIfNeeded(application, element: application.plannerElement("saved.item.new"))
+    revealSidebarIfNeeded(application, element: application.plannerElement("saved.item.addMenu"))
     XCTAssertEqual(filters.plannerControlTitle, "Active")
     XCTAssertTrue(archivedItem.waitForExistence(timeout: 10))
     archivedItem.activateForPlannerJourney()
@@ -3242,7 +3242,7 @@ final class SavedAppearanceJourneyTests: XCTestCase {
     notes: String = "Meet at the garden entrance"
   ) {
     openSection("Items", application: application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let titleField = application.textFields["saved.item.title"]
     XCTAssertTrue(titleField.waitForExistence(timeout: 5))
     titleField.activateForPlannerJourney()

@@ -42,15 +42,29 @@ extension XCUIApplication {
     return coloredPixels > 256
   }
 
+  func openSavedPlannerCatalogAddMenu() {
+    openSavedPlannerMenu(identifier: "saved.item.addMenu", title: "Add")
+  }
+
+  func openSavedPlannerNewItemEditor() {
+    openSavedPlannerCatalogAddMenu()
+    plannerElement("saved.item.new").activateForPlannerJourney()
+  }
+
+  func openSavedPlannerCaptureEditor() {
+    openSavedPlannerCatalogAddMenu()
+    plannerElement("saved.capture.new").activateForPlannerJourney()
+  }
+
   func openSavedPlannerListAddMenu() {
-    openSavedPlannerListMenu(identifier: "saved.list.addMenu", title: "Add")
+    openSavedPlannerMenu(identifier: "saved.list.addMenu", title: "Add")
   }
 
   func openSavedPlannerListActionsMenu() {
-    openSavedPlannerListMenu(identifier: "saved.list.actions", title: "List actions")
+    openSavedPlannerMenu(identifier: "saved.list.actions", title: "List actions")
   }
 
-  private func openSavedPlannerListMenu(identifier: String, title: String) {
+  private func openSavedPlannerMenu(identifier: String, title: String) {
     var menu = plannerElement(identifier)
     if !menu.exists || !menu.isHittable {
       #if os(macOS)
@@ -63,7 +77,7 @@ extension XCUIApplication {
             && $0.buttons["OverflowBarButtonItem"].firstMatch.isHittable
         }
         guard let contentBar else {
-          XCTFail("The selected List's \(title) menu is unavailable")
+          XCTFail("The selected catalog's \(title) menu is unavailable")
           return
         }
         contentBar.buttons["OverflowBarButtonItem"].firstMatch.activateForPlannerJourney()

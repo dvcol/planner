@@ -12,7 +12,7 @@ final class SavedItemJourneyTests: XCTestCase {
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
     openDesignSection("Items", in: application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -78,7 +78,7 @@ final class SavedItemJourneyTests: XCTestCase {
       }
     #endif
     openDesignSection("Items", in: application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -269,7 +269,7 @@ final class SavedItemJourneyTests: XCTestCase {
       application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
       application.launchSavedPlannerJourney()
       openItems(application)
-      application.plannerElement("saved.item.new").activateForPlannerJourney()
+      application.openSavedPlannerNewItemEditor()
       let title = application.textFields["saved.item.title"]
       XCTAssertTrue(title.waitForExistence(timeout: 5))
       title.activateForPlannerJourney()
@@ -332,7 +332,7 @@ final class SavedItemJourneyTests: XCTestCase {
       application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
       application.launchSavedPlannerJourney()
       openItems(application)
-      application.plannerElement("saved.item.new").activateForPlannerJourney()
+      application.openSavedPlannerNewItemEditor()
       let title = application.textFields["saved.item.title"]
       XCTAssertTrue(title.waitForExistence(timeout: 5))
       title.activateForPlannerJourney()
@@ -388,7 +388,7 @@ final class SavedItemJourneyTests: XCTestCase {
       application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
       application.launchSavedPlannerJourney()
       openItems(application)
-      application.plannerElement("saved.item.new").activateForPlannerJourney()
+      application.openSavedPlannerNewItemEditor()
       let title = application.textFields["saved.item.title"]
       XCTAssertTrue(title.waitForExistence(timeout: 5))
       title.activateForPlannerJourney()
@@ -560,7 +560,7 @@ final class SavedItemJourneyTests: XCTestCase {
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
     openItems(application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -658,7 +658,7 @@ final class SavedItemJourneyTests: XCTestCase {
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
     openItems(application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -756,7 +756,7 @@ final class SavedItemJourneyTests: XCTestCase {
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
     openItems(application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -839,7 +839,7 @@ final class SavedItemJourneyTests: XCTestCase {
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
     openItems(application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -940,7 +940,7 @@ final class SavedItemJourneyTests: XCTestCase {
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
     openItems(application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -1007,7 +1007,7 @@ final class SavedItemJourneyTests: XCTestCase {
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
     openItems(application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -1064,7 +1064,7 @@ final class SavedItemJourneyTests: XCTestCase {
     openItems(application)
     let back = application.navigationBars.buttons["Items"].firstMatch
     if back.exists { back.activateForPlannerJourney() }
-    XCTAssertTrue(application.plannerElement("saved.item.new").waitForExistence(timeout: 10))
+    XCTAssertTrue(application.plannerElement("saved.item.addMenu").waitForExistence(timeout: 10))
   }
 
   func testConfirmedScheduleRemovalKeepsOtherAppointmentsAndSourceItemAfterRelaunch() {
@@ -1073,7 +1073,7 @@ final class SavedItemJourneyTests: XCTestCase {
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
     openItems(application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -1170,7 +1170,7 @@ final class SavedItemJourneyTests: XCTestCase {
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
     openItems(application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -1235,7 +1235,7 @@ final class SavedItemJourneyTests: XCTestCase {
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
     openItems(application)
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -1298,9 +1298,9 @@ final class SavedItemJourneyTests: XCTestCase {
     application.launchArguments = ["--local-prototype-dataset", UUID().uuidString]
     application.launchSavedPlannerJourney()
     openItems(application)
-    let newItem = application.plannerElement("saved.item.new")
+    let newItem = application.plannerElement("saved.item.addMenu")
     XCTAssertTrue(newItem.waitForExistence(timeout: 10))
-    newItem.activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -1308,7 +1308,7 @@ final class SavedItemJourneyTests: XCTestCase {
     application.plannerElement("saved.item.cancel").activateForPlannerJourney()
     XCTAssertFalse(application.staticTexts["Canceled visit"].exists)
 
-    newItem.activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
     title.typeText("Nezu Museum")

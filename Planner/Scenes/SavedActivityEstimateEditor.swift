@@ -122,6 +122,7 @@ struct SavedItemEstimateSection: View {
         Text(estimate?.nativeEstimateDescription ?? "No estimate").foregroundStyle(Color.primary)
       }
       .accessibilityElement(children: .ignore)
+      .accessibilityAddTraits(.isStaticText)
       .accessibilityLabel("Activity estimate")
       .accessibilityValue(estimate.map { "\($0.minutes) minutes" } ?? "No estimate")
       .accessibilityIdentifier("saved.item.estimate")

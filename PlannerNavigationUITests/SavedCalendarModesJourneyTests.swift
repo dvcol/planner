@@ -12,7 +12,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     #else
       application.openPlannerSection("Items")
     #endif
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -121,7 +121,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     #else
       application.openPlannerSection("Items")
     #endif
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -250,7 +250,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     #else
       application.openPlannerSection("Items")
     #endif
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -312,7 +312,7 @@ final class SavedCalendarModesJourneyTests: XCTestCase {
     #else
       application.openPlannerSection("Items")
     #endif
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()

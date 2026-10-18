@@ -603,7 +603,7 @@ final class SavedContainerEstimateJourneyTests: XCTestCase {
 
   private func createItem(_ title: String, includeEstimate: Bool, application: XCUIApplication) {
     openSection("Items", application: application)
-    reveal("saved.item.new", application: application).activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let field = application.textFields["saved.item.title"]
     XCTAssertTrue(field.waitForExistence(timeout: 5))
     field.activateForPlannerJourney()

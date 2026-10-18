@@ -204,7 +204,7 @@ final class SavedItineraryEntriesJourneyTests: XCTestCase {
     openSection("Items", application: application)
     let back = application.navigationBars.buttons["Items"].firstMatch
     if back.exists { back.activateForPlannerJourney() }
-    XCTAssertTrue(application.plannerElement("saved.item.new").waitForExistence(timeout: 10))
+    XCTAssertTrue(application.plannerElement("saved.item.addMenu").waitForExistence(timeout: 10))
   }
 
   func testOrderedItemAndListEntriesKeepIndependentChecksAndDetailsAfterRelaunch() {
@@ -301,7 +301,7 @@ final class SavedItineraryEntriesJourneyTests: XCTestCase {
 
   private func createItem(_ title: String, notes: String, application: XCUIApplication) {
     openSection("Items", application: application)
-    reveal(application, identifier: "saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let field = application.textFields["saved.item.title"]
     XCTAssertTrue(field.waitForExistence(timeout: 5))
     field.activateForPlannerJourney()

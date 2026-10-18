@@ -1,0 +1,211 @@
+{
+  "status": "Q101 represented Add-menu journeys pass; broader app and signed-storage gates remain open",
+  "phases": [
+    {
+      "phase": "q101-mac-capture-picker-qualified",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSceneAppearanceRuntime-q101-mac-capture-picker-qualified.xcresult",
+      "compilerOnly": false,
+      "literalTestResults": [
+        "Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem]' started.",
+        "/tmp/PlannerItemWindowCompatibilitySource/PlannerNavigationUITests/SavedCaptureJourneyTests.swift:360: error: -[PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem] : XCTAssertTrue failed",
+        "Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem]' failed (54.241 seconds).",
+        "** TEST EXECUTE FAILED **"
+      ]
+    },
+    {
+      "phase": "q101-mac-saved-estimate-diagnostic",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSceneAppearanceRuntime-q101-mac-saved-estimate-diagnostic.xcresult",
+      "compilerOnly": false,
+      "literalTestResults": [
+        "Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem]' started.",
+        "/tmp/PlannerItemWindowCompatibilitySource/PlannerNavigationUITests/SavedCaptureJourneyTests.swift:370: error: -[PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem] : XCTAssertTrue failed - Estimate label: Activity estimate, value: Optional()",
+        "Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem]' failed (55.489 seconds).",
+        "** TEST EXECUTE FAILED **"
+      ]
+    },
+    {
+      "phase": "q101-mac-static-estimate-qualified",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSceneAppearanceRuntime-q101-mac-static-estimate-qualified.xcresult",
+      "compilerOnly": false,
+      "literalTestResults": [
+        "Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem]' started.",
+        "Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem]' passed (68.643 seconds).",
+        "** TEST EXECUTE SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q101-mac-unlocked-retry",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSceneAppearanceRuntime-q101-mac-unlocked-retry.xcresult",
+      "compilerOnly": false,
+      "literalTestResults": [
+        "Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem]' started.",
+        "/tmp/PlannerItemWindowCompatibilitySource/PlannerNavigationUITests/SavedCaptureJourneyTests.swift:382: error: -[PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem] : XCTAssertTrue failed",
+        "Test Case '-[PlannerNavigationUITests.SavedCaptureJourneyTests testReviewedCaptureEstimateShortcutsCancelWithoutSavingAndPersistOneInboxItem]' failed (21.667 seconds).",
+        "** TEST EXECUTE FAILED **"
+      ]
+    },
+    {
+      "phase": "q101-menu-final-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true
+    },
+    {
+      "phase": "q101-menu-green-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true
+    },
+    {
+      "phase": "q101-menu-mac-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true
+    },
+    {
+      "phase": "q101-menu-mac-estimate-diagnostic-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true
+    },
+    {
+      "phase": "q101-menu-mac-estimate-static-text-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true
+    },
+    {
+      "phase": "q101-menu-mac-qualified-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true
+    },
+    {
+      "phase": "q101-menu-mac-static-estimate-qualified-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true
+    },
+    {
+      "phase": "q101-menu-phone-navigation-qualified-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true
+    },
+    {
+      "phase": "q101-menu-qualified-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true
+    },
+    {
+      "phase": "q101-menu-recovery-qualified-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true
+    },
+    {
+      "phase": "q101-menu-red-mobile-build",
+      "exitCode": 0,
+      "runtimeCredit": false,
+      "compilerOnly": true
+    },
+    {
+      "phase": "q101-phone-final-light",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q101-phone-final-light.xcresult",
+      "compilerOnly": false,
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerNavigationUITests/NativeNavigationElements.swift:404: error: -[PlannerFixtureUITests.ListWindowJourneyTests testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving] : Failed to tap \"saved.item.cancel\" Button: No matches found for Elements matching predicate '\"saved.item.cancel\" IN identifiers' from input {(",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving]' failed (18.064 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' started.",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' passed (12.155 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' started.",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' passed (11.743 seconds).",
+        "xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH",
+        "** TEST EXECUTE FAILED **"
+      ]
+    },
+    {
+      "phase": "q101-phone-menu-navigation-qualified",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q101-phone-menu-navigation-qualified.xcresult",
+      "compilerOnly": false,
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving]' started.",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving]' passed (48.847 seconds).",
+        "** TEST EXECUTE SUCCEEDED **"
+      ]
+    },
+    {
+      "phase": "q101-tablet-final-dark-increased",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q101-tablet-final-dark-increased.xcresult",
+      "compilerOnly": false,
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving]' started.",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving]' passed (53.680 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' started.",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' passed (12.324 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' started.",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' passed (20.704 seconds).",
+        "Test Case '-[PlannerFixtureUITests.RecoveryCheckpointJourneyTests testUnavailableRecoveryEvidenceBlocksChangesAndAllowsReadingAfterRecheck]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerFixtureUITests/RecoveryCheckpointJourneyTests.swift:13: error: -[PlannerFixtureUITests.RecoveryCheckpointJourneyTests testUnavailableRecoveryEvidenceBlocksChangesAndAllowsReadingAfterRecheck] : XCTAssertTrue failed",
+        "Test Case '-[PlannerFixtureUITests.RecoveryCheckpointJourneyTests testUnavailableRecoveryEvidenceBlocksChangesAndAllowsReadingAfterRecheck]' failed (25.235 seconds).",
+        "xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH",
+        "** TEST EXECUTE FAILED **"
+      ]
+    },
+    {
+      "phase": "q101-tablet-menu-and-contrast-dark-increased",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q101-tablet-menu-and-contrast-dark-increased.xcresult",
+      "compilerOnly": false,
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerFixtureUITests/ListWindowJourneyTests.swift:34: error: -[PlannerFixtureUITests.ListWindowJourneyTests testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving] : XCTAssertTrue failed",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving]' failed (24.595 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' started.",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedItemPresentationPassesNativeContrastAudit]' passed (12.181 seconds).",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' started.",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testSelectedListPresentationAndCompletionPassNativeContrastAudit]' passed (20.794 seconds).",
+        "xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH",
+        "** TEST EXECUTE FAILED **"
+      ]
+    },
+    {
+      "phase": "q101-tablet-menu-red",
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q101-tablet-menu-red.xcresult",
+      "compilerOnly": false,
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving]' started.",
+        "/tmp/PlannerNativeItemWindowSource/PlannerFixtureUITests/ListWindowJourneyTests.swift:20: error: -[PlannerFixtureUITests.ListWindowJourneyTests testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving] : XCTAssertTrue failed",
+        "Test Case '-[PlannerFixtureUITests.ListWindowJourneyTests testItemsAndInboxAddMenuOpenTheirEditorsAndCancelWithoutSaving]' failed (20.916 seconds).",
+        "xcrun: error: unable to find utility \"simctl\", not a developer tool or in PATH",
+        "** TEST EXECUTE FAILED **"
+      ]
+    },
+    {
+      "phase": "q101-tablet-recovery-navigation-qualified",
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerSelectionContrastFixRuntime-q101-tablet-recovery-navigation-qualified.xcresult",
+      "compilerOnly": false,
+      "literalTestResults": [
+        "Test Case '-[PlannerFixtureUITests.RecoveryCheckpointJourneyTests testUnavailableRecoveryEvidenceBlocksChangesAndAllowsReadingAfterRecheck]' started.",
+        "Test Case '-[PlannerFixtureUITests.RecoveryCheckpointJourneyTests testUnavailableRecoveryEvidenceBlocksChangesAndAllowsReadingAfterRecheck]' passed (23.678 seconds).",
+        "** TEST EXECUTE SUCCEEDED **"
+      ]
+    }
+  ],
+  "limitations": [
+    "Earlier combined runs retain exit 65 for their literal controller failures, even where other cases pass.",
+    "Mac native automation now works for the selected Capture journey; ad hoc signing supplies no protected credential/App Group/CloudKit evidence.",
+    "No physical-device, complete scene or whole-app accessibility acceptance."
+  ]
+}

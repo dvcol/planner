@@ -108,7 +108,7 @@ import XCTest
           "The initialized dataset's store is missing; recovery remains separate."
         ].exists, application.debugDescription)
       XCTAssertTrue(application.plannerElement("saved.settings.recovery").isEnabled)
-      XCTAssertFalse(application.plannerElement("saved.item.new").exists)
+      XCTAssertFalse(application.plannerElement("saved.item.addMenu").exists)
       XCTAssertFalse(application.staticTexts["Saved on this device"].exists)
     }
 

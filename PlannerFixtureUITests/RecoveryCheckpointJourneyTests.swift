@@ -10,12 +10,11 @@ import XCTest
         "--fixture", "unavailable-recovery", "--fixture-dataset", UUID().uuidString,
       ]
       application.launchSavedPlannerJourney()
-      XCTAssertTrue(application.buttons["Items"].firstMatch.waitForExistence(timeout: 20))
       application.openPlannerSection("Items")
       let museum = application.savedPlannerItemRows("Recovery museum").firstMatch
       XCTAssertTrue(museum.waitForExistence(timeout: 15))
       let museumIdentifier = museum.identifier
-      XCTAssertFalse(application.plannerElement("saved.item.new").isEnabled)
+      XCTAssertFalse(application.plannerElement("saved.item.addMenu").isEnabled)
       application.plannerElement("saved.recovery.status.open").activateForPlannerJourney()
       let status = application.staticTexts["saved.recovery.status"]
       XCTAssertTrue(status.waitForExistence(timeout: 10))
@@ -36,10 +35,9 @@ import XCTest
       capture("Unavailable recovery evidence stays explicit after native recheck")
       application.terminate()
       application.launchSavedPlannerJourney()
-      XCTAssertTrue(application.buttons["Items"].firstMatch.waitForExistence(timeout: 20))
       application.openPlannerSection("Items")
       XCTAssertTrue(application.plannerElement(museumIdentifier).waitForExistence(timeout: 15))
-      XCTAssertFalse(application.plannerElement("saved.item.new").isEnabled)
+      XCTAssertFalse(application.plannerElement("saved.item.addMenu").isEnabled)
       application.plannerElement(museumIdentifier).activateForPlannerJourney()
       XCTAssertTrue(
         application.staticTexts["Original recovery notes"].waitForExistence(timeout: 10))
@@ -53,7 +51,6 @@ import XCTest
         "--fixture", "recovery-retry-failure", "--fixture-dataset", UUID().uuidString,
       ]
       application.launchSavedPlannerJourney()
-      XCTAssertTrue(application.buttons["Items"].firstMatch.waitForExistence(timeout: 20))
       application.openPlannerSection("Items")
       let museum = application.savedPlannerItemRows("Recovery museum").firstMatch
       XCTAssertTrue(museum.waitForExistence(timeout: 15))
@@ -76,15 +73,14 @@ import XCTest
       XCTAssertEqual(
         application.staticTexts["saved.recovery.status"].label, "Recovery copy incomplete")
       application.plannerElement("saved.settings.done").activateForPlannerJourney()
-      XCTAssertFalse(application.plannerElement("saved.item.new").isEnabled)
+      XCTAssertFalse(application.plannerElement("saved.item.addMenu").isEnabled)
       application.terminate()
       application.launchSavedPlannerJourney()
-      XCTAssertTrue(application.buttons["Items"].firstMatch.waitForExistence(timeout: 20))
       application.openPlannerSection("Items")
       XCTAssertTrue(application.plannerElement(museumIdentifier).waitForExistence(timeout: 15))
       XCTAssertEqual(application.savedPlannerItemRows("Recovery museum").count, 1)
       XCTAssertTrue(recovery.exists)
-      XCTAssertFalse(application.plannerElement("saved.item.new").isEnabled)
+      XCTAssertFalse(application.plannerElement("saved.item.addMenu").isEnabled)
       application.plannerElement(museumIdentifier).activateForPlannerJourney()
       XCTAssertTrue(
         application.staticTexts["Original recovery notes"].waitForExistence(timeout: 10))
@@ -98,7 +94,6 @@ import XCTest
         "--fixture", "incomplete-recovery", "--fixture-dataset", UUID().uuidString,
       ]
       application.launchSavedPlannerJourney()
-      XCTAssertTrue(application.buttons["Items"].firstMatch.waitForExistence(timeout: 20))
       application.openPlannerSection("Items")
       let museum = application.savedPlannerItemRows("Recovery museum").firstMatch
       let hotel = application.savedPlannerItemRows("Existing hotel").firstMatch
@@ -108,13 +103,12 @@ import XCTest
       let hotelIdentifier = hotel.identifier
       let recovery = application.plannerElement("saved.recovery.status.open")
       XCTAssertTrue(recovery.waitForExistence(timeout: 10))
-      let newItem = application.plannerElement("saved.item.new")
+      let newItem = application.plannerElement("saved.item.addMenu")
       XCTAssertFalse(newItem.isEnabled)
       XCTAssertTrue(newItem.frame.intersection(recovery.frame).isEmpty)
       capture("Incomplete recovery keeps saved Items readable and changes disabled")
       application.terminate()
       application.launchSavedPlannerJourney()
-      XCTAssertTrue(application.buttons["Items"].firstMatch.waitForExistence(timeout: 20))
       application.openPlannerSection("Items")
       XCTAssertTrue(application.plannerElement(museumIdentifier).waitForExistence(timeout: 15))
       XCTAssertTrue(recovery.waitForExistence(timeout: 10))

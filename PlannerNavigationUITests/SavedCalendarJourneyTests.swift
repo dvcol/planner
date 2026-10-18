@@ -12,7 +12,7 @@ final class SavedCalendarJourneyTests: XCTestCase {
     #else
       application.buttons["Items"].firstMatch.activateForPlannerJourney()
     #endif
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
@@ -59,7 +59,7 @@ final class SavedCalendarJourneyTests: XCTestCase {
     #else
       application.buttons["Items"].firstMatch.activateForPlannerJourney()
     #endif
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let childTitle = application.textFields["saved.item.title"]
     XCTAssertTrue(childTitle.waitForExistence(timeout: 5))
     childTitle.activateForPlannerJourney()
@@ -168,7 +168,7 @@ final class SavedCalendarJourneyTests: XCTestCase {
     #else
       application.buttons["Items"].firstMatch.activateForPlannerJourney()
     #endif
-    application.plannerElement("saved.item.new").activateForPlannerJourney()
+    application.openSavedPlannerNewItemEditor()
     let title = application.textFields["saved.item.title"]
     XCTAssertTrue(title.waitForExistence(timeout: 5))
     title.activateForPlannerJourney()
