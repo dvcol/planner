@@ -1,6 +1,6 @@
 # Native Item creation and contextual navigation
 
-Status: rich creation and guarded navigation have native runtime evidence on Mac, iPhone and iPad, including the platform-specific dialog fix. Mac renamed-destination review, Google Maps capture and originating-List capture also have passing native invocations. Adaptive-layout and wider compatibility checks still keep Q88–Q91/Q93 and the Navigation prototype open.
+Status: rich creation and guarded navigation have native evidence on Mac, iPhone and iPad at their recorded epochs. The current iPad continuation qualifies archived, deleted and freshly restored originating Lists, and repairs selection after saving into a restored List. Current Mac UI startup, wider platform/accessibility review and physical gates keep Q88–Q91/Q93 and the Navigation prototype open.
 
 ## Context and expected state
 
@@ -18,7 +18,7 @@ Edited drafts require Save, Discard or Keep Editing before navigation. An untouc
 
 The human approved the creation/navigation decisions and the public Core, HTTP and native UI boundaries. Core and HTTP qualification are recorded in their [Core report](core-item-in-list-creation.md) and [MCP report](mcp-item-in-list-creation.md).
 
-Rich-content, dirty-navigation and Mac renamed-destination journeys have executable native fixtures and passing invocations. The [layout and compatibility continuation](native-layout-compatibility.md) records the later source, resizing checks and deletion crash correction. Restored/unavailable destinations remain separate native gates. Required production native journeys include:
+Rich-content, dirty-navigation and Mac renamed-destination journeys have executable native fixtures and passing invocations. The [layout and compatibility continuation](native-layout-compatibility.md) records the later source, resizing checks and deletion crash correction. The archive/delete/restored-origin continuations below qualify represented iPad destination changes; Mac and physical acceptance remain separate gates. Required production native journeys include:
 
 - Cancel a changed List draft without creating a source or membership. Save full content, two separately labeled identical URLs and a local Todo membership; preserve their identities after relaunch and leave another List unchanged.
 - Keep Editing, reject an invalid navigation Save, then save successfully before leaving. Preserve fields and destination through column resizing/collapse.
@@ -64,7 +64,7 @@ The Mac originating-List capture journey passes in 56.868 s in `mac-list-window-
 
 Strict lint passes all four affected Swift files. Both final app/UI-target builds succeed. Independent Standards and Spec rechecks cleared the platform-specific fix after raising and resolving the iPad cancellation-role concern. Production Core and HTTP behavior is unchanged in this slice; their focused qualification remains in the linked reports.
 
-The [layout and compatibility continuation](native-layout-compatibility.md) supersedes the resize and represented Add/Capture/deletion runtime gaps for its recorded source and tests. Restored/unavailable native destinations, native label/estimate creation, other adaptive layouts, broader Mac Maps journeys, physical sync/account/Share, accessibility, performance and whole-app polish remain open. These reports do not close the overall feature or map gates.
+The [layout and compatibility continuation](native-layout-compatibility.md) supersedes the resize and represented Add/Capture/deletion runtime gaps for its recorded source and tests. The origin continuations below qualify represented iPad destination changes. Other platform equivalents, wider label/estimate and adaptive-layout acceptance, broader Mac Maps journeys, physical sync/account/Share, accessibility, performance and whole-app polish remain open. These reports do not close the overall feature or map gates.
 
 ## Archived originating List continuation
 
@@ -72,12 +72,22 @@ The native `testNewItemDraftRetainsFieldsAndDestinationAcrossOriginatingListArch
 
 Two earlier invocations fail at error observation because touching Save dismisses the native sidebar overlay. The original pre-Save capture confirms the dimmed editor behind that overlay. The corrected controller dismisses it through the detail heading before Save. No production correction is credited. Original after-error and saved-detail captures were inspected for readable fields and stable destination context.
 
-The archive/unarchive journey does not establish restoration under a new lifetime, Mac interaction, physical synchronization or final whole-app acceptance. Deletion is qualified separately below.
+The archive/unarchive journey does not establish Mac interaction, physical synchronization or final whole-app acceptance. Deletion and fresh-lifetime restoration are qualified separately below.
 
 ## Deleted originating List continuation
 
 `tablet-deleted-origin-all-states-qualified` passes in 88.515 s on regular-width iPad, dark mode with Increase Contrast. Confirmed List deletion preserves the title and notes of its unsaved Item draft. Save rejects the unavailable destination. Discard creates no Item, the unrestricted Items catalog remains empty after relaunch, the deleted List stays absent, and the surviving List stays empty.
 
-The first invocation passes deletion, preserved fields and rejection, then fails an empty-state text expectation: the catalog's default Active filter reports No matching items. The corrected controller explicitly clears every filter before requiring No Items yet, so its empty-catalog proof includes all completion/archive states. Production behavior is unchanged. Restoration under a fresh lifetime remains a separate required native journey.
+The first invocation passes deletion, preserved fields and rejection, then fails an empty-state text expectation: the catalog's default Active filter reports No matching items. The corrected controller explicitly clears every filter before requiring No Items yet, so its empty-catalog proof includes all completion/archive states. Production behavior is unchanged. The fresh-lifetime native continuation below qualifies restoration separately.
 
-The [caller/draft checkpoint index](evidence/navigation/native-itinerary-window-compatibility/origin-draft-and-caller-checkpoint-validation/observed-results.json) preserves individual passing functions, failed attempts and compiler-only epochs. Final mobile and Mac app/UI targets compile; strict lint passes both affected Swift files and both reports. Recorded production Swift inputs match this checkpoint. This continuation changes native test observations and adds qualification; production behavior remains unchanged.
+The [caller/draft checkpoint index](evidence/navigation/native-itinerary-window-compatibility/origin-draft-and-caller-checkpoint-validation/observed-results.json) preserves individual passing functions, failed attempts and compiler-only epochs. Final mobile and Mac app/UI targets compile; strict lint passes both affected Swift files and both reports. Recorded production Swift inputs match checkpoint `99b17596`. That continuation changes native test observations and adds qualification; its production behavior remains unchanged.
+
+## Restored originating List continuation
+
+The new native journey creates a real backup through Files, opens a List-origin draft, deletes its List, then imports that backup in Overwrite mode with explicit restoration enabled. It reviews exactly one restoration and preserves the draft through the Settings/import sheets. The restored List keeps its public identity and name, but must receive fresh destination review before the draft can save.
+
+`tablet-restored-origin-fresh-review` reaches the correct Use This List review, accepts it and saves, then fails in 123.767 s because the panes still show List deleted. The captured native hierarchy and save path establish the product defect: deletion cleared `selectedListId`, while successful List-bound Save selected the new membership without reselecting its owning List. The correction reattaches the draft's immutable List identity before loading the saved context. It does not change data creation, restoration, backup or review contracts. The corrected source shows the new appearance immediately after Save, then its first follow-up invocation stops at a hidden-sidebar locator after relaunch. Its captured hierarchy has Choose a List and Show Sidebar, with no storage failure. The controller now explicitly opens Lists before selecting the restored row. Ordinary rich Item creation passes on iPhone in 136.107 s and the affected real backup Skip/Overwrite journey passes in 91.813 s. The final `tablet-restored-origin-reviewed-relaunch-qualified` journey passes in 127.184 s on iPad with dark mode and Increase Contrast. It requires fresh review despite the unchanged List name, keeps the draft until a separate explicit Save, displays the saved local appearance immediately, then verifies the original public List/appearance identities, notes and local Todo after relaunch.
+
+Final mobile and Mac app/UI targets compile for the selection repair. The actual Mac UI startup limitation remains; compiler success supplies no window-interaction credit. This closes the represented iPad archive, deletion and fresh-lifetime draft cases, while other platform, accessibility, physical synchronization and whole-app acceptance remain with their owning gates.
+
+The final restored-context capture was inspected: the restored List is selected, its local Todo appearance is visible with 0-of-1 progress, and the detail pane retains the authored notes and List context. The [restored-origin evidence index](evidence/navigation/native-itinerary-window-compatibility/restored-origin-checkpoint-validation/observed-results.json) distinguishes the qualified product red, subsequent relaunch-controller failure, final passing journey and two affected passing phone regressions.

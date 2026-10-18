@@ -1,0 +1,11 @@
+{
+  "command": [
+    "xcrun",
+    "swift-format",
+    "lint",
+    "--strict",
+    "Planner/Scenes/SavedPlannerView.swift",
+    "PlannerNavigationUITests/SavedBackupImportJourneyTests.swift"
+  ],
+  "exitCode": 0
+}

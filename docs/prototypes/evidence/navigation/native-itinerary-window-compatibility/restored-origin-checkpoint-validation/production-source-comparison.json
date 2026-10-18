@@ -1,0 +1,60 @@
+[
+  {
+    "epoch": "native-restored-origin-adaptive-relaunch-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "beforeSelectionFix": false
+  },
+  {
+    "epoch": "native-restored-origin-draft-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [
+      "Planner/Scenes/SavedPlannerView.swift"
+    ],
+    "beforeSelectionFix": true
+  },
+  {
+    "epoch": "native-restored-origin-reviewed-final-mac-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "beforeSelectionFix": false
+  },
+  {
+    "epoch": "native-restored-origin-selection-fix-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "beforeSelectionFix": false
+  },
+  {
+    "epoch": "native-restored-origin-selection-fix-mac-build",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "beforeSelectionFix": false
+  },
+  {
+    "epoch": "phone-restored-origin-creation-and-backup-regressions",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "beforeSelectionFix": false
+  },
+  {
+    "epoch": "tablet-restored-origin-fresh-review",
+    "productionInputs": 149,
+    "differentProductionPaths": [
+      "Planner/Scenes/SavedPlannerView.swift"
+    ],
+    "beforeSelectionFix": true
+  },
+  {
+    "epoch": "tablet-restored-origin-reviewed-relaunch-qualified",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "beforeSelectionFix": false
+  },
+  {
+    "epoch": "tablet-restored-origin-selection-first-green",
+    "productionInputs": 149,
+    "differentProductionPaths": [],
+    "beforeSelectionFix": false
+  }
+]

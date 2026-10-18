@@ -1,0 +1,42 @@
+[
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "D9255D49-8208-4C14-8DBC-A2E401A06F84.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Restored originating List retains the reviewed Item and local Todo after relaunch_0_E021A314-5423-4406-9C87-CCFAA19F1D53.png",
+    "timestamp": 1792348565.516,
+    "testIdentifier": "SavedBackupImportJourneyTests/testRestoredOriginatingListRequiresFreshReviewBeforeSavingItsRetainedItemDraft()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "5FED15D8-54D9-47C8-B068-84AA41C88AEF.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Restored List requires fresh destination review despite unchanged name_0_240F7768-E1B7-469C-B521-30DFB398C7EB.png",
+    "timestamp": 1792348546.73,
+    "testIdentifier": "SavedBackupImportJourneyTests/testRestoredOriginatingListRequiresFreshReviewBeforeSavingItsRetainedItemDraft()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "A421E657-C6E0-4A9A-8B21-ABD1B015E818.png",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Manual backup explicitly reviews one restored originating List_0_DEC27555-5D6D-4CA5-9E43-8305F2E0074A.png",
+    "timestamp": 1792348539.627,
+    "testIdentifier": "SavedBackupImportJourneyTests/testRestoredOriginatingListRequiresFreshReviewBeforeSavingItsRetainedItemDraft()"
+  },
+  {
+    "configurationName": "Test Scheme Action",
+    "deviceId": "FBD72DAB-1D40-4E64-912D-7F9763E00446",
+    "deviceName": "iPad Air 11-inch (M4)",
+    "exportedFileName": "8AA52548-BC6A-41A7-A35C-D6A525BC5141.txt",
+    "isAssociatedWithFailure": false,
+    "suggestedHumanReadableName": "Native picker for the selected backup file_0_7194917E-81FF-4C41-BF12-DD3ED06873EA.txt",
+    "timestamp": 1792348525.533,
+    "testIdentifier": "SavedBackupImportJourneyTests/testRestoredOriginatingListRequiresFreshReviewBeforeSavingItsRetainedItemDraft()"
+  }
+]

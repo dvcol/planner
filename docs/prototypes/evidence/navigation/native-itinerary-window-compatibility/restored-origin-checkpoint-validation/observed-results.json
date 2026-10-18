@@ -1,0 +1,97 @@
+[
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-restored-origin-adaptive-relaunch-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-restored-origin-draft-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-restored-origin-reviewed-final-mac-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-restored-origin-selection-fix-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/native-restored-origin-selection-fix-mac-build",
+    "result": {
+      "exitCode": 0,
+      "runtimeCredit": false
+    },
+    "observedSummary": [
+      "** TEST BUILD SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/phone-restored-origin-creation-and-backup-regressions",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-phone-restored-origin-creation-and-backup-regressions.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedAppearanceJourneyTests testNewItemFromListCancelsWithoutChangesAndSavesRichContentInItsOriginalList]' passed (136.107 seconds).",
+      "Test Case '-[PlannerNavigationUITests.SavedBackupImportJourneyTests testRealBackupSkipAndOverwriteKeepTagIdentityAfterRelaunch]' passed (91.813 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-restored-origin-fresh-review",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-restored-origin-fresh-review.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedBackupImportJourneyTests testRestoredOriginatingListRequiresFreshReviewBeforeSavingItsRetainedItemDraft]' failed (123.767 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-restored-origin-reviewed-relaunch-qualified",
+    "result": {
+      "exitCode": 0,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-restored-origin-reviewed-relaunch-qualified.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedBackupImportJourneyTests testRestoredOriginatingListRequiresFreshReviewBeforeSavingItsRetainedItemDraft]' passed (127.184 seconds).",
+      "** TEST EXECUTE SUCCEEDED **"
+    ]
+  },
+  {
+    "epoch": "docs/prototypes/evidence/navigation/native-itinerary-window-compatibility/tablet-restored-origin-selection-first-green",
+    "result": {
+      "exitCode": 65,
+      "bundle": "/private/tmp/PlannerItineraryCompatibilityRuntime-tablet-restored-origin-selection-first-green.xcresult"
+    },
+    "observedSummary": [
+      "Test Case '-[PlannerNavigationUITests.SavedBackupImportJourneyTests testRestoredOriginatingListRequiresFreshReviewBeforeSavingItsRetainedItemDraft]' failed (130.219 seconds).",
+      "** TEST EXECUTE FAILED **"
+    ]
+  }
+]
