@@ -37,14 +37,14 @@ struct SavedContainerEstimates: View {
     Group {
       if dynamicTypeSize.isAccessibilitySize {
         VStack(alignment: .leading, spacing: 4) {
-          Text(title).foregroundStyle(Color.secondary)
+          Text(title).foregroundStyle(SavedRowForeground.secondary)
           durationValue(total, isManual: isManual)
         }
       } else {
         LabeledContent {
           durationValue(total, isManual: isManual)
         } label: {
-          Text(title).foregroundStyle(Color.secondary)
+          Text(title).foregroundStyle(SavedRowForeground.secondary)
         }
       }
     }
@@ -62,7 +62,7 @@ struct SavedContainerEstimates: View {
       )
       .foregroundStyle(Color.primary)
       .fixedSize(horizontal: false, vertical: true)
-      if isManual { Text("Manual").foregroundStyle(Color.secondary) }
+      if isManual { Text("Manual").foregroundStyle(SavedRowForeground.secondary) }
     }
   }
 

@@ -2,6 +2,32 @@ import PlannerCore
 import PlannerPreviews
 import SwiftUI
 
+/// Keep selected iOS row text opaque against the native blue highlight.
+struct SavedRowForeground: ShapeStyle {
+  var unselectedColor: Color = .primary
+
+  static var secondary: Self { .init(unselectedColor: secondaryColor) }
+
+  static func completion(isDone: Bool) -> Self {
+    .init(unselectedColor: isDone ? .accentColor : secondaryColor)
+  }
+
+  static var secondaryColor: Color {
+    #if os(iOS)
+      return Color.primary.opacity(0.7)
+    #else
+      return .secondary
+    #endif
+  }
+
+  func resolve(in environment: EnvironmentValues) -> some ShapeStyle {
+    #if os(iOS)
+      if environment.backgroundProminence == .increased { return AnyShapeStyle(Color.black) }
+    #endif
+    return AnyShapeStyle(unselectedColor)
+  }
+}
+
 extension PlannerRowRead {
   func metadataDescription(presentation: PlannerRowPresentationContext?) -> String {
     var descriptions = [String]()
@@ -156,34 +182,35 @@ struct SavedItemRowContent: View {
   private var textContent: some View {
     VStack(alignment: .leading, spacing: 4) {
       Text(row.title)
+        .foregroundStyle(SavedRowForeground())
         .strikethrough((row.effectiveDone ?? row.globalDone) == true)
         .lineLimit(2)
       if let subtitle = row.subtitle, !subtitle.isEmpty {
         Text(subtitle)
           .font(.subheadline)
-          .foregroundStyle(.secondary)
+          .foregroundStyle(SavedRowForeground.secondary)
           .lineLimit(1)
       }
       if let estimate = row.estimate {
         Label(estimate.nativeEstimateDescription, systemImage: "clock")
           .font(.caption)
-          .foregroundStyle(.secondary)
+          .foregroundStyle(SavedRowForeground.secondary)
           .lineLimit(1)
       }
       if let link = row.previewLink {
         Label(link.displayTitle, systemImage: link.systemImage)
           .font(.caption)
-          .foregroundStyle(.secondary)
+          .foregroundStyle(SavedRowForeground.secondary)
           .lineLimit(1)
       } else if row.hasLinks {
         Label("Maps", systemImage: "map")
           .font(.caption)
-          .foregroundStyle(.secondary)
+          .foregroundStyle(SavedRowForeground.secondary)
       }
       if let location = row.locationCaption {
         Label(location, systemImage: "mappin.and.ellipse")
           .font(.caption)
-          .foregroundStyle(.secondary)
+          .foregroundStyle(SavedRowForeground.secondary)
           .lineLimit(1)
       }
       if let schedule = row.scheduleDescription(presentation: rowPresentation) {
@@ -193,13 +220,13 @@ struct SavedItemRowContent: View {
           systemImage: "calendar"
         )
         .font(.caption)
-        .foregroundStyle(.secondary)
+        .foregroundStyle(SavedRowForeground.secondary)
         .lineLimit(1)
       }
       if let labels = row.compactLabelDescription {
         Text(labels)
           .font(.caption)
-          .foregroundStyle(.secondary)
+          .foregroundStyle(SavedRowForeground.secondary)
           .lineLimit(1)
       }
     }

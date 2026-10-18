@@ -1145,23 +1145,29 @@ struct SavedPlannerView: View {
         Section {
           NavigationLink(value: SavedPlannerSidebarSelection.lists) {
             Label("Lists", systemImage: "list.bullet")
+              .foregroundStyle(SavedRowForeground())
           }
           .accessibilityIdentifier("saved.section.lists")
           NavigationLink(value: SavedPlannerSidebarSelection.items) {
             Label("Items", systemImage: "square.stack")
+              .foregroundStyle(SavedRowForeground())
           }
           .accessibilityIdentifier("saved.section.items")
           NavigationLink(value: SavedPlannerSidebarSelection.inbox) {
             Label("Inbox", systemImage: "tray")
+              .foregroundStyle(SavedRowForeground())
           }
           .accessibilityIdentifier("saved.section.inbox")
           NavigationLink(value: SavedPlannerSidebarSelection.itineraries) {
             Label(
-              "Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath")
+              "Itineraries", systemImage: "point.topleft.down.to.point.bottomright.curvepath"
+            )
+            .foregroundStyle(SavedRowForeground())
           }
           .accessibilityIdentifier("saved.section.itineraries")
           NavigationLink(value: SavedPlannerSidebarSelection.calendar) {
             Label("Calendar", systemImage: "calendar")
+              .foregroundStyle(SavedRowForeground())
           }
           .accessibilityIdentifier("saved.section.calendar")
         }
@@ -1176,6 +1182,7 @@ struct SavedPlannerView: View {
             VStack(alignment: .leading, spacing: 4) {
               HStack {
                 Label(list.name, systemImage: "list.bullet.rectangle")
+                  .foregroundStyle(SavedRowForeground())
                 if list.archived {
                   Image(systemName: "archivebox").foregroundStyle(.secondary)
                     .accessibilityHidden(true)

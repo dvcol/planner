@@ -117,12 +117,16 @@ struct SavedItemEstimateSection: View {
   let estimate: PlannerEstimate?
 
   var body: some View {
-    Section("Activity estimate") {
-      LabeledContent("Duration", value: estimate?.nativeEstimateDescription ?? "No estimate")
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Activity estimate")
-        .accessibilityValue(estimate.map { "\($0.minutes) minutes" } ?? "No estimate")
-        .accessibilityIdentifier("saved.item.estimate")
+    Section {
+      LabeledContent("Duration") {
+        Text(estimate?.nativeEstimateDescription ?? "No estimate").foregroundStyle(Color.primary)
+      }
+      .accessibilityElement(children: .ignore)
+      .accessibilityLabel("Activity estimate")
+      .accessibilityValue(estimate.map { "\($0.minutes) minutes" } ?? "No estimate")
+      .accessibilityIdentifier("saved.item.estimate")
+    } header: {
+      Text("Activity estimate").foregroundStyle(Color.primary)
     }
   }
 }

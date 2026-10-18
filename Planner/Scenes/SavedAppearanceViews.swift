@@ -27,7 +27,7 @@ struct SavedMembershipRow: View {
       .labelStyle(.iconOnly)
       .buttonStyle(.plain)
       #if os(iOS)
-        .foregroundStyle(item.row.effectiveDone == true ? Color.accentColor : Color.secondary)
+        .foregroundStyle(SavedRowForeground.completion(isDone: item.row.effectiveDone == true))
       #endif
       .disabled(!canChange || item.row.globalDone == true)
       .accessibilityValue(item.row.effectiveDone == true ? "Completed" : "To do")
@@ -49,7 +49,9 @@ struct SavedMembershipRow: View {
         .accessibilityIdentifier("saved.appearance.\(item.id.uuidString)")
       #endif
       if item.row.archived == true {
-        Image(systemName: "archivebox").foregroundStyle(.secondary).accessibilityLabel("Archived")
+        Image(systemName: "archivebox")
+          .foregroundStyle(SavedRowForeground.secondary)
+          .accessibilityLabel("Archived")
       }
     }
   }
@@ -78,7 +80,7 @@ struct SavedAppearanceDetail: View {
         Label(
           item.effectiveDone ? "Completed" : "To do",
           systemImage: item.effectiveDone ? "checkmark.circle.fill" : "circle")
-        Text("In \(listName)").font(.subheadline).foregroundStyle(.secondary)
+        Text("In \(listName)").font(.subheadline).foregroundStyle(.primary)
         if item.archived {
           Label("Archived", systemImage: "archivebox").foregroundStyle(.secondary)
         }
@@ -87,7 +89,11 @@ struct SavedAppearanceDetail: View {
         }
       }
       if let notes = item.content.notes, !notes.isEmpty {
-        Section("Notes") { Text(notes).textSelection(.enabled) }
+        Section {
+          Text(notes).textSelection(.enabled)
+        } header: {
+          Text("Notes").foregroundStyle(Color.primary)
+        }
       }
       SavedItemEstimateSection(estimate: item.content.estimate)
       ItemLabelsSection(labels: item.labels)

@@ -83,7 +83,7 @@ struct SavedItineraryItemRow: View {
       .labelStyle(.iconOnly)
       .buttonStyle(.plain)
       #if os(iOS)
-        .foregroundStyle(item.row.effectiveDone == true ? Color.accentColor : Color.secondary)
+        .foregroundStyle(SavedRowForeground.completion(isDone: item.row.effectiveDone == true))
       #endif
       .disabled(!canChange || item.row.globalDone == true)
       .accessibilityValue(item.row.effectiveDone == true ? "Completed" : "To do")
@@ -96,7 +96,9 @@ struct SavedItineraryItemRow: View {
       .accessibilityValue(item.row.metadataDescription(presentation: item.rowPresentation))
       .accessibilityIdentifier("saved.itinerary.appearance.\(item.id.identifier)")
       if item.row.archived == true {
-        Image(systemName: "archivebox").foregroundStyle(.secondary).accessibilityLabel("Archived")
+        Image(systemName: "archivebox")
+          .foregroundStyle(SavedRowForeground.secondary)
+          .accessibilityLabel("Archived")
       }
     }
   }
