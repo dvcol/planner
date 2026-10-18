@@ -1,6 +1,6 @@
 # Native List row-window contract
 
-Status: approved by the human as Q97 A. Implementation and qualification remain required. The navigation/appearance review requested on 18 October is the current slice.
+Status: approved as Q97 A. The shared typed loader is implemented and qualified in `6f2ce0b`; native List/Table adoption is now underway after the UI pass in `2001e47`. Native integration and qualification remain required.
 
 ## Context and starting state
 
@@ -46,7 +46,7 @@ This is the expanded production interface proposed for the real-Core app-hosted 
 
 ## Definition of ready and required TDD
 
-Q97 A would confirm this expanded interface before its tests. Reuse the existing `PlannerMCPTests` app-hosted target with real local-only Core data, along with the existing public Core and native UI seams. No test reaches private page/task state or introduces a suspended-request mock into production.
+Q97 A confirmed this expanded interface before its tests. Reuse the existing `PlannerMCPTests` app-hosted target with real local-only Core data, along with the existing public Core and native UI seams. No test reaches private page/task state or introduces a suspended-request mock into production.
 
 Migrate the seven existing Item-window tests to the typed identity output, retaining their actual behaviors. Then implement one failing List behavior at a time through the production interface:
 
@@ -72,4 +72,4 @@ B. Keep the Item/Inbox loader unchanged and build a dedicated List loader with t
 
 C. Retain eager List reads for now. Native rendering remains lazy, but List content still waits for complete presentation hydration and retains it. The List moving-window requirement stays open on the map.
 
-Recommendation: A. It reuses the established paging behavior while making the List's actual identities and metadata explicit. Implementation waits for the interface/test-seam choice; independent qualification can continue.
+Recommendation: A. It reuses the established paging behavior while making the List's actual identities and metadata explicit. The human accepted A. The shared loader checkpoint passes its 13 real-Core tests; native adoption and the remaining qualification are still required.

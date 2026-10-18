@@ -1,6 +1,6 @@
 # Native List presentation windows
 
-Status: the Q97 A shared loader is implemented and its 13 real-Core tests pass. Native standalone List/Table adoption remains open while the requested UI review proceeds. The accepted interface and test boundary are in the [List-window contract](../native-list-window-contract-review.md). The navigation/appearance checkpoint is committed separately as `b1b8d3b`.
+Status: the Q97 A shared loader is implemented and its 13 real-Core tests pass. Native standalone List/Table adoption is underway after the requested UI pass in `2001e47`. The accepted interface and test boundary are in the [List-window contract](../native-list-window-contract-review.md). The navigation/appearance checkpoint is committed separately as `b1b8d3b`.
 
 ## Context and outcome
 
@@ -38,3 +38,11 @@ The loader now retains full typed source/membership identities and an optional L
 The qualified [first List red](evidence/navigation/native-list-windows/q97-first-list-qualified-red/exit.json) observed the old loader reject List membership identities. Two earlier fixture setup failures are retained and carry no behavior-red credit. The [final loader suite](evidence/navigation/native-list-windows/q97-loader-suite/exit.json) passes all 13 functions in 4.463 seconds, covering original Item/Inbox behavior, List page traversal/revisit, empty/filtered headers, independent completion across Lists, cumulative filtering/sort and stale manual-order/removal refresh. The final selected compiler check succeeds. Strict Swift formatting and whitespace checks pass.
 
 Independent Standards and Spec review found no confirmed findings in this loader checkpoint. These results establish the app-internal loader only. Native List/Table views still use eager reads; their adoption, scroll/selection/action checks and performance qualification remain required before Q97 is complete.
+
+### Native adoption cycle
+
+The existing native UI seam now has an isolated `list-windows` fixture with 193 ordered Item memberships, enough for four presentation pages, plus a separate List referencing the final Item. Seed data is imported through public reviewed Core commands, outside production targets. The initial journey traverses rows 65, 129 and 193, changes local completion, revisits the first/final membership and relaunches. Its eager-reader baseline qualifies observable compatibility; it cannot establish presentation-page retention. The earlier real-Core loader red/green establishes that requirement. Native adoption will be checked against both sources of evidence rather than calling an already compatible UI journey a failing retention test.
+
+The integration will render headers directly from the loader's generation-validated ready source. A retained same-List header supports valid details while loading; it will not supply rows from another generation. Native complete membership identities drive matching counts and reorder anchors. No second row-presentation cache is added to the view.
+
+The qualified native iPad baseline passes in 303.057 seconds. It reaches Items 65, 129 and 193, locally completes the last membership, revisits both ends with their original identities, preserves full 193-item progress and rereads the completed membership after relaunch. The first two attempts are explicitly controller failures: a collapsed sidebar hid the initial Lists button, and the CollectionView container reported noninteractive despite tappable child rows. Their failure hierarchies are retained. These baseline results use the eager native reader and establish compatibility only, not moving-window retention or a performance measurement.
