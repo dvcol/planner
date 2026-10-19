@@ -196,6 +196,47 @@
     }
   }
 
+  struct SetPlannerItemArchiveIntent: AppIntent {
+    static let title: LocalizedStringResource = "Set Item archive state"
+    static let description = IntentDescription(
+      "Archive or unarchive the shared Item without changing its completion or removing its entries."
+    )
+    static var allowedExecutionTargets: IntentExecutionTargets { .main }
+    static var supportedModes: IntentModes { .background }
+    static var authenticationPolicy: IntentAuthenticationPolicy { .alwaysAllowed }
+    @Parameter(title: "Item") var item: PlannerItemEntity
+    @Parameter(title: "Archived") var archived: Bool
+    @Dependency private var plannerStore: SavedPlannerStore
+    typealias PerformResult = IntentResultContainer<Never, Never, Never, IntentDialog>
+
+    @MainActor func perform() async throws -> PerformResult {
+      let result = try await plannerStore.executeAppIntent(
+        .setArchive(source: .init(kind: .item, id: item.id), archived: archived))
+      switch result.outcome {
+      case .rejected(let reason): throw PlannerIntentFailure(message: reason.message)
+      case .unverified:
+        throw PlannerIntentFailure(
+          message:
+            "Planner could not verify this change. Open Planner to review recovery before making another change."
+        )
+      case .applied(_, let recovery):
+        let dialog: IntentDialog
+        switch recovery {
+        case .complete:
+          if archived {
+            dialog = "Archived the Item. Its entries and completion are preserved."
+          } else {
+            dialog = "Unarchived the Item. Its entries and completion are preserved."
+          }
+        case .incomplete:
+          dialog =
+            "The Item's archive state changed on this device, but its recovery copy is incomplete. Open Planner before making more changes."
+        }
+        return .result(dialog: dialog)
+      }
+    }
+  }
+
   private struct PlannerIntentFailure: LocalizedError {
     let message: String
     var errorDescription: String? { message }

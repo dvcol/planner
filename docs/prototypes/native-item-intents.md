@@ -2,6 +2,8 @@
 
 Status: the local Item tracer is implemented and qualified under Q112 A. The complete Intent catalog and actual system qualification remain open.
 
+The separate [Archive follow-up](native-item-archive-intent.md) adds a fourth action after this tracer's recorded nine-test epoch. Mac/mobile compilation passes; its green runtime check remains pending after XCTest startup failures. This report's passing tests and three-action metadata remain evidence for their original source epoch, not a pass of that follow-up.
+
 ## Context and readiness
 
 At `274fe33e`, the app has no App Intents implementation. The accepted Core facade supplies ordinary Item creation, source reads, completion and canonical queries. Q33 governs adapter authority; Q6 permits ordinary locked-device access where Apple allows it. Backup/export/recovery administration, permanent source/label deletion and association restoration are not registered Intent actions.

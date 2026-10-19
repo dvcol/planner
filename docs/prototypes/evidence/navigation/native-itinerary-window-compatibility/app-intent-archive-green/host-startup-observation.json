@@ -1,0 +1,5 @@
+{
+  "observation": "Owned host main thread waits in XCTestDriver._prepareTestConfigurationAndIDESession, with no Test Case start in the Xcode log. No Archive action execution established.",
+  "scope": "One-second process sample, not a production deadlock finding.",
+  "systemRegistrationWarningAlsoInExecutableRed": true
+}

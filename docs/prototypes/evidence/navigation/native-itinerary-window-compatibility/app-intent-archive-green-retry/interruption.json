@@ -1,0 +1,3 @@
+{
+  "reason": "Bounded repeat stopped after 240 seconds; inspect log for actual test startup or execution. No passing completion credit."
+}
