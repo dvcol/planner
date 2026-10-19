@@ -50,8 +50,10 @@ enum SavedReviewedChangeResult {
 final class SavedPlannerStore {
   private let planner: PlannerCore.Planner?
   private var session: PlannerDatasetSession?
+  @ObservationIgnored private var openingTask: Task<Void, Never>?
   private(set) var isOpening = false
-  private(set) var isSaving = false
+  private var activeSaveCount = 0
+  var isSaving: Bool { activeSaveCount > 0 }
   private(set) var recoveryBlocked = false
   private(set) var recoveryStatusTitle = "Checking local recovery"
   private(set) var recoveryStatusFailure: String?
@@ -120,9 +122,20 @@ final class SavedPlannerStore {
   }
 
   func open() async {
-    guard let planner, session == nil, !isOpening else { return }
+    if let openingTask {
+      await openingTask.value
+      return
+    }
+    guard let planner, session == nil else { return }
     isOpening = true
     openingFailure = nil
+    let opening = Task { await finishOpening(planner) }
+    openingTask = opening
+    await opening.value
+    openingTask = nil
+  }
+
+  private func finishOpening(_ planner: PlannerCore.Planner) async {
     defer { isOpening = false }
     switch await planner.bootstrap() {
     case .ready(let ready):
@@ -134,6 +147,32 @@ final class SavedPlannerStore {
     case .mainAppMigrationRequired:
       openingFailure = "Open Planner to update its shared data before using Share."
     }
+  }
+
+  func appIntentContext() async throws -> (PlannerCore.Planner, PlannerDatasetSession) {
+    await open()
+    guard let planner, let session, isReady else {
+      throw CocoaError(
+        .fileReadUnknown,
+        userInfo: [NSLocalizedDescriptionKey: openingFailure ?? "Planner could not open its data."])
+    }
+    return (planner, session)
+  }
+
+  func executeAppIntent(_ command: PlannerCommand) async throws -> PlannerOperationResult {
+    let (planner, session) = try await appIntentContext()
+    try Task.checkCancellation()
+    guard !isCheckingRecovery, !recoveryBlocked else {
+      throw CocoaError(
+        .fileWriteUnknown,
+        userInfo: [
+          NSLocalizedDescriptionKey:
+            recoveryStatusFailure
+            ?? "Planner cannot make this change now. Open Planner to review its status."
+        ])
+    }
+    return await executeAdmittedChange(
+      command, operationId: UUID(), planner: planner, session: session)
   }
 
   func refreshRecoveryStatus() async {
@@ -164,12 +203,12 @@ final class SavedPlannerStore {
   func retryIncompleteRecovery() async {
     guard let planner, let session, canRetryRecovery else { return }
     let operationIdentifiers = incompleteRecoveryOperationIdentifiers
-    isSaving = true
+    activeSaveCount += 1
     isRetryingRecovery = true
     alertMessage = nil
     recoveryStatusFailure = nil
     defer {
-      isSaving = false
+      activeSaveCount -= 1
       isRetryingRecovery = false
     }
     var retryFailure: String?
@@ -667,9 +706,9 @@ final class SavedPlannerStore {
   {
     guard let planner, let session, canCreate else { return .failed }
     let namespace = devicePreferenceNamespace
-    isSaving = true
+    activeSaveCount += 1
     alertMessage = nil
-    defer { isSaving = false }
+    defer { activeSaveCount -= 1 }
     let result = await planner.execute(
       PlannerOperation(
         operationId: operationIdentifier, session: session, command: review.command,
@@ -778,8 +817,16 @@ final class SavedPlannerStore {
     _ command: PlannerCommand, operationId: UUID
   ) async -> PlannerOperationResult? {
     guard let planner, let session, canCreate else { return nil }
-    isSaving = true
-    defer { isSaving = false }
+    return await executeAdmittedChange(
+      command, operationId: operationId, planner: planner, session: session)
+  }
+
+  private func executeAdmittedChange(
+    _ command: PlannerCommand, operationId: UUID, planner: PlannerCore.Planner,
+    session: PlannerDatasetSession
+  ) async -> PlannerOperationResult {
+    activeSaveCount += 1
+    defer { activeSaveCount -= 1 }
     let result = await planner.execute(
       PlannerOperation(operationId: operationId, session: session, command: command))
     _ = await handleChangeResult(result)
@@ -920,8 +967,8 @@ final class SavedPlannerStore {
     -> PlannerEntityReference?
   {
     guard let planner, let session, canCreate else { return nil }
-    isSaving = true
-    defer { isSaving = false }
+    activeSaveCount += 1
+    defer { activeSaveCount -= 1 }
     let result = await planner.execute(
       PlannerOperation(
         operationId: operationId, session: session,
